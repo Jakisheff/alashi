@@ -1,7 +1,12 @@
 use anchor_lang::prelude::*;
 
-#[derive(AnchorSerialize, AnchorDeserialize, Clone, Copy, Debug, PartialEq, Eq, InitSpace)]
+anchor_lang::declare_id!("8EikcWzM7d3EjttApmymo2maWp5A3NtMpKoYdWUzzzL");
+
+#[derive(
+    AnchorSerialize, AnchorDeserialize, Clone, Copy, Debug, Default, PartialEq, Eq, InitSpace,
+)]
 pub enum Phase {
+    #[default]
     Lobby,
     Market,
     Action,
@@ -10,15 +15,18 @@ pub enum Phase {
     Aborted,
 }
 
-#[derive(AnchorSerialize, AnchorDeserialize, Clone, Copy, Debug, PartialEq, Eq, InitSpace)]
+#[derive(
+    AnchorSerialize, AnchorDeserialize, Clone, Copy, Debug, Default, PartialEq, Eq, InitSpace,
+)]
 pub enum VoteChoice {
+    #[default]
     Yes,
     No,
     Abstain,
 }
 
 #[account]
-#[derive(InitSpace)]
+#[derive(InitSpace, Default)]
 pub struct Game {
     pub admin: Pubkey,
     pub game_id: u64,
@@ -62,7 +70,7 @@ impl Game {
 }
 
 #[account]
-#[derive(InitSpace)]
+#[derive(InitSpace, Default)]
 pub struct Faction {
     pub game: Pubkey,
     pub wallet: Pubkey,

@@ -1,4 +1,6 @@
-use crate::{constants::*, error::GameError, state::Faction, state::VoteChoice};
+use crate::constants::*;
+use crate::error::GameError;
+use crate::state::{Faction, VoteChoice};
 use anchor_lang::prelude::*;
 
 pub struct FactionSnapshot {

@@ -1,9 +1,17 @@
-pub mod constants;
-pub mod error;
+pub mod constants {
+    pub use alashi_rules::constants::*;
+}
+pub mod error {
+    pub use alashi_rules::error::*;
+}
 pub mod events;
 pub mod instructions;
-pub mod logic;
-pub mod state;
+pub mod logic {
+    pub use alashi_rules::logic::*;
+}
+pub mod state {
+    pub use alashi_rules::state::*;
+}
 
 use anchor_lang::prelude::*;
 

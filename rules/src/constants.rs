@@ -44,5 +44,3 @@ pub const PRICE_TABLE: [u64; 16] = [12, 10, 9, 8, 7, 6, 5, 4, 3, 3, 2, 2, 2, 1, 
 pub fn price_at(sold: u16) -> u64 {
     PRICE_TABLE[(sold as usize).min(PRICE_TABLE.len() - 1)]
 }
-
-pub use solana_sysvar::slot_hashes::ID as SLOT_HASHES_ID;
