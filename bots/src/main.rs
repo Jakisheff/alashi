@@ -366,7 +366,7 @@ fn main() {
         Bot {
             faction: faction_pda(&game, &bot1_kp.pubkey()),
             kp: bot1_kp,
-            name: "Zhora",
+            name: "Aibot",
             acted: false,
             voted: false,
             goods: 0,
@@ -375,7 +375,7 @@ fn main() {
         Bot {
             faction: faction_pda(&game, &bot2_kp.pubkey()),
             kp: bot2_kp,
-            name: "Osol",
+            name: "Botagul",
             acted: false,
             voted: false,
             goods: 0,
@@ -400,13 +400,13 @@ fn main() {
     send_ix(
         &rpc,
         &bots[0].kp,
-        ix_join("Zhora", bots[0].kp.pubkey(), game, bots[0].faction),
+        ix_join("Aibot", bots[0].kp.pubkey(), game, bots[0].faction),
     );
     wait_account(&rpc, &bots[0].faction, "faction1");
     send_ix(
         &rpc,
         &bots[1].kp,
-        ix_join("Osol", bots[1].kp.pubkey(), game, bots[1].faction),
+        ix_join("Botagul", bots[1].kp.pubkey(), game, bots[1].faction),
     );
     wait_account(&rpc, &bots[1].faction, "faction2");
 
@@ -501,7 +501,7 @@ fn main() {
                         continue;
                     }
                     if i == 0 && !b.bribed && faction_cash(&rpc, &b.faction) >= 5_000_000 {
-                        println!("[action r{}] {} bribes Osol for influence", g.round, b.name);
+                        println!("[action r{}] {} bribes Botagul for influence", g.round, b.name);
                         if send_ix(
                             &rpc,
                             &b.kp,
@@ -554,7 +554,7 @@ fn main() {
                     }
                 }
                 if g.round == 3 && g.president == bots[0].kp.pubkey() && !g.veto_pending {
-                    println!("[law r{}] Zhora (president) vetoes", g.round);
+                    println!("[law r{}] Aibot (president) vetoes", g.round);
                     send_ix(
                         &rpc,
                         &bots[0].kp,
