@@ -17,6 +17,75 @@ use solana_hash::Hash;
 const PESO: u64 = alashi::constants::PESO;
 const SLOT_HASHES_ID: Pubkey = solana_sysvar::slot_hashes::ID;
 
+const SB_DEVNET_PID: &str = "Aio4gaXjXzJNVLtzwtNVmSqGKpANtXhybbkhtAC94ji2";
+
+fn rng_account_bytes(seed_slot: u64, reveal_slot: u64, value_first: u8) -> Vec<u8> {
+    let mut d = Vec::with_capacity(408);
+    d.extend_from_slice(&[10, 66, 229, 135, 220, 239, 217, 114]);
+    d.extend_from_slice(&[0u8; 32]);
+    d.extend_from_slice(&[1u8; 32]);
+    d.extend_from_slice(&[2u8; 32]);
+    d.extend_from_slice(&seed_slot.to_le_bytes());
+    d.extend_from_slice(&[3u8; 32]);
+    d.extend_from_slice(&reveal_slot.to_le_bytes());
+    let mut value = [0u8; 32];
+    value[0] = value_first;
+    d.extend_from_slice(&value);
+    d.extend_from_slice(&[0u8; 224]);
+    d
+}
+
+fn install_rng(svm: &mut LiteSVM, rng: &Pubkey, seed_slot: u64, reveal_slot: u64, value_first: u8) {
+    use solana_account::Account as SysAccount;
+    let owner = solana_address::Address::from_str_const(SB_DEVNET_PID);
+    svm.set_account(
+        *rng,
+        SysAccount {
+            lamports: 1_000_000,
+            data: rng_account_bytes(seed_slot, reveal_slot, value_first),
+            owner,
+            executable: false,
+            rent_epoch: u64::MAX,
+        },
+    )
+    .unwrap();
+}
+
+fn ix_reveal_law(crank: Pubkey, game: Pubkey, rng: Pubkey) -> Instruction {
+    Instruction::new_with_bytes(
+        alashi::id(),
+        &alashi::instruction::RevealLaw {}.data(),
+        alashi::accounts::RevealLaw {
+            crank,
+            game,
+            randomness: rng,
+        }
+        .to_account_metas(None),
+    )
+}
+
+fn ix_settle_refund(
+    crank: Pubkey,
+    game: Pubkey,
+    factions: Vec<Pubkey>,
+    wallets: Vec<Pubkey>,
+) -> Instruction {
+    let mut metas = alashi::accounts::SettleRefund { crank, game }.to_account_metas(None);
+    for f in factions {
+        metas.push(anchor_lang::solana_program::instruction::AccountMeta::new_readonly(f, false));
+    }
+    for w in wallets {
+        metas.push(anchor_lang::solana_program::instruction::AccountMeta::new(
+            w, false,
+        ));
+    }
+    Instruction::new_with_bytes(
+        alashi::id(),
+        &alashi::instruction::SettleRefund {}.data(),
+        metas,
+    )
+}
+
 fn set_law_seed(svm: &mut LiteSVM, seed: u8) {
     let mut b = [0u8; 32];
     b[0] = seed;
@@ -85,13 +154,21 @@ fn faction_state(svm: &LiteSVM, faction: &Pubkey) -> alashi::state::Faction {
     alashi::state::Faction::try_deserialize(&mut data).unwrap()
 }
 
-fn ix_initialize(id: u64, fee: u64, dur: i64, admin: Pubkey, game: Pubkey) -> Instruction {
+fn ix_initialize(
+    id: u64,
+    fee: u64,
+    dur: i64,
+    admin: Pubkey,
+    game: Pubkey,
+    mode: u8,
+) -> Instruction {
     Instruction::new_with_bytes(
         alashi::id(),
         &alashi::instruction::Initialize {
             game_id: id,
             entry_fee: fee,
             phase_duration: dur,
+            entropy_mode: mode,
         }
         .data(),
         alashi::accounts::Initialize {
@@ -279,7 +356,7 @@ fn start_party(id: u64, fee: u64, dur: i64) -> Party {
     assert!(send(
         &mut svm,
         &admin,
-        ix_initialize(id, fee, dur, admin.pubkey(), game)
+        ix_initialize(id, fee, dur, admin.pubkey(), game, 0)
     ));
     assert!(send(
         &mut svm,
@@ -752,7 +829,7 @@ fn test_settle_payout_and_rake() {
     assert!(send(
         &mut svm,
         &rake_admin,
-        ix_initialize(13, FEE, 0, rake_admin.pubkey(), game)
+        ix_initialize(13, FEE, 0, rake_admin.pubkey(), game, 0)
     ));
     assert!(send(&mut svm, &a, ix_join("Alpha", a.pubkey(), game, fa)));
     assert!(send(&mut svm, &b, ix_join("Beta", b.pubkey(), game, fb)));
@@ -889,4 +966,204 @@ fn test_market_buy() {
         &p.b,
         ix_buy(1, p.b.pubkey(), p.game, p.fb)
     ));
+}
+
+#[test]
+fn test_vrf_threshold() {
+    let mut svm = LiteSVM::new();
+    let bytes = include_bytes!(concat!(env!("CARGO_TARGET_TMPDIR"), "/../deploy/alashi.so"));
+    svm.add_program(alashi::id(), bytes).unwrap();
+    let payer = Keypair::new();
+    svm.airdrop(&payer.pubkey(), 10_000_000_000).unwrap();
+    let big_fee = 300_000_000;
+    let game1 = game_pda(21);
+    let game2 = game_pda(22);
+
+    assert!(!send(
+        &mut svm,
+        &payer,
+        ix_initialize(21, big_fee, 0, payer.pubkey(), game1, 0)
+    ));
+    assert!(send(
+        &mut svm,
+        &payer,
+        ix_initialize(22, big_fee, 0, payer.pubkey(), game2, 1)
+    ));
+    assert_eq!(
+        game_state(&svm, &game2).entropy_mode,
+        alashi::constants::ENTROPY_SWITCHBOARD
+    );
+}
+
+#[test]
+fn test_vrf_mode_flow() {
+    let mut svm = LiteSVM::new();
+    let bytes = include_bytes!(concat!(env!("CARGO_TARGET_TMPDIR"), "/../deploy/alashi.so"));
+    svm.add_program(alashi::id(), bytes).unwrap();
+    let a = Keypair::new();
+    let b = Keypair::new();
+    svm.airdrop(&a.pubkey(), 10_000_000_000).unwrap();
+    svm.airdrop(&b.pubkey(), 2_000_000_000).unwrap();
+
+    let game = game_pda(23);
+    let fa = faction_pda(&game, &a.pubkey());
+    let fb = faction_pda(&game, &b.pubkey());
+    let rng = Keypair::new().pubkey();
+    assert!(send(
+        &mut svm,
+        &a,
+        ix_initialize(23, FEE, 0, a.pubkey(), game, 1)
+    ));
+    assert!(send(&mut svm, &a, ix_join("Alpha", a.pubkey(), game, fa)));
+    assert!(send(&mut svm, &b, ix_join("Beta", b.pubkey(), game, fb)));
+    let fkeys = vec![fa, fb];
+
+    let adv = |svm: &mut LiteSVM, s: &Keypair, extra: Vec<Pubkey>| {
+        set_law_seed(svm, 0);
+        let mut keys = fkeys.clone();
+        keys.extend(extra);
+        send(svm, s, ix_advance(s.pubkey(), game, keys))
+    };
+
+    assert!(adv(&mut svm, &a, vec![]));
+    assert!(adv(&mut svm, &a, vec![]));
+    assert!(send(&mut svm, &a, ix_produce(a.pubkey(), game, fa)));
+    assert!(send(&mut svm, &b, ix_produce(b.pubkey(), game, fb)));
+
+    let slot = svm.get_sysvar::<solana_clock::Clock>().slot;
+    install_rng(&mut svm, &rng, slot + 5, 0, 0);
+    assert!(adv(&mut svm, &a, vec![rng]));
+
+    let g = game_state(&svm, &game);
+    assert_eq!(g.law_card, 255);
+    assert_eq!(g.vrf_account, rng);
+    assert_eq!(g.commit_slot, slot + 5);
+
+    assert!(!send(
+        &mut svm,
+        &a,
+        ix_vote(alashi::state::VoteChoice::Yes, a.pubkey(), game, fa)
+    ));
+
+    svm.warp_to_slot(slot + 5);
+    install_rng(&mut svm, &rng, slot + 5, slot + 5, 5);
+    assert!(send(&mut svm, &a, ix_reveal_law(a.pubkey(), game, rng)));
+    let g = game_state(&svm, &game);
+    assert_eq!(g.law_card, 5);
+
+    assert!(send(
+        &mut svm,
+        &a,
+        ix_vote(alashi::state::VoteChoice::Yes, a.pubkey(), game, fa)
+    ));
+    assert!(send(
+        &mut svm,
+        &b,
+        ix_vote(alashi::state::VoteChoice::No, b.pubkey(), game, fb)
+    ));
+    set_law_seed(&mut svm, 0);
+    assert!(send(
+        &mut svm,
+        &a,
+        ix_advance(a.pubkey(), game, fkeys.clone())
+    ));
+    let g = game_state(&svm, &game);
+    assert_eq!(g.round, 2);
+    assert_eq!(g.phase, alashi::state::Phase::Market);
+}
+
+#[test]
+fn test_vrf_timeout_abort_refund() {
+    let mut svm = LiteSVM::new();
+    let bytes = include_bytes!(concat!(env!("CARGO_TARGET_TMPDIR"), "/../deploy/alashi.so"));
+    svm.add_program(alashi::id(), bytes).unwrap();
+    let a = Keypair::new();
+    let b = Keypair::new();
+    let crank = Keypair::new();
+    svm.airdrop(&a.pubkey(), 10_000_000_000).unwrap();
+    svm.airdrop(&b.pubkey(), 2_000_000_000).unwrap();
+    svm.airdrop(&crank.pubkey(), 1_000_000_000).unwrap();
+
+    let game = game_pda(24);
+    let fa = faction_pda(&game, &a.pubkey());
+    let fb = faction_pda(&game, &b.pubkey());
+    let rng = Keypair::new().pubkey();
+    assert!(send(
+        &mut svm,
+        &a,
+        ix_initialize(24, FEE, 0, a.pubkey(), game, 1)
+    ));
+    assert!(send(&mut svm, &a, ix_join("Alpha", a.pubkey(), game, fa)));
+    assert!(send(&mut svm, &b, ix_join("Beta", b.pubkey(), game, fb)));
+    let fkeys = vec![fa, fb];
+
+    set_law_seed(&mut svm, 0);
+    assert!(send(
+        &mut svm,
+        &a,
+        ix_advance(a.pubkey(), game, fkeys.clone())
+    ));
+    assert!(send(
+        &mut svm,
+        &a,
+        ix_advance(a.pubkey(), game, fkeys.clone())
+    ));
+    assert!(send(&mut svm, &a, ix_produce(a.pubkey(), game, fa)));
+    assert!(send(&mut svm, &b, ix_produce(b.pubkey(), game, fb)));
+
+    let slot = svm.get_sysvar::<solana_clock::Clock>().slot;
+    let commit_slot = slot + 5;
+    install_rng(&mut svm, &rng, commit_slot, 0, 0);
+    assert!(send(
+        &mut svm,
+        &a,
+        ix_advance(a.pubkey(), game, vec![fa, fb, rng])
+    ));
+
+    svm.warp_to_slot(commit_slot + 40);
+    set_law_seed(&mut svm, 0);
+    assert!(send(
+        &mut svm,
+        &a,
+        ix_advance(a.pubkey(), game, fkeys.clone())
+    ));
+    assert!(send(
+        &mut svm,
+        &a,
+        ix_advance(a.pubkey(), game, fkeys.clone())
+    ));
+    assert!(send(
+        &mut svm,
+        &a,
+        ix_advance(a.pubkey(), game, fkeys.clone())
+    ));
+    let g = game_state(&svm, &game);
+    assert_eq!(g.vrf_retries, 3);
+    assert_eq!(g.phase, alashi::state::Phase::Law);
+
+    assert!(send(
+        &mut svm,
+        &a,
+        ix_advance(a.pubkey(), game, fkeys.clone())
+    ));
+    let g = game_state(&svm, &game);
+    assert_eq!(g.phase, alashi::state::Phase::Aborted);
+
+    let a_before = svm.get_account(&a.pubkey()).unwrap().lamports;
+    let b_before = svm.get_account(&b.pubkey()).unwrap().lamports;
+    assert!(send(
+        &mut svm,
+        &crank,
+        ix_settle_refund(
+            crank.pubkey(),
+            game,
+            vec![fa, fb],
+            vec![a.pubkey(), b.pubkey()],
+        )
+    ));
+    let a_gain = svm.get_account(&a.pubkey()).unwrap().lamports - a_before;
+    let b_gain = svm.get_account(&b.pubkey()).unwrap().lamports - b_before;
+    println!("DBG a_gain={a_gain} b_gain={b_gain}");
+    assert_eq!(a_gain + b_gain, 2 * FEE);
+    assert!(game_state(&svm, &game).settled);
 }

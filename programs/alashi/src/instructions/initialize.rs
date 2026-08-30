@@ -22,9 +22,19 @@ pub fn handle_initialize(
     game_id: u64,
     entry_fee: u64,
     phase_duration: i64,
+    entropy_mode: u8,
 ) -> Result<()> {
     require!(entry_fee > 0, GameError::InvalidEntryFee);
     require!(phase_duration >= 0, GameError::InvalidPhaseDuration);
+    require!(
+        entropy_mode == ENTROPY_SLOTHASH || entropy_mode == ENTROPY_SWITCHBOARD,
+        GameError::InvalidEntropyMode
+    );
+    // Конституция: банк выше порога обязан играть с VRF-энтропией
+    // (SPEC_VRF.md п.4; fallback на slot-hash для крупных банков запрещён).
+    if entry_fee.saturating_mul(MAX_FACTIONS as u64) > MAINNET_VRF_THRESHOLD {
+        require!(entropy_mode == ENTROPY_SWITCHBOARD, GameError::VrfRequired);
+    }
 
     let clock = Clock::get()?;
     let game = &mut ctx.accounts.game;
@@ -58,6 +68,11 @@ pub fn handle_initialize(
     game.pending_price_shift = 0;
     game.pending_boom = 0;
     game.settled = false;
+    game.entropy_mode = entropy_mode;
+    game.vrf_account = Pubkey::default();
+    game.commit_slot = 0;
+    game.vrf_retries = 0;
+    game.vrf_spent = 0;
 
     emit!(GameInitialized {
         game: game.key(),

@@ -22,6 +22,7 @@ pub fn handle_vote(ctx: Context<Vote>, choice: VoteChoice) -> Result<()> {
     let faction = &mut ctx.accounts.faction;
     require!(game.phase == Phase::Law, GameError::WrongPhase);
     require!(faction.alive, GameError::NotAlive);
+    require!(game.law_card != NO_LAW, GameError::LawNotRevealed);
     require!(faction.voted_stamp != game.stamp(), GameError::AlreadyVoted);
 
     faction.vote = choice;

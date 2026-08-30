@@ -7,6 +7,7 @@ pub enum Phase {
     Action,
     Law,
     Finished,
+    Aborted,
 }
 
 #[derive(AnchorSerialize, AnchorDeserialize, Clone, Copy, Debug, PartialEq, Eq, InitSpace)]
@@ -47,6 +48,11 @@ pub struct Game {
     pub pending_price_shift: i8,
     pub pending_boom: u8,
     pub settled: bool,
+    pub entropy_mode: u8,
+    pub vrf_account: Pubkey,
+    pub commit_slot: u64,
+    pub vrf_retries: u8,
+    pub vrf_spent: u64,
 }
 
 impl Game {

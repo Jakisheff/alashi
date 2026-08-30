@@ -56,7 +56,11 @@ pub fn llm_ask(cfg: &LlmConfig, system: &str, user: &str) -> Option<String> {
         .ok()?;
     let txt = String::from_utf8(out.stdout).ok()?;
     let v: serde_json::Value = serde_json::from_str(&txt).ok()?;
-    let content = v.get("choices")?.get(0)?.get("message")?.get("content")?
+    let content = v
+        .get("choices")?
+        .get(0)?
+        .get("message")?
+        .get("content")?
         .as_str()?
         .to_string();
     if content.trim().is_empty() {

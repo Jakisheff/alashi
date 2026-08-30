@@ -54,4 +54,16 @@ pub enum GameError {
     InvalidSettleSet,
     #[msg("bank is empty")]
     EmptyBank,
+    #[msg("invalid entropy mode")]
+    InvalidEntropyMode,
+    #[msg("bank above threshold requires VRF entropy mode")]
+    VrfRequired,
+    #[msg("law card not revealed yet")]
+    LawNotRevealed,
+    #[msg("randomness account mismatch")]
+    RandomnessMismatch,
+    #[msg("randomness not resolved for this slot")]
+    RandomnessNotReady,
+    #[msg("game aborted by oracle failure")]
+    GameAborted,
 }

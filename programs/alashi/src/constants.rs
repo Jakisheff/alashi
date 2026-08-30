@@ -30,6 +30,14 @@ pub const DECK_SIZE: u8 = 8;
 pub const DONKEY_PRICE: u64 = 1;
 pub const PAYOUT_SHARES: [u64; 4] = [50, 30, 15, 5];
 
+pub const ENTROPY_SLOTHASH: u8 = 0;
+pub const ENTROPY_SWITCHBOARD: u8 = 1;
+// TODO: пересчитать при апдейте порога (курс SOL/USD). ~$100 эквивалент,
+// консервативно округлено до 1 SOL на момент реализации 01.09.2026.
+pub const MAINNET_VRF_THRESHOLD: u64 = 1_000_000_000;
+pub const REVEAL_TIMEOUT_SLOTS: u64 = 25;
+pub const MAX_VRF_RETRIES: u8 = 3;
+
 #[constant]
 pub const PRICE_TABLE: [u64; 16] = [12, 10, 9, 8, 7, 6, 5, 4, 3, 3, 2, 2, 2, 1, 1, 1];
 

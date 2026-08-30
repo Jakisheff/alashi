@@ -22,8 +22,15 @@ pub mod alashi {
         game_id: u64,
         entry_fee: u64,
         phase_duration: i64,
+        entropy_mode: u8,
     ) -> Result<()> {
-        crate::instructions::initialize::handle_initialize(ctx, game_id, entry_fee, phase_duration)
+        crate::instructions::initialize::handle_initialize(
+            ctx,
+            game_id,
+            entry_fee,
+            phase_duration,
+            entropy_mode,
+        )
     }
 
     pub fn join(ctx: Context<Join>, name: String) -> Result<()> {
@@ -60,6 +67,14 @@ pub mod alashi {
 
     pub fn settle<'a>(ctx: Context<'a, Settle<'a>>) -> Result<()> {
         crate::instructions::settle::handle_settle(ctx)
+    }
+
+    pub fn reveal_law(ctx: Context<RevealLaw>) -> Result<()> {
+        crate::instructions::reveal_law::handle_reveal_law(ctx)
+    }
+
+    pub fn settle_refund<'a>(ctx: Context<'a, SettleRefund<'a>>) -> Result<()> {
+        crate::instructions::settle_refund::handle_settle_refund(ctx)
     }
 
     pub fn advance(ctx: Context<Advance>) -> Result<()> {

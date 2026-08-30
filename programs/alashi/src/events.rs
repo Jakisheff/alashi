@@ -115,3 +115,23 @@ pub struct Settled {
     pub rake: u64,
     pub paid: u64,
 }
+
+#[event]
+pub struct LawCommitted {
+    pub game: Pubkey,
+    pub randomness: Pubkey,
+    pub commit_slot: u64,
+}
+
+#[event]
+pub struct VrfRetry {
+    pub game: Pubkey,
+    pub round: u8,
+    pub attempt: u8,
+}
+
+#[event]
+pub struct GameAbortedEvent {
+    pub game: Pubkey,
+    pub round: u8,
+}
