@@ -105,9 +105,17 @@ dependencies = [
 name = "alashi"
 version = "0.1.0"
 dependencies = [
+ "alashi-rules",
  "anchor-lang",
  "solana-sysvar 3.1.1",
  "switchboard-on-demand",
+]
+
+[[package]]
+name = "alashi-rules"
+version = "0.1.0"
+dependencies = [
+ "anchor-lang",
 ]
 
 [[package]]
@@ -569,6 +577,7 @@ dependencies = [
  "solana-message 3.1.0",
  "solana-rpc-client",
  "solana-signer",
+ "solana-sysvar 3.1.1",
  "solana-transaction",
 ]
 

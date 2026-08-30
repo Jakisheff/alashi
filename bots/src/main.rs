@@ -23,6 +23,27 @@ use {
 const RPC_URL: &str = "https://api.devnet.solana.com";
 const ENTRY_FEE: u64 = 50_000_000;
 const PHASE_DURATION: i64 = 15;
+
+fn demo_mode() -> bool {
+    std::env::var("ALASHI_DEMO").is_ok()
+}
+
+fn phase_len(base: i64, phase_marker: &str) -> i64 {
+    if demo_mode() && phase_marker == "law" {
+        45
+    } else if demo_mode() {
+        30
+    } else {
+        base
+    }
+}
+
+fn demo_say(msg: &str) {
+    if demo_mode() {
+        println!("    [DEMO] {msg}");
+        let _ = std::io::Write::flush(&mut std::io::stdout());
+    }
+}
 const KEYS_DIR: &str = "bots/keys";
 const PRICE_TABLE: [u64; 16] = [12, 10, 9, 8, 7, 6, 5, 4, 3, 3, 2, 2, 2, 1, 1, 1];
 
@@ -261,7 +282,7 @@ fn ix_advance(crank: Pubkey, game: Pubkey, factions: &[Pubkey]) -> Instruction {
     let mut metas = accounts::Advance {
         crank,
         game,
-        hashes: constants::SLOT_HASHES_ID,
+        hashes: solana_sysvar::slot_hashes::ID,
     }
     .to_account_metas(None);
     for f in factions {
@@ -395,6 +416,9 @@ fn main() {
             "greedy heuristic (нет ключа)"
         }
     );
+    if demo_mode() {
+        println!("=== РЕЖИМ ДЕМО: фазы 30с, закон 45с, нарратив для рассказчика ===");
+    }
     let game_id = now() as u64;
     let game = game_pda(game_id);
     let mut bots = vec![
@@ -582,6 +606,7 @@ fn main() {
                         continue;
                     }
                     if b.goods > 0 {
+                        demo_say(&format!("РАССКАЗЧИК: {} продаёт — смотри, цена в таблице падает (продано в раунде: {})", b.name, g.sold_this_round));
                         println!("[market r{}] {} sells {} goods", g.round, b.name, b.goods);
                         if send_ix(
                             &rpc,
@@ -721,6 +746,9 @@ fn main() {
                 }
             }
             state::Phase::Law => {
+                if g.law_card != 255 {
+                    demo_say("РАССКАЗЧИК: теперь ЖЮРИ — подключи кошелёк и проголосуй ПРОТИВ, 45 секунд");
+                }
                 for (i, b) in bots.iter_mut().enumerate() {
                     if b.voted {
                         continue;
@@ -791,6 +819,7 @@ fn main() {
                     }
                 }
                 if g.round == 3 && g.president == bots[0].kp.pubkey() && !g.veto_pending {
+                    demo_say("РАССКАЗЧИК: президент Aibot кладёт СЛЕПОЕ ВЕТО до подсчёта голосов — как на столе бумажками");
                     println!("[law r{}] Aibot (president) vetoes", g.round);
                     send_ix(
                         &rpc,
@@ -807,6 +836,10 @@ fn main() {
                     );
                 }
             }
+            state::Phase::Aborted => {
+                println!("=== ПАРТИЯ ПРЕРВАНА (оракул VRF) ===");
+                break;
+            }
             state::Phase::Finished => {
                 println!("=== FINISHED ===");
                 println!(
@@ -821,6 +854,7 @@ fn main() {
                         );
                     }
                 }
+                demo_say("РАССКАЗЧИК: settle — банк делится 50/30 по богатству, рейк 5% виден в эксплорере");
                 let bank = rpc.get_balance(&game).unwrap_or(0);
                 println!("bank before settle: {bank} lamports");
                 let wallets: Vec<Pubkey> = bots.iter().map(|b| b.kp.pubkey()).collect();
