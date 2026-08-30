@@ -60,6 +60,18 @@ impl Simulator {
         transitions::advance(&mut self.game, &mut self.factions, now, seed)
     }
 
+    pub fn advance_with_card(
+        &mut self,
+        now: i64,
+        card: u8,
+    ) -> Result<transitions::AdvanceResult, GameError> {
+        transitions::advance_with_card(&mut self.game, &mut self.factions, now, card)
+    }
+
+    pub fn reveal_for_replay(&mut self, card: u8) -> Result<u8, GameError> {
+        transitions::reveal_law_card(&mut self.game, card)
+    }
+
     pub fn sell(&mut self, idx: usize, units: u16) -> Result<u64, GameError> {
         let g = &mut self.game;
         let f = &mut self.factions[idx];

@@ -18,11 +18,31 @@ pub struct AdvanceResult {
     pub committed_vrf: Option<(Pubkey, u64)>,
 }
 
-#[allow(clippy::too_many_arguments)]
 pub fn advance(
     game: &mut Game,
     factions: &mut [Faction],
     now: i64,
+    seed: u64,
+) -> Result<AdvanceResult, GameError> {
+    advance_inner(game, factions, now, None, seed)
+}
+
+/// Реплей из событий: карта известна из LawDrawn, seed не нужен.
+#[allow(clippy::too_many_arguments)]
+pub fn advance_with_card(
+    game: &mut Game,
+    factions: &mut [Faction],
+    now: i64,
+    card: u8,
+) -> Result<AdvanceResult, GameError> {
+    advance_inner(game, factions, now, Some(card), 0)
+}
+
+fn advance_inner(
+    game: &mut Game,
+    factions: &mut [Faction],
+    now: i64,
+    forced_card: Option<u8>,
     seed: u64,
 ) -> Result<AdvanceResult, GameError> {
     let mut res = AdvanceResult {
@@ -63,7 +83,17 @@ pub fn advance(
                 game.law_card = NO_LAW;
                 res.committed_vrf = Some((game.vrf_account, game.commit_slot));
             } else {
-                let (card, mask) = draw_law_index(seed, game.laws_used_mask);
+                let (card, mask) = match forced_card {
+                    Some(c) => {
+                        let mut m = game.laws_used_mask;
+                        if m == 0xFF {
+                            m = 0;
+                        }
+                        m |= 1 << (c % 8);
+                        (c, m)
+                    }
+                    None => draw_law_index(seed, game.laws_used_mask),
+                };
                 game.law_card = card;
                 game.laws_used_mask = mask;
                 res.law_card_drawn = Some(card);
@@ -148,6 +178,23 @@ fn elect_president_factions(factions: &[Faction]) -> Pubkey {
         })
         .map(|f| f.wallet)
         .unwrap_or_default()
+}
+
+pub fn reveal_law_card(game: &mut Game, card: u8) -> Result<u8, GameError> {
+    if game.phase != Phase::Law {
+        return Err(GameError::WrongPhase);
+    }
+    if game.law_card != NO_LAW {
+        return Err(GameError::LawNotRevealed);
+    }
+    let mut mask = game.laws_used_mask;
+    if mask == 0xFF {
+        mask = 0;
+    }
+    mask |= 1 << (card % 8);
+    game.law_card = card;
+    game.laws_used_mask = mask;
+    Ok(card)
 }
 
 pub fn reveal_law(game: &mut Game, seed: u64) -> Result<u8, GameError> {

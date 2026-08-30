@@ -1,5 +1,8 @@
 mod llm;
 
+use solana_signature::Signature as SigAlias;
+use solana_signer::Signer;
+
 use {
     alashi::{accounts, constants, id, instruction, state},
     anchor_lang::{
@@ -11,7 +14,6 @@ use {
     solana_keypair::Keypair,
     solana_message::{Message, VersionedMessage},
     solana_rpc_client::rpc_client::RpcClient,
-    solana_signer::Signer,
     solana_transaction::versioned::VersionedTransaction,
     std::{
         path::Path,
@@ -122,6 +124,7 @@ fn send_ix(rpc: &RpcClient, signer: &Keypair, ix: Instruction) -> bool {
     };
     match rpc.send_transaction(&tx) {
         Ok(sig) => {
+            capture_events(rpc, &sig);
             println!("  tx https://explorer.solana.com/tx/{sig}?cluster=devnet");
             let _ = std::io::Write::flush(&mut std::io::stdout());
             true
@@ -391,6 +394,42 @@ fn llm_decide(
     llm::parse_json_block(&raw)
 }
 
+
+
+fn capture_events(rpc: &RpcClient, sig: &solana_signature::Signature) {
+    use solana_signature::Signature as _Sig;
+    use solana_commitment_config::CommitmentConfig;
+    use solana_rpc_client_api::config::RpcTransactionConfig;
+    use std::io::Write as _;
+    use solana_transaction_status_client_types::UiTransactionEncoding;
+    let cfg = RpcTransactionConfig {
+        encoding: Some(UiTransactionEncoding::Json),
+        commitment: Some(CommitmentConfig::confirmed()),
+        max_supported_transaction_version: Some(0),
+    };
+    for _ in 0..5 {
+        if let Ok(tx) = rpc.get_transaction_with_config(sig, cfg.clone()) {
+            if let Some(meta) = tx.transaction.meta {
+                let logs: Option<Vec<String>> = meta.log_messages.into();
+                if let Some(logs) = logs {
+                    if let Ok(mut out) = std::fs::OpenOptions::new()
+                        .create(true)
+                        .append(true)
+                        .open("../data/events_stream.jsonl")
+                    {
+                        for line in &logs {
+                            if line.starts_with("Program data: ") {
+                                let _ = out.write_all(format!("{line}\n").as_bytes());
+                            }
+                        }
+                    }
+                }
+            }
+            return;
+        }
+        std::thread::sleep(Duration::from_millis(700));
+    }
+}
 
 fn register_agent(wallet: &str, model: &str, prompt: &str) {
     use sha2::{Digest, Sha256};

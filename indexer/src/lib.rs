@@ -1,4 +1,6 @@
+pub mod events;
 pub mod onchain;
+pub mod replay;
 
 use alashi_rules::state::{Faction, Game, Phase};
 use anchor_lang::prelude::Pubkey;
