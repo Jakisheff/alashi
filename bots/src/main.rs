@@ -322,6 +322,10 @@ fn wait_account(rpc: &RpcClient, key: &Pubkey, label: &str) -> bool {
     false
 }
 
+fn faction_cash(rpc: &RpcClient, faction: &Pubkey) -> u64 {
+    fetch_faction(rpc, faction).map(|f| f.cash).unwrap_or(0)
+}
+
 fn main() {
     let rpc = RpcClient::new_with_commitment(rpc_url(), CommitmentConfig::confirmed());
 
@@ -454,7 +458,7 @@ fn main() {
                     if b.acted {
                         continue;
                     }
-                    if i == 0 && !b.bribed && b.goods > 0 {
+                    if i == 0 && !b.bribed && faction_cash(&rpc, &b.faction) >= 5_000_000 {
                         println!("[action r{}] {} bribes Osol for influence", g.round, b.name);
                         if send_ix(
                             &rpc,
