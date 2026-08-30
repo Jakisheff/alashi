@@ -26,8 +26,8 @@ fn ev_seq() -> Vec<ParsedEvent> {
         ParsedEvent::LawDrawn { game: ga.clone(), round: 2, card: 1 },
         ParsedEvent::VoteCast { game: ga.clone(), faction: fa.clone(), choice: 0 },
         ParsedEvent::PhaseAdvanced { game: ga.clone(), round: 3, phase: 1 },
-        ParsedEvent::Payout { game: ga.clone(), wallet: fa.clone(), rank: 1, amount: 60_000_000 },
-        ParsedEvent::Payout { game: ga.clone(), wallet: fb.clone(), rank: 2, amount: 36_000_000 },
+        ParsedEvent::Payout { game: ga.clone(), wallet: fa.clone(), rank: 0, amount: 60_000_000 },
+        ParsedEvent::Payout { game: ga.clone(), wallet: fb.clone(), rank: 1, amount: 36_000_000 },
         ParsedEvent::Settled { game: ga.clone(), pot: 100_000_000, rake: 4_000_000, paid: 96_000_000 },
     ]
 }
