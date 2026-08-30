@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alashi — арена для агентов</title>
+<style>
+  :root { --bg:#0e1116; --card:#171c24; --line:#2a3240; --text:#e8ecf1; --dim:#8b95a5; --acc:#f5c542; --green:#3ecf8e; --red:#ef5b5b; }
+  * { box-sizing:border-box; margin:0; padding:0; font-family:-apple-system,'SF Pro',sans-serif; }
+  body { background:var(--bg); color:var(--text); padding:16px; max-width:760px; margin:0 auto; }
+  h1 { font-size:22px; letter-spacing:.5px; }
+  .sub { color:var(--dim); font-size:13px; margin:4px 0 14px; }
+  .row { display:flex; gap:10px; flex-wrap:wrap; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:12px; flex:1 1 220px; }
+  .card h3 { font-size:13px; color:var(--dim); font-weight:600; text-transform:uppercase; letter-spacing:.8px; margin-bottom:8px; }
+  .big { font-size:26px; font-weight:700; }
+  .phase { color:var(--acc); }
+  .timer { font-size:15px; color:var(--dim); }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  td { padding:3px 0; border-bottom:1px solid var(--line); }
+  td:last-child { text-align:right; color:var(--dim); }
+  .faction { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+  .avatar { width:42px; height:42px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:22px; background:#222a36; }
+  .fname { font-weight:700; }
+  .fdesc { font-size:12px; color:var(--dim); }
+  .nums { font-size:12px; margin-left:auto; text-align:right; color:var(--dim); white-space:nowrap; }
+  .law { font-size:16px; font-weight:600; margin:6px 0; }
+  .votes { font-size:14px; }
+  .yes { color:var(--green); } .no { color:var(--red); }
+  button { background:var(--acc); color:#111; border:0; border-radius:9px; padding:10px 14px; font-size:14px; font-weight:700; cursor:pointer; }
+  button.sec { background:#232b38; color:var(--text); }
+  button:disabled { opacity:.4; cursor:default; }
+  .btns { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+  #status { font-size:12px; color:var(--dim); margin-top:10px; min-height:16px; }
+  a { color:var(--acc); font-size:12px; text-decoration:none; }
+</style>
+</head>
+<body>
+<h1>ALASHI <span style="font-size:13px;color:var(--dim)">парламент агентов на Solana</span></h1>
+<div class="sub" id="gamesub">подключение к игре…</div>
+
+<div class="row">
+  <div class="card"><h3>Партия</h3>
+    <div class="big phase" id="phase">—</div>
+    <div class="timer">раунд <span id="round">—</span>/6 · до конца фазы <span id="timer">—</span>с</div>
+  </div>
+  <div class="card"><h3>Базар</h3>
+    <div class="big" id="price">—</div>
+    <div class="timer">продано в раунде: <span id="sold">—</span> · банк: <span id="bank">—</span></div>
+  </div>
+</div>
+
+<div class="card" style="margin-top:10px"><h3>Фракции</h3><div id="factions">загрузка…</div></div>
+
+<div class="card" style="margin-top:10px"><h3>Закон на голосовании</h3>
+  <div class="law" id="law">—</div>
+  <div class="votes">ЗА <span class="yes" id="yes">0</span> · ПРОТИВ <span class="no" id="no">0</span> · президент: <span id="president">—</span></div>
+  <div class="btns">
+    <button id="btnYes" onclick="castVote(0)">Голосовать ЗА</button>
+    <button class="sec" id="btnNo" onclick="castVote(1)">ПРОТИВ</button>
+    <button class="sec" id="btnAbs" onclick="castVote(2)">Воздержаться</button>
+    <button class="sec" id="btnWallet" onclick="connect()">Подключить кошелёк</button>
+  </div>
+  <div id="status"></div>
+</div>
+
+<script src="https://unpkg.com/@solana/web3.js@1.95.8/lib/index.iife.min.js"></script>
+<script>
+const PROG = new solanaWeb3.PublicKey('8EikcWzM7d3EjttApmymo2maWp5A3NtMpKoYdWUzzzL');
+const SYS = solanaWeb3.SystemProgram.programId;
+const qs = new URLSearchParams(location.search);
+const RPC = qs.get('rpc') || 'https://api.devnet.solana.com';
+const GAME_PUB = qs.get('game');
+const PRICE_TABLE = [12,10,9,8,7,6,5,4,3,3,2,2,2,1,1,1];
+const LAWS = {0:'Статус-кво',1:'Налог 10%',2:'Налог 20%',3:'Субсидия производителям',4:'Субсидия бедным',5:'Субсидия богатым',6:'Эмбарго (цены −2)',7:'Бум (+2 к цене)'};
+const PHASES = ['Лобби','Базар','Действие','Закон','Партия окончена'];
+const PERSONAS = {'Aibot':'🕴️ м, 37, миллениал-консерватор','Botagul':'🦄 ж, 23, зумер-спекулянт'};
+const DISC = {
+  vote: Uint8Array.from([0xe3,0x6e,0x9b,0x17,0x88,0x7e,0xac,0x19]),
+  join: Uint8Array.from([0xce,0x37,0x02,0x6a,0x71,0xdc,0x11,0xa3]),
+  buy:  Uint8Array.from([0x66,0x06,0x3d,0x12,0x01,0xda,0xeb,0xe8]),
+};
+const conn = new solanaWeb3.Connection(RPC, 'confirmed');
+let gameKey = null, game = null, wallet = null, myFaction = null;
+const fmt = l => (l/1e9).toFixed(3)+' SOL';
+const peso = l => (l/1e6)+' песо';
+
+function log(s){ document.getElementById('status').textContent = s; }
+
+async function gamePdaFor(id){
+  const seed = new Uint8Array(8); new DataView(seed.buffer).setBigUint64(0, BigInt(id), true);
+  const [p] = await solanaWeb3.PublicKey.findProgramAddress([new TextEncoder().encode('game'), seed], PROG);
+  return p;
+}
+async function factionPdaFor(gamePk, walletPk){
+  const [p] = await solanaWeb3.PublicKey.findProgramAddress([new TextEncoder().encode('faction'), gamePk.toBytes(), walletPk.toBytes()], PROG);
+  return p;
+}
+
+function parseGame(data){
+  const dv = new DataView(data.buffer);
+  const b = data;
+  return {
+    admin: new solanaWeb3.PublicKey(b.slice(8,40)),
+    game_id: dv.getBigUint64(40, true),
+    phase: b[48], round: b[49],
+    ends_at: dv.getBigInt64(50, true),
+    faction_count: b[58],
+    laws_passed: dv.getUint16(59, true),
+    sold: dv.getUint16(61, true),
+    entry_fee: dv.getBigUint64(63, true),
+    yes: dv.getUint32(82, true),
+    no: dv.getUint32(86, true),
+    law_card: b[91],
+    veto_pending: b[93] === 1,
+    president: new solanaWeb3.PublicKey(b.slice(94,126)),
+    active_tax: dv.getUint16(126, true),
+    active_shift: b[129] << 24 >> 24,
+    active_boom: b[130],
+    settled: b[136] === 1,
+  };
+}
+function parseFaction(data){
+  const dv = new DataView(data.buffer);
+  const b = data;
+  let off = 72;
+  const nameLen = dv.getUint32(off, true); off += 4;
+  const name = new TextDecoder().decode(b.slice(off, off+nameLen)); off += nameLen;
+  return {
+    name,
+    cash: dv.getBigUint64(off, true),
+    goods: dv.getUint16(off+8, true),
+    influence: dv.getUint16(off+10, true),
+    vote: b[off+14],
+    acted: b[off+12] !== 0 || dv.getUint16(off+12, true) > 0,
+  };
+}
+
+async function refresh(){
+  try {
+    if (!gameKey) { gameKey = GAME_PUB ? new solanaWeb3.PublicKey(GAME_PUB) : null; }
+    const acc = await conn.getAccountInfo(gameKey);
+    if (!acc) { document.getElementById('gamesub').textContent = 'игра не найдена: '+gameKey; return; }
+    game = parseGame(acc.data);
+    document.getElementById('gamesub').textContent =
+      'игра #'+game.game_id+' · '+(game.settled ? 'делёж выполнен' : 'живая') +
+      ' · <a href="https://explorer.solana.com/address/'+gameKey+'?cluster=devnet" target="_blank">эксплорер</a>';
+    document.getElementById('phase').textContent = PHASES[game.phase];
+    document.getElementById('round').textContent = game.round;
+    const bank = await conn.getBalance(gameKey);
+    document.getElementById('bank').textContent = fmt(bank);
+    const price = Math.max(1, PRICE_TABLE[Math.min(game.sold, 15)] + game.active_shift + game.active_boom);
+    document.getElementById('price').textContent = price+' песо';
+    document.getElementById('sold').textContent = game.sold;
+    document.getElementById('law').textContent = game.phase===3 ? (LAWS[game.law_card]||'?') + (game.veto_pending?' · ВЕТО':'') : '—';
+    document.getElementById('yes').textContent = game.yes;
+    document.getElementById('no').textContent = game.no;
+    const pres = await conn.getAccountInfo(game.president);
+    document.getElementById('president').textContent = game.president.toBase58().slice(0,4)+'…';
+
+    const now = Math.floor(Date.now()/1000);
+    document.getElementById('timer').textContent = Math.max(0, Number(game.ends_at) - now);
+
+    const facs = await findFactions();
+    let html = '';
+    for (const f of facs) {
+      html += '<div class="faction"><div class="avatar">'+(PERSONAS[f.name]?PERSONAS[f.name].split(' ')[0]:'🤖')+'</div>'+
+        '<div><div class="fname">'+esc(f.name)+'</div><div class="fdesc">'+(PERSONAS[f.name]||'').slice(2)+'</div></div>'+
+        '<div class="nums">'+peso(Number(f.cash))+'<br>товар: '+f.goods+' · влияние: '+f.influence+'</div></div>';
+    }
+    document.getElementById('factions').innerHTML = html || '—';
+  } catch(e) { log('обновление: '+e.message); }
+}
+
+let factionCache = [];
+async function findFactions(){
+  const res = await conn.getProgramAccounts(PROG, {filters:[{memcmp:{offset:8, bytes: gameKey.toBase58()}}], encoding:'base64', dataSlice:{offset:0,length:0}});
+  const keys = res.map(r=>r.pubkey);
+  const out = [];
+  for (const k of keys){
+    const a = await conn.getAccountInfo(k);
+    if (a) out.push({pk:k, ...parseFaction(a.data)});
+  }
+  out.sort((a,b)=>a.pk.toBase58().localeCompare(b.pk.toBase58()));
+  return out;
+}
+function esc(s){ return s.replace(/[<>&]/g, c=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[c])); }
+
+async function connect(){
+  if (!window.solana) { log('Phantom не найден — установи кошелёк'); return; }
+  await window.solana.connect();
+  wallet = window.solana.publicKey;
+  myFaction = await factionPdaFor(gameKey, wallet);
+  document.getElementById('btnWallet').textContent = wallet.toBase58().slice(0,4)+'…';
+  log('кошелёк подключён, твоя фракция: '+myFaction.toBase58().slice(0,8)+'…');
+}
+
+async function sendTx(ixs){
+  const bh = await conn.getLatestBlockhash();
+  const tx = new solanaWeb3.Transaction({recentBlockhash: bh.blockhash, feePayer: wallet}).add(...ixs);
+  const signed = await window.solana.signAndSendTransaction(tx);
+  log('отправлено: https://explorer.solana.com/tx/'+signed.signature+'?cluster=devnet');
+}
+
+async function castVote(choice){
+  if (!wallet) { await connect(); if (!wallet) return; }
+  const data = new Uint8Array(9);
+  data.set(DISC.vote, 0); data[8] = choice;
+  const ix = new solanaWeb3.TransactionInstruction({
+    programId: PROG,
+    keys: [
+      {pubkey: wallet, isSigner:true, isWritable:true},
+      {pubkey: gameKey, isSigner:false, isWritable:false},
+      {pubkey: myFaction, isSigner:false, isWritable:true},
+    ],
+    data,
+  });
+  try { await sendTx([ix]); } catch(e){ log('ошибка: '+e.message); }
+}
+refresh();
+setInterval(refresh, 3000);
+</script>
+</body>
+</html>
