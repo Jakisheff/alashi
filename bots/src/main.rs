@@ -1,3 +1,5 @@
+mod llm;
+
 use {
     alashi::{accounts, constants, id, instruction, state},
     anchor_lang::{
@@ -22,6 +24,7 @@ const RPC_URL: &str = "https://api.devnet.solana.com";
 const ENTRY_FEE: u64 = 50_000_000;
 const PHASE_DURATION: i64 = 15;
 const KEYS_DIR: &str = "bots/keys";
+const PRICE_TABLE: [u64; 16] = [12, 10, 9, 8, 7, 6, 5, 4, 3, 3, 2, 2, 2, 1, 1, 1];
 
 fn now() -> i64 {
     SystemTime::now()
@@ -344,6 +347,18 @@ fn wait_account(rpc: &RpcClient, key: &Pubkey, label: &str) -> bool {
     false
 }
 
+
+fn llm_decide(cfg: &llm::LlmConfig, phase: &str, round: u8, cash: u64, goods: u16, influence: u16, sold: u16, price_hint: u64, law: &str, president_is_me: bool) -> Option<serde_json::Value> {
+    const TPL: &str = "Доступные действия JSON: \"action\":\"sell\",\"units\":N / \"action\":\"buy\",\"units\":N / \"action\":\"produce\" / \"action\":\"bribe\",\"amount\":N / \"action\":\"donkey\" / \"action\":\"vote\",\"choice\":\"yes|no|abstain\",\"veto\":true|false (объект в фигурных скобках, veto только если ты президент)";
+    let user = format!(
+        "Фаза: {}. Раунд {}/6. Твоё состояние: {} песо, {} товаров, влияние {}. На базаре продано {} единиц, следующая цена ~{} песо. Закон на голосовании: {}. Ты президент: {}. {}",
+        phase, round, cash / 1_000_000, goods, influence, sold, price_hint, law, president_is_me, TPL
+    );
+    let raw = llm::llm_ask(cfg, llm::SYSTEM, &user)?;
+    println!("    [llm raw] {}", raw.replace('\n', " "));
+    llm::parse_json_block(&raw)
+}
+
 fn faction_cash(rpc: &RpcClient, faction: &Pubkey) -> u64 {
     fetch_faction(rpc, faction).map(|f| f.cash).unwrap_or(0)
 }
@@ -360,6 +375,11 @@ fn main() {
     ensure_funds(&rpc, "bot1", &bot1_kp);
     ensure_funds(&rpc, "bot2", &bot2_kp);
 
+    let llm = llm::llm_config();
+    println!(
+        "Botagul brain: {}",
+        if llm.is_some() { "GLM llm" } else { "greedy heuristic (нет ключа)" }
+    );
     let game_id = now() as u64;
     let game = game_pda(game_id);
     let mut bots = vec![
@@ -458,6 +478,69 @@ fn main() {
                     if b.acted {
                         continue;
                     }
+                    if bi == 1 && llm.is_some() {
+                        let f = fetch_faction(&rpc, &b.faction);
+                        let (cash, goods, infl) = f
+                            .as_ref()
+                            .map(|f| (f.cash, f.goods, f.influence))
+                            .unwrap_or((0, 0, 0));
+                        let price_hint = 1_000_000u64.saturating_mul(
+                            (PRICE_TABLE[(g.sold_this_round as usize).min(15)] as i64
+                                + g.active_price_shift as i64
+                                + g.active_boom as i64)
+                                .max(1) as u64,
+                        );
+                        let dec = llm_decide(
+                            llm.as_ref().unwrap(),
+                            "Базар",
+                            g.round,
+                            cash,
+                            goods,
+                            infl,
+                            sold_now,
+                            price_hint / 1_000_000,
+                            "-",
+                            false,
+                        );
+                        let act = dec
+                            .as_ref()
+                            .and_then(|d| d.get("action"))
+                            .and_then(|a| a.as_str())
+                            .map(|s| s.to_string());
+                        let units = dec
+                            .as_ref()
+                            .and_then(|d| d.get("units"))
+                            .and_then(|u| u.as_u64())
+                            .unwrap_or(1) as u16;
+                        match act.as_deref() {
+                            Some("buy") if cash >= units as u64 * price_hint => {
+                                println!("[market r{}] Botagul (LLM) buys {} goods", g.round, units);
+                                if send_ix(&rpc, &b.kp, ix_buy(units, b.kp.pubkey(), game, b.faction)) {
+                                    b.acted = true;
+                                    if let Some(f) = fetch_faction(&rpc, &b.faction) {
+                                        b.goods = f.goods;
+                                    }
+                                    continue;
+                                }
+                            }
+                            Some("sell") if goods > 0 && units <= goods => {
+                                println!("[market r{}] Botagul (LLM) sells {} goods", g.round, units);
+                                if send_ix(&rpc, &b.kp, ix_sell(units, b.kp.pubkey(), game, b.faction)) {
+                                    b.acted = true;
+                                    sold_now += units;
+                                    if let Some(f) = fetch_faction(&rpc, &b.faction) {
+                                        b.goods = f.goods;
+                                    }
+                                    continue;
+                                }
+                            }
+                            _ => {}
+                        }
+                        println!("[market r{}] Botagul (LLM) fallback: greedy sell", g.round);
+                        if b.goods == 0 {
+                            b.acted = true;
+                        }
+                    }
                     if bi == 1
                         && sold_now >= 2
                         && faction_cash(&rpc, &b.faction) >= 10_000_000
@@ -516,7 +599,64 @@ fn main() {
                             b.acted = true;
                             b.bribed = true;
                         }
-                    } else if i == 1 && g.round == 4 {
+                    } else if i == 1 && llm.is_some() {
+                        let f = fetch_faction(&rpc, &b.faction);
+                        let (cash, goods, infl) = f
+                            .as_ref()
+                            .map(|f| (f.cash, f.goods, f.influence))
+                            .unwrap_or((0, 0, 0));
+                        let dec = llm_decide(
+                            llm.as_ref().unwrap(),
+                            "Действие",
+                            g.round,
+                            cash,
+                            goods,
+                            infl,
+                            g.sold_this_round,
+                            0,
+                            "-",
+                            g.president == b.kp.pubkey(),
+                        );
+                        let act = dec
+                            .as_ref()
+                            .and_then(|d| d.get("action"))
+                            .and_then(|a| a.as_str())
+                            .map(|s| s.to_string());
+                        match act.as_deref() {
+                            Some("donkey") if cash >= 1_000_000 => {
+                                println!("[action r{}] Botagul (LLM) buys a donkey", g.round);
+                                if send_ix(&rpc, &b.kp, ix_donkey(b.kp.pubkey(), game, b.faction)) {
+                                    b.acted = true;
+                                    b.goods += 1;
+                                }
+                            }
+                            Some("bribe") if cash >= 5_000_000 => {
+                                println!("[action r{}] Botagul (LLM) bribes for influence", g.round);
+                                if send_ix(
+                                    &rpc,
+                                    &b.kp,
+                                    ix_bribe(5_000_000, b.kp.pubkey(), game, b.faction, target_faction),
+                                ) {
+                                    b.acted = true;
+                                }
+                            }
+                            Some("produce") => {
+                                println!("[action r{}] Botagul (LLM) produces", g.round);
+                                if send_ix(&rpc, &b.kp, ix_produce(b.kp.pubkey(), game, b.faction)) {
+                                    b.acted = true;
+                                    b.goods += 2;
+                                }
+                            }
+                            _ => {}
+                        }
+                        if !b.acted {
+                            println!("[action r{}] Botagul fallback: produce", g.round);
+                            if send_ix(&rpc, &b.kp, ix_produce(b.kp.pubkey(), game, b.faction)) {
+                                b.acted = true;
+                                b.goods += 2;
+                            }
+                        }
+                    } else if i == 1 && g.round == 4 && llm.is_none() {
                         println!("[action r{}] {} buys a donkey", g.round, b.name);
                         if send_ix(&rpc, &b.kp, ix_donkey(b.kp.pubkey(), game, b.faction)) {
                             b.acted = true;
@@ -526,7 +666,9 @@ fn main() {
                         println!("[action r{}] {} produces", g.round, b.name);
                         if send_ix(&rpc, &b.kp, ix_produce(b.kp.pubkey(), game, b.faction)) {
                             b.acted = true;
-                            b.goods += constants::PRODUCE_YIELD;
+                            if let Some(f) = fetch_faction(&rpc, &b.faction) {
+                                b.goods = f.goods;
+                            }
                         }
                     }
                 }
@@ -541,16 +683,72 @@ fn main() {
             }
             state::Phase::Law => {
                 for (i, b) in bots.iter_mut().enumerate() {
-                    if !b.voted {
-                        let choice = if i == 0 {
-                            state::VoteChoice::Yes
-                        } else {
-                            state::VoteChoice::No
+                    if b.voted {
+                        continue;
+                    }
+                    if i == 1 && llm.is_some() {
+                        let f = fetch_faction(&rpc, &b.faction);
+                        let (cash, goods, infl) = f
+                            .as_ref()
+                            .map(|f| (f.cash, f.goods, f.influence))
+                            .unwrap_or((0, 0, 0));
+                        let law_name = match g.law_card {
+                            0 => "Статус-кво",
+                            1 => "Налог 10%",
+                            2 => "Налог 20%",
+                            3 => "Субсидия производителям",
+                            4 => "Субсидия бедным",
+                            5 => "Субсидия богатым",
+                            6 => "Эмбарго (цены -2)",
+                            7 => "Бум (+2 к цене)",
+                            _ => "неизвестен",
                         };
-                        println!("[law r{}] {} votes {:?}", g.round, b.name, choice);
+                        let dec = llm_decide(
+                            llm.as_ref().unwrap(),
+                            "Закон",
+                            g.round,
+                            cash,
+                            goods,
+                            infl,
+                            g.sold_this_round,
+                            0,
+                            law_name,
+                            g.president == b.kp.pubkey(),
+                        );
+                        let choice_s = dec
+                            .as_ref()
+                            .and_then(|d| d.get("choice"))
+                            .and_then(|c| c.as_str())
+                            .unwrap_or("abstain")
+                            .to_string();
+                        let choice = match choice_s.as_str() {
+                            "yes" => state::VoteChoice::Yes,
+                            "no" => state::VoteChoice::No,
+                            _ => state::VoteChoice::Abstain,
+                        };
+                        println!("[law r{}] Botagul (LLM) votes {}", g.round, choice_s);
                         if send_ix(&rpc, &b.kp, ix_vote(choice, b.kp.pubkey(), game, b.faction)) {
                             b.voted = true;
+                            let want_veto = dec
+                                .as_ref()
+                                .and_then(|d| d.get("veto"))
+                                .and_then(|v| v.as_bool())
+                                .unwrap_or(false);
+                            if want_veto && g.president == b.kp.pubkey() && !g.veto_pending {
+                                println!("[law r{}] Botagul (LLM, president) vetoes", g.round);
+                                send_ix(&rpc, &b.kp, ix_veto(b.kp.pubkey(), game, b.faction));
+                            }
                         }
+                        continue;
+                    }
+                    let choice = if i == 0 {
+                        state::VoteChoice::Yes
+                    } else {
+                        state::VoteChoice::No
+                    };
+                    println!("[law r{}] {} votes {:?}", g.round, b.name, choice);
+                    if send_ix(&rpc, &b.kp, ix_vote(choice, b.kp.pubkey(), game, b.faction)) {
+                        b.voted = true;
                     }
                 }
                 if g.round == 3 && g.president == bots[0].kp.pubkey() && !g.veto_pending {
