@@ -11,7 +11,17 @@ use {
     solana_transaction::versioned::VersionedTransaction,
 };
 
+use anchor_lang::prelude::SlotHashes;
+use solana_hash::Hash;
+
 const PESO: u64 = alashi::constants::PESO;
+const SLOT_HASHES_ID: Pubkey = solana_sysvar::slot_hashes::ID;
+
+fn set_law_seed(svm: &mut LiteSVM, seed: u8) {
+    let mut b = [0u8; 32];
+    b[0] = seed;
+    svm.set_sysvar(&SlotHashes::new(&[(1, Hash::new_from_array(b))]));
+}
 const FEE: u64 = 100 * PESO;
 
 fn setup() -> (LiteSVM, Keypair) {
@@ -131,6 +141,7 @@ fn ix_sell(units: u16, player: Pubkey, game: Pubkey, faction: Pubkey) -> Instruc
             player,
             game,
             faction,
+            system_program: system_program::ID,
         }
         .to_account_metas(None),
     )
@@ -175,11 +186,66 @@ fn ix_vote(
 }
 
 fn ix_advance(crank: Pubkey, game: Pubkey, factions: Vec<Pubkey>) -> Instruction {
-    let mut metas = alashi::accounts::Advance { crank, game }.to_account_metas(None);
+    let mut metas = alashi::accounts::Advance {
+        crank,
+        game,
+        hashes: SLOT_HASHES_ID,
+    }
+    .to_account_metas(None);
+    for f in factions {
+        metas.push(anchor_lang::solana_program::instruction::AccountMeta::new(
+            f, false,
+        ));
+    }
+    Instruction::new_with_bytes(alashi::id(), &alashi::instruction::Advance {}.data(), metas)
+}
+
+fn ix_veto(player: Pubkey, game: Pubkey, faction: Pubkey) -> Instruction {
+    Instruction::new_with_bytes(
+        alashi::id(),
+        &alashi::instruction::Veto {}.data(),
+        alashi::accounts::Veto {
+            player,
+            game,
+            faction,
+        }
+        .to_account_metas(None),
+    )
+}
+
+fn ix_donkey(player: Pubkey, game: Pubkey, faction: Pubkey) -> Instruction {
+    Instruction::new_with_bytes(
+        alashi::id(),
+        &alashi::instruction::BuyDonkey {}.data(),
+        alashi::accounts::BuyDonkey {
+            player,
+            game,
+            faction,
+        }
+        .to_account_metas(None),
+    )
+}
+
+fn ix_settle(
+    crank: Pubkey,
+    game: Pubkey,
+    factions: Vec<Pubkey>,
+    wallets: Vec<Pubkey>,
+    admin: Pubkey,
+) -> Instruction {
+    let mut metas = alashi::accounts::Settle { crank, game }.to_account_metas(None);
     for f in factions {
         metas.push(anchor_lang::solana_program::instruction::AccountMeta::new_readonly(f, false));
     }
-    Instruction::new_with_bytes(alashi::id(), &alashi::instruction::Advance {}.data(), metas)
+    for w in wallets {
+        metas.push(anchor_lang::solana_program::instruction::AccountMeta::new(
+            w, false,
+        ));
+    }
+    metas.push(anchor_lang::solana_program::instruction::AccountMeta::new(
+        admin, false,
+    ));
+    Instruction::new_with_bytes(alashi::id(), &alashi::instruction::Settle {}.data(), metas)
 }
 
 struct Party {
@@ -221,6 +287,7 @@ fn start_party(id: u64, fee: u64, dur: i64) -> Party {
 
 impl Party {
     fn advance(&mut self) -> bool {
+        set_law_seed(&mut self.svm, 0);
         send(
             &mut self.svm,
             &self.admin,
@@ -493,4 +560,261 @@ fn test_already_acted() {
         &p.admin,
         ix_produce(p.admin.pubkey(), p.game, p.fa)
     ));
+}
+
+#[test]
+fn test_law_tax_and_veto() {
+    let mut p = start_party(11, FEE, 0);
+    set_law_seed(&mut p.svm, 0);
+
+    assert!(p.advance());
+    assert!(p.advance());
+    assert!(send(
+        &mut p.svm,
+        &p.admin,
+        ix_produce(p.admin.pubkey(), p.game, p.fa)
+    ));
+    assert!(send(
+        &mut p.svm,
+        &p.b,
+        ix_produce(p.b.pubkey(), p.game, p.fb)
+    ));
+    set_law_seed(&mut p.svm, 0);
+    assert!(p.advance());
+    assert!(send(
+        &mut p.svm,
+        &p.admin,
+        ix_vote(
+            alashi::state::VoteChoice::Yes,
+            p.admin.pubkey(),
+            p.game,
+            p.fa
+        )
+    ));
+    assert!(send(
+        &mut p.svm,
+        &p.b,
+        ix_vote(alashi::state::VoteChoice::No, p.b.pubkey(), p.game, p.fb)
+    ));
+    set_law_seed(&mut p.svm, 0);
+    assert!(p.advance());
+
+    set_law_seed(&mut p.svm, 0);
+    assert!(send(
+        &mut p.svm,
+        &p.admin,
+        ix_sell(2, p.admin.pubkey(), p.game, p.fa)
+    ));
+    assert!(send(
+        &mut p.svm,
+        &p.b,
+        ix_sell(1, p.b.pubkey(), p.game, p.fb)
+    ));
+    assert!(p.advance());
+    assert!(send(
+        &mut p.svm,
+        &p.admin,
+        ix_bribe(5 * PESO, p.admin.pubkey(), p.game, p.fa, p.fb)
+    ));
+    set_law_seed(&mut p.svm, 1);
+    assert!(p.advance());
+
+    let g = game_state(&p.svm, &p.game);
+    assert_eq!(g.law_card, alashi::constants::LAW_TAX_10);
+    assert_eq!(g.president, p.admin.pubkey());
+
+    assert!(send(
+        &mut p.svm,
+        &p.admin,
+        ix_vote(
+            alashi::state::VoteChoice::Yes,
+            p.admin.pubkey(),
+            p.game,
+            p.fa
+        )
+    ));
+    assert!(send(
+        &mut p.svm,
+        &p.b,
+        ix_vote(alashi::state::VoteChoice::No, p.b.pubkey(), p.game, p.fb)
+    ));
+    set_law_seed(&mut p.svm, 1);
+    assert!(p.advance());
+
+    let g = game_state(&p.svm, &p.game);
+    assert!(g.last_law_passed);
+    assert_eq!(g.laws_passed, 1);
+    assert_eq!(g.active_tax_bps, 1_000);
+
+    set_law_seed(&mut p.svm, 0);
+    let a_goods = faction_state(&p.svm, &p.fa).goods;
+    if a_goods > 0 {
+        assert!(send(
+            &mut p.svm,
+            &p.admin,
+            ix_sell(2, p.admin.pubkey(), p.game, p.fa)
+        ));
+    }
+    assert!(p.advance());
+    assert!(send(
+        &mut p.svm,
+        &p.admin,
+        ix_produce(p.admin.pubkey(), p.game, p.fa)
+    ));
+    set_law_seed(&mut p.svm, 0);
+    assert!(p.advance());
+    let g = game_state(&p.svm, &p.game);
+    assert_eq!(g.law_card, alashi::constants::LAW_TAX_20);
+
+    assert!(send(
+        &mut p.svm,
+        &p.admin,
+        ix_vote(
+            alashi::state::VoteChoice::Yes,
+            p.admin.pubkey(),
+            p.game,
+            p.fa
+        )
+    ));
+    assert!(send(
+        &mut p.svm,
+        &p.b,
+        ix_vote(alashi::state::VoteChoice::No, p.b.pubkey(), p.game, p.fb)
+    ));
+    assert!(send(
+        &mut p.svm,
+        &p.admin,
+        ix_veto(p.admin.pubkey(), p.game, p.fa)
+    ));
+    assert!(!send(&mut p.svm, &p.b, ix_veto(p.b.pubkey(), p.game, p.fb)));
+    set_law_seed(&mut p.svm, 0);
+    assert!(p.advance());
+
+    let g = game_state(&p.svm, &p.game);
+    assert!(!g.last_law_passed);
+    assert_eq!(g.laws_passed, 1);
+}
+
+#[test]
+fn test_donkey() {
+    let mut p = start_party(12, FEE, 0);
+    p.to_market_r2(None, None);
+
+    assert!(send(
+        &mut p.svm,
+        &p.admin,
+        ix_sell(2, p.admin.pubkey(), p.game, p.fa)
+    ));
+    assert!(p.advance());
+    assert!(send(
+        &mut p.svm,
+        &p.admin,
+        ix_donkey(p.admin.pubkey(), p.game, p.fa)
+    ));
+    assert!(!send(
+        &mut p.svm,
+        &p.admin,
+        ix_produce(p.admin.pubkey(), p.game, p.fa)
+    ));
+
+    let a = faction_state(&p.svm, &p.fa);
+    assert_eq!(a.cash, (22 - 1) * PESO);
+    assert_eq!(a.goods, 1);
+}
+
+#[test]
+fn test_settle_payout_and_rake() {
+    let mut svm = LiteSVM::new();
+    let bytes = include_bytes!(concat!(env!("CARGO_TARGET_TMPDIR"), "/../deploy/alashi.so"));
+    svm.add_program(alashi::id(), bytes).unwrap();
+    let a = Keypair::new();
+    let b = Keypair::new();
+    let rake_admin = Keypair::new();
+    svm.airdrop(&a.pubkey(), 10_000_000_000).unwrap();
+    svm.airdrop(&b.pubkey(), 2_000_000_000).unwrap();
+    svm.airdrop(&rake_admin.pubkey(), 1_000_000_000).unwrap();
+
+    let game = game_pda(13);
+    let fa = faction_pda(&game, &a.pubkey());
+    let fb = faction_pda(&game, &b.pubkey());
+    assert!(send(
+        &mut svm,
+        &rake_admin,
+        ix_initialize(13, FEE, 0, rake_admin.pubkey(), game)
+    ));
+    assert!(send(&mut svm, &a, ix_join("Alpha", a.pubkey(), game, fa)));
+    assert!(send(&mut svm, &b, ix_join("Beta", b.pubkey(), game, fb)));
+    let fkeys = vec![fa, fb];
+
+    let adv = |svm: &mut LiteSVM, s: &Keypair| {
+        set_law_seed(svm, 0);
+        send(svm, s, ix_advance(s.pubkey(), game, fkeys.clone()))
+    };
+
+    assert!(adv(&mut svm, &a));
+    for _round in 1..=6u8 {
+        let a_goods = faction_state(&svm, &fa).goods;
+        if a_goods > 0 {
+            assert!(send(&mut svm, &a, ix_sell(2, a.pubkey(), game, fa)));
+        }
+        assert!(adv(&mut svm, &a));
+        assert!(send(&mut svm, &a, ix_produce(a.pubkey(), game, fa)));
+        assert!(send(&mut svm, &b, ix_produce(b.pubkey(), game, fb)));
+        assert!(adv(&mut svm, &a));
+        assert!(send(
+            &mut svm,
+            &a,
+            ix_vote(alashi::state::VoteChoice::Abstain, a.pubkey(), game, fa)
+        ));
+        assert!(adv(&mut svm, &a));
+    }
+    let g = game_state(&svm, &game);
+    assert_eq!(g.phase, alashi::state::Phase::Finished);
+    assert_eq!(g.admin, rake_admin.pubkey());
+
+    let a_cash = faction_state(&svm, &fa).cash;
+    let b_cash = faction_state(&svm, &fb).cash;
+    assert!(a_cash > b_cash);
+
+    let bank_before = svm.get_account(&game).unwrap().lamports;
+    let rake_before = svm.get_account(&rake_admin.pubkey()).unwrap().lamports;
+    let a_before = svm.get_account(&a.pubkey()).unwrap().lamports;
+    let b_before = svm.get_account(&b.pubkey()).unwrap().lamports;
+
+    assert!(send(
+        &mut svm,
+        &a,
+        ix_settle(
+            a.pubkey(),
+            game,
+            vec![fa, fb],
+            vec![a.pubkey(), b.pubkey()],
+            rake_admin.pubkey(),
+        )
+    ));
+    assert!(!send(
+        &mut svm,
+        &a,
+        ix_settle(
+            a.pubkey(),
+            game,
+            vec![fa, fb],
+            vec![a.pubkey(), b.pubkey()],
+            rake_admin.pubkey(),
+        )
+    ));
+
+    let bank_after = svm.get_account(&game).unwrap().lamports;
+    let rake_after = svm.get_account(&rake_admin.pubkey()).unwrap().lamports;
+    let a_after = svm.get_account(&a.pubkey()).unwrap().lamports;
+    let b_after = svm.get_account(&b.pubkey()).unwrap().lamports;
+
+    assert!(game_state(&svm, &game).settled);
+    let pot = bank_before - bank_after;
+    assert!(pot > 0);
+    let rake = rake_after - rake_before;
+    assert_eq!(rake, pot * 500 / 10_000);
+    let paid = (a_after - a_before) + (b_after - b_before);
+    assert_eq!(paid + 2 * 5_000, pot - rake);
+    assert!(a_after - a_before > b_after - b_before);
 }

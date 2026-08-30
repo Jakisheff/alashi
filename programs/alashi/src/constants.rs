@@ -17,9 +17,24 @@ pub const BRIBE_PRICE: u64 = 5 * PESO;
 pub const MAX_INFLUENCE: u16 = 1_000;
 pub const MAX_NAME: usize = 16;
 
+pub const NO_LAW: u8 = 255;
+pub const LAW_STATUS_QUO: u8 = 0;
+pub const LAW_TAX_10: u8 = 1;
+pub const LAW_TAX_20: u8 = 2;
+pub const LAW_SUBSIDY_PRODUCE: u8 = 3;
+pub const LAW_SUBSIDY_POOR: u8 = 4;
+pub const LAW_SUBSIDY_RICH: u8 = 5;
+pub const LAW_EMBARGO: u8 = 6;
+pub const LAW_BOOM: u8 = 7;
+pub const DECK_SIZE: u8 = 8;
+pub const DONKEY_PRICE: u64 = 1;
+pub const PAYOUT_SHARES: [u64; 4] = [50, 30, 15, 5];
+
 #[constant]
 pub const PRICE_TABLE: [u64; 16] = [12, 10, 9, 8, 7, 6, 5, 4, 3, 3, 2, 2, 2, 1, 1, 1];
 
 pub fn price_at(sold: u16) -> u64 {
     PRICE_TABLE[(sold as usize).min(PRICE_TABLE.len() - 1)]
 }
+
+pub use solana_sysvar::slot_hashes::ID as SLOT_HASHES_ID;

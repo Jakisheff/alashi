@@ -63,3 +63,47 @@ pub struct LawResult {
     pub no: u32,
     pub passed: bool,
 }
+
+#[event]
+pub struct LawDrawn {
+    pub game: Pubkey,
+    pub round: u8,
+    pub card: u8,
+}
+
+#[event]
+pub struct LawVetoed {
+    pub game: Pubkey,
+    pub round: u8,
+    pub card: u8,
+}
+
+#[event]
+pub struct VetoCast {
+    pub game: Pubkey,
+    pub president: Pubkey,
+    pub card: u8,
+}
+
+#[event]
+pub struct DonkeyBought {
+    pub game: Pubkey,
+    pub faction: Pubkey,
+    pub price: u64,
+}
+
+#[event]
+pub struct Payout {
+    pub game: Pubkey,
+    pub wallet: Pubkey,
+    pub rank: u8,
+    pub amount: u64,
+}
+
+#[event]
+pub struct Settled {
+    pub game: Pubkey,
+    pub pot: u64,
+    pub rake: u64,
+    pub paid: u64,
+}

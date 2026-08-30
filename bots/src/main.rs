@@ -130,6 +130,7 @@ struct Bot {
     acted: bool,
     voted: bool,
     goods: u16,
+    bribed: bool,
 }
 
 fn ensure_funds(rpc: &RpcClient, who: &str, kp: &Keypair) {
@@ -203,6 +204,27 @@ fn ix_sell(units: u16, player: Pubkey, game: Pubkey, faction: Pubkey) -> Instruc
             player,
             game,
             faction,
+            system_program: anchor_lang::solana_program::system_program::ID,
+        }
+        .to_account_metas(None),
+    )
+}
+
+fn ix_bribe(
+    amount: u64,
+    player: Pubkey,
+    game: Pubkey,
+    faction: Pubkey,
+    target: Pubkey,
+) -> Instruction {
+    Instruction::new_with_bytes(
+        id(),
+        &instruction::Bribe { amount }.data(),
+        accounts::Bribe {
+            player,
+            game,
+            faction,
+            target,
         }
         .to_account_metas(None),
     )
@@ -227,13 +249,62 @@ fn ix_vote(
 }
 
 fn ix_advance(crank: Pubkey, game: Pubkey, factions: &[Pubkey]) -> Instruction {
-    let mut metas = accounts::Advance { crank, game }.to_account_metas(None);
+    let mut metas = accounts::Advance {
+        crank,
+        game,
+        hashes: constants::SLOT_HASHES_ID,
+    }
+    .to_account_metas(None);
+    for f in factions {
+        metas.push(anchor_lang::solana_program::instruction::AccountMeta::new(*f, false));
+    }
+    Instruction::new_with_bytes(id(), &instruction::Advance {}.data(), metas)
+}
+
+fn ix_veto(player: Pubkey, game: Pubkey, faction: Pubkey) -> Instruction {
+    Instruction::new_with_bytes(
+        id(),
+        &instruction::Veto {}.data(),
+        accounts::Veto {
+            player,
+            game,
+            faction,
+        }
+        .to_account_metas(None),
+    )
+}
+
+fn ix_donkey(player: Pubkey, game: Pubkey, faction: Pubkey) -> Instruction {
+    Instruction::new_with_bytes(
+        id(),
+        &instruction::BuyDonkey {}.data(),
+        accounts::BuyDonkey {
+            player,
+            game,
+            faction,
+        }
+        .to_account_metas(None),
+    )
+}
+
+fn ix_settle(
+    crank: Pubkey,
+    game: Pubkey,
+    factions: &[Pubkey],
+    wallets: &[Pubkey],
+    admin: Pubkey,
+) -> Instruction {
+    let mut metas = accounts::Settle { crank, game }.to_account_metas(None);
     for f in factions {
         metas.push(anchor_lang::solana_program::instruction::AccountMeta::new_readonly(
             *f, false,
         ));
     }
-    Instruction::new_with_bytes(id(), &instruction::Advance {}.data(), metas)
+    for w in wallets {
+        metas.push(anchor_lang::solana_program::instruction::AccountMeta::new(*w, false));
+    }
+    metas.push(anchor_lang::solana_program::instruction::AccountMeta::new(admin, false));
+    Instruction::new_with_bytes(id(), &instruction::Settle {}.data(), metas)
 }
 
 fn rpc_url() -> String {
@@ -273,6 +344,7 @@ fn main() {
             acted: false,
             voted: false,
             goods: 0,
+            bribed: false,
         },
         Bot {
             faction: faction_pda(&game, &bot2_kp.pubkey()),
@@ -281,6 +353,7 @@ fn main() {
             acted: false,
             voted: false,
             goods: 0,
+            bribed: false,
         },
     ];
     let faction_keys: Vec<Pubkey> = bots.iter().map(|b| b.faction).collect();
@@ -376,8 +449,34 @@ fn main() {
                 }
             }
             state::Phase::Action => {
-                for b in bots.iter_mut() {
-                    if !b.acted {
+                let target_faction = bots[1].faction;
+                for (i, b) in bots.iter_mut().enumerate() {
+                    if b.acted {
+                        continue;
+                    }
+                    if i == 0 && !b.bribed && b.goods > 0 {
+                        println!("[action r{}] {} bribes Osol for influence", g.round, b.name);
+                        if send_ix(
+                            &rpc,
+                            &b.kp,
+                            ix_bribe(
+                                5 * 1_000_000,
+                                b.kp.pubkey(),
+                                game,
+                                b.faction,
+                                target_faction,
+                            ),
+                        ) {
+                            b.acted = true;
+                            b.bribed = true;
+                        }
+                    } else if i == 1 && g.round == 4 {
+                        println!("[action r{}] {} buys a donkey", g.round, b.name);
+                        if send_ix(&rpc, &b.kp, ix_donkey(b.kp.pubkey(), game, b.faction)) {
+                            b.acted = true;
+                            b.goods += 1;
+                        }
+                    } else {
                         println!("[action r{}] {} produces", g.round, b.name);
                         if send_ix(&rpc, &b.kp, ix_produce(b.kp.pubkey(), game, b.faction)) {
                             b.acted = true;
@@ -408,6 +507,14 @@ fn main() {
                         }
                     }
                 }
+                if g.round == 3 && g.president == bots[0].kp.pubkey() && !g.veto_pending {
+                    println!("[law r{}] Zhora (president) vetoes", g.round);
+                    send_ix(
+                        &rpc,
+                        &bots[0].kp,
+                        ix_veto(bots[0].kp.pubkey(), game, bots[0].faction),
+                    );
+                }
                 if tnow >= g.phase_ends_at {
                     println!("[law r{}] advance", g.round);
                     send_ix(
@@ -436,7 +543,27 @@ fn main() {
                     }
                 }
                 let bank = rpc.get_balance(&game).unwrap_or(0);
-                println!("bank: {bank} lamports");
+                println!("bank before settle: {bank} lamports");
+                let wallets: Vec<Pubkey> = bots.iter().map(|b| b.kp.pubkey()).collect();
+                let fkeys: Vec<Pubkey> = bots.iter().map(|b| b.faction).collect();
+                if !g.settled {
+                    send_ix(
+                        &rpc,
+                        &bots[0].kp,
+                        ix_settle(
+                            bots[0].kp.pubkey(),
+                            game,
+                            &fkeys,
+                            &wallets,
+                            bots[0].kp.pubkey(),
+                        ),
+                    );
+                    sleep(Duration::from_secs(5));
+                    let after = rpc.get_balance(&game).unwrap_or(0);
+                    println!("bank after settle: {after} lamports");
+                    let rake_wallet = rpc.get_balance(&bots[0].kp.pubkey()).unwrap_or(0);
+                    println!("rake receiver balance: {rake_wallet} lamports");
+                }
                 println!("game: https://explorer.solana.com/address/{game}?cluster=devnet");
                 break;
             }

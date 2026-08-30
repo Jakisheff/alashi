@@ -34,6 +34,19 @@ pub struct Game {
     pub yes_influence: u32,
     pub no_influence: u32,
     pub bump: u8,
+    pub law_card: u8,
+    pub laws_used_mask: u8,
+    pub veto_pending: bool,
+    pub president: Pubkey,
+    pub active_tax_bps: u16,
+    pub active_subsidy_goods: u8,
+    pub active_price_shift: i8,
+    pub active_boom: u8,
+    pub pending_tax_bps: u16,
+    pub pending_subsidy_goods: u8,
+    pub pending_price_shift: i8,
+    pub pending_boom: u8,
+    pub settled: bool,
 }
 
 impl Game {

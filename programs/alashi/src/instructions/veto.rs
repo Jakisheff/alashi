@@ -2,9 +2,10 @@ use crate::{constants::*, error::GameError, events::*, state::*};
 use anchor_lang::prelude::*;
 
 #[derive(Accounts)]
-pub struct Produce<'info> {
+pub struct Veto<'info> {
     pub player: Signer<'info>,
     #[account(
+        mut,
         seeds = [GAME_SEED, game.game_id.to_le_bytes().as_ref()],
         bump = game.bump
     )]
@@ -17,20 +18,20 @@ pub struct Produce<'info> {
     pub faction: Account<'info, Faction>,
 }
 
-pub fn handle_produce(ctx: Context<Produce>) -> Result<()> {
-    let game = &ctx.accounts.game;
+pub fn handle_veto(ctx: Context<Veto>) -> Result<()> {
+    let game = &mut ctx.accounts.game;
     let faction = &mut ctx.accounts.faction;
-    require!(game.phase == Phase::Action, GameError::WrongPhase);
-    require!(faction.alive, GameError::NotAlive);
-    require!(faction.acted_stamp != game.stamp(), GameError::AlreadyActed);
+    require!(game.phase == Phase::Law, GameError::WrongPhase);
+    require!(game.president == faction.wallet, GameError::NotPresident);
+    require!(!game.veto_pending, GameError::AlreadyVetoed);
 
-    faction.goods += PRODUCE_YIELD + game.active_subsidy_goods as u16;
-    faction.acted_stamp = game.stamp();
+    game.veto_pending = true;
+    faction.is_president = true;
 
-    emit!(Produced {
+    emit!(VetoCast {
         game: game.key(),
-        faction: faction.key(),
-        goods: faction.goods,
+        president: faction.wallet,
+        card: game.law_card,
     });
     Ok(())
 }

@@ -45,6 +45,18 @@ pub mod alashi {
         crate::instructions::vote::handle_vote(ctx, choice)
     }
 
+    pub fn veto(ctx: Context<Veto>) -> Result<()> {
+        crate::instructions::veto::handle_veto(ctx)
+    }
+
+    pub fn buy_donkey(ctx: Context<BuyDonkey>) -> Result<()> {
+        crate::instructions::donkey::handle_buy_donkey(ctx)
+    }
+
+    pub fn settle<'a>(ctx: Context<'a, Settle<'a>>) -> Result<()> {
+        crate::instructions::settle::handle_settle(ctx)
+    }
+
     pub fn advance(ctx: Context<Advance>) -> Result<()> {
         crate::instructions::advance::handle_advance(ctx)
     }

@@ -1,15 +1,21 @@
 pub mod advance;
 pub mod bribe;
+pub mod donkey;
 pub mod initialize;
 pub mod join;
 pub mod produce;
 pub mod sell;
+pub mod settle;
+pub mod veto;
 pub mod vote;
 
 pub use advance::*;
 pub use bribe::*;
+pub use donkey::*;
 pub use initialize::*;
 pub use join::*;
 pub use produce::*;
 pub use sell::*;
+pub use settle::*;
+pub use veto::*;
 pub use vote::*;

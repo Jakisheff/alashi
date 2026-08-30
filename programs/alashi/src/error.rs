@@ -40,4 +40,18 @@ pub enum GameError {
     NotEnoughFactions,
     #[msg("faction set does not match game factions")]
     InvalidFactionSet,
+    #[msg("slot hashes sysvar is empty")]
+    NoSlotHashes,
+    #[msg("signer is not the president")]
+    NotPresident,
+    #[msg("veto already cast this law phase")]
+    AlreadyVetoed,
+    #[msg("game is not finished")]
+    NotFinished,
+    #[msg("game already settled")]
+    AlreadySettled,
+    #[msg("settle account set is invalid")]
+    InvalidSettleSet,
+    #[msg("bank is empty")]
+    EmptyBank,
 }

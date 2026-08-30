@@ -45,6 +45,19 @@ pub fn handle_initialize(
     game.yes_influence = 0;
     game.no_influence = 0;
     game.bump = ctx.bumps.game;
+    game.law_card = NO_LAW;
+    game.laws_used_mask = 0;
+    game.veto_pending = false;
+    game.president = Pubkey::default();
+    game.active_tax_bps = 0;
+    game.active_subsidy_goods = 0;
+    game.active_price_shift = 0;
+    game.active_boom = 0;
+    game.pending_tax_bps = 0;
+    game.pending_subsidy_goods = 0;
+    game.pending_price_shift = 0;
+    game.pending_boom = 0;
+    game.settled = false;
 
     emit!(GameInitialized {
         game: game.key(),
