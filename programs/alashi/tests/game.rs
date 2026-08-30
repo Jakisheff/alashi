@@ -141,7 +141,6 @@ fn ix_sell(units: u16, player: Pubkey, game: Pubkey, faction: Pubkey) -> Instruc
             player,
             game,
             faction,
-            system_program: system_program::ID,
         }
         .to_account_metas(None),
     )
@@ -198,6 +197,19 @@ fn ix_advance(crank: Pubkey, game: Pubkey, factions: Vec<Pubkey>) -> Instruction
         ));
     }
     Instruction::new_with_bytes(alashi::id(), &alashi::instruction::Advance {}.data(), metas)
+}
+
+fn ix_buy(units: u16, player: Pubkey, game: Pubkey, faction: Pubkey) -> Instruction {
+    Instruction::new_with_bytes(
+        alashi::id(),
+        &alashi::instruction::Buy { units }.data(),
+        alashi::accounts::BuyGoods {
+            player,
+            game,
+            faction,
+        }
+        .to_account_metas(None),
+    )
 }
 
 fn ix_veto(player: Pubkey, game: Pubkey, faction: Pubkey) -> Instruction {
@@ -817,4 +829,64 @@ fn test_settle_payout_and_rake() {
     let paid = (a_after - a_before) + (b_after - b_before);
     assert_eq!(paid + 2 * 5_000, pot - rake);
     assert!(a_after - a_before > b_after - b_before);
+}
+
+#[test]
+fn test_market_buy() {
+    let mut p = start_party(14, FEE, 0);
+    p.to_market_r2(
+        Some(alashi::state::VoteChoice::Abstain),
+        Some(alashi::state::VoteChoice::Abstain),
+    );
+
+    assert!(send(
+        &mut p.svm,
+        &p.admin,
+        ix_sell(2, p.admin.pubkey(), p.game, p.fa)
+    ));
+    assert!(send(
+        &mut p.svm,
+        &p.b,
+        ix_sell(1, p.b.pubkey(), p.game, p.fb)
+    ));
+    assert_eq!(game_state(&p.svm, &p.game).sold_this_round, 3);
+
+    assert!(p.advance());
+    assert!(send(
+        &mut p.svm,
+        &p.admin,
+        ix_produce(p.admin.pubkey(), p.game, p.fa)
+    ));
+    assert!(send(
+        &mut p.svm,
+        &p.b,
+        ix_produce(p.b.pubkey(), p.game, p.fb)
+    ));
+    assert!(p.advance());
+    set_law_seed(&mut p.svm, 0);
+    assert!(p.advance());
+
+    assert!(send(
+        &mut p.svm,
+        &p.admin,
+        ix_sell(2, p.admin.pubkey(), p.game, p.fa)
+    ));
+    assert!(send(
+        &mut p.svm,
+        &p.b,
+        ix_buy(1, p.b.pubkey(), p.game, p.fb)
+    ));
+    let g = game_state(&p.svm, &p.game);
+    assert_eq!(g.sold_this_round, 1);
+    let a = faction_state(&p.svm, &p.fa);
+    let b = faction_state(&p.svm, &p.fb);
+    assert_eq!(a.cash, (22 + 22) * PESO);
+    assert_eq!(b.cash, (9 - 9) * PESO);
+    assert_eq!(b.goods, 4);
+
+    assert!(!send(
+        &mut p.svm,
+        &p.b,
+        ix_buy(1, p.b.pubkey(), p.game, p.fb)
+    ));
 }

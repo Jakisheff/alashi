@@ -38,6 +38,10 @@ pub mod alashi {
         crate::instructions::sell::handle_sell(ctx, units)
     }
 
+    pub fn buy(ctx: Context<BuyGoods>, units: u16) -> Result<()> {
+        crate::instructions::buy::handle_buy(ctx, units)
+    }
+
     pub fn bribe(ctx: Context<Bribe>, amount: u64) -> Result<()> {
         crate::instructions::bribe::handle_bribe(ctx, amount)
     }

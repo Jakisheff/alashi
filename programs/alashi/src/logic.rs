@@ -189,6 +189,45 @@ pub fn draw_law_index(seed: u64, used_mask: u8) -> (u8, u8) {
     (idx as u8, mask | (1 << idx))
 }
 
+pub fn market_price(sold: u16, price_shift: i8, boom: u8) -> u64 {
+    let base = crate::constants::price_at(sold) as i64 + price_shift as i64 + boom as i64;
+    (base.max(1) as u64) * PESO
+}
+
+pub struct TradeResult {
+    pub units: u16,
+    pub gross: u64,
+    pub counter_after: u16,
+}
+
+pub fn compute_sale(units: u16, sold: u16, price_shift: i8, boom: u8) -> TradeResult {
+    let mut gross = 0u64;
+    let mut s = sold;
+    for _ in 0..units {
+        gross += market_price(s, price_shift, boom);
+        s += 1;
+    }
+    TradeResult {
+        units,
+        gross,
+        counter_after: s,
+    }
+}
+
+pub fn compute_purchase(units: u16, sold: u16, price_shift: i8, boom: u8) -> TradeResult {
+    let mut gross = 0u64;
+    let mut s = sold;
+    for _ in 0..units {
+        gross += market_price(s, price_shift, boom);
+        s = s.saturating_sub(1);
+    }
+    TradeResult {
+        units,
+        gross,
+        counter_after: s,
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -291,5 +330,25 @@ mod tests {
         assert_eq!(mask, 0b0000_0111);
         let (idx2, _) = draw_law_index(0, 0b1111_1111);
         assert_eq!(idx2, 0);
+    }
+
+    #[test]
+    fn sale_drops_price_and_purchase_raises_it() {
+        let sale = compute_sale(3, 0, 0, 0);
+        assert_eq!(sale.gross / PESO, 12 + 10 + 9);
+        assert_eq!(sale.counter_after, 3);
+        let purchase = compute_purchase(2, 3, 0, 0);
+        assert_eq!(purchase.gross / PESO, 8 + 9);
+        assert_eq!(purchase.counter_after, 1);
+        let clamp = compute_purchase(5, 1, 0, 0);
+        assert_eq!(clamp.counter_after, 0);
+        assert!(clamp.gross > 0);
+    }
+
+    #[test]
+    fn embargo_and_boom_move_market_price() {
+        assert_eq!(market_price(0, -2, 0) / PESO, 10);
+        assert_eq!(market_price(0, 0, 2) / PESO, 14);
+        assert_eq!(market_price(9, -2, 0) / PESO, 1);
     }
 }

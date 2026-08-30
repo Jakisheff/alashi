@@ -1,5 +1,6 @@
 pub mod advance;
 pub mod bribe;
+pub mod buy;
 pub mod donkey;
 pub mod initialize;
 pub mod join;
@@ -11,6 +12,7 @@ pub mod vote;
 
 pub use advance::*;
 pub use bribe::*;
+pub use buy::*;
 pub use donkey::*;
 pub use initialize::*;
 pub use join::*;

@@ -64,12 +64,18 @@ fn faction_pda(game: &Pubkey, wallet: &Pubkey) -> Pubkey {
 fn load_or_create(path: &str) -> Keypair {
     if Path::new(path).exists() {
         let bytes: Vec<u8> = serde_json::from_str(&std::fs::read_to_string(path).unwrap()).unwrap();
-        let seed: [u8; 32] = bytes[..32].try_into().expect("keypair file must hold 64 bytes");
+        let seed: [u8; 32] = bytes[..32]
+            .try_into()
+            .expect("keypair file must hold 64 bytes");
         Keypair::new_from_array(seed)
     } else {
         let kp = Keypair::new();
         std::fs::create_dir_all(KEYS_DIR).unwrap();
-        std::fs::write(path, serde_json::to_string(&kp.to_bytes().to_vec()).unwrap()).unwrap();
+        std::fs::write(
+            path,
+            serde_json::to_string(&kp.to_bytes().to_vec()).unwrap(),
+        )
+        .unwrap();
         kp
     }
 }
@@ -177,7 +183,7 @@ fn ix_join(name: &str, player: Pubkey, game: Pubkey, faction: Pubkey) -> Instruc
             player,
             game,
             faction,
-            system_program: system_program::ID,
+            system_program: anchor_lang::solana_program::system_program::ID,
         }
         .to_account_metas(None),
     )
@@ -204,7 +210,6 @@ fn ix_sell(units: u16, player: Pubkey, game: Pubkey, faction: Pubkey) -> Instruc
             player,
             game,
             faction,
-            system_program: anchor_lang::solana_program::system_program::ID,
         }
         .to_account_metas(None),
     )
@@ -256,9 +261,24 @@ fn ix_advance(crank: Pubkey, game: Pubkey, factions: &[Pubkey]) -> Instruction {
     }
     .to_account_metas(None);
     for f in factions {
-        metas.push(anchor_lang::solana_program::instruction::AccountMeta::new(*f, false));
+        metas.push(anchor_lang::solana_program::instruction::AccountMeta::new(
+            *f, false,
+        ));
     }
     Instruction::new_with_bytes(id(), &instruction::Advance {}.data(), metas)
+}
+
+fn ix_buy(units: u16, player: Pubkey, game: Pubkey, faction: Pubkey) -> Instruction {
+    Instruction::new_with_bytes(
+        id(),
+        &instruction::Buy { units }.data(),
+        accounts::BuyGoods {
+            player,
+            game,
+            faction,
+        }
+        .to_account_metas(None),
+    )
 }
 
 fn ix_veto(player: Pubkey, game: Pubkey, faction: Pubkey) -> Instruction {
@@ -296,14 +316,16 @@ fn ix_settle(
 ) -> Instruction {
     let mut metas = accounts::Settle { crank, game }.to_account_metas(None);
     for f in factions {
-        metas.push(anchor_lang::solana_program::instruction::AccountMeta::new_readonly(
-            *f, false,
-        ));
+        metas.push(anchor_lang::solana_program::instruction::AccountMeta::new_readonly(*f, false));
     }
     for w in wallets {
-        metas.push(anchor_lang::solana_program::instruction::AccountMeta::new(*w, false));
+        metas.push(anchor_lang::solana_program::instruction::AccountMeta::new(
+            *w, false,
+        ));
     }
-    metas.push(anchor_lang::solana_program::instruction::AccountMeta::new(admin, false));
+    metas.push(anchor_lang::solana_program::instruction::AccountMeta::new(
+        admin, false,
+    ));
     Instruction::new_with_bytes(id(), &instruction::Settle {}.data(), metas)
 }
 
@@ -430,14 +452,34 @@ fn main() {
                 }
             }
             state::Phase::Market => {
-                for b in bots.iter_mut() {
-                    if !b.acted && b.goods > 0 {
+                let mut sold_now = g.sold_this_round;
+                for bi in 0..bots.len() {
+                    let b = &mut bots[bi];
+                    if b.acted {
+                        continue;
+                    }
+                    if bi == 1
+                        && sold_now >= 2
+                        && faction_cash(&rpc, &b.faction) >= 10_000_000
+                    {
+                        println!(
+                            "[market r{}] {} BUYS 2 cheap goods (sold={})",
+                            g.round, b.name, g.sold_this_round
+                        );
+                        if send_ix(&rpc, &b.kp, ix_buy(2, b.kp.pubkey(), game, b.faction)) {
+                            b.acted = true;
+                            b.goods += 2;
+                        }
+                        continue;
+                    }
+                    if b.goods > 0 {
                         println!("[market r{}] {} sells {} goods", g.round, b.name, b.goods);
                         if send_ix(
                             &rpc,
                             &b.kp,
                             ix_sell(b.goods, b.kp.pubkey(), game, b.faction),
                         ) {
+                            sold_now += b.goods;
                             b.acted = true;
                             b.goods = 0;
                         }
@@ -538,11 +580,7 @@ fn main() {
                     if let Some(f) = fetch_faction(&rpc, &b.faction) {
                         println!(
                             "faction {} ({}): cash {} lamports, goods {}, influence {}",
-                            f.name,
-                            b.faction,
-                            f.cash,
-                            f.goods,
-                            f.influence
+                            f.name, b.faction, f.cash, f.goods, f.influence
                         );
                     }
                 }

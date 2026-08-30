@@ -33,6 +33,14 @@ pub struct Sold {
 }
 
 #[event]
+pub struct GoodsBought {
+    pub game: Pubkey,
+    pub faction: Pubkey,
+    pub units: u16,
+    pub cost: u64,
+}
+
+#[event]
 pub struct BribeGiven {
     pub game: Pubkey,
     pub from: Pubkey,
