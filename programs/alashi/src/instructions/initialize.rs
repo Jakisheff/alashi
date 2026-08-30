@@ -1,0 +1,56 @@
+use crate::{constants::*, error::GameError, events::*, state::*};
+use anchor_lang::prelude::*;
+
+#[derive(Accounts)]
+#[instruction(game_id: u64)]
+pub struct Initialize<'info> {
+    #[account(mut)]
+    pub admin: Signer<'info>,
+    #[account(
+        init,
+        payer = admin,
+        space = 8 + Game::INIT_SPACE,
+        seeds = [GAME_SEED, game_id.to_le_bytes().as_ref()],
+        bump
+    )]
+    pub game: Account<'info, Game>,
+    pub system_program: Program<'info, System>,
+}
+
+pub fn handle_initialize(
+    ctx: Context<Initialize>,
+    game_id: u64,
+    entry_fee: u64,
+    phase_duration: i64,
+) -> Result<()> {
+    require!(entry_fee > 0, GameError::InvalidEntryFee);
+    require!(phase_duration >= 0, GameError::InvalidPhaseDuration);
+
+    let clock = Clock::get()?;
+    let game = &mut ctx.accounts.game;
+    game.admin = ctx.accounts.admin.key();
+    game.game_id = game_id;
+    game.phase = Phase::Lobby;
+    game.round = 0;
+    game.phase_ends_at = clock
+        .unix_timestamp
+        .saturating_add(phase_duration.saturating_mul(LOBBY_MULT));
+    game.faction_count = 0;
+    game.laws_passed = 0;
+    game.sold_this_round = 0;
+    game.entry_fee = entry_fee;
+    game.rake_bps = DEFAULT_RAKE_BPS;
+    game.phase_duration = phase_duration;
+    game.last_law_passed = false;
+    game.yes_influence = 0;
+    game.no_influence = 0;
+    game.bump = ctx.bumps.game;
+
+    emit!(GameInitialized {
+        game: game.key(),
+        game_id,
+        entry_fee,
+        phase_duration,
+    });
+    Ok(())
+}
