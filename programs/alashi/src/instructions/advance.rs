@@ -1,4 +1,10 @@
-use crate::{constants::*, error::GameError, events::*, state::*};
+use crate::{
+    constants::*,
+    error::GameError,
+    events::*,
+    logic::{compute_law_effect, draw_law_index, elect_president, tally_votes, FactionSnapshot},
+    state::*,
+};
 use anchor_lang::prelude::*;
 
 #[derive(Accounts)]
@@ -81,24 +87,19 @@ pub fn handle_advance(ctx: Context<Advance>) -> Result<()> {
         Phase::Action => {
             require!(now >= game.phase_ends_at, GameError::TooEarly);
             game.phase = Phase::Law;
-            elect_president(game, &checked)?;
+            let snapshots: Vec<FactionSnapshot> = checked.iter().map(|f| f.into()).collect();
+            game.president = elect_president(&snapshots).unwrap_or_default();
             draw_law(game, gkey, &ctx.accounts.hashes.to_account_info())?;
             game.veto_pending = false;
         }
         Phase::Law => {
             require!(now >= game.phase_ends_at, GameError::TooEarly);
-            let mut yes: u32 = 0;
-            let mut no: u32 = 0;
-            for f in checked.iter() {
-                if !f.alive || f.voted_stamp != stamp {
-                    continue;
-                }
-                match f.vote {
-                    VoteChoice::Yes => yes += f.influence as u32,
-                    VoteChoice::No => no += f.influence as u32,
-                    VoteChoice::Abstain => {}
-                }
-            }
+            let votes: Vec<(u16, VoteChoice)> = checked
+                .iter()
+                .filter(|f| f.alive && f.voted_stamp == stamp)
+                .map(|f| (f.influence, f.vote))
+                .collect();
+            let (yes, no) = tally_votes(&votes);
             let voted_yes = yes > no;
             let vetoed = game.veto_pending && voted_yes;
             let passed = voted_yes && !game.veto_pending;
@@ -107,7 +108,17 @@ pub fn handle_advance(ctx: Context<Advance>) -> Result<()> {
             game.last_law_passed = passed;
             if passed {
                 game.laws_passed += 1;
-                apply_law(game, &mut checked)?;
+                let snapshots: Vec<FactionSnapshot> = checked.iter().map(|f| f.into()).collect();
+                let effect = compute_law_effect(game.law_card, &snapshots);
+                if let Some(tax) = effect.tax_bps {
+                    game.active_tax_bps = tax;
+                }
+                game.active_subsidy_goods = effect.subsidy_goods;
+                game.pending_price_shift = effect.pending_price_shift;
+                game.pending_boom = effect.pending_boom;
+                if let Some(i) = effect.influence_gain {
+                    checked[i].influence += 1;
+                }
             }
             emit!(LawResult {
                 game: gkey,
@@ -156,105 +167,31 @@ pub fn handle_advance(ctx: Context<Advance>) -> Result<()> {
     Ok(())
 }
 
-fn elect_president(game: &mut Game, factions: &[Account<'_, Faction>]) -> Result<()> {
-    let mut best: Option<&Account<'_, Faction>> = None;
-    for f in factions.iter() {
-        if !f.alive {
-            continue;
-        }
-        best = Some(match best {
-            None => f,
-            Some(b) => {
-                if f.influence > b.influence || (f.influence == b.influence && f.wallet < b.wallet)
-                {
-                    f
-                } else {
-                    b
-                }
-            }
-        });
-    }
-    if let Some(b) = best {
-        game.president = b.wallet;
-    }
-    Ok(())
-}
-
 fn draw_law(game: &mut Game, gkey: Pubkey, slot_hashes: &AccountInfo) -> Result<()> {
-    let seed = draw_seed(slot_hashes)?;
-    if game.laws_used_mask == 0xFF {
-        game.laws_used_mask = 0;
+    require_keys_eq!(
+        slot_hashes.key(),
+        solana_sysvar::slot_hashes::ID,
+        GameError::InvalidSettleSet
+    );
+    let data = slot_hashes.data.borrow();
+    if data.len() < 8 + 8 + 32 {
+        return Err(GameError::NoSlotHashes.into());
     }
-    let mut idx = seed % DECK_SIZE as u64;
-    while game.laws_used_mask & (1 << idx) != 0 {
-        idx = (idx + 1) % DECK_SIZE as u64;
+    let count = u64::from_le_bytes(data[0..8].try_into().unwrap()) as usize;
+    if count == 0 {
+        return Err(GameError::NoSlotHashes.into());
     }
-    game.law_card = idx as u8;
-    game.laws_used_mask |= 1 << idx;
+    let first_hash = &data[16..48];
+    let seed = u64::from_le_bytes(first_hash[..8].try_into().unwrap());
+    drop(data);
+
+    let (card, mask) = draw_law_index(seed, game.laws_used_mask);
+    game.law_card = card;
+    game.laws_used_mask = mask;
     emit!(LawDrawn {
         game: gkey,
         round: game.round,
-        card: game.law_card,
+        card,
     });
-    Ok(())
-}
-
-fn apply_law(game: &mut Game, factions: &mut [Account<'_, Faction>]) -> Result<()> {
-    match game.law_card {
-        LAW_TAX_10 => game.active_tax_bps = 1_000,
-        LAW_TAX_20 => game.active_tax_bps = 2_000,
-        LAW_SUBSIDY_PRODUCE => game.active_subsidy_goods = 1,
-        LAW_SUBSIDY_POOR => {
-            let mut best: Option<usize> = None;
-            for (i, f) in factions.iter().enumerate() {
-                if !f.alive {
-                    continue;
-                }
-                best = Some(match best {
-                    None => i,
-                    Some(b) => {
-                        if factions[i].cash < factions[b].cash
-                            || (factions[i].cash == factions[b].cash
-                                && factions[i].wallet < factions[b].wallet)
-                        {
-                            i
-                        } else {
-                            b
-                        }
-                    }
-                });
-            }
-            if let Some(i) = best {
-                factions[i].influence += 1;
-            }
-        }
-        LAW_SUBSIDY_RICH => {
-            let mut best: Option<usize> = None;
-            for (i, f) in factions.iter().enumerate() {
-                if !f.alive {
-                    continue;
-                }
-                best = Some(match best {
-                    None => i,
-                    Some(b) => {
-                        if factions[i].cash > factions[b].cash
-                            || (factions[i].cash == factions[b].cash
-                                && factions[i].wallet < factions[b].wallet)
-                        {
-                            i
-                        } else {
-                            b
-                        }
-                    }
-                });
-            }
-            if let Some(i) = best {
-                factions[i].influence += 1;
-            }
-        }
-        LAW_EMBARGO => game.pending_price_shift = -2,
-        LAW_BOOM => game.pending_boom = 2,
-        _ => {}
-    }
     Ok(())
 }
