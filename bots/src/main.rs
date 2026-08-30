@@ -391,6 +391,30 @@ fn llm_decide(
     llm::parse_json_block(&raw)
 }
 
+
+fn register_agent(wallet: &str, model: &str, prompt: &str) {
+    use sha2::{Digest, Sha256};
+    let mut h = Sha256::new();
+    h.update(model.as_bytes());
+    h.update(b"|");
+    h.update(prompt.as_bytes());
+    let agent_id: String = h.finalize().iter().map(|b| format!("{b:02x}")).collect();
+    let path = "../data/registry.json";
+    let mut list: Vec<serde_json::Value> = std::fs::read_to_string(path)
+        .ok()
+        .and_then(|s| serde_json::from_str(&s).ok())
+        .unwrap_or_default();
+    list.retain(|e| e.get("wallet").and_then(|w| w.as_str()) != Some(wallet));
+    list.push(serde_json::json!({
+        "wallet": wallet,
+        "agent_id": agent_id,
+        "model": model,
+        "prompt": prompt,
+    }));
+    let _ = std::fs::create_dir_all("../data");
+    let _ = std::fs::write(path, serde_json::to_vec_pretty(&list).unwrap());
+}
+
 fn faction_cash(rpc: &RpcClient, faction: &Pubkey) -> u64 {
     fetch_faction(rpc, faction).map(|f| f.cash).unwrap_or(0)
 }
@@ -400,6 +424,17 @@ fn main() {
 
     let bot1_kp = load_or_create(&format!("{KEYS_DIR}/bot1.json"));
     let bot2_kp = load_or_create(&format!("{KEYS_DIR}/bot2.json"));
+    register_agent(
+        &bot1_kp.pubkey().to_string(),
+        "greedy-v1",
+        "greedy-heuristic-v1",
+    );
+    let llm_cfg = llm::llm_config();
+    register_agent(
+        &bot2_kp.pubkey().to_string(),
+        llm_cfg.as_ref().map(|c| c.model.clone()).unwrap_or_default().as_str(),
+        llm::SYSTEM,
+    );
     println!("rpc: {}", rpc_url());
     println!("bot1: {}", bot1_kp.pubkey());
     println!("bot2: {}", bot2_kp.pubkey());
