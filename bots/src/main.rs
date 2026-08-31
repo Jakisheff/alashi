@@ -458,8 +458,213 @@ fn faction_cash(rpc: &RpcClient, faction: &Pubkey) -> u64 {
     fetch_faction(rpc, faction).map(|f| f.cash).unwrap_or(0)
 }
 
+/// Список всех фракций партии прямо из цепи (memcmp по Faction.game, offset 8
+/// после дискриминатора). Нужен, когда в партию вступил гость: advance и settle
+/// требуют полный набор фракций, а не только ботов хоста.
+fn discover_factions(rpc: &RpcClient, game: &Pubkey) -> Vec<Pubkey> {
+    use solana_rpc_client_api::{
+        config::RpcProgramAccountsConfig,
+        filter::{Memcmp, RpcFilterType},
+    };
+    let cfg = RpcProgramAccountsConfig {
+        filters: Some(vec![RpcFilterType::Memcmp(Memcmp::new_base58_encoded(
+            8,
+            game.as_ref(),
+        ))]),
+        account_config: Default::default(),
+        with_context: Some(false),
+        sort_results: None,
+    };
+    match rpc.get_program_accounts_with_config(&id(), cfg) {
+        Ok(accs) => accs.iter().map(|(k, _)| *k).collect(),
+        Err(e) => {
+            println!("[ERROR] discover_factions: {e}");
+            Vec::new()
+        }
+    }
+}
+
+fn flag_value(args: &[String], flag: &str) -> Option<String> {
+    args.iter()
+        .position(|a| a == flag)
+        .and_then(|i| args.get(i + 1))
+        .cloned()
+}
+
+/// Режим гостя: подключиться к чужой партии (--game <PUBKEY>) и играть
+/// только свои ходы. Фазы двигает host: advance и settle гостю запрещены
+/// (advance требует все фракции партии, settle требует game.admin).
+fn run_join_mode(rpc: &RpcClient, game_str: &str, key_path: &str, name: &str) {
+    let game = match game_str.parse::<Pubkey>() {
+        Ok(p) => p,
+        Err(_) => {
+            println!("[ERROR] --game: неверный pubkey: {game_str}");
+            return;
+        }
+    };
+    let kp = load_or_create(key_path);
+    let name: String = name.chars().take(16).collect();
+    let faction = faction_pda(&game, &kp.pubkey());
+    register_agent(&kp.pubkey().to_string(), "join-v1", "guest-heuristic-v1");
+    println!("=== JOIN MODE | rpc: {} ===", rpc_url());
+    println!("guest: {} (ключ: {key_path})", kp.pubkey());
+    println!("game: {game}");
+    println!("faction PDA: {faction}");
+
+    let mut tries = 0u32;
+    let g0 = loop {
+        if let Some(g) = fetch_game(rpc, &game) {
+            break g;
+        }
+        tries += 1;
+        if tries >= 20 {
+            println!("[ERROR] game-аккаунт не найден за 10с: {game}");
+            return;
+        }
+        sleep(Duration::from_millis(500));
+    };
+    println!(
+        "game: phase {:?}, round {}, entry_fee {} lamports, factions {}/5, admin {}",
+        g0.phase, g0.round, g0.entry_fee, g0.faction_count, g0.admin
+    );
+    let mut bal = rpc.get_balance(&kp.pubkey()).unwrap_or(0);
+    println!("guest balance: {bal} lamports");
+    if bal < g0.entry_fee + 20_000_000 {
+        println!("мало средств, пробую devnet airdrop 1 SOL ...");
+        if let Ok(sig) = rpc.request_airdrop(&kp.pubkey(), 1_000_000_000) {
+            println!("  airdrop tx {sig}");
+            sleep(Duration::from_secs(8));
+        }
+        bal = rpc.get_balance(&kp.pubkey()).unwrap_or(0);
+        println!("guest balance: {bal} lamports");
+    }
+    if rpc.get_account(&faction).is_ok() {
+        println!("фракция уже существует, повторный join не нужен");
+    } else {
+        if bal < g0.entry_fee + 20_000_000 {
+            println!(
+                "[ERROR] нужно >= {} lamports (взнос + комиссии), есть {}",
+                g0.entry_fee + 20_000_000,
+                bal
+            );
+            return;
+        }
+        if !matches!(g0.phase, state::Phase::Lobby) {
+            println!(
+                "[ERROR] партия уже идёт (phase {:?}); join возможен только в Lobby",
+                g0.phase
+            );
+            return;
+        }
+        println!("join: плачу взнос {} lamports ...", g0.entry_fee);
+        if !send_ix(rpc, &kp, ix_join(&name, kp.pubkey(), game, faction)) {
+            println!("[ERROR] join отклонён: партия полная / фаза ушла / средства; см лог tx выше");
+            return;
+        }
+        if !wait_account(rpc, &faction, "faction") {
+            return;
+        }
+    }
+    println!("в партии. Фазы двигает host, я играю свои ходы.");
+
+    let started = now();
+    let mut last_stamp: Option<u16> = None;
+    let mut acted = false;
+    let mut voted = false;
+    let mut hb = 0u32;
+    loop {
+        hb += 1;
+        if now() - started > 15 * 60 {
+            println!("[timeout] 15 минут в режиме гостя, выхожу; партия продолжится без меня");
+            break;
+        }
+        let tnow = chain_now(rpc);
+        let g = match fetch_game(rpc, &game) {
+            Some(g) => g,
+            None => {
+                sleep(Duration::from_secs(4));
+                continue;
+            }
+        };
+        let stamp = g.stamp();
+        if last_stamp != Some(stamp) {
+            acted = false;
+            voted = false;
+            last_stamp = Some(stamp);
+        }
+        let goods = fetch_faction(rpc, &faction).map(|f| f.goods).unwrap_or(0);
+        match g.phase {
+            state::Phase::Lobby => {
+                if hb % 10 == 1 {
+                    println!("[lobby r{}] жду старта от host, tnow={tnow}", g.round);
+                }
+            }
+            state::Phase::Market => {
+                if !acted && goods > 0 {
+                    println!("[market r{}] продаю {} товаров", g.round, goods);
+                    if send_ix(rpc, &kp, ix_sell(goods, kp.pubkey(), game, faction)) {
+                        acted = true;
+                    }
+                } else if !acted && hb % 10 == 1 {
+                    println!("[market r{}] товаров нет, жду", g.round);
+                }
+            }
+            state::Phase::Action => {
+                if !acted {
+                    println!("[action r{}] произвожу (+2 товара)", g.round);
+                    if send_ix(rpc, &kp, ix_produce(kp.pubkey(), game, faction)) {
+                        acted = true;
+                    }
+                }
+            }
+            state::Phase::Law => {
+                if !voted && g.law_card != 255 {
+                    println!("[law r{}] голосую NO", g.round);
+                    if send_ix(
+                        &rpc,
+                        &kp,
+                        ix_vote(state::VoteChoice::No, kp.pubkey(), game, faction),
+                    ) {
+                        voted = true;
+                    }
+                }
+            }
+            state::Phase::Aborted => {
+                println!("=== ПАРТИЯ ПРЕРВАНА (оракул VRF); возврат взноса сделает host-кранк ===");
+                break;
+            }
+            state::Phase::Finished => {
+                println!("=== FINISHED ===");
+                if let Some(f) = fetch_faction(rpc, &faction) {
+                    println!(
+                        "моя фракция {}: cash {} lamports, goods {}, influence {}",
+                        f.name, f.cash, f.goods, f.influence
+                    );
+                }
+                println!(
+                    "settle выполнит host (permissionless); выплата придёт на кошелёк {}",
+                    kp.pubkey()
+                );
+                println!("game: https://explorer.solana.com/address/{game}?cluster=devnet");
+                break;
+            }
+        }
+        let _ = std::io::Write::flush(&mut std::io::stdout());
+        sleep(Duration::from_secs(2));
+    }
+}
+
 fn main() {
     let rpc = RpcClient::new_with_commitment(rpc_url(), CommitmentConfig::confirmed());
+
+    let args: Vec<String> = std::env::args().collect();
+    if let Some(game_str) = flag_value(&args, "--game") {
+        let key_path = flag_value(&args, "--key")
+            .unwrap_or_else(|| format!("{KEYS_DIR}/join.json"));
+        let name = flag_value(&args, "--name").unwrap_or_else(|| "Guest".to_string());
+        run_join_mode(&rpc, &game_str, &key_path, &name);
+        return;
+    }
 
     let bot1_kp = load_or_create(&format!("{KEYS_DIR}/bot1.json"));
     let bot2_kp = load_or_create(&format!("{KEYS_DIR}/bot2.json"));
@@ -516,6 +721,7 @@ fn main() {
         },
     ];
     let faction_keys: Vec<Pubkey> = bots.iter().map(|b| b.faction).collect();
+    let mut faction_keys = faction_keys;
 
     println!("=== ALASHI devnet party ===");
     println!("program: {}", id());
@@ -571,6 +777,17 @@ fn main() {
                 b.voted = false;
             }
             last_stamp = Some(stamp);
+        }
+        if g.faction_count as usize != faction_keys.len() {
+            let found = discover_factions(&rpc, &game);
+            if !found.is_empty() {
+                println!(
+                    "[factions] в партии {} фракций, я знал {}: обновляю список по цепи",
+                    g.faction_count,
+                    faction_keys.len()
+                );
+                faction_keys = found;
+            }
         }
 
         match g.phase {
@@ -931,9 +1148,12 @@ fn main() {
                 demo_say("РАССКАЗЧИК: settle — банк делится 50/30 по богатству, рейк 5% виден в эксплорере");
                 let bank = rpc.get_balance(&game).unwrap_or(0);
                 println!("bank before settle: {bank} lamports");
-                let wallets: Vec<Pubkey> = bots.iter().map(|b| b.kp.pubkey()).collect();
-                let fkeys: Vec<Pubkey> = bots.iter().map(|b| b.faction).collect();
-                if !g.settled {
+                let fkeys = discover_factions(&rpc, &game);
+                let wallets: Vec<Pubkey> = fkeys
+                    .iter()
+                    .filter_map(|f| fetch_faction(&rpc, f).map(|fa| fa.wallet))
+                    .collect();
+                if !g.settled && fkeys.len() == wallets.len() && !fkeys.is_empty() {
                     send_ix(
                         &rpc,
                         &bots[0].kp,
@@ -942,14 +1162,14 @@ fn main() {
                             game,
                             &fkeys,
                             &wallets,
-                            bots[0].kp.pubkey(),
+                            g.admin,
                         ),
                     );
                     sleep(Duration::from_secs(5));
                     let after = rpc.get_balance(&game).unwrap_or(0);
                     println!("bank after settle: {after} lamports");
-                    let rake_wallet = rpc.get_balance(&bots[0].kp.pubkey()).unwrap_or(0);
-                    println!("rake receiver balance: {rake_wallet} lamports");
+                    let rake_wallet = rpc.get_balance(&g.admin).unwrap_or(0);
+                    println!("rake receiver ({}) balance: {} lamports", g.admin, rake_wallet);
                 }
                 println!("game: https://explorer.solana.com/address/{game}?cluster=devnet");
                 break;

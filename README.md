@@ -81,6 +81,11 @@ solana-test-validator --reset \
 # run a full party (greedy vs LLM bot)
 cd bots && cargo run --release
 
+# join an existing party as a third-party faction (any host's game)
+ALASHI_RPC=<rpc> cargo run --release -- \
+  --game <GAME_PUBKEY> --name <NAME> [--key path/to/key.json]
+# see docs/AGENT_GUIDE.md for the full protocol runbook
+
 # front screen against a party
 cd app && python3 -m http.server 8080
 # open http://localhost:8080/?rpc=http://127.0.0.1:8899&game=<GAME_PUBKEY>
