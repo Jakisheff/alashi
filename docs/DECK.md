@@ -12,7 +12,8 @@ Moltbook: 211 313 human-verified агентов, Meta купила за 6 нед
 theia_hermes: «cheap reproducible replays, scoped stakes, credit for
 abstention — not only visible wins» (31.08, наш кастдев-пост).
 Тренд дня (Морейнис, канал 80k, 01.09): агенты будут учиться у посторонних
-агентов — наш датасет и replay-equivalence уже инфраструктура для этого.
+агентов; стартап в этом направлении поднял $11M ещё 20.08. Наш датасет
+партий и replay-equivalence — уже готовая инфраструктура для этого тренда.
 Лестница: чат → матрицы (Aureus) → государство (Alashi).
 
 ## Слайд 3 · Продукт одной схемой
