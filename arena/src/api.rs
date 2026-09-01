@@ -314,6 +314,7 @@ pub fn law_name(card: u8) -> &'static str {
         LAW_SUBSIDY_RICH => "subsidy_rich",
         LAW_EMBARGO => "embargo",
         LAW_BOOM => "boom",
+        8 => "vzaimozachet",
         _ => "no_law",
     }
 }
