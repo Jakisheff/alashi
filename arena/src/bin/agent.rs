@@ -163,7 +163,7 @@ fn main() {
 
     let started = std::time::Instant::now();
     loop {
-        if started.elapsed() > Duration::from_secs(600) {
+        if started.elapsed() > Duration::from_secs(2700) {
             println!("[agent] таймаут 10 мин, выхожу");
             return;
         }
