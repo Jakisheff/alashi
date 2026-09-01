@@ -60,6 +60,9 @@ pub const CUSTOMS_THRESHOLD: u64 = 64;
 pub const CREDIT_NUM: u64 = 125;
 pub const CREDIT_DEN: u64 = 100;
 pub const LAW_AMNESTY: u8 = 8;
+// M6 валютчик: обмен кэш <-> твёрдая валюта ×0.8 (спред 20%)
+pub const EXCHANGE_NUM: u64 = 80;
+pub const EXCHANGE_DEN: u64 = 100;
 // M5 завод: +5% банка из рейка фракции с макс влиянием
 pub const FACTORY_NUM: u64 = 5;
 pub const FACTORY_DEN: u64 = 100;

@@ -224,6 +224,7 @@ fn advance_inner(
                 game.phase = Phase::Market;
                 if game.epoch == EPOCH_90S {
                     // M1 девальвация: кэш ×0.85 в начале каждого раунда
+                    // (твёрдая валюта M6 не девальвирует)
                     for f in factions.iter_mut() {
                         let before = f.cash;
                         f.cash = f.cash / DEPRECIATION_DEN * DEPRECIATION_NUM;
@@ -495,5 +496,35 @@ mod tests {
         let _ = advance_inner(&mut g, &mut fs, 20, Some(LAW_STATUS_QUO), 0).unwrap();
         assert_eq!(fs[0].promissory, 0);
         assert_eq!(fs[0].cash, 10 * PESO / 100 * 85 + 40 * PESO, "девальвация, затем гашение");
+    }
+
+    #[test]
+    fn m6_exchanger_spread_and_hard_survives_depreciation() {
+        use crate::sim::Simulator;
+        let mut sim = Simulator::new(1, 10 * PESO, 0, 0);
+        sim.game.epoch = EPOCH_90S;
+        sim.join(Pubkey::new_from_array([9; 32]), "A").unwrap();
+        sim.join(Pubkey::new_from_array([8; 32]), "B").unwrap();
+        sim.factions[0].cash = 100 * PESO;
+        assert!(sim.exchange(0, true).is_err(), "в лобби обмен закрыт");
+        sim.advance(100, 0).unwrap();
+        let got = sim.exchange(0, true).unwrap();
+        assert_eq!(got, 80 * PESO, "спред 20%");
+        assert_eq!((sim.factions[0].cash, sim.factions[0].hard), (0, 80 * PESO));
+        let back = sim.exchange(0, false).unwrap();
+        assert_eq!(back, 64 * PESO, "обратный обмен ещё минус 20%");
+        sim.factions[0].cash = 100 * PESO;
+        sim.exchange(0, true).unwrap();
+        sim.advance(200, 1).unwrap();
+        sim.advance(300, 2).unwrap();
+        sim.advance(400, 3).unwrap(); // вход в r2: кэш бы девальвнул
+        assert_eq!(sim.factions[0].cash, 0);
+        assert_eq!(sim.factions[0].hard, 80 * PESO, "твёрдая валюта не тает");
+        let mut sim2 = Simulator::new(2, 10 * PESO, 0, 0);
+        sim2.game.epoch = EPOCH_CLASSIC;
+        sim2.join(Pubkey::new_from_array([7; 32]), "A").unwrap();
+        sim2.join(Pubkey::new_from_array([6; 32]), "B").unwrap();
+        sim2.advance(100, 0).unwrap();
+        assert!(sim2.exchange(0, true).is_err(), "только в эпохе 90-х");
     }
 }

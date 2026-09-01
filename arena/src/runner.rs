@@ -242,7 +242,8 @@ pub fn settle(sim: &Simulator, entry_fee: u64) -> (Vec<usize>, Vec<u64>, u64, u6
         .iter()
         .map(|f| FactionSnapshot {
             wallet: f.wallet,
-            cash: f.cash,
+            // SPEC_EPOCH_90S M6: твёрдая валюта идёт в ранг по номиналу
+            cash: f.cash + f.hard,
             influence: f.influence,
             alive: f.alive,
         })
@@ -282,8 +283,21 @@ pub fn settle(sim: &Simulator, entry_fee: u64) -> (Vec<usize>, Vec<u64>, u64, u6
     (ranks, payouts, rake, bank)
 }
 
-pub fn apply_market(sim: &mut Simulator, i: usize, act: &MarketAction) -> ActionLog {
-    let phase = "market";
+/// Пустой лог-заготовка (для сервисных операций вроде валютчика).
+pub fn empty_log() -> ActionLog {
+    ActionLog {
+        phase: "",
+        actor: 0,
+        action: "".into(),
+        detail: serde_json::json!({}),
+        ok: false,
+        err: None,
+        cash_after: None,
+        goods_after: None,
+    }
+}
+
+pub fn apply_market(sim: &mut Simulator, i: usize, act: &MarketAction) -> ActionLog {    let phase = "market";
     match act {
         MarketAction::Sell(units) => match sim.sell(i, *units) {
             Ok(gross) => {

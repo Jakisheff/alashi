@@ -272,6 +272,42 @@ impl Simulator {
         Ok(self.factions[from].influence)
     }
 
+    /// SPEC_EPOCH_90S M6: валютчик. Обмен кэш ↔ твёрдая валюта ×0.8.
+    /// Сервисная операция: доступна в любой игровой фазе и не сжигает
+    /// ход (acted_stamp не трогаем). Твёрдая валюта не девальвирует,
+    /// участвует в ранге, крыша с неё не берёт.
+    pub fn exchange(&mut self, idx: usize, to_hard: bool) -> Result<u64, GameError> {
+        if self.game.epoch != EPOCH_90S {
+            return Err(GameError::WrongPhase);
+        }
+        if idx >= self.factions.len() {
+            return Err(GameError::InvalidFactionSet);
+        }
+        let phase = self.game.phase;
+        if !matches!(phase, Phase::Market | Phase::Action | Phase::Law) {
+            return Err(GameError::WrongPhase);
+        }
+        if to_hard {
+            let pesetas = self.factions[idx].cash;
+            let got = pesetas * EXCHANGE_NUM / EXCHANGE_DEN;
+            if got == 0 {
+                return Err(GameError::NotEnoughCash);
+            }
+            self.factions[idx].cash -= pesetas;
+            self.factions[idx].hard += got;
+            Ok(got)
+        } else {
+            let hard = self.factions[idx].hard;
+            let got = hard * EXCHANGE_NUM / EXCHANGE_DEN;
+            if got == 0 {
+                return Err(GameError::NotEnoughCash);
+            }
+            self.factions[idx].hard -= hard;
+            self.factions[idx].cash += got;
+            Ok(got)
+        }
+    }
+
     pub fn vote(&mut self, idx: usize, choice: VoteChoice) -> Result<(), GameError> {
         let g = &mut self.game;
         let f = &mut self.factions[idx];

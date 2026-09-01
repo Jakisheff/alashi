@@ -280,6 +280,7 @@ fn state_json(game_id: u64, entry: &GameEntry) -> serde_json::Value {
                 "alive": f.alive,
                 "grey_goods": f.grey_goods,
                 "promissory": f.promissory,
+                "hard": f.hard,
                 "roof_to": if f.roof_armed { serde_json::json!(f.roof_to) } else { serde_json::Value::Null },
             })
         }).collect::<Vec<_>>(),
@@ -462,6 +463,38 @@ fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json
             let to = p.get("to").and_then(|v| v.as_u64()).unwrap_or(usize::MAX as u64) as usize;
             runner::apply_action(entry.sim_mut(), idx, &ActionAction::Roof { to })
         }
+        "buy_hard" | "sell_hard" => {
+            // SPEC_EPOCH_90S M6: валютчик, сервисная операция без сжигания хода
+            let to_hard = action == "buy_hard";
+            let sim = entry.sim_mut();
+            match sim.exchange(idx, to_hard) {
+                Ok(amount) => {
+                    let f = &sim.factions[idx];
+                    ActionLog {
+                        phase: "money",
+                        actor: idx,
+                        action: action.into(),
+                        detail: serde_json::json!({
+                            "amount": amount,
+                            "hard_after": f.hard,
+                            "cash_after": f.cash,
+                        }),
+                        ok: true,
+                        err: None,
+                        cash_after: Some(f.cash),
+                        goods_after: Some(f.goods),
+                    }
+                }
+                Err(e) => {
+                    let mut l = runner::empty_log();
+                    l.phase = "money".into();
+                    l.actor = idx;
+                    l.action = action.into();
+                    l.err = Some(format!("{:?}", e));
+                    l
+                }
+            }
+        }
         "donkey" => runner::apply_action(entry.sim_mut(), idx, &ActionAction::Donkey),
         "bribe" => {
             let to = p.get("to").and_then(|v| v.as_u64()).unwrap_or(usize::MAX as u64) as usize;
@@ -482,7 +515,7 @@ fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json
             let w = entry.wallets[idx];
             runner::apply_law(entry.sim_mut(), idx, &LawAction::Veto, &w)
         }
-        _ => return err_json("bad_action", "sell|sell_credit|buy|produce|shuttle|roof|donkey|bribe|vote|veto"),
+        _ => return err_json("bad_action", "sell|sell_credit|buy|buy_hard|sell_hard|produce|shuttle|roof|donkey|bribe|vote|veto"),
     };
     let ok = log.ok;
     let err = log.err.clone();
