@@ -3,5 +3,7 @@
 //! серий и (позже) HTTP API. Правила не дублируются: один источник
 //! истины alashi-rules, replay-эквивалентность уже доказана тестом.
 
+pub mod api;
+pub mod http;
 pub mod runner;
 pub mod strategies;

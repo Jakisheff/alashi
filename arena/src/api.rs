@@ -1,0 +1,631 @@
+//! HTTP API арены: партии для внешних агентов поверх чистых правил.
+//! Каждое действие агента = один вызов /act с токеном. Кранк фаз —
+//! фоновый поток по таймеру ИЛИ permissionless POST /advance (как ончейн).
+
+use crate::http::{read_request, respond, Request};
+use crate::runner::{self, ActionLog};
+use crate::strategies::{ActionAction, LawAction, MarketAction};
+use crate::strategies::{eff_price, ALL};
+use alashi_rules::anchor_lang::prelude::Pubkey;
+use alashi_rules::constants::*;
+use alashi_rules::error::GameError;
+use alashi_rules::sim::Simulator;
+use alashi_rules::state::{Phase, VoteChoice};
+use sha2::{Digest, Sha256};
+use std::collections::HashMap;
+use std::net::{TcpListener, TcpStream};
+use std::sync::atomic::{AtomicU64, Ordering};
+use std::sync::{Arc, Mutex};
+use std::time::{SystemTime, UNIX_EPOCH};
+
+pub struct AgentRec {
+    pub name: String,
+    pub agent_id: String,
+    pub token: String,
+    pub model: String,
+    pub faction_idx: usize,
+}
+
+pub struct GameEntry {
+    pub sim: Simulator,
+    pub entry_fee: u64,
+    pub wallets: Vec<Pubkey>,
+    pub agents: Vec<AgentRec>,
+    pub created: i64,
+}
+
+pub struct AppState {
+    pub games: Mutex<HashMap<u64, GameEntry>>,
+    pub next_id: AtomicU64,
+    pub completed: Mutex<Vec<String>>,
+    pub master_seed: AtomicU64,
+}
+
+fn now() -> i64 {
+    SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .map(|d| d.as_secs() as i64)
+        .unwrap_or(0)
+}
+
+fn splitmix64(x: u64) -> u64 {
+    let mut z = x.wrapping_add(0x9E3779B97F4A7C15);
+    z = (z ^ (z >> 30)).wrapping_mul(0xBF58476D1CE4E5B9);
+    z = (z ^ (z >> 27)).wrapping_mul(0x94D049BB133111EB);
+    z ^ (z >> 31)
+}
+
+fn random_hex() -> String {
+    use std::io::Read;
+    let mut b = [0u8; 16];
+    let ok = std::fs::File::open("/dev/urandom")
+        .and_then(|mut f| f.read_exact(&mut b))
+        .is_ok();
+    if ok {
+        return b.iter().map(|x| format!("{:02x}", x)).collect();
+    }
+    let t = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .map(|d| d.as_nanos() as u64)
+        .unwrap_or(0);
+    format!("{:032x}", splitmix64(t ^ 0xDEAD))
+}
+
+pub fn agent_id_of(model: &str, prompt: &str) -> String {
+    let mut h = Sha256::new();
+    h.update(model.as_bytes());
+    h.update(b"|");
+    h.update(prompt.as_bytes());
+    h.finalize().iter().map(|b| format!("{:02x}", b)).collect()
+}
+
+pub fn new_state() -> Arc<AppState> {
+    Arc::new(AppState {
+        games: Mutex::new(HashMap::new()),
+        next_id: AtomicU64::new(1),
+        completed: Mutex::new(Vec::new()),
+        master_seed: AtomicU64::new(
+            SystemTime::now()
+                .duration_since(UNIX_EPOCH)
+                .map(|d| d.as_secs())
+                .unwrap_or(1),
+        ),
+    })
+}
+
+// ---------- служебное ----------
+
+fn game_seed(state: &AppState, game_id: u64) -> u64 {
+    splitmix64(state.master_seed.load(Ordering::Relaxed) ^ splitmix64(game_id))
+}
+
+fn settle_and_record(state: &AppState, game_id: u64) {
+    let mut rec = None;
+    {
+        let mut games = state.games.lock().unwrap();
+        if let Some(entry) = games.get_mut(&game_id) {
+            let (ranks, payouts, rake, bank) = runner::settle(&entry.sim, entry.entry_fee);
+            let agents: Vec<serde_json::Value> = entry
+                .agents
+                .iter()
+                .map(|a| {
+                    serde_json::json!({
+                        "name": a.name,
+                        "agent_id": a.agent_id,
+                        "model": a.model,
+                    })
+                })
+                .collect();
+            let v = serde_json::json!({
+                "game_id": game_id,
+                "entry_fee": entry.entry_fee,
+                "n_factions": entry.sim.factions.len(),
+                "finished_at": now(),
+                "agents": agents,
+                "ranks": ranks,
+                "payouts": payouts,
+                "rake": rake,
+                "bank": bank,
+                "final_cash": entry.sim.factions.iter().map(|f| f.cash).collect::<Vec<_>>(),
+                "final_goods": entry.sim.factions.iter().map(|f| f.goods).collect::<Vec<_>>(),
+                "final_influence": entry.sim.factions.iter().map(|f| f.influence).collect::<Vec<_>>(),
+            });
+            rec = Some(v.to_string());
+        }
+        games.remove(&game_id);
+    }
+    if let Some(r) = rec {
+        state.completed.lock().unwrap().push(r);
+    }
+}
+
+/// Один тик кранка: двигает все партии, чьё время фазы вышло.
+pub fn crank_once(state: &AppState) {
+    let t = now();
+    let mut to_settle: Vec<u64> = Vec::new();
+    let mut to_expire: Vec<u64> = Vec::new();
+    let mut games = state.games.lock().unwrap();
+    for (&gid, entry) in games.iter_mut() {
+        let seed = splitmix64(game_seed(state, gid) ^ (entry.sim.game.round as u64));
+        match entry.sim.game.phase {
+            Phase::Lobby => {
+                let full = entry.sim.game.faction_count >= MAX_FACTIONS;
+                let late = t >= entry.sim.game.phase_ends_at;
+                if full || late {
+                    if entry.sim.game.faction_count >= MIN_FACTIONS {
+                        if entry.sim.advance(t, seed).is_ok() {
+                            entry.sim.game.phase_ends_at = t + entry.sim.game.phase_duration;
+                        }
+                    } else if late {
+                        to_expire.push(gid);
+                    }
+                }
+            }
+            Phase::Finished => to_settle.push(gid),
+            Phase::Aborted => to_expire.push(gid),
+            _ => {
+                if t >= entry.sim.game.phase_ends_at {
+                    if entry.sim.advance(t, seed).is_ok() {
+                        entry.sim.game.phase_ends_at = t + entry.sim.game.phase_duration;
+                    }
+                    if entry.sim.game.phase == Phase::Finished {
+                        to_settle.push(gid);
+                    }
+                }
+            }
+        }
+    }
+    drop(games);
+    for gid in to_settle {
+        settle_and_record(state, gid);
+    }
+    if !to_expire.is_empty() {
+        let mut games = state.games.lock().unwrap();
+        for gid in to_expire {
+            games.remove(&gid);
+        }
+    }
+}
+
+// ---------- JSON состояния ----------
+
+fn phase_name(p: Phase) -> &'static str {
+    match p {
+        Phase::Lobby => "lobby",
+        Phase::Market => "market",
+        Phase::Action => "action",
+        Phase::Law => "law",
+        Phase::Finished => "finished",
+        Phase::Aborted => "aborted",
+    }
+}
+
+fn state_json(game_id: u64, entry: &GameEntry) -> serde_json::Value {
+    let g = &entry.sim.game;
+    let stamp = g.stamp();
+    let price_now = eff_price(g.sold_this_round, g.active_price_shift, g.active_boom);
+    serde_json::json!({
+        "game_id": game_id,
+        "phase": phase_name(g.phase),
+        "round": g.round,
+        "entry_fee": entry.entry_fee,
+        "phase_ends_at": g.phase_ends_at,
+        "now": now(),
+        "law_card": if g.phase == Phase::Law { Some(g.law_card) } else { None },
+        "law_card_name": if g.phase == Phase::Law { Some(law_name(g.law_card)) } else { None },
+        "sold_counter": g.sold_this_round,
+        "price_now": price_now,
+        "price_table": PRICE_TABLE,
+        "tax_bps": g.active_tax_bps,
+        "price_shift": g.active_price_shift,
+        "boom": g.active_boom,
+        "laws_passed": g.laws_passed,
+        "last_law_passed": g.last_law_passed,
+        "veto_pending": g.veto_pending,
+        "president_idx": entry.sim.factions.iter().position(|f| f.wallet == g.president),
+        "yes_influence": g.yes_influence,
+        "no_influence": g.no_influence,
+        "factions": entry.sim.factions.iter().enumerate().map(|(i, f)| {
+            serde_json::json!({
+                "idx": i,
+                "name": f.name,
+                "agent_id": entry.agents.iter().find(|a| a.faction_idx == i).map(|a| a.agent_id.clone()),
+                "cash": f.cash,
+                "goods": f.goods,
+                "influence": f.influence,
+                "acted": f.alive && f.acted_stamp == stamp,
+                "voted": f.alive && f.voted_stamp == stamp,
+                "is_president": f.is_president,
+                "alive": f.alive,
+            })
+        }).collect::<Vec<_>>(),
+    })
+}
+
+pub fn law_name(card: u8) -> &'static str {
+    match card {
+        LAW_STATUS_QUO => "status_quo",
+        LAW_TAX_10 => "tax_10",
+        LAW_TAX_20 => "tax_20",
+        LAW_SUBSIDY_PRODUCE => "subsidy_produce",
+        LAW_SUBSIDY_POOR => "subsidy_poor",
+        LAW_SUBSIDY_RICH => "subsidy_rich",
+        LAW_EMBARGO => "embargo",
+        LAW_BOOM => "boom",
+        _ => "no_law",
+    }
+}
+
+// ---------- обработчики ----------
+
+fn err_json(code: &str, msg: &str) -> serde_json::Value {
+    serde_json::json!({"ok": false, "error": code, "message": msg})
+}
+
+fn h_new_game(state: &AppState, body: &serde_json::Value) -> serde_json::Value {
+    let entry_fee = body
+        .get("entry_fee")
+        .and_then(|v| v.as_u64())
+        .unwrap_or(10 * PESO);
+    let phase_duration = body
+        .get("phase_duration")
+        .and_then(|v| v.as_i64())
+        .unwrap_or(30);
+    if entry_fee == 0 || phase_duration < 1 {
+        return err_json("bad_params", "entry_fee > 0, phase_duration >= 1");
+    }
+    let game_id = state.next_id.fetch_add(1, Ordering::SeqCst);
+    let entropy = alashi_rules::constants::ENTROPY_SLOTHASH;
+    let mut sim = Simulator::new(game_id, entry_fee, phase_duration, entropy);
+    sim.game.phase_ends_at = now() + phase_duration * LOBBY_MULT;
+    let entry = GameEntry {
+        sim,
+        entry_fee,
+        wallets: vec![],
+        agents: vec![],
+        created: now(),
+    };
+    let v = state_json(game_id, &entry);
+    state.games.lock().unwrap().insert(game_id, entry);
+    serde_json::json!({"ok": true, "game_id": game_id, "state": v})
+}
+
+fn h_join(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json::Value {
+    let name = body
+        .get("name")
+        .and_then(|v| v.as_str())
+        .unwrap_or("Agent")
+        .to_string();
+    let model = body
+        .get("model")
+        .and_then(|v| v.as_str())
+        .unwrap_or("unknown")
+        .to_string();
+    let prompt = body
+        .get("prompt")
+        .and_then(|v| v.as_str())
+        .unwrap_or("")
+        .to_string();
+    if name.len() > MAX_NAME {
+        return err_json("name_too_long", "имя до 16 байт");
+    }
+    let agent_id = agent_id_of(&model, &prompt);
+    let token = random_hex();
+    let mut games = state.games.lock().unwrap();
+    let Some(entry) = games.get_mut(&game_id) else {
+        return err_json("unknown_game", "партия не найдена или закрыта");
+    };
+    if entry.agents.len() >= MAX_FACTIONS as usize {
+        return err_json("game_full", "мест нет");
+    }
+    // Кошелёк детерминирован из agent_id + game_id.
+    let mut h = Sha256::new();
+    h.update(agent_id.as_bytes());
+    h.update(&game_id.to_le_bytes());
+    let d: [u8; 32] = h.finalize().into();
+    let wallet = Pubkey::new_from_array(d);
+    if let Err(e) = entry.sim.join(wallet, &name) {
+        return err_json("join_failed", &format!("{:?}", e));
+    }
+    let faction_idx = entry.sim.factions.len() - 1;
+    entry.wallets.push(wallet);
+    entry.agents.push(AgentRec {
+        name,
+        agent_id: agent_id.clone(),
+        token: token.clone(),
+        model,
+        faction_idx,
+    });
+    let v = state_json(game_id, entry);
+    serde_json::json!({"ok": true, "agent_id": agent_id, "token": token, "faction_idx": faction_idx, "state": v})
+}
+
+fn h_state(state: &AppState, game_id: u64) -> serde_json::Value {
+    let games = state.games.lock().unwrap();
+    match games.get(&game_id) {
+        Some(e) => serde_json::json!({"ok": true, "state": state_json(game_id, e)}),
+        None => {
+            let completed = state.completed.lock().unwrap();
+            let rec = completed
+                .iter()
+                .filter_map(|l| serde_json::from_str::<serde_json::Value>(l).ok())
+                .find(|r| r["game_id"].as_u64() == Some(game_id));
+            match rec {
+                Some(r) => serde_json::json!({"ok": true, "finished": true, "result": r}),
+                None => err_json("unknown_game", "партия не найдена"),
+            }
+        }
+    }
+}
+
+fn log_to_json(l: &ActionLog) -> serde_json::Value {
+    serde_json::json!({
+        "actor": l.actor,
+        "action": l.action,
+        "detail": l.detail,
+        "ok": l.ok,
+        "err": l.err,
+        "cash_after": l.cash_after,
+        "goods_after": l.goods_after,
+    })
+}
+
+fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json::Value {
+    let token = body.get("token").and_then(|v| v.as_str()).unwrap_or("");
+    let action = body.get("action").and_then(|v| v.as_str()).unwrap_or("");
+    let p = body.get("params").cloned().unwrap_or(serde_json::json!({}));
+    let mut games = state.games.lock().unwrap();
+    let Some(entry) = games.get_mut(&game_id) else {
+        return err_json("unknown_game", "партия не найдена или закрыта");
+    };
+    let Some(agent) = entry.agents.iter().find(|a| a.token == token) else {
+        return err_json("bad_token", "токен не найден");
+    };
+    let idx = agent.faction_idx;
+    let log: ActionLog = match action {
+        "sell" => {
+            let units = p.get("units").and_then(|v| v.as_u64()).unwrap_or(0) as u16;
+            runner::apply_market(entry.sim_mut(), idx, &MarketAction::Sell(units))
+        }
+        "buy" => {
+            let units = p.get("units").and_then(|v| v.as_u64()).unwrap_or(0) as u16;
+            runner::apply_market(entry.sim_mut(), idx, &MarketAction::Buy(units))
+        }
+        "produce" => runner::apply_action(entry.sim_mut(), idx, &ActionAction::Produce),
+        "donkey" => runner::apply_action(entry.sim_mut(), idx, &ActionAction::Donkey),
+        "bribe" => {
+            let to = p.get("to").and_then(|v| v.as_u64()).unwrap_or(usize::MAX as u64) as usize;
+            let amount = p.get("amount").and_then(|v| v.as_u64()).unwrap_or(0);
+            runner::apply_action(entry.sim_mut(), idx, &ActionAction::Bribe { to, amount })
+        }
+        "vote" => {
+            let choice = match p.get("choice").and_then(|v| v.as_str()).unwrap_or("") {
+                "yes" => VoteChoice::Yes,
+                "no" => VoteChoice::No,
+                "abstain" => VoteChoice::Abstain,
+                _ => return err_json("bad_choice", "choice: yes|no|abstain"),
+            };
+            let w = entry.wallets[idx];
+            runner::apply_law(entry.sim_mut(), idx, &LawAction::Vote(choice), &w)
+        }
+        "veto" => {
+            let w = entry.wallets[idx];
+            runner::apply_law(entry.sim_mut(), idx, &LawAction::Veto, &w)
+        }
+        _ => return err_json("bad_action", "sell|buy|produce|donkey|bribe|vote|veto"),
+    };
+    let ok = log.ok;
+    let err = log.err.clone();
+    let v = state_json(game_id, entry);
+    serde_json::json!({"ok": ok, "error": err, "action_log": log_to_json(&log), "state": v})
+}
+
+fn h_advance(state: &AppState, game_id: u64) -> serde_json::Value {
+    let t = now();
+    let mut games = state.games.lock().unwrap();
+    let Some(entry) = games.get_mut(&game_id) else {
+        return err_json("unknown_game", "партия не найдена или закрыта");
+    };
+    let seed = splitmix64(game_seed(state, game_id) ^ (entry.sim.game.round as u64));
+    match entry.sim.advance(t, seed) {
+        Ok(_) => {
+            entry.sim.game.phase_ends_at = t + entry.sim.game.phase_duration;
+            let finished = entry.sim.game.phase == Phase::Finished;
+            let v = state_json(game_id, entry);
+            drop(games);
+            if finished {
+                settle_and_record(state, game_id);
+            }
+            serde_json::json!({"ok": true, "finished": finished, "state": v})
+        }
+        Err(e) => serde_json::json!({"ok": false, "error": format!("{:?}", e), "state": state_json(game_id, entry)}),
+    }
+}
+
+fn h_games(state: &AppState) -> serde_json::Value {
+    let games = state.games.lock().unwrap();
+    let list: Vec<serde_json::Value> = games
+        .iter()
+        .map(|(&gid, e)| {
+            serde_json::json!({
+                "game_id": gid,
+                "phase": phase_name(e.sim.game.phase),
+                "round": e.sim.game.round,
+                "factions": e.sim.game.faction_count,
+                "names": e.sim.factions.iter().map(|f| f.name.clone()).collect::<Vec<_>>(),
+                "ends_in": e.sim.game.phase_ends_at - now(),
+            })
+        })
+        .collect();
+    serde_json::json!({"ok": true, "games": list})
+}
+
+fn h_leaderboard(state: &AppState) -> serde_json::Value {
+    let completed = state.completed.lock().unwrap();
+    let mut rows: HashMap<String, serde_json::Value> = HashMap::new();
+    for line in completed.iter() {
+        let Ok(r) = serde_json::from_str::<serde_json::Value>(line) else {
+            continue;
+        };
+        let ranks = r["ranks"].as_array().cloned().unwrap_or_default();
+        let payouts = r["payouts"].as_array().cloned().unwrap_or_default();
+        let agents = r["agents"].as_array().cloned().unwrap_or_default();
+        for (place, fi) in ranks.iter().enumerate() {
+            let fi = fi.as_u64().unwrap_or(0) as usize;
+            let Some(a) = agents.get(fi) else { continue };
+            let key = a["agent_id"].as_str().unwrap_or("?").to_string();
+            let e = rows
+                .entry(key.clone())
+                .or_insert_with(|| serde_json::json!({"agent_id": key, "name": a["name"], "model": a["model"], "games": 0, "wins": 0, "rank_sum": 0, "payout": 0}));
+            e["games"] = json_add(&e["games"], 1);
+            e["rank_sum"] = json_add(&e["rank_sum"], place as u64);
+            e["payout"] = json_add(&e["payout"], payouts.get(fi).and_then(|x| x.as_u64()).unwrap_or(0));
+            if place == 0 {
+                e["wins"] = json_add(&e["wins"], 1);
+            }
+        }
+    }
+    let mut out: Vec<serde_json::Value> = rows.into_values().collect();
+    out.sort_by_key(|e| {
+        std::cmp::Reverse((e["payout"].as_f64().unwrap_or(0.0) * 1e6) as u64)
+    });
+    for e in out.iter_mut() {
+        let g = e["games"].as_u64().unwrap_or(1).max(1);
+        e["avg_rank"] = serde_json::json!(e["rank_sum"].as_f64().unwrap_or(0.0) / g as f64);
+    }
+    serde_json::json!({"ok": true, "leaderboard": out})
+}
+
+fn json_add(v: &serde_json::Value, add: u64) -> serde_json::Value {
+    serde_json::json!(v.as_u64().unwrap_or(0) + add)
+}
+
+fn h_export(state: &AppState) -> String {
+    state.completed.lock().unwrap().join("\n")
+}
+
+fn root_doc() -> serde_json::Value {
+    serde_json::json!({
+        "ok": true,
+        "alashi arena v0": "off-chain партии на чистых правилах (alashi-rules)",
+        "endpoints": {
+            "POST /game/new": "{\"entry_fee\"?, \"phase_duration\"?} → game_id",
+            "POST /game/:id/join": "{\"name\", \"model\", \"prompt\"} → agent_id + token",
+            "GET  /game/:id/state": "публичное состояние партии",
+            "POST /game/:id/act": "{\"token\", \"action\": sell|buy|produce|donkey|bribe|vote|veto, \"params\"}",
+            "POST /game/:id/advance": "permissionless кранк (как ончейн)",
+            "GET  /games": "активные партии",
+            "GET  /leaderboard": "рейтинг агентов по завершённым партиям",
+            "GET  /export": "завершённые партии JSONL",
+        },
+        "strategies_for_selfplay": ALL,
+    })
+}
+
+pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
+    let path = req.path.split('?').next().unwrap_or("").to_string();
+    let segs: Vec<&str> = path.trim_matches('/').split('/').collect();
+    let body_v: serde_json::Value = serde_json::from_slice(&req.body).unwrap_or(serde_json::json!({}));
+    let (status, body) = match (req.method.as_str(), segs.as_slice()) {
+        ("GET", []) => ("200 OK", root_doc().to_string()),
+        ("POST", ["game", "new"]) => ("200 OK", h_new_game(state, &body_v).to_string()),
+        ("POST", ["game", id, "join"]) => match id.parse::<u64>() {
+            Ok(id) => ("200 OK", h_join(state, id, &body_v).to_string()),
+            Err(_) => ("400 Bad Request", err_json("bad_id", "game_id не число").to_string()),
+        },
+        ("GET", ["game", id, "state"]) => match id.parse::<u64>() {
+            Ok(id) => ("200 OK", h_state(state, id).to_string()),
+            Err(_) => ("400 Bad Request", err_json("bad_id", "game_id не число").to_string()),
+        },
+        ("POST", ["game", id, "act"]) => match id.parse::<u64>() {
+            Ok(id) => ("200 OK", h_act(state, id, &body_v).to_string()),
+            Err(_) => ("400 Bad Request", err_json("bad_id", "game_id не число").to_string()),
+        },
+        ("POST", ["game", id, "advance"]) => match id.parse::<u64>() {
+            Ok(id) => ("200 OK", h_advance(state, id).to_string()),
+            Err(_) => ("400 Bad Request", err_json("bad_id", "game_id не число").to_string()),
+        },
+        ("GET", ["games"]) => ("200 OK", h_games(state).to_string()),
+        ("GET", ["leaderboard"]) => ("200 OK", h_leaderboard(state).to_string()),
+        ("GET", ["export"]) => {
+            let l = h_export(state);
+            let body = if l.is_empty() {
+                "[]".to_string()
+            } else {
+                format!("[{}]", l.split('\n').map(|x| x.to_string()).collect::<Vec<_>>().join(","))
+            };
+            ("200 OK", body)
+        }
+        _ => (
+            "404 Not Found",
+            err_json("not_found", "см. GET / для списка эндпоинтов").to_string(),
+        ),
+    };
+    respond(stream, status, &body);
+}
+
+/// Поднять API и вернуть фактический адрес (порт 0 = свободный).
+/// Для тестов и arenad.
+pub fn serve_on(
+    state: Arc<AppState>,
+    addr: &str,
+    tick_ms: u64,
+) -> std::io::Result<std::net::SocketAddr> {
+    let listener = TcpListener::bind(addr)?;
+    let local = listener.local_addr()?;
+    let crank_state = Arc::clone(&state);
+    std::thread::spawn(move || loop {
+        std::thread::sleep(std::time::Duration::from_millis(tick_ms));
+        crank_once(&crank_state);
+    });
+    std::thread::spawn(move || {
+        for stream in listener.incoming() {
+            let Ok(mut stream) = stream else { continue };
+            let st = Arc::clone(&state);
+            std::thread::spawn(move || {
+                stream
+                    .set_read_timeout(Some(std::time::Duration::from_secs(10)))
+                    .ok();
+                if let Some(req) = read_request(&stream) {
+                    handle(&st, &req, &mut stream);
+                }
+            });
+        }
+    });
+    Ok(local)
+}
+
+pub fn serve(state: Arc<AppState>, addr: &str, tick_ms: u64) -> std::io::Result<()> {
+    let listener = TcpListener::bind(addr)?;
+    let crank_state = Arc::clone(&state);
+    std::thread::spawn(move || loop {
+        std::thread::sleep(std::time::Duration::from_millis(tick_ms));
+        crank_once(&crank_state);
+    });
+    println!("alashi arena on http://{}", addr);
+    let _ = std::io::Write::flush(&mut std::io::stdout());
+    for stream in listener.incoming() {
+        let Ok(mut stream) = stream else { continue };
+        let st = Arc::clone(&state);
+        std::thread::spawn(move || {
+            stream
+                .set_read_timeout(Some(std::time::Duration::from_secs(10)))
+                .ok();
+            if let Some(req) = read_request(&stream) {
+                handle(&st, &req, &mut stream);
+            }
+        });
+    }
+    Ok(())
+}
+
+// reimplement sim_mut: Simulator field доступен напрямую
+impl GameEntry {
+    fn sim_mut(&mut self) -> &mut Simulator {
+        &mut self.sim
+    }
+}
+
+// silence unused warnings for GameError import (используется в типах ошибок)
+#[allow(dead_code)]
+fn _unused(_e: GameError) {}

@@ -203,7 +203,30 @@ pub fn play_game(
     }
 
     // Settle: банк = взносы, резерва нет (нет рента), рейк по правилам.
-    let bank = cfg.entry_fee * n as u64;
+    let (ranks, payouts, rake, bank) = settle(&sim, cfg.entry_fee);
+    let rake = rake;
+
+    GameRecord {
+        game_id,
+        seed,
+        entry_fee: cfg.entry_fee,
+        n_factions: n,
+        strategies: strategies.iter().map(|s| s.name()).collect(),
+        phases,
+        final_cash: sim.factions.iter().map(|f| f.cash).collect(),
+        final_goods: sim.factions.iter().map(|f| f.goods).collect(),
+        final_influence: sim.factions.iter().map(|f| f.influence).collect(),
+        ranks,
+        payouts,
+        rake,
+        bank,
+    }
+}
+
+/// Settle по правилам для off-chain партии: банк = взносы, резерв 0.
+pub fn settle(sim: &Simulator, entry_fee: u64) -> (Vec<usize>, Vec<u64>, u64, u64) {
+    let n = sim.factions.len();
+    let bank = entry_fee * n as u64;
     let snaps: Vec<FactionSnapshot> = sim
         .factions
         .iter()
@@ -226,25 +249,10 @@ pub fn play_game(
     let mut rest: Vec<usize> = (0..n).filter(|i| !ranks.contains(i)).collect();
     rest.sort_by(|&a, &b| sim.factions[b].cash.cmp(&sim.factions[a].cash));
     ranks.extend(rest);
-
-    GameRecord {
-        game_id,
-        seed,
-        entry_fee: cfg.entry_fee,
-        n_factions: n,
-        strategies: strategies.iter().map(|s| s.name()).collect(),
-        phases,
-        final_cash: sim.factions.iter().map(|f| f.cash).collect(),
-        final_goods: sim.factions.iter().map(|f| f.goods).collect(),
-        final_influence: sim.factions.iter().map(|f| f.influence).collect(),
-        ranks,
-        payouts,
-        rake: plan.rake,
-        bank,
-    }
+    (ranks, payouts, plan.rake, bank)
 }
 
-fn apply_market(sim: &mut Simulator, i: usize, act: &MarketAction) -> ActionLog {
+pub fn apply_market(sim: &mut Simulator, i: usize, act: &MarketAction) -> ActionLog {
     let phase = "market";
     match act {
         MarketAction::Sell(units) => match sim.sell(i, *units) {
@@ -308,7 +316,7 @@ fn apply_market(sim: &mut Simulator, i: usize, act: &MarketAction) -> ActionLog 
     }
 }
 
-fn apply_action(sim: &mut Simulator, i: usize, act: &ActionAction) -> ActionLog {
+pub fn apply_action(sim: &mut Simulator, i: usize, act: &ActionAction) -> ActionLog {
     let phase = "action";
     match act {
         ActionAction::Produce => match sim.produce(i) {
@@ -339,7 +347,7 @@ fn apply_action(sim: &mut Simulator, i: usize, act: &ActionAction) -> ActionLog 
     }
 }
 
-fn apply_law(sim: &mut Simulator, i: usize, act: &LawAction, wallet: &Pubkey) -> ActionLog {
+pub fn apply_law(sim: &mut Simulator, i: usize, act: &LawAction, wallet: &Pubkey) -> ActionLog {
     let phase = "law";
     match act {
         LawAction::Vote(choice) => {
