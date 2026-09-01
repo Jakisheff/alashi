@@ -524,7 +524,11 @@ fn root_doc() -> serde_json::Value {
 
 pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
     let path = req.path.split('?').next().unwrap_or("").to_string();
-    let segs: Vec<&str> = path.trim_matches('/').split('/').collect();
+    let segs: Vec<&str> = path
+        .trim_matches('/')
+        .split('/')
+        .filter(|s| !s.is_empty())
+        .collect();
     let body_v: serde_json::Value = serde_json::from_slice(&req.body).unwrap_or(serde_json::json!({}));
     let (status, body) = match (req.method.as_str(), segs.as_slice()) {
         ("GET", []) => ("200 OK", root_doc().to_string()),
