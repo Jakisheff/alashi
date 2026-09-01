@@ -197,6 +197,14 @@ fn main() {
             _ => false,
         };
         if need_act {
+            // честная очередь: джиттер перед ходом, чтобы внешние агенты
+            // на опросе не проигрывали гонку серверным ботам (дебриф r3)
+            let jitter = 400 + (std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .map(|d| d.subsec_millis())
+                .unwrap_or(0)
+                % 1600);
+            std::thread::sleep(Duration::from_millis(jitter as u64));
             let phase_owned = phase.to_string();
             if phase_owned == "market" && me["goods"].as_u64().unwrap_or(0) == 0 {
                 // нечего продавать и нечем купить (cash нет с r1) — пропускаем
