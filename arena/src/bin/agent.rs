@@ -73,7 +73,7 @@ fn llm_ask(cfg: &LlmCfg, system: &str, user: &str) -> Option<String> {
     .to_string();
     let out = std::process::Command::new("curl")
         .args([
-            "-s", "-m", "14", "-X", "POST",
+            "-s", "-4", "-m", "14", "-X", "POST",
             &format!("{}/chat/completions", cfg.base),
             "-H", &format!("Authorization: Bearer {}", cfg.key),
             "-H", "Content-Type: application/json",
@@ -212,13 +212,19 @@ fn main() {
 /// (action, params) — решение LLM или фоллбэк.
 fn decide(llm: &Option<LlmCfg>, s: &Value, me: &Value, prompt: &str) -> (&'static str, Value) {
     let phase = s["phase"].as_str().unwrap_or("");
-    let space = match phase {
-        "market" => r#"{"action":"sell","units":N} или {"action":"buy","units":N} — одна рыночная операция за раунд. Цена падает с каждым проданным лотом (таблица price_table)."#,
-        "action" => r#"{"action":"produce"} (+2 товара), {"action":"donkey"} (1 товар за 1 песо), {"action":"bribe","to":IDX,"amount":N} (+влияние). Одно действие."#,
-        "law" => r#"{"action":"vote","choice":"yes|no|abstain"} и, если ты президент, можно {"action":"veto"}. Голос взвешен влиянием."#,
-        _ => return fallback(phase, me),
-    };
     if let Some(cfg) = llm {
+        // разгона: три агента в одной фазе не должны бить API одновременно
+        let jitter = std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .map(|d| d.subsec_millis() % 2000)
+            .unwrap_or(0);
+        std::thread::sleep(Duration::from_millis(u64::from(jitter)));
+        let space = match phase {
+            "market" => r#"{"action":"sell","units":N} или {"action":"buy","units":N} — одна рыночная операция за раунд. Цена падает с каждым проданным лотом (таблица price_table)."#,
+            "action" => r#"{"action":"produce"} (+2 товара), {"action":"donkey"} (1 товар за 1 песо), {"action":"bribe","to":IDX,"amount":N} (+влияние). Одно действие."#,
+            "law" => r#"{"action":"vote","choice":"yes|no|abstain"} и, если ты президент, можно {"action":"veto"}. Голос взвешен влиянием."#,
+            _ => return fallback(phase, me),
+        };
         let user = format!(
             "{}\nСостояние: {}\nТы — фракция idx {}.\nДоступно: {}\nОтветь одним JSON.",
             prompt,
@@ -226,28 +232,34 @@ fn decide(llm: &Option<LlmCfg>, s: &Value, me: &Value, prompt: &str) -> (&'stati
             me["idx"],
             space
         );
-        if let Some(ans) = llm_ask(cfg, SYSTEM, &user) {
-            if let Some(v) = parse_json_block(&ans) {
-                if let Some(a) = v["action"].as_str() {
-                    let params = v.get("params").cloned().unwrap_or_else(|| {
-                        let mut p = serde_json::Map::new();
-                        for k in ["units", "to", "amount", "choice"] {
-                            if let Some(x) = v.get(k) {
-                                p.insert(k.to_string(), x.clone());
+        // до двух попыток: вторая через 3с ловит rate-limit
+        for attempt in 0..2 {
+            if attempt > 0 {
+                std::thread::sleep(Duration::from_secs(3));
+            }
+            if let Some(ans) = llm_ask(cfg, SYSTEM, &user) {
+                if let Some(v) = parse_json_block(&ans) {
+                    if let Some(a) = v["action"].as_str() {
+                        let params = v.get("params").cloned().unwrap_or_else(|| {
+                            let mut p = serde_json::Map::new();
+                            for k in ["units", "to", "amount", "choice"] {
+                                if let Some(x) = v.get(k) {
+                                    p.insert(k.to_string(), x.clone());
+                                }
                             }
-                        }
-                        Value::Object(p)
-                    });
-                    return match a {
-                        "sell" => ("sell", params),
-                        "buy" => ("buy", params),
-                        "produce" => ("produce", params),
-                        "donkey" => ("donkey", params),
-                        "bribe" => ("bribe", params),
-                        "vote" => ("vote", params),
-                        "veto" => ("veto", params),
-                        _ => fallback(phase, me),
-                    };
+                            Value::Object(p)
+                        });
+                        return match a {
+                            "sell" => ("sell", params),
+                            "buy" => ("buy", params),
+                            "produce" => ("produce", params),
+                            "donkey" => ("donkey", params),
+                            "bribe" => ("bribe", params),
+                            "vote" => ("vote", params),
+                            "veto" => ("veto", params),
+                            _ => fallback(phase, me),
+                        };
+                    }
                 }
             }
         }
