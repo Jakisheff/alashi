@@ -32,6 +32,10 @@ pub struct GameEntry {
     pub wallets: Vec<Pubkey>,
     pub agents: Vec<AgentRec>,
     pub created: i64,
+    /// Полный протокол партии для /export: каждый ход с фазой и раундом.
+    pub action_log: Vec<serde_json::Value>,
+    /// Итоги закрытых фаз (закон: карта, да/нет, прошёл/вето).
+    pub phase_log: Vec<serde_json::Value>,
 }
 
 pub struct AppState {
@@ -99,6 +103,31 @@ fn game_seed(state: &AppState, game_id: u64) -> u64 {
     splitmix64(state.master_seed.load(Ordering::Relaxed) ^ splitmix64(game_id))
 }
 
+/// Фиксирует итог закрытой фазы в протокол: для law — карту, вес да/нет,
+/// итог и вето (веса обновляются самим advance при подсчёте).
+fn record_phase_close(entry: &mut GameEntry, closing: (Phase, u8, u8)) {
+    let (phase, round, card) = closing;
+    let g = &entry.sim.game;
+    let rec = match phase {
+        Phase::Law => serde_json::json!({
+            "round": round,
+            "phase": "law",
+            "card": card,
+            "card_name": law_name(card),
+            "yes": g.yes_influence,
+            "no": g.no_influence,
+            "passed": g.last_law_passed,
+            "veto_pending": g.veto_pending,
+            "laws_passed_total": g.laws_passed,
+        }),
+        _ => serde_json::json!({
+            "round": round,
+            "phase": phase_name(phase),
+        }),
+    };
+    entry.phase_log.push(rec);
+}
+
 fn settle_and_record(state: &AppState, game_id: u64) {
     let mut rec = None;
     {
@@ -119,6 +148,7 @@ fn settle_and_record(state: &AppState, game_id: u64) {
             let v = serde_json::json!({
                 "game_id": game_id,
                 "entry_fee": entry.entry_fee,
+                "vote_weight_mode": entry.sim.game.vote_weight_mode,
                 "n_factions": entry.sim.factions.len(),
                 "finished_at": now(),
                 "agents": agents,
@@ -129,6 +159,8 @@ fn settle_and_record(state: &AppState, game_id: u64) {
                 "final_cash": entry.sim.factions.iter().map(|f| f.cash).collect::<Vec<_>>(),
                 "final_goods": entry.sim.factions.iter().map(|f| f.goods).collect::<Vec<_>>(),
                 "final_influence": entry.sim.factions.iter().map(|f| f.influence).collect::<Vec<_>>(),
+                "phases": entry.phase_log,
+                "actions": entry.action_log,
             });
             rec = Some(v.to_string());
         }
@@ -153,8 +185,11 @@ pub fn crank_once(state: &AppState) {
                 let late = t >= entry.sim.game.phase_ends_at;
                 if full || late {
                     if entry.sim.game.faction_count >= MIN_FACTIONS {
+                        let closing =
+                            (entry.sim.game.phase, entry.sim.game.round, entry.sim.game.law_card);
                         if entry.sim.advance(t, seed).is_ok() {
                             entry.sim.game.phase_ends_at = t + entry.sim.game.phase_duration;
+                            record_phase_close(entry, closing);
                         }
                     } else if late {
                         to_expire.push(gid);
@@ -165,8 +200,11 @@ pub fn crank_once(state: &AppState) {
             Phase::Aborted => to_expire.push(gid),
             _ => {
                 if t >= entry.sim.game.phase_ends_at {
+                    let closing =
+                        (entry.sim.game.phase, entry.sim.game.round, entry.sim.game.law_card);
                     if entry.sim.advance(t, seed).is_ok() {
                         entry.sim.game.phase_ends_at = t + entry.sim.game.phase_duration;
+                        record_phase_close(entry, closing);
                     }
                     if entry.sim.game.phase == Phase::Finished {
                         to_settle.push(gid);
@@ -294,6 +332,8 @@ fn h_new_game(state: &AppState, body: &serde_json::Value) -> serde_json::Value {
         wallets: vec![],
         agents: vec![],
         created: now(),
+        action_log: vec![],
+        phase_log: vec![],
     };
     let v = state_json(game_id, &entry);
     state.games.lock().unwrap_or_else(|e| e.into_inner()).insert(game_id, entry);
@@ -426,6 +466,19 @@ fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json
     };
     let ok = log.ok;
     let err = log.err.clone();
+    // протокол хода: фаза, раунд, актёр, действие, исход (для /export)
+    entry.action_log.push(serde_json::json!({
+        "round": entry.sim.game.round,
+        "phase": phase_name(entry.sim.game.phase),
+        "actor": idx,
+        "action": action,
+        "params": p,
+        "ok": ok,
+        "err": err,
+        "cash_after": log.cash_after,
+        "goods_after": log.goods_after,
+        "ts": now(),
+    }));
     let v = state_json(game_id, entry);
     serde_json::json!({"ok": ok, "error": err, "action_log": log_to_json(&log), "state": v})
 }
@@ -437,9 +490,11 @@ fn h_advance(state: &AppState, game_id: u64) -> serde_json::Value {
         return err_json("unknown_game", "партия не найдена или закрыта");
     };
     let seed = splitmix64(game_seed(state, game_id) ^ (entry.sim.game.round as u64));
+    let closing = (entry.sim.game.phase, entry.sim.game.round, entry.sim.game.law_card);
     match entry.sim.advance(t, seed) {
         Ok(_) => {
             entry.sim.game.phase_ends_at = t + entry.sim.game.phase_duration;
+            record_phase_close(entry, closing);
             let finished = entry.sim.game.phase == Phase::Finished;
             let v = state_json(game_id, entry);
             drop(games);

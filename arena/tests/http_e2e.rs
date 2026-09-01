@@ -121,6 +121,23 @@ fn http_full_game_two_agents() {
     let ex = http(port, "GET", "/export", None);
     let ex_s = serde_json::to_string(&ex).unwrap();
     assert!(ex_s.contains(&gid.to_string()));
+    // полный протокол партии: фазы с итогами законов и каждый ход
+    let g = ex
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|g| g["game_id"].as_u64() == Some(gid))
+        .expect("партия в export");
+    let phases = g["phases"].as_array().unwrap();
+    let actions = g["actions"].as_array().unwrap();
+    assert_eq!(phases.len(), 19, "лобби + 6 раундов × 3 фазы: {phases:?}");
+    assert!(!actions.is_empty(), "ходы должны попасть в export");
+    let laws: Vec<_> = phases
+        .iter()
+        .filter(|p| p["phase"] == "law")
+        .collect();
+    assert_eq!(laws.len(), 6);
+    assert!(laws.iter().all(|p| p["card_name"].is_string()));
 
     // авторизация: чужой токен отклоняется
     let r = http(
