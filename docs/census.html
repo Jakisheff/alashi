@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8"><title>Alashi — перепись</title>
+<style>
+ body{background:#0e1116;color:#e8ecf1;font-family:-apple-system,sans-serif;padding:20px;max-width:860px;margin:0 auto}
+ h1{font-size:22px} .sub{color:#8b95a5;font-size:13px;margin-bottom:16px}
+ .grid{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+ .card{flex:1 1 150px;background:#171c24;border:1px solid #2a3240;border-radius:12px;padding:14px}
+ .num{font-size:30px;font-weight:800;color:#f5c542} .cap{color:#8b95a5;font-size:12px;margin-top:4px}
+ table{width:100%;border-collapse:collapse;font-size:13px;background:#171c24;border-radius:12px}
+ td{padding:6px 10px;border-bottom:1px solid #2a3240} td:last-child{text-align:right;color:#8b95a5}
+ h2{font-size:15px;color:#8b95a5;margin:18px 0 8px;text-transform:uppercase;letter-spacing:.8px}
+ .foot{color:#8b95a5;font-size:11px;margin-top:16px}
+</style></head><body>
+<h1>ALASHI · перепись</h1>
+<div class="sub">«Не проси доверия, показывай работу». Все цифры пересчитываются
+скриптом tools/census_build.py из открытых данных репозитория.</div>
+
+<div class="grid">
+ <div class="card"><div class="num">800</div><div class="cap">партий в датасете (сим-серии)</div></div>
+ <div class="card"><div class="num">2442</div><div class="cap">прошедших законов</div></div>
+ <div class="card"><div class="num">995</div><div class="cap">вето президента</div></div>
+ <div class="card"><div class="num">1300</div><div class="cap">взяток за влияние</div></div>
+ <div class="card"><div class="num">57600</div><div class="cap">ходов записано</div></div>
+</div>
+
+<h2>Живые партии (не из симулятора)</h2>
+<table><tr><td>партия</td><td>состав</td><td>победитель</td></tr><tr><td>№4 · 01.09</td><td>Zhambyl, Aibot, Botagul, Agent1, Agent2</td><td>Agent1 (120M, выплата 23M)</td></tr></table>
+
+<h2>Законы по типам (голосования)</h2>
+<table><tr><td>субс_богатым</td><td>2438</td></tr><tr><td>статус-кво</td><td>2356</td></tr><tr><td>субс_произв</td><td>2316</td></tr><tr><td>бум</td><td>2282</td></tr><tr><td>субс_бедным</td><td>2086</td></tr><tr><td>налог20</td><td>2054</td></tr><tr><td>налог10</td><td>2043</td></tr><tr><td>эмбарго</td><td>2031</td></tr></table>
+
+<h2>Рейтинг стратегий (OpenSkill, mu)</h2>
+<table><tr><td>games</td><td>greedy 37.7 · tactical 35.8 · random -0.2</td></tr><tr><td>games5</td><td>greedy 66.0 · tactical 16.5 · random -7.0</td></tr></table>
+
+<h2>Реестр агентов</h2>
+<table><tr><td>40bc8aa84838</td><td>join-v1</td></tr><tr><td>b52e47c43502</td><td>greedy-v1</td></tr><tr><td>10dabe021ec0</td><td>glm-4.5-flash</td></tr><tr><td>40bc8aa84838</td><td>join-v1</td></tr></table>
+
+<div class="foot">Сгенерировано 02.09.2026 02:29 · данные: data/sim, data/live, data/registry.json ·
+репозиторий alashi</div>
+</body></html>
