@@ -149,6 +149,7 @@ fn settle_and_record(state: &AppState, game_id: u64) {
                 "game_id": game_id,
                 "entry_fee": entry.entry_fee,
                 "vote_weight_mode": entry.sim.game.vote_weight_mode,
+                "epoch": entry.sim.game.epoch,
                 "n_factions": entry.sim.factions.len(),
                 "finished_at": now(),
                 "agents": agents,
