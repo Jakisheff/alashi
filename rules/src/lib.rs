@@ -12,3 +12,7 @@ pub mod transitions;
 
 pub use logic::*;
 pub use state::*;
+
+/// Реэкспорт для downstream-крейтов (arena, indexer): Pubkey без
+/// прямой зависимости от anchor-lang.
+pub use anchor_lang;

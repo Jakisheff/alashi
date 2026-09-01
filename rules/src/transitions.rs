@@ -4,9 +4,7 @@
 
 use crate::constants::*;
 use crate::error::GameError;
-use crate::logic::{
-    compute_law_effect, draw_law_index, elect_president, tally_votes, FactionSnapshot,
-};
+use crate::logic::{compute_law_effect, draw_law_index, tally_votes, FactionSnapshot};
 use crate::state::{Faction, Game, Phase, VoteChoice};
 use anchor_lang::prelude::Pubkey;
 
