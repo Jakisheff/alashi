@@ -262,6 +262,23 @@ fn state_json(game_id: u64, entry: &GameEntry) -> serde_json::Value {
         "vote_weight_mode": g.vote_weight_mode,
         "epoch": if g.epoch == alashi_rules::constants::EPOCH_90S { "90s" } else { "classic" },
         "amnesty_used": g.amnesty_used,
+        // M8: решение президента скрыто до закрытия фазы, виден факт
+        "customs_decided": g.customs_decided,
+        // M9: аукцион публичен, доходность скрыта (инсайд через /act)
+        "license_auction": if g.epoch == alashi_rules::constants::EPOCH_90S {
+            let mut v = serde_json::Map::new();
+            v.insert("round".into(), json_num(alashi_rules::constants::AUCTION_ROUND));
+            v.insert("sold".into(), serde_json::json!(g.license_sold));
+            if g.license_sold {
+                v.insert("holder".into(), serde_json::json!(g.license_holder));
+            }
+            v.insert("pot".into(), json_num(g.prize_pot));
+            serde_json::Value::Object(v)
+        } else { serde_json::Value::Null },
+        // M11: публичные бартерные оферы (адресные to скрыты)
+        "barter_offers": entry.sim.barter_offers.iter().map(|o| serde_json::json!({
+            "offer": o.id, "from": o.from, "goods": o.goods, "price": o.price,
+        })).collect::<Vec<_>>(),
         "veto_pending": g.veto_pending,
         "president_idx": entry.sim.factions.iter().position(|f| f.wallet == g.president),
         "yes_influence": g.yes_influence,
@@ -305,6 +322,20 @@ pub fn law_name(card: u8) -> &'static str {
 
 fn err_json(code: &str, msg: &str) -> serde_json::Value {
     serde_json::json!({"ok": false, "error": code, "message": msg})
+}
+
+/// Заготовка неудачного сервисного лога (для M7-M11 действий вне runner).
+fn fail_like(e: alashi_rules::error::GameError, idx: usize, action: &str) -> ActionLog {
+    let mut l = runner::empty_log();
+    l.phase = "money".into();
+    l.actor = idx;
+    l.action = action.into();
+    l.err = Some(format!("{:?}", e));
+    l
+}
+
+fn json_num(v: impl Into<u64>) -> serde_json::Value {
+    serde_json::json!(v.into())
 }
 
 fn h_new_game(state: &AppState, body: &serde_json::Value) -> serde_json::Value {
@@ -461,7 +492,127 @@ fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json
         "shuttle" => runner::apply_action(entry.sim_mut(), idx, &ActionAction::Shuttle),
         "roof" => {
             let to = p.get("to").and_then(|v| v.as_u64()).unwrap_or(usize::MAX as u64) as usize;
-            runner::apply_action(entry.sim_mut(), idx, &ActionAction::Roof { to })
+            let tariff = match p.get("tariff").and_then(|v| v.as_str()) {
+                Some("black") => alashi_rules::constants::ROOF_BLACK,
+                Some("red") => alashi_rules::constants::ROOF_RED,
+                _ => 0,
+            };
+            runner::apply_action(entry.sim_mut(), idx, &ActionAction::Roof { to, tariff })
+        }
+        "customs" => {
+            // M8: президент выбирает границу вслепую (до чужих ходов)
+            let tight = p.get("tight").and_then(|v| v.as_bool()).unwrap_or(true);
+            match entry.sim.set_customs(idx, tight) {
+                Ok(_) => {
+                    let mut l = runner::empty_log();
+                    l.phase = "action".into();
+                    l.actor = idx;
+                    l.action = "customs".into();
+                    l.ok = true;
+                    l.detail = serde_json::json!({"decided": true});
+                    l
+                }
+                Err(e) => {
+                    let mut l = runner::empty_log();
+                    l.phase = "action".into();
+                    l.actor = idx;
+                    l.action = "customs".into();
+                    l.err = Some(format!("{:?}", e));
+                    l
+                }
+            }
+        }
+        "bid_license" => {
+            let amount = p.get("amount").and_then(|v| v.as_u64()).unwrap_or(0);
+            match entry.sim.bid_license(idx, amount) {
+                Ok(total) => {
+                    let f = &entry.sim.factions[idx];
+                    ActionLog {
+                        phase: "action",
+                        actor: idx,
+                        action: "bid_license".into(),
+                        detail: serde_json::json!({"amount": amount, "total_bid": total}),
+                        ok: true,
+                        err: None,
+                        cash_after: Some(f.cash),
+                        goods_after: Some(f.goods),
+                    }
+                }
+                Err(e) => fail_like(e, idx, "bid_license"),
+            }
+        }
+        "inspect_license" => {
+            // M9: ответ содержит закрытый доход — только для инсайдера
+            match entry.sim.inspect_license(idx) {
+                Ok(y) => {
+                    let f = &entry.sim.factions[idx];
+                    ActionLog {
+                        phase: "action",
+                        actor: idx,
+                        action: "inspect_license".into(),
+                        detail: serde_json::json!({"license_yield": y}),
+                        ok: true,
+                        err: None,
+                        cash_after: Some(f.cash),
+                        goods_after: Some(f.goods),
+                    }
+                }
+                Err(e) => fail_like(e, idx, "inspect_license"),
+            }
+        }
+        "sell_vote" => {
+            let buyer = p.get("to").and_then(|v| v.as_u64()).unwrap_or(usize::MAX as u64) as usize;
+            let price = p.get("price").and_then(|v| v.as_u64()).unwrap_or(0);
+            match entry.sim.sell_vote(idx, buyer, price) {
+                Ok(_) => {
+                    let f = &entry.sim.factions[idx];
+                    ActionLog {
+                        phase: "law",
+                        actor: idx,
+                        action: "sell_vote".into(),
+                        detail: serde_json::json!({"to": buyer, "price": price}),
+                        ok: true,
+                        err: None,
+                        cash_after: Some(f.cash),
+                        goods_after: Some(f.goods),
+                    }
+                }
+                Err(e) => fail_like(e, idx, "sell_vote"),
+            }
+        }
+        "barter_propose" => {
+            let goods = p.get("goods").and_then(|v| v.as_u64()).unwrap_or(0) as u16;
+            let price = p.get("price").and_then(|v| v.as_u64()).unwrap_or(0);
+            let to = p.get("to").and_then(|v| v.as_u64()).map(|t| t as usize);
+            match entry.sim.barter_propose(idx, to, goods, price) {
+                Ok(id) => ActionLog {
+                    phase: "market",
+                    actor: idx,
+                    action: "barter_propose".into(),
+                    detail: serde_json::json!({"offer": id, "goods": goods, "price": price}),
+                    ok: true,
+                    err: None,
+                    cash_after: Some(entry.sim.factions[idx].cash),
+                    goods_after: Some(entry.sim.factions[idx].goods),
+                },
+                Err(e) => fail_like(e, idx, "barter_propose"),
+            }
+        }
+        "barter_accept" => {
+            let offer = p.get("offer").and_then(|v| v.as_u64()).unwrap_or(0);
+            match entry.sim.barter_accept(idx, offer) {
+                Ok(_) => ActionLog {
+                    phase: "market",
+                    actor: idx,
+                    action: "barter_accept".into(),
+                    detail: serde_json::json!({"offer": offer}),
+                    ok: true,
+                    err: None,
+                    cash_after: Some(entry.sim.factions[idx].cash),
+                    goods_after: Some(entry.sim.factions[idx].goods),
+                },
+                Err(e) => fail_like(e, idx, "barter_accept"),
+            }
         }
         "buy_hard" | "sell_hard" => {
             // SPEC_EPOCH_90S M6: валютчик, сервисная операция без сжигания хода
@@ -515,7 +666,7 @@ fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json
             let w = entry.wallets[idx];
             runner::apply_law(entry.sim_mut(), idx, &LawAction::Veto, &w)
         }
-        _ => return err_json("bad_action", "sell|sell_credit|buy|buy_hard|sell_hard|produce|shuttle|roof|donkey|bribe|vote|veto"),
+        _ => return err_json("bad_action", "sell|sell_credit|buy|buy_hard|sell_hard|produce|shuttle|roof|customs|bid_license|inspect_license|sell_vote|barter_propose|barter_accept|donkey|bribe|vote|veto"),
     };
     let ok = log.ok;
     let err = log.err.clone();

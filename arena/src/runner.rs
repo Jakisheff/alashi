@@ -236,7 +236,8 @@ pub fn play_game(
 /// Settle по правилам для off-chain партии: банк = взносы, резерв 0.
 pub fn settle(sim: &Simulator, entry_fee: u64) -> (Vec<usize>, Vec<u64>, u64, u64) {
     let n = sim.factions.len();
-    let bank = entry_fee * n as u64;
+    // M9: банк партии включает ставки аукциона лицензии
+    let bank = entry_fee * n as u64 + sim.game.prize_pot;
     let snaps: Vec<FactionSnapshot> = sim
         .factions
         .iter()
@@ -260,6 +261,14 @@ pub fn settle(sim: &Simulator, entry_fee: u64) -> (Vec<usize>, Vec<u64>, u64, u6
     let mut rest: Vec<usize> = (0..n).filter(|i| !ranks.contains(i)).collect();
     rest.sort_by(|&a, &b| sim.factions[b].cash.cmp(&sim.factions[a].cash));
     ranks.extend(rest);
+    // SPEC_EPOCH_90S M9: рента лицензии держателю (доход известен
+    // заранее, инсайдеры могли его купить)
+    if sim.game.epoch == EPOCH_90S
+        && sim.game.license_sold
+        && (sim.game.license_holder as usize) < n
+    {
+        payouts[sim.game.license_holder as usize] += sim.game.license_yield;
+    }
     // SPEC_EPOCH_90S M5 «завод»: фракция с макс влиянием получает 5%
     // банка из рейка (при равенстве влияния — лучший ранг по cash).
     let mut rake = plan.rake;
@@ -421,14 +430,14 @@ pub fn apply_action(sim: &mut Simulator, i: usize, act: &ActionAction) -> Action
             ),
             Err(e) => fail(phase, i, "shuttle", serde_json::json!({}), e),
         },
-        ActionAction::Roof { to } => match sim.roof(i, *to) {
+        ActionAction::Roof { to, tariff } => match sim.roof(i, *to, *tariff) {
             Ok(roof_to) => {
                 let f = &sim.factions[i];
                 ActionLog {
                     phase,
                     actor: i,
                     action: "roof".into(),
-                    detail: serde_json::json!({"to": roof_to, "price": f.cash * ROOF_NUM / ROOF_DEN}),
+                    detail: serde_json::json!({"to": roof_to, "tariff": if *tariff == ROOF_BLACK { "black" } else { "red" }}),
                     ok: true,
                     err: None,
                     cash_after: Some(f.cash),

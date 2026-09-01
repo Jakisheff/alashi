@@ -63,6 +63,23 @@ pub const LAW_AMNESTY: u8 = 8;
 // M6 валютчик: обмен кэш <-> твёрдая валюта ×0.8 (спред 20%)
 pub const EXCHANGE_NUM: u64 = 80;
 pub const EXCHANGE_DEN: u64 = 100;
+// M7 крыши: чёрная 30% (гарантия от таможни и закона), красная 10%
+// (закон гасит, но p≈25% «беспредела»: горит весь товар)
+pub const ROOF_BLACK: u8 = 1;
+pub const ROOF_RED: u8 = 2;
+pub const ROOF_BLACK_NUM: u64 = 30;
+pub const ROOF_BLACK_DEN: u64 = 100;
+pub const ROOF_RED_NUM: u64 = 10;
+pub const ROOF_RED_DEN: u64 = 100;
+pub const RED_MAYHEM_THRESHOLD: u64 = 64;
+// M8 таможенник: дань президенту с серого хода при льготной границе
+pub const CUSTOMS_TRIBUTE: u64 = 2 * PESO;
+// M9 лицензия: аукцион в раунде 4, доход 20-60M, инсайд 5M
+pub const AUCTION_ROUND: u8 = 4;
+pub const LICENSE_MIN_YIELD: u64 = 20 * PESO;
+pub const LICENSE_YIELD_SPAN: u64 = 40 * PESO;
+pub const LICENSE_INSIGHT_PRICE: u64 = 5 * PESO;
+pub const LICENSE_NONE: u8 = 255;
 // M5 завод: +5% банка из рейка фракции с макс влиянием
 pub const FACTORY_NUM: u64 = 5;
 pub const FACTORY_DEN: u64 = 100;

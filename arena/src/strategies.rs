@@ -44,8 +44,8 @@ pub enum ActionAction {
     Pass,
     /// SPEC_EPOCH_90S: серый канал «челнок» (+3 товара, риск таможни).
     Shuttle,
-    /// SPEC_EPOCH_90S: крыша-контракт (20% кэша целику).
-    Roof { to: usize },
+    /// SPEC_EPOCH_90S: крыша-контракт, тариф чёрный/красный.
+    Roof { to: usize, tariff: u8 },
 }
 
 #[derive(Debug, Clone, PartialEq)]

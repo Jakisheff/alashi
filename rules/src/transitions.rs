@@ -81,6 +81,14 @@ fn advance_inner(
                 return Err(GameError::TooEarly);
             }
             game.phase = Phase::Action;
+            // M9: доход лицензии фиксируется сидом входа в раунд аукциона,
+            // инсайдеры могут узнать его до ставок
+            if game.epoch == EPOCH_90S
+                && game.round == AUCTION_ROUND
+                && game.license_yield == 0
+            {
+                game.license_yield = LICENSE_MIN_YIELD + (seed % LICENSE_YIELD_SPAN);
+            }
         }
         Phase::Action => {
             if now < game.phase_ends_at {
@@ -89,14 +97,77 @@ fn advance_inner(
             game.phase = Phase::Law;
             let president = elect_president_factions(factions);
             game.president = president;
-            // SPEC_EPOCH_90S M3: таможня на серой партии — одна на раунд,
-            // байт сида решает; при задержании серой товар конфискуется
-            if game.epoch == EPOCH_90S && ((seed >> 8) & 0xFF) < CUSTOMS_THRESHOLD {
+            if game.epoch == EPOCH_90S {
+                // SPEC_EPOCH_90S M3+M7+M8: граница раунда.
+                // Президент выбрал режим вслепую (customs_tight, M8);
+                // при отсутствии решения — старый RNG-режим M3.
+                let mayhem = ((seed >> 24) & 0xFF) < RED_MAYHEM_THRESHOLD;
+                let rng_seizure = ((seed >> 8) & 0xFF) < CUSTOMS_THRESHOLD;
+                let tight = if game.customs_decided {
+                    game.customs_tight
+                } else {
+                    rng_seizure
+                };
+                let pres_idx = factions
+                    .iter()
+                    .position(|f| f.wallet == game.president);
+                let mut tribute_total: u64 = 0;
                 for f in factions.iter_mut() {
-                    if f.grey_goods > 0 {
-                        f.goods = f.goods.saturating_sub(f.grey_goods);
+                    if f.grey_goods == 0 && f.roof_tariff != ROOF_RED {
+                        continue;
+                    }
+                    // M7 чёрная крыша: полная гарантия, граница не страшна
+                    if f.roof_tariff == ROOF_BLACK {
+                        f.grey_goods = 0;
+                        continue;
+                    }
+                    // M7 красная крыша: p≈25% беспредела — горит весь товар
+                    if f.roof_tariff == ROOF_RED && mayhem && f.goods > 0 {
+                        f.goods = 0;
                         f.grey_goods = 0;
                         res.customs_seized = true;
+                        continue;
+                    }
+                    if f.grey_goods > 0 {
+                        if tight {
+                            f.goods = f.goods.saturating_sub(f.grey_goods);
+                            res.customs_seized = true;
+                        } else {
+                            // M8 льготная граница: дань президенту с серого хода
+                            let pay = f.cash.min(CUSTOMS_TRIBUTE);
+                            f.cash -= pay;
+                            tribute_total += pay;
+                        }
+                        f.grey_goods = 0;
+                    }
+                }
+                if let Some(pi) = pres_idx {
+                    factions[pi].cash += tribute_total;
+                }
+                // M9 слепой аукцион: раунд аукциона, вскрытие ставок
+                if game.round == AUCTION_ROUND && !game.license_sold {
+                    let mut best: Option<usize> = None;
+                    let mut pot: u64 = 0;
+                    for (i, f) in factions.iter().enumerate() {
+                        if f.bid > 0 {
+                            pot += f.bid;
+                        }
+                        if f.bid > 0 && best.map_or(true, |b| f.bid > factions[b].bid) {
+                            best = Some(i);
+                        }
+                    }
+                    // платит только победитель, остальным возврат
+                    for (i, f) in factions.iter_mut().enumerate() {
+                        if Some(i) == best {
+                            game.prize_pot += f.bid;
+                        } else if f.bid > 0 {
+                            f.cash += f.bid;
+                        }
+                        f.bid = 0;
+                    }
+                    if let Some(b) = best {
+                        game.license_holder = b as u8;
+                        game.license_sold = true;
                     }
                 }
             }
@@ -155,8 +226,21 @@ fn advance_inner(
                             weight += SKIP_VOTE_WEIGHT;
                         }
                     }
-                    (weight, f.vote)
+                    // M10 скупка голосов: голос проданного идёт по выбору
+                    // покупателя, если покупатель проголосовал
+                    let choice = if game.epoch == EPOCH_90S && f.vote_sold {
+                        let buyer = &factions[f.vote_sold_to as usize];
+                        if buyer.voted_stamp == stamp && buyer.alive {
+                            buyer.vote
+                        } else {
+                            return None; // сделка не сработала, продавец молчит
+                        }
+                    } else {
+                        f.vote
+                    };
+                    Some((weight, choice))
                 })
+                .flatten()
                 .collect();
             let (yes, no) = tally_votes(&votes);
             let voted_yes = yes > no;
@@ -239,6 +323,13 @@ fn advance_inner(
             }
             game.law_card = NO_LAW;
             game.veto_pending = false;
+            // M8/M10: сброс посюраундовых флагов
+            game.customs_decided = false;
+            game.customs_tight = false;
+            for f in factions.iter_mut() {
+                f.vote_sold = false;
+                f.vote_sold_to = 0;
+            }
         }
         Phase::Finished => return Err(GameError::GameFinished),
         Phase::Aborted => return Err(GameError::GameAborted),
@@ -526,5 +617,153 @@ mod tests {
         sim2.join(Pubkey::new_from_array([6; 32]), "B").unwrap();
         sim2.advance(100, 0).unwrap();
         assert!(sim2.exchange(0, true).is_err(), "только в эпохе 90-х");
+    }
+
+    #[test]
+    fn m78_customs_president_and_tariffs() {
+        use crate::sim::Simulator;
+        let mut sim = Simulator::new(1, 10 * PESO, 0, 0);
+        sim.game.epoch = EPOCH_90S;
+        sim.join(Pubkey::new_from_array([1; 32]), "A").unwrap();
+        sim.join(Pubkey::new_from_array([2; 32]), "B").unwrap();
+        sim.advance(100, 0).unwrap(); // market r1
+        sim.factions[0].cash = 100 * PESO;
+        sim.factions[1].cash = 100 * PESO;
+        sim.advance(200, 0).unwrap(); // → action r1, president elected
+        // обе фракции везут серое
+        sim.shuttle(0).unwrap();
+        sim.shuttle(1).unwrap();
+        // A покупает чёрную крышу у B (30%), B — красную у A (10%)
+        sim.roof(0, 1, ROOF_BLACK).unwrap();
+        assert_eq!(sim.factions[0].roof_tariff, ROOF_BLACK);
+        assert_eq!(sim.factions[0].cash, 70 * PESO);
+        // красная крыша B сработает только на бите mayhem
+        sim.roof(1, 0, ROOF_RED).unwrap();
+        // B получил 30M от A и заплатил 10% от 130M = 13M
+        assert_eq!(sim.factions[1].cash, 117 * PESO);
+        sim.advance(300, 0).unwrap(); // action → law: таможня
+        // при seed 0: tight-режима нет (customs_decided=false),
+        // rng_seizure = 0 < 64 → tight: серой горит у B (red не спасает
+        // отtight), у A чёрная — проходит
+        assert_eq!(sim.factions[0].goods, 3, "чёрная крыша прошла границу");
+        assert!(sim.factions[1].goods < 3, "красная крыша не даёт гарантии");
+    }
+
+    #[test]
+    fn m8_president_sets_tight_blindly_and_gets_tribute() {
+        use crate::sim::Simulator;
+        let mut sim = Simulator::new(2, 10 * PESO, 0, 0);
+        sim.game.epoch = EPOCH_90S;
+        sim.join(Pubkey::new_from_array([1; 32]), "A").unwrap();
+        sim.join(Pubkey::new_from_array([2; 32]), "B").unwrap();
+        sim.advance(100, 0).unwrap();
+        sim.factions[1].cash = 50 * PESO; // B богатейший, A назначим президентом руками
+        sim.advance(200, 0).unwrap(); // action r1
+        sim.shuttle(1).unwrap(); // B везёт серое без крыши
+        sim.game.president = sim.factions[0].wallet; // A президент
+        sim.set_customs(0, false).unwrap(); // льготная граница
+        assert!(sim.set_customs(0, true).is_err(), "раз в раунд");
+        assert!(sim.set_customs(1, false).is_err(), "не президент");
+        let cash_b_before = sim.factions[1].cash;
+        sim.advance(300, 0).unwrap(); // таможня: loose → дань президенту
+        assert_eq!(sim.factions[1].goods, 3, "товар прошёл");
+        assert_eq!(sim.factions[1].cash, cash_b_before - CUSTOMS_TRIBUTE);
+        assert_eq!(sim.factions[0].cash, CUSTOMS_TRIBUTE, "дань дошла");
+        // флаг живёт до конца Law-фазы, сбрасывается при входе в раунд
+        sim.factions[0].voted_stamp = sim.game.stamp();
+        sim.factions[0].vote = VoteChoice::Abstain;
+        sim.advance(400, 0).unwrap(); // law → market r2
+        assert!(!sim.game.customs_decided, "флаг сброшен к следующему раунду");
+    }
+
+    #[test]
+    fn m9_blind_auction_and_insider() {
+        use crate::sim::Simulator;
+        let mut sim = Simulator::new(3, 10 * PESO, 0, 0);
+        sim.game.epoch = EPOCH_90S;
+        sim.join(Pubkey::new_from_array([1; 32]), "A").unwrap();
+        sim.join(Pubkey::new_from_array([2; 32]), "B").unwrap();
+        sim.factions[0].cash = 100 * PESO;
+        sim.factions[1].cash = 100 * PESO;
+        // доходим до action r4 (аукцион)
+        for r in 1..=3u8 {
+            sim.advance(100 + r as i64 * 100, r as u64).unwrap(); // →action? нет: advance двигает на шаг
+        }
+        // быстрее: подгоним фазы напрямую
+        sim.game.round = AUCTION_ROUND;
+        sim.game.phase = Phase::Market;
+        sim.advance(900, 42).unwrap(); // market→action r4: yield зафиксирован
+        let y = sim.game.license_yield;
+        assert!(y >= LICENSE_MIN_YIELD && y < LICENSE_MIN_YIELD + LICENSE_YIELD_SPAN);
+        // инсайд: A платит 5M и видит доход
+        let seen = sim.inspect_license(0).unwrap();
+        assert_eq!(seen, y, "инсайдер видит точный доход");
+        assert_eq!(sim.factions[0].cash, 95 * PESO);
+        // ставки: A 20M, B 10M; платит только победитель
+        sim.bid_license(0, 20 * PESO).unwrap();
+        sim.bid_license(1, 10 * PESO).unwrap();
+        sim.advance(1000, 0).unwrap(); // action → law: вскрытие
+        assert_eq!(sim.game.license_holder, 0);
+        assert_eq!(sim.factions[0].cash, 75 * PESO, "A: -20 ставка, победитель");
+        assert_eq!(sim.factions[1].cash, 100 * PESO, "B: ставка вернулась");
+        assert_eq!(sim.game.prize_pot, 20 * PESO);
+        // ставки вне раунда аукциона закрыты
+        sim.game.round = AUCTION_ROUND + 1;
+        sim.game.phase = Phase::Market;
+        sim.advance(1100, 0).unwrap();
+        assert!(sim.bid_license(0, PESO).is_err());
+    }
+
+    #[test]
+    fn m10_vote_buying_delegates_choice() {
+        let mut g = Game::default();
+        g.epoch = EPOCH_90S;
+        g.round = 1;
+        g.phase = Phase::Law;
+        g.law_card = LAW_TAX_10;
+        g.phase_ends_at = 10;
+        let stamp = g.stamp();
+        let mut f1 = Faction::default();
+        f1.wallet = Pubkey::new_from_array([1; 32]);
+        f1.alive = true;
+        f1.influence = 1;
+        f1.vote = VoteChoice::Yes;
+        f1.voted_stamp = stamp; // покупатель голосует ЗА
+        let mut f2 = Faction::default();
+        f2.wallet = Pubkey::new_from_array([2; 32]);
+        f2.alive = true;
+        f2.influence = 1;
+        f2.vote = VoteChoice::No; // продавец был бы ПРОТИВ
+        f2.voted_stamp = stamp; // sell_vote ставит штамп автоматически
+        f2.vote_sold = true;
+        f2.vote_sold_to = 0;
+        let mut fs = vec![f1, f2];
+        let _ = advance_inner(&mut g, &mut fs, 20, None, 7).unwrap();
+        // голос проданного пошёл ЗА вместе с покупателем: да 2, нет 0 → прошёл
+        assert_eq!((g.yes_influence, g.no_influence), (2, 0));
+        assert!(g.last_law_passed);
+        assert!(!fs[1].vote_sold, "сделка сгорает после подсчёта");
+    }
+
+    #[test]
+    fn m11_barter_direct_exchange() {
+        use crate::sim::Simulator;
+        let mut sim = Simulator::new(4, 10 * PESO, 0, 0);
+        sim.game.epoch = EPOCH_90S;
+        sim.join(Pubkey::new_from_array([1; 32]), "A").unwrap();
+        sim.join(Pubkey::new_from_array([2; 32]), "B").unwrap();
+        sim.advance(100, 0).unwrap(); // market r1
+        sim.factions[0].goods = 4;
+        sim.factions[1].cash = 30 * PESO;
+        let id = sim.barter_propose(0, None, 2, 10 * PESO).unwrap();
+        // чужой кэш недостаточен? у B 30M хватает
+        sim.barter_accept(1, id).unwrap();
+        assert_eq!(sim.factions[0].goods, 2);
+        assert_eq!(sim.factions[1].goods, 2);
+        assert_eq!(sim.factions[1].cash, 20 * PESO);
+        assert_eq!(sim.factions[0].cash, 10 * PESO);
+        assert!(sim.barter_offers.is_empty(), "офер снят");
+        // повторный accept того же офера невозможен
+        assert!(sim.barter_accept(1, id).is_err());
     }
 }

@@ -2,6 +2,7 @@
 //! Ядро — rules::sim::Simulator, поверх — стратегии ботов, прогонщик
 //! серий и (позже) HTTP API. Правила не дублируются: один источник
 //! истины alashi-rules, replay-эквивалентность уже доказана тестом.
+#![recursion_limit = "512"]
 
 pub mod api;
 pub mod http;

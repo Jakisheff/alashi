@@ -63,6 +63,18 @@ pub struct Game {
     pub epoch: u8,
     /// карта «взаимозачёт» (id 8) уже выпадала в этой партии (epoch=1).
     pub amnesty_used: bool,
+    /// M8 режим границы этого раунда, выбранный президентом вслепую.
+    pub customs_tight: bool,
+    /// M8 президент уже выбрал режим границы в этом раунде.
+    pub customs_decided: bool,
+    /// M9 банк партии вырос от ставок аукциона (входит в делёж).
+    pub prize_pot: u64,
+    /// M9 доходность лицензии раунда аукциона.
+    pub license_yield: u64,
+    /// M9 держатель лицензии (255 = никто).
+    pub license_holder: u8,
+    /// M9 аукцион уже проведён.
+    pub license_sold: bool,
     pub vrf_account: Pubkey,
     pub commit_slot: u64,
     pub vrf_retries: u8,
@@ -103,4 +115,14 @@ pub struct Faction {
     pub roof_to: u8,
     /// контракт активен (одноразовый).
     pub roof_armed: bool,
+    /// M7 тариф крыши: 0 нет, 1 чёрная (30%, гарантия), 2 красная (10%,
+    /// риск беспредела). Живёт до конца партии.
+    pub roof_tariff: u8,
+    /// M10 голос продан фракции с этим индексом (валиден при vote_sold).
+    pub vote_sold_to: u8,
+    pub vote_sold: bool,
+    /// M9 ставка на лицензию этого раунда (эскроу).
+    pub bid: u64,
+    /// M9 куплен инсайд о доходности лицензии.
+    pub insider: bool,
 }
