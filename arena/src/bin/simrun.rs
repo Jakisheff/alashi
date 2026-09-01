@@ -46,6 +46,9 @@ fn main() {
     let entry_fee: u64 = flag(&args, "--entry-fee")
         .and_then(|v| v.parse().ok())
         .unwrap_or(10_000_000);
+    let vote_mode: u8 = flag(&args, "--vote-mode")
+        .and_then(|v| v.parse().ok())
+        .unwrap_or(0);
 
     for name in &mix_ref {
         if !ALL.contains(&name) {
@@ -57,13 +60,15 @@ fn main() {
     let cfg = GameConfig {
         entry_fee,
         phase_duration: 10,
+        vote_weight_mode: vote_mode,
     };
     eprintln!(
-        "simrun: {} игр, микс [{}], seed {}, entry_fee {}",
+        "simrun: {} игр, микс [{}], seed {}, entry_fee {}, vote_weight_mode {}",
         games,
         mix_ref.join(","),
         seed,
-        entry_fee
+        entry_fee,
+        vote_mode
     );
     let lines = match run_series(games, seed, &mix_ref, &cfg) {
         Ok(l) => l,
@@ -96,10 +101,13 @@ fn main() {
     }
 
     // Сводка: победы/средний ранг/средняя выплата по стратегиям.
-    let n = mix_ref.len();
-    let mut wins = vec![0u64; n];
-    let mut rank_sum = vec![0u64; n];
-    let mut payout_sum = vec![0u64; n];
+    // С ротацией посадки слот ↔ стратегия меняется каждую партию,
+    // поэтому копим по имени стратегии из записи, а не по позиции микса.
+    let mut names: Vec<String> = vec![];
+    let mut wins = std::collections::HashMap::<String, u64>::new();
+    let mut games_cnt = std::collections::HashMap::<String, u64>::new();
+    let mut rank_sum = std::collections::HashMap::<String, u64>::new();
+    let mut payout_sum = std::collections::HashMap::<String, u64>::new();
     let mut laws_passed = 0u64;
     let mut vetoes = 0u64;
     let mut bribes = 0u64;
@@ -108,13 +116,21 @@ fn main() {
         let ranks = v["ranks"].as_array().unwrap();
         let payouts = v["payouts"].as_array().unwrap();
         let strats = v["strategies"].as_array().unwrap();
-        for (rank_pos, fi) in ranks.iter().enumerate() {
-            let fi = fi.as_u64().unwrap() as usize;
-            rank_sum[fi] += rank_pos as u64;
-            if rank_pos == 0 {
-                wins[fi] += 1;
+        for fi in 0..strats.len() {
+            let name = strats[fi].as_str().unwrap().to_string();
+            if !names.contains(&name) {
+                names.push(name.clone());
             }
-            payout_sum[fi] += payouts[fi].as_u64().unwrap_or(0);
+            *games_cnt.entry(name.clone()).or_insert(0) += 1;
+            let rank_pos = ranks
+                .iter()
+                .position(|r| r.as_u64() == Some(fi as u64))
+                .unwrap_or(99);
+            *rank_sum.entry(name.clone()).or_insert(0) += rank_pos as u64;
+            if rank_pos == 0 {
+                *wins.entry(name.clone()).or_insert(0) += 1;
+            }
+            *payout_sum.entry(name.clone()).or_insert(0) += payouts[fi].as_u64().unwrap_or(0);
         }
         for p in v["phases"].as_array().unwrap() {
             if p["phase"] == "law" {
@@ -131,17 +147,17 @@ fn main() {
                 }
             }
         }
-        let _ = strats;
     }
-    eprintln!("--- сводка по стратегиям (позиция в миксе) ---");
-    for i in 0..n {
+    eprintln!("--- сводка по стратегиям (ротация посадки включена) ---");
+    for name in &names {
+        let g = games_cnt.get(name).copied().unwrap_or(0);
         eprintln!(
             "{:>8}: побед {:>3}/{:<3} ср.ранг {:>5.2} ср.выплата {:>8.2} песо",
-            mix_ref[i],
-            wins[i],
-            games,
-            rank_sum[i] as f64 / games as f64,
-            payout_sum[i] as f64 / games as f64 / 1_000_000.0
+            name,
+            wins.get(name).copied().unwrap_or(0),
+            g,
+            rank_sum.get(name).copied().unwrap_or(0) as f64 / g as f64,
+            payout_sum.get(name).copied().unwrap_or(0) as f64 / g as f64 / 1_000_000.0
         );
     }
     eprintln!(

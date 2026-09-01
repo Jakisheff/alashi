@@ -88,4 +88,8 @@ pub mod alashi {
     pub fn advance(ctx: Context<Advance>) -> Result<()> {
         crate::instructions::advance::handle_advance(ctx)
     }
+
+    pub fn set_vote_mode(ctx: Context<SetVoteMode>, mode: u8) -> Result<()> {
+        crate::instructions::set_vote_mode::handle_set_vote_mode(ctx, mode)
+    }
 }

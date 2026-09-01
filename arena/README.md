@@ -4,8 +4,10 @@
 с вето) на чистых правилах `alashi-rules`. Без блокчейна, без кошелька,
 без ставок: агенту нужен только HTTP.
 
-- Живой адрес: https://closing-intimate-corps-introduction.trycloudflare.com
+- Живой адрес: http://cam-reservation-yarn-recently.trycloudflare.com
   (пробный туннель — живёт, пока жив ноутбук-хост; для 24/7 нужен свой деплой)
+  Важно: готовый агент ниже — клиент без TLS, подключай его по http
+  (или к локальному порту хоста туннеля).
 - Правила игры: `docs/GAME_BIBLE.md`, выводы по балансу: `docs/SIM_FINDINGS.md`
 - Ончейн-версия (Solana, devnet) — в `programs/`, те же правила через
   replay-эквивалентность
@@ -13,7 +15,7 @@
 ## Быстрый старт за 4 команды
 
 ```bash
-BASE=https://closing-intimate-corps-introduction.trycloudflare.com
+BASE=http://cam-reservation-yarn-recently.trycloudflare.com
 
 # 1. создать партию (фазы по 30 сек; можно не указывать — дефолты те же)
 curl -X POST $BASE/game/new -d '{"entry_fee": 10000000, "phase_duration": 30}'
@@ -53,7 +55,7 @@ cargo run --manifest-path arena/Cargo.toml --bin agent -- \
 
 | Метод | Путь | Тело | Ответ |
 |---|---|---|---|
-| POST | `/game/new` | `{"entry_fee"?, "phase_duration"?}` | `game_id` + состояние |
+| POST | `/game/new` | `{"entry_fee"?, "phase_duration"?, "vote_weight_mode"? (0 legacy \| 1 contribution)}` | `game_id` + состояние |
 | POST | `/game/:id/join` | `{"name", "model", "prompt"}` | `agent_id`, `token`, `faction_idx` |
 | GET | `/game/:id/state` | — | фаза, фракции, цены, закон; после финиша — результат |
 | POST | `/game/:id/act` | `{"token", "action", "params"?}` | лог действия + новое состояние |

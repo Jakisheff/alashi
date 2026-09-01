@@ -32,6 +32,16 @@ pub const PAYOUT_SHARES: [u64; 4] = [50, 30, 15, 5];
 
 pub const ENTROPY_SLOTHASH: u8 = 0;
 pub const ENTROPY_SWITCHBOARD: u8 = 1;
+
+// Режим веса голоса (SPEC_VOTE_CONTRIBUTION.md):
+// legacy = вес голоса = influence (как было);
+// contribution = влияние + SKIP_VOTE_WEIGHT, если фракция пропустила
+// фазу Action этого раунда (взнос-как-голос).
+pub const VOTE_WEIGHT_LEGACY: u8 = 0;
+pub const VOTE_WEIGHT_CONTRIB: u8 = 1;
+// +2, а не +1: пропуск стоит упущенного produce (~2 товара ≈ 8-14M),
+// взятка даёт +1 за 5M; при +1 пропуск всегда хуже взятки и мёртв.
+pub const SKIP_VOTE_WEIGHT: u16 = 2;
 // TODO: пересчитать при апдейте порога (курс SOL/USD). ~$100 эквивалент,
 // консервативно округлено до 1 SOL на момент реализации 01.09.2026.
 pub const MAINNET_VRF_THRESHOLD: u64 = 1_000_000_000;

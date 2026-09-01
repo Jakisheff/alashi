@@ -15,6 +15,8 @@ use anchor_lang::prelude::SlotHashes;
 use solana_hash::Hash;
 
 const PESO: u64 = alashi::constants::PESO;
+const VOTE_WEIGHT_LEGACY: u8 = alashi_rules::constants::VOTE_WEIGHT_LEGACY;
+const VOTE_WEIGHT_CONTRIB: u8 = alashi_rules::constants::VOTE_WEIGHT_CONTRIB;
 const SLOT_HASHES_ID: Pubkey = solana_sysvar::slot_hashes::ID;
 
 const SB_DEVNET_PID: &str = "Aio4gaXjXzJNVLtzwtNVmSqGKpANtXhybbkhtAC94ji2";
@@ -1166,4 +1168,248 @@ fn test_vrf_timeout_abort_refund() {
     println!("DBG a_gain={a_gain} b_gain={b_gain}");
     assert_eq!(a_gain + b_gain, 2 * FEE);
     assert!(game_state(&svm, &game).settled);
+}
+
+// ---------- R2 (REVIEW_EXTERNAL): дедуп аккаунтов в settle ----------
+
+#[test]
+fn test_settle_rejects_duplicate_faction_accounts() {
+    let mut svm = LiteSVM::new();
+    let bytes = include_bytes!(concat!(env!("CARGO_TARGET_TMPDIR"), "/../deploy/alashi.so"));
+    svm.add_program(alashi::id(), bytes).unwrap();
+    let a = Keypair::new();
+    let b = Keypair::new();
+    let rake_admin = Keypair::new();
+    svm.airdrop(&a.pubkey(), 10_000_000_000).unwrap();
+    svm.airdrop(&b.pubkey(), 2_000_000_000).unwrap();
+    svm.airdrop(&rake_admin.pubkey(), 1_000_000_000).unwrap();
+
+    let game = game_pda(9100);
+    let fa = faction_pda(&game, &a.pubkey());
+    let fb = faction_pda(&game, &b.pubkey());
+    assert!(send(
+        &mut svm,
+        &rake_admin,
+        ix_initialize(9100, FEE, 0, rake_admin.pubkey(), game, 0)
+    ));
+    assert!(send(&mut svm, &a, ix_join("Alpha", a.pubkey(), game, fa)));
+    assert!(send(&mut svm, &b, ix_join("Beta", b.pubkey(), game, fb)));
+    let fkeys = vec![fa, fb];
+    let adv = |svm: &mut LiteSVM, s: &Keypair| {
+        set_law_seed(svm, 0);
+        send(svm, s, ix_advance(s.pubkey(), game, fkeys.clone()))
+    };
+
+    assert!(adv(&mut svm, &a));
+    for _round in 1..=6u8 {
+        let a_goods = faction_state(&svm, &fa).goods;
+        if a_goods > 0 {
+            assert!(send(&mut svm, &a, ix_sell(2, a.pubkey(), game, fa)));
+        }
+        assert!(adv(&mut svm, &a));
+        assert!(send(&mut svm, &a, ix_produce(a.pubkey(), game, fa)));
+        assert!(send(&mut svm, &b, ix_produce(b.pubkey(), game, fb)));
+        assert!(adv(&mut svm, &a));
+        assert!(send(
+            &mut svm,
+            &a,
+            ix_vote(alashi::state::VoteChoice::Abstain, a.pubkey(), game, fa)
+        ));
+        assert!(adv(&mut svm, &a));
+    }
+    assert_eq!(game_state(&svm, &game).phase, alashi::state::Phase::Finished);
+
+    // атака R2: свой Faction дважды + свой кошелёк дважды → отказ
+    assert!(!send(
+        &mut svm,
+        &a,
+        ix_settle(
+            a.pubkey(),
+            game,
+            vec![fa, fa],
+            vec![a.pubkey(), a.pubkey()],
+            rake_admin.pubkey(),
+        )
+    ));
+    // состояние не тронуто: честный settle проходит тем же банком
+    assert!(send(
+        &mut svm,
+        &a,
+        ix_settle(
+            a.pubkey(),
+            game,
+            vec![fa, fb],
+            vec![a.pubkey(), b.pubkey()],
+            rake_admin.pubkey(),
+        )
+    ));
+    assert!(game_state(&svm, &game).settled);
+}
+
+// ---------- взнос-как-голос (SPEC_VOTE_CONTRIBUTION) ----------
+
+fn ix_set_vote_mode(admin: Pubkey, game: Pubkey, mode: u8) -> Instruction {
+    Instruction::new_with_bytes(
+        alashi::id(),
+        &alashi::instruction::SetVoteMode { mode }.data(),
+        alashi::accounts::SetVoteMode {
+            admin,
+            game,
+        }
+        .to_account_metas(None),
+    )
+}
+
+struct Party3 {
+    svm: LiteSVM,
+    admin: Keypair,
+    b: Keypair,
+    c: Keypair,
+    game: Pubkey,
+    fa: Pubkey,
+    fb: Pubkey,
+    fc: Pubkey,
+}
+
+fn start_party3(id: u64, vote_mode: Option<u8>) -> Party3 {
+    let (mut svm, admin) = setup();
+    let b = Keypair::new();
+    let c = Keypair::new();
+    svm.airdrop(&b.pubkey(), 2_000_000_000).unwrap();
+    svm.airdrop(&c.pubkey(), 2_000_000_000).unwrap();
+    let game = game_pda(id);
+    let fa = faction_pda(&game, &admin.pubkey());
+    let fb = faction_pda(&game, &b.pubkey());
+    let fc = faction_pda(&game, &c.pubkey());
+    assert!(send(
+        &mut svm,
+        &admin,
+        ix_initialize(id, FEE, 0, admin.pubkey(), game, 0)
+    ));
+    if let Some(mode) = vote_mode {
+        assert!(send(
+            &mut svm,
+            &admin,
+            ix_set_vote_mode(admin.pubkey(), game, mode)
+        ));
+    }
+    assert!(send(
+        &mut svm,
+        &admin,
+        ix_join("Aibot", admin.pubkey(), game, fa)
+    ));
+    assert!(send(&mut svm, &b, ix_join("Botagul", b.pubkey(), game, fb)));
+    assert!(send(&mut svm, &c, ix_join("Zhambyl", c.pubkey(), game, fc)));
+    Party3 {
+        svm,
+        admin,
+        b,
+        c,
+        game,
+        fa,
+        fb,
+        fc,
+    }
+}
+
+impl Party3 {
+    fn advance(&mut self) -> bool {
+        set_law_seed(&mut self.svm, 0); // карта 0 = status_quo, нейтральна
+        send(
+            &mut self.svm,
+            &self.admin,
+            ix_advance(
+                self.admin.pubkey(),
+                self.game,
+                vec![self.fa, self.fb, self.fc],
+            ),
+        )
+    }
+}
+
+/// Раунд с известным исходом: A и B действуют и голосуют ЗА,
+/// C пропускает действие и голосует ПРОТИВ.
+fn play_round_skipper(p: &mut Party3) -> alashi::state::Game {
+    assert!(p.advance()); // lobby -> market r1
+    assert!(p.advance()); // market -> action
+    assert!(send(
+        &mut p.svm,
+        &p.admin,
+        ix_produce(p.admin.pubkey(), p.game, p.fa)
+    ));
+    assert!(send(
+        &mut p.svm,
+        &p.b,
+        ix_produce(p.b.pubkey(), p.game, p.fb)
+    ));
+    // C молчит: пропуск = взнос
+    assert!(p.advance()); // action -> law
+    assert!(send(
+        &mut p.svm,
+        &p.admin,
+        ix_vote(
+            alashi::state::VoteChoice::Yes,
+            p.admin.pubkey(),
+            p.game,
+            p.fa
+        )
+    ));
+    assert!(send(
+        &mut p.svm,
+        &p.b,
+        ix_vote(alashi::state::VoteChoice::Yes, p.b.pubkey(), p.game, p.fb)
+    ));
+    assert!(send(
+        &mut p.svm,
+        &p.c,
+        ix_vote(alashi::state::VoteChoice::No, p.c.pubkey(), p.game, p.fc)
+    ));
+    assert!(p.advance()); // law -> market r2
+    game_state(&p.svm, &p.game)
+}
+
+#[test]
+fn test_contribution_skip_flips_vote() {
+    let mut p = start_party3(9001, Some(VOTE_WEIGHT_CONTRIB as u8));
+    let g = play_round_skipper(&mut p);
+    // да = 2 (оба действовали), нет = 1 + 2 (пропуск) = 3 → закон упал
+    assert_eq!((g.yes_influence, g.no_influence), (2, 3));
+    assert!(!g.last_law_passed);
+    // поле влияния C не тронуто: бонус жил только в подсчёте
+    let c = faction_state(&p.svm, &p.fc);
+    assert_eq!(c.influence, 1);
+    assert_eq!(g.vote_weight_mode, VOTE_WEIGHT_CONTRIB as u8);
+}
+
+#[test]
+fn test_legacy_same_scenario_passes() {
+    let mut p = start_party3(9002, None);
+    let g = play_round_skipper(&mut p);
+    // legacy: да 2 > нет 1 → прошёл, пропуск ничего не весит
+    assert_eq!((g.yes_influence, g.no_influence), (2, 1));
+    assert!(g.last_law_passed);
+}
+
+#[test]
+fn test_set_vote_mode_guards() {
+    let mut p = start_party3(9003, Some(VOTE_WEIGHT_CONTRIB as u8));
+    // не-админ не может менять режим
+    assert!(!send(
+        &mut p.svm,
+        &p.b,
+        ix_set_vote_mode(p.b.pubkey(), p.game, VOTE_WEIGHT_LEGACY as u8)
+    ));
+    // неверный режим отклоняется
+    assert!(!send(
+        &mut p.svm,
+        &p.admin,
+        ix_set_vote_mode(p.admin.pubkey(), p.game, 2)
+    ));
+    // после старта партии режим менять нельзя
+    assert!(p.advance());
+    assert!(!send(
+        &mut p.svm,
+        &p.admin,
+        ix_set_vote_mode(p.admin.pubkey(), p.game, VOTE_WEIGHT_LEGACY as u8)
+    ));
 }

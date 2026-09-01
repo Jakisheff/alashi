@@ -57,6 +57,7 @@ pub struct Game {
     pub pending_boom: u8,
     pub settled: bool,
     pub entropy_mode: u8,
+    pub vote_weight_mode: u8,
     pub vrf_account: Pubkey,
     pub commit_slot: u64,
     pub vrf_retries: u8,

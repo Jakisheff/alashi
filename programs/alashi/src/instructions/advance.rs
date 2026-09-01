@@ -136,7 +136,17 @@ pub fn handle_advance(ctx: Context<Advance>) -> Result<()> {
             let votes: Vec<(u16, VoteChoice)> = checked
                 .iter()
                 .filter(|f| f.alive && f.voted_stamp == stamp)
-                .map(|f| (f.influence, f.vote))
+                .map(|f| {
+                    let mut weight = f.influence;
+                    if game.vote_weight_mode == VOTE_WEIGHT_CONTRIB {
+                        let action_stamp = ((game.round as u16) << 3) | Phase::Action as u16;
+                        if f.acted_stamp != action_stamp {
+                            // взнос-как-голос: пропуск Action = вес на этом законе
+                            weight += SKIP_VOTE_WEIGHT;
+                        }
+                    }
+                    (weight, f.vote)
+                })
                 .collect();
             let (yes, no) = tally_votes(&votes);
             let voted_yes = yes > no;

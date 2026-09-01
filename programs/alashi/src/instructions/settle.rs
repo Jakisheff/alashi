@@ -35,6 +35,13 @@ pub fn handle_settle<'a>(ctx: Context<'a, Settle<'a>>) -> Result<()> {
     for (i, f) in factions.iter().enumerate() {
         require!(f.game == game.key(), GameError::InvalidSettleSet);
         require!(f.wallet == rem[k + i].key(), GameError::InvalidSettleSet);
+        // R2 (REVIEW_EXTERNAL): дедуп как в advance — без него кранкер
+        // подаёт один Faction k раз и забирает 95% банка одной транзакцией.
+        for (j, g) in factions.iter().enumerate() {
+            if i != j {
+                require!(f.key() != g.key(), GameError::InvalidSettleSet);
+            }
+        }
     }
     require!(rem[2 * k].key() == game.admin, GameError::InvalidSettleSet);
 

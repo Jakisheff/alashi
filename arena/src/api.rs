@@ -102,7 +102,7 @@ fn game_seed(state: &AppState, game_id: u64) -> u64 {
 fn settle_and_record(state: &AppState, game_id: u64) {
     let mut rec = None;
     {
-        let mut games = state.games.lock().unwrap();
+        let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
         if let Some(entry) = games.get_mut(&game_id) {
             let (ranks, payouts, rake, bank) = runner::settle(&entry.sim, entry.entry_fee);
             let agents: Vec<serde_json::Value> = entry
@@ -135,7 +135,7 @@ fn settle_and_record(state: &AppState, game_id: u64) {
         games.remove(&game_id);
     }
     if let Some(r) = rec {
-        state.completed.lock().unwrap().push(r);
+        state.completed.lock().unwrap_or_else(|e| e.into_inner()).push(r);
     }
 }
 
@@ -144,7 +144,7 @@ pub fn crank_once(state: &AppState) {
     let t = now();
     let mut to_settle: Vec<u64> = Vec::new();
     let mut to_expire: Vec<u64> = Vec::new();
-    let mut games = state.games.lock().unwrap();
+    let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
     for (&gid, entry) in games.iter_mut() {
         let seed = splitmix64(game_seed(state, gid) ^ (entry.sim.game.round as u64));
         match entry.sim.game.phase {
@@ -180,7 +180,7 @@ pub fn crank_once(state: &AppState) {
         settle_and_record(state, gid);
     }
     if !to_expire.is_empty() {
-        let mut games = state.games.lock().unwrap();
+        let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
         for gid in to_expire {
             games.remove(&gid);
         }
@@ -221,6 +221,7 @@ fn state_json(game_id: u64, entry: &GameEntry) -> serde_json::Value {
         "boom": g.active_boom,
         "laws_passed": g.laws_passed,
         "last_law_passed": g.last_law_passed,
+        "vote_weight_mode": g.vote_weight_mode,
         "veto_pending": g.veto_pending,
         "president_idx": entry.sim.factions.iter().position(|f| f.wallet == g.president),
         "yes_influence": g.yes_influence,
@@ -271,12 +272,21 @@ fn h_new_game(state: &AppState, body: &serde_json::Value) -> serde_json::Value {
         .get("phase_duration")
         .and_then(|v| v.as_i64())
         .unwrap_or(30);
+    let vote_weight_mode = body
+        .get("vote_weight_mode")
+        .and_then(|v| v.as_u64())
+        .unwrap_or(alashi_rules::constants::VOTE_WEIGHT_LEGACY as u64)
+        as u8;
     if entry_fee == 0 || phase_duration < 1 {
         return err_json("bad_params", "entry_fee > 0, phase_duration >= 1");
+    }
+    if vote_weight_mode > alashi_rules::constants::VOTE_WEIGHT_CONTRIB {
+        return err_json("bad_params", "vote_weight_mode: 0 legacy, 1 contribution");
     }
     let game_id = state.next_id.fetch_add(1, Ordering::SeqCst);
     let entropy = alashi_rules::constants::ENTROPY_SLOTHASH;
     let mut sim = Simulator::new(game_id, entry_fee, phase_duration, entropy);
+    sim.game.vote_weight_mode = vote_weight_mode;
     sim.game.phase_ends_at = now() + phase_duration * LOBBY_MULT;
     let entry = GameEntry {
         sim,
@@ -286,7 +296,7 @@ fn h_new_game(state: &AppState, body: &serde_json::Value) -> serde_json::Value {
         created: now(),
     };
     let v = state_json(game_id, &entry);
-    state.games.lock().unwrap().insert(game_id, entry);
+    state.games.lock().unwrap_or_else(|e| e.into_inner()).insert(game_id, entry);
     serde_json::json!({"ok": true, "game_id": game_id, "state": v})
 }
 
@@ -311,7 +321,7 @@ fn h_join(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_jso
     }
     let agent_id = agent_id_of(&model, &prompt);
     let token = random_hex();
-    let mut games = state.games.lock().unwrap();
+    let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
     let Some(entry) = games.get_mut(&game_id) else {
         return err_json("unknown_game", "партия не найдена или закрыта");
     };
@@ -341,11 +351,11 @@ fn h_join(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_jso
 }
 
 fn h_state(state: &AppState, game_id: u64) -> serde_json::Value {
-    let games = state.games.lock().unwrap();
+    let games = state.games.lock().unwrap_or_else(|e| e.into_inner());
     match games.get(&game_id) {
         Some(e) => serde_json::json!({"ok": true, "state": state_json(game_id, e)}),
         None => {
-            let completed = state.completed.lock().unwrap();
+            let completed = state.completed.lock().unwrap_or_else(|e| e.into_inner());
             let rec = completed
                 .iter()
                 .filter_map(|l| serde_json::from_str::<serde_json::Value>(l).ok())
@@ -374,7 +384,7 @@ fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json
     let token = body.get("token").and_then(|v| v.as_str()).unwrap_or("");
     let action = body.get("action").and_then(|v| v.as_str()).unwrap_or("");
     let p = body.get("params").cloned().unwrap_or(serde_json::json!({}));
-    let mut games = state.games.lock().unwrap();
+    let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
     let Some(entry) = games.get_mut(&game_id) else {
         return err_json("unknown_game", "партия не найдена или закрыта");
     };
@@ -422,7 +432,7 @@ fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json
 
 fn h_advance(state: &AppState, game_id: u64) -> serde_json::Value {
     let t = now();
-    let mut games = state.games.lock().unwrap();
+    let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
     let Some(entry) = games.get_mut(&game_id) else {
         return err_json("unknown_game", "партия не найдена или закрыта");
     };
@@ -443,7 +453,7 @@ fn h_advance(state: &AppState, game_id: u64) -> serde_json::Value {
 }
 
 fn h_games(state: &AppState) -> serde_json::Value {
-    let games = state.games.lock().unwrap();
+    let games = state.games.lock().unwrap_or_else(|e| e.into_inner());
     let list: Vec<serde_json::Value> = games
         .iter()
         .map(|(&gid, e)| {
@@ -461,7 +471,7 @@ fn h_games(state: &AppState) -> serde_json::Value {
 }
 
 fn h_leaderboard(state: &AppState) -> serde_json::Value {
-    let completed = state.completed.lock().unwrap();
+    let completed = state.completed.lock().unwrap_or_else(|e| e.into_inner());
     let mut rows: HashMap<String, serde_json::Value> = HashMap::new();
     for line in completed.iter() {
         let Ok(r) = serde_json::from_str::<serde_json::Value>(line) else {
@@ -501,7 +511,7 @@ fn json_add(v: &serde_json::Value, add: u64) -> serde_json::Value {
 }
 
 fn h_export(state: &AppState) -> String {
-    state.completed.lock().unwrap().join("\n")
+    state.completed.lock().unwrap_or_else(|e| e.into_inner()).join("\n")
 }
 
 fn root_doc() -> serde_json::Value {
@@ -509,7 +519,7 @@ fn root_doc() -> serde_json::Value {
         "ok": true,
         "alashi arena v0": "off-chain партии на чистых правилах (alashi-rules)",
         "endpoints": {
-            "POST /game/new": "{\"entry_fee\"?, \"phase_duration\"?} → game_id",
+            "POST /game/new": "{\"entry_fee\"?, \"phase_duration\"?, \"vote_weight_mode\"? (0 legacy | 1 contribution)} → game_id",
             "POST /game/:id/join": "{\"name\", \"model\", \"prompt\"} → agent_id + token",
             "GET  /game/:id/state": "публичное состояние партии",
             "POST /game/:id/act": "{\"token\", \"action\": sell|buy|produce|donkey|bribe|vote|veto, \"params\"}",

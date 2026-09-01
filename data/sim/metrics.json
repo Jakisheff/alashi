@@ -4,18 +4,18 @@
   "openskill": [
    {
     "strategy": "greedy",
-    "mu": 42.03,
-    "sigma": 2.616
+    "mu": 37.71,
+    "sigma": 2.507
    },
    {
     "strategy": "tactical",
-    "mu": 33.37,
-    "sigma": 2.565
+    "mu": 35.77,
+    "sigma": 2.468
    },
    {
     "strategy": "random",
-    "mu": -0.25,
-    "sigma": 4.351
+    "mu": -0.19,
+    "sigma": 4.132
    }
   ],
   "rationality_gap": [
@@ -28,61 +28,61 @@
    },
    {
     "strategy": "random",
-    "sell_decisions": 227,
+    "sell_decisions": 249,
     "mean_gap": 0.0,
-    "buys": 55,
-    "passes": 663
+    "buys": 67,
+    "passes": 676
    },
    {
     "strategy": "tactical",
-    "sell_decisions": 851,
+    "sell_decisions": 846,
     "mean_gap": 0.0,
-    "buys": 35,
-    "passes": 314
+    "buys": 29,
+    "passes": 325
    }
   ],
   "shapley": [
    {
     "strategy": "greedy",
-    "payout_share": 0.4642,
-    "shapley_share": 0.4498,
-    "exploitation_delta": 0.0144,
-    "raw_shapley": 267.167
+    "payout_share": 0.4518,
+    "shapley_share": 0.4356,
+    "exploitation_delta": 0.0163,
+    "raw_shapley": 247.833
    },
    {
     "strategy": "random",
-    "payout_share": 0.1626,
-    "shapley_share": 0.1813,
-    "exploitation_delta": -0.0186,
-    "raw_shapley": 107.667
+    "payout_share": 0.1634,
+    "shapley_share": 0.1895,
+    "exploitation_delta": -0.0261,
+    "raw_shapley": 107.833
    },
    {
     "strategy": "tactical",
-    "payout_share": 0.3732,
-    "shapley_share": 0.369,
-    "exploitation_delta": 0.0042,
-    "raw_shapley": 219.167
+    "payout_share": 0.3847,
+    "shapley_share": 0.3749,
+    "exploitation_delta": 0.0098,
+    "raw_shapley": 213.333
    }
   ],
-  "laws_passed": 634
+  "laws_passed": 598
  },
  "games5": {
   "games": 200,
   "openskill": [
    {
     "strategy": "greedy",
-    "mu": 60.61,
-    "sigma": 2.363
+    "mu": 66.03,
+    "sigma": 2.371
    },
    {
     "strategy": "tactical",
-    "mu": 25.83,
-    "sigma": 2.365
+    "mu": 16.48,
+    "sigma": 2.226
    },
    {
     "strategy": "random",
-    "mu": -11.53,
-    "sigma": 4.201
+    "mu": -6.96,
+    "sigma": 3.298
    }
   ],
   "rationality_gap": [
@@ -95,42 +95,176 @@
    },
    {
     "strategy": "random",
-    "sell_decisions": 245,
+    "sell_decisions": 259,
     "mean_gap": 0.0,
-    "buys": 111,
-    "passes": 653
+    "buys": 80,
+    "passes": 661
    },
    {
     "strategy": "tactical",
-    "sell_decisions": 1521,
+    "sell_decisions": 1565,
     "mean_gap": 0.0,
-    "buys": 150,
-    "passes": 729
+    "buys": 82,
+    "passes": 753
    }
   ],
   "shapley": [
    {
     "strategy": "greedy",
-    "payout_share": 0.3849,
-    "shapley_share": 0.5363,
-    "exploitation_delta": -0.1515,
-    "raw_shapley": 332.0
+    "payout_share": 0.7907,
+    "shapley_share": 0.5359,
+    "exploitation_delta": 0.2548,
+    "raw_shapley": 323.7
    },
    {
     "strategy": "random",
-    "payout_share": 0.007,
-    "shapley_share": 0.1035,
-    "exploitation_delta": -0.0965,
-    "raw_shapley": 64.083
+    "payout_share": 0.0203,
+    "shapley_share": 0.0995,
+    "exploitation_delta": -0.0793,
+    "raw_shapley": 60.1
    },
    {
     "strategy": "tactical",
-    "payout_share": 0.1116,
-    "shapley_share": 0.3601,
-    "exploitation_delta": -0.2485,
-    "raw_shapley": 222.917
+    "payout_share": 0.189,
+    "shapley_share": 0.3646,
+    "exploitation_delta": -0.1756,
+    "raw_shapley": 220.2
    }
   ],
-  "laws_passed": 633
+  "laws_passed": 625
+ },
+ "games_contrib": {
+  "games": 200,
+  "openskill": [
+   {
+    "strategy": "greedy",
+    "mu": 37.71,
+    "sigma": 2.507
+   },
+   {
+    "strategy": "tactical",
+    "mu": 35.77,
+    "sigma": 2.468
+   },
+   {
+    "strategy": "random",
+    "mu": -0.19,
+    "sigma": 4.132
+   }
+  ],
+  "rationality_gap": [
+   {
+    "strategy": "greedy",
+    "sell_decisions": 1000,
+    "mean_gap": 0.0,
+    "buys": 0,
+    "passes": 200
+   },
+   {
+    "strategy": "random",
+    "sell_decisions": 249,
+    "mean_gap": 0.0,
+    "buys": 67,
+    "passes": 676
+   },
+   {
+    "strategy": "tactical",
+    "sell_decisions": 846,
+    "mean_gap": 0.0,
+    "buys": 29,
+    "passes": 325
+   }
+  ],
+  "shapley": [
+   {
+    "strategy": "greedy",
+    "payout_share": 0.4518,
+    "shapley_share": 0.4361,
+    "exploitation_delta": 0.0157,
+    "raw_shapley": 246.833
+   },
+   {
+    "strategy": "random",
+    "payout_share": 0.1634,
+    "shapley_share": 0.1905,
+    "exploitation_delta": -0.0271,
+    "raw_shapley": 107.833
+   },
+   {
+    "strategy": "tactical",
+    "payout_share": 0.3847,
+    "shapley_share": 0.3734,
+    "exploitation_delta": 0.0114,
+    "raw_shapley": 211.333
+   }
+  ],
+  "laws_passed": 594
+ },
+ "games5_contrib": {
+  "games": 200,
+  "openskill": [
+   {
+    "strategy": "greedy",
+    "mu": 66.03,
+    "sigma": 2.371
+   },
+   {
+    "strategy": "tactical",
+    "mu": 16.48,
+    "sigma": 2.226
+   },
+   {
+    "strategy": "random",
+    "mu": -6.96,
+    "sigma": 3.298
+   }
+  ],
+  "rationality_gap": [
+   {
+    "strategy": "greedy",
+    "sell_decisions": 2000,
+    "mean_gap": 0.0,
+    "buys": 0,
+    "passes": 400
+   },
+   {
+    "strategy": "random",
+    "sell_decisions": 259,
+    "mean_gap": 0.0,
+    "buys": 80,
+    "passes": 661
+   },
+   {
+    "strategy": "tactical",
+    "sell_decisions": 1565,
+    "mean_gap": 0.0,
+    "buys": 82,
+    "passes": 753
+   }
+  ],
+  "shapley": [
+   {
+    "strategy": "greedy",
+    "payout_share": 0.7907,
+    "shapley_share": 0.5359,
+    "exploitation_delta": 0.2548,
+    "raw_shapley": 323.7
+   },
+   {
+    "strategy": "random",
+    "payout_share": 0.0203,
+    "shapley_share": 0.0995,
+    "exploitation_delta": -0.0793,
+    "raw_shapley": 60.1
+   },
+   {
+    "strategy": "tactical",
+    "payout_share": 0.189,
+    "shapley_share": 0.3646,
+    "exploitation_delta": -0.1756,
+    "raw_shapley": 220.2
+   }
+  ],
+  "laws_passed": 625
  }
 }

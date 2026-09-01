@@ -164,11 +164,22 @@ impl Simulator {
     }
 
     pub fn bribe(&mut self, from: usize, to: usize, amount: u64) -> Result<u16, GameError> {
-        if self.factions[from].acted_stamp == self.game.stamp() {
-            return Err(GameError::AlreadyActed);
+        // R1 (REVIEW_EXTERNAL): индексы валидируются до любого обращения,
+        // иначе один POST /act с to=999 кладёт весь arenad (отравленный лок).
+        if from >= self.factions.len() || to >= self.factions.len() {
+            return Err(GameError::InvalidFactionSet);
         }
         if self.game.phase != Phase::Action {
             return Err(GameError::WrongPhase);
+        }
+        if !self.factions[from].alive || !self.factions[to].alive {
+            return Err(GameError::NotAlive);
+        }
+        if self.factions[from].acted_stamp == self.game.stamp() {
+            return Err(GameError::AlreadyActed);
+        }
+        if from == to {
+            return Err(GameError::SelfBribe);
         }
         let gain = amount / BRIBE_PRICE;
         if gain == 0 {
@@ -176,6 +187,9 @@ impl Simulator {
         }
         if self.factions[from].cash < amount {
             return Err(GameError::NotEnoughCash);
+        }
+        if self.factions[from].influence as u64 + gain > MAX_INFLUENCE as u64 {
+            return Err(GameError::BribeTooBig);
         }
         let stamps = self.game.stamp();
         self.factions[from].cash -= amount;

@@ -132,3 +132,96 @@ fn http_full_game_two_agents() {
     // партия уже закрыта → unknown_game, тоже валидный отказ
     assert_eq!(r["ok"], false);
 }
+
+#[test]
+fn http_bribe_rejects_bad_target() {
+    let state = new_state();
+    let addr = serve_on(state, "127.0.0.1:0", 50).expect("serve");
+    let port = addr.port();
+
+    let r = http(
+        port,
+        "POST",
+        "/game/new",
+        Some(r#"{"entry_fee": 10000000, "phase_duration": 1}"#),
+    );
+    assert_eq!(r["ok"], true, "{r}");
+    let gid = r["game_id"].as_u64().unwrap();
+    let mut tokens = vec![];
+    for name in ["Attacker", "Victim"] {
+        let r = http(
+            port,
+            "POST",
+            &format!("/game/{}/join", gid),
+            Some(&format!(
+                r#"{{"name": "{}", "model": "t", "prompt": "e2e"}}"#,
+                name
+            )),
+        );
+        assert_eq!(r["ok"], true, "{r}");
+        tokens.push(r["token"].as_str().unwrap().to_string());
+    }
+    // доигрываем до фазы action: market без товаров, ждём таймер и advance
+    let deadline = std::time::Instant::now() + std::time::Duration::from_secs(20);
+    loop {
+        assert!(deadline.elapsed().is_zero(), "не дошли до action за 20с");
+        http(port, "POST", &format!("/game/{}/advance", gid), Some("{}"));
+        let r = http(port, "GET", &format!("/game/{}/state", gid), None);
+        let phase = r["state"]["phase"].as_str().unwrap().to_string();
+        if phase == "action" {
+            break;
+        }
+        std::thread::sleep(std::time::Duration::from_millis(200));
+    }
+
+    // R1: to за границей, to опущено (usize::MAX), self-bribe — всё ok:false
+    for params in [
+        r#"{"to": 999, "amount": 5000000}"#,
+        r#"{"amount": 5000000}"#,
+        r#"{"to": 0, "amount": 5000000}"#,
+    ] {
+        let body = format!(
+            r#"{{"token": "{}", "action": "bribe", "params": {}}}"#,
+            tokens[0], params
+        );
+        let r = http(port, "POST", &format!("/game/{}/act", gid), Some(&body));
+        assert_eq!(r["ok"], false, "params {params} прошли: {r}");
+    }
+    // арена жива после атак: /games и /game/:id/state отвечают
+    let r = http(port, "GET", "/games", None);
+    assert_eq!(r["ok"], true, "{r}");
+    let r = http(port, "GET", &format!("/game/{}/state", gid), None);
+    assert_eq!(r["ok"], true, "{r}");
+}
+
+#[test]
+fn http_vote_weight_mode_flag() {
+    let state = new_state();
+    let addr = serve_on(state, "127.0.0.1:0", 50).expect("serve");
+    let port = addr.port();
+
+    // дефолт = legacy (0)
+    let r = http(port, "POST", "/game/new", Some(r#"{"entry_fee": 10000000, "phase_duration": 5}"#));
+    assert_eq!(r["ok"], true, "{r}");
+    assert_eq!(r["state"]["vote_weight_mode"], 0, "{r}");
+
+    // contribution (1) выставляется и читается
+    let r = http(
+        port,
+        "POST",
+        "/game/new",
+        Some(r#"{"entry_fee": 10000000, "phase_duration": 5, "vote_weight_mode": 1}"#),
+    );
+    assert_eq!(r["ok"], true, "{r}");
+    assert_eq!(r["state"]["vote_weight_mode"], 1, "{r}");
+
+    // мусорное значение отбивается
+    let r = http(
+        port,
+        "POST",
+        "/game/new",
+        Some(r#"{"entry_fee": 10000000, "phase_duration": 5, "vote_weight_mode": 7}"#),
+    );
+    assert_eq!(r["ok"], false, "{r}");
+    assert_eq!(r["error"], "bad_params", "{r}");
+}

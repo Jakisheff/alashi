@@ -156,16 +156,14 @@ def run_shapley(games):
     contrib = defaultdict(Fraction)
     contrib_games = defaultdict(set)
     payout = defaultdict(int)
-    bank_total = defaultdict(int)
     law_count = 0
     for gi, g in enumerate(games):
         strats = g["strategies"]
         n = g["n_factions"]
         payouts = g["payouts"]
         bank = g["bank"] - g["rake"]
-        for s, p, b in zip(strats, payouts, [bank] * n):
+        for s, p in zip(strats, payouts):
             payout[s] += p
-            bank_total[s] += b
         # трекаем влияние и кэш по ходу (приближение: последнее известное)
         influence = [1] * n
         cash = [0] * n
@@ -196,13 +194,17 @@ def run_shapley(games):
                     contrib[strats[i]] += sh[k]
                     contrib_games[strats[i]].add((gi, law_count))
     # нормируем: сумма Shapley по каждому закону = 1, если закон прошёл
-    total_laws_weighted = defaultdict(Fraction)
+    # R3 (REVIEW_EXTERNAL): оба знаменателя — суммарный банк всех партий;
+    # прежний bank_total[s] делил выплату на число мест (две копии стратегии
+    # считались за одну) и сумма дельт не сходилась в 0.
+    payout_total = sum(payout.values())
+    total = sum(contrib.values()) or 1
     out = []
+    deltas = []
     for s in sorted({s for g in games for s in g["strategies"]}):
-        share = payout[s] / bank_total[s] if bank_total[s] else 0
-        # доля вклада: вклад / общая сумма вкладов всех стратегий
-        total = sum(contrib.values()) or 1
+        share = payout[s] / payout_total if payout_total else 0
         cshare = float(contrib[s] / total) if total else 0.0
+        deltas.append(share - cshare)
         out.append({
             "strategy": s,
             "payout_share": round(share, 4),
@@ -210,7 +212,8 @@ def run_shapley(games):
             "exploitation_delta": round(share - cshare, 4),
             "raw_shapley": round(float(contrib[s]), 3),
         })
-        total_laws_weighted[s] = contrib[s]
+    # закон сохранения (L3 LESSONS_LEARNED): сумма дельт обязана быть 0
+    assert abs(sum(deltas)) < 1e-9, f"shapley deltas sum != 0: {sum(deltas)}"
     return out, law_count
 
 

@@ -28,6 +28,12 @@ pub fn handle_settle_refund<'a>(ctx: Context<'a, SettleRefund<'a>>) -> Result<()
     for (i, f) in factions.iter().enumerate() {
         require!(f.game == game.key(), GameError::InvalidSettleSet);
         require!(f.wallet == rem[k + i].key(), GameError::InvalidSettleSet);
+        // R2 (REVIEW_EXTERNAL): дедуп, иначе share * k уходит одному кошельку
+        for (j, g) in factions.iter().enumerate() {
+            if i != j {
+                require!(f.key() != g.key(), GameError::InvalidSettleSet);
+            }
+        }
     }
 
     let rent = Rent::get()?.minimum_balance(8 + Game::INIT_SPACE);

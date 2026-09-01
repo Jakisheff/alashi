@@ -108,7 +108,17 @@ fn advance_inner(
             let votes: Vec<(u16, VoteChoice)> = factions
                 .iter()
                 .filter(|f| f.alive && f.voted_stamp == stamp)
-                .map(|f| (f.influence, f.vote))
+                .map(|f| {
+                    let mut weight = f.influence;
+                    if game.vote_weight_mode == VOTE_WEIGHT_CONTRIB {
+                        let action_stamp = ((game.round as u16) << 3) | Phase::Action as u16;
+                        if f.acted_stamp != action_stamp {
+                            // взнос-как-голос: пропуск Action = вес на этом законе
+                            weight += SKIP_VOTE_WEIGHT;
+                        }
+                    }
+                    (weight, f.vote)
+                })
                 .collect();
             let (yes, no) = tally_votes(&votes);
             let voted_yes = yes > no;
@@ -209,4 +219,68 @@ pub fn reveal_law(game: &mut Game, seed: u64) -> Result<u8, GameError> {
     game.law_card = card;
     game.laws_used_mask = mask;
     Ok(card)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn factions2() -> (Game, Vec<Faction>) {
+        let mut g = Game::default();
+        g.round = 1;
+        g.phase = Phase::Law;
+        g.law_card = LAW_TAX_10;
+        let law_stamp = g.stamp();
+        let mut f1 = Faction::default();
+        f1.wallet = Pubkey::new_from_array([1; 32]);
+        f1.alive = true;
+        f1.influence = 1;
+        f1.vote = VoteChoice::Yes;
+        f1.voted_stamp = law_stamp;
+        f1.acted_stamp = ((1u16) << 3) | Phase::Action as u16; // действовал
+        let mut f2 = Faction::default();
+        f2.wallet = Pubkey::new_from_array([2; 32]);
+        f2.alive = true;
+        f2.influence = 1;
+        f2.vote = VoteChoice::No;
+        f2.voted_stamp = law_stamp;
+        f2.acted_stamp = 0; // пропустил Action
+        (g, vec![f1, f2])
+    }
+
+    #[test]
+    fn legacy_tally_ignores_skip() {
+        let (mut g, mut fs) = factions2();
+        g.vote_weight_mode = VOTE_WEIGHT_LEGACY;
+        g.phase_ends_at = 10;
+        let res = advance_inner(&mut g, &mut fs, 20, None, 7).unwrap();
+        // yes(1) > no(1)? нет, равенство → закон не прошёл в обоих случаях ниже
+        // legacy: да 1 против нет 1 → не прошло
+        assert!(!res.vetoed);
+        assert!(!g.last_law_passed);
+        assert_eq!((g.yes_influence, g.no_influence), (1, 1));
+    }
+
+    #[test]
+    fn contribution_skip_adds_weight() {
+        let (mut g, mut fs) = factions2();
+        g.vote_weight_mode = VOTE_WEIGHT_CONTRIB;
+        g.phase_ends_at = 10;
+        let _ = advance_inner(&mut g, &mut fs, 20, None, 7).unwrap();
+        // no(1+2=3) > yes(1) → не прошло, и вес виден в счётчиках
+        assert_eq!((g.yes_influence, g.no_influence), (1, 3));
+        assert!(!g.last_law_passed);
+    }
+
+    #[test]
+    fn contribution_no_vote_no_bonus() {
+        // пропуск без голоса не участвует в подсчёте
+        let (mut g, mut fs) = factions2();
+        g.vote_weight_mode = VOTE_WEIGHT_CONTRIB;
+        g.phase_ends_at = 10;
+        fs[1].voted_stamp = 0; // не голосовал
+        let _ = advance_inner(&mut g, &mut fs, 20, None, 7).unwrap();
+        assert_eq!((g.yes_influence, g.no_influence), (1, 0));
+        assert!(g.last_law_passed);
+    }
 }

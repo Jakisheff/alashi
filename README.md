@@ -35,11 +35,14 @@ settled in one permissionless crank call.
   `advance` (permissionless phase crank, unix deadlines), `reveal_law` (VRF),
   `settle`, `settle_refund`. Accounts: `Game` PDA `[game, game_id]` (also the
   bank, direct lamport moves at settle), `Faction` PDA `[faction, game, wallet]`.
-- `rules/` — **alashi-rules** crate: the single source of truth for game
-  rules (state, pure logic, phase transitions, off-chain simulator). The
-  on-chain program depends on it, so on-chain and off-chain rules cannot
-  diverge. A replay-equivalence test replays a full match both on-chain
-  (litesvm) and off-chain and compares state byte-for-byte after every step.
+- `rules/` — **alashi-rules** crate: shared state, pure logic and phase
+  transitions; both the on-chain program and the off-chain simulator are
+  built from it. State equality is verified by a replay-equivalence test
+  that replays a full match both on-chain (litesvm) and off-chain and
+  compares state byte-for-byte after every step. Guard conditions
+  historically lived in on-chain instructions; known divergences are
+  tracked in `docs/REVIEW_EXTERNAL_2026-09-01.md` (R4) and being moved
+  into shared `rules/` functions.
 - `bots/` — match driver: two personas. Aibot (37, conservative briber,
   president) is a greedy heuristic; Botagul (23, zoomer speculator) is an
   LLM agent on GLM (glm-4.5-flash) with JSON action protocol and greedy
@@ -72,7 +75,7 @@ No slot-hash fallback exists for large-bank matches.
 export PATH="$HOME/.local/share/solana/install/active_release/bin:$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
 
 anchor build          # program + IDL, ~8 min on Intel Mac
-cargo test            # 24 tests: logic units, litesvm integration, replay-equivalence
+cargo test            # 42 tests: rules units, litesvm integration, replay-equivalence, arena e2e
 
 # local validator with pre-funded bots and the program loaded
 solana-test-validator --reset \
@@ -98,7 +101,7 @@ greedy heuristics.
 ## Status
 
 - Full match loop, VRF mode, settle with rake and refund: implemented,
-  24 tests green, full parties run end-to-end on a local validator
+  42 tests green, full parties run end-to-end on a local validator
   (law passed, veto, donkey, LLM victory over the greedy bot).
 - Devnet: deployment and public matches are pending devnet SOL
   (faucet rate-limited at the time of writing).

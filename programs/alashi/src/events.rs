@@ -135,3 +135,9 @@ pub struct GameAbortedEvent {
     pub game: Pubkey,
     pub round: u8,
 }
+
+#[event]
+pub struct VoteModeSet {
+    pub game: Pubkey,
+    pub mode: u8,
+}

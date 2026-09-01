@@ -16,6 +16,13 @@ use std::time::Duration;
 // ---------- http-клиент (как в e2e-тесте) ----------
 
 fn http(base: &str, method: &str, path: &str, body: Option<&str>) -> Option<Value> {
+    let https = base.starts_with("https://");
+    if https {
+        // R17: клиент без TLS — по https подключится к 443 и упадёт
+        // молча; говорим явно и отказываемся.
+        eprintln!("[ERROR] клиент без TLS: используй http-адрес арены (для туннеля: локальный порт хоста)");
+        return None;
+    }
     let url = base.trim_start_matches("http://");
     let mut stream = TcpStream::connect(url).ok()?;
     stream
@@ -43,7 +50,7 @@ struct LlmCfg {
     model: String,
 }
 
-fn llm_cfg() -> Option<LlmCfg> {
+fn llm_cfg(model_override: Option<&str>) -> Option<LlmCfg> {
     let key = std::env::var("ALASHI_LLM_KEY").ok().or_else(|| {
         let path = std::env::var("HOME").ok()? + "/.config/alashi/llm.json";
         let s = std::fs::read_to_string(path).ok()?;
@@ -56,7 +63,7 @@ fn llm_cfg() -> Option<LlmCfg> {
     Some(LlmCfg {
         key,
         base: "https://api.z.ai/api/paas/v4".into(),
-        model: "glm-4.5-flash".into(),
+        model: model_override.unwrap_or("glm-4.5-flash").into(),
     })
 }
 
@@ -129,8 +136,12 @@ fn main() {
     let prompt = flag(&args, "--prompt")
         .and_then(|p| std::fs::read_to_string(p).ok())
         .unwrap_or_else(|| "Стратег: играй рационально, следи за таблицей цен и влиянием.".into());
+    // R17: --model разбирается и уходит в join (иначе в лидерборд
+    // попадала константа "glm-agent" при любой реальной модели)
+    let model_flag = flag(&args, "--model");
+    let declared_model = model_flag.clone().unwrap_or_else(|| "glm-agent".into());
     let no_llm = args.iter().any(|a| a == "--no-llm");
-    let llm = if no_llm { None } else { llm_cfg() };
+    let llm = if no_llm { None } else { llm_cfg(model_flag.as_deref()) };
     if llm.is_none() {
         println!("[agent] LLM-ключа нет — жадный фоллбэк");
     }
@@ -139,7 +150,7 @@ fn main() {
         &url,
         "POST",
         &format!("/game/{}/join", game),
-        Some(&serde_json::json!({"name": name, "model": "glm-agent", "prompt": prompt}).to_string()),
+        Some(&serde_json::json!({"name": name, "model": declared_model, "prompt": prompt}).to_string()),
     )
     .expect("join");
     if j["ok"] != true {

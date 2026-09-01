@@ -47,6 +47,7 @@ pub struct GameRecord {
     pub game_id: u64,
     pub seed: u64,
     pub entry_fee: u64,
+    pub vote_weight_mode: u8,
     pub n_factions: usize,
     pub strategies: Vec<&'static str>,
     pub phases: Vec<PhaseLog>,
@@ -63,6 +64,7 @@ pub struct GameRecord {
 pub struct GameConfig {
     pub entry_fee: u64,
     pub phase_duration: i64,
+    pub vote_weight_mode: u8,
 }
 
 impl Default for GameConfig {
@@ -70,6 +72,7 @@ impl Default for GameConfig {
         GameConfig {
             entry_fee: 10 * PESO,
             phase_duration: 10,
+            vote_weight_mode: alashi_rules::constants::VOTE_WEIGHT_LEGACY,
         }
     }
 }
@@ -118,6 +121,7 @@ pub fn play_game(
     let n = strategies.len();
     assert!(n >= MIN_FACTIONS as usize && n <= MAX_FACTIONS as usize);
     let mut sim = Simulator::new(game_id, cfg.entry_fee, cfg.phase_duration, ENTROPY_SLOTHASH);
+    sim.game.vote_weight_mode = cfg.vote_weight_mode;
     // Кошельки детерминированы из seed: уникальны и воспроизводимы.
     let wallets: Vec<Pubkey> = (0..n)
         .map(|i| {
@@ -210,6 +214,7 @@ pub fn play_game(
         game_id,
         seed,
         entry_fee: cfg.entry_fee,
+        vote_weight_mode: cfg.vote_weight_mode,
         n_factions: n,
         strategies: strategies.iter().map(|s| s.name()).collect(),
         phases,
@@ -451,7 +456,13 @@ pub fn run_series(
     let mut out = Vec::with_capacity(n_games as usize);
     for g in 0..n_games {
         let seed = splitmix64(master_seed ^ splitmix64(g + 1));
-        let mut strategies: Vec<Box<dyn Strategy>> = mix
+        // R9 (REVIEW_EXTERNAL): ротация посадки — порядок хода (round+k)%n
+        // спутан со стратегией, если микс зафиксирован во всех партиях;
+        // теперь назначение стратегий по слотам крутится каждую партию.
+        let rotated: Vec<&str> = (0..mix.len())
+            .map(|i| mix[(i + g as usize) % mix.len()])
+            .collect();
+        let mut strategies: Vec<Box<dyn Strategy>> = rotated
             .iter()
             .enumerate()
             .map(|(i, name)| {

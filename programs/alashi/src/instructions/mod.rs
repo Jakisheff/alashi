@@ -9,6 +9,7 @@ pub mod reveal_law;
 pub mod sell;
 pub mod settle;
 pub mod settle_refund;
+pub mod set_vote_mode;
 pub mod veto;
 pub mod vote;
 
@@ -23,5 +24,6 @@ pub use reveal_law::*;
 pub use sell::*;
 pub use settle::*;
 pub use settle_refund::*;
+pub use set_vote_mode::*;
 pub use veto::*;
 pub use vote::*;

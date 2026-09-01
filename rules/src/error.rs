@@ -66,4 +66,8 @@ pub enum GameError {
     RandomnessNotReady,
     #[msg("game aborted by oracle failure")]
     GameAborted,
+    #[msg("caller is not the game admin")]
+    NotAdmin,
+    #[msg("invalid vote weight mode")]
+    InvalidVoteWeightMode,
 }
