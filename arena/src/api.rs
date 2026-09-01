@@ -260,6 +260,8 @@ fn state_json(game_id: u64, entry: &GameEntry) -> serde_json::Value {
         "laws_passed": g.laws_passed,
         "last_law_passed": g.last_law_passed,
         "vote_weight_mode": g.vote_weight_mode,
+        "epoch": if g.epoch == alashi_rules::constants::EPOCH_90S { "90s" } else { "classic" },
+        "amnesty_used": g.amnesty_used,
         "veto_pending": g.veto_pending,
         "president_idx": entry.sim.factions.iter().position(|f| f.wallet == g.president),
         "yes_influence": g.yes_influence,
@@ -276,6 +278,9 @@ fn state_json(game_id: u64, entry: &GameEntry) -> serde_json::Value {
                 "voted": f.alive && f.voted_stamp == stamp,
                 "is_president": f.is_president,
                 "alive": f.alive,
+                "grey_goods": f.grey_goods,
+                "promissory": f.promissory,
+                "roof_to": if f.roof_armed { serde_json::json!(f.roof_to) } else { serde_json::Value::Null },
             })
         }).collect::<Vec<_>>(),
     })
@@ -315,6 +320,11 @@ fn h_new_game(state: &AppState, body: &serde_json::Value) -> serde_json::Value {
         .and_then(|v| v.as_u64())
         .unwrap_or(alashi_rules::constants::VOTE_WEIGHT_LEGACY as u64)
         as u8;
+    let epoch = match body.get("epoch").and_then(|v| v.as_str()) {
+        Some("90s") => alashi_rules::constants::EPOCH_90S,
+        Some("classic") | None => alashi_rules::constants::EPOCH_CLASSIC,
+        _ => return err_json("bad_params", "epoch: classic | 90s"),
+    };
     if entry_fee == 0 || phase_duration < 1 {
         return err_json("bad_params", "entry_fee > 0, phase_duration >= 1");
     }
@@ -325,6 +335,7 @@ fn h_new_game(state: &AppState, body: &serde_json::Value) -> serde_json::Value {
     let entropy = alashi_rules::constants::ENTROPY_SLOTHASH;
     let mut sim = Simulator::new(game_id, entry_fee, phase_duration, entropy);
     sim.game.vote_weight_mode = vote_weight_mode;
+    sim.game.epoch = epoch;
     sim.game.phase_ends_at = now() + phase_duration * LOBBY_MULT;
     let entry = GameEntry {
         sim,
@@ -437,11 +448,20 @@ fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json
             let units = p.get("units").and_then(|v| v.as_u64()).unwrap_or(0) as u16;
             runner::apply_market(entry.sim_mut(), idx, &MarketAction::Sell(units))
         }
+        "sell_credit" => {
+            let units = p.get("units").and_then(|v| v.as_u64()).unwrap_or(0) as u16;
+            runner::apply_market(entry.sim_mut(), idx, &MarketAction::SellCredit(units))
+        }
         "buy" => {
             let units = p.get("units").and_then(|v| v.as_u64()).unwrap_or(0) as u16;
             runner::apply_market(entry.sim_mut(), idx, &MarketAction::Buy(units))
         }
         "produce" => runner::apply_action(entry.sim_mut(), idx, &ActionAction::Produce),
+        "shuttle" => runner::apply_action(entry.sim_mut(), idx, &ActionAction::Shuttle),
+        "roof" => {
+            let to = p.get("to").and_then(|v| v.as_u64()).unwrap_or(usize::MAX as u64) as usize;
+            runner::apply_action(entry.sim_mut(), idx, &ActionAction::Roof { to })
+        }
         "donkey" => runner::apply_action(entry.sim_mut(), idx, &ActionAction::Donkey),
         "bribe" => {
             let to = p.get("to").and_then(|v| v.as_u64()).unwrap_or(usize::MAX as u64) as usize;
@@ -462,7 +482,7 @@ fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json
             let w = entry.wallets[idx];
             runner::apply_law(entry.sim_mut(), idx, &LawAction::Veto, &w)
         }
-        _ => return err_json("bad_action", "sell|buy|produce|donkey|bribe|vote|veto"),
+        _ => return err_json("bad_action", "sell|sell_credit|buy|produce|shuttle|roof|donkey|bribe|vote|veto"),
     };
     let ok = log.ok;
     let err = log.err.clone();

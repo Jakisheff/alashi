@@ -58,6 +58,11 @@ pub struct Game {
     pub settled: bool,
     pub entropy_mode: u8,
     pub vote_weight_mode: u8,
+    /// SPEC_EPOCH_90S: 0 = classic, 1 = эпоха 90-х (девальвация,
+    /// крыша, челнок, вексель, завод).
+    pub epoch: u8,
+    /// карта «взаимозачёт» (id 8) уже выпадала в этой партии (epoch=1).
+    pub amnesty_used: bool,
     pub vrf_account: Pubkey,
     pub commit_slot: u64,
     pub vrf_retries: u8,
@@ -86,4 +91,13 @@ pub struct Faction {
     pub is_president: bool,
     pub alive: bool,
     pub bump: u8,
+    /// SPEC_EPOCH_90S (epoch=1): товар, добытый серым ходом этого раунда
+    /// (конфискуется таможней при закрытии Action).
+    pub grey_goods: u16,
+    /// непогашенный вексель (продажа в кредит), гасится в начале раунда.
+    pub promissory: u64,
+    /// крыша-контракт: индекс фракции-крыши (валиден при roof_armed).
+    pub roof_to: u8,
+    /// контракт активен (одноразовый).
+    pub roof_armed: bool,
 }

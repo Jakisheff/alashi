@@ -73,6 +73,20 @@ impl Simulator {
     }
 
     pub fn sell(&mut self, idx: usize, units: u16) -> Result<u64, GameError> {
+        self.sell_impl(idx, units, false)
+    }
+
+    /// SPEC_EPOCH_90S M4: продажа в кредит (вексель): выручка ×1.25,
+    /// деньги приходят в начале следующего раунда; сгорают картой
+    /// «взаимозачёт».
+    pub fn sell_credit(&mut self, idx: usize, units: u16) -> Result<u64, GameError> {
+        self.sell_impl(idx, units, true)
+    }
+
+    fn sell_impl(&mut self, idx: usize, units: u16, credit: bool) -> Result<u64, GameError> {
+        if credit && self.game.epoch != EPOCH_90S {
+            return Err(GameError::WrongPhase);
+        }
         let g = &mut self.game;
         let f = &mut self.factions[idx];
         if g.phase != Phase::Market {
@@ -95,9 +109,14 @@ impl Simulator {
         );
         let tax = trade.gross * g.active_tax_bps as u64 / 10_000;
         let revenue = trade.gross - tax;
+        let revenue = if credit { revenue * CREDIT_NUM / CREDIT_DEN } else { revenue };
         g.sold_this_round = trade.counter_after;
         f.goods -= units;
-        f.cash += revenue;
+        if credit {
+            f.promissory += revenue;
+        } else {
+            f.cash += revenue;
+        }
         f.acted_stamp = g.stamp();
         Ok(revenue)
     }
@@ -142,6 +161,60 @@ impl Simulator {
         f.goods += PRODUCE_YIELD + g.active_subsidy_goods as u16;
         f.acted_stamp = g.stamp();
         Ok(f.goods)
+    }
+
+    /// SPEC_EPOCH_90S M3: серый канал «челнок»: +3 товара (вместо 2),
+    /// товар помечается серым и стоит на таможне при закрытии фазы.
+    pub fn shuttle(&mut self, idx: usize) -> Result<u16, GameError> {
+        if self.game.epoch != EPOCH_90S {
+            return Err(GameError::WrongPhase);
+        }
+        let g = &mut self.game;
+        let f = &mut self.factions[idx];
+        if g.phase != Phase::Action {
+            return Err(GameError::WrongPhase);
+        }
+        if f.acted_stamp == g.stamp() {
+            return Err(GameError::AlreadyActed);
+        }
+        f.goods += SHUTTLE_GOODS + g.active_subsidy_goods as u16;
+        f.grey_goods += SHUTTLE_GOODS + g.active_subsidy_goods as u16;
+        f.acted_stamp = g.stamp();
+        Ok(f.goods)
+    }
+
+    /// SPEC_EPOCH_90S M2: крыша-контракт: 20% кэша целику, первый
+    /// анти-богатый закон против хозяина гасится.
+    pub fn roof(&mut self, from: usize, to: usize) -> Result<u8, GameError> {
+        if self.game.epoch != EPOCH_90S {
+            return Err(GameError::WrongPhase);
+        }
+        if from >= self.factions.len() || to >= self.factions.len() {
+            return Err(GameError::InvalidFactionSet);
+        }
+        if from == to {
+            return Err(GameError::SelfBribe);
+        }
+        let g = &mut self.game;
+        if g.phase != Phase::Action {
+            return Err(GameError::WrongPhase);
+        }
+        if self.factions[from].roof_armed {
+            return Err(GameError::AlreadyActed);
+        }
+        let price = self.factions[from].cash * ROOF_NUM / ROOF_DEN;
+        if price == 0 {
+            return Err(GameError::NotEnoughCash);
+        }
+        if self.factions[from].cash < price {
+            return Err(GameError::NotEnoughCash);
+        }
+        self.factions[from].cash -= price;
+        self.factions[to].cash += price;
+        self.factions[from].roof_to = to as u8;
+        self.factions[from].roof_armed = true;
+        self.factions[from].acted_stamp = g.stamp();
+        Ok(to as u8)
     }
 
     pub fn donkey(&mut self, idx: usize) -> Result<(), GameError> {

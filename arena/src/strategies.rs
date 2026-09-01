@@ -32,6 +32,8 @@ pub enum MarketAction {
     Sell(u16),
     Buy(u16),
     Pass,
+    /// SPEC_EPOCH_90S: продажа в кредит, вексель ×1.25.
+    SellCredit(u16),
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -40,6 +42,10 @@ pub enum ActionAction {
     Donkey,
     Bribe { to: usize, amount: u64 },
     Pass,
+    /// SPEC_EPOCH_90S: серый канал «челнок» (+3 товара, риск таможни).
+    Shuttle,
+    /// SPEC_EPOCH_90S: крыша-контракт (20% кэша целику).
+    Roof { to: usize },
 }
 
 #[derive(Debug, Clone, PartialEq)]

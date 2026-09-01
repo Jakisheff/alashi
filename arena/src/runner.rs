@@ -48,6 +48,7 @@ pub struct GameRecord {
     pub seed: u64,
     pub entry_fee: u64,
     pub vote_weight_mode: u8,
+    pub epoch: u8,
     pub n_factions: usize,
     pub strategies: Vec<&'static str>,
     pub phases: Vec<PhaseLog>,
@@ -65,6 +66,7 @@ pub struct GameConfig {
     pub entry_fee: u64,
     pub phase_duration: i64,
     pub vote_weight_mode: u8,
+    pub epoch: u8,
 }
 
 impl Default for GameConfig {
@@ -73,6 +75,7 @@ impl Default for GameConfig {
             entry_fee: 10 * PESO,
             phase_duration: 10,
             vote_weight_mode: alashi_rules::constants::VOTE_WEIGHT_LEGACY,
+            epoch: alashi_rules::constants::EPOCH_CLASSIC,
         }
     }
 }
@@ -122,6 +125,7 @@ pub fn play_game(
     assert!(n >= MIN_FACTIONS as usize && n <= MAX_FACTIONS as usize);
     let mut sim = Simulator::new(game_id, cfg.entry_fee, cfg.phase_duration, ENTROPY_SLOTHASH);
     sim.game.vote_weight_mode = cfg.vote_weight_mode;
+    sim.game.epoch = cfg.epoch;
     // Кошельки детерминированы из seed: уникальны и воспроизводимы.
     let wallets: Vec<Pubkey> = (0..n)
         .map(|i| {
@@ -215,6 +219,7 @@ pub fn play_game(
         seed,
         entry_fee: cfg.entry_fee,
         vote_weight_mode: cfg.vote_weight_mode,
+        epoch: cfg.epoch,
         n_factions: n,
         strategies: strategies.iter().map(|s| s.name()).collect(),
         phases,
@@ -254,7 +259,27 @@ pub fn settle(sim: &Simulator, entry_fee: u64) -> (Vec<usize>, Vec<u64>, u64, u6
     let mut rest: Vec<usize> = (0..n).filter(|i| !ranks.contains(i)).collect();
     rest.sort_by(|&a, &b| sim.factions[b].cash.cmp(&sim.factions[a].cash));
     ranks.extend(rest);
-    (ranks, payouts, plan.rake, bank)
+    // SPEC_EPOCH_90S M5 «завод»: фракция с макс влиянием получает 5%
+    // банка из рейка (при равенстве влияния — лучший ранг по cash).
+    let mut rake = plan.rake;
+    if sim.game.epoch == EPOCH_90S && n > 0 {
+        let bonus = bank * FACTORY_NUM / FACTORY_DEN;
+        if bonus > 0 && rake >= bonus {
+            let mut best = ranks.first().copied().unwrap_or(0);
+            let mut best_key = (0u16, 0u64);
+            for &i in &ranks {
+                let f = &sim.factions[i];
+                let key = (f.influence, f.cash);
+                if key > best_key {
+                    best_key = key;
+                    best = i;
+                }
+            }
+            payouts[best] += bonus;
+            rake -= bonus;
+        }
+    }
+    (ranks, payouts, rake, bank)
 }
 
 pub fn apply_market(sim: &mut Simulator, i: usize, act: &MarketAction) -> ActionLog {
@@ -282,6 +307,29 @@ pub fn apply_market(sim: &mut Simulator, i: usize, act: &MarketAction) -> Action
                 }
             }
             Err(e) => fail(phase, i, "sell", serde_json::json!({"units": units}), e),
+        },
+        MarketAction::SellCredit(units) => match sim.sell_credit(i, *units) {
+            Ok(gross) => {
+                let f = &sim.factions[i];
+                ActionLog {
+                    phase,
+                    actor: i,
+                    action: "sell_credit".into(),
+                    detail: serde_json::json!({
+                        "units": units,
+                        "promissory": gross,
+                        "tax_bps": sim.game.active_tax_bps,
+                        "counter_after": sim.game.sold_this_round,
+                        "shift": sim.game.active_price_shift,
+                        "boom": sim.game.active_boom,
+                    }),
+                    ok: true,
+                    err: None,
+                    cash_after: Some(f.cash),
+                    goods_after: Some(f.goods),
+                }
+            }
+            Err(e) => fail(phase, i, "sell_credit", serde_json::json!({"units": units}), e),
         },
         MarketAction::Buy(units) => match sim.buy(i, *units) {
             Ok(cost) => {
@@ -349,6 +397,32 @@ pub fn apply_action(sim: &mut Simulator, i: usize, act: &ActionAction) -> Action
             Err(e) => fail(phase, i, "bribe", serde_json::json!({"to": to, "amount": amount}), e),
         },
         ActionAction::Pass => ok(phase, i, "pass", serde_json::json!({}), &sim.factions[i]),
+        ActionAction::Shuttle => match sim.shuttle(i) {
+            Ok(goods) => ok(
+                phase,
+                i,
+                "shuttle",
+                serde_json::json!({"goods_after": goods, "grey": sim.factions[i].grey_goods}),
+                &sim.factions[i],
+            ),
+            Err(e) => fail(phase, i, "shuttle", serde_json::json!({}), e),
+        },
+        ActionAction::Roof { to } => match sim.roof(i, *to) {
+            Ok(roof_to) => {
+                let f = &sim.factions[i];
+                ActionLog {
+                    phase,
+                    actor: i,
+                    action: "roof".into(),
+                    detail: serde_json::json!({"to": roof_to, "price": f.cash * ROOF_NUM / ROOF_DEN}),
+                    ok: true,
+                    err: None,
+                    cash_after: Some(f.cash),
+                    goods_after: Some(f.goods),
+                }
+            }
+            Err(e) => fail(phase, i, "roof", serde_json::json!({"to": to}), e),
+        },
     }
 }
 
@@ -515,5 +589,21 @@ mod tests {
     fn bad_mix_rejected() {
         assert!(run_series(1, 1, &["greedy"], &GameConfig::default()).is_err());
         assert!(run_series(1, 1, &["greedy", "nope"], &GameConfig::default()).is_err());
+    }
+
+    #[test]
+    fn m5_90s_epoch_money_conserves_with_factory() {
+        // SPEC_EPOCH_90S: полная партия в эпохе 90-х, деньги сходятся,
+        // завод (5% из рейка) уходит фракции с макс влиянием.
+        let mut strs = strategies(&["greedy", "random", "tactical"], 42);
+        let cfg = GameConfig {
+            epoch: alashi_rules::constants::EPOCH_90S,
+            ..GameConfig::default()
+        };
+        let rec = play_game(1, 42, &mut strs, &cfg);
+        let paid: u64 = rec.payouts.iter().sum();
+        assert_eq!(paid + rec.rake, rec.bank, "выплаты + рейк = банк");
+        assert!(rec.rake <= rec.bank * DEFAULT_RAKE_BPS as u64 / 10_000,
+            "завод не увеличивает рейк, а забирает из него");
     }
 }

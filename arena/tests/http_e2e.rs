@@ -151,6 +151,99 @@ fn http_full_game_two_agents() {
 }
 
 #[test]
+fn http_epoch_90s_full_game() {
+    let state = new_state();
+    let addr = serve_on(state, "127.0.0.1:0", 50).expect("serve");
+    let port = addr.port();
+
+    let r = http(
+        port,
+        "POST",
+        "/game/new",
+        Some(r#"{"entry_fee": 10000000, "phase_duration": 1, "epoch": "90s"}"#),
+    );
+    assert_eq!(r["ok"], true, "{r}");
+    assert_eq!(r["state"]["epoch"], "90s", "{r}");
+    let gid = r["game_id"].as_u64().unwrap();
+
+    let mut tokens = vec![];
+    for name in ["Old", "New"] {
+        let r = http(
+            port,
+            "POST",
+            &format!("/game/{}/join", gid),
+            Some(&format!(r#"{{"name": "{}", "model": "t90", "prompt": "e"}}"#, name)),
+        );
+        assert_eq!(r["ok"], true, "{r}");
+        tokens.push(r["token"].as_str().unwrap().to_string());
+    }
+
+    let deadline = std::time::Instant::now() + std::time::Duration::from_secs(90);
+    let mut did_shuttle = false;
+    let mut did_credit = false;
+    let mut did_roof = false;
+    loop {
+        assert!(deadline.elapsed().is_zero(), "таймаут 90с");
+        http(port, "POST", &format!("/game/{}/advance", gid), Some("{}"));
+        let r = http(port, "GET", &format!("/game/{}/state", gid), None);
+        if r["finished"] == true {
+            break;
+        }
+        let s = &r["state"];
+        let phase = s["phase"].as_str().unwrap();
+        for (i, f) in s["factions"].as_array().unwrap().iter().enumerate() {
+            let acted = f["acted"].as_bool().unwrap();
+            let goods = f["goods"].as_u64().unwrap_or(0);
+            let (action, params) = match phase {
+                "market" if !acted && goods > 0 => {
+                    // вексель хотя бы раз, дальше обычная продажа
+                    if i == 0 && !did_credit {
+                        did_credit = true;
+                        ("sell_credit", format!(r#"{{"units": {}}}"#, goods))
+                    } else {
+                        ("sell", format!(r#"{{"units": {}}}"#, goods))
+                    }
+                }
+                "action" if !acted => {
+                    if i == 0 && !did_shuttle {
+                        did_shuttle = true;
+                        ("shuttle", "{}".to_string())
+                    } else if i == 1 && !did_roof && f["cash"].as_u64().unwrap_or(0) > 10_000_000 {
+                        did_roof = true;
+                        ("roof", r#"{"to": 0}"#.to_string())
+                    } else {
+                        ("produce", "{}".to_string())
+                    }
+                }
+                "law" if !f["voted"].as_bool().unwrap() => ("vote", r#"{"choice": "yes"}"#.to_string()),
+                _ => continue,
+            };
+            let body = format!(
+                r#"{{"token": "{}", "action": "{}", "params": {}}}"#,
+                tokens[i], action, params
+            );
+            let r = http(port, "POST", &format!("/game/{}/act", gid), Some(&body));
+            assert!(r["ok"] == true || r["error"].is_string(), "{action}: {r}");
+        }
+        std::thread::sleep(std::time::Duration::from_millis(300));
+    }
+
+    assert!(did_shuttle && did_credit, "90s-механики должны были сыграть");
+    // деньги сходятся: выплаты + рейк = банк
+    let r = http(port, "GET", &format!("/game/{}/state", gid), None);
+    let result = &r["result"];
+    let payouts: u64 = result["payouts"].as_array().unwrap().iter().map(|v| v.as_u64().unwrap()).sum();
+    let bank = result["bank"].as_u64().unwrap();
+    let rake = result["rake"].as_u64().unwrap();
+    assert_eq!(payouts + rake, bank);
+    // протокол партии содержит новые действия
+    let ex = http(port, "GET", "/export", None);
+    let ex_s = serde_json::to_string(&ex).unwrap();
+    assert!(ex_s.contains("shuttle"), "протокол должен видеть челнок");
+    assert!(ex_s.contains("sell_credit"), "протокол должен видеть вексель");
+}
+
+#[test]
 fn http_bribe_rejects_bad_target() {
     let state = new_state();
     let addr = serve_on(state, "127.0.0.1:0", 50).expect("serve");

@@ -49,6 +49,14 @@ fn main() {
     let vote_mode: u8 = flag(&args, "--vote-mode")
         .and_then(|v| v.parse().ok())
         .unwrap_or(0);
+    let epoch: u8 = match flag(&args, "--epoch").as_deref() {
+        Some("90s") => alashi_rules::constants::EPOCH_90S,
+        Some("classic") | None => alashi_rules::constants::EPOCH_CLASSIC,
+        Some(other) => {
+            eprintln!("[ERROR] --epoch: classic | 90s (дали {})", other);
+            std::process::exit(2);
+        }
+    };
 
     for name in &mix_ref {
         if !ALL.contains(&name) {
@@ -61,14 +69,16 @@ fn main() {
         entry_fee,
         phase_duration: 10,
         vote_weight_mode: vote_mode,
+        epoch,
     };
     eprintln!(
-        "simrun: {} игр, микс [{}], seed {}, entry_fee {}, vote_weight_mode {}",
+        "simrun: {} игр, микс [{}], seed {}, entry_fee {}, vote_weight_mode {}, epoch {}",
         games,
         mix_ref.join(","),
         seed,
         entry_fee,
-        vote_mode
+        vote_mode,
+        if epoch == 1 { "90s" } else { "classic" }
     );
     let lines = match run_series(games, seed, &mix_ref, &cfg) {
         Ok(l) => l,
