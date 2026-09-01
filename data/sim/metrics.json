@@ -1,0 +1,136 @@
+{
+ "games": {
+  "games": 200,
+  "openskill": [
+   {
+    "strategy": "greedy",
+    "mu": 42.03,
+    "sigma": 2.616
+   },
+   {
+    "strategy": "tactical",
+    "mu": 33.37,
+    "sigma": 2.565
+   },
+   {
+    "strategy": "random",
+    "mu": -0.25,
+    "sigma": 4.351
+   }
+  ],
+  "rationality_gap": [
+   {
+    "strategy": "greedy",
+    "sell_decisions": 1000,
+    "mean_gap": 0.0,
+    "buys": 0,
+    "passes": 200
+   },
+   {
+    "strategy": "random",
+    "sell_decisions": 227,
+    "mean_gap": 0.0,
+    "buys": 55,
+    "passes": 663
+   },
+   {
+    "strategy": "tactical",
+    "sell_decisions": 851,
+    "mean_gap": 0.0,
+    "buys": 35,
+    "passes": 314
+   }
+  ],
+  "shapley": [
+   {
+    "strategy": "greedy",
+    "payout_share": 0.4642,
+    "shapley_share": 0.4498,
+    "exploitation_delta": 0.0144,
+    "raw_shapley": 267.167
+   },
+   {
+    "strategy": "random",
+    "payout_share": 0.1626,
+    "shapley_share": 0.1813,
+    "exploitation_delta": -0.0186,
+    "raw_shapley": 107.667
+   },
+   {
+    "strategy": "tactical",
+    "payout_share": 0.3732,
+    "shapley_share": 0.369,
+    "exploitation_delta": 0.0042,
+    "raw_shapley": 219.167
+   }
+  ],
+  "laws_passed": 634
+ },
+ "games5": {
+  "games": 200,
+  "openskill": [
+   {
+    "strategy": "greedy",
+    "mu": 60.61,
+    "sigma": 2.363
+   },
+   {
+    "strategy": "tactical",
+    "mu": 25.83,
+    "sigma": 2.365
+   },
+   {
+    "strategy": "random",
+    "mu": -11.53,
+    "sigma": 4.201
+   }
+  ],
+  "rationality_gap": [
+   {
+    "strategy": "greedy",
+    "sell_decisions": 2000,
+    "mean_gap": 0.0,
+    "buys": 0,
+    "passes": 400
+   },
+   {
+    "strategy": "random",
+    "sell_decisions": 245,
+    "mean_gap": 0.0,
+    "buys": 111,
+    "passes": 653
+   },
+   {
+    "strategy": "tactical",
+    "sell_decisions": 1521,
+    "mean_gap": 0.0,
+    "buys": 150,
+    "passes": 729
+   }
+  ],
+  "shapley": [
+   {
+    "strategy": "greedy",
+    "payout_share": 0.3849,
+    "shapley_share": 0.5363,
+    "exploitation_delta": -0.1515,
+    "raw_shapley": 332.0
+   },
+   {
+    "strategy": "random",
+    "payout_share": 0.007,
+    "shapley_share": 0.1035,
+    "exploitation_delta": -0.0965,
+    "raw_shapley": 64.083
+   },
+   {
+    "strategy": "tactical",
+    "payout_share": 0.1116,
+    "shapley_share": 0.3601,
+    "exploitation_delta": -0.2485,
+    "raw_shapley": 222.917
+   }
+  ],
+  "laws_passed": 633
+ }
+}
