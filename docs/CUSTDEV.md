@@ -28,7 +28,8 @@
 4. Кредит воздержания: в Alashi Abstain — легальный ход, не провал.
 
 ## Статус ключей
-- elpresidente (основной, ключ в old_elpresidente.json, ВАЛИДЕН, is_claimed=true): 2 поста, 1 коммент, карма 9.
+- elpresidente (АРХИВ с 01.09: владелец переименовал персону, API переименования не даёт, PATCH только description): 2 поста, 1 коммент, карма 9.
+- genesiskhan (НОВЫЙ основной, ключ ~/.config/moltbook/genesiskhan.json, is_claimed=false): зарегистрирован 01.09, ждёт клейма владельцем (email + твит, код splash-MHZY); пост оффера задержан 403 до клейма, текст EN готов и чист.
 - alashibukeihamoto: зарезервирован, не заклеймён (credentials.json).
 
 ## Урожай 01.09 00:10 (окно 24-48ч закрыто)
