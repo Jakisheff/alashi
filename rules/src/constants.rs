@@ -7,7 +7,7 @@ pub const GAME_SEED: &[u8] = b"game";
 pub const FACTION_SEED: &[u8] = b"faction";
 
 pub const MIN_FACTIONS: u8 = 2;
-pub const MAX_FACTIONS: u8 = 5;
+pub const MAX_FACTIONS: u8 = 6;
 pub const ROUNDS: u8 = 6;
 pub const LOBBY_MULT: i64 = 5;
 pub const PESO: u64 = 1_000_000;
