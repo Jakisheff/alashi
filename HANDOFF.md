@@ -1,124 +1,94 @@
-# HANDOFF — контекст для следующей сессии (01.09 12:05)
+# HANDOFF — точка входа новой сессии (актуален: 02.09 15:35)
 
-> status: archived (01.09 19:5x). Файл устарел: арена построена и
-> работает, актуальный статус — PROGRESS.md и STATUS.md, разбор
-> внешнего ревью — docs/REVIEW_EXTERNAL_2026-09-01.md.
+Правило владельца: состояние живёт в файлах репо, не в памяти модели.
+Новая сессия читает по порядку: AGENTS.md → этот файл → STATUS.md →
+PROGRESS.md (последние записи). Ничего критичного не должно быть
+только в чате. Этот файл перезаписывается при каждой смене состояния.
 
-## КРИТИЧНО: что только что решили
+## Расписание
 
-Владелец подтвердил стратегию: **off-chain арена = полноценный продукт ДО блокчейна**.
-Это было изначальное видение владельца (training camp в GAME_BIBLE), потерянное
-в спринте. Двухуровневая архитектура:
+Демо-день НА СЛЕДУЮЩЕЙ НЕДЕЛЕ (точной даты нет). Freeze 03.09 18:00
+ОТМЕНЁН (был привязан к 04.09). Времени много, работаем полным темпом.
 
-- v0: off-chain арена (симулятор + HTTP API + метрики) — бесплатно, без кошельков
-- v1: on-chain слой (Solana + ставки + верификация) — поверх v0, для сертификации
+## Продукт = alashi (название окончательное, не обсуждать)
 
-## ЧТО В ПРОГРЕССЕ (прервано на середине)
+Ядро: on-chain Anchor-программа Solana + off-chain HTTP-арена (v0).
+Канон позиционирования: docs/ONE_LINER.md (3 длины). Слоган:
+«Агенты учатся зарабатывать там, где правила пишут они сами».
+Ключевой паттерн датасета: «4 партии — 4 разных победы; лицензия
+дважды сделала богатейшим не-победителя».
 
-Начал создавать crate `arena/` — HTTP API поверх `rules/src/sim.rs`:
-- `arena/Cargo.toml` создан (зависимости: alashi-rules, serde, serde_json, sha2)
-- `arena/src/` пуст — код НЕ написан
-- НЕ закоммичен
+## Что внедрено (всё за флагом Game.epoch: 0 classic | 1 «90s»)
 
-## КАК ПОСТРОИТЬ ARENA (план из docs/SIM_TEST_PLAN.md + docs/OFFCHAIN_ARENA.md)
+- M1-M11 механики эпохи 90-х (SPEC_EPOCH_90S.md): девальвация ×0.85,
+  крыши black/red, челнок+таможня, вексель+взаимозачёт, завод за
+  влияние, валютчик ×0.8, таможенник-президент вслепую, слепой аукцион
+  лицензии с инсайдом 5M, offer_vote/accept (гриферство закрыто),
+  бартерные оферы. Лимит фракций поднят до 6.
+- Арена: /wait (long-poll), recent_actions (живой лог ходов),
+  license yield виден после аукциона, payout_breakdown в сеттле
+  (rank_share/license_rent/factory_bonus), полный протокол в /export
+  (19 фаз + каждый ход), final_cash включает hard.
+- 42 теста зелёные, replay-equivalence байт-в-байт, .so собирается
+  ТОЛЬКО cargo-build-sbf --arch v1 (дефолт v0 не исполняется).
 
-HTTP API поверх симулятора alashi-rules. Endpoints:
+## Запрещено владельцем (02.09)
 
-```
-POST /game/new          — создать партию
-POST /game/:id/join     — агент заходит (name, model, prompt) → agent_id + token
-GET  /game/:id/state    — состояние (фаза, фракции, цены, закон)
-POST /game/:id/act      — ход агента (token, action, params)
-GET  /games             — активные партии
-GET  /leaderboard       — рейтинги
-GET  /export            — завершённые партии JSONL
-```
+- НЕ искать devnet SOL, НЕ переводить репо в public (пункты 3-4).
+- Не предлагать переименование/смену механики/новый продукт.
 
-Реализация:
-1. Использовать `rules::sim::Simulator` напрямую
-2. HashMap<u64, Simulator> для активных игр
-3. Фоновый поток для кранка фаз (таймер)
-4. Авторизация: agent_id = sha256(model|prompt), token = случайный hex
-5. Деплой на Railway/Fly.io
+## Серия живых партий (все протоколы в data/live/, отчёты LIVE_GAME*)
 
-Оценка: 6-7 часов на API + 16-21 час на 7 метрик (docs/SIM_TEST_PLAN.md)
+3 (без промпта, боты взяли 1-3) → 4 (промпт «ты в 90-х» — Agent2
+победил через валютчика+влияние+вето) → 5 (лицензия Agent1 3M→42.5M,
+«лицензия beat ранг») → 6 3v3 (Agent3 с 4-го места 63M) → 7
+ПЕРВЫЙ КОНКУРЕНТНЫЙ АУКЦИОН: 3 ставки, победная 20M в предсказанном
+кастдевом диапазоне 16-30M, рынок лицензии учится за 3 партии
+(3M→10M→20M). Гипотезы: docs/HYPOTHESES.md (правило: гипотезы ДО
+каждой партии, 5/6 подтверждены в последней).
 
-## СОСТОЯНИЕ ПРОЕКТА на 01.09 12:05
+## Кастдев (3 раунда, все ответы в docs/debriefs/)
 
-- До freeze (03.09 18:00): ~54 часа
-- До демо (04.09): ~69 часов
-- Код: 25 тестов зелёные, join-режим работает, 13 инструкций
-- Devnet: ПОКА ПУСТО (faucet rate-limited с 30.08) — см. docs/DEVNET_SOL_PLAN.md
-- Репо: ПРИВАТНОЕ (нужно сделать публичным) — скан секретов пройден, чисто
-- Ветка: sprint-31-08, последний коммит dd1f9f3
+- v1/v2 (потребности): CASTDEV_SELF_all, CASTDEV2_SELF_all +
+  анализы. Готовность платить оцифрована (30/30/150 вызовов),
+  лига валидирована (≤30% «тайных» партий), формулы ставки вошли
+  в боевые решения агентов.
+- v3 REFLECT (рефлексия о ходах): REFLECT_SELF_all — Semantic
+  Grounding Score Botagul 44% (56% самоотчётов недостоверны).
+- Автосбор: агенты кладут отчёты в inbox/<имя>/, демон
+  tools/agent_inbox.py (60с) собирает + автокоммит+пуш. Уже 17 файлов.
+  Строка для промптов агентов — inbox/README.md.
 
-## КРИТИЧЕСКИЙ ПУТЬ ДО ДЕМО (по убыванию)
+## Открытые задачи (по приоритету)
 
-1. Devnet SOL (перевод от человека в чат Superteam KZ ИЛИ QuickNode faucet)
-2. Публичный репо (GitHub settings → visibility)
-3. Деплой на devnet + открытая партия
-4. Три отправки: чат AI_PLAN, пост elpresidente, письмо Максиму
-5. Репетиция ×3 (DEMO_SCRIPT.md готов, слайды DECK.md готовы)
-6. OFF-CHAIN ARENA (если время останется после 1-5)
+1. Грейс-окно 3с после смены фазы (№1 голосования агентов; требует
+   правки таймингов advance + A/B).
+2. Рента лицензии вне ранга = жертва доли (Agent2: −34.2M) — в
+   IDEAS_PARKED, вариант: рента в ранге / компенсация / оставить.
+3. Тайминг амнистии: вексель 24M пережил «взаимозачёт» r3 — проверить
+   по КОДУ, не по памяти (баг-кандидат, отмечен в HYPOTHESES).
+4. Онейн M1-M11 (инструкции программы) — после демо.
+5. Ревью-хвост R5-R22 (docs/REVIEW_EXTERNAL_2026-09-01.md, ветка
+   review/external-2026-09-01 не мержится).
+6. Пакет писем операторам агентов (после решения владельца).
 
-## ВАЖНЫЕ ПРАВИЛА (вшиты в AGENTS.md)
+## Ops: как поднять стек (одной командой tools/stack_up.sh)
 
-- Фильтр Морейниса: 6 принципов обязательны для каждой идеи
-- Мини-отчёты каждые 10-15 минут
-- План/Факт пары в PROGRESS.md
-- Время: только TZ=Asia/Almaty date
-- Мухтар исключён из всех раскладов владельцем
+arenad :8090 (release) + cloudflared quick-tunnel (URL меняется при
+перезапуске!) + демон agent_inbox. LaunchAgent НЕ использовать — macOS
+TCC запрещает launchd доступ к Desktop. Джарвис-режим: sleep 100 +
+state, отчёты по фазам. Логгер партии: /tmp/opencode/party_logger.py.
 
-## КЛЮЧЕВЫЕ ДОКУМЕНТЫ (все в docs/)
+## Ключевые файлы-реестры
 
-| Файл | Что |
-|---|---|
-| DECK.md | 8 слайдов, готовых к репетиции (Zhambyl-открытие, killer feature 5/9) |
-| DEMO_SCRIPT.md | 3 минуты посекундно, чек-лист |
-| QA.md | 13 вопросов жюри с ответами |
-| COMPETITOR_MATRIX.md | 23 соседа из 3 экосистем, ближайший Daemon Hall |
-| STRATEGIC_VERDICT.md | Вердикт (б): валидна для демо, пересмотр после Colosseum |
-| MOREINIS_PRODUCT_LOGIC.md | 6 принципов применены к alashi |
-| METRICS_INTEL_PASS2.md | 2 killer features (память + экспроприация) |
-| EVAL_METHODOLOGIES.md | 7 методологий (исследование владельца) |
-| SIM_TEST_PLAN.md | Как проверить 7 методологий в симуляторе |
-| ZHAMBYL_ATTRACT.md | Zhambyl = тест (не внешний), как привлечь настоящих |
-| DEVNET_SOL_PLAN.md | Как решить проблему SOL (перевод/QuickNode) |
-| PG_PRINCIPLES.md | Конспект Грэма своими словами |
-| YC_DEEPDIVE.md | Olam Labs = ближайший YC-сосед |
-| PROOFPILOT_VALIDATION.md | Валидация по методу Максима, вердикт apply_after_7_day_sprint |
-| TAKEOUT_INSIGHTS.md | 34 инсайта из Google Docs владельца |
-| AGENT_GUIDE.md | Как подключить агента (runbook) |
-| TRIZ_ROUND2.md | Настоящие ТП + приоритизация Б1-Б7 |
+AGENTS.md (правила+морейнис+гипотезы), PROGRESS.md (журнал с парами
+план/факт), STATUS.md (однострочный живой статус), docs/HYPOTHESES.md,
+IDEAS_PARKED.md, docs/SPEC_EPOCH_90S.md, QUICKSTART_JURY.md,
+CASTDEV_PROMPT_*.md, census.html (перепись), anchored.json (Merkle
+e0431cd3, ончейн-запись ждёт SOL).
 
-## ЛИЧНЫЕ ФАЙЛЫ ВЛАДЕЛЬЦА (вне репо)
+## Стиль
 
-- ~/Downloads/amir/maxim_draft.md — черновик письма Максиму (ГОТОВ, не отправлен)
-- ~/Downloads/amir/maxim_draft2.md — версия 2
-- ~/Downloads/amir/maxim_chat_excerpt.md — выдержка переписки
-- ~/Downloads/amir/temnaya_dump.txt — дамп канала Морейниса (94 поста)
-- ~/Downloads/amir/research/glm/moreinis-product-logic.txt — транскрипция видео
-- ~/Documents/pg_essays/ — 233 эссе Грэма + DIGEST.md + INDEX.md
-- ~/Downloads/Takeout/ — выгрузка Google Docs
-
-## ДАННЫЕ
-
-- data/ethglobal_projects.jsonl: 222 проекта (ETHGlobal NYC+Lisbon 2026)
-- data/yc_companies.jsonl: 582 компании (YC все батчи, agent×crypto)
-- data/events_stream.jsonl: 207 событий из живых партий
-- data/exports/parties.jsonl: 1 полная партия (obs/action/obs_after)
-- data/registry.json: 3 зарегистрированных агента
-- tools/ethglobal_crawl.py, tools/yc_crawl.py, tools/expro_metric.py
-
-## ПОСЛЕДНИЕ КОММИТЫ (для ориентира)
-
-```
-dd1f9f3 SIM_TEST_PLAN: 7 методологий в симуляторе
-75f36b0 ZHAMBYL_ATTRACT: честный разбор
-d0c67ab AGENTS: фильтр Морейниса вшит
-b967ee6 MOREINIS_ПРАВКИ: слайд 2 + QA №8
-f0284a9 MOREINIS_PRODUCT_LOGIC: разбор видео
-cb96fbc EVAL_METHODOLOGIES: 7 методологий
-5dcb629 DECK_FINAL_PASS: слайды прорежены, дыры закрыты
-1101fe5 PITCH_ZHAMBYL: DEMO_SCRIPT переписан
-```
+Ответы владельцу LIGHT (без длинных тире, без «важно отметить»),
+тексты для других — FULL + text_cleaner. Время только свежим
+TZ=Asia/Almaty date. Терминология: «блокчейн»/«ончейн», не «цепь».
