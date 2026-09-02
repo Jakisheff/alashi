@@ -562,24 +562,39 @@ fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json
                 Err(e) => fail_like(e, idx, "inspect_license"),
             }
         }
-        "sell_vote" => {
+        "offer_vote" => {
+            // M10 (фикс): офер продажи голоса, деньги не списываются
             let buyer = p.get("to").and_then(|v| v.as_u64()).unwrap_or(usize::MAX as u64) as usize;
             let price = p.get("price").and_then(|v| v.as_u64()).unwrap_or(0);
-            match entry.sim.sell_vote(idx, buyer, price) {
+            match entry.sim.offer_vote(idx, buyer, price) {
                 Ok(_) => {
+                    let mut l = runner::empty_log();
+                    l.phase = "law".into();
+                    l.actor = idx;
+                    l.action = "offer_vote".into();
+                    l.ok = true;
+                    l.detail = serde_json::json!({"to": buyer, "price": price, "pending_accept": true});
+                    l
+                }
+                Err(e) => fail_like(e, idx, "offer_vote"),
+            }
+        }
+        "accept_vote_offer" => {
+            match entry.sim.accept_vote_offer(idx) {
+                Ok(price) => {
                     let f = &entry.sim.factions[idx];
                     ActionLog {
                         phase: "law",
                         actor: idx,
-                        action: "sell_vote".into(),
-                        detail: serde_json::json!({"to": buyer, "price": price}),
+                        action: "accept_vote_offer".into(),
+                        detail: serde_json::json!({"paid": price}),
                         ok: true,
                         err: None,
                         cash_after: Some(f.cash),
                         goods_after: Some(f.goods),
                     }
                 }
-                Err(e) => fail_like(e, idx, "sell_vote"),
+                Err(e) => fail_like(e, idx, "accept_vote_offer"),
             }
         }
         "barter_propose" => {
@@ -668,7 +683,7 @@ fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json
             let w = entry.wallets[idx];
             runner::apply_law(entry.sim_mut(), idx, &LawAction::Veto, &w)
         }
-        _ => return err_json("bad_action", "sell|sell_credit|buy|buy_hard|sell_hard|produce|shuttle|roof|customs|bid_license|inspect_license|sell_vote|barter_propose|barter_accept|donkey|bribe|vote|veto"),
+        _ => return err_json("bad_action", "sell|sell_credit|buy|buy_hard|sell_hard|produce|shuttle|roof|customs|bid_license|inspect_license|sell_vote|barter_propose|barter_accept|offer_vote|accept_vote_offer|donkey|bribe|vote|veto"),
     };
     let ok = log.ok;
     let err = log.err.clone();

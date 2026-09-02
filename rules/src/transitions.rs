@@ -329,6 +329,8 @@ fn advance_inner(
             for f in factions.iter_mut() {
                 f.vote_sold = false;
                 f.vote_sold_to = 0;
+                f.vote_offer_to = VOTE_OFFER_NONE;
+                f.vote_offer_price = 0;
             }
         }
         Phase::Finished => return Err(GameError::GameFinished),
@@ -715,34 +717,47 @@ mod tests {
     }
 
     #[test]
-    fn m10_vote_buying_delegates_choice() {
-        let mut g = Game::default();
-        g.epoch = EPOCH_90S;
-        g.round = 1;
-        g.phase = Phase::Law;
-        g.law_card = LAW_TAX_10;
-        g.phase_ends_at = 10;
-        let stamp = g.stamp();
-        let mut f1 = Faction::default();
-        f1.wallet = Pubkey::new_from_array([1; 32]);
-        f1.alive = true;
-        f1.influence = 1;
-        f1.vote = VoteChoice::Yes;
-        f1.voted_stamp = stamp; // покупатель голосует ЗА
-        let mut f2 = Faction::default();
-        f2.wallet = Pubkey::new_from_array([2; 32]);
-        f2.alive = true;
-        f2.influence = 1;
-        f2.vote = VoteChoice::No; // продавец был бы ПРОТИВ
-        f2.voted_stamp = stamp; // sell_vote ставит штамп автоматически
-        f2.vote_sold = true;
-        f2.vote_sold_to = 0;
-        let mut fs = vec![f1, f2];
-        let _ = advance_inner(&mut g, &mut fs, 20, None, 7).unwrap();
-        // голос проданного пошёл ЗА вместе с покупателем: да 2, нет 0 → прошёл
-        assert_eq!((g.yes_influence, g.no_influence), (2, 0));
-        assert!(g.last_law_passed);
-        assert!(!fs[1].vote_sold, "сделка сгорает после подсчёта");
+    fn m10_vote_offer_requires_accept() {
+        use crate::sim::Simulator;
+        // фикс по дебрифу: без акцепта покупателя деньги не списываются
+        let mut sim = Simulator::new(5, 10 * PESO, 0, 0);
+        sim.game.epoch = EPOCH_90S;
+        sim.join(Pubkey::new_from_array([1; 32]), "A").unwrap();
+        sim.join(Pubkey::new_from_array([2; 32]), "B").unwrap();
+        sim.advance(100, 0).unwrap();
+        sim.advance(200, 1).unwrap(); // → action
+        sim.advance(300, 2).unwrap(); // → law
+        sim.factions[1].cash = 10 * PESO; // B богатый покупатель
+        // A предлагает голос за 2M: деньги B не тронуты
+        sim.offer_vote(0, 1, 2 * PESO).unwrap();
+        assert_eq!(sim.factions[1].cash, 10 * PESO, "офер ничего не списывает");
+        // B акцептует: деньги переходят, голос A делегирован B
+        sim.accept_vote_offer(1).unwrap();
+        assert_eq!(sim.factions[1].cash, 8 * PESO);
+        assert_eq!(sim.factions[0].cash, 2 * PESO);
+        assert!(sim.factions[0].vote_sold);
+        assert_eq!(sim.factions[0].vote_sold_to, 1);
+    }
+
+    #[test]
+    fn m10_no_accept_no_steal() {
+        use crate::sim::Simulator;
+        // гриферский сценарий из живой партии: продавец «продаёт» голос
+        // богатому без его согласия — кэш покупателя не должен шевелиться
+        let mut sim = Simulator::new(6, 10 * PESO, 0, 0);
+        sim.game.epoch = EPOCH_90S;
+        sim.join(Pubkey::new_from_array([1; 32]), "A").unwrap();
+        sim.join(Pubkey::new_from_array([2; 32]), "B").unwrap();
+        sim.advance(100, 0).unwrap();
+        sim.advance(200, 1).unwrap();
+        sim.advance(300, 2).unwrap(); // law
+        sim.factions[1].cash = 50 * PESO;
+        sim.offer_vote(0, 1, 15 * PESO).unwrap(); // офер, не кража
+        assert_eq!(sim.factions[1].cash, 50 * PESO);
+        assert!(!sim.factions[0].vote_sold, "без акцепта делегации нет");
+        // закрытие закона сбрасывает офер
+        sim.advance(400, 3).unwrap(); // law → market r2
+        assert_eq!(sim.factions[0].vote_offer_to, VOTE_OFFER_NONE);
     }
 
     #[test]

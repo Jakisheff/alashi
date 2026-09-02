@@ -61,6 +61,7 @@ impl Simulator {
         f.wallet = wallet;
         f.name = name.to_string();
         f.influence = 1;
+        f.vote_offer_to = VOTE_OFFER_NONE;
         f.vote = crate::state::VoteChoice::Abstain;
         f.alive = true;
         self.factions.push(f);
@@ -298,10 +299,11 @@ impl Simulator {
         Ok(self.game.license_yield)
     }
 
-    /// SPEC_EPOCH_90S M10: продажа своего голоса покупателю за кэш
-    /// (цена списывается с покупателя сразу, голос в этом законе идёт
-    /// по выбору покупателя).
-    pub fn sell_vote(&mut self, seller: usize, buyer: usize, price: u64) -> Result<(), GameError> {
+    /// SPEC_EPOCH_90S M10 (фикс 02.09 по дебрифу): продажа голоса в два
+    /// шага. Офер: продавец объявляет цену, деньги НЕ списываются.
+    /// Акцепт: покупатель подтверждает accept_vote_offer, тогда кэш
+    /// переходит, а голос продавца идёт по выбору покупателя.
+    pub fn offer_vote(&mut self, seller: usize, buyer: usize, price: u64) -> Result<(), GameError> {
         if self.game.epoch != EPOCH_90S {
             return Err(GameError::WrongPhase);
         }
@@ -314,9 +316,38 @@ impl Simulator {
         if self.game.phase != Phase::Law {
             return Err(GameError::WrongPhase);
         }
-        if self.factions[seller].vote_sold {
+        if self.factions[seller].vote_sold || self.factions[seller].vote_offer_to != VOTE_OFFER_NONE {
             return Err(GameError::AlreadyVoted);
         }
+        // офер валиден только если покупатель сможет заплатить
+        if self.factions[buyer].cash < price {
+            return Err(GameError::NotEnoughCash);
+        }
+        self.factions[seller].vote_offer_to = buyer as u8;
+        self.factions[seller].vote_offer_price = price;
+        Ok(())
+    }
+
+    /// M10: акцепт покупки голоса (только адресат офера).
+    pub fn accept_vote_offer(&mut self, buyer: usize) -> Result<u64, GameError> {
+        if self.game.epoch != EPOCH_90S {
+            return Err(GameError::WrongPhase);
+        }
+        if self.game.phase != Phase::Law {
+            return Err(GameError::WrongPhase);
+        }
+        if buyer >= self.factions.len() {
+            return Err(GameError::InvalidFactionSet);
+        }
+        let (seller, price) = {
+            let mut found = None;
+            for (i, f) in self.factions.iter().enumerate() {
+                if f.vote_offer_to as usize == buyer && f.vote_offer_to != VOTE_OFFER_NONE {
+                    found = Some((i, f.vote_offer_price));
+                }
+            }
+            found.ok_or(GameError::InvalidFactionSet)?
+        };
         if self.factions[buyer].cash < price {
             return Err(GameError::NotEnoughCash);
         }
@@ -324,9 +355,10 @@ impl Simulator {
         self.factions[seller].cash += price;
         self.factions[seller].vote_sold = true;
         self.factions[seller].vote_sold_to = buyer as u8;
-        // голос продавца автоматически считается поданным
+        self.factions[seller].vote_offer_to = VOTE_OFFER_NONE;
+        self.factions[seller].vote_offer_price = 0;
         self.factions[seller].voted_stamp = self.game.stamp();
-        Ok(())
+        Ok(price)
     }
 
     pub fn donkey(&mut self, idx: usize) -> Result<(), GameError> {

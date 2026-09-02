@@ -58,6 +58,10 @@ pub fn handle_join(ctx: Context<Join>, name: String) -> Result<()> {
     faction.is_president = false;
     faction.alive = true;
     faction.bump = ctx.bumps.faction;
+    // SPEC_EPOCH_90S: маркеры без-значения инициализируются явно,
+    // чтобы ончейн и симулятор были байт-в-байт (урок R4)
+    faction.vote_offer_to = VOTE_OFFER_NONE;
+    faction.roof_to = 0;
 
     emit!(FactionJoined {
         game: game.key(),
