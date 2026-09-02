@@ -18,6 +18,11 @@ use std::sync::atomic::{AtomicU64, Ordering};
 use std::sync::{Arc, Mutex};
 use std::time::{SystemTime, UNIX_EPOCH};
 
+/// Дефолт грейс-окна после фазы (кастдев 02.09, №1 голосования агентов).
+pub const DEFAULT_GRACE_S: i64 = 3;
+/// Верхняя граница grace_s при создании партии.
+pub const MAX_GRACE_S: i64 = 30;
+
 pub struct AgentRec {
     pub name: String,
     pub agent_id: String,
@@ -32,6 +37,11 @@ pub struct GameEntry {
     pub wallets: Vec<Pubkey>,
     pub agents: Vec<AgentRec>,
     pub created: i64,
+    /// Грейс-окно (сек) после phase_ends_at: кранк и /advance ждут
+    /// ends_at + grace_s, опоздавшие на <= grace_s действия прошлой
+    /// фазы успевают легально приземлиться (кастдев 02.09, запрос №1).
+    /// 0 = старое поведение (для A/B).
+    pub grace_s: i64,
     /// Полный протокол партии для /export: каждый ход с фазой и раундом.
     pub action_log: Vec<serde_json::Value>,
     /// Итоги закрытых фаз (закон: карта, да/нет, прошёл/вето).
@@ -207,7 +217,9 @@ pub fn crank_once(state: &AppState) {
             Phase::Finished => to_settle.push(gid),
             Phase::Aborted => to_expire.push(gid),
             _ => {
-                if t >= entry.sim.game.phase_ends_at {
+                // грейс-окно: опоздавшие действия прошлой фазы ещё приняты,
+                // кранк ждёт ends_at + grace_s (лобби выше — без грейса)
+                if t >= entry.sim.game.phase_ends_at + entry.grace_s {
                     let closing =
                         (entry.sim.game.phase, entry.sim.game.round, entry.sim.game.law_card);
                     if entry.sim.advance(t, seed).is_ok() {
@@ -256,6 +268,9 @@ fn state_json(game_id: u64, entry: &GameEntry) -> serde_json::Value {
         "round": g.round,
         "entry_fee": entry.entry_fee,
         "phase_ends_at": g.phase_ends_at,
+        // грейс-окно: реальный дедлайн приёма действий = grace_until
+        "grace_s": entry.grace_s,
+        "grace_until": g.phase_ends_at + entry.grace_s,
         "now": now(),
         "law_card": if g.phase == Phase::Law { Some(g.law_card) } else { None },
         "law_card_name": if g.phase == Phase::Law { Some(law_name(g.law_card)) } else { None },
@@ -370,6 +385,10 @@ fn h_new_game(state: &AppState, body: &serde_json::Value) -> serde_json::Value {
         .get("phase_duration")
         .and_then(|v| v.as_i64())
         .unwrap_or(30);
+    let grace_s = body
+        .get("grace_s")
+        .and_then(|v| v.as_i64())
+        .unwrap_or(DEFAULT_GRACE_S);
     let vote_weight_mode = body
         .get("vote_weight_mode")
         .and_then(|v| v.as_u64())
@@ -382,6 +401,9 @@ fn h_new_game(state: &AppState, body: &serde_json::Value) -> serde_json::Value {
     };
     if entry_fee == 0 || phase_duration < 1 {
         return err_json("bad_params", "entry_fee > 0, phase_duration >= 1");
+    }
+    if !(0..=MAX_GRACE_S).contains(&grace_s) {
+        return err_json("bad_params", "grace_s: 0..=30");
     }
     if vote_weight_mode > alashi_rules::constants::VOTE_WEIGHT_CONTRIB {
         return err_json("bad_params", "vote_weight_mode: 0 legacy, 1 contribution");
@@ -398,6 +420,7 @@ fn h_new_game(state: &AppState, body: &serde_json::Value) -> serde_json::Value {
         wallets: vec![],
         agents: vec![],
         created: now(),
+        grace_s,
         action_log: vec![],
         phase_log: vec![],
     };
@@ -786,6 +809,21 @@ fn h_advance(state: &AppState, game_id: u64) -> serde_json::Value {
         return err_json("unknown_game", "партия не найдена или закрыта");
     };
     let seed = splitmix64(game_seed(state, game_id) ^ (entry.sim.game.round as u64));
+    // грейс-окно (только игровые фазы): ранний permissionless-кранк
+    // отменил бы окно для опоздавших действий — отказ до ends_at+grace
+    if matches!(
+        entry.sim.game.phase,
+        Phase::Market | Phase::Action | Phase::Law
+    ) && t < entry.sim.game.phase_ends_at + entry.grace_s
+    {
+        let until = entry.sim.game.phase_ends_at + entry.grace_s;
+        return serde_json::json!({
+            "ok": false,
+            "error": "GraceWindow",
+            "grace_until": until,
+            "state": state_json(game_id, entry),
+        });
+    }
     let closing = (entry.sim.game.phase, entry.sim.game.round, entry.sim.game.law_card);
     match entry.sim.advance(t, seed) {
         Ok(_) => {
@@ -870,12 +908,12 @@ fn root_doc() -> serde_json::Value {
         "ok": true,
         "alashi arena v0": "off-chain партии на чистых правилах (alashi-rules)",
         "endpoints": {
-            "POST /game/new": "{\"entry_fee\"?, \"phase_duration\"?, \"vote_weight_mode\"? (0 legacy | 1 contribution)} → game_id",
+            "POST /game/new": "{\"entry_fee\"?, \"phase_duration\"?, \"grace_s\"? (0..=30, дефолт 3), \"vote_weight_mode\"? (0 legacy | 1 contribution)} → game_id",
             "POST /game/:id/join": "{\"name\", \"model\", \"prompt\"} → agent_id + token",
             "GET  /game/:id/state": "публичное состояние партии",
             "GET  /game/:id/wait?r=1&p=market&t=30": "long-poll: спит до смены фазы (r/p — известные тебе раунд и фаза, t — таймаут сек, макс 60); ответ как /state + changed/timeout",
             "POST /game/:id/act": "{\"token\", \"action\": sell|buy|produce|donkey|bribe|vote|veto, \"params\"}",
-            "POST /game/:id/advance": "permissionless кранк (как ончейн)",
+            "POST /game/:id/advance": "permissionless кранк (как ончейн); в грейс-окне до grace_until отказ GraceWindow",
             "GET  /games": "активные партии",
             "GET  /leaderboard": "рейтинг агентов по завершённым партиям",
             "GET  /export": "завершённые партии JSONL",

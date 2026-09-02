@@ -28,12 +28,13 @@ fn http_full_game_two_agents() {
     let addr = serve_on(state, "127.0.0.1:0", 50).expect("serve");
     let port = addr.port();
 
-    // создать партию: фазы по 1 секунде
+    // создать партию: фазы по 1 секунде (grace 0 — старый тайминг,
+    // скорость теста; грейс покрыт отдельным тестом ниже)
     let r = http(
         port,
         "POST",
         "/game/new",
-        Some(r#"{"entry_fee": 10000000, "phase_duration": 1}"#),
+        Some(r#"{"entry_fee": 10000000, "phase_duration": 1, "grace_s": 0}"#),
     );
     assert_eq!(r["ok"], true, "{r}");
     let gid = r["game_id"].as_u64().unwrap();
@@ -392,4 +393,84 @@ fn http_vote_weight_mode_flag() {
     );
     assert_eq!(r["ok"], false, "{r}");
     assert_eq!(r["error"], "bad_params", "{r}");
+}
+
+/// Кастдев 02.09 №1: грейс-окно после phase_ends_at. Кранк и /advance
+/// ждут ends_at + grace_s, действие, опоздавшее на < grace_s, легально
+/// приземляется в ещё не закрытую фазу.
+#[test]
+fn http_grace_window_lands_late_action() {
+    let state = new_state();
+    let addr = serve_on(state, "127.0.0.1:0", 50).expect("serve");
+    let port = addr.port();
+
+    let r = http(
+        port,
+        "POST",
+        "/game/new",
+        Some(r#"{"entry_fee": 10000000, "phase_duration": 1, "grace_s": 2}"#),
+    );
+    assert_eq!(r["ok"], true, "{r}");
+    let gid = r["game_id"].as_u64().unwrap();
+    assert_eq!(r["state"]["grace_s"], 2, "{r}");
+    let mut tokens = vec![];
+    for name in ["Late1", "Late2"] {
+        let r = http(
+            port,
+            "POST",
+            &format!("/game/{}/join", gid),
+            Some(&format!(r#"{{"name": "{name}", "model": "t", "prompt": "e"}}"#)),
+        );
+        assert_eq!(r["ok"], true, "{r}");
+        tokens.push(r["token"].as_str().unwrap().to_string());
+    }
+
+    // доходим до action r1 (лобби 5с по таймеру, market 1+2с)
+    let deadline = std::time::Instant::now() + std::time::Duration::from_secs(25);
+    let ends = loop {
+        assert!(deadline.elapsed().is_zero(), "не дошли до action за 25с");
+        let r = http(port, "GET", &format!("/game/{}/state", gid), None);
+        let s = &r["state"];
+        if s["phase"] == "action" && s["round"] == 1 {
+            let ends = s["phase_ends_at"].as_i64().unwrap();
+            assert_eq!(s["grace_until"].as_i64().unwrap(), ends + 2, "{s}");
+            break ends;
+        }
+        std::thread::sleep(std::time::Duration::from_millis(100));
+    };
+
+    // ждём середину окна (ends + 1с, окно [ends, ends+2))
+    let r = http(port, "GET", &format!("/game/{}/state", gid), None);
+    let now_ts = r["state"]["now"].as_i64().unwrap();
+    let wait = (ends + 1 - now_ts).max(0) as u64;
+    std::thread::sleep(std::time::Duration::from_secs(wait));
+
+    // опоздавшее на 1с produce обязано приземлиться: фаза ещё открыта
+    let body = format!(
+        r#"{{"token": "{}", "action": "produce", "params": {{}}}}"#,
+        tokens[0]
+    );
+    let r = http(port, "POST", &format!("/game/{}/act", gid), Some(&body));
+    assert_eq!(r["ok"], true, "опоздавшее действие не приземлилось: {r}");
+
+    // ранний permissionless /advance срезается грейсом, фаза не двигается
+    let r = http(port, "POST", &format!("/game/{}/advance", gid), Some("{}"));
+    assert_eq!(r["ok"], false, "{r}");
+    assert_eq!(r["error"], "GraceWindow", "{r}");
+    let r = http(port, "GET", &format!("/game/{}/state", gid), None);
+    assert_eq!(r["state"]["phase"], "action", "фаза уехала до grace_until: {r}");
+
+    // после grace_until кранк закрывает фазу: produce зачтён, пришли в law
+    let mut law = false;
+    let deadline = std::time::Instant::now() + std::time::Duration::from_secs(10);
+    while deadline.elapsed().is_zero() {
+        let r = http(port, "GET", &format!("/game/{}/state", gid), None);
+        let s = &r["state"];
+        if s["phase"] == "law" && s["round"] == 1 {
+            law = true;
+            break;
+        }
+        std::thread::sleep(std::time::Duration::from_millis(100));
+    }
+    assert!(law, "после грейса фаза не закрылась");
 }
