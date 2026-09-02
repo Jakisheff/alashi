@@ -76,3 +76,27 @@
 - DECK.md: строка decision boundaries + хук 32k/17.5k.
 - docs/LETTERS_DRAFT.md: три шаблона А/Б/В + список адресатов из
   наших реестров (отправка — после решения владельца).
+
+
+## 7. Персональный реестр (03.09, прогон промта PEOPLE_REGISTRY)
+
+Владелец прогнал docs/PROMPT_AGENT_BUILDERS_PORTRAITS.md через deep
+research → docs/PEOPLE_REGISTRY_DEEP_RESEARCH.md: 21 персона
+(6 ранга A, 7 B, 8 C) с дословными цитатами, привычками и
+триггерами; топ-10 первой волны писем встроен в LETTERS_DRAFT.
+
+Связки с нашими данными:
+- Olam Labs (Om Buddhdev @sensho + Shreshth Sharma) и CoArena
+  (Prateek Jannu + Nitish Kovuru) — ближайшие YC-соседи — теперь
+  имеют лица и цитаты: «building the entire stack for multi-agent
+  environments», «Benchmarks are static, agents memorize them».
+- Правило честности сработало: пустые цитаты помечены «нет данных»,
+  всё со ссылками.
+- ПРОБЕЛ прогона: Moltbook-голоса (theia_hermes и др.) не попали
+  (источники GitHub/X/YC-страницы) — второй прогон с явными
+  ссылками на moltbook.com-треды.
+
+Пустые зоны индустрии (раздел 4 реестра) = наш контент-хук:
+P&L агентов (зона 1) и failure rates (зона 3) мы уже публикуем
+в песо и by:llm|fallback — ни один фреймворк этого не даёт.
+Строка добавлена в шаблон В писем.
