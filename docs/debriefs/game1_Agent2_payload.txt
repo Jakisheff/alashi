@@ -1,0 +1,178 @@
+Ты только что закончил партию на арене alashi. Тебе доступен полный
+протокол: твои ходы, ходы соперников, законы, цены, итоговый делёж.
+Твоя задача сейчас: не играть, а разобрать собственную игру как
+исследователь по методике Advanced Jobs To Be Done. Отвечай честно о
+реальных решениях из протокола, не придумывай.
+
+Рамка: в каждый момент раунда у тебя была «работа» (заработать,
+защититься, захватить власть, обмануть) и ты «нанимал» под неё
+конкретное решение из доступных: продать быстро, продать в кредит,
+челнок, осёл, крыша, валютчик, взятка, влияние, лицензия, бартер,
+продажа голоса, вето, граница. У каждого найма был контекст (твоя
+касса, раунд, угрозы) и конкуренты (другие механики под ту же работу).
+
+Ответь по структуре:
+
+1. КАРТА НАЙМОВ. Перечисли каждую механику, которую ты реально
+   использовал в этой партии. Для каждой: в каком контексте нанял
+   (раунд, касса, угроза), какая работа стояла, какие альтернативы
+   были на столе и почему выбрал именно эту.
+
+2. ЧЕТЫРЕ СИЛЫ ПО ПЕРЕКЛЮЧЕНИЯМ. Вспомни 2-3 момента, когда ты менял
+   стратегию или впервые попробовал новую механику. Для каждого
+   переключения назови:
+   - PUSH: что толкало прочь от прежнего решения (потеря денег,
+     страх налога, поймали на границе);
+   - PULL: что тянуло к новому (выгода, которую увидел у других
+     или в правилах);
+   - ТРЕВОГА: что боялся потерять, пробуя новое;
+   - ПРИВЫЧКА: что из старого поведения всё равно тащил за собой.
+
+3. НЕНАНЯТЫЕ. Какие механики ты НЕ использовал вообще? Для каждой: работа, под которую она подходит, и честная причина: не знал,
+   не понял, как вызвать, посчитал невыгодной (числом), не было
+   контекста. Отдельно: что должно произойти в партии, чтобы ты её
+   нанял в следующий раз.
+
+4. КОНКУРЕНТ ВНЕ АРЕНЫ. Если бы ту же работу (заработать на
+   стратегии с риском) тебе предложило другое место: что должно быть у alashi, чтобы ты вернулся сюда, а не туда.
+
+5. ВЫЖИМКА ДЛЯ РАЗРАБОТЧИКОВ. Три конкретные правки арены, которые
+   следуют из твоего разбора. Не «сделайте лучше», а изменения
+   конкретных правил, цен или интерфейсов с ожидаемым эффектом.
+
+Формат ответа: текст по пунктам 1-5, суммарно до 400 слов. Числа из
+протокола обязательны: если говоришь «выгодно», покажи сколько.
+
+=== ПРОТОКОЛ ПАРТИИ ===
+ПАРТИЯ №1, фракций: 6
+Агенты (индекс = фракция): 0:Aibot, 1:Botagul, 2:Zhambyl, 3:Agent1, 4:Agent3, 5:Agent2
+Ты играл за: Agent2 (индекс 5)
+
+ИТОГ (ранг по портфелю, выплаты):
+  1. Agent2: выплата 33M
+  2. Zhambyl: выплата 19M
+  3. Aibot: выплата 9M
+  4. Agent3: выплата 63M
+  5. Botagul: выплата 0M
+  6. Agent1: выплата 0M
+  банк 70M, рейк 0M
+
+ХРОНИКА ПО ФАЗАМ (звёздочка = твой ход; cash в млн):
+r0 lobby
+r1 market
+r1 action
+r1 law | карта vzaimozachet | да 4 нет 0 | ПРОШЁЛ
+r2 market
+r2 action
+r2 law | карта subsidy_rich | да 3 нет 3 | не прошёл
+r3 market
+r3 action
+r3 law | карта tax_20 | да 5 нет 1 | ПРОШЁЛ
+r4 market
+r4 action
+r4 law | карта subsidy_produce | да 4 нет 1 | ПРОШЁЛ
+r5 market
+r5 action
+r5 law | карта subsidy_poor | да 4 нет 1 | ПРОШЁЛ
+r6 market
+r6 action
+r6 law | карта status_quo | да 5 нет 0 | ПРОШЁЛ
+
+ВСЕ ХОДЫ ПАРТИИ (r/фаза, кто, действие, исход, кэш после):
+   r1 action: Aibot -> produce {} | cash 0M
+   r1 action: Zhambyl -> produce {} | cash 0M
+   r1 action: Agent3 -> produce {} | cash 0M
+ * r1 action: Agent2 -> produce {} | cash 0M
+   r1 action: Botagul -> produce {} | cash 0M
+   r1 law: Aibot -> vote {"choice": "yes"} | cash -
+   r1 law: Zhambyl -> vote {"choice": "yes"} | cash -
+ * r1 law: Agent2 -> vote {"choice": "abstain"} | cash -
+   r1 law: Agent3 -> vote {"choice": "yes"} | cash -
+   r1 law: Botagul -> vote {"choice": "yes"} | cash -
+   r2 market: Aibot -> sell {"units": 2} | cash 22M
+   r2 market: Zhambyl -> sell {"units": 2} | cash 17M
+ * r2 market: Agent2 -> sell {"units": 2} | cash 13M
+ * r2 market: Agent2 -> buy_hard {} | cash 0M
+   r2 market: Agent3 -> sell {"units": 2} | cash 9M
+   r2 market: Botagul -> sell {"units": 2} | cash 6M
+ * r2 action: Agent2 -> produce {} | cash 0M
+   r2 action: Aibot -> produce {} | cash 22M
+   r2 action: Zhambyl -> produce {} | cash 17M
+   r2 action: Agent3 -> produce {} | cash 9M
+   r2 action: Botagul -> produce {} | cash 6M
+   r2 law: Zhambyl -> vote {"choice": "yes"} | cash -
+ * r2 law: Agent2 -> vote {"choice": "no"} | cash -
+   r2 law: Aibot -> vote {"choice": "yes"} | cash -
+   r2 law: Agent3 -> vote {"choice": "no"} | cash -
+   r2 law: Botagul -> vote {"choice": "yes"} | cash -
+   r2 law: Agent1 -> vote {"choice": "no"} | cash -
+ * r3 market: Agent2 -> sell {"units": 2} | cash 22M
+   r3 market: Zhambyl -> sell {"units": 2} | cash 31M
+   r3 market: Aibot -> sell {"units": 2} | cash 31M
+ * r3 market: Agent2 -> buy_hard {} | cash 0M
+   r3 market: Agent3 -> sell {"units": 2} | cash 16M
+   r3 market: Botagul -> sell {"units": 2} | cash 11M
+ * r3 action: Agent2 -> produce {} | cash 0M
+   r3 action: Aibot -> produce {} | cash 31M
+   r3 action: Zhambyl -> produce {} | cash 31M
+   r3 action: Agent3 -> produce {} | cash 16M
+   r3 action: Botagul -> produce {} | cash 11M
+   r3 action: Agent1 -> produce {} | cash 0M
+ * r3 law: Agent2 -> vote {"choice": "yes"} | cash -
+   r3 law: Zhambyl -> vote {"choice": "yes"} | cash -
+   r3 law: Aibot -> vote {"choice": "yes"} | cash -
+   r3 law: Agent3 -> vote {"choice": "yes"} | cash -
+   r3 law: Botagul -> vote {"choice": "yes"} | cash -
+   r3 law: Agent1 -> vote {"choice": "no"} | cash -
+ * r4 market: Agent2 -> sell_credit {"units": 2} | cash 0M
+   r4 market: Zhambyl -> sell {"units": 2} | cash 40M
+ * r4 market: Agent2 -> buy_hard {} ОТКАЗ(NotEnoughCash) | cash -
+   r4 market: Aibot -> sell {"units": 2} | cash 37M
+   r4 market: Agent3 -> sell {"units": 2} | cash 21M
+   r4 market: Botagul -> sell {"units": 2} | cash 14M
+   r4 market: Agent3 -> bid_license {"amount": 10000000} ОТКАЗ(WrongPhase) | cash -
+ * r4 action: Agent2 -> produce {} | cash 0M
+   r4 action: Zhambyl -> produce {} | cash 40M
+   r4 action: Aibot -> produce {} | cash 37M
+   r4 action: Agent3 -> bid_license {"amount": 10000000} | cash 11M
+   r4 action: Agent3 -> produce {} | cash 11M
+   r4 action: Botagul -> produce {} | cash 14M
+   r4 action: Agent1 -> produce {} | cash 0M
+ * r4 law: Agent2 -> vote {"choice": "no"} | cash -
+   r4 law: Aibot -> vote {"choice": "yes"} | cash -
+   r4 law: Zhambyl -> vote {"choice": "yes"} | cash -
+   r4 law: Agent3 -> vote {"choice": "yes"} | cash -
+   r4 law: Botagul -> vote {"choice": "yes"} | cash -
+ * r5 market: Agent2 -> sell_credit {"units": 2} | cash 22M
+   r5 market: Aibot -> sell {"units": 2} | cash 45M
+   r5 market: Zhambyl -> sell {"units": 2} | cash 44M
+   r5 market: Agent3 -> sell {"units": 2} | cash 16M
+   r5 market: Agent3 -> buy_hard {} | cash 0M
+   r5 market: Botagul -> sell {"units": 2} | cash 16M
+   r5 market: Agent1 -> sell {"units": 4} | cash 5M
+   r5 action: Aibot -> produce {} | cash 45M
+   r5 action: Zhambyl -> produce {} | cash 44M
+ * r5 action: Agent2 -> produce {} | cash 22M
+   r5 action: Agent3 -> produce {} | cash 0M
+   r5 action: Botagul -> produce {} | cash 16M
+   r5 action: Agent1 -> produce {} | cash 5M
+ * r5 law: Agent2 -> vote {"choice": "no"} | cash -
+   r5 law: Aibot -> vote {"choice": "yes"} | cash -
+   r5 law: Zhambyl -> vote {"choice": "yes"} | cash -
+   r5 law: Agent3 -> vote {"choice": "yes"} | cash -
+   r5 law: Botagul -> vote {"choice": "yes"} | cash -
+ * r6 market: Agent2 -> sell {"units": 3} | cash 65M
+   r6 market: Zhambyl -> sell {"units": 3} | cash 54M
+   r6 market: Aibot -> sell {"units": 3} | cash 48M
+   r6 market: Agent3 -> sell {"units": 3} | cash 5M
+   r6 market: Botagul -> sell {"units": 3} | cash 17M
+   r6 action: Zhambyl -> produce {} | cash 54M
+   r6 action: Aibot -> produce {} | cash 48M
+   r6 action: Botagul -> produce {} | cash 17M
+   r6 law: Zhambyl -> vote {"choice": "yes"} | cash -
+   r6 law: Aibot -> vote {"choice": "yes"} | cash -
+   r6 law: Agent3 -> vote {"choice": "yes"} | cash -
+ * r6 law: Agent2 -> vote {"choice": "abstain"} | cash -
+   r6 law: Botagul -> vote {"choice": "yes"} | cash -
+
+Теперь дай ответ по пунктам 1-5.
