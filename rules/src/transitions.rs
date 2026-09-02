@@ -323,7 +323,8 @@ fn advance_inner(
                 game.pending_price_shift = effect.pending_price_shift;
                 game.pending_boom = effect.pending_boom;
                 if let Some(i) = effect.influence_gain {
-                    factions[i].influence += 1;
+                    // R21 (REVIEW_EXTERNAL): потолок влияния и для закона
+                    factions[i].influence = (factions[i].influence + 1).min(MAX_INFLUENCE);
                 }
             }
             if game.round >= ROUNDS {

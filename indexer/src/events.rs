@@ -31,6 +31,22 @@ pub enum ParsedEvent {
     Payout { game: String, wallet: String, rank: u8, amount: u64 },
     Settled { game: String, pot: u64, rake: u64, paid: u64 },
     LawCommitted { game: String, randomness: String, commit_slot: u64 },
+    // R18 (REVIEW_EXTERNAL): VRF-ветвь раньше терялась — прерванная
+    // партия была неотличима от незавершённой
+    VrfRetry { game: String, round: u8, attempt: u8 },
+    GameAborted { game: String, round: u8 },
+    // SPEC_EPOCH_90S: события M-действий
+    SoldCreditEv { game: String, faction: String, units: u16, promissory: u64 },
+    ShuttledEv { game: String, faction: String, goods: u16, grey: u16 },
+    RoofBought { game: String, from: String, to: String, tariff: u8, price: u64 },
+    CustomsSet { game: String, president: String, tight: bool },
+    LicenseBid { game: String, faction: String, amount: u64, total_bid: u64 },
+    LicenseInsight { game: String, faction: String, yield_amount: u64 },
+    Exchanged { game: String, faction: String, to_hard: bool, got: u64 },
+    VoteOffered { game: String, seller: String, buyer: String, price: u64 },
+    VoteSold { game: String, buyer: String, seller: String, price: u64 },
+    BarterProposed { game: String, from: String, offer: u64, goods: u16, price: u64 },
+    BarterAccepted { game: String, by: String, from: String, offer: u64 },
 }
 
 
@@ -157,6 +173,100 @@ pub fn parse_log_line(line: &str) -> Option<ParsedEvent> {
             pot: e.pot,
             rake: e.rake,
             paid: e.paid,
+        })
+    } else if raw.starts_with(&event_disc("event:LawCommitted")) {
+        dec!(LawCommitted, body).map(|e| ParsedEvent::LawCommitted {
+            game: e.game.to_string(),
+            randomness: e.randomness.to_string(),
+            commit_slot: e.commit_slot,
+        })
+    } else if raw.starts_with(&event_disc("event:VrfRetry")) {
+        dec!(VrfRetry, body).map(|e| ParsedEvent::VrfRetry {
+            game: e.game.to_string(),
+            round: e.round,
+            attempt: e.attempt,
+        })
+    } else if raw.starts_with(&event_disc("event:GameAbortedEvent")) {
+        dec!(GameAbortedEvent, body).map(|e| ParsedEvent::GameAborted {
+            game: e.game.to_string(),
+            round: e.round,
+        })
+    } else if raw.starts_with(&event_disc("event:SoldCredit")) {
+        dec!(SoldCredit, body).map(|e| ParsedEvent::SoldCreditEv {
+            game: e.game.to_string(),
+            faction: e.faction.to_string(),
+            units: e.units,
+            promissory: e.promissory,
+        })
+    } else if raw.starts_with(&event_disc("event:Shuttled")) {
+        dec!(Shuttled, body).map(|e| ParsedEvent::ShuttledEv {
+            game: e.game.to_string(),
+            faction: e.faction.to_string(),
+            goods: e.goods,
+            grey: e.grey,
+        })
+    } else if raw.starts_with(&event_disc("event:RoofBought")) {
+        dec!(RoofBought, body).map(|e| ParsedEvent::RoofBought {
+            game: e.game.to_string(),
+            from: e.from.to_string(),
+            to: e.to.to_string(),
+            tariff: e.tariff,
+            price: e.price,
+        })
+    } else if raw.starts_with(&event_disc("event:CustomsSet")) {
+        dec!(CustomsSet, body).map(|e| ParsedEvent::CustomsSet {
+            game: e.game.to_string(),
+            president: e.president.to_string(),
+            tight: e.tight,
+        })
+    } else if raw.starts_with(&event_disc("event:LicenseBid")) {
+        dec!(LicenseBid, body).map(|e| ParsedEvent::LicenseBid {
+            game: e.game.to_string(),
+            faction: e.faction.to_string(),
+            amount: e.amount,
+            total_bid: e.total_bid,
+        })
+    } else if raw.starts_with(&event_disc("event:LicenseInsight")) {
+        dec!(LicenseInsight, body).map(|e| ParsedEvent::LicenseInsight {
+            game: e.game.to_string(),
+            faction: e.faction.to_string(),
+            yield_amount: e.yield_amount,
+        })
+    } else if raw.starts_with(&event_disc("event:Exchanged")) {
+        dec!(Exchanged, body).map(|e| ParsedEvent::Exchanged {
+            game: e.game.to_string(),
+            faction: e.faction.to_string(),
+            to_hard: e.to_hard,
+            got: e.got,
+        })
+    } else if raw.starts_with(&event_disc("event:VoteOffered")) {
+        dec!(VoteOffered, body).map(|e| ParsedEvent::VoteOffered {
+            game: e.game.to_string(),
+            seller: e.seller.to_string(),
+            buyer: e.buyer.to_string(),
+            price: e.price,
+        })
+    } else if raw.starts_with(&event_disc("event:VoteSold")) {
+        dec!(VoteSold, body).map(|e| ParsedEvent::VoteSold {
+            game: e.game.to_string(),
+            buyer: e.buyer.to_string(),
+            seller: e.seller.to_string(),
+            price: e.price,
+        })
+    } else if raw.starts_with(&event_disc("event:BarterProposed")) {
+        dec!(BarterProposed, body).map(|e| ParsedEvent::BarterProposed {
+            game: e.game.to_string(),
+            from: e.from.to_string(),
+            offer: e.offer,
+            goods: e.goods,
+            price: e.price,
+        })
+    } else if raw.starts_with(&event_disc("event:BarterAccepted")) {
+        dec!(BarterAccepted, body).map(|e| ParsedEvent::BarterAccepted {
+            game: e.game.to_string(),
+            by: e.by.to_string(),
+            from: e.from.to_string(),
+            offer: e.offer,
         })
     } else {
         None

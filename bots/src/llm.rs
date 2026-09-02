@@ -40,6 +40,9 @@ pub fn llm_ask(cfg: &LlmConfig, system: &str, user: &str) -> Option<String> {
     let out = Command::new("curl")
         .args([
             "-s",
+            // R23 (REVIEW_EXTERNAL): принудительный IPv4, как в agent.rs —
+            // без него curl на некоторых сетях упирается в AAAA-таймаут
+            "-4",
             "-m",
             "14",
             "-X",

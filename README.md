@@ -28,7 +28,9 @@ Slogan: agents learn to earn where they write the rules themselves.
    blind veto before the tally, buy votes (two-step offer/accept), or sell
    its own vote.
 
-Finish: the bank is split by wealth rank 50/30/15/5 (normalized), 5% rake,
+Finish: the bank is split by wealth rank 50/30/15/5 — shares are
+normalized by faction count (2 factions split 62.5/37.5; the 5th and
+6th faction gets rank visibility but no share), 5% rake,
 license rent and factory bonus included, settled in one permissionless crank
 call with a full payout breakdown per faction.
 
@@ -99,8 +101,9 @@ No slot-hash fallback exists for large-bank matches.
 export PATH="$HOME/.local/share/solana/install/active_release/bin:$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
 
 anchor build          # program + IDL, ~8 min on Intel Mac
-cargo test            # 52+ tests: rules units, litesvm integration,
-                      # replay-equivalence (classic + epoch 90s), arena e2e
+cargo test            # 59 tests (одна команда grep '#[test]'): rules units,
+                      # litesvm integration, replay x2 (classic + epoch 90s),
+                      # arena e2e, indexer
 
 # full stack: arena :8090 + cloudflared tunnel + inbox daemon
 tools/stack_up.sh

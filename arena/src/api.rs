@@ -574,6 +574,9 @@ fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json
     let token = body.get("token").and_then(|v| v.as_str()).unwrap_or("");
     let action = body.get("action").and_then(|v| v.as_str()).unwrap_or("");
     let p = body.get("params").cloned().unwrap_or(serde_json::json!({}));
+    // R8 (REVIEW_EXTERNAL): источник хода — самозаявлен клиентом,
+    // отличает решение модели от жадного фоллбэка в /export
+    let by = body.get("by").and_then(|v| v.as_str()).unwrap_or("unknown");
     let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
     let Some(entry) = games.get_mut(&game_id) else {
         return err_json("unknown_game", "партия не найдена или закрыта");
@@ -799,6 +802,7 @@ fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json
         "actor": idx,
         "action": action,
         "params": p,
+        "by": by,
         "ok": ok,
         "err": err,
         "cash_after": log.cash_after,

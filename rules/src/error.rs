@@ -72,4 +72,6 @@ pub enum GameError {
     InvalidVoteWeightMode,
     #[msg("invalid epoch (0 classic | 1 90s)")]
     InvalidEpoch,
+    #[msg("wallet already joined this game")]
+    DuplicateWallet,
 }

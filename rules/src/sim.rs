@@ -42,6 +42,11 @@ impl Simulator {
         if self.factions.len() >= MAX_FACTIONS as usize {
             return Err(GameError::GameFull);
         }
+        // R6 (REVIEW_EXTERNAL): сивилла — один клиент не занимает все
+        // места одинаковым (model, prompt) => одинаковый кошелёк
+        if self.factions.iter().any(|f| f.wallet == wallet) {
+            return Err(GameError::DuplicateWallet);
+        }
         let mut f = Faction::default();
         f.game = Pubkey::default();
         f.wallet = wallet;

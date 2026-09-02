@@ -168,12 +168,12 @@ fn http_epoch_90s_full_game() {
     let gid = r["game_id"].as_u64().unwrap();
 
     let mut tokens = vec![];
-    for name in ["Old", "New"] {
+    for (name, model) in [("Old", "t90-a"), ("New", "t90-b")] {
         let r = http(
             port,
             "POST",
             &format!("/game/{}/join", gid),
-            Some(&format!(r#"{{"name": "{}", "model": "t90", "prompt": "e"}}"#, name)),
+            Some(&format!(r#"{{"name": "{}", "model": "{}", "prompt": "e"}}"#, name, model)),
         );
         assert_eq!(r["ok"], true, "{r}");
         tokens.push(r["token"].as_str().unwrap().to_string());
@@ -258,12 +258,12 @@ fn http_wait_longpoll_wakes_on_phase_change() {
     );
     assert_eq!(r["ok"], true, "{r}");
     let gid = r["game_id"].as_u64().unwrap();
-    for name in ["W1", "W2"] {
+    for (name, model) in [("W1", "t-w1"), ("W2", "t-w2")] {
         let r = http(
             port,
             "POST",
             &format!("/game/{}/join", gid),
-            Some(&format!(r#"{{"name": "{name}", "model": "t", "prompt": "e"}}"#)),
+            Some(&format!(r#"{{"name": "{name}", "model": "{model}", "prompt": "e"}}"#)),
         );
         assert_eq!(r["ok"], true, "{r}");
     }
@@ -317,14 +317,14 @@ fn http_bribe_rejects_bad_target() {
     assert_eq!(r["ok"], true, "{r}");
     let gid = r["game_id"].as_u64().unwrap();
     let mut tokens = vec![];
-    for name in ["Attacker", "Victim"] {
+    for (name, model) in [("Attacker", "t-a"), ("Victim", "t-v")] {
         let r = http(
             port,
             "POST",
             &format!("/game/{}/join", gid),
             Some(&format!(
-                r#"{{"name": "{}", "model": "t", "prompt": "e2e"}}"#,
-                name
+                r#"{{"name": "{}", "model": "{}", "prompt": "e2e"}}"#,
+                name, model
             )),
         );
         assert_eq!(r["ok"], true, "{r}");
@@ -395,6 +395,42 @@ fn http_vote_weight_mode_flag() {
     assert_eq!(r["error"], "bad_params", "{r}");
 }
 
+/// R6 (REVIEW_EXTERNAL): сивилла — один и тот же (model, prompt) не
+/// может занять все места: кошелёк детерминирован из agent_id, второй
+/// join с тем же телом отбивается DuplicateWallet.
+#[test]
+fn http_join_rejects_duplicate_wallet() {
+    let state = new_state();
+    let addr = serve_on(state, "127.0.0.1:0", 50).expect("serve");
+    let port = addr.port();
+
+    let r = http(
+        port,
+        "POST",
+        "/game/new",
+        Some(r#"{"entry_fee": 10000000, "phase_duration": 5}"#),
+    );
+    assert_eq!(r["ok"], true, "{r}");
+    let gid = r["game_id"].as_u64().unwrap();
+    let body = r#"{"name":"Same","model":"m","prompt":"p"}"#;
+    let r = http(port, "POST", &format!("/game/{}/join", gid), Some(body));
+    assert_eq!(r["ok"], true, "{r}");
+    // побайтово тот же join — тот же кошелёк — отбивается
+    let r = http(port, "POST", &format!("/game/{}/join", gid), Some(body));
+    assert_eq!(r["ok"], false, "{r}");
+    assert_eq!(r["error"], "join_failed", "{r}");
+    // другой (model, prompt) — другой кошелёк — проходит
+    let r = http(
+        port,
+        "POST",
+        &format!("/game/{}/join", gid),
+        Some(r#"{"name":"Other","model":"m2","prompt":"p"}"#),
+    );
+    assert_eq!(r["ok"], true, "{r}");
+    let r = http(port, "GET", &format!("/game/{}/state", gid), None);
+    assert_eq!(r["ok"], true, "{r}");
+}
+
 /// Кастдев 02.09 №1: грейс-окно после phase_ends_at. Кранк и /advance
 /// ждут ends_at + grace_s, действие, опоздавшее на < grace_s, легально
 /// приземляется в ещё не закрытую фазу.
@@ -414,12 +450,12 @@ fn http_grace_window_lands_late_action() {
     let gid = r["game_id"].as_u64().unwrap();
     assert_eq!(r["state"]["grace_s"], 2, "{r}");
     let mut tokens = vec![];
-    for name in ["Late1", "Late2"] {
+    for (name, model) in [("Late1", "t-1"), ("Late2", "t-2")] {
         let r = http(
             port,
             "POST",
             &format!("/game/{}/join", gid),
-            Some(&format!(r#"{{"name": "{name}", "model": "t", "prompt": "e"}}"#)),
+            Some(&format!(r#"{{"name": "{name}", "model": "{model}", "prompt": "e"}}"#)),
         );
         assert_eq!(r["ok"], true, "{r}");
         tokens.push(r["token"].as_str().unwrap().to_string());

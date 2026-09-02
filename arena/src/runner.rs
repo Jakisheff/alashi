@@ -454,6 +454,16 @@ pub fn apply_action(sim: &mut Simulator, i: usize, act: &ActionAction) -> Action
             }
             Err(e) => fail(phase, i, "roof", serde_json::json!({"to": to}), e),
         },
+        ActionAction::Bid(amount) => match sim.bid_license(i, *amount) {
+            Ok(total) => ok(
+                phase,
+                i,
+                "bid_license",
+                serde_json::json!({"amount": amount, "total_bid": total}),
+                &sim.factions[i],
+            ),
+            Err(e) => fail(phase, i, "bid_license", serde_json::json!({"amount": amount}), e),
+        },
     }
 }
 
@@ -626,15 +636,26 @@ mod tests {
     fn m5_90s_epoch_money_conserves_with_factory() {
         // SPEC_EPOCH_90S: полная партия в эпохе 90-х, деньги сходятся,
         // завод (5% из рейка) уходит фракции с макс влиянием.
+        // Рента лицензии — экзогенный поток (не из банка): инвариант
+        // банка считается без неё: доли + фактический рейк = банк.
         let mut strs = strategies(&["greedy", "random", "tactical"], 42);
         let cfg = GameConfig {
             epoch: alashi_rules::constants::EPOCH_90S,
             ..GameConfig::default()
         };
         let rec = play_game(1, 42, &mut strs, &cfg);
+        let rent: u64 = rec.license.map(|l| l.rent).unwrap_or(0);
         let paid: u64 = rec.payouts.iter().sum();
-        assert_eq!(paid + rec.rake, rec.bank, "выплаты + рейк = банк");
+        assert_eq!(
+            paid - rent + rec.rake,
+            rec.bank,
+            "доли рангов + фактический рейк = банк (рента экзогенна)"
+        );
         assert!(rec.rake <= rec.bank * DEFAULT_RAKE_BPS as u64 / 10_000,
             "завод не увеличивает рейк, а забирает из него");
+        // метрика лицензиара заполнена, если аукцион состоялся
+        if let Some(l) = rec.license {
+            assert!(l.rent == 0 || l.holder_payout >= l.rent);
+        }
     }
 }

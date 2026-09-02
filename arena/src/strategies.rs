@@ -46,6 +46,8 @@ pub enum ActionAction {
     Shuttle,
     /// SPEC_EPOCH_90S: крыша-контракт, тариф чёрный/красный.
     Roof { to: usize, tariff: u8 },
+    /// SPEC_EPOCH_90S M9: ставка на слепой аукцион лицензии (r4).
+    Bid(u64),
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -144,7 +146,11 @@ impl Strategy for GreedyBot {
             MarketAction::Pass
         }
     }
-    fn action(&mut self, _obs: &Obs) -> ActionAction {
+    fn action(&mut self, obs: &Obs) -> ActionAction {
+        // M9: скромная ставка на лицензию в раунд аукциона
+        if obs.round == AUCTION_ROUND && obs.cash[obs.my_idx] >= 6 * PESO {
+            return ActionAction::Bid(4 * PESO);
+        }
         ActionAction::Produce
     }
     fn law(&mut self, _obs: &Obs) -> LawAction {
@@ -232,6 +238,11 @@ impl Strategy for TacticalBot {
     }
     fn action(&mut self, obs: &Obs) -> ActionAction {
         let cash = obs.cash[obs.my_idx];
+        // M9: ставка на лицензию в раунд аукциона (середина диапазона
+        // дохода 20-60M; живые партии: победные 6-20M)
+        if obs.round == AUCTION_ROUND && cash >= 12 * PESO {
+            return ActionAction::Bid(8 * PESO);
+        }
         let am_president = obs.president == obs.my_wallet;
         let top_rival = (0..obs.n_factions)
             .filter(|&i| i != obs.my_idx)

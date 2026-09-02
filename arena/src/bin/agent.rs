@@ -220,7 +220,10 @@ fn main() {
             }
             let decision = decide(&llm, s, &me, &prompt);
             let (action, params) = decision;
-            let body = serde_json::json!({"token": token, "action": action, "params": params}).to_string();
+            let body = serde_json::json!({
+                "token": token, "action": action, "params": params,
+                "by": if llm.is_some() { "llm" } else { "fallback" },
+            }).to_string();
             let rr = http(&url, "POST", &format!("/game/{}/act", game), Some(&body));
             if let Some(rr) = rr {
                 let ok_s = if rr["ok"] == true { "ok".into() } else { format!("err: {}", rr["error"].as_str().unwrap_or("?")) };
@@ -238,7 +241,9 @@ fn main() {
                     // фаза уже ушла — фоллбэк того же хода тоже не пройдёт
                     if err_s != "WrongPhase" && err_s != "TooEarly" && err_s != "GraceWindow" {
                         let (a2, p2) = fallback(phase, &me);
-                        let body = serde_json::json!({"token": token, "action": a2, "params": p2}).to_string();
+                        let body = serde_json::json!({
+                            "token": token, "action": a2, "params": p2, "by": "fallback",
+                        }).to_string();
                         let r2 = http(&url, "POST", &format!("/game/{}/act", game), Some(&body));
                         let ok2 = r2.as_ref().map(|v| v["ok"] == true).unwrap_or(false);
                         my_log.push(format!(

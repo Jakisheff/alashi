@@ -64,7 +64,7 @@ pub fn scan(rpc_url: &str) -> (usize, crate::Aggregated) {
         let key = crate::game_key(g);
         let idstr = key.to_string();
         if !state.processed_games.contains(&idstr) {
-            fresh.push(Game { ..*g });
+            fresh.push(g.clone());
             known.insert(key, true);
         }
     }
