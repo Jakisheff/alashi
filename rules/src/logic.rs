@@ -101,6 +101,116 @@ pub fn compute_settlement(
     Ok(SettlementPlan { payouts, rake, pot })
 }
 
+// ---------- SPEC_EPOCH_90S: сеттл с рентой лицензии и заводом ----------
+
+/// Одна строка прозрачного сеттл-отчёта (кастдев 02.09: payout_breakdown).
+#[derive(Clone, Copy, Debug, Default, PartialEq)]
+pub struct EpochPayoutLine {
+    /// индекс фракции во входном массиве
+    pub idx: usize,
+    pub wallet: Pubkey,
+    pub rank: u8,
+    pub rank_share: u64,
+    pub license_rent: u64,
+    pub factory_bonus: u64,
+    pub total: u64,
+}
+
+pub struct EpochSettlement {
+    pub lines: Vec<EpochPayoutLine>,
+    /// полный порядок мест (индексы входа), включая фракции без доли
+    pub order: Vec<usize>,
+    pub rake: u64,
+    pub pot: u64,
+}
+
+/// Сеттл эпохи 90-х (и классики: rent/factory просто нулевые).
+/// Единая логика рангов для HTTP-арены и ончейн settle. Ранг: cash+hard
+/// (твёрдая валюта по номиналу); завод = FACTORY_NUM/FACTORY_DEN банка
+/// из рейка фракции с макс влиянием (тай по рангу).
+/// external_rent: арена платит ренту лицензии как экзогенный песо-поток
+/// (true); ончейн v1 ренту не платит — источник lamports отсутствует
+/// (ставки — внутренние песо, эскроу-вариант в IDEAS_PARKED).
+pub fn compute_settlement_epoch(
+    game: &crate::state::Game,
+    factions: &[Faction],
+    bank: u64,
+    reserve: u64,
+    external_rent: bool,
+) -> Result<EpochSettlement> {
+    let epoch_90s = game.epoch == EPOCH_90S;
+    let snaps: Vec<FactionSnapshot> = factions
+        .iter()
+        .map(|f| FactionSnapshot {
+            wallet: f.wallet,
+            cash: f.cash + if epoch_90s { f.hard } else { 0 },
+            influence: f.influence,
+            alive: f.alive,
+        })
+        .collect();
+    let plan = compute_settlement(&snaps, bank, reserve, game.rake_bps, &PAYOUT_SHARES)?;
+    let n = factions.len();
+
+    let mut rank_share = vec![0u64; n];
+    let mut order: Vec<usize> = Vec::new();
+    for p in &plan.payouts {
+        rank_share[p.faction_index] = p.amount;
+        order.push(p.faction_index);
+    }
+    // фракции вне долей — после, по тому же критерию ранга
+    let mut rest: Vec<usize> = (0..n).filter(|i| !order.contains(i)).collect();
+    rest.sort_by(|&a, &b| snaps[b].cash.cmp(&snaps[a].cash));
+    order.extend(rest);
+
+    // M9: рента лицензии держателю (сверх доли, в ранг не входит)
+    let mut license_rent = vec![0u64; n];
+    if epoch_90s && game.license_sold && external_rent {
+        if let Some(h) = factions
+            .iter()
+            .position(|f| f.wallet == game.license_holder)
+        {
+            license_rent[h] = game.license_yield;
+        }
+    }
+
+    // M5 «завод»: 5% банка из рейка фракции с макс влиянием
+    let mut rake = plan.rake;
+    let mut factory_bonus = vec![0u64; n];
+    if epoch_90s && n > 0 {
+        let bonus = bank * FACTORY_NUM / FACTORY_DEN;
+        if bonus > 0 && rake >= bonus && !order.is_empty() {
+            let mut best = order[0];
+            let mut best_key = (0u16, 0u64);
+            for &i in &order {
+                let key = (snaps[i].influence, snaps[i].cash);
+                if key > best_key {
+                    best_key = key;
+                    best = i;
+                }
+            }
+            factory_bonus[best] = bonus;
+            rake -= bonus;
+        }
+    }
+
+    let lines = (0..n)
+        .map(|i| {
+            let total = rank_share[i] + license_rent[i] + factory_bonus[i];
+            let rank = order.iter().position(|&x| x == i).map(|r| r as u8).unwrap_or(255);
+            EpochPayoutLine {
+                idx: i,
+                wallet: factions[i].wallet,
+                rank,
+                rank_share: rank_share[i],
+                license_rent: license_rent[i],
+                factory_bonus: factory_bonus[i],
+                total,
+            }
+        })
+        .collect();
+    Ok(EpochSettlement { lines, order, rake, pot: plan.pot })
+}
+
 pub struct LawEffect {
     pub tax_bps: Option<u16>,
     pub subsidy_goods: u8,

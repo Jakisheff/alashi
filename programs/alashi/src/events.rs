@@ -141,3 +141,95 @@ pub struct VoteModeSet {
     pub game: Pubkey,
     pub mode: u8,
 }
+
+// ---------- SPEC_EPOCH_90S: события M-действий ----------
+
+#[event]
+pub struct SoldCredit {
+    pub game: Pubkey,
+    pub faction: Pubkey,
+    pub units: u16,
+    pub promissory: u64,
+}
+
+#[event]
+pub struct Shuttled {
+    pub game: Pubkey,
+    pub faction: Pubkey,
+    pub goods: u16,
+    pub grey: u16,
+}
+
+#[event]
+pub struct RoofBought {
+    pub game: Pubkey,
+    pub from: Pubkey,
+    /// фракция-крыша (получатель платежа)
+    pub to: Pubkey,
+    pub tariff: u8,
+    pub price: u64,
+}
+
+#[event]
+pub struct CustomsSet {
+    pub game: Pubkey,
+    pub president: Pubkey,
+    pub tight: bool,
+}
+
+#[event]
+pub struct LicenseBid {
+    pub game: Pubkey,
+    pub faction: Pubkey,
+    pub amount: u64,
+    pub total_bid: u64,
+}
+
+#[event]
+pub struct LicenseInsight {
+    pub game: Pubkey,
+    pub faction: Pubkey,
+    /// доходность, известная теперь инсайдеру
+    pub yield_amount: u64,
+}
+
+#[event]
+pub struct Exchanged {
+    pub game: Pubkey,
+    pub faction: Pubkey,
+    pub to_hard: bool,
+    pub got: u64,
+}
+
+#[event]
+pub struct VoteOffered {
+    pub game: Pubkey,
+    pub seller: Pubkey,
+    pub buyer: Pubkey,
+    pub price: u64,
+}
+
+#[event]
+pub struct VoteSold {
+    pub game: Pubkey,
+    pub buyer: Pubkey,
+    pub seller: Pubkey,
+    pub price: u64,
+}
+
+#[event]
+pub struct BarterProposed {
+    pub game: Pubkey,
+    pub from: Pubkey,
+    pub offer: u64,
+    pub goods: u16,
+    pub price: u64,
+}
+
+#[event]
+pub struct BarterAccepted {
+    pub game: Pubkey,
+    pub by: Pubkey,
+    pub from: Pubkey,
+    pub offer: u64,
+}

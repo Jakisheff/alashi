@@ -31,6 +31,7 @@ pub mod alashi {
         entry_fee: u64,
         phase_duration: i64,
         entropy_mode: u8,
+        epoch: u8,
     ) -> Result<()> {
         crate::instructions::initialize::handle_initialize(
             ctx,
@@ -38,6 +39,7 @@ pub mod alashi {
             entry_fee,
             phase_duration,
             entropy_mode,
+            epoch,
         )
     }
 
@@ -91,5 +93,51 @@ pub mod alashi {
 
     pub fn set_vote_mode(ctx: Context<SetVoteMode>, mode: u8) -> Result<()> {
         crate::instructions::set_vote_mode::handle_set_vote_mode(ctx, mode)
+    }
+
+    // ---------- SPEC_EPOCH_90S (epoch=1) ----------
+
+    pub fn sell_credit(ctx: Context<SellCredit>, units: u16) -> Result<()> {
+        crate::instructions::epoch90s::handle_sell_credit(ctx, units)
+    }
+
+    pub fn shuttle(ctx: Context<Shuttle>) -> Result<()> {
+        crate::instructions::epoch90s::handle_shuttle(ctx)
+    }
+
+    pub fn roof(ctx: Context<Roof>, tariff: u8) -> Result<()> {
+        crate::instructions::epoch90s::handle_roof(ctx, tariff)
+    }
+
+    pub fn set_customs(ctx: Context<SetCustoms>, tight: bool) -> Result<()> {
+        crate::instructions::epoch90s::handle_set_customs(ctx, tight)
+    }
+
+    pub fn bid_license(ctx: Context<BidLicense>, amount: u64) -> Result<()> {
+        crate::instructions::epoch90s::handle_bid_license(ctx, amount)
+    }
+
+    pub fn inspect_license(ctx: Context<InspectLicense>) -> Result<()> {
+        crate::instructions::epoch90s::handle_inspect_license(ctx)
+    }
+
+    pub fn exchange(ctx: Context<Exchange>, to_hard: bool) -> Result<()> {
+        crate::instructions::epoch90s::handle_exchange(ctx, to_hard)
+    }
+
+    pub fn offer_vote(ctx: Context<OfferVote>, price: u64) -> Result<()> {
+        crate::instructions::epoch90s::handle_offer_vote(ctx, price)
+    }
+
+    pub fn accept_vote_offer(ctx: Context<AcceptVoteOffer>) -> Result<()> {
+        crate::instructions::epoch90s::handle_accept_vote_offer(ctx)
+    }
+
+    pub fn barter_propose(ctx: Context<BarterPropose>, goods: u16, price: u64) -> Result<()> {
+        crate::instructions::epoch90s::handle_barter_propose(ctx, goods, price)
+    }
+
+    pub fn barter_accept(ctx: Context<BarterAccept>, offer_id: u64) -> Result<()> {
+        crate::instructions::epoch90s::handle_barter_accept(ctx, offer_id)
     }
 }

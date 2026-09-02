@@ -171,6 +171,7 @@ fn ix_initialize(
             entry_fee: fee,
             phase_duration: dur,
             entropy_mode: mode,
+            epoch: 0,
         }
         .data(),
         alashi::accounts::Initialize {

@@ -2,10 +2,11 @@ use crate::{
     constants::*,
     error::GameError,
     events::*,
-    logic::{compute_settlement, FactionSnapshot},
     state::*,
 };
+use alashi_rules::logic::compute_settlement_epoch;
 use anchor_lang::prelude::*;
+use std::ops::Deref;
 
 #[derive(Accounts)]
 pub struct Settle<'info> {
@@ -31,7 +32,8 @@ pub fn handle_settle<'a>(ctx: Context<'a, Settle<'a>>) -> Result<()> {
         .iter()
         .map(|ai| Account::<Faction>::try_from(ai))
         .collect::<anchor_lang::Result<Vec<_>>>()?;
-    let snapshots: Vec<FactionSnapshot> = factions.iter().map(|f| f.into()).collect();
+    // прозрачные копии для rules (общая математика сеттла)
+    let plain: Vec<Faction> = factions.iter().map(|f| f.deref().clone()).collect();
     for (i, f) in factions.iter().enumerate() {
         require!(f.game == game.key(), GameError::InvalidSettleSet);
         require!(f.wallet == rem[k + i].key(), GameError::InvalidSettleSet);
@@ -47,17 +49,26 @@ pub fn handle_settle<'a>(ctx: Context<'a, Settle<'a>>) -> Result<()> {
 
     let reserve = Rent::get()?.minimum_balance(8 + Game::INIT_SPACE);
     let bank = **game.to_account_info().lamports.borrow();
-    let plan = compute_settlement(&snapshots, bank, reserve, game.rake_bps, &PAYOUT_SHARES)?;
+    // Единая математика с ареной (rules), но external_rent=false:
+    // ончейн v1 не платит ренту лицензии в lamports — источник
+    // отсутствует (ставки — внутренние песо; эскроу-вариант запаркован).
+    // Завод (из рейка) и ранги cash+hard работают полностью.
+    let plan = compute_settlement_epoch(game, &plain, bank, reserve, false)?;
 
     let bank_info = game.to_account_info();
-    for p in plan.payouts.iter() {
-        **bank_info.lamports.borrow_mut() -= p.amount;
-        **rem[k + p.faction_index].lamports.borrow_mut() += p.amount;
+    let mut paid: u64 = 0;
+    for line in plan.lines.iter() {
+        if line.total == 0 {
+            continue;
+        }
+        **bank_info.lamports.borrow_mut() -= line.total;
+        **rem[k + line.idx].lamports.borrow_mut() += line.total;
+        paid += line.total;
         emit!(Payout {
             game: game.key(),
-            wallet: p.wallet,
-            rank: p.rank,
-            amount: p.amount,
+            wallet: line.wallet,
+            rank: line.rank,
+            amount: line.total,
         });
     }
     if plan.rake > 0 {
@@ -70,7 +81,7 @@ pub fn handle_settle<'a>(ctx: Context<'a, Settle<'a>>) -> Result<()> {
         game: game.key(),
         pot: plan.pot,
         rake: plan.rake,
-        paid: plan.payouts.iter().map(|p| p.amount).sum(),
+        paid,
     });
     Ok(())
 }

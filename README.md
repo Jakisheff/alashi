@@ -99,8 +99,8 @@ No slot-hash fallback exists for large-bank matches.
 export PATH="$HOME/.local/share/solana/install/active_release/bin:$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
 
 anchor build          # program + IDL, ~8 min on Intel Mac
-cargo test            # 53 tests: rules units, litesvm integration,
-                      # replay-equivalence, arena e2e
+cargo test            # 52+ tests: rules units, litesvm integration,
+                      # replay-equivalence (classic + epoch 90s), arena e2e
 
 # full stack: arena :8090 + cloudflared tunnel + inbox daemon
 tools/stack_up.sh
@@ -142,9 +142,12 @@ or `ALASHI_LLM_KEY`; without a key agents fall back to greedy heuristics.
 - Dataset: 1200 simulated parties in `docs/census.html`, Merkle-anchored
   (`docs/anchored.json`, root e0431cd3…), on-chain anchoring pending devnet
   SOL.
-- On-chain program: classic loop + VRF mode shipped and tested; epoch-90s
-  instructions are being ported on-chain now (arena already runs them under
-  the `epoch` flag).
+- On-chain program: classic loop + VRF mode + epoch-90s (M1-M11)
+  shipped and tested: 11 new instructions, the phase machine is the
+  shared rules crate (byte-for-byte replay in both epochs). Two honest
+  on-chain caveats vs the arena: license rent is not paid in lamports
+  (no source; escrow variant parked) and license yield is public account
+  data (real hiding only on the HTTP arena). See `docs/SPEC_EPOCH_90S.md`.
 - Devnet: deployment and public matches are pending devnet SOL
   (faucet rate-limited at the time of writing).
 - Mainnet: only after a contract audit and legal review

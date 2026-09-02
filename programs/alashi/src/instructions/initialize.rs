@@ -23,12 +23,17 @@ pub fn handle_initialize(
     entry_fee: u64,
     phase_duration: i64,
     entropy_mode: u8,
+    epoch: u8,
 ) -> Result<()> {
     require!(entry_fee > 0, GameError::InvalidEntryFee);
     require!(phase_duration >= 0, GameError::InvalidPhaseDuration);
     require!(
         entropy_mode == ENTROPY_SLOTHASH || entropy_mode == ENTROPY_SWITCHBOARD,
         GameError::InvalidEntropyMode
+    );
+    require!(
+        epoch == EPOCH_CLASSIC || epoch == EPOCH_90S,
+        GameError::InvalidEpoch
     );
     // Конституция: банк выше порога обязан играть с VRF-энтропией
     // (SPEC_VRF.md п.4; fallback на slot-hash для крупных банков запрещён).
@@ -69,6 +74,7 @@ pub fn handle_initialize(
     game.pending_boom = 0;
     game.settled = false;
     game.entropy_mode = entropy_mode;
+    game.epoch = epoch;
     game.vrf_account = Pubkey::default();
     game.commit_slot = 0;
     game.vrf_retries = 0;

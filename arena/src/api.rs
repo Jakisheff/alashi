@@ -205,7 +205,7 @@ pub fn crank_once(state: &AppState) {
                     if entry.sim.game.faction_count >= MIN_FACTIONS {
                         let closing =
                             (entry.sim.game.phase, entry.sim.game.round, entry.sim.game.law_card);
-                        if entry.sim.advance(t, 0, seed).is_ok() {
+                        if entry.sim.advance(t, seed).is_ok() {
                             entry.sim.game.phase_ends_at = t + entry.sim.game.phase_duration;
                             record_phase_close(entry, closing);
                         }
@@ -222,7 +222,7 @@ pub fn crank_once(state: &AppState) {
                 if t >= entry.sim.game.phase_ends_at + entry.grace_s {
                     let closing =
                         (entry.sim.game.phase, entry.sim.game.round, entry.sim.game.law_card);
-                    if entry.sim.advance(t, 0, seed).is_ok() {
+                    if entry.sim.advance(t, seed).is_ok() {
                         entry.sim.game.phase_ends_at = t + entry.sim.game.phase_duration;
                         record_phase_close(entry, closing);
                     }
@@ -832,7 +832,7 @@ fn h_advance(state: &AppState, game_id: u64) -> serde_json::Value {
         });
     }
     let closing = (entry.sim.game.phase, entry.sim.game.round, entry.sim.game.law_card);
-    match entry.sim.advance(t, 0, seed) {
+    match entry.sim.advance(t, seed) {
         Ok(_) => {
             entry.sim.game.phase_ends_at = t + entry.sim.game.phase_duration;
             record_phase_close(entry, closing);

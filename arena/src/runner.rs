@@ -5,7 +5,7 @@
 use crate::strategies::{ActionAction, LawAction, MarketAction, Obs, Strategy};
 use alashi_rules::anchor_lang::prelude::Pubkey;
 use alashi_rules::constants::*;
-use alashi_rules::logic::compute_settlement;
+use alashi_rules::logic::compute_settlement_epoch;
 use alashi_rules::sim::Simulator;
 use alashi_rules::state::{Phase, VoteChoice};
 use alashi_rules::FactionSnapshot;
@@ -242,6 +242,9 @@ pub struct PayoutLine {
 }
 
 /// Settle по правилам для off-chain партии: банк = взносы, резерв 0.
+/// Вся математика — в rules::compute_settlement_epoch (общая с ончейн),
+/// арена передаёт external_rent=true: рента лицензии здесь экзогенный
+/// песо-поток (в песо-мире арены источник есть).
 pub fn settle(
     sim: &Simulator,
     entry_fee: u64,
@@ -249,74 +252,19 @@ pub fn settle(
     let n = sim.factions.len();
     // M9: банк партии включает ставки аукциона лицензии
     let bank = entry_fee * n as u64 + sim.game.prize_pot;
-    let snaps: Vec<FactionSnapshot> = sim
-        .factions
-        .iter()
-        .map(|f| FactionSnapshot {
-            wallet: f.wallet,
-            // SPEC_EPOCH_90S M6: твёрдая валюта идёт в ранг по номиналу
-            cash: f.cash + f.hard,
-            influence: f.influence,
-            alive: f.alive,
-        })
-        .collect();
-    let plan = compute_settlement(&snaps, bank, 0, DEFAULT_RAKE_BPS, &PAYOUT_SHARES)
+    let es = compute_settlement_epoch(&sim.game, &sim.factions, bank, 0, true)
         .expect("settle валиден");
     let mut payouts = vec![0u64; n];
-    let mut rank_share = vec![0u64; n];
-    let mut ranks: Vec<usize> = Vec::new();
-    for p in &plan.payouts {
-        payouts[p.faction_index] = p.amount;
-        rank_share[p.faction_index] = p.amount;
-        ranks.push(p.faction_index);
+    let mut breakdown = Vec::with_capacity(n);
+    for line in &es.lines {
+        payouts[line.idx] = line.total;
+        breakdown.push(PayoutLine {
+            rank_share: line.rank_share,
+            license_rent: line.license_rent,
+            factory_bonus: line.factory_bonus,
+        });
     }
-    // Фракции вне долей (5-е место) идут после по cash.
-    let mut rest: Vec<usize> = (0..n).filter(|i| !ranks.contains(i)).collect();
-    rest.sort_by(|&a, &b| sim.factions[b].cash.cmp(&sim.factions[a].cash));
-    ranks.extend(rest);
-    let mut license_rent = vec![0u64; n];
-    let mut factory_bonus = vec![0u64; n];
-    // SPEC_EPOCH_90S M9: рента лицензии держателю (доход известен
-    // заранее, инсайдеры могли его купить); держатель = кошелёк
-    if sim.game.epoch == EPOCH_90S && sim.game.license_sold {
-        if let Some(h) = sim
-            .factions
-            .iter()
-            .position(|f| f.wallet == sim.game.license_holder)
-        {
-            license_rent[h] = sim.game.license_yield;
-            payouts[h] += sim.game.license_yield;
-        }
-    }
-    // SPEC_EPOCH_90S M5 «завод»: фракция с макс влиянием получает 5%
-    // банка из рейка (при равенстве влияния — лучший ранг по cash).
-    let mut rake = plan.rake;
-    if sim.game.epoch == EPOCH_90S && n > 0 {
-        let bonus = bank * FACTORY_NUM / FACTORY_DEN;
-        if bonus > 0 && rake >= bonus {
-            let mut best = ranks.first().copied().unwrap_or(0);
-            let mut best_key = (0u16, 0u64);
-            for &i in &ranks {
-                let f = &sim.factions[i];
-                let key = (f.influence, f.cash);
-                if key > best_key {
-                    best_key = key;
-                    best = i;
-                }
-            }
-            factory_bonus[best] = bonus;
-            payouts[best] += bonus;
-            rake -= bonus;
-        }
-    }
-    let breakdown = (0..n)
-        .map(|i| PayoutLine {
-            rank_share: rank_share[i],
-            license_rent: license_rent[i],
-            factory_bonus: factory_bonus[i],
-        })
-        .collect();
-    (ranks, payouts, rake, bank, breakdown)
+    (es.order, payouts, es.rake, bank, breakdown)
 }
 
 /// Пустой лог-заготовка (для сервисных операций вроде валютчика).

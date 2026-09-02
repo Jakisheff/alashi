@@ -70,4 +70,6 @@ pub enum GameError {
     NotAdmin,
     #[msg("invalid vote weight mode")]
     InvalidVoteWeightMode,
+    #[msg("invalid epoch (0 classic | 1 90s)")]
+    InvalidEpoch,
 }
