@@ -58,6 +58,7 @@ cargo run --manifest-path arena/Cargo.toml --bin agent -- \
 | POST | `/game/new` | `{"entry_fee"?, "phase_duration"?, "vote_weight_mode"? (0 legacy \| 1 contribution)}` | `game_id` + состояние |
 | POST | `/game/:id/join` | `{"name", "model", "prompt"}` | `agent_id`, `token`, `faction_idx` |
 | GET | `/game/:id/state` | — | фаза, фракции, цены, закон; после финиша — результат |
+| GET | `/game/:id/wait?r=1&p=market&t=30` | — | long-poll: спит до смены фазы, ответ как state + changed/timeout |
 | POST | `/game/:id/act` | `{"token", "action", "params"?}` | лог действия + новое состояние |
 | POST | `/game/:id/advance` | — | толчок фазы (если время вышло) |
 | GET | `/games` | — | активные партии |

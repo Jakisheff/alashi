@@ -460,6 +460,60 @@ fn h_state(state: &AppState, game_id: u64) -> serde_json::Value {
     }
 }
 
+/// Кастдев 02.09: long-pool ожидание смены фазы. Спим до тех пор, пока
+/// (round, phase) партии не станет отличаться от переданного, партия
+/// не завершится или не выйдет таймаут. Ответ = как /state плюс флаги
+/// changed/timeout. Параметры: r (раунд, число), p (фаза, строка),
+/// t (таймаут в секундах, дефолт 30, максимум 60).
+fn h_wait(state: &AppState, game_id: u64, raw_path: &str) -> serde_json::Value {
+    let q = raw_path.split_once('?').map(|(_, q)| q).unwrap_or("");
+    let getq = |k: &str| {
+        q.split('&').find_map(|kv| {
+            let (kk, vv) = kv.split_once('=')?;
+            (kk == k).then(|| vv.to_string())
+        })
+    };
+    let after_round: Option<u8> = getq("r").and_then(|v| v.parse().ok());
+    let after_phase = getq("p");
+    let timeout_s: u64 = getq("t").and_then(|v| v.parse().ok()).unwrap_or(30).min(60);
+    let deadline = now() + timeout_s as i64;
+
+    loop {
+        // короткий лок: читаем и отпускаем, кранк не блокируется
+        let snapshot = {
+            let games = state.games.lock().unwrap_or_else(|e| e.into_inner());
+            games.get(&game_id).map(|e| {
+                (e.sim.game.round, phase_name(e.sim.game.phase), state_json(game_id, e))
+            })
+        };
+        match snapshot {
+            Some((r, p, st)) => {
+                let changed = after_round.map(|ar| ar != r).unwrap_or(false)
+                    || after_phase.as_deref().map(|ap| ap != p).unwrap_or(false);
+                if changed {
+                    return serde_json::json!({"ok": true, "changed": true, "state": st});
+                }
+            }
+            None => {
+                // партии нет среди живых: либо finished, либо unknown
+                return h_state(state, game_id);
+            }
+        }
+        if now() >= deadline {
+            let games = state.games.lock().unwrap_or_else(|e| e.into_inner());
+            if let Some(e) = games.get(&game_id) {
+                return serde_json::json!({
+                    "ok": true, "changed": false, "timeout": true,
+                    "state": state_json(game_id, e),
+                });
+            }
+            return h_state(state, game_id);
+        }
+        std::thread::sleep(std::time::Duration::from_millis(200));
+    }
+}
+
+
 fn log_to_json(l: &ActionLog) -> serde_json::Value {
     serde_json::json!({
         "actor": l.actor,
@@ -805,6 +859,7 @@ fn root_doc() -> serde_json::Value {
             "POST /game/new": "{\"entry_fee\"?, \"phase_duration\"?, \"vote_weight_mode\"? (0 legacy | 1 contribution)} → game_id",
             "POST /game/:id/join": "{\"name\", \"model\", \"prompt\"} → agent_id + token",
             "GET  /game/:id/state": "публичное состояние партии",
+            "GET  /game/:id/wait?r=1&p=market&t=30": "long-poll: спит до смены фазы (r/p — известные тебе раунд и фаза, t — таймаут сек, макс 60); ответ как /state + changed/timeout",
             "POST /game/:id/act": "{\"token\", \"action\": sell|buy|produce|donkey|bribe|vote|veto, \"params\"}",
             "POST /game/:id/advance": "permissionless кранк (как ончейн)",
             "GET  /games": "активные партии",
@@ -832,6 +887,12 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
         },
         ("GET", ["game", id, "state"]) => match id.parse::<u64>() {
             Ok(id) => ("200 OK", h_state(state, id).to_string()),
+            Err(_) => ("400 Bad Request", err_json("bad_id", "game_id не число").to_string()),
+        },
+        // кастдев 02.09: long-poll — просыпаемся на смене фазы, а не
+        // молотим state. GET /game/:id/wait?r=1&p=market&t=30
+        ("GET", ["game", id, "wait"]) => match id.parse::<u64>() {
+            Ok(id) => ("200 OK", h_wait(state, id, &req.path).to_string()),
             Err(_) => ("400 Bad Request", err_json("bad_id", "game_id не число").to_string()),
         },
         ("POST", ["game", id, "act"]) => match id.parse::<u64>() {

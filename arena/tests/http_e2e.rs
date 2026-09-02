@@ -244,6 +244,64 @@ fn http_epoch_90s_full_game() {
 }
 
 #[test]
+fn http_wait_longpoll_wakes_on_phase_change() {
+    let state = new_state();
+    let addr = serve_on(state, "127.0.0.1:0", 50).expect("serve");
+    let port = addr.port();
+
+    let r = http(
+        port,
+        "POST",
+        "/game/new",
+        Some(r#"{"entry_fee": 10000000, "phase_duration": 1}"#),
+    );
+    assert_eq!(r["ok"], true, "{r}");
+    let gid = r["game_id"].as_u64().unwrap();
+    for name in ["W1", "W2"] {
+        let r = http(
+            port,
+            "POST",
+            &format!("/game/{}/join", gid),
+            Some(&format!(r#"{{"name": "{name}", "model": "t", "prompt": "e"}}"#)),
+        );
+        assert_eq!(r["ok"], true, "{r}");
+    }
+
+    // long-poll из потока: засыпаем на фазе market r1 — должны
+    // проснуться, когда фаза сменится (кранк 250мс, фазы по 1с)
+    let (tx, rx) = std::sync::mpsc::channel();
+    let port2 = port;
+    std::thread::spawn(move || {
+        // дождёмся старта партии (лобби закрывается по 2-му join+таймер)
+        let mut started = false;
+        for _ in 0..40 {
+            let r = http(port2, "GET", &format!("/game/{gid}/state"), None);
+            if r["state"]["round"].as_u64().unwrap_or(0) >= 1 {
+                started = true;
+                break;
+            }
+            std::thread::sleep(std::time::Duration::from_millis(200));
+        }
+        assert!(started, "партия не стартовала");
+        let t0 = std::time::Instant::now();
+        let r = http(
+            port2,
+            "GET",
+            &format!("/game/{gid}/wait?r=1&p=market&t=25"),
+            None,
+        );
+        let _ = tx.send((r, t0.elapsed()));
+    });
+
+    // ждём ответа long-poll: фаза обязана смениться за 25с
+    let (r, elapsed) = rx.recv_timeout(std::time::Duration::from_secs(30)).expect("long-poll молчит");
+    assert_eq!(r["changed"], true, "{r}");
+    let phase = r["state"]["phase"].as_str().unwrap().to_string();
+    assert_ne!(phase, "market", "проснулись в той же фазе");
+    assert!(elapsed.as_secs() < 20, "проснулись слишком поздно: {elapsed:?}");
+}
+
+#[test]
 fn http_bribe_rejects_bad_target() {
     let state = new_state();
     let addr = serve_on(state, "127.0.0.1:0", 50).expect("serve");
