@@ -67,6 +67,9 @@ pub struct GameConfig {
     pub phase_duration: i64,
     pub vote_weight_mode: u8,
     pub epoch: u8,
+    /// A/B «рента в ранге» (прод = false): рента лицензии в ранг
+    /// держателя вместо отдельной выплаты.
+    pub rent_in_rank: bool,
 }
 
 impl Default for GameConfig {
@@ -76,6 +79,7 @@ impl Default for GameConfig {
             phase_duration: 10,
             vote_weight_mode: alashi_rules::constants::VOTE_WEIGHT_LEGACY,
             epoch: alashi_rules::constants::EPOCH_CLASSIC,
+            rent_in_rank: false,
         }
     }
 }
@@ -211,7 +215,7 @@ pub fn play_game(
     }
 
     // Settle: банк = взносы, резерва нет (нет рента), рейк по правилам.
-    let (ranks, payouts, rake, bank, _breakdown) = settle(&sim, cfg.entry_fee);
+    let (ranks, payouts, rake, bank, _breakdown) = settle(&sim, cfg.entry_fee, cfg.rent_in_rank);
     let rake = rake;
 
     GameRecord {
@@ -248,11 +252,12 @@ pub struct PayoutLine {
 pub fn settle(
     sim: &Simulator,
     entry_fee: u64,
+    rent_in_rank: bool,
 ) -> (Vec<usize>, Vec<u64>, u64, u64, Vec<PayoutLine>) {
     let n = sim.factions.len();
     // M9: банк партии включает ставки аукциона лицензии
     let bank = entry_fee * n as u64 + sim.game.prize_pot;
-    let es = compute_settlement_epoch(&sim.game, &sim.factions, bank, 0, true)
+    let es = compute_settlement_epoch(&sim.game, &sim.factions, bank, 0, true, rent_in_rank)
         .expect("settle валиден");
     let mut payouts = vec![0u64; n];
     let mut breakdown = Vec::with_capacity(n);

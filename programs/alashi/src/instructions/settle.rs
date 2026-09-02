@@ -53,7 +53,7 @@ pub fn handle_settle<'a>(ctx: Context<'a, Settle<'a>>) -> Result<()> {
     // ончейн v1 не платит ренту лицензии в lamports — источник
     // отсутствует (ставки — внутренние песо; эскроу-вариант запаркован).
     // Завод (из рейка) и ранги cash+hard работают полностью.
-    let plan = compute_settlement_epoch(game, &plain, bank, reserve, false)?;
+    let plan = compute_settlement_epoch(game, &plain, bank, reserve, false, false)?;
 
     let bank_info = game.to_account_info();
     let mut paid: u64 = 0;

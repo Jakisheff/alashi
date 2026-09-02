@@ -131,15 +131,19 @@ pub struct EpochSettlement {
 /// external_rent: арена платит ренту лицензии как экзогенный песо-поток
 /// (true); ончейн v1 ренту не платит — источник lamports отсутствует
 /// (ставки — внутренние песо, эскроу-вариант в IDEAS_PARKED).
+/// rent_in_rank: ЭКСПЕРИМЕНТ (A/B из рефлексии Agent2, прод = false):
+/// доход лицензии учитывается в ранге держателя (ставка уже вычтена
+/// из кэша при биде), рента при этом НЕ выплачивается отдельно.
 pub fn compute_settlement_epoch(
     game: &crate::state::Game,
     factions: &[Faction],
     bank: u64,
     reserve: u64,
     external_rent: bool,
+    rent_in_rank: bool,
 ) -> Result<EpochSettlement> {
     let epoch_90s = game.epoch == EPOCH_90S;
-    let snaps: Vec<FactionSnapshot> = factions
+    let mut snaps: Vec<FactionSnapshot> = factions
         .iter()
         .map(|f| FactionSnapshot {
             wallet: f.wallet,
@@ -148,6 +152,15 @@ pub fn compute_settlement_epoch(
             alive: f.alive,
         })
         .collect();
+    // A/B rent_in_rank: рента держателю в РАНГ (без отдельной выплаты)
+    if epoch_90s && game.license_sold && rent_in_rank {
+        if let Some(h) = factions
+            .iter()
+            .position(|f| f.wallet == game.license_holder)
+        {
+            snaps[h].cash += game.license_yield;
+        }
+    }
     let plan = compute_settlement(&snaps, bank, reserve, game.rake_bps, &PAYOUT_SHARES)?;
     let n = factions.len();
 
@@ -164,7 +177,7 @@ pub fn compute_settlement_epoch(
 
     // M9: рента лицензии держателю (сверх доли, в ранг не входит)
     let mut license_rent = vec![0u64; n];
-    if epoch_90s && game.license_sold && external_rent {
+    if epoch_90s && game.license_sold && external_rent && !rent_in_rank {
         if let Some(h) = factions
             .iter()
             .position(|f| f.wallet == game.license_holder)
