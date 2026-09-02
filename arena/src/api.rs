@@ -279,6 +279,9 @@ fn state_json(game_id: u64, entry: &GameEntry) -> serde_json::Value {
             v.insert("sold".into(), serde_json::json!(g.license_sold));
             if g.license_sold {
                 v.insert("holder".into(), serde_json::json!(g.license_holder));
+                // кастдев v2 (Agent3, правка №3): рента видна после
+                // аукциона — доход держателя уже факт его актива
+                v.insert("yield".into(), json_num(g.license_yield));
             }
             v.insert("pot".into(), json_num(g.prize_pot));
             serde_json::Value::Object(v)
@@ -291,6 +294,17 @@ fn state_json(game_id: u64, entry: &GameEntry) -> serde_json::Value {
         "president_idx": entry.sim.factions.iter().position(|f| f.wallet == g.president),
         "yes_influence": g.yes_influence,
         "no_influence": g.no_influence,
+        // кастдев v2 (голосование фич): живой лог ходов — чужие
+        // действия текущей фазы, слепота к ним стоила агентам ~50M
+        "recent_actions": entry.action_log.iter().rev().take(12).rev()
+            .map(|a| serde_json::json!({
+                "round": a.get("round"),
+                "phase": a.get("phase"),
+                "actor": a.get("actor"),
+                "action": a.get("action"),
+                "ok": a.get("ok"),
+                "ts": a.get("ts"),
+            })).collect::<Vec<_>>(),
         "factions": entry.sim.factions.iter().enumerate().map(|(i, f)| {
             serde_json::json!({
                 "idx": i,
