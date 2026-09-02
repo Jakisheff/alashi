@@ -3,6 +3,7 @@
 //! расхождение правил между ними невозможно по построению
 //! (ARCH_TRAINING_CAMP.md, слой L1).
 
+pub mod actions;
 pub mod constants;
 pub mod error;
 pub mod logic;

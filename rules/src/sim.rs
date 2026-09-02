@@ -1,10 +1,12 @@
 //! Off-chain симулятор: партии на чистых правилах без блокчейна.
 //! Один запуск = сотни игр для L3 training camp. Энтропия подаётся
 //! извне (seed_provider), чтобы матч был воспроизводимым.
+//! Вся логика ходов — в actions.rs (общая с ончейн-инструкциями),
+//! здесь только индексные обёртки над массивом фракций.
 
+use crate::actions;
 use crate::constants::*;
 use crate::error::GameError;
-use crate::logic::{compute_purchase, compute_sale};
 use crate::state::{Faction, Game, Phase, VoteChoice};
 use crate::transitions;
 use anchor_lang::prelude::Pubkey;
@@ -14,21 +16,6 @@ pub struct Simulator {
     pub game: Game,
     pub factions: Vec<Faction>,
     pub round_seed: u64,
-    /// M11 бартерные оферы (вне Game/Faction: не ончейн-состояние,
-    /// влияет только на cash/goods сторон при accept).
-    pub barter_offers: Vec<BarterOffer>,
-}
-
-/// SPEC_EPOCH_90S M11: бартерный офер — товар за кэш напрямую между
-/// фракциями, минуя рынок и валютчика.
-#[derive(Clone, Copy, Debug, PartialEq)]
-pub struct BarterOffer {
-    pub id: u64,
-    pub from: usize,
-    /// 255 = любому
-    pub to: u8,
-    pub goods: u16,
-    pub price: u64,
 }
 
 impl Simulator {
@@ -45,7 +32,6 @@ impl Simulator {
             game,
             factions: vec![],
             round_seed: 0,
-            barter_offers: vec![],
         }
     }
 
@@ -61,8 +47,7 @@ impl Simulator {
         f.wallet = wallet;
         f.name = name.to_string();
         f.influence = 1;
-        f.vote_offer_to = VOTE_OFFER_NONE;
-        f.vote = crate::state::VoteChoice::Abstain;
+        f.vote = VoteChoice::Abstain;
         f.alive = true;
         self.factions.push(f);
         self.game.faction_count = self.factions.len() as u8;
@@ -74,7 +59,9 @@ impl Simulator {
         now: i64,
         seed: u64,
     ) -> Result<transitions::AdvanceResult, GameError> {
-        transitions::advance(&mut self.game, &mut self.factions, now, seed)
+        self.round_seed = seed;
+        let mut refs: Vec<&mut Faction> = self.factions.iter_mut().collect();
+        transitions::advance(&mut self.game, &mut refs, now, 0, seed, None)
     }
 
     pub fn advance_with_card(
@@ -82,377 +69,115 @@ impl Simulator {
         now: i64,
         card: u8,
     ) -> Result<transitions::AdvanceResult, GameError> {
-        transitions::advance_with_card(&mut self.game, &mut self.factions, now, card)
+        let mut refs: Vec<&mut Faction> = self.factions.iter_mut().collect();
+        transitions::advance_with_card(&mut self.game, &mut refs, now, card)
     }
 
     pub fn reveal_for_replay(&mut self, card: u8) -> Result<u8, GameError> {
         transitions::reveal_law_card(&mut self.game, card)
     }
 
-    pub fn sell(&mut self, idx: usize, units: u16) -> Result<u64, GameError> {
-        self.sell_impl(idx, units, false)
-    }
+    // ---------- индексные обёртки над actions::* ----------
 
-    /// SPEC_EPOCH_90S M4: продажа в кредит (вексель): выручка ×1.25,
-    /// деньги приходят в начале следующего раунда; сгорают картой
-    /// «взаимозачёт».
-    pub fn sell_credit(&mut self, idx: usize, units: u16) -> Result<u64, GameError> {
-        self.sell_impl(idx, units, true)
-    }
-
-    fn sell_impl(&mut self, idx: usize, units: u16, credit: bool) -> Result<u64, GameError> {
-        if credit && self.game.epoch != EPOCH_90S {
-            return Err(GameError::WrongPhase);
+    /// Две фракции по индексам без двойного borrow.
+    fn pair(
+        factions: &mut [Faction],
+        a: usize,
+        b: usize,
+    ) -> Result<(&mut Faction, &mut Faction), GameError> {
+        if a >= factions.len() || b >= factions.len() {
+            return Err(GameError::InvalidFactionSet);
         }
-        let g = &mut self.game;
-        let f = &mut self.factions[idx];
-        if g.phase != Phase::Market {
-            return Err(GameError::WrongPhase);
+        if a == b {
+            return Err(GameError::SelfBribe);
         }
-        if !f.alive {
-            return Err(GameError::NotAlive);
-        }
-        if f.acted_stamp == g.stamp() {
-            return Err(GameError::AlreadyActed);
-        }
-        if units == 0 || units > f.goods {
-            return Err(GameError::NotEnoughGoods);
-        }
-        let trade = compute_sale(
-            units,
-            g.sold_this_round,
-            g.active_price_shift,
-            g.active_boom,
-        );
-        let tax = trade.gross * g.active_tax_bps as u64 / 10_000;
-        let revenue = trade.gross - tax;
-        let revenue = if credit { revenue * CREDIT_NUM / CREDIT_DEN } else { revenue };
-        g.sold_this_round = trade.counter_after;
-        f.goods -= units;
-        if credit {
-            f.promissory += revenue;
+        let (lo, hi) = if a < b { (a, b) } else { (b, a) };
+        let (left, right) = factions.split_at_mut(hi);
+        if lo == a {
+            Ok((&mut left[lo], &mut right[0]))
         } else {
-            f.cash += revenue;
+            Ok((&mut right[0], &mut left[lo]))
         }
-        f.acted_stamp = g.stamp();
-        Ok(revenue)
+    }
+
+    pub fn sell(&mut self, idx: usize, units: u16) -> Result<u64, GameError> {
+        let (g, f) = (&mut self.game, &mut self.factions[idx]);
+        actions::sell(g, f, units, false)
+    }
+
+    /// SPEC_EPOCH_90S M4: продажа в кредит (вексель).
+    pub fn sell_credit(&mut self, idx: usize, units: u16) -> Result<u64, GameError> {
+        let (g, f) = (&mut self.game, &mut self.factions[idx]);
+        actions::sell(g, f, units, true)
     }
 
     pub fn buy(&mut self, idx: usize, units: u16) -> Result<u64, GameError> {
-        let g = &mut self.game;
-        let f = &mut self.factions[idx];
-        if g.phase != Phase::Market {
-            return Err(GameError::WrongPhase);
-        }
-        if !f.alive {
-            return Err(GameError::NotAlive);
-        }
-        if f.acted_stamp == g.stamp() {
-            return Err(GameError::AlreadyActed);
-        }
-        let trade = compute_purchase(
-            units,
-            g.sold_this_round,
-            g.active_price_shift,
-            g.active_boom,
-        );
-        if f.cash < trade.gross {
-            return Err(GameError::NotEnoughCash);
-        }
-        f.cash -= trade.gross;
-        f.goods += units;
-        g.sold_this_round = trade.counter_after;
-        f.acted_stamp = g.stamp();
-        Ok(trade.gross)
+        let (g, f) = (&mut self.game, &mut self.factions[idx]);
+        actions::buy(g, f, units)
     }
 
     pub fn produce(&mut self, idx: usize) -> Result<u16, GameError> {
-        let g = &mut self.game;
-        let f = &mut self.factions[idx];
-        if g.phase != Phase::Action {
-            return Err(GameError::WrongPhase);
-        }
-        if f.acted_stamp == g.stamp() {
-            return Err(GameError::AlreadyActed);
-        }
-        f.goods += PRODUCE_YIELD + g.active_subsidy_goods as u16;
-        f.acted_stamp = g.stamp();
-        Ok(f.goods)
+        let (g, f) = (&mut self.game, &mut self.factions[idx]);
+        actions::produce(g, f)
     }
 
-    /// SPEC_EPOCH_90S M3: серый канал «челнок»: +3 товара (вместо 2),
-    /// товар помечается серым и стоит на таможне при закрытии фазы.
+    /// M3: серый канал «челнок».
     pub fn shuttle(&mut self, idx: usize) -> Result<u16, GameError> {
-        if self.game.epoch != EPOCH_90S {
-            return Err(GameError::WrongPhase);
-        }
-        let g = &mut self.game;
-        let f = &mut self.factions[idx];
-        if g.phase != Phase::Action {
-            return Err(GameError::WrongPhase);
-        }
-        if f.acted_stamp == g.stamp() {
-            return Err(GameError::AlreadyActed);
-        }
-        f.goods += SHUTTLE_GOODS + g.active_subsidy_goods as u16;
-        f.grey_goods += SHUTTLE_GOODS + g.active_subsidy_goods as u16;
-        f.acted_stamp = g.stamp();
-        Ok(f.goods)
-    }
-
-    /// SPEC_EPOCH_90S M2+M7: крыша-контракт с тарифом:
-    /// чёрный (30% кэша, гарантия от границы и гашение закона) или
-    /// красный (10%, гашение закона, p≈25% беспредела на границе).
-    pub fn roof(&mut self, from: usize, to: usize, tariff: u8) -> Result<u8, GameError> {
-        if self.game.epoch != EPOCH_90S {
-            return Err(GameError::WrongPhase);
-        }
-        if from >= self.factions.len() || to >= self.factions.len() {
-            return Err(GameError::InvalidFactionSet);
-        }
-        if from == to {
-            return Err(GameError::SelfBribe);
-        }
-        if tariff != ROOF_BLACK && tariff != ROOF_RED {
-            return Err(GameError::InvalidVoteWeightMode);
-        }
-        let g = &mut self.game;
-        if g.phase != Phase::Action {
-            return Err(GameError::WrongPhase);
-        }
-        if self.factions[from].roof_armed {
-            return Err(GameError::AlreadyActed);
-        }
-        let (num, den) = if tariff == ROOF_BLACK {
-            (ROOF_BLACK_NUM, ROOF_BLACK_DEN)
-        } else {
-            (ROOF_RED_NUM, ROOF_RED_DEN)
-        };
-        let price = self.factions[from].cash * num / den;
-        if price == 0 {
-            return Err(GameError::NotEnoughCash);
-        }
-        if self.factions[from].cash < price {
-            return Err(GameError::NotEnoughCash);
-        }
-        self.factions[from].cash -= price;
-        self.factions[to].cash += price;
-        self.factions[from].roof_to = to as u8;
-        self.factions[from].roof_armed = true;
-        self.factions[from].roof_tariff = tariff;
-        self.factions[from].acted_stamp = g.stamp();
-        Ok(to as u8)
-    }
-
-    /// SPEC_EPOCH_90S M8: президент вслепую выбирает режим границы
-    /// этого раунда (tight = досмотр). Не сжигает ход, раз в раунд.
-    pub fn set_customs(&mut self, from: usize, tight: bool) -> Result<(), GameError> {
-        if self.game.epoch != EPOCH_90S {
-            return Err(GameError::WrongPhase);
-        }
-        if self.game.phase != Phase::Action {
-            return Err(GameError::WrongPhase);
-        }
-        if self.game.customs_decided {
-            return Err(GameError::AlreadyActed);
-        }
-        if self.factions[from].wallet != self.game.president {
-            return Err(GameError::NotPresident);
-        }
-        self.game.customs_tight = tight;
-        self.game.customs_decided = true;
-        Ok(())
-    }
-
-    /// SPEC_EPOCH_90S M9: ставка на слепой аукцион лицензии (эскроу
-    /// кэша, платит только победитель). Только в раунд аукциона.
-    pub fn bid_license(&mut self, from: usize, amount: u64) -> Result<u64, GameError> {
-        if self.game.epoch != EPOCH_90S {
-            return Err(GameError::WrongPhase);
-        }
-        if self.game.phase != Phase::Action || self.game.round != AUCTION_ROUND {
-            return Err(GameError::WrongPhase);
-        }
-        if self.factions[from].cash < amount || amount == 0 {
-            return Err(GameError::NotEnoughCash);
-        }
-        self.factions[from].cash -= amount;
-        self.factions[from].bid += amount;
-        Ok(self.factions[from].bid)
-    }
-
-    /// SPEC_EPOCH_90S M9: инсайд о доходности лицензии (5M, до конца
-    /// партии). Ответ — точный доход, известен только купившим.
-    pub fn inspect_license(&mut self, from: usize) -> Result<u64, GameError> {
-        if self.game.epoch != EPOCH_90S {
-            return Err(GameError::WrongPhase);
-        }
-        if self.factions[from].insider {
-            return Err(GameError::AlreadyActed);
-        }
-        if self.factions[from].cash < LICENSE_INSIGHT_PRICE {
-            return Err(GameError::NotEnoughCash);
-        }
-        self.factions[from].cash -= LICENSE_INSIGHT_PRICE;
-        self.factions[from].insider = true;
-        // доход фиксирован сидом раунда аукциона, известен заранее
-        Ok(self.game.license_yield)
-    }
-
-    /// SPEC_EPOCH_90S M10 (фикс 02.09 по дебрифу): продажа голоса в два
-    /// шага. Офер: продавец объявляет цену, деньги НЕ списываются.
-    /// Акцепт: покупатель подтверждает accept_vote_offer, тогда кэш
-    /// переходит, а голос продавца идёт по выбору покупателя.
-    pub fn offer_vote(&mut self, seller: usize, buyer: usize, price: u64) -> Result<(), GameError> {
-        if self.game.epoch != EPOCH_90S {
-            return Err(GameError::WrongPhase);
-        }
-        if seller >= self.factions.len() || buyer >= self.factions.len() {
-            return Err(GameError::InvalidFactionSet);
-        }
-        if seller == buyer || price == 0 {
-            return Err(GameError::SelfBribe);
-        }
-        if self.game.phase != Phase::Law {
-            return Err(GameError::WrongPhase);
-        }
-        if self.factions[seller].vote_sold || self.factions[seller].vote_offer_to != VOTE_OFFER_NONE {
-            return Err(GameError::AlreadyVoted);
-        }
-        // офер валиден только если покупатель сможет заплатить
-        if self.factions[buyer].cash < price {
-            return Err(GameError::NotEnoughCash);
-        }
-        self.factions[seller].vote_offer_to = buyer as u8;
-        self.factions[seller].vote_offer_price = price;
-        Ok(())
-    }
-
-    /// M10: акцепт покупки голоса (только адресат офера).
-    pub fn accept_vote_offer(&mut self, buyer: usize) -> Result<u64, GameError> {
-        if self.game.epoch != EPOCH_90S {
-            return Err(GameError::WrongPhase);
-        }
-        if self.game.phase != Phase::Law {
-            return Err(GameError::WrongPhase);
-        }
-        if buyer >= self.factions.len() {
-            return Err(GameError::InvalidFactionSet);
-        }
-        let (seller, price) = {
-            let mut found = None;
-            for (i, f) in self.factions.iter().enumerate() {
-                if f.vote_offer_to as usize == buyer && f.vote_offer_to != VOTE_OFFER_NONE {
-                    found = Some((i, f.vote_offer_price));
-                }
-            }
-            found.ok_or(GameError::InvalidFactionSet)?
-        };
-        if self.factions[buyer].cash < price {
-            return Err(GameError::NotEnoughCash);
-        }
-        self.factions[buyer].cash -= price;
-        self.factions[seller].cash += price;
-        self.factions[seller].vote_sold = true;
-        self.factions[seller].vote_sold_to = buyer as u8;
-        self.factions[seller].vote_offer_to = VOTE_OFFER_NONE;
-        self.factions[seller].vote_offer_price = 0;
-        self.factions[seller].voted_stamp = self.game.stamp();
-        Ok(price)
+        let (g, f) = (&mut self.game, &mut self.factions[idx]);
+        actions::shuttle(g, f)
     }
 
     pub fn donkey(&mut self, idx: usize) -> Result<(), GameError> {
-        let g = &mut self.game;
-        let f = &mut self.factions[idx];
-        if g.phase != Phase::Action {
-            return Err(GameError::WrongPhase);
-        }
-        if f.acted_stamp == g.stamp() {
-            return Err(GameError::AlreadyActed);
-        }
-        let price = DONKEY_PRICE * PESO;
-        if f.cash < price {
-            return Err(GameError::NotEnoughCash);
-        }
-        f.cash -= price;
-        f.goods += 1;
-        f.acted_stamp = g.stamp();
-        Ok(())
+        let (g, f) = (&mut self.game, &mut self.factions[idx]);
+        actions::donkey(g, f)
     }
 
     pub fn bribe(&mut self, from: usize, to: usize, amount: u64) -> Result<u16, GameError> {
-        // R1 (REVIEW_EXTERNAL): индексы валидируются до любого обращения,
-        // иначе один POST /act с to=999 кладёт весь arenad (отравленный лок).
+        // R1 (REVIEW_EXTERNAL): границы первыми, потом any-borrow
+        let (fa, fb) = Self::pair(&mut self.factions, from, to)?;
+        actions::bribe(&mut self.game, fa, fb, amount)
+    }
+
+    /// M2+M7: крыша-контракт (to — индекс фракции-крыши).
+    pub fn roof(&mut self, from: usize, to: usize, tariff: u8) -> Result<Pubkey, GameError> {
         if from >= self.factions.len() || to >= self.factions.len() {
             return Err(GameError::InvalidFactionSet);
-        }
-        if self.game.phase != Phase::Action {
-            return Err(GameError::WrongPhase);
-        }
-        if !self.factions[from].alive || !self.factions[to].alive {
-            return Err(GameError::NotAlive);
-        }
-        if self.factions[from].acted_stamp == self.game.stamp() {
-            return Err(GameError::AlreadyActed);
         }
         if from == to {
             return Err(GameError::SelfBribe);
         }
-        let gain = amount / BRIBE_PRICE;
-        if gain == 0 {
-            return Err(GameError::BribeTooSmall);
-        }
-        if self.factions[from].cash < amount {
-            return Err(GameError::NotEnoughCash);
-        }
-        if self.factions[from].influence as u64 + gain > MAX_INFLUENCE as u64 {
-            return Err(GameError::BribeTooBig);
-        }
-        let stamps = self.game.stamp();
-        self.factions[from].cash -= amount;
-        self.factions[to].cash += amount;
-        self.factions[from].influence += gain as u16;
-        self.factions[from].acted_stamp = stamps;
-        Ok(self.factions[from].influence)
+        let (fa, fb) = Self::pair(&mut self.factions, from, to)?;
+        actions::roof(&mut self.game, fa, fb, tariff)
     }
 
-    /// SPEC_EPOCH_90S M6: валютчик. Обмен кэш ↔ твёрдая валюта ×0.8.
-    /// Сервисная операция: доступна в любой игровой фазе и не сжигает
-    /// ход (acted_stamp не трогаем). Твёрдая валюта не девальвирует,
-    /// участвует в ранге, крыша с неё не берёт.
+    /// M8: президент вслепую выбирает режим границы.
+    pub fn set_customs(&mut self, from: usize, tight: bool) -> Result<(), GameError> {
+        let (g, f) = (&mut self.game, &self.factions[from]);
+        actions::set_customs(g, f, tight)
+    }
+
+    /// M9: ставка на слепой аукцион лицензии.
+    pub fn bid_license(&mut self, from: usize, amount: u64) -> Result<u64, GameError> {
+        let (g, f) = (&mut self.game, &mut self.factions[from]);
+        actions::bid_license(g, f, amount)
+    }
+
+    /// M9: инсайд о доходности лицензии.
+    pub fn inspect_license(&mut self, from: usize) -> Result<u64, GameError> {
+        let (g, f) = (&self.game, &mut self.factions[from]);
+        actions::inspect_license(g, f)
+    }
+
+    /// M6: валютчик (обмен всего кэша ↔ твёрдой валюты ×0.8).
     pub fn exchange(&mut self, idx: usize, to_hard: bool) -> Result<u64, GameError> {
-        if self.game.epoch != EPOCH_90S {
-            return Err(GameError::WrongPhase);
-        }
         if idx >= self.factions.len() {
             return Err(GameError::InvalidFactionSet);
         }
-        let phase = self.game.phase;
-        if !matches!(phase, Phase::Market | Phase::Action | Phase::Law) {
-            return Err(GameError::WrongPhase);
-        }
-        if to_hard {
-            let pesetas = self.factions[idx].cash;
-            let got = pesetas * EXCHANGE_NUM / EXCHANGE_DEN;
-            if got == 0 {
-                return Err(GameError::NotEnoughCash);
-            }
-            self.factions[idx].cash -= pesetas;
-            self.factions[idx].hard += got;
-            Ok(got)
-        } else {
-            let hard = self.factions[idx].hard;
-            let got = hard * EXCHANGE_NUM / EXCHANGE_DEN;
-            if got == 0 {
-                return Err(GameError::NotEnoughCash);
-            }
-            self.factions[idx].hard -= hard;
-            self.factions[idx].cash += got;
-            Ok(got)
-        }
+        let (g, f) = (&self.game, &mut self.factions[idx]);
+        actions::exchange(g, f, to_hard)
     }
 
-    /// SPEC_EPOCH_90S M11: предложить бартер (товар за кэш напрямую).
+    /// M11: предложить бартер (to — индекс или None = любому).
     pub fn barter_propose(
         &mut self,
         from: usize,
@@ -460,98 +185,82 @@ impl Simulator {
         goods: u16,
         price: u64,
     ) -> Result<u64, GameError> {
-        if self.game.epoch != EPOCH_90S {
-            return Err(GameError::WrongPhase);
-        }
-        if self.game.phase != Phase::Market {
-            return Err(GameError::WrongPhase);
-        }
         if from >= self.factions.len() {
             return Err(GameError::InvalidFactionSet);
         }
-        if goods == 0 || goods > self.factions[from].goods {
-            return Err(GameError::NotEnoughGoods);
-        }
-        let id = self.barter_offers.len() as u64 + 1;
-        self.barter_offers.push(BarterOffer {
-            id,
-            from,
-            to: to.map(|t| t as u8).unwrap_or(ROOF_NONE),
-            goods,
-            price,
-        });
-        Ok(id)
+        let to_wallet = match to {
+            Some(t) => Some(
+                self.factions
+                    .get(t)
+                    .ok_or(GameError::InvalidFactionSet)?
+                    .wallet,
+            ),
+            None => None,
+        };
+        let (g, f) = (&mut self.game, &self.factions[from]);
+        actions::barter_propose(g, f, to_wallet, goods, price)
     }
 
-    /// M11: принять бартерный офер (оплата кэшем, товар переходит).
+    /// M11: принять бартерный офер.
     pub fn barter_accept(&mut self, by: usize, offer_id: u64) -> Result<(), GameError> {
-        if self.game.epoch != EPOCH_90S {
-            return Err(GameError::WrongPhase);
-        }
-        if self.game.phase != Phase::Market {
-            return Err(GameError::WrongPhase);
-        }
         let pos = self
+            .game
             .barter_offers
             .iter()
             .position(|o| o.id == offer_id)
             .ok_or(GameError::InvalidFactionSet)?;
-        let offer = self.barter_offers[pos];
-        if offer.from == by {
+        let from_wallet = self.game.barter_offers[pos].from;
+        let from = self
+            .factions
+            .iter()
+            .position(|f| f.wallet == from_wallet)
+            .ok_or(GameError::InvalidFactionSet)?;
+        if from == by {
             return Err(GameError::SelfBribe);
         }
-        if offer.to != ROOF_NONE && offer.to as usize != by {
-            return Err(GameError::InvalidFactionSet);
-        }
-        if self.factions[offer.from].goods < offer.goods {
-            return Err(GameError::NotEnoughGoods);
-        }
-        if self.factions[by].cash < offer.price {
-            return Err(GameError::NotEnoughCash);
-        }
-        self.factions[by].cash -= offer.price;
-        self.factions[offer.from].cash += offer.price;
-        self.factions[offer.from].goods -= offer.goods;
-        self.factions[by].goods += offer.goods;
-        self.barter_offers.remove(pos);
-        Ok(())
+        let (f_by, f_from) = Self::pair(&mut self.factions, by, from)?;
+        actions::barter_accept(&mut self.game, f_by, f_from, offer_id)
     }
 
     pub fn vote(&mut self, idx: usize, choice: VoteChoice) -> Result<(), GameError> {
-        let g = &mut self.game;
-        let f = &mut self.factions[idx];
-        if g.phase != Phase::Law {
-            return Err(GameError::WrongPhase);
-        }
-        if g.law_card == NO_LAW {
-            return Err(GameError::LawNotRevealed);
-        }
-        if f.voted_stamp == g.stamp() {
-            return Err(GameError::AlreadyVoted);
-        }
-        f.vote = choice;
-        f.voted_stamp = g.stamp();
-        Ok(())
+        let (g, f) = (&mut self.game, &mut self.factions[idx]);
+        actions::vote(g, f, choice)
     }
 
     pub fn veto(&mut self, idx: usize) -> Result<(), GameError> {
-        let g = &mut self.game;
-        let f = &mut self.factions[idx];
-        if g.phase != Phase::Law {
-            return Err(GameError::WrongPhase);
+        let (g, f) = (&mut self.game, &mut self.factions[idx]);
+        actions::veto(g, f)
+    }
+
+    /// M10: офер продажи голоса (продавец idx, покупатель buyer_idx).
+    pub fn offer_vote(&mut self, seller: usize, buyer: usize, price: u64) -> Result<(), GameError> {
+        if seller >= self.factions.len() || buyer >= self.factions.len() {
+            return Err(GameError::InvalidFactionSet);
         }
-        if g.law_card == NO_LAW {
-            return Err(GameError::LawNotRevealed);
+        if seller == buyer {
+            return Err(GameError::SelfBribe);
         }
-        if g.president != f.wallet {
-            return Err(GameError::NotPresident);
+        let (buyer_wallet, buyer_cash) = {
+            let b = &self.factions[buyer];
+            (b.wallet, b.cash)
+        };
+        let (g, f) = (&self.game, &mut self.factions[seller]);
+        actions::offer_vote(g, f, buyer_wallet, buyer_cash, price)
+    }
+
+    /// M10: акцепт покупки голоса (покупатель buyer_idx).
+    pub fn accept_vote_offer(&mut self, buyer: usize) -> Result<u64, GameError> {
+        if buyer >= self.factions.len() {
+            return Err(GameError::InvalidFactionSet);
         }
-        if g.veto_pending {
-            return Err(GameError::AlreadyVetoed);
-        }
-        g.veto_pending = true;
-        f.is_president = true;
-        Ok(())
+        // находим продавца: офер адресован покупателю
+        let seller = self
+            .factions
+            .iter()
+            .position(|f| f.vote_offer_to == self.factions[buyer].wallet && f.vote_offer_to != Pubkey::default())
+            .ok_or(GameError::InvalidFactionSet)?;
+        let (f_buyer, f_seller) = Self::pair(&mut self.factions, buyer, seller)?;
+        actions::accept_vote_offer(&self.game, f_buyer, f_seller)
     }
 
     pub fn state_bytes(&self) -> (Vec<u8>, Vec<Vec<u8>>) {

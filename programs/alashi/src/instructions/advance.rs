@@ -2,9 +2,9 @@ use crate::{
     constants::*,
     error::GameError,
     events::*,
-    logic::{compute_law_effect, draw_law_index, elect_president, tally_votes, FactionSnapshot},
     state::*,
 };
+use alashi_rules::transitions;
 use anchor_lang::prelude::*;
 use switchboard_on_demand::accounts::RandomnessAccountData;
 use switchboard_on_demand::ON_DEMAND_DEVNET_PID;
@@ -41,6 +41,21 @@ fn draw_seed(ai: &AccountInfo) -> Result<u64> {
     Ok(u64::from_le_bytes(first_hash[..8].try_into().unwrap()))
 }
 
+/// Проверка randomness-аккаунта Switchboard (owner + seed_slot > slot).
+/// Возвращает (ключ аккаунта, seed_slot) для transitions::advance.
+fn verify_switchboard(rng: &AccountInfo, clock_slot: u64) -> Result<(Pubkey, u64)> {
+    let owner = rng.owner;
+    require!(
+        owner.as_ref() == ON_DEMAND_DEVNET_PID.as_ref()
+            || owner.as_ref() == ON_DEMAND_MAINNET_PID.as_ref(),
+        GameError::RandomnessMismatch
+    );
+    let data = RandomnessAccountData::parse(rng.data.borrow())
+        .map_err(|_| GameError::RandomnessNotReady)?;
+    require!(data.seed_slot > clock_slot, GameError::RandomnessNotReady);
+    Ok((*rng.key, data.seed_slot))
+}
+
 pub fn handle_advance(ctx: Context<Advance>) -> Result<()> {
     let clock = Clock::get()?;
     let now = clock.unix_timestamp;
@@ -69,141 +84,76 @@ pub fn handle_advance(ctx: Context<Advance>) -> Result<()> {
         }
     }
 
-    let stamp = game.stamp();
-    match game.phase {
-        Phase::Lobby => {
-            require!(
-                game.faction_count >= MIN_FACTIONS,
-                GameError::NotEnoughFactions
-            );
-            require!(
-                now >= game.phase_ends_at || game.faction_count == MAX_FACTIONS,
-                GameError::TooEarly
-            );
-            game.round = 1;
-            game.phase = Phase::Market;
-            game.law_card = NO_LAW;
-            game.laws_used_mask = 0;
-        }
-        Phase::Market => {
-            require!(now >= game.phase_ends_at, GameError::TooEarly);
-            game.phase = Phase::Action;
-        }
-        Phase::Action => {
-            require!(now >= game.phase_ends_at, GameError::TooEarly);
-            game.phase = Phase::Law;
-            let snapshots: Vec<FactionSnapshot> = checked.iter().map(|f| f.into()).collect();
-            game.president = elect_president(&snapshots).unwrap_or_default();
-            match game.entropy_mode {
-                ENTROPY_SWITCHBOARD => {
-                    let rng_ai = ctx.remaining_accounts[game.faction_count as usize].clone();
-                    commit_switchboard(game, gkey, &rng_ai)?;
-                }
-                _ => {
-                    draw_law(game, gkey, &ctx.accounts.hashes.to_account_info())?;
-                }
-            }
-            game.veto_pending = false;
-        }
-        Phase::Law => {
-            require!(now >= game.phase_ends_at, GameError::TooEarly);
-            if game.entropy_mode == ENTROPY_SWITCHBOARD && game.law_card == NO_LAW {
-                let clock_slot = clock.slot;
-                if clock_slot.saturating_sub(game.commit_slot) > REVEAL_TIMEOUT_SLOTS {
-                    if game.vrf_retries >= MAX_VRF_RETRIES {
-                        game.phase = Phase::Aborted;
-                        game.phase_ends_at = now.saturating_add(game.phase_duration);
-                        emit!(GameAbortedEvent {
-                            game: gkey,
-                            round: game.round,
-                        });
-                        for f in checked.iter_mut() {
-                            f.exit(&crate::id())?;
-                        }
-                        return Ok(());
-                    }
-                    game.vrf_retries += 1;
-                    game.phase_ends_at = now.saturating_add(game.phase_duration);
-                    emit!(VrfRetry {
-                        game: gkey,
-                        round: game.round,
-                        attempt: game.vrf_retries,
-                    });
-                    return Ok(());
-                }
-                return Err(GameError::LawNotRevealed.into());
-            }
-            let votes: Vec<(u16, VoteChoice)> = checked
-                .iter()
-                .filter(|f| f.alive && f.voted_stamp == stamp)
-                .map(|f| {
-                    let mut weight = f.influence;
-                    if game.vote_weight_mode == VOTE_WEIGHT_CONTRIB {
-                        let action_stamp = ((game.round as u16) << 3) | Phase::Action as u16;
-                        if f.acted_stamp != action_stamp {
-                            // взнос-как-голос: пропуск Action = вес на этом законе
-                            weight += SKIP_VOTE_WEIGHT;
-                        }
-                    }
-                    (weight, f.vote)
-                })
-                .collect();
-            let (yes, no) = tally_votes(&votes);
-            let voted_yes = yes > no;
-            let vetoed = game.veto_pending && voted_yes;
-            let passed = voted_yes && !game.veto_pending;
-            game.yes_influence = yes;
-            game.no_influence = no;
-            game.last_law_passed = passed;
-            if passed {
-                game.laws_passed += 1;
-                let snapshots: Vec<FactionSnapshot> = checked.iter().map(|f| f.into()).collect();
-                let effect = compute_law_effect(game.law_card, &snapshots);
-                if let Some(tax) = effect.tax_bps {
-                    game.active_tax_bps = tax;
-                }
-                game.active_subsidy_goods = effect.subsidy_goods;
-                game.pending_price_shift = effect.pending_price_shift;
-                game.pending_boom = effect.pending_boom;
-                if let Some(i) = effect.influence_gain {
-                    checked[i].influence += 1;
-                }
-            }
-            emit!(LawResult {
-                game: gkey,
-                round: game.round,
-                yes,
-                no,
-                passed,
-            });
-            if vetoed {
-                emit!(LawVetoed {
-                    game: gkey,
-                    round: game.round,
-                    card: game.law_card,
-                });
-            }
-            if game.round >= ROUNDS {
-                game.phase = Phase::Finished;
-            } else {
-                game.round += 1;
-                game.phase = Phase::Market;
-            }
-            game.law_card = NO_LAW;
-            game.veto_pending = false;
-        }
-        Phase::Finished => return Err(GameError::GameFinished.into()),
-        Phase::Aborted => return Err(GameError::GameAborted.into()),
-    }
+    // энтропия фазы: слот-хэш для карты закона, VRF-коммит для режима 1
+    let vrf_commit = if wants_rng {
+        let rng_ai = ctx.remaining_accounts[game.faction_count as usize].clone();
+        Some(verify_switchboard(&rng_ai, clock.slot)?)
+    } else {
+        None
+    };
+    let seed = if game.phase == Phase::Action && game.entropy_mode != ENTROPY_SWITCHBOARD {
+        draw_seed(&ctx.accounts.hashes.to_account_info())?
+    } else {
+        0
+    };
 
-    if game.phase == Phase::Market {
-        game.sold_this_round = 0;
-        game.active_price_shift = game.pending_price_shift;
-        game.active_boom = game.pending_boom;
-        game.pending_price_shift = 0;
-        game.pending_boom = 0;
+    // вся машина фаз (M1-M11 включительно) — в rules::transitions,
+    // единый источник для ончейна и симулятора (replay байт-в-байт)
+    let prev_phase = game.phase;
+    let prev_card = game.law_card;
+    let prev_round = game.round;
+    let mut refs: Vec<&mut Faction> = checked.iter_mut().map(|a| &mut **a).collect();
+    let res = transitions::advance(game, &mut refs, now, clock.slot, seed, vrf_commit)?;
+
+    // события из результата перехода
+    if let Some((randomness, commit_slot)) = res.committed_vrf {
+        emit!(LawCommitted {
+            game: gkey,
+            randomness,
+            commit_slot,
+        });
     }
-    game.phase_ends_at = now.saturating_add(game.phase_duration);
+    if let Some(card) = res.law_card_drawn {
+        emit!(LawDrawn {
+            game: gkey,
+            round: game.round,
+            card,
+        });
+    }
+    if let Some(attempt) = res.retried {
+        emit!(VrfRetry {
+            game: gkey,
+            round: game.round,
+            attempt,
+        });
+    }
+    if res.aborted {
+        for f in checked.iter_mut() {
+            f.exit(&crate::id())?;
+        }
+        emit!(GameAbortedEvent {
+            game: gkey,
+            round: game.round,
+        });
+        return Ok(());
+    }
+    if prev_phase == Phase::Law && res.retried.is_none() {
+        // подсчёт закона состоялся в transitions (веса — из Game)
+        emit!(LawResult {
+            game: gkey,
+            round: prev_round,
+            yes: game.yes_influence,
+            no: game.no_influence,
+            passed: game.last_law_passed,
+        });
+        if res.vetoed {
+            emit!(LawVetoed {
+                game: gkey,
+                round: prev_round,
+                card: prev_card,
+            });
+        }
+    }
 
     for f in checked.iter_mut() {
         f.exit(&crate::id())?;
@@ -213,57 +163,6 @@ pub fn handle_advance(ctx: Context<Advance>) -> Result<()> {
         game: gkey,
         round: game.round,
         phase: game.phase,
-    });
-    Ok(())
-}
-
-fn draw_law(game: &mut Game, gkey: Pubkey, slot_hashes: &AccountInfo) -> Result<()> {
-    require_keys_eq!(
-        slot_hashes.key(),
-        solana_sysvar::slot_hashes::ID,
-        GameError::InvalidSettleSet
-    );
-    let data = slot_hashes.data.borrow();
-    if data.len() < 8 + 8 + 32 {
-        return Err(GameError::NoSlotHashes.into());
-    }
-    let count = u64::from_le_bytes(data[0..8].try_into().unwrap()) as usize;
-    if count == 0 {
-        return Err(GameError::NoSlotHashes.into());
-    }
-    let first_hash = &data[16..48];
-    let seed = u64::from_le_bytes(first_hash[..8].try_into().unwrap());
-    drop(data);
-
-    let (card, mask) = draw_law_index(seed, game.laws_used_mask);
-    game.law_card = card;
-    game.laws_used_mask = mask;
-    emit!(LawDrawn {
-        game: gkey,
-        round: game.round,
-        card,
-    });
-    Ok(())
-}
-
-fn commit_switchboard(game: &mut Game, gkey: Pubkey, rng: &AccountInfo) -> Result<()> {
-    let owner = rng.owner;
-    require!(
-        owner.as_ref() == ON_DEMAND_DEVNET_PID.as_ref()
-            || owner.as_ref() == ON_DEMAND_MAINNET_PID.as_ref(),
-        GameError::RandomnessMismatch
-    );
-    let data = RandomnessAccountData::parse(rng.data.borrow())
-        .map_err(|_| GameError::RandomnessNotReady)?;
-    let clock = Clock::get()?;
-    require!(data.seed_slot > clock.slot, GameError::RandomnessNotReady);
-    game.vrf_account = *rng.key;
-    game.commit_slot = data.seed_slot;
-    game.law_card = NO_LAW;
-    emit!(LawCommitted {
-        game: gkey,
-        randomness: *rng.key,
-        commit_slot: data.seed_slot,
     });
     Ok(())
 }

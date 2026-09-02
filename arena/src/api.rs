@@ -205,7 +205,7 @@ pub fn crank_once(state: &AppState) {
                     if entry.sim.game.faction_count >= MIN_FACTIONS {
                         let closing =
                             (entry.sim.game.phase, entry.sim.game.round, entry.sim.game.law_card);
-                        if entry.sim.advance(t, seed).is_ok() {
+                        if entry.sim.advance(t, 0, seed).is_ok() {
                             entry.sim.game.phase_ends_at = t + entry.sim.game.phase_duration;
                             record_phase_close(entry, closing);
                         }
@@ -222,7 +222,7 @@ pub fn crank_once(state: &AppState) {
                 if t >= entry.sim.game.phase_ends_at + entry.grace_s {
                     let closing =
                         (entry.sim.game.phase, entry.sim.game.round, entry.sim.game.law_card);
-                    if entry.sim.advance(t, seed).is_ok() {
+                    if entry.sim.advance(t, 0, seed).is_ok() {
                         entry.sim.game.phase_ends_at = t + entry.sim.game.phase_duration;
                         record_phase_close(entry, closing);
                     }
@@ -293,7 +293,8 @@ fn state_json(game_id: u64, entry: &GameEntry) -> serde_json::Value {
             v.insert("round".into(), json_num(alashi_rules::constants::AUCTION_ROUND));
             v.insert("sold".into(), serde_json::json!(g.license_sold));
             if g.license_sold {
-                v.insert("holder".into(), serde_json::json!(g.license_holder));
+                let holder_idx = entry.sim.factions.iter().position(|x| x.wallet == g.license_holder);
+                v.insert("holder".into(), serde_json::json!(holder_idx));
                 // кастдев v2 (Agent3, правка №3): рента видна после
                 // аукциона — доход держателя уже факт его актива
                 v.insert("yield".into(), json_num(g.license_yield));
@@ -301,10 +302,14 @@ fn state_json(game_id: u64, entry: &GameEntry) -> serde_json::Value {
             v.insert("pot".into(), json_num(g.prize_pot));
             serde_json::Value::Object(v)
         } else { serde_json::Value::Null },
-        // M11: публичные бартерные оферы (адресные to скрыты)
-        "barter_offers": entry.sim.barter_offers.iter().map(|o| serde_json::json!({
-            "offer": o.id, "from": o.from, "goods": o.goods, "price": o.price,
-        })).collect::<Vec<_>>(),
+        // M11: публичные бартерные оферы (адресные to скрыты);
+        // from/to показаны индексами фракций (кошельки остаются в Game)
+        "barter_offers": entry.sim.game.barter_offers.iter().map(|o| {
+            let from_idx = entry.sim.factions.iter().position(|f| f.wallet == o.from);
+            serde_json::json!({
+                "offer": o.id, "from": from_idx, "goods": o.goods, "price": o.price,
+            })
+        }).collect::<Vec<_>>(),
         "veto_pending": g.veto_pending,
         "president_idx": entry.sim.factions.iter().position(|f| f.wallet == g.president),
         "yes_influence": g.yes_influence,
@@ -335,7 +340,9 @@ fn state_json(game_id: u64, entry: &GameEntry) -> serde_json::Value {
                 "grey_goods": f.grey_goods,
                 "promissory": f.promissory,
                 "hard": f.hard,
-                "roof_to": if f.roof_armed { serde_json::json!(f.roof_to) } else { serde_json::Value::Null },
+                "roof_to": if f.roof_armed {
+                    serde_json::json!(entry.sim.factions.iter().position(|x| x.wallet == f.roof_to))
+                } else { serde_json::Value::Null },
             })
         }).collect::<Vec<_>>(),
     })
@@ -825,7 +832,7 @@ fn h_advance(state: &AppState, game_id: u64) -> serde_json::Value {
         });
     }
     let closing = (entry.sim.game.phase, entry.sim.game.round, entry.sim.game.law_card);
-    match entry.sim.advance(t, seed) {
+    match entry.sim.advance(t, 0, seed) {
         Ok(_) => {
             entry.sim.game.phase_ends_at = t + entry.sim.game.phase_duration;
             record_phase_close(entry, closing);

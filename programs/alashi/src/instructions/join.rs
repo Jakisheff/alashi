@@ -59,9 +59,11 @@ pub fn handle_join(ctx: Context<Join>, name: String) -> Result<()> {
     faction.alive = true;
     faction.bump = ctx.bumps.faction;
     // SPEC_EPOCH_90S: маркеры без-значения инициализируются явно,
-    // чтобы ончейн и симулятор были байт-в-байт (урок R4)
-    faction.vote_offer_to = VOTE_OFFER_NONE;
-    faction.roof_to = 0;
+    // чтобы ончейн и симулятор были байт-в-байт (урок R4). Нулевые
+    // кошельки-сен­тинелы (нет офера/крыши) даёт zero-init аккаунта.
+    faction.vote_offer_to = Pubkey::default();
+    faction.roof_to = Pubkey::default();
+    faction.vote_sold_to = Pubkey::default();
 
     emit!(FactionJoined {
         game: game.key(),

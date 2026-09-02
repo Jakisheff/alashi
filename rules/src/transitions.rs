@@ -26,30 +26,34 @@ pub struct AdvanceResult {
 
 pub fn advance(
     game: &mut Game,
-    factions: &mut [Faction],
+    factions: &mut [&mut Faction],
     now: i64,
+    slot: u64,
     seed: u64,
+    vrf_commit: Option<(Pubkey, u64)>,
 ) -> Result<AdvanceResult, GameError> {
-    advance_inner(game, factions, now, None, seed)
+    advance_inner(game, factions, now, slot, None, seed, vrf_commit)
 }
 
 /// Реплей из событий: карта известна из LawDrawn, seed не нужен.
-#[allow(clippy::too_many_arguments)]
 pub fn advance_with_card(
     game: &mut Game,
-    factions: &mut [Faction],
+    factions: &mut [&mut Faction],
     now: i64,
     card: u8,
 ) -> Result<AdvanceResult, GameError> {
-    advance_inner(game, factions, now, Some(card), 0)
+    advance_inner(game, factions, now, 0, Some(card), 0, None)
 }
 
+#[allow(clippy::too_many_arguments)]
 fn advance_inner(
     game: &mut Game,
-    factions: &mut [Faction],
+    factions: &mut [&mut Faction],
     now: i64,
+    slot: u64,
     forced_card: Option<u8>,
     seed: u64,
+    vrf_commit: Option<(Pubkey, u64)>,
 ) -> Result<AdvanceResult, GameError> {
     let mut res = AdvanceResult {
         law_card_drawn: None,
@@ -166,7 +170,7 @@ fn advance_inner(
                         f.bid = 0;
                     }
                     if let Some(b) = best {
-                        game.license_holder = b as u8;
+                        game.license_holder = factions[b].wallet;
                         game.license_sold = true;
                     }
                 }
@@ -175,8 +179,15 @@ fn advance_inner(
                 f.grey_goods = 0;
             }
             if game.entropy_mode == ENTROPY_SWITCHBOARD {
+                // коммит проверен вызывающей стороной (ончейн: owner
+                // Switchboard, seed_slot > текущего слота) и передан
+                // параметром — правила только фиксируют его
+                let (acc, seed_slot) =
+                    vrf_commit.ok_or(GameError::RandomnessMismatch)?;
+                game.vrf_account = acc;
+                game.commit_slot = seed_slot;
                 game.law_card = NO_LAW;
-                res.committed_vrf = Some((game.vrf_account, game.commit_slot));
+                res.committed_vrf = Some((acc, seed_slot));
             } else {
                 let (card, mask) = match forced_card {
                     Some(c) => {
@@ -212,6 +223,19 @@ fn advance_inner(
                 return Err(GameError::TooEarly);
             }
             if game.entropy_mode == ENTROPY_SWITCHBOARD && game.law_card == NO_LAW {
+                // SPEC_VRF: 25-слот таймаут, 3 ретрая, затем Aborted
+                if slot.saturating_sub(game.commit_slot) > REVEAL_TIMEOUT_SLOTS {
+                    if game.vrf_retries >= MAX_VRF_RETRIES {
+                        game.phase = Phase::Aborted;
+                        game.phase_ends_at = now.saturating_add(game.phase_duration);
+                        res.aborted = true;
+                        return Ok(res);
+                    }
+                    game.vrf_retries += 1;
+                    game.phase_ends_at = now.saturating_add(game.phase_duration);
+                    res.retried = Some(game.vrf_retries);
+                    return Ok(res);
+                }
                 return Err(GameError::LawNotRevealed);
             }
             let votes: Vec<(u16, VoteChoice)> = factions
@@ -229,11 +253,12 @@ fn advance_inner(
                     // M10 скупка голосов: голос проданного идёт по выбору
                     // покупателя, если покупатель проголосовал
                     let choice = if game.epoch == EPOCH_90S && f.vote_sold {
-                        let buyer = &factions[f.vote_sold_to as usize];
-                        if buyer.voted_stamp == stamp && buyer.alive {
-                            buyer.vote
-                        } else {
-                            return None; // сделка не сработала, продавец молчит
+                        match factions
+                            .iter()
+                            .find(|x| x.wallet == f.vote_sold_to && x.alive)
+                        {
+                            Some(buyer) if buyer.voted_stamp == stamp => buyer.vote,
+                            _ => return None, // сделка не сработала, продавец молчит
                         }
                     } else {
                         f.vote
@@ -328,8 +353,8 @@ fn advance_inner(
             game.customs_tight = false;
             for f in factions.iter_mut() {
                 f.vote_sold = false;
-                f.vote_sold_to = 0;
-                f.vote_offer_to = VOTE_OFFER_NONE;
+                f.vote_sold_to = Pubkey::default();
+                f.vote_offer_to = Pubkey::default();
                 f.vote_offer_price = 0;
             }
         }
@@ -348,7 +373,7 @@ fn advance_inner(
     Ok(res)
 }
 
-fn elect_president_factions(factions: &[Faction]) -> Pubkey {
+fn elect_president_factions(factions: &[&mut Faction]) -> Pubkey {
     factions
         .iter()
         .filter(|f| f.alive)
@@ -400,6 +425,10 @@ pub fn reveal_law(game: &mut Game, seed: u64) -> Result<u8, GameError> {
 mod tests {
     use super::*;
 
+    fn refs(fs: &mut [Faction]) -> Vec<&mut Faction> {
+        fs.iter_mut().collect()
+    }
+
     fn factions2() -> (Game, Vec<Faction>) {
         let mut g = Game::default();
         g.round = 1;
@@ -428,7 +457,7 @@ mod tests {
         let (mut g, mut fs) = factions2();
         g.vote_weight_mode = VOTE_WEIGHT_LEGACY;
         g.phase_ends_at = 10;
-        let res = advance_inner(&mut g, &mut fs, 20, None, 7).unwrap();
+        let res = advance_inner(&mut g, &mut refs(&mut fs), 20, 0, None, 7, None).unwrap();
         // yes(1) > no(1)? нет, равенство → закон не прошёл в обоих случаях ниже
         // legacy: да 1 против нет 1 → не прошло
         assert!(!res.vetoed);
@@ -441,7 +470,7 @@ mod tests {
         let (mut g, mut fs) = factions2();
         g.vote_weight_mode = VOTE_WEIGHT_CONTRIB;
         g.phase_ends_at = 10;
-        let _ = advance_inner(&mut g, &mut fs, 20, None, 7).unwrap();
+        let _ = advance_inner(&mut g, &mut refs(&mut fs), 20, 0, None, 7, None).unwrap();
         // no(1+2=3) > yes(1) → не прошло, и вес виден в счётчиках
         assert_eq!((g.yes_influence, g.no_influence), (1, 3));
         assert!(!g.last_law_passed);
@@ -454,7 +483,7 @@ mod tests {
         g.vote_weight_mode = VOTE_WEIGHT_CONTRIB;
         g.phase_ends_at = 10;
         fs[1].voted_stamp = 0; // не голосовал
-        let _ = advance_inner(&mut g, &mut fs, 20, None, 7).unwrap();
+        let _ = advance_inner(&mut g, &mut refs(&mut fs), 20, 0, None, 7, None).unwrap();
         assert_eq!((g.yes_influence, g.no_influence), (1, 0));
         assert!(g.last_law_passed);
     }
@@ -469,7 +498,7 @@ mod tests {
         g.phase_ends_at = 10;
         fs[0].cash = 100 * PESO;
         fs[0].goods = 3;
-        let res = advance_inner(&mut g, &mut fs, 20, None, 7).unwrap();
+        let res = advance_inner(&mut g, &mut refs(&mut fs), 20, 0, None, 7, None).unwrap();
         assert_eq!(g.round, 2);
         assert_eq!(fs[0].cash, 85 * PESO);
         assert_eq!(fs[0].goods, 3);
@@ -479,7 +508,7 @@ mod tests {
         g.epoch = EPOCH_CLASSIC;
         g.phase_ends_at = 10;
         fs[0].cash = 100 * PESO;
-        let _ = advance_inner(&mut g, &mut fs, 20, None, 7).unwrap();
+        let _ = advance_inner(&mut g, &mut refs(&mut fs), 20, 0, None, 7, None).unwrap();
         assert_eq!(fs[0].cash, 100 * PESO);
     }
 
@@ -494,8 +523,8 @@ mod tests {
         fs[0].cash = 10 * PESO;
         fs[0].influence = 3; // да 3 против нет 1: прошёл бы
         fs[1].roof_armed = true; // крыша куплена
-        fs[1].roof_to = 0;
-        let res = advance_inner(&mut g, &mut fs, 20, None, 7).unwrap();
+        fs[1].roof_to = fs[0].wallet;
+        let res = advance_inner(&mut g, &mut refs(&mut fs), 20, 0, None, 7, None).unwrap();
         assert!(res.roof_blocked);
         assert!(!g.last_law_passed, "закон должен быть погашен крышей");
         assert!(!fs[1].roof_armed, "контракт сгорает");
@@ -504,7 +533,7 @@ mod tests {
         g.epoch = EPOCH_90S;
         g.phase_ends_at = 10;
         fs[0].influence = 3;
-        let res = advance_inner(&mut g, &mut fs, 20, None, 7).unwrap();
+        let res = advance_inner(&mut g, &mut refs(&mut fs), 20, 0, None, 7, None).unwrap();
         assert!(!res.roof_blocked);
         assert!(g.last_law_passed);
     }
@@ -525,7 +554,7 @@ mod tests {
         // seed: (seed>>8)&0xFF = 0x10 < 64
         let seed = 0x10_00;
         let mut fs = fs;
-        let res = advance_inner(&mut g, &mut fs, 20, None, seed).unwrap();
+        let res = advance_inner(&mut g, &mut refs(&mut fs), 20, 0, None, seed, None).unwrap();
         assert!(res.customs_seized);
         assert_eq!(fs[0].goods, 2, "серой товар изъят, легальный цел");
         // seed с байтом >= 64: таможня спит
@@ -540,7 +569,7 @@ mod tests {
         f.grey_goods = 3;
         let mut fs = vec![f];
         let seed = 0x80_00; // (>>8)&0xFF = 0x80 = 128 >= 64
-        let res = advance_inner(&mut g, &mut fs, 20, None, seed).unwrap();
+        let res = advance_inner(&mut g, &mut refs(&mut fs), 20, 0, None, seed, None).unwrap();
         assert!(!res.customs_seized);
         assert_eq!(fs[0].goods, 5);
         assert_eq!(fs[0].grey_goods, 0, "маркер сбрасывается в любом случае");
@@ -564,7 +593,7 @@ mod tests {
         f.promissory = 50 * PESO;
         f.cash = 10 * PESO;
         let mut fs = vec![f];
-        let res = advance_inner(&mut g, &mut fs, 20, Some(LAW_AMNESTY), 0).unwrap();
+        let res = advance_inner(&mut g, &mut refs(&mut fs), 20, 0, Some(LAW_AMNESTY), 0, None).unwrap();
         assert!(res.amnesty_burned);
         assert_eq!(fs[0].promissory, 0);
         // вексель сгорел, кэш прошёл девальвацию нового раунда: 10M × 0.85
@@ -586,7 +615,7 @@ mod tests {
         f.promissory = 40 * PESO;
         f.cash = 10 * PESO;
         let mut fs = vec![f];
-        let _ = advance_inner(&mut g, &mut fs, 20, Some(LAW_STATUS_QUO), 0).unwrap();
+        let _ = advance_inner(&mut g, &mut refs(&mut fs), 20, 0, Some(LAW_STATUS_QUO), 0, None).unwrap();
         assert_eq!(fs[0].promissory, 0);
         assert_eq!(fs[0].cash, 10 * PESO / 100 * 85 + 40 * PESO, "девальвация, затем гашение");
     }
@@ -705,7 +734,7 @@ mod tests {
         sim.bid_license(0, 20 * PESO).unwrap();
         sim.bid_license(1, 10 * PESO).unwrap();
         sim.advance(1000, 0).unwrap(); // action → law: вскрытие
-        assert_eq!(sim.game.license_holder, 0);
+        assert_eq!(sim.game.license_holder, sim.factions[0].wallet);
         assert_eq!(sim.factions[0].cash, 75 * PESO, "A: -20 ставка, победитель");
         assert_eq!(sim.factions[1].cash, 100 * PESO, "B: ставка вернулась");
         assert_eq!(sim.game.prize_pot, 20 * PESO);
@@ -736,7 +765,7 @@ mod tests {
         assert_eq!(sim.factions[1].cash, 8 * PESO);
         assert_eq!(sim.factions[0].cash, 2 * PESO);
         assert!(sim.factions[0].vote_sold);
-        assert_eq!(sim.factions[0].vote_sold_to, 1);
+        assert_eq!(sim.factions[0].vote_sold_to, sim.factions[1].wallet);
     }
 
     #[test]
@@ -757,7 +786,7 @@ mod tests {
         assert!(!sim.factions[0].vote_sold, "без акцепта делегации нет");
         // закрытие закона сбрасывает офер
         sim.advance(400, 3).unwrap(); // law → market r2
-        assert_eq!(sim.factions[0].vote_offer_to, VOTE_OFFER_NONE);
+        assert_eq!(sim.factions[0].vote_offer_to, Pubkey::default());
     }
 
     #[test]
@@ -777,7 +806,7 @@ mod tests {
         assert_eq!(sim.factions[1].goods, 2);
         assert_eq!(sim.factions[1].cash, 20 * PESO);
         assert_eq!(sim.factions[0].cash, 10 * PESO);
-        assert!(sim.barter_offers.is_empty(), "офер снят");
+        assert!(sim.game.barter_offers.is_empty(), "офер снят");
         // повторный accept того же офера невозможен
         assert!(sim.barter_accept(1, id).is_err());
     }

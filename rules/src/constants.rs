@@ -79,8 +79,9 @@ pub const AUCTION_ROUND: u8 = 4;
 pub const LICENSE_MIN_YIELD: u64 = 20 * PESO;
 pub const LICENSE_YIELD_SPAN: u64 = 40 * PESO;
 pub const LICENSE_INSIGHT_PRICE: u64 = 5 * PESO;
-pub const LICENSE_NONE: u8 = 255;
-pub const VOTE_OFFER_NONE: u8 = 255;
+// M10/M11: «нет офера/держателя» и бартер «любому» = Pubkey::default()
+// (кошелёчная семантика вместо индексной: ончейн-аккаунты
+// адресуются ключами, порядок массива у кранкера не каноничен)
 // M5 завод: +5% банка из рейка фракции с макс влиянием
 pub const FACTORY_NUM: u64 = 5;
 pub const FACTORY_DEN: u64 = 100;

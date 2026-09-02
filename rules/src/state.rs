@@ -71,14 +71,35 @@ pub struct Game {
     pub prize_pot: u64,
     /// M9 доходность лицензии раунда аукциона.
     pub license_yield: u64,
-    /// M9 держатель лицензии (255 = никто).
-    pub license_holder: u8,
+    /// M9 держатель лицензии (Pubkey::default() = никто). Кошелек, не
+    /// индекс: ончейн-аккаунты адресуются ключами, порядок массива
+    /// фракций у кранкера не каноничен (анти-гриф).
+    pub license_holder: Pubkey,
     /// M9 аукцион уже проведён.
     pub license_sold: bool,
+    /// M11 бартерные оферы (в Game: ончейн-хранилище и симулятор
+    /// сериализуются одинаково байт-в-байт).
+    #[max_len(8)]
+    pub barter_offers: Vec<BarterOfferRec>,
+    /// M11 счётчик идентификаторов оферов.
+    pub barter_next_id: u64,
     pub vrf_account: Pubkey,
     pub commit_slot: u64,
     pub vrf_retries: u8,
     pub vrf_spent: u64,
+}
+
+/// M11 бартерный офер: товар за кэш напрямую между фракциями.
+/// from/to — кошельки (to = Pubkey::default() = любому).
+#[derive(
+    AnchorSerialize, AnchorDeserialize, Clone, Copy, Debug, Default, PartialEq, Eq, InitSpace,
+)]
+pub struct BarterOfferRec {
+    pub id: u64,
+    pub from: Pubkey,
+    pub to: Pubkey,
+    pub goods: u16,
+    pub price: u64,
 }
 
 impl Game {
@@ -111,20 +132,22 @@ pub struct Faction {
     /// SPEC_EPOCH_90S M6: твёрдая валюта («доллары»), не девальвирует,
     /// обмен через валютчика со спредом 20%.
     pub hard: u64,
-    /// крыша-контракт: индекс фракции-крыши (валиден при roof_armed).
-    pub roof_to: u8,
+    /// крыша-контракт: кошелёк фракции-крыши, которой заплачено
+    /// (валиден при roof_armed). Информационное поле: гасит закон
+    /// сам факт armed у богатейшего.
+    pub roof_to: Pubkey,
     /// контракт активен (одноразовый).
     pub roof_armed: bool,
     /// M7 тариф крыши: 0 нет, 1 чёрная (30%, гарантия), 2 красная (10%,
     /// риск беспредела). Живёт до конца партии.
     pub roof_tariff: u8,
-    /// M10 голос продан фракции с этим индексом (валиден при vote_sold).
-    pub vote_sold_to: u8,
+    /// M10 голос продан фракции с этим кошельком (валиден при vote_sold).
+    pub vote_sold_to: Pubkey,
     pub vote_sold: bool,
-    /// M10 офер продажи голоса: кому (255 = нет) и за сколько.
-    /// Фикс по дебрифу: покупатель подтверждает акцептом, деньги не
-    /// списываются без его действия.
-    pub vote_offer_to: u8,
+    /// M10 офер продажи голоса: кому (Pubkey::default() = нет) и за
+    /// сколько. Фикс по дебрифу: покупатель подтверждает акцептом,
+    /// деньги не списываются без его действия.
+    pub vote_offer_to: Pubkey,
     pub vote_offer_price: u64,
     /// M9 ставка на лицензию этого раунда (эскроу).
     pub bid: u64,

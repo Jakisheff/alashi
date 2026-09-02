@@ -277,14 +277,16 @@ pub fn settle(
     let mut license_rent = vec![0u64; n];
     let mut factory_bonus = vec![0u64; n];
     // SPEC_EPOCH_90S M9: рента лицензии держателю (доход известен
-    // заранее, инсайдеры могли его купить)
-    if sim.game.epoch == EPOCH_90S
-        && sim.game.license_sold
-        && (sim.game.license_holder as usize) < n
-    {
-        let h = sim.game.license_holder as usize;
-        license_rent[h] = sim.game.license_yield;
-        payouts[h] += sim.game.license_yield;
+    // заранее, инсайдеры могли его купить); держатель = кошелёк
+    if sim.game.epoch == EPOCH_90S && sim.game.license_sold {
+        if let Some(h) = sim
+            .factions
+            .iter()
+            .position(|f| f.wallet == sim.game.license_holder)
+        {
+            license_rent[h] = sim.game.license_yield;
+            payouts[h] += sim.game.license_yield;
+        }
     }
     // SPEC_EPOCH_90S M5 «завод»: фракция с макс влиянием получает 5%
     // банка из рейка (при равенстве влияния — лучший ранг по cash).
