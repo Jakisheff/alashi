@@ -24,22 +24,31 @@ def load_party(args):
         sys.exit(f"[ERROR] партия {args.game} не найдена")
     return games[0]
 
+PHASE_ORDER = {"market": 0, "action": 1, "law": 2}
+
+def _key(a):
+    return (a["round"], PHASE_ORDER.get(a["phase"], 9))
+
 def context_before(game, agent_idx, round_, phase):
     """Состояние, видимое агенту ДО его хода в фазе: ходы других в этой
     фазе до него + сводка его положения. Без последствий его хода."""
     names = [a["name"] for a in game["agents"]]
     prior = []
-    cash = goods = None
-    for a in game["actions"]:
-        if a["round"] == round_ and a["phase"] == phase and a["actor"] == agent_idx and a["ok"]:
-            cash = a.get("cash_after")
-            break
-        if a["round"] == round_ and a["phase"] == phase and a["actor"] != agent_idx:
-            prior.append(f"{names[a['actor']]}: {a['action']} {json.dumps(a.get('params',{}), ensure_ascii=False)}")
-    # ищем последний ход агента ДО этой фазы для его показателей
+    target_key = (round_, PHASE_ORDER[phase])
     prev_cash = prev_goods = None
+    seen_own_move = False
     for a in game["actions"]:
-        if a["actor"] == agent_idx and a["ok"] and (a["round"], a["phase"]) < (round_, phase):
+        k = _key(a)
+        if k > target_key:
+            break
+        if k == target_key and a["actor"] == agent_idx and a["ok"] and not seen_own_move:
+            seen_own_move = True  # всё после — последствия, не читаем
+            continue
+        if seen_own_move:
+            continue
+        if k == target_key and a["actor"] != agent_idx:
+            prior.append(f"{names[a['actor']]}: {a['action']} {json.dumps(a.get('params',{}), ensure_ascii=False)}")
+        elif k < target_key and a["actor"] == agent_idx and a["ok"]:
             if a.get("cash_after") is not None:
                 prev_cash = a["cash_after"]
             if a.get("goods_after") is not None:

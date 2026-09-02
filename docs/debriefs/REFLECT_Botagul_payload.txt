@@ -1,0 +1,214 @@
+# Рефлексивное интервью Botagul: скорми этот текст агенту целиком
+
+ПАРТИЯ alashi, раунд 2, фаза market.
+Твой ход был: sell {"units": 2}
+Контекст ДО хода (только это ты видел):
+{
+ "round": 2,
+ "phase": "market",
+ "твои_деньги_до": 0,
+ "твой_товар_до": 2,
+ "законы_раньше": [
+  "r1: tax_10 прошёл"
+ ],
+ "чужие_ходы_в_этой_фазе_до_тебя": [
+  "Agent2: sell_credit {\"units\": 2}",
+  "Agent1: sell {\"units\": 2}",
+  "Aibot: sell {\"units\": 2}",
+  "Zhambyl: sell {\"units\": 2}",
+  "Agent3: sell {\"units\": 2}"
+ ]
+}
+
+---
+
+ПАРТИЯ alashi, раунд 2, фаза action.
+Твой ход был: produce {}
+Контекст ДО хода (только это ты видел):
+{
+ "round": 2,
+ "phase": "action",
+ "твои_деньги_до": 3600000,
+ "твой_товар_до": 0,
+ "законы_раньше": [
+  "r1: tax_10 прошёл"
+ ],
+ "чужие_ходы_в_этой_фазе_до_тебя": [
+  "Agent2: produce {}",
+  "Agent1: produce {}",
+  "Zhambyl: produce {}",
+  "Aibot: produce {}",
+  "Agent3: produce {}",
+  "Agent3: customs {\"tight\": false}"
+ ]
+}
+
+---
+
+ПАРТИЯ alashi, раунд 2, фаза law.
+Твой ход был: vote {"choice": "yes"}
+Контекст ДО хода (только это ты видел):
+{
+ "round": 2,
+ "phase": "law",
+ "твои_деньги_до": 3600000,
+ "твой_товар_до": 2,
+ "законы_раньше": [
+  "r1: tax_10 прошёл"
+ ],
+ "чужие_ходы_в_этой_фазе_до_тебя": [
+  "Agent2: vote {\"choice\": \"abstain\"}",
+  "Aibot: vote {\"choice\": \"yes\"}",
+  "Agent1: vote {\"choice\": \"abstain\"}",
+  "Zhambyl: vote {\"choice\": \"yes\"}",
+  "Agent3: vote {\"choice\": \"yes\"}"
+ ]
+}
+
+---
+
+ПАРТИЯ alashi, раунд 4, фаза market.
+Твой ход был: sell {"units": 2}
+Контекст ДО хода (только это ты видел):
+{
+ "round": 4,
+ "phase": "market",
+ "твои_деньги_до": 6660000,
+ "твой_товар_до": 2,
+ "законы_раньше": [
+  "r1: tax_10 прошёл",
+  "r2: status_quo прошёл",
+  "r3: vzaimozachet прошёл"
+ ],
+ "чужие_ходы_в_этой_фазе_до_тебя": [
+  "Agent2: sell_credit {\"units\": 2}",
+  "Agent1: sell {\"units\": 2}",
+  "Agent3: sell {\"units\": 6}",
+  "Zhambyl: sell {\"units\": 2}",
+  "Aibot: sell {\"units\": 2}",
+  "Agent3: sell {\"units\": 3}"
+ ]
+}
+
+---
+
+ПАРТИЯ alashi, раунд 4, фаза action.
+Твой ход был: produce {}
+Контекст ДО хода (только это ты видел):
+{
+ "round": 4,
+ "phase": "action",
+ "твои_деньги_до": 9261000,
+ "твой_товар_до": 0,
+ "законы_раньше": [
+  "r1: tax_10 прошёл",
+  "r2: status_quo прошёл",
+  "r3: vzaimozachet прошёл"
+ ],
+ "чужие_ходы_в_этой_фазе_до_тебя": [
+  "Agent2: bid_license {\"amount\": 20000000}",
+  "Zhambyl: produce {}",
+  "Aibot: produce {}",
+  "Agent3: bid_license {\"amount\": 10000000}",
+  "Agent3: produce {}",
+  "Agent1: bid_license {\"amount\": 3000000}",
+  "Agent1: produce {}"
+ ]
+}
+
+---
+
+ПАРТИЯ alashi, раунд 4, фаза law.
+Твой ход был: vote {"choice": "yes"}
+Контекст ДО хода (только это ты видел):
+{
+ "round": 4,
+ "phase": "law",
+ "твои_деньги_до": 9261000,
+ "твой_товар_до": 2,
+ "законы_раньше": [
+  "r1: tax_10 прошёл",
+  "r2: status_quo прошёл",
+  "r3: vzaimozachet прошёл"
+ ],
+ "чужие_ходы_в_этой_фазе_до_тебя": [
+  "Agent2: vote {\"choice\": \"yes\"}",
+  "Zhambyl: vote {\"choice\": \"yes\"}",
+  "Agent1: vote {\"choice\": \"no\"}",
+  "Aibot: vote {\"choice\": \"yes\"}",
+  "Agent3: vote {\"choice\": \"yes\"}"
+ ]
+}
+
+---
+
+ПАРТИЯ alashi, раунд 6, фаза market.
+Твой ход был: sell {"units": 2}
+Контекст ДО хода (только это ты видел):
+{
+ "round": 6,
+ "phase": "market",
+ "твои_деньги_до": 12671850,
+ "твой_товар_до": 2,
+ "законы_раньше": [
+  "r1: tax_10 прошёл",
+  "r2: status_quo прошёл",
+  "r3: vzaimozachet прошёл",
+  "r4: tax_20 прошёл",
+  "r5: subsidy_produce прошёл"
+ ],
+ "чужие_ходы_в_этой_фазе_до_тебя": [
+  "Agent2: sell {\"units\": 2}",
+  "Zhambyl: sell {\"units\": 2}",
+  "Aibot: sell {\"units\": 2}",
+  "Agent3: sell {\"units\": 2}"
+ ]
+}
+
+---
+
+ПАРТИЯ alashi, раунд 6, фаза action.
+Твой ход был: produce {}
+Контекст ДО хода (только это ты видел):
+{
+ "round": 6,
+ "phase": "action",
+ "твои_деньги_до": 15571030,
+ "твой_товар_до": 0,
+ "законы_раньше": [
+  "r1: tax_10 прошёл",
+  "r2: status_quo прошёл",
+  "r3: vzaimozachet прошёл",
+  "r4: tax_20 прошёл",
+  "r5: subsidy_produce прошёл"
+ ],
+ "чужие_ходы_в_этой_фазе_до_тебя": [
+  "Zhambyl: produce {}",
+  "Aibot: produce {}"
+ ]
+}
+
+---
+
+ПАРТИЯ alashi, раунд 6, фаза law.
+Твой ход был: vote {"choice": "yes"}
+Контекст ДО хода (только это ты видел):
+{
+ "round": 6,
+ "phase": "law",
+ "твои_деньги_до": 15571030,
+ "твой_товар_до": 3,
+ "законы_раньше": [
+  "r1: tax_10 прошёл",
+  "r2: status_quo прошёл",
+  "r3: vzaimozachet прошёл",
+  "r4: tax_20 прошёл",
+  "r5: subsidy_produce прошёл"
+ ],
+ "чужие_ходы_в_этой_фазе_до_тебя": [
+  "Zhambyl: vote {\"choice\": \"yes\"}",
+  "Aibot: vote {\"choice\": \"yes\"}",
+  "Agent3: vote {\"choice\": \"yes\"}",
+  "Agent2: vote {\"choice\": \"no\"}"
+ ]
+}
