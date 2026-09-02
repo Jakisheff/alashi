@@ -60,6 +60,19 @@ pub struct GameRecord {
     pub payouts: Vec<u64>,
     pub rake: u64,
     pub bank: u64,
+    /// M9-метрики лицензиара для A/B и датасета: держатель, его ставка,
+    /// рента и суммарная выплата держателю.
+    pub license: Option<LicenseRec>,
+}
+
+#[derive(Serialize, Clone, Copy)]
+pub struct LicenseRec {
+    pub holder_idx: usize,
+    pub bid: u64,
+    pub rent: u64,
+    pub holder_payout: u64,
+    /// место держателя по рангу wealth (0 = богатейший)
+    pub holder_rank: u8,
 }
 
 pub struct GameConfig {
@@ -215,8 +228,22 @@ pub fn play_game(
     }
 
     // Settle: банк = взносы, резерва нет (нет рента), рейк по правилам.
-    let (ranks, payouts, rake, bank, _breakdown) = settle(&sim, cfg.entry_fee, cfg.rent_in_rank);
+    let (ranks, payouts, rake, bank, breakdown) = settle(&sim, cfg.entry_fee, cfg.rent_in_rank);
     let rake = rake;
+    let license = if sim.game.license_sold {
+        sim.factions
+            .iter()
+            .position(|f| f.wallet == sim.game.license_holder)
+            .map(|h| LicenseRec {
+                holder_idx: h,
+                bid: sim.game.prize_pot,
+                rent: breakdown[h].license_rent,
+                holder_payout: payouts[h],
+                holder_rank: ranks.iter().position(|&x| x == h).map(|r| r as u8).unwrap_or(255),
+            })
+    } else {
+        None
+    };
 
     GameRecord {
         game_id,
@@ -234,6 +261,7 @@ pub fn play_game(
         payouts,
         rake,
         bank,
+        license,
     }
 }
 

@@ -143,7 +143,7 @@ fn settle_and_record(state: &AppState, game_id: u64) {
     {
         let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
         if let Some(entry) = games.get_mut(&game_id) {
-            let (ranks, payouts, rake, bank, breakdown) = runner::settle(&entry.sim, entry.entry_fee);
+            let (ranks, payouts, rake, bank, breakdown) = runner::settle(&entry.sim, entry.entry_fee, false);
             let agents: Vec<serde_json::Value> = entry
                 .agents
                 .iter()

@@ -65,20 +65,23 @@ fn main() {
         }
     }
 
+    let rent_in_rank = flag(&args, "--rent-in-rank").is_some();
     let cfg = GameConfig {
         entry_fee,
         phase_duration: 10,
         vote_weight_mode: vote_mode,
         epoch,
+        rent_in_rank,
     };
     eprintln!(
-        "simrun: {} игр, микс [{}], seed {}, entry_fee {}, vote_weight_mode {}, epoch {}",
+        "simrun: {} игр, микс [{}], seed {}, entry_fee {}, vote_weight_mode {}, epoch {}, rent_in_rank {}",
         games,
         mix_ref.join(","),
         seed,
         entry_fee,
         vote_mode,
-        if epoch == 1 { "90s" } else { "classic" }
+        if epoch == 1 { "90s" } else { "classic" },
+        rent_in_rank
     );
     let lines = match run_series(games, seed, &mix_ref, &cfg) {
         Ok(l) => l,
