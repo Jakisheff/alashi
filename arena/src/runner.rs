@@ -211,7 +211,7 @@ pub fn play_game(
     }
 
     // Settle: банк = взносы, резерва нет (нет рента), рейк по правилам.
-    let (ranks, payouts, rake, bank) = settle(&sim, cfg.entry_fee);
+    let (ranks, payouts, rake, bank, _breakdown) = settle(&sim, cfg.entry_fee);
     let rake = rake;
 
     GameRecord {
@@ -233,8 +233,19 @@ pub fn play_game(
     }
 }
 
+/// Слагаемые выплаты для прозрачного сеттл-отчёта (кастдев 02.09).
+#[derive(Serialize)]
+pub struct PayoutLine {
+    pub rank_share: u64,
+    pub license_rent: u64,
+    pub factory_bonus: u64,
+}
+
 /// Settle по правилам для off-chain партии: банк = взносы, резерв 0.
-pub fn settle(sim: &Simulator, entry_fee: u64) -> (Vec<usize>, Vec<u64>, u64, u64) {
+pub fn settle(
+    sim: &Simulator,
+    entry_fee: u64,
+) -> (Vec<usize>, Vec<u64>, u64, u64, Vec<PayoutLine>) {
     let n = sim.factions.len();
     // M9: банк партии включает ставки аукциона лицензии
     let bank = entry_fee * n as u64 + sim.game.prize_pot;
@@ -252,22 +263,28 @@ pub fn settle(sim: &Simulator, entry_fee: u64) -> (Vec<usize>, Vec<u64>, u64, u6
     let plan = compute_settlement(&snaps, bank, 0, DEFAULT_RAKE_BPS, &PAYOUT_SHARES)
         .expect("settle валиден");
     let mut payouts = vec![0u64; n];
+    let mut rank_share = vec![0u64; n];
     let mut ranks: Vec<usize> = Vec::new();
     for p in &plan.payouts {
         payouts[p.faction_index] = p.amount;
+        rank_share[p.faction_index] = p.amount;
         ranks.push(p.faction_index);
     }
     // Фракции вне долей (5-е место) идут после по cash.
     let mut rest: Vec<usize> = (0..n).filter(|i| !ranks.contains(i)).collect();
     rest.sort_by(|&a, &b| sim.factions[b].cash.cmp(&sim.factions[a].cash));
     ranks.extend(rest);
+    let mut license_rent = vec![0u64; n];
+    let mut factory_bonus = vec![0u64; n];
     // SPEC_EPOCH_90S M9: рента лицензии держателю (доход известен
     // заранее, инсайдеры могли его купить)
     if sim.game.epoch == EPOCH_90S
         && sim.game.license_sold
         && (sim.game.license_holder as usize) < n
     {
-        payouts[sim.game.license_holder as usize] += sim.game.license_yield;
+        let h = sim.game.license_holder as usize;
+        license_rent[h] = sim.game.license_yield;
+        payouts[h] += sim.game.license_yield;
     }
     // SPEC_EPOCH_90S M5 «завод»: фракция с макс влиянием получает 5%
     // банка из рейка (при равенстве влияния — лучший ранг по cash).
@@ -285,11 +302,19 @@ pub fn settle(sim: &Simulator, entry_fee: u64) -> (Vec<usize>, Vec<u64>, u64, u6
                     best = i;
                 }
             }
+            factory_bonus[best] = bonus;
             payouts[best] += bonus;
             rake -= bonus;
         }
     }
-    (ranks, payouts, rake, bank)
+    let breakdown = (0..n)
+        .map(|i| PayoutLine {
+            rank_share: rank_share[i],
+            license_rent: license_rent[i],
+            factory_bonus: factory_bonus[i],
+        })
+        .collect();
+    (ranks, payouts, rake, bank, breakdown)
 }
 
 /// Пустой лог-заготовка (для сервисных операций вроде валютчика).

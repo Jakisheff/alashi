@@ -133,7 +133,7 @@ fn settle_and_record(state: &AppState, game_id: u64) {
     {
         let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
         if let Some(entry) = games.get_mut(&game_id) {
-            let (ranks, payouts, rake, bank) = runner::settle(&entry.sim, entry.entry_fee);
+            let (ranks, payouts, rake, bank, breakdown) = runner::settle(&entry.sim, entry.entry_fee);
             let agents: Vec<serde_json::Value> = entry
                 .agents
                 .iter()
@@ -157,9 +157,16 @@ fn settle_and_record(state: &AppState, game_id: u64) {
                 "payouts": payouts,
                 "rake": rake,
                 "bank": bank,
-                "final_cash": entry.sim.factions.iter().map(|f| f.cash).collect::<Vec<_>>(),
+                // кастдев 02.09: final_cash обязан включать твёрдую
+                // валюту, иначе агенты неверно читают свой ранг
+                "final_cash": entry.sim.factions.iter().map(|f| f.cash + f.hard).collect::<Vec<_>>(),
+                "final_hard": entry.sim.factions.iter().map(|f| f.hard).collect::<Vec<_>>(),
+                "final_promissory": entry.sim.factions.iter().map(|f| f.promissory).collect::<Vec<_>>(),
                 "final_goods": entry.sim.factions.iter().map(|f| f.goods).collect::<Vec<_>>(),
                 "final_influence": entry.sim.factions.iter().map(|f| f.influence).collect::<Vec<_>>(),
+                // кастдев 02.09: прозрачный сеттл — откуда каждый песо
+                // выплаты: доля ранга, рента лицензии, завод
+                "payout_breakdown": breakdown,
                 "phases": entry.phase_log,
                 "actions": entry.action_log,
             });
