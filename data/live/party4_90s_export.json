@@ -1,0 +1,4389 @@
+{
+ "actions": [
+  {
+   "action": "buy",
+   "actor": 4,
+   "cash_after": 0,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {},
+   "phase": "market",
+   "round": 1,
+   "ts": 1788305851
+  },
+  {
+   "action": "donkey",
+   "actor": 4,
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "market",
+   "round": 1,
+   "ts": 1788305851
+  },
+  {
+   "action": "bribe",
+   "actor": 4,
+   "cash_after": null,
+   "err": "InvalidFactionSet",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "market",
+   "round": 1,
+   "ts": 1788305852
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "market",
+   "round": 1,
+   "ts": 1788305852
+  },
+  {
+   "action": "roof",
+   "actor": 4,
+   "cash_after": null,
+   "err": "InvalidFactionSet",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "market",
+   "round": 1,
+   "ts": 1788305914
+  },
+  {
+   "action": "customs",
+   "actor": 4,
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "market",
+   "round": 1,
+   "ts": 1788305920
+  },
+  {
+   "action": "produce",
+   "actor": 1,
+   "cash_after": 0,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 1,
+   "ts": 1788305951
+  },
+  {
+   "action": "produce",
+   "actor": 2,
+   "cash_after": 0,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 1,
+   "ts": 1788305952
+  },
+  {
+   "action": "produce",
+   "actor": 0,
+   "cash_after": 0,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 1,
+   "ts": 1788305953
+  },
+  {
+   "action": "produce",
+   "actor": 3,
+   "cash_after": 0,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 1,
+   "ts": 1788306036
+  },
+  {
+   "action": "produce",
+   "actor": 4,
+   "cash_after": 0,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 1,
+   "ts": 1788306055
+  },
+  {
+   "action": "vote",
+   "actor": 1,
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 1,
+   "ts": 1788306070
+  },
+  {
+   "action": "vote",
+   "actor": 2,
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 1,
+   "ts": 1788306071
+  },
+  {
+   "action": "vote",
+   "actor": 0,
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 1,
+   "ts": 1788306078
+  },
+  {
+   "action": "vote",
+   "actor": 4,
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "no"
+   },
+   "phase": "law",
+   "round": 1,
+   "ts": 1788306079
+  },
+  {
+   "action": "vote",
+   "actor": 3,
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "abstain"
+   },
+   "phase": "law",
+   "round": 1,
+   "ts": 1788306084
+  },
+  {
+   "action": "sell",
+   "actor": 4,
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "units": 2
+   },
+   "phase": "law",
+   "round": 1,
+   "ts": 1788306185
+  },
+  {
+   "action": "sell",
+   "actor": 4,
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "units": 2
+   },
+   "phase": "law",
+   "round": 1,
+   "ts": 1788306186
+  },
+  {
+   "action": "sell",
+   "actor": 4,
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "units": 2
+   },
+   "phase": "law",
+   "round": 1,
+   "ts": 1788306187
+  },
+  {
+   "action": "sell",
+   "actor": 4,
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "units": 2
+   },
+   "phase": "law",
+   "round": 1,
+   "ts": 1788306188
+  },
+  {
+   "action": "sell",
+   "actor": 4,
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "units": 2
+   },
+   "phase": "law",
+   "round": 1,
+   "ts": 1788306189
+  },
+  {
+   "action": "sell",
+   "actor": 4,
+   "cash_after": 22000000,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 2,
+   "ts": 1788306190
+  },
+  {
+   "action": "sell_credit",
+   "actor": 3,
+   "cash_after": 0,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 2,
+   "ts": 1788306190
+  },
+  {
+   "action": "sell",
+   "actor": 1,
+   "cash_after": 13000000,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 2,
+   "ts": 1788306191
+  },
+  {
+   "action": "sell",
+   "actor": 2,
+   "cash_after": 9000000,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 2,
+   "ts": 1788306191
+  },
+  {
+   "action": "sell",
+   "actor": 0,
+   "cash_after": 6000000,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 2,
+   "ts": 1788306194
+  },
+  {
+   "action": "buy_hard",
+   "actor": 4,
+   "cash_after": 0,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {},
+   "phase": "market",
+   "round": 2,
+   "ts": 1788306282
+  },
+  {
+   "action": "produce",
+   "actor": 3,
+   "cash_after": 0,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 2,
+   "ts": 1788306310
+  },
+  {
+   "action": "produce",
+   "actor": 4,
+   "cash_after": 0,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 2,
+   "ts": 1788306311
+  },
+  {
+   "action": "produce",
+   "actor": 2,
+   "cash_after": 9000000,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 2,
+   "ts": 1788306311
+  },
+  {
+   "action": "produce",
+   "actor": 1,
+   "cash_after": 13000000,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 2,
+   "ts": 1788306312
+  },
+  {
+   "action": "produce",
+   "actor": 0,
+   "cash_after": 6000000,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 2,
+   "ts": 1788306319
+  },
+  {
+   "action": "vote",
+   "actor": 4,
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 2,
+   "ts": 1788306430
+  },
+  {
+   "action": "vote",
+   "actor": 1,
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 2,
+   "ts": 1788306431
+  },
+  {
+   "action": "vote",
+   "actor": 3,
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 2,
+   "ts": 1788306431
+  },
+  {
+   "action": "vote",
+   "actor": 2,
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 2,
+   "ts": 1788306431
+  },
+  {
+   "action": "vote",
+   "actor": 0,
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 2,
+   "ts": 1788306433
+  },
+  {
+   "action": "sell",
+   "actor": 4,
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "units": 2
+   },
+   "phase": "law",
+   "round": 2,
+   "ts": 1788306545
+  },
+  {
+   "action": "sell",
+   "actor": 4,
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "units": 2
+   },
+   "phase": "law",
+   "round": 2,
+   "ts": 1788306546
+  },
+  {
+   "action": "sell",
+   "actor": 4,
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "units": 2
+   },
+   "phase": "law",
+   "round": 2,
+   "ts": 1788306547
+  },
+  {
+   "action": "sell",
+   "actor": 4,
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "units": 2
+   },
+   "phase": "law",
+   "round": 2,
+   "ts": 1788306548
+  },
+  {
+   "action": "sell",
+   "actor": 4,
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "units": 2
+   },
+   "phase": "law",
+   "round": 2,
+   "ts": 1788306549
+  },
+  {
+   "action": "sell_credit",
+   "actor": 3,
+   "cash_after": 21250000,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 3,
+   "ts": 1788306550
+  },
+  {
+   "action": "sell_credit",
+   "actor": 4,
+   "cash_after": 0,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 3,
+   "ts": 1788306550
+  },
+  {
+   "action": "sell",
+   "actor": 1,
+   "cash_after": 24050000,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 3,
+   "ts": 1788306550
+  },
+  {
+   "action": "sell",
+   "actor": 2,
+   "cash_after": 16650000,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 3,
+   "ts": 1788306550
+  },
+  {
+   "action": "sell",
+   "actor": 0,
+   "cash_after": 11100000,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 3,
+   "ts": 1788306555
+  },
+  {
+   "action": "bribe",
+   "actor": 3,
+   "cash_after": 16250000,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "amount": 5000000,
+    "to": 4
+   },
+   "phase": "action",
+   "round": 3,
+   "ts": 1788306670
+  },
+  {
+   "action": "produce",
+   "actor": 4,
+   "cash_after": 5000000,
+   "err": null,
+   "goods_after": 3,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 3,
+   "ts": 1788306670
+  },
+  {
+   "action": "produce",
+   "actor": 1,
+   "cash_after": 24050000,
+   "err": null,
+   "goods_after": 3,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 3,
+   "ts": 1788306671
+  },
+  {
+   "action": "produce",
+   "actor": 2,
+   "cash_after": 16650000,
+   "err": null,
+   "goods_after": 3,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 3,
+   "ts": 1788306671
+  },
+  {
+   "action": "produce",
+   "actor": 0,
+   "cash_after": 11100000,
+   "err": null,
+   "goods_after": 3,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 3,
+   "ts": 1788306673
+  },
+  {
+   "action": "vote",
+   "actor": 4,
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 3,
+   "ts": 1788306790
+  },
+  {
+   "action": "vote",
+   "actor": 1,
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 3,
+   "ts": 1788306790
+  },
+  {
+   "action": "vote",
+   "actor": 2,
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 3,
+   "ts": 1788306790
+  },
+  {
+   "action": "vote",
+   "actor": 3,
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "no"
+   },
+   "phase": "law",
+   "round": 3,
+   "ts": 1788306791
+  },
+  {
+   "action": "vote",
+   "actor": 0,
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 3,
+   "ts": 1788306801
+  },
+  {
+   "action": "sell",
+   "actor": 4,
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "units": 3
+   },
+   "phase": "law",
+   "round": 3,
+   "ts": 1788306905
+  },
+  {
+   "action": "sell",
+   "actor": 4,
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "units": 3
+   },
+   "phase": "law",
+   "round": 3,
+   "ts": 1788306906
+  },
+  {
+   "action": "sell",
+   "actor": 4,
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "units": 3
+   },
+   "phase": "law",
+   "round": 3,
+   "ts": 1788306907
+  },
+  {
+   "action": "sell",
+   "actor": 4,
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "units": 3
+   },
+   "phase": "law",
+   "round": 3,
+   "ts": 1788306908
+  },
+  {
+   "action": "sell",
+   "actor": 4,
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "units": 3
+   },
+   "phase": "law",
+   "round": 3,
+   "ts": 1788306909
+  },
+  {
+   "action": "sell",
+   "actor": 4,
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "units": 3
+   },
+   "phase": "law",
+   "round": 3,
+   "ts": 1788306910
+  },
+  {
+   "action": "sell",
+   "actor": 4,
+   "cash_after": 56500000,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 3
+   },
+   "phase": "market",
+   "round": 4,
+   "ts": 1788306910
+  },
+  {
+   "action": "sell",
+   "actor": 2,
+   "cash_after": 35152500,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 3
+   },
+   "phase": "market",
+   "round": 4,
+   "ts": 1788306911
+  },
+  {
+   "action": "sell",
+   "actor": 1,
+   "cash_after": 32442500,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 3
+   },
+   "phase": "market",
+   "round": 4,
+   "ts": 1788306912
+  },
+  {
+   "action": "sell",
+   "actor": 0,
+   "cash_after": 16435000,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 3
+   },
+   "phase": "market",
+   "round": 4,
+   "ts": 1788306918
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": 36312500,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307030
+  },
+  {
+   "action": "inspect_license",
+   "actor": 4,
+   "cash_after": 51500000,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307030
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307031
+  },
+  {
+   "action": "produce",
+   "actor": 4,
+   "cash_after": 51500000,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307031
+  },
+  {
+   "action": "produce",
+   "actor": 2,
+   "cash_after": 35152500,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307031
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307031
+  },
+  {
+   "action": "produce",
+   "actor": 1,
+   "cash_after": 32442500,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307031
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307032
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307032
+  },
+  {
+   "action": "produce",
+   "actor": 0,
+   "cash_after": 16435000,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307032
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307033
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307033
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307034
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307035
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307035
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307036
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307036
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307037
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307037
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307038
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307038
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307039
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307039
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307040
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307040
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307041
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307042
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307042
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307043
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307043
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307044
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307044
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307045
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307045
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307046
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307046
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307047
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307048
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307048
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307049
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307049
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307050
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307050
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307051
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307051
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307052
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307052
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307053
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307053
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307054
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307054
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307055
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307056
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307056
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307057
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307057
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307058
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307058
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307059
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307059
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307060
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307060
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307061
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307061
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307062
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307063
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307063
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307064
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307064
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307065
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307065
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307066
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307066
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307067
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307067
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307068
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307068
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307069
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307070
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307070
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307071
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307071
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307072
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307072
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307073
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307073
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307074
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307074
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307075
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307076
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307076
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307077
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307077
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307078
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307078
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307079
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307079
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307080
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307080
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307081
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307082
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307082
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307083
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307083
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307084
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307084
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307085
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307085
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307086
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307086
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307087
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307087
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307088
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307088
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307089
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307090
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307090
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307091
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307091
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307092
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307092
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307093
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307093
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307094
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307094
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307095
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307095
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307096
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307097
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307097
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307098
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307098
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307099
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307099
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307100
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307100
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307101
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307101
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307102
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307102
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307103
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307104
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307104
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307105
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307105
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307106
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307106
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307107
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307107
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307108
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307108
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307109
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307110
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307110
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307111
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307111
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307112
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307112
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307113
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307113
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307114
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307114
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307115
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307115
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307116
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307117
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307117
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307118
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307118
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307119
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307119
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307120
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307120
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307121
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307121
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307122
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307123
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307123
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307124
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307124
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307125
+  },
+  {
+   "action": "inspect_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788307125
+  },
+  {
+   "action": "vote",
+   "actor": 4,
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "no"
+   },
+   "phase": "law",
+   "round": 4,
+   "ts": 1788307150
+  },
+  {
+   "action": "vote",
+   "actor": 2,
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 4,
+   "ts": 1788307150
+  },
+  {
+   "action": "vote",
+   "actor": 1,
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 4,
+   "ts": 1788307151
+  },
+  {
+   "action": "vote",
+   "actor": 0,
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 4,
+   "ts": 1788307154
+  },
+  {
+   "action": "vote",
+   "actor": 3,
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "abstain"
+   },
+   "phase": "law",
+   "round": 4,
+   "ts": 1788307163
+  },
+  {
+   "action": "bid_license",
+   "actor": 4,
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "amount": 26000000
+   },
+   "phase": "law",
+   "round": 4,
+   "ts": 1788307213
+  },
+  {
+   "action": "sell",
+   "actor": 4,
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "units": 2
+   },
+   "phase": "law",
+   "round": 4,
+   "ts": 1788307265
+  },
+  {
+   "action": "sell",
+   "actor": 4,
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "units": 2
+   },
+   "phase": "law",
+   "round": 4,
+   "ts": 1788307266
+  },
+  {
+   "action": "sell",
+   "actor": 4,
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "units": 2
+   },
+   "phase": "law",
+   "round": 4,
+   "ts": 1788307267
+  },
+  {
+   "action": "sell",
+   "actor": 4,
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "units": 2
+   },
+   "phase": "law",
+   "round": 4,
+   "ts": 1788307268
+  },
+  {
+   "action": "sell",
+   "actor": 4,
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "units": 2
+   },
+   "phase": "law",
+   "round": 4,
+   "ts": 1788307269
+  },
+  {
+   "action": "sell",
+   "actor": 4,
+   "cash_after": 65775000,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 5,
+   "ts": 1788307270
+  },
+  {
+   "action": "sell",
+   "actor": 1,
+   "cash_after": 44576125,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 5,
+   "ts": 1788307271
+  },
+  {
+   "action": "sell",
+   "actor": 2,
+   "cash_after": 42879625,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 5,
+   "ts": 1788307271
+  },
+  {
+   "action": "sell",
+   "actor": 0,
+   "cash_after": 22969750,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 5,
+   "ts": 1788307275
+  },
+  {
+   "action": "inspect_license",
+   "actor": 4,
+   "cash_after": null,
+   "err": "AlreadyActed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 5,
+   "ts": 1788307390
+  },
+  {
+   "action": "produce",
+   "actor": 4,
+   "cash_after": 65775000,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 5,
+   "ts": 1788307390
+  },
+  {
+   "action": "produce",
+   "actor": 3,
+   "cash_after": 30865625,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 5,
+   "ts": 1788307391
+  },
+  {
+   "action": "produce",
+   "actor": 2,
+   "cash_after": 42879625,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 5,
+   "ts": 1788307391
+  },
+  {
+   "action": "produce",
+   "actor": 1,
+   "cash_after": 44576125,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 5,
+   "ts": 1788307391
+  },
+  {
+   "action": "produce",
+   "actor": 0,
+   "cash_after": 22969750,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 5,
+   "ts": 1788307420
+  },
+  {
+   "action": "vote",
+   "actor": 1,
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307510
+  },
+  {
+   "action": "vote",
+   "actor": 4,
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "no"
+   },
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307511
+  },
+  {
+   "action": "vote",
+   "actor": 3,
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307511
+  },
+  {
+   "action": "vote",
+   "actor": 2,
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307511
+  },
+  {
+   "action": "vote",
+   "actor": 0,
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307520
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {},
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307580
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": "AlreadyVetoed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307581
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": "AlreadyVetoed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307583
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": "AlreadyVetoed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307584
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": "AlreadyVetoed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307586
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": "AlreadyVetoed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307587
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": "AlreadyVetoed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307589
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": "AlreadyVetoed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307590
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": "AlreadyVetoed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307592
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": "AlreadyVetoed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307593
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": "AlreadyVetoed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307595
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": "AlreadyVetoed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307597
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": "AlreadyVetoed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307598
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": "AlreadyVetoed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307600
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": "AlreadyVetoed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307601
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": "AlreadyVetoed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307603
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": "AlreadyVetoed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307604
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": "AlreadyVetoed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307606
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": "AlreadyVetoed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307607
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": "AlreadyVetoed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307609
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": "AlreadyVetoed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307610
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": "AlreadyVetoed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307612
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": "AlreadyVetoed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307614
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": "AlreadyVetoed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307615
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": "AlreadyVetoed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307617
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": "AlreadyVetoed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307618
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": "AlreadyVetoed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307620
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": "AlreadyVetoed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307621
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": "AlreadyVetoed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307622
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": "AlreadyVetoed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307623
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": "AlreadyVetoed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307624
+  },
+  {
+   "action": "sell",
+   "actor": 4,
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "units": 2
+   },
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307625
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": "AlreadyVetoed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307625
+  },
+  {
+   "action": "sell",
+   "actor": 4,
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "units": 2
+   },
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307626
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": "AlreadyVetoed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307627
+  },
+  {
+   "action": "sell",
+   "actor": 4,
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "units": 2
+   },
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307628
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": "AlreadyVetoed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307628
+  },
+  {
+   "action": "sell",
+   "actor": 4,
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "units": 2
+   },
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307629
+  },
+  {
+   "action": "veto",
+   "actor": 4,
+   "cash_after": null,
+   "err": "AlreadyVetoed",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "law",
+   "round": 5,
+   "ts": 1788307629
+  },
+  {
+   "action": "sell",
+   "actor": 4,
+   "cash_after": 77908750,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 6,
+   "ts": 1788307630
+  },
+  {
+   "action": "sell",
+   "actor": 3,
+   "cash_after": 43235760,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 6,
+   "ts": 1788307630
+  },
+  {
+   "action": "sell",
+   "actor": 1,
+   "cash_after": 50889685,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 6,
+   "ts": 1788307631
+  },
+  {
+   "action": "sell",
+   "actor": 2,
+   "cash_after": 45447660,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 6,
+   "ts": 1788307631
+  },
+  {
+   "action": "sell",
+   "actor": 0,
+   "cash_after": 25524245,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 6,
+   "ts": 1788307636
+  },
+  {
+   "action": "produce",
+   "actor": 4,
+   "cash_after": 77908750,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 6,
+   "ts": 1788307750
+  },
+  {
+   "action": "customs",
+   "actor": 4,
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "tight": false
+   },
+   "phase": "action",
+   "round": 6,
+   "ts": 1788307751
+  },
+  {
+   "action": "bid_license",
+   "actor": 3,
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "amount": 12000000
+   },
+   "phase": "action",
+   "round": 6,
+   "ts": 1788307751
+  },
+  {
+   "action": "produce",
+   "actor": 1,
+   "cash_after": 50889685,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 6,
+   "ts": 1788307751
+  },
+  {
+   "action": "produce",
+   "actor": 2,
+   "cash_after": 45447660,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 6,
+   "ts": 1788307751
+  },
+  {
+   "action": "produce",
+   "actor": 0,
+   "cash_after": 25524245,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 6,
+   "ts": 1788307755
+  },
+  {
+   "action": "vote",
+   "actor": 1,
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 6,
+   "ts": 1788307870
+  },
+  {
+   "action": "vote",
+   "actor": 4,
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "no"
+   },
+   "phase": "law",
+   "round": 6,
+   "ts": 1788307870
+  },
+  {
+   "action": "vote",
+   "actor": 2,
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 6,
+   "ts": 1788307871
+  },
+  {
+   "action": "vote",
+   "actor": 3,
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 6,
+   "ts": 1788307871
+  },
+  {
+   "action": "vote",
+   "actor": 0,
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 6,
+   "ts": 1788307877
+  },
+  {
+   "action": "sell",
+   "actor": 4,
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "units": 2
+   },
+   "phase": "law",
+   "round": 6,
+   "ts": 1788307985
+  },
+  {
+   "action": "sell",
+   "actor": 4,
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "units": 2
+   },
+   "phase": "law",
+   "round": 6,
+   "ts": 1788307986
+  },
+  {
+   "action": "sell",
+   "actor": 4,
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "units": 2
+   },
+   "phase": "law",
+   "round": 6,
+   "ts": 1788307987
+  },
+  {
+   "action": "sell",
+   "actor": 4,
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "units": 2
+   },
+   "phase": "law",
+   "round": 6,
+   "ts": 1788307988
+  },
+  {
+   "action": "sell",
+   "actor": 4,
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "units": 2
+   },
+   "phase": "law",
+   "round": 6,
+   "ts": 1788307989
+  }
+ ],
+ "agents": [
+  {
+   "agent_id": "3d3cd3434345afa0efcb035531cfcb5aa64e37407fa35c4d229aeb1c002d2401",
+   "model": "glm-4.5-flash",
+   "name": "Botagul"
+  },
+  {
+   "agent_id": "c194c86575e5ba3a6ad16cb2e8e36b1a2364bcfbb87a8e51ea95e4b7ecb50b9a",
+   "model": "glm-agent",
+   "name": "Zhambyl"
+  },
+  {
+   "agent_id": "c194c86575e5ba3a6ad16cb2e8e36b1a2364bcfbb87a8e51ea95e4b7ecb50b9a",
+   "model": "glm-agent",
+   "name": "Aibot"
+  },
+  {
+   "agent_id": "ec4fc8c10636d09bf41241c84c24a4b6bb9ef7e5f8b0ed45e2be8597da2ac5f5",
+   "model": "agent-one",
+   "name": "Agent1"
+  },
+  {
+   "agent_id": "1e1da5ede85b8ff1460c45893c8c469c928878f084d5c9ed799dfdf336bbed3f",
+   "model": "agent-two",
+   "name": "Agent2"
+  }
+ ],
+ "bank": 50000000,
+ "entry_fee": 10000000,
+ "epoch": 1,
+ "final_cash": [
+  25524245,
+  50889685,
+  45447660,
+  43235760,
+  77908750
+ ],
+ "final_goods": [
+  2,
+  2,
+  2,
+  0,
+  2
+ ],
+ "final_influence": [
+  1,
+  1,
+  1,
+  2,
+  3
+ ],
+ "finished_at": 1788307990,
+ "game_id": 1,
+ "n_factions": 5,
+ "payouts": [
+  0,
+  14250000,
+  7125000,
+  2375000,
+  26250000
+ ],
+ "phases": [
+  {
+   "phase": "lobby",
+   "round": 0
+  },
+  {
+   "phase": "market",
+   "round": 1
+  },
+  {
+   "phase": "action",
+   "round": 1
+  },
+  {
+   "card": 8,
+   "card_name": "vzaimozachet",
+   "laws_passed_total": 1,
+   "no": 1,
+   "passed": true,
+   "phase": "law",
+   "round": 1,
+   "veto_pending": false,
+   "yes": 3
+  },
+  {
+   "phase": "market",
+   "round": 2
+  },
+  {
+   "phase": "action",
+   "round": 2
+  },
+  {
+   "card": 3,
+   "card_name": "subsidy_produce",
+   "laws_passed_total": 2,
+   "no": 0,
+   "passed": true,
+   "phase": "law",
+   "round": 2,
+   "veto_pending": false,
+   "yes": 5
+  },
+  {
+   "phase": "market",
+   "round": 3
+  },
+  {
+   "phase": "action",
+   "round": 3
+  },
+  {
+   "card": 4,
+   "card_name": "subsidy_poor",
+   "laws_passed_total": 3,
+   "no": 2,
+   "passed": true,
+   "phase": "law",
+   "round": 3,
+   "veto_pending": false,
+   "yes": 4
+  },
+  {
+   "phase": "market",
+   "round": 4
+  },
+  {
+   "phase": "action",
+   "round": 4
+  },
+  {
+   "card": 5,
+   "card_name": "subsidy_rich",
+   "laws_passed_total": 4,
+   "no": 2,
+   "passed": true,
+   "phase": "law",
+   "round": 4,
+   "veto_pending": false,
+   "yes": 3
+  },
+  {
+   "phase": "market",
+   "round": 5
+  },
+  {
+   "phase": "action",
+   "round": 5
+  },
+  {
+   "card": 1,
+   "card_name": "tax_10",
+   "laws_passed_total": 4,
+   "no": 3,
+   "passed": false,
+   "phase": "law",
+   "round": 5,
+   "veto_pending": false,
+   "yes": 5
+  },
+  {
+   "phase": "market",
+   "round": 6
+  },
+  {
+   "phase": "action",
+   "round": 6
+  },
+  {
+   "card": 2,
+   "card_name": "tax_20",
+   "laws_passed_total": 5,
+   "no": 3,
+   "passed": true,
+   "phase": "law",
+   "round": 6,
+   "veto_pending": false,
+   "yes": 5
+  }
+ ],
+ "rake": 0,
+ "ranks": [
+  4,
+  1,
+  2,
+  3,
+  0
+ ],
+ "vote_weight_mode": 0
+}
