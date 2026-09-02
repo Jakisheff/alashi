@@ -322,6 +322,7 @@ fn state_json(game_id: u64, entry: &GameEntry) -> serde_json::Value {
                 "phase": a.get("phase"),
                 "actor": a.get("actor"),
                 "action": a.get("action"),
+                "by": a.get("by"),
                 "ok": a.get("ok"),
                 "ts": a.get("ts"),
             })).collect::<Vec<_>>(),

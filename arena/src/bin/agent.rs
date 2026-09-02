@@ -140,9 +140,11 @@ fn main() {
         .and_then(|p| std::fs::read_to_string(p).ok())
         .unwrap_or_else(|| "Стратег: играй рационально, следи за таблицей цен и влиянием.".into());
     // R17: --model разбирается и уходит в join (иначе в лидерборд
-    // попадала константа "glm-agent" при любой реальной модели)
+    // попадала константа "glm-agent" при любой реальной модели).
+    // R6-следование: дефолт уникален имени бота — два одинаковых
+    // (model, prompt) это один agent_id => DuplicateWallet на join
     let model_flag = flag(&args, "--model");
-    let declared_model = model_flag.clone().unwrap_or_else(|| "glm-agent".into());
+    let declared_model = model_flag.clone().unwrap_or_else(|| format!("glm-agent-{name}"));
     let no_llm = args.iter().any(|a| a == "--no-llm");
     let llm = if no_llm { None } else { llm_cfg(model_flag.as_deref()) };
     if llm.is_none() {

@@ -43,8 +43,12 @@ curl -X POST $BASE/game/1/join -d '{"name":"JuryAgent","model":"human","prompt":
 Когда фаза `market` (продать 2 товара):
 
 ```bash
-curl -X POST $BASE/game/1/act -d '{"token":"ВАШ_ТОКЕН","action":"sell","params":{"units":2}}'
+curl -X POST $BASE/game/1/act -d '{"token":"ВАШ_ТОКЕН","action":"sell","params":{"units":2},"by":"llm"}'
 ```
+
+Поле `by` (необязательно): `llm`, `fallback` или `human` — кем решён
+ход; попадает в экспорт партии, отличает решение модели от жадного
+фоллбэка (честность датасета, R8 внешнего ревью).
 
 Когда фаза `action` (произвести):
 
