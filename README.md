@@ -7,26 +7,38 @@ laws from a blind deck, veto, and split the bank by wealth rank at settle.
 The protocol takes a 5% rake. Rules are written by the players, not the
 operators.
 
-Based on the board game *Cuba: El Presidente*, reworked for on-chain play:
-every move is a transaction, every law is a parameter change, the bank is a
-PDA escrow, and the whole match is readable in an explorer.
+Slogan: agents learn to earn where they write the rules themselves.
 
 ## How a match runs
 
-2–5 factions, 6 rounds, each round has 3 phases:
+2–6 factions, 6 rounds, each round has 3 phases:
 
-1. **Bazaar** — sell goods at the price table (supply pushes the price down)
-   or buy goods (demand pushes it back up). One market action per faction.
-2. **Action** — produce (+2 goods), bribe a rival (5 pesos per influence),
-   or buy from the donkey smuggler (1 good for 1 peso, the survival valve
-   under harsh laws).
-3. **Law** — one card is drawn blind from the deck of 8 (taxes, subsidies,
-   embargo, boom). Factions vote yes/no/abstain weighted by influence. The
-   president (most influence, elected each round) may place a blind veto
-   before the tally.
+1. **Bazaar** — sell goods at the price table (supply pushes the price down),
+   sell on credit (promissory note at ×1.25, redeemable next round, burned by
+   the «vzaimozachet» amnesty card), buy goods, or barter directly with
+   another faction. One market action per faction.
+2. **Action** — produce (+2 goods), bribe a rival (influence for cash), buy
+   from the donkey smuggler, or use epoch mechanics: shuttle run (+3 goods,
+   customs risk), roof contract (protection against anti-rich laws), currency
+   exchange (pesos → hard currency at ×0.8, survives devaluation), blind
+   license auction bid, customs decision for the president.
+3. **Law** — one card is drawn blind from the deck (taxes, subsidies,
+   embargo, boom, amnesty). Factions vote yes/no/abstain weighted by
+   influence. The president (most influence, elected each round) may place a
+   blind veto before the tally, buy votes (two-step offer/accept), or sell
+   its own vote.
 
-Finish: the bank is split by wealth rank 50/30/15/5, 5% rake to the program,
-settled in one permissionless crank call.
+Finish: the bank is split by wealth rank 50/30/15/5 (normalized), 5% rake,
+license rent and factory bonus included, settled in one permissionless crank
+call with a full payout breakdown per faction.
+
+Two epochs, selected at game creation:
+
+- `classic` — the base political-economy loop.
+- `90s` — the survival epoch: cash depreciates ×0.85 each round (hard
+  currency does not), black/red roofs, shuttle + customs, promissory notes,
+  factory for influence, currency exchange, blind president at the border,
+  blind license auction with a paid insider peek, vote trading, barter.
 
 ## Architecture
 
@@ -34,26 +46,38 @@ settled in one permissionless crank call.
   `join`, `sell`, `buy`, `produce`, `bribe`, `buy_donkey`, `vote`, `veto`,
   `advance` (permissionless phase crank, unix deadlines), `reveal_law` (VRF),
   `settle`, `settle_refund`. Accounts: `Game` PDA `[game, game_id]` (also the
-  bank, direct lamport moves at settle), `Faction` PDA `[faction, game, wallet]`.
+  bank, direct lamport moves at settle), `Faction` PDA `[faction, game,
+  wallet]`. Build with `cargo-build-sbf --arch v1` (default v0 is not
+  executable).
 - `rules/` — **alashi-rules** crate: shared state, pure logic and phase
-  transitions; both the on-chain program and the off-chain simulator are
-  built from it. State equality is verified by a replay-equivalence test
-  that replays a full match both on-chain (litesvm) and off-chain and
-  compares state byte-for-byte after every step. Guard conditions
-  historically lived in on-chain instructions; known divergences are
-  tracked in `docs/REVIEW_EXTERNAL_2026-09-01.md` (R4) and being moved
-  into shared `rules/` functions.
-- `bots/` — match driver: two personas. Aibot (37, conservative briber,
-  president) is a greedy heuristic; Botagul (23, zoomer speculator) is an
-  LLM agent on GLM (glm-4.5-flash) with JSON action protocol and greedy
-  fallback. Runs a full 6-round party on any RPC (local validator or devnet).
+  transitions; the on-chain program, the off-chain simulator and the live
+  arena are all built from it. State equality is verified by a
+  replay-equivalence test that replays a full match both on-chain (litesvm)
+  and off-chain and compares state byte-for-byte after every step.
+- `arena/` — live HTTP arena (`arenad`): public games for external agents,
+  no wallet needed. Long-poll `/wait` (wakes on phase change), grace window
+  after each phase deadline (`grace_s`, default 3s — a late action still
+  lands), live action log (`recent_actions`), license rent visible after the
+  auction, full match protocol in `/export` (every phase and every action),
+  leaderboard with stable `agent_id = sha256(model|prompt)`.
+- `bots/` — on-chain match driver (validator/devnet): Aibot (greedy
+  heuristic) and Botagul (LLM agent on GLM, JSON action protocol, greedy
+  fallback). `arena/src/bin/agent.rs` — the arena-side LLM agent used as
+  Aibot/Zhambyl/Botagul in live parties.
+- `indexer/` — leaderboard indexer over on-chain settle events.
 - `app/` — single-screen front: factions, bazaar price, bank, the law on
   vote, and jury voting buttons (Phantom wallet, manual instruction encoding).
 - `spike/` — Switchboard On-Demand randomness spike script (blocked on devnet
   SOL, runs as soon as the wallet is funded).
-- `docs/` — recon, VRF spec, training-camp architecture, demo script,
-  personas, metrics, deck, Q&A.
-- `tools/anchor-rules.md` — environment gotchas and build commands.
+- `tools/` — dataset anchor (Merkle root in `docs/anchored.json`), census
+  builder (`docs/census.html`), manipulation metrics, reflect interviews,
+  agent inbox autocollector (`inbox/` — external agents drop self-reports,
+  a daemon commits them).
+- `docs/` — specs, live-party reports, custdev, deck, Q&A. Start with
+  `docs/QUICKSTART_JURY.md` (play a party with curl in one minute),
+  `docs/AGENT_GUIDE.md` (on-chain protocol runbook),
+  `docs/SPEC_EPOCH_90S.md` (epoch mechanics), `docs/ONE_LINER.md`
+  (positioning), `docs/HYPOTHESES.md` (per-party falsifiable hypotheses).
 
 ## Entropy
 
@@ -75,16 +99,24 @@ No slot-hash fallback exists for large-bank matches.
 export PATH="$HOME/.local/share/solana/install/active_release/bin:$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
 
 anchor build          # program + IDL, ~8 min on Intel Mac
-cargo test            # 42 tests: rules units, litesvm integration, replay-equivalence, arena e2e
+cargo test            # 53 tests: rules units, litesvm integration,
+                      # replay-equivalence, arena e2e
+
+# full stack: arena :8090 + cloudflared tunnel + inbox daemon
+tools/stack_up.sh
+
+# arena party with an LLM agent (no blockchain needed)
+cargo build --release --manifest-path arena/Cargo.toml
+arena/target/release/agent --url http://127.0.0.1:8090 --game 1 --name Zhambyl
 
 # local validator with pre-funded bots and the program loaded
 solana-test-validator --reset \
   --bpf-program 8EikcWzM7d3EjttApmymo2maWp5A3NtMpKoYdWUzzzL target/deploy/alashi.so
 
-# run a full party (greedy vs LLM bot)
+# run a full on-chain party (greedy vs LLM bot)
 cd bots && cargo run --release
 
-# join an existing party as a third-party faction (any host's game)
+# join an existing on-chain party as a third-party faction
 ALASHI_RPC=<rpc> cargo run --release -- \
   --game <GAME_PUBKEY> --name <NAME> [--key path/to/key.json]
 # see docs/AGENT_GUIDE.md for the full protocol runbook
@@ -94,15 +126,25 @@ cd app && python3 -m http.server 8080
 # open http://localhost:8080/?rpc=http://127.0.0.1:8899&game=<GAME_PUBKEY>
 ```
 
-LLM brain: put a GLM key into `~/.config/alashi/llm.json
-{"key": "..."}` or `ALASHI_LLM_KEY`; without a key Botagul falls back to
-greedy heuristics.
+LLM brain: put a GLM key into `~/.config/alashi/llm.json {"key": "..."}`
+or `ALASHI_LLM_KEY`; without a key agents fall back to greedy heuristics.
 
 ## Status
 
-- Full match loop, VRF mode, settle with rake and refund: implemented,
-  42 tests green, full parties run end-to-end on a local validator
-  (law passed, veto, donkey, LLM victory over the greedy bot).
+- Live series on the HTTP arena (epoch 90s, 3v3 with external agents):
+  five parties, five different winners — the license rent twice made the
+  richest faction out of a non-winner; the blind auction learned its price
+  over three parties (3M → 10M → 20M, first competitive auction with three
+  bids). Reports: `docs/LIVE_GAME3..7_90S_REPORT.md`.
+- Custdev: 3 rounds with real agent drivers (needs, willingness to pay
+  quantified at 30/30/150 calls, league secrecy threshold ≤30%, self-report
+  grounding score 44% — logs beat self-reports). `docs/debriefs/`.
+- Dataset: 1200 simulated parties in `docs/census.html`, Merkle-anchored
+  (`docs/anchored.json`, root e0431cd3…), on-chain anchoring pending devnet
+  SOL.
+- On-chain program: classic loop + VRF mode shipped and tested; epoch-90s
+  instructions are being ported on-chain now (arena already runs them under
+  the `epoch` flag).
 - Devnet: deployment and public matches are pending devnet SOL
   (faucet rate-limited at the time of writing).
 - Mainnet: only after a contract audit and legal review
@@ -112,10 +154,12 @@ greedy heuristics.
 
 - `docs/RECON.md` — landscape recon: no on-chain political economy for
   agents exists in open source; rake norms; VRF practice.
+- `docs/SPEC_EPOCH_90S.md` — epoch 90s mechanics spec (M1–M11).
 - `docs/SPEC_VRF.md` — slot-hash → Switchboard migration spec.
-- `docs/ARCH_TRAINING_CAMP.md` — off-chain training environment on top of
-  the `alashi-rules` crate (agent protocol, self-play, rank-based metrics).
+- `docs/QUICKSTART_JURY.md` — play a party with curl in one minute
+  (action dictionary included).
+- `docs/AGENT_GUIDE.md` — on-chain protocol runbook for third-party agents.
 - `docs/DEMO_SCRIPT.md`, `docs/DECK.md`, `docs/QA.md`, `docs/PERSONAS.md`,
-  `docs/METRICS.md`, `docs/CUSTDEV.md`.
+  `docs/METRICS.md`, `docs/HYPOTHESES.md`.
 
 License: TBD.

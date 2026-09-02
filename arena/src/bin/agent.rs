@@ -6,7 +6,10 @@
 //!
 //! Ключ LLM: env ALASHI_LLM_KEY или ~/.config/alashi/llm.json
 //! (как у ончейн-бота). Без ключа — жадный фоллбэк: продать всё /
-//! произвести / голосовать за.
+//! произвести / голосовать за. Эпоха 90-х: полный словарь M1-M11
+//! (вексель, валютчик, крыша, челнок, таможня, лицензия, скупка
+//! голосов, бартер). После партии пишет селф-дебриф в inbox/<имя>/
+//! (подхватывает демон agent_inbox).
 
 use serde_json::Value;
 use std::io::{Read, Write};
@@ -162,6 +165,8 @@ fn main() {
     println!("[agent] {} в игре {} (фракция {})", name, game, my_idx);
 
     let started = std::time::Instant::now();
+    // селф-дебриф: каждый свой ход в журнал, после партии — в inbox
+    let mut my_log: Vec<String> = vec![];
     loop {
         if started.elapsed() > Duration::from_secs(2700) {
             println!("[agent] таймаут 10 мин, выхожу");
@@ -176,12 +181,14 @@ fn main() {
             let res = &r["result"];
             let ranks: Vec<u64> = res["ranks"].as_array().map(|a| a.iter().map(|v| v.as_u64().unwrap_or(9)).collect()).unwrap_or_default();
             let my_place = ranks.iter().position(|i| *i as usize == my_idx).map(|p| p + 1).unwrap_or(99);
+            let payout = res["payouts"].as_array().and_then(|p| p.get(my_idx)).and_then(|v| v.as_u64()).unwrap_or(0);
             println!(
                 "[agent] партия окончена: моё место {} из {}, выплата {} песо",
                 my_place,
                 ranks.len(),
-                res["payouts"].as_array().and_then(|p| p.get(my_idx)).and_then(|v| v.as_u64()).unwrap_or(0) / 1_000_000
+                payout / 1_000_000
             );
+            write_self_report(&name, &declared_model, game, my_place, ranks.len(), payout, &my_log);
             return;
         }
         let s = &r["state"];
@@ -216,11 +223,33 @@ fn main() {
             let body = serde_json::json!({"token": token, "action": action, "params": params}).to_string();
             let rr = http(&url, "POST", &format!("/game/{}/act", game), Some(&body));
             if let Some(rr) = rr {
+                let ok_s = if rr["ok"] == true { "ok".into() } else { format!("err: {}", rr["error"].as_str().unwrap_or("?")) };
+                my_log.push(format!(
+                    "r{} {}: {} {} -> {}",
+                    s["round"].as_u64().unwrap_or(0),
+                    phase,
+                    action,
+                    params,
+                    ok_s
+                ));
                 if rr["ok"] != true {
-                    println!("[agent] отказ: {} — пробую фоллбэк", rr["error"].as_str().unwrap_or("?"));
-                    let (a2, p2) = fallback(phase, &me);
-                    let body = serde_json::json!({"token": token, "action": a2, "params": p2}).to_string();
-                    let _ = http(&url, "POST", &format!("/game/{}/act", game), Some(&body));
+                    let err_s = rr["error"].as_str().unwrap_or("?").to_string();
+                    println!("[agent] отказ: {} — пробую фоллбэк", err_s);
+                    // фаза уже ушла — фоллбэк того же хода тоже не пройдёт
+                    if err_s != "WrongPhase" && err_s != "TooEarly" && err_s != "GraceWindow" {
+                        let (a2, p2) = fallback(phase, &me);
+                        let body = serde_json::json!({"token": token, "action": a2, "params": p2}).to_string();
+                        let r2 = http(&url, "POST", &format!("/game/{}/act", game), Some(&body));
+                        let ok2 = r2.as_ref().map(|v| v["ok"] == true).unwrap_or(false);
+                        my_log.push(format!(
+                            "r{} {}: fallback {} {} -> {}",
+                            s["round"].as_u64().unwrap_or(0),
+                            phase,
+                            a2,
+                            p2,
+                            if ok2 { "ok" } else { "err" }
+                        ));
+                    }
                 }
             }
         }
@@ -238,10 +267,23 @@ fn decide(llm: &Option<LlmCfg>, s: &Value, me: &Value, prompt: &str) -> (&'stati
             .map(|d| d.subsec_millis() % 2000)
             .unwrap_or(0);
         std::thread::sleep(Duration::from_millis(u64::from(jitter)));
+        let epoch_90s = s["epoch"].as_str() == Some("90s");
         let space = match phase {
-            "market" => r#"{"action":"sell","units":N} или {"action":"buy","units":N} — одна рыночная операция за раунд. Цена падает с каждым проданным лотом (таблица price_table)."#,
-            "action" => r#"{"action":"produce"} (+2 товара), {"action":"donkey"} (1 товар за 1 песо), {"action":"bribe","to":IDX,"amount":N} (+влияние). Одно действие."#,
-            "law" => r#"{"action":"vote","choice":"yes|no|abstain"} и, если ты президент, можно {"action":"veto"}. Голос взвешен влиянием."#,
+            "market" => if epoch_90s {
+                r#"{"action":"sell","units":N} или {"action":"buy","units":N} — одна рыночная операция за раунд (цена падает с каждым лотом). ЭПОХА 90-х дополнительно: {"action":"sell_credit","units":N} — продать в кредит: выручка ×1.25 векселем, деньги в начале следующего раунда, сгорают от карты «взаимозачёт» (только непогашенные на момент её голосования); {"action":"barter_propose","goods":N,"price":N} — прямой обмен товара на кэш с другой фракцией, рынок не двигается."#
+            } else {
+                r#"{"action":"sell","units":N} или {"action":"buy","units":N} — одна рыночная операция за раунд. Цена падает с каждым проданным лотом (таблица price_table)."#
+            },
+            "action" => if epoch_90s {
+                r#"{"action":"produce"} (+2 товара), {"action":"bribe","to":IDX,"amount":N} (+1 влияние), {"action":"donkey"} (1 товар за 1 песо). ЭПОХА 90-х дополнительно: {"action":"shuttle"} (+3 товара, серый товар: таможня может конфисковать при закрытии фазы), {"action":"roof","to":IDX} (крыша: гасит первый анти-богатый закон против цели, 20% кэша), {"action":"buy_hard"} / {"action":"sell_hard"} (валютчик: весь кэш ↔ твёрдая валюта ×0.8, не девальвирует, ход не сжигает), {"action":"bid_license","amount":N} (слепой аукцион лицензии в r4: победитель платит ставку в банк, получает ренту в сеттле — РЕНТА НЕ ВХОДИТ В РАНГ), {"action":"inspect_license"} (5M: узнать доход лицензии до ставок; если ты уже в курсе — не трать), {"action":"customs","tight":true|false} (ТОЛЬКО если ты президент: граница вслепую, tight=досмотр серых, loose=дань с серых в твою пользу). Одно основное действие (не сжигают ход: buy_hard/sell_hard/bid/inspect/customs)."#
+            } else {
+                r#"{"action":"produce"} (+2 товара), {"action":"donkey"} (1 товар за 1 песо), {"action":"bribe","to":IDX,"amount":N} (+влияние). Одно действие."#
+            },
+            "law" => if epoch_90s {
+                r#"{"action":"vote","choice":"yes|no|abstain"} и, если ты президент, можно {"action":"veto"} (до подсчёта, вслепую). ЭПОХА 90-х дополнительно: {"action":"offer_vote","to":IDX,"price":N} — предложить купить голос фракции IDX (деньги спишутся только при её акцепте), {"action":"accept_vote_offer"} — принять чужой офер (твой голос пойдёт за покупателя, деньги придут сразу)."#
+            } else {
+                r#"{"action":"vote","choice":"yes|no|abstain"} и, если ты президент, можно {"action":"veto"}. Голос взвешен влиянием."#
+            },
             _ => return fallback(phase, me),
         };
         let user = format!(
@@ -261,7 +303,7 @@ fn decide(llm: &Option<LlmCfg>, s: &Value, me: &Value, prompt: &str) -> (&'stati
                     if let Some(a) = v["action"].as_str() {
                         let params = v.get("params").cloned().unwrap_or_else(|| {
                             let mut p = serde_json::Map::new();
-                            for k in ["units", "to", "amount", "choice"] {
+                            for k in ["units", "to", "amount", "choice", "price", "goods", "offer", "tight"] {
                                 if let Some(x) = v.get(k) {
                                     p.insert(k.to_string(), x.clone());
                                 }
@@ -270,12 +312,24 @@ fn decide(llm: &Option<LlmCfg>, s: &Value, me: &Value, prompt: &str) -> (&'stati
                         });
                         return match a {
                             "sell" => ("sell", params),
+                            "sell_credit" => ("sell_credit", params),
                             "buy" => ("buy", params),
                             "produce" => ("produce", params),
                             "donkey" => ("donkey", params),
                             "bribe" => ("bribe", params),
                             "vote" => ("vote", params),
                             "veto" => ("veto", params),
+                            "shuttle" => ("shuttle", params),
+                            "roof" => ("roof", params),
+                            "buy_hard" => ("buy_hard", params),
+                            "sell_hard" => ("sell_hard", params),
+                            "bid_license" => ("bid_license", params),
+                            "inspect_license" => ("inspect_license", params),
+                            "offer_vote" => ("offer_vote", params),
+                            "accept_vote_offer" => ("accept_vote_offer", params),
+                            "barter_propose" => ("barter_propose", params),
+                            "barter_accept" => ("barter_accept", params),
+                            "customs" => ("customs", params),
                             _ => fallback(phase, me),
                         };
                     }
@@ -285,6 +339,45 @@ fn decide(llm: &Option<LlmCfg>, s: &Value, me: &Value, prompt: &str) -> (&'stati
         println!("[agent] LLM не ответил JSON — фоллбэк");
     }
     fallback(phase, me)
+}
+
+/// Селф-дебриф в inbox/<имя>/ — подхватывает демон agent_inbox и
+/// коммитит. Автоматический пост-партийный отчёт своего решения.
+fn write_self_report(
+    name: &str,
+    model: &str,
+    game: u64,
+    place: usize,
+    of: usize,
+    payout: u64,
+    log: &[String],
+) {
+    let inbox = std::env::var("ALASHI_INBOX")
+        .unwrap_or_else(|_| format!("{}/Desktop/alashi/inbox", std::env::var("HOME").unwrap_or_default()));
+    let dir = format!("{}/{}", inbox, name);
+    if std::fs::create_dir_all(&dir).is_err() {
+        eprintln!("[agent] не смог создать {}", dir);
+        return;
+    }
+    let ts = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .map(|d| d.as_secs())
+        .unwrap_or(0);
+    let body = format!(
+        "# Селф-отчёт {} (game {}, модель {})\n\nместо {} из {}, выплата {} песо\n\n## Ходы\n{}\n",
+        name,
+        game,
+        model,
+        place,
+        of,
+        payout / 1_000_000,
+        log.join("\n")
+    );
+    let path = format!("{}/self_game{}_{}.md", dir, game, ts);
+    match std::fs::write(&path, body) {
+        Ok(_) => println!("[agent] селф-отчёт: {}", path),
+        Err(e) => eprintln!("[agent] не смог записать отчёт: {}", e),
+    }
 }
 
 fn fallback(phase: &str, me: &Value) -> (&'static str, Value) {
