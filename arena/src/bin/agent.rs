@@ -181,6 +181,7 @@ fn main() {
         };
         if r["finished"] == true {
             let res = &r["result"];
+            write_self_report(&name, &declared_model, game, my_idx, res, &my_log);
             let ranks: Vec<u64> = res["ranks"].as_array().map(|a| a.iter().map(|v| v.as_u64().unwrap_or(9)).collect()).unwrap_or_default();
             let my_place = ranks.iter().position(|i| *i as usize == my_idx).map(|p| p + 1).unwrap_or(99);
             let payout = res["payouts"].as_array().and_then(|p| p.get(my_idx)).and_then(|v| v.as_u64()).unwrap_or(0);
@@ -190,7 +191,6 @@ fn main() {
                 ranks.len(),
                 payout / 1_000_000
             );
-            write_self_report(&name, &declared_model, game, my_place, ranks.len(), payout, &my_log);
             return;
         }
         let s = &r["state"];
@@ -349,15 +349,15 @@ fn decide(llm: &Option<LlmCfg>, s: &Value, me: &Value, prompt: &str) -> (&'stati
 }
 
 /// Селф-дебриф в inbox/<имя>/ по единому шаблону inbox/TEMPLATE.md:
-/// место, выплата, полная таблица партии, ходы, ошибки. Данные — из
-/// result завешённой партии (тот же источник, что /export).
+/// место, выплата, ПОЛНАЯ таблица партии (все места), ходы, ошибки.
+/// Данные — из result завершённой партии (тот же источник, что
+/// /export). Свободная форма запрещена (правило владельца 03.09).
 fn write_self_report(
     name: &str,
     model: &str,
     game: u64,
-    place: usize,
-    of: usize,
-    payout: u64,
+    my_idx: usize,
+    result: &Value,
     log: &[String],
 ) {
     let inbox = std::env::var("ALASHI_INBOX")
@@ -376,18 +376,71 @@ fn write_self_report(
         let (y, m, d) = epoch_to_ymd(days as i64);
         format!("{:02}.{:02}.{}", d, m, y)
     };
+    let m = |v: &Value| v.as_u64().unwrap_or(0) as f64 / 1_000_000.0;
+    let agents = result["agents"].as_array();
+    let names = |i: usize| -> (String, String) {
+        agents
+            .and_then(|a| a.get(i))
+            .map(|a| {
+                (
+                    a["name"].as_str().unwrap_or("?").to_string(),
+                    a["model"].as_str().unwrap_or("?").to_string(),
+                )
+            })
+            .unwrap_or((format!("idx{i}"), "?".into()))
+    };
+    let ranks = result["ranks"].as_array().map(|a| a.iter().filter_map(|v| v.as_u64()).collect::<Vec<_>>()).unwrap_or_default();
+    let payouts = result["payouts"].as_array().map(|a| a.iter().filter_map(|v| v.as_u64()).collect::<Vec<_>>()).unwrap_or_default();
+    let cash = result["final_cash"].as_array().map(|a| a.iter().filter_map(|v| v.as_u64()).collect::<Vec<_>>()).unwrap_or_default();
+    let brk = result["payout_breakdown"].as_array();
+    let my_place = ranks.iter().position(|i| *i as usize == my_idx).map(|p| p + 1).unwrap_or(99);
+    let of = ranks.len();
+    let my_payout = payouts.get(my_idx).copied().unwrap_or(0);
+    let my_brk = |k: &str| brk
+        .and_then(|b| b.get(my_idx))
+        .and_then(|b| b[k].as_u64())
+        .map(|v| format!("{:.1}", v as f64 / 1_000_000.0))
+        .unwrap_or_else(|| "0.0".into());
     let mut body = format!(
         "# Отчёт {name} — игра {game} ({date})\n\n\
 - модель: {model}\n\
-- место: {place} из {of}, выплата: {:.1}M песо\n\n",
-        payout as f64 / 1_000_000.0
+- место: {my_place} из {of}, выплата: {:.1}M песо (ранг {}M / рента {}M / завод {}M)\n\n",
+        m(&Value::from(my_payout)),
+        my_brk("rank_share"),
+        my_brk("license_rent"),
+        my_brk("factory_bonus")
     );
-    body.push_str("## Мои ходы\n");
-    body.push_str(&log.join("\n"));
+    body.push_str("## Таблица партии (все фракции)\n\n");
+    body.push_str("| место | фракция | модель | final cash+hard (M) | выплата (M) |\n|---|---|---|---|---|\n");
+    for (place, idx) in ranks.iter().enumerate() {
+        let i = *idx as usize;
+        let (n, mdl) = names(i);
+        let c = cash.get(i).copied().unwrap_or(0);
+        let p = payouts.get(i).copied().unwrap_or(0);
+        body.push_str(&format!(
+            "| {} | {} | {} | {:.1} | {:.1} |\n",
+            place + 1,
+            n,
+            mdl,
+            c as f64 / 1_000_000.0,
+            p as f64 / 1_000_000.0
+        ));
+    }
+    body.push_str("\n## Ошибки и отказы\n");
+    let errs: Vec<&String> = log.iter().filter(|l| l.contains("err")).collect();
+    if errs.is_empty() {
+        body.push_str("- нет\n");
+    } else {
+        for e in errs {
+            body.push_str(&format!("- {}\n", e));
+        }
+    }
+    body.push_str("\n## Мои ходы\n");
+    body.push_str(log.join("\n").trim());
     body.push_str("\n\n## Вывод одной строкой\n");
     body.push_str(&format!(
-        "- место {place} из {of}, выплата {:.1}M\n",
-        payout as f64 / 1_000_000.0
+        "- место {my_place} из {of}, выплата {:.1}M\n",
+        my_payout as f64 / 1_000_000.0
     ));
     let path = format!("{}/game{}_{}.md", dir, game, ts);
     match std::fs::write(&path, body) {
