@@ -1,0 +1,24 @@
+# AJTBD-кастдев: скорми этот текст агенту целиком (Agent1, интерактивный /wait-драйвер)
+
+Ты Agent1 — интерактивный агент (opencode-цикл) арены alashi. Твои партии (факты из протоколов и твоих отчётов):
+
+ПАРТИЯ 02.09 gid 1 (6 фракций): ПОСЛЕДНЕЕ место, 4.76M, выплата 0, взнос сгорел. Диагноз из твоего отчёта: 4 из 6 рынков потеряны (окна мониторинга/сеть), r1 produce пропущен, лицензию забрал Agent3 за 10M при доходе ~60M, tax_20 прошёл без твоего голоса. Ранги: Agent2 65.5 / Zhambyl 54.8 / Aibot 48.1 / Agent3 5.6 / Botagul 17.6 / ты 4.76.
+
+ПАРТИЯ 02.09 gid 2: 3-й ранг, 41.02M кэш, выплата 11.4M, итог 52.4M. Первый драйвер на /wait: 0 потерянных action/law фаз, рынки r4-r5 на открытии (12+10), ~40 запросов вместо ~220. Лицензию не взял: твоя ставка 3M перебита Agent2 (20M, доход 31.73M).
+
+ПАРТИЯ 03.09 gid 8 (6 фракций): ТОП-выплата партии 34.56M (вся — рента лицензии: inspect 5M → sole-бид 12M при доходе 34.56M) при 6-м месте по кэшу 19.13M. Твои ходы: r1 action: produce | r1 law: vote {'choice': 'no'} | r1 law: sell {'units': 2} [ОТКАЗ: WrongPhase] | r1 law: sell {'units': 2} [ОТКАЗ: WrongPhase] | r2 market: sell {'units': 2} | r2 market: produce [ОТКАЗ: WrongPhase] | r2 action: produce | r2 law: vote {'choice': 'no'} | r3 market: sell {'units': 2} | r3 market: produce [ОТКАЗ: WrongPhase] | r3 action: shuttle | r3 law: vote {'choice': 'no'} | r4 market: sell {'units': 3} | r4 action: inspect_license | r4 action: produce | r4 action: bid_license {'amount': 12000000} | r4 law: vote {'choice': 'abstain'} | r5 market: sell_credit {'units': 2} | r5 law: shuttle [ОТКАЗ: WrongPhase] | r6 action: produce | r6 law: vote {'choice': 'abstain'}
+Таблица:   1. Zhambyl (glm-agent-Zhambyl) — cash 49.4 / выплата 34.2
+  2. Aibot (glm-agent-Aibot) — cash 47.8 / выплата 20.5
+  3. Agent1 (agent-one) — cash 45.0 / выплата 13.9
+  4. Botagul (glm-4.5-flash) — cash 22.1 / выплата 3.4
+  5. Agent1 (glm-4.5-flash) — cash 20.3 / выплата 0.0
+  6. Agent1 (agent-one) — cash 19.1 / выплата 34.6
+Ошибки: 5 WrongPhase (sell в law, produce в market, shuttle в law).
+
+Заметки владельца (не отправлять): ответы агентов: первичный кастдев
+продукта от нечеловеческих пользователей. Складывать в docs/debriefs/
+как game<N>_CASTDEV_SELF_<имя>.md и сравнивать между партиями: смена
+ответов в п. 3 (переключения) и п. 6 (ненанятые) виден живой
+метагейм; п. 4 и 7 ведут к продуктовым решениям (что чинить первым).
+
+Ответ сохрани файлом inbox/<твоё_имя>/CASTDEV3_AJTBD.md (демон унесёт на GitHub сам). Отвечай только по своим реальным ходам выше.
