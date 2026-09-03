@@ -1,0 +1,1328 @@
+{
+ "actions": [
+  {
+   "action": "produce",
+   "actor": 3,
+   "by": "fallback",
+   "cash_after": 0,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 1,
+   "ts": 1788433173
+  },
+  {
+   "action": "produce",
+   "actor": 2,
+   "by": "fallback",
+   "cash_after": 0,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 1,
+   "ts": 1788433174
+  },
+  {
+   "action": "produce",
+   "actor": 0,
+   "by": "llm",
+   "cash_after": 0,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 1,
+   "ts": 1788433177
+  },
+  {
+   "action": "produce",
+   "actor": 1,
+   "by": "llm",
+   "cash_after": 0,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 1,
+   "ts": 1788433207
+  },
+  {
+   "action": "vote",
+   "actor": 2,
+   "by": "fallback",
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 1,
+   "ts": 1788433267
+  },
+  {
+   "action": "vote",
+   "actor": 3,
+   "by": "fallback",
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 1,
+   "ts": 1788433267
+  },
+  {
+   "action": "vote",
+   "actor": 1,
+   "by": "llm",
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 1,
+   "ts": 1788433298
+  },
+  {
+   "action": "sell",
+   "actor": 2,
+   "by": "fallback",
+   "cash_after": 22000000,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 2,
+   "ts": 1788433360
+  },
+  {
+   "action": "sell",
+   "actor": 3,
+   "by": "fallback",
+   "cash_after": 17000000,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 2,
+   "ts": 1788433360
+  },
+  {
+   "action": "sell",
+   "actor": 1,
+   "by": "llm",
+   "cash_after": 13000000,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 2,
+   "ts": 1788433391
+  },
+  {
+   "action": "vote",
+   "actor": 0,
+   "by": "llm",
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "choice": "no"
+   },
+   "phase": "market",
+   "round": 2,
+   "ts": 1788433414
+  },
+  {
+   "action": "sell",
+   "actor": 0,
+   "by": "llm",
+   "cash_after": 9000000,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 2,
+   "ts": 1788433438
+  },
+  {
+   "action": "produce",
+   "actor": 3,
+   "by": "fallback",
+   "cash_after": 17000000,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 2,
+   "ts": 1788433453
+  },
+  {
+   "action": "produce",
+   "actor": 2,
+   "by": "fallback",
+   "cash_after": 22000000,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 2,
+   "ts": 1788433453
+  },
+  {
+   "action": "produce",
+   "actor": 1,
+   "by": "llm",
+   "cash_after": 13000000,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 2,
+   "ts": 1788433485
+  },
+  {
+   "action": "vote",
+   "actor": 2,
+   "by": "fallback",
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 2,
+   "ts": 1788433546
+  },
+  {
+   "action": "vote",
+   "actor": 3,
+   "by": "fallback",
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 2,
+   "ts": 1788433546
+  },
+  {
+   "action": "vote",
+   "actor": 1,
+   "by": "llm",
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 2,
+   "ts": 1788433577
+  },
+  {
+   "action": "customs",
+   "actor": 0,
+   "by": "llm",
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "tight": true
+   },
+   "phase": "law",
+   "round": 2,
+   "ts": 1788433618
+  },
+  {
+   "action": "produce",
+   "actor": 0,
+   "by": "llm",
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "law",
+   "round": 2,
+   "ts": 1788433618
+  },
+  {
+   "action": "sell",
+   "actor": 3,
+   "by": "fallback",
+   "cash_after": 36450000,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 3,
+   "ts": 1788433639
+  },
+  {
+   "action": "sell",
+   "actor": 2,
+   "by": "fallback",
+   "cash_after": 35700000,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 3,
+   "ts": 1788433639
+  },
+  {
+   "action": "sell",
+   "actor": 1,
+   "by": "llm",
+   "cash_after": 24050000,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 3,
+   "ts": 1788433670
+  },
+  {
+   "action": "produce",
+   "actor": 3,
+   "by": "fallback",
+   "cash_after": 36450000,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 3,
+   "ts": 1788433732
+  },
+  {
+   "action": "produce",
+   "actor": 2,
+   "by": "fallback",
+   "cash_after": 35700000,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 3,
+   "ts": 1788433732
+  },
+  {
+   "action": "produce",
+   "actor": 1,
+   "by": "llm",
+   "cash_after": 24050000,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 3,
+   "ts": 1788433763
+  },
+  {
+   "action": "buy",
+   "actor": 0,
+   "by": "llm",
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "units": 1
+   },
+   "phase": "action",
+   "round": 3,
+   "ts": 1788433791
+  },
+  {
+   "action": "produce",
+   "actor": 0,
+   "by": "llm",
+   "cash_after": 7650000,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 3,
+   "ts": 1788433807
+  },
+  {
+   "action": "vote",
+   "actor": 3,
+   "by": "fallback",
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 3,
+   "ts": 1788433824
+  },
+  {
+   "action": "vote",
+   "actor": 2,
+   "by": "fallback",
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 3,
+   "ts": 1788433824
+  },
+  {
+   "action": "vote",
+   "actor": 1,
+   "by": "llm",
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 3,
+   "ts": 1788433856
+  },
+  {
+   "action": "veto",
+   "actor": 0,
+   "by": "llm",
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {},
+   "phase": "law",
+   "round": 3,
+   "ts": 1788433867
+  },
+  {
+   "action": "vote",
+   "actor": 0,
+   "by": "llm",
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "no"
+   },
+   "phase": "law",
+   "round": 3,
+   "ts": 1788433868
+  },
+  {
+   "action": "sell",
+   "actor": 3,
+   "by": "fallback",
+   "cash_after": 52982500,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 4,
+   "ts": 1788433918
+  },
+  {
+   "action": "sell",
+   "actor": 2,
+   "by": "fallback",
+   "cash_after": 47345000,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 4,
+   "ts": 1788433918
+  },
+  {
+   "action": "sell",
+   "actor": 0,
+   "by": "llm",
+   "cash_after": 19502500,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 4,
+   "ts": 1788433929
+  },
+  {
+   "action": "sell",
+   "actor": 1,
+   "by": "llm",
+   "cash_after": 29442500,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 4,
+   "ts": 1788433950
+  },
+  {
+   "action": "produce",
+   "actor": 2,
+   "by": "fallback",
+   "cash_after": 47345000,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788434010
+  },
+  {
+   "action": "produce",
+   "actor": 3,
+   "by": "fallback",
+   "cash_after": 52982500,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788434010
+  },
+  {
+   "action": "customs",
+   "actor": 0,
+   "by": "llm",
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "tight": true
+   },
+   "phase": "action",
+   "round": 4,
+   "ts": 1788434018
+  },
+  {
+   "action": "produce",
+   "actor": 0,
+   "by": "llm",
+   "cash_after": 19502500,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788434018
+  },
+  {
+   "action": "inspect_license",
+   "actor": 0,
+   "by": "llm",
+   "cash_after": 14502500,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788434018
+  },
+  {
+   "action": "produce",
+   "actor": 1,
+   "by": "llm",
+   "cash_after": 29442500,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788434042
+  },
+  {
+   "action": "bid_license",
+   "actor": 0,
+   "by": "llm",
+   "cash_after": 4502500,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {
+    "amount": 10000000
+   },
+   "phase": "action",
+   "round": 4,
+   "ts": 1788434044
+  },
+  {
+   "action": "vote",
+   "actor": 3,
+   "by": "fallback",
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 4,
+   "ts": 1788434104
+  },
+  {
+   "action": "vote",
+   "actor": 2,
+   "by": "fallback",
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 4,
+   "ts": 1788434104
+  },
+  {
+   "action": "vote",
+   "actor": 1,
+   "by": "llm",
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 4,
+   "ts": 1788434135
+  },
+  {
+   "action": "veto",
+   "actor": 0,
+   "by": "llm",
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {},
+   "phase": "law",
+   "round": 4,
+   "ts": 1788434166
+  },
+  {
+   "action": "vote",
+   "actor": 0,
+   "by": "llm",
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "no"
+   },
+   "phase": "law",
+   "round": 4,
+   "ts": 1788434166
+  },
+  {
+   "action": "buy_hard",
+   "actor": 0,
+   "by": "llm",
+   "cash_after": 0,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "law",
+   "round": 4,
+   "ts": 1788434166
+  },
+  {
+   "action": "sell",
+   "actor": 2,
+   "by": "fallback",
+   "cash_after": 62243250,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 5,
+   "ts": 1788434196
+  },
+  {
+   "action": "sell",
+   "actor": 3,
+   "by": "fallback",
+   "cash_after": 62035125,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 5,
+   "ts": 1788434196
+  },
+  {
+   "action": "sell_credit",
+   "actor": 0,
+   "by": "llm",
+   "cash_after": 0,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 5,
+   "ts": 1788434202
+  },
+  {
+   "action": "sell",
+   "actor": 1,
+   "by": "llm",
+   "cash_after": 34026125,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 5,
+   "ts": 1788434221
+  },
+  {
+   "action": "produce",
+   "actor": 2,
+   "by": "fallback",
+   "cash_after": 62243250,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 5,
+   "ts": 1788434289
+  },
+  {
+   "action": "produce",
+   "actor": 3,
+   "by": "fallback",
+   "cash_after": 62035125,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 5,
+   "ts": 1788434290
+  },
+  {
+   "action": "shuttle",
+   "actor": 0,
+   "by": "llm",
+   "cash_after": 0,
+   "err": null,
+   "goods_after": 3,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 5,
+   "ts": 1788434294
+  },
+  {
+   "action": "customs",
+   "actor": 0,
+   "by": "llm",
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "tight": false
+   },
+   "phase": "action",
+   "round": 5,
+   "ts": 1788434294
+  },
+  {
+   "action": "produce",
+   "actor": 1,
+   "by": "llm",
+   "cash_after": 34026125,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 5,
+   "ts": 1788434321
+  },
+  {
+   "action": "vote",
+   "actor": 3,
+   "by": "fallback",
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 5,
+   "ts": 1788434383
+  },
+  {
+   "action": "vote",
+   "actor": 2,
+   "by": "fallback",
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 5,
+   "ts": 1788434384
+  },
+  {
+   "action": "vote",
+   "actor": 0,
+   "by": "llm",
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 5,
+   "ts": 1788434392
+  },
+  {
+   "action": "vote",
+   "actor": 1,
+   "by": "llm",
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 5,
+   "ts": 1788434415
+  },
+  {
+   "action": "sell",
+   "actor": 0,
+   "by": "llm",
+   "cash_after": 47250000,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 3
+   },
+   "phase": "market",
+   "round": 6,
+   "ts": 1788434475
+  },
+  {
+   "action": "sell",
+   "actor": 2,
+   "by": "fallback",
+   "cash_after": 67906720,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 6,
+   "ts": 1788434476
+  },
+  {
+   "action": "sell",
+   "actor": 3,
+   "by": "fallback",
+   "cash_after": 63729835,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 6,
+   "ts": 1788434476
+  },
+  {
+   "action": "sell",
+   "actor": 1,
+   "by": "llm",
+   "cash_after": 35922185,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 6,
+   "ts": 1788434507
+  },
+  {
+   "action": "produce",
+   "actor": 3,
+   "by": "fallback",
+   "cash_after": 63729835,
+   "err": null,
+   "goods_after": 3,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 6,
+   "ts": 1788434568
+  },
+  {
+   "action": "produce",
+   "actor": 2,
+   "by": "fallback",
+   "cash_after": 67906720,
+   "err": null,
+   "goods_after": 3,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 6,
+   "ts": 1788434568
+  },
+  {
+   "action": "produce",
+   "actor": 0,
+   "by": "llm",
+   "cash_after": 47250000,
+   "err": null,
+   "goods_after": 3,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 6,
+   "ts": 1788434576
+  },
+  {
+   "action": "produce",
+   "actor": 1,
+   "by": "llm",
+   "cash_after": 35922185,
+   "err": null,
+   "goods_after": 3,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 6,
+   "ts": 1788434600
+  },
+  {
+   "action": "veto",
+   "actor": 0,
+   "by": "llm",
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {},
+   "phase": "action",
+   "round": 6,
+   "ts": 1788434639
+  },
+  {
+   "action": "vote",
+   "actor": 0,
+   "by": "llm",
+   "cash_after": null,
+   "err": "WrongPhase",
+   "goods_after": null,
+   "ok": false,
+   "params": {
+    "choice": "no"
+   },
+   "phase": "action",
+   "round": 6,
+   "ts": 1788434639
+  },
+  {
+   "action": "veto",
+   "actor": 0,
+   "by": "llm",
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {},
+   "phase": "law",
+   "round": 6,
+   "ts": 1788434661
+  },
+  {
+   "action": "vote",
+   "actor": 3,
+   "by": "fallback",
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 6,
+   "ts": 1788434661
+  },
+  {
+   "action": "vote",
+   "actor": 2,
+   "by": "fallback",
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 6,
+   "ts": 1788434661
+  },
+  {
+   "action": "vote",
+   "actor": 0,
+   "by": "llm",
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "no"
+   },
+   "phase": "law",
+   "round": 6,
+   "ts": 1788434662
+  },
+  {
+   "action": "vote",
+   "actor": 1,
+   "by": "llm",
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 6,
+   "ts": 1788434694
+  }
+ ],
+ "agents": [
+  {
+   "agent_id": "72a38fa3e59076a540212a9d7cd1ea42d4f18bb83215b9449de37f1a34fac3fc",
+   "model": "agent-one",
+   "name": "Agent1"
+  },
+  {
+   "agent_id": "ef35f18a88afea4f2750b26def2b5a10f35777e2fc8fb2d5160483f94a695c2e",
+   "model": "glm-agent-Botagul",
+   "name": "Botagul"
+  },
+  {
+   "agent_id": "13d6565c9fc298428102cd90120a9a98a58fff1c141833f2f48f73a9b96c5f59",
+   "model": "glm-agent-Zhambyl",
+   "name": "Zhambyl"
+  },
+  {
+   "agent_id": "937156f17e90f0d9fcf87ffe36f087fc586d13baf408757c9a25ccc2160e43de",
+   "model": "glm-agent-Aibot",
+   "name": "Aibot"
+  }
+ ],
+ "bank": 50000000,
+ "entry_fee": 10000000,
+ "epoch": 1,
+ "final_cash": [
+  50852000,
+  35922185,
+  67906720,
+  63729835
+ ],
+ "final_goods": [
+  3,
+  3,
+  3,
+  3
+ ],
+ "final_hard": [
+  3602000,
+  0,
+  0,
+  0
+ ],
+ "final_influence": [
+  2,
+  1,
+  1,
+  1
+ ],
+ "final_promissory": [
+  0,
+  0,
+  0,
+  0
+ ],
+ "finished_at": 1788434754,
+ "game_id": 6,
+ "n_factions": 4,
+ "payout_breakdown": [
+  {
+   "factory_bonus": 2500000,
+   "license_rent": 30051265,
+   "rank_share": 7125000
+  },
+  {
+   "factory_bonus": 0,
+   "license_rent": 0,
+   "rank_share": 2375000
+  },
+  {
+   "factory_bonus": 0,
+   "license_rent": 0,
+   "rank_share": 23750000
+  },
+  {
+   "factory_bonus": 0,
+   "license_rent": 0,
+   "rank_share": 14250000
+  }
+ ],
+ "payouts": [
+  39676265,
+  2375000,
+  23750000,
+  14250000
+ ],
+ "phases": [
+  {
+   "phase": "lobby",
+   "round": 0
+  },
+  {
+   "phase": "market",
+   "round": 1
+  },
+  {
+   "phase": "action",
+   "round": 1
+  },
+  {
+   "card": 8,
+   "card_name": "vzaimozachet",
+   "laws_passed_total": 1,
+   "no": 0,
+   "passed": true,
+   "phase": "law",
+   "round": 1,
+   "veto_pending": false,
+   "yes": 3
+  },
+  {
+   "phase": "market",
+   "round": 2
+  },
+  {
+   "phase": "action",
+   "round": 2
+  },
+  {
+   "card": 4,
+   "card_name": "subsidy_poor",
+   "laws_passed_total": 2,
+   "no": 0,
+   "passed": true,
+   "phase": "law",
+   "round": 2,
+   "veto_pending": false,
+   "yes": 3
+  },
+  {
+   "phase": "market",
+   "round": 3
+  },
+  {
+   "phase": "action",
+   "round": 3
+  },
+  {
+   "card": 2,
+   "card_name": "tax_20",
+   "laws_passed_total": 2,
+   "no": 2,
+   "passed": false,
+   "phase": "law",
+   "round": 3,
+   "veto_pending": false,
+   "yes": 3
+  },
+  {
+   "phase": "market",
+   "round": 4
+  },
+  {
+   "phase": "action",
+   "round": 4
+  },
+  {
+   "card": 1,
+   "card_name": "tax_10",
+   "laws_passed_total": 2,
+   "no": 2,
+   "passed": false,
+   "phase": "law",
+   "round": 4,
+   "veto_pending": false,
+   "yes": 3
+  },
+  {
+   "phase": "market",
+   "round": 5
+  },
+  {
+   "phase": "action",
+   "round": 5
+  },
+  {
+   "card": 3,
+   "card_name": "subsidy_produce",
+   "laws_passed_total": 3,
+   "no": 0,
+   "passed": true,
+   "phase": "law",
+   "round": 5,
+   "veto_pending": false,
+   "yes": 5
+  },
+  {
+   "phase": "market",
+   "round": 6
+  },
+  {
+   "phase": "action",
+   "round": 6
+  },
+  {
+   "card": 6,
+   "card_name": "embargo",
+   "laws_passed_total": 3,
+   "no": 2,
+   "passed": false,
+   "phase": "law",
+   "round": 6,
+   "veto_pending": false,
+   "yes": 3
+  }
+ ],
+ "rake": 0,
+ "ranks": [
+  2,
+  3,
+  0,
+  1
+ ],
+ "vote_weight_mode": 0
+}
