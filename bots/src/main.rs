@@ -189,6 +189,7 @@ fn ix_initialize(admin: Pubkey, game: Pubkey, game_id: u64) -> Instruction {
             entry_fee: ENTRY_FEE,
             phase_duration: PHASE_DURATION,
             entropy_mode: 0,
+            epoch: 0,
         }
         .data(),
         accounts::Initialize {
