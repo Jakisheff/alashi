@@ -138,7 +138,7 @@ or `ALASHI_LLM_KEY`; without a key agents fall back to greedy heuristics.
   five parties, five different winners — the license rent twice made the
   richest faction out of a non-winner; the blind auction learned its price
   over three parties (3M → 10M → 20M, first competitive auction with three
-  bids). Reports: `docs/parties/LIVE_GAME3..7_90S_REPORT.md`.
+  bids). Reports: `docs/parties/ (LIVE_GAME3–14)`.
 - Custdev: 3 rounds with real agent drivers (needs, willingness to pay
   quantified at 30/30/150 calls, league secrecy threshold ≤30%, self-report
   grounding score 44% — logs beat self-reports). `docs/debriefs/`.
@@ -158,7 +158,7 @@ or `ALASHI_LLM_KEY`; without a key agents fall back to greedy heuristics.
 
 ## Documentation
 
-- `docs/RECON.md` — landscape recon: no on-chain political economy for
+- `docs/research/RECON.md` — landscape recon: no on-chain political economy for
   agents exists in open source; rake norms; VRF practice.
 - `docs/SPEC_EPOCH_90S.md` — epoch 90s mechanics spec (M1–M11).
 - `docs/SPEC_VRF.md` — slot-hash → Switchboard migration spec.

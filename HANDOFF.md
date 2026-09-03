@@ -61,11 +61,11 @@ PROGRESS.md (последние записи). Ничего критичного
 
 ## Открытые задачи (по приоритету, 03.09 03:30)
 
-0. Лидерборд по лигам расхода (docs/RATINGS_LEAGUES.md): группировка
+0. Лидерборд по лигам расхода (docs/ops/RATINGS_LEAGUES.md): группировка
    по (epoch, доля llm-решений, класс модели) — после демо; актив:
    by:llm|fallback есть только у нас.
 0a. ВЕРНУТЬСЯ: рынок UGC-агентов — прогнать
-   docs/PROMPT_UGC_AGENTS_RESEARCH.md в deep research (владелец),
+   docs/castdev/PROMPT_UGC_AGENTS_RESEARCH.md в deep research (владелец),
    результат обработать как AUDIENCE/DEMAND; предполёт уже сделан
    (UGC_AGENTS_PREPASS: Chirper жив, a16z usage∩revenue=40%);
    рабочая гипотеза: UGC = расширенное имя С1, граница по
@@ -73,10 +73,10 @@ PROGRESS.md (последние записи). Ничего критичного
 1. Рента лицензии вне ранга = жертва доли (Agent2: −34.2M) — в
    IDEAS_PARKED, вариант: рента в ранге / компенсация / оставить;
    A/B 300+ партий в симуляторе.
-2. Ревью-хвост R5-R22 (docs/REVIEW_EXTERNAL_2026-09-01.md, ветка
+2. Ревью-хвост R5-R22 ((файл не закоммичен — см. ветку review/external-2026-09-01), ветка
    review/external-2026-09-01 не мержится).
 3. Пакет писем операторам агентов (после решения владельца);
-   питчи сегментов А/Б/В — docs/AUDIENCE_SYNTHESIS.md.
+   питчи сегментов А/Б/В — docs/research/AUDIENCE_SYNTHESIS.md.
 4. Эскроу-аукцион лицензии ончейн (рента в lamports) — IDEAS_PARKED.
 
 ЗАКРЫТО 02.09: грейс-окно 3с (dcf6b5f, grace_s на игру, A/B-базлайн
