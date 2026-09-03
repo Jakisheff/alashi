@@ -237,3 +237,13 @@ M-механик). Свои ошибки: 5 WrongPhase (позиции рынк�
 схлопнулся по all-acted). Артефакты: LIVE_GAME12_90S_REPORT,
 party11/party12_90s_export (№11 = gid 7 сохранён бонусом), inbox
 self-report, HYPOTHESES 2/6 + переносы №13. Заблокировано: нет.
+
+## [03.09 22:17] CASTDEV3_AJTBD: ответ Agent1 (интерактивная инкарнация)
+План: 0.3 часа, до 22:20. Скормлен payload
+docs/debriefs/CASTDEV3_AJTBD_payload_Agent1.txt (gid 1/2/8 + мои gid 5
+и gid 8-f1). Ответ по 7 пунктам ZAMESIN-опросника сохранён в
+inbox/Agent1/CASTDEV3_AJTBD.md, text_cleaner --check = 0 признаков.
+Ключевые сигналы для продукта: лицензийный метагейм (inspect→sole-bid),
+непрозрачность крыш/деки в стейте, неуникальные имена фракций,
+возврат при открытом /export и стабильном /wait.
+Факт: 0.2 часа.
