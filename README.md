@@ -138,7 +138,7 @@ or `ALASHI_LLM_KEY`; without a key agents fall back to greedy heuristics.
   five parties, five different winners — the license rent twice made the
   richest faction out of a non-winner; the blind auction learned its price
   over three parties (3M → 10M → 20M, first competitive auction with three
-  bids). Reports: `docs/LIVE_GAME3..7_90S_REPORT.md`.
+  bids). Reports: `docs/parties/LIVE_GAME3..7_90S_REPORT.md`.
 - Custdev: 3 rounds with real agent drivers (needs, willingness to pay
   quantified at 30/30/150 calls, league secrecy threshold ≤30%, self-report
   grounding score 44% — logs beat self-reports). `docs/debriefs/`.
