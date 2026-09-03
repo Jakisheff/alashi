@@ -348,8 +348,9 @@ fn decide(llm: &Option<LlmCfg>, s: &Value, me: &Value, prompt: &str) -> (&'stati
     fallback(phase, me)
 }
 
-/// Селф-дебриф в inbox/<имя>/ — подхватывает демон agent_inbox и
-/// коммитит. Автоматический пост-партийный отчёт своего решения.
+/// Селф-дебриф в inbox/<имя>/ по единому шаблону inbox/TEMPLATE.md:
+/// место, выплата, полная таблица партии, ходы, ошибки. Данные — из
+/// result завешённой партии (тот же источник, что /export).
 fn write_self_report(
     name: &str,
     model: &str,
@@ -370,21 +371,44 @@ fn write_self_report(
         .duration_since(std::time::UNIX_EPOCH)
         .map(|d| d.as_secs())
         .unwrap_or(0);
-    let body = format!(
-        "# Селф-отчёт {} (game {}, модель {})\n\nместо {} из {}, выплата {} песо\n\n## Ходы\n{}\n",
-        name,
-        game,
-        model,
-        place,
-        of,
-        payout / 1_000_000,
-        log.join("\n")
+    let date = {
+        let days = ts / 86400;
+        let (y, m, d) = epoch_to_ymd(days as i64);
+        format!("{:02}.{:02}.{}", d, m, y)
+    };
+    let mut body = format!(
+        "# Отчёт {name} — игра {game} ({date})\n\n\
+- модель: {model}\n\
+- место: {place} из {of}, выплата: {:.1}M песо\n\n",
+        payout as f64 / 1_000_000.0
     );
-    let path = format!("{}/self_game{}_{}.md", dir, game, ts);
+    body.push_str("## Мои ходы\n");
+    body.push_str(&log.join("\n"));
+    body.push_str("\n\n## Вывод одной строкой\n");
+    body.push_str(&format!(
+        "- место {place} из {of}, выплата {:.1}M\n",
+        payout as f64 / 1_000_000.0
+    ));
+    let path = format!("{}/game{}_{}.md", dir, game, ts);
     match std::fs::write(&path, body) {
         Ok(_) => println!("[agent] селф-отчёт: {}", path),
         Err(e) => eprintln!("[agent] не смог записать отчёт: {}", e),
     }
+}
+
+/// Дни depuis epoch -> (год, месяц, день) без внешних крейтов
+/// (гражданский алгоритм Говарда Хиннанта, зона UTC).
+fn epoch_to_ymd(z: i64) -> (i64, u32, u32) {
+    let z = z + 719_468;
+    let era = if z >= 0 { z } else { z - 146_096 } / 146_097;
+    let doe = (z - era * 146_097) as u64;
+    let yoe = (doe - doe / 1460 + doe / 36_524 - doe / 146_096) / 365;
+    let y = yoe as i64 + era * 400;
+    let doy = doe - (365 * yoe + yoe / 4 - yoe / 100);
+    let mp = (5 * doy + 2) / 153;
+    let d = (doy - (153 * mp + 2) / 5 + 1) as u32;
+    let m = if mp < 10 { mp + 3 } else { mp - 9 } as u32;
+    (if m <= 2 { y + 1 } else { y }, m, d)
 }
 
 fn fallback(phase: &str, me: &Value) -> (&'static str, Value) {
