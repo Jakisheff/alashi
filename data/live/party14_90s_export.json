@@ -2,32 +2,6 @@
  "actions": [
   {
    "action": "produce",
-   "actor": 1,
-   "by": "fallback",
-   "cash_after": 0,
-   "err": null,
-   "goods_after": 2,
-   "ok": true,
-   "params": {},
-   "phase": "action",
-   "round": 1,
-   "ts": 1788458558
-  },
-  {
-   "action": "produce",
-   "actor": 3,
-   "by": "llm",
-   "cash_after": 0,
-   "err": null,
-   "goods_after": 2,
-   "ok": true,
-   "params": {},
-   "phase": "action",
-   "round": 1,
-   "ts": 1788458558
-  },
-  {
-   "action": "produce",
    "actor": 0,
    "by": "fallback",
    "cash_after": 0,
@@ -37,7 +11,20 @@
    "params": {},
    "phase": "action",
    "round": 1,
-   "ts": 1788458559
+   "ts": 1788519405
+  },
+  {
+   "action": "produce",
+   "actor": 1,
+   "by": "fallback",
+   "cash_after": 0,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 1,
+   "ts": 1788519405
   },
   {
    "action": "produce",
@@ -50,48 +37,7 @@
    "params": {},
    "phase": "action",
    "round": 1,
-   "ts": 1788458567
-  },
-  {
-   "action": "produce",
-   "actor": 5,
-   "by": "llm",
-   "cash_after": 0,
-   "err": null,
-   "goods_after": 2,
-   "ok": true,
-   "params": {},
-   "phase": "action",
-   "round": 1,
-   "ts": 1788458578
-  },
-  {
-   "action": "produce",
-   "actor": 4,
-   "by": "llm",
-   "cash_after": 0,
-   "err": null,
-   "goods_after": 2,
-   "ok": true,
-   "params": {},
-   "phase": "action",
-   "round": 1,
-   "ts": 1788458578
-  },
-  {
-   "action": "vote",
-   "actor": 1,
-   "by": "fallback",
-   "cash_after": null,
-   "err": null,
-   "goods_after": null,
-   "ok": true,
-   "params": {
-    "choice": "yes"
-   },
-   "phase": "law",
-   "round": 1,
-   "ts": 1788458682
+   "ts": 1788519417
   },
   {
    "action": "vote",
@@ -106,27 +52,12 @@
    },
    "phase": "law",
    "round": 1,
-   "ts": 1788458682
+   "ts": 1788519498
   },
   {
    "action": "vote",
-   "actor": 3,
-   "by": "llm",
-   "cash_after": null,
-   "err": null,
-   "goods_after": null,
-   "ok": true,
-   "params": {
-    "choice": "abstain"
-   },
-   "phase": "law",
-   "round": 1,
-   "ts": 1788458686
-  },
-  {
-   "action": "vote",
-   "actor": 5,
-   "by": "llm",
+   "actor": 1,
+   "by": "fallback",
    "cash_after": null,
    "err": null,
    "goods_after": null,
@@ -136,22 +67,7 @@
    },
    "phase": "law",
    "round": 1,
-   "ts": 1788458688
-  },
-  {
-   "action": "vote",
-   "actor": 4,
-   "by": "llm",
-   "cash_after": null,
-   "err": null,
-   "goods_after": null,
-   "ok": true,
-   "params": {
-    "choice": "yes"
-   },
-   "phase": "law",
-   "round": 1,
-   "ts": 1788458701
+   "ts": 1788519498
   },
   {
    "action": "vote",
@@ -166,22 +82,7 @@
    },
    "phase": "law",
    "round": 1,
-   "ts": 1788458701
-  },
-  {
-   "action": "sell",
-   "actor": 3,
-   "by": "llm",
-   "cash_after": null,
-   "err": "WrongPhase",
-   "goods_after": null,
-   "ok": false,
-   "params": {
-    "units": 2
-   },
-   "phase": "law",
-   "round": 1,
-   "ts": 1788458776
+   "ts": 1788519507
   },
   {
    "action": "sell",
@@ -196,7 +97,7 @@
    },
    "phase": "market",
    "round": 2,
-   "ts": 1788458805
+   "ts": 1788519590
   },
   {
    "action": "sell",
@@ -211,11 +112,11 @@
    },
    "phase": "market",
    "round": 2,
-   "ts": 1788458805
+   "ts": 1788519590
   },
   {
    "action": "sell",
-   "actor": 5,
+   "actor": 2,
    "by": "llm",
    "cash_after": 13000000,
    "err": null,
@@ -226,68 +127,7 @@
    },
    "phase": "market",
    "round": 2,
-   "ts": 1788458811
-  },
-  {
-   "action": "sell",
-   "actor": 3,
-   "by": "llm",
-   "cash_after": 9000000,
-   "err": null,
-   "goods_after": 0,
-   "ok": true,
-   "params": {
-    "units": 2
-   },
-   "phase": "market",
-   "round": 2,
-   "ts": 1788458813
-  },
-  {
-   "action": "sell",
-   "actor": 2,
-   "by": "llm",
-   "cash_after": 6000000,
-   "err": null,
-   "goods_after": 0,
-   "ok": true,
-   "params": {
-    "units": 2
-   },
-   "phase": "market",
-   "round": 2,
-   "ts": 1788458815
-  },
-  {
-   "action": "bribe",
-   "actor": 4,
-   "by": "llm",
-   "cash_after": null,
-   "err": "WrongPhase",
-   "goods_after": null,
-   "ok": false,
-   "params": {
-    "amount": 5000000,
-    "to": 0
-   },
-   "phase": "market",
-   "round": 2,
-   "ts": 1788458817
-  },
-  {
-   "action": "sell",
-   "actor": 4,
-   "by": "llm",
-   "cash_after": 4000000,
-   "err": null,
-   "goods_after": 0,
-   "ok": true,
-   "params": {
-    "units": 2
-   },
-   "phase": "market",
-   "round": 2,
-   "ts": 1788458832
+   "ts": 1788519599
   },
   {
    "action": "produce",
@@ -295,25 +135,12 @@
    "by": "fallback",
    "cash_after": 22000000,
    "err": null,
-   "goods_after": 3,
+   "goods_after": 2,
    "ok": true,
    "params": {},
    "phase": "action",
    "round": 2,
-   "ts": 1788458927
-  },
-  {
-   "action": "produce",
-   "actor": 3,
-   "by": "llm",
-   "cash_after": 9000000,
-   "err": null,
-   "goods_after": 3,
-   "ok": true,
-   "params": {},
-   "phase": "action",
-   "round": 2,
-   "ts": 1788458928
+   "ts": 1788519684
   },
   {
    "action": "produce",
@@ -321,66 +148,25 @@
    "by": "fallback",
    "cash_after": 17000000,
    "err": null,
-   "goods_after": 3,
+   "goods_after": 2,
    "ok": true,
    "params": {},
    "phase": "action",
    "round": 2,
-   "ts": 1788458928
+   "ts": 1788519684
   },
   {
    "action": "produce",
-   "actor": 4,
-   "by": "llm",
-   "cash_after": 4000000,
-   "err": null,
-   "goods_after": 3,
-   "ok": true,
-   "params": {},
-   "phase": "action",
-   "round": 2,
-   "ts": 1788458933
-  },
-  {
-   "action": "produce",
-   "actor": 5,
+   "actor": 2,
    "by": "llm",
    "cash_after": 13000000,
    "err": null,
-   "goods_after": 3,
+   "goods_after": 2,
    "ok": true,
    "params": {},
    "phase": "action",
    "round": 2,
-   "ts": 1788458933
-  },
-  {
-   "action": "produce",
-   "actor": 2,
-   "by": "llm",
-   "cash_after": 6000000,
-   "err": null,
-   "goods_after": 3,
-   "ok": true,
-   "params": {},
-   "phase": "action",
-   "round": 2,
-   "ts": 1788458946
-  },
-  {
-   "action": "vote",
-   "actor": 0,
-   "by": "fallback",
-   "cash_after": null,
-   "err": null,
-   "goods_after": null,
-   "ok": true,
-   "params": {
-    "choice": "yes"
-   },
-   "phase": "law",
-   "round": 2,
-   "ts": 1788459051
+   "ts": 1788519695
   },
   {
    "action": "vote",
@@ -395,27 +181,12 @@
    },
    "phase": "law",
    "round": 2,
-   "ts": 1788459051
+   "ts": 1788519776
   },
   {
    "action": "vote",
-   "actor": 3,
-   "by": "llm",
-   "cash_after": null,
-   "err": null,
-   "goods_after": null,
-   "ok": true,
-   "params": {
-    "choice": "abstain"
-   },
-   "phase": "law",
-   "round": 2,
-   "ts": 1788459057
-  },
-  {
-   "action": "vote",
-   "actor": 5,
-   "by": "llm",
+   "actor": 0,
+   "by": "fallback",
    "cash_after": null,
    "err": null,
    "goods_after": null,
@@ -425,7 +196,7 @@
    },
    "phase": "law",
    "round": 2,
-   "ts": 1788459057
+   "ts": 1788519777
   },
   {
    "action": "vote",
@@ -440,502 +211,304 @@
    },
    "phase": "law",
    "round": 2,
-   "ts": 1788459070
+   "ts": 1788519788
   },
   {
-   "action": "veto",
-   "actor": 4,
-   "by": "llm",
-   "cash_after": null,
+   "action": "sell",
+   "actor": 0,
+   "by": "fallback",
+   "cash_after": 40700000,
    "err": null,
-   "goods_after": null,
-   "ok": true,
-   "params": {},
-   "phase": "law",
-   "round": 2,
-   "ts": 1788459077
-  },
-  {
-   "action": "vote",
-   "actor": 4,
-   "by": "llm",
-   "cash_after": null,
-   "err": null,
-   "goods_after": null,
+   "goods_after": 0,
    "ok": true,
    "params": {
-    "choice": "yes"
+    "units": 2
    },
-   "phase": "law",
-   "round": 2,
-   "ts": 1788459109
+   "phase": "market",
+   "round": 3,
+   "ts": 1788519869
   },
   {
    "action": "sell",
    "actor": 1,
    "by": "fallback",
-   "cash_after": 45450000,
+   "cash_after": 31450000,
    "err": null,
    "goods_after": 0,
    "ok": true,
    "params": {
-    "units": 3
+    "units": 2
    },
    "phase": "market",
    "round": 3,
-   "ts": 1788459174
-  },
-  {
-   "action": "sell",
-   "actor": 0,
-   "by": "fallback",
-   "cash_after": 39700000,
-   "err": null,
-   "goods_after": 0,
-   "ok": true,
-   "params": {
-    "units": 3
-   },
-   "phase": "market",
-   "round": 3,
-   "ts": 1788459174
+   "ts": 1788519869
   },
   {
    "action": "sell",
    "actor": 2,
    "by": "llm",
-   "cash_after": 17100000,
+   "cash_after": 24050000,
    "err": null,
    "goods_after": 0,
    "ok": true,
    "params": {
-    "units": 3
+    "units": 2
    },
    "phase": "market",
    "round": 3,
-   "ts": 1788459181
-  },
-  {
-   "action": "sell",
-   "actor": 3,
-   "by": "llm",
-   "cash_after": 14650000,
-   "err": null,
-   "goods_after": 0,
-   "ok": true,
-   "params": {
-    "units": 3
-   },
-   "phase": "market",
-   "round": 3,
-   "ts": 1788459186
-  },
-  {
-   "action": "sell",
-   "actor": 4,
-   "by": "llm",
-   "cash_after": 7400000,
-   "err": null,
-   "goods_after": 0,
-   "ok": true,
-   "params": {
-    "units": 3
-   },
-   "phase": "market",
-   "round": 3,
-   "ts": 1788459193
-  },
-  {
-   "action": "sell",
-   "actor": 5,
-   "by": "llm",
-   "cash_after": 14050000,
-   "err": null,
-   "goods_after": 0,
-   "ok": true,
-   "params": {
-    "units": 3
-   },
-   "phase": "market",
-   "round": 3,
-   "ts": 1788459193
-  },
-  {
-   "action": "produce",
-   "actor": 3,
-   "by": "llm",
-   "cash_after": 14650000,
-   "err": null,
-   "goods_after": 3,
-   "ok": true,
-   "params": {},
-   "phase": "action",
-   "round": 3,
-   "ts": 1788459296
-  },
-  {
-   "action": "produce",
-   "actor": 1,
-   "by": "fallback",
-   "cash_after": 45450000,
-   "err": null,
-   "goods_after": 3,
-   "ok": true,
-   "params": {},
-   "phase": "action",
-   "round": 3,
-   "ts": 1788459297
+   "ts": 1788519878
   },
   {
    "action": "produce",
    "actor": 0,
    "by": "fallback",
-   "cash_after": 39700000,
-   "err": null,
-   "goods_after": 3,
-   "ok": true,
-   "params": {},
-   "phase": "action",
-   "round": 3,
-   "ts": 1788459297
-  },
-  {
-   "action": "produce",
-   "actor": 5,
-   "by": "llm",
-   "cash_after": 14050000,
-   "err": null,
-   "goods_after": 3,
-   "ok": true,
-   "params": {},
-   "phase": "action",
-   "round": 3,
-   "ts": 1788459303
-  },
-  {
-   "action": "produce",
-   "actor": 2,
-   "by": "llm",
-   "cash_after": 17100000,
-   "err": null,
-   "goods_after": 3,
-   "ok": true,
-   "params": {},
-   "phase": "action",
-   "round": 3,
-   "ts": 1788459315
-  },
-  {
-   "action": "produce",
-   "actor": 4,
-   "by": "llm",
-   "cash_after": 7400000,
-   "err": null,
-   "goods_after": 3,
-   "ok": true,
-   "params": {},
-   "phase": "action",
-   "round": 3,
-   "ts": 1788459315
-  },
-  {
-   "action": "vote",
-   "actor": 1,
-   "by": "fallback",
-   "cash_after": null,
-   "err": null,
-   "goods_after": null,
-   "ok": true,
-   "params": {
-    "choice": "yes"
-   },
-   "phase": "law",
-   "round": 3,
-   "ts": 1788459419
-  },
-  {
-   "action": "vote",
-   "actor": 0,
-   "by": "fallback",
-   "cash_after": null,
-   "err": null,
-   "goods_after": null,
-   "ok": true,
-   "params": {
-    "choice": "yes"
-   },
-   "phase": "law",
-   "round": 3,
-   "ts": 1788459420
-  },
-  {
-   "action": "vote",
-   "actor": 2,
-   "by": "llm",
-   "cash_after": null,
-   "err": null,
-   "goods_after": null,
-   "ok": true,
-   "params": {
-    "choice": "yes"
-   },
-   "phase": "law",
-   "round": 3,
-   "ts": 1788459425
-  },
-  {
-   "action": "vote",
-   "actor": 3,
-   "by": "llm",
-   "cash_after": null,
-   "err": null,
-   "goods_after": null,
-   "ok": true,
-   "params": {
-    "choice": "no"
-   },
-   "phase": "law",
-   "round": 3,
-   "ts": 1788459427
-  },
-  {
-   "action": "vote",
-   "actor": 4,
-   "by": "llm",
-   "cash_after": null,
-   "err": null,
-   "goods_after": null,
-   "ok": true,
-   "params": {
-    "choice": "yes"
-   },
-   "phase": "law",
-   "round": 3,
-   "ts": 1788459438
-  },
-  {
-   "action": "vote",
-   "actor": 5,
-   "by": "llm",
-   "cash_after": null,
-   "err": null,
-   "goods_after": null,
-   "ok": true,
-   "params": {
-    "choice": "yes"
-   },
-   "phase": "law",
-   "round": 3,
-   "ts": 1788459438
-  },
-  {
-   "action": "sell",
-   "actor": 1,
-   "by": "fallback",
-   "cash_after": 63432500,
-   "err": null,
-   "goods_after": 0,
-   "ok": true,
-   "params": {
-    "units": 3
-   },
-   "phase": "market",
-   "round": 4,
-   "ts": 1788459543
-  },
-  {
-   "action": "sell",
-   "actor": 0,
-   "by": "fallback",
-   "cash_after": 50545000,
-   "err": null,
-   "goods_after": 0,
-   "ok": true,
-   "params": {
-    "units": 3
-   },
-   "phase": "market",
-   "round": 4,
-   "ts": 1788459543
-  },
-  {
-   "action": "sell",
-   "actor": 5,
-   "by": "llm",
-   "cash_after": 21542500,
-   "err": null,
-   "goods_after": 0,
-   "ok": true,
-   "params": {
-    "units": 3
-   },
-   "phase": "market",
-   "round": 4,
-   "ts": 1788459548
-  },
-  {
-   "action": "sell",
-   "actor": 3,
-   "by": "llm",
-   "cash_after": 18052500,
-   "err": null,
-   "goods_after": 0,
-   "ok": true,
-   "params": {
-    "units": 3
-   },
-   "phase": "market",
-   "round": 4,
-   "ts": 1788459551
-  },
-  {
-   "action": "sell",
-   "actor": 2,
-   "by": "llm",
-   "cash_after": 17735000,
-   "err": null,
-   "goods_after": 0,
-   "ok": true,
-   "params": {
-    "units": 3
-   },
-   "phase": "market",
-   "round": 4,
-   "ts": 1788459561
-  },
-  {
-   "action": "sell",
-   "actor": 4,
-   "by": "llm",
-   "cash_after": 8690000,
-   "err": null,
-   "goods_after": 0,
-   "ok": true,
-   "params": {
-    "units": 3
-   },
-   "phase": "market",
-   "round": 4,
-   "ts": 1788459561
-  },
-  {
-   "action": "produce",
-   "actor": 0,
-   "by": "fallback",
-   "cash_after": 50545000,
+   "cash_after": 40700000,
    "err": null,
    "goods_after": 2,
    "ok": true,
    "params": {},
    "phase": "action",
+   "round": 3,
+   "ts": 1788519962
+  },
+  {
+   "action": "produce",
+   "actor": 1,
+   "by": "fallback",
+   "cash_after": 31450000,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 3,
+   "ts": 1788519963
+  },
+  {
+   "action": "produce",
+   "actor": 2,
+   "by": "llm",
+   "cash_after": 24050000,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 3,
+   "ts": 1788519974
+  },
+  {
+   "action": "vote",
+   "actor": 1,
+   "by": "fallback",
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 3,
+   "ts": 1788520056
+  },
+  {
+   "action": "vote",
+   "actor": 0,
+   "by": "fallback",
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 3,
+   "ts": 1788520056
+  },
+  {
+   "action": "vote",
+   "actor": 2,
+   "by": "llm",
+   "cash_after": null,
+   "err": null,
+   "goods_after": null,
+   "ok": true,
+   "params": {
+    "choice": "yes"
+   },
+   "phase": "law",
+   "round": 3,
+   "ts": 1788520067
+  },
+  {
+   "action": "sell",
+   "actor": 0,
+   "by": "fallback",
+   "cash_after": 54395000,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
    "round": 4,
-   "ts": 1788459666
+   "ts": 1788520148
+  },
+  {
+   "action": "sell",
+   "actor": 1,
+   "by": "fallback",
+   "cash_after": 42032500,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 4,
+   "ts": 1788520148
+  },
+  {
+   "action": "sell",
+   "actor": 2,
+   "by": "llm",
+   "cash_after": 32142500,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 4,
+   "ts": 1788520157
   },
   {
    "action": "inspect_license",
-   "actor": 3,
-   "by": "llm",
-   "cash_after": 13052500,
+   "actor": 1,
+   "by": "fallback",
+   "cash_after": 37032500,
    "err": null,
    "goods_after": 0,
    "ok": true,
    "params": {},
    "phase": "action",
    "round": 4,
-   "ts": 1788459666
-  },
-  {
-   "action": "produce",
-   "actor": 1,
-   "by": "fallback",
-   "cash_after": 63432500,
-   "err": null,
-   "goods_after": 2,
-   "ok": true,
-   "params": {},
-   "phase": "action",
-   "round": 4,
-   "ts": 1788459666
-  },
-  {
-   "action": "produce",
-   "actor": 3,
-   "by": "llm",
-   "cash_after": 13052500,
-   "err": null,
-   "goods_after": 2,
-   "ok": true,
-   "params": {},
-   "phase": "action",
-   "round": 4,
-   "ts": 1788459667
-  },
-  {
-   "action": "produce",
-   "actor": 5,
-   "by": "llm",
-   "cash_after": 21542500,
-   "err": null,
-   "goods_after": 2,
-   "ok": true,
-   "params": {},
-   "phase": "action",
-   "round": 4,
-   "ts": 1788459674
-  },
-  {
-   "action": "produce",
-   "actor": 2,
-   "by": "llm",
-   "cash_after": 17735000,
-   "err": null,
-   "goods_after": 2,
-   "ok": true,
-   "params": {},
-   "phase": "action",
-   "round": 4,
-   "ts": 1788459680
+   "ts": 1788520242
   },
   {
    "action": "inspect_license",
-   "actor": 4,
-   "by": "llm",
-   "cash_after": 3690000,
+   "actor": 0,
+   "by": "fallback",
+   "cash_after": 49395000,
    "err": null,
    "goods_after": 0,
    "ok": true,
    "params": {},
    "phase": "action",
    "round": 4,
-   "ts": 1788459680
-  },
-  {
-   "action": "produce",
-   "actor": 4,
-   "by": "llm",
-   "cash_after": 3690000,
-   "err": null,
-   "goods_after": 2,
-   "ok": true,
-   "params": {},
-   "phase": "action",
-   "round": 4,
-   "ts": 1788459690
+   "ts": 1788520242
   },
   {
    "action": "bid_license",
-   "actor": 3,
-   "by": "llm",
-   "cash_after": 1052500,
+   "actor": 1,
+   "by": "fallback",
+   "cash_after": 12344167,
    "err": null,
-   "goods_after": 2,
+   "goods_after": 0,
    "ok": true,
    "params": {
-    "amount": 12000000
+    "amount": 24688333
    },
    "phase": "action",
    "round": 4,
-   "ts": 1788459690
+   "ts": 1788520244
+  },
+  {
+   "action": "bid_license",
+   "actor": 0,
+   "by": "fallback",
+   "cash_after": 20575801,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "amount": 28819199
+   },
+   "phase": "action",
+   "round": 4,
+   "ts": 1788520244
+  },
+  {
+   "action": "produce",
+   "actor": 1,
+   "by": "fallback",
+   "cash_after": 12344167,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788520246
+  },
+  {
+   "action": "produce",
+   "actor": 0,
+   "by": "fallback",
+   "cash_after": 20575801,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788520246
+  },
+  {
+   "action": "inspect_license",
+   "actor": 2,
+   "by": "llm",
+   "cash_after": 27142500,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788520253
+  },
+  {
+   "action": "bid_license",
+   "actor": 2,
+   "by": "llm",
+   "cash_after": 9047500,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "amount": 18095000
+   },
+   "phase": "action",
+   "round": 4,
+   "ts": 1788520266
+  },
+  {
+   "action": "produce",
+   "actor": 2,
+   "by": "llm",
+   "cash_after": 9047500,
+   "err": null,
+   "goods_after": 2,
+   "ok": true,
+   "params": {},
+   "phase": "action",
+   "round": 4,
+   "ts": 1788520279
   },
   {
    "action": "vote",
@@ -950,7 +523,7 @@
    },
    "phase": "law",
    "round": 4,
-   "ts": 1788459789
+   "ts": 1788520334
   },
   {
    "action": "vote",
@@ -965,52 +538,7 @@
    },
    "phase": "law",
    "round": 4,
-   "ts": 1788459789
-  },
-  {
-   "action": "vote",
-   "actor": 5,
-   "by": "llm",
-   "cash_after": null,
-   "err": null,
-   "goods_after": null,
-   "ok": true,
-   "params": {
-    "choice": "yes"
-   },
-   "phase": "law",
-   "round": 4,
-   "ts": 1788459795
-  },
-  {
-   "action": "vote",
-   "actor": 3,
-   "by": "llm",
-   "cash_after": null,
-   "err": null,
-   "goods_after": null,
-   "ok": true,
-   "params": {
-    "choice": "abstain"
-   },
-   "phase": "law",
-   "round": 4,
-   "ts": 1788459799
-  },
-  {
-   "action": "vote",
-   "actor": 4,
-   "by": "llm",
-   "cash_after": null,
-   "err": null,
-   "goods_after": null,
-   "ok": true,
-   "params": {
-    "choice": "yes"
-   },
-   "phase": "law",
-   "round": 4,
-   "ts": 1788459810
+   "ts": 1788520334
   },
   {
    "action": "vote",
@@ -1025,43 +553,13 @@
    },
    "phase": "law",
    "round": 4,
-   "ts": 1788459810
-  },
-  {
-   "action": "sell_credit",
-   "actor": 3,
-   "by": "llm",
-   "cash_after": 894625,
-   "err": null,
-   "goods_after": 0,
-   "ok": true,
-   "params": {
-    "units": 2
-   },
-   "phase": "market",
-   "round": 5,
-   "ts": 1788459912
-  },
-  {
-   "action": "sell",
-   "actor": 1,
-   "by": "fallback",
-   "cash_after": 67517625,
-   "err": null,
-   "goods_after": 0,
-   "ok": true,
-   "params": {
-    "units": 2
-   },
-   "phase": "market",
-   "round": 5,
-   "ts": 1788459912
+   "ts": 1788520346
   },
   {
    "action": "sell",
    "actor": 0,
    "by": "fallback",
-   "cash_after": 53363250,
+   "cash_after": 35089430,
    "err": null,
    "goods_after": 0,
    "ok": true,
@@ -1070,13 +568,28 @@
    },
    "phase": "market",
    "round": 5,
-   "ts": 1788459912
+   "ts": 1788520427
+  },
+  {
+   "action": "sell",
+   "actor": 1,
+   "by": "fallback",
+   "cash_after": 45077625,
+   "err": null,
+   "goods_after": 0,
+   "ok": true,
+   "params": {
+    "units": 2
+   },
+   "phase": "market",
+   "round": 5,
+   "ts": 1788520427
   },
   {
    "action": "sell",
    "actor": 2,
    "by": "llm",
-   "cash_after": 22274750,
+   "cash_after": 33471125,
    "err": null,
    "goods_after": 0,
    "ok": true,
@@ -1085,128 +598,46 @@
    },
    "phase": "market",
    "round": 5,
-   "ts": 1788459918
-  },
-  {
-   "action": "sell",
-   "actor": 5,
-   "by": "llm",
-   "cash_after": 23111125,
-   "err": null,
-   "goods_after": 0,
-   "ok": true,
-   "params": {
-    "units": 2
-   },
-   "phase": "market",
-   "round": 5,
-   "ts": 1788459922
-  },
-  {
-   "action": "sell",
-   "actor": 4,
-   "by": "llm",
-   "cash_after": 6336500,
-   "err": null,
-   "goods_after": 0,
-   "ok": true,
-   "params": {
-    "units": 2
-   },
-   "phase": "market",
-   "round": 5,
-   "ts": 1788459922
-  },
-  {
-   "action": "produce",
-   "actor": 3,
-   "by": "llm",
-   "cash_after": null,
-   "err": "WrongPhase",
-   "goods_after": null,
-   "ok": false,
-   "params": {},
-   "phase": "market",
-   "round": 5,
-   "ts": 1788459980
+   "ts": 1788520435
   },
   {
    "action": "produce",
    "actor": 0,
    "by": "fallback",
-   "cash_after": 53363250,
+   "cash_after": 35089430,
    "err": null,
    "goods_after": 2,
    "ok": true,
    "params": {},
    "phase": "action",
    "round": 5,
-   "ts": 1788460034
-  },
-  {
-   "action": "produce",
-   "actor": 3,
-   "by": "llm",
-   "cash_after": 894625,
-   "err": null,
-   "goods_after": 2,
-   "ok": true,
-   "params": {},
-   "phase": "action",
-   "round": 5,
-   "ts": 1788460035
+   "ts": 1788520521
   },
   {
    "action": "produce",
    "actor": 1,
    "by": "fallback",
-   "cash_after": 67517625,
+   "cash_after": 45077625,
    "err": null,
    "goods_after": 2,
    "ok": true,
    "params": {},
    "phase": "action",
    "round": 5,
-   "ts": 1788460035
-  },
-  {
-   "action": "produce",
-   "actor": 4,
-   "by": "llm",
-   "cash_after": 6336500,
-   "err": null,
-   "goods_after": 2,
-   "ok": true,
-   "params": {},
-   "phase": "action",
-   "round": 5,
-   "ts": 1788460041
+   "ts": 1788520521
   },
   {
    "action": "produce",
    "actor": 2,
    "by": "llm",
-   "cash_after": 22274750,
+   "cash_after": 33471125,
    "err": null,
    "goods_after": 2,
    "ok": true,
    "params": {},
    "phase": "action",
    "round": 5,
-   "ts": 1788460053
-  },
-  {
-   "action": "produce",
-   "actor": 5,
-   "by": "llm",
-   "cash_after": 23111125,
-   "err": null,
-   "goods_after": 2,
-   "ok": true,
-   "params": {},
-   "phase": "action",
-   "round": 5,
-   "ts": 1788460054
+   "ts": 1788520532
   },
   {
    "action": "vote",
@@ -1221,7 +652,7 @@
    },
    "phase": "law",
    "round": 5,
-   "ts": 1788460158
+   "ts": 1788520614
   },
   {
    "action": "vote",
@@ -1236,7 +667,7 @@
    },
    "phase": "law",
    "round": 5,
-   "ts": 1788460158
+   "ts": 1788520614
   },
   {
    "action": "vote",
@@ -1251,73 +682,13 @@
    },
    "phase": "law",
    "round": 5,
-   "ts": 1788460164
-  },
-  {
-   "action": "vote",
-   "actor": 3,
-   "by": "llm",
-   "cash_after": null,
-   "err": null,
-   "goods_after": null,
-   "ok": true,
-   "params": {
-    "choice": "yes"
-   },
-   "phase": "law",
-   "round": 5,
-   "ts": 1788460171
-  },
-  {
-   "action": "vote",
-   "actor": 4,
-   "by": "llm",
-   "cash_after": null,
-   "err": null,
-   "goods_after": null,
-   "ok": true,
-   "params": {
-    "choice": "yes"
-   },
-   "phase": "law",
-   "round": 5,
-   "ts": 1788460177
-  },
-  {
-   "action": "vote",
-   "actor": 5,
-   "by": "llm",
-   "cash_after": null,
-   "err": null,
-   "goods_after": null,
-   "ok": true,
-   "params": {
-    "choice": "yes"
-   },
-   "phase": "law",
-   "round": 5,
-   "ts": 1788460177
-  },
-  {
-   "action": "sell",
-   "actor": 3,
-   "by": "llm",
-   "cash_after": null,
-   "err": "WrongPhase",
-   "goods_after": null,
-   "ok": false,
-   "params": {
-    "units": 2
-   },
-   "phase": "law",
-   "round": 5,
-   "ts": 1788460232
+   "ts": 1788520625
   },
   {
    "action": "sell",
    "actor": 0,
    "by": "fallback",
-   "cash_after": 65158720,
+   "cash_after": 47425990,
    "err": null,
    "goods_after": 0,
    "ok": true,
@@ -1326,13 +697,13 @@
    },
    "phase": "market",
    "round": 6,
-   "ts": 1788460280
+   "ts": 1788520706
   },
   {
    "action": "sell",
    "actor": 1,
    "by": "fallback",
-   "cash_after": 72689960,
+   "cash_after": 51915960,
    "err": null,
    "goods_after": 0,
    "ok": true,
@@ -1341,43 +712,13 @@
    },
    "phase": "market",
    "round": 6,
-   "ts": 1788460280
-  },
-  {
-   "action": "sell",
-   "actor": 3,
-   "by": "llm",
-   "cash_after": 34460410,
-   "err": null,
-   "goods_after": 0,
-   "ok": true,
-   "params": {
-    "units": 2
-   },
-   "phase": "market",
-   "round": 6,
-   "ts": 1788460280
-  },
-  {
-   "action": "sell",
-   "actor": 4,
-   "by": "llm",
-   "cash_after": 13486025,
-   "err": null,
-   "goods_after": 0,
-   "ok": true,
-   "params": {
-    "units": 2
-   },
-   "phase": "market",
-   "round": 6,
-   "ts": 1788460287
+   "ts": 1788520706
   },
   {
    "action": "sell",
    "actor": 2,
    "by": "llm",
-   "cash_after": 24333495,
+   "cash_after": 38850435,
    "err": null,
    "goods_after": 0,
    "ok": true,
@@ -1386,128 +727,46 @@
    },
    "phase": "market",
    "round": 6,
-   "ts": 1788460290
-  },
-  {
-   "action": "sell",
-   "actor": 5,
-   "by": "llm",
-   "cash_after": 23244435,
-   "err": null,
-   "goods_after": 0,
-   "ok": true,
-   "params": {
-    "units": 2
-   },
-   "phase": "market",
-   "round": 6,
-   "ts": 1788460290
+   "ts": 1788520714
   },
   {
    "action": "produce",
-   "actor": 3,
-   "by": "llm",
-   "cash_after": null,
-   "err": "WrongPhase",
-   "goods_after": null,
-   "ok": false,
-   "params": {},
-   "phase": "market",
-   "round": 6,
-   "ts": 1788460347
-  },
-  {
-   "action": "produce",
-   "actor": 3,
-   "by": "llm",
-   "cash_after": 34460410,
+   "actor": 1,
+   "by": "fallback",
+   "cash_after": 51915960,
    "err": null,
-   "goods_after": 2,
+   "goods_after": 3,
    "ok": true,
    "params": {},
    "phase": "action",
    "round": 6,
-   "ts": 1788460403
+   "ts": 1788520800
   },
   {
    "action": "produce",
    "actor": 0,
    "by": "fallback",
-   "cash_after": 65158720,
+   "cash_after": 47425990,
    "err": null,
-   "goods_after": 2,
+   "goods_after": 3,
    "ok": true,
    "params": {},
    "phase": "action",
    "round": 6,
-   "ts": 1788460403
-  },
-  {
-   "action": "produce",
-   "actor": 1,
-   "by": "fallback",
-   "cash_after": 72689960,
-   "err": null,
-   "goods_after": 2,
-   "ok": true,
-   "params": {},
-   "phase": "action",
-   "round": 6,
-   "ts": 1788460404
-  },
-  {
-   "action": "produce",
-   "actor": 5,
-   "by": "llm",
-   "cash_after": 23244435,
-   "err": null,
-   "goods_after": 2,
-   "ok": true,
-   "params": {},
-   "phase": "action",
-   "round": 6,
-   "ts": 1788460410
+   "ts": 1788520800
   },
   {
    "action": "produce",
    "actor": 2,
    "by": "llm",
-   "cash_after": 24333495,
+   "cash_after": 38850435,
    "err": null,
-   "goods_after": 2,
+   "goods_after": 3,
    "ok": true,
    "params": {},
    "phase": "action",
    "round": 6,
-   "ts": 1788460435
-  },
-  {
-   "action": "produce",
-   "actor": 4,
-   "by": "llm",
-   "cash_after": 13486025,
-   "err": null,
-   "goods_after": 2,
-   "ok": true,
-   "params": {},
-   "phase": "action",
-   "round": 6,
-   "ts": 1788460436
-  },
-  {
-   "action": "vote",
-   "actor": 3,
-   "by": "llm",
-   "cash_after": null,
-   "err": "WrongPhase",
-   "goods_after": null,
-   "ok": false,
-   "params": {
-    "choice": "abstain"
-   },
-   "phase": "action",
-   "round": 6,
-   "ts": 1788460520
+   "ts": 1788520812
   },
   {
    "action": "vote",
@@ -1522,7 +781,7 @@
    },
    "phase": "law",
    "round": 6,
-   "ts": 1788460527
+   "ts": 1788520894
   },
   {
    "action": "vote",
@@ -1537,52 +796,7 @@
    },
    "phase": "law",
    "round": 6,
-   "ts": 1788460527
-  },
-  {
-   "action": "vote",
-   "actor": 3,
-   "by": "llm",
-   "cash_after": null,
-   "err": null,
-   "goods_after": null,
-   "ok": true,
-   "params": {
-    "choice": "abstain"
-   },
-   "phase": "law",
-   "round": 6,
-   "ts": 1788460530
-  },
-  {
-   "action": "vote",
-   "actor": 4,
-   "by": "llm",
-   "cash_after": null,
-   "err": null,
-   "goods_after": null,
-   "ok": true,
-   "params": {
-    "choice": "yes"
-   },
-   "phase": "law",
-   "round": 6,
-   "ts": 1788460533
-  },
-  {
-   "action": "vote",
-   "actor": 5,
-   "by": "llm",
-   "cash_after": null,
-   "err": null,
-   "goods_after": null,
-   "ok": true,
-   "params": {
-    "choice": "yes"
-   },
-   "phase": "law",
-   "round": 6,
-   "ts": 1788460545
+   "ts": 1788520894
   },
   {
    "action": "vote",
@@ -1597,7 +811,7 @@
    },
    "phase": "law",
    "round": 6,
-   "ts": 1788460546
+   "ts": 1788520904
   }
  ],
  "agents": [
@@ -1612,111 +826,63 @@
    "name": "Aibot"
   },
   {
-   "agent_id": "cc5a5d2a160ee03e565a6fe7086263f61b4b4d178a0f9f267c6d9a355fcc7361",
+   "agent_id": "8f10a7916c93e5b3679e9e7d2834af7739edced143bd03a92b1ec55c20b03759",
    "model": "glm-4.5-flash",
    "name": "Botagul"
-  },
-  {
-   "agent_id": "9ad8117fb533581d5a4097523d36c0a07566f8cba45497d2a0b38bca6a94bfae",
-   "model": "agent-one",
-   "name": "Agent1"
-  },
-  {
-   "agent_id": "455f1a21518bda7522aa6ad238bdc659917230ed07f2a82fd568a88d98cbb68e",
-   "model": "glm-agent-Opencode",
-   "name": "Opencode"
-  },
-  {
-   "agent_id": "78342d9f156e824940b7f136d6f67b53d592f9f796f48b133b23fb89f634f655",
-   "model": "glm-4.5-flash",
-   "name": "Agent1"
   }
  ],
- "bank": 72000000,
+ "bank": 58819199,
  "entry_fee": 10000000,
  "epoch": 1,
  "final_cash": [
-  65158720,
-  72689960,
-  24333495,
-  34460410,
-  13486025,
-  23244435
+  47425990,
+  51915960,
+  38850435
  ],
  "final_goods": [
-  2,
-  2,
-  2,
-  2,
-  2,
-  2
+  3,
+  3,
+  3
  ],
  "final_hard": [
-  0,
-  0,
-  0,
   0,
   0,
   0
  ],
  "final_influence": [
   1,
-  2,
   1,
-  1,
-  1,
-  1
+  2
  ],
  "final_promissory": [
   0,
   0,
-  0,
-  0,
-  0,
   0
  ],
- "finished_at": 1788460649,
- "game_id": 12,
- "n_factions": 6,
+ "finished_at": 1788520985,
+ "game_id": 1,
+ "n_factions": 3,
  "payout_breakdown": [
   {
    "factory_bonus": 0,
-   "license_rent": 0,
-   "rank_share": 20520000
-  },
-  {
-   "factory_bonus": 3600000,
-   "license_rent": 0,
-   "rank_share": 34200000
+   "license_rent": 48031999,
+   "rank_share": 17645760
   },
   {
    "factory_bonus": 0,
    "license_rent": 0,
-   "rank_share": 3420000
+   "rank_share": 29409600
   },
   {
-   "factory_bonus": 0,
-   "license_rent": 20143788,
-   "rank_share": 10260000
-  },
-  {
-   "factory_bonus": 0,
+   "factory_bonus": 2940959,
    "license_rent": 0,
-   "rank_share": 0
-  },
-  {
-   "factory_bonus": 0,
-   "license_rent": 0,
-   "rank_share": 0
+   "rank_share": 8822880
   }
  ],
  "payouts": [
-  20520000,
-  37800000,
-  3420000,
-  30403788,
-  0,
-  0
+  65677759,
+  29409600,
+  11763839
  ],
  "phases": [
   {
@@ -1732,15 +898,15 @@
    "round": 1
   },
   {
-   "card": 3,
-   "card_name": "subsidy_produce",
+   "card": 8,
+   "card_name": "vzaimozachet",
    "laws_passed_total": 1,
    "no": 0,
    "passed": true,
    "phase": "law",
    "round": 1,
    "veto_pending": false,
-   "yes": 5
+   "yes": 3
   },
   {
    "phase": "market",
@@ -1753,13 +919,13 @@
   {
    "card": 0,
    "card_name": "status_quo",
-   "laws_passed_total": 1,
+   "laws_passed_total": 2,
    "no": 0,
-   "passed": false,
+   "passed": true,
    "phase": "law",
    "round": 2,
    "veto_pending": false,
-   "yes": 5
+   "yes": 3
   },
   {
    "phase": "market",
@@ -1770,15 +936,15 @@
    "round": 3
   },
   {
-   "card": 2,
-   "card_name": "tax_20",
-   "laws_passed_total": 2,
-   "no": 1,
+   "card": 1,
+   "card_name": "tax_10",
+   "laws_passed_total": 3,
+   "no": 0,
    "passed": true,
    "phase": "law",
    "round": 3,
    "veto_pending": false,
-   "yes": 5
+   "yes": 3
   },
   {
    "phase": "market",
@@ -1789,15 +955,15 @@
    "round": 4
   },
   {
-   "card": 8,
-   "card_name": "vzaimozachet",
-   "laws_passed_total": 3,
+   "card": 2,
+   "card_name": "tax_20",
+   "laws_passed_total": 4,
    "no": 0,
    "passed": true,
    "phase": "law",
    "round": 4,
    "veto_pending": false,
-   "yes": 5
+   "yes": 3
   },
   {
    "phase": "market",
@@ -1808,15 +974,15 @@
    "round": 5
   },
   {
-   "card": 1,
-   "card_name": "tax_10",
-   "laws_passed_total": 4,
+   "card": 3,
+   "card_name": "subsidy_produce",
+   "laws_passed_total": 5,
    "no": 0,
    "passed": true,
    "phase": "law",
    "round": 5,
    "veto_pending": false,
-   "yes": 6
+   "yes": 3
   },
   {
    "phase": "market",
@@ -1827,25 +993,22 @@
    "round": 6
   },
   {
-   "card": 5,
-   "card_name": "subsidy_rich",
-   "laws_passed_total": 5,
+   "card": 4,
+   "card_name": "subsidy_poor",
+   "laws_passed_total": 6,
    "no": 0,
    "passed": true,
    "phase": "law",
    "round": 6,
    "veto_pending": false,
-   "yes": 5
+   "yes": 3
   }
  ],
  "rake": 0,
  "ranks": [
   1,
   0,
-  3,
-  2,
-  5,
-  4
+  2
  ],
  "vote_weight_mode": 0
 }
