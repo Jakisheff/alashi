@@ -16,11 +16,15 @@ else
 fi
 
 # 2. cloudflared quick-tunnel (URL печатаем — он меняется при каждом перезапуске)
+# бинарник ищем в персистентных путях: /tmp вычищается при перезагрузке
+CF_BIN="$(command -v cloudflared || true)"
+[ -z "$CF_BIN" ] && [ -x "$HOME/.local/bin/cloudflared" ] && CF_BIN="$HOME/.local/bin/cloudflared"
+[ -z "$CF_BIN" ] && [ -x /tmp/cloudflared ] && CF_BIN=/tmp/cloudflared
 if pgrep -f "cloudflared tunnel" >/dev/null; then
   echo "[ok] cloudflared жив, свежий URL:"
   grep -hoE "https://[a-z0-9-]+\.trycloudflare\.com" /tmp/opencode/cf_tunnel*.log 2>/dev/null | tail -1
-else
-  nohup /tmp/cloudflared tunnel --url http://127.0.0.1:8090 > /tmp/opencode/cf_tunnel_$(date +%H%M%S).log 2>&1 &
+elif [ -n "$CF_BIN" ]; then
+  nohup "$CF_BIN" tunnel --url http://127.0.0.1:8090 > /tmp/opencode/cf_tunnel_$(date +%H%M%S).log 2>&1 &
   sleep 10
   LATEST=$(ls -t /tmp/opencode/cf_tunnel_*.log | head -1)
   URL=$(grep -oE "https://[a-z0-9-]+\.trycloudflare\.com" "$LATEST" | head -1)
