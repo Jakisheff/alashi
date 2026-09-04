@@ -70,7 +70,7 @@ fn llm_cfg(model_override: Option<&str>) -> Option<LlmCfg> {
     })
 }
 
-fn llm_ask(cfg: &LlmCfg, system: &str, user: &str) -> Option<String> {
+fn llm_ask(cfg: &LlmCfg, system: &str, user: &str, timeout_s: u64) -> Option<String> {
     let body = serde_json::json!({
         "model": cfg.model,
         "thinking": {"type": "disabled"},
@@ -83,7 +83,7 @@ fn llm_ask(cfg: &LlmCfg, system: &str, user: &str) -> Option<String> {
     .to_string();
     let out = std::process::Command::new("curl")
         .args([
-            "-s", "-4", "-m", "14", "-X", "POST",
+            "-s", "-4", "-m", &timeout_s.to_string(), "-X", "POST",
             &format!("{}/chat/completions", cfg.base),
             "-H", &format!("Authorization: Bearer {}", cfg.key),
             "-H", "Content-Type: application/json",
@@ -108,6 +108,16 @@ fn parse_json_block(raw: &str) -> Option<Value> {
 }
 
 // ---------- агент ----------
+
+/// Память раунда: bid/inspect не сжигают ход, acted остаётся false —
+/// без флагов фоллбэк бидил бы и инспектил бы каждый тик (урок gid 12:
+/// двойной бид Agent3 в gid 1). Сбрасывается на смене (round, phase).
+#[derive(Default)]
+struct Mem {
+    inspected: bool,
+    bid: bool,
+    license_yield: Option<u64>,
+}
 
 const SYSTEM: &str = "Ты играешь в политэкономическую игру Alashi против других агентов. \
 Твоя цель — максимизировать свой cash к концу 6 раундов: ранг по cash определяет долю банка. \
@@ -169,6 +179,8 @@ fn main() {
     let started = std::time::Instant::now();
     // селф-дебриф: каждый свой ход в журнал, после партии — в inbox
     let mut my_log: Vec<String> = vec![];
+    let mut mem = Mem::default();
+    let mut last_rf: Option<(u64, String)> = None;
     loop {
         if started.elapsed() > Duration::from_secs(2700) {
             println!("[agent] таймаут 10 мин, выхожу");
@@ -195,6 +207,11 @@ fn main() {
         }
         let s = &r["state"];
         let phase = s["phase"].as_str().unwrap_or("lobby");
+        let rf = (s["round"].as_u64().unwrap_or(0), phase.to_string());
+        if last_rf.as_ref() != Some(&rf) {
+            mem = Mem::default();
+            last_rf = Some(rf);
+        }
         let me = s["factions"]
             .as_array()
             .and_then(|f| f.iter().find(|f| f["idx"].as_u64() == Some(my_idx as u64)))
@@ -207,12 +224,15 @@ fn main() {
         };
         if need_act {
             // честная очередь: джиттер перед ходом, чтобы внешние агенты
-            // на опросе не проигрывали гонку серверным ботам (дебриф r3)
-            let jitter = 400 + (std::time::SystemTime::now()
-                .duration_since(std::time::UNIX_EPOCH)
-                .map(|d| d.subsec_millis())
-                .unwrap_or(0)
-                % 1600);
+            // на опросе не проигрывали гонку серверным ботам (дебриф r3).
+            // Базар — исключение: позиция продажи решает цену (урок gid 12).
+            let jitter = if phase == "market" { 0 } else {
+                400 + (std::time::SystemTime::now()
+                    .duration_since(std::time::UNIX_EPOCH)
+                    .map(|d| d.subsec_millis())
+                    .unwrap_or(0)
+                    % 1600)
+            };
             std::thread::sleep(Duration::from_millis(jitter as u64));
             let phase_owned = phase.to_string();
             if phase_owned == "market" && me["goods"].as_u64().unwrap_or(0) == 0 {
@@ -220,7 +240,7 @@ fn main() {
                 std::thread::sleep(Duration::from_millis(700));
                 continue;
             }
-            let decision = decide(&llm, s, &me, &prompt);
+            let decision = decide(&llm, s, &me, &prompt, &mem);
             let (action, params) = decision;
             let body = serde_json::json!({
                 "token": token, "action": action, "params": params,
@@ -240,9 +260,16 @@ fn main() {
                 if rr["ok"] != true {
                     let err_s = rr["error"].as_str().unwrap_or("?").to_string();
                     println!("[agent] отказ: {} — пробую фоллбэк", err_s);
+                    // уже инсайдер / уже бид: пометить, чтобы фоллбэк не
+                    // долбил то же действие каждый тик до конца фазы
+                    match action {
+                        "inspect_license" => mem.inspected = true,
+                        "bid_license" if err_s == "AlreadyActed" => mem.bid = true,
+                        _ => {}
+                    }
                     // фаза уже ушла — фоллбэк того же хода тоже не пройдёт
                     if err_s != "WrongPhase" && err_s != "TooEarly" && err_s != "GraceWindow" {
-                        let (a2, p2) = fallback(phase, &me);
+                        let (a2, p2) = fallback(phase, s, &me, &mem);
                         let body = serde_json::json!({
                             "token": token, "action": a2, "params": p2, "by": "fallback",
                         }).to_string();
@@ -257,6 +284,17 @@ fn main() {
                             if ok2 { "ok" } else { "err" }
                         ));
                     }
+                } else {
+                    match action {
+                        "inspect_license" => {
+                            mem.inspected = true;
+                            if let Some(y) = rr["action_log"]["detail"]["license_yield"].as_u64() {
+                                mem.license_yield = Some(y);
+                            }
+                        }
+                        "bid_license" => mem.bid = true,
+                        _ => {}
+                    }
                 }
             }
         }
@@ -265,15 +303,24 @@ fn main() {
 }
 
 /// (action, params) — решение LLM или фоллбэк.
-fn decide(llm: &Option<LlmCfg>, s: &Value, me: &Value, prompt: &str) -> (&'static str, Value) {
+fn decide(
+    llm: &Option<LlmCfg>,
+    s: &Value,
+    me: &Value,
+    prompt: &str,
+    mem: &Mem,
+) -> (&'static str, Value) {
     let phase = s["phase"].as_str().unwrap_or("");
     if let Some(cfg) = llm {
-        // разгона: три агента в одной фазе не должны бить API одновременно
-        let jitter = std::time::SystemTime::now()
-            .duration_since(std::time::UNIX_EPOCH)
-            .map(|d| d.subsec_millis() % 2000)
-            .unwrap_or(0);
-        std::thread::sleep(Duration::from_millis(u64::from(jitter)));
+        // тайм-бюджет ДО хода (урок gid 12: 20-40с ретраев хвостили
+        // продажи): базар — одна быстрая попытка без разгона, остальным
+        // фазам две попытки, вторая только если бюджет ещё не съеден
+        let t0 = std::time::Instant::now();
+        let (jitter_ms, ask_to, attempts, budget_s) = match phase {
+            "market" => (400, 8u64, 1u32, 8u64),
+            _ => (1200, 10, 2, 15),
+        };
+        std::thread::sleep(Duration::from_millis(jitter_ms));
         let epoch_90s = s["epoch"].as_str() == Some("90s");
         let space = match phase {
             "market" => if epoch_90s {
@@ -291,21 +338,30 @@ fn decide(llm: &Option<LlmCfg>, s: &Value, me: &Value, prompt: &str) -> (&'stati
             } else {
                 r#"{"action":"vote","choice":"yes|no|abstain"} и, если ты президент, можно {"action":"veto"}. Голос взвешен влиянием."#
             },
-            _ => return fallback(phase, me),
+            _ => return fallback(phase, s, me, mem),
         };
-        let user = format!(
+        let mut user = format!(
             "{}\nСостояние: {}\nТы — фракция idx {}.\nДоступно: {}\nОтветь одним JSON.",
             prompt,
             serde_json::to_string(s).unwrap_or_default(),
             me["idx"],
             space
         );
-        // до двух попыток: вторая через 3с ловит rate-limit
-        for attempt in 0..2 {
+        // свой инсайд state не показывает — LLM должен видеть yield,
+        // за который заплачено 5M (иначе ставка вслепую даже после inspect)
+        if let Some(y) = mem.license_yield {
+            user.push_str(&format!("\nИнсайд: доход лицензии = {} песо.", y / 1_000_000));
+        }
+        // до двух попыток: вторая через 2с ловит rate-limit, но не за
+        // счёт окна фазы (бюджет проверяется до, а не после попытки)
+        for attempt in 0..attempts {
             if attempt > 0 {
-                std::thread::sleep(Duration::from_secs(3));
+                if t0.elapsed().as_secs() + ask_to > budget_s {
+                    break;
+                }
+                std::thread::sleep(Duration::from_secs(2));
             }
-            if let Some(ans) = llm_ask(cfg, SYSTEM, &user) {
+            if let Some(ans) = llm_ask(cfg, SYSTEM, &user, ask_to) {
                 if let Some(v) = parse_json_block(&ans) {
                     if let Some(a) = v["action"].as_str() {
                         let params = v.get("params").cloned().unwrap_or_else(|| {
@@ -337,7 +393,7 @@ fn decide(llm: &Option<LlmCfg>, s: &Value, me: &Value, prompt: &str) -> (&'stati
                             "barter_propose" => ("barter_propose", params),
                             "barter_accept" => ("barter_accept", params),
                             "customs" => ("customs", params),
-                            _ => fallback(phase, me),
+                            _ => fallback(phase, s, me, mem),
                         };
                     }
                 }
@@ -345,7 +401,7 @@ fn decide(llm: &Option<LlmCfg>, s: &Value, me: &Value, prompt: &str) -> (&'stati
         }
         println!("[agent] LLM не ответил JSON — фоллбэк");
     }
-    fallback(phase, me)
+    fallback(phase, s, me, mem)
 }
 
 /// Селф-дебриф в inbox/<имя>/ по единому шаблону inbox/TEMPLATE.md:
@@ -464,13 +520,38 @@ fn epoch_to_ymd(z: i64) -> (i64, u32, u32) {
     (if m <= 2 { y + 1 } else { y }, m, d)
 }
 
-fn fallback(phase: &str, me: &Value) -> (&'static str, Value) {
+fn fallback(phase: &str, s: &Value, me: &Value, mem: &Mem) -> (&'static str, Value) {
     match phase {
         "market" => {
             let goods = me["goods"].as_u64().unwrap_or(0).max(1);
             ("sell", serde_json::json!({"units": goods}))
         }
-        "action" => ("produce", serde_json::json!({})),
+        "action" => {
+            // урок gid 12: фоллбэк r4 = inspect + детерминированный бид,
+            // а не produce (produce сжигал ход до аукциона). Бид: 3/5
+            // известного yield (20M ренты -> 12M), без инсайда 2/5 казны,
+            // потолок 30M, ниже 10M лицензия не стоит борьбы
+            let cash = me["cash"].as_u64().unwrap_or(0);
+            let auction_round = s["license_auction"]["round"].as_u64().unwrap_or(4);
+            let round = s["round"].as_u64().unwrap_or(0);
+            let sold = s["license_auction"]["sold"].as_bool() == Some(true);
+            if s["epoch"].as_str() == Some("90s") && round == auction_round && !sold {
+                if !mem.inspected && !mem.bid && cash >= 5_000_000 {
+                    return ("inspect_license", serde_json::json!({}));
+                }
+                if !mem.bid && cash >= 10_000_000 {
+                    let target = match mem.license_yield {
+                        Some(y) => y * 3 / 5,
+                        None => cash * 2 / 5,
+                    };
+                    let bid = target.clamp(10_000_000, 30_000_000).min(cash * 2 / 3);
+                    if bid >= 10_000_000 {
+                        return ("bid_license", serde_json::json!({"amount": bid}));
+                    }
+                }
+            }
+            ("produce", serde_json::json!({}))
+        }
         "law" => ("vote", serde_json::json!({"choice": "yes"})),
         _ => ("produce", serde_json::json!({})),
     }
