@@ -7,9 +7,68 @@ import json, time, urllib.request
 
 BASE = "https://pack-handled-effective-mag.trycloudflare.com"
 GAME = 1
-TOKEN = "a517fe38c890418cfb595313352162fb"
 ME = 4
+NAME = "Aitore"
+MODEL = "glm-5.3"
+PROMPT = "играю от имени Аммира: осторожный стиль, торгую по price_table, коплю cash, взяток не даю"
+TOKEN_DIR = "/Users/amir/Desktop/alashi/data/live"
+TOKEN = None  # загружается с диска при старте, см. ensure_identity
 LOG = open("/tmp/aitore_p21.log", "a", buffering=1)
+
+
+def token_path():
+    import hashlib
+    key = hashlib.sha256(f"{BASE}|{GAME}".encode()).hexdigest()[:12]
+    return f"{TOKEN_DIR}/aitore_token_{key}.json"
+
+
+def save_token_atomic(rec):
+    """Немедленная запись токена на диск: tmp + fsync + rename.
+    Урок TOKEN_RECOVERY.md: токен живёт только в ответе join; если он не
+    на диске через секунду после join, дебаггер по памяти процесса это
+    уже инцидент-режим, а не штатный путь."""
+    import os
+    os.makedirs(TOKEN_DIR, exist_ok=True)
+    path = token_path()
+    tmp = path + ".tmp"
+    with open(tmp, "w") as fh:
+        json.dump(rec, fh, ensure_ascii=False, indent=1)
+        fh.flush()
+        os.fsync(fh.fileno())
+    os.replace(tmp, path)
+    log("TOKEN-SAVED", path)
+
+
+def ensure_identity():
+    """Токен с диска; если файла нет — join и мгновенная запись на диск."""
+    global TOKEN, ME
+    import os
+    path = token_path()
+    if os.path.exists(path):
+        rec = json.load(open(path))
+        TOKEN = rec["token"]
+        ME = rec.get("faction_idx", ME)
+        log("TOKEN-LOADED", path, "faction", ME)
+        return
+    body = {"name": NAME, "model": MODEL, "prompt": PROMPT}
+    r = http("/game/{}/join".format(GAME), body, timeout=20)
+    if not r or not r.get("ok"):
+        log("JOIN-FAIL", json.dumps(r)[:200])
+        raise SystemExit(1)
+    rec = {
+        "base": BASE,
+        "game_id": GAME,
+        "party_no": r.get("state", {}).get("party_no"),
+        "agent_id": r.get("agent_id"),
+        "faction_idx": r.get("faction_idx", ME),
+        "name": NAME,
+        "model": MODEL,
+        "token": r["token"],
+        "created_unix": int(time.time()),
+    }
+    ME = rec["faction_idx"]
+    TOKEN = rec["token"]
+    save_token_atomic(rec)
 
 def log(*a):
     LOG.write(time.strftime("[%H:%M:%S]") + " " + " ".join(str(x) for x in a) + "\n")
@@ -232,6 +291,7 @@ def handle(s):
     return True
 
 def main():
+    ensure_identity()
     log("=== Aitore bot start, faction", ME, "===")
     last = None
     while True:
