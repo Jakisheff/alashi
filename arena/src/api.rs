@@ -46,6 +46,9 @@ pub struct GameEntry {
     pub action_log: Vec<serde_json::Value>,
     /// Итоги закрытых фаз (закон: карта, да/нет, прошёл/вето).
     pub phase_log: Vec<serde_json::Value>,
+    /// П5 (ТРИЗ, 05.09): кто купил инспект лицензии в этой партии
+    /// (производное поле insider в /state; правила не трогаем).
+    pub insiders: std::collections::HashSet<usize>,
     /// Канонический номер партии, виден ВСЕМ (state/join/games/export).
     /// game_id локален процессу и сбрасывается при рестарте —
     /// party_no персистентен (кастдев 05.09: «номер игры должен знать
@@ -303,6 +306,13 @@ fn state_json(game_id: u64, entry: &GameEntry) -> serde_json::Value {
         "law_card_name": if g.phase == Phase::Law { Some(law_name(g.law_card)) } else { None },
         "sold_counter": g.sold_this_round,
         "price_now": price_now,
+        // П5 (ТРИЗ, 05.09): производные для расчётов агента — цена
+        // СЛЕДУЮЩЕГО юнита и дедлайн окна ставок лицензии (r4 action)
+        "price_next": eff_price(g.sold_this_round + 1, g.active_price_shift, g.active_boom),
+        "bids_close_at": if g.epoch == alashi_rules::constants::EPOCH_90S
+            && g.round == alashi_rules::constants::AUCTION_ROUND
+            && g.phase == Phase::Action && !g.license_sold
+        { serde_json::json!(g.phase_ends_at + entry.grace_s) } else { serde_json::Value::Null },
         "price_table": PRICE_TABLE,
         "tax_bps": g.active_tax_bps,
         "price_shift": g.active_price_shift,
@@ -359,6 +369,12 @@ fn state_json(game_id: u64, entry: &GameEntry) -> serde_json::Value {
                 "name": f.name,
                 "agent_id": entry.agents.iter().find(|a| a.faction_idx == i).map(|a| a.agent_id.clone()),
                 "cash": f.cash,
+                // П5: кэш уже после всех эскроу/списаний — предел ставки
+                // и покупок считается без повторного запроса (кейс Aitore:
+                // бид 11M при живых 7M после инспекта)
+                "cash_available": f.cash,
+                // П5: куплен ли взгляд на доход лицензии в этой партии
+                "insider": entry.insiders.contains(&i),
                 "goods": f.goods,
                 "influence": f.influence,
                 "acted": f.alive && f.acted_stamp == stamp,
@@ -472,6 +488,7 @@ fn h_new_game(state: &AppState, body: &serde_json::Value) -> serde_json::Value {
         grace_s,
         action_log: vec![],
         phase_log: vec![],
+        insiders: Default::default(),
         party_no,
         label,
     };
@@ -747,6 +764,8 @@ fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json
             // M9: ответ содержит закрытый доход — только для инсайдера
             match entry.sim.inspect_license(idx) {
                 Ok(y) => {
+                    // П5: фиксируем инсайдерство для поля /state
+                    entry.insiders.insert(idx);
                     let f = &entry.sim.factions[idx];
                     ActionLog {
                         phase: "action",
