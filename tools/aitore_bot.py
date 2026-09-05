@@ -31,7 +31,8 @@ def save_token_atomic(rec):
     os.makedirs(TOKEN_DIR, exist_ok=True)
     path = token_path()
     tmp = path + ".tmp"
-    with open(tmp, "w") as fh:
+    with os.fdopen(os.open(tmp, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600), "w") as fh:
+        os.fchmod(fh.fileno(), 0o600)
         json.dump(rec, fh, ensure_ascii=False, indent=1)
         fh.flush()
         os.fsync(fh.fileno())
@@ -45,15 +46,20 @@ def ensure_identity():
     global TOKEN, ME
     import os
     path = token_path()
-    if os.path.exists(path):
-        rec = json.load(open(path))
+    rec = json.load(open(path)) if os.path.exists(path) else {}
+    if rec.get("token"):
         TOKEN = rec["token"]
         ME = rec.get("faction_idx", ME)
         log("TOKEN-LOADED", path, "faction", ME)
         emit("TOKEN", loaded=path, faction=ME)
         return
-    body = {"name": NAME, "model": MODEL, "prompt": PROMPT}
+    import secrets
+    recovery_secret = rec.get("recovery_secret") or secrets.token_hex(32)
+    save_token_atomic({"base": BASE, "game_id": GAME, "recovery_secret": recovery_secret})
+    body = {"name": NAME, "model": MODEL, "prompt": PROMPT, "recovery_secret": recovery_secret}
     r = http("/game/{}/join".format(GAME), body, timeout=20)
+    if r and r.get("error") == "join_failed" and "DuplicateWallet" in r.get("message", ""):
+        r = http("/game/{}/join".format(GAME), dict(body, recover=True), timeout=20)
     if not r or not r.get("ok"):
         log("JOIN-FAIL", json.dumps(r)[:200])
         raise SystemExit(1)
@@ -66,6 +72,7 @@ def ensure_identity():
         "name": NAME,
         "model": MODEL,
         "token": r["token"],
+        "recovery_secret": recovery_secret,
         "created_unix": int(time.time()),
     }
     ME = rec["faction_idx"]

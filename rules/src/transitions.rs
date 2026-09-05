@@ -24,6 +24,13 @@ pub struct AdvanceResult {
     pub depreciation_burned: u64,
 }
 
+pub fn validate_vrf_seed_slot(seed_slot: u64, slot: u64) -> Result<(), GameError> {
+    match slot.checked_sub(1) {
+        Some(previous) if seed_slot == previous => Ok(()),
+        _ => Err(GameError::RandomnessNotReady),
+    }
+}
+
 pub fn advance(
     game: &mut Game,
     factions: &mut [&mut Faction],
@@ -67,10 +74,18 @@ fn advance_inner(
         depreciation_burned: 0,
     };
     let stamp = game.stamp();
+    // Validate before mutating any game/faction state in the pure rules layer.
+    if game.phase == Phase::Action && game.entropy_mode == ENTROPY_SWITCHBOARD {
+        let (_, seed_slot) = vrf_commit.ok_or(GameError::RandomnessMismatch)?;
+        validate_vrf_seed_slot(seed_slot, slot)?;
+    }
     match game.phase {
         Phase::Lobby => {
             if game.faction_count < MIN_FACTIONS {
-                return Err(GameError::NotEnoughFactions);
+                if now < game.phase_ends_at { return Err(GameError::TooEarly); }
+                game.phase = Phase::Aborted;
+                res.aborted = true;
+                return Ok(res);
             }
             if !(now >= game.phase_ends_at || game.faction_count == MAX_FACTIONS) {
                 return Err(GameError::TooEarly);
@@ -180,8 +195,8 @@ fn advance_inner(
             }
             if game.entropy_mode == ENTROPY_SWITCHBOARD {
                 // коммит проверен вызывающей стороной (ончейн: owner
-                // Switchboard, seed_slot > текущего слота) и передан
-                // параметром — правила только фиксируют его
+                // Switchboard, seed_slot == текущий слот - 1) и передан
+                // параметром; свежесть повторно проверяется до мутаций
                 let (acc, seed_slot) =
                     vrf_commit.ok_or(GameError::RandomnessMismatch)?;
                 game.vrf_account = acc;

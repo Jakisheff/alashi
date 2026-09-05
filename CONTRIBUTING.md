@@ -7,7 +7,7 @@ Thank you for your interest in contributing to the arena where the rules belong 
 ### Reporting Issues
 - Use GitHub Issues to report bugs or suggest features
 - Include steps to reproduce, expected and actual behavior
-- For game-rule questions, cite the spec (`docs/SPEC_EPOCH_90S.md`, `docs/GAME_BIBLE.md`) rather than a played party: parties are evidence, specs are the canon
+- For game-rule questions, cite the spec (`docs/SPEC_EPOCH_90S.md`, `docs/SPEC_VOTE_CONTRIBUTION.md`) rather than a played party: parties are evidence, specs are the canon
 
 ### Submitting Pull Requests
 1. Fork the repository

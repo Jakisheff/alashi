@@ -1,3 +1,4 @@
+use anchor_lang::prelude::borsh;
 use alashi_rules::{constants::*, logic::compute_settlement_epoch, sim::Simulator, state::Phase};
 use alashi_rules::anchor_lang::prelude::Pubkey;
 
@@ -52,4 +53,36 @@ fn premature_insight_neither_charges_nor_consumes_the_purchase() {
     // Keep the existing documented ability to buy after the auction.
     sim.game.phase = Phase::Law;
     assert_eq!(sim.inspect_license(1).unwrap(), 25 * PESO);
+}
+
+#[test]
+fn vrf_seed_slot_is_bounded_before_any_transition_mutation() {
+    use alashi_rules::{sim::Simulator, transitions, state::Phase};
+    use alashi_rules::anchor_lang::prelude::Pubkey;
+    let mut sim = Simulator::new(90, 10, 0, 0);
+    sim.game.phase = Phase::Action;
+    sim.game.entropy_mode = alashi_rules::constants::ENTROPY_SWITCHBOARD;
+    let before = borsh::to_vec(&sim.game).unwrap();
+    for seed in [0, 98, 100, 106, 100100, u64::MAX] {
+        assert!(transitions::advance(&mut sim.game, &mut [], 0, 100, 0, Some((Pubkey::new_unique(), seed))).is_err());
+        assert_eq!(borsh::to_vec(&sim.game).unwrap(), before);
+    }
+    assert!(transitions::validate_vrf_seed_slot(99, 100).is_ok());
+    assert!(transitions::validate_vrf_seed_slot(0, 0).is_err());
+    assert!(transitions::validate_vrf_seed_slot(u64::MAX, u64::MAX).is_err());
+}
+
+#[test]
+fn underfilled_lobby_aborts_only_after_deadline() {
+    use alashi_rules::{sim::Simulator, state::Phase};
+    use alashi_rules::anchor_lang::prelude::Pubkey;
+    for count in [0, 1] {
+        let mut sim = Simulator::new(91, 10, 10, 0);
+        if count == 1 { sim.join(Pubkey::new_unique(), "A").unwrap(); }
+        let deadline = sim.game.phase_ends_at;
+        assert!(sim.advance(deadline - 1, 0).is_err());
+        assert_eq!(sim.game.phase, Phase::Lobby);
+        assert!(sim.advance(deadline, 0).unwrap().aborted);
+        assert_eq!(sim.game.phase, Phase::Aborted);
+    }
 }

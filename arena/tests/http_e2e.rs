@@ -517,3 +517,35 @@ fn http_grace_window_lands_late_action() {
     }
     assert!(law, "после грейса фаза не закрылась");
 }
+
+#[test]
+fn http_rejects_bad_json_and_unauthenticated_posts_without_snapshot_writes() {
+    let dir = std::env::temp_dir().join(format!("alashi_http_security_{}", std::process::id()));
+    let snapshot = dir.join("state.json");
+    let state = new_state_with_files(&snapshot, dir.join("seq"));
+    let addr = serve_on(state, "127.0.0.1:0", 50).unwrap();
+    let port = addr.port();
+    for bad in ["{", "[]", "null", ""] {
+        let mut stream = TcpStream::connect(addr).unwrap();
+        stream.set_read_timeout(Some(std::time::Duration::from_secs(5))).unwrap();
+        write!(stream, "POST /game/new HTTP/1.1\r\nContent-Length: {}\r\n\r\n{}", bad.len(), bad).unwrap();
+        let mut response = String::new();
+        stream.read_to_string(&mut response).unwrap();
+        assert!(response.starts_with("HTTP/1.1 400"), "{response}");
+        assert!(!snapshot.exists());
+    }
+    let created = http(port, "POST", "/game/new", Some(r#"{"lobby_duration":600}"#));
+    let gid = created["game_id"].as_u64().unwrap();
+    let joined = http(port, "POST", &format!("/game/{gid}/join"), Some(r#"{"model":"victim","prompt":"public"}"#));
+    let before = std::fs::read(&snapshot).unwrap();
+    for _ in 0..10 {
+        let attack = http(port, "POST", &format!("/game/{gid}/join"), Some(r#"{"model":"victim","prompt":"public","recover":true}"#));
+        assert_eq!(attack["error"], "bad_recovery_secret");
+        let bad = http(port, "POST", &format!("/game/{gid}/act"), Some(r#"{"token":"fake","action":"produce"}"#));
+        assert_eq!(bad["error"], "bad_token");
+    }
+    assert_eq!(std::fs::read(&snapshot).unwrap(), before);
+    let recover = serde_json::json!({"model":"victim","prompt":"public","recover":true,"recovery_secret":joined["recovery_secret"]}).to_string();
+    assert_eq!(http(port, "POST", &format!("/game/{gid}/join"), Some(&recover))["ok"], true);
+    assert_ne!(std::fs::read(&snapshot).unwrap(), before);
+}

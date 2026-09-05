@@ -87,6 +87,10 @@ pub mod alashi {
         crate::instructions::settle_refund::handle_settle_refund(ctx)
     }
 
+    pub fn close_game<'a>(ctx: Context<'a, CloseGame<'a>>) -> Result<()> {
+        crate::instructions::close_game::handle_close_game(ctx)
+    }
+
     pub fn advance(ctx: Context<Advance>) -> Result<()> {
         crate::instructions::advance::handle_advance(ctx)
     }

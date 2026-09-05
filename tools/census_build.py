@@ -5,7 +5,8 @@
 Источники: data/registry.json (агенты), data/sim/*.jsonl (сим-партии),
 data/live/ (живые партии), docs/MANIPULATION_REPORT.md (сводки).
 Пересчёт одной командой: python3 tools/census_build.py"""
-import json, glob, hashlib, os, datetime
+import json, glob, hashlib, os, datetime, re, subprocess
+from html import escape
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -49,33 +50,38 @@ for tag, gs in games.items():
 CN = {0: "статус-кво", 1: "налог10", 2: "налог20", 3: "субс_произв",
       4: "субс_бедным", 5: "субс_богатым", 6: "эмбарго", 7: "бум"}
 
-# живые партии
+# Archived exports, not a hard-coded historical snapshot.
 live = []
-lp = os.path.join(ROOT, "data/live/party4_snapshots.jsonl")
-if os.path.exists(lp):
-    snaps = [json.loads(l) for l in open(lp) if '"err"' not in l]
-    if snaps:
-        last = snaps[-1]
-        live.append({
-            "game": 4, "date": "01.09", "factions": len(last["factions"]),
-            "names": ", ".join(f["name"] for f in last["factions"]),
-            "winner": "Agent1 (120M, выплата 23M)",
-        })
+for path in glob.glob(os.path.join(ROOT, "data/live/party*_export.json")):
+    records = json.load(open(path))
+    for record in records if isinstance(records, list) else [records]:
+        number = record.get("party_no") or int(re.search(r"party(\d+)", os.path.basename(path)).group(1))
+        agents_record = record.get("agents", [])
+        payouts = record.get("payouts", [])
+        top = max(range(len(payouts)), key=payouts.__getitem__) if payouts else None
+        winner = (f"{agents_record[top]['name']} ({payouts[top] / 1_000_000:.2f}M)"
+                  if top is not None and top < len(agents_record) else "нет данных")
+        finished = record.get("finished_at")
+        date = (datetime.datetime.fromtimestamp(finished, datetime.timezone(datetime.timedelta(hours=5))).strftime("%d.%m")
+                if isinstance(finished, (int, float)) else "дата не записана")
+        live.append({"game": number, "date": date,
+                     "names": ", ".join(a.get("name", "?") for a in agents_record), "winner": winner})
+live.sort(key=lambda row: row["game"])
 
 metr = {}
 mp = os.path.join(ROOT, "data/sim/metrics.json")
 if os.path.exists(mp):
     metr = json.load(open(mp))
 
-now = datetime.datetime.now().strftime("%d.%m.%Y %H:%M")
+now = subprocess.check_output(["date", "+%d.%m %H:%M"], env=dict(os.environ, TZ="Asia/Almaty"), text=True).strip()
 law_rows = "".join(
     f"<tr><td>{CN.get(k, k)}</td><td>{v}</td></tr>"
     for k, v in sorted(laws.items(), key=lambda x: -x[1]))
 live_rows = "".join(
-    f"<tr><td>№{l['game']} · {l['date']}</td><td>{l['names']}</td><td>{l['winner']}</td></tr>"
+    f"<tr><td>№{l['game']} · {l['date']}</td><td>{escape(l['names'])}</td><td>{escape(l['winner'])}</td></tr>"
     for l in live) or "<tr><td colspan=3>первая живая партия в данных</td></tr>"
 agent_rows = "".join(
-    f"<tr><td>{a.get('name', a.get('agent_id', '?')[:12])}</td><td>{a.get('model', '')}</td></tr>"
+    f"<tr><td>{escape(a.get('name', a.get('agent_id', '?')[:12]))}</td><td>{escape(a.get('model', ''))}</td></tr>"
     for a in agents) or "<tr><td colspan=2>реестр пуст</td></tr>"
 
 openskill = ""
@@ -110,8 +116,8 @@ html = f"""<!DOCTYPE html>
  <div class="card"><div class="num">{n_actions}</div><div class="cap">ходов записано</div></div>
 </div>
 
-<h2>Живые партии (не из симулятора)</h2>
-<table><tr><td>партия</td><td>состав</td><td>победитель</td></tr>{live_rows}</table>
+<h2>Архив HTTP-партий: {len(live)} экспортов</h2>
+<table><tr><td>партия</td><td>состав</td><td>максимальная выплата</td></tr>{live_rows}</table>
 
 <h2>Законы по типам (голосования)</h2>
 <table>{law_rows}</table>

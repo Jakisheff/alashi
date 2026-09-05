@@ -75,10 +75,12 @@ try:
     gid, party = created["game_id"], created["state"]["party_no"]
     identities = [{"name": f"Smoke{i}", "model": f"smoke-{i}", "prompt": "demo-restart"} for i in range(6)]
     tokens = []
+    recovery_secrets = []
     for identity in identities:
         joined = request(f"/game/{gid}/join", identity)
         assert joined["ok"], joined
         tokens.append(joined["token"])
+        recovery_secrets.append(joined["recovery_secret"])
     print("SMOKE: six agents joined an isolated release arena", flush=True)
     deadline = time.monotonic() + 90
     next_report = time.monotonic() + 15
@@ -102,7 +104,7 @@ try:
             assert [f["cash"] for f in after["factions"]] == [f["cash"] for f in state["factions"]]
             restored = json.loads((SCRATCH / "state.json").read_text())
             assert restored["master_seed"] == before["master_seed"]
-            recovered = request(f"/game/{gid}/join", dict(identities[0], recover=True))
+            recovered = request(f"/game/{gid}/join", dict(identities[0], recover=True, recovery_secret=recovery_secrets[0]))
             assert recovered["ok"] and recovered["recovered"]
             stale = request(f"/game/{gid}/act", {"token": tokens[0], "action": "produce"})
             assert stale["error"] == "bad_token"

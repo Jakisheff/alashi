@@ -32,6 +32,7 @@ pub struct AgentRec {
     pub name: String,
     pub agent_id: String,
     pub token: String,
+    pub recovery_hash: Option<String>,
     pub model: String,
     pub faction_idx: usize,
 }
@@ -70,6 +71,9 @@ pub struct AppState {
     pub master_seed: AtomicU64,
     snapshot_path: PathBuf,
     sequence_path: PathBuf,
+    snapshot_lock: Mutex<()>,
+    connections: Arc<AtomicU64>,
+    waiters: Arc<AtomicU64>,
 }
 
 // ---------- П7 (ТРИЗ, 05.09): сериализация состояния ----------
@@ -97,6 +101,7 @@ fn hex_dec(s: &str) -> Option<Vec<u8>> {
 }
 
 pub fn save_snapshot(state: &AppState) -> std::io::Result<()> {
+    let _writer = state.snapshot_lock.lock().unwrap_or_else(|e| e.into_inner());
     let games = state.games.lock().unwrap_or_else(|e| e.into_inner());
     let completed = state.completed.lock().unwrap_or_else(|e| e.into_inner());
     let arr: Vec<serde_json::Value> = games
@@ -116,7 +121,7 @@ pub fn save_snapshot(state: &AppState) -> std::io::Result<()> {
                 "wallets": e.wallets.iter().map(|w| w.to_string()).collect::<Vec<_>>(),
                 "agents": e.agents.iter().map(|a| serde_json::json!({
                     "name": a.name, "agent_id": a.agent_id, "token": a.token,
-                    "model": a.model, "faction_idx": a.faction_idx,
+                    "model": a.model, "faction_idx": a.faction_idx, "recovery_hash": a.recovery_hash,
                 })).collect::<Vec<_>>(),
                 "insiders": e.insiders.iter().cloned().collect::<Vec<_>>(),
                 "action_log": e.action_log,
@@ -132,12 +137,28 @@ pub fn save_snapshot(state: &AppState) -> std::io::Result<()> {
         "games": arr,
         "completed": completed.clone(),
     });
+    drop(completed);
+    drop(games);
     let p = &state.snapshot_path;
     if let Some(dir) = p.parent() {
         std::fs::create_dir_all(dir)?;
     }
     let tmp = p.with_extension("json.tmp");
-    std::fs::write(&tmp, doc.to_string())?;
+    let mut options = std::fs::OpenOptions::new();
+    options.create(true).write(true).truncate(true);
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::OpenOptionsExt;
+        options.mode(0o600);
+    }
+    let mut file = options.open(&tmp)?;
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::PermissionsExt;
+        file.set_permissions(std::fs::Permissions::from_mode(0o600))?;
+    }
+    std::io::Write::write_all(&mut file, doc.to_string().as_bytes())?;
+    file.sync_all()?;
     std::fs::rename(&tmp, p)
 }
 
@@ -179,6 +200,7 @@ pub fn load_snapshot(state: &AppState) {
                     name: a["name"].as_str()?.to_string(),
                     agent_id: a["agent_id"].as_str()?.to_string(),
                     token: a["token"].as_str()?.to_string(),
+                    recovery_hash: a["recovery_hash"].as_str().map(str::to_string),
                     model: a["model"].as_str().unwrap_or("?").to_string(),
                     faction_idx: a["faction_idx"].as_u64()? as usize,
                 })
@@ -257,20 +279,21 @@ fn splitmix64(x: u64) -> u64 {
     z ^ (z >> 31)
 }
 
-fn random_hex() -> String {
+fn random_hex() -> std::io::Result<String> {
     use std::io::Read;
-    let mut b = [0u8; 16];
-    let ok = std::fs::File::open("/dev/urandom")
-        .and_then(|mut f| f.read_exact(&mut b))
-        .is_ok();
-    if ok {
-        return b.iter().map(|x| format!("{:02x}", x)).collect();
-    }
-    let t = SystemTime::now()
-        .duration_since(UNIX_EPOCH)
-        .map(|d| d.as_nanos() as u64)
-        .unwrap_or(0);
-    format!("{:032x}", splitmix64(t ^ 0xDEAD))
+    let mut bytes = [0u8; 32];
+    std::fs::File::open("/dev/urandom")?.read_exact(&mut bytes)?;
+    Ok(hex_enc(&bytes))
+}
+
+fn recovery_hash(secret: &str) -> Option<String> {
+    if secret.len() != 64 { return None; }
+    let bytes = hex_dec(secret)?;
+    Some(hex_enc(&Sha256::digest(bytes)))
+}
+
+fn secret_matches(a: &str, b: &str) -> bool {
+    a.len() == b.len() && a.bytes().zip(b.bytes()).fold(0u8, |diff, (x, y)| diff | (x ^ y)) == 0
 }
 
 pub fn agent_id_of(model: &str, prompt: &str) -> String {
@@ -301,6 +324,9 @@ pub fn new_state_with_files(snapshot_path: impl Into<PathBuf>, sequence_path: im
         ),
         snapshot_path: snapshot_path.into(),
         sequence_path: sequence_path.into(),
+        snapshot_lock: Mutex::new(()),
+        connections: Arc::new(AtomicU64::new(0)),
+        waiters: Arc::new(AtomicU64::new(0)),
     })
 }
 
@@ -794,7 +820,10 @@ fn h_join(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_jso
     let placeholder_warn = matches!(name.as_str(), "имя" | "модель" | "test" | "Agent")
         || matches!(model.as_str(), "модель" | "name" | "test");
     let agent_id = agent_id_of(&model, &prompt);
-    let token = random_hex();
+    let token = match random_hex() {
+        Ok(token) => token,
+        Err(_) => return err_json("entropy_unavailable", "не удалось создать секрет сессии"),
+    };
     let recover = body.get("recover").and_then(|v| v.as_bool()).unwrap_or(false);
     let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
     let Some(entry) = games.get_mut(&game_id) else {
@@ -803,16 +832,34 @@ fn h_join(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_jso
     // Recovery is an existing-session operation, not a new join.
     if let Some(i) = entry.agents.iter().position(|a| a.agent_id == agent_id) {
         if recover {
+            let agent = &entry.agents[i];
+            let supplied = body.get("recovery_secret").and_then(|v| v.as_str()).unwrap_or("");
+            let valid = match &agent.recovery_hash {
+                Some(expected) => recovery_hash(supplied).is_some_and(|hash| secret_matches(&hash, expected)),
+                // A legacy session can enroll only with its current bearer token.
+                None => body.get("token").and_then(|v| v.as_str())
+                    .is_some_and(|current| secret_matches(current, &agent.token)),
+            };
+            if !valid { return err_json("bad_recovery_secret", "recover требует секрет восстановления; для старой сессии нужен действующий token"); }
+            let enrolled_secret = if agent.recovery_hash.is_none() {
+                match random_hex() {
+                    Ok(secret) => Some(secret),
+                    Err(_) => return err_json("entropy_unavailable", "не удалось создать секрет восстановления"),
+                }
+            } else { None };
+            if let Some(secret) = &enrolled_secret {
+                entry.agents[i].recovery_hash = recovery_hash(secret);
+            }
             let faction_idx = entry.agents[i].faction_idx;
             entry.agents[i].token = token.clone();
             let v = state_json(game_id, entry);
             return serde_json::json!({
                 "ok": true, "recovered": true, "game_id": game_id,
-                "agent_id": agent_id, "token": token, "faction_idx": faction_idx,
+                "agent_id": agent_id, "token": token, "recovery_secret": enrolled_secret, "faction_idx": faction_idx,
                 "warning": "токен перевыпущен; предыдущий отозван", "state": v
             });
         }
-        return err_json("join_failed", "DuplicateWallet: агент уже в партии; для восстановления передай recover: true");
+        return err_json("join_failed", "DuplicateWallet: агент уже в партии; для восстановления передай recover: true и recovery_secret");
     }
     if recover {
         return err_json("unknown_agent", "агент не участвовал в этой партии");
@@ -820,6 +867,16 @@ fn h_join(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_jso
     if entry.agents.len() >= MAX_FACTIONS as usize {
         return err_json("game_full", "мест нет");
     }
+    let recovery_secret = match body.get("recovery_secret") {
+        Some(v) => match v.as_str().filter(|s| recovery_hash(s).is_some()) {
+            Some(secret) => secret.to_string(),
+            None => return err_json("bad_params", "recovery_secret должен содержать 64 hex-символа из 32 случайных байтов"),
+        },
+        None => match random_hex() {
+            Ok(secret) => secret,
+            Err(_) => return err_json("entropy_unavailable", "не удалось создать секрет восстановления"),
+        },
+    };
     let mut h = Sha256::new();
     h.update(agent_id.as_bytes());
     h.update(&game_id.to_le_bytes());
@@ -833,18 +890,14 @@ fn h_join(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_jso
         name: name.clone(),
         agent_id: agent_id.clone(),
         token: token.clone(),
+        recovery_hash: recovery_hash(&recovery_secret),
         model,
         faction_idx,
     });
-    // П2 (ТРИЗ): токен в лог оператора при каждом join — страховка
-    // от утери ответа сессией (ночной кейс 05.09)
-    eprintln!(
-        "[join] party {} faction {} «{}» agent {}.. model {} token {}",
-        entry.party_no, faction_idx, name, &agent_id[..8.min(agent_id.len())], body.get("model").and_then(|v| v.as_str()).unwrap_or("?"), token
-    );
+    eprintln!("[join] party {} faction {} agent {}", entry.party_no, faction_idx, agent_id);
     let v = state_json(game_id, entry);
-    serde_json::json!({"ok": true, "agent_id": agent_id, "token": token, "faction_idx": faction_idx,
-        "warning": if placeholder_warn { Some("имя/model похожи на плейсхолдер из примера — подставь реальные значения; токен сохранить сразу; восстановление через join с recover: true") } else { None },
+    serde_json::json!({"ok": true, "agent_id": agent_id, "token": token, "recovery_secret": recovery_secret, "faction_idx": faction_idx,
+        "warning": if placeholder_warn { Some("имя/model похожи на плейсхолдер из примера — подставь реальные значения; сохрани token и recovery_secret сразу; восстановление требует recovery_secret") } else { None },
         "state": v})
 }
 
@@ -890,15 +943,17 @@ fn h_wait(state: &AppState, game_id: u64, raw_path: &str) -> serde_json::Value {
         let snapshot = {
             let games = state.games.lock().unwrap_or_else(|e| e.into_inner());
             games.get(&game_id).map(|e| {
-                (e.sim.game.round, phase_name(e.sim.game.phase), state_json(game_id, e))
+                (e.sim.game.round, phase_name(e.sim.game.phase))
             })
         };
         match snapshot {
-            Some((r, p, st)) => {
+            Some((r, p)) => {
                 let changed = after_round.map(|ar| ar != r).unwrap_or(false)
                     || after_phase.as_deref().map(|ap| ap != p).unwrap_or(false);
                 if changed {
-                    return serde_json::json!({"ok": true, "changed": true, "state": st});
+                    let mut response = h_state(state, game_id);
+                    response["changed"] = serde_json::json!(true);
+                    return response;
                 }
             }
             None => {
@@ -914,6 +969,7 @@ fn h_wait(state: &AppState, game_id: u64, raw_path: &str) -> serde_json::Value {
                     "state": state_json(game_id, e),
                 });
             }
+            drop(games);
             return h_state(state, game_id);
         }
         std::thread::sleep(std::time::Duration::from_millis(200));
@@ -948,6 +1004,16 @@ fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json
         return err_json("bad_token", "токен не найден");
     };
     let idx = agent.faction_idx;
+    let small_field = match action {
+        "sell" | "sell_credit" | "buy" => Some("units"),
+        "barter_propose" => Some("goods"),
+        _ => None,
+    };
+    if let Some(field) = small_field {
+        if !p.get(field).and_then(|v| v.as_u64()).is_some_and(|v| v <= u16::MAX as u64) {
+            return err_json("bad_params", "units/goods должны быть целым числом от 0 до 65535");
+        }
+    }
     let log: ActionLog = match action {
         "sell" => {
             let units = p.get("units").and_then(|v| v.as_u64()).unwrap_or(0) as u16;
@@ -1374,7 +1440,15 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
         .split('/')
         .filter(|s| !s.is_empty())
         .collect();
-    let body_v: serde_json::Value = serde_json::from_slice(&req.body).unwrap_or(serde_json::json!({}));
+    let body_v = if req.method == "POST" {
+        match serde_json::from_slice::<serde_json::Value>(&req.body) {
+            Ok(value) if value.is_object() => value,
+            _ => {
+                respond(stream, "400 Bad Request", &err_json("bad_json", "тело POST должно быть JSON-объектом").to_string());
+                return;
+            }
+        }
+    } else { serde_json::json!({}) };
     // зрительский экран: GET /ui из app/arena.html (для демо, через туннель)
     if req.method == "GET" && (path == "/ui" || path == "/ui/") {
         let html = std::fs::read_to_string("app/arena.html")
@@ -1383,6 +1457,15 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
         crate::http::respond_html(stream, "200 OK", &html, "text/html; charset=utf-8");
         return;
     }
+    let _wait_permit = if req.method == "GET" && matches!(segs.as_slice(), ["game", _, "wait"]) {
+        match Permit::acquire(&state.waiters, MAX_WAITERS) {
+            Some(permit) => Some(permit),
+            None => {
+                respond(stream, "503 Service Unavailable", &err_json("busy", "слишком много ожидающих запросов").to_string());
+                return;
+            }
+        }
+    } else { None };
     let mut is_post_mut = false;
     let (status, body) = match (req.method.as_str(), segs.as_slice()) {
         ("GET", []) => ("200 OK", root_doc().to_string()),
@@ -1429,7 +1512,7 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
         ),
     };
     // П7: любой POST меняет состояние - снимок на диск
-    if is_post_mut {
+    if is_post_mut && serde_json::from_str::<serde_json::Value>(&body).ok().is_some_and(|v| v["ok"] == true) {
         if let Err(e) = save_snapshot(state) {
             eprintln!("[ERROR] snapshot save after POST: {e}");
             respond(stream, "503 Service Unavailable", &err_json(
@@ -1439,6 +1522,44 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
         }
     }
     respond(stream, status, &body);
+}
+
+pub const MAX_CONNECTIONS: u64 = 64;
+pub const MAX_WAITERS: u64 = 16;
+
+struct Permit(Arc<AtomicU64>);
+impl Permit {
+    fn acquire(counter: &Arc<AtomicU64>, limit: u64) -> Option<Self> {
+        counter.fetch_update(Ordering::SeqCst, Ordering::SeqCst,
+            |n| if n < limit { Some(n + 1) } else { None }).ok()?;
+        Some(Self(Arc::clone(counter)))
+    }
+}
+impl Drop for Permit {
+    fn drop(&mut self) { self.0.fetch_sub(1, Ordering::SeqCst); }
+}
+
+fn accept_connections(listener: TcpListener, state: Arc<AppState>) {
+    for stream in listener.incoming() {
+        let Ok(mut stream) = stream else { continue };
+        let Some(permit) = Permit::acquire(&state.connections, MAX_CONNECTIONS) else {
+            stream.set_write_timeout(Some(std::time::Duration::from_millis(100))).ok();
+            respond(&mut stream, "503 Service Unavailable", r#"{"ok":false,"error":"busy"}"#);
+            continue;
+        };
+        let st = Arc::clone(&state);
+        if let Err(error) = std::thread::Builder::new().name("arena-http".into()).spawn(move || {
+            let _permit = permit;
+            stream.set_write_timeout(Some(std::time::Duration::from_secs(5))).ok();
+            if let Some(req) = read_request(&stream) {
+                handle(&st, &req, &mut stream);
+            } else {
+                respond(&mut stream, "400 Bad Request", r#"{"ok":false,"error":"bad_http"}"#);
+            }
+        }) {
+            eprintln!("[ERROR] HTTP worker: {error}");
+        }
+    }
 }
 
 /// Поднять API и вернуть фактический адрес (порт 0 = свободный).
@@ -1456,20 +1577,7 @@ pub fn serve_on(
         std::thread::sleep(std::time::Duration::from_millis(tick_ms));
         crank_once(&crank_state);
     });
-    std::thread::spawn(move || {
-        for stream in listener.incoming() {
-            let Ok(mut stream) = stream else { continue };
-            let st = Arc::clone(&state);
-            std::thread::spawn(move || {
-                stream
-                    .set_read_timeout(Some(std::time::Duration::from_secs(10)))
-                    .ok();
-                if let Some(req) = read_request(&stream) {
-                    handle(&st, &req, &mut stream);
-                }
-            });
-        }
-    });
+    std::thread::spawn(move || accept_connections(listener, state));
     Ok(local)
 }
 
@@ -1483,18 +1591,7 @@ pub fn serve(state: Arc<AppState>, addr: &str, tick_ms: u64) -> std::io::Result<
     });
     println!("alashi arena on http://{}", addr);
     let _ = std::io::Write::flush(&mut std::io::stdout());
-    for stream in listener.incoming() {
-        let Ok(mut stream) = stream else { continue };
-        let st = Arc::clone(&state);
-        std::thread::spawn(move || {
-            stream
-                .set_read_timeout(Some(std::time::Duration::from_secs(10)))
-                .ok();
-            if let Some(req) = read_request(&stream) {
-                handle(&st, &req, &mut stream);
-            }
-        });
-    }
+    accept_connections(listener, state);
     Ok(())
 }
 

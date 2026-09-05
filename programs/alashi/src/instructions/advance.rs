@@ -41,7 +41,7 @@ fn draw_seed(ai: &AccountInfo) -> Result<u64> {
     Ok(u64::from_le_bytes(first_hash[..8].try_into().unwrap()))
 }
 
-/// Проверка randomness-аккаунта Switchboard (owner + seed_slot > slot).
+/// Проверка владельца, нераскрытого значения и seed предыдущего слота.
 /// Возвращает (ключ аккаунта, seed_slot) для transitions::advance.
 fn verify_switchboard(rng: &AccountInfo, clock_slot: u64) -> Result<(Pubkey, u64)> {
     let owner = rng.owner;
@@ -52,7 +52,8 @@ fn verify_switchboard(rng: &AccountInfo, clock_slot: u64) -> Result<(Pubkey, u64
     );
     let data = RandomnessAccountData::parse(rng.data.borrow())
         .map_err(|_| GameError::RandomnessNotReady)?;
-    require!(data.seed_slot > clock_slot, GameError::RandomnessNotReady);
+    transitions::validate_vrf_seed_slot(data.seed_slot, clock_slot)?;
+    require!(data.reveal_slot == 0, GameError::RandomnessNotReady);
     Ok((*rng.key, data.seed_slot))
 }
 

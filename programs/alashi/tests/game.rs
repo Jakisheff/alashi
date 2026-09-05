@@ -1080,14 +1080,15 @@ fn test_vrf_mode_flow() {
     assert!(send(&mut svm, &a, ix_produce(a.pubkey(), game, fa)));
     assert!(send(&mut svm, &b, ix_produce(b.pubkey(), game, fb)));
 
+    svm.warp_to_slot(100);
     let slot = svm.get_sysvar::<solana_clock::Clock>().slot;
-    install_rng(&mut svm, &rng, slot + 5, 0, 0);
+    install_rng(&mut svm, &rng, slot - 1, 0, 0);
     assert!(adv(&mut svm, &a, vec![rng]));
 
     let g = game_state(&svm, &game);
     assert_eq!(g.law_card, 255);
     assert_eq!(g.vrf_account, rng);
-    assert_eq!(g.commit_slot, slot + 5);
+    assert_eq!(g.commit_slot, slot - 1);
 
     assert!(!send(
         &mut svm,
@@ -1096,7 +1097,7 @@ fn test_vrf_mode_flow() {
     ));
 
     svm.warp_to_slot(slot + 5);
-    install_rng(&mut svm, &rng, slot + 5, slot + 5, 5);
+    install_rng(&mut svm, &rng, slot - 1, slot + 5, 5);
     assert!(send(&mut svm, &a, ix_reveal_law(a.pubkey(), game, rng)));
     let g = game_state(&svm, &game);
     assert_eq!(g.law_card, 5);
@@ -1161,8 +1162,9 @@ fn test_vrf_timeout_abort_refund() {
     assert!(send(&mut svm, &a, ix_produce(a.pubkey(), game, fa)));
     assert!(send(&mut svm, &b, ix_produce(b.pubkey(), game, fb)));
 
+    svm.warp_to_slot(100);
     let slot = svm.get_sysvar::<solana_clock::Clock>().slot;
-    let commit_slot = slot + 5;
+    let commit_slot = slot - 1;
     install_rng(&mut svm, &rng, commit_slot, 0, 0);
     assert!(send(
         &mut svm,
@@ -1460,4 +1462,105 @@ fn test_set_vote_mode_guards() {
         &p.admin,
         ix_set_vote_mode(p.admin.pubkey(), p.game, VOTE_WEIGHT_LEGACY as u8)
     ));
+}
+
+fn ix_close_game(crank: Pubkey, game: Pubkey, admin: Pubkey, factions: Vec<Pubkey>, wallets: Vec<Pubkey>) -> Instruction {
+    let mut metas = alashi::accounts::CloseGame { crank, game, admin }.to_account_metas(None);
+    for key in factions.into_iter().chain(wallets) {
+        metas.push(anchor_lang::solana_program::instruction::AccountMeta::new(key, false));
+    }
+    Instruction::new_with_bytes(alashi::id(), &alashi::instruction::CloseGame {}.data(), metas)
+}
+
+#[test]
+fn test_expired_lobby_refunds_and_closes_empty_or_single_player() {
+    for count in [0, 1] {
+        let (mut svm, admin) = setup();
+        let player = Keypair::new();
+        let crank = Keypair::new();
+        svm.airdrop(&player.pubkey(), 2_000_000_000).unwrap();
+        svm.airdrop(&crank.pubkey(), 1_000_000_000).unwrap();
+        let id = 900 + count;
+        let game = game_pda(id);
+        let faction = faction_pda(&game, &player.pubkey());
+        assert!(send(&mut svm, &admin, ix_initialize(id, FEE, 10, admin.pubkey(), game, 0)));
+        let game_rent = svm.get_account(&game).unwrap().lamports;
+        let (factions, wallets) = if count == 1 {
+            assert!(send(&mut svm, &player, ix_join("Solo", player.pubkey(), game, faction)));
+            (vec![faction], vec![player.pubkey()])
+        } else { (vec![], vec![]) };
+        assert!(!send(&mut svm, &crank, ix_advance(crank.pubkey(), game, factions.clone())));
+        assert!(!send(&mut svm, &crank, ix_close_game(crank.pubkey(), game, admin.pubkey(), factions.clone(), wallets.clone())));
+        let mut clock = svm.get_sysvar::<solana_clock::Clock>();
+        clock.unix_timestamp = game_state(&svm, &game).phase_ends_at;
+        svm.set_sysvar(&clock);
+        assert!(send(&mut svm, &crank, ix_advance(crank.pubkey(), game, factions.clone())));
+        assert_eq!(game_state(&svm, &game).phase, alashi::state::Phase::Aborted);
+        let player_before = svm.get_account(&player.pubkey()).unwrap().lamports;
+        let faction_rent = if count == 1 { svm.get_account(&faction).unwrap().lamports } else { 0 };
+        assert!(send(&mut svm, &crank, ix_settle_refund(crank.pubkey(), game, factions.clone(), wallets.clone())));
+        assert_eq!(svm.get_account(&player.pubkey()).unwrap().lamports - player_before, FEE * count);
+        assert!(!send(&mut svm, &crank, ix_settle_refund(crank.pubkey(), game, factions.clone(), wallets.clone())));
+        let admin_before = svm.get_account(&admin.pubkey()).unwrap().lamports;
+        assert!(send(&mut svm, &crank, ix_close_game(crank.pubkey(), game, admin.pubkey(), factions, wallets)));
+        assert_eq!(svm.get_account(&admin.pubkey()).unwrap().lamports - admin_before, game_rent);
+        assert_eq!(svm.get_account(&player.pubkey()).unwrap().lamports - player_before, FEE * count + faction_rent);
+        assert!(svm.get_account(&game).is_none_or(|a| a.lamports == 0 && a.data.is_empty()));
+        if count == 1 { assert!(svm.get_account(&faction).is_none_or(|a| a.lamports == 0 && a.data.is_empty())); }
+    }
+}
+
+#[test]
+fn test_close_settled_game_rejects_redirection_and_duplicates() {
+    let mut party = start_party(902, FEE, 0);
+    let crank = Keypair::new();
+    party.svm.airdrop(&crank.pubkey(), 1_000_000_000).unwrap();
+    let factions = vec![party.fa, party.fb];
+    let wallets = vec![party.admin.pubkey(), party.b.pubkey()];
+    for _ in 0..19 { assert!(party.advance()); }
+    assert!(!send(&mut party.svm, &crank, ix_close_game(crank.pubkey(), party.game, party.admin.pubkey(), factions.clone(), wallets.clone())));
+    assert!(send(&mut party.svm, &crank, ix_settle(crank.pubkey(), party.game, factions.clone(), wallets.clone(), party.admin.pubkey())));
+    let a_before = party.svm.get_account(&party.admin.pubkey()).unwrap().lamports;
+    let b_before = party.svm.get_account(&party.b.pubkey()).unwrap().lamports;
+    let game_rent = party.svm.get_account(&party.game).unwrap().lamports;
+    let fa_rent = party.svm.get_account(&party.fa).unwrap().lamports;
+    let fb_rent = party.svm.get_account(&party.fb).unwrap().lamports;
+    for (admin, fs, ws) in [
+        (crank.pubkey(), factions.clone(), wallets.clone()),
+        (party.admin.pubkey(), factions.clone(), vec![crank.pubkey(), party.b.pubkey()]),
+        (party.admin.pubkey(), vec![party.fa, party.fa], vec![party.admin.pubkey(), party.admin.pubkey()]),
+        (party.admin.pubkey(), vec![party.fa], vec![party.admin.pubkey()]),
+    ] {
+        assert!(!send(&mut party.svm, &crank, ix_close_game(crank.pubkey(), party.game, admin, fs, ws)));
+        assert_eq!(party.svm.get_account(&party.fa).unwrap().lamports, fa_rent);
+        assert_eq!(party.svm.get_account(&party.game).unwrap().lamports, game_rent);
+    }
+    assert!(send(&mut party.svm, &crank, ix_close_game(crank.pubkey(), party.game, party.admin.pubkey(), factions, wallets)));
+    assert_eq!(party.svm.get_account(&party.admin.pubkey()).unwrap().lamports - a_before, game_rent + fa_rent);
+    assert_eq!(party.svm.get_account(&party.b.pubkey()).unwrap().lamports - b_before, fb_rent);
+}
+
+#[test]
+fn test_vrf_future_seed_and_prerevealed_value_are_rejected() {
+    let (mut svm, a) = setup();
+    let b = Keypair::new();
+    svm.airdrop(&b.pubkey(), 2_000_000_000).unwrap();
+    let game = game_pda(903);
+    let fa = faction_pda(&game, &a.pubkey());
+    let fb = faction_pda(&game, &b.pubkey());
+    let rng = Keypair::new().pubkey();
+    assert!(send(&mut svm, &a, ix_initialize(903, FEE, 0, a.pubkey(), game, 1)));
+    assert!(send(&mut svm, &a, ix_join("A", a.pubkey(), game, fa)));
+    assert!(send(&mut svm, &b, ix_join("B", b.pubkey(), game, fb)));
+    for _ in 0..2 { assert!(send(&mut svm, &a, ix_advance(a.pubkey(), game, vec![fa, fb]))); }
+    svm.warp_to_slot(100);
+    let slot = svm.get_sysvar::<solana_clock::Clock>().slot;
+    let before = svm.get_account(&game).unwrap().data;
+    for (seed_slot, reveal_slot) in [(slot, 0), (slot + 100000, 0), (u64::MAX, 0), (slot - 1, slot)] {
+        install_rng(&mut svm, &rng, seed_slot, reveal_slot, 4);
+        assert!(!send(&mut svm, &a, ix_advance(a.pubkey(), game, vec![fa, fb, rng])));
+        assert_eq!(svm.get_account(&game).unwrap().data, before);
+    }
+    install_rng(&mut svm, &rng, slot - 1, 0, 4);
+    assert!(send(&mut svm, &a, ix_advance(a.pubkey(), game, vec![fa, fb, rng])));
 }

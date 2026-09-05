@@ -48,11 +48,12 @@ fn invalid_creation_parameters_cannot_reach_the_crank() {
 fn recover_full_started_game_revokes_old_token_and_survives_restart() {
     let state = isolated();
     let gid = create(&state);
-    let old_token = join(&state, gid, 0)["token"].as_str().unwrap().to_string();
+    let joined = join(&state, gid, 0);
+    let old_token = joined["token"].as_str().unwrap().to_string();
     for i in 1..6 { join(&state, gid, i); }
     crank_once(&state);
     assert_eq!(state.games.lock().unwrap()[&gid].sim.game.phase, Phase::Market);
-    let recovered = h_join(&state, gid, &json!({"model": "demo-0", "prompt": "regression", "recover": true}));
+    let recovered = h_join(&state, gid, &json!({"model": "demo-0", "prompt": "regression", "recover": true, "recovery_secret": joined["recovery_secret"]}));
     assert_eq!(recovered["recovered"], true, "{recovered}");
     assert_eq!(state.games.lock().unwrap()[&gid].sim.factions.len(), 6);
     assert_eq!(h_act(&state, gid, &json!({"token": old_token, "action": "produce"}))["error"], "bad_token");
@@ -154,4 +155,71 @@ fn simultaneous_creators_get_distinct_party_numbers() {
     assert_eq!(games.len(), 12);
     let parties: std::collections::HashSet<_> = games.values().map(|g| g.party_no).collect();
     assert_eq!(parties.len(), 12);
+}
+
+#[test]
+fn recovery_requires_secret_and_persists_only_its_hash() {
+    let state = isolated();
+    let gid = create(&state);
+    let client_secret = "ab".repeat(32);
+    let joined = h_join(&state, gid, &json!({"model":"victim", "prompt":"public", "recovery_secret":client_secret}));
+    assert_eq!(joined["ok"], true);
+    let token = joined["token"].as_str().unwrap();
+    for secret in [Value::Null, json!("cd".repeat(32)), json!("short")] {
+        let attack = h_join(&state, gid, &json!({"model":"victim", "prompt":"public", "recover":true, "recovery_secret":secret}));
+        assert_eq!(attack["error"], "bad_recovery_secret");
+        assert_eq!(state.games.lock().unwrap()[&gid].agents[0].token, token);
+    }
+    save_snapshot(&state).unwrap();
+    let snapshot = std::fs::read_to_string(&state.snapshot_path).unwrap();
+    assert!(!snapshot.contains(&client_secret));
+    let restored = restore(&state);
+    let recovered = h_join(&restored, gid, &json!({"model":"victim", "prompt":"public", "recover":true, "recovery_secret":client_secret}));
+    assert_eq!(recovered["ok"], true);
+    assert_ne!(recovered["token"], token);
+    assert!(!h_state(&restored, gid).to_string().contains(&client_secret));
+}
+
+#[test]
+fn legacy_recovery_needs_current_token_to_enroll_secret() {
+    let state = isolated();
+    let gid = create(&state);
+    let joined = join(&state, gid, 0);
+    state.games.lock().unwrap().get_mut(&gid).unwrap().agents[0].recovery_hash = None;
+    save_snapshot(&state).unwrap();
+    let restored = restore(&state);
+    let mut body = json!({"model":"demo-0", "prompt":"regression", "recover":true});
+    assert_eq!(h_join(&restored, gid, &body)["error"], "bad_recovery_secret");
+    body["token"] = joined["token"].clone();
+    let enrolled = h_join(&restored, gid, &body);
+    assert_eq!(enrolled["ok"], true);
+    assert_eq!(enrolled["recovery_secret"].as_str().unwrap().len(), 64);
+    assert_eq!(h_join(&restored, gid, &body)["error"], "bad_recovery_secret");
+    body["recovery_secret"] = enrolled["recovery_secret"].clone();
+    assert_eq!(h_join(&restored, gid, &body)["ok"], true);
+}
+
+#[test]
+fn oversized_action_units_are_rejected_without_mutating_game() {
+    let state = isolated();
+    let gid = create(&state);
+    let joined = join(&state, gid, 0);
+    let before = borsh::to_vec(&state.games.lock().unwrap()[&gid].sim.game).unwrap();
+    for (action, field) in [("sell","units"), ("sell_credit","units"), ("buy","units"), ("barter_propose","goods")] {
+        for value in [json!(65536), json!(u64::MAX), json!(-1), json!("1")] {
+            let params = json!({field: value});
+            assert_eq!(h_act(&state, gid, &json!({"token": joined["token"], "action":action, "params":params}))["error"], "bad_params");
+        }
+    }
+    assert_eq!(borsh::to_vec(&state.games.lock().unwrap()[&gid].sim.game).unwrap(), before);
+}
+
+#[test]
+fn connection_permits_are_bounded_and_released() {
+    let counter = Arc::new(AtomicU64::new(0));
+    let permits: Vec<_> = (0..MAX_CONNECTIONS).map(|_| Permit::acquire(&counter, MAX_CONNECTIONS).unwrap()).collect();
+    assert!(Permit::acquire(&counter, MAX_CONNECTIONS).is_none());
+    drop(permits);
+    assert_eq!(counter.load(Ordering::SeqCst), 0);
+    assert!(Permit::acquire(&counter, MAX_CONNECTIONS).is_some());
 }

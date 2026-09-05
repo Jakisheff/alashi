@@ -1,0 +1,129 @@
+alashi-security-rules-tests.txt
+     Running unittests src/lib.rs (target/debug/deps/alashi_rules-8b203bed39673cb1)
+running 24 tests
+test logic::tests::sale_drops_price_and_purchase_raises_it ... ok
+test logic::tests::embargo_and_boom_move_market_price ... ok
+test logic::tests::draw_law_skips_used_and_wraps ... ok
+test logic::tests::law_effects_map_cards ... ok
+test logic::tests::settlement_empty_bank ... ok
+test logic::tests::settlement_four_factions_full_shares ... ok
+test logic::tests::settlement_tie_break_by_wallet ... ok
+test logic::tests::settlement_two_factions_exact_split ... ok
+test logic::tests::tally_and_president ... ok
+test state::test_id ... ok
+test transitions::tests::contribution_no_vote_no_bonus ... ok
+test transitions::tests::contribution_skip_adds_weight ... ok
+test transitions::tests::legacy_tally_ignores_skip ... ok
+test transitions::tests::m10_no_accept_no_steal ... ok
+test transitions::tests::m10_vote_offer_requires_accept ... ok
+test transitions::tests::m11_barter_direct_exchange ... ok
+test transitions::tests::m1_depreciation_burns_cash_not_goods ... ok
+test transitions::tests::m2_roof_blocks_first_anti_rich_law ... ok
+test transitions::tests::m3_customs_seizes_grey_goods ... ok
+test transitions::tests::m4_amnesty_burns_promissory_and_redemption_pays ... ok
+test transitions::tests::m6_exchanger_spread_and_hard_survives_depreciation ... ok
+test transitions::tests::m78_customs_president_and_tariffs ... ok
+test transitions::tests::m9_blind_auction_and_insider ... ok
+test transitions::tests::m8_president_sets_tight_blindly_and_gets_tribute ... ok
+test result: ok. 24 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/demo_regressions.rs (target/debug/deps/demo_regressions-6e951a9a268cff05)
+running 5 tests
+test factory_uses_distributable_pot_and_preserves_rent ... ok
+test large_bank_does_not_overflow_intermediate_share_calculations ... ok
+test underfilled_lobby_aborts_only_after_deadline ... ok
+test premature_insight_neither_charges_nor_consumes_the_purchase ... ok
+test vrf_seed_slot_is_bounded_before_any_transition_mutation ... ok
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+running 0 tests
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+alashi-security-arena-tests.txt
+     Running unittests src/lib.rs (arena/target/debug/deps/arena-b63ddb4be4e90531)
+running 19 tests
+test api::tests::connection_permits_are_bounded_and_released ... ok
+test api::tests::invalid_creation_parameters_cannot_reach_the_crank ... ok
+test api::tests::completed_history_and_saved_hint_prevent_reused_ids ... ok
+test api::tests::legacy_recovery_needs_current_token_to_enroll_secret ... ok
+test api::tests::negative_ratings_sort_by_score_and_not_hashmap_order ... ok
+test api::tests::automatic_phase_and_entropy_checkpoint_survive_without_a_post ... ok
+test api::tests::oversized_action_units_are_rejected_without_mutating_game ... ok
+test api::tests::recovery_requires_secret_and_persists_only_its_hash ... ok
+test api::tests::recover_full_started_game_revokes_old_token_and_survives_restart ... ok
+test http::tests::header_limits_apply_before_unterminated_line_allocation ... ok
+test http::tests::rejects_ambiguous_or_incomplete_http_framing ... ok
+test rating::tests::matches_openskill_reference ... ok
+test rating::tests::winner_rises_loser_falls ... ok
+test runner::tests::bad_mix_rejected ... ok
+test runner::tests::game_completes_and_money_conserves ... ok
+test runner::tests::m5_90s_epoch_money_conserves_with_factory ... ok
+test runner::tests::series_reproducible_and_parseable ... ok
+test api::tests::simultaneous_creators_get_distinct_party_numbers ... ok
+test api::tests::invalid_legacy_settlement_does_not_stop_another_full_party ... ok
+test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.87s
+
+alashi-security-onchain-tests.txt
+     Running unittests src/lib.rs (target/debug/deps/alashi-08948e2270c004d5)
+running 1 test
+test test_id ... ok
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/game.rs (target/debug/deps/game-f93087864a55f6ac)
+running 21 tests
+test test_already_acted ... ok
+test test_contribution_skip_flips_vote ... ok
+test test_bribe_and_vote_weight ... ok
+test test_close_settled_game_rejects_redirection_and_duplicates ... ok
+test test_donkey ... ok
+test test_epoch90s_factory_pays_in_lamports_and_preserves_rent ... ok
+test test_expired_lobby_refunds_and_closes_empty_or_single_player ... ok
+test test_full_game_six_rounds ... ok
+test test_legacy_same_scenario_passes ... ok
+test test_law_tax_and_veto ... ok
+test test_market_buy ... ok
+test test_phase_and_join_guards ... ok
+test test_market_price_drop ... ok
+test test_set_vote_mode_guards ... ok
+test test_time_gate ... ok
+test test_vrf_future_seed_and_prerevealed_value_are_rejected ... ok
+test test_vrf_threshold ... ok
+test test_settle_payout_and_rake ... ok
+test test_vrf_mode_flow ... ok
+test test_settle_rejects_duplicate_faction_accounts ... ok
+test test_vrf_timeout_abort_refund ... ok
+test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 25.28s
+     Running tests/replay_equivalence.rs (target/debug/deps/replay_equivalence-648168a1f49f14d0)
+running 2 tests
+test replay_epoch_90s_full_party ... ok
+test replay_equivalence_full_party ... ok
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.66s
+running 0 tests
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+alashi-security-indexer-tests.txt
+     Running unittests src/lib.rs (indexer/target/debug/deps/indexer-9305f0a5002415de)
+running 0 tests
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/export.rs (indexer/target/debug/deps/export-17e59ce396fe205f)
+running 0 tests
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/indexer.rs (indexer/target/debug/deps/indexer-7e90bd88432c33c3)
+running 0 tests
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/aggregation_test.rs (indexer/target/debug/deps/aggregation_test-19f40f42f908db8b)
+running 4 tests
+test tie_break_by_wallet_asc ... ok
+test unsettled_games_ignored ... ok
+test agent_id_deterministic_and_prompt_sensitive ... ok
+test ranks_asymmetric_50_30_15_5 ... ok
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/export_format_test.rs (indexer/target/debug/deps/export_format_test-0a9b114fd91d2ff1)
+running 2 tests
+test observations_present_every_step ... ok
+test jsonl_roundtrip_and_ranks ... ok
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+running 0 tests
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+HTTP e2e: 8 passed; 0 failed. Follow-up snapshot and long-poll regressions: passed.
+Release HTTP security smoke: passed.
+Release six-agent restart smoke: passed.
+Bot lost-join response recovery smoke: passed.

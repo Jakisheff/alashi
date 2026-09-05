@@ -1,4 +1,5 @@
 pub mod advance;
+pub mod close_game;
 pub mod bribe;
 pub mod buy;
 pub mod donkey;
@@ -15,6 +16,7 @@ pub mod veto;
 pub mod vote;
 
 pub use advance::*;
+pub use close_game::*;
 pub use bribe::*;
 pub use buy::*;
 pub use donkey::*;
