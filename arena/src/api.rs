@@ -46,6 +46,13 @@ pub struct GameEntry {
     pub action_log: Vec<serde_json::Value>,
     /// Итоги закрытых фаз (закон: карта, да/нет, прошёл/вето).
     pub phase_log: Vec<serde_json::Value>,
+    /// Канонический номер партии, виден ВСЕМ (state/join/games/export).
+    /// game_id локален процессу и сбрасывается при рестарте —
+    /// party_no персистентен (кастдев 05.09: «номер игры должен знать
+    /// каждый агент, а не только оператор»).
+    pub party_no: u64,
+    /// Человекочитаемая метка партии (необязательная, из POST /game/new).
+    pub label: Option<String>,
 }
 
 pub struct AppState {
@@ -60,6 +67,21 @@ fn now() -> i64 {
         .duration_since(UNIX_EPOCH)
         .map(|d| d.as_secs() as i64)
         .unwrap_or(0)
+}
+
+/// Персистентный счётчик партий: файл хранит ПОСЛЕДНИЙ использованный
+/// номер. Файла нет — считаем 18 (канон живых партий на 05.09).
+/// Путь: $ALASHI_SEQ_FILE или data/arena_party_no.txt от CWD arenad.
+fn next_party_no() -> u64 {
+    let path = std::env::var("ALASHI_SEQ_FILE")
+        .unwrap_or_else(|_| "data/arena_party_no.txt".into());
+    let last: u64 = std::fs::read_to_string(&path)
+        .ok()
+        .and_then(|s| s.trim().parse().ok())
+        .unwrap_or(18);
+    let next = last.saturating_add(1);
+    let _ = std::fs::write(&path, format!("{}", next));
+    next
 }
 
 fn splitmix64(x: u64) -> u64 {
@@ -157,6 +179,8 @@ fn settle_and_record(state: &AppState, game_id: u64) {
                 .collect();
             let v = serde_json::json!({
                 "game_id": game_id,
+                "party_no": entry.party_no,
+                "label": entry.label,
                 "entry_fee": entry.entry_fee,
                 "vote_weight_mode": entry.sim.game.vote_weight_mode,
                 "epoch": entry.sim.game.epoch,
@@ -264,6 +288,9 @@ fn state_json(game_id: u64, entry: &GameEntry) -> serde_json::Value {
     let price_now = eff_price(g.sold_this_round, g.active_price_shift, g.active_boom);
     serde_json::json!({
         "game_id": game_id,
+        // канон партии: одинаков до и после рестарта арены
+        "party_no": entry.party_no,
+        "label": entry.label,
         "phase": phase_name(g.phase),
         "round": g.round,
         "entry_fee": entry.entry_fee,
@@ -422,6 +449,12 @@ fn h_new_game(state: &AppState, body: &serde_json::Value) -> serde_json::Value {
     sim.game.vote_weight_mode = vote_weight_mode;
     sim.game.epoch = epoch;
     sim.game.phase_ends_at = now() + phase_duration * LOBBY_MULT;
+    let party_no = next_party_no();
+    let label = body
+        .get("label")
+        .and_then(|v| v.as_str())
+        .filter(|s| !s.is_empty() && s.len() <= 32)
+        .map(|s| s.to_string());
     let entry = GameEntry {
         sim,
         entry_fee,
@@ -431,6 +464,8 @@ fn h_new_game(state: &AppState, body: &serde_json::Value) -> serde_json::Value {
         grace_s,
         action_log: vec![],
         phase_log: vec![],
+        party_no,
+        label,
     };
     let v = state_json(game_id, &entry);
     state.games.lock().unwrap_or_else(|e| e.into_inner()).insert(game_id, entry);
@@ -860,6 +895,8 @@ fn h_games(state: &AppState) -> serde_json::Value {
         .map(|(&gid, e)| {
             serde_json::json!({
                 "game_id": gid,
+                "party_no": e.party_no,
+                "label": e.label,
                 "phase": phase_name(e.sim.game.phase),
                 "round": e.sim.game.round,
                 "factions": e.sim.game.faction_count,
