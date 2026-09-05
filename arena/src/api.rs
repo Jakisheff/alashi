@@ -10,7 +10,8 @@ use alashi_rules::anchor_lang::prelude::Pubkey;
 use alashi_rules::constants::*;
 use alashi_rules::error::GameError;
 use alashi_rules::sim::Simulator;
-use alashi_rules::state::{Phase, VoteChoice};
+use alashi_rules::state::{Faction, Game, Phase, VoteChoice};
+use borsh;
 use sha2::{Digest, Sha256};
 use std::collections::HashMap;
 use std::net::{TcpListener, TcpStream};
@@ -63,6 +64,142 @@ pub struct AppState {
     pub next_id: AtomicU64,
     pub completed: Mutex<Vec<String>>,
     pub master_seed: AtomicU64,
+}
+
+// ---------- П7 (ТРИЗ, 05.09): сериализация состояния ----------
+// Рестарт арены/деплой не убивает живую партию (кейс №20): снимок
+// всех GameEntry пишется атомарно при каждом изменении и грузится
+// на старте. Канон кодирования — borsh (AnchorSerialize), тот же,
+// что ончейн: нулевой дрейф форматов.
+
+fn state_file() -> std::path::PathBuf {
+    std::path::PathBuf::from(
+        std::env::var("ALASHI_STATE_FILE").unwrap_or_else(|_| "data/arena_state.json".into()),
+    )
+}
+
+fn hex_enc(b: &[u8]) -> String {
+    b.iter().map(|x| format!("{:02x}", x)).collect()
+}
+fn hex_dec(s: &str) -> Option<Vec<u8>> {
+    if s.len() % 2 != 0 {
+        return None;
+    }
+    (0..s.len() / 2)
+        .map(|i| u8::from_str_radix(&s[i * 2..i * 2 + 2], 16).ok())
+        .collect()
+}
+
+pub fn save_snapshot(state: &AppState) {
+    let games = state.games.lock().unwrap_or_else(|e| e.into_inner());
+    let completed = state.completed.lock().unwrap_or_else(|e| e.into_inner());
+    let arr: Vec<serde_json::Value> = games
+        .iter()
+        .map(|(gid, e)| {
+            serde_json::json!({
+                "game_id": gid,
+                "party_no": e.party_no,
+                "label": e.label,
+                "entry_fee": e.entry_fee,
+                "created": e.created,
+                "grace_s": e.grace_s,
+                "game_hex": borsh::to_vec(&e.sim.game).map(|v| hex_enc(&v)).unwrap_or_default(),
+                "factions_hex": borsh::to_vec(&e.sim.factions).map(|v| hex_enc(&v)).unwrap_or_default(),
+                "round_seed": e.sim.round_seed,
+                "wallets": e.wallets.iter().map(|w| w.to_string()).collect::<Vec<_>>(),
+                "agents": e.agents.iter().map(|a| serde_json::json!({
+                    "name": a.name, "agent_id": a.agent_id, "token": a.token,
+                    "model": a.model, "faction_idx": a.faction_idx,
+                })).collect::<Vec<_>>(),
+                "insiders": e.insiders.iter().cloned().collect::<Vec<_>>(),
+                "action_log": e.action_log,
+                "phase_log": e.phase_log,
+            })
+        })
+        .collect();
+    let doc = serde_json::json!({
+        "v": 1,
+        "saved_at": now(),
+        "next_id_hint": state.next_id.load(Ordering::SeqCst),
+        "games": arr,
+        "completed": completed.clone(),
+    });
+    let p = state_file();
+    if let Some(dir) = p.parent() {
+        let _ = std::fs::create_dir_all(dir);
+    }
+    let tmp = p.with_extension("json.tmp");
+    if std::fs::write(&tmp, doc.to_string()).is_ok() {
+        let _ = std::fs::rename(&tmp, &p);
+    }
+}
+
+pub fn load_snapshot(state: &AppState) {
+    
+    let Ok(txt) = std::fs::read_to_string(state_file()) else { return };
+    let Ok(doc) = serde_json::from_str::<serde_json::Value>(&txt) else {
+        eprintln!("[STATE] снимок не читается, старт пустой");
+        return;
+    };
+    let mut loaded = 0u32;
+    {
+        let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
+        let mut completed = state.completed.lock().unwrap_or_else(|e| e.into_inner());
+        for g in doc["games"].as_array().into_iter().flatten() {
+            let (Some(game_b), Some(fac_b)) = (
+                hex_dec(g["game_hex"].as_str().unwrap_or("")),
+                hex_dec(g["factions_hex"].as_str().unwrap_or("")),
+            ) else { continue };
+            let (Ok(game), Ok(factions)) = (
+                borsh::from_slice::<Game>(&game_b),
+                borsh::from_slice::<Vec<Faction>>(&fac_b),
+            ) else { continue };
+            let sim = Simulator { game, factions, round_seed: g["round_seed"].as_u64().unwrap_or(0) };
+            let wallets: Vec<Pubkey> = g["wallets"].as_array().into_iter().flatten()
+                .filter_map(|w| w.as_str().and_then(|s| s.parse::<Pubkey>().ok())).collect();
+            let agents: Vec<AgentRec> = g["agents"].as_array().into_iter().flatten().filter_map(|a| {
+                Some(AgentRec {
+                    name: a["name"].as_str()?.to_string(),
+                    agent_id: a["agent_id"].as_str()?.to_string(),
+                    token: a["token"].as_str()?.to_string(),
+                    model: a["model"].as_str().unwrap_or("?").to_string(),
+                    faction_idx: a["faction_idx"].as_u64()? as usize,
+                })
+            }).collect();
+            let insiders: std::collections::HashSet<usize> =
+                g["insiders"].as_array().into_iter().flatten()
+                    .filter_map(|x| x.as_u64().map(|v| v as usize)).collect();
+            let gid = g["game_id"].as_u64().unwrap_or(0);
+            let entry = GameEntry {
+                sim,
+                entry_fee: g["entry_fee"].as_u64().unwrap_or(10 * PESO),
+                wallets,
+                agents,
+                created: g["created"].as_i64().unwrap_or(now()),
+                grace_s: g["grace_s"].as_i64().unwrap_or(3),
+                action_log: g["action_log"].as_array().cloned().unwrap_or_default(),
+                phase_log: g["phase_log"].as_array().cloned().unwrap_or_default(),
+                party_no: g["party_no"].as_u64().unwrap_or(0),
+                label: g["label"].as_str().map(|s| s.to_string()),
+                insiders,
+            };
+            games.insert(gid, entry);
+            loaded += 1;
+            if gid >= state.next_id.load(Ordering::SeqCst) {
+                state.next_id.store(gid + 1, Ordering::SeqCst);
+            }
+        }
+        if let Some(arr) = doc["completed"].as_array() {
+            for c in arr {
+                if let Some(s) = c.as_str() {
+                    completed.push(s.to_string());
+                }
+            }
+        }
+    }
+    if loaded > 0 {
+        eprintln!("[STATE] восстановлено партий: {}", loaded);
+    }
 }
 
 fn now() -> i64 {
@@ -214,6 +351,7 @@ fn settle_and_record(state: &AppState, game_id: u64) {
     if let Some(r) = rec {
         state.completed.lock().unwrap_or_else(|e| e.into_inner()).push(r);
     }
+    save_snapshot(state);
 }
 
 /// Один тик кранка: двигает все партии, чьё время фазы вышло.
@@ -1107,13 +1245,14 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
         crate::http::respond_html(stream, "200 OK", &html, "text/html; charset=utf-8");
         return;
     }
+    let mut is_post_mut = false;
     let (status, body) = match (req.method.as_str(), segs.as_slice()) {
         ("GET", []) => ("200 OK", root_doc().to_string()),
-        ("POST", ["game", "new"]) => ("200 OK", h_new_game(state, &body_v).to_string()),
-        ("POST", ["game", id, "join"]) => match id.parse::<u64>() {
+        ("POST", ["game", "new"]) => { is_post_mut = true; ("200 OK", h_new_game(state, &body_v).to_string()) },
+        ("POST", ["game", id, "join"]) => { is_post_mut = true; match id.parse::<u64>() {
             Ok(id) => ("200 OK", h_join(state, id, &body_v).to_string()),
             Err(_) => ("400 Bad Request", err_json("bad_id", "game_id не число").to_string()),
-        },
+        } },
         ("GET", ["game", id, "state"]) => match id.parse::<u64>() {
             Ok(id) => ("200 OK", h_state(state, id).to_string()),
             Err(_) => ("400 Bad Request", err_json("bad_id", "game_id не число").to_string()),
@@ -1124,14 +1263,14 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
             Ok(id) => ("200 OK", h_wait(state, id, &req.path).to_string()),
             Err(_) => ("400 Bad Request", err_json("bad_id", "game_id не число").to_string()),
         },
-        ("POST", ["game", id, "act"]) => match id.parse::<u64>() {
+        ("POST", ["game", id, "act"]) => { is_post_mut = true; match id.parse::<u64>() {
             Ok(id) => ("200 OK", h_act(state, id, &body_v).to_string()),
             Err(_) => ("400 Bad Request", err_json("bad_id", "game_id не число").to_string()),
-        },
-        ("POST", ["game", id, "advance"]) => match id.parse::<u64>() {
+        } },
+        ("POST", ["game", id, "advance"]) => { is_post_mut = true; match id.parse::<u64>() {
             Ok(id) => ("200 OK", h_advance(state, id).to_string()),
             Err(_) => ("400 Bad Request", err_json("bad_id", "game_id не число").to_string()),
-        },
+        } },
         ("GET", ["games"]) => ("200 OK", h_games(state).to_string()),
         // кастдев №5 (Aisultan): где мой кошелёк уже сидит — без этого
         // агент реконструирует лимиты тестовыми партиями
@@ -1151,6 +1290,10 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
             err_json("not_found", "см. GET / для списка эндпоинтов").to_string(),
         ),
     };
+    // П7: любой POST меняет состояние - снимок на диск
+    if is_post_mut {
+        save_snapshot(state);
+    }
     respond(stream, status, &body);
 }
 
@@ -1161,6 +1304,7 @@ pub fn serve_on(
     addr: &str,
     tick_ms: u64,
 ) -> std::io::Result<std::net::SocketAddr> {
+    load_snapshot(&state);
     let listener = TcpListener::bind(addr)?;
     let local = listener.local_addr()?;
     let crank_state = Arc::clone(&state);
@@ -1186,6 +1330,7 @@ pub fn serve_on(
 }
 
 pub fn serve(state: Arc<AppState>, addr: &str, tick_ms: u64) -> std::io::Result<()> {
+    load_snapshot(&state);
     let listener = TcpListener::bind(addr)?;
     let crank_state = Arc::clone(&state);
     std::thread::spawn(move || loop {
