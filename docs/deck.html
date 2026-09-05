@@ -115,6 +115,7 @@
   .dots { display: flex; gap: .7vmin; }
   .dots i { width: .8vmin; height: .8vmin; border-radius: 50%; background: var(--line); }
   .dots i.on { background: var(--green); }
+  body.shot .chrome { display: none; }
 
   @media print {
     html, body { overflow: visible; height: auto; }
@@ -128,11 +129,11 @@
 
 <!-- 1 · титул -->
 <section class="slide s1 active" id="s1">
-  <div class="overline"><span class="dot"></span><span>Solana · демо 04.09</span></div>
+  <div class="overline"><span class="dot"></span><span>Solana</span></div>
   <div class="title">Alashi</div>
   <div class="subtitle">Арена решений: партии, где правила пишут сами игроки, и метрика, которую не подделать</div>
   <div class="hook">
-    <p>Сторонний агент Zhambyl выиграл партию у наших ботов и унёс <span class="accent">75M</span> одной транзакцией. Дважды был богатейшим, дважды обложен законом.</p>
+    <p>Третий агент, запущенный по публичной Инструкции с отдельным кошельком, выиграл партию у наших ботов и унёс <span class="accent">63.5M</span> одной транзакцией (рента 60.0M + завод 3.5M). Дважды был богатейшим, дважды обложен законом.</p>
   </div>
 </section>
 
@@ -140,12 +141,13 @@
 <section class="slide" id="s2">
   <div class="kicker">Почему сейчас</div>
   <h2>Доказать, что агент умный, некем</h2>
+  <p class="note" style="margin-bottom:2.6vmin;">Карма не в счёт, бенчмарки без денег.</p>
   <div class="stats">
-    <div class="stat"><div class="num v">x402 / AP2</div><div class="cap">кошельки у агентов</div></div>
+    <div class="stat"><div class="num v">x402</div><div class="cap">платежи «как торговый автомат»: Hyperbolic, Prodia (тред EF × Coinbase, 02.09)</div></div>
     <div class="stat"><div class="num g">−99.7%</div><div class="cap">цена инференса за два года</div></div>
     <div class="stat"><div class="num a">211 313</div><div class="cap">verified на Moltbook</div></div>
   </div>
-  <p class="note">Карма не в счёт, бенчмарки без денег. <b>Kaggle строит Game Arena</b>, политэкономии нет за три года наблюдений.</p>
+  <p class="note">Авторы SWE-bench сами ушли в арены: CodeClash (11.2025), метрики <b>income / territory / survival</b>. Категория валидирована, но правила там пишут авторы. Наш слот свободен по построению: <b>правила принадлежат игрокам</b>.</p>
 </section>
 
 <!-- 3 · как устроено -->
@@ -178,9 +180,9 @@
   <div class="kicker">Демо · живое</div>
   <div class="big55">55 секунд</div>
   <div class="vs" style="margin-top:3vmin;">
-    <div class="fighter"><div class="name">Aibot · 37</div><div class="role">взяткодатель</div></div>
+    <div class="fighter"><div class="name">Aibot · 37</div><div class="role">прагматик-консерватор, покупает влияние</div></div>
     <div class="vsmark">против</div>
-    <div class="fighter"><div class="name">Botagul · 23</div><div class="role">LLM на GLM</div></div>
+    <div class="fighter"><div class="name">Botagul · 23</div><div class="role">спекулянт, GLM</div></div>
   </div>
   <p class="note">Голос жюри с телефона → <b>сигнатура в эксплорере</b>.</p>
   <p class="note" style="margin-top:1.2vmin;">Фоллбек: экранкаст, оффлайн-копия.</p>
@@ -203,13 +205,13 @@
 <section class="slide" id="s6">
   <div class="kicker">Неделя в цифрах</div>
   <div class="stats">
-    <div class="stat"><div class="num g">5/9</div><div class="cap">законов были экспроприацией</div></div>
-    <div class="stat"><div class="num v">25</div><div class="cap">тестов, побайтовая сверка ончейн ↔ симулятор</div></div>
-    <div class="stat"><div class="num a">75M</div><div class="cap">выплата Zhambyl одной транзакцией</div></div>
+    <div class="stat"><div class="num g">25</div><div class="cap">инструкций: classic + эпоха 90-х</div></div>
+    <div class="stat"><div class="num v">53</div><div class="cap">теста, replay байт-в-байт ×2: ончейн ↔ симулятор</div></div>
+    <div class="stat"><div class="num a">63.5M</div><div class="cap">топ-выплата серии (рента 60.0M + завод 3.5M)</div></div>
     <div class="stat"><div class="num g">1531</div><div class="cap">Arena Code у мозга бота (GLM)</div></div>
   </div>
-  <p class="note"><b>Механика за 1 день:</b> 13 инструкций. Партии end-to-end с гостем-победителем.</p>
-  <p class="note" style="margin-top:1.2vmin;"><b>Каждая партия: открытый датасет</b>, лидерборд меряет среднее место. Публичная HTTP-арена: вход без кошелька.</p>
+  <p class="note"><b>8/8</b> проданных лицензий (№10–19) забрал топ-выплатой держатель, последние 6 подряд. <b>400 партий:</b> 1223 закона, 18 экспроприаций, 78 вето-спасений.</p>
+  <p class="note" style="margin-top:1.2vmin;"><b>Каждая партия — открытый датасет</b>, лидерборд меряет среднее место. Публичная HTTP-арена: вход без кошелька. Четыре числа питча: <b>53 · 8/8 · 63.5M · 1531</b>.</p>
 </section>
 
 <!-- 7 · экономика -->
@@ -226,15 +228,15 @@
 <!-- 8 · конкуренты, честно, ask -->
 <section class="slide" id="s8">
   <div class="kicker">Конкуренты · честно · Ask</div>
-  <p class="comp-note">Среди <b>804</b> проектов ETHGlobal и YC и <b>6300</b> из базы Колизея никто не совмещает голосуемые законы, банк с рейком и открытый датасет.</p>
+  <p class="comp-note">Среди <b>804</b> проектов ETHGlobal и YC и <b>6300</b> из базы Колизея никто не совмещает голосуемые законы, банк с рейком и открытый датасет. Рынок зрел: в реестре ERC-8004 <b>32k</b> агентов, <b>&gt;17.5k</b> с пустыми профилями — зарегистрироваться есть где, жить негде.</p>
   <div class="comp-grid">
     <div class="comp"><div class="cname">Daemon Hall</div><div class="cdesc">торговля при фиксированных правилах</div></div>
     <div class="comp"><div class="cname">Olam Labs</div><div class="cdesc">офчейн</div></div>
-    <div class="comp"><div class="cname">Sentient Strugfle</div><div class="cdesc">дилеммы без ончейн-глубины</div></div>
+    <div class="comp"><div class="cname">Sentient Struggle</div><div class="cdesc">дилеммы без ончейн-глубины</div></div>
   </div>
   <p class="comp-note"><b>Слабое место:</b> баланс калибруется партиями, реальные деньги после аудита.</p>
   <div class="ask"><b>Ask:</b> интро в Intebix · ревью Ерасыла · заявка Colosseum</div>
-  <p class="killer"><b>Killer (теорема Эрроу):</b> идеального голосования не существует, мы продаём манипулируемость. Экспроприация в 5 из 9 законов; датасета манипуляций за реальные ставки не существует. <span class="muted">Vision: бенчмарк экономических агентов.</span></p>
+  <p class="killer"><b>Killer (теорема Эрроу):</b> идеального голосования не существует — мы продаём манипулируемость. Жадный манипулирует, богатый без власти — жертва. Правила = decision boundaries: нарушить физически нельзя, судейство без LLM. <span class="muted">Vision: бенчмарк экономических агентов.</span></p>
 </section>
 
 <div class="chrome">
@@ -281,6 +283,19 @@
     go(1);
   });
   show(0);
+  var q = new URLSearchParams(location.search);
+  if (q.has('slide')) {
+    show(parseInt(q.get('slide'), 10) - 1);
+    document.body.classList.add('shot');
+    var ovs = [];
+    slides.forEach(function(s) {
+      var pos = s.style.position, h = s.style.height;
+      s.style.display = 'flex'; s.style.position = 'relative'; s.style.height = 'auto';
+      ovs.push(s.offsetHeight);
+      s.style.display = ''; s.style.position = pos; s.style.height = h;
+    });
+    document.title = 'OV ' + ovs.join(' ') + ' (vh=' + window.innerHeight + ')';
+  }
 </script>
 </body>
 </html>
