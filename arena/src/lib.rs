@@ -6,5 +6,6 @@
 
 pub mod api;
 pub mod http;
+pub mod rating;
 pub mod runner;
 pub mod strategies;

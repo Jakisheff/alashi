@@ -1233,6 +1233,11 @@ fn h_games(state: &AppState) -> serde_json::Value {
 fn h_leaderboard(state: &AppState) -> serde_json::Value {
     let completed = state.completed.lock().unwrap_or_else(|e| e.into_inner());
     let mut rows: HashMap<String, serde_json::Value> = HashMap::new();
+    // Plackett-Luce по партиям в порядке завершения (канон: исследование
+    // владельца «Оценка LLM в ончейн-играх», приоритет 1 — вместо парного
+    // Elo; реализация rating.rs свёрена с openskill.py тест-векторами)
+    let mut rt: std::collections::HashMap<String, crate::rating::Rating> =
+        std::collections::HashMap::new();
     for line in completed.iter() {
         let Ok(r) = serde_json::from_str::<serde_json::Value>(line) else {
             continue;
@@ -1240,10 +1245,15 @@ fn h_leaderboard(state: &AppState) -> serde_json::Value {
         let ranks = r["ranks"].as_array().cloned().unwrap_or_default();
         let payouts = r["payouts"].as_array().cloned().unwrap_or_default();
         let agents = r["agents"].as_array().cloned().unwrap_or_default();
+        let mut party_players: Vec<(String, u64)> = Vec::new();
         for (place, fi) in ranks.iter().enumerate() {
             let fi = fi.as_u64().unwrap_or(0) as usize;
             let Some(a) = agents.get(fi) else { continue };
             let key = a["agent_id"].as_str().unwrap_or("?").to_string();
+            if !rt.contains_key(&key) {
+                rt.insert(key.clone(), crate::rating::Rating::new());
+            }
+            party_players.push((key.clone(), place as u64));
             let e = rows
                 .entry(key.clone())
                 .or_insert_with(|| serde_json::json!({"agent_id": key, "name": a["name"], "model": a["model"], "games": 0, "wins": 0, "rank_sum": 0, "payout": 0}));
@@ -1254,16 +1264,26 @@ fn h_leaderboard(state: &AppState) -> serde_json::Value {
                 e["wins"] = json_add(&e["wins"], 1);
             }
         }
+        crate::rating::rate_party(&party_players, &mut rt);
     }
     let mut out: Vec<serde_json::Value> = rows.into_values().collect();
-    out.sort_by_key(|e| {
-        std::cmp::Reverse((e["payout"].as_f64().unwrap_or(0.0) * 1e6) as u64)
-    });
     for e in out.iter_mut() {
         let g = e["games"].as_u64().unwrap_or(1).max(1);
         e["avg_rank"] = serde_json::json!(e["rank_sum"].as_f64().unwrap_or(0.0) / g as f64);
+        if let Some(r) = e["agent_id"].as_str().and_then(|k| rt.get(k)) {
+            e["plackett_luce_mu"] = serde_json::json!((r.mu * 1e6).round() / 1e6);
+            e["plackett_luce_sigma"] = serde_json::json!((r.sigma * 1e6).round() / 1e6);
+            e["plackett_luce_ordinal"] = serde_json::json!((r.ordinal() * 1e6).round() / 1e6);
+        }
     }
-    serde_json::json!({"ok": true, "leaderboard": out})
+    out.sort_by_key(|e| {
+        std::cmp::Reverse((e["plackett_luce_ordinal"].as_f64().unwrap_or(0.0) * 1e6) as u64)
+    });
+    serde_json::json!({
+        "ok": true,
+        "rating_model": "plackett-luce (weng-lin, openskill-совместимо)",
+        "leaderboard": out,
+    })
 }
 
 fn json_add(v: &serde_json::Value, add: u64) -> serde_json::Value {
