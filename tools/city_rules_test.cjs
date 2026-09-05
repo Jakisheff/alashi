@@ -51,3 +51,56 @@ test('embedded character includes in-file buffers and movement animations',()=>{
  const animations=model.animations.map(a=>a.name);
  for(const name of ['Idle_Neutral','Walk','Run'])assert.ok(animations.includes(name));
 });
+
+const faction=(influence,cash=0)=>({influence,cash});
+const draws=(...values)=>()=>{assert.ok(values.length,'unexpected extra ballot draw');return values.shift()};
+test('NPC decisions are sealed without receiving a player vote',()=>{
+ const ballot=R.createBallot(faction(1),faction(3),'tax10',draws(.95,.1));
+ assert.equal(ballot.rivalVote,'abstain');assert.equal(ballot.rivalVeto,true);
+ assert.equal(ballot.president,'rival');assert.ok(Object.isFrozen(ballot));
+ const original=JSON.stringify(ballot);
+ for(const choice of ['yes','no','abstain'])R.tallyBallot(ballot,choice);
+ assert.equal(JSON.stringify(ballot),original);
+});
+test('NPC presidential veto blocks a strict yes majority',()=>{
+ const ballot=R.createBallot(faction(1),faction(3),'tax10',draws(.95,.1));
+ const r=R.tallyBallot(ballot,'yes');
+ assert.equal(r.yes,1);assert.equal(r.no,0);assert.equal(r.veto,'rival');assert.equal(r.passed,false);
+});
+test('NPC president can also decline veto and permit approval',()=>{
+ const ballot=R.createBallot(faction(1),faction(3),'tax10',draws(.95,.9));
+ const r=R.tallyBallot(ballot,'yes');assert.equal(r.veto,null);assert.equal(r.passed,true);
+});
+test('NPC cannot veto when player wins presidential tie',()=>{
+ const ballot=R.createBallot(faction(2),faction(2),'tax10',draws(.95));
+ assert.equal(ballot.president,'player');assert.equal(ballot.rivalVeto,false);
+ assert.equal(R.tallyBallot(ballot,'yes').passed,true);
+});
+test('player veto works only for the elected president',()=>{
+ const own=R.createBallot(faction(3),faction(1),'boom',draws(.1));
+ assert.equal(R.tallyBallot(own,'veto').veto,'player');assert.equal(R.tallyBallot(own,'veto').passed,false);
+ const npc=R.createBallot(faction(1),faction(3),'boom',draws(.1));
+ assert.throws(()=>R.tallyBallot(npc,'veto'));
+});
+test('weighted voting rejects ties and excludes abstentions',()=>{
+ const tie=R.createBallot(faction(2),faction(2),'tax10',draws(.5));
+ assert.equal(R.tallyBallot(tie,'yes').passed,false);
+ const majority=R.createBallot(faction(3),faction(1),'tax10',draws(.5));
+ assert.equal(R.tallyBallot(majority,'yes').passed,true);
+ const abstain=R.createBallot(faction(2),faction(1),'tax10',draws(.95));
+ assert.equal(R.tallyBallot(abstain,'abstain').yes,0);
+ assert.equal(R.tallyBallot(abstain,'abstain').passed,false);
+});
+test('sealed weights survive later mutation of input faction objects',()=>{
+ const player=faction(3),npc=faction(1);
+ const ballot=R.createBallot(player,npc,'tax10',draws(.5));player.influence=99;npc.influence=88;
+ const r=R.tallyBallot(ballot,'yes');assert.equal(r.yes,3);assert.equal(r.no,1);
+});
+test('NPC preference is probabilistic, not a fixed public vote per card',()=>{
+ for(const law of ['tax10','boom','poor']){
+  const votes=[.05,.8,.99].map(v=>R.createBallot(faction(3,0),faction(1,1),law,draws(v)).rivalVote);
+  assert.deepEqual(votes,['yes','no','abstain']);
+ }
+ assert.throws(()=>R.createBallot(faction(1),faction(1),'unknown'));
+ assert.throws(()=>R.tallyBallot({president:'player'},'invalid'));
+});

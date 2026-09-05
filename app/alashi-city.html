@@ -6091,7 +6091,23 @@ const CityRules = (() => {
     } return {x,z,hit};
   }
   function angle(value) {return Math.atan2(Math.sin(value),Math.cos(value))}
-  return {prices,M,sale,blocked,move,angle};
+  function createBallot(player,rival,law,rng=Math.random) {
+    if(!['tax10','boom','poor'].includes(law))throw Error('Неизвестный закон');
+    const president=player.influence>=rival.influence?'player':'rival';
+    const support=law==='tax10'?.25:law==='boom'?.65:rival.cash<player.cash?.75:.15;
+    const roll=rng(),rivalVote=roll<support?'yes':roll<.85?'no':'abstain';
+    const rivalVeto=president==='rival'&&rivalVote!=='yes'&&rng()<.65;
+    return Object.freeze({president,playerWeight:player.influence,rivalWeight:rival.influence,rivalVote,rivalVeto});
+  }
+  function tallyBallot(ballot,choice) {
+    if(!['yes','no','abstain','veto'].includes(choice))throw Error('Недопустимый голос');
+    if(choice==='veto'&&ballot.president!=='player')throw Error('Право вето есть только у президента');
+    const yes=(choice==='yes'?ballot.playerWeight:0)+(ballot.rivalVote==='yes'?ballot.rivalWeight:0);
+    const no=(choice==='no'?ballot.playerWeight:0)+(ballot.rivalVote==='no'?ballot.rivalWeight:0);
+    const veto=choice==='veto'?'player':ballot.president==='rival'&&ballot.rivalVeto?'rival':null;
+    return {yes,no,veto,passed:yes>no&&!veto,playerVote:choice==='veto'?'abstain':choice,rivalVote:ballot.rivalVote};
+  }
+  return {prices,M,sale,blocked,move,angle,createBallot,tallyBallot};
 })();
 globalThis.CityRules=CityRules;
 (() => {
@@ -6263,6 +6279,8 @@ if(typeof CityGLTFLoader!=='undefined'&&$('character-model')){
  },e=>console.error('[ERROR] Character model could not be loaded',e));
 }
 
+let sealedBallot=null;
+function ballotRandom(){if(globalThis.crypto?.getRandomValues){const value=new Uint32Array(1);crypto.getRandomValues(value);return value[0]/4294967296}return Math.random()}
 const keys=new Set();let orbit=Math.PI,pitch=.1,camDistance=6,mouseTime=-10,drag=false,toastTime=0,audio=null,sound=true,quality=true,last=performance.now(),fpsTime=0,frames=0,fps=60,interactable=null,footYaw=Math.PI,stepTime=0,camReset=true;
 const fmt=n=>Number((n/1e6).toFixed(6)).toLocaleString('ru-RU');
 const objectiveData=[['Садись за руль','Твоя машина стоит у тротуара. Подойди к ней и нажми E.'],['Работа на комбинате','Доберись до золотой метки. Выйди из машины и забери два товара.'],['Деньги на рынке','Отвези товар на Зелёный рынок. Первые две продажи принесут 22M.'],['Найди поддержку','В Доме союзов 5M помогут заручиться поддержкой. Влияние откроет двери парламента.'],['Твой первый закон','Отправляйся в парламент. Голоса решают, сколько принесёт следующий рейс.'],['Город открыт','Производи и продавай товар. После каждого рейса можно провести новый закон. Шесть раундов до дележа банка.']];
@@ -6289,6 +6307,7 @@ function stationDialog(s){
   openModal('<div class="eyebrow">ЗЕЛЁНЫЙ РЫНОК</div><h1>Алия, торговец</h1><p>В багажнике: '+state.goods+' шт. Цена следующего лота: '+Math.max(1,CityRules.prices[Math.min(state.sold,15)]+state.boom)+'M. Налог: '+state.tax+'%.</p><p>За весь товар получишь <b>'+fmt(sale.net)+'M</b>. Продано на рынке в этом раунде: '+state.sold+' шт.</p><div class="actions"><button class="primary" id="sell" '+(!state.goods?'disabled':'')+'>Продать товар</button><button class="secondary" id="leave">Вернуться на улицу</button></div>');
   $('sell').onclick=()=>{if(!state.goods)return;const s=CityRules.sale(state.goods,state.sold,state.tax,state.boom);state.cash+=s.net;state.taxVault+=s.tax;state.sold+=state.goods;state.goods=0;state.deliveries++;if(!state.complete)rivalSale();if(state.mission===2)state.mission=3;else if(state.mission>=5&&!state.complete)state.mission=4;closeModal();showToast('+'+fmt(s.net)+'M песо',s.tax?'Удержан налог '+fmt(s.tax)+'M.':'Деньги зачислены в твою кассу.');chime();updateHUD()};
  }else if(s.id==='union'){
+  if(sealedBallot){showToast('Голосование уже началось','Сначала заверши выбор в парламенте. Влияние на это голосование зафиксировано.');return}
   openModal('<div class="eyebrow">ДОМ СОЮЗОВ</div><h1>Марат, председатель</h1><p>Председатель профсоюза предлагает голоса своих людей. Взятка 5M даст тебе +1 влияние. Деньги уйдут фракции «Союз».</p><p>Твоё влияние: '+state.influence+'. У «Союза» 1 голос. '+(state.cash<5000000?'Сначала заработай на рынке.':'')+'</p><div class="actions"><button class="primary" id="bribe" '+(state.cash<5000000?'disabled':'')+'>Передать 5M · +1 влияние</button><button class="secondary" id="leave">Вернуться на улицу</button></div>');
   $('bribe').onclick=()=>{if(state.cash<5000000)return;state.cash-=5000000;rival.cash+=5000000;state.influence++;if(state.mission===3)state.mission=4;closeModal();showToast('+1 влияние','Поддержка получена. Тебя ждут в парламенте.');chime();updateHUD()};
  }else{
@@ -6296,10 +6315,11 @@ function stationDialog(s){
   if(state.mission<4){showToast('Сначала заручись поддержкой','Председатель профсоюза находится в Доме союзов.');return}
   if(state.mission===5){showToast('Нужен новый рейс','Произведи товар и продай его перед следующим голосованием.');return}
   if(!state.law){if(!lawDeck.length)lawDeck=shuffle(['tax10','boom','poor']);state.law=lawDeck.pop();}
-  const laws={tax10:['Налог 10%','С каждой продажи будет удерживаться 10%.','no'],boom:['Бум','В следующем раунде рыночные цены вырастут на 2M.','no'],poor:['Субсидия бедным','Беднейшая фракция получает +1 влияние.','yes']},l=laws[state.law];
-  state.president=state.influence>=rival.influence;
-  openModal('<div class="eyebrow">ПАРЛАМЕНТ · РАУНД '+state.round+' / 6</div><h1>'+l[0]+'</h1><p>'+l[1]+'</p><p>Касса «Союза»: '+fmt(rival.cash)+'M.</p><p>Твой голос весит <b>'+state.influence+'</b>. «Союз»: '+rival.influence+' '+(l[2]==='yes'?'за':'против')+'. '+(state.president?'Ты президент и можешь наложить вето.':'Президентом остаётся «Союз».')+'</p><div class="actions"><button class="primary" data-vote="yes">Голосовать за</button><button class="secondary" data-vote="no">Голосовать против</button><button class="secondary" data-vote="abstain">Воздержаться</button>'+(state.president?'<button class="secondary" data-vote="veto">Наложить вето</button>':'')+'<button class="secondary" id="leave">Вернуться на улицу</button></div>');
-  document.querySelectorAll('[data-vote]').forEach(b=>b.onclick=()=>resolveVote(b.dataset.vote,l[2]));
+  const laws={tax10:['Налог 10%','С каждой продажи будет удерживаться 10%.'],boom:['Бум','В следующем раунде рыночные цены вырастут на 2M.'],poor:['Субсидия бедным','Беднейшая фракция получает +1 влияние.']},l=laws[state.law];
+  if(!sealedBallot)sealedBallot=CityRules.createBallot(state,rival,state.law,ballotRandom);
+  state.president=sealedBallot.president==='player';
+  openModal('<div class="eyebrow">ПАРЛАМЕНТ · РАУНД '+state.round+' / 6</div><h1>'+l[0]+'</h1><p>'+l[1]+'</p><p>Касса «Союза»: '+fmt(rival.cash)+'M.</p><p>Вес твоего голоса: <b>'+sealedBallot.playerWeight+'</b>. Вес голоса «Союза»: <b>'+sealedBallot.rivalWeight+'</b>.</p><p id="sealed-status">Решение «Союза» запечатано. Голос и решение о вето откроются после твоего выбора.</p><p>'+(state.president?'Ты президент и можешь наложить вето.':'Президент: «Союз». Его решение о вето пока скрыто.')+'</p><div class="actions"><button class="primary" data-vote="yes">Голосовать за</button><button class="secondary" data-vote="no">Голосовать против</button><button class="secondary" data-vote="abstain">Воздержаться</button>'+(state.president?'<button class="secondary" data-vote="veto">Наложить вето</button>':'')+'<button class="secondary" id="leave">Вернуться на улицу</button></div>');
+  document.querySelectorAll('[data-vote]').forEach(b=>b.onclick=()=>resolveVote(b.dataset.vote));
  }
  $('leave')?.addEventListener('click',closeModal);
 }
@@ -6307,13 +6327,21 @@ const rival={cash:0,influence:1,soldRound:0};
 function rivalSale(){if(rival.soldRound===state.round)return;const sale=CityRules.sale(2,state.sold,state.tax,state.boom);rival.cash+=sale.net;state.taxVault+=sale.tax;state.sold+=2;rival.soldRound=state.round;}
 let lawDeck=['poor','boom','tax10'];function shuffle(a){const result=[...a];for(let i=result.length-1;i>0;i--){const j=Math.floor(rand()*(i+1));[result[i],result[j]]=[result[j],result[i]]}return result}
 lawDeck=shuffle(lawDeck);
-function resolveVote(vote,rivalVote){let yes=(vote==='yes'?state.influence:0)+(rivalVote==='yes'?rival.influence:0),no=(vote==='no'?state.influence:0)+(rivalVote==='no'?rival.influence:0),passed=yes>no&&vote!=='veto';
+function resolveVote(vote){
+ if(!sealedBallot||state.complete||state.mission!==4)return;
+ const ballot=sealedBallot,result=CityRules.tallyBallot(ballot,vote),{yes,no,passed,veto}=result;
+ sealedBallot=null;
+ const labels={yes:'за',no:'против',abstain:'воздержание'};
+ const title=passed?'Закон принят':veto==='rival'?'Вето президента «Союза»':veto==='player'?'Твоё президентское вето':'Закон отклонён';
+ const reveal='<section id="ballot-reveal"><p>Твой голос: <b>'+labels[result.playerVote]+'</b> (вес '+ballot.playerWeight+').<br>Голос «Союза»: <b>'+labels[result.rivalVote]+'</b> (вес '+ballot.rivalWeight+').</p><p>За: '+yes+', против: '+no+'. Вето: '+(veto==='rival'?'«Союз»':veto==='player'?'игрок':'не использовано')+'.</p></section>';
  if(passed){if(state.law==='tax10')state.tax=10;if(state.law==='boom')state.nextBoom=2;if(state.law==='poor'){if(state.cash<=rival.cash)state.influence++;else rival.influence++}}
  state.law=null;closeModal();
  if(state.round===6){const rake=1000000,net=19000000,first=state.cash>=rival.cash,own=first?11875000:7125000,other=net-own;state.cash+=own;rival.cash+=other;state.complete=true;state.mission=5;
-  openModal('<div class="eyebrow">ШЕСТОЙ РАУНД ЗАВЕРШЁН</div><h1>'+(state.cash>=rival.cash?'Район за тобой.':'«Союз» впереди.')+'</h1><p>Банк: 20M. Рейк 5%: 1M. Распределено: 19M.</p><p>Твоя выплата: '+fmt(own)+'M. Итоговая касса: <b>'+fmt(state.cash)+'M</b>.<br>Касса «Союза» с выплатой: '+fmt(rival.cash)+'M.</p><p class="caption">Рейк 5% ушёл протоколу. Выплаты рассчитаны один раз. Можно продолжить свободную игру.</p><div class="actions"><button class="primary" id="continue">Вернуться в город</button></div>');$('continue').onclick=closeModal;
- }else{state.round++;state.sold=0;state.boom=state.nextBoom;state.nextBoom=0;state.mission=5;showToast(passed?'Закон принят':vote==='veto'?'Президентское вето':'Закон отклонён','За: '+yes+', против: '+no+'. Начался раунд '+state.round+'. Рынок снова открывается с высокой цены.');chime()}
- updateHUD();
+  openModal('<div class="eyebrow">ШЕСТОЙ РАУНД ЗАВЕРШЁН</div><h1>'+(state.cash>=rival.cash?'Район за тобой.':'«Союз» впереди.')+'</h1><h2>'+title+'</h2>'+reveal+'<p>Банк: 20M. Рейк 5%: 1M. Распределено: 19M.</p><p>Твоя выплата: '+fmt(own)+'M. Итоговая касса: <b>'+fmt(state.cash)+'M</b>.<br>Касса «Союза» с выплатой: '+fmt(rival.cash)+'M.</p><p class="caption">Рейк 5% ушёл протоколу. Выплаты рассчитаны один раз. Можно продолжить свободную игру.</p><div class="actions"><button class="primary" id="continue">Вернуться в город</button></div>');
+ }else{state.round++;state.sold=0;state.boom=state.nextBoom;state.nextBoom=0;state.mission=5;
+  openModal('<div class="eyebrow">ГОЛОСА ВСКРЫТЫ</div><h1>'+title+'</h1>'+reveal+'<p>Начался раунд '+state.round+'. Рынок снова открывается с высокой цены.</p><div class="actions"><button class="primary" id="continue">Вернуться в город</button></div>');chime();
+ }
+ $('continue').onclick=closeModal;updateHUD();
 }
 function nearby(){const p=actorPos();if(state.inCar)return {type:'exit',text:'Выйти из машины'};let closest=null,dist=6.5;for(const c of cars){const d=c.group.position.distanceTo(p);if(d<dist){dist=d;closest={type:'car',car:c,text:'Сесть за руль · Alashi 2107'}}}for(const s of stations){if(Math.hypot(p.x-s.x,p.z-s.z)<4.4)return {type:'station',station:s,text:s.name}}return closest}
 function interact(){if(!state.started||state.paused)return;const n=nearby();if(!n)return;
