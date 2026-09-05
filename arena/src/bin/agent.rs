@@ -103,11 +103,12 @@ fn llm_ask(
     user: &str,
     timeout_s: u64,
     ctx: Option<&Value>,
+    max_tokens: u32,
 ) -> (Option<String>, Usage) {
     let body = serde_json::json!({
         "model": cfg.model,
         "thinking": {"type": "disabled"},
-        "max_tokens": 400,
+        "max_tokens": max_tokens,
         "messages": [
             {"role": "system", "content": system},
             {"role": "user", "content": user}
@@ -483,6 +484,36 @@ fn decide(
         if let Some(y) = mem.license_yield {
             user.push_str(&format!("\nИнсайд: доход лицензии = {} песо.", y / 1_000_000));
         }
+        let (a, mut p) = decide_inner(cfg, s, me, prompt, mem, &user, attempts, ask_to, budget_s, t0, &llm_ctx, spent);
+        // двойной судья со свапом позиций для закона (паттерн
+        // gpt-prompt-engineer: позиционное смещение жюри гасится двумя
+        // вызовами с перестановкой A/B; расхождение = воздержание)
+        if a == "vote" && phase == "law" {
+            if let Some(c) = double_judge(cfg, s, me, &llm_ctx, spent) {
+                p["choice"] = serde_json::json!(c);
+            }
+        }
+        return (a, p);
+    }
+    fallback(phase, s, me, mem)
+}
+
+fn decide_inner(
+    cfg: &LlmCfg,
+    s: &Value,
+    me: &Value,
+    _prompt: &str,
+    mem: &Mem,
+    user: &str,
+    attempts: u32,
+    ask_to: u64,
+    budget_s: u64,
+    t0: std::time::Instant,
+    llm_ctx: &Value,
+    spent: &mut Usage,
+) -> (&'static str, Value) {
+    let phase = s["phase"].as_str().unwrap_or("");
+    {
         // до двух попыток: вторая через 2с ловит rate-limit, но не за
         // счёт окна фазы (бюджет проверяется до, а не после попытки)
         for attempt in 0..attempts {
@@ -492,7 +523,7 @@ fn decide(
                 }
                 std::thread::sleep(Duration::from_secs(2));
             }
-            let (ans, u) = llm_ask(cfg, SYSTEM, &user, ask_to, Some(&llm_ctx));
+            let (ans, u) = llm_ask(cfg, SYSTEM, user, ask_to, Some(llm_ctx), 400);
             spent.add(u);
             if let Some(ans) = ans {
                 if let Some(v) = parse_json_block(&ans) {
@@ -535,6 +566,67 @@ fn decide(
         println!("[agent] LLM не ответил JSON — фоллбэк");
     }
     fallback(phase, s, me, mem)
+}
+
+const JUDGE_SYSTEM: &str = "Ты судья на голосовании закона в политэкономической игре Alashi. Ответь ровно одной буквой: A или B.";
+
+/// Двойной судья со свапом позиций (паттерн gpt-prompt-engineer: жюри
+/// склонно к варианту «A», два вызова с перестановкой гасят смещение;
+/// расхождение судей = воздержание). Вердикт одним токеном: max_tokens 4.
+fn double_judge(cfg: &LlmCfg, s: &Value, me: &Value, ctx: &Value, spent: &mut Usage) -> Option<String> {
+    let law = s["law_card_name"].as_str().unwrap_or("?");
+    let mut table = String::new();
+    if let Some(fs) = s["factions"].as_array() {
+        for f in fs {
+            table.push_str(&format!(
+                "  idx {}: cash {}M goods {} hard {}M inf {}\n",
+                f["idx"].as_u64().unwrap_or(0),
+                f["cash"].as_u64().unwrap_or(0) / 1_000_000,
+                f["goods"].as_u64().unwrap_or(0),
+                f["hard"].as_u64().unwrap_or(0) / 1_000_000,
+                f["influence"].as_u64().unwrap_or(0),
+            ));
+        }
+    }
+    let base = format!(
+        "Закон на голосовании: {}.\nТы — фракция idx {} (cash {}M, goods {}, hard {}M, влияние {}, президент: {}).\nТаблица фракций:\n{}Что выгоднее твоей фракции?",
+        law,
+        me["idx"].as_u64().unwrap_or(0),
+        me["cash"].as_u64().unwrap_or(0) / 1_000_000,
+        me["goods"].as_u64().unwrap_or(0),
+        me["hard"].as_u64().unwrap_or(0) / 1_000_000,
+        me["influence"].as_u64().unwrap_or(0),
+        me["is_president"].as_bool().unwrap_or(false),
+        table,
+    );
+    let p1 = format!("{base}\nВарианты: A = проголосовать yes, B = проголосовать no.\nОтветь ровно одной буквой: A или B.");
+    let p2 = format!("{base}\nВарианты: A = проголосовать no, B = проголосовать yes.\nОтветь ровно одной буквой: A или B.");
+    let (a1, u1) = llm_ask(cfg, JUDGE_SYSTEM, &p1, 8, Some(ctx), 4);
+    spent.add(u1);
+    let (a2, u2) = llm_ask(cfg, JUDGE_SYSTEM, &p2, 8, Some(ctx), 4);
+    spent.add(u2);
+    let v1 = judge_letter(a1.as_deref(), "yes", "no");
+    let v2 = judge_letter(a2.as_deref(), "no", "yes");
+    match (v1, v2) {
+        (Some(x), Some(y)) if x == y => {
+            println!("[agent] двойной судья согласен: {x}");
+            Some(x.to_string())
+        }
+        (Some(_), Some(_)) => {
+            println!("[agent] двойной судья разошёлся: воздержание");
+            Some("abstain".into())
+        }
+        _ => None,
+    }
+}
+
+fn judge_letter(ans: Option<&str>, a_is: &'static str, b_is: &'static str) -> Option<&'static str> {
+    let t = ans?.trim().to_uppercase();
+    match t.chars().next()? {
+        'A' => Some(a_is),
+        'B' => Some(b_is),
+        _ => None,
+    }
 }
 
 /// Селф-дебриф в inbox/<имя>/ по единому шаблону inbox/TEMPLATE.md:
