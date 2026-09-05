@@ -491,6 +491,10 @@ fn h_join(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_jso
     if name.len() > MAX_NAME {
         return err_json("name_too_long", "имя до 16 байт");
     }
+    // кастдев №5 (Aisultan): плейсхолдеры из примеров джойна принимались
+    // буквально («имя», «модель», «test») — предупреждаем в ответе
+    let placeholder_warn = matches!(name.as_str(), "имя" | "модель" | "test" | "Agent")
+        || matches!(model.as_str(), "модель" | "name" | "test");
     let agent_id = agent_id_of(&model, &prompt);
     let token = random_hex();
     let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
@@ -507,6 +511,23 @@ fn h_join(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_jso
     let d: [u8; 32] = h.finalize().into();
     let wallet = Pubkey::new_from_array(d);
     if let Err(e) = entry.sim.join(wallet, &name) {
+        // кастдев №5: DuplicateWallet обязан объяснять, КТО уже сидит
+        // (иначе агент гадает и плодит тестовые партии)
+        if matches!(e, GameError::DuplicateWallet) {
+            if let Some(i) = entry.wallets.iter().position(|w| *w == wallet) {
+                let nm = entry.agents.get(i).map(|a| a.name.clone()).unwrap_or_default();
+                return err_json(
+                    "join_failed",
+                    &format!(
+                        "DuplicateWallet: этот агент (agent_id {}..) уже в партии {} как «{}» (faction_idx {}). Имя не меняет кошелёк: agent_id = sha256(model|prompt). Новый токен не выдаётся, действуй старым; утерян — см. docs/ops/TOKEN_RECOVERY.md",
+                        &agent_id[..8.min(agent_id.len())],
+                        entry.party_no,
+                        nm,
+                        i
+                    ),
+                );
+            }
+        }
         return err_json("join_failed", &format!("{:?}", e));
     }
     let faction_idx = entry.sim.factions.len() - 1;
@@ -519,7 +540,9 @@ fn h_join(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_jso
         faction_idx,
     });
     let v = state_json(game_id, entry);
-    serde_json::json!({"ok": true, "agent_id": agent_id, "token": token, "faction_idx": faction_idx, "state": v})
+    serde_json::json!({"ok": true, "agent_id": agent_id, "token": token, "faction_idx": faction_idx,
+        "warning": if placeholder_warn { Some("имя/model похожи на плейсхолдер из примера — подставь реальные значения; токен сохранить сразу, он не восстанавливается через API") } else { None },
+        "state": v})
 }
 
 fn h_state(state: &AppState, game_id: u64) -> serde_json::Value {
@@ -846,7 +869,15 @@ fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json
         "ts": now(),
     }));
     let v = state_json(game_id, entry);
-    serde_json::json!({"ok": ok, "error": err, "action_log": log_to_json(&log), "state": v})
+    // кастдев №5: повтор при потерянном ответе выглядел как «за меня
+    // играл фоллбэк» — прямо говорим, что это почти наверняка свой повтор
+    let hint = match err.as_deref() {
+        Some("AlreadyActed") | Some("AlreadyVoted") => Some(
+            "ход/голос в этой фазе уже принят — почти наверняка твой же повторный запрос, чей ответ потерялся в туннеле. Серверных фоллбэков нет: ходы делает только владелец токена",
+        ),
+        _ => None,
+    };
+    serde_json::json!({"ok": ok, "error": err, "hint": hint, "action_log": log_to_json(&log), "state": v})
 }
 
 fn h_advance(state: &AppState, game_id: u64) -> serde_json::Value {
@@ -886,6 +917,41 @@ fn h_advance(state: &AppState, game_id: u64) -> serde_json::Value {
         }
         Err(e) => serde_json::json!({"ok": false, "error": format!("{:?}", e), "state": state_json(game_id, entry)}),
     }
+}
+
+/// Кастдев №5: GET /slots?agent_id=<hex> — во всех АКТИВНЫХ партиях
+/// находит фракции этого агента (кошелёк детерминирован от
+/// agent_id+game_id). Отвечает на «где я уже сижу» без тест-джойнов.
+fn h_slots(state: &AppState, raw_path: &str) -> serde_json::Value {
+    let q = raw_path.split_once('?').map(|(_, q)| q).unwrap_or("");
+    let agent_id = q
+        .split('&')
+        .find_map(|kv| kv.split_once('=').filter(|(k, _)| *k == "agent_id").map(|(_, v)| v.to_string()))
+        .unwrap_or_default();
+    if agent_id.len() != 64 || !agent_id.chars().all(|c| c.is_ascii_hexdigit()) {
+        return err_json("bad_params", "нужен ?agent_id= (64 hex, из ответа join)");
+    }
+    let games = state.games.lock().unwrap_or_else(|e| e.into_inner());
+    let mut found = Vec::new();
+    for (&gid, e) in games.iter() {
+        let mut h = Sha256::new();
+        h.update(agent_id.as_bytes());
+        h.update(&gid.to_le_bytes());
+        let d: [u8; 32] = h.finalize().into();
+        let wallet = Pubkey::new_from_array(d);
+        if let Some(i) = e.wallets.iter().position(|w| *w == wallet) {
+            found.push(serde_json::json!({
+                "game_id": gid,
+                "party_no": e.party_no,
+                "label": e.label,
+                "phase": phase_name(e.sim.game.phase),
+                "round": e.sim.game.round,
+                "faction_idx": i,
+                "faction_name": e.agents.get(i).map(|a| a.name.clone()),
+            }));
+        }
+    }
+    serde_json::json!({"ok": true, "agent_id": agent_id, "active_slots": found})
 }
 
 fn h_games(state: &AppState) -> serde_json::Value {
@@ -964,6 +1030,7 @@ fn root_doc() -> serde_json::Value {
             "POST /game/:id/act": "{\"token\", \"action\": sell|buy|produce|donkey|bribe|vote|veto, \"params\"}",
             "POST /game/:id/advance": "permissionless кранк (как ончейн); в грейс-окне до grace_until отказ GraceWindow",
             "GET  /games": "активные партии",
+            "GET  /slots?agent_id=": "во всех активных партиях — где сидит этот агент (фракции, фазы)",
             "GET  /leaderboard": "рейтинг агентов по завершённым партиям",
             "GET  /export": "завершённые партии JSONL",
         },
@@ -1005,6 +1072,9 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
             Err(_) => ("400 Bad Request", err_json("bad_id", "game_id не число").to_string()),
         },
         ("GET", ["games"]) => ("200 OK", h_games(state).to_string()),
+        // кастдев №5 (Aisultan): где мой кошелёк уже сидит — без этого
+        // агент реконструирует лимиты тестовыми партиями
+        ("GET", ["slots"]) => ("200 OK", h_slots(state, &req.path).to_string()),
         ("GET", ["leaderboard"]) => ("200 OK", h_leaderboard(state).to_string()),
         ("GET", ["export"]) => {
             let l = h_export(state);
