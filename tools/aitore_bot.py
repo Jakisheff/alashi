@@ -73,20 +73,38 @@ def ensure_identity():
 def log(*a):
     LOG.write(time.strftime("[%H:%M:%S]") + " " + " ".join(str(x) for x in a) + "\n")
 
-def http(path, body=None, timeout=15):
+def http(path, body=None, timeout=15, retries=4):
+    """Транспортный уровень: сеть/туннель -> ретраи с бэкоффом 1-2-4-8.
+    Игровой протокол (JSON с ok:false внутри HTTP 200) сюда не попадает:
+    это не транспортная ошибка, её разбирает act(). Урок партии №20:
+    статичный sleep(2) при падении туннеля сжигал окно фазы."""
+    import urllib.error
     url = BASE + path
     data = json.dumps(body).encode() if body is not None else None
-    for attempt in range(3):
+    delay = 1.0
+    for attempt in range(retries):
         try:
             req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"})
             with urllib.request.urlopen(req, timeout=timeout) as r:
                 return json.loads(r.read())
+        except urllib.error.HTTPError as e:
+            try:
+                return json.loads(e.read())
+            except Exception:
+                if 500 <= e.code:
+                    log("HTTP-5XX", path.split("?")[0], e.code, "attempt", attempt, f"backoff={delay:.0f}s")
+                    time.sleep(delay)
+                    delay *= 2
+                    continue
+                log("HTTP-4XX", path.split("?")[0], e.code)
+                return None
         except Exception as e:
-            log("HTTP-ERR", path.split("?")[0], repr(e)[:120], "attempt", attempt)
-            time.sleep(2)
+            log("HTTP-TRANSPORT", path.split("?")[0], repr(e)[:100], "attempt", attempt, f"backoff={delay:.0f}s")
+            time.sleep(delay)
+            delay *= 2
     return None
 
-def act(action, params=None, fresh=False):
+def act(action, params=None, fresh=False, retry=True):
     """Отправка хода. fresh=True: лёгкий пре-чек допущений по только что
     подтянутому state (урок партии 21: бид 11M при живом кэше 7M, счёт по
     устаревшему снапшоту до инспекта). Гонка продаж идёт без пре-чека:
@@ -108,8 +126,30 @@ def act(action, params=None, fresh=False):
         body["params"] = params
     r = http(f"/game/{GAME}/act", body)
     if r is None:
-        log("ACT-FAIL", action)
+        log("ACT-FAIL (транспорт исчерпан)", action)
         return None
+    if r.get("ok") is not True and not r.get("precheck"):
+        err = r.get("error")
+        if err in ("AlreadyActed", "AlreadyVoted"):
+            # почти наверняка свой повтор, чей ответ потерялся в канале
+            log("ACT-ALREADY (считаем выполненным)", action)
+            return r
+        if err in ("NotEnoughCash", "NotEnoughGoods") and retry and params:
+            # игровой фидбек: в ответе лежит свежий state, правим суммы
+            # и пробуем один раз снова, без слепого sleep
+            s2 = r.get("state") or {}
+            fs = s2.get("factions") or []
+            f2 = fs[ME] if len(fs) > ME else {}
+            if action == "bid_license":
+                amt = min(int(params.get("amount", 0)), f2.get("cash", 0) - 200_000)
+                if amt >= 1_000_000:
+                    log("ACT-RETRY (поправка ставки)", amt)
+                    return act("bid_license", {"amount": amt}, fresh=False, retry=False)
+            elif action in ("sell", "sell_credit"):
+                u = min(int(params.get("units", 0)), f2.get("goods", 0))
+                if u >= 1:
+                    log("ACT-RETRY (поправка лота)", u)
+                    return act(action, {"units": u}, fresh=False, retry=False)
     log("ACT", action, json.dumps(params or {}), "->", "ok" if r.get("ok") else f"err={r.get('error')}")
     return r
 
