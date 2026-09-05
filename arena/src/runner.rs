@@ -83,6 +83,18 @@ pub struct GameConfig {
     /// A/B «рента в ранге» (прод = false): рента лицензии в ранг
     /// держателя вместо отдельной выплаты.
     pub rent_in_rank: bool,
+    /// П1 (ТРИЗ, 05.09): режим исполнения рынка. Sequential —
+    /// прод = мгновенно по прибытию (гонка латентностей);
+    /// Lottery — решения против состояния на открытии, порядок
+    /// случайный; Batch — все продажи по одной средневзвешенной цене.
+    pub market_exec: MarketExec,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MarketExec {
+    Sequential,
+    Lottery,
+    Batch,
 }
 
 impl Default for GameConfig {
@@ -93,6 +105,7 @@ impl Default for GameConfig {
             vote_weight_mode: alashi_rules::constants::VOTE_WEIGHT_LEGACY,
             epoch: alashi_rules::constants::EPOCH_CLASSIC,
             rent_in_rank: false,
+            market_exec: MarketExec::Sequential,
         }
     }
 }
@@ -175,21 +188,54 @@ pub fn play_game(
         let mut actions: Vec<ActionLog> = Vec::new();
         // Ротация первого хода: честнее на падающей цене.
         let order: Vec<usize> = (0..n).map(|k| (round as usize + k) % n).collect();
-        for &i in &order {
-            match phase {
-                Phase::Market => {
-                    let act = with_obs(&sim, &wallets, i, |o| strategies[i].market(o));
-                    actions.push(apply_market(&mut sim, i, &act));
+        if phase == Phase::Market && cfg.market_exec != MarketExec::Sequential {
+            // П1 A/B: честная очередь. Решения собираются против
+            // состояния НА ОТКРЫТИИ фазы (все видят одинаковый рынок),
+            // затем исполняются по режиму.
+            let mut decisions = Vec::new();
+            for &i in &order {
+                let act = with_obs(&sim, &wallets, i, |o| strategies[i].market(o));
+                decisions.push((i, act));
+            }
+            let exec_order: Vec<usize> = match cfg.market_exec {
+                MarketExec::Lottery => {
+                    // случайный порядок продавцов (seed^round — воспроизводимо)
+                    let mut idx: Vec<usize> = (0..decisions.len()).collect();
+                    let mut rng = splitmix64(seed ^ ((round as u64) << 16) ^ 0x1234);
+                    for k in (1..idx.len()).rev() {
+                        rng = splitmix64(rng);
+                        let j = (rng % (k as u64 + 1)) as usize;
+                        idx.swap(k, j);
+                    }
+                    idx
                 }
-                Phase::Action => {
-                    let act = with_obs(&sim, &wallets, i, |o| strategies[i].action(o));
-                    actions.push(apply_action(&mut sim, i, &act));
+                _ => (0..decisions.len()).collect(),
+            };
+            if cfg.market_exec == MarketExec::Batch {
+                actions.extend(batch_market(&mut sim, &decisions));
+            } else {
+                for k in exec_order {
+                    let (i, ref act) = decisions[k];
+                    actions.push(apply_market(&mut sim, i, act));
                 }
-                Phase::Law => {
-                    let act = with_obs(&sim, &wallets, i, |o| strategies[i].law(o));
-                    actions.push(apply_law(&mut sim, i, &act, &wallets[i]));
+            }
+        } else {
+            for &i in &order {
+                match phase {
+                    Phase::Market => {
+                        let act = with_obs(&sim, &wallets, i, |o| strategies[i].market(o));
+                        actions.push(apply_market(&mut sim, i, &act));
+                    }
+                    Phase::Action => {
+                        let act = with_obs(&sim, &wallets, i, |o| strategies[i].action(o));
+                        actions.push(apply_action(&mut sim, i, &act));
+                    }
+                    Phase::Law => {
+                        let act = with_obs(&sim, &wallets, i, |o| strategies[i].law(o));
+                        actions.push(apply_law(&mut sim, i, &act, &wallets[i]));
+                    }
+                    _ => unreachable!(),
                 }
-                _ => unreachable!(),
             }
         }
         let res = sim
@@ -312,6 +358,78 @@ pub fn empty_log() -> ActionLog {
         cash_after: None,
         goods_after: None,
     }
+}
+
+/// П1 (ТРИЗ) Batch: все продажи фазы по одной средневзвешенной цене
+/// (суммарный gross по таблице от нуля / суммарные юниты). Налог и
+/// кредит считаются каждому на его долю. Покупки исполняются после
+/// пакета по итоговому счётчику. Решения уже собраны против
+/// состояния на открытии фазы.
+fn batch_market(sim: &mut Simulator, decisions: &[(usize, MarketAction)]) -> Vec<ActionLog> {
+    use crate::strategies::sale_gross;
+    let mut logs = Vec::new();
+    let shift = sim.game.active_price_shift;
+    let boom = sim.game.active_boom;
+    let tax_bps = sim.game.active_tax_bps;
+    let mut sells: Vec<(usize, u16, bool)> = Vec::new(); // (i, units, credit)
+    let mut buys: Vec<(usize, u16)> = Vec::new();
+    for &(i, ref act) in decisions {
+        match act {
+            MarketAction::Sell(u) => sells.push((i, *u, false)),
+            MarketAction::SellCredit(u) => sells.push((i, *u, true)),
+            MarketAction::Buy(u) => buys.push((i, *u)),
+            MarketAction::Pass => {}
+        }
+    }
+    let total_units: u64 = sells.iter().map(|(_, u, _)| *u as u64).sum();
+    if total_units > 0 {
+        let gross_total = sale_gross(0, total_units as u16, shift, boom);
+        let avg = gross_total / total_units;
+        let mut distributed = 0u64;
+        let n = sells.len();
+        for (k, &(i, units, credit)) in sells.iter().enumerate() {
+            // валидация: товара хватает (иначе отказ как в правилах)
+            if sim.factions[i].goods < units {
+                logs.push(fail("market", i, "sell", serde_json::json!({"units": units, "batch": true}), alashi_rules::error::GameError::NotEnoughGoods));
+                continue;
+            }
+            let mut gross = avg * units as u64;
+            if k + 1 == n {
+                gross = gross_total - distributed; // остаток последнему — сумма сходится
+            } else {
+                distributed += gross;
+            }
+            let tax = gross * tax_bps as u64 / 10_000;
+            let mut revenue = gross - tax;
+            if credit {
+                revenue = revenue * alashi_rules::constants::CREDIT_NUM
+                    / alashi_rules::constants::CREDIT_DEN;
+                sim.factions[i].promissory += revenue;
+            } else {
+                sim.factions[i].cash += revenue;
+            }
+            sim.factions[i].goods -= units;
+            let f = &sim.factions[i];
+            logs.push(ActionLog {
+                phase: "market",
+                actor: i,
+                action: if credit { "sell_credit" } else { "sell" }.into(),
+                detail: serde_json::json!({
+                    "units": units, "revenue": revenue, "batch": true,
+                    "avg_price": avg, "tax_bps": tax_bps,
+                }),
+                ok: true,
+                err: None,
+                cash_after: Some(f.cash),
+                goods_after: Some(f.goods),
+            });
+        }
+        sim.game.sold_this_round += total_units as u16;
+    }
+    for (i, u) in buys {
+        logs.push(apply_market(sim, i, &MarketAction::Buy(u)));
+    }
+    logs
 }
 
 pub fn apply_market(sim: &mut Simulator, i: usize, act: &MarketAction) -> ActionLog {    let phase = "market";

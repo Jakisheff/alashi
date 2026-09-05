@@ -6,7 +6,7 @@
 //!   cargo run --manifest-path arena/Cargo.toml --bin simrun -- \
 //!       --games 50 --mix greedy,tactical --seed 7
 
-use arena::runner::{run_series, GameConfig};
+use arena::runner::{run_series, GameConfig, MarketExec};
 use arena::strategies::ALL;
 use std::io::Write;
 
@@ -66,22 +66,33 @@ fn main() {
     }
 
     let rent_in_rank = flag(&args, "--rent-in-rank").is_some();
+    let market_exec = match flag(&args, "--market-mode").as_deref() {
+        Some("lottery") => MarketExec::Lottery,
+        Some("batch") => MarketExec::Batch,
+        Some("sequential") | None => MarketExec::Sequential,
+        Some(other) => {
+            eprintln!("[ERROR] --market-mode: sequential | lottery | batch (дали {})", other);
+            std::process::exit(2);
+        }
+    };
     let cfg = GameConfig {
         entry_fee,
         phase_duration: 10,
         vote_weight_mode: vote_mode,
         epoch,
         rent_in_rank,
+        market_exec,
     };
     eprintln!(
-        "simrun: {} игр, микс [{}], seed {}, entry_fee {}, vote_weight_mode {}, epoch {}, rent_in_rank {}",
+        "simrun: {} игр, микс [{}], seed {}, entry_fee {}, vote_weight_mode {}, epoch {}, rent_in_rank {}, market_mode {}",
         games,
         mix_ref.join(","),
         seed,
         entry_fee,
         vote_mode,
         if epoch == 1 { "90s" } else { "classic" },
-        rent_in_rank
+        rent_in_rank,
+        match market_exec { MarketExec::Sequential => "sequential", MarketExec::Lottery => "lottery", MarketExec::Batch => "batch" }
     );
     let lines = match run_series(games, seed, &mix_ref, &cfg) {
         Ok(l) => l,
