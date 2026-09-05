@@ -448,14 +448,14 @@ fn h_new_game(state: &AppState, body: &serde_json::Value) -> serde_json::Value {
     let mut sim = Simulator::new(game_id, entry_fee, phase_duration, entropy);
     sim.game.vote_weight_mode = vote_weight_mode;
     sim.game.epoch = epoch;
-    // кастдев №5/ночь 05.09: окно джойна внешних рвётся — длина лобби
+    // кастдев №5/ночь 05.09: окно джойна внешних рвётся - длина лобби
     // отвязана от длины фазы; отдельно задаётся lobby_duration (сек),
-    // дефолт прежний phase_duration x LOBBY_MULT
+    // дефолт прежний phase_duration x LOBBY_MULT. Пола нет: тесты
+    // и быстрые смоуки используют короткие фазы.
     let lobby_duration = body
         .get("lobby_duration")
         .and_then(|v| v.as_i64())
-        .unwrap_or(phase_duration * LOBBY_MULT)
-        .max(60);
+        .unwrap_or(phase_duration * LOBBY_MULT);
     sim.game.phase_ends_at = now() + lobby_duration;
     let party_no = next_party_no();
     let label = body
@@ -505,6 +505,7 @@ fn h_join(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_jso
         || matches!(model.as_str(), "модель" | "name" | "test");
     let agent_id = agent_id_of(&model, &prompt);
     let token = random_hex();
+    let recover = body.get("recover").and_then(|v| v.as_bool()).unwrap_or(false);
     let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
     let Some(entry) = games.get_mut(&game_id) else {
         return err_json("unknown_game", "партия не найдена или закрыта");
@@ -519,15 +520,33 @@ fn h_join(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_jso
     let d: [u8; 32] = h.finalize().into();
     let wallet = Pubkey::new_from_array(d);
     if let Err(e) = entry.sim.join(wallet, &name) {
-        // кастдев №5: DuplicateWallet обязан объяснять, КТО уже сидит
-        // (иначе агент гадает и плодит тестовые партии)
         if matches!(e, GameError::DuplicateWallet) {
             if let Some(i) = entry.wallets.iter().position(|w| *w == wallet) {
                 let nm = entry.agents.get(i).map(|a| a.name.clone()).unwrap_or_default();
+                // П2 (ТРИЗ, 05.09): recover-токен — перевыпуск при повторном
+                // join с тем же agent_id. Закрывает потери токенов сессиями и
+                // саму причину lldb-дампов (стопнувших №20). agent_id выводится
+                // из публичных model+prompt — для dev-арены принято.
+                if recover {
+                    if let Some(a) = entry.agents.get_mut(i) {
+                        a.token = token.clone();
+                        eprintln!(
+                            "[join] party {} RECOVER: faction {} «{}» agent {}.. new token {}",
+                            entry.party_no, i, nm, &agent_id[..8.min(agent_id.len())], token
+                        );
+                        let v = state_json(game_id, entry);
+                        return serde_json::json!({
+                            "ok": true, "recovered": true, "game_id": game_id,
+                            "agent_id": agent_id, "token": token, "faction_idx": i,
+                            "warning": Some("токен перевыпущен (recover); предыдущий умер"),
+                            "state": v
+                        });
+                    }
+                }
                 return err_json(
                     "join_failed",
                     &format!(
-                        "DuplicateWallet: этот агент (agent_id {}..) уже в партии {} как «{}» (faction_idx {}). Имя не меняет кошелёк: agent_id = sha256(model|prompt). Новый токен не выдаётся, действуй старым; утерян — см. docs/ops/TOKEN_RECOVERY.md",
+                        "DuplicateWallet: этот агент (agent_id {}..) уже в партии {} как «{}» (faction_idx {}). Имя не меняет кошелёк: agent_id = sha256(model|prompt). Для перевыпуска токена повтори join с \"recover\": true; утерянный токен без recover не восстанавливается",
                         &agent_id[..8.min(agent_id.len())],
                         entry.party_no,
                         nm,
@@ -541,12 +560,18 @@ fn h_join(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_jso
     let faction_idx = entry.sim.factions.len() - 1;
     entry.wallets.push(wallet);
     entry.agents.push(AgentRec {
-        name,
+        name: name.clone(),
         agent_id: agent_id.clone(),
         token: token.clone(),
         model,
         faction_idx,
     });
+    // П2 (ТРИЗ): токен в лог оператора при каждом join — страховка
+    // от утери ответа сессией (ночной кейс 05.09)
+    eprintln!(
+        "[join] party {} faction {} «{}» agent {}.. model {} token {}",
+        entry.party_no, faction_idx, name, &agent_id[..8.min(agent_id.len())], body.get("model").and_then(|v| v.as_str()).unwrap_or("?"), token
+    );
     let v = state_json(game_id, entry);
     serde_json::json!({"ok": true, "agent_id": agent_id, "token": token, "faction_idx": faction_idx,
         "warning": if placeholder_warn { Some("имя/model похожи на плейсхолдер из примера — подставь реальные значения; токен сохранить сразу, он не восстанавливается через API") } else { None },
