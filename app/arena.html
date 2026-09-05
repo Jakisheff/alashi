@@ -159,6 +159,9 @@ async function tick(first){
     document.getElementById('conn').textContent=`игра gid ${GID} · арена отвечает`;
     if(d.finished){ return renderFin(d.result); }
     const s=d.state;
+    if(s.settlement_error){
+      document.getElementById('conn').textContent='Выплата этой партии приостановлена. Организатору нужно проверить результат.';
+    }
     document.getElementById('src').textContent=U('');
     document.getElementById('pno').textContent=s.party_no??GID;
     document.getElementById('phase').textContent=(PHASES[s.phase]||s.phase)+(s.label?` · ${s.label}`:'');

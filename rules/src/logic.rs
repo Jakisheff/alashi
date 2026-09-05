@@ -47,11 +47,14 @@ pub fn compute_settlement(
     rake_bps: u16,
     shares: &[u64],
 ) -> Result<SettlementPlan> {
+    if rake_bps > 10_000 {
+        return Err(GameError::InvalidSettleSet.into());
+    }
     if bank <= reserve {
         return Err(GameError::EmptyBank.into());
     }
     let pot = bank - reserve;
-    let rake = pot * rake_bps as u64 / 10_000;
+    let rake = (pot as u128 * rake_bps as u128 / 10_000) as u64;
     let payout_total = pot - rake;
 
     let k = factions.len();
@@ -73,7 +76,7 @@ pub fn compute_settlement(
     });
 
     let others_total: u64 = (1..share_count)
-        .map(|r| payout_total * shares[r] / total_shares)
+        .map(|r| (payout_total as u128 * shares[r] as u128 / total_shares as u128) as u64)
         .sum();
     let rank0_amount = payout_total.saturating_sub(others_total);
 
@@ -85,7 +88,7 @@ pub fn compute_settlement(
         let amount = if rank == 0 {
             rank0_amount
         } else {
-            payout_total * shares[rank] / total_shares
+            (payout_total as u128 * shares[rank] as u128 / total_shares as u128) as u64
         };
         if amount == 0 {
             continue;
@@ -190,7 +193,7 @@ pub fn compute_settlement_epoch(
     let mut rake = plan.rake;
     let mut factory_bonus = vec![0u64; n];
     if epoch_90s && n > 0 {
-        let bonus = bank * FACTORY_NUM / FACTORY_DEN;
+        let bonus = (plan.pot as u128 * FACTORY_NUM as u128 / FACTORY_DEN as u128) as u64;
         if bonus > 0 && rake >= bonus && !order.is_empty() {
             let mut best = order[0];
             let mut best_key = (0u16, 0u64);

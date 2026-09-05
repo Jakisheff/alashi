@@ -972,6 +972,53 @@ fn test_market_buy() {
 }
 
 #[test]
+fn test_epoch90s_factory_pays_in_lamports_and_preserves_rent() {
+    let (mut svm, admin) = setup();
+    let a = Keypair::new();
+    let b = Keypair::new();
+    let crank = Keypair::new();
+    for signer in [&a, &b, &crank] {
+        svm.airdrop(&signer.pubkey(), 2_000_000_000).unwrap();
+    }
+    let gid = 606;
+    let game = game_pda(gid);
+    let fa = faction_pda(&game, &a.pubkey());
+    let fb = faction_pda(&game, &b.pubkey());
+    let mut init = ix_initialize(gid, FEE, 0, admin.pubkey(), game, 0);
+    init.data = alashi::instruction::Initialize {
+        game_id: gid, entry_fee: FEE, phase_duration: 0, entropy_mode: 0,
+        epoch: alashi::constants::EPOCH_90S,
+    }.data();
+    assert!(send(&mut svm, &admin, init));
+    let reserve = svm.get_account(&game).unwrap().lamports;
+    assert!(reserve > 0);
+    assert!(send(&mut svm, &a, ix_join("Alpha", a.pubkey(), game, fa)));
+    assert!(send(&mut svm, &b, ix_join("Beta", b.pubkey(), game, fb)));
+    for _ in 0..19 {
+        set_law_seed(&mut svm, 0);
+        assert!(send(&mut svm, &crank, ix_advance(crank.pubkey(), game, vec![fa, fb])));
+    }
+    assert_eq!(game_state(&svm, &game).phase, alashi::state::Phase::Finished);
+    let admin_before = svm.get_account(&admin.pubkey()).unwrap().lamports;
+    let a_before = svm.get_account(&a.pubkey()).unwrap().lamports;
+    let b_before = svm.get_account(&b.pubkey()).unwrap().lamports;
+    assert!(send(&mut svm, &crank, ix_settle(
+        crank.pubkey(), game, vec![fa, fb], vec![a.pubkey(), b.pubkey()], admin.pubkey(),
+    )));
+    assert_eq!(svm.get_account(&game).unwrap().lamports, reserve);
+    assert_eq!(svm.get_account(&admin.pubkey()).unwrap().lamports, admin_before);
+    let a_paid = svm.get_account(&a.pubkey()).unwrap().lamports - a_before;
+    let b_paid = svm.get_account(&b.pubkey()).unwrap().lamports - b_before;
+    let pot = 2 * FEE;
+    assert_eq!(a_paid + b_paid, pot);
+    let expected_factory = pot / 20;
+    let rank_one = (pot - expected_factory) * 30 / 80;
+    let expected_winner = pot - rank_one;
+    let winner_paid = if a.pubkey() < b.pubkey() { a_paid } else { b_paid };
+    assert_eq!(winner_paid, expected_winner);
+}
+
+#[test]
 fn test_vrf_threshold() {
     let mut svm = LiteSVM::new();
     let bytes = include_bytes!(concat!(env!("CARGO_TARGET_TMPDIR"), "/../deploy/alashi.so"));

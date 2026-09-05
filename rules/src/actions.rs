@@ -327,6 +327,9 @@ pub fn inspect_license(game: &Game, f: &mut Faction) -> Result<u64, GameError> {
     if game.epoch != EPOCH_90S {
         return Err(GameError::WrongPhase);
     }
+    if game.license_yield == 0 || !matches!(game.phase, Phase::Market | Phase::Action | Phase::Law) {
+        return Err(GameError::WrongPhase);
+    }
     if f.insider {
         return Err(GameError::AlreadyActed);
     }

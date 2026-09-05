@@ -328,11 +328,29 @@ pub fn settle(
     entry_fee: u64,
     rent_in_rank: bool,
 ) -> (Vec<usize>, Vec<u64>, u64, u64, Vec<PayoutLine>) {
+    try_settle(sim, entry_fee, rent_in_rank).expect("valid simulation settlement")
+}
+
+/// The HTTP arena must report invalid persisted games without stopping its crank.
+pub fn try_settle(
+    sim: &Simulator,
+    entry_fee: u64,
+    rent_in_rank: bool,
+) -> Result<(Vec<usize>, Vec<u64>, u64, u64, Vec<PayoutLine>), String> {
     let n = sim.factions.len();
     // M9: банк партии включает ставки аукциона лицензии
-    let bank = entry_fee * n as u64 + sim.game.prize_pot;
+    let bank = entry_fee.checked_mul(n as u64)
+        .and_then(|v| v.checked_add(sim.game.prize_pot))
+        .ok_or("settlement bank overflow")?;
+    bank.checked_add(sim.game.license_yield).ok_or("settlement payout overflow")?;
+    for f in &sim.factions {
+        let wealth = f.cash.checked_add(f.hard).ok_or("settlement wealth overflow")?;
+        if rent_in_rank {
+            wealth.checked_add(sim.game.license_yield).ok_or("settlement rank overflow")?;
+        }
+    }
     let es = compute_settlement_epoch(&sim.game, &sim.factions, bank, 0, true, rent_in_rank)
-        .expect("settle валиден");
+        .map_err(|e| e.to_string())?;
     let mut payouts = vec![0u64; n];
     let mut breakdown = Vec::with_capacity(n);
     for line in &es.lines {
@@ -343,7 +361,7 @@ pub fn settle(
             factory_bonus: line.factory_bonus,
         });
     }
-    (es.order, payouts, es.rake, bank, breakdown)
+    Ok((es.order, payouts, es.rake, bank, breakdown))
 }
 
 /// Пустой лог-заготовка (для сервисных операций вроде валютчика).

@@ -15,6 +15,7 @@ use borsh;
 use sha2::{Digest, Sha256};
 use std::collections::HashMap;
 use std::net::{TcpListener, TcpStream};
+use std::path::PathBuf;
 use std::sync::atomic::{AtomicU64, Ordering};
 use std::sync::{Arc, Mutex};
 use std::time::{SystemTime, UNIX_EPOCH};
@@ -23,6 +24,9 @@ use std::time::{SystemTime, UNIX_EPOCH};
 pub const DEFAULT_GRACE_S: i64 = 3;
 /// Верхняя граница grace_s при создании партии.
 pub const MAX_GRACE_S: i64 = 30;
+pub const MAX_ENTRY_FEE: u64 = 1_000_000 * PESO;
+pub const MAX_PHASE_DURATION: i64 = 86_400;
+pub const MAX_LOBBY_DURATION: i64 = 7 * 86_400;
 
 pub struct AgentRec {
     pub name: String,
@@ -51,12 +55,12 @@ pub struct GameEntry {
     /// (производное поле insider в /state; правила не трогаем).
     pub insiders: std::collections::HashSet<usize>,
     /// Канонический номер партии, виден ВСЕМ (state/join/games/export).
-    /// game_id локален процессу и сбрасывается при рестарте —
-    /// party_no персистентен (кастдев 05.09: «номер игры должен знать
+    /// game_id и party_no сохраняются при рестарте (кастдев 05.09: «номер игры должен знать
     /// каждый агент, а не только оператор»).
     pub party_no: u64,
     /// Человекочитаемая метка партии (необязательная, из POST /game/new).
     pub label: Option<String>,
+    pub settlement_error: Option<String>,
 }
 
 pub struct AppState {
@@ -64,6 +68,8 @@ pub struct AppState {
     pub next_id: AtomicU64,
     pub completed: Mutex<Vec<String>>,
     pub master_seed: AtomicU64,
+    snapshot_path: PathBuf,
+    sequence_path: PathBuf,
 }
 
 // ---------- П7 (ТРИЗ, 05.09): сериализация состояния ----------
@@ -82,7 +88,7 @@ fn hex_enc(b: &[u8]) -> String {
     b.iter().map(|x| format!("{:02x}", x)).collect()
 }
 fn hex_dec(s: &str) -> Option<Vec<u8>> {
-    if s.len() % 2 != 0 {
+    if s.len() % 2 != 0 || !s.is_ascii() {
         return None;
     }
     (0..s.len() / 2)
@@ -90,7 +96,7 @@ fn hex_dec(s: &str) -> Option<Vec<u8>> {
         .collect()
 }
 
-pub fn save_snapshot(state: &AppState) {
+pub fn save_snapshot(state: &AppState) -> std::io::Result<()> {
     let games = state.games.lock().unwrap_or_else(|e| e.into_inner());
     let completed = state.completed.lock().unwrap_or_else(|e| e.into_inner());
     let arr: Vec<serde_json::Value> = games
@@ -100,6 +106,7 @@ pub fn save_snapshot(state: &AppState) {
                 "game_id": gid,
                 "party_no": e.party_no,
                 "label": e.label,
+                "settlement_error": e.settlement_error,
                 "entry_fee": e.entry_fee,
                 "created": e.created,
                 "grace_s": e.grace_s,
@@ -121,22 +128,28 @@ pub fn save_snapshot(state: &AppState) {
         "v": 1,
         "saved_at": now(),
         "next_id_hint": state.next_id.load(Ordering::SeqCst),
+        "master_seed": state.master_seed.load(Ordering::SeqCst),
         "games": arr,
         "completed": completed.clone(),
     });
-    let p = state_file();
+    let p = &state.snapshot_path;
     if let Some(dir) = p.parent() {
-        let _ = std::fs::create_dir_all(dir);
+        std::fs::create_dir_all(dir)?;
     }
     let tmp = p.with_extension("json.tmp");
-    if std::fs::write(&tmp, doc.to_string()).is_ok() {
-        let _ = std::fs::rename(&tmp, &p);
+    std::fs::write(&tmp, doc.to_string())?;
+    std::fs::rename(&tmp, p)
+}
+
+fn persist_snapshot(state: &AppState) {
+    if let Err(e) = save_snapshot(state) {
+        eprintln!("[ERROR] snapshot save: {e}");
     }
 }
 
 pub fn load_snapshot(state: &AppState) {
     
-    let Ok(txt) = std::fs::read_to_string(state_file()) else { return };
+    let Ok(txt) = std::fs::read_to_string(&state.snapshot_path) else { return };
     let Ok(doc) = serde_json::from_str::<serde_json::Value>(&txt) else {
         eprintln!("[STATE] снимок не читается, старт пустой");
         return;
@@ -145,6 +158,10 @@ pub fn load_snapshot(state: &AppState) {
     {
         let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
         let mut completed = state.completed.lock().unwrap_or_else(|e| e.into_inner());
+        if let Some(seed) = doc["master_seed"].as_u64() {
+            state.master_seed.store(seed, Ordering::SeqCst);
+        }
+        state.next_id.fetch_max(doc["next_id_hint"].as_u64().unwrap_or(1), Ordering::SeqCst);
         for g in doc["games"].as_array().into_iter().flatten() {
             let (Some(game_b), Some(fac_b)) = (
                 hex_dec(g["game_hex"].as_str().unwrap_or("")),
@@ -181,18 +198,26 @@ pub fn load_snapshot(state: &AppState) {
                 phase_log: g["phase_log"].as_array().cloned().unwrap_or_default(),
                 party_no: g["party_no"].as_u64().unwrap_or(0),
                 label: g["label"].as_str().map(|s| s.to_string()),
+                settlement_error: g["settlement_error"].as_str().map(str::to_string),
                 insiders,
             };
             games.insert(gid, entry);
             loaded += 1;
             if gid >= state.next_id.load(Ordering::SeqCst) {
-                state.next_id.store(gid + 1, Ordering::SeqCst);
+                state.next_id.store(gid.saturating_add(1), Ordering::SeqCst);
             }
         }
         if let Some(arr) = doc["completed"].as_array() {
             for c in arr {
                 if let Some(s) = c.as_str() {
-                    completed.push(s.to_string());
+                    if let Ok(rec) = serde_json::from_str::<serde_json::Value>(s) {
+                        if let Some(gid) = rec["game_id"].as_u64() {
+                            state.next_id.fetch_max(gid.saturating_add(1), Ordering::SeqCst);
+                        }
+                    }
+                    if !completed.iter().any(|existing| existing == s) {
+                        completed.push(s.to_string());
+                    }
                 }
             }
         }
@@ -212,16 +237,17 @@ fn now() -> i64 {
 /// Персистентный счётчик партий: файл хранит ПОСЛЕДНИЙ использованный
 /// номер. Файла нет — считаем 18 (канон живых партий на 05.09).
 /// Путь: $ALASHI_SEQ_FILE или data/arena_party_no.txt от CWD arenad.
-fn next_party_no() -> u64 {
-    let path = std::env::var("ALASHI_SEQ_FILE")
-        .unwrap_or_else(|_| "data/arena_party_no.txt".into());
-    let last: u64 = std::fs::read_to_string(&path)
+fn next_party_no(path: &std::path::Path) -> std::io::Result<u64> {
+    let last: u64 = std::fs::read_to_string(path)
         .ok()
         .and_then(|s| s.trim().parse().ok())
         .unwrap_or(18);
     let next = last.saturating_add(1);
-    let _ = std::fs::write(&path, format!("{}", next));
-    next
+    if let Some(dir) = path.parent() {
+        std::fs::create_dir_all(dir)?;
+    }
+    std::fs::write(path, format!("{}", next))?;
+    Ok(next)
 }
 
 fn splitmix64(x: u64) -> u64 {
@@ -256,6 +282,13 @@ pub fn agent_id_of(model: &str, prompt: &str) -> String {
 }
 
 pub fn new_state() -> Arc<AppState> {
+    new_state_with_files(
+        state_file(),
+        std::env::var("ALASHI_SEQ_FILE").unwrap_or_else(|_| "data/arena_party_no.txt".into()),
+    )
+}
+
+pub fn new_state_with_files(snapshot_path: impl Into<PathBuf>, sequence_path: impl Into<PathBuf>) -> Arc<AppState> {
     Arc::new(AppState {
         games: Mutex::new(HashMap::new()),
         next_id: AtomicU64::new(1),
@@ -266,6 +299,8 @@ pub fn new_state() -> Arc<AppState> {
                 .map(|d| d.as_secs())
                 .unwrap_or(1),
         ),
+        snapshot_path: snapshot_path.into(),
+        sequence_path: sequence_path.into(),
     })
 }
 
@@ -334,7 +369,16 @@ fn settle_and_record(state: &AppState, game_id: u64) {
     {
         let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
         if let Some(entry) = games.get_mut(&game_id) {
-            let (ranks, payouts, rake, bank, breakdown) = runner::settle(&entry.sim, entry.entry_fee, false);
+            let (ranks, payouts, rake, bank, breakdown) = match runner::try_settle(&entry.sim, entry.entry_fee, false) {
+                Ok(plan) => plan,
+                Err(error) => {
+                    eprintln!("[ERROR] game {game_id} settlement: {error}");
+                    entry.settlement_error = Some(error);
+                    drop(games);
+                    persist_snapshot(state);
+                    return;
+                }
+            };
             let agents: Vec<serde_json::Value> = entry
                 .agents
                 .iter()
@@ -413,11 +457,12 @@ fn settle_and_record(state: &AppState, game_id: u64) {
             rec = Some(v.to_string());
         }
         games.remove(&game_id);
+        if let Some(r) = rec {
+            // Removal and insertion must be one snapshot-visible change.
+            state.completed.lock().unwrap_or_else(|e| e.into_inner()).push(r);
+        }
     }
-    if let Some(r) = rec {
-        state.completed.lock().unwrap_or_else(|e| e.into_inner()).push(r);
-    }
-    save_snapshot(state);
+    persist_snapshot(state);
 }
 
 /// Один тик кранка: двигает все партии, чьё время фазы вышло.
@@ -425,6 +470,7 @@ pub fn crank_once(state: &AppState) {
     let t = now();
     let mut to_settle: Vec<u64> = Vec::new();
     let mut to_expire: Vec<u64> = Vec::new();
+    let mut changed = false;
     let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
     for (&gid, entry) in games.iter_mut() {
         let seed = splitmix64(game_seed(state, gid) ^ (entry.sim.game.round as u64));
@@ -437,7 +483,8 @@ pub fn crank_once(state: &AppState) {
                         let closing =
                             (entry.sim.game.phase, entry.sim.game.round, entry.sim.game.law_card);
                         if entry.sim.advance(t, seed).is_ok() {
-                            entry.sim.game.phase_ends_at = t + entry.sim.game.phase_duration;
+                            changed = true;
+                            entry.sim.game.phase_ends_at = t.saturating_add(entry.sim.game.phase_duration);
                             record_phase_close(entry, closing);
                         }
                     } else if late {
@@ -445,16 +492,21 @@ pub fn crank_once(state: &AppState) {
                     }
                 }
             }
-            Phase::Finished => to_settle.push(gid),
+            Phase::Finished => {
+                if entry.settlement_error.is_none() {
+                    to_settle.push(gid);
+                }
+            }
             Phase::Aborted => to_expire.push(gid),
             _ => {
                 // грейс-окно: опоздавшие действия прошлой фазы ещё приняты,
                 // кранк ждёт ends_at + grace_s (лобби выше — без грейса)
-                if t >= entry.sim.game.phase_ends_at + entry.grace_s {
+                if t >= entry.sim.game.phase_ends_at.saturating_add(entry.grace_s) {
                     let closing =
                         (entry.sim.game.phase, entry.sim.game.round, entry.sim.game.law_card);
                     if entry.sim.advance(t, seed).is_ok() {
-                        entry.sim.game.phase_ends_at = t + entry.sim.game.phase_duration;
+                        changed = true;
+                        entry.sim.game.phase_ends_at = t.saturating_add(entry.sim.game.phase_duration);
                         record_phase_close(entry, closing);
                     }
                     if entry.sim.game.phase == Phase::Finished {
@@ -469,10 +521,14 @@ pub fn crank_once(state: &AppState) {
         settle_and_record(state, gid);
     }
     if !to_expire.is_empty() {
+        changed = true;
         let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
         for gid in to_expire {
             games.remove(&gid);
         }
+    }
+    if changed {
+        persist_snapshot(state);
     }
 }
 
@@ -497,6 +553,7 @@ fn state_json(game_id: u64, entry: &GameEntry) -> serde_json::Value {
         "game_id": game_id,
         // канон партии: одинаков до и после рестарта арены
         "party_no": entry.party_no,
+        "settlement_error": entry.settlement_error,
         "label": entry.label,
         "phase": phase_name(g.phase),
         "round": g.round,
@@ -504,7 +561,7 @@ fn state_json(game_id: u64, entry: &GameEntry) -> serde_json::Value {
         "phase_ends_at": g.phase_ends_at,
         // грейс-окно: реальный дедлайн приёма действий = grace_until
         "grace_s": entry.grace_s,
-        "grace_until": g.phase_ends_at + entry.grace_s,
+        "grace_until": g.phase_ends_at.saturating_add(entry.grace_s),
         "now": now(),
         "law_card": if g.phase == Phase::Law { Some(g.law_card) } else { None },
         "law_card_name": if g.phase == Phase::Law { Some(law_name(g.law_card)) } else { None },
@@ -512,11 +569,11 @@ fn state_json(game_id: u64, entry: &GameEntry) -> serde_json::Value {
         "price_now": price_now,
         // П5 (ТРИЗ, 05.09): производные для расчётов агента — цена
         // СЛЕДУЮЩЕГО юнита и дедлайн окна ставок лицензии (r4 action)
-        "price_next": eff_price(g.sold_this_round + 1, g.active_price_shift, g.active_boom),
+        "price_next": eff_price(g.sold_this_round.saturating_add(1), g.active_price_shift, g.active_boom),
         "bids_close_at": if g.epoch == alashi_rules::constants::EPOCH_90S
             && g.round == alashi_rules::constants::AUCTION_ROUND
             && g.phase == Phase::Action && !g.license_sold
-        { serde_json::json!(g.phase_ends_at + entry.grace_s) } else { serde_json::Value::Null },
+        { serde_json::json!(g.phase_ends_at.saturating_add(entry.grace_s)) } else { serde_json::Value::Null },
         "price_table": PRICE_TABLE,
         "tax_bps": g.active_tax_bps,
         "price_shift": g.active_price_shift,
@@ -647,37 +704,48 @@ fn h_new_game(state: &AppState, body: &serde_json::Value) -> serde_json::Value {
     let vote_weight_mode = body
         .get("vote_weight_mode")
         .and_then(|v| v.as_u64())
-        .unwrap_or(alashi_rules::constants::VOTE_WEIGHT_LEGACY as u64)
-        as u8;
+        .unwrap_or(alashi_rules::constants::VOTE_WEIGHT_LEGACY as u64);
     let epoch = match body.get("epoch").and_then(|v| v.as_str()) {
         Some("90s") => alashi_rules::constants::EPOCH_90S,
         Some("classic") | None => alashi_rules::constants::EPOCH_CLASSIC,
         _ => return err_json("bad_params", "epoch: classic | 90s"),
     };
-    if entry_fee == 0 || phase_duration < 1 {
-        return err_json("bad_params", "entry_fee > 0, phase_duration >= 1");
+    if !(1..=MAX_ENTRY_FEE).contains(&entry_fee) || !(1..=MAX_PHASE_DURATION).contains(&phase_duration) {
+        return err_json("bad_params", "entry_fee: 1..=1000000000000; phase_duration: 1..=86400");
     }
     if !(0..=MAX_GRACE_S).contains(&grace_s) {
         return err_json("bad_params", "grace_s: 0..=30");
     }
-    if vote_weight_mode > alashi_rules::constants::VOTE_WEIGHT_CONTRIB {
+    if vote_weight_mode > alashi_rules::constants::VOTE_WEIGHT_CONTRIB as u64 {
         return err_json("bad_params", "vote_weight_mode: 0 legacy, 1 contribution");
     }
-    let game_id = state.next_id.fetch_add(1, Ordering::SeqCst);
+    let lobby_duration = body.get("lobby_duration").and_then(|v| v.as_i64())
+        .unwrap_or(phase_duration * LOBBY_MULT);
+    if !(1..=MAX_LOBBY_DURATION).contains(&lobby_duration) {
+        return err_json("bad_params", "lobby_duration: 1..=604800");
+    }
+    // Serialize ID/sequence allocation with insertion for simultaneous creators.
+    let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
+    let game_id = match state.next_id.fetch_update(Ordering::SeqCst, Ordering::SeqCst, |id| id.checked_add(1)) {
+        Ok(id) => id,
+        Err(_) => return err_json("id_exhausted", "закончились идентификаторы партий"),
+    };
     let entropy = alashi_rules::constants::ENTROPY_SLOTHASH;
     let mut sim = Simulator::new(game_id, entry_fee, phase_duration, entropy);
-    sim.game.vote_weight_mode = vote_weight_mode;
+    sim.game.vote_weight_mode = vote_weight_mode as u8;
     sim.game.epoch = epoch;
     // кастдев №5/ночь 05.09: окно джойна внешних рвётся - длина лобби
     // отвязана от длины фазы; отдельно задаётся lobby_duration (сек),
     // дефолт прежний phase_duration x LOBBY_MULT. Пола нет: тесты
     // и быстрые смоуки используют короткие фазы.
-    let lobby_duration = body
-        .get("lobby_duration")
-        .and_then(|v| v.as_i64())
-        .unwrap_or(phase_duration * LOBBY_MULT);
     sim.game.phase_ends_at = now() + lobby_duration;
-    let party_no = next_party_no();
+    let party_no = match next_party_no(&state.sequence_path) {
+        Ok(number) => number,
+        Err(e) => {
+            eprintln!("[ERROR] party sequence: {e}");
+            return err_json("sequence_failed", "не удалось сохранить номер партии");
+        }
+    };
     let label = body
         .get("label")
         .and_then(|v| v.as_str())
@@ -695,9 +763,10 @@ fn h_new_game(state: &AppState, body: &serde_json::Value) -> serde_json::Value {
         insiders: Default::default(),
         party_no,
         label,
+        settlement_error: None,
     };
     let v = state_json(game_id, &entry);
-    state.games.lock().unwrap_or_else(|e| e.into_inner()).insert(game_id, entry);
+    games.insert(game_id, entry);
     serde_json::json!({"ok": true, "game_id": game_id, "state": v})
 }
 
@@ -731,51 +800,31 @@ fn h_join(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_jso
     let Some(entry) = games.get_mut(&game_id) else {
         return err_json("unknown_game", "партия не найдена или закрыта");
     };
+    // Recovery is an existing-session operation, not a new join.
+    if let Some(i) = entry.agents.iter().position(|a| a.agent_id == agent_id) {
+        if recover {
+            let faction_idx = entry.agents[i].faction_idx;
+            entry.agents[i].token = token.clone();
+            let v = state_json(game_id, entry);
+            return serde_json::json!({
+                "ok": true, "recovered": true, "game_id": game_id,
+                "agent_id": agent_id, "token": token, "faction_idx": faction_idx,
+                "warning": "токен перевыпущен; предыдущий отозван", "state": v
+            });
+        }
+        return err_json("join_failed", "DuplicateWallet: агент уже в партии; для восстановления передай recover: true");
+    }
+    if recover {
+        return err_json("unknown_agent", "агент не участвовал в этой партии");
+    }
     if entry.agents.len() >= MAX_FACTIONS as usize {
         return err_json("game_full", "мест нет");
     }
-    // Кошелёк детерминирован из agent_id + game_id.
     let mut h = Sha256::new();
     h.update(agent_id.as_bytes());
     h.update(&game_id.to_le_bytes());
-    let d: [u8; 32] = h.finalize().into();
-    let wallet = Pubkey::new_from_array(d);
+    let wallet = Pubkey::new_from_array(h.finalize().into());
     if let Err(e) = entry.sim.join(wallet, &name) {
-        if matches!(e, GameError::DuplicateWallet) {
-            if let Some(i) = entry.wallets.iter().position(|w| *w == wallet) {
-                let nm = entry.agents.get(i).map(|a| a.name.clone()).unwrap_or_default();
-                // П2 (ТРИЗ, 05.09): recover-токен — перевыпуск при повторном
-                // join с тем же agent_id. Закрывает потери токенов сессиями и
-                // саму причину lldb-дампов (стопнувших №20). agent_id выводится
-                // из публичных model+prompt — для dev-арены принято.
-                if recover {
-                    if let Some(a) = entry.agents.get_mut(i) {
-                        a.token = token.clone();
-                        eprintln!(
-                            "[join] party {} RECOVER: faction {} «{}» agent {}.. new token {}",
-                            entry.party_no, i, nm, &agent_id[..8.min(agent_id.len())], token
-                        );
-                        let v = state_json(game_id, entry);
-                        return serde_json::json!({
-                            "ok": true, "recovered": true, "game_id": game_id,
-                            "agent_id": agent_id, "token": token, "faction_idx": i,
-                            "warning": Some("токен перевыпущен (recover); предыдущий умер"),
-                            "state": v
-                        });
-                    }
-                }
-                return err_json(
-                    "join_failed",
-                    &format!(
-                        "DuplicateWallet: этот агент (agent_id {}..) уже в партии {} как «{}» (faction_idx {}). Имя не меняет кошелёк: agent_id = sha256(model|prompt). Для перевыпуска токена повтори join с \"recover\": true; утерянный токен без recover не восстанавливается",
-                        &agent_id[..8.min(agent_id.len())],
-                        entry.party_no,
-                        nm,
-                        i
-                    ),
-                );
-            }
-        }
         return err_json("join_failed", &format!("{:?}", e));
     }
     let faction_idx = entry.sim.factions.len() - 1;
@@ -795,7 +844,7 @@ fn h_join(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_jso
     );
     let v = state_json(game_id, entry);
     serde_json::json!({"ok": true, "agent_id": agent_id, "token": token, "faction_idx": faction_idx,
-        "warning": if placeholder_warn { Some("имя/model похожи на плейсхолдер из примера — подставь реальные значения; токен сохранить сразу, он не восстанавливается через API") } else { None },
+        "warning": if placeholder_warn { Some("имя/model похожи на плейсхолдер из примера — подставь реальные значения; токен сохранить сразу; восстановление через join с recover: true") } else { None },
         "state": v})
 }
 
@@ -807,6 +856,7 @@ fn h_state(state: &AppState, game_id: u64) -> serde_json::Value {
             let completed = state.completed.lock().unwrap_or_else(|e| e.into_inner());
             let rec = completed
                 .iter()
+                .rev()
                 .filter_map(|l| serde_json::from_str::<serde_json::Value>(l).ok())
                 .find(|r| r["game_id"].as_u64() == Some(game_id));
             match rec {
@@ -1148,9 +1198,9 @@ fn h_advance(state: &AppState, game_id: u64) -> serde_json::Value {
     if matches!(
         entry.sim.game.phase,
         Phase::Market | Phase::Action | Phase::Law
-    ) && t < entry.sim.game.phase_ends_at + entry.grace_s
+    ) && t < entry.sim.game.phase_ends_at.saturating_add(entry.grace_s)
     {
-        let until = entry.sim.game.phase_ends_at + entry.grace_s;
+        let until = entry.sim.game.phase_ends_at.saturating_add(entry.grace_s);
         return serde_json::json!({
             "ok": false,
             "error": "GraceWindow",
@@ -1161,7 +1211,7 @@ fn h_advance(state: &AppState, game_id: u64) -> serde_json::Value {
     let closing = (entry.sim.game.phase, entry.sim.game.round, entry.sim.game.law_card);
     match entry.sim.advance(t, seed) {
         Ok(_) => {
-            entry.sim.game.phase_ends_at = t + entry.sim.game.phase_duration;
+            entry.sim.game.phase_ends_at = t.saturating_add(entry.sim.game.phase_duration);
             record_phase_close(entry, closing);
             let finished = entry.sim.game.phase == Phase::Finished;
             let v = state_json(game_id, entry);
@@ -1276,8 +1326,10 @@ fn h_leaderboard(state: &AppState) -> serde_json::Value {
             e["plackett_luce_ordinal"] = serde_json::json!((r.ordinal() * 1e6).round() / 1e6);
         }
     }
-    out.sort_by_key(|e| {
-        std::cmp::Reverse((e["plackett_luce_ordinal"].as_f64().unwrap_or(0.0) * 1e6) as u64)
+    out.sort_by(|a, b| {
+        b["plackett_luce_ordinal"].as_f64().unwrap_or(0.0)
+            .total_cmp(&a["plackett_luce_ordinal"].as_f64().unwrap_or(0.0))
+            .then_with(|| a["agent_id"].as_str().cmp(&b["agent_id"].as_str()))
     });
     serde_json::json!({
         "ok": true,
@@ -1378,7 +1430,13 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
     };
     // П7: любой POST меняет состояние - снимок на диск
     if is_post_mut {
-        save_snapshot(state);
+        if let Err(e) = save_snapshot(state) {
+            eprintln!("[ERROR] snapshot save after POST: {e}");
+            respond(stream, "503 Service Unavailable", &err_json(
+                "snapshot_failed", "изменение в памяти принято, но запись на диск не удалась; проверь state перед повтором",
+            ).to_string());
+            return;
+        }
     }
     respond(stream, status, &body);
 }
@@ -1450,3 +1508,7 @@ impl GameEntry {
 // silence unused warnings for GameError import (используется в типах ошибок)
 #[allow(dead_code)]
 fn _unused(_e: GameError) {}
+
+#[cfg(test)]
+#[path = "api_tests.rs"]
+mod tests;

@@ -1,7 +1,7 @@
 //! E2E HTTP-тест арены: живой сервер, два «агента» по HTTP играют
 //! полную партию до settle, проверяем экспорт и лидерборд.
 
-use arena::api::{new_state, serve_on};
+use arena::api::{new_state_with_files, serve_on, AppState};
 use serde_json::Value;
 use std::io::{Read, Write};
 use std::net::TcpStream;
@@ -22,27 +22,16 @@ fn http(port: u16, method: &str, path: &str, body: Option<&str>) -> Value {
     serde_json::from_str(&text[body_start..]).expect("valid json body")
 }
 
-/// П7: каждый тест пишет снапшот в свой temp-файл, чтобы не
-/// воскрешать чужие партии и не гоняться за одним файлом.
-fn isolate_state_file() {
-    static ONCE: std::sync::Once = std::sync::Once::new();
-    ONCE.call_once(|| {
-        let p = std::env::temp_dir().join(format!(
-            "alashi_state_test_{}_{}.json",
-            std::process::id(),
-            std::time::SystemTime::now()
-                .duration_since(std::time::UNIX_EPOCH)
-                .map(|d| d.as_nanos())
-                .unwrap_or(0)
-        ));
-        std::env::set_var("ALASHI_STATE_FILE", p);
-    });
+fn isolated_state() -> std::sync::Arc<AppState> {
+    static NEXT: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(1);
+    let id = NEXT.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
+    let dir = std::env::temp_dir().join(format!("alashi_http_{}_{}", std::process::id(), id));
+    new_state_with_files(dir.join("state.json"), dir.join("seq"))
 }
 
 #[test]
 fn http_full_game_two_agents() {
-    isolate_state_file();
-    let state = new_state();
+    let state = isolated_state();
     let addr = serve_on(state, "127.0.0.1:0", 50).expect("serve");
     let port = addr.port();
 
@@ -171,8 +160,7 @@ fn http_full_game_two_agents() {
 
 #[test]
 fn http_epoch_90s_full_game() {
-    isolate_state_file();
-    let state = new_state();
+    let state = isolated_state();
     let addr = serve_on(state, "127.0.0.1:0", 50).expect("serve");
     let port = addr.port();
 
@@ -265,8 +253,7 @@ fn http_epoch_90s_full_game() {
 
 #[test]
 fn http_wait_longpoll_wakes_on_phase_change() {
-    isolate_state_file();
-    let state = new_state();
+    let state = isolated_state();
     let addr = serve_on(state, "127.0.0.1:0", 50).expect("serve");
     let port = addr.port();
 
@@ -324,8 +311,7 @@ fn http_wait_longpoll_wakes_on_phase_change() {
 
 #[test]
 fn http_bribe_rejects_bad_target() {
-    isolate_state_file();
-    let state = new_state();
+    let state = isolated_state();
     let addr = serve_on(state, "127.0.0.1:0", 50).expect("serve");
     let port = addr.port();
 
@@ -386,8 +372,7 @@ fn http_bribe_rejects_bad_target() {
 
 #[test]
 fn http_vote_weight_mode_flag() {
-    isolate_state_file();
-    let state = new_state();
+    let state = isolated_state();
     let addr = serve_on(state, "127.0.0.1:0", 50).expect("serve");
     let port = addr.port();
 
@@ -422,8 +407,7 @@ fn http_vote_weight_mode_flag() {
 /// join с тем же телом отбивается DuplicateWallet.
 #[test]
 fn http_join_rejects_duplicate_wallet() {
-    isolate_state_file();
-    let state = new_state();
+    let state = isolated_state();
     let addr = serve_on(state, "127.0.0.1:0", 50).expect("serve");
     let port = addr.port();
 
@@ -459,8 +443,7 @@ fn http_join_rejects_duplicate_wallet() {
 /// приземляется в ещё не закрытую фазу.
 #[test]
 fn http_grace_window_lands_late_action() {
-    isolate_state_file();
-    let state = new_state();
+    let state = isolated_state();
     let addr = serve_on(state, "127.0.0.1:0", 50).expect("serve");
     let port = addr.port();
 
