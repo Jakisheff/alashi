@@ -1,0 +1,72 @@
+warning: variable `pot` is assigned to, but never used
+   --> rules/src/transitions.rs:154:29
+    |
+154 |                     let mut pot: u64 = 0;
+    |                             ^^^
+    |
+    = note: consider using `_pot` instead
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: `alashi-rules` (lib) generated 1 warning
+   Compiling alashi v0.1.0 (/Users/amir/Desktop/alashi/programs/alashi)
+warning: unused import: `InitSpace`
+ --> programs/alashi/tests/replay_equivalence.rs:7:47
+  |
+7 |         AccountDeserialize, AccountSerialize, InitSpace, InstructionData, ToAccountMetas,
+  |                                               ^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: function `sim_bytes` is never used
+  --> programs/alashi/tests/replay_equivalence.rs:84:4
+   |
+84 | fn sim_bytes(sim: &Simulator) -> (Vec<u8>, Vec<Vec<u8>>) {
+   |    ^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `alashi` (test "replay_equivalence") generated 2 warnings (run `cargo fix --test "replay_equivalence"` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 7.44s
+     Running unittests src/lib.rs (target/debug/deps/alashi-08948e2270c004d5)
+
+running 1 test
+test test_id ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/game.rs (target/debug/deps/game-f93087864a55f6ac)
+
+running 17 tests
+test test_donkey ... ok
+test test_already_acted ... ok
+test test_contribution_skip_flips_vote ... ok
+test test_bribe_and_vote_weight ... ok
+test test_legacy_same_scenario_passes ... ok
+test test_market_buy ... ok
+test test_law_tax_and_veto ... ok
+test test_full_game_six_rounds ... ok
+test test_market_price_drop ... ok
+test test_phase_and_join_guards ... ok
+test test_set_vote_mode_guards ... ok
+test test_time_gate ... ok
+test test_vrf_mode_flow ... ok
+test test_vrf_threshold ... ok
+test test_settle_payout_and_rake ... ok
+test test_settle_rejects_duplicate_faction_accounts ... ok
+test test_vrf_timeout_abort_refund ... ok
+
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.18s
+
+     Running tests/replay_equivalence.rs (target/debug/deps/replay_equivalence-648168a1f49f14d0)
+
+running 2 tests
+test replay_epoch_90s_full_party ... ok
+test replay_equivalence_full_party ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.14s
+
+   Doc-tests alashi
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s

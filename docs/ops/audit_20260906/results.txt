@@ -1,0 +1,46 @@
+FACTORY: pot=20000000 reserve=1000000 bonus=0 rake=1000000; control reserve=0 bonus=1000000
+RESTART_ID: persisted next_id_hint=42, restored next_id=1, completed=1
+CRANK_SNAPSHOT: memory=Market, restored=Lobby after automatic phase transition
+RECOVERY_GATE: duplicate player in Market returns GameNotInLobby, not DuplicateWallet
+BARTER_CAP: accepted=9 serialized_game=983 allocated_payload=901
+ROOF_SECOND_ACTION: shuttle accepted then black roof accepted in same phase
+EARLY_INSPECT: paid=5000000 yield=0; actual auction inspection rejected
+LEADERBOARD_SIGN: [("a", 2.619329992012684, 2619329), ("b", 2.108616826698025, 2108616), ("c", 1.463070392705049, 1463070), ("d", 0.5859712784141813, 585971), ("e", -0.7802283703838633, 0), ("f", -3.823314036952219, 0)]
+SETTLEMENT_OVERFLOW: two players with accepted entry_fee=9223372036854775808 panic in crank_once
+ONCHAIN_SEED_ZERO: auction yield=20000000 for adapter seed=0
+
+warning: variable `pot` is assigned to, but never used
+   --> /Users/amir/Desktop/alashi/rules/src/transitions.rs:154:29
+    |
+154 |                     let mut pot: u64 = 0;
+    |                             ^^^
+    |
+    = note: consider using `_pot` instead
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: `alashi-rules` (lib) generated 1 warning
+warning: unused import: `alashi_rules::FactionSnapshot`
+  --> /Users/amir/Desktop/alashi/arena/src/runner.rs:11:5
+   |
+11 | use alashi_rules::FactionSnapshot;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` on by default
+
+warning: unused variable: `q`
+  --> /Users/amir/Desktop/alashi/arena/src/rating.rs:67:16
+   |
+67 |         .map(|(q, (_, rq))| {
+   |                ^ help: if this is intentional, prefix it with an underscore: `_q`
+   |
+   = note: `#[warn(unused_variables)]` on by default
+
+warning: `arena` (lib) generated 2 warnings (run `cargo fix --lib -p arena` to apply 1 suggestion)
+   Compiling alashi-audit-probes v0.1.0 (/Users/amir/Desktop/alashi/docs/ops/audit_20260906)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.92s
+     Running `arena/target/debug/alashi-audit-probes`
+[STATE] восстановлено партий: 1
+
+thread 'main' panicked at /Users/amir/Desktop/alashi/arena/src/runner.rs:333:16:
+attempt to multiply with overflow
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace

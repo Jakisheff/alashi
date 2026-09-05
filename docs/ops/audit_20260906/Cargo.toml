@@ -1,0 +1,12 @@
+[package]
+name = "alashi-audit-probes"
+version = "0.1.0"
+edition = "2021"
+
+[workspace]
+
+[dependencies]
+arena = { path = "../../../arena" }
+alashi-rules = { path = "../../../rules" }
+serde_json = "1"
+borsh = "1"
