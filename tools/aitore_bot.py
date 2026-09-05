@@ -474,6 +474,13 @@ def main():
             continue
         s = r.get("state")
         if s is None:
+            if r.get("finished") is True:
+                # партия закрыта и удалена из memory: /state отдаёт result
+                # без state; выходим, не крутя NO-STATE вечно (баг смоука 26)
+                log("FINISHED (результат без state), выхожу",
+                    json.dumps(r.get("result", {}).get("ranks", ""))[:80])
+                emit("FINISHED", round=None, via="result")
+                break
             log("NO-STATE", json.dumps(r)[:200])
             time.sleep(8)
             continue
