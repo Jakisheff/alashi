@@ -118,7 +118,10 @@ async function listGames(){
   const d = await j('/games');
   const g = document.getElementById('games');
   g.innerHTML='';
-  if(!d.games.length){ g.innerHTML='<span class="dim">активных партий нет — создайте POST /game/new или ждите лобби</span>'; return; }
+  if(!d.games.length){
+    g.innerHTML='<div class="chip on" style="cursor:default">ждём начала демо — партия создастся оператором</div>';
+    return;
+  }
   for(const x of d.games){
     const c=document.createElement('div');
     c.className='chip'+(x.game_id===GID?' on':'');
@@ -126,6 +129,20 @@ async function listGames(){
     c.textContent=`№${x.party_no??x.game_id} · ${PHASES[x.phase]||x.phase} r${x.round} · ${x.factions}/6${x.label?' · '+x.label:''}`;
     g.appendChild(c);
   }
+}
+
+async function showLastResultIfIdle(){
+  // пустое состояние: показываем итог последней завершённой партии,
+  // чтобы экран не выглядел мёртвым до старта демо
+  try{
+    const d=await j('/export');
+    if(!Array.isArray(d)||!d.length) return;
+    const r=d[d.length-1];
+    if(!r.party_no) return;
+    document.getElementById('phase').textContent='ждём начала демо';
+    document.getElementById('pno').textContent=r.party_no+' (последняя сыгранная)';
+    renderFin(r);
+  }catch(e){}
 }
 
 function pickGame(id){
@@ -137,7 +154,7 @@ function pickGame(id){
 async function tick(first){
   try{
     await listGames();
-    if(!GID){ const d=await j('/games'); if(d.games.length) {GID=d.games[0].game_id;} else { document.getElementById('conn').textContent='нет активных партий'; return; } }
+    if(!GID){ const d=await j('/games'); if(d.games.length) {GID=d.games[0].game_id;} else { document.getElementById('conn').textContent='арена на связи · ждём начала демо'; await showLastResultIfIdle(); return; } }
     const d = await j(`/game/${GID}/state`);
     document.getElementById('conn').textContent=`игра gid ${GID} · арена отвечает`;
     if(d.finished){ return renderFin(d.result); }
