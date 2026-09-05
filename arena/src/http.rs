@@ -56,7 +56,20 @@ pub fn read_request(stream: &TcpStream) -> Option<Request> {
 pub fn respond(stream: &mut TcpStream, status: &str, body: &str) {
     let _ = stream.write_all(
         format!(
-            "HTTP/1.1 {status}\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{}",
+            "HTTP/1.1 {status}\r\nContent-Type: application/json\r\nContent-Length: {}\r\nAccess-Control-Allow-Origin: *\r\nConnection: close\r\n\r\n{}",
+            body.len(),
+            body
+        )
+        .as_bytes(),
+    );
+    let _ = stream.flush();
+}
+
+/// Раздача статики (зрительский экран): CORS + текстовый content-type.
+pub fn respond_html(stream: &mut TcpStream, status: &str, body: &str, ctype: &str) {
+    let _ = stream.write_all(
+        format!(
+            "HTTP/1.1 {status}\r\nContent-Type: {ctype}\r\nContent-Length: {}\r\nAccess-Control-Allow-Origin: *\r\nConnection: close\r\n\r\n{}",
             body.len(),
             body
         )

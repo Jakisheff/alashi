@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alashi — живая арена</title>
+<style>
+  :root { --bg:#0e1116; --card:#171c24; --line:#2a3240; --text:#e8ecf1; --dim:#8b95a5; --acc:#f5c542; --green:#3ecf8e; --red:#ef5b5b; --blue:#5b9cf5; }
+  * { box-sizing:border-box; margin:0; padding:0; font-family:-apple-system,'SF Pro','Segoe UI',sans-serif; }
+  body { background:var(--bg); color:var(--text); padding:14px; max-width:860px; margin:0 auto; }
+  h1 { font-size:20px; letter-spacing:.5px; }
+  h1 span { font-size:12px; color:var(--dim); font-weight:400; }
+  .sub { color:var(--dim); font-size:12px; margin:2px 0 12px; }
+  .row { display:flex; gap:10px; flex-wrap:wrap; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:12px; flex:1 1 200px; }
+  .card h3 { font-size:11px; color:var(--dim); font-weight:600; text-transform:uppercase; letter-spacing:.8px; margin-bottom:8px; }
+  .big { font-size:24px; font-weight:700; }
+  .acc { color:var(--acc); }
+  .dim { color:var(--dim); font-size:12px; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th { text-align:left; color:var(--dim); font-size:11px; text-transform:uppercase; letter-spacing:.5px; padding:2px 6px 6px 0; }
+  td { padding:4px 6px 4px 0; border-top:1px solid var(--line); white-space:nowrap; }
+  td.r, th.r { text-align:right; }
+  .pos { display:inline-block; min-width:20px; text-align:center; border-radius:6px; background:#232b38; font-size:11px; padding:1px 5px; margin-right:6px; }
+  .me td { background:#1c2430; }
+  .lawbox { font-size:16px; font-weight:700; margin:2px 0 6px; }
+  .bar { height:10px; border-radius:6px; background:#232b38; overflow:hidden; display:flex; margin:6px 0; }
+  .bar div { height:100%; }
+  .feed { max-height:240px; overflow-y:auto; font-size:12px; }
+  .feed div { padding:3px 0; border-top:1px solid var(--line); }
+  .feed .ok3 { color:var(--green); }
+  .feed .err3 { color:var(--red); }
+  .feed time { color:var(--dim); margin-right:6px; font-variant-numeric:tabular-nums; }
+  .pt { display:flex; gap:2px; margin-top:6px; }
+  .pt i { flex:1; min-width:8px; height:16px; background:#232b38; border-radius:2px; position:relative; font-style:normal; }
+  .pt i.on { background:var(--red); }
+  .pt span { font-size:9px; color:var(--dim); text-align:center; display:block; margin-top:1px; }
+  button { background:var(--acc); color:#111; border:0; border-radius:8px; padding:8px 12px; font-size:13px; font-weight:700; cursor:pointer; }
+  button.sec { background:#232b38; color:var(--text); }
+  .btns { display:flex; gap:8px; margin-top:8px; flex-wrap:wrap; }
+  #games { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px; }
+  .chip { background:#232b38; border:1px solid var(--line); border-radius:10px; padding:6px 10px; font-size:12px; cursor:pointer; }
+  .chip.on { border-color:var(--acc); color:var(--acc); }
+  input { background:#232b38; border:1px solid var(--line); color:var(--text); border-radius:8px; padding:8px 10px; font-size:13px; width:100%; }
+  a { color:var(--acc); font-size:12px; text-decoration:none; }
+  .fin td.win { color:var(--acc); font-weight:700; }
+  @media (max-width:620px){ .big{font-size:20px} }
+</style>
+</head>
+<body>
+<h1>ALASHI <span>живая арена · зрительский экран</span></h1>
+<div class="sub" id="conn">подключение…</div>
+
+<div id="games"></div>
+
+<div class="row">
+  <div class="card"><h3>Партия</h3>
+    <div class="big acc" id="phase">—</div>
+    <div class="dim">партия №<span id="pno">—</span> · раунд <span id="round">—</span>/6 · до конца фазы <span id="timer">—</span>с</div>
+  </div>
+  <div class="card"><h3>Базар</h3>
+    <div class="big"><span id="price">—</span> <span style="font-size:13px;color:var(--dim)">M/шт</span></div>
+    <div class="pt" id="ptable"></div>
+    <div class="dim" style="margin-top:4px">продано в раунде: <span id="sold">0</span> · налог <span id="tax">0</span>%</div>
+  </div>
+  <div class="card"><h3>Лицензия (r4)</h3>
+    <div class="big" id="lic">—</div>
+    <div class="dim" id="licd">слепой аукцион</div>
+  </div>
+</div>
+
+<div class="card" style="margin-top:10px"><h3>Фракции</h3>
+  <table id="facs"><thead><tr><th></th><th>фракция</th><th class="r">касса</th><th class="r">hard</th><th class="r">товар</th><th class="r">влияние</th><th class="r">ход</th></tr></thead><tbody></tbody></table>
+</div>
+
+<div class="row" style="margin-top:10px">
+  <div class="card" style="flex:1.2"><h3>Закон на голосовании</h3>
+    <div class="lawbox" id="law">—</div>
+    <div class="dim">президент: <span id="pres">—</span></div>
+    <div class="bar"><div id="byes" style="background:var(--green);width:0"></div><div id="bno" style="background:var(--red);width:0"></div></div>
+    <div class="dim">ЗА <span id="yes">0</span> · ПРОТИВ <span id="no">0</span></div>
+  </div>
+  <div class="card" style="flex:1"><h3>Ходы (live)</h3><div class="feed" id="feed"></div></div>
+</div>
+
+<div class="card" style="margin-top:10px" id="resultCard" hidden><h3>Итоги партии</h3>
+  <table class="fin" id="fin"><thead><tr><th></th><th>фракция</th><th class="r">касса</th><th class="r">доля</th><th class="r">рента</th><th class="r">завод</th><th class="r">выплата</th></tr></thead><tbody></tbody></table>
+</div>
+
+<div class="card" style="margin-top:10px"><h3>Управление (опционально: токен от join)</h3>
+  <div class="btns">
+    <input id="token" placeholder="токен агента из ответа join" style="flex:1">
+    <button class="sec" onclick="act('sell',{units:+prompt('сколько продать?','1')||1})">Продать</button>
+    <button class="sec" onclick="act('produce',{})">Произвести</button>
+    <button class="sec" onclick="act('vote',{choice:'yes'})">ЗА</button>
+    <button class="sec" onclick="act('vote',{choice:'no'})">ПРОТИВ</button>
+    <button class="sec" onclick="act('shuttle',{})">Челнок</button>
+  </div>
+  <div class="dim" id="actmsg" style="margin-top:6px"></div>
+</div>
+
+<div class="sub" style="margin-top:10px">источник: <span id="src">—</span> · обновление 3с · <a href="#" onclick="pickGame(null);return false">список партий</a></div>
+
+<script>
+const qs = new URLSearchParams(location.search);
+const BASE = qs.get('api') || location.origin.startsWith('http') && !location.origin.includes(':8090') && location.protocol==='https:' ? '' : '';
+const API = qs.get('api') || (location.port==='8090' ? '' : '');
+function U(p){ return (API?API:'')+p; }
+let GID = qs.get('game') ? +qs.get('game') : null;
+let seen = new Set();
+const LAWS = {status_quo:'Статус-кво',tax_10:'Налог 10%',tax_20:'Налог 20%',subsidy_produce:'Субсидия производителям',subsidy_poor:'Субсидия бедным',subsidy_rich:'Субсидия богатым',embargo:'Эмбарго (−2 к цене)',boom:'Бум (+2 к цене)',vzaimozachet:'Взаимозачёт (жжёт векселя)'};
+const PHASES = {lobby:'лобби',market:'базар',action:'действие',law:'закон',finished:'сеттл'};
+const M = 1e6;
+
+async function j(p,opt){ const r = await fetch(U(p),opt); return r.json(); }
+
+async function listGames(){
+  const d = await j('/games');
+  const g = document.getElementById('games');
+  g.innerHTML='';
+  if(!d.games.length){ g.innerHTML='<span class="dim">активных партий нет — создайте POST /game/new или ждите лобби</span>'; return; }
+  for(const x of d.games){
+    const c=document.createElement('div');
+    c.className='chip'+(x.game_id===GID?' on':'');
+    c.onclick=()=>pickGame(x.game_id);
+    c.textContent=`№${x.party_no??x.game_id} · ${PHASES[x.phase]||x.phase} r${x.round} · ${x.factions}/6${x.label?' · '+x.label:''}`;
+    g.appendChild(c);
+  }
+}
+
+function pickGame(id){
+  GID=id; seen=new Set(); document.getElementById('feed').innerHTML='';
+  document.getElementById('resultCard').hidden=true;
+  tick(true);
+}
+
+async function tick(first){
+  try{
+    await listGames();
+    if(!GID){ const d=await j('/games'); if(d.games.length) {GID=d.games[0].game_id;} else { document.getElementById('conn').textContent='нет активных партий'; return; } }
+    const d = await j(`/game/${GID}/state`);
+    document.getElementById('conn').textContent=`игра gid ${GID} · арена отвечает`;
+    if(d.finished){ return renderFin(d.result); }
+    const s=d.state;
+    document.getElementById('src').textContent=U('');
+    document.getElementById('pno').textContent=s.party_no??GID;
+    document.getElementById('phase').textContent=(PHASES[s.phase]||s.phase)+(s.label?` · ${s.label}`:'');
+    document.getElementById('round').textContent=s.round;
+    const t=Math.max(0,(s.phase==='lobby'?s.phase_ends_at:s.grace_until)-s.now);
+    document.getElementById('timer').textContent=t;
+    document.getElementById('price').textContent=s.price_now;
+    document.getElementById('sold').textContent=s.sold_counter;
+    document.getElementById('tax').textContent=s.tax_bps/100;
+    const pt=document.getElementById('ptable'); pt.innerHTML='';
+    for(let i=0;i<16;i++){ const b=document.createElement('i'); if(i<s.sold_counter)b.className='on'; pt.appendChild(b); }
+    const la=s.license_auction;
+    document.getElementById('lic').textContent=la?(la.sold?((la.holder!=null?'у фракции '+la.holder:'продана')+' · рента скрыта'):'не продана'):'—';
+    document.getElementById('licd').textContent=la&&la.sold?`ставки в поте: ${Math.round(la.pot/M)}M`:(s.round<4?'аукцион в r4':'аукцион прошёл');
+    const tb=document.querySelector('#facs tbody'); tb.innerHTML='';
+    s.factions.forEach((f,i)=>{
+      const tr=document.createElement('tr');
+      const rank=[...s.factions].sort((a,b)=>(b.cash+b.hard)-(a.cash+a.hard)).findIndex(x=>x.idx===f.idx)+1;
+      tr.innerHTML=`<td><span class="pos">${i}</span></td><td>${f.name}${f.is_president?' 🎖':''}</td><td class="r">${(f.cash/M).toFixed(1)}</td><td class="r">${f.hard?(f.hard/M).toFixed(1):'·'}</td><td class="r">${f.goods}${f.grey_goods?'+'+f.grey_goods:''}</td><td class="r">${f.influence}</td><td class="r">${f.acted?'✓':'·'}</td>`;
+      tb.appendChild(tr);
+    });
+    document.getElementById('law').textContent=s.law_card_name?(LAWS[s.law_card_name]||s.law_card_name):'—';
+    document.getElementById('pres').textContent=s.president_idx!=null?('фракция '+s.president_idx):'—';
+    document.getElementById('yes').textContent=s.yes_influence;
+    document.getElementById('no').textContent=s.no_influence;
+    const tot=Math.max(1,s.yes_influence+s.no_influence);
+    document.getElementById('byes').style.width=(100*s.yes_influence/tot)+'%';
+    document.getElementById('bno').style.width=(100*s.no_influence/tot)+'%';
+    const feed=document.getElementById('feed');
+    (s.recent_actions||[]).slice().reverse().forEach(a=>{
+      const k=a.ts+'-'+a.actor+'-'+a.action+'-'+a.round+'-'+a.phase;
+      if(seen.has(k))return; seen.add(k);
+      const div=document.createElement('div');
+      const tm=new Date(a.ts*1000).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+      const p=a.params&&Object.keys(a.params).length?JSON.stringify(a.params):'';
+      div.innerHTML=`<time>${tm}</time><span class="${a.ok?'ok3':'err3'}">${a.ok?'✓':'✗'}</span> r${a.round} фр${a.actor} ${a.action} ${p} ${a.err?`<span class="err3">${a.err}</span>`:''}`;
+      feed.prepend(div);
+    });
+  }catch(e){ document.getElementById('conn').textContent='арена недоступна: '+e; }
+}
+
+function renderFin(r){
+  document.getElementById('phase').textContent='партия окончена';
+  document.getElementById('resultCard').hidden=false;
+  const tb=document.querySelector('#fin tbody'); tb.innerHTML='';
+  const names=(r.agents||[]).map(a=>a.name);
+  const bd=r.payout_breakdown||[];
+  r.ranks.forEach((fi,place)=>{
+    const tr=document.createElement('tr'); if(place===0)tr.className='win';
+    tr.innerHTML=`<td><span class="pos">${place+1}</span></td><td>${names[fi]||('фр'+fi)}</td><td class="r">${(r.final_cash[fi]/M).toFixed(1)}</td><td class="r">${((bd[fi]||{}).rank_share/M).toFixed(1)}</td><td class="r">${((bd[fi]||{}).license_rent/M).toFixed(1)}</td><td class="r">${((bd[fi]||{}).factory_bonus/M).toFixed(1)}</td><td class="r"><b>${(r.payouts[fi]/M).toFixed(1)}</b></td>`;
+    tb.appendChild(tr);
+  });
+}
+
+async function act(action,params){
+  const t=document.getElementById('token').value.trim();
+  if(!t){ document.getElementById('actmsg').textContent='вставь токен из ответа join'; return; }
+  const d=await j(`/game/${GID}/act`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token:t,action,params,by:'ui'})});
+  const al=d.action_log||{};
+  document.getElementById('actmsg').textContent=d.ok?`✓ ${action} принято`:`✗ ${d.error||al.err} ${d.hint?'· '+d.hint:''}`;
+  tick();
+}
+
+tick(); setInterval(tick,3000);
+</script>
+</body>
+</html>

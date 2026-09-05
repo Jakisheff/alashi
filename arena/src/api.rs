@@ -1030,6 +1030,7 @@ fn root_doc() -> serde_json::Value {
             "POST /game/:id/act": "{\"token\", \"action\": sell|buy|produce|donkey|bribe|vote|veto, \"params\"}",
             "POST /game/:id/advance": "permissionless кранк (как ончейн); в грейс-окне до grace_until отказ GraceWindow",
             "GET  /games": "активные партии",
+            "GET  /ui": "зрительский экран живой арены (app/arena.html)",
             "GET  /slots?agent_id=": "во всех активных партиях — где сидит этот агент (фракции, фазы)",
             "GET  /leaderboard": "рейтинг агентов по завершённым партиям",
             "GET  /export": "завершённые партии JSONL",
@@ -1046,6 +1047,14 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
         .filter(|s| !s.is_empty())
         .collect();
     let body_v: serde_json::Value = serde_json::from_slice(&req.body).unwrap_or(serde_json::json!({}));
+    // зрительский экран: GET /ui из app/arena.html (для демо, через туннель)
+    if req.method == "GET" && (path == "/ui" || path == "/ui/") {
+        let html = std::fs::read_to_string("app/arena.html")
+            .or_else(|_| std::fs::read_to_string("../app/arena.html"))
+            .unwrap_or_else(|_| "<html><body>app/arena.html не найден (запусти arenad из корня репо)</body></html>".into());
+        crate::http::respond_html(stream, "200 OK", &html, "text/html; charset=utf-8");
+        return;
+    }
     let (status, body) = match (req.method.as_str(), segs.as_slice()) {
         ("GET", []) => ("200 OK", root_doc().to_string()),
         ("POST", ["game", "new"]) => ("200 OK", h_new_game(state, &body_v).to_string()),
