@@ -51,19 +51,46 @@ struct LlmCfg {
     key: String,
     base: String,
     model: String,
+    // цены за 1M токенов (USD), необязательно: без них считаем только токены
+    price_in: Option<f64>,
+    price_out: Option<f64>,
+}
+
+/// Расход токенов одного LLM-вызова (для метрики «стоимость хода/партии»,
+/// паттерн gpt-author print_step_costs).
+#[derive(Default, Clone, Copy)]
+struct Usage {
+    prompt: u64,
+    completion: u64,
+}
+
+impl Usage {
+    fn cost_usd(&self, cfg: &LlmCfg) -> Option<f64> {
+        Some(self.prompt as f64 / 1e6 * cfg.price_in? + self.completion as f64 / 1e6 * cfg.price_out?)
+    }
+    fn add(&mut self, o: Usage) {
+        self.prompt += o.prompt;
+        self.completion += o.completion;
+    }
 }
 
 fn llm_cfg(model_override: Option<&str>) -> Option<LlmCfg> {
-    let key = std::env::var("ALASHI_LLM_KEY").ok().or_else(|| {
-        let path = std::env::var("HOME").ok()? + "/.config/alashi/llm.json";
+    // ключ и цены: env ALASHI_LLM_KEY или ~/.config/alashi/llm.json
+    // {"key", "price_in_per_1m"?, "price_out_per_1m"?}
+    let file = std::env::var("HOME").ok().and_then(|h| {
+        let path = h + "/.config/alashi/llm.json";
         let s = std::fs::read_to_string(path).ok()?;
-        let k = serde_json::from_str::<Value>(&s).ok()?.get("key")?.as_str()?.to_string();
-        Some(k)
-    })?;
+        serde_json::from_str::<Value>(&s).ok()
+    });
+    let key = std::env::var("ALASHI_LLM_KEY")
+        .ok()
+        .or_else(|| file.as_ref()?.get("key")?.as_str().map(|s| s.to_string()))?;
     if key.len() < 10 {
         return None;
     }
     Some(LlmCfg {
+        price_in: file.as_ref().and_then(|f| f["price_in_per_1m"].as_f64()),
+        price_out: file.as_ref().and_then(|f| f["price_out_per_1m"].as_f64()),
         key,
         base: "https://api.z.ai/api/paas/v4".into(),
         model: model_override.unwrap_or("glm-4.5-flash").into(),
@@ -76,7 +103,7 @@ fn llm_ask(
     user: &str,
     timeout_s: u64,
     ctx: Option<&Value>,
-) -> Option<String> {
+) -> (Option<String>, Usage) {
     let body = serde_json::json!({
         "model": cfg.model,
         "thinking": {"type": "disabled"},
@@ -87,7 +114,7 @@ fn llm_ask(
         ]
     })
     .to_string();
-    let out = std::process::Command::new("curl")
+    let out = match std::process::Command::new("curl")
         .args([
             "-s", "-4", "-m", &timeout_s.to_string(), "-X", "POST",
             &format!("{}/chat/completions", cfg.base),
@@ -96,14 +123,34 @@ fn llm_ask(
             "-d", &body,
         ])
         .output()
-        .ok()?;
-    let txt = String::from_utf8(out.stdout).ok()?;
-    let v: Value = serde_json::from_str(&txt).ok()?;
+    {
+        Ok(o) => o,
+        Err(_) => return (None, Usage::default()),
+    };
+    let txt = match String::from_utf8(out.stdout) {
+        Ok(t) => t,
+        Err(_) => return (None, Usage::default()),
+    };
+    let v: Value = match serde_json::from_str(&txt) {
+        Ok(v) => v,
+        Err(_) => return (None, Usage::default()),
+    };
     if let Some(ctx) = ctx {
         llm_dump(ctx, system, user, &v);
     }
-    let c = v.get("choices")?.get(0)?.get("message")?.get("content")?.as_str()?.to_string();
-    if c.trim().is_empty() { None } else { Some(c) }
+    let usage = Usage {
+        prompt: v["usage"]["prompt_tokens"].as_u64().unwrap_or(0),
+        completion: v["usage"]["completion_tokens"].as_u64().unwrap_or(0),
+    };
+    let c = v
+        .get("choices")
+        .and_then(|c| c.get(0))
+        .and_then(|c| c.get("message"))
+        .and_then(|m| m.get("content"))
+        .and_then(|c| c.as_str())
+        .map(|c| c.to_string())
+        .filter(|c| !c.trim().is_empty());
+    (c, usage)
 }
 
 /// Дамп полной цепочки «промпт -> ответ» на каждый LLM-вызов в отдельный
@@ -227,6 +274,7 @@ fn main() {
     println!("[agent] {} в игре {} (фракция {})", name, game, my_idx);
 
     let started = std::time::Instant::now();
+    let mut total_usage = Usage::default();
     // селф-дебриф: каждый свой ход в журнал, после партии — в inbox
     let mut my_log: Vec<String> = vec![];
     let mut mem = Mem::default();
@@ -247,11 +295,18 @@ fn main() {
             let ranks: Vec<u64> = res["ranks"].as_array().map(|a| a.iter().map(|v| v.as_u64().unwrap_or(9)).collect()).unwrap_or_default();
             let my_place = ranks.iter().position(|i| *i as usize == my_idx).map(|p| p + 1).unwrap_or(99);
             let payout = res["payouts"].as_array().and_then(|p| p.get(my_idx)).and_then(|v| v.as_u64()).unwrap_or(0);
+            let cost_note = match llm.as_ref().and_then(|c| total_usage.cost_usd(c)) {
+                Some(c) => format!("~{:.4}$", c),
+                None => "цены не заданы".into(),
+            };
             println!(
-                "[agent] партия окончена: моё место {} из {}, выплата {} песо",
+                "[agent] партия окончена: моё место {} из {}, выплата {} песо; LLM за партию: {}in/{}out ({})",
                 my_place,
                 ranks.len(),
-                payout / 1_000_000
+                payout / 1_000_000,
+                total_usage.prompt,
+                total_usage.completion,
+                cost_note
             );
             return;
         }
@@ -290,7 +345,25 @@ fn main() {
                 std::thread::sleep(Duration::from_millis(700));
                 continue;
             }
-            let decision = decide(&llm, s, &me, &prompt, &mem, game);
+            let mut step_usage = Usage::default();
+            let decision = decide(&llm, s, &me, &prompt, &mem, game, &mut step_usage);
+            total_usage.add(step_usage);
+            if step_usage.prompt + step_usage.completion > 0 {
+                let cost_note = match step_usage.cost_usd(llm.as_ref().unwrap()) {
+                    Some(c) => format!(", ~{:.5}$", c),
+                    None => " (цены не заданы в llm.json)".into(),
+                };
+                println!(
+                    "[agent] LLM за ход: {}in/{}out{}, партия: {}in/{}out",
+                    step_usage.prompt, step_usage.completion, cost_note,
+                    total_usage.prompt, total_usage.completion
+                );
+                my_log.push(format!(
+                    "llm r{} {}: {}in/{}out{}",
+                    s["round"].as_u64().unwrap_or(0), phase,
+                    step_usage.prompt, step_usage.completion, cost_note
+                ));
+            }
             let (action, params) = decision;
             let body = serde_json::json!({
                 "token": token, "action": action, "params": params,
@@ -360,6 +433,7 @@ fn decide(
     prompt: &str,
     mem: &Mem,
     game: u64,
+    spent: &mut Usage,
 ) -> (&'static str, Value) {
     let phase = s["phase"].as_str().unwrap_or("");
     let llm_ctx = serde_json::json!({
@@ -418,7 +492,9 @@ fn decide(
                 }
                 std::thread::sleep(Duration::from_secs(2));
             }
-            if let Some(ans) = llm_ask(cfg, SYSTEM, &user, ask_to, Some(&llm_ctx)) {
+            let (ans, u) = llm_ask(cfg, SYSTEM, &user, ask_to, Some(&llm_ctx));
+            spent.add(u);
+            if let Some(ans) = ans {
                 if let Some(v) = parse_json_block(&ans) {
                     if let Some(a) = v["action"].as_str() {
                         let params = v.get("params").cloned().unwrap_or_else(|| {
