@@ -37,6 +37,7 @@ def save_token_atomic(rec):
         os.fsync(fh.fileno())
     os.replace(tmp, path)
     log("TOKEN-SAVED", path)
+    emit("TOKEN", saved=path)
 
 
 def ensure_identity():
@@ -49,6 +50,7 @@ def ensure_identity():
         TOKEN = rec["token"]
         ME = rec.get("faction_idx", ME)
         log("TOKEN-LOADED", path, "faction", ME)
+        emit("TOKEN", loaded=path, faction=ME)
         return
     body = {"name": NAME, "model": MODEL, "prompt": PROMPT}
     r = http("/game/{}/join".format(GAME), body, timeout=20)
@@ -72,6 +74,75 @@ def ensure_identity():
 
 def log(*a):
     LOG.write(time.strftime("[%H:%M:%S]") + " " + " ".join(str(x) for x in a) + "\n")
+
+
+# --- машиночитаемый поток событий (::EVENT::{json}, паттерн mshumer) ---
+# рядом с человеческим логом; плюс дамп цепочки «состояние -> решение ->
+# результат» на каждый ход: разборы партий без реконструкции по логам
+PARTY = None
+EV = None
+MOVES_DIR = None
+MOVE_SEQ = 0
+
+
+def iso_now():
+    return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+
+
+def emit(ev_type, **kw):
+    if EV is None:
+        return
+    rec = {"type": ev_type, "ts": iso_now()}
+    rec.update(kw)
+    EV.write("::EVENT::" + json.dumps(rec, ensure_ascii=False) + "\n")
+
+
+def open_events(party_no):
+    global EV, MOVES_DIR, PARTY
+    import os
+    if party_no is None:
+        return
+    PARTY = party_no
+    MOVES_DIR = f"{TOKEN_DIR}/aitore_moves"
+    os.makedirs(MOVES_DIR, exist_ok=True)
+    EV = open(f"{TOKEN_DIR}/aitore_events_p{party_no}.ndjson", "a", buffering=1)
+    emit("EVENTS-OPEN", party=party_no, faction=ME)
+
+
+def compact_state(s):
+    s2 = {k: v for k, v in s.items() if k != "recent_actions"}
+    return s2
+
+
+def dump_move(s_before, action, params, result):
+    import os
+    global MOVE_SEQ
+    if MOVES_DIR is None or s_before is None:
+        return
+    MOVE_SEQ += 1
+    r = result if isinstance(result, dict) else {}
+    rec = {
+        "ts": iso_now(),
+        "party": PARTY,
+        "round": s_before.get("round"),
+        "phase": s_before.get("phase"),
+        "actor": ME,
+        "strategy": PROMPT,
+        "state_before": compact_state(s_before),
+        "action": action,
+        "params": params or {},
+        "precheck_veto": bool(r.get("precheck")),
+        "ok": r.get("ok"),
+        "error": r.get("error"),
+        "state_after": compact_state(r["state"]) if r.get("state") else None,
+    }
+    path = f"{MOVES_DIR}/p{PARTY}_r{s_before.get('round')}{s_before.get('phase')}_{MOVE_SEQ:03d}.json"
+    tmp = path + ".tmp"
+    with open(tmp, "w") as fh:
+        json.dump(rec, fh, ensure_ascii=False, indent=1)
+        fh.flush()
+        os.fsync(fh.fileno())
+    os.replace(tmp, path)
 
 def http(path, body=None, timeout=15, retries=4):
     """Транспортный уровень: сеть/туннель -> ретраи с бэкоффом 1-2-4-8.
@@ -104,7 +175,7 @@ def http(path, body=None, timeout=15, retries=4):
             delay *= 2
     return None
 
-def act(action, params=None, fresh=False, retry=True):
+def act(action, params=None, fresh=False, retry=True, s_ctx=None):
     """Отправка хода. fresh=True: лёгкий пре-чек допущений по только что
     подтянутому state (урок партии 21: бид 11M при живом кэше 7M, счёт по
     устаревшему снапшоту до инспекта). Гонка продаж идёт без пре-чека:
@@ -123,7 +194,11 @@ def act(action, params=None, fresh=False, retry=True):
             why = validate(s2, f2, action, params or {})
             if why:
                 log("PRECHECK-VETO", action, json.dumps(params or {}), "->", why)
-                return {"ok": False, "error": "precheck:" + why, "precheck": True}
+                res = {"ok": False, "error": "precheck:" + why, "precheck": True}
+                dump_move(s_ctx, action, params, res)
+                emit("MOVE", action=action, params=params or {}, ok=False,
+                     error=res["error"], round=(s_ctx or {}).get("round"), phase=(s_ctx or {}).get("phase"))
+                return res
         else:
             log("PRECHECK-SKIP (нет state)", action)
     body = {"token": TOKEN, "action": action, "by": "llm-glm5.3"}
@@ -156,6 +231,9 @@ def act(action, params=None, fresh=False, retry=True):
                     log("ACT-RETRY (поправка лота)", u)
                     return act(action, {"units": u}, fresh=False, retry=False)
     log("ACT", action, json.dumps(params or {}), "->", "ok" if r.get("ok") else f"err={r.get('error')}")
+    dump_move(s_ctx, action, params, r)
+    emit("MOVE", action=action, params=params or {}, ok=bool(r.get("ok")),
+         error=r.get("error"), round=(s_ctx or {}).get("round"), phase=(s_ctx or {}).get("phase"))
     return r
 
 
@@ -242,14 +320,14 @@ def do_market(s):
     f = s["factions"][ME]
     r = s["round"]
     if not f["acted"] and f["goods"] > 0:
-        act("sell", {"units": f["goods"]})
+        act("sell", {"units": f["goods"]}, s_ctx=s)
         st = http(f"/game/{GAME}/state")
         if st:
             f = st["state"]["factions"][ME]
         # конвертация: раунды 1-3 весь кэш в hard; r4 держим кэш для лицензии
         # (buy_hard конвертирует всё сразу, частичного нет)
         if r <= 3 and f["cash"] > 2_000_000:
-            act("buy_hard", fresh=True)
+            act("buy_hard", fresh=True, s_ctx=s)
     if s.get("barter_offers"):
         log("BARTER-OFFERS", json.dumps(s["barter_offers"]))
 
@@ -257,15 +335,15 @@ def do_action(s):
     f = s["factions"][ME]
     r = s["round"]
     if s.get("president_idx") == ME and not s.get("customs_decided"):
-        act("customs", {"tight": False})  # сам вожу серое — льготная граница + дань
+        act("customs", {"tight": False}, s_ctx=s)  # сам вожу серое — льготная граница + дань
     if not f["acted"]:
-        act("produce")  # после конфиската r2: только белый товар, гарантия
+        act("produce", s_ctx=s)  # после конфиската r2: только белый товар, гарантия
     if r == 4:
         st = http(f"/game/{GAME}/state")
         if st:
             s2 = st["state"]; f2 = s2["factions"][ME]
             if f2["cash"] >= 5_000_000 and not f2.get("insider", False):
-                r2 = act("inspect_license", fresh=True)
+                r2 = act("inspect_license", fresh=True, s_ctx=s)
                 # вытащим yield из action_log.detail
                 y = None
                 try:
@@ -277,7 +355,7 @@ def do_action(s):
                     f2 = http(f"/game/{GAME}/state")["state"]["factions"][ME]
                     bid = min(f2["cash"] - 200_000, int(y * 1.3))
                     if bid >= 1_000_000:
-                        act("bid_license", {"amount": bid}, fresh=True)
+                        act("bid_license", {"amount": bid}, fresh=True, s_ctx=s)
                         log("LICENSE-BID", bid)
 
 def vote_choice(s):
@@ -302,24 +380,24 @@ def do_law(s):
     r = s["round"]
     if r == 6 and not f["voted"] and not f.get("vote_sold"):
         # финальный рывок за 4-е место: продать голос лидеру
-        act("offer_vote", {"to": 3, "price": 4_000_000})
+        act("offer_vote", {"to": 3, "price": 4_000_000}, s_ctx=s)
         st = http(f"/game/{GAME}/state")
         if st:
             f = st["state"]["factions"][ME]
     if f["is_president"]:
         name = (s.get("law_card_name") or "").lower()
         if "tax" in name or "embargo" in name:
-            act("veto")
+            act("veto", s_ctx=s)
             f = http(f"/game/{GAME}/state")["state"]["factions"][ME]
     if not f["voted"]:
-        act("vote", {"choice": vote_choice(s)})
+        act("vote", {"choice": vote_choice(s)}, s_ctx=s)
     # r4 после вскрытия аукциона: остаток кэша в hard (остались деvals r5,r6)
     if r == 4:
         st = http(f"/game/{GAME}/state")
         if st:
             f2 = st["state"]["factions"][ME]
             if f2["cash"] > 2_000_000:
-                act("buy_hard", fresh=True)
+                act("buy_hard", fresh=True, s_ctx=s)
 
 DEADLINE_MARGIN_S = 8   # запас до конца фазы, после которого только safe-ход
 MAX_CALLS_PER_PHASE = 14
@@ -334,14 +412,14 @@ def safe_final(s):
     ph = s["phase"]
     if ph == "market" and not f["acted"] and f["goods"] > 0:
         log("GRACEFUL-FINAL: sell", f["goods"])
-        return act("sell", {"units": f["goods"]})
+        return act("sell", {"units": f["goods"]}, s_ctx=s)
     if ph == "action" and not f["acted"]:
         log("GRACEFUL-FINAL: produce")
-        return act("produce")
+        return act("produce", s_ctx=s)
     if ph == "law" and not f["voted"]:
         choice = vote_choice(s) if s.get("law_card_name") else "abstain"
         log("GRACEFUL-FINAL: vote", choice)
-        return act("vote", {"choice": choice})
+        return act("vote", {"choice": choice}, s_ctx=s)
     log("GRACEFUL-FINAL: обязательного хода нет, фаза", ph)
 
 
@@ -370,6 +448,7 @@ def handle(s):
         do_law(s)
     elif ph == "finished":
         log("FINISHED", json.dumps(s.get("recent_actions", [])[-3:]))
+        emit("FINISHED", round=s.get("round"))
         return False
     # пост-проверка: окно почти закрыто или бюджет вызовов съеден,
     # а обязательный ход так и не ушёл -> безопасный ход без размышлений
@@ -398,9 +477,14 @@ def main():
             log("NO-STATE", json.dumps(r)[:200])
             time.sleep(8)
             continue
+        if EV is None and s.get("party_no") is not None:
+            open_events(s["party_no"])
         key = (s["round"], s["phase"])
         if key != last:
             last = key
+            emit("PHASE", round=s["round"], phase=s["phase"],
+                 price=s.get("price_now"), sold=s.get("sold_counter"),
+                 law=s.get("law_card_name"))
             if not handle(s):
                 break
             continue
@@ -408,6 +492,7 @@ def main():
         if s["phase"] not in ("lobby", "finished") and s["now"] >= s.get("grace_until", 0) + 1:
             cr = http(f"/game/{GAME}/advance", {})
             log("CRANK", "ok" if (cr and cr.get("ok")) else f"err={cr.get('error') if cr else 'none'}")
+            emit("CRANK", ok=bool(cr and cr.get("ok")), error=(cr or {}).get("error"))
         time.sleep(1)
     log("=== bot exit ===")
 

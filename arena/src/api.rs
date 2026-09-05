@@ -271,6 +271,35 @@ pub fn new_state() -> Arc<AppState> {
 
 // ---------- служебное ----------
 
+/// Дни epoch -> (год, месяц, день), гражданский алгоритм Хиннанта (UTC).
+fn epoch_to_ymd(z: i64) -> (i64, u32, u32) {
+    let z = z + 719_468;
+    let era = if z >= 0 { z } else { z - 146_096 } / 146_097;
+    let doe = (z - era * 146_097) as u64;
+    let yoe = (doe - doe / 1460 + doe / 36_524 - doe / 146_096) / 365;
+    let y = yoe as i64 + era * 400;
+    let doy = doe - (365 * yoe + yoe / 4 - yoe / 100);
+    let mp = (5 * doy + 2) / 153;
+    let d = (doy - (153 * mp + 2) / 5 + 1) as u32;
+    let m = if mp < 10 { mp + 3 } else { mp - 9 } as u32;
+    (if m <= 2 { y + 1 } else { y }, m, d)
+}
+
+/// unix-секунды -> ISO 8601 UTC без внешних крейтов.
+fn iso_utc(ts: u64) -> String {
+    let (y, m, d) = epoch_to_ymd((ts / 86400) as i64);
+    let s = ts % 86400;
+    format!(
+        "{:04}-{:02}-{:02}T{:02}:{:02}:{:02}Z",
+        y,
+        m,
+        d,
+        s / 3600,
+        (s % 3600) / 60,
+        s % 60
+    )
+}
+
 fn game_seed(state: &AppState, game_id: u64) -> u64 {
     splitmix64(state.master_seed.load(Ordering::Relaxed) ^ splitmix64(game_id))
 }
@@ -317,6 +346,42 @@ fn settle_and_record(state: &AppState, game_id: u64) {
                     })
                 })
                 .collect();
+            // NDJSON-совместимый поток типизированных событий (паттерн
+            // mshumer/autonomous-researcher ::EVENT::{json}): каждый ход
+            // как машиночитаемое событие с ISO-временем рядом с
+            // человеческим actions[]; фазы и сеттл — типами PHASE/SETTLE
+            let mut events: Vec<serde_json::Value> = entry
+                .action_log
+                .iter()
+                .map(|a| {
+                    let ts = a["ts"].as_u64().unwrap_or(0);
+                    serde_json::json!({
+                        "type": "MOVE",
+                        "ts": ts,
+                        "ts_iso": iso_utc(ts),
+                        "round": a["round"],
+                        "phase": a["phase"],
+                        "actor": a["actor"],
+                        "action": a["action"],
+                        "params": a["params"],
+                        "by": a["by"],
+                        "ok": a["ok"],
+                        "err": a["err"],
+                    })
+                })
+                .collect();
+            for p in entry.phase_log.iter() {
+                let mut e = p.clone();
+                e["type"] = serde_json::json!("PHASE");
+                events.push(e);
+            }
+            events.push(serde_json::json!({
+                "type": "SETTLE",
+                "ts": now(),
+                "ts_iso": iso_utc(now() as u64),
+                "ranks": ranks,
+                "bank": bank,
+            }));
             let v = serde_json::json!({
                 "game_id": game_id,
                 "party_no": entry.party_no,
@@ -343,6 +408,7 @@ fn settle_and_record(state: &AppState, game_id: u64) {
                 "payout_breakdown": breakdown,
                 "phases": entry.phase_log,
                 "actions": entry.action_log,
+                "events": events,
             });
             rec = Some(v.to_string());
         }

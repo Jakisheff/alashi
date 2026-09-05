@@ -70,7 +70,13 @@ fn llm_cfg(model_override: Option<&str>) -> Option<LlmCfg> {
     })
 }
 
-fn llm_ask(cfg: &LlmCfg, system: &str, user: &str, timeout_s: u64) -> Option<String> {
+fn llm_ask(
+    cfg: &LlmCfg,
+    system: &str,
+    user: &str,
+    timeout_s: u64,
+    ctx: Option<&Value>,
+) -> Option<String> {
     let body = serde_json::json!({
         "model": cfg.model,
         "thinking": {"type": "disabled"},
@@ -93,8 +99,52 @@ fn llm_ask(cfg: &LlmCfg, system: &str, user: &str, timeout_s: u64) -> Option<Str
         .ok()?;
     let txt = String::from_utf8(out.stdout).ok()?;
     let v: Value = serde_json::from_str(&txt).ok()?;
+    if let Some(ctx) = ctx {
+        llm_dump(ctx, system, user, &v);
+    }
     let c = v.get("choices")?.get(0)?.get("message")?.get("content")?.as_str()?.to_string();
     if c.trim().is_empty() { None } else { Some(c) }
+}
+
+/// Дамп полной цепочки «промпт -> ответ» на каждый LLM-вызов в отдельный
+/// JSON (находка mshumer/OpenReasoningEngine: logs/conversation_*.json):
+/// послематчевый разбор воспроизводим без реконструкции по обрывкам сессий.
+/// Каталог: env ALASHI_AGENT_LOGS или ./agent_llm_logs.
+fn llm_dump(ctx: &Value, system: &str, user: &str, resp: &Value) {
+    let dir = std::env::var("ALASHI_AGENT_LOGS").unwrap_or_else(|_| "agent_llm_logs".into());
+    if std::fs::create_dir_all(&dir).is_err() {
+        return;
+    }
+    let ts = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .map(|d| d.as_secs())
+        .unwrap_or(0);
+    let days = ts / 86400;
+    let (y, m, d) = epoch_to_ymd(days as i64);
+    let sday = ts % 86400;
+    let iso = format!(
+        "{:04}-{:02}-{:02}T{:02}:{:02}:{:02}Z",
+        y, m, d, sday / 3600, (sday % 3600) / 60, sday % 60
+    );
+    let rec = serde_json::json!({
+        "ts": ts,
+        "ts_iso": iso,
+        "ctx": ctx,
+        "system": system,
+        "user": user,
+        "response": resp,
+    });
+    let path = format!(
+        "{}/llm_g{}_r{}_{}_{}.json",
+        dir,
+        ctx["game"].as_u64().unwrap_or(0),
+        ctx["round"].as_u64().unwrap_or(0),
+        ctx["phase"].as_str().unwrap_or("?"),
+        ts
+    );
+    if std::fs::write(&path, rec.to_string()).is_err() {
+        eprintln!("[agent] не смог записать дамп LLM: {}", path);
+    }
 }
 
 fn parse_json_block(raw: &str) -> Option<Value> {
@@ -240,7 +290,7 @@ fn main() {
                 std::thread::sleep(Duration::from_millis(700));
                 continue;
             }
-            let decision = decide(&llm, s, &me, &prompt, &mem);
+            let decision = decide(&llm, s, &me, &prompt, &mem, game);
             let (action, params) = decision;
             let body = serde_json::json!({
                 "token": token, "action": action, "params": params,
@@ -309,8 +359,15 @@ fn decide(
     me: &Value,
     prompt: &str,
     mem: &Mem,
+    game: u64,
 ) -> (&'static str, Value) {
     let phase = s["phase"].as_str().unwrap_or("");
+    let llm_ctx = serde_json::json!({
+        "game": game,
+        "round": s["round"],
+        "phase": phase,
+        "actor": me["idx"],
+    });
     if let Some(cfg) = llm {
         // тайм-бюджет ДО хода (урок gid 12: 20-40с ретраев хвостили
         // продажи): базар — одна быстрая попытка без разгона, остальным
@@ -361,7 +418,7 @@ fn decide(
                 }
                 std::thread::sleep(Duration::from_secs(2));
             }
-            if let Some(ans) = llm_ask(cfg, SYSTEM, &user, ask_to) {
+            if let Some(ans) = llm_ask(cfg, SYSTEM, &user, ask_to, Some(&llm_ctx)) {
                 if let Some(v) = parse_json_block(&ans) {
                     if let Some(a) = v["action"].as_str() {
                         let params = v.get("params").cloned().unwrap_or_else(|| {
