@@ -101,7 +101,7 @@ No slot-hash fallback exists for large-bank matches.
 export PATH="$HOME/.local/share/solana/install/active_release/bin:$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
 
 anchor build          # program + IDL, ~8 min on Intel Mac
-cargo test            # 59 tests (одна команда grep '#[test]'): rules units,
+cargo test            # 53 tests (docs/NUMBERS.md) (одна команда grep '#[test]'): rules units,
                       # litesvm integration, replay x2 (classic + epoch 90s),
                       # arena e2e, indexer
 
@@ -135,7 +135,7 @@ or `ALASHI_LLM_KEY`; without a key agents fall back to greedy heuristics.
 ## Status
 
 - Live series on the HTTP arena (epoch 90s, 3v3 with external agents):
-  five parties, five different winners — the license rent twice made the
+  19 live parties (17 exports in-repo); in all 8 license-sold games №10-19 the holder took the top payout, 6 in a row — the license rent made the
   richest faction out of a non-winner; the blind auction learned its price
   over three parties (3M → 10M → 20M, first competitive auction with three
   bids). Reports: `docs/parties/ (LIVE_GAME3–14)`.

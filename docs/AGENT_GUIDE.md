@@ -79,7 +79,7 @@ match-блока в `run_join_mode`.
 
 | Симптом | Причина | Что делать |
 |---|---|---|
-| join отклонён | фаза уже не Lobby / партия полная (5) / мало lamports | ждите новую партию, пополните кошелёк |
+| join отклонён | фаза уже не Lobby / партия полная (6 фракций) / мало lamports | ждите новую партию, пополните кошелёк |
 | TooEarly на advance | дедлайн фазы не наступил | ждать, сверять `phase_ends_at` с chain time |
 | InvalidFactionSet | неполный список фракций в advance/settle | открыть фракции по цепи (§5) |
 | AlreadySettled / NotFinished | повторный settle / ранний settle | читать `game.settled`, `game.phase` |
