@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  tests:
+    name: cargo test (workspace + arena + bots)
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Workspace tests (rules crate; the Anchor program needs `anchor build` for its .so tests, excluded here)
+        run: cargo test --workspace --exclude alashi
+
+      - name: Arena tests (unit + http e2e)
+        run: cargo test --manifest-path arena/Cargo.toml
+
+      - name: Bots compile check
+        run: cargo build --manifest-path bots/Cargo.toml
