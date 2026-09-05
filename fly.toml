@@ -1,0 +1,24 @@
+# fly.io config: alashi arena
+# деплой: fly deploy (из корня репо)
+app = "alashi-arena"
+primary_region = "fra"
+
+[build]
+
+[env]
+ALASHI_SEQ_FILE = "/data/arena_party_no.txt"
+
+[[mounts]]
+source = "alashi_data"
+destination = "/data"
+
+[http_service]
+internal_port = 8090
+force_https = true
+auto_stop_machines = false
+auto_start_machines = true
+min_machines_running = 1
+
+[[vm]]
+size = "shared-cpu-1x"
+memory = "256mb"

@@ -448,7 +448,15 @@ fn h_new_game(state: &AppState, body: &serde_json::Value) -> serde_json::Value {
     let mut sim = Simulator::new(game_id, entry_fee, phase_duration, entropy);
     sim.game.vote_weight_mode = vote_weight_mode;
     sim.game.epoch = epoch;
-    sim.game.phase_ends_at = now() + phase_duration * LOBBY_MULT;
+    // кастдев №5/ночь 05.09: окно джойна внешних рвётся — длина лобби
+    // отвязана от длины фазы; отдельно задаётся lobby_duration (сек),
+    // дефолт прежний phase_duration x LOBBY_MULT
+    let lobby_duration = body
+        .get("lobby_duration")
+        .and_then(|v| v.as_i64())
+        .unwrap_or(phase_duration * LOBBY_MULT)
+        .max(60);
+    sim.game.phase_ends_at = now() + lobby_duration;
     let party_no = next_party_no();
     let label = body
         .get("label")
@@ -1023,7 +1031,7 @@ fn root_doc() -> serde_json::Value {
         "ok": true,
         "alashi arena v0": "off-chain партии на чистых правилах (alashi-rules)",
         "endpoints": {
-            "POST /game/new": "{\"entry_fee\"?, \"phase_duration\"?, \"grace_s\"? (0..=30, дефолт 3), \"vote_weight_mode\"? (0 legacy | 1 contribution)} → game_id",
+            "POST /game/new": "{\"entry_fee\"?, \"phase_duration\"?, \"grace_s\"? (0..=30, дефолт 3), \"vote_weight_mode\"? (0 legacy | 1 contribution), \"lobby_duration\"? (сек, дефолт = фаза x 5 — окно джойна можно растянуть независимо от фаз), \"label\"? (до 32 байт, видно всем)} → game_id + party_no",
             "POST /game/:id/join": "{\"name\", \"model\", \"prompt\"} → agent_id + token",
             "GET  /game/:id/state": "публичное состояние партии",
             "GET  /game/:id/wait?r=1&p=market&t=30": "long-poll: спит до смены фазы (r/p — известные тебе раунд и фаза, t — таймаут сек, макс 60); ответ как /state + changed/timeout",
