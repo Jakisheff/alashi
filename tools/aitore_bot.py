@@ -111,10 +111,15 @@ def act(action, params=None, fresh=False, retry=True):
     сервер сам отклонит невалидный ход, а полсекунды на /state стоят
     позиции в очереди цен."""
     if fresh:
+        global phase_calls
         st = http(f"/game/{GAME}/state")
+        phase_calls += 1
         if st and st.get("state"):
             s2 = st["state"]
             f2 = s2["factions"][ME]
+            if s2["now"] >= s2["phase_ends_at"] - 2:
+                log("PRECHECK-VETO (окно фазы закрыто)", action)
+                return {"ok": False, "error": "precheck:window", "precheck": True}
             why = validate(s2, f2, action, params or {})
             if why:
                 log("PRECHECK-VETO", action, json.dumps(params or {}), "->", why)
@@ -316,7 +321,45 @@ def do_law(s):
             if f2["cash"] > 2_000_000:
                 act("buy_hard", fresh=True)
 
+DEADLINE_MARGIN_S = 8   # запас до конца фазы, после которого только safe-ход
+MAX_CALLS_PER_PHASE = 14
+phase_calls = 0
+
+
+def safe_final(s):
+    """Graceful-финал (паттерн ORE/rlm-daytona): бюджет шагов или времени
+    фазы исчерпан -> обязан быть отправлен валидный ход, самый безопасный
+    из доступных, а не молчание до таймаута."""
+    f = s["factions"][ME]
+    ph = s["phase"]
+    if ph == "market" and not f["acted"] and f["goods"] > 0:
+        log("GRACEFUL-FINAL: sell", f["goods"])
+        return act("sell", {"units": f["goods"]})
+    if ph == "action" and not f["acted"]:
+        log("GRACEFUL-FINAL: produce")
+        return act("produce")
+    if ph == "law" and not f["voted"]:
+        choice = vote_choice(s) if s.get("law_card_name") else "abstain"
+        log("GRACEFUL-FINAL: vote", choice)
+        return act("vote", {"choice": choice})
+    log("GRACEFUL-FINAL: обязательного хода нет, фаза", ph)
+
+
+def mandatory_move_missing(s):
+    f = s["factions"][ME]
+    ph = s["phase"]
+    if ph == "market":
+        return (not f["acted"]) and f["goods"] > 0
+    if ph == "action":
+        return not f["acted"]
+    if ph == "law":
+        return not f["voted"]
+    return False
+
+
 def handle(s):
+    global phase_calls
+    phase_calls = 0
     snapshot(s, "PHASE")
     ph = s["phase"]
     if ph == "market":
@@ -328,6 +371,14 @@ def handle(s):
     elif ph == "finished":
         log("FINISHED", json.dumps(s.get("recent_actions", [])[-3:]))
         return False
+    # пост-проверка: окно почти закрыто или бюджет вызовов съеден,
+    # а обязательный ход так и не ушёл -> безопасный ход без размышлений
+    st = http(f"/game/{GAME}/state")
+    if st and st.get("state"):
+        s2 = st["state"]
+        near = s2["now"] >= s2["phase_ends_at"] - DEADLINE_MARGIN_S
+        if mandatory_move_missing(s2) and (near or phase_calls >= MAX_CALLS_PER_PHASE):
+            safe_final(s2)
     return True
 
 def main():
