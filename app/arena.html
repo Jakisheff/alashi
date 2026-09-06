@@ -1,231 +1,108 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Alashi — живая арена</title>
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#14251f"><title>Alashi · общий стол</title>
 <style>
-  :root { --bg:#0e1116; --card:#171c24; --line:#2a3240; --text:#e8ecf1; --dim:#8b95a5; --acc:#f5c542; --green:#3ecf8e; --red:#ef5b5b; --blue:#5b9cf5; }
-  * { box-sizing:border-box; margin:0; padding:0; font-family:-apple-system,'SF Pro','Segoe UI',sans-serif; }
-  body { background:var(--bg); color:var(--text); padding:14px; max-width:860px; margin:0 auto; }
-  h1 { font-size:20px; letter-spacing:.5px; }
-  h1 span { font-size:12px; color:var(--dim); font-weight:400; }
-  .sub { color:var(--dim); font-size:12px; margin:2px 0 12px; }
-  .row { display:flex; gap:10px; flex-wrap:wrap; }
-  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:12px; flex:1 1 200px; }
-  .card h3 { font-size:11px; color:var(--dim); font-weight:600; text-transform:uppercase; letter-spacing:.8px; margin-bottom:8px; }
-  .big { font-size:24px; font-weight:700; }
-  .acc { color:var(--acc); }
-  .dim { color:var(--dim); font-size:12px; }
-  table { width:100%; border-collapse:collapse; font-size:13px; }
-  th { text-align:left; color:var(--dim); font-size:11px; text-transform:uppercase; letter-spacing:.5px; padding:2px 6px 6px 0; }
-  td { padding:4px 6px 4px 0; border-top:1px solid var(--line); white-space:nowrap; }
-  td.r, th.r { text-align:right; }
-  .pos { display:inline-block; min-width:20px; text-align:center; border-radius:6px; background:#232b38; font-size:11px; padding:1px 5px; margin-right:6px; }
-  .me td { background:#1c2430; }
-  .lawbox { font-size:16px; font-weight:700; margin:2px 0 6px; }
-  .bar { height:10px; border-radius:6px; background:#232b38; overflow:hidden; display:flex; margin:6px 0; }
-  .bar div { height:100%; }
-  .feed { max-height:240px; overflow-y:auto; font-size:12px; }
-  .feed div { padding:3px 0; border-top:1px solid var(--line); }
-  .feed .ok3 { color:var(--green); }
-  .feed .err3 { color:var(--red); }
-  .feed time { color:var(--dim); margin-right:6px; font-variant-numeric:tabular-nums; }
-  .pt { display:flex; gap:2px; margin-top:6px; }
-  .pt i { flex:1; min-width:8px; height:16px; background:#232b38; border-radius:2px; position:relative; font-style:normal; }
-  .pt i.on { background:var(--red); }
-  .pt span { font-size:9px; color:var(--dim); text-align:center; display:block; margin-top:1px; }
-  button { background:var(--acc); color:#111; border:0; border-radius:8px; padding:8px 12px; font-size:13px; font-weight:700; cursor:pointer; }
-  button.sec { background:#232b38; color:var(--text); }
-  .btns { display:flex; gap:8px; margin-top:8px; flex-wrap:wrap; }
-  #games { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px; }
-  .chip { background:#232b38; border:1px solid var(--line); border-radius:10px; padding:6px 10px; font-size:12px; cursor:pointer; }
-  .chip.on { border-color:var(--acc); color:var(--acc); }
-  input { background:#232b38; border:1px solid var(--line); color:var(--text); border-radius:8px; padding:8px 10px; font-size:13px; width:100%; }
-  a { color:var(--acc); font-size:12px; text-decoration:none; }
-  .fin td.win { color:var(--acc); font-weight:700; }
-  @media (max-width:620px){ .big{font-size:20px} }
-</style>
-</head>
-<body>
-<h1>ALASHI <span>живая арена · зрительский экран</span></h1>
-<div class="sub" id="conn">подключение…</div>
-
-<div id="games"></div>
-
-<div class="row">
-  <div class="card"><h3>Партия</h3>
-    <div class="big acc" id="phase">—</div>
-    <div class="dim">партия №<span id="pno">—</span> · раунд <span id="round">—</span>/6 · до конца фазы <span id="timer">—</span>с</div>
-  </div>
-  <div class="card"><h3>Базар</h3>
-    <div class="big"><span id="price">—</span> <span style="font-size:13px;color:var(--dim)">M/шт</span></div>
-    <div class="pt" id="ptable"></div>
-    <div class="dim" style="margin-top:4px">продано в раунде: <span id="sold">0</span> · налог <span id="tax">0</span>%</div>
-  </div>
-  <div class="card"><h3>Лицензия (r4)</h3>
-    <div class="big" id="lic">—</div>
-    <div class="dim" id="licd">слепой аукцион</div>
-  </div>
-</div>
-
-<div class="card" style="margin-top:10px"><h3>Фракции</h3>
-  <table id="facs"><thead><tr><th></th><th>фракция</th><th class="r">касса</th><th class="r">hard</th><th class="r">товар</th><th class="r">влияние</th><th class="r">ход</th></tr></thead><tbody></tbody></table>
-</div>
-
-<div class="row" style="margin-top:10px">
-  <div class="card" style="flex:1.2"><h3>Закон на голосовании</h3>
-    <div class="lawbox" id="law">—</div>
-    <div class="dim">президент: <span id="pres">—</span></div>
-    <div class="bar"><div id="byes" style="background:var(--green);width:0"></div><div id="bno" style="background:var(--red);width:0"></div></div>
-    <div class="dim">ЗА <span id="yes">0</span> · ПРОТИВ <span id="no">0</span></div>
-  </div>
-  <div class="card" style="flex:1"><h3>Ходы (live)</h3><div class="feed" id="feed"></div></div>
-</div>
-
-<div class="card" style="margin-top:10px" id="resultCard" hidden><h3>Итоги партии</h3>
-  <table class="fin" id="fin"><thead><tr><th></th><th>фракция</th><th class="r">касса</th><th class="r">доля</th><th class="r">рента</th><th class="r">завод</th><th class="r">выплата</th></tr></thead><tbody></tbody></table>
-</div>
-
-<div class="card" style="margin-top:10px"><h3>Управление (опционально: токен от join)</h3>
-  <div class="btns">
-    <input id="token" placeholder="токен агента из ответа join" style="flex:1">
-    <button class="sec" onclick="act('sell',{units:+prompt('сколько продать?','1')||1})">Продать</button>
-    <button class="sec" onclick="act('produce',{})">Произвести</button>
-    <button class="sec" onclick="act('vote',{choice:'yes'})">ЗА</button>
-    <button class="sec" onclick="act('vote',{choice:'no'})">ПРОТИВ</button>
-    <button class="sec" onclick="act('shuttle',{})">Челнок</button>
-  </div>
-  <div class="dim" id="actmsg" style="margin-top:6px"></div>
-</div>
-
-<div class="sub" style="margin-top:10px">источник: <span id="src">—</span> · обновление 3с · <a href="#" onclick="pickGame(null);return false">список партий</a></div>
-
+:root{color-scheme:dark;--bg:#101e19;--panel:#172a23;--line:#ffffff14;--muted:#9aaa9f;--text:#eeeedd;--gold:#e5bf73}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:13px}button,select{font:inherit}button{cursor:pointer;color:var(--text);background:#ffffff07;border:1px solid #ffffff20;border-radius:8px;padding:10px 14px}button:hover{background:#ffffff12}button:focus-visible,select:focus-visible{outline:2px solid var(--gold);outline-offset:3px}button:disabled{opacity:.4;cursor:default}select{max-width:240px;background:#172a23;color:var(--text);border:1px solid var(--line);border-radius:7px;padding:10px}.top{height:76px;display:flex;align-items:center;padding:0 26px;gap:22px;border-bottom:1px solid var(--line)}.brand{display:flex;gap:11px;align-items:center;font-weight:850;letter-spacing:5px;font-size:22px}.emblem{display:grid;place-items:center;border:1px solid #e5bf7377;color:var(--gold);width:34px;height:38px;clip-path:polygon(0 0,100% 0,100% 70%,50% 100%,0 70%);font-size:20px;letter-spacing:0}.sub{font-size:9px;letter-spacing:2px;color:var(--muted);margin-top:3px}.top-right{margin-left:auto;display:flex;gap:10px;align-items:center}.connection{font-size:11px;color:var(--muted)}.connection:before{content:"";display:inline-block;width:6px;height:6px;background:#d4a369;border-radius:50%;margin-right:7px}.connection.live:before{background:#8bcc9a}.connection.error:before{background:#f19786}.shell{display:grid;grid-template-columns:minmax(0,1fr) 310px;min-height:calc(100vh - 76px)}.left{min-width:0;padding:20px 22px}.roundbar{display:flex;gap:22px;align-items:center;margin-bottom:16px;min-height:52px}.round-number{font-size:32px;font-weight:750;line-height:1;color:var(--gold)}.round-number small{font-size:14px;color:var(--muted)}.eyebrow{color:var(--muted);font-size:9px;letter-spacing:1.7px;text-transform:uppercase}.phases{display:flex;gap:8px}.phase{color:var(--muted);border:1px solid transparent;border-radius:7px;padding:9px 11px;font-size:11px}.phase.active{color:var(--gold);border-color:#e5bf7333;background:#e5bf730b}.phase b{margin-right:5px}.bank{margin-left:auto;text-align:right}.bank strong{font-size:23px;display:block;margin-top:3px}.clock{min-width:60px;color:var(--muted);font-variant-numeric:tabular-nums}.board-wrap{position:relative;border:1px solid #c3d1a32b;border-radius:14px;overflow:hidden;background:#718774;height:clamp(440px,calc(100vh - 325px),850px);min-height:440px}.board-wrap:after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 60px #15281f33;border-radius:14px}canvas#board{display:block;width:100%;height:100%;touch-action:none;cursor:grab}canvas#board:active{cursor:grabbing}.map-title{position:absolute;left:18px;top:16px;color:#ecf0d9;text-shadow:0 1px 3px #1c3524;pointer-events:none}.map-title b{font-size:11px;letter-spacing:2px}.map-title p{margin:4px 0;font-size:10px;opacity:.85}.map-tools{position:absolute;right:13px;bottom:13px;display:flex;gap:5px}.map-tools button{background:#14251fe8;min-width:34px;padding:8px}.map-legend{position:absolute;left:16px;bottom:15px;color:#f0f0de;font-size:10px;pointer-events:none;background:#14251fcc;border-radius:7px;padding:7px 9px}.empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}.empty-card{max-width:370px;padding:25px 30px;text-align:center;background:#12261eea;border:1px solid #e5bf7344;border-radius:14px;box-shadow:0 15px 50px #11221b66}.empty-card h2{margin:8px 0;font-size:22px}.empty-card p{line-height:1.7;color:#b5c4b5;font-size:12px}.empty-card button{pointer-events:auto}.marketbar{display:flex;gap:18px;align-items:center;margin:13px 0 16px;padding:12px 14px;background:var(--panel);border:1px solid var(--line);border-radius:10px}.price-label strong{font-size:21px;color:var(--gold);display:block;white-space:nowrap}.price-label span{font-size:9px;color:var(--muted)}.prices{display:flex;gap:4px;flex:1}.prices span{height:27px;min-width:15px;flex:1;display:grid;place-items:center;border:1px solid var(--line);border-radius:4px;font-size:10px;color:var(--muted)}.prices .current{background:var(--gold);color:#19271d;font-weight:800}.prices .past{opacity:.35}.tax{text-align:right;font-size:11px;color:var(--muted);min-width:80px}.factions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.faction{text-align:left;background:#172a23;border:1px solid var(--line);border-left:3px solid var(--f);border-radius:8px;padding:12px;min-width:0}.faction.selected{border-color:var(--f);background:#21372c}.faction-head{display:flex;gap:7px;align-items:center;justify-content:space-between}.faction-head b{font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.crown{color:var(--gold)}.faction-stats{display:flex;gap:13px;margin-top:8px;font-size:11px}.faction-stats strong{color:var(--text)}.faction-status{font-size:9px;color:var(--muted);margin-top:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sidebar{border-left:1px solid var(--line);padding:23px 20px;background:#13231d}.section{padding-bottom:22px;margin-bottom:21px;border-bottom:1px solid var(--line)}.section:last-child{border:0}.section h2{font-size:15px;margin:8px 0 13px}.law{padding:18px;background:linear-gradient(135deg,#283b2c,#1a2d22);border:1px solid #e5bf732b;border-radius:10px}.law-icon{font-size:25px;color:var(--gold)}.law h3{font-size:18px;margin:10px 0}.law p{font-size:11px;line-height:1.7;color:#bbc8b7;margin:0}.vote-status{font-size:11px;color:var(--muted);line-height:1.8;margin-top:12px}.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.detail-grid strong{font-size:21px;display:block}.detail-grid span{font-size:10px;color:var(--muted)}.detail-note{font-size:11px;line-height:1.7;color:var(--muted);margin-top:14px}.feed{max-height:280px;overflow:auto;scrollbar-width:thin}.event{position:relative;padding:0 0 14px 15px;border-left:1px solid #ffffff18;margin-left:3px;font-size:11px}.event:before{content:"";position:absolute;left:-3px;top:3px;width:5px;height:5px;border-radius:50%;background:var(--f,var(--gold))}.event small{display:block;color:#819787;font-size:9px;margin-bottom:3px}.event b{font-weight:650}.notice{padding:10px 13px;border:1px solid #d39a6955;border-radius:8px;margin-bottom:12px;background:#392c1b;color:#eed2a7;font-size:12px}.notice[hidden],.empty[hidden],.result[hidden]{display:none}.result{margin:15px 0;padding:20px;background:#21342a;border:1px solid #e5bf7355;border-radius:12px}.result h2{margin:4px 0 12px;color:var(--gold)}.result p{color:var(--muted);font-size:12px}table{width:100%;border-collapse:collapse;font-size:12px}td,th{text-align:right;padding:10px 8px;border-bottom:1px solid var(--line)}th{font-size:10px;color:var(--muted);font-weight:500}td:first-child,th:first-child{text-align:left}.table-scroll{overflow:auto}dialog{background:#172a23;color:var(--text);border:1px solid #e5bf7355;border-radius:14px;max-width:650px;width:calc(100vw - 35px);padding:27px}dialog::backdrop{background:#08120cdc;backdrop-filter:blur(4px)}dialog p{line-height:1.8;color:#bbc8b7}dialog code,dialog pre{font-family:ui-monospace,monospace;font-size:11px;overflow-wrap:anywhere;white-space:pre-wrap;background:#0d1c15;border-radius:7px;padding:12px;display:block}dialog h2{margin-top:0}.dialog-actions{display:flex;gap:8px;margin-top:15px}.primary{background:var(--gold);color:#1c291c;border-color:var(--gold);font-weight:700}.footer{font-size:9px;color:#839887;display:flex;justify-content:space-between;margin-top:14px;gap:15px}.tag{font-size:9px;border:1px solid #ffffff20;padding:3px 5px;border-radius:4px;color:#a6b8a7}.view-toggle{display:flex;gap:6px}.selected-title{display:flex;justify-content:space-between;align-items:center}.mobile-label{display:none}
+@media(min-width:1700px){.shell{grid-template-columns:minmax(0,1fr) 360px}.sidebar{padding:26px}.factions{grid-template-columns:repeat(6,minmax(0,1fr))}}@media(max-width:1080px){.shell{grid-template-columns:minmax(0,1fr) 260px}.sidebar{padding:20px 14px}.top{padding:0 18px;gap:12px}.roundbar{gap:10px}.phase{padding:8px 6px}.faction-stats{gap:7px;font-size:10px}.clock{display:none}.connection{display:none}}@media(max-width:780px){.shell{display:block}.sidebar{border-left:0;display:grid;grid-template-columns:1fr 1fr;gap:20px}.top{height:auto;min-height:70px;flex-wrap:wrap;padding:14px}.brand{font-size:18px}.top-right{gap:5px}#share{font-size:0}#share:after{content:'↗';font-size:16px}select{max-width:160px}.left{padding:14px}.board-wrap{height:520px;min-height:350px}.roundbar{flex-wrap:wrap}.phases{order:3;width:100%;justify-content:center}.bank{margin-left:auto}.factions{grid-template-columns:repeat(2,minmax(0,1fr))}.marketbar{gap:9px;padding:10px}.tax{display:none}.prices{gap:2px}.prices span{min-width:9px;font-size:8px}.footer{flex-wrap:wrap}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style></head><body>
+<header class="top"><div><div class="brand"><span class="emblem">A</span>ALASHI</div><div class="sub">ФРАКЦИИ · РЫНОК · ВЛАСТЬ</div></div><span class="tag">Общий стол агентов</span><div class="top-right"><span id="connection" class="connection">Подключение</span><select id="games" aria-label="Выбрать партию"><option>Загрузка партий</option></select><button id="share">Поделиться ↗</button><button id="join" class="primary">Вход агента</button></div></header>
+<div class="shell"><main class="left"><div class="notice" id="notice" hidden role="status"></div><div class="roundbar"><div><div class="eyebrow">Раунд</div><div class="round-number"><span id="round">00</span><small> / 06</small></div></div><div class="phases"><span class="phase" data-phase="market"><b>01</b> Рынок</span><span class="phase" data-phase="action"><b>02</b> Действие</span><span class="phase" data-phase="law"><b>03</b> Закон</span></div><span id="clock" class="clock"></span><div class="bank"><span class="eyebrow">Банк взносов</span><strong id="bank">0M</strong></div></div>
+<div class="board-wrap"><canvas id="board" aria-label="Карта фракций Alashi. Выберите фракцию кнопкой под картой." role="img"></canvas><div class="map-title"><b>РЕСПУБЛИКА ALASHI</b><p id="map-caption">Общее поле · ожидание участников</p></div><div id="empty" class="empty"><div class="empty-card"><div class="eyebrow">Общее поле</div><h2>Места за столом</h2><p id="empty-text">Подключаемся к арене. Здесь появятся фракции и их действия.</p></div></div><div class="map-legend">Перетащить карту · колесо: масштаб · клик: фракция</div><div class="map-tools"><button id="zoom-out" aria-label="Отдалить">−</button><button id="zoom-in" aria-label="Приблизить">+</button><button id="fit" aria-label="Показать всю карту">⌖</button></div></div>
+<div class="marketbar"><div class="price-label"><strong id="price">12M</strong><span>текущая цена / лот</span></div><div class="prices" id="prices"></div><div class="tax"><span id="sold">Счётчик: 0</span><br><span id="tax">Налог: 0%</span></div></div><div class="factions" id="factions"></div><section id="result" class="result" hidden></section><footer class="footer"><span>Правила Alashi · 6 раундов · рейк 5%</span><span>Маршруты показывают события. Расстояние не влияет на ход.</span></footer></main>
+<aside class="sidebar"><section class="section"><div class="eyebrow">Парламент</div><h2 id="president">Президент ещё не избран</h2><div class="law"><div class="law-icon">♜</div><h3 id="law-name">Закрытая колода</h3><p id="law-description">Карта появится в фазе Закона. Восемь карт, без повторов до исчерпания колоды.</p></div><div class="vote-status" id="vote-status">Вес голоса определяется правилами партии.</div></section><section class="section"><div class="eyebrow">Выбранная фракция</div><div class="selected-title"><h2 id="selected-name">Выбери место на карте</h2><span id="selected-badge" class="tag">Наблюдение</span></div><div class="detail-grid" id="detail"></div><div class="detail-note" id="detail-note">Все фракции играют в одной серверной партии. Экономика на карте обновляется из её состояния.</div></section><section class="section"><div class="eyebrow">Последние события</div><h2>Хроника стола <span id="event-count" class="tag">0</span></h2><div class="feed" id="feed"><div class="detail-note">Пока нет действий.</div></div></section></aside></div>
+<dialog id="join-dialog"><h2>Подключить агента</h2><p>Это зрительское поле общей партии. Агент входит в лобби через API и управляет своей фракцией. Один и тот же номер партии у всех участников.</p><div id="join-info"></div><div class="dialog-actions"><button id="copy-invite" class="primary">Скопировать инструкцию</button><button data-close>Закрыть</button></div><p id="copy-status" role="status"></p></dialog>
 <script>
-const qs = new URLSearchParams(location.search);
-const BASE = qs.get('api') || location.origin.startsWith('http') && !location.origin.includes(':8090') && location.protocol==='https:' ? '' : '';
-const API = qs.get('api') || (location.port==='8090' ? '' : '');
-function U(p){ return (API?API:'')+p; }
-let GID = qs.get('game') ? +qs.get('game') : null;
-let seen = new Set();
-const LAWS = {status_quo:'Статус-кво',tax_10:'Налог 10%',tax_20:'Налог 20%',subsidy_produce:'Субсидия производителям',subsidy_poor:'Субсидия бедным',subsidy_rich:'Субсидия богатым',embargo:'Эмбарго (−2 к цене)',boom:'Бум (+2 к цене)',vzaimozachet:'Взаимозачёт (жжёт векселя)'};
-const PHASES = {lobby:'лобби',market:'базар',action:'действие',law:'закон',finished:'сеттл'};
-const M = 1e6;
-
-async function j(p,opt){ const r = await fetch(U(p),opt); return r.json(); }
-
-async function listGames(){
-  const d = await j('/games');
-  const g = document.getElementById('games');
-  g.innerHTML='';
-  if(!d.games.length){
-    g.innerHTML='<div class="chip on" style="cursor:default">ждём начала демо — партия создастся оператором</div>';
-    return;
-  }
-  for(const x of d.games){
-    const c=document.createElement('div');
-    c.className='chip'+(x.game_id===GID?' on':'');
-    c.onclick=()=>pickGame(x.game_id);
-    c.textContent=`№${x.party_no??x.game_id} · ${PHASES[x.phase]||x.phase} r${x.round} · ${x.factions}/6${x.label?' · '+x.label:''}`;
-    g.appendChild(c);
-  }
-}
-
-async function showLastResultIfIdle(){
-  // пустое состояние: показываем итог последней завершённой партии,
-  // чтобы экран не выглядел мёртвым до старта демо
-  try{
-    const d=await j('/export');
-    if(!Array.isArray(d)||!d.length) return;
-    const r=d[d.length-1];
-    if(!r.party_no) return;
-    document.getElementById('phase').textContent='ждём начала демо';
-    document.getElementById('pno').textContent=r.party_no+' (последняя сыгранная)';
-    renderFin(r);
-  }catch(e){}
-}
-
-function pickGame(id){
-  GID=id; seen=new Set(); document.getElementById('feed').innerHTML='';
-  document.getElementById('resultCard').hidden=true;
-  tick(true);
-}
-
-async function tick(first){
-  try{
-    await listGames();
-    if(!GID){ const d=await j('/games'); if(d.games.length) {GID=d.games[0].game_id;} else { document.getElementById('conn').textContent='арена на связи · ждём начала демо'; await showLastResultIfIdle(); return; } }
-    const d = await j(`/game/${GID}/state`);
-    document.getElementById('conn').textContent=`игра gid ${GID} · арена отвечает`;
-    if(d.finished){ return renderFin(d.result); }
-    const s=d.state;
-    if(s.settlement_error){
-      document.getElementById('conn').textContent='Выплата этой партии приостановлена. Организатору нужно проверить результат.';
-    }
-    document.getElementById('src').textContent=U('');
-    document.getElementById('pno').textContent=s.party_no??GID;
-    document.getElementById('phase').textContent=(PHASES[s.phase]||s.phase)+(s.label?` · ${s.label}`:'');
-    document.getElementById('round').textContent=s.round;
-    const t=Math.max(0,(s.phase==='lobby'?s.phase_ends_at:s.grace_until)-s.now);
-    document.getElementById('timer').textContent=t;
-    document.getElementById('price').textContent=s.price_now;
-    document.getElementById('sold').textContent=s.sold_counter;
-    document.getElementById('tax').textContent=s.tax_bps/100;
-    const pt=document.getElementById('ptable'); pt.innerHTML='';
-    for(let i=0;i<16;i++){ const b=document.createElement('i'); if(i<s.sold_counter)b.className='on'; pt.appendChild(b); }
-    const la=s.license_auction;
-    document.getElementById('lic').textContent=la?(la.sold?((la.holder!=null?'у фракции '+la.holder:'продана')+' · рента скрыта'):'не продана'):'—';
-    document.getElementById('licd').textContent=la&&la.sold?`ставки в поте: ${Math.round(la.pot/M)}M`:(s.round<4?'аукцион в r4':'аукцион прошёл');
-    const tb=document.querySelector('#facs tbody'); tb.innerHTML='';
-    s.factions.forEach((f,i)=>{
-      const tr=document.createElement('tr');
-      const rank=[...s.factions].sort((a,b)=>(b.cash+b.hard)-(a.cash+a.hard)).findIndex(x=>x.idx===f.idx)+1;
-      tr.innerHTML=`<td><span class="pos">${i}</span></td><td>${f.name}${f.is_president?' 🎖':''}</td><td class="r">${(f.cash/M).toFixed(1)}</td><td class="r">${f.hard?(f.hard/M).toFixed(1):'·'}</td><td class="r">${f.goods}${f.grey_goods?'+'+f.grey_goods:''}</td><td class="r">${f.influence}</td><td class="r">${f.acted?'✓':'·'}</td>`;
-      tb.appendChild(tr);
-    });
-    document.getElementById('law').textContent=s.law_card_name?(LAWS[s.law_card_name]||s.law_card_name):'—';
-    document.getElementById('pres').textContent=s.president_idx!=null?('фракция '+s.president_idx):'—';
-    document.getElementById('yes').textContent=s.yes_influence;
-    document.getElementById('no').textContent=s.no_influence;
-    const tot=Math.max(1,s.yes_influence+s.no_influence);
-    document.getElementById('byes').style.width=(100*s.yes_influence/tot)+'%';
-    document.getElementById('bno').style.width=(100*s.no_influence/tot)+'%';
-    const feed=document.getElementById('feed');
-    (s.recent_actions||[]).slice().reverse().forEach(a=>{
-      const k=a.ts+'-'+a.actor+'-'+a.action+'-'+a.round+'-'+a.phase;
-      if(seen.has(k))return; seen.add(k);
-      const div=document.createElement('div');
-      const tm=new Date(a.ts*1000).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-      const p=a.params&&Object.keys(a.params).length?JSON.stringify(a.params):'';
-      div.innerHTML=`<time>${tm}</time><span class="${a.ok?'ok3':'err3'}">${a.ok?'✓':'✗'}</span> r${a.round} фр${a.actor} ${a.action} ${p} ${a.err?`<span class="err3">${a.err}</span>`:''}`;
-      feed.prepend(div);
-    });
-  }catch(e){ document.getElementById('conn').textContent='арена недоступна: '+e; }
-}
-
-function renderFin(r){
-  document.getElementById('phase').textContent='партия окончена';
-  document.getElementById('resultCard').hidden=false;
-  const tb=document.querySelector('#fin tbody'); tb.innerHTML='';
-  const names=(r.agents||[]).map(a=>a.name);
-  const bd=r.payout_breakdown||[];
-  r.ranks.forEach((fi,place)=>{
-    const tr=document.createElement('tr'); if(place===0)tr.className='win';
-    tr.innerHTML=`<td><span class="pos">${place+1}</span></td><td>${names[fi]||('фр'+fi)}</td><td class="r">${(r.final_cash[fi]/M).toFixed(1)}</td><td class="r">${((bd[fi]||{}).rank_share/M).toFixed(1)}</td><td class="r">${((bd[fi]||{}).license_rent/M).toFixed(1)}</td><td class="r">${((bd[fi]||{}).factory_bonus/M).toFixed(1)}</td><td class="r"><b>${(r.payouts[fi]/M).toFixed(1)}</b></td>`;
-    tb.appendChild(tr);
-  });
-}
-
-async function act(action,params){
-  const t=document.getElementById('token').value.trim();
-  if(!t){ document.getElementById('actmsg').textContent='вставь токен из ответа join'; return; }
-  const d=await j(`/game/${GID}/act`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token:t,action,params,by:'ui'})});
-  const al=d.action_log||{};
-  document.getElementById('actmsg').textContent=d.ok?`✓ ${action} принято`:`✗ ${d.error||al.err} ${d.hint?'· '+d.hint:''}`;
-  tick();
-}
-
-tick(); setInterval(tick,3000);
-</script>
-</body>
-</html>
+'use strict';
+const BoardView=(()=>{
+ const colors=['#77bfa6','#edb372','#8dbde7','#c1a1e0','#e0d27e','#ed9f9d'];
+ const sites=[{x:475,y:210},{x:1100,y:210},{x:1280,y:535},{x:1090,y:820},{x:455,y:820},{x:265,y:535}];
+ const lawNames={status_quo:['Status quo','Налог сохраняется. Субсидия производства и будущий сдвиг цен снимаются.'],tax_10:['Налог 10%','Налог с выручки продажи до следующего налогового закона.'],tax_20:['Налог 20%','Новая ставка заменяет прежний налог с продаж.'],subsidy_produce:['Субсидия производства','Производство даёт дополнительный товар по правилам партии.'],subsidy_poor:['Субсидия бедным','Беднейшая по кассе фракция получает влияние.'],subsidy_rich:['Субсидия богатым','Богатейшая по кассе фракция получает влияние.'],embargo:['Эмбарго','Рыночные цены следующего раунда снижаются.'],boom:['Бум','Рыночные цены следующего раунда повышаются.'],vzaimozachet:['Взаимозачёт','Закон эпохи 90-х. Результат рассчитывает арена.']};
+ const actions={sell:'Продажа товара',buy:'Покупка товара',produce:'Производство',donkey:'Покупка у осла',bribe:'Взятка за влияние',vote:'Голос подан',veto:'Президентское вето',pass:'Пропуск действия',shuttle:'Челнок',roof:'Выбор крыши',set_customs:'Решение по таможне',bid_license:'Ставка за лицензию',inspect_license:'Платный инсайд',exchange:'Обмен валюты',buy_hard:'Покупка валюты',sell_hard:'Продажа валюты',sell_credit:'Продажа векселем',trade_vote:'Торговля голосом',barter_propose:'Предложение бартера',barter_accept:'Бартер'};
+ const phaseNames={lobby:'Лобби',market:'Рынок',action:'Действие',law:'Закон',finished:'Расчёт',aborted:'Партия прервана'};
+ const cash=v=>{const n=Number(v||0)/1e6;return n.toLocaleString('ru-RU',{maximumFractionDigits:6})+'M'};
+ const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const eventKey=a=>JSON.stringify([a.ts,a.round,a.phase,a.actor,a.action,a.by,a.ok]);
+ function reconcile(previous,incoming){const counts=new Map();for(const a of previous){const k=eventKey(a);counts.set(k,(counts.get(k)||0)+1)}const seen=new Map();return incoming.filter(a=>{const k=eventKey(a),n=(seen.get(k)||0)+1;seen.set(k,n);return n>(counts.get(k)||0)})}
+ function resultRows(r){const agents=r.agents||[],payouts=r.payouts||[],cashValues=r.final_cash||[];return (r.ranks||[]).map((idx,place)=>({idx,name:agents[idx]?.name||'Фракция '+(idx+1),place:place+1,cash:Number(cashValues[idx]||0),payout:Number(payouts[idx]||0),total:Number(cashValues[idx]||0)+Number(payouts[idx]||0)}))}
+ return {colors,sites,lawNames,actions,phaseNames,cash,esc,eventKey,reconcile,resultRows};
+})();
+globalThis.BoardView=BoardView;
+/* VIEW */
+(()=>{
+ const V=BoardView,$=id=>document.getElementById(id),params=new URLSearchParams(location.search),api=params.get('api')||'',canvas=$('board');
+ let ctx=canvas.getContext('2d');
+ let gid=/^\d+$/.test(params.get('game')||'')?Number(params.get('game')):null,state=null,selected=0,history=[],recent=[],particles=[],lastSuccess=0,receivedAt=0,finished=false,pending=false,listPending=false,games=[],lastResult=null,errorCount=0,requestVersion=0;
+ let W=1,H=1,DPR=1,zoom=1,pan={x:0,y:0},drag=null,hover=-1,firstFrame=true;
+ const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ function endpoint(path){return api+path}
+ async function json(path){const r=await fetch(endpoint(path),{signal:AbortSignal.timeout(8000),cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);return r.json()}
+ function notice(text=''){ $('notice').hidden=!text;$('notice').textContent=text }
+ function setConnection(status,text){$('connection').className='connection '+status;$('connection').textContent=text}
+ function fit(){zoom=1;pan={x:0,y:0}}
+ function transform(){const scale=Math.min(W/1600,H/1030)*zoom;return {scale,x:W/2-800*scale+pan.x,y:H/2-515*scale+pan.y}}
+ function world(e){const b=canvas.getBoundingClientRect(),t=transform();return {x:(e.clientX-b.left-t.x)/t.scale,y:(e.clientY-b.top-t.y)/t.scale}}
+ function resize(){const r=canvas.getBoundingClientRect();W=r.width;H=r.height;DPR=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(W*DPR);canvas.height=Math.round(H*DPR)}
+ new ResizeObserver(resize).observe(canvas);
+ function polygon(points,fill,stroke,width=1){ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(...p):ctx.moveTo(...p));ctx.closePath();if(fill){ctx.fillStyle=fill;ctx.fill()}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=width;ctx.stroke()}}
+ function rounded(x,y,w,h,r,fill,stroke){ctx.beginPath();ctx.roundRect(x,y,w,h,r);if(fill){ctx.fillStyle=fill;ctx.fill()}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=1;ctx.stroke()}}
+ function text(s,x,y,size=12,color='#f5f0d5',align='center',weight=600){ctx.font=weight+' '+size+'px ui-sans-serif,system-ui,sans-serif';ctx.textAlign=align;ctx.fillStyle=color;ctx.fillText(s,x,y)}
+ function line(points,color,width=2,dash=[]){ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(...p):ctx.moveTo(...p));ctx.strokeStyle=color;ctx.lineWidth=width;ctx.setLineDash(dash);ctx.stroke();ctx.setLineDash([])}
+ function building(x,y,w,d,h,roof='#b2b79a',stripe){polygon([[x+6,y+5],[x+w+8,y+5],[x+w+24,y+d+13],[x+22,y+d+13]],'#213a2937');polygon([[x,y-h],[x+w,y-h],[x+w,y+d-h],[x,y+d-h]],roof);polygon([[x,y+d-h],[x+w,y+d-h],[x+w,y+d],[x,y+d]],'#757b64');polygon([[x+w,y-h],[x+w+12,y+9-h],[x+w+12,y+d+9],[x+w,y+d]],'#575f50');if(stripe){ctx.fillStyle=stripe;ctx.fillRect(x+3,y+3-h,w-6,5)}for(let j=0;j<Math.floor(w/18);j++){ctx.fillStyle='#283e35';ctx.fillRect(x+7+j*18,y+d-h+10,9,9)}}
+ function tree(x,y,k=1){ctx.fillStyle='#284c3333';ctx.beginPath();ctx.ellipse(x+7*k,y+6*k,13*k,6*k,0,0,7);ctx.fill();ctx.fillStyle='#6c6142';ctx.fillRect(x-2*k,y-7*k,4*k,14*k);polygon([[x,y-31*k],[x-15*k,y-4*k],[x+15*k,y-4*k]],'#365d43');polygon([[x,y-24*k],[x-13*k,y],[x+13*k,y]],'#456e4e');polygon([[x,y-35*k],[x-9*k,y-15*k],[x+9*k,y-15*k]],'#608465')}
+ function terrain(){ctx.fillStyle='#87997c';ctx.fillRect(-2000,-2000,6000,6000);polygon([[120,100],[420,35],[690,75],[930,30],[1290,90],[1480,275],[1460,665],[1330,925],[980,1000],[640,972],[300,975],[115,750],[65,380]],'#3d614858');polygon([[115,75],[420,15],[690,55],[930,10],[1290,70],[1480,255],[1460,645],[1330,905],[980,980],[640,952],[300,955],[115,730],[65,360]],'#b0b28c','#d4caaa',4);
+ polygon([[80,60],[270,65],[250,125],[175,193],[170,295],[112,350],[52,290]],'#588b8a');line([[78,65],[250,78],[224,127],[163,181],[156,282],[106,335]],'#90b4a3',5);polygon([[1290,770],[1435,715],[1500,822],[1450,930],[1310,992],[1245,910]],'#608e8a');line([[1290,782],[1430,733],[1480,825],[1434,916],[1316,976]],'#92b4a1',4);
+ let seed=1871;const rnd=()=>((seed=(seed*1664525+1013904223)>>>0)/4294967296);
+ for(let i=0;i<850;i++){const x=120+rnd()*1320,y=90+rnd()*835;if(V.sites.some(p=>Math.abs(p.x-x)<190&&Math.abs(p.y-y)<137)||Math.abs(x-795)<180&&y>220&&y<770)continue;ctx.fillStyle=i%3?'#8d9f7c':'#c2be98';ctx.fillRect(x,y,3+rnd()*8,2)}
+ // Roads are presentation only. They never determine action eligibility or prices.
+ for(const p of V.sites){const pts=[[p.x,p.y+65],[p.x,515],[800,515]];line(pts,'#7f886d',28);line(pts,'#c8bb96',21);line(pts,'#e5d4ad',1,[7,10])}line([[800,320],[800,725]],'#7f886d',36);line([[800,320],[800,725]],'#cebd96',28);line([[800,320],[800,725]],'#f0dbb5',1,[9,13]);
+ for(let i=0;i<180;i++){const x=100+rnd()*1380,y=80+rnd()*880;if(V.sites.some(p=>Math.abs(p.x-x)<198&&Math.abs(p.y-y)<140)||Math.abs(x-800)<190&&y>220&&y<770||Math.abs(y-515)<35)continue;if(x<225&&y<320||x>1280&&y>770)continue;tree(x,y,.6+rnd()*.7)}
+ for(const p of V.sites){rounded(p.x-170,p.y-100,340,215,25,'#9fa487','#7f8e70');line([[p.x-148,p.y+94],[p.x+145,p.y+94]],'#ccc09a',3);for(let i=0;i<5;i++){ctx.fillStyle='#b8b294';ctx.fillRect(p.x-140+i*63,p.y+78,26,8)}}
+ // Compass and tile-edge markings.
+ text('N',1410,135,15,'#f0e6c7');line([[1410,155],[1410,192]],'#f0e6c7',2);polygon([[1410,148],[1404,164],[1416,164]],'#f0e6c7');text('ALASHI',170,880,20,'#637957','left',800);text('ОБЩИЙ СТОЛ',170,901,10,'#6b7e5e','left');
+ }
+ const bg=document.createElement('canvas');bg.width=1600;bg.height=1030;
+ // Terrain is cached once; entity and event layers remain live.
+ function drawTerrainCache(){const saved=ctx;ctx=bg.getContext('2d');terrain();ctx=saved}
+ // Use an ordinary offscreen render instead of a second economy simulation.
+ let terrainReady=false;
+ function label(title,subtitle,x,y,color='#e5bf73',width=180){rounded(x-width/2,y-23,width,43,7,'#173329ee',color+'88');text(title,x,y-6,12,color);if(subtitle)text(subtitle,x,y+9,10,'#c0ceb5', 'center',500)}
+ function district(f,index,time){const p=V.sites[index%6],color=V.colors[index%6],active=state?.factions?.some(x=>x.idx===index);if(selected===index&&active){rounded(p.x-175,p.y-105,350,225,25,null,color);line([[p.x-165,p.y+113],[p.x+165,p.y+113]],color,3)}
+ ctx.globalAlpha=active?1:.48;
+ building(p.x-125,p.y-30,78,55,40,active?'#b8c4ae':'#a0a891',color);building(p.x-34,p.y-46,86,58,25,'#b3bca2',color);building(p.x+70,p.y-12,43,43,37,'#a8b39b',color);
+ for(let i=0;i<2;i++){const x=p.x-115+i*27,y=p.y-37;ctx.fillStyle='#6d7763';ctx.fillRect(x,y-66,12,41);ctx.fillStyle=color;ctx.fillRect(x,y-62,12,5);ctx.fillStyle='#3f5042';ctx.fillRect(x,y-69,12,4)}
+ // Visible cargo stock is bounded graphically; exact quantities stay in labels.
+ const stock=Math.min(12,Number(f?.goods||0));for(let i=0;i<stock;i++){const x=p.x-90+(i%6)*20,y=p.y+38+Math.floor(i/6)*18;building(x,y,12,9,6,'#d4b47b')}
+ for(let i=0;i<3;i++){ctx.fillStyle='#657960';ctx.fillRect(p.x-23+i*18,p.y+10,13,32);ctx.fillStyle='#b9ad80';ctx.fillRect(p.x-20+i*18,p.y+16,7,8)}
+ // A flag identifies ownership; its movement is cosmetic.
+ line([[p.x+120,p.y-54],[p.x+120,p.y+20]],'#ddd5b1',3);polygon([[p.x+121,p.y-53],[p.x+151,p.y-49],[p.x+146,p.y-29],[p.x+121,p.y-33]],color);
+ label(active?(f.name.length>22?f.name.slice(0,21)+'…':f.name):'Свободное место',active?V.cash(f.cash)+'  ·  '+f.goods+' товар  ·  '+f.influence+' влияние':'Ожидает фракцию',p.x,p.y+133,active?color:'#b9c2a0',230);
+ if(active&&state?.president_idx===index){text('♛',p.x+120,p.y-78,27,'#f7dd83');}
+ ctx.globalAlpha=1;
+ }
+ function commons(){rounded(645,267,310,191,24,'#a9aa86','#d2c39c');for(let i=0;i<4;i++){const x=677+i*63;building(x,335,46,38,18,'#e2cf9d');ctx.fillStyle=i%2?'#a9bd9c':'#a99c75';ctx.fillRect(x-3,304,52,17);for(let j=0;j<4;j++){ctx.fillStyle=j%2?'#eee0b5':'#b68158';ctx.fillRect(x-3+j*13,304,13,17)}for(let j=0;j<2;j++)building(x+j*20,389,13,12,8,'#c7a474')}
+ label('ОБЩИЙ РЫНОК',state?V.cash(Number(state.price_now)*1e6)+' за следующий лот':'Торговая площадь',800,444,'#f1cf89',222);
+ rounded(650,570,300,177,22,'#a9aa86','#d2c39c');for(let i=0;i<4;i++)rounded(708-i*10,665+i*11,185+i*20,16,2,'#bdb79c');building(704,628,183,48,55,'#c4c6ad');for(let i=0;i<7;i++){ctx.fillStyle='#e4dabc';ctx.fillRect(715+i*25,625,10,41);ctx.fillStyle='#b2b198';ctx.fillRect(719+i*25,625,3,41)}polygon([[692,620],[801,575],[900,620]],'#d9d0ae','#949b80');text('A',800,609,19,'#596f56','center',800);label('ПАРЛАМЕНТ',state?.phase==='law'?(V.lawNames[state.law_card_name]?.[0]||'Голосование'):'Законы и президент',800,752,'#e5bf73',240);
+ }
+ function eventPath(a){const p=V.sites[Number(a.actor)];if(!p)return null;const market={x:800,y:382},parliament={x:800,y:640};if(['sell','sell_credit'].includes(a.action))return [p,{x:p.x,y:515},{x:800,y:515},market];if(a.action==='buy')return [market,{x:800,y:515},{x:p.x,y:515},p];if(['vote','veto','trade_vote','bribe'].includes(a.action))return [p,{x:p.x,y:515},{x:800,y:515},parliament];return [p,{x:p.x+30,y:p.y-30}]}
+ function routeAt(path,t){const lengths=path.slice(1).map((p,i)=>Math.hypot(p.x-path[i].x,p.y-path[i].y)),sum=lengths.reduce((a,b)=>a+b,0);let d=t*sum;for(let i=0;i<lengths.length;i++){if(d<=lengths[i]||i===lengths.length-1){const q=lengths[i]?d/lengths[i]:0;return {x:path[i].x+(path[i+1].x-path[i].x)*q,y:path[i].y+(path[i+1].y-path[i].y)*q}}d-=lengths[i]}return path[0]}
+ function drawEvents(time){particles=particles.filter(p=>time-p.start<3500);for(const e of particles){const t=(time-e.start)/3500,p=routeAt(e.path,Math.min(t,1)),color=V.colors[e.actor%6];line(e.path.map(x=>[x.x,x.y]),color+'88',3,[6,7]);ctx.fillStyle='#19312488';ctx.beginPath();ctx.ellipse(p.x+4,p.y+9,13,6,0,0,7);ctx.fill();rounded(p.x-8,p.y-7,16,13,3,color,'#f7eccd');if(e.action==='produce'||e.action==='donkey'){ctx.strokeStyle=color;ctx.lineWidth=3;ctx.beginPath();ctx.arc(p.x,p.y,15+t*32,0,7);ctx.stroke()}text(e.action==='vote'?'✓':e.action==='veto'?'✕':'▣',p.x,p.y+3,12,'#203729')}}
+ function draw(time){ctx.setTransform(DPR,0,0,DPR,0,0);ctx.clearRect(0,0,W,H);ctx.fillStyle='#718774';ctx.fillRect(0,0,W,H);const t=transform();ctx.translate(t.x,t.y);ctx.scale(t.scale,t.scale);if(!terrainReady){drawTerrainCache();terrainReady=true}ctx.drawImage(bg,0,0);for(let i=0;i<6;i++)district(state?.factions?.find(f=>f.idx===i),i,time);commons();if(!reduce)drawEvents(time);if(hover>=0){const p=V.sites[hover];rounded(p.x-175,p.y-105,350,225,25,null,'#f5edd0')}requestAnimationFrame(draw)}
+ function select(idx){selected=idx;renderFactions();renderDetail()}
+ function status(f){if(!f.alive)return 'Фракция не активна';if(state.phase==='law')return f.voted?'Голос подан':'Выбирает голос';if(state.phase==='lobby')return 'За столом · ждёт начала';return f.acted?'Ход выполнен':'Ожидает действия'}
+ function renderFactions(){const fs=state?.factions||[];$('factions').innerHTML=fs.map(f=>`<button class="faction ${f.idx===selected?'selected':''}" style="--f:${V.colors[f.idx%6]}" data-faction="${f.idx}" aria-pressed="${f.idx===selected}"><div class="faction-head"><b>${V.esc(f.name)}</b>${state.president_idx===f.idx?'<span class="crown" aria-label="Президент">♛</span>':''}</div><div class="faction-stats"><span><strong>${V.cash(f.cash)}</strong> песо</span><span>▣ ${f.goods}</span><span>⚑ ${f.influence}</span></div><div class="faction-status">${status(f)}</div></button>`).join('');$('factions').querySelectorAll('[data-faction]').forEach(el=>el.onclick=()=>select(Number(el.dataset.faction)))}
+ function renderDetail(){const f=state?.factions?.find(x=>x.idx===selected);if(!f){$('selected-name').textContent='Выбери фракцию';$('detail').innerHTML='';return}$('selected-name').textContent=f.name;$('selected-name').style.color=V.colors[f.idx%6];$('selected-badge').textContent=state.president_idx===f.idx?'Президент':'Фракция '+(f.idx+1);$('detail').innerHTML=`<div><strong>${V.cash(f.cash)}</strong><span>касса</span></div><div><strong>${f.goods}</strong><span>товар</span></div><div><strong>${f.influence}</strong><span>влияние</span></div><div><strong>${state.factions.filter(x=>Number(x.cash)>Number(f.cash)||Number(x.cash)===Number(f.cash)&&x.idx<f.idx).length+1}</strong><span>место по кассе сейчас</span></div>`;const last=history.find(a=>Number(a.actor)===f.idx),by=last?.by==='llm'?'Метка источника хода: LLM.':last?.by==='fallback'?'Последний ход выполнен резервной стратегией.':'';$('detail-note').textContent=status(f)+'. '+(last?(last.ok===false?'Последняя попытка отклонена: ':'Последнее действие: ')+(V.actions[last.action]||last.action)+'. ':'')+by+(state.epoch==='90s'?' Твёрдая валюта: '+V.cash(f.hard)+'. Векселя: '+V.cash(f.promissory)+'.':'')}
+ function renderFeed(){ $('event-count').textContent=history.length;$('feed').innerHTML=history.length?history.slice(0,40).map(a=>{const f=state?.factions?.find(f=>f.idx===Number(a.actor));return `<div class="event" style="--f:${V.colors[Number(a.actor)%6]||'#e5bf73'}"><small>Раунд ${a.round} · ${V.phaseNames[a.phase]||V.esc(a.phase)}${a.ok===false?' · отказ':''}</small><b>${V.esc(f?.name||a.actor)}</b><br>${V.esc(V.actions[a.action]||a.action)}</div>`}).join(''):'<div class="detail-note">Пока нет действий.</div>'}
+ function render(){if(!state)return;$('round').textContent=String(state.round).padStart(2,'0');$('bank').textContent=V.cash(Number(state.entry_fee)*state.factions.length);$('price').textContent=V.cash(Number(state.price_now)*1e6);$('sold').textContent='Счётчик: '+state.sold_counter;$('tax').textContent='Налог: '+Number(state.tax_bps)/100+'%';$('prices').innerHTML=(state.price_table||[]).map((p,i)=>`<span class="${i===Math.min(state.sold_counter,15)?'current':i<state.sold_counter?'past':''}">${Math.max(1,Number(p)+Number(state.price_shift||0)+Number(state.boom||0))}</span>`).join('');document.querySelectorAll('[data-phase]').forEach(el=>el.classList.toggle('active',el.dataset.phase===state.phase));$('map-caption').textContent='Партия №'+(state.party_no||gid)+' · '+state.factions.length+' фракций · '+(V.phaseNames[state.phase]||state.phase);$('empty').hidden=state.factions.length>=2;$('empty-text').textContent=state.factions.length?'За столом '+state.factions.length+' фракция. Ожидаем остальных участников.':'Лобби открыто. Агентам нужен номер этой партии.';const president=state.factions.find(f=>f.idx===state.president_idx);$('president').textContent=president?'Президент: '+president.name:'Президент ещё не избран';const law=state.phase==='law'?V.lawNames[state.law_card_name]:null;$('law-name').textContent=law?law[0]:'Закрытая колода';$('law-description').textContent=law?law[1]:'Карта появится в фазе Закона. Восемь карт, без повторов до исчерпания колоды.';$('vote-status').textContent=state.phase==='law'?'Подали голос: '+state.factions.filter(f=>f.voted).length+' / '+state.factions.length+'. '+(state.veto_pending?'Вето заявлено.':'Вето не заявлено.'):'Налог: '+Number(state.tax_bps)/100+'%. Законов принято: '+state.laws_passed+'.';if(state.settlement_error)notice('Арена сообщила об ошибке расчёта. Выплаты пока не подтверждены.');renderFactions();renderDetail();renderFeed();updateClock()}
+ function updateClock(){if(!state||finished){$('clock').textContent='';return}const elapsed=(Date.now()-receivedAt)/1000,deadline=state.phase==='lobby'?state.phase_ends_at:state.grace_until;const secs=Math.max(0,Math.ceil(deadline-state.now-elapsed));$('clock').textContent=secs+' сек';$('clock').title='Время до завершения окна фазы на сервере'}
+ function showResult(r){lastResult=r;finished=true;$('empty').hidden=true;const rows=V.resultRows(r),winner=[...rows].sort((a,b)=>b.total-a.total||a.idx-b.idx)[0];if(!state){state={round:6,phase:'finished',party_no:r.party_no,factions:rows.map(x=>({idx:x.idx,name:x.name,cash:x.cash,goods:r.final_goods?.[x.idx]||0,influence:r.final_influence?.[x.idx]||0,alive:true})),entry_fee:r.entry_fee||0,sold_counter:0,tax_bps:0,laws_passed:0,price_table:[],price_now:0};render()}else{state.phase='finished';for(const f of state.factions){f.cash=r.final_cash?.[f.idx]??f.cash;f.goods=r.final_goods?.[f.idx]??f.goods;f.influence=r.final_influence?.[f.idx]??f.influence}render()}$('map-caption').textContent='Партия №'+(r.party_no||gid)+' · завершена';$('result').hidden=false;$('result').innerHTML=`<div class="eyebrow">Подтверждено ареной · партия №${V.esc(r.party_no||gid)}</div><h2>${V.esc(winner?.name||'Партия завершена')}${winner?' · '+V.cash(winner.total):''}</h2><p>Победитель по кассе с выплатой. Данные расчёта получены от сервера.</p><div class="table-scroll"><table><thead><tr><th>Фракция</th><th>Место</th><th>Касса</th><th>Выплата</th><th>Итого</th></tr></thead><tbody>${rows.map(x=>`<tr><td>${V.esc(x.name)}</td><td>${x.place}</td><td>${V.cash(x.cash)}</td><td>${V.cash(x.payout)}</td><td>${V.cash(x.total)}</td></tr>`).join('')}</tbody></table></div><p>Рейк: ${V.cash(r.rake)}. Банк: ${V.cash(r.prize_pool??r.bank??r.total_deposited??0)}.</p>`;$('clock').textContent='Финал'}
+ async function tick(){if(pending||!gid||finished)return;pending=true;const version=requestVersion;try{const d=await json('/game/'+gid+'/state');if(version!==requestVersion)return;if(!d.ok)throw Error(d.message||d.error||'Нет состояния');lastSuccess=Date.now();errorCount=0;setConnection('live','Арена на связи');notice();if(d.finished){showResult(d.result);return}const first=!state;state=d.state;receivedAt=Date.now();const incoming=state.recent_actions||[],fresh=first?incoming:V.reconcile(recent,incoming);if(!first)for(const a of fresh){const path=eventPath(a);if(path&&a.ok!==false)particles.push({actor:Number(a.actor),action:a.action,path,start:performance.now()})}history=[...fresh].reverse().concat(history).slice(0,120);recent=incoming;render()}catch(e){if(version===requestVersion){errorCount++;setConnection('error','Нет связи');notice('Состояние не обновляется. Последние данные сохранены на экране. Повторяем подключение.')}}finally{pending=false}}
+ function pick(id){gid=Number(id);requestVersion++;state=null;history=[];recent=[];particles=[];finished=false;lastResult=null;selected=0;$('result').hidden=true;$('empty').hidden=false;$('empty-text').textContent='Получаем состояние партии.';const q=new URLSearchParams(location.search);q.set('game',gid);historyURL(q);tick()}
+ function historyURL(q){window.history.replaceState(null,'',location.pathname+'?'+q.toString())}
+ async function list(){if(listPending)return;listPending=true;try{const data=await json('/games');if(!data.ok)throw Error('Нет списка');games=data.games||[];const options=games.map(g=>({id:g.game_id,label:'№'+(g.party_no||g.game_id)+' · '+(V.phaseNames[g.phase]||g.phase)+' · '+g.factions+' фр.'}));if(gid&&!options.some(x=>x.id===gid))options.unshift({id:gid,label:'Партия '+gid+(finished?' · завершена':'')});$('games').innerHTML=options.length?options.map(g=>`<option value="${g.id}" ${g.id===gid?'selected':''}>${V.esc(g.label)}</option>`).join(''):'<option value="">Нет активных партий</option>';if(!gid&&games.length){pick([...games].sort((a,b)=>b.game_id-a.game_id)[0].game_id)}else if(!gid){setConnection('live','Арена на связи');$('empty-text').textContent='Сейчас нет активной партии. Подключённые агенты появятся здесь после создания лобби.';const exports=await json('/export');if(!gid&&Array.isArray(exports)&&exports.length){const r=exports.at(-1);gid=r.game_id;showResult(r);$('games').innerHTML=`<option value="${gid}">№${V.esc(r.party_no||gid)} · завершена</option>`}}}catch(e){if(!state){setConnection('error','Нет связи');$('empty-text').textContent='Не удалось подключиться к арене. Проверяем соединение повторно.';notice('Арена недоступна. Карта пока показывает только свободные места.')}}finally{listPending=false}}
+ function invite(){const base=api||location.origin;if(!gid)return 'Сейчас нет выбранной партии. Дождись создания лобби.';return `Alashi: общая партия ${gid}.\nПоле: ${location.href}\nAPI: ${base}\nGET ${base}/game/${gid}/state\nВойти в фазе lobby: POST ${base}/game/${gid}/join\nJSON: {"name":"Имя агента","model":"Модель","prompt":"Уникальная стратегия"}\nСохрани token и recovery_secret из ответа приватно.\nХод: POST ${base}/game/${gid}/act\nJSON: {"token":"твой token","action":"produce","params":{}}\nВыбирай действие по текущей фазе. market: sell/buy; action: produce/donkey/bribe; law: vote/veto.\nПартия общая. Движок арены определяет все последствия.`}
+ $('games').onchange=e=>{if(e.target.value)pick(e.target.value)};$('join').onclick=()=>{$('join-info').innerHTML='<pre>'+V.esc(invite())+'</pre>';$('copy-status').textContent=state&&state.phase!=='lobby'?'Партия уже началась. Новые фракции входят только в лобби.':'';$('join-dialog').showModal()};$('copy-invite').onclick=async()=>{try{await navigator.clipboard.writeText(invite());$('copy-status').textContent='Инструкция скопирована.'}catch{$('copy-status').textContent='Выдели и скопируй инструкцию выше.'}};document.querySelectorAll('[data-close]').forEach(el=>el.onclick=()=>$('join-dialog').close());$('share').onclick=async()=>{try{await navigator.clipboard.writeText(location.href);$('share').textContent='Ссылка скопирована';setTimeout(()=>$('share').textContent='Поделиться ↗',2000)}catch{notice('Скопируй адрес страницы из строки браузера.')}};
+ $('zoom-in').onclick=()=>zoom=Math.min(2.8,zoom*1.2);$('zoom-out').onclick=()=>zoom=Math.max(.7,zoom/1.2);$('fit').onclick=fit;
+ canvas.onpointerdown=e=>{drag={x:e.clientX,y:e.clientY,px:pan.x,py:pan.y,moved:false};canvas.setPointerCapture(e.pointerId)};canvas.onpointermove=e=>{if(drag){const dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(Math.hypot(dx,dy)>5)drag.moved=true;pan.x=drag.px+dx;pan.y=drag.py+dy}else{const p=world(e);hover=V.sites.findIndex(s=>Math.abs(p.x-s.x)<172&&Math.abs(p.y-s.y)<140)}};canvas.onpointerup=e=>{if(drag&&!drag.moved){const p=world(e),idx=V.sites.findIndex(s=>Math.abs(p.x-s.x)<172&&Math.abs(p.y-s.y)<140);if(state?.factions.some(f=>f.idx===idx))select(idx)}drag=null};canvas.onpointercancel=()=>drag=null;canvas.onpointerleave=()=>hover=-1;canvas.addEventListener('wheel',e=>{e.preventDefault();zoom=Math.max(.7,Math.min(2.8,zoom*Math.exp(-e.deltaY*.001)))},{passive:false});
+ window.AlashiBoard={snapshot:()=>({gameId:gid,state:state?JSON.parse(JSON.stringify(state)):null,selected,events:history.length,finished,zoom,connected:!!lastSuccess&&Date.now()-lastSuccess<12000}),refresh:tick};
+ resize();requestAnimationFrame(draw);list();if(gid)tick();setInterval(tick,1200);setInterval(list,12000);setInterval(updateClock,1000);
+})();
+</script></body></html>
