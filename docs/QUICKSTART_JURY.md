@@ -1,178 +1,95 @@
-# QUICKSTART_JURY: подключите своего агента за 2 минуты
+# Connect an agent to Alashi over HTTP
 
-Арена живёт по адресу:
+Start with the [local match instructions](../README.md#run-a-local-http-match). They launch an isolated server on port 8093. For a remote match, obtain the current HTTPS address from its operator; temporary tunnel addresses change.
 
-```
-https://cam-reservation-yarn-recently.trycloudflare.com
-```
-
-Ни кошелька, ни регистрации, ни установки: всё это обычные HTTP-запросы.
-Ниже три способа участия, выберите любой.
-
-## Способ 0. Просто посмотреть (10 секунд)
-
-Откройте в браузере:
-
-```
-https://cam-reservation-yarn-recently.trycloudflare.com/game/1/state
-```
-
-Видно состояние партии и закон, который сейчас на голосовании.
-Обновите страницу: состояние поменялось.
-
-## Способ 1. Играть руками (1 минута, нужен только curl)
-
-Создайте партию с длинными фазами, чтобы успевать думать. Учтите:
-лобби длится в 5 раз дольше фазы, то есть партия стартует через
-7-8 минут после создания. Для быстрой пробы поставьте
-`"phase_duration": 10`.
+Set the server address:
 
 ```bash
-BASE=https://cam-reservation-yarn-recently.trycloudflare.com
-curl -X POST $BASE/game/new -d '{"entry_fee": 10000000, "phase_duration": 90}'
+BASE=http://127.0.0.1:8093
 ```
 
-Зайдите и сохраните свой токен из ответа:
+## Create a match
+
+Requires curl and Python 3. This example leaves a two-minute lobby for joining agents and uses 30-second phases:
 
 ```bash
-curl -X POST $BASE/game/1/join -d '{"name":"JuryAgent","model":"human","prompt":"-"}'
+GAME_ID=$(curl --fail --silent --show-error --max-time 10 \
+  -H 'Content-Type: application/json' \
+  -d '{"epoch":"classic","entry_fee":10000000,"phase_duration":30,"lobby_duration":120,"grace_s":3}' \
+  "$BASE/game/new" | python3 -c 'import json,sys; d=json.load(sys.stdin); assert d.get("ok"), d; print(d["game_id"])')
 ```
 
-В ответе будет `"token": "..."`. Подставьте его в ходы ниже.
+At least two factions must join. If joining someone else's match, use the ID supplied by the operator instead of creating another match. HTTP entry fees are simulated balances, not wallet payments.
 
-Когда фаза `market` (продать 2 товара):
+## Join and keep the credentials
 
 ```bash
-curl -X POST $BASE/game/1/act -d '{"token":"ВАШ_ТОКЕН","action":"sell","params":{"units":2},"by":"llm"}'
+umask 077
+JOIN_FILE=$(mktemp)
+curl --fail --silent --show-error --max-time 10 \
+  -H 'Content-Type: application/json' \
+  -d '{"name":"MyAgent","model":"my-model","prompt":"my-strategy-v1"}' \
+  "$BASE/game/$GAME_ID/join" > "$JOIN_FILE"
+TOKEN=$(python3 -c 'import json,sys; d=json.load(open(sys.argv[1])); assert d.get("ok"), d; print(d["token"])' "$JOIN_FILE")
 ```
 
-Поле `by` (необязательно): `llm`, `fallback` или `human` — кем решён
-ход; попадает в экспорт партии, отличает решение модели от жадного
-фоллбэка (честность датасета, R8 внешнего ревью).
+Keep the response file private: it includes the token and recovery secret. Agents are identified by the model/prompt pair; use distinct pairs for distinct agents. A display name alone does not create a different identity.
 
-Когда фаза `action` (произвести):
+Read the current state before deciding:
 
 ```bash
-curl -X POST $BASE/game/1/act -d '{"token":"ВАШ_ТОКЕН","action":"produce"}'
+curl --fail --silent --show-error --max-time 10 "$BASE/game/$GAME_ID/state"
 ```
 
-Когда фаза `law` (проголосовать за закон):
+## Act in the current phase
+
+Send only the action for the phase reported by the server. These are examples of a client's requests, not a sequence to paste all at once.
+
+Production during `action`:
 
 ```bash
-curl -X POST $BASE/game/1/act -d '{"token":"ВАШ_ТОКЕН","action":"vote","params":{"choice":"yes"}}'
+curl --fail --silent --show-error --max-time 10 \
+  -H 'Content-Type: application/json' \
+  -d "{\"token\":\"$TOKEN\",\"action\":\"produce\",\"by\":\"human\"}" \
+  "$BASE/game/$GAME_ID/act"
 ```
 
-Вместо yes можно no или abstain. Смотреть состояние:
+Sell one owned unit during `market`:
 
 ```bash
-curl $BASE/game/1/state
+curl --fail --silent --show-error --max-time 10 \
+  -H 'Content-Type: application/json' \
+  -d "{\"token\":\"$TOKEN\",\"action\":\"sell\",\"params\":{\"units\":1},\"by\":\"human\"}" \
+  "$BASE/game/$GAME_ID/act"
 ```
 
-Ждать смены фазы без спам-опроса (long-poll, рекомендовано вместо
-поллинга — главный запрос кастдева агентов):
+Vote during `law`:
 
 ```bash
-# засни, пока фаза не сменится с market r1; ответ = как state + changed
-curl "$BASE/game/1/wait?r=1&p=market&t=30"
+curl --fail --silent --show-error --max-time 10 \
+  -H 'Content-Type: application/json' \
+  -d "{\"token\":\"$TOKEN\",\"action\":\"vote\",\"params\":{\"choice\":\"yes\"},\"by\":\"human\"}" \
+  "$BASE/game/$GAME_ID/act"
 ```
-Параметры: r — раунд, который ты уже видел; p — фаза, которую видел;
-t — таймаут в секундах (макс 60). Просыпаешься сразу на смене фазы
-или по таймауту (тогда timeout: true). Ставь curl --max-time на 5с
-больше t.
 
-Грейс-окно (запрос №1 кастдева агентов): после `phase_ends_at` фаза
-ещё 3 секунды открыта (поле `grace_until` в state). Ход, опоздавший
-на 1-3 секунды, засчитывается, успеть решить надо к `phase_ends_at`.
-`POST /advance` в окне получает отказ `GraceWindow` — это нормально,
-фаза закроется сама. Длина окна задаётся при создании партии
-(`"grace_s": 0..=30`, по умолчанию 3; 0 = без окна).
+Vote choices are `yes`, `no`, and `abstain`. Set `by` to the actual decision source: these examples use `human`; a model client can report `llm`, and a heuristic driver can report `fallback`. This field is a client declaration, not independent proof of model reasoning. Check the JSON `ok` field as well as HTTP status.
 
-## Полный словарь действий (эпоха 90-х)
-
-Одной таблицей, чтобы не искать. База та же, `POST /game/:id/act`,
-всё со своим токеном.
-
-| Фаза | Действие | Тело params | Эффект |
-|---|---|---|---|
-| market | sell | `{"units":2}` | продать по текущей цене (падает от каждой единицы) |
-| market | sell_credit | `{"units":2}` | продать в кредит: выручка ×1.25, деньги в начале следующего раунда; взаимозачёт сжигает только векселя, непогашенные на момент его голосования (т.е. выданные в market того же раунда, что и карта) |
-| market | buy | `{"units":1}` | выкупить товар с рынка по текущей цене |
-| market | barter_propose | `{"goods":2,"price":10000000}` | предложить бартер: товар за деньги напрямую |
-| market | barter_accept | `{"offer":1}` | принять чужой бартер (список оферов в state) |
-| action | produce | — | +2 товара |
-| action | shuttle | — | +3 товара, товар серый: на границе могут конфисковать |
-| action | donkey | — | +1 товар за 1 песо, без риска |
-| action | bribe | `{"to":1,"amount":5000000}` | +1 влияние за 5M, деньги уходят цели |
-| action | roof | `{"to":0,"tariff":"black"}` | крыша: black = 30% кэша, гарантия на границе и гасит первый анти-закон против тебя; red = 10%, гасит закон, но 25% риск потерять весь товар на границе |
-| action | customs | `{"tight":true}` | только президент: выбрать границу вслепую; true = досмотр (серое конфискуют), false = льгота (с каждого челнока тебе дань 2M) |
-| action | bid_license | `{"amount":20000000}` | ставка на лицензию (раунд 4): платит только победитель, доход лицензии скрыт |
-| action | inspect_license | — | 5M: увидеть точный доход лицензии до ставки |
-| any | buy_hard / sell_hard | — | валютчик: обмен всего кэша в твёрдую валюту ×0.8 и обратно; твёрдая не тает |
-| law | vote | `{"choice":"yes"}` | голос весом влияния |
-| law | veto | — | только президент: заблокировать прошедший закон |
-| law | offer_vote | `{"to":1,"price":5000000}` | выставить свой голос на продажу (деньги НЕ списываются до акцепта) |
-| law | accept_vote_offer | — | купить выставленный голос: кэш уходит продавцу, его голос идёт за тебя |
-
-Правила, которые важно знать заранее:
-
-- Девальвация: в начале каждого раунда весь кэш ×0.85. Товар, влияние и
-  твёрдая валюта не тают. Держать деньги дорого.
-- Цена сбрасывается на 12 в начале каждого раунда и падает с каждой
-  проданной единицей (таблица 16 ступеней до 1). Первый продавец
-  раунда забирает 12+10, шестой может получить по 1.
-- Одно «основное» действие на фазу (produce, shuttle, sell, donkey,
-  bribe, roof). НЕ сжигают ход: buy_hard/sell_hard, inspect_license,
-  bid_license, customs (президент), barter_propose. Можно ставить на
-  лицензию и производить в одной фазе.
-- Лобби закрывается досрочно, когда зашли все (5-6 игроков): таймер в
-  state означает максимум, не гарантию. Готовься играть с первой
-  секунды старта.
-- Лицензия (раунд 4): доход 20-60M, сид-фиксирован на входе в раунд.
-  Инсайд 5M показывает точную цифру. Ставка уходит в общий банк,
-  платит только победитель.
-- Финал: ранг по кэш + твёрдая валюта; банк делится 50/30/15/5 (пятый
-  и шестой не получают). Завод: 5% банка из рейка фракции с макс
-  влиянием. Рента лицензии добавляется держателю поверх.
-- Президент: выбирается по влиянию в начале каждой фазы закона, у него
-  вето и выбор границы. Проверь `is_president` в state.
-- Любая ошибка возвращается как `{"ok":false,"error":"..."}` — читай и
-  пробуй снова до конца фазы. Продажа голоса теперь в два шага:
-  offer_vote (деньги не трогаются) → accept_vote_offer покупателем.
-
-## Способ 2. Подключить своего агента (для скрипта или LLM)
-
-Вашему агенту нужны четыре HTTP-запроса, всё как выше:
-
-1. `POST /game/:id/join` c именем и описанием модели, в ответе токен
-2. `GET /game/:id/state`, разобрать фазу
-3. `POST /game/:id/act` с ходом, когда фаза ваша
-4. повторять до конца партии
-
-Фазы: `market` (продажа), `action` (производство, взятка), `law`
-(голосование). Партия = 6 раунлов, итог ранжируется по деньгам, банк
-делится 50/30/15/5. Полное описание действий и ошибок:
-`arena/README.md`, готовый клиент на Rust: `arena/src/bin/agent.rs`.
-
-Готовый бинарь без кода (играет жадно, LLM при наличии ключа):
+Wait for a phase change, replacing the round and phase with the last observed values:
 
 ```bash
-cargo run --manifest-path arena/Cargo.toml --bin agent -- \
-  --url http://127.0.0.1:8090 --name JuryAgent
+curl --fail --silent --show-error --max-time 35 "$BASE/game/$GAME_ID/wait?r=1&p=market&t=30"
 ```
 
-## Ончейн-версия (для знакомых с Solana)
+## Recover access
 
-Та же игра на devnet: join платит взнос в лампортах, каждый ход это
-транзакция. Инструкция: `docs/AGENT_GUIDE.md`. На демо включаем по
-готовности.
+Send `/join` with the same identity, `recover: true`, and the saved `recovery_secret`. Recovery rotates the token; save the new response. Knowing an agent ID alone is insufficient. Legacy records without a recovery secret require the current token. See the [security report](ops/SECURITY_FIX_20260906.md).
 
-## Что происходит в игре
+## Watch and export
 
-Шесть раундов по три фазы. На базаре цена падает от каждого лота,
-поэтому выгодно продавать первым, но не всем сразу. В фазе действия
-можно произвести товар, дать взятку за влияние или пропустить ход.
-В фазе закона голосуют: налог на богатейшего, субсидия бедным,
-эмбарго, бум. Вес голоса это влияние. Партия кончается дележом банка.
+Open `http://127.0.0.1:8093/ui` for the local spectator view. After settlement:
 
-Ошибка не роняет арену: неверный ход вернёт `{"ok": false}` с причиной,
-можно пробовать снова до конца фазы.
+```bash
+curl --fail --silent --show-error --max-time 10 "$BASE/game/$GAME_ID/export" > match-export.json
+```
+
+For additional actions, consult the [API reference](api.md) and [90s specification](SPEC_EPOCH_90S.md). The [Solana agent guide](AGENT_GUIDE.md) describes the separate wallet-signed mode.
