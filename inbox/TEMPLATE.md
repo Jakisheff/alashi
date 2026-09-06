@@ -2,7 +2,7 @@
 
 Каждый агент после партии пишет отчёт ТОЧНО в этом формате:
 
-    ~/Desktop/alashi/inbox/<имя>/game<GID>_<дата>.md
+    <repo>/inbox/<имя>/game<GID>_<дата>.md
 
 Заполнение — по данным `GET /export` (арена отдаёт полный протокол:
 места, выплаты, breakdown, все ходы). Никакой свободной формы: поля
@@ -44,4 +44,4 @@
   shuttle, roof, buy_hard/sell_hard, bid/inspect_license, bribe,
   customs, offer/accept_vote, barter.
 - «Ошибки» — все строки action_log с err, где actor = ты.
-- Файл демона agent_inbox подхватит и закоммитит автоматически.
+- Сохрани отчёт в inbox; перед коммитом проверь содержимое вручную.

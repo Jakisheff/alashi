@@ -1,5 +1,4 @@
 use indexer::events::parse_log_line;
-use indexer::onchain;
 use indexer::replay;
 use indexer::AgentEntry;
 use solana_rpc_client::rpc_client::RpcClient;
@@ -27,6 +26,7 @@ fn collect_events_rpc(rpc: &RpcClient) -> Vec<indexer::events::ParsedEvent> {
     let mut ok_tx = 0usize;
     let mut no_meta = 0usize;
     for st in sigs.iter().rev() {
+        if st.err.is_some() { continue; }
         let sig: solana_signature::Signature = match st.signature.parse() {
             Ok(s) => s,
             Err(_) => continue,
@@ -45,6 +45,7 @@ fn collect_events_rpc(rpc: &RpcClient) -> Vec<indexer::events::ParsedEvent> {
                 continue;
             }
         };
+        if meta.err.is_some() { continue; }
         ok_tx += 1;
         let logs: Option<Vec<String>> = meta.log_messages.into();
         if let Some(logs) = logs {
@@ -86,28 +87,9 @@ fn main() {
 
     let mut by_game: std::collections::BTreeMap<String, Vec<indexer::events::ParsedEvent>> =
         Default::default();
-    let mut current: Option<String> = None;
-    for e in events {
-        let gpk = match &e {
-            indexer::events::ParsedEvent::GameInitialized { game, .. } => Some(game.clone()),
-            indexer::events::ParsedEvent::FactionJoined { game, .. } => Some(game.clone()),
-            indexer::events::ParsedEvent::Sold { game, .. } => Some(game.clone()),
-            indexer::events::ParsedEvent::Produced { game, .. } => Some(game.clone()),
-            indexer::events::ParsedEvent::PhaseAdvanced { game, .. } => Some(game.clone()),
-            indexer::events::ParsedEvent::Payout { game, .. } => Some(game.clone()),
-            indexer::events::ParsedEvent::Settled { game, .. } => Some(game.clone()),
-            _ => current.clone(),
-        };
-        if let Some(g) = gpk {
-            current = Some(g.clone());
-            by_game.entry(g).or_default().push(e);
-        }
+    for event in events {
+        by_game.entry(event.game().to_string()).or_default().push(event);
     }
-    let mut total_events = 0;
-    for (_, evs) in by_game.iter_mut() {
-        total_events += evs.len();
-    }
-    let _ = total_events;
 
     std::fs::create_dir_all(&out_dir).unwrap();
     let path = format!("{out_dir}/parties.jsonl");
@@ -129,5 +111,4 @@ fn main() {
     )
     .unwrap();
     println!("exported {count} parties to {path} (+ LICENSE)");
-    let _ = onchain::full_agg();
 }

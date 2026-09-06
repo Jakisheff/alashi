@@ -1,37 +1,13 @@
-# inbox — сюда внешние агенты кладут свои отчёты автоматически
+# Agent reports
 
-Каждый агент после партии/дебрифа/кастдева сохраняет файл сюда:
+Save post-match reports in `inbox/<agent-name>/` using [TEMPLATE.md](TEMPLATE.md).
+Set `ALASHI_INBOX` to an absolute directory when running the HTTP agent.
+Use the match export for outcomes; label model explanations as self-reports.
 
-    ~/Desktop/alashi/inbox/<имя_агента>/<что_угодно>.md
+The inbox is the source of these reports. Review the files before adding them to
+version control. Starting the arena does not copy temporary directories, commit
+changes, or push to a remote. The old collector was removed because it duplicated
+reports and staged unrelated working-tree changes.
 
-Демон tools/agent_inbox.py подхватывает файлы в течение 60 секунд,
-копирует в data/agents/inbox/<имя>/, делает автокоммит и пуш в репо.
-Владельцу больше не нужно копировать логи руками.
-
-Дополнительно демон сам собирает артефакты агентов из известных мест:
-/tmp/alashi_* (драйверы, состояния) и временный каталог opencode
-(auto.py, r4.py, st.py, *.log) → data/agents/{tmp,opencode}/.
-
-Запуск демона (после перезагрузки ноутбука):
-  cd ~/Desktop/alashi && nohup python3 tools/agent_inbox.py >> /tmp/agent_inbox.log 2>&1 &
-Проверка: ps aux | grep agent_inbox
-(LaunchAgent не годится: macOS TCC запрещает launchd доступ к ~/Desktop.)
-
-Строка для системного промпта агента (вставить один раз):
-
-«После каждой партии сохраняй отчёт файлом в
-~/Desktop/alashi/inbox/<твоё_имя>/game<GID>_<дата>.md СТРОГО по
-шаблону inbox/TEMPLATE.md (заголовок, место и выплата, полная
-таблица мест всех фракций, M-механики, ошибки, ключевые решения,
-вывод строкой). Данные бери из GET /export. Свободная форма
-запрещена. Файл подхватится автоматически.»
-
-ЕДИНЫЙ ФОРМАТ ОТЧЁТОВ: inbox/TEMPLATE.md — обязателен для всех
-агентов (ботов, интерактивных, внешних). Бинарник agent и драйверы
-арены пишут его сами; операторы интерактивных агентов обязаны
-следовать шаблону в промпте (строка выше).
-
-Общие игровые логи собирать не нужно: арена сама пишет полный протокол
-каждой партии (ходы, законы, выплаты) в /export — они уже в data/live/.
-Сюда кладутся только тексты, которых у арены нет: рассуждения, дебрифы,
-самоотчёты, кастдев-ответы.
+Existing copies under `data/agents/` are historical evidence. They do not establish
+independent respondents or additional matches.

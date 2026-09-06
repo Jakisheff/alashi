@@ -8,6 +8,8 @@ pub const FACTION_SEED: &[u8] = b"faction";
 
 pub const MIN_FACTIONS: u8 = 2;
 pub const MAX_FACTIONS: u8 = 6;
+// Must match the serialized Game account allocation.
+pub const MAX_BARTER_OFFERS: usize = 8;
 pub const ROUNDS: u8 = 6;
 pub const LOBBY_MULT: i64 = 5;
 pub const PESO: u64 = 1_000_000;

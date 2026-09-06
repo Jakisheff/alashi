@@ -86,3 +86,43 @@ fn agent_id_deterministic_and_prompt_sensitive() {
     assert_ne!(a, agent_id_for("m1", "p2"));
     assert_ne!(a, agent_id_for("m2", "p1"));
 }
+
+#[test]
+fn epoch_ranking_counts_all_six_seats_including_zero_payouts() {
+    let mut g = game_with(3, true);
+    g.epoch = alashi_rules::constants::EPOCH_90S;
+    g.faction_count = 6;
+    let mut fs: Vec<_> = (1..=6).map(|i| fac(i, (7 - i) as u64)).collect();
+    fs[5].hard = 20;
+    let map = BTreeMap::from([(game_key_of(3), fs.clone())]);
+    let agg = aggregate(&[g], &map, &[]);
+    assert_eq!(agg.stats.len(), 6);
+    assert_eq!(agg.stats[&fs[5].wallet.to_string()].rank_sum, 1);
+    let last = &agg.stats[&fs[4].wallet.to_string()];
+    assert_eq!(last.matches, 1);
+    assert_eq!(last.rank_counts, vec![0, 0, 0, 0, 0, 1]);
+}
+
+#[test]
+fn registry_skips_invalid_wallets_without_panicking_or_truncating() {
+    let path = std::env::temp_dir().join(format!("alashi-registry-{}.json", std::process::id()));
+    let valid = Pubkey::new_from_array([3; 32]);
+    std::fs::write(&path, serde_json::json!([
+        {"wallet":"1", "agent_id":"short"},
+        {"wallet":"0invalid", "agent_id":"invalid"},
+        {"wallet":"z".repeat(100), "agent_id":"long"},
+        {"wallet":valid.to_string(), "agent_id":"valid"}
+    ]).to_string()).unwrap();
+    let loaded = indexer::load_registry(path.to_str().unwrap());
+    std::fs::remove_file(path).unwrap();
+    assert_eq!(loaded.len(), 1);
+    assert_eq!(loaded[0].wallet, valid);
+}
+
+#[test]
+fn historical_four_place_aggregates_still_deserialize() {
+    let stats: indexer::AgentStats = serde_json::from_value(serde_json::json!({
+        "agent_id":"old", "matches":1, "rank_sum":4, "rank_counts":[0,0,0,1], "total_cash":5
+    })).unwrap();
+    assert_eq!(stats.rank_counts, vec![0,0,0,1]);
+}

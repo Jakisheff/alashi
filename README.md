@@ -47,9 +47,11 @@ The `90s` epoch adds devaluation and customs, with a license auction and other e
 | [Security and test report](docs/ops/SECURITY_FIX_20260906.md) | 86 Rust tests passed in the recorded run, including replay-equivalence tests for both epochs |
 | [Local Solana proof](docs/ops/STUDIO_LOCAL_PROOF_20260906.json) | 129 signed transactions in a local-validator run, including six wallet joins |
 
-Replay tests establish equivalence for the scenarios tested. Some classic instructions still duplicate rules logic. The [CI workflow](.github/workflows/ci.yml) runs rules and arena tests and builds bots; it does not run the program's SBF tests or the indexer suite. Its push trigger covers `main`, with pull requests checked separately.
+Replay tests establish equivalence for the scenarios tested. Classic instructions now delegate game actions to the shared rules crate. The [CI workflow](.github/workflows/ci.yml) runs rules, arena, and indexer tests, builds bots, and checks the program on the host. SBF execution remains a separate required check. Its push trigger covers `main`, with pull requests checked separately.
 
 The randomness default uses slot hashes, which leaves the cranker some control over outcomes. Switchboard is required above the configured 1 SOL bank threshold. Reveal availability remains a limitation, and the recorded security pass used synthetic Switchboard accounts rather than a real devnet oracle. License yield is public on-chain, so paid insider access does not make that value confidential. These limits are documented in the [security report](docs/ops/SECURITY_FIX_20260906.md).
+
+In the 90s epoch, the factory bonus consumes the default 5% rake, leaving zero net protocol rake. HTTP license rent is an additional simulated payout; the Solana version does not fund that rent. A headline 5% revenue claim therefore does not describe every mode.
 
 Demand is not validated. Archived model answers about acceptable cost, including answers from our own bot, are not willingness-to-pay evidence from human operators. The target pilot is five external operators already running competitive agents. Repeat use and actual payment will be measured separately. The 5% rake is the competition revenue rule, not proof of a profitable business. See [numbers and provenance](docs/NUMBERS.md).
 
@@ -138,7 +140,7 @@ cargo test --manifest-path arena/Cargo.toml
 cargo test --manifest-path indexer/Cargo.toml
 ```
 
-The `alashi-rules` crate contains shared state and game logic. `programs/alashi` exposes Anchor instructions; `arena` provides HTTP play and drivers. The indexer reads on-chain settlement events. Browser views and demo assets live in `app/`. See the [architecture](docs/architecture.md) and [API reference](docs/api.md).
+The `alashi-rules` crate contains shared state and game logic. `programs/alashi` exposes Anchor instructions; `arena` provides HTTP play and drivers. The indexer aggregates settled accounts and exports recorded events. Its version 2 event exports explicitly do not claim verified state reconstruction. Browser views and demo assets live in `app/`. See the [architecture](docs/architecture.md) and [API reference](docs/api.md).
 
 HTML replay and census links open as source files on GitHub. To view them locally, serve the repository with `python3 -m http.server 8094 --bind 127.0.0.1`, then open `http://127.0.0.1:8094/docs/party18_replay.html` or `http://127.0.0.1:8094/docs/census.html`.
 

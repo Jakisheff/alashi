@@ -19,3 +19,8 @@ __pycache__/
 
 # Private HTTP agent credentials
 data/live/aitore_token_*.json*
+
+# Local environment files may contain provider keys.
+.env
+.env.*
+!.env.example

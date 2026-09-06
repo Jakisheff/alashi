@@ -2,8 +2,8 @@
 """Метрики фазы 1 (без LLM) поверх off-chain датасетов alashi (SIM_TEST_PLAN).
 
 1. OpenSkill (Plackett-Luce) по рангам партий — рейтинг стратегий.
-2. Rationality Gap — расстояние рыночных решений от переборного оптимума
-   ценовой таблицы (фаза Market, только продажи).
+2. Rationality Gap недоступен: архив не задаёт независимый оптимум.
+   Старый перебор только до выбранного числа товаров был тавтологией.
 3. Shapley Fairness — вклад в прошедшие законы (вес голоса = влияние)
    против фактической доли выплаты; exploitation_delta = доля − вклад.
 
@@ -19,30 +19,9 @@ from fractions import Fraction
 
 from openskill.models import PlackettLuce
 
-PRICE_TABLE = [12, 10, 9, 8, 7, 6, 5, 4, 3, 3, 2, 2, 2, 1, 1, 1]
-
-
-def eff_price(counter, shift, boom):
-    i = min(counter, len(PRICE_TABLE) - 1)
-    return max(1, PRICE_TABLE[i] + shift + boom)
-
-
-def sale_gross(counter, units, shift=0, boom=0):
-    return sum(eff_price(counter + j, shift, boom) for j in range(units))
-
-
 def load(path):
     with open(path) as f:
         return [json.loads(l) for l in f]
-
-
-def opskill(games):
-    model = PlackettLude_default()
-    return model
-
-
-def PlackettLude_default():
-    return None
 
 
 # ---------- 1. OpenSkill ----------
@@ -78,49 +57,13 @@ def run_openskill(games):
 # ---------- 2. Rationality Gap ----------
 
 def run_rationality(games):
-    stats = defaultdict(lambda: {"n": 0, "gap_sum": 0.0, "buys": 0, "passes": 0})
-    for g in games:
-        strats = g["strategies"]
-        # трекаем counter и модификаторы по ходу фаз (как видел агент)
-        for ph in g["phases"]:
-            if ph["phase"] != "market":
-                continue
-            counter = 0
-            for a in ph["actions"]:
-                if not a["ok"]:
-                    continue
-                s = strats[a["actor"]]
-                d = a["detail"]
-                if a["action"] == "sell":
-                    units = d["units"]
-                    shift, boom = d.get("shift", 0), d.get("boom", 0)
-                    # оптимум по брутто на текущем counter (налог монотонен)
-                    best = max(
-                        sale_gross(counter, k, shift, boom)
-                        for k in range(0, units + 1)
-                    )
-                    tax = d.get("tax_bps", 0)
-                    actual = d["revenue"] * 10_000 / (10_000 - tax) / 1e6  # брутто из net
-                    gap = (best - actual) / best if best > 0 else 0.0
-                    st = stats[s]
-                    st["n"] += 1
-                    st["gap_sum"] += gap
-                    counter = d.get("counter_after", counter + units)
-                elif a["action"] == "buy":
-                    stats[s]["buys"] += 1
-                    counter = d.get("counter_after", max(0, counter - d["units"]))
-                else:
-                    stats[s]["passes"] += 1
-    out = []
-    for s, st in sorted(stats.items()):
-        out.append({
-            "strategy": s,
-            "sell_decisions": st["n"],
-            "mean_gap": round(st["gap_sum"] / st["n"], 4) if st["n"] else None,
-            "buys": st["buys"],
-            "passes": st["passes"],
-        })
-    return out
+    """No rationality estimate without an independent feasible-action baseline."""
+    return [{
+        "strategy": strategy,
+        "mean_gap": None,
+        "status": "unavailable",
+        "reason": "No independent action baseline; the old metric optimized only up to the chosen quantity.",
+    } for strategy in sorted({s for g in games for s in g["strategies"]})]
 
 
 # ---------- 3. Shapley Fairness ----------
@@ -239,8 +182,7 @@ def main():
             print(f"  {r['strategy']:>8}: {r['mu']:7.2f} ± {r['sigma']}")
         print("Rationality Gap (Market, продажи):")
         for r in rat:
-            g_ = f"{r['mean_gap']:.3f}" if r["mean_gap"] is not None else "-"
-            print(f"  {r['strategy']:>8}: gap {g_}  решений {r['sell_decisions']}  покупок {r['buys']}  пасов {r['passes']}")
+            print(f"  {r['strategy']:>8}: unavailable — {r['reason']}")
         print("Shapley Fairness (доля выплаты vs вклад в законы):")
         for r in shap:
             print(

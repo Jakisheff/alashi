@@ -1,4 +1,5 @@
-use crate::{constants::*, error::GameError, events::*, logic::compute_sale, state::*};
+use crate::{constants::*, events::*, state::*};
+use alashi_rules::actions;
 use anchor_lang::prelude::*;
 
 #[derive(Accounts)]
@@ -21,25 +22,7 @@ pub struct Sell<'info> {
 pub fn handle_sell(ctx: Context<Sell>, units: u16) -> Result<()> {
     let game = &mut ctx.accounts.game;
     let faction = &mut ctx.accounts.faction;
-    require!(game.phase == Phase::Market, GameError::WrongPhase);
-    require!(faction.alive, GameError::NotAlive);
-    require!(faction.acted_stamp != game.stamp(), GameError::AlreadyActed);
-    require!(units > 0, GameError::NoUnits);
-    require!(units <= faction.goods, GameError::NotEnoughGoods);
-
-    let trade = compute_sale(
-        units,
-        game.sold_this_round,
-        game.active_price_shift,
-        game.active_boom,
-    );
-    let tax = trade.gross * game.active_tax_bps as u64 / 10_000;
-    let revenue = trade.gross - tax;
-
-    game.sold_this_round = trade.counter_after;
-    faction.goods -= units;
-    faction.cash += revenue;
-    faction.acted_stamp = game.stamp();
+    let revenue = actions::sell(game, faction, units, false)?;
 
     emit!(Sold {
         game: game.key(),

@@ -1,4 +1,5 @@
-use crate::{constants::*, error::GameError, events::*, state::*};
+use crate::{constants::*, events::*, state::*};
+use alashi_rules::actions;
 use anchor_lang::prelude::*;
 
 #[derive(Accounts)]
@@ -28,31 +29,16 @@ pub fn handle_bribe(ctx: Context<Bribe>, amount: u64) -> Result<()> {
     let game = &ctx.accounts.game;
     let faction = &mut ctx.accounts.faction;
     let target = &mut ctx.accounts.target;
-    require!(game.phase == Phase::Action, GameError::WrongPhase);
-    require!(faction.alive, GameError::NotAlive);
-    require!(target.alive, GameError::NotAlive);
-    require!(faction.acted_stamp != game.stamp(), GameError::AlreadyActed);
-    require!(faction.wallet != target.wallet, GameError::SelfBribe);
-
-    let influence_gain = amount / BRIBE_PRICE;
-    require!(influence_gain >= 1, GameError::BribeTooSmall);
-    require!(faction.cash >= amount, GameError::NotEnoughCash);
-    require!(
-        faction.influence as u64 + influence_gain <= MAX_INFLUENCE as u64,
-        GameError::BribeTooBig
-    );
-
-    faction.cash -= amount;
-    target.cash += amount;
-    faction.influence += influence_gain as u16;
-    faction.acted_stamp = game.stamp();
+    let before = faction.influence;
+    actions::bribe(game, faction, target, amount)?;
+    let influence_gain = faction.influence - before;
 
     emit!(BribeGiven {
         game: game.key(),
         from: faction.key(),
         to: target.key(),
         amount,
-        influence_gained: influence_gain as u16,
+        influence_gained: influence_gain,
     });
     Ok(())
 }

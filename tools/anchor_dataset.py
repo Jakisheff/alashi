@@ -1,14 +1,11 @@
 #!/usr/bin/env python3
-"""Якорение датасета alashi (по Баладжи, «реестр записей»): строит Merkle-корень
-по хешам файлов данных и фиксирует его в docs/anchored.json.
+"""Verify the recorded dataset Merkle root without changing the evidence.
 
-Запись корня ончейн (одна memo-транзакция Solana) готова командой --tx:
-печатает готовый CLI-вызов. Реальная запись требует devnet SOL — на
-02.09 кошелёк пуст, запись отложена до пополнения (см. PROGRESS).
-
-Повторное якорение: запустить снова, новая запись добавится в список.
-Проверка: python3 tools/anchor_dataset.py --verify."""
-import hashlib, json, os, sys, datetime
+Default / --verify: compare current files with the latest recorded root.
+--record: explicitly append a new local checksum record (not an on-chain anchor).
+This tool never submits or suggests a funds transfer.
+"""
+import argparse, hashlib, json, os, sys, datetime
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -43,7 +40,9 @@ def build():
     for rel in TARGETS:
         p = os.path.join(ROOT, rel)
         if os.path.exists(p):
-            files.append({"file": rel, "sha256": sha256(open(p, "rb").read()),
+            with open(p, "rb") as source:
+                digest = sha256(source.read())
+            files.append({"file": rel, "sha256": digest,
                           "bytes": os.path.getsize(p)})
         else:
             files.append({"file": rel, "sha256": None, "bytes": 0})
@@ -53,30 +52,35 @@ def build():
     return root, files
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    modes = parser.add_mutually_exclusive_group()
+    modes.add_argument("--verify", action="store_true", help="read-only verification (default)")
+    modes.add_argument("--record", action="store_true", help="append a new local checksum record")
+    args = parser.parse_args()
     root, files = build()
     ap = os.path.join(ROOT, "docs/anchored.json")
-    recs = {"anchors": []}
     if os.path.exists(ap):
-        recs = json.load(open(ap))
-    now = datetime.datetime.now().strftime("%d.%m.%Y %H:%M")
-    entry = {"root": root, "generated": now, "files": files}
-    if not recs["anchors"] or recs["anchors"][-1]["root"] != root:
-        recs["anchors"].append(entry)
-        json.dump(recs, open(ap, "w"), ensure_ascii=False, indent=1)
-        print(f"новый якорь: {root} ({now})")
+        with open(ap) as source:
+            recs = json.load(source)
     else:
-        print(f"корень не изменился с прошлой генерации: {root}")
-    if "--verify" in sys.argv:
-        r2, _ = build()
-        ok = r2 == recs["anchors"][-1]["root"]
-        print("verify:", "OK" if ok else "FAIL")
-        sys.exit(0 if ok else 1)
-    if "--tx" in sys.argv:
-        # memo-программа Solana, текст = merkle-корень
-        print("# запись корня в devnet (нужен SOL на кошельке ~0.00001):")
-        print(f'solana transfer {root[:44]} 0.000001 --url devnet --allow-unfunded-recipient \\')
-        print("  # либо memo: строим tx с MemooJ1xyz... и текстом корня целиком")
-        print("# полный корень для memo:", root)
+        recs = {"anchors": []}
+    anchors = recs.get("anchors", [])
+    if not args.record:
+        ok = bool(anchors) and root == anchors[-1].get("root")
+        print("verify:", "OK" if ok else "FAIL (missing record or changed dataset)")
+        return 0 if ok else 1
+    if not anchors or anchors[-1].get("root") != root:
+        recs.setdefault("anchors", []).append({
+            "root": root,
+            "generated": datetime.datetime.now().isoformat(timespec="seconds"),
+            "files": files,
+        })
+        os.makedirs(os.path.dirname(ap), exist_ok=True)
+        with open(ap, "w") as output:
+            json.dump(recs, output, ensure_ascii=False, indent=1)
+    print("local checksum record:", root)
+    return 0
+
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

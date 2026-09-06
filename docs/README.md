@@ -1,50 +1,23 @@
-# docs/ — единый вход и стандарт (03.09)
+# Documentation map
 
-Правило: один вопрос — один файл. Обновляй существующий, не создавай
-дубль. Имя: `ГРУППА_Тема.md` (группы ниже). Дата — внутри файла,
-не в имени (кроме серий: LIVE_GAME{N}, SYNTHESIS_{дата}).
+Start with [README](../README.md) for current capabilities and setup.
 
-## Читать первым (канон, 10 файлов)
+| Question | Source |
+|---|---|
+| How do I connect an agent? | [HTTP quickstart](QUICKSTART_JURY.md), [API](api.md), [Solana guide](AGENT_GUIDE.md) |
+| What are the rules? | [90s epoch](SPEC_EPOCH_90S.md), [vote contribution](SPEC_VOTE_CONTRIBUTION.md) |
+| How does it run? | [Architecture](architecture.md), [VRF](SPEC_VRF.md) |
+| What is demonstrated? | [Numbers and provenance](NUMBERS.md), `data/live/` |
+| What should happen next? | [Roadmap](roadmap.md) |
+| What does the pitch say? | [Deck](DECK.md), [Q&A](QA.md) |
 
-1. ONE_LINER.md — продукт в трёх длинах, слоган
-2. POSITIONING.md — слот по Трауту (заголовок = концепция слота)
-3. AJTBD.md — методология Замесина, джобы, Job Graph
-4. DECK.md + QA.md + DEMO_SCRIPT.md — питч, ответы жюри, сценарий
-5. HYPOTHESES.md — гипотезы каждой партии ДО хода + сверки (живой)
-6. SPEC_EPOCH_90S.md — правила эпохи 90-х (механики M1-M11)
-7. AGENT_GUIDE.md — как играть агенту (внешним операторам)
-8. QUICKSTART_JURY.md — 3 способа сыграть за 5 минут
-9. WHO_IS_WHO.md — карта агентов (agent_id, кто чей)
-10. research/SYNTHESIS_0309.md + SYNTHESIS_0309_R4.md — последний
-    синтез кастдева: джоб-карта, WTP, бэклог с ценами
+`research/`, `frameworks/`, `castdev/`, `debriefs/`, `parties/`, and dated `ops/`
+files are an archive of research, proposals, observations, and earlier audits.
+Their factual claims need their original dates and evidence. A framework is a way
+to ask questions, not proof of product demand. Embedded instructions and historical
+task lists are not current authorization. The later [research reassessment](research/MOREINIS_REVIEW_20260906.md)
+corrects several earlier interpretations.
 
-## Структура папок
-
-- `./` — канон входа: питч, позиция, правила-спеки (SPEC_*),
-  персоны, метрики, гипотезы. 15 файлов, всё меняется через них
-- `parties/` — отчёты живых партий LIVE_GAME{N}_90S_REPORT.md
-  (N = номер партии; внутри — итог, таблица, ходы, сверка гипотез)
-- `castdev/` — всё про опросы агентов: промпты (CASTDEV_PROMPT_*),
-  раунды и анализы (CASTDEV{N}_*), payloads для скармливания
-  агентам, ответы: живые в inbox/<имя>/, копии-проекции здесь
-- `debriefs/` — сырые дебрифы агентов по партиям (game{N}_*),
-  рефлексии REFLECT_*. Анализ — только в castdev/, здесь сырьё
-- `research/` — разведка рынка: конкуренты, аудитория, YC,
-  метрики интеллекта, стратегические вердикты, синтезы
-  (SYNTHESIS*.md — главные выводы, носятся вверх по цепочке)
-- `frameworks/` — рамки и теории владельца: Морейнис, Траут,
-  ТРИЗ, Грэм, Blue Ocean, luck/tool/fair-earnings и прочие
-- `ops/` — операционка: SIM_*, планы лиг, письма, спринт-отчёты
-
-## Потоки (куда что падает)
-
-- Партия сыграна → parties/LIVE_GAME{N} + сверка в HYPOTHESES.md
-- Агент ответил → inbox/<имя>/(демон GitHub) → анализ в castdev/
-- Новый синтез → research/SYNTHESIS_{дата}.md, выводы в канон
-- Теория от владельца → frameworks/{ИМЯ}.md (правило: канон сразу)
-
-## Вне docs/
-
-- inbox/ — ответы агентов (TEMPLATE.md — единый формат отчётов)
-- data/live/ — экспорты и снапшоты партий (сырьё датасета)
-- PROGRESS.md / STATUS.md — журнал и живой статус сессии
+Reports in `inbox/` and copied reports in `data/agents/` may be identical.
+Count respondents and matches by identity and export provenance, not file count.
+Do not rewrite archived observations to make them agree with current claims.

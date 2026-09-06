@@ -25,7 +25,7 @@ pub struct AgentStats {
     pub agent_id: String,
     pub matches: u64,
     pub rank_sum: u64,
-    pub rank_counts: [u64; 4],
+    pub rank_counts: Vec<u64>,
     pub total_cash: u64,
 }
 
@@ -68,9 +68,7 @@ pub fn load_registry(path: &str) -> Vec<AgentEntry> {
             arr.iter()
                 .filter_map(|e| {
                     Some(AgentEntry {
-                        wallet: Pubkey::new_from_array(
-                            bs58_decode(e.get("wallet")?.as_str()?),
-                        ),
+                        wallet: e.get("wallet")?.as_str()?.parse::<Pubkey>().ok()?,
                         agent_id: e.get("agent_id")?.as_str()?.to_string(),
                         model: e
                             .get("model")
@@ -89,45 +87,15 @@ pub fn load_registry(path: &str) -> Vec<AgentEntry> {
         .unwrap_or_default()
 }
 
-fn bs58_decode(s: &str) -> [u8; 32] {
-    let alphabet: Vec<char> =
-        "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz".chars().collect();
-    let mut num = vec![0u8];
-    for c in s.chars() {
-        let val = alphabet.iter().position(|a| *a == c).unwrap_or(0) as u32;
-        let mut carry = val;
-        for digit in num.iter_mut().rev() {
-            let x = *digit as u32 * 58 + carry;
-            *digit = (x & 0xff) as u8;
-            carry = x >> 8;
-        }
-        while carry > 0 {
-            num.insert(0, (carry & 0xff) as u8);
-            carry >>= 8;
-        }
-    }
-    let leading_zeros = s.chars().take_while(|c| *c == '1').count();
-    let mut out = [0u8; 32];
-    let bytes: Vec<u8> = std::iter::repeat(0)
-        .take(leading_zeros)
-        .chain(num.into_iter().skip_while(|b| *b == 0))
-        .collect();
-    let n = bytes.len().min(32);
-    out[32 - n..].copy_from_slice(&bytes[32 - n..]);
-    out
+pub fn rank_factions(factions: &[Faction]) -> Vec<usize> {
+    rank_factions_for_epoch(factions, alashi_rules::constants::EPOCH_CLASSIC)
 }
 
-pub fn rank_factions(factions: &[Faction]) -> Vec<usize> {
+pub fn rank_factions_for_epoch(factions: &[Faction], epoch: u8) -> Vec<usize> {
+    let wealth = |f: &Faction| f.cash as u128 + if epoch == alashi_rules::constants::EPOCH_90S { f.hard as u128 } else { 0 };
     let mut order: Vec<usize> = (0..factions.len()).collect();
-    order.sort_by(|&a, &b| {
-        let ca = factions[a].cash;
-        let cb = factions[b].cash;
-        if ca != cb {
-            cb.cmp(&ca)
-        } else {
-            factions[a].wallet.cmp(&factions[b].wallet)
-        }
-    });
+    order.sort_by(|&a, &b| wealth(&factions[b]).cmp(&wealth(&factions[a]))
+        .then_with(|| factions[a].wallet.cmp(&factions[b].wallet)));
     order
 }
 
@@ -152,11 +120,8 @@ pub fn aggregate(
             continue;
         }
         agg.parties_indexed += 1;
-        let order = rank_factions(factions);
+        let order = rank_factions_for_epoch(factions, game.epoch);
         for (rank_pos, &fi) in order.iter().enumerate() {
-            if rank_pos >= 4 {
-                break;
-            }
             let wallet = factions[fi].wallet;
             let id = by_wallet
                 .get(&wallet)
@@ -166,6 +131,7 @@ pub fn aggregate(
             st.agent_id = id;
             st.matches += 1;
             st.rank_sum += (rank_pos + 1) as u64;
+            st.rank_counts.resize(alashi_rules::constants::MAX_FACTIONS as usize, 0);
             st.rank_counts[rank_pos] += 1;
             st.total_cash += factions[fi].cash;
         }

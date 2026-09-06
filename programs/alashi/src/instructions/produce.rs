@@ -1,4 +1,5 @@
-use crate::{constants::*, error::GameError, events::*, state::*};
+use crate::{constants::*, events::*, state::*};
+use alashi_rules::actions;
 use anchor_lang::prelude::*;
 
 #[derive(Accounts)]
@@ -20,12 +21,7 @@ pub struct Produce<'info> {
 pub fn handle_produce(ctx: Context<Produce>) -> Result<()> {
     let game = &ctx.accounts.game;
     let faction = &mut ctx.accounts.faction;
-    require!(game.phase == Phase::Action, GameError::WrongPhase);
-    require!(faction.alive, GameError::NotAlive);
-    require!(faction.acted_stamp != game.stamp(), GameError::AlreadyActed);
-
-    faction.goods += PRODUCE_YIELD + game.active_subsidy_goods as u16;
-    faction.acted_stamp = game.stamp();
+    actions::produce(game, faction)?;
 
     emit!(Produced {
         game: game.key(),
