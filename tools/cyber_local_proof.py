@@ -25,7 +25,7 @@ def confirm(sig):
   time.sleep(.15)
  raise RuntimeError('Confirmation timed out')
 def meta(pub,sign=False,write=True):return AccountMeta(pub,sign,write)
-players=[Keypair(),Keypair()];names=['Aibot','Botagul'];admin=players[0];gid=int(time.time())
+names=['Aitore','Aikorkem','Aisultan','Botagul','Aibot','Zhambyl'];players=[Keypair() for _ in names];admin=players[0];gid=int(time.time())
 game=Pubkey.find_program_address([b'game',struct.pack('<Q',gid)],PROGRAM)[0]
 factions=[Pubkey.find_program_address([b'faction',bytes(game),bytes(p.pubkey())],PROGRAM)[0] for p in players]
 receipts=[]
@@ -62,7 +62,7 @@ for log in settle['receipt']['meta']['logMessages']:
  b=base64.b64decode(log.split(': ',1)[1])
  if b[:8]==hashlib.sha256(b'event:Payout').digest()[:8]:payouts.append({'wallet':str(Pubkey.from_bytes(b[40:72])),'rank':b[72],'amount':struct.unpack('<Q',b[73:81])[0]})
  if b[:8]==hashlib.sha256(b'event:Settled').digest()[:8]:settled=dict(zip(['pot','rake','paid'],struct.unpack('<QQQ',b[40:64])))
-assert len(payouts)==2 and settled and settled['paid']==19_000_000 and settled['rake']==1_000_000
+assert len(payouts)==4 and settled and settled['paid']==57_000_000 and settled['rake']==3_000_000
 output={'network':'solana-local-validator','rpc':URL,'program':str(PROGRAM),'program_sha256':hashlib.sha256(Path('target/deploy/alashi.so').read_bytes()).hexdigest(),'game':str(game),'game_id':gid,'players':[{'name':n,'wallet':str(p.pubkey())} for p,n in zip(players,names)],'entry_fee':10_000_000,'payouts':payouts,'settled':settled,'transactions':receipts}
 Path('docs/ops/CYBER_LOCAL_PROOF_20260906.json').write_text(json.dumps(output,indent=2)+'\n')
 print(json.dumps({'ok':True,'transactions':len(receipts),'payouts':payouts,'settled':settled}))

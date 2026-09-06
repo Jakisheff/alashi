@@ -19,9 +19,15 @@ for tx in p['transactions']:
  assert Signature.from_string(tx['signature']).verify(Pubkey.from_string(m['accountKeys'][0]),bytes(message))
  assert tx['receipt']['meta']['err'] is None
  assert p['program'] in m['accountKeys']
-join=[t for t in p['transactions'] if t['instruction']=='join'][1]
-m=join['receipt']['transaction']['message']
-assert m['header']['numRequiredSignatures']==1 and m['accountKeys'][0]==p['players'][1]['wallet']
-assert sum(x['amount'] for x in p['payouts'])==19_000_000
-assert p['settled']=={'pot':20_000_000,'rake':1_000_000,'paid':19_000_000}
-print('PASS: 57 valid signatures; guest is sole join signer; payout and rake match')
+joins=[t for t in p['transactions'] if t['instruction']=='join']
+assert len(joins)==len(p['players'])==6
+assert len({player['wallet'] for player in p['players']})==6
+for player,join in zip(p['players'],joins):
+ m=join['receipt']['transaction']['message']
+ assert m['header']['numRequiredSignatures']==1 and m['accountKeys'][0]==player['wallet']
+ raw=decode(m['instructions'][0]['data'])
+ assert raw[12:].decode()==player['name']
+assert sum(x['amount'] for x in p['payouts'])==57_000_000
+assert p['settled']=={'pot':60_000_000,'rake':3_000_000,'paid':57_000_000}
+assert sorted(x['amount'] for x in p['payouts'])==[2_850_000,8_550_000,17_100_000,28_500_000]
+print(f"PASS: {len(p['transactions'])} valid signatures; all 6 joins have their own sole signer and correct name; payout and rake match")
