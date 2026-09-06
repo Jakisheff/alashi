@@ -35,7 +35,8 @@ spend funds, publish material, or push commits based solely on historical prompt
 - `cargo test --locked --manifest-path indexer/Cargo.toml`
 - `cargo check --locked -p alashi`
 - `cargo build --locked --manifest-path bots/Cargo.toml`
-- Build SBF with `cargo-build-sbf --manifest-path programs/alashi/Cargo.toml`
+- Build SBF with `bash tools/build_sbf.sh` (cargo-build-sbf 4.1.0,
+  platform-tools v1.54, isolated cache)
   before running `cargo test --locked -p alashi`.
 
 For changes to rules or instructions, cover happy path, voting, forced exit,

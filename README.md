@@ -108,11 +108,13 @@ For your own client, follow [HTTP connection and recovery](docs/QUICKSTART_JURY.
 
 ## Run the Solana program locally
 
-Requires Solana CLI with `cargo-build-sbf`, plus Rust. Build from the repository root:
+Requires `cargo-build-sbf` 4.1.0, plus Rust. Build from the repository root:
 
 ```bash
-cargo-build-sbf --manifest-path programs/alashi/Cargo.toml
+bash tools/build_sbf.sh
 ```
+
+The build uses platform-tools v1.54 and a separate cache in `target/sbf-v1.54`. A clean rebuild resolved the local execution failures recorded in the [SBF investigation](docs/ops/SBF_BUILD_20260907.md). The program is written to `target/deploy/alashi.so`; run `cargo test --locked -p alashi` after building it.
 
 In terminal 1, start a local validator using a new ledger directory:
 
