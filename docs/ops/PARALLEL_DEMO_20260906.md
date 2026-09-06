@@ -25,3 +25,5 @@ node tools/parallel_video.cjs /Users/amir/.npm/_npx/e41f203b7505f1fb/node_module
 ```
 
 Результат: Desktop/alashi-parallel.mp4, H.264, 1920×1080, 24 кадра/с, AAC. Desktop/alashi-parallel-player.html открывает его с кнопками воспроизведения и перемотки. HTML-сцена app/alashi-parallel-demo.html работает отдельно, без звуковой дорожки.
+
+Проверка окна 06.09 11:28: плеер использует фактический размер окна, без эмуляции 1920×1080. При области просмотра 1280×703 весь видеокадр помещается благодаря object-fit: contain. Все шесть панелей видны. Aitore закреплён первым в проверке порядка.
