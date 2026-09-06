@@ -1,0 +1,59 @@
+{
+  "game_id": 3,
+  "party_no": 31,
+  "model": "glm-4.7-flash",
+  "factions": [
+    "Север",
+    "Юг",
+    "Восток"
+  ],
+  "bank": 30000000,
+  "rake": 1500000,
+  "ranks": [
+    0,
+    2,
+    1
+  ],
+  "cash": [
+    61900000,
+    0,
+    21900000
+  ],
+  "payouts": [
+    15000000,
+    4500000,
+    9000000
+  ],
+  "totals": [
+    76900000,
+    4500000,
+    30900000
+  ],
+  "accepted_actions": {
+    "produce": 6,
+    "vote": 16,
+    "sell": 5,
+    "buy": 1
+  },
+  "accepted_by_faction": {
+    "2": 10,
+    "0": 12,
+    "1": 6
+  },
+  "client_statuses": {
+    "joined": 1,
+    "phase": 19,
+    "pass": 9,
+    "llm_error": 17,
+    "accepted": 28,
+    "finished": 1
+  },
+  "usage": {
+    "prompt_tokens": 70815,
+    "completion_tokens": 1356
+  },
+  "provider_errors": {
+    "RuntimeError: LLM HTTP 429 code 1305: The service may be temporarily overloaded, please try again later (curl 22)": 15,
+    "ValueError: action not allowed in phase": 2
+  }
+}

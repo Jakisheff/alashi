@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 import unittest
+from unittest.mock import patch
+from tempfile import TemporaryDirectory
+from pathlib import Path
+from types import SimpleNamespace
+import contextlib, io, json
+import board_agents
 from board_agents import parse_decision, available_actions
 class Decisions(unittest.TestCase):
  def test_accepts_llm_json(self):
@@ -24,4 +30,28 @@ class Decisions(unittest.TestCase):
   self.assertEqual(available_actions(state,0),['pass','sell'])
   state['factions'][0]['cash']=12000000
   self.assertIn('buy',available_actions(state,0))
+ def test_nested_veto_is_not_silently_lost(self):
+  decision=parse_decision('{"action":"vote","params":{"choice":"no","veto":true}}','law',0,0)
+  self.assertTrue(decision['veto'])
+  self.assertNotIn('veto',decision['params'])
+ def test_string_and_conflicting_veto_rejected(self):
+  for text in ('{"action":"vote","params":{"choice":"yes"},"veto":"false"}', '{"action":"vote","params":{"choice":"yes","veto":true},"veto":false}'):
+   with self.assertRaises(ValueError):parse_decision(text,'law',0,0)
+ def test_provider_overload_retries_once_without_exposing_key(self):
+  error=SimpleNamespace(returncode=22,stdout='{"error":{"code":"1305","message":"overloaded"}}\n429')
+  success=SimpleNamespace(returncode=0,stdout=json.dumps({'choices':[{'message':{'content':'{"ready":true}'}}]})+'\n200')
+  with TemporaryDirectory() as directory:
+   home=Path(directory);config=home/'.config/alashi';config.mkdir(parents=True);(config/'llm.json').write_text('{"key":"test-key-never-real"}')
+   output=io.StringIO()
+   with patch('board_agents.Path.home',return_value=home),patch('sys.argv',['runner','--check']),patch('board_agents.subprocess.run',side_effect=[error,success]) as run,patch('board_agents.time.sleep'),contextlib.redirect_stdout(output):
+    board_agents.main()
+   self.assertEqual(run.call_count,2)
+   self.assertNotIn('test-key-never-real',output.getvalue())
+ def test_provider_overload_is_bounded(self):
+  error=SimpleNamespace(returncode=22,stdout='{"error":{"code":"1305"}}\n429')
+  with TemporaryDirectory() as directory:
+   home=Path(directory);config=home/'.config/alashi';config.mkdir(parents=True);(config/'llm.json').write_text('{"key":"test-key-never-real"}')
+   with patch('board_agents.Path.home',return_value=home),patch('sys.argv',['runner','--check']),patch('board_agents.subprocess.run',return_value=error) as run,patch('board_agents.time.sleep'):
+    with self.assertRaises(RuntimeError):board_agents.main()
+   self.assertEqual(run.call_count,2)
 if __name__=='__main__':unittest.main()
