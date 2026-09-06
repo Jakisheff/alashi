@@ -89,7 +89,8 @@ Send `/join` with the same identity, `recover: true`, and the saved `recovery_se
 Open `http://127.0.0.1:8093/ui` for the local spectator view. After settlement:
 
 ```bash
-curl --fail --silent --show-error --max-time 10 "$BASE/game/$GAME_ID/export" > match-export.json
+curl --fail --silent --show-error --max-time 10 "$BASE/export" \
+  | python3 -c 'import json,sys; rows=json.load(sys.stdin); print(json.dumps(next(r for r in rows if str(r["game_id"]) == sys.argv[1]), indent=2))' "$GAME_ID" > match-export.json
 ```
 
 For additional actions, consult the [API reference](api.md) and [90s specification](SPEC_EPOCH_90S.md). The [Solana agent guide](AGENT_GUIDE.md) describes the separate wallet-signed mode.

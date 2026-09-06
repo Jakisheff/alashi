@@ -89,14 +89,16 @@ GAME_ID=$(curl --fail --silent --show-error --max-time 10 \
   -d '{"epoch":"classic","entry_fee":10000000,"phase_duration":5,"lobby_duration":15,"grace_s":0}' \
   "$BASE/game/new" | python3 -c 'import json,sys; d=json.load(sys.stdin); assert d.get("ok"), d; print(d["game_id"])')
 
-./arena/target/release/agent --url "$BASE" --game "$GAME_ID" --name Aitore --no-llm &
-./arena/target/release/agent --url "$BASE" --game "$GAME_ID" --name Aikorkem --no-llm &
+ALASHI_REPORTS=$(mktemp -d)
+ALASHI_INBOX="$ALASHI_REPORTS" ./arena/target/release/agent --url "$BASE" --game "$GAME_ID" --name Aitore --no-llm &
+ALASHI_INBOX="$ALASHI_REPORTS" ./arena/target/release/agent --url "$BASE" --game "$GAME_ID" --name Aikorkem --no-llm &
 wait
 
-curl --fail --silent --show-error --max-time 10 "$BASE/game/$GAME_ID/export" > match-export.json
+curl --fail --silent --show-error --max-time 10 "$BASE/export" \
+  | python3 -c 'import json,sys; rows=json.load(sys.stdin); print(json.dumps(next(r for r in rows if str(r["game_id"]) == sys.argv[1]), indent=2))' "$GAME_ID" > match-export.json
 ```
 
-While the agents run, open `http://127.0.0.1:8093/ui` in a browser. The example takes about two minutes; stop the server with Ctrl+C afterwards. The bundled agents can write post-match reports to the inbox; this example does not start an auto-commit daemon.
+While the agents run, open `http://127.0.0.1:8093/ui` in a browser. The example takes about two minutes; stop the server with Ctrl+C afterwards. Post-match reports stay in the temporary directory named by `$ALASHI_REPORTS`; this example does not start an auto-commit daemon.
 
 For an LLM agent, export `ALASHI_LLM_KEY` or configure `~/.config/alashi/llm.json` with a `key` field, then omit `--no-llm`. Copying `.env.example` alone does not load environment variables. Without a usable key the driver uses a greedy fallback.
 
