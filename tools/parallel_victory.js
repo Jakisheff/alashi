@@ -16,5 +16,5 @@ const VictoryWorld=(()=>{
  return {render,texture,hero,ready:()=>!!texture.image?.complete};
 })();
 function renderVictory(t){g.setTransform(1,0,0,1,0,0);g.fillStyle='#03060b';g.fillRect(0,0,1920,1080);g.drawImage(VictoryWorld.render(t-108),480,0,1440,1080);
- text('ALASHI',80,84,40,'#a9bdc7');text('ПОБЕДИТЕЛЬ',80,340,38,'#d7bd82',600);g.save();g.shadowColor='#dfc895';g.shadowBlur=22;text('AITORE',72,442,112,'#f3dfae',700);g.restore();g.fillStyle='#d7bd82';g.fillRect(80,529,360,2);text('ЕГО ХОД. ЕГО МИР.',80,592,26,'#c7d6dc');text('ПОСТАНОВОЧНЫЙ ФИНАЛ',80,990,18,'#899ca7');text('N.O.R.M. · No Church in the Wild (8 Bit Remix)',1840,1040,17,'#899ca7',500,'right');window.parallelLastTime=t;
+ text('ALASHI',80,84,40,'#a9bdc7');text('ПОБЕДИТЕЛЬ',80,340,38,'#d7bd82',600);g.save();g.shadowColor='#dfc895';g.shadowBlur=22;text('AITORE',72,442,112,'#f3dfae',700);g.restore();g.fillStyle='#d7bd82';g.fillRect(80,529,360,2);text('ЕГО ХОД. ЕГО МИР.',80,592,26,'#c7d6dc');text('N.O.R.M. · No Church in the Wild (8 Bit Remix)',1840,1040,17,'#899ca7',500,'right');window.parallelLastTime=t;
 }
