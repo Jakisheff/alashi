@@ -79,7 +79,7 @@ pub struct Game {
     pub license_sold: bool,
     /// M11 бартерные оферы (в Game: ончейн-хранилище и симулятор
     /// сериализуются одинаково байт-в-байт).
-    #[max_len(8)]
+    #[max_len(crate::constants::MAX_BARTER_OFFERS)]
     pub barter_offers: Vec<BarterOfferRec>,
     /// M11 счётчик идентификаторов оферов.
     pub barter_next_id: u64,

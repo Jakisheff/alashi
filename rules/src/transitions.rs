@@ -166,12 +166,11 @@ fn advance_inner(
                 // M9 слепой аукцион: раунд аукциона, вскрытие ставок
                 if game.round == AUCTION_ROUND && !game.license_sold {
                     let mut best: Option<usize> = None;
-                    let mut pot: u64 = 0;
                     for (i, f) in factions.iter().enumerate() {
-                        if f.bid > 0 {
-                            pot += f.bid;
-                        }
-                        if f.bid > 0 && best.map_or(true, |b| f.bid > factions[b].bid) {
+                        if f.bid > 0 && best.map_or(true, |b| {
+                            f.bid > factions[b].bid
+                                || (f.bid == factions[b].bid && f.wallet < factions[b].wallet)
+                        }) {
                             best = Some(i);
                         }
                     }

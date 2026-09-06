@@ -33,27 +33,40 @@ fn ev_seq() -> Vec<ParsedEvent> {
 }
 
 #[test]
-fn jsonl_roundtrip_and_ranks() {
+fn recorded_payouts_and_events_survive_roundtrip_without_synthetic_cash() {
     let reg = vec![(anchor_lang::prelude::Pubkey::new_from_array([2; 32]).to_string(), "agent-x".into())];
-    let out = replay::replay(&ev_seq(), &reg).expect("replay");
-    let line = serde_json::to_string(&out.record).unwrap();
-    let back: serde_json::Value = serde_json::from_str(&line).unwrap();
-    assert!(back["steps"].as_array().unwrap().len() >= 10);
+    let out = replay::replay(&ev_seq(), &reg).expect("export");
+    let back: serde_json::Value = serde_json::from_str(&out.record.to_string()).unwrap();
+    assert_eq!(back["schema_version"], 2);
+    assert_eq!(back["replay_verified"], false);
     assert_eq!(back["game_id"], 7);
-    let ranks = back["ranks"].as_array().unwrap();
-    assert_eq!(ranks.len(), 2);
-    assert_eq!(ranks[0]["rank"], 1);
-    assert_eq!(ranks[0]["agent_id"], "agent-x");
-    let winner_cash = ranks[0]["final_cash"].as_u64().unwrap();
-    assert!(winner_cash >= ranks[1]["final_cash"].as_u64().unwrap());
+    assert_eq!(back["ranks"][0]["agent_id"], "agent-x");
+    assert_eq!(back["ranks"][0]["payout"], 60_000_000);
+    assert!(back["ranks"][0].get("final_cash").is_none());
+    assert!(back.get("steps").is_none());
+    assert_eq!(back["events"], serde_json::to_value(ev_seq()).unwrap());
 }
 
 #[test]
-fn observations_present_every_step() {
-    let out = replay::replay(&ev_seq(), &[]).expect("replay");
-    for step in out.record["steps"].as_array().unwrap() {
-        assert!(step["obs_before"]["phase"].is_number());
-        assert!(step["obs_after"]["factions"].is_array());
-        assert!(step["action"]["type"].is_string());
-    }
+fn epoch_events_are_preserved_without_claiming_to_apply_them() {
+    let mut events = ev_seq();
+    let game = events[0].game().to_string();
+    let event = ParsedEvent::Exchanged { game, faction:"faction".into(), to_hard:true, got:17 };
+    events.insert(7, event.clone());
+    let record = replay::replay(&events, &[]).unwrap().record;
+    assert_eq!(record["events"][7], serde_json::to_value(event).unwrap());
+    assert_eq!(record["replay_verified"], false);
+}
+
+#[test]
+fn incomplete_or_mixed_game_logs_are_not_exported_as_settled_matches() {
+    let mut events = ev_seq();
+    events.pop();
+    assert!(replay::replay(&events, &[]).is_none());
+    let mut events = ev_seq();
+    events.remove(0);
+    assert!(replay::replay(&events, &[]).is_none());
+    let mut events = ev_seq();
+    events.push(ParsedEvent::Exchanged { game:"another-game".into(), faction:"faction".into(), to_hard:true, got:17 });
+    assert!(replay::replay(&events, &[]).is_none());
 }

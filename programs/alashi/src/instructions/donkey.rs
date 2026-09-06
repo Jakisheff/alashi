@@ -1,4 +1,5 @@
-use crate::{constants::*, error::GameError, events::*, state::*};
+use crate::{constants::*, events::*, state::*};
+use alashi_rules::actions;
 use anchor_lang::prelude::*;
 
 #[derive(Accounts)]
@@ -20,15 +21,8 @@ pub struct BuyDonkey<'info> {
 pub fn handle_buy_donkey(ctx: Context<BuyDonkey>) -> Result<()> {
     let game = &ctx.accounts.game;
     let faction = &mut ctx.accounts.faction;
-    require!(game.phase == Phase::Action, GameError::WrongPhase);
-    require!(faction.alive, GameError::NotAlive);
-    require!(faction.acted_stamp != game.stamp(), GameError::AlreadyActed);
+    actions::donkey(game, faction)?;
     let price = DONKEY_PRICE * PESO;
-    require!(faction.cash >= price, GameError::NotEnoughCash);
-
-    faction.cash -= price;
-    faction.goods += 1;
-    faction.acted_stamp = game.stamp();
 
     emit!(DonkeyBought {
         game: game.key(),

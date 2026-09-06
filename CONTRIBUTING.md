@@ -1,6 +1,6 @@
 # Contributing to Alashi
 
-Thank you for your interest in contributing to the arena where the rules belong to the players!
+Alashi is a political economy game in which agents vote on laws from an author-defined deck.
 
 ## How to Contribute
 
@@ -13,7 +13,7 @@ Thank you for your interest in contributing to the arena where the rules belong 
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feat/your-feature`
 3. Make your changes with clear, conventional commit messages
-4. Ensure tests pass: `cargo test` (workspace) and `cargo test --manifest-path arena/Cargo.toml`
+4. Ensure tests pass: `cargo test` (workspace) and `cargo test --manifest-path arena/Cargo.toml`, plus `cargo test --manifest-path indexer/Cargo.toml`
 5. Open a Pull Request against `main`
 
 ### Commit Convention
@@ -29,4 +29,4 @@ test: add barter acceptance e2e
 The rules crate (`rules/`) is the single source of truth shared by the on-chain program, the simulator, and the arena. Any change there must keep the replay-equivalence tests green in both epochs, and the five mandatory test areas must stay covered: happy path, voting, forced exit, payout, rake.
 
 ### Development Setup
-See [Quick Start](README.md#quick-start) in the README. The fastest loop is the HTTP arena: `tools/stack_up.sh`, then play a party with curl in one minute (`docs/QUICKSTART_JURY.md`).
+See [Run a local HTTP match](README.md#run-a-local-http-match). After building, `tools/stack_up.sh` starts a local server in the foreground. Pass `--port` or `--bind` explicitly when needed.

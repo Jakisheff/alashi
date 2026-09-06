@@ -29,7 +29,10 @@ pub fn sell(
     if f.acted_stamp == game.stamp() {
         return Err(GameError::AlreadyActed);
     }
-    if units == 0 || units > f.goods {
+    if units == 0 {
+        return Err(GameError::NoUnits);
+    }
+    if units > f.goods {
         return Err(GameError::NotEnoughGoods);
     }
     let trade = compute_sale(
@@ -66,6 +69,9 @@ pub fn buy(game: &mut Game, f: &mut Faction, units: u16) -> Result<u64, GameErro
     if f.acted_stamp == game.stamp() {
         return Err(GameError::AlreadyActed);
     }
+    if units == 0 {
+        return Err(GameError::NoUnits);
+    }
     let trade = compute_purchase(
         units,
         game.sold_this_round,
@@ -99,6 +105,9 @@ pub fn barter_propose(
     }
     if goods == 0 || goods > f.goods {
         return Err(GameError::NotEnoughGoods);
+    }
+    if game.barter_offers.len() >= MAX_BARTER_OFFERS {
+        return Err(GameError::TooManyOffers);
     }
     let id = game.barter_next_id;
     game.barter_next_id += 1;
@@ -156,9 +165,12 @@ pub fn barter_accept(
 
 // ---------- фаза Action ----------
 
-pub fn produce(game: &mut Game, f: &mut Faction) -> Result<u16, GameError> {
+pub fn produce(game: &Game, f: &mut Faction) -> Result<u16, GameError> {
     if game.phase != Phase::Action {
         return Err(GameError::WrongPhase);
+    }
+    if !f.alive {
+        return Err(GameError::NotAlive);
     }
     if f.acted_stamp == game.stamp() {
         return Err(GameError::AlreadyActed);
@@ -169,12 +181,15 @@ pub fn produce(game: &mut Game, f: &mut Faction) -> Result<u16, GameError> {
 }
 
 /// M3: серый канал «челнок» (+3 товара, серой маркер до закрытия фазы).
-pub fn shuttle(game: &mut Game, f: &mut Faction) -> Result<u16, GameError> {
+pub fn shuttle(game: &Game, f: &mut Faction) -> Result<u16, GameError> {
     if game.epoch != EPOCH_90S {
         return Err(GameError::WrongPhase);
     }
     if game.phase != Phase::Action {
         return Err(GameError::WrongPhase);
+    }
+    if !f.alive {
+        return Err(GameError::NotAlive);
     }
     if f.acted_stamp == game.stamp() {
         return Err(GameError::AlreadyActed);
@@ -185,9 +200,12 @@ pub fn shuttle(game: &mut Game, f: &mut Faction) -> Result<u16, GameError> {
     Ok(f.goods)
 }
 
-pub fn donkey(game: &mut Game, f: &mut Faction) -> Result<(), GameError> {
+pub fn donkey(game: &Game, f: &mut Faction) -> Result<(), GameError> {
     if game.phase != Phase::Action {
         return Err(GameError::WrongPhase);
+    }
+    if !f.alive {
+        return Err(GameError::NotAlive);
     }
     if f.acted_stamp == game.stamp() {
         return Err(GameError::AlreadyActed);
@@ -206,7 +224,7 @@ pub fn donkey(game: &mut Game, f: &mut Faction) -> Result<(), GameError> {
 /// обращения к массивам — и симулятор, и ончейн-контекст обязаны
 /// проверить границы первыми делом.
 pub fn bribe(
-    game: &mut Game,
+    game: &Game,
     f_from: &mut Faction,
     f_to: &mut Faction,
     amount: u64,
@@ -219,6 +237,9 @@ pub fn bribe(
     }
     if f_from.acted_stamp == game.stamp() {
         return Err(GameError::AlreadyActed);
+    }
+    if f_from.wallet == f_to.wallet {
+        return Err(GameError::SelfBribe);
     }
     let gain = amount / BRIBE_PRICE;
     if gain == 0 {
@@ -240,7 +261,7 @@ pub fn bribe(
 /// M2+M7: крыша-контракт с тарифом (чёрный 30% / красный 10%),
 /// платёж уходит фракции-крыше.
 pub fn roof(
-    game: &mut Game,
+    game: &Game,
     f_from: &mut Faction,
     f_to: &mut Faction,
     tariff: u8,
@@ -253,6 +274,9 @@ pub fn roof(
     }
     if game.phase != Phase::Action {
         return Err(GameError::WrongPhase);
+    }
+    if f_from.wallet == f_to.wallet {
+        return Err(GameError::SelfBribe);
     }
     if f_from.roof_armed {
         return Err(GameError::AlreadyActed);
@@ -373,9 +397,12 @@ pub fn exchange(game: &Game, f: &mut Faction, to_hard: bool) -> Result<u64, Game
 
 // ---------- фаза Law ----------
 
-pub fn vote(game: &mut Game, f: &mut Faction, choice: VoteChoice) -> Result<(), GameError> {
+pub fn vote(game: &Game, f: &mut Faction, choice: VoteChoice) -> Result<(), GameError> {
     if game.phase != Phase::Law {
         return Err(GameError::WrongPhase);
+    }
+    if !f.alive {
+        return Err(GameError::NotAlive);
     }
     if game.law_card == NO_LAW {
         return Err(GameError::LawNotRevealed);

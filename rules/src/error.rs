@@ -74,4 +74,6 @@ pub enum GameError {
     InvalidEpoch,
     #[msg("wallet already joined this game")]
     DuplicateWallet,
+    #[msg("at most eight open barter offers per game")]
+    TooManyOffers,
 }

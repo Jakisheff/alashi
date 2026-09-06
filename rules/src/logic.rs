@@ -168,15 +168,13 @@ pub fn compute_settlement_epoch(
     let n = factions.len();
 
     let mut rank_share = vec![0u64; n];
-    let mut order: Vec<usize> = Vec::new();
     for p in &plan.payouts {
         rank_share[p.faction_index] = p.amount;
-        order.push(p.faction_index);
     }
-    // фракции вне долей — после, по тому же критерию ранга
-    let mut rest: Vec<usize> = (0..n).filter(|i| !order.contains(i)).collect();
-    rest.sort_by(|&a, &b| snaps[b].cash.cmp(&snaps[a].cash));
-    order.extend(rest);
+    // Rank exists even when rounding or the payout schedule awards zero.
+    let mut order: Vec<usize> = (0..n).collect();
+    order.sort_by(|&a, &b| snaps[b].cash.cmp(&snaps[a].cash)
+        .then_with(|| snaps[a].wallet.cmp(&snaps[b].wallet)));
 
     // M9: рента лицензии держателю (сверх доли, в ранг не входит)
     let mut license_rent = vec![0u64; n];

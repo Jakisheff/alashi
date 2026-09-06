@@ -97,8 +97,9 @@ fn persist_agg(agg: &crate::Aggregated, fresh: usize) {
         dst.matches += st.matches;
         dst.rank_sum += st.rank_sum;
         dst.total_cash += st.total_cash;
-        for i in 0..4 {
-            dst.rank_counts[i] += st.rank_counts[i];
+        dst.rank_counts.resize(alashi_rules::constants::MAX_FACTIONS as usize, 0);
+        for (i, count) in st.rank_counts.iter().enumerate() {
+            dst.rank_counts[i] += count;
         }
     }
     let _ = std::fs::create_dir_all(crate::DATA_DIR);

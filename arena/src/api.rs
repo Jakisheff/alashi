@@ -8,7 +8,6 @@ use crate::strategies::{ActionAction, LawAction, MarketAction};
 use crate::strategies::{eff_price, ALL};
 use alashi_rules::anchor_lang::prelude::Pubkey;
 use alashi_rules::constants::*;
-use alashi_rules::error::GameError;
 use alashi_rules::sim::Simulator;
 use alashi_rules::state::{Faction, Game, Phase, VoteChoice};
 use borsh;
@@ -1017,18 +1016,18 @@ fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json
     let log: ActionLog = match action {
         "sell" => {
             let units = p.get("units").and_then(|v| v.as_u64()).unwrap_or(0) as u16;
-            runner::apply_market(entry.sim_mut(), idx, &MarketAction::Sell(units))
+            runner::apply_market(&mut entry.sim, idx, &MarketAction::Sell(units))
         }
         "sell_credit" => {
             let units = p.get("units").and_then(|v| v.as_u64()).unwrap_or(0) as u16;
-            runner::apply_market(entry.sim_mut(), idx, &MarketAction::SellCredit(units))
+            runner::apply_market(&mut entry.sim, idx, &MarketAction::SellCredit(units))
         }
         "buy" => {
             let units = p.get("units").and_then(|v| v.as_u64()).unwrap_or(0) as u16;
-            runner::apply_market(entry.sim_mut(), idx, &MarketAction::Buy(units))
+            runner::apply_market(&mut entry.sim, idx, &MarketAction::Buy(units))
         }
-        "produce" => runner::apply_action(entry.sim_mut(), idx, &ActionAction::Produce),
-        "shuttle" => runner::apply_action(entry.sim_mut(), idx, &ActionAction::Shuttle),
+        "produce" => runner::apply_action(&mut entry.sim, idx, &ActionAction::Produce),
+        "shuttle" => runner::apply_action(&mut entry.sim, idx, &ActionAction::Shuttle),
         "roof" => {
             let to = p.get("to").and_then(|v| v.as_u64()).unwrap_or(usize::MAX as u64) as usize;
             let tariff = match p.get("tariff").and_then(|v| v.as_str()) {
@@ -1036,7 +1035,7 @@ fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json
                 Some("red") => alashi_rules::constants::ROOF_RED,
                 _ => 0,
             };
-            runner::apply_action(entry.sim_mut(), idx, &ActionAction::Roof { to, tariff })
+            runner::apply_action(&mut entry.sim, idx, &ActionAction::Roof { to, tariff })
         }
         "customs" => {
             // M8: президент выбирает границу вслепую (до чужих ходов)
@@ -1173,7 +1172,7 @@ fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json
         "buy_hard" | "sell_hard" => {
             // SPEC_EPOCH_90S M6: валютчик, сервисная операция без сжигания хода
             let to_hard = action == "buy_hard";
-            let sim = entry.sim_mut();
+            let sim = &mut entry.sim;
             match sim.exchange(idx, to_hard) {
                 Ok(amount) => {
                     let f = &sim.factions[idx];
@@ -1202,11 +1201,11 @@ fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json
                 }
             }
         }
-        "donkey" => runner::apply_action(entry.sim_mut(), idx, &ActionAction::Donkey),
+        "donkey" => runner::apply_action(&mut entry.sim, idx, &ActionAction::Donkey),
         "bribe" => {
             let to = p.get("to").and_then(|v| v.as_u64()).unwrap_or(usize::MAX as u64) as usize;
             let amount = p.get("amount").and_then(|v| v.as_u64()).unwrap_or(0);
-            runner::apply_action(entry.sim_mut(), idx, &ActionAction::Bribe { to, amount })
+            runner::apply_action(&mut entry.sim, idx, &ActionAction::Bribe { to, amount })
         }
         "vote" => {
             let choice = match p.get("choice").and_then(|v| v.as_str()).unwrap_or("") {
@@ -1216,11 +1215,11 @@ fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json
                 _ => return err_json("bad_choice", "choice: yes|no|abstain"),
             };
             let w = entry.wallets[idx];
-            runner::apply_law(entry.sim_mut(), idx, &LawAction::Vote(choice), &w)
+            runner::apply_law(&mut entry.sim, idx, &LawAction::Vote(choice), &w)
         }
         "veto" => {
             let w = entry.wallets[idx];
-            runner::apply_law(entry.sim_mut(), idx, &LawAction::Veto, &w)
+            runner::apply_law(&mut entry.sim, idx, &LawAction::Veto, &w)
         }
         _ => return err_json("bad_action", "sell|sell_credit|buy|buy_hard|sell_hard|produce|shuttle|roof|customs|bid_license|inspect_license|sell_vote|barter_propose|barter_accept|offer_vote|accept_vote_offer|donkey|bribe|vote|veto"),
     };
@@ -1594,17 +1593,6 @@ pub fn serve(state: Arc<AppState>, addr: &str, tick_ms: u64) -> std::io::Result<
     accept_connections(listener, state);
     Ok(())
 }
-
-// reimplement sim_mut: Simulator field доступен напрямую
-impl GameEntry {
-    fn sim_mut(&mut self) -> &mut Simulator {
-        &mut self.sim
-    }
-}
-
-// silence unused warnings for GameError import (используется в типах ошибок)
-#[allow(dead_code)]
-fn _unused(_e: GameError) {}
 
 #[cfg(test)]
 #[path = "api_tests.rs"]

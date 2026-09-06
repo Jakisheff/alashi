@@ -22,3 +22,8 @@ data/live/aitore_token_*.json*
 
 # Local evaluation packages include full agent observations and declared artifacts
 data/eval/runs/
+
+# Local environment files may contain provider keys.
+.env
+.env.*
+!.env.example

@@ -1,4 +1,5 @@
-use crate::{constants::*, error::GameError, events::*, state::*};
+use crate::{constants::*, events::*, state::*};
+use alashi_rules::actions;
 use anchor_lang::prelude::*;
 
 #[derive(Accounts)]
@@ -20,13 +21,7 @@ pub struct Vote<'info> {
 pub fn handle_vote(ctx: Context<Vote>, choice: VoteChoice) -> Result<()> {
     let game = &ctx.accounts.game;
     let faction = &mut ctx.accounts.faction;
-    require!(game.phase == Phase::Law, GameError::WrongPhase);
-    require!(faction.alive, GameError::NotAlive);
-    require!(game.law_card != NO_LAW, GameError::LawNotRevealed);
-    require!(faction.voted_stamp != game.stamp(), GameError::AlreadyVoted);
-
-    faction.vote = choice;
-    faction.voted_stamp = game.stamp();
+    actions::vote(game, faction, choice)?;
 
     emit!(VoteCast {
         game: game.key(),

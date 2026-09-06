@@ -7,7 +7,7 @@ on:
 
 jobs:
   tests:
-    name: cargo test (workspace + arena + bots)
+    name: Rules, arena, indexer, and program compile
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
@@ -18,10 +18,23 @@ jobs:
       - uses: Swatinem/rust-cache@v2
 
       - name: Workspace tests (rules crate; the Anchor program needs `anchor build` for its .so tests, excluded here)
-        run: cargo test --workspace --exclude alashi
+        run: cargo test --locked --workspace --exclude alashi
 
       - name: Arena tests (unit + http e2e)
-        run: cargo test --manifest-path arena/Cargo.toml
+        run: cargo test --locked --manifest-path arena/Cargo.toml
 
       - name: Bots compile check
-        run: cargo build --manifest-path bots/Cargo.toml
+        run: cargo build --locked --manifest-path bots/Cargo.toml
+
+      - name: Indexer tests
+        run: cargo test --locked --manifest-path indexer/Cargo.toml
+
+      - name: Anchor program host compile (SBF execution is a separate check)
+        run: cargo check --locked -p alashi
+
+      - name: Local tooling checks
+        run: |
+          python3 tools/board_agents_test.py
+          python3 tools/anchor_dataset_test.py
+          node --test tools/hotseat_engine_test.cjs tools/board_view_test.cjs tools/city_rules_test.cjs
+          bash -n tools/stack_up.sh

@@ -1,5 +1,4 @@
 use alashi::events::*;
-use anchor_lang::prelude::Pubkey;
 use base64::Engine;
 use sha2::{Digest, Sha256};
 
@@ -50,6 +49,42 @@ pub enum ParsedEvent {
 }
 
 
+impl ParsedEvent {
+    pub fn game(&self) -> &str {
+        match self {
+            Self::GameInitialized { game, .. }
+            | Self::FactionJoined { game, .. }
+            | Self::Produced { game, .. }
+            | Self::Sold { game, .. }
+            | Self::GoodsBought { game, .. }
+            | Self::BribeGiven { game, .. }
+            | Self::DonkeyBought { game, .. }
+            | Self::VoteCast { game, .. }
+            | Self::VetoCast { game, .. }
+            | Self::LawDrawn { game, .. }
+            | Self::LawResult { game, .. }
+            | Self::LawVetoed { game, .. }
+            | Self::PhaseAdvanced { game, .. }
+            | Self::Payout { game, .. }
+            | Self::Settled { game, .. }
+            | Self::LawCommitted { game, .. }
+            | Self::VrfRetry { game, .. }
+            | Self::GameAborted { game, .. }
+            | Self::SoldCreditEv { game, .. }
+            | Self::ShuttledEv { game, .. }
+            | Self::RoofBought { game, .. }
+            | Self::CustomsSet { game, .. }
+            | Self::LicenseBid { game, .. }
+            | Self::LicenseInsight { game, .. }
+            | Self::Exchanged { game, .. }
+            | Self::VoteOffered { game, .. }
+            | Self::VoteSold { game, .. }
+            | Self::BarterProposed { game, .. }
+            | Self::BarterAccepted { game, .. } => game,
+        }
+    }
+}
+
 pub fn parse_log_line(line: &str) -> Option<ParsedEvent> {
     let payload_b64 = line.strip_prefix("Program data: ")?;
     let raw = base64::engine::general_purpose::STANDARD
@@ -58,8 +93,6 @@ pub fn parse_log_line(line: &str) -> Option<ParsedEvent> {
     if raw.len() < 8 {
         return None;
     }
-    let mut disc = [0u8; 8];
-    disc.copy_from_slice(&raw[..8]);
     let body = &raw[8..];
     use anchor_lang::AnchorDeserialize;
     macro_rules! dec {
@@ -67,7 +100,6 @@ pub fn parse_log_line(line: &str) -> Option<ParsedEvent> {
             $t::try_from_slice($b).ok().map(|e| e)
         };
     }
-    let _ = disc;
     if raw.starts_with(&event_disc("event:GameInitialized")) {
         dec!(GameInitialized, body).map(|e| ParsedEvent::GameInitialized {
             game: e.game.to_string(),

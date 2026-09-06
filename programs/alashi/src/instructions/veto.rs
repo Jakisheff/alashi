@@ -1,4 +1,5 @@
-use crate::{constants::*, error::GameError, events::*, state::*};
+use crate::{constants::*, events::*, state::*};
+use alashi_rules::actions;
 use anchor_lang::prelude::*;
 
 #[derive(Accounts)]
@@ -21,12 +22,7 @@ pub struct Veto<'info> {
 pub fn handle_veto(ctx: Context<Veto>) -> Result<()> {
     let game = &mut ctx.accounts.game;
     let faction = &mut ctx.accounts.faction;
-    require!(game.phase == Phase::Law, GameError::WrongPhase);
-    require!(game.president == faction.wallet, GameError::NotPresident);
-    require!(!game.veto_pending, GameError::AlreadyVetoed);
-
-    game.veto_pending = true;
-    faction.is_president = true;
+    actions::veto(game, faction)?;
 
     emit!(VetoCast {
         game: game.key(),
