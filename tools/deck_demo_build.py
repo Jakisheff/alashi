@@ -48,11 +48,11 @@ for y,title,body in [(416,'Адаптация стратегии','Повтор�
 text(s,'Рейк протокола: 5%. Коммерческая модель ещё проверяется.',100,850,1720,65,37,GOLD)
 
 # Keep sources and notes next to the deck, and in PowerPoint speaker notes.
-(OUT/'deck_manifest.json').write_text(json.dumps({'main_slides':8,'demo_slide':9,'total_seconds':sum(s['seconds'] for s in slides),'slides':slides},ensure_ascii=False,indent=2)+'\n')
-notes=['# Выступление Alashi','', 'План: 5 минут вместе с двухминутным видео. Речь: слайды 1-8, ровно 180 секунд по плану. Демо: слайд 9, 120 секунд. Слайды 10-11 для вопросов.','']
+(OUT/'deck_manifest.json').write_text(json.dumps({'main_slides':10,'demo_slide':11,'total_seconds':sum(s['seconds'] for s in slides),'slides':slides},ensure_ascii=False,indent=2)+'\n')
+notes=['# Выступление Alashi','', 'План: 5 минут вместе с двухминутным видео. Речь: слайды 1-10, ровно 180 секунд по плану. Демо: слайд 11, 120 секунд. Слайды 12-13 для вопросов.','']
 for i,s in enumerate(slides,1):notes += [f'## {i}. {s["title"]}',f'Время: {s["seconds"]} секунд.' if s['seconds'] else 'Запасной слайд.',s['notes'],'',f'Источники: {s["sources"]}','']
 (ROOT/'docs/DEMO_TALK_20260906.md').write_text('\n'.join(notes))
-md=['# Alashi: презентация демо-дня','', 'Восемь слайдов питча, отдельный слайд демо и два запасных. Суммарный целевой хронометраж: 5 минут, включая видео 2 минуты.','']
+md=['# Alashi: презентация демо-дня','', 'Десять слайдов питча, отдельный слайд демо и два запасных. Суммарный целевой хронометраж: 5 минут, включая видео 2 минуты.','']
 for i,s in enumerate(slides,1):
  md += [f'## {i}. {s["title"]}','']+[n['value'].replace('\n',' ') for n in s['nodes'] if n['kind']=='text']+['']
 (ROOT/'docs/DECK.md').write_text('\n'.join(md))
@@ -103,4 +103,4 @@ shutil.copy2(VIDEO,OUT/'alashi-demo.mp4')
 (PACKAGE/'Alashi.html').write_text(page.replace('out/alashi-demo.mp4','alashi-demo.mp4'))
 shutil.copy2(VIDEO,PACKAGE/'alashi-demo.mp4');shutil.copy2(OUT/'deck.pptx',PACKAGE/'Alashi.pptx');shutil.copy2(ROOT/'docs/DEMO_TALK_20260906.md',PACKAGE/'Речь.md');shutil.copy2(ROOT/'assets/fonts/Jura.ttf',PACKAGE/'Jura.ttf')
 shutil.copy2(ROOT/'docs/ops/DECK_OPEN_20260906.txt',PACKAGE/'Как открыть.txt')
-print(json.dumps({'slides':len(slides),'main':8,'seconds':sum(s['seconds'] for s in slides),'pptx_bytes':(OUT/'deck.pptx').stat().st_size,'package':str(PACKAGE)},ensure_ascii=False))
+print(json.dumps({'slides':len(slides),'main':10,'seconds':sum(s['seconds'] for s in slides),'pptx_bytes':(OUT/'deck.pptx').stat().st_size,'package':str(PACKAGE)},ensure_ascii=False))
