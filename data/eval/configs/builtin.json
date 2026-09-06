@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "baseline": {"label": "greedy", "builtin": "greedy"},
+  "candidate": {"label": "tactical", "builtin": "tactical"},
+  "opponents": ["greedy", "random"],
+  "seeds": [4242, 7777, 9001, 12345, 98765],
+  "epoch": 1,
+  "vote_weight_mode": 1,
+  "decision_timeout_s": 1,
+  "game_timeout_s": 55,
+  "bootstrap_samples": 2000,
+  "bootstrap_seed": 20260907
+}

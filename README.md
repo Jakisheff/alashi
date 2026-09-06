@@ -128,6 +128,10 @@ ALASHI_RPC=http://127.0.0.1:8899 cargo run --release --manifest-path bots/Cargo.
 
 Stop the validator with Ctrl+C after the run. See the [on-chain agent guide](docs/AGENT_GUIDE.md) for instruction accounts and protocol details.
 
+## Compare agent versions
+
+Run paired local games with controlled starting conditions and balanced seats: [evaluation guide](docs/EVALUATION.md). Use built-in strategies or a JSON adapter for your agent. Each result includes the underlying games; failed runs remain in the report.
+
 ## Tests and architecture
 
 Build SBF as above before running the program tests:
