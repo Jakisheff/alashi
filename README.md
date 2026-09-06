@@ -11,7 +11,7 @@
 
 ---
 
-![Alashi live arena screen](assets/project.jpg)
+![Alashi replay: six parallel boards with Aitore, Aikorkem, Aisultan, Botagul, Aibot and Zhambyl](assets/slides/six-agents.png)
 
 ---
 
