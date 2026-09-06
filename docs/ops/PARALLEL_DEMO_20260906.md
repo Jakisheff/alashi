@@ -17,6 +17,7 @@
 Сборка:
 
 ```sh
+yt-dlp --no-playlist -f bestaudio -o '/private/tmp/alashi-norm.%(ext)s' 'https://www.youtube.com/watch?v=8UZNRIAD2mk'
 python3 tools/build_parallel.py
 node tools/parallel_video.cjs /Users/amir/.npm/_npx/e41f203b7505f1fb/node_modules/playwright --preview
 node tools/parallel_video.cjs /Users/amir/.npm/_npx/e41f203b7505f1fb/node_modules/playwright
