@@ -4,6 +4,7 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 import compare_agents as ev
 import pilot_budget
@@ -62,6 +63,77 @@ class EvaluationTests(unittest.TestCase):
         self.assertEqual(trace['source'], 'fallback')
         self.assertEqual(trace['error'], 'policy_timeout')
         self.assertIsNone(trace['cost_usd'])
+
+    def test_external_requests_do_not_disclose_seed_in_either_epoch(self):
+        self.config['candidate'] = {'label': 'probe', 'command': ['unused']}
+        ids = set()
+
+        def assert_no_seed(value):
+            if isinstance(value, dict):
+                self.assertFalse({'seed', 'game_seed'} & value.keys())
+                for child in value.values():
+                    assert_no_seed(child)
+            elif isinstance(value, list):
+                for child in value:
+                    assert_no_seed(child)
+
+        for epoch in (0, 1):
+            self.config['epoch'] = epoch
+            for _ in range(2):
+                requests = []
+
+                def probe(variant, request, timeout):
+                    requests.append(copy.deepcopy(request))
+                    response = {'action': 'pass'}
+                    return response, {'source': 'external_unverified', 'error': None,
+                                      'cost_usd': None, 'response': response}
+
+                with patch.object(ev, 'call_policy', side_effect=probe):
+                    result = self.game('candidate')
+                self.assertEqual(result['status'], 'completed')
+                self.assertTrue(requests)
+                self.assertEqual(result['seed'], 4242)  # Harness retains replay evidence.
+                self.assertNotIn(result['match_id'], ids)
+                ids.add(result['match_id'])
+                for request in requests:
+                    assert_no_seed(request)
+                    self.assertEqual(request['schema_version'], 2)
+                    self.assertEqual(request['match_id'], result['match_id'])
+                    self.assertEqual(len(request['match_id']), 32)
+
+    def test_auto_seeds_resolve_to_unique_unpredictable_u64(self):
+        cfg = dict(self.config)
+        cfg['seeds'] = 'auto'
+        cfg['auto_seed_count'] = 4
+        with tempfile.NamedTemporaryFile('w', suffix='.json', delete=False) as handle:
+            json.dump(cfg, handle)
+            path = Path(handle.name)
+        try:
+            resolved = ev.load_config(path)
+        finally:
+            path.unlink()
+        self.assertEqual(len(resolved['seeds']), 4)
+        self.assertEqual(len(set(resolved['seeds'])), 4)
+        self.assertTrue(all(type(s) is int and 0 <= s < 2**64 for s in resolved['seeds']))
+        self.assertEqual(resolved['seeds_source'], 'auto_os_u64')
+        cfg['auto_seed_count'] = 0
+        with tempfile.NamedTemporaryFile('w', suffix='.json', delete=False) as handle:
+            json.dump(cfg, handle)
+            path = Path(handle.name)
+        try:
+            with self.assertRaises(ValueError):
+                ev.load_config(path)
+        finally:
+            path.unlink()
+        cfg.update(seeds=[4242, 7777], auto_seed_count=3)
+        with tempfile.NamedTemporaryFile('w', suffix='.json', delete=False) as handle:
+            json.dump(cfg, handle)
+            path = Path(handle.name)
+        try:
+            with self.assertRaises(ValueError):
+                ev.load_config(path)
+        finally:
+            path.unlink()
 
     def test_invalid_action_is_retained_as_fallback(self):
         self.config['candidate'] = {'label':'invalid', 'command':[

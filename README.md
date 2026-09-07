@@ -134,7 +134,7 @@ Stop the validator with Ctrl+C after the run. See the [on-chain agent guide](doc
 
 ## Compare agent versions
 
-Run paired local games with controlled starting conditions and balanced seats: [evaluation guide](docs/EVALUATION.md). Use built-in strategies or a JSON adapter for your agent. Each result includes the underlying games; failed runs remain in the report.
+Run paired local games with controlled starting conditions and balanced seats: [evaluation guide](docs/EVALUATION.md). The boundary and pilot decisions are recorded in the [agent evaluation architecture](docs/ARCHITECTURE_AGENT_EVALUATION.md). Use built-in strategies or a JSON adapter for your agent. Each result includes the underlying games; failed runs remain in the report.
 
 ## Tests and architecture
 

@@ -1,5 +1,7 @@
 # Architecture
 
+The experimental architecture for comparing agent strategies is documented in [ARCHITECTURE_AGENT_EVALUATION.md](ARCHITECTURE_AGENT_EVALUATION.md). It adds an evaluation boundary around the existing rules engine without changing the HTTP or Solana execution modes.
+
 ## System Overview
 
 Alashi is one set of rules in three bodies: an on-chain Anchor program, an off-chain HTTP arena for external agents, and a simulator. All three compile against the shared crate `alashi-rules` (state, pure logic, phase transitions) with replay-equivalence tests for selected scenarios. These tests do not establish equivalence of every configuration, event export, or funding model.

@@ -12,12 +12,14 @@ import platform
 from pathlib import Path
 import random
 import selectors
+import secrets
 import signal
 import statistics
 import subprocess
 import sys
 import tempfile
 import time
+import uuid
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -34,8 +36,9 @@ def digest(path):
 
 def load_config(path):
     c = json.loads(path.read_text())
-    fields = {'schema_version', 'baseline', 'candidate', 'opponents', 'seeds', 'epoch',
-              'vote_weight_mode', 'decision_timeout_s', 'game_timeout_s', 'bootstrap_samples', 'bootstrap_seed'}
+    fields = {'schema_version', 'baseline', 'candidate', 'opponents', 'seeds', 'auto_seed_count',
+              'epoch', 'vote_weight_mode', 'decision_timeout_s', 'game_timeout_s',
+              'bootstrap_samples', 'bootstrap_seed'}
     if set(c) - fields or c.get('schema_version') != 1:
         raise ValueError('unknown config fields or schema_version != 1')
     for side in ('baseline', 'candidate'):
@@ -58,10 +61,24 @@ def load_config(path):
     if not isinstance(opponents, list) or not 1 <= len(opponents) <= 5 or any(v not in BUILTINS for v in opponents):
         raise ValueError('1..5 builtin opponents required')
     seeds = c['seeds']
-    if not isinstance(seeds, list) or not seeds or len(seeds) > 1000:
-        raise ValueError('provide 1..1000 unique seeds')
-    if any(type(s) is not int or not 0 <= s < 2**64 for s in seeds) or len(set(seeds)) != len(seeds):
-        raise ValueError('seeds must be unique u64 integers')
+    if seeds == 'auto':
+        count = c.pop('auto_seed_count', 3)
+        if type(count) is not int or not 1 <= count <= 1000:
+            raise ValueError('auto_seed_count must be 1..1000')
+        picked = []
+        while len(picked) < count:
+            s = secrets.randbits(64)
+            if s not in picked:
+                picked.append(s)
+        c['seeds'] = picked
+        c['seeds_source'] = 'auto_os_u64'
+    else:
+        if 'auto_seed_count' in c:
+            raise ValueError('auto_seed_count requires seeds "auto"')
+        if not isinstance(seeds, list) or not seeds or len(seeds) > 1000:
+            raise ValueError('provide 1..1000 unique seeds or the string "auto"')
+        if any(type(s) is not int or not 0 <= s < 2**64 for s in seeds) or len(set(seeds)) != len(seeds):
+            raise ValueError('seeds must be unique u64 integers')
     for key, default in [('epoch', 1), ('vote_weight_mode', 1)]:
         c.setdefault(key, default)
         if type(c[key]) is not int or c[key] not in (0, 1):
@@ -167,7 +184,9 @@ def run_game(binary, c, side, seed, seat, folder):
     cfg = {key: c[key] for key in ('opponents', 'epoch', 'vote_weight_mode')}
     cfg.update(seed=seed, seat=seat, builtin=variant.get('builtin'))
     start = time.monotonic()
-    result = {'side': side, 'seed': seed, 'seat': seat, 'status': 'failed', 'error': None}
+    match_id = uuid.uuid4().hex
+    result = {'side': side, 'seed': seed, 'seat': seat, 'match_id': match_id,
+              'status': 'failed', 'error': None}
     trace = []
     proc = None
     lines = None
@@ -187,7 +206,7 @@ def run_game(binary, c, side, seed, seat, folder):
                     if timeout <= 0:
                         raise TimeoutError('game_timeout')
                     response, pending = call_policy(variant, {
-                        'schema_version': 1, 'game_seed': seed,
+                        'schema_version': 2, 'match_id': match_id,
                         'decision_index': len(trace), 'phase': event['phase'],
                         'rules': {'epoch': c['epoch'], 'vote_weight_mode': c['vote_weight_mode'],
                                   'entry_fee': 10000000, 'market_exec': 'sequential'},
