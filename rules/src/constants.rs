@@ -48,8 +48,11 @@ pub const SKIP_VOTE_WEIGHT: u16 = 2;
 // ---------- SPEC_EPOCH_90S: эпоха 90-х (epoch = 1) ----------
 pub const EPOCH_CLASSIC: u8 = 0;
 pub const EPOCH_90S: u8 = 1;
-// M1 девальвация: кэш ×0.85 в начале каждого раунда r>=2
-pub const DEPRECIATION_NUM: u64 = 85;
+// M1 девальвация: кэш ×0.62 в начале каждого раунда r>=2.
+// Калибровка по фактуре: тенге 4.7/USD (15.11.1993) -> 50+/USD (11.1994),
+// падение ×10.6 за год; 5 девальваций партии по ×0.62 дают ×0.09.
+// Инфляция 1992 = 2500%, 1994 = 1260% (SOURCE_BIZ_KZ_90S_FULL, п.20, 25).
+pub const DEPRECIATION_NUM: u64 = 62;
 pub const DEPRECIATION_DEN: u64 = 100;
 // M2 крыша: цена 20% кэша, блокирует первый анти-богатый закон против хозяина
 pub const ROOF_NUM: u64 = 20;

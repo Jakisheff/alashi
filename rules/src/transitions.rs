@@ -347,7 +347,7 @@ fn advance_inner(
                 game.round += 1;
                 game.phase = Phase::Market;
                 if game.epoch == EPOCH_90S {
-                    // M1 девальвация: кэш ×0.85 в начале каждого раунда
+                    // M1 девальвация: кэш ×0.62 в начале каждого раунда
                     // (твёрдая валюта M6 не девальвирует)
                     for f in factions.iter_mut() {
                         let before = f.cash;
@@ -507,7 +507,7 @@ mod tests {
 
     #[test]
     fn m1_depreciation_burns_cash_not_goods() {
-        // r1 закон закрыт → вход в r2: в 90s кэш ×0.85, товар цел
+        // r1 закон закрыт → вход в r2: в 90s кэш ×0.62, товар цел
         let (mut g, mut fs) = factions2();
         g.epoch = EPOCH_90S;
         g.phase_ends_at = 10;
@@ -515,9 +515,9 @@ mod tests {
         fs[0].goods = 3;
         let res = advance_inner(&mut g, &mut refs(&mut fs), 20, 0, None, 7, None).unwrap();
         assert_eq!(g.round, 2);
-        assert_eq!(fs[0].cash, 85 * PESO);
+        assert_eq!(fs[0].cash, 62 * PESO);
         assert_eq!(fs[0].goods, 3);
-        assert_eq!(res.depreciation_burned, 15 * PESO);
+        assert_eq!(res.depreciation_burned, 38 * PESO);
         // classic: без изменений
         let (mut g, mut fs) = factions2();
         g.epoch = EPOCH_CLASSIC;
@@ -611,8 +611,8 @@ mod tests {
         let res = advance_inner(&mut g, &mut refs(&mut fs), 20, 0, Some(LAW_AMNESTY), 0, None).unwrap();
         assert!(res.amnesty_burned);
         assert_eq!(fs[0].promissory, 0);
-        // вексель сгорел, кэш прошёл девальвацию нового раунда: 10M × 0.85
-        assert_eq!(fs[0].cash, 10 * PESO / 100 * 85);
+        // вексель сгорел, кэш прошёл девальвацию нового раунда: 10M × 0.62
+        assert_eq!(fs[0].cash, 10 * PESO / 100 * 62);
         assert!(g.amnesty_used, "карта одноразовая");
         // обычный закон: вексель гасится при входе в новый раунд
         let mut g = Game::default();
@@ -632,7 +632,7 @@ mod tests {
         let mut fs = vec![f];
         let _ = advance_inner(&mut g, &mut refs(&mut fs), 20, 0, Some(LAW_STATUS_QUO), 0, None).unwrap();
         assert_eq!(fs[0].promissory, 0);
-        assert_eq!(fs[0].cash, 10 * PESO / 100 * 85 + 40 * PESO, "девальвация, затем гашение");
+        assert_eq!(fs[0].cash, 10 * PESO / 100 * 62 + 40 * PESO, "девальвация, затем гашение");
     }
 
     #[test]
