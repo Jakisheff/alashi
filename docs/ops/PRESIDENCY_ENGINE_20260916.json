@@ -1,0 +1,1420 @@
+{
+  "schema_version": 1,
+  "kind": "engine_and_control_checks",
+  "model_run": false,
+  "source_sha256": {
+    "arena/src/presidency.rs": "6b96195f3c46f79dfbcb8dd3a7e3fd4ea8717010f1f8a371baa2b2b64f16ebac",
+    "arena/src/runner.rs": "1ad90b2b991ed3c0dc420f3ba416dd124d101a747b7d6bab37c3688b2a099be5",
+    "arena/src/strategies.rs": "37fbc3c08bb3cbf2cc0104014d6e6364ed360a6de72cbad166c817860af74d33",
+    "rules/src/actions.rs": "50d4992bdfdd02c47a03c408092c1f588c91bf238cb48a5b289d38ccb280097d",
+    "rules/src/constants.rs": "f0f3eff7023a1b5a75dddbdd83865a7c9cc8d5095edf1be2e2abd33cdc05429f",
+    "rules/src/logic.rs": "3ff0a559ff09393cbc48cbed8f17bab45dfea6cec99ed28437cd0b7e69615222",
+    "rules/src/sim.rs": "67bae0721ad428e2cb10aa485611ee1f16a3cd58bec2ba1a63e242b1e86b55b7",
+    "rules/src/state.rs": "2427623116f258c2cfc7df959cf05598e5b6a102bd8cca7a95c29b4102dfde9f",
+    "rules/src/transitions.rs": "0e1107c556155fcf0c305582829ad8e6fc55bb078e1880c81bb8b7e4ce34a1a4"
+  },
+  "metrics": [
+    {
+      "missed": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "mode": 0,
+      "policy": "Always",
+      "unauthorized": {
+        "denominator": 1,
+        "numerator": 1
+      }
+    },
+    {
+      "missed": {
+        "denominator": 1,
+        "numerator": 1
+      },
+      "mode": 0,
+      "policy": "Never",
+      "unauthorized": {
+        "denominator": 1,
+        "numerator": 0
+      }
+    },
+    {
+      "missed": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "mode": 0,
+      "policy": "MaxWeight",
+      "unauthorized": {
+        "denominator": 1,
+        "numerator": 0
+      }
+    },
+    {
+      "missed": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "mode": 0,
+      "policy": "President",
+      "unauthorized": {
+        "denominator": 1,
+        "numerator": 0
+      }
+    },
+    {
+      "missed": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "mode": 1,
+      "policy": "Always",
+      "unauthorized": {
+        "denominator": 1,
+        "numerator": 1
+      }
+    },
+    {
+      "missed": {
+        "denominator": 1,
+        "numerator": 1
+      },
+      "mode": 1,
+      "policy": "Never",
+      "unauthorized": {
+        "denominator": 1,
+        "numerator": 0
+      }
+    },
+    {
+      "missed": {
+        "denominator": 1,
+        "numerator": 1
+      },
+      "mode": 1,
+      "policy": "MaxWeight",
+      "unauthorized": {
+        "denominator": 1,
+        "numerator": 1
+      }
+    },
+    {
+      "missed": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "mode": 1,
+      "policy": "President",
+      "unauthorized": {
+        "denominator": 1,
+        "numerator": 0
+      }
+    }
+  ],
+  "report_path": "data/eval/runs/presidency-engine-20260916-002/report.json",
+  "report_sha256": "924a6a6de2d1dbde120b8e5324b34da265ed0bef2d2008cfd8d07c6da3747d8e",
+  "cases": [
+    {
+      "mode": 0,
+      "benefit": "Positive",
+      "delta": 6000000,
+      "scope": "all Law choices with the disclosed scripted round-6 continuation",
+      "current": {
+        "acted_stamp": [
+          41,
+          42,
+          34
+        ],
+        "active_boom": 0,
+        "active_price_shift": 0,
+        "active_tax_bps": 0,
+        "alive": [
+          true,
+          true,
+          true
+        ],
+        "cash": [
+          52000000,
+          41000000,
+          42000000
+        ],
+        "decision_stage": "primary",
+        "goods": [
+          0,
+          1,
+          0
+        ],
+        "influence": [
+          10,
+          11,
+          7
+        ],
+        "law_card": 2,
+        "my_idx": 1,
+        "my_wallet": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
+        "n_factions": 3,
+        "phase": "Law",
+        "president": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
+        "round": 5,
+        "sold_counter": 3,
+        "veto_pending": false,
+        "vote_weight": [
+          10,
+          11,
+          7
+        ],
+        "vote_weight_mode": 0,
+        "voted": [
+          false,
+          false,
+          false
+        ]
+      },
+      "previous": {
+        "acted_stamp": [
+          34,
+          34,
+          34
+        ],
+        "active_boom": 0,
+        "active_price_shift": 0,
+        "active_tax_bps": 0,
+        "alive": [
+          true,
+          true,
+          true
+        ],
+        "cash": [
+          33000000,
+          39000000,
+          32000000
+        ],
+        "decision_stage": "primary",
+        "goods": [
+          2,
+          2,
+          0
+        ],
+        "influence": [
+          10,
+          9,
+          7
+        ],
+        "law_card": 7,
+        "my_idx": 1,
+        "my_wallet": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
+        "n_factions": 3,
+        "phase": "Law",
+        "president": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+        "round": 4,
+        "sold_counter": 0,
+        "veto_pending": false,
+        "vote_weight": [
+          10,
+          9,
+          7
+        ],
+        "vote_weight_mode": 0,
+        "voted": [
+          false,
+          false,
+          false
+        ]
+      },
+      "with_veto": {
+        "bank": 30000000,
+        "final_cash": [
+          52000000,
+          53000000,
+          42000000
+        ],
+        "payouts": [
+          9000000,
+          15000000,
+          4500000
+        ],
+        "rake": 1500000,
+        "ranks": [
+          1,
+          0,
+          2
+        ]
+      },
+      "without_veto": [
+        {
+          "choice": "None",
+          "outcome": {
+            "bank": 30000000,
+            "final_cash": [
+              52000000,
+              50600000,
+              42000000
+            ],
+            "payouts": [
+              15000000,
+              9000000,
+              4500000
+            ],
+            "rake": 1500000,
+            "ranks": [
+              0,
+              1,
+              2
+            ]
+          }
+        },
+        {
+          "choice": "Some(Yes)",
+          "outcome": {
+            "bank": 30000000,
+            "final_cash": [
+              52000000,
+              50600000,
+              42000000
+            ],
+            "payouts": [
+              15000000,
+              9000000,
+              4500000
+            ],
+            "rake": 1500000,
+            "ranks": [
+              0,
+              1,
+              2
+            ]
+          }
+        },
+        {
+          "choice": "Some(No)",
+          "outcome": {
+            "bank": 30000000,
+            "final_cash": [
+              52000000,
+              50600000,
+              42000000
+            ],
+            "payouts": [
+              15000000,
+              9000000,
+              4500000
+            ],
+            "rake": 1500000,
+            "ranks": [
+              0,
+              1,
+              2
+            ]
+          }
+        },
+        {
+          "choice": "Some(Abstain)",
+          "outcome": {
+            "bank": 30000000,
+            "final_cash": [
+              52000000,
+              50600000,
+              42000000
+            ],
+            "payouts": [
+              15000000,
+              9000000,
+              4500000
+            ],
+            "rake": 1500000,
+            "ranks": [
+              0,
+              1,
+              2
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "mode": 0,
+      "benefit": "Zero",
+      "delta": 0,
+      "scope": "all Law choices with the disclosed scripted round-6 continuation",
+      "current": {
+        "acted_stamp": [
+          41,
+          42,
+          34
+        ],
+        "active_boom": 0,
+        "active_price_shift": 0,
+        "active_tax_bps": 0,
+        "alive": [
+          true,
+          true,
+          true
+        ],
+        "cash": [
+          52000000,
+          41000000,
+          42000000
+        ],
+        "decision_stage": "primary",
+        "goods": [
+          0,
+          1,
+          0
+        ],
+        "influence": [
+          10,
+          11,
+          7
+        ],
+        "law_card": 0,
+        "my_idx": 1,
+        "my_wallet": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
+        "n_factions": 3,
+        "phase": "Law",
+        "president": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
+        "round": 5,
+        "sold_counter": 3,
+        "veto_pending": false,
+        "vote_weight": [
+          10,
+          11,
+          7
+        ],
+        "vote_weight_mode": 0,
+        "voted": [
+          false,
+          false,
+          false
+        ]
+      },
+      "previous": {
+        "acted_stamp": [
+          34,
+          34,
+          34
+        ],
+        "active_boom": 0,
+        "active_price_shift": 0,
+        "active_tax_bps": 0,
+        "alive": [
+          true,
+          true,
+          true
+        ],
+        "cash": [
+          33000000,
+          39000000,
+          32000000
+        ],
+        "decision_stage": "primary",
+        "goods": [
+          2,
+          2,
+          0
+        ],
+        "influence": [
+          10,
+          9,
+          7
+        ],
+        "law_card": 7,
+        "my_idx": 1,
+        "my_wallet": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
+        "n_factions": 3,
+        "phase": "Law",
+        "president": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+        "round": 4,
+        "sold_counter": 0,
+        "veto_pending": false,
+        "vote_weight": [
+          10,
+          9,
+          7
+        ],
+        "vote_weight_mode": 0,
+        "voted": [
+          false,
+          false,
+          false
+        ]
+      },
+      "with_veto": {
+        "bank": 30000000,
+        "final_cash": [
+          52000000,
+          53000000,
+          42000000
+        ],
+        "payouts": [
+          9000000,
+          15000000,
+          4500000
+        ],
+        "rake": 1500000,
+        "ranks": [
+          1,
+          0,
+          2
+        ]
+      },
+      "without_veto": [
+        {
+          "choice": "None",
+          "outcome": {
+            "bank": 30000000,
+            "final_cash": [
+              52000000,
+              53000000,
+              42000000
+            ],
+            "payouts": [
+              9000000,
+              15000000,
+              4500000
+            ],
+            "rake": 1500000,
+            "ranks": [
+              1,
+              0,
+              2
+            ]
+          }
+        },
+        {
+          "choice": "Some(Yes)",
+          "outcome": {
+            "bank": 30000000,
+            "final_cash": [
+              52000000,
+              53000000,
+              42000000
+            ],
+            "payouts": [
+              9000000,
+              15000000,
+              4500000
+            ],
+            "rake": 1500000,
+            "ranks": [
+              1,
+              0,
+              2
+            ]
+          }
+        },
+        {
+          "choice": "Some(No)",
+          "outcome": {
+            "bank": 30000000,
+            "final_cash": [
+              52000000,
+              53000000,
+              42000000
+            ],
+            "payouts": [
+              9000000,
+              15000000,
+              4500000
+            ],
+            "rake": 1500000,
+            "ranks": [
+              1,
+              0,
+              2
+            ]
+          }
+        },
+        {
+          "choice": "Some(Abstain)",
+          "outcome": {
+            "bank": 30000000,
+            "final_cash": [
+              52000000,
+              53000000,
+              42000000
+            ],
+            "payouts": [
+              9000000,
+              15000000,
+              4500000
+            ],
+            "rake": 1500000,
+            "ranks": [
+              1,
+              0,
+              2
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "mode": 0,
+      "benefit": "Negative",
+      "delta": -6000000,
+      "scope": "all Law choices with the disclosed scripted round-6 continuation",
+      "current": {
+        "acted_stamp": [
+          41,
+          42,
+          34
+        ],
+        "active_boom": 0,
+        "active_price_shift": 0,
+        "active_tax_bps": 2000,
+        "alive": [
+          true,
+          true,
+          true
+        ],
+        "cash": [
+          49000000,
+          38600000,
+          41200000
+        ],
+        "decision_stage": "primary",
+        "goods": [
+          0,
+          1,
+          0
+        ],
+        "influence": [
+          10,
+          11,
+          7
+        ],
+        "law_card": 1,
+        "my_idx": 1,
+        "my_wallet": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
+        "n_factions": 3,
+        "phase": "Law",
+        "president": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
+        "round": 5,
+        "sold_counter": 3,
+        "veto_pending": false,
+        "vote_weight": [
+          10,
+          11,
+          7
+        ],
+        "vote_weight_mode": 0,
+        "voted": [
+          false,
+          false,
+          false
+        ]
+      },
+      "previous": {
+        "acted_stamp": [
+          34,
+          34,
+          34
+        ],
+        "active_boom": 0,
+        "active_price_shift": 0,
+        "active_tax_bps": 0,
+        "alive": [
+          true,
+          true,
+          true
+        ],
+        "cash": [
+          33800000,
+          39000000,
+          31200000
+        ],
+        "decision_stage": "primary",
+        "goods": [
+          2,
+          2,
+          0
+        ],
+        "influence": [
+          10,
+          9,
+          7
+        ],
+        "law_card": 2,
+        "my_idx": 1,
+        "my_wallet": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
+        "n_factions": 3,
+        "phase": "Law",
+        "president": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+        "round": 4,
+        "sold_counter": 0,
+        "veto_pending": false,
+        "vote_weight": [
+          10,
+          9,
+          7
+        ],
+        "vote_weight_mode": 0,
+        "voted": [
+          false,
+          false,
+          false
+        ]
+      },
+      "with_veto": {
+        "bank": 30000000,
+        "final_cash": [
+          49000000,
+          48200000,
+          41200000
+        ],
+        "payouts": [
+          15000000,
+          9000000,
+          4500000
+        ],
+        "rake": 1500000,
+        "ranks": [
+          0,
+          1,
+          2
+        ]
+      },
+      "without_veto": [
+        {
+          "choice": "None",
+          "outcome": {
+            "bank": 30000000,
+            "final_cash": [
+              49000000,
+              49400000,
+              41200000
+            ],
+            "payouts": [
+              9000000,
+              15000000,
+              4500000
+            ],
+            "rake": 1500000,
+            "ranks": [
+              1,
+              0,
+              2
+            ]
+          }
+        },
+        {
+          "choice": "Some(Yes)",
+          "outcome": {
+            "bank": 30000000,
+            "final_cash": [
+              49000000,
+              49400000,
+              41200000
+            ],
+            "payouts": [
+              9000000,
+              15000000,
+              4500000
+            ],
+            "rake": 1500000,
+            "ranks": [
+              1,
+              0,
+              2
+            ]
+          }
+        },
+        {
+          "choice": "Some(No)",
+          "outcome": {
+            "bank": 30000000,
+            "final_cash": [
+              49000000,
+              49400000,
+              41200000
+            ],
+            "payouts": [
+              9000000,
+              15000000,
+              4500000
+            ],
+            "rake": 1500000,
+            "ranks": [
+              1,
+              0,
+              2
+            ]
+          }
+        },
+        {
+          "choice": "Some(Abstain)",
+          "outcome": {
+            "bank": 30000000,
+            "final_cash": [
+              49000000,
+              49400000,
+              41200000
+            ],
+            "payouts": [
+              9000000,
+              15000000,
+              4500000
+            ],
+            "rake": 1500000,
+            "ranks": [
+              1,
+              0,
+              2
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "mode": 1,
+      "benefit": "Positive",
+      "delta": 6000000,
+      "scope": "all Law choices with the disclosed scripted round-6 continuation",
+      "current": {
+        "acted_stamp": [
+          41,
+          42,
+          34
+        ],
+        "active_boom": 0,
+        "active_price_shift": 0,
+        "active_tax_bps": 0,
+        "alive": [
+          true,
+          true,
+          true
+        ],
+        "cash": [
+          52000000,
+          41000000,
+          42000000
+        ],
+        "decision_stage": "primary",
+        "goods": [
+          0,
+          1,
+          0
+        ],
+        "influence": [
+          10,
+          11,
+          7
+        ],
+        "law_card": 2,
+        "my_idx": 1,
+        "my_wallet": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
+        "n_factions": 3,
+        "phase": "Law",
+        "president": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
+        "round": 5,
+        "sold_counter": 3,
+        "veto_pending": false,
+        "vote_weight": [
+          12,
+          11,
+          9
+        ],
+        "vote_weight_mode": 1,
+        "voted": [
+          false,
+          false,
+          false
+        ]
+      },
+      "previous": {
+        "acted_stamp": [
+          34,
+          34,
+          34
+        ],
+        "active_boom": 0,
+        "active_price_shift": 0,
+        "active_tax_bps": 0,
+        "alive": [
+          true,
+          true,
+          true
+        ],
+        "cash": [
+          33000000,
+          39000000,
+          32000000
+        ],
+        "decision_stage": "primary",
+        "goods": [
+          2,
+          2,
+          0
+        ],
+        "influence": [
+          10,
+          9,
+          7
+        ],
+        "law_card": 7,
+        "my_idx": 1,
+        "my_wallet": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
+        "n_factions": 3,
+        "phase": "Law",
+        "president": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+        "round": 4,
+        "sold_counter": 0,
+        "veto_pending": false,
+        "vote_weight": [
+          10,
+          9,
+          7
+        ],
+        "vote_weight_mode": 1,
+        "voted": [
+          false,
+          false,
+          false
+        ]
+      },
+      "with_veto": {
+        "bank": 30000000,
+        "final_cash": [
+          52000000,
+          53000000,
+          42000000
+        ],
+        "payouts": [
+          9000000,
+          15000000,
+          4500000
+        ],
+        "rake": 1500000,
+        "ranks": [
+          1,
+          0,
+          2
+        ]
+      },
+      "without_veto": [
+        {
+          "choice": "None",
+          "outcome": {
+            "bank": 30000000,
+            "final_cash": [
+              52000000,
+              50600000,
+              42000000
+            ],
+            "payouts": [
+              15000000,
+              9000000,
+              4500000
+            ],
+            "rake": 1500000,
+            "ranks": [
+              0,
+              1,
+              2
+            ]
+          }
+        },
+        {
+          "choice": "Some(Yes)",
+          "outcome": {
+            "bank": 30000000,
+            "final_cash": [
+              52000000,
+              50600000,
+              42000000
+            ],
+            "payouts": [
+              15000000,
+              9000000,
+              4500000
+            ],
+            "rake": 1500000,
+            "ranks": [
+              0,
+              1,
+              2
+            ]
+          }
+        },
+        {
+          "choice": "Some(No)",
+          "outcome": {
+            "bank": 30000000,
+            "final_cash": [
+              52000000,
+              50600000,
+              42000000
+            ],
+            "payouts": [
+              15000000,
+              9000000,
+              4500000
+            ],
+            "rake": 1500000,
+            "ranks": [
+              0,
+              1,
+              2
+            ]
+          }
+        },
+        {
+          "choice": "Some(Abstain)",
+          "outcome": {
+            "bank": 30000000,
+            "final_cash": [
+              52000000,
+              50600000,
+              42000000
+            ],
+            "payouts": [
+              15000000,
+              9000000,
+              4500000
+            ],
+            "rake": 1500000,
+            "ranks": [
+              0,
+              1,
+              2
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "mode": 1,
+      "benefit": "Zero",
+      "delta": 0,
+      "scope": "all Law choices with the disclosed scripted round-6 continuation",
+      "current": {
+        "acted_stamp": [
+          41,
+          42,
+          34
+        ],
+        "active_boom": 0,
+        "active_price_shift": 0,
+        "active_tax_bps": 0,
+        "alive": [
+          true,
+          true,
+          true
+        ],
+        "cash": [
+          52000000,
+          41000000,
+          42000000
+        ],
+        "decision_stage": "primary",
+        "goods": [
+          0,
+          1,
+          0
+        ],
+        "influence": [
+          10,
+          11,
+          7
+        ],
+        "law_card": 0,
+        "my_idx": 1,
+        "my_wallet": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
+        "n_factions": 3,
+        "phase": "Law",
+        "president": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
+        "round": 5,
+        "sold_counter": 3,
+        "veto_pending": false,
+        "vote_weight": [
+          12,
+          11,
+          9
+        ],
+        "vote_weight_mode": 1,
+        "voted": [
+          false,
+          false,
+          false
+        ]
+      },
+      "previous": {
+        "acted_stamp": [
+          34,
+          34,
+          34
+        ],
+        "active_boom": 0,
+        "active_price_shift": 0,
+        "active_tax_bps": 0,
+        "alive": [
+          true,
+          true,
+          true
+        ],
+        "cash": [
+          33000000,
+          39000000,
+          32000000
+        ],
+        "decision_stage": "primary",
+        "goods": [
+          2,
+          2,
+          0
+        ],
+        "influence": [
+          10,
+          9,
+          7
+        ],
+        "law_card": 7,
+        "my_idx": 1,
+        "my_wallet": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
+        "n_factions": 3,
+        "phase": "Law",
+        "president": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+        "round": 4,
+        "sold_counter": 0,
+        "veto_pending": false,
+        "vote_weight": [
+          10,
+          9,
+          7
+        ],
+        "vote_weight_mode": 1,
+        "voted": [
+          false,
+          false,
+          false
+        ]
+      },
+      "with_veto": {
+        "bank": 30000000,
+        "final_cash": [
+          52000000,
+          53000000,
+          42000000
+        ],
+        "payouts": [
+          9000000,
+          15000000,
+          4500000
+        ],
+        "rake": 1500000,
+        "ranks": [
+          1,
+          0,
+          2
+        ]
+      },
+      "without_veto": [
+        {
+          "choice": "None",
+          "outcome": {
+            "bank": 30000000,
+            "final_cash": [
+              52000000,
+              53000000,
+              42000000
+            ],
+            "payouts": [
+              9000000,
+              15000000,
+              4500000
+            ],
+            "rake": 1500000,
+            "ranks": [
+              1,
+              0,
+              2
+            ]
+          }
+        },
+        {
+          "choice": "Some(Yes)",
+          "outcome": {
+            "bank": 30000000,
+            "final_cash": [
+              52000000,
+              53000000,
+              42000000
+            ],
+            "payouts": [
+              9000000,
+              15000000,
+              4500000
+            ],
+            "rake": 1500000,
+            "ranks": [
+              1,
+              0,
+              2
+            ]
+          }
+        },
+        {
+          "choice": "Some(No)",
+          "outcome": {
+            "bank": 30000000,
+            "final_cash": [
+              52000000,
+              53000000,
+              42000000
+            ],
+            "payouts": [
+              9000000,
+              15000000,
+              4500000
+            ],
+            "rake": 1500000,
+            "ranks": [
+              1,
+              0,
+              2
+            ]
+          }
+        },
+        {
+          "choice": "Some(Abstain)",
+          "outcome": {
+            "bank": 30000000,
+            "final_cash": [
+              52000000,
+              53000000,
+              42000000
+            ],
+            "payouts": [
+              9000000,
+              15000000,
+              4500000
+            ],
+            "rake": 1500000,
+            "ranks": [
+              1,
+              0,
+              2
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "mode": 1,
+      "benefit": "Negative",
+      "delta": -6000000,
+      "scope": "all Law choices with the disclosed scripted round-6 continuation",
+      "current": {
+        "acted_stamp": [
+          41,
+          42,
+          34
+        ],
+        "active_boom": 0,
+        "active_price_shift": 0,
+        "active_tax_bps": 2000,
+        "alive": [
+          true,
+          true,
+          true
+        ],
+        "cash": [
+          49000000,
+          38600000,
+          41200000
+        ],
+        "decision_stage": "primary",
+        "goods": [
+          0,
+          1,
+          0
+        ],
+        "influence": [
+          10,
+          11,
+          7
+        ],
+        "law_card": 1,
+        "my_idx": 1,
+        "my_wallet": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
+        "n_factions": 3,
+        "phase": "Law",
+        "president": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
+        "round": 5,
+        "sold_counter": 3,
+        "veto_pending": false,
+        "vote_weight": [
+          12,
+          11,
+          9
+        ],
+        "vote_weight_mode": 1,
+        "voted": [
+          false,
+          false,
+          false
+        ]
+      },
+      "previous": {
+        "acted_stamp": [
+          34,
+          34,
+          34
+        ],
+        "active_boom": 0,
+        "active_price_shift": 0,
+        "active_tax_bps": 0,
+        "alive": [
+          true,
+          true,
+          true
+        ],
+        "cash": [
+          33800000,
+          39000000,
+          31200000
+        ],
+        "decision_stage": "primary",
+        "goods": [
+          2,
+          2,
+          0
+        ],
+        "influence": [
+          10,
+          9,
+          7
+        ],
+        "law_card": 2,
+        "my_idx": 1,
+        "my_wallet": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
+        "n_factions": 3,
+        "phase": "Law",
+        "president": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+        "round": 4,
+        "sold_counter": 0,
+        "veto_pending": false,
+        "vote_weight": [
+          10,
+          9,
+          7
+        ],
+        "vote_weight_mode": 1,
+        "voted": [
+          false,
+          false,
+          false
+        ]
+      },
+      "with_veto": {
+        "bank": 30000000,
+        "final_cash": [
+          49000000,
+          48200000,
+          41200000
+        ],
+        "payouts": [
+          15000000,
+          9000000,
+          4500000
+        ],
+        "rake": 1500000,
+        "ranks": [
+          0,
+          1,
+          2
+        ]
+      },
+      "without_veto": [
+        {
+          "choice": "None",
+          "outcome": {
+            "bank": 30000000,
+            "final_cash": [
+              49000000,
+              49400000,
+              41200000
+            ],
+            "payouts": [
+              9000000,
+              15000000,
+              4500000
+            ],
+            "rake": 1500000,
+            "ranks": [
+              1,
+              0,
+              2
+            ]
+          }
+        },
+        {
+          "choice": "Some(Yes)",
+          "outcome": {
+            "bank": 30000000,
+            "final_cash": [
+              49000000,
+              49400000,
+              41200000
+            ],
+            "payouts": [
+              9000000,
+              15000000,
+              4500000
+            ],
+            "rake": 1500000,
+            "ranks": [
+              1,
+              0,
+              2
+            ]
+          }
+        },
+        {
+          "choice": "Some(No)",
+          "outcome": {
+            "bank": 30000000,
+            "final_cash": [
+              49000000,
+              49400000,
+              41200000
+            ],
+            "payouts": [
+              9000000,
+              15000000,
+              4500000
+            ],
+            "rake": 1500000,
+            "ranks": [
+              1,
+              0,
+              2
+            ]
+          }
+        },
+        {
+          "choice": "Some(Abstain)",
+          "outcome": {
+            "bank": 30000000,
+            "final_cash": [
+              49000000,
+              49400000,
+              41200000
+            ],
+            "payouts": [
+              9000000,
+              15000000,
+              4500000
+            ],
+            "rake": 1500000,
+            "ranks": [
+              1,
+              0,
+              2
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

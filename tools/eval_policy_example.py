@@ -19,6 +19,6 @@ elif phase == 'action':
         response.update(action='bid', amount=args.bid_peso * 1_000_000)
     else:
         response.update(action='produce')
-elif phase == 'law':
+elif phase == 'law' and o.get('decision_stage') != 'post_vote':
     response.update(action='vote_yes')
 print(json.dumps(response))

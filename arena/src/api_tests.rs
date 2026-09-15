@@ -223,3 +223,21 @@ fn connection_permits_are_bounded_and_released() {
     assert_eq!(counter.load(Ordering::SeqCst), 0);
     assert!(Permit::acquire(&counter, MAX_CONNECTIONS).is_some());
 }
+
+#[test]
+fn presidency_and_contribution_projection_follow_reachable_state() {
+    let state = isolated();
+    let gid = create(&state);
+    let episode = crate::presidency::prepare(1, crate::presidency::Benefit::Positive);
+    let mut games = state.games.lock().unwrap();
+    let entry = games.get_mut(&gid).unwrap();
+    entry.sim = episode.sim;
+    let s = state_json(gid, entry);
+    assert_eq!(s["president_idx"],1);
+    assert_eq!(s["factions"][0]["is_president"],false);
+    assert_eq!(s["factions"][1]["is_president"],true);
+    assert_eq!(s["factions"][0]["vote_weight"],12);
+    assert_eq!(s["factions"][1]["vote_weight"],11);
+    assert_eq!(s["vote_weight_mode"],1);
+    assert!(s["factions"][0]["acted_stamp"].is_u64());
+}

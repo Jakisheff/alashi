@@ -115,7 +115,7 @@ fn err_str(e: alashi_rules::error::GameError) -> String {
 }
 
 /// Наблюдение без аллокаций-утечек: Vec живут в замыкании.
-fn with_obs<R>(
+pub fn with_obs<R>(
     sim: &Simulator,
     wallets: &[Pubkey],
     my_idx: usize,
@@ -125,6 +125,10 @@ fn with_obs<R>(
     let cash: Vec<u64> = sim.factions.iter().map(|x| x.cash).collect();
     let goods: Vec<u16> = sim.factions.iter().map(|x| x.goods).collect();
     let influence: Vec<u16> = sim.factions.iter().map(|x| x.influence).collect();
+    let acted_stamp: Vec<u16> = sim.factions.iter().map(|x| x.acted_stamp).collect();
+    let vote_weight: Vec<u16> = sim.factions.iter().map(|x| vote_weight(g, x)).collect();
+    let voted: Vec<bool> = sim.factions.iter()
+        .map(|x| g.phase == Phase::Law && x.voted_stamp == g.stamp()).collect();
     let alive: Vec<bool> = sim.factions.iter().map(|x| x.alive).collect();
     let obs = Obs {
         round: g.round,
@@ -133,6 +137,11 @@ fn with_obs<R>(
         cash: &cash,
         goods: &goods,
         influence: &influence,
+        vote_weight_mode: g.vote_weight_mode,
+        acted_stamp: &acted_stamp,
+        vote_weight: &vote_weight,
+        voted: &voted,
+        veto_pending: g.veto_pending,
         alive: &alive,
         sold_counter: g.sold_this_round,
         active_tax_bps: g.active_tax_bps,
@@ -143,6 +152,54 @@ fn with_obs<R>(
         my_wallet: wallets[my_idx],
     };
     f(&obs)
+}
+
+/// Read-only projection of the weight used by the Law tally.
+pub fn vote_weight(g: &alashi_rules::state::Game, f: &alashi_rules::state::Faction) -> u16 {
+    let action_stamp = ((g.round as u16) << 3) | Phase::Action as u16;
+    let bonus = if g.vote_weight_mode == VOTE_WEIGHT_CONTRIB && f.acted_stamp != action_stamp {
+        SKIP_VOTE_WEIGHT
+    } else {
+        0
+    };
+    f.influence + bonus
+}
+
+pub fn observation_json(o: &Obs) -> serde_json::Value {
+    serde_json::json!({"round":o.round,"my_idx":o.my_idx,"n_factions":o.n_factions,
+        "decision_stage":if o.voted[o.my_idx] { "post_vote" } else { "primary" },
+        "cash":o.cash,"goods":o.goods,"influence":o.influence,"alive":o.alive,
+        "vote_weight_mode":o.vote_weight_mode,"acted_stamp":o.acted_stamp,
+        "vote_weight":o.vote_weight,"voted":o.voted,"veto_pending":o.veto_pending,
+        "sold_counter":o.sold_counter,"active_tax_bps":o.active_tax_bps,
+        "active_price_shift":o.active_price_shift,"active_boom":o.active_boom,
+        "law_card":o.law_card,"president":o.president.to_string(),
+        "my_wallet":o.my_wallet.to_string()})
+}
+
+/// A vote does not consume the right to veto. Give each voter one review,
+/// including non-presidents, so the driver does not conceal invalid attempts.
+pub fn review_vetoes(
+    sim: &mut Simulator,
+    wallets: &[Pubkey],
+    strategies: &mut [Box<dyn Strategy>],
+    order: &[usize],
+) -> Vec<ActionLog> {
+    let mut logs = Vec::new();
+    for &i in order {
+        if sim.game.phase != Phase::Law || sim.game.law_card == NO_LAW || sim.game.veto_pending {
+            break;
+        }
+        if !sim.factions[i].alive || sim.factions[i].voted_stamp != sim.game.stamp() {
+            continue;
+        }
+        let act = with_obs(sim, wallets, i, |o| strategies[i].veto_after_vote(o));
+        // Pass is a driver decision, not an instruction sent to rules.
+        if act != LawAction::Pass {
+            logs.push(apply_law(sim, i, &act, &wallets[i]));
+        }
+    }
+    logs
 }
 
 pub fn play_game(
@@ -237,6 +294,9 @@ pub fn play_game(
                     _ => unreachable!(),
                 }
             }
+        }
+        if phase == Phase::Law {
+            actions.extend(review_vetoes(&mut sim, &wallets, strategies, &order));
         }
         let res = sim
             .advance(

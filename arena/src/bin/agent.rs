@@ -215,6 +215,19 @@ struct Mem {
     inspected: bool,
     bid: bool,
     license_yield: Option<u64>,
+    veto_reviewed: bool,
+}
+
+fn needs_decision(s: &Value, me: &Value, mem: &Mem) -> bool {
+    if me["alive"] == false { return false; }
+    match s["phase"].as_str() {
+        Some("market" | "action") => me["acted"] == false,
+        Some("law") => s["law_card"].as_u64().is_some_and(|c| c != alashi_rules::constants::NO_LAW as u64)
+            && (me["voted"] == false || (
+                me["voted"] == true && !mem.veto_reviewed && s["veto_pending"] == false
+            )),
+        _ => false,
+    }
 }
 
 const SYSTEM: &str = "Ты играешь в политэкономическую игру Alashi против других агентов. \
@@ -323,12 +336,12 @@ fn main() {
             .and_then(|f| f.iter().find(|f| f["idx"].as_u64() == Some(my_idx as u64)))
             .cloned()
             .unwrap_or(Value::Null);
-        let need_act = match phase {
-            "market" | "action" => me["acted"].as_bool() == Some(false),
-            "law" => me["voted"].as_bool() == Some(false),
-            _ => false,
-        };
+        let need_act = needs_decision(s, &me, &mem);
         if need_act {
+            if phase == "law" && me["voted"] == true {
+                // One review per phase, including transport failures and pass.
+                mem.veto_reviewed = true;
+            }
             // честная очередь: джиттер перед ходом, чтобы внешние агенты
             // на опросе не проигрывали гонку серверным ботам (дебриф r3).
             // Базар — исключение: позиция продажи решает цену (урок gid 12).
@@ -366,6 +379,10 @@ fn main() {
                 ));
             }
             let (action, params) = decision;
+            if action == "pass" {
+                my_log.push(format!("r{} {}: pass after vote", s["round"], phase));
+                continue;
+            }
             let body = serde_json::json!({
                 "token": token, "action": action, "params": params,
                 "by": if llm.is_some() { "llm" } else { "fallback" },
@@ -394,6 +411,10 @@ fn main() {
                     // фаза уже ушла — фоллбэк того же хода тоже не пройдёт
                     if err_s != "WrongPhase" && err_s != "TooEarly" && err_s != "GraceWindow" {
                         let (a2, p2) = fallback(phase, s, &me, &mem);
+                        if a2 == "pass" {
+                            my_log.push(format!("r{} {}: fallback pass", s["round"], phase));
+                            continue;
+                        }
                         let body = serde_json::json!({
                             "token": token, "action": a2, "params": p2, "by": "fallback",
                         }).to_string();
@@ -464,6 +485,9 @@ fn decide(
                 r#"{"action":"produce"} (+2 товара), {"action":"bribe","to":IDX,"amount":N} (+1 влияние), {"action":"donkey"} (1 товар за 1 песо). ЭПОХА 90-х дополнительно: {"action":"shuttle"} (+3 товара, серый товар: таможня может конфисковать при закрытии фазы), {"action":"roof","to":IDX} (крыша: гасит первый анти-богатый закон против цели, 20% кэша), {"action":"buy_hard"} / {"action":"sell_hard"} (валютчик: весь кэш ↔ твёрдая валюта ×0.8, не девальвирует, ход не сжигает), {"action":"bid_license","amount":N} (слепой аукцион лицензии в r4: победитель платит ставку в банк, получает ренту в сеттле — РЕНТА НЕ ВХОДИТ В РАНГ), {"action":"inspect_license"} (5M: узнать доход лицензии до ставок; если ты уже в курсе — не трать), {"action":"customs","tight":true|false} (ТОЛЬКО если ты президент: граница вслепую, tight=досмотр серых, loose=дань с серых в твою пользу). Одно основное действие (не сжигают ход: buy_hard/sell_hard/bid/inspect/customs)."#
             } else {
                 r#"{"action":"produce"} (+2 товара), {"action":"donkey"} (1 товар за 1 песо), {"action":"bribe","to":IDX,"amount":N} (+влияние). Одно действие."#
+            },
+            "law" if me["voted"] == true => {
+                r#"Голос уже подан. До подсчёта выбери {"action":"veto"}, если используешь право президента, или {"action":"pass"}, чтобы завершить решения. Повторно голосовать нельзя."#
             },
             "law" => if epoch_90s {
                 r#"{"action":"vote","choice":"yes|no|abstain"} и, если ты президент, можно {"action":"veto"} (до подсчёта, вслепую). ЭПОХА 90-х дополнительно: {"action":"offer_vote","to":IDX,"price":N} — предложить купить голос фракции IDX (деньги спишутся только при её акцепте), {"action":"accept_vote_offer"} — принять чужой офер (твой голос пойдёт за покупателя, деньги придут сразу)."#
@@ -546,6 +570,7 @@ fn decide_inner(
                             "bribe" => ("bribe", params),
                             "vote" => ("vote", params),
                             "veto" => ("veto", params),
+                            "pass" if phase == "law" && me["voted"] == true => ("pass", params),
                             "shuttle" => ("shuttle", params),
                             "roof" => ("roof", params),
                             "buy_hard" => ("buy_hard", params),
@@ -777,7 +802,40 @@ fn fallback(phase: &str, s: &Value, me: &Value, mem: &Mem) -> (&'static str, Val
             }
             ("produce", serde_json::json!({}))
         }
+        "law" if me["voted"] == true => ("pass", serde_json::json!({})),
         "law" => ("vote", serde_json::json!({"choice": "yes"})),
         _ => ("produce", serde_json::json!({})),
+    }
+}
+
+#[cfg(test)]
+mod presidency_tests {
+    use super::*;
+    use serde_json::json;
+
+    #[test]
+    fn voter_gets_one_veto_review_even_without_presidential_title() {
+        let s = json!({"phase":"law", "law_card":2, "veto_pending":false});
+        let me = json!({"alive":true, "voted":true, "is_president":false});
+        let mut mem = Mem::default();
+        assert!(needs_decision(&s, &me, &mem));
+        assert_eq!(fallback("law", &s, &me, &mem).0,"pass");
+        mem.veto_reviewed = true;
+        assert!(!needs_decision(&s, &me, &mem));
+        assert!(needs_decision(&s, &me, &Mem::default()));
+    }
+
+    #[test]
+    fn no_review_after_veto_or_before_reveal_or_after_phase() {
+        let me = json!({"alive":true,"voted":true});
+        let mem = Mem::default();
+        for s in [
+            json!({"phase":"law","law_card":2,"veto_pending":true}),
+            json!({"phase":"law","law_card":255,"veto_pending":false}),
+            json!({"phase":"finished","law_card":2,"veto_pending":false}),
+        ] { assert!(!needs_decision(&s,&me,&mem)); }
+        let s = json!({"phase":"law","law_card":2,"veto_pending":true});
+        let unvoted = json!({"alive":true,"voted":false});
+        assert!(needs_decision(&s,&unvoted,&mem)); // voting still allowed
     }
 }

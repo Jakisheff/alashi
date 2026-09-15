@@ -1,7 +1,7 @@
 //! Isolated JSON-lines bridge for tools/compare_agents.py. Never connects to arenad.
 use alashi_rules::{constants::*, state::VoteChoice};
 use arena::{
-    runner::{play_game, GameConfig},
+    runner::{observation_json, play_game, GameConfig},
     strategies::*,
 };
 use serde::Deserialize;
@@ -33,12 +33,7 @@ fn read() -> Value {
     serde_json::from_str(&line).expect("bridge JSON")
 }
 fn observation(o: &Obs) -> Value {
-    json!({"round":o.round,"my_idx":o.my_idx,"n_factions":o.n_factions,
-        "cash":o.cash,"goods":o.goods,"influence":o.influence,"alive":o.alive,
-        "sold_counter":o.sold_counter,"active_tax_bps":o.active_tax_bps,
-        "active_price_shift":o.active_price_shift,"active_boom":o.active_boom,
-        "law_card":o.law_card,"president":o.president.to_string(),
-        "my_wallet":o.my_wallet.to_string()})
+    observation_json(o)
 }
 fn number<T: TryFrom<u64>>(v: &Value, key: &str) -> Result<T, String> {
     v[key]
@@ -124,6 +119,9 @@ impl Strategy for Subject {
     }
     fn law(&mut self, o: &Obs) -> LawAction {
         self.choose(o, "law", |s, o| s.law(o), law, LawAction::Pass)
+    }
+    fn veto_after_vote(&mut self, o: &Obs) -> LawAction {
+        self.choose(o, "law", |s, o| s.veto_after_vote(o), law, LawAction::Pass)
     }
 }
 fn main() {

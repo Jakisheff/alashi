@@ -15,6 +15,11 @@ pub struct Obs<'a> {
     pub cash: &'a [u64],
     pub goods: &'a [u16],
     pub influence: &'a [u16],
+    pub vote_weight_mode: u8,
+    pub acted_stamp: &'a [u16],
+    pub vote_weight: &'a [u16],
+    pub voted: &'a [bool],
+    pub veto_pending: bool,
     pub alive: &'a [bool],
     /// Счётчик проданного в раунде (позиция в ценовой таблице).
     pub sold_counter: u16,
@@ -62,6 +67,10 @@ pub trait Strategy: Send {
     fn market(&mut self, obs: &Obs) -> MarketAction;
     fn action(&mut self, obs: &Obs) -> ActionAction;
     fn law(&mut self, obs: &Obs) -> LawAction;
+    /// One extra decision after voting, before the tally. Existing bots opt out.
+    fn veto_after_vote(&mut self, _obs: &Obs) -> LawAction {
+        LawAction::Pass
+    }
 }
 
 /// Эффективная цена единицы на позиции counter (та же арифметика,

@@ -64,6 +64,39 @@ class EvaluationTests(unittest.TestCase):
         self.assertEqual(trace['error'], 'policy_timeout')
         self.assertIsNone(trace['cost_usd'])
 
+    def test_external_agent_receives_contribution_and_can_veto_after_voting(self):
+        self.config['vote_weight_mode'] = 1
+        self.config['candidate'] = {'label': 'probe', 'command': ['unused']}
+        requests = []
+
+        def probe(variant, request, timeout):
+            requests.append(copy.deepcopy(request))
+            obs = request['observation']
+            action = 'pass'
+            if request['phase'] == 'law':
+                action = 'veto' if obs['decision_stage'] == 'post_vote' else 'vote_no'
+            response = {'action': action}
+            return response, {'source': 'external_unverified', 'error': None,
+                              'cost_usd': None, 'response': response}
+
+        with patch.object(ev, 'call_policy', side_effect=probe):
+            result = self.game('candidate')
+        self.assertEqual(result['status'], 'completed')
+        reviews = [r for r in requests if r['observation']['decision_stage'] == 'post_vote']
+        self.assertEqual(len(reviews), 6)
+        for r in reviews:
+            o = r['observation']
+            self.assertEqual(r['phase'], 'law')
+            self.assertEqual(o['vote_weight_mode'], 1)
+            self.assertEqual(o['vote_weight'][o['my_idx']], 3)
+            self.assertTrue(o['voted'][o['my_idx']])
+            self.assertEqual(len(o['acted_stamp']), 3)
+        vetoes = [a for p in result['game']['phases'] for a in p['actions']
+                  if a['actor'] == 0 and a['action'] == 'veto']
+        self.assertEqual(len(vetoes), 6)
+        for a in vetoes:
+            self.assertTrue(a['ok'] or a['err'] == 'NotPresident')
+
     def test_external_requests_do_not_disclose_seed_in_either_epoch(self):
         self.config['candidate'] = {'label': 'probe', 'command': ['unused']}
         ids = set()
