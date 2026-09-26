@@ -214,18 +214,10 @@ fn advance_inner(
                     }
                     None => draw_law_index(seed, game.laws_used_mask),
                 };
-                // SPEC_EPOCH_90S M4: карта «взаимозачёт» (id 8) — раз за
-                // партию, бит сида, только в эпохе 90-х
-                let card = if game.epoch == EPOCH_90S
-                    && !game.amnesty_used
-                    && card != LAW_AMNESTY
-                    && ((seed >> 16) & 1) == 1
-                {
-                    game.amnesty_used = true;
-                    LAW_AMNESTY
-                } else {
-                    card
-                };
+                // SPEC_EPOCH_90S M4: карта «взаимозачёт» — раз за
+                // партию, бит сида, только в эпохе 90-х (общий источник
+                // правила — apply_special_law_card, аудит 27.09 S1)
+                let card = apply_special_law_card(game, seed, card);
                 game.law_card = card;
                 game.laws_used_mask = mask;
                 res.law_card_drawn = Some(card);
@@ -420,6 +412,22 @@ pub fn reveal_law_card(game: &mut Game, card: u8) -> Result<u8, GameError> {
     Ok(card)
 }
 
+/// SPEC_EPOCH_90S M4: карта «взаимозачёт» (id 8) — раз за партию, бит
+/// сида, только в эпохе 90-х. Аудит 27.09 (S1): единый источник для
+/// слот-хэш вывода и VRF reveal — правило живёт только здесь.
+pub fn apply_special_law_card(game: &mut Game, seed: u64, drawn: u8) -> u8 {
+    if game.epoch == EPOCH_90S
+        && !game.amnesty_used
+        && drawn != LAW_AMNESTY
+        && ((seed >> 16) & 1) == 1
+    {
+        game.amnesty_used = true;
+        LAW_AMNESTY
+    } else {
+        drawn
+    }
+}
+
 pub fn reveal_law(game: &mut Game, seed: u64) -> Result<u8, GameError> {
     if game.entropy_mode != ENTROPY_SWITCHBOARD {
         return Err(GameError::InvalidEntropyMode);
@@ -430,9 +438,10 @@ pub fn reveal_law(game: &mut Game, seed: u64) -> Result<u8, GameError> {
     if game.law_card != NO_LAW {
         return Err(GameError::LawNotRevealed);
     }
-    let (card, mask) = draw_law_index(seed, game.laws_used_mask);
-    game.law_card = card;
+    let (drawn, mask) = draw_law_index(seed, game.laws_used_mask);
     game.laws_used_mask = mask;
+    let card = apply_special_law_card(game, seed, drawn);
+    game.law_card = card;
     Ok(card)
 }
 

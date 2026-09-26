@@ -1,4 +1,4 @@
-use crate::{constants::*, error::GameError, events::*, logic::draw_law_index, state::*};
+use crate::{constants::*, error::GameError, events::*, state::*};
 use anchor_lang::prelude::*;
 use switchboard_on_demand::accounts::RandomnessAccountData;
 use switchboard_on_demand::ON_DEMAND_DEVNET_PID;
@@ -54,9 +54,10 @@ pub fn handle_reveal_law(ctx: Context<RevealLaw>) -> Result<()> {
     b.copy_from_slice(&value[..8]);
     let seed = u64::from_le_bytes(b);
 
-    let (card, mask) = draw_law_index(seed, game.laws_used_mask);
-    game.law_card = card;
-    game.laws_used_mask = mask;
+    // Аудит 27.09 (S1): вывод карты — общее правило ядра, включая
+    // особую карту «взаимозачёт» эпохи 90-х (раньше ветка жила только
+    // в слот-хэш пути advance)
+    let card = alashi_rules::transitions::reveal_law(game, seed)?;
     emit!(LawDrawn {
         game: game.key(),
         round: game.round,

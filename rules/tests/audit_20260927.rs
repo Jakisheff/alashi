@@ -1,9 +1,10 @@
-// Regression pin for audit 20260927, finding S1
-// (docs/ops/audit_20260927/REPORT.md). The onchain adapter feeds seed = 0
-// into the shared core for most economy events. These tests feed the
-// adapter's actual inputs to the core and assert the CURRENT defective
-// behavior on purpose. After the S1 fix lands, invert the expectations
-// to the safe behavior.
+// Core behavior documentation for audit 20260927, finding S1
+// (docs/ops/audit_20260927/REPORT.md). The onchain adapter used to feed
+// seed = 0 into the shared core for most economy events; the adapter now
+// derives economy randomness from the slot hash on every advance and the
+// VRF reveal routes through the core (see programs replay tests). These
+// tests pin the core mapping seed -> economy outcome, including the
+// boundary value 0.
 
 use alashi_rules::anchor_lang::prelude::Pubkey;
 use alashi_rules::constants::{

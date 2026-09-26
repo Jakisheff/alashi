@@ -85,18 +85,19 @@ pub fn handle_advance(ctx: Context<Advance>) -> Result<()> {
         }
     }
 
-    // энтропия фазы: слот-хэш для карты закона, VRF-коммит для режима 1
+    // энтропия фазы: VRF-коммит для карты закона в режиме 1
     let vrf_commit = if wants_rng {
         let rng_ai = ctx.remaining_accounts[game.faction_count as usize].clone();
         Some(verify_switchboard(&rng_ai, clock.slot)?)
     } else {
         None
     };
-    let seed = if game.phase == Phase::Action && game.entropy_mode != ENTROPY_SWITCHBOARD {
-        draw_seed(&ctx.accounts.hashes.to_account_info())?
-    } else {
-        0
-    };
+    // Аудит 27.09 (S1): случайность — явный вход каждого игрового
+    // события. Экономические эффекты (доход лицензии, беспредел крыш,
+    // таможня) всегда получают слот-хэш; ноль больше не обозначает
+    // «нет данных». Карта закона в режиме VRF раскрывается только
+    // проверенным reveal.
+    let seed = draw_seed(&ctx.accounts.hashes.to_account_info())?;
 
     // вся машина фаз (M1-M11 включительно) — в rules::transitions,
     // единый источник для ончейна и симулятора (replay байт-в-байт)
