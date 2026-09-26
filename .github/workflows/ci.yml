@@ -11,11 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions-rust-lang/setup-rust-toolchain@v1
-
-      - uses: Swatinem/rust-cache@v2
+      # Аудит 27.09 (A2): действия закреплены по commit SHA, не по тегу
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions-rust-lang/setup-rust-toolchain@166cdcfd11aee3cb47222f9ddb555ce30ddb9659 # v1
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2
 
       - name: Workspace tests (rules crate; the Anchor program needs `anchor build` for its .so tests, excluded here)
         run: cargo test --locked --workspace --exclude alashi
@@ -29,7 +28,7 @@ jobs:
       - name: Indexer tests
         run: cargo test --locked --manifest-path indexer/Cargo.toml
 
-      - name: Anchor program host compile (SBF execution is a separate check)
+      - name: Anchor program host compile (SBF execution is the sbf job below)
         run: cargo check --locked -p alashi
 
       - name: Local tooling checks
@@ -38,3 +37,64 @@ jobs:
           python3 tools/anchor_dataset_test.py
           node --test tools/hotseat_engine_test.cjs tools/board_view_test.cjs tools/city_rules_test.cjs
           bash -n tools/stack_up.sh
+
+  # Аудит 27.09 (A2): свежая SBF-сборка и исполнение программы в CI.
+  # Раньше replay-тесты не запускались на свежей сборке, и устаревший
+  # сценарий 90-х жил незамеченным до 27.09.
+  sbf:
+    name: Fresh SBF build and program tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions-rust-lang/setup-rust-toolchain@166cdcfd11aee3cb47222f9ddb555ce30ddb9659 # v1
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2
+
+      - name: Install cargo-build-sbf 4.1.0 (isolated release dir)
+        run: |
+          curl -sL https://github.com/anza-xyz/agave/releases/download/v4.1.0/solana-release-x86_64-unknown-linux-gnu.tar.bz2 \
+            | tar xj -C "$HOME"
+          echo "$HOME/solana-release/bin" >> "$GITHUB_PATH"
+
+      - name: Build fresh SBF (tools/build_sbf.sh pins 4.1.0 / platform-tools v1.54)
+        run: bash tools/build_sbf.sh
+
+      - name: Program tests on fresh SBF (game + replay equivalence)
+        run: cargo test --locked -p alashi
+
+  # Аудит 27.09 (A2): проверка утечки секретов в истории
+  secrets:
+    name: Gitleaks secret scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7 # v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # Аудит 27.09 (A2): CVE-сканирование всех используемых Cargo.lock
+  audit:
+    name: RustSec audit of all lockfiles
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions-rust-lang/setup-rust-toolchain@166cdcfd11aee3cb47222f9ddb555ce30ddb9659 # v1
+
+      - name: Install cargo-audit
+        run: cargo install cargo-audit --locked
+
+      - name: Audit every Cargo.lock
+        run: |
+          for lock in Cargo.lock arena/Cargo.lock indexer/Cargo.lock bots/Cargo.lock; do
+            if [ -f "$lock" ]; then
+              echo "== $lock"
+              cargo audit --file "$lock"
+            else
+              echo "MISSING LOCKFILE: $lock" >&2
+              exit 1
+            fi
+          done
