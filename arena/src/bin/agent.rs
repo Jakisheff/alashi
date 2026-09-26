@@ -2,7 +2,8 @@
 //! заходит в партию, читает состояние, решает через LLM, действует.
 //!
 //!   agent --url http://127.0.0.1:8090 --game 1 --name Zhambyl \
-//!         [--model glm-4.5-flash] [--prompt файл] [--no-llm]
+//!         [--model glm-4.5-flash] [--prompt файл] [--no-llm] \
+//!         [--recovery-file путь]
 //!
 //! Ключ LLM: env ALASHI_LLM_KEY или ~/.config/alashi/llm.json
 //! (как у ончейн-бота). Без ключа — жадный фоллбэк: продать всё /
@@ -10,39 +11,52 @@
 //! (вексель, валютчик, крыша, челнок, таможня, лицензия, скупка
 //! голосов, бартер). После партии пишет селф-дебриф в inbox/<имя>/
 //! (подхватывает демон agent_inbox).
+//!
+//! Аудит 27.09 (S6): внешние адреса — только https (curl, проверка
+//! сертификата); открытый HTTP по умолчанию работает лишь на loopback.
+//! --recovery-file сохраняет секрет сессии (0600) до join и позволяет
+//! восстановить сессию после перезапуска.
 
 use serde_json::Value;
-use std::io::{Read, Write};
-use std::net::TcpStream;
 use std::time::Duration;
 
-// ---------- http-клиент (как в e2e-тесте) ----------
+// ---------- http-клиент ----------
+// Аудит 27.09 (S6): TLS через системный curl с проверкой сертификата
+// (паттерн нуля зависимостей, как у LLM-вызовов ниже). Открытый HTTP
+// допустим только на loopback: bearer-токен по внешней сети без TLS
+// перехватывается. Обход для локальных тестов: ALASHI_ALLOW_INSECURE_HTTP=1.
+
+fn allow_insecure_http() -> bool {
+    std::env::var("ALASHI_ALLOW_INSECURE_HTTP").ok().as_deref() == Some("1")
+}
+
+fn is_loopback(base: &str) -> bool {
+    let host = base
+        .trim_start_matches("https://")
+        .trim_start_matches("http://")
+        .split(':')
+        .next()
+        .unwrap_or("");
+    matches!(host, "127.0.0.1" | "localhost" | "[::1]" | "::1")
+}
 
 fn http(base: &str, method: &str, path: &str, body: Option<&str>) -> Option<Value> {
-    let https = base.starts_with("https://");
-    if https {
-        // R17: клиент без TLS — по https подключится к 443 и упадёт
-        // молча; говорим явно и отказываемся.
-        eprintln!("[ERROR] клиент без TLS: используй http-адрес арены (для туннеля: локальный порт хоста)");
+    if base.starts_with("http://") && !is_loopback(base) && !allow_insecure_http() {
+        eprintln!("[ERROR] открытый HTTP за пределами loopback: используй https-адрес арены (токен сессии перехватывается прослушкой сети)");
         return None;
     }
-    let url = base.trim_start_matches("http://");
-    let mut stream = TcpStream::connect(url).ok()?;
-    stream
-        .set_read_timeout(Some(Duration::from_secs(15)))
-        .ok();
-    let body = body.unwrap_or("");
-    let req = format!(
-        "{method} {path} HTTP/1.1\r\nHost: {url}\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{}",
-        body.len(),
-        body
-    );
-    stream.write_all(req.as_bytes()).ok()?;
-    let mut buf = Vec::new();
-    stream.read_to_end(&mut buf).ok()?;
-    let text = String::from_utf8_lossy(&buf);
-    let at = text.find("\r\n\r\n")? + 4;
-    serde_json::from_str(&text[at..]).ok()
+    let url = format!("{base}{path}");
+    let mut cmd = std::process::Command::new("curl");
+    cmd.args([
+        "-s", "-4", "-m", "75", "-X", method, "-H", "Content-Type: application/json",
+    ]);
+    if let Some(b) = body {
+        cmd.args(["-d", b]);
+    }
+    cmd.arg(&url);
+    let out = cmd.output().ok()?;
+    let text = String::from_utf8_lossy(&out.stdout);
+    serde_json::from_str(&text).ok()
 }
 
 // ---------- LLM (curl, как bots/llm.rs — ноль зависимостей) ----------
@@ -244,6 +258,24 @@ fn flag(args: &[String], name: &str) -> Option<String> {
     None
 }
 
+/// Аудит 27.09 (S6): секрет восстановления — только владелец, права 0600.
+fn write_recovery_secret(path: &str, secret: &str) {
+    let mut options = std::fs::OpenOptions::new();
+    options.create(true).write(true).truncate(true);
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::OpenOptionsExt;
+        options.mode(0o600);
+    }
+    match options.open(path).and_then(|mut f| {
+        use std::io::Write;
+        f.write_all(secret.as_bytes())
+    }) {
+        Ok(()) => println!("[agent] секрет восстановления сохранён: {path}"),
+        Err(e) => eprintln!("[ERROR] не удалось сохранить секрет восстановления ({path}): {e}; сохрани вручную"),
+    }
+}
+
 fn main() {
     let args: Vec<String> = std::env::args().collect();
     let url = flag(&args, "--url").unwrap_or_else(|| "http://127.0.0.1:8090".into());
@@ -272,16 +304,50 @@ fn main() {
         println!("[agent] LLM-ключа нет — жадный фоллбэк");
     }
 
-    let j = http(
+    // Аудит 27.09 (S6): секрет восстановления создаётся/читается до
+    // join и хранится в файле с правами 0600, переживает перезапуск
+    let recovery_file = flag(&args, "--recovery-file");
+    let stored_secret = recovery_file
+        .as_ref()
+        .and_then(|p| std::fs::read_to_string(p).ok())
+        .map(|s| s.trim().to_string())
+        .filter(|s| s.len() == 64 && s.chars().all(|c| c.is_ascii_hexdigit()));
+    if recovery_file.is_some() && stored_secret.is_none() {
+        eprintln!("[WARN] --recovery-file не содержит 64 hex-символа; join пройдёт с серверным секретом");
+    }
+    let mut join_body = serde_json::json!({
+        "name": name, "model": declared_model.clone(), "prompt": prompt.clone(),
+    });
+    if let Some(secret) = &stored_secret {
+        join_body["recovery_secret"] = serde_json::json!(secret);
+    }
+    let mut j = http(
         &url,
         "POST",
         &format!("/game/{}/join", game),
-        Some(&serde_json::json!({"name": name, "model": declared_model, "prompt": prompt}).to_string()),
+        Some(&join_body.to_string()),
     )
     .expect("join");
+    if j["ok"] != true && stored_secret.is_some() {
+        // рестарт при живой сессии: восстановление тем же секретом
+        let recover_body = serde_json::json!({
+            "name": name, "model": declared_model.clone(), "prompt": prompt.clone(),
+            "recover": true, "recovery_secret": stored_secret,
+        });
+        j = http(
+            &url,
+            "POST",
+            &format!("/game/{}/join", game),
+            Some(&recover_body.to_string()),
+        )
+        .expect("recover join");
+    }
     if j["ok"] != true {
         eprintln!("[ERROR] join: {}", j);
         std::process::exit(1);
+    }
+    if let (Some(path), Some(secret)) = (&recovery_file, j["recovery_secret"].as_str()) {
+        write_recovery_secret(path, secret);
     }
     let token = j["token"].as_str().unwrap().to_string();
     let my_idx = j["faction_idx"].as_u64().unwrap() as usize;
