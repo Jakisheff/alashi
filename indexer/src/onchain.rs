@@ -1,4 +1,4 @@
-use crate::{aggregate, agent_json, leaderboard_json, load_registry, load_state, save_state, IndexerState};
+use crate::{aggregate, agent_json, leaderboard_json, load_registry, load_state, save_state};
 use alashi_rules::state::{Faction, Game};
 use anchor_lang::prelude::Pubkey;
 use anchor_lang::AccountDeserialize;
@@ -59,55 +59,77 @@ pub fn scan(rpc_url: &str) -> (usize, crate::Aggregated) {
 
     let mut known: BTreeMap<Pubkey, bool> = BTreeMap::new();
     let mut state = load_state(crate::STATE_FILE);
+    // разовая миграция: агрегаты из старого кеша становятся базлайном
+    // единого состояния (аудит 27.09, S5)
+    if state.aggregates.parties_indexed == 0 {
+        if let Ok(legacy) = std::fs::read_to_string("../data/aggregates.json")
+            .and_then(|s| Ok(serde_json::from_str::<crate::Aggregated>(&s).unwrap_or_default()))
+        {
+            state.aggregates = legacy;
+        }
+    }
     let mut fresh: Vec<Game> = vec![];
     for g in &games {
         let key = crate::game_key(g);
         let idstr = key.to_string();
-        if !state.processed_games.contains(&idstr) {
+        let sig = crate::game_signature(g);
+        let reuse = state.processed_games.contains(&idstr)
+            && state
+                .processed_sigs
+                .get(&idstr)
+                .map(|old| old != &sig)
+                .unwrap_or(false);
+        if reuse {
+            eprintln!("game {idstr}: адрес партии использован повторно, индексирую заново");
+        }
+        if !state.processed_games.contains(&idstr) || reuse {
             fresh.push(g.clone());
             known.insert(key, true);
+            state.processed_sigs.insert(idstr.clone(), sig);
         }
     }
     for (k, _) in known {
         state.processed_games.insert(k.to_string());
     }
     let fresh_count = fresh.len();
-    save_state(&state, crate::STATE_FILE);
 
     println!("parsed {} games, {} game-keys with factions", games.len(), factions.len());
     let registry = load_registry(crate::REGISTRY_FILE);
-    let agg = aggregate(&fresh, &factions, &registry);
-    persist_agg(&agg, fresh_count);
-    (fresh_count, agg)
+    let delta = aggregate(&fresh, &factions, &registry);
+    crate::merge_aggregates(&mut state.aggregates, &delta);
+
+    // Аудит 27.09 (S5): checkpoint и агрегаты — одна атомарная запись.
+    // Сбой до неё оставляет партию необработанной (повторный скан
+    // догонит), сбой после — согласованное состояние.
+    if let Err(e) = save_state(&state, crate::STATE_FILE) {
+        eprintln!("[FATAL] не удалось записать состояние индексатора: {e}");
+        std::process::exit(1);
+    }
+    // агрегаты в отдельном файле — пересчитываемый кеш поверх состояния
+    persist_agg(&state.aggregates, fresh_count);
+    (fresh_count, state.aggregates.clone())
 }
 
 pub fn full_agg() -> crate::Aggregated {
-    std::fs::read_to_string("../data/aggregates.json")
+    if let Some(agg) = std::fs::read_to_string("../data/aggregates.json")
         .ok()
         .and_then(|s| serde_json::from_str(&s).ok())
-        .unwrap_or_default()
+    {
+        return agg;
+    }
+    // кеш отсутствует — агрегаты восстанавливаются из состояния
+    load_state(crate::STATE_FILE).aggregates
 }
 
+/// Кеш поверх единого состояния: авторитет — indexer_state.json
+/// (аудит 27.09, S5), этот файл пересчитываем.
 fn persist_agg(agg: &crate::Aggregated, fresh: usize) {
-    let mut combined = full_agg();
-    combined.parties_indexed += agg.parties_indexed;
-    for (id, st) in agg.stats.iter() {
-        let dst = combined.stats.entry(id.clone()).or_default();
-        dst.agent_id = st.agent_id.clone();
-        dst.matches += st.matches;
-        dst.rank_sum += st.rank_sum;
-        dst.total_cash += st.total_cash;
-        dst.rank_counts.resize(alashi_rules::constants::MAX_FACTIONS as usize, 0);
-        for (i, count) in st.rank_counts.iter().enumerate() {
-            dst.rank_counts[i] += count;
-        }
-    }
     let _ = std::fs::create_dir_all(crate::DATA_DIR);
     let _ = std::fs::write(
         "../data/aggregates.json",
-        serde_json::to_vec_pretty(&combined).unwrap(),
+        serde_json::to_vec_pretty(agg).unwrap(),
     );
-    println!("indexed {fresh} new settled parties, total {}", combined.parties_indexed);
+    println!("indexed {fresh} new settled parties, total {}", agg.parties_indexed);
 }
 
 pub fn serve(port: u16) -> ! {

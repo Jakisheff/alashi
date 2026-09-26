@@ -20,7 +20,7 @@ pub struct AgentEntry {
     pub prompt: String,
 }
 
-#[derive(Default, serde::Serialize, serde::Deserialize)]
+#[derive(Default, Clone, serde::Serialize, serde::Deserialize)]
 pub struct AgentStats {
     pub agent_id: String,
     pub matches: u64,
@@ -38,16 +38,19 @@ impl AgentStats {
     }
 }
 
-#[derive(Default, serde::Serialize, serde::Deserialize)]
+#[derive(Default, Clone, serde::Serialize, serde::Deserialize)]
 pub struct Aggregated {
     pub stats: BTreeMap<String, AgentStats>,
     pub parties_indexed: u64,
 }
 
+/// Аудит 27.09 (S7): кодирование как в arena::api::agent_id_of —
+/// с префиксами длины, без неоднозначного разделителя.
 pub fn agent_id_for(model: &str, prompt: &str) -> String {
     let mut h = Sha256::new();
+    h.update((model.len() as u64).to_le_bytes());
     h.update(model.as_bytes());
-    h.update(b"|");
+    h.update((prompt.len() as u64).to_le_bytes());
     h.update(prompt.as_bytes());
     hex(&h.finalize())
 }
@@ -151,6 +154,16 @@ pub fn game_key(game: &Game) -> Pubkey {
 #[derive(Default, serde::Serialize, serde::Deserialize)]
 pub struct IndexerState {
     pub processed_games: BTreeSet<String>,
+    /// Аудит 27.09 (S5): агрегаты живут в одном файле с checkpoint и
+    /// пишутся одной атомарной операцией. Раньше checkpoint сохранялся
+    /// до агрегатов, и сбой между ними навсегда пропускал партию.
+    #[serde(default)]
+    pub aggregates: Aggregated,
+    /// Подпись обработанной партии (хэш сериализации Game): один и тот
+    /// же PDA может быть создан заново после закрытия — при другом
+    /// состоянии партия индексируется повторно, а не пропускается.
+    #[serde(default)]
+    pub processed_sigs: BTreeMap<String, String>,
 }
 
 pub fn load_state(path: &str) -> IndexerState {
@@ -160,11 +173,46 @@ pub fn load_state(path: &str) -> IndexerState {
         .unwrap_or_default()
 }
 
-pub fn save_state(state: &IndexerState, path: &str) {
+/// Аудит 27.09 (S5): запись состояния атомарна (tmp + rename) и
+/// возвращает ошибку вызывающему: потерянная запись не считается успехом.
+pub fn save_state(state: &IndexerState, path: &str) -> std::io::Result<()> {
+    use std::io::Write;
     if let Some(dir) = Path::new(path).parent() {
-        let _ = std::fs::create_dir_all(dir);
+        std::fs::create_dir_all(dir)?;
     }
-    let _ = std::fs::write(path, serde_json::to_string_pretty(state).unwrap());
+    let tmp = format!("{path}.tmp");
+    let mut f = std::fs::File::create(&tmp)?;
+    f.write_all(serde_json::to_string_pretty(state).unwrap().as_bytes())?;
+    f.sync_all()?;
+    std::fs::rename(&tmp, path)
+}
+
+/// Подпись итогового состояния партии для распознавания повторного
+/// использования адреса игры (аудит 27.09, S5).
+pub fn game_signature(game: &Game) -> String {
+    use anchor_lang::AccountSerialize;
+    let mut buf = Vec::new();
+    let _ = game.try_serialize(&mut buf);
+    let mut h = Sha256::new();
+    h.update(&buf);
+    hex(&h.finalize())
+}
+
+/// Слияние приращения агрегатов (бывшая логика persist_agg, теперь без
+/// собственной записи на диск).
+pub fn merge_aggregates(combined: &mut Aggregated, add: &Aggregated) {
+    combined.parties_indexed += add.parties_indexed;
+    for (id, st) in add.stats.iter() {
+        let dst = combined.stats.entry(id.clone()).or_default();
+        dst.agent_id = st.agent_id.clone();
+        dst.matches += st.matches;
+        dst.rank_sum += st.rank_sum;
+        dst.total_cash += st.total_cash;
+        dst.rank_counts.resize(alashi_rules::constants::MAX_FACTIONS as usize, 0);
+        for (i, count) in st.rank_counts.iter().enumerate() {
+            dst.rank_counts[i] += count;
+        }
+    }
 }
 
 pub fn leaderboard_json(agg: &Aggregated) -> String {

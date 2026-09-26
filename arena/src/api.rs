@@ -354,10 +354,14 @@ fn secret_matches(a: &str, b: &str) -> bool {
     a.len() == b.len() && a.bytes().zip(b.bytes()).fold(0u8, |diff, (x, y)| diff | (x ^ y)) == 0
 }
 
+/// Аудит 27.09 (S7): составной идентификатор кодируется однозначно,
+/// с префиксами длины. Раньше ("a|b","c") и ("a","b|c") давали один
+/// хэш.
 pub fn agent_id_of(model: &str, prompt: &str) -> String {
     let mut h = Sha256::new();
+    h.update((model.len() as u64).to_le_bytes());
     h.update(model.as_bytes());
-    h.update(b"|");
+    h.update((prompt.len() as u64).to_le_bytes());
     h.update(prompt.as_bytes());
     h.finalize().iter().map(|b| format!("{:02x}", b)).collect()
 }

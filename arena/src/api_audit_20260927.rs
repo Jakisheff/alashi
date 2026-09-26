@@ -1,5 +1,5 @@
 // Regression tests for audit 20260927 (docs/ops/audit_20260927/REPORT.md),
-// findings S2/S3/S4. The original audit pins asserted the defective
+// findings S2/S3/S4/S7. The original audit pins asserted the defective
 // behavior; these tests assert the SAFE behavior required by the report
 // acceptance criteria. No sockets, no Solana, isolated temp files only.
 
@@ -156,4 +156,12 @@ fn timestamp_seed_is_not_recoverable_from_public_law_cards() {
         .collect();
     assert!(hits.is_empty(), "timestamp-кандидаты восстановили seed: {hits:?}");
     assert!(!(observation_time.saturating_sub(86400)..=observation_time).contains(&master));
+}
+
+#[test]
+fn agent_id_encoding_is_unambiguous() {
+    // Аудит 27.09 (S7): ("a|b","c") и ("a","b|c") больше не коллизируют
+    assert_ne!(agent_id_of("a|b", "c"), agent_id_of("a", "b|c"));
+    assert_ne!(agent_id_of("", "ab"), agent_id_of("a", "b"));
+    assert_eq!(agent_id_of("model", "prompt"), agent_id_of("model", "prompt"));
 }
