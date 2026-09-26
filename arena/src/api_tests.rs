@@ -25,7 +25,7 @@ fn join(state: &AppState, gid: u64, i: usize) -> Value {
 
 fn restore(state: &AppState) -> Arc<AppState> {
     let other = new_state_with_files(state.snapshot_path.clone(), state.sequence_path.clone());
-    load_snapshot(&other);
+    load_snapshot(&other).unwrap();
     other
 }
 
@@ -75,8 +75,13 @@ fn completed_history_and_saved_hint_prevent_reused_ids() {
     assert_eq!(create(&restored), 42);
     assert_eq!(h_state(&restored, 17)["result"]["party_no"], 90);
     // Older snapshots might omit next_id_hint entirely.
-    let mut legacy: Value = serde_json::from_slice(&std::fs::read(&state.snapshot_path).unwrap()).unwrap();
-    legacy.as_object_mut().unwrap().remove("next_id_hint");
+    // Аудит 27.09 (S4): create теперь устойчиво пишет снимок, поэтому
+    // legacy-файл собираем заново — нет hint, нет games, только completed.
+    let legacy = json!({
+        "v": 1,
+        "games": [],
+        "completed": [json!({"game_id": 17, "party_no": 90}).to_string()],
+    });
     std::fs::write(&state.snapshot_path, legacy.to_string()).unwrap();
     let restored = restore(&state);
     assert_eq!(create(&restored), 18);

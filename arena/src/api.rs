@@ -26,7 +26,16 @@ pub const MAX_GRACE_S: i64 = 30;
 pub const MAX_ENTRY_FEE: u64 = 1_000_000 * PESO;
 pub const MAX_PHASE_DURATION: i64 = 86_400;
 pub const MAX_LOBBY_DURATION: i64 = 7 * 86_400;
+/// Аудит 27.09 (S2): пределы накопления. Значения выбраны под размер
+/// пилота и меняются одной строкой.
+pub const MAX_ACTIVE_GAMES: usize = 100;
+pub const MAX_COMPLETED_GAMES: usize = 250;
+pub const MAX_ACTION_LOG: usize = 256;
+pub const MAX_PHASE_LOG: usize = 512;
+/// Аудит 27.09 (S2): самозаявленная метка источника хода в журнале.
+pub const MAX_BY_LEN: usize = 64;
 
+#[derive(Clone)]
 pub struct AgentRec {
     pub name: String,
     pub agent_id: String,
@@ -36,6 +45,7 @@ pub struct AgentRec {
     pub faction_idx: usize,
 }
 
+#[derive(Clone)]
 pub struct GameEntry {
     pub sim: Simulator,
     pub entry_fee: u64,
@@ -167,12 +177,34 @@ fn persist_snapshot(state: &AppState) {
     }
 }
 
-pub fn load_snapshot(state: &AppState) {
-    
-    let Ok(txt) = std::fs::read_to_string(&state.snapshot_path) else { return };
-    let Ok(doc) = serde_json::from_str::<serde_json::Value>(&txt) else {
-        eprintln!("[STATE] снимок не читается, старт пустой");
-        return;
+/// Аудит 27.09 (S4): повреждённый снимок не молчит. Отсутствие файла —
+/// чистый старт; любой другой сбой чтения или структуры — ошибка, оригинал
+/// сохраняется рядом как .corrupt.<ts>, пустое состояние не подменяет
+/// данные. Вызывающая сторона (serve) обязана отказаться от старта.
+pub fn load_snapshot(state: &AppState) -> Result<(), String> {
+    let txt = match std::fs::read_to_string(&state.snapshot_path) {
+        Ok(txt) => txt,
+        Err(e) if e.kind() == std::io::ErrorKind::NotFound => return Ok(()),
+        Err(e) => return Err(format!("снимок не читается: {e}")),
+    };
+    let backup_path = state
+        .snapshot_path
+        .with_extension(format!("json.corrupt.{}", now()));
+    let fail = |msg: String| -> Result<(), String> {
+        match std::fs::rename(&state.snapshot_path, &backup_path) {
+            Ok(()) => Err(format!("{msg}; оригинал сохранён: {}", backup_path.display())),
+            Err(e) => Err(format!("{msg}; сохранить оригинал не удалось: {e}")),
+        }
+    };
+    let doc = match serde_json::from_str::<serde_json::Value>(&txt) {
+        Ok(doc) => doc,
+        Err(e) => return fail(format!("снимок повреждён (JSON): {e}")),
+    };
+    if doc.get("v").and_then(|v| v.as_u64()) != Some(1) {
+        return fail("неизвестная версия снимка".into());
+    }
+    let Some(games_arr) = doc.get("games").and_then(|g| g.as_array()) else {
+        return fail("в снимке нет массива games".into());
     };
     let mut loaded = 0u32;
     {
@@ -182,32 +214,47 @@ pub fn load_snapshot(state: &AppState) {
             state.master_seed.store(seed, Ordering::SeqCst);
         }
         state.next_id.fetch_max(doc["next_id_hint"].as_u64().unwrap_or(1), Ordering::SeqCst);
-        for g in doc["games"].as_array().into_iter().flatten() {
+        for g in games_arr {
+            let Some(gid) = g["game_id"].as_u64() else {
+                return fail("запись партии без game_id".into());
+            };
             let (Some(game_b), Some(fac_b)) = (
                 hex_dec(g["game_hex"].as_str().unwrap_or("")),
                 hex_dec(g["factions_hex"].as_str().unwrap_or("")),
-            ) else { continue };
+            ) else {
+                return fail(format!("партия {gid}: game_hex/factions_hex не декодируются"));
+            };
             let (Ok(game), Ok(factions)) = (
                 borsh::from_slice::<Game>(&game_b),
                 borsh::from_slice::<Vec<Faction>>(&fac_b),
-            ) else { continue };
+            ) else {
+                return fail(format!("партия {gid}: borsh-запись не декодируется"));
+            };
             let sim = Simulator { game, factions, round_seed: g["round_seed"].as_u64().unwrap_or(0) };
-            let wallets: Vec<Pubkey> = g["wallets"].as_array().into_iter().flatten()
-                .filter_map(|w| w.as_str().and_then(|s| s.parse::<Pubkey>().ok())).collect();
-            let agents: Vec<AgentRec> = g["agents"].as_array().into_iter().flatten().filter_map(|a| {
-                Some(AgentRec {
-                    name: a["name"].as_str()?.to_string(),
-                    agent_id: a["agent_id"].as_str()?.to_string(),
-                    token: a["token"].as_str()?.to_string(),
-                    recovery_hash: a["recovery_hash"].as_str().map(str::to_string),
-                    model: a["model"].as_str().unwrap_or("?").to_string(),
-                    faction_idx: a["faction_idx"].as_u64()? as usize,
-                })
-            }).collect();
-            let insiders: std::collections::HashSet<usize> =
-                g["insiders"].as_array().into_iter().flatten()
-                    .filter_map(|x| x.as_u64().map(|v| v as usize)).collect();
-            let gid = g["game_id"].as_u64().unwrap_or(0);
+            let Some(wallets) = g["wallets"].as_array().map(|arr| {
+                arr.iter().map(|w| w.as_str().and_then(|s| s.parse::<Pubkey>().ok())).collect::<Option<Vec<Pubkey>>>()
+            }).flatten() else {
+                return fail(format!("партия {gid}: битый кошелёк"));
+            };
+            let Some(agents) = g["agents"].as_array().map(|arr| {
+                arr.iter().map(|a| {
+                    Some(AgentRec {
+                        name: a["name"].as_str()?.to_string(),
+                        agent_id: a["agent_id"].as_str()?.to_string(),
+                        token: a["token"].as_str()?.to_string(),
+                        recovery_hash: a["recovery_hash"].as_str().map(str::to_string),
+                        model: a["model"].as_str().unwrap_or("?").to_string(),
+                        faction_idx: a["faction_idx"].as_u64()? as usize,
+                    })
+                }).collect::<Option<Vec<AgentRec>>>()
+            }).flatten() else {
+                return fail(format!("партия {gid}: битая запись агента"));
+            };
+            let Some(insiders) = g["insiders"].as_array().map(|arr| {
+                arr.iter().map(|x| x.as_u64().map(|v| v as usize)).collect::<Option<std::collections::HashSet<usize>>>()
+            }).flatten() else {
+                return fail(format!("партия {gid}: битые инсайдеры"));
+            };
             let entry = GameEntry {
                 sim,
                 entry_fee: g["entry_fee"].as_u64().unwrap_or(10 * PESO),
@@ -246,6 +293,7 @@ pub fn load_snapshot(state: &AppState) {
     if loaded > 0 {
         eprintln!("[STATE] восстановлено партий: {}", loaded);
     }
+    Ok(())
 }
 
 fn now() -> i64 {
@@ -271,11 +319,22 @@ fn next_party_no(path: &std::path::Path) -> std::io::Result<u64> {
     Ok(next)
 }
 
-fn splitmix64(x: u64) -> u64 {
-    let mut z = x.wrapping_add(0x9E3779B97F4A7C15);
-    z = (z ^ (z >> 30)).wrapping_mul(0xBF58476D1CE4E5B9);
-    z = (z ^ (z >> 27)).wrapping_mul(0x94D049BB133111EB);
-    z ^ (z >> 31)
+/// Аудит 27.09 (S3): секрет арены берётся из ОС, а не из времени.
+/// Для локальных воспроизводимых прогонов: ALASHI_MASTER_SEED=<u64>.
+fn master_seed_from_env_or_os() -> u64 {
+    if let Ok(v) = std::env::var("ALASHI_MASTER_SEED") {
+        if let Ok(seed) = v.trim().parse::<u64>() {
+            return seed;
+        }
+    }
+    random_u64().expect("нет доступа к источнику энтропии ОС (/dev/urandom)")
+}
+
+fn random_u64() -> std::io::Result<u64> {
+    use std::io::Read;
+    let mut bytes = [0u8; 8];
+    std::fs::File::open("/dev/urandom")?.read_exact(&mut bytes)?;
+    Ok(u64::from_le_bytes(bytes))
 }
 
 fn random_hex() -> std::io::Result<String> {
@@ -315,12 +374,7 @@ pub fn new_state_with_files(snapshot_path: impl Into<PathBuf>, sequence_path: im
         games: Mutex::new(HashMap::new()),
         next_id: AtomicU64::new(1),
         completed: Mutex::new(Vec::new()),
-        master_seed: AtomicU64::new(
-            SystemTime::now()
-                .duration_since(UNIX_EPOCH)
-                .map(|d| d.as_secs())
-                .unwrap_or(1),
-        ),
+        master_seed: AtomicU64::new(master_seed_from_env_or_os()),
         snapshot_path: snapshot_path.into(),
         sequence_path: sequence_path.into(),
         snapshot_lock: Mutex::new(()),
@@ -360,8 +414,16 @@ fn iso_utc(ts: u64) -> String {
     )
 }
 
-fn game_seed(state: &AppState, game_id: u64) -> u64 {
-    splitmix64(state.master_seed.load(Ordering::Relaxed) ^ splitmix64(game_id))
+/// Аудит 27.09 (S3): раундовый seed выводится криптографической
+/// функцией из секрета арены, номера партии и раунда. Время в выводе
+/// не участвует.
+fn round_seed(state: &AppState, game_id: u64, round: u8) -> u64 {
+    let mut h = Sha256::new();
+    h.update(state.master_seed.load(Ordering::Relaxed).to_le_bytes());
+    h.update(game_id.to_le_bytes());
+    h.update(round.to_le_bytes());
+    let d = h.finalize();
+    u64::from_le_bytes(d[..8].try_into().unwrap())
 }
 
 /// Фиксирует итог закрытой фазы в протокол: для law — карту, вес да/нет,
@@ -387,13 +449,20 @@ fn record_phase_close(entry: &mut GameEntry, closing: (Phase, u8, u8)) {
         }),
     };
     entry.phase_log.push(rec);
+    // Аудит 27.09 (S2): журнал фаз ограничен, старые записи вытесняются
+    if entry.phase_log.len() > MAX_PHASE_LOG {
+        let excess = entry.phase_log.len() - MAX_PHASE_LOG;
+        entry.phase_log.drain(0..excess);
+    }
 }
 
 fn settle_and_record(state: &AppState, game_id: u64) {
     let mut rec = None;
+    let mut backup = None;
     {
         let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
         if let Some(entry) = games.get_mut(&game_id) {
+            backup = Some(entry.clone());
             let (ranks, payouts, rake, bank, breakdown) = match runner::try_settle(&entry.sim, entry.entry_fee, false) {
                 Ok(plan) => plan,
                 Err(error) => {
@@ -484,10 +553,32 @@ fn settle_and_record(state: &AppState, game_id: u64) {
         games.remove(&game_id);
         if let Some(r) = rec {
             // Removal and insertion must be one snapshot-visible change.
-            state.completed.lock().unwrap_or_else(|e| e.into_inner()).push(r);
+            // Аудит 27.09 (S2): архив завершённых партий ограничен.
+            let mut completed = state.completed.lock().unwrap_or_else(|e| e.into_inner());
+            completed.push(r.clone());
+            while completed.len() > MAX_COMPLETED_GAMES {
+                completed.remove(0);
+            }
         }
     }
-    persist_snapshot(state);
+    // Аудит 27.09 (S4): сеттл подтверждается устойчивой записью; при сбое
+    // партия возвращается в активные и не теряется
+    if let Err(e) = save_snapshot(state) {
+        eprintln!("[ERROR] snapshot save after settle: {e}");
+        let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
+        if let Some(entry) = backup {
+            games.insert(game_id, entry);
+        }
+        drop(games);
+        // записанный рекорд этой партии убираем из архива
+        let mut completed = state.completed.lock().unwrap_or_else(|e| e.into_inner());
+        completed.retain(|line| {
+            serde_json::from_str::<serde_json::Value>(line)
+                .ok()
+                .and_then(|v| v["game_id"].as_u64())
+                != Some(game_id)
+        });
+    }
 }
 
 /// Один тик кранка: двигает все партии, чьё время фазы вышло.
@@ -498,7 +589,7 @@ pub fn crank_once(state: &AppState) {
     let mut changed = false;
     let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
     for (&gid, entry) in games.iter_mut() {
-        let seed = splitmix64(game_seed(state, gid) ^ (entry.sim.game.round as u64));
+        let seed = round_seed(state, gid, entry.sim.game.round);
         match entry.sim.game.phase {
             Phase::Lobby => {
                 let full = entry.sim.game.faction_count >= MAX_FACTIONS;
@@ -716,6 +807,18 @@ fn json_num(v: impl Into<u64>) -> serde_json::Value {
 }
 
 fn h_new_game(state: &AppState, body: &serde_json::Value) -> serde_json::Value {
+    // Аудит 27.09 (S2): неизвестные поля отклоняются, а не игнорируются
+    if let Some(obj) = body.as_object() {
+        for key in obj.keys() {
+            if !matches!(
+                key.as_str(),
+                "entry_fee" | "phase_duration" | "grace_s" | "vote_weight_mode" | "epoch"
+                    | "lobby_duration" | "label"
+            ) {
+                return err_json("bad_params", &format!("неизвестное поле: {key}"));
+            }
+        }
+    }
     let entry_fee = body
         .get("entry_fee")
         .and_then(|v| v.as_u64())
@@ -753,6 +856,13 @@ fn h_new_game(state: &AppState, body: &serde_json::Value) -> serde_json::Value {
     }
     // Serialize ID/sequence allocation with insertion for simultaneous creators.
     let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
+    // Аудит 27.09 (S2): предел одновременных активных партий
+    if games.len() >= MAX_ACTIVE_GAMES {
+        return err_json(
+            "arena_full",
+            &format!("достигнут предел активных партий ({MAX_ACTIVE_GAMES})"),
+        );
+    }
     let game_id = match state.next_id.fetch_update(Ordering::SeqCst, Ordering::SeqCst, |id| id.checked_add(1)) {
         Ok(id) => id,
         Err(_) => return err_json("id_exhausted", "закончились идентификаторы партий"),
@@ -794,10 +904,59 @@ fn h_new_game(state: &AppState, body: &serde_json::Value) -> serde_json::Value {
     };
     let v = state_json(game_id, &entry);
     games.insert(game_id, entry);
+    drop(games);
+    // Аудит 27.09 (S4): создание подтверждается только устойчивой записью.
+    // party_no уже расходуется в файле последовательности: при сбое диска
+    // номер пропускается, партия не создаётся наполовину.
+    if let Err(e) = save_snapshot(state) {
+        eprintln!("[ERROR] snapshot save after create: {e}");
+        state
+            .games
+            .lock()
+            .unwrap_or_else(|e| e.into_inner())
+            .remove(&game_id);
+        return err_json("storage_failed", "партия не создана: не удалось записать состояние на диск; повтори запрос");
+    }
     serde_json::json!({"ok": true, "game_id": game_id, "state": v})
 }
 
 fn h_join(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json::Value {
+    // Аудит 27.09 (S2): неизвестные поля отклоняются, а не игнорируются
+    if let Some(obj) = body.as_object() {
+        for key in obj.keys() {
+            if !matches!(
+                key.as_str(),
+                "name" | "model" | "prompt" | "recover" | "recovery_secret" | "token"
+            ) {
+                return err_json("bad_params", &format!("неизвестное поле: {key}"));
+            }
+        }
+    }
+    let backup = {
+        let games = state.games.lock().unwrap_or_else(|e| e.into_inner());
+        games.get(&game_id).map(|e| e.clone())
+    };
+    let response = h_join_inner(state, game_id, body);
+    if response["ok"] != true {
+        return response;
+    }
+    // Аудит 27.09 (S4): join принят только при устойчивой записи; при сбое
+    // диска мутация откатывается и повтор join даёт чистый результат.
+    if let Err(e) = save_snapshot(state) {
+        eprintln!("[ERROR] snapshot save after join: {e}");
+        if let Some(entry) = backup {
+            state
+                .games
+                .lock()
+                .unwrap_or_else(|e| e.into_inner())
+                .insert(game_id, entry);
+        }
+        return err_json("storage_failed", "изменение не принято: не удалось записать состояние на диск; повтори запрос");
+    }
+    response
+}
+
+fn h_join_inner(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json::Value {
     let name = body
         .get("name")
         .and_then(|v| v.as_str())
@@ -991,12 +1150,73 @@ fn log_to_json(l: &ActionLog) -> serde_json::Value {
 }
 
 fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json::Value {
+    // Аудит 27.09 (S2): неизвестные поля тела и params отклоняются,
+    // а не сохраняются в журнал
+    if let Some(obj) = body.as_object() {
+        for key in obj.keys() {
+            if !matches!(key.as_str(), "token" | "action" | "params" | "by") {
+                return err_json("bad_params", &format!("неизвестное поле: {key}"));
+            }
+        }
+    }
+    let action = body.get("action").and_then(|v| v.as_str()).unwrap_or("");
+    let allowed: &[&str] = match action {
+        "sell" | "sell_credit" | "buy" => &["units"],
+        "produce" | "shuttle" | "donkey" | "inspect_license" | "accept_vote_offer"
+        | "buy_hard" | "sell_hard" | "veto" => &[],
+        "roof" => &["to", "tariff"],
+        "customs" => &["tight"],
+        "bid_license" => &["amount"],
+        "offer_vote" => &["to", "price"],
+        "barter_propose" => &["goods", "price", "to"],
+        "barter_accept" => &["offer"],
+        "bribe" => &["to", "amount"],
+        "vote" => &["choice"],
+        _ => {
+            return err_json("bad_action", "sell|sell_credit|buy|buy_hard|sell_hard|produce|shuttle|roof|customs|bid_license|inspect_license|sell_vote|barter_propose|barter_accept|offer_vote|accept_vote_offer|donkey|bribe|vote|veto")
+        }
+    };
+    if let Some(params) = body.get("params").and_then(|v| v.as_object()) {
+        for key in params.keys() {
+            if !allowed.contains(&key.as_str()) {
+                return err_json("bad_params", &format!("неизвестное поле params: {key}"));
+            }
+        }
+    }
+    let backup = {
+        let games = state.games.lock().unwrap_or_else(|e| e.into_inner());
+        games.get(&game_id).map(|e| e.clone())
+    };
+    let response = h_act_inner(state, game_id, body);
+    if response["ok"] != true {
+        return response;
+    }
+    // Аудит 27.09 (S4): действие подтверждается только устойчивой записью
+    if let Err(e) = save_snapshot(state) {
+        eprintln!("[ERROR] snapshot save after act: {e}");
+        if let Some(entry) = backup {
+            state
+                .games
+                .lock()
+                .unwrap_or_else(|e| e.into_inner())
+                .insert(game_id, entry);
+        }
+        return err_json("storage_failed", "изменение не принято: не удалось записать состояние на диск; повтори запрос");
+    }
+    response
+}
+
+fn h_act_inner(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json::Value {
     let token = body.get("token").and_then(|v| v.as_str()).unwrap_or("");
     let action = body.get("action").and_then(|v| v.as_str()).unwrap_or("");
     let p = body.get("params").cloned().unwrap_or(serde_json::json!({}));
     // R8 (REVIEW_EXTERNAL): источник хода — самозаявлен клиентом,
     // отличает решение модели от жадного фоллбэка в /export
-    let by = body.get("by").and_then(|v| v.as_str()).unwrap_or("unknown");
+    let mut by = body.get("by").and_then(|v| v.as_str()).unwrap_or("unknown").to_string();
+    // Аудит 27.09 (S2): метка источника урезается до предела
+    if by.chars().count() > MAX_BY_LEN {
+        by = by.chars().take(MAX_BY_LEN).collect();
+    }
     let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
     let Some(entry) = games.get_mut(&game_id) else {
         return err_json("unknown_game", "партия не найдена или закрыта");
@@ -1227,13 +1447,14 @@ fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json
     };
     let ok = log.ok;
     let err = log.err.clone();
-    // протокол хода: фаза, раунд, актёр, действие, исход (для /export)
+    // протокол хода: фаза, раунд, актёр, действие, исход (для /export).
+    // Аудит 27.09 (S2): у отклонённых действий параметры не сохраняются
     entry.action_log.push(serde_json::json!({
         "round": entry.sim.game.round,
         "phase": phase_name(entry.sim.game.phase),
         "actor": idx,
         "action": action,
-        "params": p,
+        "params": if ok { p } else { serde_json::Value::Null },
         "by": by,
         "ok": ok,
         "err": err,
@@ -1241,6 +1462,10 @@ fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json
         "goods_after": log.goods_after,
         "ts": now(),
     }));
+    if entry.action_log.len() > MAX_ACTION_LOG {
+        let excess = entry.action_log.len() - MAX_ACTION_LOG;
+        entry.action_log.drain(0..excess);
+    }
     let v = state_json(game_id, entry);
     // кастдев №5: повтор при потерянном ответе выглядел как «за меня
     // играл фоллбэк» — прямо говорим, что это почти наверняка свой повтор
@@ -1259,7 +1484,7 @@ fn h_advance(state: &AppState, game_id: u64) -> serde_json::Value {
     let Some(entry) = games.get_mut(&game_id) else {
         return err_json("unknown_game", "партия не найдена или закрыта");
     };
-    let seed = splitmix64(game_seed(state, game_id) ^ (entry.sim.game.round as u64));
+    let seed = round_seed(state, game_id, entry.sim.game.round);
     // грейс-окно (только игровые фазы): ранний permissionless-кранк
     // отменил бы окно для опоздавших действий — отказ до ends_at+grace
     if matches!(
@@ -1276,6 +1501,8 @@ fn h_advance(state: &AppState, game_id: u64) -> serde_json::Value {
         });
     }
     let closing = (entry.sim.game.phase, entry.sim.game.round, entry.sim.game.law_card);
+    // Аудит 27.09 (S4): копия для отката при сбое записи
+    let backup = entry.clone();
     match entry.sim.advance(t, seed) {
         Ok(_) => {
             entry.sim.game.phase_ends_at = t.saturating_add(entry.sim.game.phase_duration);
@@ -1285,6 +1512,14 @@ fn h_advance(state: &AppState, game_id: u64) -> serde_json::Value {
             drop(games);
             if finished {
                 settle_and_record(state, game_id);
+            } else if let Err(e) = save_snapshot(state) {
+                eprintln!("[ERROR] snapshot save after advance: {e}");
+                state
+                    .games
+                    .lock()
+                    .unwrap_or_else(|e| e.into_inner())
+                    .insert(game_id, backup);
+                return err_json("storage_failed", "изменение не принято: не удалось записать состояние на диск; повтори запрос");
             }
             serde_json::json!({"ok": true, "finished": finished, "state": v})
         }
@@ -1467,11 +1702,9 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
             }
         }
     } else { None };
-    let mut is_post_mut = false;
-    let (status, body) = match (req.method.as_str(), segs.as_slice()) {
-        ("GET", []) => ("200 OK", root_doc().to_string()),
-        ("POST", ["game", "new"]) => { is_post_mut = true; ("200 OK", h_new_game(state, &body_v).to_string()) },
-        ("POST", ["game", id, "join"]) => { is_post_mut = true; match id.parse::<u64>() {
+    let (status, body) = match (req.method.as_str(), segs.as_slice()) {        ("GET", []) => ("200 OK", root_doc().to_string()),
+        ("POST", ["game", "new"]) => { ("200 OK", h_new_game(state, &body_v).to_string()) },
+        ("POST", ["game", id, "join"]) => { match id.parse::<u64>() {
             Ok(id) => ("200 OK", h_join(state, id, &body_v).to_string()),
             Err(_) => ("400 Bad Request", err_json("bad_id", "game_id не число").to_string()),
         } },
@@ -1485,11 +1718,11 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
             Ok(id) => ("200 OK", h_wait(state, id, &req.path).to_string()),
             Err(_) => ("400 Bad Request", err_json("bad_id", "game_id не число").to_string()),
         },
-        ("POST", ["game", id, "act"]) => { is_post_mut = true; match id.parse::<u64>() {
+        ("POST", ["game", id, "act"]) => { match id.parse::<u64>() {
             Ok(id) => ("200 OK", h_act(state, id, &body_v).to_string()),
             Err(_) => ("400 Bad Request", err_json("bad_id", "game_id не число").to_string()),
         } },
-        ("POST", ["game", id, "advance"]) => { is_post_mut = true; match id.parse::<u64>() {
+        ("POST", ["game", id, "advance"]) => { match id.parse::<u64>() {
             Ok(id) => ("200 OK", h_advance(state, id).to_string()),
             Err(_) => ("400 Bad Request", err_json("bad_id", "game_id не число").to_string()),
         } },
@@ -1512,16 +1745,8 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
             err_json("not_found", "см. GET / для списка эндпоинтов").to_string(),
         ),
     };
-    // П7: любой POST меняет состояние - снимок на диск
-    if is_post_mut && serde_json::from_str::<serde_json::Value>(&body).ok().is_some_and(|v| v["ok"] == true) {
-        if let Err(e) = save_snapshot(state) {
-            eprintln!("[ERROR] snapshot save after POST: {e}");
-            respond(stream, "503 Service Unavailable", &err_json(
-                "snapshot_failed", "изменение в памяти принято, но запись на диск не удалась; проверь state перед повтором",
-            ).to_string());
-            return;
-        }
-    }
+    // Аудит 27.09 (S4): ответственность за «мутация + устойчивая запись +
+    // ответ» лежит на обработчиках; слой HTTP состояние не сохраняет
     respond(stream, status, &body);
 }
 
@@ -1570,7 +1795,7 @@ pub fn serve_on(
     addr: &str,
     tick_ms: u64,
 ) -> std::io::Result<std::net::SocketAddr> {
-    load_snapshot(&state);
+    load_snapshot(&state).map_err(|msg| std::io::Error::new(std::io::ErrorKind::InvalidData, msg))?;
     let listener = TcpListener::bind(addr)?;
     let local = listener.local_addr()?;
     let crank_state = Arc::clone(&state);
@@ -1583,7 +1808,7 @@ pub fn serve_on(
 }
 
 pub fn serve(state: Arc<AppState>, addr: &str, tick_ms: u64) -> std::io::Result<()> {
-    load_snapshot(&state);
+    load_snapshot(&state).map_err(|msg| std::io::Error::new(std::io::ErrorKind::InvalidData, msg))?;
     let listener = TcpListener::bind(addr)?;
     let crank_state = Arc::clone(&state);
     std::thread::spawn(move || loop {
@@ -1599,3 +1824,7 @@ pub fn serve(state: Arc<AppState>, addr: &str, tick_ms: u64) -> std::io::Result<
 #[cfg(test)]
 #[path = "api_tests.rs"]
 mod tests;
+
+#[cfg(test)]
+#[path = "api_audit_20260927.rs"]
+mod audit_20260927;

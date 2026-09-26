@@ -12,6 +12,7 @@ use crate::transitions;
 use anchor_lang::prelude::Pubkey;
 use anchor_lang::AccountSerialize;
 
+#[derive(Clone)]
 pub struct Simulator {
     pub game: Game,
     pub factions: Vec<Faction>,
