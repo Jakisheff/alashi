@@ -305,8 +305,11 @@ fn main() {
     }
 
     // Аудит 27.09 (S6): секрет восстановления создаётся/читается до
-    // join и хранится в файле с правами 0600, переживает перезапуск
+    // join и хранится в файле с правами 0600, переживает перезапуск.
+    // Отчёт «Цукерберг/Muse» 27.09: --owner-key задаёт постоянную
+    // личность персонажа, независимую от модели и промпта.
     let recovery_file = flag(&args, "--recovery-file");
+    let owner_key = flag(&args, "--owner-key").filter(|k| k.len() == 64);
     let stored_secret = recovery_file
         .as_ref()
         .and_then(|p| std::fs::read_to_string(p).ok())
@@ -318,6 +321,9 @@ fn main() {
     let mut join_body = serde_json::json!({
         "name": name, "model": declared_model.clone(), "prompt": prompt.clone(),
     });
+    if let Some(k) = &owner_key {
+        join_body["owner_key"] = serde_json::json!(k);
+    }
     if let Some(secret) = &stored_secret {
         join_body["recovery_secret"] = serde_json::json!(secret);
     }
@@ -328,12 +334,18 @@ fn main() {
         Some(&join_body.to_string()),
     )
     .expect("join");
-    if j["ok"] != true && stored_secret.is_some() {
+    if j["ok"] != true && (stored_secret.is_some() || owner_key.is_some()) {
         // рестарт при живой сессии: восстановление тем же секретом
-        let recover_body = serde_json::json!({
+        let mut recover_body = serde_json::json!({
             "name": name, "model": declared_model.clone(), "prompt": prompt.clone(),
-            "recover": true, "recovery_secret": stored_secret,
+            "recover": true,
         });
+        if let Some(k) = &owner_key {
+            recover_body["owner_key"] = serde_json::json!(k);
+        }
+        if let Some(secret) = &stored_secret {
+            recover_body["recovery_secret"] = serde_json::json!(secret);
+        }
         j = http(
             &url,
             "POST",

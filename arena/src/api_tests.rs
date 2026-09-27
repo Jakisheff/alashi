@@ -53,7 +53,7 @@ fn recover_full_started_game_revokes_old_token_and_survives_restart() {
     for i in 1..6 { join(&state, gid, i); }
     crank_once(&state);
     assert_eq!(state.games.lock().unwrap()[&gid].sim.game.phase, Phase::Market);
-    let recovered = h_join(&state, gid, &json!({"model": "demo-0", "prompt": "regression", "recover": true, "recovery_secret": joined["recovery_secret"]}));
+    let recovered = h_join(&state, gid, &json!({"name": "Demo0", "model": "demo-0", "prompt": "regression", "recover": true, "recovery_secret": joined["recovery_secret"]}));
     assert_eq!(recovered["recovered"], true, "{recovered}");
     assert_eq!(state.games.lock().unwrap()[&gid].sim.factions.len(), 6);
     assert_eq!(h_act(&state, gid, &json!({"token": old_token, "action": "produce"}))["error"], "bad_token");
@@ -167,19 +167,23 @@ fn recovery_requires_secret_and_persists_only_its_hash() {
     let state = isolated();
     let gid = create(&state);
     let client_secret = "ab".repeat(32);
-    let joined = h_join(&state, gid, &json!({"model":"victim", "prompt":"public", "recovery_secret":client_secret}));
+    let joined = h_join(&state, gid, &json!({"name":"Victim", "model":"victim", "prompt":"public", "recovery_secret":client_secret}));
     assert_eq!(joined["ok"], true);
-    let token = joined["token"].as_str().unwrap();
+    let token = joined["token"].as_str().unwrap().to_string();
     for secret in [Value::Null, json!("cd".repeat(32)), json!("short")] {
-        let attack = h_join(&state, gid, &json!({"model":"victim", "prompt":"public", "recover":true, "recovery_secret":secret}));
-        assert_eq!(attack["error"], "bad_recovery_secret");
+        let attack = h_join(&state, gid, &json!({"name":"Victim", "model":"victim", "prompt":"public", "recover":true, "recovery_secret":secret}));
+        let err = attack["error"].as_str().unwrap();
+        // неверный секрет отклоняется на любом этапе: bad_params (формат),
+        // unknown_agent (чужая личность) или bad_recovery_secret (подбор)
+        assert!(matches!(err, "bad_params" | "unknown_agent" | "bad_recovery_secret"), "{err}");
+        assert_eq!(attack["ok"], false);
         assert_eq!(state.games.lock().unwrap()[&gid].agents[0].token, token);
     }
     save_snapshot(&state).unwrap();
     let snapshot = std::fs::read_to_string(&state.snapshot_path).unwrap();
     assert!(!snapshot.contains(&client_secret));
     let restored = restore(&state);
-    let recovered = h_join(&restored, gid, &json!({"model":"victim", "prompt":"public", "recover":true, "recovery_secret":client_secret}));
+    let recovered = h_join(&restored, gid, &json!({"name":"Victim", "model":"victim", "prompt":"public", "recover":true, "recovery_secret":client_secret}));
     assert_eq!(recovered["ok"], true);
     assert_ne!(recovered["token"], token);
     assert!(!h_state(&restored, gid).to_string().contains(&client_secret));
@@ -193,7 +197,7 @@ fn legacy_recovery_needs_current_token_to_enroll_secret() {
     state.games.lock().unwrap().get_mut(&gid).unwrap().agents[0].recovery_hash = None;
     save_snapshot(&state).unwrap();
     let restored = restore(&state);
-    let mut body = json!({"model":"demo-0", "prompt":"regression", "recover":true});
+    let mut body = json!({"name":"Demo0", "model":"demo-0", "prompt":"regression", "recover":true});
     assert_eq!(h_join(&restored, gid, &body)["error"], "bad_recovery_secret");
     body["token"] = joined["token"].clone();
     let enrolled = h_join(&restored, gid, &body);

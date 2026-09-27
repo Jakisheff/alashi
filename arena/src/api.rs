@@ -38,7 +38,13 @@ pub const MAX_BY_LEN: usize = 64;
 #[derive(Clone)]
 pub struct AgentRec {
     pub name: String,
+    /// Отпечаток стратегии: SHA256(model, prompt). Не личность.
     pub agent_id: String,
+    /// Отчёт «Цукерберг/Muse» 27.09: постоянная личность персонажа.
+    pub character_id: String,
+    /// Владелец персонажа (хэш секрета): виден организатору клуба,
+    /// чтобы отличать разных людей от одного оператора.
+    pub owner_id: String,
     pub token: String,
     pub recovery_hash: Option<String>,
     pub model: String,
@@ -129,7 +135,8 @@ pub fn save_snapshot(state: &AppState) -> std::io::Result<()> {
                 "round_seed": e.sim.round_seed,
                 "wallets": e.wallets.iter().map(|w| w.to_string()).collect::<Vec<_>>(),
                 "agents": e.agents.iter().map(|a| serde_json::json!({
-                    "name": a.name, "agent_id": a.agent_id, "token": a.token,
+                    "name": a.name, "agent_id": a.agent_id, "character_id": a.character_id,
+                    "owner_id": a.owner_id, "token": a.token,
                     "model": a.model, "faction_idx": a.faction_idx, "recovery_hash": a.recovery_hash,
                 })).collect::<Vec<_>>(),
                 "insiders": e.insiders.iter().cloned().collect::<Vec<_>>(),
@@ -236,20 +243,27 @@ pub fn load_snapshot(state: &AppState) -> Result<(), String> {
             }).flatten() else {
                 return fail(format!("партия {gid}: битый кошелёк"));
             };
-            let Some(agents) = g["agents"].as_array().map(|arr| {
-                arr.iter().map(|a| {
+            let mut agents: Vec<AgentRec> = Vec::new();
+            for a in g["agents"].as_array().into_iter().flatten() {
+                let Some(rec) = (|| {
+                    let agent_id = a["agent_id"].as_str()?.to_string();
                     Some(AgentRec {
                         name: a["name"].as_str()?.to_string(),
-                        agent_id: a["agent_id"].as_str()?.to_string(),
+                        agent_id: agent_id.clone(),
+                        // legacy-снимки без персонажа: личность = отпечаток
+                        // стратегии (отчёт 27.09, миграция без потери данных)
+                        character_id: a["character_id"].as_str().unwrap_or(&agent_id).to_string(),
+                        owner_id: a["owner_id"].as_str().unwrap_or("legacy").to_string(),
                         token: a["token"].as_str()?.to_string(),
                         recovery_hash: a["recovery_hash"].as_str().map(str::to_string),
                         model: a["model"].as_str().unwrap_or("?").to_string(),
                         faction_idx: a["faction_idx"].as_u64()? as usize,
                     })
-                }).collect::<Option<Vec<AgentRec>>>()
-            }).flatten() else {
-                return fail(format!("партия {gid}: битая запись агента"));
-            };
+                })() else {
+                    return fail(format!("партия {gid}: битая запись агента"));
+                };
+                agents.push(rec);
+            }
             let Some(insiders) = g["insiders"].as_array().map(|arr| {
                 arr.iter().map(|x| x.as_u64().map(|v| v as usize)).collect::<Option<std::collections::HashSet<usize>>>()
             }).flatten() else {
@@ -363,6 +377,29 @@ pub fn agent_id_of(model: &str, prompt: &str) -> String {
     h.update(model.as_bytes());
     h.update((prompt.len() as u64).to_le_bytes());
     h.update(prompt.as_bytes());
+    h.finalize().iter().map(|b| format!("{:02x}", b)).collect()
+}
+
+/// Отчёт «Цукерберг/Muse» 27.09, раздел 6: владелец персонажа — хэш
+/// секрета (owner_key клиента или recovery_secret сессии). Секрет
+/// остаётся у владельца, сервер хранит только хэш.
+pub fn owner_id_of(owner_key: &str) -> String {
+    let mut h = Sha256::new();
+    h.update(b"alashi-owner-v1");
+    h.update((owner_key.len() as u64).to_le_bytes());
+    h.update(owner_key.as_bytes());
+    h.finalize().iter().map(|b| format!("{:02x}", b)).collect()
+}
+
+/// Персонаж = владелец + имя. Модель и промпт не входят: смена версии
+/// стратегии не создаёт новую личность.
+pub fn character_id_of(owner_id: &str, name: &str) -> String {
+    let mut h = Sha256::new();
+    h.update(b"alashi-character-v1");
+    h.update((owner_id.len() as u64).to_le_bytes());
+    h.update(owner_id.as_bytes());
+    h.update((name.len() as u64).to_le_bytes());
+    h.update(name.as_bytes());
     h.finalize().iter().map(|b| format!("{:02x}", b)).collect()
 }
 
@@ -484,6 +521,8 @@ fn settle_and_record(state: &AppState, game_id: u64) {
                     serde_json::json!({
                         "name": a.name,
                         "agent_id": a.agent_id,
+                        "character_id": a.character_id,
+                        "owner_id": a.owner_id,
                         "model": a.model,
                     })
                 })
@@ -749,6 +788,7 @@ fn state_json(game_id: u64, entry: &GameEntry) -> serde_json::Value {
                 "idx": i,
                 "name": f.name,
                 "agent_id": entry.agents.iter().find(|a| a.faction_idx == i).map(|a| a.agent_id.clone()),
+                "character_id": entry.agents.iter().find(|a| a.faction_idx == i).map(|a| a.character_id.clone()),
                 "cash": f.cash,
                 // П5: кэш уже после всех эскроу/списаний — предел ставки
                 // и покупок считается без повторного запроса (кейс Aitore:
@@ -930,7 +970,7 @@ fn h_join(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_jso
         for key in obj.keys() {
             if !matches!(
                 key.as_str(),
-                "name" | "model" | "prompt" | "recover" | "recovery_secret" | "token"
+                "name" | "model" | "prompt" | "recover" | "recovery_secret" | "owner_key" | "token"
             ) {
                 return err_json("bad_params", &format!("неизвестное поле: {key}"));
             }
@@ -989,12 +1029,59 @@ fn h_join_inner(state: &AppState, game_id: u64, body: &serde_json::Value) -> ser
         Err(_) => return err_json("entropy_unavailable", "не удалось создать секрет сессии"),
     };
     let recover = body.get("recover").and_then(|v| v.as_bool()).unwrap_or(false);
+    // Отчёт «Цукерберг/Muse» 27.09: якорь личности — секрет владельца
+    // (явный owner_key или recovery_secret, переданный клиентом).
+    // Клиент без секрета получает legacy-личность, равную отпечатку
+    // стратегии: старые клиенты и прежние снимки продолжают работать.
+    let owner_key = match body.get("owner_key") {
+        Some(v) => match v.as_str().filter(|s| recovery_hash(s).is_some()) {
+            Some(k) => Some(k.to_string()),
+            None => {
+                return err_json("bad_params", "owner_key должен содержать 64 hex-символа из 32 случайных байтов")
+            }
+        },
+        None => None,
+    };
+    let has_client_secret = body.get("recovery_secret").and_then(|v| v.as_str()).is_some();
+    let recovery_secret = match body.get("recovery_secret") {
+        Some(v) => match v.as_str().filter(|s| recovery_hash(s).is_some()) {
+            Some(secret) => secret.to_string(),
+            None => return err_json("bad_params", "recovery_secret должен содержать 64 hex-символа из 32 случайных байтов"),
+        },
+        None => match random_hex() {
+            Ok(secret) => secret,
+            Err(_) => return err_json("entropy_unavailable", "не удалось создать секрет восстановления"),
+        },
+    };
+    let (owner_id, character_id) = if let Some(k) = &owner_key {
+        let oid = owner_id_of(k);
+        let cid = character_id_of(&oid, &name);
+        (oid, cid)
+    } else if has_client_secret {
+        let oid = owner_id_of(&recovery_secret);
+        let cid = character_id_of(&oid, &name);
+        (oid, cid)
+    } else {
+        ("legacy".into(), agent_id.clone())
+    };
     let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
     let Some(entry) = games.get_mut(&game_id) else {
         return err_json("unknown_game", "партия не найдена или закрыта");
     };
     // Recovery is an existing-session operation, not a new join.
-    if let Some(i) = entry.agents.iter().position(|a| a.agent_id == agent_id) {
+    // Отчёт 27.09: сессия ищется по персонажу; для legacy-сессий
+    // (личность = отпечаток стратегии) сохранён поиск по стратегии.
+    let found = entry
+        .agents
+        .iter()
+        .position(|a| a.character_id == character_id)
+        .or_else(|| {
+            entry
+                .agents
+                .iter()
+                .position(|a| a.character_id == a.agent_id && a.agent_id == agent_id)
+        });
+    if let Some(i) = found {
         if recover {
             let agent = &entry.agents[i];
             let supplied = body.get("recovery_secret").and_then(|v| v.as_str()).unwrap_or("");
@@ -1015,34 +1102,27 @@ fn h_join_inner(state: &AppState, game_id: u64, body: &serde_json::Value) -> ser
                 entry.agents[i].recovery_hash = recovery_hash(secret);
             }
             let faction_idx = entry.agents[i].faction_idx;
+            let stored_agent_id = entry.agents[i].agent_id.clone();
+            let stored_owner_id = entry.agents[i].owner_id.clone();
             entry.agents[i].token = token.clone();
             let v = state_json(game_id, entry);
             return serde_json::json!({
                 "ok": true, "recovered": true, "game_id": game_id,
-                "agent_id": agent_id, "token": token, "recovery_secret": enrolled_secret, "faction_idx": faction_idx,
+                "agent_id": stored_agent_id, "character_id": character_id, "owner_id": stored_owner_id,
+                "token": token, "recovery_secret": enrolled_secret, "faction_idx": faction_idx,
                 "warning": "токен перевыпущен; предыдущий отозван", "state": v
             });
         }
-        return err_json("join_failed", "DuplicateWallet: агент уже в партии; для восстановления передай recover: true и recovery_secret");
+        return err_json("join_failed", "DuplicateWallet: персонаж уже в партии; для восстановления передай recover: true и recovery_secret");
     }
     if recover {
-        return err_json("unknown_agent", "агент не участвовал в этой партии");
+        return err_json("unknown_agent", "персонаж не участвовал в этой партии");
     }
     if entry.agents.len() >= MAX_FACTIONS as usize {
         return err_json("game_full", "мест нет");
     }
-    let recovery_secret = match body.get("recovery_secret") {
-        Some(v) => match v.as_str().filter(|s| recovery_hash(s).is_some()) {
-            Some(secret) => secret.to_string(),
-            None => return err_json("bad_params", "recovery_secret должен содержать 64 hex-символа из 32 случайных байтов"),
-        },
-        None => match random_hex() {
-            Ok(secret) => secret,
-            Err(_) => return err_json("entropy_unavailable", "не удалось создать секрет восстановления"),
-        },
-    };
     let mut h = Sha256::new();
-    h.update(agent_id.as_bytes());
+    h.update(character_id.as_bytes());
     h.update(&game_id.to_le_bytes());
     let wallet = Pubkey::new_from_array(h.finalize().into());
     if let Err(e) = entry.sim.join(wallet, &name) {
@@ -1053,14 +1133,17 @@ fn h_join_inner(state: &AppState, game_id: u64, body: &serde_json::Value) -> ser
     entry.agents.push(AgentRec {
         name: name.clone(),
         agent_id: agent_id.clone(),
+        character_id: character_id.clone(),
+        owner_id: owner_id.clone(),
         token: token.clone(),
         recovery_hash: recovery_hash(&recovery_secret),
         model,
         faction_idx,
     });
-    eprintln!("[join] party {} faction {} agent {}", entry.party_no, faction_idx, agent_id);
+    eprintln!("[join] party {} faction {} character {} (strategy {})", entry.party_no, faction_idx, character_id, agent_id);
     let v = state_json(game_id, entry);
-    serde_json::json!({"ok": true, "agent_id": agent_id, "token": token, "recovery_secret": recovery_secret, "faction_idx": faction_idx,
+    serde_json::json!({"ok": true, "agent_id": agent_id, "character_id": character_id, "owner_id": owner_id,
+        "token": token, "recovery_secret": recovery_secret, "faction_idx": faction_idx,
         "warning": if placeholder_warn { Some("имя/model похожи на плейсхолдер из примера — подставь реальные значения; сохрани token и recovery_secret сразу; восстановление требует recovery_secret") } else { None },
         "state": v})
 }
@@ -1531,23 +1614,26 @@ fn h_advance(state: &AppState, game_id: u64) -> serde_json::Value {
     }
 }
 
-/// Кастдев №5: GET /slots?agent_id=<hex> — во всех АКТИВНЫХ партиях
-/// находит фракции этого агента (кошелёк детерминирован от
-/// agent_id+game_id). Отвечает на «где я уже сижу» без тест-джойнов.
+/// Кастдев №5: GET /slots?character_id=<hex> — во всех АКТИВНЫХ партиях
+/// находит фракции этого персонажа (кошелёк детерминирован от
+/// character_id+game_id). Отчёт 27.09: поиск по личности, не по версии
+/// стратегии; ?agent_id= оставлен для legacy-сессий.
 fn h_slots(state: &AppState, raw_path: &str) -> serde_json::Value {
     let q = raw_path.split_once('?').map(|(_, q)| q).unwrap_or("");
-    let agent_id = q
-        .split('&')
-        .find_map(|kv| kv.split_once('=').filter(|(k, _)| *k == "agent_id").map(|(_, v)| v.to_string()))
-        .unwrap_or_default();
-    if agent_id.len() != 64 || !agent_id.chars().all(|c| c.is_ascii_hexdigit()) {
-        return err_json("bad_params", "нужен ?agent_id= (64 hex, из ответа join)");
+    let getq = |k: &str| {
+        q.split('&').find_map(|kv| {
+            kv.split_once('=').filter(|(key, _)| *key == k).map(|(_, v)| v.to_string())
+        })
+    };
+    let character_id = getq("character_id").or_else(|| getq("agent_id")).unwrap_or_default();
+    if character_id.len() != 64 || !character_id.chars().all(|c| c.is_ascii_hexdigit()) {
+        return err_json("bad_params", "нужен ?character_id= (64 hex, из ответа join)");
     }
     let games = state.games.lock().unwrap_or_else(|e| e.into_inner());
     let mut found = Vec::new();
     for (&gid, e) in games.iter() {
         let mut h = Sha256::new();
-        h.update(agent_id.as_bytes());
+        h.update(character_id.as_bytes());
         h.update(&gid.to_le_bytes());
         let d: [u8; 32] = h.finalize().into();
         let wallet = Pubkey::new_from_array(d);
@@ -1563,7 +1649,138 @@ fn h_slots(state: &AppState, raw_path: &str) -> serde_json::Value {
             }));
         }
     }
-    serde_json::json!({"ok": true, "agent_id": agent_id, "active_slots": found})
+    serde_json::json!({"ok": true, "character_id": character_id, "active_slots": found})
+}
+
+/// Отчёт «Цукерберг/Muse» 27.09, раздел 8: история пары персонажей по
+/// проверяемым событиям завершённых партий. Только факты журнала
+/// действий, без интерпретации мотивов.
+fn h_history(state: &AppState, raw_path: &str) -> serde_json::Value {
+    let q = raw_path.split_once('?').map(|(_, q)| q).unwrap_or("");
+    let getq = |k: &str| {
+        q.split('&').find_map(|kv| {
+            kv.split_once('=').filter(|(key, _)| *key == k).map(|(_, v)| v.to_string())
+        })
+    };
+    let me = getq("character_id").unwrap_or_default();
+    let peer = getq("peer").unwrap_or_default();
+    for id in [&me, &peer] {
+        if id.len() != 64 || !id.chars().all(|c| c.is_ascii_hexdigit()) {
+            return err_json("bad_params", "нужны ?character_id= и ?peer= (64 hex, из ответов join)");
+        }
+    }
+    let completed = state.completed.lock().unwrap_or_else(|e| e.into_inner());
+    let mut meetings: Vec<serde_json::Value> = Vec::new();
+    for line in completed.iter() {
+        let Ok(rec) = serde_json::from_str::<serde_json::Value>(line) else { continue };
+        let Some(agents) = rec["agents"].as_array() else { continue };
+        let idx_of = |cid: &str| {
+            agents.iter().position(|a| a["character_id"].as_str() == Some(cid))
+        };
+        let (Some(mi), Some(pi)) = (idx_of(&me), idx_of(&peer)) else { continue };
+        let rank_of = |fi: usize| -> Option<u64> {
+            rec["ranks"].as_array().and_then(|r| {
+                r.iter().position(|x| x.as_u64() == Some(fi as u64)).map(|p| p as u64)
+            })
+        };
+        let payout_of = |fi: usize| -> u64 {
+            rec["payouts"].as_array().and_then(|p| p.get(fi)).and_then(|x| x.as_u64()).unwrap_or(0)
+        };
+        let (Some(my_rank), Some(peer_rank)) = (rank_of(mi), rank_of(pi)) else { continue };
+        // прямые взаимодействия по журналу действий (только успешные ходы)
+        let mut bribes_to_peer = 0u64;
+        let mut bribes_from_peer = 0u64;
+        let mut roofs_on_peer: Vec<&str> = Vec::new();
+        let mut roofs_on_me: Vec<&str> = Vec::new();
+        let mut vote_trades = 0u64;
+        let mut pending_offer: Option<(usize, usize)> = None; // (offerer, target)
+        let mut my_votes: std::collections::HashMap<u64, &str> = Default::default();
+        let mut peer_votes: std::collections::HashMap<u64, &str> = Default::default();
+        let mut my_vetoes = 0u64;
+        let mut peer_vetoes = 0u64;
+        if let Some(actions) = rec["actions"].as_array() {
+            for a in actions.iter() {
+                if a["ok"] != true { continue; }
+                let actor = a["actor"].as_u64().unwrap_or(u64::MAX) as usize;
+                let action = a["action"].as_str().unwrap_or("");
+                let to = a["params"]["to"].as_u64().map(|v| v as usize);
+                let amount = a["params"]["amount"].as_u64().unwrap_or(0);
+                let round = a["round"].as_u64().unwrap_or(0);
+                match action {
+                    "bribe" => {
+                        if actor == mi && to == Some(pi) { bribes_to_peer += amount; }
+                        if actor == pi && to == Some(mi) { bribes_from_peer += amount; }
+                    }
+                    "roof" => {
+                        let tariff = a["params"]["tariff"].as_str().unwrap_or("?");
+                        if actor == mi && to == Some(pi) { roofs_on_peer.push(tariff); }
+                        if actor == pi && to == Some(mi) { roofs_on_me.push(tariff); }
+                    }
+                    "offer_vote" => {
+                        pending_offer = to.map(|t| (actor, t));
+                    }
+                    "accept_vote_offer" => {
+                        if let Some((offerer, target)) = pending_offer.take() {
+                            let pair_involves =
+                                (offerer == mi && actor == pi) || (offerer == pi && actor == mi);
+                            let target_relevant = target == mi || target == pi;
+                            if pair_involves && target_relevant { vote_trades += 1; }
+                        }
+                    }
+                    "vote" => {
+                        if let Some(choice) = a["params"]["choice"].as_str() {
+                            if actor == mi { my_votes.insert(round, choice); }
+                            if actor == pi { peer_votes.insert(round, choice); }
+                        }
+                    }
+                    "veto" => {
+                        if actor == mi { my_vetoes += 1; }
+                        if actor == pi { peer_vetoes += 1; }
+                    }
+                    _ => {}
+                }
+            }
+        }
+        let mut same_votes = 0u64;
+        let mut opposed_votes = 0u64;
+        for (round, my) in my_votes.iter() {
+            if let Some(their) = peer_votes.get(round) {
+                if my == their && my != &"abstain" { same_votes += 1; }
+                if my != their && my != &"abstain" && their != &"abstain" { opposed_votes += 1; }
+            }
+        }
+        meetings.push(serde_json::json!({
+            "game_id": rec["game_id"],
+            "party_no": rec["party_no"],
+            "label": rec["label"],
+            "finished_at": rec["finished_at"],
+            "me": {"faction_idx": mi, "rank": my_rank, "payout": payout_of(mi)},
+            "peer": {"faction_idx": pi, "name": agents[pi]["name"], "rank": peer_rank, "payout": payout_of(pi)},
+            "outcome": if my_rank < peer_rank { "ahead" } else if my_rank > peer_rank { "behind" } else { "tie" },
+            "interactions": {
+                "bribes_to_peer": bribes_to_peer,
+                "bribes_from_peer": bribes_from_peer,
+                "roofs_on_peer": roofs_on_peer,
+                "roofs_on_me": roofs_on_me,
+                "vote_trades": vote_trades,
+                "same_votes": same_votes,
+                "opposed_votes": opposed_votes,
+                "my_vetoes": my_vetoes,
+                "peer_vetoes": peer_vetoes,
+            },
+        }));
+    }
+    let ahead = meetings.iter().filter(|m| m["outcome"] == "ahead").count();
+    let behind = meetings.iter().filter(|m| m["outcome"] == "behind").count();
+    serde_json::json!({
+        "ok": true,
+        "character_id": me,
+        "peer": peer,
+        "meetings": meetings.len(),
+        "summary": {"ahead": ahead, "behind": behind, "tie": meetings.len() - ahead - behind},
+        "history": meetings,
+        "note": "только записанные события журнала; мотивы не интерпретируются",
+    })
 }
 
 fn h_games(state: &AppState) -> serde_json::Value {
@@ -1666,6 +1883,7 @@ fn root_doc() -> serde_json::Value {
             "GET  /games": "активные партии",
             "GET  /ui": "зрительский экран живой арены (app/arena.html)",
             "GET  /slots?agent_id=": "во всех активных партиях — где сидит этот агент (фракции, фазы)",
+            "GET  /history?character_id=&peer=": "история встреч пары персонажей по завершённым партиям: места, выплаты и прямые взаимодействия из журнала (взятки, крыши, торговля голосами, совпадения голосов)",
             "GET  /leaderboard": "рейтинг агентов по завершённым партиям",
             "GET  /export": "завершённые партии JSONL",
         },
@@ -1734,6 +1952,7 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
         // кастдев №5 (Aisultan): где мой кошелёк уже сидит — без этого
         // агент реконструирует лимиты тестовыми партиями
         ("GET", ["slots"]) => ("200 OK", h_slots(state, &req.path).to_string()),
+        ("GET", ["history"]) => ("200 OK", h_history(state, &req.path).to_string()),
         ("GET", ["leaderboard"]) => ("200 OK", h_leaderboard(state).to_string()),
         ("GET", ["export"]) => {
             let l = h_export(state);
@@ -1832,3 +2051,7 @@ mod tests;
 #[cfg(test)]
 #[path = "api_audit_20260927.rs"]
 mod audit_20260927;
+
+#[cfg(test)]
+#[path = "api_social_tests.rs"]
+mod social_20260927;
