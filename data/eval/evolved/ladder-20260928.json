@@ -1,0 +1,208 @@
+{
+  "elapsed_s": 72.73480074,
+  "fitness_histories_pesos": [
+    [
+      -1.00625,
+      -0.0625,
+      -0.0625,
+      -0.0625,
+      -0.0625,
+      -0.0625,
+      -0.0625,
+      -0.0625,
+      -0.0625,
+      -0.0625,
+      -0.0625,
+      -0.0625
+    ],
+    [
+      -0.025,
+      -0.025,
+      -0.025,
+      -0.025,
+      -0.025,
+      -0.025,
+      -0.025,
+      -0.025,
+      -0.025,
+      -0.025,
+      -0.025,
+      -0.025
+    ],
+    [
+      -0.4625,
+      -0.4625,
+      -0.4625,
+      -0.10625,
+      -0.10625,
+      -0.10625,
+      -0.10625,
+      -0.10625,
+      -0.10625,
+      -0.10625,
+      -0.10625,
+      -0.10625
+    ],
+    [
+      -0.1875,
+      -0.1875,
+      -0.1875,
+      -0.1875,
+      -0.1875,
+      -0.1875,
+      -0.1875,
+      -0.1875,
+      -0.1875,
+      -0.1875,
+      -0.1875,
+      -0.1875
+    ],
+    [
+      23.275,
+      23.275,
+      23.75,
+      23.75,
+      23.75,
+      23.75,
+      23.75,
+      23.75,
+      23.75,
+      23.75,
+      23.75,
+      23.75
+    ]
+  ],
+  "gene_max": [
+    8,
+    10,
+    4,
+    3,
+    20,
+    20
+  ],
+  "gene_min": [
+    1,
+    2,
+    1,
+    0,
+    4,
+    0
+  ],
+  "gene_names": [
+    "dip_buy",
+    "buy_reserve",
+    "max_buy_units",
+    "bribe_appetite",
+    "bribe_gate",
+    "license_bid"
+  ],
+  "interpretation": "Локальная калибровка на фиксированном расписании сидов; сила уровня гарантируется только относительно этого микса соперников.",
+  "levels": [
+    {
+      "achieved_pesos": 5.9375,
+      "genome": {
+        "bribe_appetite": 3,
+        "bribe_gate": 7,
+        "buy_reserve": 5,
+        "dip_buy": 3,
+        "license_bid": 20,
+        "max_buy_units": 2
+      },
+      "level": 1,
+      "target_pesos": 6.0
+    },
+    {
+      "achieved_pesos": 9.975,
+      "genome": {
+        "bribe_appetite": 1,
+        "bribe_gate": 10,
+        "buy_reserve": 2,
+        "dip_buy": 3,
+        "license_bid": 18,
+        "max_buy_units": 4
+      },
+      "level": 2,
+      "target_pesos": 10.0
+    },
+    {
+      "achieved_pesos": 13.89375,
+      "genome": {
+        "bribe_appetite": 2,
+        "bribe_gate": 14,
+        "buy_reserve": 10,
+        "dip_buy": 5,
+        "license_bid": 19,
+        "max_buy_units": 4
+      },
+      "level": 3,
+      "target_pesos": 14.0
+    },
+    {
+      "achieved_pesos": 17.8125,
+      "genome": {
+        "bribe_appetite": 2,
+        "bribe_gate": 19,
+        "buy_reserve": 8,
+        "dip_buy": 4,
+        "license_bid": 14,
+        "max_buy_units": 1
+      },
+      "level": 4,
+      "target_pesos": 18.0
+    },
+    {
+      "achieved_pesos": 23.75,
+      "genome": {
+        "bribe_appetite": 3,
+        "bribe_gate": 17,
+        "buy_reserve": 4,
+        "dip_buy": 1,
+        "license_bid": 0,
+        "max_buy_units": 3
+      },
+      "level": 5,
+      "target_pesos": null
+    }
+  ],
+  "params": {
+    "base_seed": 7,
+    "generations_per_level": 12,
+    "mutation_rate": 0.25,
+    "opponents": [
+      "greedy",
+      "tactical",
+      "greedy",
+      "random"
+    ],
+    "population": 16,
+    "seeds": 4,
+    "targets_arg": "6,10,14,18"
+  },
+  "schema_version": 1,
+  "verification": [
+    {
+      "earlier_generation": 0,
+      "later_generation": 1,
+      "mean_payout_delta": 3621875.0,
+      "paired_matches": 40
+    },
+    {
+      "earlier_generation": 1,
+      "later_generation": 2,
+      "mean_payout_delta": 6234375.0,
+      "paired_matches": 40
+    },
+    {
+      "earlier_generation": 2,
+      "later_generation": 3,
+      "mean_payout_delta": 1306250.0,
+      "paired_matches": 40
+    },
+    {
+      "earlier_generation": 3,
+      "later_generation": 4,
+      "mean_payout_delta": 6115625.0,
+      "paired_matches": 40
+    }
+  ]
+}

@@ -23,7 +23,7 @@ import uuid
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-BUILTINS = {'greedy', 'random', 'tactical'}
+BUILTINS = {'greedy', 'random', 'tactical', 'genome'}
 
 
 def write_json(path, value):

@@ -599,3 +599,10 @@ source_defined: сводка docs/ops/PRESIDENCY_ENGINE_20260916.json, полн�
 Факт: 0,27 часа. План: 2 часа, до 02:07 закрыт.
 
 16.09 00:28. Независимая проверка и публикация ветки sprint-31-08 (коммит a97171d). Прошли: 33 теста alashi-rules, 35 арены включая 8 HTTP e2e на реальных сокетах, 10 indexer, cargo check alashi, сборка bots, 12 Python-тестов, чистка FULL трёх доков без признаков. SBF и тесты -p alashi не запускались: rules и программа Solana в этом этапе не менялись. Пуш в origin выполнен.
+
+28.09 15:10. Эволюционная лестница соперников (genome). План: 3 часа, до 17:00.
+observed: GenomeBot в arena/src/strategies.rs управляется шестью генами (dip_buy, buy_reserve, max_buy_units, bribe_appetite, bribe_gate, license_bid) с границами GENE_MIN/GENE_MAX; имя genome добавлено в by_name и ALL, по умолчанию эквивалентен tactical. Новый бинарь arena evoagents калибрует уровни: для каждой цели эволюция минимизирует |выплата − цель|, финальный уровень максимизирует выплату; расписание seed×seat общее для всех геномов поколения, соперники greedy/tactical/greedy/random. compare_agents BUILTINS дополнен именем genome.
+observed: артефакт data/eval/evolved/ladder-20260928.json. Цели 6/10/14/18M и максимум достигнуты как 5,94/9,98/13,89/17,81/23,75 млн песо. Парная проверка соседних уровней на 40 зеркальных парах свежих сидов: +3,62/+6,23/+1,31/+6,12 млн песо в пользу более позднего уровня. Три теста evoagents: границы генов при операторах, детерминизм по сиду, различие фитнеса разных геномов.
+observed: cargo test alashi-rules 24+1+4+5, сьют arena целиком, indexer 7+3, cargo check alashi, сборка bots, Python compare_agents 12 и seed_inference 2. SBF-сборка не запускалась: программа Solana не менялась.
+source_defined: not_validated: перенос силы уровней на другие миксы соперников и живых агентов не измерялся; геномы уровней ещё не подключаются как соперники в конфиг compare_agents.
+Факт: 1,3 часа. План 3 часа до 17:00 закрыт.

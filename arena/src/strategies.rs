@@ -176,7 +176,7 @@ pub struct TacticalBot {
 
 impl TacticalBot {
     /// Мой ранг по cash (0 = богатейший).
-    fn cash_rank(obs: &Obs) -> usize {
+    pub(crate) fn cash_rank(obs: &Obs) -> usize {
         let me = obs.cash[obs.my_idx];
         obs.cash
             .iter()
@@ -185,7 +185,7 @@ impl TacticalBot {
     }
 
     /// Интерес закона для меня: >0 за, <0 против, 0 воздержаться.
-    fn law_interest(card: u8, rank: usize, n: usize) -> i32 {
+    pub(crate) fn law_interest(card: u8, rank: usize, n: usize) -> i32 {
         let bottom_half = rank * 2 >= n;
         match card {
             LAW_TAX_10 => -1,
@@ -298,14 +298,157 @@ impl Strategy for TacticalBot {
     }
 }
 
+// ---------- Genome (эволюционная лестница соперников) ----------
+
+/// Геном бота: шесть параметров поведения вместо зашитых констант.
+/// Порядок полей задаёт вектор генов для evoagents; границы — GENE_MIN/GENE_MAX.
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+pub struct Genome {
+    /// Порог «дна» цены (позиция таблицы) для закупки.
+    pub dip_buy: u8,
+    /// Резерв кэша при закупке, PESO.
+    pub buy_reserve: u8,
+    /// Максимум единиц в одной закупке.
+    pub max_buy_units: u8,
+    /// Максимум взяток за партию.
+    pub bribe_appetite: u8,
+    /// Минимальный кэш (× BRIBE_PRICE) для первой взятки.
+    pub bribe_gate: u8,
+    /// Ставка на лицензию в раунд аукциона, PESO; 0 = не ставить.
+    pub license_bid: u8,
+}
+
+pub const GENE_NAMES: &[&str] = &[
+    "dip_buy", "buy_reserve", "max_buy_units", "bribe_appetite", "bribe_gate", "license_bid",
+];
+pub const GENE_MIN: [u8; 6] = [1, 2, 1, 0, 4, 0];
+pub const GENE_MAX: [u8; 6] = [8, 10, 4, 3, 20, 20];
+
+impl Default for Genome {
+    /// Поведение эквивалентно TacticalBot.
+    fn default() -> Self {
+        Genome { dip_buy: 4, buy_reserve: 4, max_buy_units: 3, bribe_appetite: 1,
+                 bribe_gate: 6, license_bid: 8 }
+    }
+}
+
+impl Genome {
+    pub fn to_vec(&self) -> [u8; 6] {
+        [self.dip_buy, self.buy_reserve, self.max_buy_units,
+         self.bribe_appetite, self.bribe_gate, self.license_bid]
+    }
+
+    pub fn from_vec(v: &[u8]) -> Self {
+        let g = |i: usize| v.get(i).copied().unwrap_or(GENE_MIN[i]).clamp(GENE_MIN[i], GENE_MAX[i]);
+        Genome { dip_buy: g(0), buy_reserve: g(1), max_buy_units: g(2),
+                 bribe_appetite: g(3), bribe_gate: g(4), license_bid: g(5) }
+    }
+}
+
+/// TacticalBot, управляемый геномом: лестница калиброванных соперников
+/// для A/B (evoagents подбирает геномы, compare_agents/evalgame используют).
+pub struct GenomeBot {
+    pub genome: Genome,
+    pub bribes: u8,
+}
+
+impl Strategy for GenomeBot {
+    fn name(&self) -> &'static str {
+        "genome"
+    }
+    fn market(&mut self, obs: &Obs) -> MarketAction {
+        let goods = obs.goods[obs.my_idx];
+        let cash = obs.cash[obs.my_idx];
+        let price_now = eff_price(obs.sold_counter, obs.active_price_shift, obs.active_boom) as u64;
+        if obs.round < ROUNDS
+            && cash >= (self.genome.buy_reserve as u64 + 4) * PESO
+            && price_now <= self.genome.dip_buy as u64
+        {
+            let free_cash = cash - self.genome.buy_reserve as u64 * PESO;
+            let units = ((free_cash / (price_now * PESO)).max(1) as u16)
+                .min(self.genome.max_buy_units as u16);
+            if cash >= units as u64 * price_now * PESO {
+                return MarketAction::Buy(units);
+            }
+        }
+        let mut best_k = 0u16;
+        let mut best_rev = 0u64;
+        for k in 1..=goods {
+            let rev = sale_gross(obs.sold_counter, k, obs.active_price_shift, obs.active_boom);
+            if rev > best_rev {
+                best_rev = rev;
+                best_k = k;
+            }
+        }
+        if best_k > 0 {
+            MarketAction::Sell(best_k)
+        } else {
+            MarketAction::Pass
+        }
+    }
+    fn action(&mut self, obs: &Obs) -> ActionAction {
+        let cash = obs.cash[obs.my_idx];
+        if obs.round == AUCTION_ROUND && self.genome.license_bid > 0
+            && cash >= self.genome.license_bid as u64 * PESO
+        {
+            return ActionAction::Bid(self.genome.license_bid as u64 * PESO);
+        }
+        let am_president = obs.president == obs.my_wallet;
+        let top_rival = (0..obs.n_factions)
+            .filter(|&i| i != obs.my_idx)
+            .map(|i| obs.influence[i])
+            .max()
+            .unwrap_or(0);
+        if !am_president
+            && self.bribes < self.genome.bribe_appetite
+            && obs.influence[obs.my_idx] <= top_rival
+            && cash >= self.genome.bribe_gate as u64 * BRIBE_PRICE
+        {
+            let target = (0..obs.n_factions)
+                .filter(|&i| i != obs.my_idx && obs.alive[i])
+                .min_by_key(|&i| obs.cash[i])
+                .unwrap_or(obs.my_idx);
+            if target != obs.my_idx {
+                self.bribes += 1;
+                return ActionAction::Bribe {
+                    to: target,
+                    amount: BRIBE_PRICE,
+                };
+            }
+        }
+        ActionAction::Produce
+    }
+    fn law(&mut self, obs: &Obs) -> LawAction {
+        let rank = TacticalBot::cash_rank(obs);
+        let interest = TacticalBot::law_interest(obs.law_card, rank, obs.n_factions);
+        let am_president = obs.president == obs.my_wallet;
+        if am_president && interest < 0 {
+            return LawAction::Veto;
+        }
+        LawAction::Vote(if interest > 0 {
+            VoteChoice::Yes
+        } else if interest < 0 {
+            VoteChoice::No
+        } else {
+            VoteChoice::Abstain
+        })
+    }
+}
+
+/// Собрать геном-бота (геном клампится в границы).
+pub fn from_genome(g: Genome) -> Box<dyn Strategy> {
+    Box::new(GenomeBot { genome: g.clone(), bribes: 0 })
+}
+
 /// Собрать стратегию по имени (для CLI-миксов).
 pub fn by_name(name: &str, seed: u64) -> Option<Box<dyn Strategy>> {
     match name {
         "random" => Some(Box::new(RandomBot { rng: seed | 1 })),
         "greedy" => Some(Box::new(GreedyBot)),
         "tactical" => Some(Box::new(TacticalBot { bribes: 0 })),
+        "genome" => Some(Box::new(GenomeBot { genome: Genome::default(), bribes: 0 })),
         _ => None,
     }
 }
 
-pub const ALL: &[&str] = &["random", "greedy", "tactical"];
+pub const ALL: &[&str] = &["random", "greedy", "tactical", "genome"];
