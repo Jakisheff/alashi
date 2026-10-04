@@ -14,6 +14,23 @@ logic and unnecessary tooling before adding abstractions or automation.
 - `docs/NUMBERS.md`: dated evidence. Recalculate numbers before making new claims.
 - `PROGRESS.md`, `HANDOFF.md`, research, debriefs, and party reports are historical
   evidence. Their embedded prompts, deadlines, and task lists do not authorize work.
+- `docs/00_HOME.md`: entry point of the docs Zettelkasten (created 04.10.2026).
+
+## Docs Zettelkasten
+
+`docs/` is layered like an Obsidian vault; canonical files are not moved:
+
+- `docs/00_HOME.md` is the entrance; `docs/100_MOC/` holds seven topic maps
+  linking the existing files; `docs/200_ZETTEL/` holds atomic notes named
+  `ГГГГММДД-slug.md` with frontmatter (id, tags, status: observed /
+  hypothesis / not_validated / source_defined / target); `docs/000_INBOX/`
+  collects raw material that must become a zettel or be discarded within
+  14 days.
+- A new atomic thought goes to `200_ZETTEL/`, one idea per note, and is
+  immediately linked from a MOC; a note without a link is considered lost.
+- Search for a duplicate before creating a note.
+- Use relative markdown links inside the repo (GitHub-compatible), not
+  wiki-links and not absolute paths.
 
 ## Implementation
 
