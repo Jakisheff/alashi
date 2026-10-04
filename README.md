@@ -132,6 +132,87 @@ ALASHI_RPC=http://127.0.0.1:8899 cargo run --release --manifest-path bots/Cargo.
 
 Stop the validator with Ctrl+C after the run. See the [on-chain agent guide](docs/AGENT_GUIDE.md) for instruction accounts and protocol details.
 
+## Devnet
+
+Devnet deployment: pending. The program ID in `Anchor.toml` and `declare_id!` is `8EikcWzM7d3EjttApmymo2maWp5A3NtMpKoYdWUzzzL`, but nothing is deployed under it on devnet or mainnet. Today the on-chain mode is checked by program tests on a fresh SBF build (LiteSVM, no validator) and by the local-validator run above. The steps below describe the intended devnet path; they have not been run end to end.
+
+### Prerequisites
+
+| Tool | Version | Where it is set |
+|---|---|---|
+| Rust | 1.89.0 | `rust-toolchain.toml` |
+| `cargo-build-sbf` | 4.1.0, with platform-tools v1.54 | `tools/build_sbf.sh` exits on any other version |
+| Solana CLI | Not pinned in the repository. CI installs the Agave v4.1.0 release, which provides `cargo-build-sbf` 4.1.0 | `.github/workflows/ci.yml` |
+| Anchor | `anchor-lang` 1.1.2 crate; the commands below do not need the Anchor CLI | `programs/alashi/Cargo.toml` |
+
+### Configure the CLI for devnet
+
+Use a separate deploy keypair stored outside the repository. Never commit it or paste its contents anywhere.
+
+```bash
+solana config set --url devnet
+solana-keygen new --outfile ~/.config/solana/alashi-devnet-deployer.json
+solana config set --keypair ~/.config/solana/alashi-devnet-deployer.json
+solana address
+```
+
+Get devnet SOL from [faucet.solana.com](https://faucet.solana.com) or with `solana airdrop 2`. The CLI airdrop is rate-limited and may be refused. Check the balance with `solana balance`. A deploy pays rent proportional to the program size; `solana rent <bytes>` estimates it for the size of `target/deploy/alashi.so`.
+
+### Build and deploy
+
+The keypair for `8EikcWzM7d3EjttApmymo2maWp5A3NtMpKoYdWUzzzL` is not in the repository: `target/deploy/*-keypair.json` is ignored by git. Unless you hold that keypair, deploy under a new program ID:
+
+```bash
+solana-keygen new --no-bip39-passphrase --outfile target/deploy/alashi-keypair.json
+solana address -k target/deploy/alashi-keypair.json
+```
+
+Replace the old ID with the printed address in `programs/alashi/src/lib.rs` and `rules/src/state.rs` (both `declare_id!`) and in `Anchor.toml` under `[programs.devnet]`. The bot driver and the indexer read the ID from the `alashi` crate, so they pick it up on the next build. `app/index.html` and the local-validator command above also contain the old ID.
+
+Build with the pinned script rather than `anchor build`; in the [code audit](docs/ops/CODE_AUDIT_20260906.md), `anchor build` changed two program IDs on its own. Then run the program tests and deploy:
+
+```bash
+bash tools/build_sbf.sh
+cargo test --locked -p alashi
+solana program deploy target/deploy/alashi.so \
+  --program-id target/deploy/alashi-keypair.json --url devnet
+solana program show <PROGRAM_ID> --url devnet
+```
+
+The configured deploy keypair pays for the deploy and becomes the upgrade authority.
+
+### Run one on-chain match against devnet
+
+The bot driver uses the public devnet RPC when `ALASHI_RPC` is unset; set it explicitly anyway. It signs with its own wallets, not the CLI keypair. It loads `bots/keys/bot1.json` and `bots/keys/bot2.json` relative to the working directory (ignored by git) and creates them if missing. Create and fund them before the first run, so the match does not depend on the airdrop:
+
+```bash
+solana-keygen new --no-bip39-passphrase --outfile bots/keys/bot1.json
+solana-keygen new --no-bip39-passphrase --outfile bots/keys/bot2.json
+solana transfer "$(solana address -k bots/keys/bot1.json)" 0.5 --allow-unfunded-recipient
+solana transfer "$(solana address -k bots/keys/bot2.json)" 0.5 --allow-unfunded-recipient
+
+ALASHI_RPC=https://api.devnet.solana.com cargo run --release --manifest-path bots/Cargo.toml
+```
+
+A bot wallet holding less than 0.2 SOL triggers a 1 SOL airdrop request. Bot 1 creates a game with a 0.05 SOL entry fee and slot-hash randomness, which stays under the 1 SOL bank threshold that requires Switchboard. Both bots join, play with 15 second phases, and bot 1 settles the bank. The driver gives up after 12 minutes if the match has not finished. Without an LLM key the second bot uses the greedy heuristic, as in the HTTP example.
+
+Another wallet can join a game while it is in the lobby phase: add `-- --game <GAME_ADDRESS> --key <KEYPAIR_PATH> --name <NAME>` to the same `cargo run` command.
+
+Limits of the current code:
+
+- The driver writes transaction events and its agent registry to `../data/` relative to the working directory (`bots/src/main.rs:419`, `bots/src/main.rs:442`). Run from the repository root, that creates a `data/` directory next to the checkout (`bots/src/main.rs:454`).
+- The indexer takes the RPC URL as a positional argument and defaults to `http://127.0.0.1:8899` (`indexer/src/bin/indexer.rs:15-18`, `indexer/src/bin/export.rs:65-68`). It reads and writes `../data/` relative to the working directory (`indexer/src/lib.rs:11-14`), so `cd indexer && cargo run --release --bin indexer -- scan https://api.devnet.solana.com` updates tracked files in `data/`. It has not been run against devnet.
+
+### Explorer
+
+The driver prints a link for every transaction it sends and for the game account. To open any transaction, replace the signature in:
+
+```
+https://explorer.solana.com/tx/<signature>?cluster=devnet
+```
+
+The deployed program is at `https://explorer.solana.com/address/<PROGRAM_ID>?cluster=devnet`. The driver adds `?cluster=devnet` to its links even when it runs against a local validator (`bots/src/main.rs:128`, `bots/src/main.rs:729`).
+
 ## Compare agent versions
 
 Run paired local games with controlled starting conditions and balanced seats: [evaluation guide](docs/EVALUATION.md). The boundary and pilot decisions are recorded in the [agent evaluation architecture](docs/ARCHITECTURE_AGENT_EVALUATION.md). Use built-in strategies or a JSON adapter for your agent. Each result includes the underlying games; failed runs remain in the report.
