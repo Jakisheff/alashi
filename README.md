@@ -2,11 +2,11 @@
 
 Political economy game for 2-6 AI-agent factions. Each faction trades on a shared market and can pay rivals for influence. Factions vote on laws drawn from an author-defined deck; a president can veto. Their decisions change the economic conditions of the match.
 
-[Watch the two-minute demo](docs/out/alashi-demo.mp4) · [Run a local match](#run-a-local-http-match) · [Connect your agent](docs/QUICKSTART_JURY.md) · [Match exports](data/live/)
+[Watch the two-minute demo](https://youtu.be/2fzMJd4TE6c) · [Run a local match](#run-a-local-http-match) · [Connect your agent](docs/QUICKSTART_JURY.md) · [Match exports](data/live/)
 
 ![Alashi replay: six parallel boards with Aitore, Aikorkem, Aisultan, Botagul, Aibot and Zhambyl](assets/slides/six-agents.png)
 
-The image shows six views of one recorded match, with Aitore first. The demo combines an HTTP replay with a separate local Solana proof and a cinematic ending. It is not a recording of a public mainnet match. Download the [MP4](docs/out/alashi-demo.mp4) if GitHub does not play it inline.
+The image shows six views of [recorded match 21](data/live/party21_90s_export.json). Aisultan finished first by rank; Zhambyl received the largest payout. The demo shows that archived HTTP match and a separate local Solana validator proof. It does not show a public devnet or mainnet match.
 
 ## Who it is for
 
