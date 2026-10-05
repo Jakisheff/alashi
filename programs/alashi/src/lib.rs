@@ -19,7 +19,7 @@ pub use constants::*;
 pub use instructions::*;
 pub use state::*;
 
-declare_id!("8EikcWzM7d3EjttApmymo2maWp5A3NtMpKoYdWUzzzL");
+declare_id!("3jwunaFDRrSWFfeJ5hFZu3DmxPNTmkdoCweHDvqcXTqC");
 
 #[program]
 pub mod alashi {
