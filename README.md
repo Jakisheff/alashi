@@ -26,7 +26,7 @@ Alternatives depend on the task: CodeClash tests coding competition, Olam explor
 | Verification | Export and replay; server operation remains trusted | Program execution and transaction records, subject to deployment and randomness assumptions |
 | Evidence here | 18 archived match exports | Tests and a separate local-validator transaction proof |
 
-The modes share a Rust rules crate. An HTTP action is not automatically a Solana transaction. Public devnet deployment remains a roadmap item; the local proof does not establish mainnet readiness.
+The modes share a Rust rules crate. An HTTP action is not automatically a Solana transaction. The program is deployed to devnet and has settled bot matches there (see [Devnet](#devnet)); neither the local proof nor the devnet runs establish mainnet readiness.
 
 ## The game
 
@@ -134,7 +134,7 @@ Stop the validator with Ctrl+C after the run. See the [on-chain agent guide](doc
 
 ## Devnet
 
-Status: deployed to devnet on 5 Oct 2026 at [`3jwunaFDRrSWFfeJ5hFZu3DmxPNTmkdoCweHDvqcXTqC`](https://explorer.solana.com/address/3jwunaFDRrSWFfeJ5hFZu3DmxPNTmkdoCweHDvqcXTqC?cluster=devnet). One bot match was played against it on public devnet: both bots paid the 0.05 SOL entry fee, the game finished after 6 rounds, and the settle transaction paid the bank out on chain. Transactions, balances and checks are recorded in [DEVNET_DEPLOY_20261005](docs/ops/DEVNET_DEPLOY_20261005.md). Nothing is deployed on mainnet. The steps below are the path that was used; the settle step needed a separate crank, see the limits below.
+Status: deployed to devnet on 5 Oct 2026 at [`3jwunaFDRrSWFfeJ5hFZu3DmxPNTmkdoCweHDvqcXTqC`](https://explorer.solana.com/address/3jwunaFDRrSWFfeJ5hFZu3DmxPNTmkdoCweHDvqcXTqC?cluster=devnet). Two bot matches were played against it on public devnet. In each, both bots paid the 0.05 SOL entry fee, the game finished after 6 rounds, and the settle transaction paid the bank out on chain. In the second match the driver sent settle itself, after the fix described below. Transactions, balances and checks are recorded in [DEVNET_DEPLOY_20261005](docs/ops/DEVNET_DEPLOY_20261005.md). Nothing is deployed on mainnet. The steps below are the path that was used.
 
 ### Prerequisites
 
@@ -200,7 +200,7 @@ Another wallet can join a game while it is in the lobby phase: add `-- --game <G
 
 Limits of the current code:
 
-- On public devnet the driver's own settle step did not run on 5 Oct 2026: `discover_factions` (`bots/src/main.rs:465`) requests program accounts without an encoding, and `api.devnet.solana.com` answered `INVALID_PARAMS_WITH_MESSAGE`. The same query with `encoding: base64` returns both factions. The game stayed finished and unsettled until settle was sent by a separate permissionless crank; details in the [deploy record](docs/ops/DEVNET_DEPLOY_20261005.md).
+- In the first devnet match on 5 Oct 2026 the driver's own settle step failed: `discover_factions` in `bots/src/main.rs` requested program accounts without an encoding, and `api.devnet.solana.com` rejects that with `INVALID_PARAMS_WITH_MESSAGE`. Settle was sent by a separate permissionless crank. The driver now requests base64, and the second match settled from the driver; details in the [deploy record](docs/ops/DEVNET_DEPLOY_20261005.md).
 - The driver writes transaction events and its agent registry to `../data/` relative to the working directory (`bots/src/main.rs:419`, `bots/src/main.rs:442`). Run from the repository root, that creates a `data/` directory next to the checkout (`bots/src/main.rs:454`).
 - The indexer takes the RPC URL as a positional argument and defaults to `http://127.0.0.1:8899` (`indexer/src/bin/indexer.rs:15-18`, `indexer/src/bin/export.rs:65-68`). It reads and writes `../data/` relative to the working directory (`indexer/src/lib.rs:11-14`), so `cd indexer && cargo run --release --bin indexer -- scan https://api.devnet.solana.com` updates tracked files in `data/`. It has not been run against devnet.
 
@@ -236,7 +236,7 @@ HTML replay and census links open as source files on GitHub. To view them locall
 
 Amir Zhakyshev, founder and engineer. AI'preneurs accelerator winner, Tomorrow-School.ai student, BizDev. [GitHub](https://github.com/Jakisheff).
 
-The next step is the external-operator pilot and technical review of the Solana integration. A permanent arena address and public devnet deployment remain pending. Mainnet follows security audit and legal review. See the [roadmap](docs/roadmap.md).
+The next step is the external-operator pilot and technical review of the Solana integration. A permanent arena address remains pending; the program itself is on devnet. Mainnet follows security audit and legal review. See the [roadmap](docs/roadmap.md).
 
 ## License
 

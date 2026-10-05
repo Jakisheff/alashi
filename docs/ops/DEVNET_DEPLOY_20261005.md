@@ -88,9 +88,24 @@ The settle transaction (slot 507746250, 13293 compute units, fee 0.000005 SOL) e
 
 Balance changes in the same transaction: game account 0.10526796 to 0.00526796 SOL (the remaining amount is the account's rent reserve); Aibot 0.44264212 to 0.50701212 SOL (payout plus rake as admin, minus the fee); Botagul 0.44801508 to 0.48364008 SOL. Reading the game account afterwards gives phase `Finished`, `settled: true`.
 
-The driver did not send this settle itself. After the game finished it printed `[ERROR] discover_factions: RPC response error -32602: INVALID_PARAMS_WITH_MESSAGE` and exited without settling. `discover_factions` (`bots/src/main.rs:465`) calls `getProgramAccounts` without an encoding. The same request sent by hand without an encoding returned the same error from `api.devnet.solana.com`; with `encoding: base64` it returned both factions. Settle is permissionless, so a one-off crank kept outside the repository read the factions with base64 encoding and sent `settle` signed by bot 1, with the same account order the driver uses. The driver code was not changed.
+The driver did not send this settle itself. After the game finished it printed `[ERROR] discover_factions: RPC response error -32602: INVALID_PARAMS_WITH_MESSAGE` and exited without settling. `discover_factions` (`bots/src/main.rs:465`) calls `getProgramAccounts` without an encoding. The same request sent by hand without an encoding returned the same error from `api.devnet.solana.com`; with `encoding: base64` it returned both factions. Settle is permissionless, so a one-off crank kept outside the repository read the factions with base64 encoding and sent `settle` signed by bot 1, with the same account order the driver uses. The driver was fixed afterwards; see Match 2.
 
-## Balances after the run
+## Match 2: the driver settles itself
+
+After the first match, `discover_factions` in `bots/src/main.rs` was changed to request `encoding: base64`. The same two bot wallets then played a second match from the same scratch directory, started at 18:27 and finished at about 18:38 (UTC+5). The driver sent 57 transactions, including settle, with no manual step.
+
+Game account: [`Bhw3PvbxEQSbs99DeaCKX2tQ7gr8e3fsGMs3MKukTkry`](https://explorer.solana.com/address/Bhw3PvbxEQSbs99DeaCKX2tQ7gr8e3fsGMs3MKukTkry?cluster=devnet).
+
+| Step | Transaction | Verified on chain |
+|---|---|---|
+| Create game (`Initialize`, bot 1) | [`5tc8AYLz...YU2ch`](https://explorer.solana.com/tx/5tc8AYLzq48gmctdw1cvHsHiDqqd9vTuVHXf1uS3cpvCtUABrRDUSeiVQWLkNLhA1aeBrWmW5dRZ68vCH5JYU2ch?cluster=devnet) | ok, game account +0.00526796 SOL |
+| Join, bot 1 | [`Qs2kbWxS...xT91Z`](https://explorer.solana.com/tx/Qs2kbWxSQVjSX4Yu5NNwzyhUKNdNZo4mhbvCh721onGRKyFT3LXPSLR4rs136QmPTSPnUgLA1m33wBbxx9xT91Z?cluster=devnet) | ok, signed by bot 1, game account +0.05 SOL |
+| Join, bot 2 | [`55NAhSwA...6XgaR`](https://explorer.solana.com/tx/55NAhSwAmwv7jAWSJeWpFC6MWhb7wDSntSWEbchq4tFH4dqm5mp596wct19Dn4CckM62mr86cw48xwW561d6XgaR?cluster=devnet) | ok, signed by bot 2, game account +0.05 SOL |
+| Settle and payouts (sent by the driver) | [`3wSs9P7B...8Ks`](https://explorer.solana.com/tx/3wSs9P7BNeHwrWNpnXSb4TximEzd3d7qqgQdDgaEhgFzDdnhDdJSuwB59aaCaBtjsbe4kt1MZj36mnn1PFWsG8ks?cluster=devnet) | ok; game account -0.1 SOL, bot 1 +0.064370 SOL, bot 2 +0.035625 SOL |
+
+The driver logged bank 105267960 lamports before settle and 5267960 after; the remainder is the account's rent reserve. Balances after Match 2: bot 1 0.51402424 SOL, bot 2 0.46727516 SOL.
+
+## Balances after Match 1
 
 | Wallet | Balance |
 |---|---|
@@ -102,7 +117,7 @@ The driver did not send this settle itself. After the game finished it printed `
 
 ## Not verified
 
-- The bot driver's own settle path on public devnet: it fails as described above and is not fixed in this change.
+- Settle event logs of Match 2 were not decoded; the payouts there are checked by balance changes only.
 - The indexer was not run against devnet.
 - `app/index.html` with the new ID was not opened against devnet.
 - The proof scripts `tools/studio_local_proof.py` and `tools/cyber_local_proof.py` were not rerun with the new ID.

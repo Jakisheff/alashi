@@ -464,15 +464,21 @@ fn faction_cash(rpc: &RpcClient, faction: &Pubkey) -> u64 {
 /// требуют полный набор фракций, а не только ботов хоста.
 fn discover_factions(rpc: &RpcClient, game: &Pubkey) -> Vec<Pubkey> {
     use solana_rpc_client_api::{
-        config::RpcProgramAccountsConfig,
+        config::{RpcAccountInfoConfig, RpcProgramAccountsConfig},
         filter::{Memcmp, RpcFilterType},
+        response::UiAccountEncoding,
     };
     let cfg = RpcProgramAccountsConfig {
         filters: Some(vec![RpcFilterType::Memcmp(Memcmp::new_base58_encoded(
             8,
             game.as_ref(),
         ))]),
-        account_config: Default::default(),
+        // Публичный devnet RPC отвергает getProgramAccounts без encoding
+        // (INVALID_PARAMS, 05.10.2026); с base64 тот же запрос проходит.
+        account_config: RpcAccountInfoConfig {
+            encoding: Some(UiAccountEncoding::Base64),
+            ..Default::default()
+        },
         with_context: Some(false),
         sort_results: None,
     };
