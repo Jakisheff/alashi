@@ -121,7 +121,7 @@ In terminal 1, start a local validator using a new ledger directory:
 ```bash
 ALASHI_LEDGER=$(mktemp -d)
 solana-test-validator --ledger "$ALASHI_LEDGER" \
-  --bpf-program 8EikcWzM7d3EjttApmymo2maWp5A3NtMpKoYdWUzzzL target/deploy/alashi.so
+  --bpf-program 3jwunaFDRrSWFfeJ5hFZu3DmxPNTmkdoCweHDvqcXTqC target/deploy/alashi.so
 ```
 
 In terminal 2, run the bot driver against that validator explicitly:
@@ -134,7 +134,7 @@ Stop the validator with Ctrl+C after the run. See the [on-chain agent guide](doc
 
 ## Devnet
 
-Devnet deployment: pending. The program ID in `Anchor.toml` and `declare_id!` is `8EikcWzM7d3EjttApmymo2maWp5A3NtMpKoYdWUzzzL`, but nothing is deployed under it on devnet or mainnet. Today the on-chain mode is checked by program tests on a fresh SBF build (LiteSVM, no validator) and by the local-validator run above. The steps below describe the intended devnet path; they have not been run end to end.
+Status: deployed to devnet on 5 Oct 2026 at [`3jwunaFDRrSWFfeJ5hFZu3DmxPNTmkdoCweHDvqcXTqC`](https://explorer.solana.com/address/3jwunaFDRrSWFfeJ5hFZu3DmxPNTmkdoCweHDvqcXTqC?cluster=devnet). One bot match was played against it on public devnet: both bots paid the 0.05 SOL entry fee, the game finished after 6 rounds, and the settle transaction paid the bank out on chain. Transactions, balances and checks are recorded in [DEVNET_DEPLOY_20261005](docs/ops/DEVNET_DEPLOY_20261005.md). Nothing is deployed on mainnet. The steps below are the path that was used; the settle step needed a separate crank, see the limits below.
 
 ### Prerequisites
 
@@ -160,14 +160,14 @@ Get devnet SOL from [faucet.solana.com](https://faucet.solana.com) or with `sola
 
 ### Build and deploy
 
-The keypair for `8EikcWzM7d3EjttApmymo2maWp5A3NtMpKoYdWUzzzL` is not in the repository: `target/deploy/*-keypair.json` is ignored by git. Unless you hold that keypair, deploy under a new program ID:
+The keypair for `3jwunaFDRrSWFfeJ5hFZu3DmxPNTmkdoCweHDvqcXTqC` is not in the repository: `target/deploy/*-keypair.json` is ignored by git. To deploy your own copy, use a new program ID:
 
 ```bash
 solana-keygen new --no-bip39-passphrase --outfile target/deploy/alashi-keypair.json
 solana address -k target/deploy/alashi-keypair.json
 ```
 
-Replace the old ID with the printed address in `programs/alashi/src/lib.rs` and `rules/src/state.rs` (both `declare_id!`) and in `Anchor.toml` under `[programs.devnet]`. The bot driver and the indexer read the ID from the `alashi` crate, so they pick it up on the next build. `app/index.html` and the local-validator command above also contain the old ID.
+Replace the current ID with the printed address in `programs/alashi/src/lib.rs` and `rules/src/state.rs` (both `declare_id!`) and in `Anchor.toml` under `[programs.devnet]`. The bot driver and the indexer read the ID from the `alashi` crate, so they pick it up on the next build. `app/index.html`, `tools/studio_local_proof.py`, `tools/cyber_local_proof.py` and the local-validator command above also contain the ID.
 
 Build with the pinned script rather than `anchor build`; in the [code audit](docs/ops/CODE_AUDIT_20260906.md), `anchor build` changed two program IDs on its own. Then run the program tests and deploy:
 
@@ -200,6 +200,7 @@ Another wallet can join a game while it is in the lobby phase: add `-- --game <G
 
 Limits of the current code:
 
+- On public devnet the driver's own settle step did not run on 5 Oct 2026: `discover_factions` (`bots/src/main.rs:465`) requests program accounts without an encoding, and `api.devnet.solana.com` answered `INVALID_PARAMS_WITH_MESSAGE`. The same query with `encoding: base64` returns both factions. The game stayed finished and unsettled until settle was sent by a separate permissionless crank; details in the [deploy record](docs/ops/DEVNET_DEPLOY_20261005.md).
 - The driver writes transaction events and its agent registry to `../data/` relative to the working directory (`bots/src/main.rs:419`, `bots/src/main.rs:442`). Run from the repository root, that creates a `data/` directory next to the checkout (`bots/src/main.rs:454`).
 - The indexer takes the RPC URL as a positional argument and defaults to `http://127.0.0.1:8899` (`indexer/src/bin/indexer.rs:15-18`, `indexer/src/bin/export.rs:65-68`). It reads and writes `../data/` relative to the working directory (`indexer/src/lib.rs:11-14`), so `cd indexer && cargo run --release --bin indexer -- scan https://api.devnet.solana.com` updates tracked files in `data/`. It has not been run against devnet.
 
