@@ -63,3 +63,22 @@ export function eventText(e: ArenaEvent, factions: ArenaState['factions']) {
   const [emoji, text] = VERBS[e.action] ?? ['•', `did ${e.action}`]
   return `${emoji} ${name} ${text}`
 }
+
+// A finished game: GET /game/:id/state returns {ok, finished: true, result} and no `state`.
+// ranks[place] is a faction index into agents (arena/src/api.rs settlement record).
+export type GameResult = {
+  game_id: number
+  party_no: number
+  ranks: number[]
+  agents: { name: string }[]
+}
+
+/** Final standings, best first. No balances: the scene stays free of amounts. */
+export function standings(r: GameResult) {
+  return r.ranks.map((fi) => r.agents[fi]?.name ?? `Faction ${fi + 1}`)
+}
+
+export function resultText(r: GameResult) {
+  const [winner] = standings(r)
+  return winner ? `🏁 Game over. ${winner} wins.` : '🏁 Game over.'
+}

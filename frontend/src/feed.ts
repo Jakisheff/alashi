@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useRef, useState } from 'react'
-import { advance, eventText, type ArenaEvent, type ArenaState, type Cursor } from './events'
+import { advance, eventText, resultText, type ArenaEvent, type ArenaState, type Cursor, type GameResult } from './events'
 import { useScene } from './store'
 
 // ?api=<base>&game=<id> reads the arena's public GET /game/:id/state (same-origin, no /api prefix per Ivan).
@@ -47,15 +47,17 @@ export function useArenaFeed() {
   const live = useQuery({
     queryKey: ['arena-state', API, GAME],
     enabled: FEED_MODE === 'live',
-    refetchInterval: 2000, // paused while the tab is hidden (react-query default)
+    // Paused while the tab is hidden (react-query default); stops for good once the game is finished.
+    refetchInterval: (query) => (query.state.data?.finished ? false : 2000),
     queryFn: async () => {
       const res = await fetch(`${API}/game/${GAME}/state`)
       if (!res.ok) throw new Error(`state ${res.status}`)
-      return ((await res.json()) as { state: ArenaState }).state
+      return (await res.json()) as { state?: ArenaState; finished?: boolean; result?: GameResult }
     },
   })
   const sample = useSampleState(FEED_MODE === 'sample')
-  const state = FEED_MODE === 'live' ? live.data ?? null : sample
+  const state = FEED_MODE === 'live' ? (live.data?.state ?? null) : sample
+  const result = (live.data?.finished && live.data.result) || null
 
   const cursor = useRef<Cursor>(null)
   const queue = useRef<{ text: string; ok: boolean }[]>([])
@@ -67,6 +69,11 @@ export function useArenaFeed() {
     for (const e of u.fresh) queue.current.push({ text: eventText(e, state.factions), ok: e.ok })
     if (queue.current.length > QUEUE_MAX) queue.current.splice(0, queue.current.length - QUEUE_MAX)
   }, [state])
+
+  // The final line goes after any events still queued.
+  useEffect(() => {
+    if (result) queue.current.push({ text: resultText(result), ok: true })
+  }, [result])
 
   useEffect(() => {
     const timers: ReturnType<typeof setTimeout>[] = []
@@ -84,5 +91,5 @@ export function useArenaFeed() {
     }
   }, [])
 
-  return { state, error: FEED_MODE === 'live' ? live.error : null, mode: FEED_MODE }
+  return { state, result, error: FEED_MODE === 'live' ? live.error : null, mode: FEED_MODE }
 }

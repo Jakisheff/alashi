@@ -2,6 +2,7 @@ import { ContactShadows, Environment, Lightformer, OrbitControls } from '@react-
 import { Canvas, useThree } from '@react-three/fiber'
 import { Bloom, EffectComposer } from '@react-three/postprocessing'
 import { Suspense, useCallback, useEffect } from 'react'
+import { standings } from './events'
 import { useArenaFeed } from './feed'
 import { GenieModel } from './genie/GenieModel'
 import { Onboarding } from './Onboarding'
@@ -90,13 +91,17 @@ export default function App() {
           <span className="font-semibold">Degenie</span>
           {feed.mode === 'live' ? (
             <>
-              <span className="rounded-full bg-[#1f4a43] px-2 text-xs tracking-wide text-white uppercase">live</span>
+              <span className="rounded-full bg-[#1f4a43] px-2 text-xs tracking-wide text-white uppercase">{feed.result ? 'final' : 'live'}</span>
               <span className="hidden text-stone-500 sm:inline">
-                {feed.error
-                  ? 'reconnecting…'
-                  : feed.state
-                    ? `HTTP game · simulated balances · round ${feed.state.round} · ${feed.state.phase}`
-                    : 'connecting…'}
+                {feed.result
+                  ? `game over · ${standings(feed.result)
+                      .map((n, i) => `${i + 1}. ${n}`)
+                      .join(' · ')}`
+                  : feed.error
+                    ? 'reconnecting…'
+                    : feed.state
+                      ? `HTTP game · simulated balances · round ${feed.state.round} · ${feed.state.phase}`
+                      : 'connecting…'}
               </span>
             </>
           ) : (

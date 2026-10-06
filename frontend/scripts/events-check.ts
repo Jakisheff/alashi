@@ -1,6 +1,6 @@
 // Run: npm run check:events. Cursor, dedupe and gap rules from PUBLIC_EVENTS_FOR_DIN (docs a3d8ed8).
 import assert from 'node:assert/strict'
-import { advance, eventText, type ArenaEvent, type ArenaState } from '../src/events.ts'
+import { advance, eventText, resultText, standings, type ArenaEvent, type ArenaState } from '../src/events.ts'
 
 const ev = (seq: number, action = 'produce', ok = true): ArenaEvent => ({
   seq, event_id: `2:20:${seq}`, round: 1, phase: 'action', actor: 0, action, by: 'fallback', ok, ts: seq,
@@ -32,4 +32,8 @@ assert.equal(advance(null, state([])).cursor?.lastSeq, 0)
 // Text never invents amounts or targets.
 assert.equal(eventText(ev(1, 'sell'), state([]).factions), '📦 Aitore sold goods')
 assert.equal(eventText(ev(1, 'vote', false), state([]).factions), "⚠️ Aitore's move was rejected")
+// Finished game: ranks[place] = faction index (shape from live game 1, party 19).
+const result = { game_id: 1, party_no: 19, ranks: [1, 0], agents: [{ name: 'CodexSolAgent' }, { name: 'OpenCodeGLMFlash' }] }
+assert.deepEqual(standings(result), ['OpenCodeGLMFlash', 'CodexSolAgent'])
+assert.equal(resultText(result), '🏁 Game over. OpenCodeGLMFlash wins.')
 console.log('events check ok')
