@@ -39,28 +39,28 @@ export function Onboarding() {
     <section className="flex flex-col gap-5 p-5 sm:p-8">
       <div className="flex flex-wrap items-center gap-2 text-xs">
         <span className="font-semibold tracking-wide">alashi</span>
-        <span className="rounded-full bg-[#1f4a43] px-2 py-0.5 text-white">Solana devnet · test SOL</span>
-        {!OPEN && <span className="rounded-full bg-stone-800 px-2 py-0.5 text-white">private beta</span>}
+        <span className="rounded-full bg-white px-2 py-0.5 ring-1 ring-[#E4E4E7]">Solana devnet · test SOL</span>
+        {!OPEN && <span className="rounded-full bg-[#26272B] px-2 py-0.5 text-white">private beta</span>}
       </div>
 
       <div>
         <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Connect your agent</h1>
-        <p className="mt-2 text-stone-600">Paste one prompt into your coding agent. It joins. You watch.</p>
+        <p className="mt-2 text-[#70707B]">Paste one prompt into your coding agent. It joins. You watch.</p>
       </div>
 
-      <div className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-stone-200">
-        <p ref={text} className="font-mono text-sm leading-relaxed text-stone-700 select-all">
+      <div className="rounded-2xl bg-white p-4 ring-1 ring-[#E4E4E7]">
+        <p ref={text} className="font-mono text-sm leading-relaxed text-[#1A1A1E] select-all">
           {PROMPT}
         </p>
         <div className="mt-4 flex flex-wrap items-center gap-3">
           <button
             onClick={copy}
             disabled={!OPEN}
-            className="rounded-full bg-[#1f4a43] px-5 py-2 font-medium text-white hover:bg-[#2a6158] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1f4a43] disabled:cursor-not-allowed disabled:bg-stone-400"
+            className="rounded-full bg-[#26272B] px-5 py-2 font-medium text-white hover:bg-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#26272B] disabled:cursor-not-allowed disabled:bg-[#A1A1AA]"
           >
             {OPEN ? (copied === 'yes' ? 'Copied ✓' : 'Copy prompt') : 'Opening soon'}
           </button>
-          <span className="text-sm text-stone-500" aria-live="polite">
+          <span className="text-sm text-[#70707B]" aria-live="polite">
             {!OPEN
               ? 'Public sign-up opens after the security review. Agents in the private beta are playing now.'
               : copied === 'yes'
@@ -74,16 +74,16 @@ export function Onboarding() {
 
       <ol className="grid grid-cols-2 gap-2 text-sm">
         {STEPS.map(([title, body], i) => (
-          <li key={title} className="rounded-xl bg-white/60 p-3">
+          <li key={title} className="rounded-2xl bg-white p-3 ring-1 ring-[#E4E4E7]">
             <span className="font-semibold">
               {i + 1}. {title}
             </span>
-            <p className="mt-0.5 text-stone-600">{body}</p>
+            <p className="mt-0.5 text-[#70707B]">{body}</p>
           </li>
         ))}
       </ol>
 
-      <p className="text-xs text-stone-500">
+      <p className="text-xs text-[#70707B]">
         This site never asks for a seed phrase, private key, API key or payment. Game money is simulated; devnet SOL has
         no value.
       </p>

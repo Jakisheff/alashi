@@ -1,4 +1,4 @@
-import { ContactShadows, Environment, Lightformer, OrbitControls } from '@react-three/drei'
+import { Environment, Lightformer, OrbitControls } from '@react-three/drei'
 import { Canvas, useThree } from '@react-three/fiber'
 import { Bloom, EffectComposer } from '@react-three/postprocessing'
 import { Suspense, useCallback, useEffect } from 'react'
@@ -59,7 +59,7 @@ export default function App() {
   }, [trigger])
 
   return (
-    <div className="min-h-full bg-[#ece6da] text-stone-800 lg:grid lg:h-full lg:grid-cols-[minmax(0,30rem)_1fr]">
+    <div className="min-h-full bg-[#F4F4F5] text-[#1A1A1E] lg:grid lg:h-full lg:grid-cols-[minmax(0,30rem)_1fr]">
       <Onboarding />
       <div className="relative h-[75vh] min-h-96 lg:h-full">
         <Canvas
@@ -67,7 +67,7 @@ export default function App() {
           camera={{ fov: 32 }}
           fallback={<p className="p-6">WebGL is unavailable. Degenie is {clip}.</p>}
         >
-          <color attach="background" args={['#ece6da']} />
+          <color attach="background" args={['#F4F4F5']} />
           <ambientLight intensity={0.35} />
           <directionalLight position={[3, 4, 5]} intensity={1.6} />
           <Environment resolution={256}>
@@ -79,20 +79,19 @@ export default function App() {
           <Suspense fallback={null}>
             <GenieModel />
           </Suspense>
-          <ContactShadows position={[0, -2.05, 0]} scale={4} blur={2.6} opacity={0.35} far={3} />
           <OrbitControls target={TARGET} enablePan={false} minDistance={3.5} maxDistance={14} />
           {/* Bloom picks up only emissive parts: screen face, rim light, tail smoke and sparks. */}
           <EffectComposer>
-            <Bloom mipmapBlur intensity={0.9} luminanceThreshold={0.9} luminanceSmoothing={0.25} />
+            <Bloom mipmapBlur intensity={0.9} luminanceThreshold={1} luminanceSmoothing={0.25} />
           </EffectComposer>
         </Canvas>
 
-        <div className="absolute top-3 left-3 flex items-center gap-2 rounded-full bg-white/80 px-3 py-1 text-sm">
+        <div className="absolute top-3 left-3 flex items-center gap-2 rounded-full bg-white/90 px-3 py-1 text-sm ring-1 ring-[#E4E4E7]">
           <span className="font-semibold">Degenie</span>
           {feed.mode === 'live' ? (
             <>
               <span className="rounded-full bg-[#1f4a43] px-2 text-xs tracking-wide text-white uppercase">{feed.result ? 'final' : 'live'}</span>
-              <span className="hidden text-stone-500 sm:inline">
+              <span className="hidden text-[#70707B] sm:inline">
                 {feed.result
                   ? `game over · ${standings(feed.result)
                       .map((n, i) => `${i + 1}. ${n}`)
@@ -106,8 +105,8 @@ export default function App() {
             </>
           ) : (
             <>
-              <span className="rounded-full bg-stone-800 px-2 text-xs tracking-wide text-white uppercase">preview</span>
-              <span className="hidden text-stone-500 sm:inline">sample events, not a real game</span>
+              <span className="rounded-full bg-[#26272B] px-2 text-xs tracking-wide text-white uppercase">preview</span>
+              <span className="hidden text-[#70707B] sm:inline">sample events, not a real game</span>
             </>
           )}
         </div>
@@ -118,7 +117,7 @@ export default function App() {
               <button
                 key={c}
                 onClick={() => trigger(c)}
-                className={`rounded-full px-2.5 py-0.5 ${c === clip ? 'bg-[#1f4a43] text-white' : 'hover:bg-stone-200'}`}
+                className={`rounded-full px-2.5 py-0.5 ${c === clip ? 'bg-[#26272B] text-white' : 'hover:bg-[#E4E4E7]'}`}
               >
                 <span className="hidden opacity-50 sm:inline">{i + 1} </span>
                 {c}
@@ -126,7 +125,7 @@ export default function App() {
             ))}
             <button
               onClick={toggleCaptions}
-              className="rounded-full px-2.5 py-0.5 hover:bg-stone-200"
+              className="rounded-full px-2.5 py-0.5 hover:bg-[#E4E4E7]"
               aria-pressed={captions}
             >
               {captions ? 'jokes on' : 'jokes off'}
