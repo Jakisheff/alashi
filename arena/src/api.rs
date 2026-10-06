@@ -31,6 +31,7 @@ pub const MAX_LOBBY_DURATION: i64 = 7 * 86_400;
 pub const MAX_ACTIVE_GAMES: usize = 100;
 pub const MAX_COMPLETED_GAMES: usize = 250;
 pub const MAX_ACTION_LOG: usize = 256;
+pub const RECENT_ACTIONS_LIMIT: usize = 12;
 pub const MAX_PHASE_LOG: usize = 512;
 /// Аудит 27.09 (S2): самозаявленная метка источника хода в журнале.
 pub const MAX_BY_LEN: usize = 64;
@@ -86,6 +87,8 @@ pub struct AppState {
     pub master_seed: AtomicU64,
     snapshot_path: PathBuf,
     sequence_path: PathBuf,
+    // ponytail: one transaction gate for this single-file arena. Split persistence
+    // per game if contention matters; every writer acquires this before games.
     snapshot_lock: Mutex<()>,
     connections: Arc<AtomicU64>,
     waiters: Arc<AtomicU64>,
@@ -117,6 +120,11 @@ fn hex_dec(s: &str) -> Option<Vec<u8>> {
 
 pub fn save_snapshot(state: &AppState) -> std::io::Result<()> {
     let _writer = state.snapshot_lock.lock().unwrap_or_else(|e| e.into_inner());
+    save_snapshot_locked(state)
+}
+
+// Caller holds snapshot_lock for the full mutation -> save -> rollback cycle.
+fn save_snapshot_locked(state: &AppState) -> std::io::Result<()> {
     let games = state.games.lock().unwrap_or_else(|e| e.into_inner());
     let completed = state.completed.lock().unwrap_or_else(|e| e.into_inner());
     let arr: Vec<serde_json::Value> = games
@@ -178,8 +186,8 @@ pub fn save_snapshot(state: &AppState) -> std::io::Result<()> {
     std::fs::rename(&tmp, p)
 }
 
-fn persist_snapshot(state: &AppState) {
-    if let Err(e) = save_snapshot(state) {
+fn persist_snapshot_locked(state: &AppState) {
+    if let Err(e) = save_snapshot_locked(state) {
         eprintln!("[ERROR] snapshot save: {e}");
     }
 }
@@ -269,6 +277,26 @@ pub fn load_snapshot(state: &AppState) -> Result<(), String> {
             }).flatten() else {
                 return fail(format!("партия {gid}: битые инсайдеры"));
             };
+            let mut action_log = g["action_log"].as_array().cloned().unwrap_or_default();
+            // Legacy snapshots never had IDs. Number only their retained history;
+            // discarded historical attempts cannot be recovered.
+            let legacy = action_log.iter().all(|a| a.get("seq").is_none());
+            let mut previous: Option<u64> = None;
+            for (i, action) in action_log.iter_mut().enumerate() {
+                if !action.is_object() {
+                    return fail(format!("партия {gid}: битая запись действия"));
+                }
+                if legacy {
+                    action["seq"] = serde_json::json!(i as u64 + 1);
+                }
+                let Some(seq) = action["seq"].as_u64().filter(|&seq| seq > 0) else {
+                    return fail(format!("партия {gid}: неверный номер действия"));
+                };
+                if previous.is_some_and(|prev| prev.checked_add(1) != Some(seq)) {
+                    return fail(format!("партия {gid}: нарушен порядок действий"));
+                }
+                previous = Some(seq);
+            }
             let entry = GameEntry {
                 sim,
                 entry_fee: g["entry_fee"].as_u64().unwrap_or(10 * PESO),
@@ -276,7 +304,7 @@ pub fn load_snapshot(state: &AppState) -> Result<(), String> {
                 agents,
                 created: g["created"].as_i64().unwrap_or(now()),
                 grace_s: g["grace_s"].as_i64().unwrap_or(3),
-                action_log: g["action_log"].as_array().cloned().unwrap_or_default(),
+                action_log,
                 phase_log: g["phase_log"].as_array().cloned().unwrap_or_default(),
                 party_no: g["party_no"].as_u64().unwrap_or(0),
                 label: g["label"].as_str().map(|s| s.to_string()),
@@ -497,7 +525,7 @@ fn record_phase_close(entry: &mut GameEntry, closing: (Phase, u8, u8)) {
     }
 }
 
-fn settle_and_record(state: &AppState, game_id: u64) {
+fn settle_and_record_locked(state: &AppState, game_id: u64) {
     let mut rec = None;
     let mut backup = None;
     {
@@ -510,7 +538,7 @@ fn settle_and_record(state: &AppState, game_id: u64) {
                     eprintln!("[ERROR] game {game_id} settlement: {error}");
                     entry.settlement_error = Some(error);
                     drop(games);
-                    persist_snapshot(state);
+                    persist_snapshot_locked(state);
                     return;
                 }
             };
@@ -538,6 +566,8 @@ fn settle_and_record(state: &AppState, game_id: u64) {
                     let ts = a["ts"].as_u64().unwrap_or(0);
                     serde_json::json!({
                         "type": "MOVE",
+                        "seq": a["seq"],
+                        "event_id": format!("{}:{}:{}", game_id, entry.party_no, a["seq"]),
                         "ts": ts,
                         "ts_iso": iso_utc(ts),
                         "round": a["round"],
@@ -606,7 +636,7 @@ fn settle_and_record(state: &AppState, game_id: u64) {
     }
     // Аудит 27.09 (S4): сеттл подтверждается устойчивой записью; при сбое
     // партия возвращается в активные и не теряется
-    if let Err(e) = save_snapshot(state) {
+    if let Err(e) = save_snapshot_locked(state) {
         eprintln!("[ERROR] snapshot save after settle: {e}");
         let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
         if let Some(entry) = backup {
@@ -626,6 +656,7 @@ fn settle_and_record(state: &AppState, game_id: u64) {
 
 /// Один тик кранка: двигает все партии, чьё время фазы вышло.
 pub fn crank_once(state: &AppState) {
+    let _transaction = state.snapshot_lock.lock().unwrap_or_else(|e| e.into_inner());
     let t = now();
     let mut to_settle: Vec<u64> = Vec::new();
     let mut to_expire: Vec<u64> = Vec::new();
@@ -677,7 +708,7 @@ pub fn crank_once(state: &AppState) {
     }
     drop(games);
     for gid in to_settle {
-        settle_and_record(state, gid);
+        settle_and_record_locked(state, gid);
     }
     if !to_expire.is_empty() {
         changed = true;
@@ -687,7 +718,7 @@ pub fn crank_once(state: &AppState) {
         }
     }
     if changed {
-        persist_snapshot(state);
+        persist_snapshot_locked(state);
     }
 }
 
@@ -708,6 +739,7 @@ fn state_json(game_id: u64, entry: &GameEntry) -> serde_json::Value {
     let g = &entry.sim.game;
     let stamp = g.stamp();
     let price_now = eff_price(g.sold_this_round, g.active_price_shift, g.active_boom);
+    let recent_actions = &entry.action_log[entry.action_log.len().saturating_sub(RECENT_ACTIONS_LIMIT)..];
     serde_json::json!({
         "game_id": game_id,
         // канон партии: одинаков до и после рестарта арены
@@ -773,8 +805,18 @@ fn state_json(game_id: u64, entry: &GameEntry) -> serde_json::Value {
         "no_influence": g.no_influence,
         // кастдев v2 (голосование фич): живой лог ходов — чужие
         // действия текущей фазы, слепота к ним стоила агентам ~50M
-        "recent_actions": entry.action_log.iter().rev().take(12).rev()
+        // Bounds describe the returned window, not the larger retained log.
+        // Missing events: last_seen_seq + 1 < first_seq. Never infer loss on first load.
+        "recent_actions_range": {
+            "first_seq": recent_actions.first().and_then(|a| a["seq"].as_u64()),
+            "last_seq": recent_actions.last().and_then(|a| a["seq"].as_u64()),
+            "retained_first_seq": entry.action_log.first().and_then(|a| a["seq"].as_u64()),
+            "limit": RECENT_ACTIONS_LIMIT,
+        },
+        "recent_actions": recent_actions.iter()
             .map(|a| serde_json::json!({
+                "seq": a["seq"],
+                "event_id": format!("{}:{}:{}", game_id, entry.party_no, a["seq"]),
                 "round": a.get("round"),
                 "phase": a.get("phase"),
                 "actor": a.get("actor"),
@@ -851,6 +893,7 @@ fn json_num(v: impl Into<u64>) -> serde_json::Value {
 }
 
 fn h_new_game(state: &AppState, body: &serde_json::Value) -> serde_json::Value {
+    let _transaction = state.snapshot_lock.lock().unwrap_or_else(|e| e.into_inner());
     // Аудит 27.09 (S2): неизвестные поля отклоняются, а не игнорируются
     if let Some(obj) = body.as_object() {
         for key in obj.keys() {
@@ -952,7 +995,7 @@ fn h_new_game(state: &AppState, body: &serde_json::Value) -> serde_json::Value {
     // Аудит 27.09 (S4): создание подтверждается только устойчивой записью.
     // party_no уже расходуется в файле последовательности: при сбое диска
     // номер пропускается, партия не создаётся наполовину.
-    if let Err(e) = save_snapshot(state) {
+    if let Err(e) = save_snapshot_locked(state) {
         eprintln!("[ERROR] snapshot save after create: {e}");
         state
             .games
@@ -965,6 +1008,7 @@ fn h_new_game(state: &AppState, body: &serde_json::Value) -> serde_json::Value {
 }
 
 fn h_join(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json::Value {
+    let _transaction = state.snapshot_lock.lock().unwrap_or_else(|e| e.into_inner());
     // Аудит 27.09 (S2): неизвестные поля отклоняются, а не игнорируются
     if let Some(obj) = body.as_object() {
         for key in obj.keys() {
@@ -986,7 +1030,7 @@ fn h_join(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_jso
     }
     // Аудит 27.09 (S4): join принят только при устойчивой записи; при сбое
     // диска мутация откатывается и повтор join даёт чистый результат.
-    if let Err(e) = save_snapshot(state) {
+    if let Err(e) = save_snapshot_locked(state) {
         eprintln!("[ERROR] snapshot save after join: {e}");
         if let Some(entry) = backup {
             state
@@ -1149,6 +1193,7 @@ fn h_join_inner(state: &AppState, game_id: u64, body: &serde_json::Value) -> ser
 }
 
 fn h_state(state: &AppState, game_id: u64) -> serde_json::Value {
+    let _transaction = state.snapshot_lock.lock().unwrap_or_else(|e| e.into_inner());
     let games = state.games.lock().unwrap_or_else(|e| e.into_inner());
     match games.get(&game_id) {
         Some(e) => serde_json::json!({"ok": true, "state": state_json(game_id, e)}),
@@ -1188,6 +1233,7 @@ fn h_wait(state: &AppState, game_id: u64, raw_path: &str) -> serde_json::Value {
     loop {
         // короткий лок: читаем и отпускаем, кранк не блокируется
         let snapshot = {
+            let _transaction = state.snapshot_lock.lock().unwrap_or_else(|e| e.into_inner());
             let games = state.games.lock().unwrap_or_else(|e| e.into_inner());
             games.get(&game_id).map(|e| {
                 (e.sim.game.round, phase_name(e.sim.game.phase))
@@ -1209,15 +1255,12 @@ fn h_wait(state: &AppState, game_id: u64, raw_path: &str) -> serde_json::Value {
             }
         }
         if now() >= deadline {
-            let games = state.games.lock().unwrap_or_else(|e| e.into_inner());
-            if let Some(e) = games.get(&game_id) {
-                return serde_json::json!({
-                    "ok": true, "changed": false, "timeout": true,
-                    "state": state_json(game_id, e),
-                });
+            let mut response = h_state(state, game_id);
+            if response.get("state").is_some() {
+                response["changed"] = serde_json::json!(false);
+                response["timeout"] = serde_json::json!(true);
             }
-            drop(games);
-            return h_state(state, game_id);
+            return response;
         }
         std::thread::sleep(std::time::Duration::from_millis(200));
     }
@@ -1237,6 +1280,7 @@ fn log_to_json(l: &ActionLog) -> serde_json::Value {
 }
 
 fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json::Value {
+    let _transaction = state.snapshot_lock.lock().unwrap_or_else(|e| e.into_inner());
     // Аудит 27.09 (S2): неизвестные поля тела и params отклоняются,
     // а не сохраняются в журнал
     if let Some(obj) = body.as_object() {
@@ -1275,11 +1319,13 @@ fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json
         games.get(&game_id).map(|e| e.clone())
     };
     let response = h_act_inner(state, game_id, body);
-    if response["ok"] != true {
+    // Authenticated rules rejections are events too. Invalid input/token produces
+    // no action_log and must not write a snapshot or consume a sequence.
+    if response.get("action_log").is_none() {
         return response;
     }
-    // Аудит 27.09 (S4): действие подтверждается только устойчивой записью
-    if let Err(e) = save_snapshot(state) {
+    // Publish an event only after saving it, including ok:false attempts.
+    if let Err(e) = save_snapshot_locked(state) {
         eprintln!("[ERROR] snapshot save after act: {e}");
         if let Some(entry) = backup {
             state
@@ -1322,6 +1368,11 @@ fn h_act_inner(state: &AppState, game_id: u64, body: &serde_json::Value) -> serd
             return err_json("bad_params", "units/goods должны быть целым числом от 0 до 65535");
         }
     }
+    // The last retained entry is the high-water mark: trimming never removes it.
+    // Check before applying rules so exhaustion cannot mutate the game.
+    let Some(seq) = entry.action_log.last().and_then(|a| a["seq"].as_u64()).unwrap_or(0).checked_add(1) else {
+        return err_json("event_seq_exhausted", "закончились номера событий партии");
+    };
     let log: ActionLog = match action {
         "sell" => {
             let units = p.get("units").and_then(|v| v.as_u64()).unwrap_or(0) as u16;
@@ -1537,6 +1588,7 @@ fn h_act_inner(state: &AppState, game_id: u64, body: &serde_json::Value) -> serd
     // протокол хода: фаза, раунд, актёр, действие, исход (для /export).
     // Аудит 27.09 (S2): у отклонённых действий параметры не сохраняются
     entry.action_log.push(serde_json::json!({
+        "seq": seq,
         "round": entry.sim.game.round,
         "phase": phase_name(entry.sim.game.phase),
         "actor": idx,
@@ -1566,6 +1618,7 @@ fn h_act_inner(state: &AppState, game_id: u64, body: &serde_json::Value) -> serd
 }
 
 fn h_advance(state: &AppState, game_id: u64) -> serde_json::Value {
+    let _transaction = state.snapshot_lock.lock().unwrap_or_else(|e| e.into_inner());
     let t = now();
     let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
     let Some(entry) = games.get_mut(&game_id) else {
@@ -1598,8 +1651,8 @@ fn h_advance(state: &AppState, game_id: u64) -> serde_json::Value {
             let v = state_json(game_id, entry);
             drop(games);
             if finished {
-                settle_and_record(state, game_id);
-            } else if let Err(e) = save_snapshot(state) {
+                settle_and_record_locked(state, game_id);
+            } else if let Err(e) = save_snapshot_locked(state) {
                 eprintln!("[ERROR] snapshot save after advance: {e}");
                 state
                     .games
@@ -1866,6 +1919,7 @@ fn json_add(v: &serde_json::Value, add: u64) -> serde_json::Value {
 }
 
 fn h_export(state: &AppState) -> String {
+    let _transaction = state.snapshot_lock.lock().unwrap_or_else(|e| e.into_inner());
     state.completed.lock().unwrap_or_else(|e| e.into_inner()).join("\n")
 }
 
@@ -1876,7 +1930,7 @@ fn root_doc() -> serde_json::Value {
         "endpoints": {
             "POST /game/new": "{\"entry_fee\"?, \"phase_duration\"?, \"grace_s\"? (0..=30, дефолт 3), \"vote_weight_mode\"? (0 legacy | 1 contribution), \"lobby_duration\"? (сек, дефолт = фаза x 5 — окно джойна можно растянуть независимо от фаз), \"label\"? (до 32 байт, видно всем)} → game_id + party_no",
             "POST /game/:id/join": "{\"name\", \"model\", \"prompt\"} → agent_id + token",
-            "GET  /game/:id/state": "публичное состояние партии",
+            "GET  /game/:id/state": "публичное состояние партии; recent_actions[].seq/event_id стабильны после рестарта; recent_actions_range.first_seq/last_seq — окно ответа, retained_first_seq — начало сохранённого журнала",
             "GET  /game/:id/wait?r=1&p=market&t=30": "long-poll: спит до смены фазы (r/p — известные тебе раунд и фаза, t — таймаут сек, макс 60); ответ как /state + changed/timeout",
             "POST /game/:id/act": "{\"token\", \"action\": sell|buy|produce|donkey|bribe|vote|veto, \"params\"}",
             "POST /game/:id/advance": "permissionless кранк (как ончейн); в грейс-окне до grace_until отказ GraceWindow",

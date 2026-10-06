@@ -250,3 +250,164 @@ fn presidency_and_contribution_projection_follow_reachable_state() {
     assert_eq!(s["vote_weight_mode"],1);
     assert!(s["factions"][0]["acted_stamp"].is_u64());
 }
+
+#[test]
+fn public_action_ids_survive_repeated_polls_trim_and_restart() {
+    let state = isolated();
+    let gid = create(&state);
+    let joined = join(&state, gid, 0);
+    let empty = h_state(&state, gid);
+    assert_eq!(empty["state"]["recent_actions_range"], json!({"first_seq":null, "last_seq":null, "retained_first_seq":null, "limit":12}));
+    // Identical rejected attempts are distinct events, even within one clock second.
+    let body = json!({"token":joined["token"], "action":"produce"});
+    for seq in 1..=(MAX_ACTION_LOG as u64 + 14) {
+        let response = h_act(&state, gid, &body);
+        assert_eq!(response["ok"], false, "{response}");
+        assert_eq!(response["state"]["recent_actions"].as_array().unwrap().last().unwrap()["seq"], seq);
+    }
+    let observed = h_state(&state, gid)["state"].clone();
+    let actions = observed["recent_actions"].as_array().unwrap();
+    let last = MAX_ACTION_LOG as u64 + 14;
+    assert_eq!(actions.len(), 12);
+    assert_eq!(observed["recent_actions_range"], json!({"first_seq":last-11, "last_seq":last, "retained_first_seq":15, "limit":12}));
+    // A client whose cursor is less than first_seq - 1 missed actions.
+    assert!(observed["recent_actions_range"]["first_seq"].as_u64().unwrap() > 2);
+    assert_eq!(state.games.lock().unwrap()[&gid].action_log.len(), MAX_ACTION_LOG);
+    assert_eq!(h_state(&state, gid)["state"]["recent_actions"], observed["recent_actions"]);
+    let restored = restore(&state);
+    assert_eq!(h_state(&restored, gid)["state"]["recent_actions"], observed["recent_actions"]);
+    let next = h_act(&restored, gid, &body);
+    let event = next["state"]["recent_actions"].as_array().unwrap().last().unwrap();
+    assert_eq!(event["seq"], last+1);
+    assert_eq!(event["event_id"], format!("{}:{}:{}", gid, observed["party_no"], last+1));
+    let other_gid = create(&restored);
+    let other = join(&restored, other_gid, 0);
+    let other_response = h_act(&restored, other_gid, &json!({"token":other["token"], "action":"produce"}));
+    assert_eq!(other_response["state"]["recent_actions"][0]["seq"], 1);
+    assert_ne!(other_response["state"]["recent_actions"][0]["event_id"], actions[0]["event_id"]);
+}
+
+#[test]
+fn public_action_legacy_migration_is_deterministic_and_rejects_invalid_sequences() {
+    let state = isolated();
+    let gid = create(&state);
+    let joined = join(&state, gid, 0);
+    let body = json!({"token":joined["token"], "action":"produce"});
+    h_act(&state, gid, &body);
+    h_act(&state, gid, &body);
+    let mut legacy: Value = serde_json::from_str(&std::fs::read_to_string(&state.snapshot_path).unwrap()).unwrap();
+    for action in legacy["games"][0]["action_log"].as_array_mut().unwrap() {
+        action.as_object_mut().unwrap().remove("seq");
+    }
+    std::fs::write(&state.snapshot_path, legacy.to_string()).unwrap();
+    let migrated = restore(&state);
+    let first = h_state(&migrated, gid)["state"]["recent_actions"].clone();
+    assert_eq!(first[0]["seq"], 1);
+    assert_eq!(first[1]["seq"], 2);
+    assert_eq!(h_state(&restore(&state), gid)["state"]["recent_actions"], first);
+    h_act(&migrated, gid, &body);
+    assert_eq!(h_state(&restore(&state), gid)["state"]["recent_actions"][2]["seq"], 3);
+    for (a, b) in [(json!(1), json!(1)), (json!(1), Value::Null), (json!(0), json!(1)), (json!(1), json!(3))] {
+        let broken = isolated();
+        let mut snapshot = legacy.clone();
+        snapshot["games"][0]["action_log"][0]["seq"] = a;
+        snapshot["games"][0]["action_log"][1]["seq"] = b;
+        std::fs::create_dir_all(broken.snapshot_path.parent().unwrap()).unwrap();
+        std::fs::write(&broken.snapshot_path, snapshot.to_string()).unwrap();
+        assert!(load_snapshot(&broken).is_err(), "invalid sequence was accepted");
+    }
+}
+
+#[test]
+fn public_action_storage_failure_rolls_back_events_and_rule_changes() {
+    let state = isolated();
+    let gid = create(&state);
+    let joined = join(&state, gid, 0);
+    let body = json!({"token":joined["token"], "action":"produce"});
+    h_act(&state, gid, &body);
+    let before = h_state(&state, gid)["state"]["recent_actions"].clone();
+    let tmp = state.snapshot_path.with_extension("json.tmp");
+    std::fs::create_dir(&tmp).unwrap();
+    assert_eq!(h_act(&state, gid, &body)["error"], "storage_failed");
+    assert_eq!(h_state(&state, gid)["state"]["recent_actions"], before);
+    assert_eq!(h_state(&restore(&state), gid)["state"]["recent_actions"], before);
+    state.games.lock().unwrap().get_mut(&gid).unwrap().sim.game.phase = Phase::Action;
+    let factions = borsh::to_vec(&state.games.lock().unwrap()[&gid].sim.factions).unwrap();
+    assert_eq!(h_act(&state, gid, &body)["error"], "storage_failed");
+    assert_eq!(borsh::to_vec(&state.games.lock().unwrap()[&gid].sim.factions).unwrap(), factions);
+    assert_eq!(h_state(&state, gid)["state"]["recent_actions"], before);
+    std::fs::remove_dir(&tmp).unwrap();
+    let retry = h_act(&state, gid, &body);
+    assert_eq!(retry["ok"], true);
+    assert_eq!(retry["state"]["recent_actions"][1]["seq"], 2);
+    let saved = h_state(&restore(&state), gid);
+    assert_eq!(saved["state"]["recent_actions"], retry["state"]["recent_actions"]);
+}
+
+#[test]
+fn public_action_projection_stays_private_and_sequence_never_wraps() {
+    let state = isolated();
+    let gid = create(&state);
+    let joined = join(&state, gid, 0);
+    let body = json!({"token":joined["token"], "action":"produce"});
+    h_act(&state, gid, &body);
+    {
+        let mut games = state.games.lock().unwrap();
+        let action = &mut games.get_mut(&gid).unwrap().action_log[0];
+        action["params"] = json!({"tight":true, "to":4, "license_yield":999});
+        action["detail"] = json!({"secret":"hidden"});
+        action["seq"] = json!(u64::MAX);
+    }
+    let public = h_state(&state, gid);
+    let event = &public["state"]["recent_actions"][0];
+    let keys: std::collections::BTreeSet<_> = event.as_object().unwrap().keys().map(String::as_str).collect();
+    assert_eq!(keys, ["event_id", "seq", "round", "phase", "actor", "action", "by", "ok", "ts"].into_iter().collect());
+    let before = borsh::to_vec(&state.games.lock().unwrap()[&gid].sim.game).unwrap();
+    assert_eq!(h_act(&state, gid, &body)["error"], "event_seq_exhausted");
+    assert_eq!(borsh::to_vec(&state.games.lock().unwrap()[&gid].sim.game).unwrap(), before);
+    assert_eq!(state.games.lock().unwrap()[&gid].action_log.len(), 1);
+}
+
+#[test]
+fn concurrent_public_actions_have_unique_persisted_sequences() {
+    let state = isolated();
+    let gid = create(&state);
+    let joined = join(&state, gid, 0);
+    let mut threads = Vec::new();
+    for _ in 0..24 {
+        let state = Arc::clone(&state);
+        let body = json!({"token":joined["token"], "action":"produce"});
+        threads.push(std::thread::spawn(move || {
+            let response = h_act(&state, gid, &body);
+            assert_eq!(response["ok"], false);
+            response["state"]["recent_actions"].as_array().unwrap().last().unwrap()["seq"].as_u64().unwrap()
+        }));
+    }
+    let mut seqs: Vec<_> = threads.into_iter().map(|t| t.join().unwrap()).collect();
+    seqs.sort_unstable();
+    assert_eq!(seqs, (1..=24).collect::<Vec<_>>());
+    assert_eq!(state.games.lock().unwrap()[&gid].action_log, restore(&state).games.lock().unwrap()[&gid].action_log);
+}
+
+#[test]
+fn public_action_finished_export_keeps_live_event_identity() {
+    let state = isolated();
+    let gid = create(&state);
+    let joined = join(&state, gid, 0);
+    join(&state, gid, 1);
+    let response = h_act(&state, gid, &json!({"token":joined["token"], "action":"produce"}));
+    let event_id = response["state"]["recent_actions"][0]["event_id"].clone();
+    for _ in 0..19 {
+        state.games.lock().unwrap().get_mut(&gid).unwrap().sim.game.phase_ends_at = 0;
+        crank_once(&state);
+    }
+    let finished = h_state(&state, gid);
+    assert_eq!(finished["finished"], true);
+    assert_eq!(finished["result"]["actions"][0]["seq"], 1);
+    let events = finished["result"]["events"].as_array().unwrap();
+    let movement = events.iter().find(|e| e["type"] == "MOVE").unwrap();
+    assert_eq!(movement["seq"], 1);
+    assert_eq!(movement["event_id"], event_id);
+    assert_eq!(movement["ok"], false);
+    assert_eq!(h_export(&restore(&state)), h_export(&state));
+}
