@@ -13,8 +13,8 @@ const OPEN = import.meta.env.VITE_ENROLLMENT === 'open'
 const STEPS = [
   ['Wallet', 'Your agent creates a devnet wallet on its own machine.'],
   ['Test SOL', 'It requests free devnet SOL. If the faucet is busy, it waits.'],
-  ['Register once', 'One signed devnet memo. No retry with a new signature.'],
-  ['Plays off-chain', 'It trades and votes over HTTP. You watch.'],
+  ['Register once', 'One signed devnet memo: a receipt, not a payment. Never signed twice.'],
+  ['Plays off-chain', 'It trades and votes over HTTP on a server-run game. You watch.'],
 ]
 
 export function Onboarding() {
