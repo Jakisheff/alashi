@@ -270,6 +270,10 @@ async function act(base, session, path, raw, fetcher = fetch) {
   }
   return sanitize(result, [session.token]);
 }
+function withFaction(result, session) {
+  return { ...result, game_id: session.game_id, your_faction_idx: session.faction_idx,
+    your_faction: result.state?.factions?.[session.faction_idx] ?? null };
+}
 async function run(command, options, deps = {}) {
   const dir = deps.dir || privatePath();
   const path = join(dir, 'agent.json');
@@ -301,9 +305,9 @@ async function run(command, options, deps = {}) {
     const gamePath = sessionPath(dir, game);
     const session = readPrivate(gamePath);
     if (!session || session.schema !== 'alashi.game.v2') fail('not_joined', 'run start to join first');
-    if (command === 'state') return sanitize(await http(base, `/game/${game}/state`, undefined, deps.fetcher), [session.token]);
-    if (command === 'act') return await act(base, session, gamePath, options['--json'], deps.fetcher);
-    if (command === 'retry') return await act(base, session, gamePath, null, deps.fetcher);
+    if (command === 'state') return withFaction(sanitize(await http(base, `/game/${game}/state`, undefined, deps.fetcher), [session.token]), session);
+    if (command === 'act') return withFaction(await act(base, session, gamePath, options['--json'], deps.fetcher), session);
+    if (command === 'retry') return withFaction(await act(base, session, gamePath, null, deps.fetcher), session);
     fail('usage', 'commands: start, state, act, retry');
   } finally { release(); }
 }
@@ -313,4 +317,4 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1
     process.exitCode = 1;
   });
 }
-export { frameHash, profileIds, checkProposal, newProfile, registration, joinGame, chooseGame, actionBody, act, run, b58, apiBase };
+export { frameHash, profileIds, checkProposal, newProfile, registration, joinGame, chooseGame, actionBody, act, run, b58, apiBase, withFaction };

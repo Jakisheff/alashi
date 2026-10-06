@@ -4,7 +4,7 @@ import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { Keypair } from '@solana/web3.js';
-import { frameHash, profileIds, checkProposal, newProfile, registration, joinGame, chooseGame, act, apiBase, run } from './alashi.mjs';
+import { frameHash, profileIds, checkProposal, newProfile, registration, joinGame, chooseGame, act, apiBase, run, withFaction } from './alashi.mjs';
 
 const DEVNET = 'EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG';
 const MEMO = 'MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr';
@@ -165,4 +165,48 @@ test('start persists one private wallet and returns identity link while no game 
     assert.equal(again.agent_record_id, result.agent_record_id);
     assert.equal(latestCalls, 1);
   } finally { rmSync(dir, { recursive: true, force: true }); }
+});
+
+test('public state identifies the saved player faction', () => {
+  const view = withFaction({ ok: true, state: { factions: [{ name: 'other' }, { name: 'mine' }] } },
+    { game_id: 7, faction_idx: 1 });
+  assert.equal(view.game_id, 7);
+  assert.equal(view.your_faction_idx, 1);
+  assert.equal(view.your_faction.name, 'mine');
+});
+
+test('pinned JSON-RPC client supports every bootstrap RPC method', async () => {
+  const { createServer } = await import('node:http');
+  const { Connection, PublicKey } = await import('@solana/web3.js');
+  const methods = [];
+  const server = createServer(async (request, reply) => {
+    const chunks = [];
+    for await (const chunk of request) chunks.push(chunk);
+    const input = JSON.parse(Buffer.concat(chunks).toString());
+    methods.push(input.method);
+    const values = {
+      getGenesisHash: DEVNET,
+      getBalance: { context: { slot: 1 }, value: 3_000_000 },
+      getLatestBlockhash: { context: { slot: 1 }, value: { blockhash: '11111111111111111111111111111111', lastValidBlockHeight: 100 } },
+      getSignatureStatuses: { context: { slot: 1 }, value: [null] },
+      isBlockhashValid: { context: { slot: 1 }, value: true },
+      sendTransaction: '1'.repeat(64),
+    };
+    reply.setHeader('content-type', 'application/json');
+    reply.end(JSON.stringify({ jsonrpc: '2.0', id: input.id, result: values[input.method] }));
+  });
+  await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+  try {
+    const rpc = new Connection(`http://127.0.0.1:${server.address().port}`, 'confirmed');
+    assert.equal(await rpc.getGenesisHash(), DEVNET);
+    assert.equal(await rpc.getBalance(new PublicKey('11111111111111111111111111111111')), 3_000_000);
+    assert.equal((await rpc.getLatestBlockhash()).lastValidBlockHeight, 100);
+    assert.equal((await rpc.getSignatureStatuses(['1'.repeat(64)])).value[0], null);
+    assert.equal((await rpc.isBlockhashValid('11111111111111111111111111111111')).value, true);
+    assert.equal(await rpc.sendRawTransaction(Buffer.alloc(64)), '1'.repeat(64));
+    assert.deepEqual(methods, ['getGenesisHash', 'getBalance', 'getLatestBlockhash',
+      'getSignatureStatuses', 'isBlockhashValid', 'sendTransaction']);
+  } finally {
+    await new Promise(resolve => server.close(resolve));
+  }
 });
