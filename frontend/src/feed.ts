@@ -3,12 +3,12 @@ import { useEffect, useRef, useState } from 'react'
 import { advance, eventText, resultText, type ArenaEvent, type ArenaState, type Cursor, type GameResult } from './events'
 import { useScene } from './store'
 
-// ?api=<base>&game=<id> reads the arena's public GET /game/:id/state (same-origin, no /api prefix per Ivan).
-// Without it the page plays a clearly labelled sample stream so the scene is never silently fake.
+// A game id (?game=<id>, or the watched agent's game) reads the arena's public GET /game/:id/state,
+// same-origin unless ?api=<base> (no /api prefix per Ivan). Without one the page plays a clearly labelled
+// sample stream so the scene is never silently fake.
 const q = new URLSearchParams(location.search)
-const API = q.get('api')
-const GAME = q.get('game')
-export const FEED_MODE: 'live' | 'sample' = API !== null && GAME ? 'live' : 'sample'
+const API = q.get('api') ?? ''
+export const GAME_PARAM = q.get('game')
 
 const EVENT_SECONDS = 3.2 // one reaction at a time: act, then accepted/rejected
 const QUEUE_MAX = 6 // a long backlog is trimmed to the latest events instead of replayed
@@ -43,21 +43,22 @@ function useSampleState(enabled: boolean) {
 }
 
 /** Feeds arena events to Degenie: types each line on its screen and plays act -> accepted/rejected. */
-export function useArenaFeed() {
+export function useArenaFeed(game: string | null) {
+  const mode: 'live' | 'sample' = game ? 'live' : 'sample'
   const live = useQuery({
-    queryKey: ['arena-state', API, GAME],
-    enabled: FEED_MODE === 'live',
+    queryKey: ['arena-state', API, game],
+    enabled: mode === 'live',
     // Paused while the tab is hidden (react-query default); stops for good once the game is finished.
     refetchInterval: (query) => (query.state.data?.finished ? false : 2000),
     queryFn: async () => {
-      const res = await fetch(`${API}/game/${GAME}/state`)
+      const res = await fetch(`${API}/game/${game}/state`)
       if (!res.ok) throw new Error(`state ${res.status}`)
       return (await res.json()) as { state?: ArenaState; finished?: boolean; result?: GameResult }
     },
   })
-  const sample = useSampleState(FEED_MODE === 'sample')
-  const state = FEED_MODE === 'live' ? (live.data?.state ?? null) : sample
-  const result = (live.data?.finished && live.data.result) || null
+  const sample = useSampleState(mode === 'sample')
+  const state = mode === 'live' ? (live.data?.state ?? null) : sample
+  const result = (mode === 'live' && live.data?.finished && live.data.result) || null
 
   const cursor = useRef<Cursor>(null)
   const queue = useRef<{ text: string; ok: boolean }[]>([])
@@ -91,5 +92,5 @@ export function useArenaFeed() {
     }
   }, [])
 
-  return { state, result, error: FEED_MODE === 'live' ? live.error : null, mode: FEED_MODE }
+  return { state, result, error: mode === 'live' ? live.error : null, mode }
 }

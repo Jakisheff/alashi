@@ -3,7 +3,8 @@ import { Canvas, useThree } from '@react-three/fiber'
 import { Bloom, EffectComposer } from '@react-three/postprocessing'
 import { Suspense, useCallback, useEffect } from 'react'
 import { standings } from './events'
-import { useArenaFeed } from './feed'
+import { useAgentWatch } from './agent'
+import { GAME_PARAM, useArenaFeed } from './feed'
 import { GenieModel } from './genie/GenieModel'
 import { Onboarding } from './Onboarding'
 import type { GenieClip } from './genie/pose'
@@ -36,7 +37,9 @@ const LINES: Partial<Record<GenieClip, string[]>> = {
 
 export default function App() {
   const { clip, captions, speech, play, say, toggleCaptions } = useScene()
-  const feed = useArenaFeed()
+  const watch = useAgentWatch()
+  const watchedGame = 'game' in watch && watch.game !== null ? String(watch.game) : null
+  const feed = useArenaFeed(GAME_PARAM ?? watchedGame)
 
   // Manual triggers (buttons, keys 1-4) also get a joke from the brief; arena events bring their own text.
   const trigger = useCallback(
@@ -60,7 +63,7 @@ export default function App() {
 
   return (
     <div className="min-h-full bg-[#F4F4F5] text-[#1A1A1E] lg:grid lg:h-full lg:grid-cols-[minmax(0,30rem)_1fr]">
-      <Onboarding />
+      <Onboarding watch={watch} />
       <div className="relative h-[75vh] min-h-96 lg:h-full">
         <Canvas
           dpr={[1, 2]}

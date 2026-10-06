@@ -1,5 +1,6 @@
 // Run: npm run check:events. Cursor, dedupe and gap rules from PUBLIC_EVENTS_FOR_DIN (docs a3d8ed8).
 import assert from 'node:assert/strict'
+import { followGame, parseAgentId, type AgentProfile } from '../src/agent.ts'
 import { advance, eventText, resultText, standings, type ArenaEvent, type ArenaState } from '../src/events.ts'
 
 const ev = (seq: number, action = 'produce', ok = true): ArenaEvent => ({
@@ -36,4 +37,15 @@ assert.equal(eventText(ev(1, 'vote', false), state([]).factions), "⚠️ Aitore
 const result = { game_id: 1, party_no: 19, ranks: [1, 0], agents: [{ name: 'CodexSolAgent' }, { name: 'OpenCodeGLMFlash' }] }
 assert.deepEqual(standings(result), ['OpenCodeGLMFlash', 'CodexSolAgent'])
 assert.equal(resultText(result), '🏁 Game over. OpenCodeGLMFlash wins.')
+// Watch link: only a 64 lowercase hex id is ever sent; the scene follows the agent's game and keeps the last one.
+assert.equal(parseAgentId('ab'.repeat(32)), 'ab'.repeat(32))
+for (const bad of [null, '', 'AB'.repeat(32), 'ab'.repeat(31), 'ab'.repeat(32) + '/../x']) assert.equal(parseAgentId(bad), null)
+const slot = { game_id: 2, party_no: 20, label: 'x', phase: 'market', round: 1, faction_idx: 0, faction_name: 'A' }
+const profile = (slots: (typeof slot)[]): AgentProfile =>
+  ({ ok: true, agent_record_id: 'ab'.repeat(32), character_id: 'cd'.repeat(32), registered: true, active_slots: slots })
+assert.equal(followGame(null, undefined), null)
+assert.equal(followGame(null, profile([])), null)
+assert.equal(followGame(null, profile([slot])), 2)
+assert.equal(followGame(2, profile([])), 2) // game finished: keep showing its result
+assert.equal(followGame(2, { ok: false, error: 'unknown_agent' }), 2)
 console.log('events check ok')
