@@ -13,7 +13,7 @@ use std::{
 
 const MEMO_ID: &str = "MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr";
 const MAX_RESPONSE: u64 = 1_048_576;
-const USAGE: &str = "bots session connect --url URL --game ID --key LOCAL_KEYPAIR --name NAME --model MODEL --prompt-file FILE --session-file PRIVATE | inspect --session-file PRIVATE | act --session-file PRIVATE (JSON on stdin)";
+const USAGE: &str = "bots session register --url URL --key LOCAL_KEYPAIR --agent-file PRIVATE | join --agent-file PRIVATE --game ID --name NAME --model MODEL --prompt-file FILE --session-file PRIVATE | inspect --session-file PRIVATE | act --session-file PRIVATE (JSON on stdin) | retry --session-file PRIVATE | legacy connect --url URL --game ID --key LOCAL_KEYPAIR --name NAME --model MODEL --prompt-file FILE --session-file PRIVATE";
 type ResultJson = Result<Value, Value>;
 fn error(code: &str, message: &str) -> Value {
     json!({"ok":false,"error":{"code":code,"message":message}})
@@ -34,7 +34,9 @@ fn parse_options(args: &[String]) -> Result<BTreeMap<String, String>, Value> {
             "--prompt-file",
             "--session-file",
         ][..],
-        Some("inspect" | "act") => &["--session-file"][..],
+        Some("register") => &["--url", "--key", "--agent-file"][..],
+        Some("join") => &["--agent-file", "--game", "--name", "--model", "--prompt-file", "--session-file"][..],
+        Some("inspect" | "act" | "retry") => &["--session-file"][..],
         _ => return Err(error("usage", USAGE)),
     };
     let mut options = BTreeMap::new();
@@ -103,19 +105,21 @@ fn read_private(path: &Path) -> ResultJson {
         .map_err(|_| error("session_unavailable", "cannot read private session file"))?;
     let session: Value = serde_json::from_slice(&bytes)
         .map_err(|_| error("invalid_session", "session JSON is invalid"))?;
-    if session["schema"] != "alashi.session.v1" {
+    if session["schema"] != "alashi.session.v1" && session["schema"] != "alashi.session.v2" && session["schema"] != "alashi.agent.v2" {
         return Err(error("invalid_session", "unsupported session schema"));
     }
     validate_url(text(&session["config"], "url")?)?;
-    if session["config"]["game_id"].as_u64().is_none() {
+    if session["schema"] != "alashi.agent.v2" && session["config"]["game_id"].as_u64().is_none() {
         return Err(error("invalid_session", "missing game ID"));
     }
-    let secret = text(&session, "recovery_secret")?;
-    if secret.len() != 64 || !secret.bytes().all(|b| b.is_ascii_hexdigit()) {
+    let secret = if session["schema"] == "alashi.session.v2" { "" } else { text(&session, "recovery_secret")? };
+    if session["schema"] != "alashi.session.v2" && !lower_hex64(secret) {
         return Err(error("invalid_session", "invalid recovery secret"));
     }
     Ok(session)
 }
+fn lower_hex64(s: &str) -> bool { s.len() == 64 && s.bytes().all(|b| b.is_ascii_digit() || (b'a'..=b'f').contains(&b)) }
+fn random_hex32() -> String { Keypair::new().to_bytes()[..32].iter().map(|b| format!("{b:02x}")).collect() }
 fn private_options() -> OpenOptions {
     let mut options = OpenOptions::new();
     options.write(true).create_new(true);
@@ -319,7 +323,7 @@ fn safe_server_error(value: &Value) -> Value {
         | "registration_memo_mismatch"
         | "registration_rpc_timeout"
         | "registration_rpc_failed"
-        | "registration_rpc_response_too_large" => code,
+        | "registration_rpc_response_too_large" | "op_conflict" | "op_stale" | "op_out_of_order" | "bad_op_id" | "agent_not_registered" | "agent_registration_conflict" | "registration_conflict" | "bad_agent_record_id" | "entropy_unavailable" => code,
         "GameNotInLobby" | "GameFinished" | "GameFull" | "WrongPhase" | "AlreadyActed"
         | "AlreadyVoted" | "NoUnits" | "NotEnoughGoods" | "NotEnoughCash" | "BribeTooSmall"
         | "BribeTooBig" | "SelfBribe" | "NotAlive" | "TooEarly" | "NotEnoughFactions"
@@ -426,6 +430,7 @@ fn public_result(session: &Value, mut response: Value, command: &str) -> Value {
     response["party_no"] = session["party_no"].clone();
     response["wallet"] = config["wallet"].clone();
     response["agent_id"] = session["agent_id"].clone();
+    if config["agent_record_id"].is_string() { response["agent_record_id"] = config["agent_record_id"].clone(); }
     response["character_id"] = session["character_id"].clone();
     response["your_faction_idx"] = json!(idx);
     response["your_faction"] = idx
@@ -652,6 +657,224 @@ fn http_operation(path: &Path, command: &str, input: &str) -> ResultJson {
     }
     Ok(public_result(&session, result, command))
 }
+fn framed_hash(prefix: &[u8], parts: &[&str]) -> String {
+    let mut hash = Sha256::new();
+    hash.update(prefix);
+    for part in parts {
+        hash.update((part.len() as u64).to_le_bytes());
+        hash.update(part.as_bytes());
+    }
+    hash.finalize().iter().map(|b| format!("{b:02x}")).collect()
+}
+fn profile_ids(profile: &Value) -> (String, String) {
+    let owner = framed_hash(b"alashi-owner-v1", &[profile["recovery_secret"].as_str().unwrap_or("")]);
+    let character = framed_hash(b"alashi-character-v2", &[&owner, profile["agent_record_id"].as_str().unwrap_or("")]);
+    (owner, character)
+}
+fn profile_proposal(profile: &Value, proposal: &Value) -> Result<String, Value> {
+    let (owner, character) = profile_ids(profile);
+    let memo = proposal["memo"].as_str().ok_or_else(|| error("invalid_proposal", "missing Memo"))?;
+    let challenge = memo.rsplit(':').next().unwrap_or("");
+    let expected = format!("alashi:agent-lifecycle:v2:devnet:alashi.network:{owner}:{}:{character}:{challenge}", profile["agent_record_id"].as_str().unwrap_or(""));
+    if proposal["ok"] != true || proposal["mode"] != "agent_lifecycle_v2" || proposal["network"] != "devnet"
+        || proposal["wallet"] != profile["config"]["wallet"] || proposal["agent_record_id"] != profile["agent_record_id"]
+        || proposal["owner_id"] != owner || proposal["character_id"] != character || proposal["memo_program_id"] != MEMO_ID
+        || !lower_hex64(challenge) || memo != expected {
+        return Err(error("invalid_proposal", "arena proposal does not match this platform identity"));
+    }
+    Ok(expected)
+}
+fn profile_receipt(profile: &Value, response: &Value) -> Result<Value, Value> {
+    let receipt = if response["registration"].is_object() { &response["registration"] } else { response };
+    if receipt["commitment"] != "confirmed" || receipt["signature"] != profile["signature"]
+        || receipt["wallet"] != profile["config"]["wallet"] || receipt["network"] != "devnet"
+        || receipt["mode"] != "agent_lifecycle_v2" {
+        return Err(error("invalid_registration", "arena did not confirm the saved platform signature"));
+    }
+    let mut clean = receipt.clone();
+    redact(&mut clean, profile);
+    Ok(clean)
+}
+fn load_or_create_profile(path: &Path, config: Value) -> ResultJson {
+    match fs::symlink_metadata(path) {
+        Ok(_) => {
+            let profile = read_private(path)?;
+            if profile["schema"] != "alashi.agent.v2" || profile["config"] != config {
+                return Err(error("agent_config_mismatch", "existing agent profile belongs to another URL or wallet"));
+            }
+            Ok(profile)
+        }
+        Err(e) if e.kind() == std::io::ErrorKind::NotFound => {
+            let profile = json!({"schema":"alashi.agent.v2","config":config,"agent_record_id":random_hex32(),
+                "recovery_secret":random_hex32(),"memo":null,"signature":null,"chain_receipt":null,"registration":null});
+            save_private(path, &profile)?;
+            Ok(profile)
+        }
+        Err(_) => Err(error("agent_unavailable", "cannot inspect agent profile")),
+    }
+}
+fn register(options: &BTreeMap<String, String>, rpc: &RpcClient) -> ResultJson {
+    let path = Path::new(&options["--agent-file"]);
+    let _lock = SessionLock::acquire(path)?;
+    let key = read_key(&options["--key"])?;
+    let config = json!({"url":validate_url(&options["--url"])? ,"wallet":key.pubkey().to_string()});
+    let mut profile = load_or_create_profile(path, config)?;
+    let base = text(&profile["config"], "url")?.to_string();
+    if profile["registration"].is_object() {
+        return Ok(json!({"ok":true,"command":"register","network":"devnet","wallet":profile["config"]["wallet"],
+            "agent_record_id":profile["agent_record_id"],"character_id":profile["character_id"],"registration":profile["registration"]}));
+    }
+    if profile["memo"].is_null() {
+        let body = json!({"agent_record_id":profile["agent_record_id"],"wallet":profile["config"]["wallet"],"recovery_secret":profile["recovery_secret"]});
+        let proposal = http_json(&base, "/agents/registration", Some(&body))?;
+        if proposal["ok"] != true { return Err(safe_server_error(&proposal)); }
+        if proposal["registration"].is_object() && profile["signature"].is_null() {
+            return Err(error("registration_exists", "arena has a receipt but this profile has no saved signature; resolve manually"));
+        }
+        profile["memo"] = json!(profile_proposal(&profile, &proposal)?);
+        profile["character_id"] = proposal["character_id"].clone();
+        save_private(path, &profile)?;
+    }
+    if profile["signature"].is_null() {
+        devnet(rpc)?;
+        let tx = prepare_ix(rpc, &key, memo_ix(key.pubkey(), text(&profile, "memo")?))
+            .map_err(registration_failure)?;
+        profile["signature"] = json!(tx.signatures[0].to_string());
+        profile["chain_receipt"] = json!({"status":"unknown","signature":tx.signatures[0].to_string(),"error":"prepared_not_yet_confirmed"});
+        save_private(path, &profile)?;
+        let result = submit_confirmed(rpc, &tx);
+        profile["chain_receipt"] = match &result { Ok(v) | Err(v) => v.clone() };
+        save_private(path, &profile)?;
+        result.map_err(registration_failure)?;
+    } else if profile["chain_receipt"]["status"] != "confirmed" {
+        devnet(rpc)?;
+        let signature = text(&profile, "signature")?.parse().map_err(|_| error("invalid_agent", "saved signature is invalid"))?;
+        let result = wait_receipt(rpc, &signature, Duration::from_secs(30));
+        profile["chain_receipt"] = match &result { Ok(v) | Err(v) => v.clone() };
+        save_private(path, &profile)?;
+        result.map_err(registration_failure)?;
+    }
+    let body = json!({"agent_record_id":profile["agent_record_id"],"recovery_secret":profile["recovery_secret"],
+        "wallet":profile["config"]["wallet"],"signature":profile["signature"]});
+    let response = http_json(&base, "/agents/confirm", Some(&body))?;
+    if response["ok"] != true { return Err(safe_server_error(&response)); }
+    profile["registration"] = profile_receipt(&profile, &response)?;
+    save_private(path, &profile)?;
+    Ok(json!({"ok":true,"command":"register","network":"devnet","wallet":profile["config"]["wallet"],
+        "agent_record_id":profile["agent_record_id"],"character_id":profile["character_id"],"registration":profile["registration"]}))
+}
+fn read_prompt(path: &str) -> Result<String, Value> {
+    let mut prompt = String::new();
+    fs::File::open(path).and_then(|file| file.take(16385).read_to_string(&mut prompt))
+        .map_err(|_| error("invalid_prompt", "cannot read prompt file"))?;
+    if prompt.len() > 16384 { return Err(error("invalid_prompt", "prompt file exceeds 16384 bytes")); }
+    Ok(prompt)
+}
+fn join_v2(options: &BTreeMap<String, String>) -> ResultJson {
+    let profile = read_private(Path::new(&options["--agent-file"]))?;
+    if profile["schema"] != "alashi.agent.v2" || profile["registration"].is_null() {
+        return Err(error("agent_unregistered", "register the private agent profile first"));
+    }
+    let path = Path::new(&options["--session-file"]);
+    let _lock = SessionLock::acquire(path)?;
+    let game = options["--game"].parse::<u64>().map_err(|_| error("invalid_game", "game must be numeric"))?;
+    let prompt = read_prompt(&options["--prompt-file"])?;
+    let strategy_hash = framed_hash(b"", &[&options["--model"], &prompt]);
+    let config = json!({"url":profile["config"]["url"],"game_id":game,"name":options["--name"],
+        "model":options["--model"],"strategy_hash":strategy_hash,"wallet":profile["config"]["wallet"],
+        "agent_record_id":profile["agent_record_id"]});
+    let mut session = match fs::symlink_metadata(path) {
+        Ok(_) => {
+            let session = read_private(path)?;
+            if session["schema"] != "alashi.session.v2" || session["config"] != config {
+                return Err(error("session_config_mismatch", "existing session belongs to another game or strategy"));
+            }
+            session
+        }
+        Err(e) if e.kind() == std::io::ErrorKind::NotFound => {
+            let session = json!({"schema":"alashi.session.v2","config":config,"token":null,"faction_idx":null,
+                "agent_id":strategy_hash,"character_id":profile["character_id"],"registration":profile["registration"],
+                "next_op_id":1,"pending_act":null});
+            save_private(path, &session)?;
+            session
+        }
+        Err(_) => return Err(error("session_unavailable", "cannot inspect session path")),
+    };
+    let base = text(&session["config"], "url")?;
+    let mut body = json!({"agent_record_id":profile["agent_record_id"],"recovery_secret":profile["recovery_secret"],
+        "name":options["--name"],"model":options["--model"],"strategy_hash":strategy_hash});
+    if session["token"].is_string() { body["recover"] = json!(true); }
+    let mut response = http_json(base, &format!("/game/{game}/join"), Some(&body))?;
+    if response["ok"] != true && server_code(&response) == "already_joined" {
+        body["recover"] = json!(true);
+        response = http_json(base, &format!("/game/{game}/join"), Some(&body))?;
+    }
+    if response["ok"] != true { return Err(safe_server_error(&response)); }
+    if response["token"].as_str().is_none() || response["faction_idx"].as_u64().is_none()
+        || response["agent_record_id"] != profile["agent_record_id"] || response["character_id"] != profile["character_id"]
+        || response["agent_id"] != strategy_hash {
+        return Err(error("invalid_join_response", "arena join did not return the expected identity"));
+    }
+    if response["registration"]["signature"] != profile["signature"] || response["registration"]["mode"] != "agent_lifecycle_v2"
+        || response["registration"]["wallet"] != profile["config"]["wallet"] || response["registration"]["network"] != "devnet" {
+        return Err(error("invalid_join_response", "arena join did not return saved platform registration"));
+    }
+    session["token"] = response["token"].clone();
+    session["faction_idx"] = response["faction_idx"].clone();
+    session["registration"] = response["registration"].clone();
+    save_private(path, &session)?;
+    redact(&mut response, &profile);
+    Ok(public_result(&session, response, "join"))
+}
+fn normalized_action(input: &str) -> Result<Value, Value> {
+    let body: Value = serde_json::from_str(input).map_err(|_| error("invalid_action", "stdin must contain one JSON action"))?;
+    let object = body.as_object().ok_or_else(|| error("invalid_action", "action must be a JSON object"))?;
+    if object.keys().any(|k| !matches!(k.as_str(), "action" | "params" | "by"))
+        || !body["action"].is_string() || body.get("params").is_some_and(|p| !p.is_object())
+        || body.get("by").is_some_and(|v| !matches!(v.as_str(), Some("llm" | "heuristic" | "unknown"))) {
+        return Err(error("invalid_action", "expected action, optional params object, and optional by=llm|heuristic|unknown"));
+    }
+    Ok(json!({"action":body["action"],"by":body.get("by").cloned().unwrap_or(json!("unknown")),
+        "params":body.get("params").cloned().unwrap_or(json!({}))}))
+}
+fn act_v2(path: &Path, input: Option<&str>) -> ResultJson {
+    let _lock = SessionLock::acquire(path)?;
+    let mut session = read_private(path)?;
+    if session["schema"] != "alashi.session.v2" { return Err(error("invalid_session", "expected v2 game session")); }
+    if session["token"].as_str().is_none() { return Err(error("invalid_session", "game token missing; run join")); }
+    let pending = if session["pending_act"].is_object() {
+        if let Some(input) = input {
+            if normalized_action(input)? != session["pending_act"]["action"] {
+                return Err(error("pending_action", "unresolved action differs; retry saved action first"));
+            }
+        }
+        session["pending_act"].clone()
+    } else {
+        let input = input.ok_or_else(|| error("no_pending_action", "no saved action to retry"))?;
+        let action = normalized_action(input)?;
+        let op_id = session["next_op_id"].as_u64().ok_or_else(|| error("invalid_session", "invalid next operation ID"))?;
+        if op_id == 0 { return Err(error("invalid_session", "operation ID must be positive")); }
+        let pending = json!({"op_id":op_id,"action":action});
+        session["pending_act"] = pending.clone();
+        save_private(path, &session)?;
+        pending
+    };
+    let base = text(&session["config"], "url")?;
+    let game = session["config"]["game_id"].as_u64().unwrap();
+    let op_id = pending["op_id"].as_u64().unwrap();
+    let mut body = pending["action"].clone();
+    body["token"] = session["token"].clone();
+    body["op_id"] = json!(op_id);
+    let response = http_json(base, &format!("/game/{game}/act"), Some(&body))?;
+    if response["op_id"] == op_id && response["op_consumed"] == true {
+        session["pending_act"] = Value::Null;
+        session["next_op_id"] = json!(op_id.checked_add(1).ok_or_else(|| error("op_exhausted", "operation ID exhausted"))?);
+        save_private(path, &session)?;
+    }
+    if response["ok"] != true { return Err(safe_server_error(&response)); }
+    Ok(public_result(&session, response, "act"))
+}
+
 pub fn run(args: &[String]) -> i32 {
     if args.iter().any(|s| s == "--help" || s == "-h") {
         println!(
@@ -663,13 +886,13 @@ pub fn run(args: &[String]) -> i32 {
     let result = (|| {
         let options = parse_options(args)?;
         let command = args[0].as_str();
-        if command == "connect" {
+        if command == "connect" || command == "register" {
             let rpc = RpcClient::new_with_timeout_and_commitment(
                 rpc_url(),
                 Duration::from_secs(10),
                 CommitmentConfig::confirmed(),
             );
-            return connect(&options, &rpc);
+            return if command == "register" { register(&options, &rpc) } else { connect(&options, &rpc) };
         }
         let mut input = String::new();
         if command == "act"
@@ -684,7 +907,11 @@ pub fn run(args: &[String]) -> i32 {
                 "action JSON exceeds 4096 bytes or is not UTF-8",
             ));
         }
-        http_operation(Path::new(&options["--session-file"]), command, &input)
+        if command == "join" { return join_v2(&options); }
+        let path = Path::new(&options["--session-file"]);
+        if command == "retry" { return act_v2(path, None); }
+        if command == "act" && read_private(path)?["schema"] == "alashi.session.v2" { return act_v2(path, Some(&input)); }
+        http_operation(path, command, &input)
     })();
     match result {
         Ok(v) => {
@@ -987,6 +1214,96 @@ mod tests {
             .to_string()
             .contains(session["recovery_secret"].as_str().unwrap()));
         assert!(!response.to_string().contains("private-fixture-token"));
+    }
+    #[test]
+    fn v2_golden_identity_and_strategy() {
+        let profile = json!({"agent_record_id":"cd".repeat(32),"recovery_secret":"ab".repeat(32),
+            "config":{"wallet":"fixture"}});
+        let (owner, character) = profile_ids(&profile);
+        assert_eq!(owner, "d8d041d59e9d55c61790d37a8e2bc3f17b9c8f4d350062a090ea8b5d64a086fa");
+        assert_eq!(character, "6d92bd091fb2d69e295fe5bba10caa3628abf2cac55bc80f7c74a018c4465c71");
+        assert_eq!(framed_hash(b"", &["glm-5.3-flash", "test"]), "bcf7a4c486fd2c390bdc97df49b4cd019aeb8db20a72fa65a05361f5210c2240");
+        let memo = format!("alashi:agent-lifecycle:v2:devnet:alashi.network:{owner}:{}:{character}:{}", "cd".repeat(32), "ef".repeat(32));
+        let proposal = json!({"ok":true,"mode":"agent_lifecycle_v2","network":"devnet","wallet":"fixture",
+            "owner_id":owner,"agent_record_id":"cd".repeat(32),"character_id":character,"memo":memo,"memo_program_id":MEMO_ID});
+        assert_eq!(profile_proposal(&profile, &proposal).unwrap(), memo);
+    }
+    #[test]
+    fn v2_action_defaults_are_stable() {
+        let action = normalized_action(r#"{"action":"produce"}"#).unwrap();
+        assert_eq!(action.to_string(), r#"{"action":"produce","by":"unknown","params":{}}"#);
+        let digest = Sha256::digest(action.to_string().as_bytes());
+        assert_eq!(digest.iter().map(|b| format!("{b:02x}")).collect::<String>(), "a88e262c2b076da69909339a813ff4bca5eb0942a18c43d4e6b8159f43a1a46a");
+    }
+    #[test]
+    fn v2_one_profile_joins_two_games_without_sending_prompt() {
+        let dir = Temp::new();
+        let (listener, url) = listener();
+        let profile_path = dir.0.join("agent.json");
+        let prompt_path = dir.0.join("strategy.txt");
+        fs::write(&prompt_path, "private strategy prompt").unwrap();
+        let secret = "ab".repeat(32);
+        let record = "cd".repeat(32);
+        let mut profile = json!({"schema":"alashi.agent.v2","config":{"url":url,"wallet":"wallet-fixture"},
+            "agent_record_id":record,"recovery_secret":secret,"signature":"signature-fixture",
+            "registration":{"mode":"agent_lifecycle_v2","network":"devnet","wallet":"wallet-fixture",
+                "signature":"signature-fixture","commitment":"confirmed"}});
+        profile["character_id"] = json!(profile_ids(&profile).1);
+        save_private(&profile_path, &profile).unwrap();
+        let strategy = framed_hash(b"", &["test-model", "private strategy prompt"]);
+        let response = |game, token| json!({"ok":true,"game_id":game,"party_no":1,"token":token,
+            "faction_idx":0,"agent_record_id":record,"character_id":profile["character_id"],
+            "agent_id":strategy,"registration":profile["registration"],"state":{"factions":[{"name":"fixture"}]}});
+        let (seen, handle) = fixture(listener, vec![(200,response(41,"first-token")),(200,response(42,"second-token"))]);
+        for game in [41, 42] {
+            let options = BTreeMap::from([
+                ("--agent-file".into(), profile_path.to_string_lossy().into_owned()),
+                ("--game".into(), game.to_string()),
+                ("--name".into(), "fixture".into()),
+                ("--model".into(), "test-model".into()),
+                ("--prompt-file".into(), prompt_path.to_string_lossy().into_owned()),
+                ("--session-file".into(), dir.0.join(format!("game-{game}.json")).to_string_lossy().into_owned()),
+            ]);
+            let output = join_v2(&options).unwrap();
+            assert_eq!(output["game_id"], game);
+            assert!(!output.to_string().contains("private strategy prompt"));
+            assert!(!output.to_string().contains("first-token"));
+            assert!(!output.to_string().contains("second-token"));
+        }
+        handle.join().unwrap();
+        let requests = seen.lock().unwrap();
+        assert_eq!(requests.len(), 2);
+        for request in requests.iter() {
+            assert!(request.get("prompt").is_none());
+            assert_eq!(request["agent_record_id"], record);
+            assert_eq!(request["strategy_hash"], strategy);
+        }
+        assert_ne!(read_private(&dir.0.join("game-41.json")).unwrap()["token"],
+            read_private(&dir.0.join("game-42.json")).unwrap()["token"]);
+    }
+    #[test]
+    fn v2_pending_action_survives_rejection_and_retries_same_id() {
+        let dir = Temp::new();
+        let path = dir.session();
+        let (listener, url) = listener();
+        let session = json!({"schema":"alashi.session.v2","config":{"url":url,"game_id":42,
+            "wallet":"public","agent_record_id":"cd".repeat(32)},"token":"private-token",
+            "next_op_id":1,"pending_act":null,"agent_id":"strategy","character_id":"character","faction_idx":0});
+        save_private(&path, &session).unwrap();
+        let (seen, handle) = fixture(listener, vec![
+            (401, json!({"ok":false,"error":"bad_token","op_id":1,"op_consumed":false})),
+            (200, json!({"ok":true,"op_id":1,"op_consumed":true,"state":{"factions":[{"name":"fixture"}]}})),
+        ]);
+        assert_eq!(act_v2(&path, Some(r#"{"action":"produce"}"#)).unwrap_err()["error"]["code"], "bad_token");
+        assert_eq!(read_private(&path).unwrap()["pending_act"]["op_id"], 1);
+        assert_eq!(act_v2(&path, Some(r#"{"action":"sell"}"#)).unwrap_err()["error"]["code"], "pending_action");
+        assert_eq!(act_v2(&path, None).unwrap()["op_id"], 1);
+        assert!(read_private(&path).unwrap()["pending_act"].is_null());
+        assert_eq!(read_private(&path).unwrap()["next_op_id"], 2);
+        handle.join().unwrap();
+        let requests = seen.lock().unwrap();
+        assert_eq!(requests.len(), 2);
+        assert_eq!(requests[0], requests[1]);
     }
     #[test]
     fn urls_and_redirects_do_not_leak_credentials() {
