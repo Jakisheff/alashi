@@ -1249,3 +1249,75 @@ fn confirm_retry_cannot_observe_receipt_before_snapshot_commit() {
     thread.join().unwrap();
     assert_eq!(result["error"], "registration_conflict", "{result}");
 }
+
+#[test]
+fn managed_lobby_closes_soon_after_second_join_and_persists_that_deadline() {
+    let state = isolated();
+    let agents: Vec<Value> = (60..=63).map(|n| confirmed_match_agent(&state, n)).collect();
+    let matched = h_match(&state, &agents[0]);
+    let gid = matched["game_id"].as_u64().unwrap();
+    let join_body = |agent: &Value, name: &str| json!({
+        "agent_record_id":agent["agent_record_id"],
+        "recovery_secret":agent["recovery_secret"],
+        "name":name,"model":"test-harness","strategy_hash":"aa".repeat(32),
+    });
+    let first_body = join_body(&agents[0], "First");
+    let first = h_join(&state, gid, &first_body);
+    assert_eq!(first["ok"], true, "{first}");
+    let long_deadline = state.games.lock().unwrap()[&gid].sim.game.phase_ends_at;
+    assert!(long_deadline - now() >= 120);
+    crank_once(&state);
+    assert_eq!(state.games.lock().unwrap()[&gid].sim.game.phase, Phase::Lobby);
+    assert_eq!(state.games.lock().unwrap()[&gid].sim.game.phase_ends_at, long_deadline);
+
+    let second_body = join_body(&agents[1], "Second");
+    std::fs::remove_file(&state.snapshot_path).unwrap();
+    std::fs::create_dir(&state.snapshot_path).unwrap();
+    assert_eq!(h_join(&state, gid, &second_body)["error"], "storage_failed");
+    {
+        let games = state.games.lock().unwrap();
+        assert_eq!(games[&gid].sim.game.faction_count, 1);
+        assert_eq!(games[&gid].sim.game.phase_ends_at, long_deadline);
+    }
+    std::fs::remove_dir(&state.snapshot_path).unwrap();
+    let second = h_join(&state, gid, &second_body);
+    assert_eq!(second["ok"], true, "{second}");
+    let short_deadline = state.games.lock().unwrap()[&gid].sim.game.phase_ends_at;
+    assert!(short_deadline <= now() + MATCH_READY_CLOSE_S);
+    assert!(short_deadline < long_deadline);
+    let barrier = Arc::new(std::sync::Barrier::new(2));
+    let requests: Vec<_> = agents[2..].iter().cloned().map(|agent| {
+        let state = state.clone();
+        let barrier = barrier.clone();
+        std::thread::spawn(move || { barrier.wait(); h_match(&state, &agent) })
+    }).collect();
+    for request in requests {
+        let result = request.join().unwrap();
+        assert_eq!(result["game_id"], gid, "{result}");
+        assert_eq!(result["joined"], false);
+    }
+    state.games.lock().unwrap().get_mut(&gid).unwrap().sim.game.phase_ends_at = now() + 4;
+    assert_eq!(h_match(&state, &agents[2])["error"], "match_wait");
+    state.games.lock().unwrap().get_mut(&gid).unwrap().sim.game.phase_ends_at = short_deadline;
+    crank_once(&state);
+    assert_eq!(state.games.lock().unwrap()[&gid].sim.game.phase, Phase::Lobby);
+
+    let restored = restore(&state);
+    assert_eq!(restored.games.lock().unwrap()[&gid].sim.game.phase_ends_at, short_deadline);
+    let third = h_join(&restored, gid, &join_body(&agents[2], "Third"));
+    assert_eq!(third["ok"], true, "{third}");
+    assert_eq!(restored.games.lock().unwrap()[&gid].sim.game.phase_ends_at, short_deadline);
+    let mut recover = first_body.clone();
+    recover["recover"] = json!(true);
+    assert_eq!(h_join(&restored, gid, &recover)["recovered"], true);
+    assert_eq!(restored.games.lock().unwrap()[&gid].sim.game.phase_ends_at, short_deadline);
+
+    let manual = create(&restored);
+    let manual_deadline = restored.games.lock().unwrap()[&manual].sim.game.phase_ends_at;
+    assert_eq!(h_join(&restored, manual, &first_body)["ok"], true);
+    assert_eq!(h_join(&restored, manual, &second_body)["ok"], true);
+    assert_eq!(restored.games.lock().unwrap()[&manual].sim.game.phase_ends_at, manual_deadline);
+    restored.games.lock().unwrap().get_mut(&gid).unwrap().sim.game.phase_ends_at = now() - 1;
+    crank_once(&restored);
+    assert_eq!(restored.games.lock().unwrap()[&gid].sim.game.phase, Phase::Market);
+}

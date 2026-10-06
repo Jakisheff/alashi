@@ -42,6 +42,8 @@ pub const MAX_REGISTERED_AGENTS: usize = 1000;
 pub const MAX_CONFIRM_VERIFIERS: u64 = 4;
 pub const MATCH_LOBBY_DURATION_S: i64 = 900;
 pub const MATCH_MIN_JOIN_TIME_S: i64 = 60;
+pub const MATCH_READY_CLOSE_S: i64 = 30;
+pub const MATCH_READY_MIN_JOIN_TIME_S: i64 = 5;
 pub const MAX_RECENT_OPS: usize = 64;
 pub const SESSION_LIFETIME_S: i64 = 86_400;
 
@@ -1421,6 +1423,14 @@ fn h_confirm_v2_with_verifier(
     serde_json::json!({"ok":true,"agent_record_id":id,"registration":receipt})
 }
 
+fn close_ready_managed_lobby(entry: &mut GameEntry) {
+    if entry.managed_match && entry.sim.game.phase == Phase::Lobby
+        && entry.sim.game.faction_count == MIN_FACTIONS {
+        entry.sim.game.phase_ends_at = entry.sim.game.phase_ends_at
+            .min(now().saturating_add(MATCH_READY_CLOSE_S));
+    }
+}
+
 fn h_join_v2(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json::Value {
     if !body.as_object().is_some_and(|o| o.keys().all(|k|
         matches!(k.as_str(), "agent_record_id" | "recovery_secret" | "name" | "model" | "strategy_hash" | "recover"))) {
@@ -1483,6 +1493,7 @@ fn h_join_v2(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_
             session_expires_at:Some(expires), recovery_hash:None,
             registration:record.receipt.clone(), model:model.to_string(), faction_idx,
         });
+        close_ready_managed_lobby(entry);
         let view = state_json(game_id, entry);
         serde_json::json!({"ok":true,"game_id":game_id,"party_no":entry.party_no,
             "agent_record_id":id,"agent_id":strategy_hash,"character_id":record.character_id,
@@ -1746,6 +1757,7 @@ fn h_join_inner(state: &AppState, game_id: u64, body: &serde_json::Value, proof:
         model,
         faction_idx,
     });
+    close_ready_managed_lobby(entry);
     eprintln!("[join] party {} faction {} character {} (strategy {})", entry.party_no, faction_idx, character_id, agent_id);
     let v = state_json(game_id, entry);
     serde_json::json!({"ok": true, "agent_id": agent_id, "character_id": character_id, "owner_id": owner_id,
@@ -2415,10 +2427,14 @@ fn h_match(state: &AppState, body: &serde_json::Value) -> serde_json::Value {
             .min_by_key(|(gid, _)| *gid) {
             return match_result(gid, entry, true);
         }
-        if let Some((&gid, entry)) = games.iter().filter(|(_, entry)|
+        if let Some((&gid, entry)) = games.iter().filter(|(_, entry)| {
+            let min_time = if entry.managed_match && entry.sim.game.faction_count >= MIN_FACTIONS {
+                MATCH_READY_MIN_JOIN_TIME_S
+            } else { MATCH_MIN_JOIN_TIME_S };
             entry.sim.game.phase == Phase::Lobby
                 && entry.sim.game.faction_count < MAX_FACTIONS
-                && entry.sim.game.phase_ends_at.saturating_sub(t) >= MATCH_MIN_JOIN_TIME_S)
+                && entry.sim.game.phase_ends_at.saturating_sub(t) >= min_time
+        })
             .max_by_key(|(gid, entry)| (entry.sim.game.faction_count, std::cmp::Reverse(**gid))) {
             return match_result(gid, entry, false);
         }
