@@ -8,7 +8,7 @@ import { ScreenText } from './ScreenText'
 import { createSmokeMaterial } from './smoke'
 
 // Built by art/desk_genie.py in Blender; clips are sampled from pose.ts.
-const MODEL = '/models/desk-genie.glb'
+const MODEL = `${import.meta.env.BASE_URL}models/desk-genie.glb`
 const FADE = 0.2
 
 // ?pose=<clip>&t=<seconds> freezes a pose: deterministic frames for review and screenshots.

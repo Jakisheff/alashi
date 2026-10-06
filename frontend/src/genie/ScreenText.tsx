@@ -49,7 +49,7 @@ export function ScreenText() {
   return (
     <Text
       position={[0, 0, 0.002]}
-      font="/fonts/Jura.ttf"
+      font={`${import.meta.env.BASE_URL}fonts/Jura.ttf`}
       fontSize={0.07}
       lineHeight={1.15}
       maxWidth={0.8}
