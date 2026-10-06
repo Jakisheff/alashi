@@ -177,6 +177,43 @@ def arc(name, radius, start, end, thickness, loc, mat, rot_y=0.0, n=24):
     return finish(o)
 
 
+def rounded_rect(name, w, h, r, thickness, loc, mat, n=8):
+    """Round tube along a rounded rectangle in the XZ plane, centred on loc."""
+    cu = bpy.data.curves.new(name, "CURVE")
+    cu.dimensions = "3D"
+    cu.bevel_depth = thickness
+    cu.bevel_resolution = 3
+    sp = cu.splines.new("POLY")
+    corners = ((w / 2 - r, h / 2 - r, 0), (-(w / 2 - r), h / 2 - r, 1), (-(w / 2 - r), -(h / 2 - r), 2),
+               (w / 2 - r, -(h / 2 - r), 3))
+    coords = [(cx + r * math.cos((q + i / n) * math.pi / 2), cz + r * math.sin((q + i / n) * math.pi / 2))
+              for cx, cz, q in corners for i in range(n + 1)]
+    sp.points.add(len(coords) - 1)
+    for p, (x, z) in zip(sp.points, coords):
+        p.co = (x, 0, z, 1)
+    sp.use_cyclic_u = True
+    o = bpy.data.objects.new(name, cu)
+    bpy.context.collection.objects.link(o)
+    o.location = loc
+    cu.materials.append(mat)
+    apply_all(o)
+    return finish(o)
+
+
+def join(objs, name):
+    """Bake modifiers and merge rigid parts that share a bone into one mesh (fewer draw calls)."""
+    for o in objs:
+        apply_all(o)
+    bpy.ops.object.select_all(action="DESELECT")
+    for o in objs:
+        o.select_set(True)
+    bpy.context.view_layer.objects.active = objs[0]
+    bpy.ops.object.join()
+    o = active()
+    o.name = name
+    return o
+
+
 # ---------- the character ----------
 
 def build():
@@ -186,36 +223,47 @@ def build():
         "orange": material("orange-rubber", "#e06a2c", rough=0.6),
         "joint": material("joint-dark", "#30332f", rough=0.5, metal=0.2),
         "screen": material("screen-glass", "#1c1e1a", rough=0.15, coat=0.8, emit="#1f2a22", strength=0.6),
-        "glow": material("face-glow", "#ffe6a0", rough=0.4, emit="#ffd77a", strength=1.2),
+        "glow": material("face-glow", "#ffd27a", rough=0.4, emit="#ffbf4d", strength=0.9),
         "pupil": material("pupil", "#2a2820", rough=0.6),
         "brow": material("brow", "#c2b291", rough=0.5),
         "steel": material("steel", "#8d8a80", rough=0.3, metal=0.8),
         "tail": material("tail-glass", "#2fa392", rough=0.08, emit="#14786b", strength=0.8, alpha=0.55, coat=1.0),
-        "spark": material("tail-spark", "#fff6c8", emit="#fff1b0", strength=2.5),
+        "spark": material("tail-spark", "#fff1b0", emit="#ffe08a", strength=1.6),
     }
 
-    # Head-body: a rounded CRT housing, a little narrower at the bottom.
-    shell = box("body-shell", (1.3, 1.0, 1.15), (0, 0, 0), m["ivory"], 0.16, 8)
+    m["glint"] = material("eye-glint", "#ffffff", emit="#ffffff", strength=2.0)
+
+    # Head-body: a soft, pillowy CRT housing (bevelled cage + subdivision), narrower at the bottom.
+    bpy.ops.mesh.primitive_cube_add(size=1)
+    shell = active()
+    shell.name = "body-shell"
+    shell.data.transform(Matrix.Diagonal((1.3, 1.0, 1.15, 1)))
     for v in shell.data.vertices:
         if v.co.z < 0:
             v.co.x *= 0.9
+    bevel(shell, 0.26, 3, angle=False)
+    shell.modifiers.new("Subsurf", "SUBSURF").levels = 2
     # Screen recess cut into the front face (front face is y = -0.5).
     cutter = box("cutter", (0.9, 0.2, 0.7), (0.02, -0.55, 0.07), None, 0.08, 6)
     boolean = shell.modifiers.new("Recess", "BOOLEAN")
     boolean.object = cutter
     boolean.operation = "DIFFERENCE"
     boolean.solver = "EXACT"
-    shell.modifiers.move(shell.modifiers.find("Recess"), 1)  # bevel -> recess -> normals
     apply_all(shell)
     bpy.data.objects.remove(cutter, do_unlink=True)
+    finish(shell, m["ivory"])
 
+    # Screen: dark glass, a raised ivory lip around the opening and a dark gasket inside it.
     box("screen", (0.86, 0.04, 0.66), (0.02, -0.45, 0.07), m["screen"], 0.06, 5)
+    rounded_rect("screen-lip", 0.94, 0.74, 0.11, 0.024, (0.02, -0.49, 0.07), m["ivory"])
+    rounded_rect("screen-gasket", 0.87, 0.67, 0.07, 0.012, (0.02, -0.468, 0.07), m["joint"])
 
     # Face on the screen (front of the glass is y = -0.47).
     fy = -0.475
     for side, x in (("left", 0.22), ("right", -0.18)):
         disc(f"{side}-eye", 0.12, (x, fy, EYE_Z), m["glow"], scale=(1, 1.15, 1))
         disc(f"{side}-pupil", 0.055, (x, fy - 0.003, EYE_Z), m["pupil"])
+        disc(f"{side}-pupil-glint", 0.016, (x + 0.022, fy - 0.0045, EYE_Z + 0.024), m["glint"], verts=16)
     # Lids: patches of screen that slide over the eyes (rest coverage 0.3 = sly).
     lid_z = EYE_Z + lid_offset(1, LID_REST)
     for side, x, tilt in (("left", 0.22, 0.12), ("right", -0.18, -0.12)):
@@ -224,23 +272,26 @@ def build():
         lid.name = f"{side}-lid"
         lid.data.transform(Matrix.Diagonal((0.3, LID_H, 1, 1)))
         finish(lid, m["screen"], smooth=False)
-    # Arched brows, asymmetric: the character's left brow sits higher (smirk).
+    # Arched brow ridges, asymmetric: the character's left brow sits higher (smirk).
     for side, x, raise_, tilt in (("left", 0.22, 0.021, -0.1), ("right", -0.18, 0.0, 0.05)):
-        arc(f"{side}-brow", BROW_R, math.pi / 2 - BROW_ARC / 2, math.pi / 2 + BROW_ARC / 2, 0.022,
-            (x, fy - 0.01, 0.27 - BROW_R + raise_), m["brow"], rot_y=tilt)
+        arc(f"{side}-brow", BROW_R, math.pi / 2 - BROW_ARC / 2, math.pi / 2 + BROW_ARC / 2, 0.03,
+            (x, fy - 0.012, 0.27 - BROW_R + raise_), m["brow"], rot_y=tilt)
     # Crooked grin: lower half circle; the rig scales it vertically for smile/frown.
-    arc("mouth", 0.1, math.pi, 2 * math.pi, 0.018, (0.07, fy - 0.004, -0.13), m["glow"], rot_y=-0.12)
+    arc("mouth", 0.1, math.pi, 2 * math.pi, 0.022, (0.07, fy - 0.004, -0.13), m["glow"], rot_y=-0.12)
 
-    # Forest-teal side "ears" with an inner ring, orange slot and speaker grille.
+    # Forest-teal side "ears": dark rim, orange slot at the front, speaker holes at the back.
     for sx in (1, -1):
         side = "left" if sx > 0 else "right"
-        cylinder(f"{side}-ear", 0.34, 0.12, (0.66 * sx, 0, 0.05), m["teal"], rot=(0, math.pi / 2, 0), edge=0.035)
-        cylinder(f"{side}-ear-ring", 0.25, 0.03, (0.725 * sx, 0, 0.05), m["joint"], rot=(0, math.pi / 2, 0), edge=0.01)
-        box(f"{side}-ear-slot", (0.04, 0.07, 0.22), (0.745 * sx, -0.08, 0.05), m["orange"], 0.02, 4)
-        for i in range(7):
-            a = i / 7 * 2 * math.pi
-            sphere(f"{side}-grille-{i}", 0.018, (0.738 * sx, 0.1 + 0.08 * math.cos(a), 0.05 + 0.08 * math.sin(a)),
-                   m["joint"], segs=(12, 6))
+        cylinder(f"{side}-ear", 0.34, 0.12, (0.66 * sx, 0, 0.05), m["teal"], rot=(0, math.pi / 2, 0), edge=0.05,
+                 segments=4)
+        bpy.ops.mesh.primitive_torus_add(major_radius=0.29, minor_radius=0.018, location=(0.72 * sx, 0, 0.05),
+                                         rotation=(0, math.pi / 2, 0))
+        finish(active(), m["joint"]).name = f"{side}-ear-rim"
+        box(f"{side}-ear-slot", (0.04, 0.07, 0.24), (0.735 * sx, -0.11, 0.05), m["orange"], 0.02, 4)
+        holes = [(0, 0)] + [(0.045 * math.cos(i * math.pi / 3), 0.045 * math.sin(i * math.pi / 3)) for i in range(6)] \
+            + [(0.09 * math.cos(i * math.pi / 6), 0.09 * math.sin(i * math.pi / 6)) for i in range(12)]
+        join([sphere(f"{side}-hole-{i}", 0.012, (0.722 * sx, 0.11 + dy, 0.05 + dz), m["joint"], scale=(0.4, 1, 1),
+                     segs=(10, 6)) for i, (dy, dz) in enumerate(holes)], f"{side}-ear-grille")
 
     # Top button, sensor, vents and ports.
     box("top-button", (0.26, 0.14, 0.07), (0.12, 0.0, 0.58), m["orange"], 0.025, 4)
@@ -250,19 +301,16 @@ def build():
     for i, x in enumerate((-0.32, -0.25, -0.18)):
         sphere(f"port-{i}", 0.02, (x, -0.495, -0.33), m["joint"], segs=(12, 6))
 
-    # Lower housing narrows toward the tail, with a dark seam ring.
-    bpy.ops.mesh.primitive_cone_add(vertices=48, radius1=0.25, radius2=0.47, depth=0.26, location=(0, 0, -0.69))
-    housing = active()
-    housing.name = "lower-housing"
-    housing.scale = (1, 0.82, 1)
-    bevel(housing, 0.05, 4)
-    weighted_normals(housing)
-    finish(housing, m["ivory"])
-    bpy.ops.mesh.primitive_torus_add(major_radius=0.47, minor_radius=0.015, location=(0, 0, -0.565))
-    seam = active()
+    # Rounded "chin" under the body; a dark collar where the tail comes out.
+    sphere("lower-housing", 0.5, (0, 0, -0.56), m["ivory"], scale=(0.86, 0.72, 0.5), segs=(48, 24))
+    bpy.ops.mesh.primitive_torus_add(major_radius=0.43, minor_radius=0.014, location=(0, 0, -0.56))
+    seam = finish(active(), m["joint"])
     seam.name = "seam-ring"
     seam.scale = (1, 0.82, 1)
-    finish(seam, m["joint"])
+    bpy.ops.mesh.primitive_torus_add(major_radius=0.21, minor_radius=0.035, location=(0, 0, -0.79))
+    collar = finish(active(), m["joint"])
+    collar.name = "tail-collar"
+    collar.scale = (1, 0.85, 1)
 
     # Arms hang straight down at rest; the rig poses them (rest pose = all zeros).
     for sx in (1, -1):
@@ -274,14 +322,17 @@ def build():
         capsule(f"{side}-upper-arm", 0.088, 0.32, sh + Vector((0, 0, -0.16)), m["ivory"])
         sphere(f"{side}-elbow", 0.086, el, m["joint"])
         capsule(f"{side}-forearm", 0.083, 0.28, el + Vector((0, 0, -0.15)), m["ivory"])
-        cylinder(f"{side}-wrist", 0.09, 0.05, el + Vector((0, 0, -0.29)), m["joint"], verts=24, edge=0.012)
+        cylinder(f"{side}-wrist", 0.09, 0.05, el + Vector((0, 0, -0.29)), m["orange"], verts=24, edge=0.012)
         box(f"{side}-palm", (0.2, 0.12, 0.18), hd, m["teal"], 0.055, 4)
         disc(f"{side}-palm-pad", 0.05, hd + Vector((0, -0.062, 0.005)), m["orange"])
-        for i, fx in enumerate((-0.069, -0.023, 0.023, 0.069)):
-            sphere(f"{side}-knuckle-{i}", 0.032, hd + Vector((fx, -0.01, -0.085)), m["joint"], segs=(12, 8))
-            capsule(f"{side}-finger-{i}", 0.03, 0.12, hd + Vector((fx, -0.01, -0.145)), m["ivory"])
-        capsule(f"{side}-thumb", 0.03, 0.1, hd + Vector((0.11 * sx, -0.025, -0.01)), m["ivory"],
-                rot=(0, -0.9 * sx, 0))
+        xs = (-0.069, -0.023, 0.023, 0.069)
+        join([sphere(f"{side}-k{i}", 0.032, hd + Vector((fx, -0.01, -0.085)), m["joint"], segs=(12, 8))
+              for i, fx in enumerate(xs)], f"{side}-knuckles")
+        fingers = [capsule(f"{side}-f{i}", 0.03, 0.12, hd + Vector((fx, -0.01, -0.145)), m["ivory"])
+                   for i, fx in enumerate(xs)]
+        fingers.append(capsule(f"{side}-t", 0.03, 0.1, hd + Vector((0.11 * sx, -0.025, -0.01)), m["ivory"],
+                               rot=(0, -0.9 * sx, 0)))
+        join(fingers, f"{side}-fingers")
 
     # Glass tail: a tapering NURBS tube that curls up at the tip, with sparks inside.
     pts = TAIL_PTS
@@ -306,8 +357,12 @@ def build():
     finish(tail)
     if hasattr(m["tail"], "surface_render_method"):
         m["tail"].surface_render_method = "BLENDED"
-    for i, (x, y, z) in enumerate(pts[2:6]):
-        sphere(f"tail-spark-{i}", 0.022, (x * 0.9, y, z + 0.02), m["spark"], segs=(12, 8))
+    # Sparks only where the tube is thick enough to keep them inside.
+    for i in (1, 2, 3):
+        for j, f in enumerate((0.3, 0.7)):
+            a, b_ = Vector(pts[i]), Vector(pts[i + 1])
+            c = a.lerp(b_, f) + Vector((0.04 * (1 if (i + j) % 2 else -1), 0, 0))
+            sphere(f"tail-spark-{i}-{j}", 0.014, c, m["spark"], segs=(10, 6))
 
     return m
 
@@ -328,7 +383,7 @@ FACE_BONES = {  # bone: head position
 
 def bone_for(name):
     for b in FACE_BONES:
-        if name == b:
+        if name == b or name.startswith(b + "-"):
             return b
     if name in ("left-eye", "right-eye"):
         return "face"
@@ -337,10 +392,10 @@ def bone_for(name):
             return f"{side}-arm"
         if name in (f"{side}-elbow", f"{side}-forearm", f"{side}-wrist"):
             return f"{side}-forearm"
-        if name.startswith((f"{side}-palm", f"{side}-knuckle", f"{side}-finger", f"{side}-thumb")):
+        if name.startswith((f"{side}-palm", f"{side}-knuckles", f"{side}-fingers")):
             return f"{side}-hand"
     if name.startswith("tail-spark-"):
-        return f"tail-{int(name[-1]) + 2}"
+        return f"tail-{int(name.split('-')[2])}"
     return "body"
 
 

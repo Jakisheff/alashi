@@ -65,7 +65,7 @@ export default function App() {
       <Canvas
         dpr={[1, 2]}
         camera={{ fov: 32 }}
-        fallback={<p className="p-6">WebGL is unavailable. DeskGenie is {clip}.</p>}
+        fallback={<p className="p-6">WebGL is unavailable. Degenie is {clip}.</p>}
       >
         <color attach="background" args={['#ece6da']} />
         <ambientLight intensity={0.35} />
@@ -84,7 +84,7 @@ export default function App() {
       </Canvas>
 
       <div className="absolute top-3 left-3 flex items-center gap-2 rounded-full bg-white/80 px-3 py-1 text-sm">
-        <span className="font-semibold">DeskGenie</span>
+        <span className="font-semibold">Degenie</span>
         <span className="rounded-full bg-stone-800 px-2 text-xs tracking-wide text-white uppercase">preview</span>
         <span className="hidden text-stone-500 sm:inline">no live game data</span>
       </div>
@@ -105,7 +105,7 @@ export default function App() {
           {captions ? 'text on' : 'text off'}
         </button>
       </div>
-      <p className="sr-only" aria-live="polite">DeskGenie: {clip}</p>
+      <p className="sr-only" aria-live="polite">Degenie: {clip}</p>
     </div>
   )
 }
