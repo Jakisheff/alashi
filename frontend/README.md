@@ -18,6 +18,8 @@ npm run build
 
 - `?pose=accepted&t=0.55` замораживает позу: кадры для ревью и скриншотов.
 - `npm run check:pose` проверяет, что клипы начинаются и заканчиваются в позе idle.
+- Реплики Degenie печатаются в нижней полосе его экрана (`src/genie/ScreenText.tsx`, `useScene().say(text)`);
+  длинный текст разбивается на страницы по две строки. Шрифт Jura (OFL, `public/fonts`).
 
 Пересборка GLB (Blender 5.2):
 

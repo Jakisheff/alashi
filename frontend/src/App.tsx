@@ -1,7 +1,7 @@
 import { ContactShadows, Environment, Lightformer, OrbitControls } from '@react-three/drei'
 import { Canvas, useThree } from '@react-three/fiber'
 import { Bloom, EffectComposer } from '@react-three/postprocessing'
-import { Suspense, useEffect, useState } from 'react'
+import { Suspense, useEffect } from 'react'
 import { GenieModel } from './genie/GenieModel'
 import type { GenieClip } from './genie/pose'
 import { useScene } from './store'
@@ -29,28 +29,20 @@ const LINES: Partial<Record<GenieClip, string[]>> = {
   rejected: ["Didn't work. At least now it's reproducible."],
 }
 
-function Caption() {
-  const { clip, take, captions } = useScene()
-  const [line, setLine] = useState<string | null>(null)
+// Picks a line for each triggered clip; Degenie types it on its own screen (ScreenText).
+function useLines() {
+  const { clip, take, captions, say } = useScene()
   useEffect(() => {
     const options = LINES[clip]
-    if (!captions || !options) return
-    setLine(options[take % options.length])
-    const id = setTimeout(() => setLine(null), 2800)
-    return () => clearTimeout(id)
-    // Only a new trigger shows a line; returning to idle keeps it on screen.
+    if (captions && options) say(options[take % options.length])
+    // Only a new trigger speaks; returning to idle keeps the current line on screen.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [take])
-  if (!line || !captions) return null
-  return (
-    <div className="pointer-events-none absolute top-[14%] left-1/2 max-w-[80%] -translate-x-1/2 rounded-2xl bg-white/90 px-4 py-2 text-center text-[15px] text-stone-800 shadow-sm">
-      {line}
-    </div>
-  )
 }
 
 export default function App() {
-  const { clip, captions, play, toggleCaptions } = useScene()
+  const { clip, captions, speech, play, toggleCaptions } = useScene()
+  useLines()
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -94,8 +86,6 @@ export default function App() {
         <span className="hidden text-stone-500 sm:inline">no live game data</span>
       </div>
 
-      <Caption />
-
       <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-1 rounded-full bg-white/80 p-1 font-mono text-xs whitespace-nowrap sm:text-sm">
         {CLIPS.map((c, i) => (
           <button
@@ -110,7 +100,9 @@ export default function App() {
           {captions ? 'text on' : 'text off'}
         </button>
       </div>
-      <p className="sr-only" aria-live="polite">Degenie: {clip}</p>
+      <p className="sr-only" aria-live="polite">
+        Degenie: {clip}. {speech}
+      </p>
     </div>
   )
 }

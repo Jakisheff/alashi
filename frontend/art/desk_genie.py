@@ -21,14 +21,15 @@ COL = "DeskGenie"
 GLB = os.path.join(ART, "..", "public", "models", "desk-genie.glb")
 
 # Face constants shared by the build and the rig.
-SCREEN_Z = 0.2  # screen centre height
-EYE_Z, EYE_R, LID_REST = SCREEN_Z + 0.06, 0.13, 0.3
+SCREEN_Z, SCREEN_H = 0.25, 0.72  # screen centre height and height; the lower band shows text
+EYE_Z, EYE_R, LID_REST = SCREEN_Z + 0.15, 0.13, 0.3
 EYE_HALF = EYE_R * 1.15
 EYE_TOP = EYE_Z + EYE_HALF
 EYES_X = {"left": 0.23, "right": -0.2}  # anatomical left is +X
 BROW_R, BROW_ARC = 0.15, 1.3
 BROW_Z = EYE_Z + 0.18 - BROW_R  # arc centre; the arc top sits 0.18 above the eye centre
-MOUTH = (0.06, SCREEN_Z - 0.12)  # (x, z) of the grin's circle centre
+MOUTH = (0.06, SCREEN_Z - 0.02)  # (x, z) of the grin's circle centre
+TEXT_Z = SCREEN_Z - 0.25  # centre of the text band (R3F types replies there)
 # Tail: wide at the body, curling into a smoke spiral on the viewer's left.
 TAIL_PTS = [(0, 0, -0.5), (0.04, -0.02, -0.85), (0.1, -0.04, -1.2), (0.0, -0.04, -1.52),
             (-0.28, -0.02, -1.7), (-0.55, 0, -1.6), (-0.62, 0, -1.38), (-0.48, 0, -1.26), (-0.4, 0, -1.36)]
@@ -276,7 +277,7 @@ def cut(target, cutter):
 
 def body_mesh():
     """Square top that tapers toward the tail: three rings of (half width, half depth) at heights."""
-    rings = [(0.62, 0.66, 0.52), (0.02, 0.66, 0.52), (-0.6, 0.36, 0.34)]
+    rings = [(0.8, 0.66, 0.52), (0.0, 0.66, 0.52), (-0.6, 0.36, 0.34)]
     verts = [(sx * w, sy * d, z) for z, w, d in rings for sx, sy in ((-1, -1), (1, -1), (1, 1), (-1, 1))]
     faces = [(0, 1, 2, 3), (11, 10, 9, 8)]  # caps wound outward (top up, bottom down)
     for r in range(2):
@@ -300,6 +301,7 @@ def build():
         "screen": material("screen-glass", "#15171a", rough=0.12, coat=1.0, emit="#1b2420", strength=0.5),
         "glow": material("face-glow", "#ffd98f", rough=0.4, emit="#ffc766", strength=1.6),
         "cyan": material("screen-rim", "#6ee7ff", emit="#6ee7ff", strength=2.5),
+        "divider": material("screen-divider", "#3b6f69", emit="#2f8f84", strength=0.6),
         "pupil": material("pupil", "#2a261d", rough=0.6),
         "glint": material("eye-glint", "#ffffff", emit="#ffffff", strength=3.0),
         "brow": material("brow", "#b8a888", rough=0.5),
@@ -314,7 +316,7 @@ def build():
     bevel(shell, 0.2, 3, angle=False)
     shell.modifiers.new("Subsurf", "SUBSURF").levels = 2
     apply_all(shell)
-    cut(shell, box("cutter", (0.94, 0.2, 0.56), (0.02, -0.6, SCREEN_Z), None, 0.1, 6))
+    cut(shell, box("cutter", (0.94, 0.2, SCREEN_H), (0.02, -0.6, SCREEN_Z), None, 0.1, 6))
     finish(shell, m["ivory"])
     bvh = BVHTree.FromObject(shell, bpy.context.evaluated_depsgraph_get())
 
@@ -331,14 +333,20 @@ def build():
     shell.data.polygons.foreach_set("use_smooth", [True] * len(shell.data.polygons))
 
     # Screen glass, raised lip, dark gasket and a thin cyan rim light along the top and right.
-    box("screen", (0.9, 0.04, 0.52), (0.02, -0.5, SCREEN_Z), m["screen"], 0.08, 5)
-    lip_y = front(bvh, 0.02, SCREEN_Z + 0.33)[0].y
-    rounded_rect("screen-lip", 0.98, 0.6, 0.13, 0.024, (0.02, lip_y + 0.004, SCREEN_Z), m["ivory"])
-    rounded_rect("screen-gasket", 0.91, 0.53, 0.09, 0.012, (0.02, -0.523, SCREEN_Z), m["joint"])
-    rim = [(x, SCREEN_Z + 0.245) for x in (-0.1, 0.1, 0.3)]
-    rim += [(0.39 + 0.07 * math.sin(a), SCREEN_Z + 0.175 + 0.07 * math.cos(a)) for a in (0.4, 0.8, 1.2, 1.57)]
-    rim += [(0.46, SCREEN_Z + z) for z in (0.12, 0.0, -0.1)]
+    box("screen", (0.9, 0.04, SCREEN_H - 0.04), (0.02, -0.5, SCREEN_Z), m["screen"], 0.08, 5)
+    lip_y = front(bvh, 0.02, SCREEN_Z + SCREEN_H / 2 + 0.05)[0].y
+    rounded_rect("screen-lip", 0.98, SCREEN_H + 0.04, 0.13, 0.024, (0.02, lip_y + 0.004, SCREEN_Z), m["ivory"])
+    rounded_rect("screen-gasket", 0.91, SCREEN_H - 0.03, 0.09, 0.012, (0.02, -0.523, SCREEN_Z), m["joint"])
+    top = SCREEN_Z + SCREEN_H / 2 - 0.035
+    rim = [(x, top) for x in (-0.1, 0.1, 0.3)]
+    rim += [(0.39 + 0.07 * math.sin(a), top - 0.07 + 0.07 * math.cos(a)) for a in (0.4, 0.8, 1.2, 1.57)]
+    rim += [(0.46, top - dz) for dz in (0.15, 0.3)]
     tube("screen-rim", [(x, -0.527, z) for x, z in rim], 0.006, m["cyan"])
+    # Dim divider above the text band, plus an empty node where R3F anchors the typed text.
+    tube("screen-divider", [(x, -0.527, TEXT_Z + 0.115) for x in (-0.36, 0.4)], 0.004, m["divider"])
+    text_anchor = bpy.data.objects.new("text-anchor", None)
+    bpy.context.collection.objects.link(text_anchor)
+    text_anchor.location = (0.02, -0.53, TEXT_Z)
 
     # Face on the glass (front of the glass is y = -0.52).
     fy = -0.525
@@ -357,7 +365,7 @@ def build():
     for side, raise_, tilt in (("left", 0.021, -0.1), ("right", 0.0, 0.05)):
         arc(f"{side}-brow", BROW_R, math.pi / 2 - BROW_ARC / 2, math.pi / 2 + BROW_ARC / 2, 0.034,
             (EYES_X[side], fy - 0.014, BROW_Z + raise_), m["brow"], rot_y=tilt)
-    arc("mouth", 0.11, math.pi, 2 * math.pi, 0.024, (MOUTH[0], fy - 0.004, MOUTH[1]), m["glow"], rot_y=-0.14)
+    arc("mouth", 0.1, math.pi, 2 * math.pi, 0.024, (MOUTH[0], fy - 0.004, MOUTH[1]), m["glow"], rot_y=-0.14)
 
     # Front details placed on the surface: orange vent, three ports, slotted grille, sensor.
     for i, z in enumerate((-0.17, -0.225)):
@@ -369,7 +377,7 @@ def build():
     for i in range(4):
         loc, n = front(bvh, 0.21, -0.33 - i * 0.04)
         align(box(f"grille-{i}", (0.2, 0.02, 0.016), loc - n * 0.004, m["joint"], 0.007, 2), n)
-    loc, n = front(bvh, 0.44, SCREEN_Z + 0.36)
+    loc, n = front(bvh, 0.44, SCREEN_Z + SCREEN_H / 2 + 0.09)
     align(cylinder("sensor", 0.035, 0.03, loc, m["steel"], verts=24, edge=0.008), n, axis=(0, 0, 1))
     loc, n = surface_hit(bvh, (0.12, -0.05, 2), (0, 0, -1))
     box("top-button", (0.26, 0.15, 0.08), loc, m["orange"], 0.03, 4)
@@ -378,16 +386,17 @@ def build():
     # Ears: teal discs with a steel rim, a raised inner step and an orange gripped pill.
     for sx in (1, -1):
         side = "left" if sx > 0 else "right"
-        loc, _ = surface_hit(bvh, (2 * sx, 0.04, SCREEN_Z), (-sx, 0, 0))
+        ez = SCREEN_Z + 0.08
+        loc, _ = surface_hit(bvh, (2 * sx, 0.04, ez), (-sx, 0, 0))
         cx = loc.x + 0.02 * sx
-        cylinder(f"{side}-ear", 0.4, 0.13, (cx, 0.04, SCREEN_Z), m["teal"], rot=(0, math.pi / 2, 0), edge=0.05, segments=4)
-        bpy.ops.mesh.primitive_torus_add(major_radius=0.4, minor_radius=0.018, location=(cx - 0.06 * sx, 0.04, SCREEN_Z),
+        cylinder(f"{side}-ear", 0.32, 0.12, (cx, 0.04, ez), m["teal"], rot=(0, math.pi / 2, 0), edge=0.05, segments=4)
+        bpy.ops.mesh.primitive_torus_add(major_radius=0.32, minor_radius=0.016, location=(cx - 0.055 * sx, 0.04, ez),
                                          rotation=(0, math.pi / 2, 0))
         finish(active(), m["steel"]).name = f"{side}-ear-rim"
-        cylinder(f"{side}-ear-step", 0.29, 0.04, (cx + 0.07 * sx, 0.04, SCREEN_Z), m["teal"], rot=(0, math.pi / 2, 0),
+        cylinder(f"{side}-ear-step", 0.23, 0.04, (cx + 0.065 * sx, 0.04, ez), m["teal"], rot=(0, math.pi / 2, 0),
                  edge=0.015, segments=3)
-        box(f"{side}-ear-pill", (0.05, 0.11, 0.27), (cx + 0.1 * sx, -0.02, SCREEN_Z), m["orange"], 0.05, 5)
-        join([box(f"{side}-grip-{i}", (0.02, 0.07, 0.012), (cx + 0.127 * sx, -0.02, SCREEN_Z + dz), m["joint"], 0.004, 2)
+        box(f"{side}-ear-pill", (0.05, 0.1, 0.22), (cx + 0.095 * sx, -0.02, ez), m["orange"], 0.05, 5)
+        join([box(f"{side}-grip-{i}", (0.02, 0.07, 0.012), (cx + 0.122 * sx, -0.02, ez + dz), m["joint"], 0.004, 2)
               for i, dz in enumerate((-0.06, 0, 0.06))], f"{side}-ear-grips")
 
     # Dark collar where the body hands over to the tail.
@@ -480,7 +489,7 @@ def bone_for(name):
     for b in FACE_BONES:
         if name == b or name.startswith(b + "-"):
             return b
-    if name.startswith(("left-eye", "right-eye")):
+    if name.startswith(("left-eye", "right-eye", "text-anchor")):
         return "face"
     for side in ("left", "right"):
         if name in (f"{side}-shoulder", f"{side}-upper-arm"):
@@ -537,7 +546,7 @@ def rig(col):
 
     # Bone-parent every rigid part without moving it (a bone child sits at the bone's tail).
     for o in list(col.objects):
-        if o in (arm,) or o.name == "tail":
+        if o is arm or o.name == "tail":
             continue
         pb = arm.pose.bones[bone_for(o.name)]
         world = o.matrix_world.copy()

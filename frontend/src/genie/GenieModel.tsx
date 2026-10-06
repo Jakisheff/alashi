@@ -1,9 +1,10 @@
 import { useAnimations, useGLTF } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
+import { createPortal, useFrame } from '@react-three/fiber'
 import { useEffect, useMemo, useRef } from 'react'
 import { LoopOnce, LoopRepeat, type AnimationAction, type Group, type Mesh } from 'three'
 import { useScene } from '../store'
 import { CLIP_SECONDS, type GenieClip } from './pose'
+import { ScreenText } from './ScreenText'
 import { createSmokeMaterial } from './smoke'
 
 // Built by art/desk_genie.py in Blender; clips are sampled from pose.ts.
@@ -27,6 +28,7 @@ export function GenieModel() {
   const take = useScene((s) => s.take)
   const current = useRef<AnimationAction | null>(null)
   const smoke = useMemo(() => createSmokeMaterial(), [])
+  const textAnchor = useMemo(() => scene.getObjectByName('text-anchor'), [scene])
 
   // The GLB tail carries a placeholder glass material; swap in the animated smoke shader.
   useEffect(() => {
@@ -77,6 +79,7 @@ export function GenieModel() {
   return (
     <group ref={group} position={[0, 0.15, 0]} rotation-y={0.35}>
       <primitive object={scene} />
+      {textAnchor && createPortal(<ScreenText />, textAnchor)}
     </group>
   )
 }
