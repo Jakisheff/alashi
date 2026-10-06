@@ -11,6 +11,7 @@ const DEVNET_GENESIS = 'EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG';
 const MEMO_ID = new PublicKey('MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr');
 const RPC_URL = 'https://api.devnet.solana.com';
 const DEFAULT_API = 'https://alashi.network';
+const solanaRpc = (url = RPC_URL) => new Connection(url, { commitment: 'confirmed', disableRetryOnRateLimit: true });
 const BASE58 = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 const hex32 = value => typeof value === 'string' && /^[0-9a-f]{64}$/.test(value);
@@ -61,7 +62,20 @@ function lock(path) {
   try { fd = openSync(path + '.lock', 'wx', 0o600); }
   catch { fail('busy', 'another agent process holds the lock; verify it stopped before removing .lock'); }
   writeFileSync(fd, String(process.pid));
-  return () => { closeSync(fd); unlinkSync(path + '.lock'); };
+  let released = false;
+  const release = () => {
+    if (released) return;
+    released = true;
+    process.off('SIGINT', interrupted);
+    process.off('SIGTERM', terminated);
+    closeSync(fd);
+    unlinkSync(path + '.lock');
+  };
+  const interrupted = () => { release(); process.exit(130); };
+  const terminated = () => { release(); process.exit(143); };
+  process.once('SIGINT', interrupted);
+  process.once('SIGTERM', terminated);
+  return release;
 }
 function apiBase(value) {
   const url = new URL(value || DEFAULT_API);
@@ -75,6 +89,8 @@ async function http(base, path, body, fetcher = fetch) {
     headers: body === undefined ? {} : { 'content-type': 'application/json' },
     body: body === undefined ? undefined : JSON.stringify(body), redirect: 'manual', signal: AbortSignal.timeout(15000) });
   if (response.status >= 300 && response.status < 400) fail('http_redirect', 'redirect refused for private request');
+  if (response.status === 429) fail('rate_limited', 'arena rate limit reached; wait before retrying with the same private profile');
+  if ([502, 503, 504].includes(response.status)) fail('server_unavailable', 'arena is temporarily unavailable; retry later with saved progress');
   const value = await response.json();
   if (typeof value !== 'object' || typeof value.ok !== 'boolean') fail('http_response', 'invalid arena JSON');
   return value;
@@ -117,26 +133,36 @@ function keypair(profile) {
 async function devnet(rpc) {
   if (await rpc.getGenesisHash() !== DEVNET_GENESIS) fail('not_solana_devnet', 'RPC is not Solana devnet');
 }
-async function fundIfNeeded(rpc, wallet, profile, save) {
+async function fundIfNeeded(rpc, wallet, profile, save, sleep = delay) {
   if (await rpc.getBalance(wallet, 'confirmed') >= 2_000_000) return;
+  if (profile.airdrop_signature) {
+    const status = (await rpc.getSignatureStatuses([profile.airdrop_signature],
+      { searchTransactionHistory: true })).value[0];
+    if (status?.err) {
+      // A failed faucet transfer can be replaced; the identity Memo remains untouched.
+      profile.airdrop_signature = null;
+      save();
+    }
+  }
   if (!profile.airdrop_signature) {
-    for (let attempt = 0; attempt < 4; attempt++) {
+    for (let attempt = 0; attempt < 2; attempt++) {
       try {
         profile.airdrop_signature = await rpc.requestAirdrop(wallet, 10_000_000);
         save();
         break;
       } catch (error) {
-        if (!/429|rate.?limit|too many requests/i.test(String(error))) throw error;
-        if (attempt === 3) fail('faucet_rate_limited', 'devnet faucet returned 429; retry later with the same profile');
-        await delay(Math.min(8000, 1000 * 2 ** attempt));
+        if (!/429|rate.?limit|too many requests/i.test(String(error)))
+          fail('faucet_unavailable', `devnet faucet is unavailable; retry later with the same private profile, or fund public wallet ${wallet.toBase58()} manually on devnet`);
+        if (attempt === 1) fail('faucet_rate_limited', 'devnet faucet returned 429; retry later with the same profile');
+        await sleep(2000);
       }
     }
   }
   for (let poll = 0; poll < 10; poll++) {
     if (await rpc.getBalance(wallet, 'confirmed') >= 2_000_000) return;
-    await delay(1000);
+    await sleep(1000);
   }
-  fail('airdrop_pending', 'saved devnet airdrop has not reached the wallet; retry later with the same profile');
+  fail('airdrop_ambiguous', `devnet airdrop is unconfirmed; fund public wallet ${wallet.toBase58()} manually on devnet, then rerun with the same profile`);
 }
 async function chainStatus(rpc, signature) {
   const status = (await rpc.getSignatureStatuses([signature], { searchTransactionHistory: true })).value[0];
@@ -211,7 +237,7 @@ function sanitize(value, secrets) {
   }
   return value;
 }
-async function joinGame(base, profile, game, name, model, strategyHash, dir, fetcher = fetch) {
+async function joinGame(base, profile, game, name, model, strategyHash, dir, fetcher = fetch, recover = false) {
   const path = sessionPath(dir, game);
   let session = readPrivate(path);
   if (session && (session.agent_record_id !== profile.agent_record_id || session.strategy_hash !== strategyHash))
@@ -223,7 +249,7 @@ async function joinGame(base, profile, game, name, model, strategyHash, dir, fet
     savePrivate(path, session);
   }
   const body = { agent_record_id: profile.agent_record_id, recovery_secret: profile.recovery_secret,
-    name, model, strategy_hash: strategyHash, ...(session.token ? { recover: true } : {}) };
+    name, model, strategy_hash: strategyHash, ...(session.token || recover ? { recover: true } : {}) };
   let result = await http(base, `/game/${game}/join`, body, fetcher);
   if (!result.ok && safeError(result) === 'already_joined') result = await http(base, `/game/${game}/join`, { ...body, recover: true }, fetcher);
   if (!result.ok) fail(safeError(result), 'join rejected');
@@ -236,11 +262,16 @@ async function joinGame(base, profile, game, name, model, strategyHash, dir, fet
   savePrivate(path, session);
   return sanitize(result, [profile.recovery_secret, result.token]);
 }
-async function chooseGame(base, fetcher = fetch) {
-  const result = await http(base, '/games', undefined, fetcher);
-  if (!result.ok || !Array.isArray(result.games)) fail('games_unavailable', 'game list unavailable');
-  return result.games.filter(game => game.phase === 'lobby' && Number.isSafeInteger(game.game_id) && game.factions < 6)
-    .sort((a, b) => a.game_id - b.game_id)[0]?.game_id ?? null;
+async function matchGame(base, profile, fetcher = fetch) {
+  const result = await http(base, '/agents/match', {
+    agent_record_id: profile.agent_record_id, recovery_secret: profile.recovery_secret }, fetcher);
+  if (!result.ok && ['arena_full', 'match_wait'].includes(safeError(result))) return null;
+  if (!result.ok) fail(safeError(result), 'matchmaking unavailable');
+  if (!Number.isSafeInteger(result.game_id) || result.game_id < 0 ||
+      !Number.isSafeInteger(result.party_no) || typeof result.phase !== 'string' ||
+      typeof result.joined !== 'boolean' || typeof result.waiting_for_players !== 'boolean')
+    fail('invalid_match', 'arena returned an invalid match assignment');
+  return result;
 }
 function actionBody(raw) {
   const value = JSON.parse(raw);
@@ -287,17 +318,19 @@ async function run(command, options, deps = {}) {
       let profile = readPrivate(path);
       if (!profile) { profile = newProfile(); savePrivate(path, profile); }
       if (profile.schema !== 'alashi.bootstrap.v1' || !hex32(profile.agent_record_id) || !hex32(profile.recovery_secret)) fail('invalid_profile', 'private agent profile invalid');
-      const rpc = deps.rpc || new Connection(RPC_URL, 'confirmed');
+      const rpc = deps.rpc || solanaRpc();
       const receipt = await registration(base, profile, () => savePrivate(path, profile), rpc, deps.fetcher);
       const watch = `https://alashi.network/?agent=${profile.agent_record_id}`;
       const strategy = options['--strategy-file'] ? readFileSync(options['--strategy-file'], 'utf8') : '';
       const strategyHash = frameHash('', [model, strategy]);
-      const game = options['--game'] ? Number(options['--game']) : await chooseGame(base, deps.fetcher);
+      const match = options['--game'] ? null : await matchGame(base, profile, deps.fetcher);
+      const game = options['--game'] ? Number(options['--game']) : match?.game_id ?? null;
       if (game === null) return { ok: true, status: 'waiting_for_game', agent_record_id: profile.agent_record_id,
-        character_id: profileIds(profile).character, wallet: profile.wallet, registration: receipt, watch_url: watch };
+        character_id: profileIds(profile).character, wallet: profile.wallet, registration: receipt,
+        identity_url: watch, watch_url: watch };
       if (!Number.isSafeInteger(game) || game < 0) fail('invalid_game', 'game ID must be a nonnegative integer');
-      const joined = await joinGame(base, profile, game, name, model, strategyHash, dir, deps.fetcher);
-      return { ...joined, status: 'joined', watch_url: watch,
+      const joined = await joinGame(base, profile, game, name, model, strategyHash, dir, deps.fetcher, match?.joined === true);
+      return { ...joined, status: 'joined', waiting_for_players: match?.waiting_for_players ?? joined.state?.phase === 'lobby', watch_url: watch,
         game_url: `https://alashi.network/?api=&game=${game}` };
     }
     const game = Number(options['--game']);
@@ -317,4 +350,4 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1
     process.exitCode = 1;
   });
 }
-export { frameHash, profileIds, checkProposal, newProfile, registration, joinGame, chooseGame, actionBody, act, run, b58, apiBase, withFaction };
+export { lock, solanaRpc, frameHash, profileIds, checkProposal, newProfile, registration, joinGame, matchGame, actionBody, act, run, b58, apiBase, withFaction, fundIfNeeded, http };

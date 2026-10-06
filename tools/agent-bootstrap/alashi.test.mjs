@@ -4,7 +4,7 @@ import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { Keypair } from '@solana/web3.js';
-import { frameHash, profileIds, checkProposal, newProfile, registration, joinGame, chooseGame, act, apiBase, run, withFaction } from './alashi.mjs';
+import { solanaRpc, frameHash, profileIds, checkProposal, newProfile, registration, joinGame, matchGame, act, apiBase, run, withFaction, fundIfNeeded, http } from './alashi.mjs';
 
 const DEVNET = 'EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG';
 const MEMO = 'MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr';
@@ -116,11 +116,6 @@ test('one profile joins two games, no prompt upload, pending op replay is exact'
   } finally { rmSync(dir, { recursive: true, force: true }); }
 });
 
-test('no open lobby returns waiting rather than joining', async () => {
-  const fetcher = async () => response({ ok: true, games: [{ game_id: 1, phase: 'market', factions: 2 }] });
-  assert.equal(await chooseGame('https://alashi.network', fetcher), null);
-});
-
 test('start persists one private wallet and returns identity link while no game is open', async () => {
   const dir = mkdtempSync(join(tmpdir(), 'alashi-start-offline-'));
   try {
@@ -135,7 +130,10 @@ test('start persists one private wallet and returns identity link while no game 
       sendRawTransaction: async () => { confirmed = true; return 'mock-signature'; },
     };
     let identity;
+    let receipt;
+    let matches = 0;
     const fetcher = async (url, init) => {
+      assert.equal(url.endsWith('/games'), false, 'implicit discovery must use authenticated match');
       if (url.endsWith('/agents/registration')) {
         const body = JSON.parse(init.body);
         identity = body;
@@ -147,9 +145,24 @@ test('start persists one private wallet and returns identity link while no game 
       }
       if (url.endsWith('/agents/confirm')) {
         const body = JSON.parse(init.body);
-        return response({ ok: true, agent_record_id: body.agent_record_id, registration: {
-          mode: 'agent_lifecycle_v2', network: 'devnet', wallet: body.wallet,
-          signature: body.signature, slot: 1, commitment: 'confirmed' } });
+        receipt = { mode: 'agent_lifecycle_v2', network: 'devnet', wallet: body.wallet,
+          signature: body.signature, slot: 1, commitment: 'confirmed' };
+        return response({ ok: true, agent_record_id: body.agent_record_id, registration: receipt });
+      }
+      if (url.endsWith('/agents/match')) {
+        const body = JSON.parse(init.body);
+        assert.deepEqual(body, { agent_record_id: identity.agent_record_id, recovery_secret: identity.recovery_secret });
+        matches++;
+        return response(matches === 1 ? { ok: false, error: 'match_wait' } :
+          { ok: true, game_id: 42, party_no: 2, phase: 'lobby', joined: false, waiting_for_players: true });
+      }
+      if (url.endsWith('/game/42/join')) {
+        const body = JSON.parse(init.body);
+        assert.equal(body.recovery_secret, identity.recovery_secret);
+        assert.equal(body.prompt, undefined);
+        return response({ ok: true, game_id: 42, party_no: 2, agent_record_id: identity.agent_record_id,
+          character_id: profileIds(identity).character, agent_id: body.strategy_hash, token: 'ab'.repeat(32),
+          faction_idx: 0, registration: receipt, state: { phase: 'lobby', factions: [{ name: 'agent' }] } });
       }
       return response({ ok: true, games: [] });
     };
@@ -163,6 +176,9 @@ test('start persists one private wallet and returns identity link while no game 
     assert.equal(stat.mode & 0o077, 0);
     const again = await run('start', options, { dir, rpc, fetcher });
     assert.equal(again.agent_record_id, result.agent_record_id);
+    assert.equal(again.status, 'joined');
+    assert.equal(again.waiting_for_players, true);
+    assert.equal(again.game_id, 42);
     assert.equal(latestCalls, 1);
   } finally { rmSync(dir, { recursive: true, force: true }); }
 });
@@ -209,4 +225,148 @@ test('pinned JSON-RPC client supports every bootstrap RPC method', async () => {
   } finally {
     await new Promise(resolve => server.close(resolve));
   }
+});
+
+
+test('signal cleanup removes only this process lock', async () => {
+  const { spawn } = await import('node:child_process');
+  const { existsSync } = await import('node:fs');
+  const dir = mkdtempSync(join(tmpdir(), 'alashi-lock-offline-'));
+  const lockPath = join(dir, 'agent.json.lock');
+  try {
+    const child = spawn(process.execPath, ['--input-type=module', '-e',
+      `import { lock } from ${JSON.stringify(new URL('./alashi.mjs', import.meta.url).href)}; lock(${JSON.stringify(join(dir, 'agent.json'))}); process.stdout.write('ready\\n'); setInterval(() => {}, 1000);`],
+    { stdio: ['ignore', 'pipe', 'pipe'] });
+    await new Promise((resolve, reject) => {
+      child.once('error', reject);
+      child.stdout.once('data', resolve);
+    });
+    assert.equal(existsSync(lockPath), true);
+    child.kill('SIGINT');
+    const code = await new Promise(resolve => child.once('exit', resolve));
+    assert.equal(code, 130);
+    assert.equal(existsSync(lockPath), false);
+  } finally { rmSync(dir, { recursive: true, force: true }); }
+});
+
+test('pinned RPC sends one HTTP request on 429', async () => {
+  const { createServer } = await import('node:http');
+  let requests = 0;
+  const server = createServer((_, reply) => {
+    requests++;
+    reply.writeHead(429, { 'content-type': 'text/plain' });
+    reply.end('rate limited');
+  });
+  await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+  try {
+    const rpc = solanaRpc(`http://127.0.0.1:${server.address().port}`);
+    await assert.rejects(rpc.requestAirdrop(Keypair.generate().publicKey, 10_000_000));
+    assert.equal(requests, 1);
+  } finally {
+    await new Promise(resolve => server.close(resolve));
+  }
+});
+
+test('failed saved airdrop retries only faucet funding on the same wallet', async () => {
+  const profile = newProfile();
+  profile.airdrop_signature = 'failed-airdrop';
+  const wallet = Keypair.fromSecretKey(Uint8Array.from(profile.secret_key)).publicKey;
+  let balance = 0;
+  let requests = 0;
+  const rpc = {
+    getBalance: async () => balance,
+    getSignatureStatuses: async ([signature]) => {
+      assert.equal(signature, 'failed-airdrop');
+      return { value: [{ err: { InstructionError: [0, 'Custom'] } }] };
+    },
+    requestAirdrop: async address => {
+      assert.equal(address.toBase58(), wallet.toBase58());
+      requests++;
+      balance = 3_000_000;
+      return 'new-airdrop';
+    },
+  };
+  await fundIfNeeded(rpc, wallet, profile, () => {}, async () => {});
+  assert.equal(profile.airdrop_signature, 'new-airdrop');
+  assert.equal(requests, 1);
+  assert.equal(profile.signature, null);
+});
+
+test('ambiguous saved airdrop gives manual funding path without another request', async () => {
+  const profile = newProfile();
+  profile.airdrop_signature = 'unknown-airdrop';
+  const wallet = Keypair.fromSecretKey(Uint8Array.from(profile.secret_key)).publicKey;
+  let requests = 0;
+  const rpc = {
+    getBalance: async () => 0,
+    getSignatureStatuses: async () => ({ value: [null] }),
+    requestAirdrop: async () => { requests++; return 'never'; },
+  };
+  await assert.rejects(fundIfNeeded(rpc, wallet, profile, () => {}, async () => {}), error => {
+    assert.equal(error.code, 'airdrop_ambiguous');
+    assert.match(error.message, new RegExp(wallet.toBase58()));
+    return true;
+  });
+  assert.equal(requests, 0);
+  assert.equal(profile.airdrop_signature, 'unknown-airdrop');
+});
+
+
+test('first faucet RPC failure gives same-wallet recovery without repeat request', async () => {
+  const profile = newProfile();
+  const wallet = Keypair.fromSecretKey(Uint8Array.from(profile.secret_key)).publicKey;
+  let requests = 0;
+  const rpc = {
+    getBalance: async () => 0,
+    requestAirdrop: async () => { requests++; throw new Error('Solana RPC -32603 Internal error'); },
+  };
+  await assert.rejects(fundIfNeeded(rpc, wallet, profile, () => {}, async () => {}), error => {
+    assert.equal(error.code, 'faucet_unavailable');
+    assert.match(error.message, new RegExp(wallet.toBase58()));
+    assert.doesNotMatch(error.message, /32603/);
+    return true;
+  });
+  assert.equal(requests, 1);
+  assert.equal(profile.airdrop_signature, undefined);
+  assert.equal(profile.signature, null);
+});
+
+test('proxy rate limit and outage are plain errors before non-JSON bodies', async () => {
+  const response429 = async () => new Response('<html>rate limit</html>', { status: 429 });
+  const response503 = async () => new Response('<html>offline</html>', { status: 503 });
+  await assert.rejects(http('https://alashi.network', '/games', undefined, response429), { code: 'rate_limited' });
+  await assert.rejects(http('https://alashi.network', '/games', undefined, response503), { code: 'server_unavailable' });
+  assert.deepEqual(await http('https://alashi.network', '/agents/registration', {},
+    async () => new Response(JSON.stringify({ ok: false, error: 'registration_busy' }), { status: 409 })),
+    { ok: false, error: 'registration_busy' });
+});
+
+
+test('matchmaker reports an existing slot and recovery join uses no new Memo', async () => {
+  const dir = mkdtempSync(join(tmpdir(), 'alashi-match-offline-'));
+  try {
+    const p = newProfile();
+    p.signature = 'saved-signature';
+    p.registration = { mode: 'agent_lifecycle_v2', network: 'devnet', wallet: p.wallet,
+      signature: p.signature, commitment: 'confirmed', slot: 77 };
+    const matcher = async (url, init) => {
+      assert.equal(url, 'https://alashi.network/agents/match');
+      assert.deepEqual(JSON.parse(init.body), { agent_record_id: p.agent_record_id,
+        recovery_secret: p.recovery_secret });
+      return response({ ok: true, game_id: 9, party_no: 1, phase: 'market', joined: true,
+        waiting_for_players: false });
+    };
+    const assignment = await matchGame('https://alashi.network', p, matcher);
+    assert.equal(assignment.joined, true);
+    let recover;
+    const fetcher = async (_, init) => {
+      recover = JSON.parse(init.body).recover;
+      return response({ ok: true, game_id: 9, agent_record_id: p.agent_record_id,
+        character_id: profileIds(p).character, agent_id: frameHash('', ['model', '']),
+        token: 'cd'.repeat(32), faction_idx: 0, registration: p.registration });
+    };
+    await joinGame('https://alashi.network', p, 9, 'agent', 'model', frameHash('', ['model', '']),
+      dir, fetcher, assignment.joined);
+    assert.equal(recover, true);
+  } finally { rmSync(dir, { recursive: true, force: true }); }
 });
