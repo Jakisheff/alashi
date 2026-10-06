@@ -411,3 +411,168 @@ fn public_action_finished_export_keeps_live_event_identity() {
     assert_eq!(movement["ok"], false);
     assert_eq!(h_export(&restore(&state)), h_export(&state));
 }
+
+fn registration_fixture(state: &AppState, gid: u64) -> (Value, Value, Value, Value) {
+    let wallet = Pubkey::new_unique().to_string();
+    let mut body = json!({"name":"Receipt", "model":"fixture", "prompt":"fixture strategy",
+        "recovery_secret":"ab".repeat(32), "wallet":wallet});
+    let proposal = h_registration(state, gid, &body);
+    assert_eq!(proposal["ok"], true, "{proposal}");
+    body.as_object_mut().unwrap().remove("wallet");
+    body["registration"] = json!({"wallet":wallet,"signature":"2".repeat(88)});
+    let status = json!({"value":[{"slot":123,"err":null,"confirmationStatus":"confirmed"}]});
+    let tx = json!({"slot":123,"meta":{"err":null,"fee":5000},"transaction":{
+        "signatures":[body["registration"]["signature"]],
+        "message":{"accountKeys":[{"pubkey":wallet,"signer":true}],
+            "instructions":[{"programId":registration::MEMO_PROGRAM_ID,"parsed":proposal["memo"]}]}
+    }});
+    (body,proposal,status,tx)
+}
+
+#[test]
+fn registration_proposal_is_read_only_and_requires_exact_identity_fields() {
+    let mut state = isolated();
+    Arc::get_mut(&mut state).unwrap().require_devnet_registration = true;
+    let gid = create(&state);
+    let before = std::fs::read(&state.snapshot_path).unwrap();
+    let (body,proposal,_,_) = registration_fixture(&state,gid);
+    assert_eq!(proposal["required"],true);
+    assert_eq!(root_doc(&state)["registration"]["required"],true);
+    assert!(proposal.get("token").is_none());
+    assert!(proposal.get("recovery_secret").is_none());
+    assert!(!proposal.to_string().contains(body["recovery_secret"].as_str().unwrap()));
+    assert_eq!(std::fs::read(&state.snapshot_path).unwrap(),before);
+    assert!(state.games.lock().unwrap()[&gid].agents.is_empty());
+    let mut request=body.clone();
+    request["wallet"]=request["registration"]["wallet"].clone();
+    request.as_object_mut().unwrap().remove("registration");
+    for key in ["name","model","prompt","recovery_secret","wallet"] {
+        let mut invalid=request.clone(); invalid.as_object_mut().unwrap().remove(key);
+        assert_eq!(h_registration(&state,gid,&invalid)["ok"],false,"{key}");
+    }
+    request["owner_key"]=json!("cd".repeat(32));
+    assert_eq!(h_registration(&state,gid,&request)["ok"],false);
+}
+
+#[test]
+fn registration_is_persisted_public_and_recovery_and_actions_need_no_rpc() {
+    let mut state = isolated();
+    Arc::get_mut(&mut state).unwrap().require_devnet_registration=true;
+    let gid=create(&state);
+    let (body,_,status,tx)=registration_fixture(&state,gid);
+    let joined=h_join_with_verifier(&state,gid,&body,|proof,memo| {
+        // These would fail immediately if verification held either global lock.
+        assert!(state.snapshot_lock.try_lock().is_ok());
+        assert!(state.games.try_lock().is_ok());
+        registration::validate_receipt(proof,memo,&status,&tx)
+    });
+    assert_eq!(joined["ok"],true,"{joined}");
+    assert_eq!(joined["registration"]["fee_lamports"],"5000");
+    let state=restore(&state);
+    let receipt=joined["registration"].clone();
+    assert_eq!(h_state(&state,gid)["state"]["factions"][0]["registration"],receipt);
+    let mut recover=body.clone();
+    recover["recover"]=json!(true);
+    recover.as_object_mut().unwrap().remove("registration");
+    // Model updates do not replace the registered strategy/session identity.
+    recover["model"]=json!("updated model");
+    let recovered=h_join_with_verifier(&state,gid,&recover,|_,_| panic!("recovery must not call RPC"));
+    assert_eq!(recovered["ok"],true,"{recovered}");
+    assert_eq!(recovered["registration"],receipt);
+    assert_eq!(recovered["agent_id"],joined["agent_id"]);
+    recover["registration"]=body["registration"].clone();
+    assert_eq!(h_join_with_verifier(&state,gid,&recover,|_,_| panic!("stored proof needs no RPC"))["ok"],true);
+    recover["registration"]["signature"]=json!("3".repeat(88));
+    assert_eq!(h_join_with_verifier(&state,gid,&recover,|_,_| panic!("mismatch must not call RPC"))["error"],"registration_recovery_mismatch");
+    recover.as_object_mut().unwrap().remove("registration");
+    recover["recovery_secret"]=json!("ef".repeat(32));
+    assert_eq!(h_join_with_verifier(&state,gid,&recover,|_,_| panic!("bad recovery must not call RPC"))["ok"],false);
+    // Recovery revoked the old token. Actions use only the HTTP credential path.
+    recover["recovery_secret"]=body["recovery_secret"].clone();
+    let session=h_join_with_verifier(&state,gid,&recover,|_,_| panic!("no RPC"));
+    state.games.lock().unwrap().get_mut(&gid).unwrap().sim.game.phase=Phase::Action;
+    let acted=h_act(&state,gid,&json!({"token":session["token"],"action":"produce"}));
+    assert_eq!(acted["ok"],true,"{acted}");
+    let public=h_state(&state,gid)["state"].clone();
+    assert_eq!(public["execution_mode"],"http_simulated");
+    assert_eq!(public["recent_actions"][0]["seq"],1);
+    assert!(!public.to_string().contains(session["token"].as_str().unwrap()));
+    assert!(!public.to_string().contains(body["recovery_secret"].as_str().unwrap()));
+    state.games.lock().unwrap().get_mut(&gid).unwrap().sim.game.phase=Phase::Finished;
+    settle_and_record_locked_for_test(&state,gid);
+    let completed=h_export(&state);
+    let exported:Value=serde_json::from_str(&completed).unwrap();
+    assert_eq!(exported["agents"][0]["registration"],receipt);
+    assert_eq!(exported["execution_mode"],"http_simulated");
+    assert_eq!(restore(&state).completed.lock().unwrap().len(),1);
+}
+
+fn settle_and_record_locked_for_test(state:&AppState,gid:u64) {
+    let _lock=state.snapshot_lock.lock().unwrap();
+    settle_and_record_locked(state,gid);
+}
+
+#[test]
+fn public_signature_replay_with_different_secret_game_or_strategy_is_rejected() {
+    let state=isolated();
+    let gid=create(&state);
+    let (body,_,status,tx)=registration_fixture(&state,gid);
+    for (field,value) in [("recovery_secret","cd".repeat(32)),("model","other".into()),("name","Other".into()),("prompt","other".into())] {
+        let mut replay=body.clone();replay[field]=json!(value);
+        let denied=h_join_with_verifier(&state,gid,&replay,|p,m|registration::validate_receipt(p,m,&status,&tx));
+        assert_eq!(denied["error"],"registration_memo_mismatch","{denied}");
+    }
+    let other=create(&state);
+    assert_eq!(h_join_with_verifier(&state,other,&body,|p,m|registration::validate_receipt(p,m,&status,&tx))["error"],"registration_memo_mismatch");
+    let mut conflict=body.clone();conflict["owner_key"]=json!("cd".repeat(32));
+    assert_eq!(h_join_with_verifier(&state,gid,&conflict,|_,_|panic!("owner key rejected before RPC"))["error"],"registration_owner_key_forbidden");
+    assert!(state.games.lock().unwrap()[&gid].agents.is_empty());
+}
+
+#[test]
+fn mandatory_registration_grandfathers_only_authenticated_legacy_recovery() {
+    let mut state=isolated();
+    let gid=create(&state);
+    let legacy=join(&state,gid,0);
+    Arc::get_mut(&mut state).unwrap().require_devnet_registration=true;
+    assert_eq!(h_join_with_verifier(&state,gid,&json!({"name":"New","model":"new","prompt":""}),|_,_|panic!("missing proof no RPC"))["error"],"registration_required");
+    let recovered=h_join_with_verifier(&state,gid,&json!({"name":"Demo0","model":"demo-0","prompt":"regression",
+        "recover":true,"recovery_secret":legacy["recovery_secret"]}),|_,_|panic!("legacy recovery no RPC"));
+    assert_eq!(recovered["ok"],true,"{recovered}");
+    assert_eq!(recovered["registration"],Value::Null);
+    assert_eq!(recovered["state"]["factions"][0]["registration"],Value::Null);
+}
+
+#[test]
+fn verification_failure_and_party_change_do_not_mutate_membership() {
+    let state=isolated();
+    let gid=create(&state);
+    let (body,_,status,tx)=registration_fixture(&state,gid);
+    for code in ["registration_rpc_timeout","registration_transaction_failed","registration_not_confirmed"] {
+        assert_eq!(h_join_with_verifier(&state,gid,&body,|_,_|Err(code))["error"],code);
+    }
+    assert!(state.games.lock().unwrap()[&gid].agents.is_empty());
+    let denied=h_join_with_verifier(&state,gid,&body,|p,m| {
+        let receipt=registration::validate_receipt(p,m,&status,&tx)?;
+        state.games.lock().unwrap().get_mut(&gid).unwrap().party_no+=1;
+        Ok(receipt)
+    });
+    assert_eq!(denied["error"],"registration_game_changed");
+    assert!(state.games.lock().unwrap()[&gid].agents.is_empty());
+}
+
+#[test]
+fn registration_storage_failure_rolls_back_receipt_and_allows_same_signature_retry() {
+    let state=isolated();
+    let gid=create(&state);
+    let (body,_,status,tx)=registration_fixture(&state,gid);
+    std::fs::remove_file(&state.snapshot_path).unwrap();
+    std::fs::create_dir(&state.snapshot_path).unwrap();
+    let failed=h_join_with_verifier(&state,gid,&body,|p,m|registration::validate_receipt(p,m,&status,&tx));
+    assert_eq!(failed["error"],"storage_failed");
+    assert!(state.games.lock().unwrap()[&gid].agents.is_empty());
+    std::fs::remove_dir(&state.snapshot_path).unwrap();
+    let retry=h_join_with_verifier(&state,gid,&body,|p,m|registration::validate_receipt(p,m,&status,&tx));
+    assert_eq!(retry["ok"],true,"{retry}");
+    assert_eq!(restore(&state).games.lock().unwrap()[&gid].agents[0].registration.as_ref().unwrap().signature,body["registration"]["signature"].as_str().unwrap());
+}

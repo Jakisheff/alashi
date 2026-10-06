@@ -10,3 +10,5 @@ pub mod rating;
 pub mod runner;
 pub mod strategies;
 pub mod presidency;
+
+pub mod registration;

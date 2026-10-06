@@ -4,6 +4,7 @@
 
 use crate::http::{read_request, respond, Request};
 use crate::runner::{self, ActionLog};
+use crate::registration::{self, Proof, Receipt};
 use crate::strategies::{ActionAction, LawAction, MarketAction};
 use crate::strategies::{eff_price, ALL};
 use alashi_rules::anchor_lang::prelude::Pubkey;
@@ -48,6 +49,7 @@ pub struct AgentRec {
     pub owner_id: String,
     pub token: String,
     pub recovery_hash: Option<String>,
+    pub registration: Option<Receipt>,
     pub model: String,
     pub faction_idx: usize,
 }
@@ -85,6 +87,7 @@ pub struct AppState {
     pub next_id: AtomicU64,
     pub completed: Mutex<Vec<String>>,
     pub master_seed: AtomicU64,
+    pub require_devnet_registration: bool,
     snapshot_path: PathBuf,
     sequence_path: PathBuf,
     // ponytail: one transaction gate for this single-file arena. Split persistence
@@ -146,6 +149,7 @@ fn save_snapshot_locked(state: &AppState) -> std::io::Result<()> {
                     "name": a.name, "agent_id": a.agent_id, "character_id": a.character_id,
                     "owner_id": a.owner_id, "token": a.token,
                     "model": a.model, "faction_idx": a.faction_idx, "recovery_hash": a.recovery_hash,
+                    "registration": a.registration,
                 })).collect::<Vec<_>>(),
                 "insiders": e.insiders.iter().cloned().collect::<Vec<_>>(),
                 "action_log": e.action_log,
@@ -264,6 +268,10 @@ pub fn load_snapshot(state: &AppState) -> Result<(), String> {
                         owner_id: a["owner_id"].as_str().unwrap_or("legacy").to_string(),
                         token: a["token"].as_str()?.to_string(),
                         recovery_hash: a["recovery_hash"].as_str().map(str::to_string),
+                        registration: match a.get("registration").filter(|v| !v.is_null()) {
+                            Some(value) => Some(serde_json::from_value(value.clone()).ok()?),
+                            None => None,
+                        },
                         model: a["model"].as_str().unwrap_or("?").to_string(),
                         faction_idx: a["faction_idx"].as_u64()? as usize,
                     })
@@ -444,6 +452,7 @@ pub fn new_state_with_files(snapshot_path: impl Into<PathBuf>, sequence_path: im
         next_id: AtomicU64::new(1),
         completed: Mutex::new(Vec::new()),
         master_seed: AtomicU64::new(master_seed_from_env_or_os()),
+        require_devnet_registration: std::env::var("ALASHI_REQUIRE_DEVNET_REGISTRATION").as_deref() == Ok("1"),
         snapshot_path: snapshot_path.into(),
         sequence_path: sequence_path.into(),
         snapshot_lock: Mutex::new(()),
@@ -552,6 +561,7 @@ fn settle_and_record_locked(state: &AppState, game_id: u64) {
                         "character_id": a.character_id,
                         "owner_id": a.owner_id,
                         "model": a.model,
+                        "registration": a.registration,
                     })
                 })
                 .collect();
@@ -597,6 +607,8 @@ fn settle_and_record_locked(state: &AppState, game_id: u64) {
                 "game_id": game_id,
                 "party_no": entry.party_no,
                 "label": entry.label,
+                "execution_mode": "http_simulated",
+                "registration_mode": "devnet_agent_start_v1",
                 "entry_fee": entry.entry_fee,
                 "vote_weight_mode": entry.sim.game.vote_weight_mode,
                 "epoch": entry.sim.game.epoch,
@@ -742,6 +754,8 @@ fn state_json(game_id: u64, entry: &GameEntry) -> serde_json::Value {
     let recent_actions = &entry.action_log[entry.action_log.len().saturating_sub(RECENT_ACTIONS_LIMIT)..];
     serde_json::json!({
         "game_id": game_id,
+        "execution_mode": "http_simulated",
+        "registration_mode": "devnet_agent_start_v1",
         // канон партии: одинаков до и после рестарта арены
         "party_no": entry.party_no,
         "settlement_error": entry.settlement_error,
@@ -831,6 +845,7 @@ fn state_json(game_id: u64, entry: &GameEntry) -> serde_json::Value {
                 "name": f.name,
                 "agent_id": entry.agents.iter().find(|a| a.faction_idx == i).map(|a| a.agent_id.clone()),
                 "character_id": entry.agents.iter().find(|a| a.faction_idx == i).map(|a| a.character_id.clone()),
+                "registration": entry.agents.iter().find(|a| a.faction_idx == i).and_then(|a| a.registration.clone()),
                 "cash": f.cash,
                 // П5: кэш уже после всех эскроу/списаний — предел ставки
                 // и покупок считается без повторного запроса (кейс Aitore:
@@ -1007,44 +1022,116 @@ fn h_new_game(state: &AppState, body: &serde_json::Value) -> serde_json::Value {
     serde_json::json!({"ok": true, "game_id": game_id, "state": v})
 }
 
-fn h_join(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json::Value {
+/// Registered identities use the existing secret-derived character ID.
+/// A public signature cannot create the same identity without its private secret.
+fn registration_identity(body: &serde_json::Value) -> Result<(String, String), &'static str> {
+    if body.get("owner_key").is_some() { return Err("registration_owner_key_forbidden"); }
+    let name = body["name"].as_str().ok_or("registration_identity_required")?;
+    let model = body["model"].as_str().ok_or("registration_identity_required")?;
+    let prompt = body["prompt"].as_str().ok_or("registration_identity_required")?;
+    let secret = body["recovery_secret"].as_str().filter(|s| recovery_hash(s).is_some())
+        .ok_or("registration_recovery_secret_required")?;
+    if name.len() > MAX_NAME { return Err("name_too_long"); }
+    Ok((character_id_of(&owner_id_of(secret), name), agent_id_of(model, prompt)))
+}
+
+fn registration_error(code: &str) -> serde_json::Value {
+    err_json(code, "регистрация devnet не подтверждена; сохрани прежнюю подпись и повтори проверку без новой транзакции")
+}
+
+fn h_registration(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json::Value {
+    if !body.as_object().is_some_and(|obj| obj.keys().all(|k|
+        matches!(k.as_str(), "name" | "model" | "prompt" | "recovery_secret" | "wallet"))) {
+        return err_json("bad_params", "неизвестные поля предложения регистрации");
+    }
+    let (character_id, agent_id) = match registration_identity(body) {
+        Ok(ids) => ids, Err(code) => return registration_error(code),
+    };
+    let wallet = body["wallet"].as_str().unwrap_or("");
+    if let Err(code) = registration::validate_wallet(wallet) { return registration_error(code); }
     let _transaction = state.snapshot_lock.lock().unwrap_or_else(|e| e.into_inner());
-    // Аудит 27.09 (S2): неизвестные поля отклоняются, а не игнорируются
-    if let Some(obj) = body.as_object() {
-        for key in obj.keys() {
-            if !matches!(
-                key.as_str(),
-                "name" | "model" | "prompt" | "recover" | "recovery_secret" | "owner_key" | "token"
-            ) {
-                return err_json("bad_params", &format!("неизвестное поле: {key}"));
-            }
+    let games = state.games.lock().unwrap_or_else(|e| e.into_inner());
+    let Some(entry) = games.get(&game_id) else { return err_json("unknown_game", "партия не найдена"); };
+    if entry.agents.iter().any(|a| a.character_id == character_id) {
+        return err_json("already_joined", "используй recover: true с прежним recovery_secret; новая транзакция не нужна");
+    }
+    if entry.sim.game.phase != Phase::Lobby || now() >= entry.sim.game.phase_ends_at {
+        return err_json("registration_lobby_closed", "лобби закрыто; не подписывай новую транзакцию");
+    }
+    if entry.agents.len() >= MAX_FACTIONS as usize { return err_json("game_full", "мест нет"); }
+    serde_json::json!({"ok":true, "mode":"agent_start_v1", "network":"devnet",
+        "required":state.require_devnet_registration, "memo_program_id":registration::MEMO_PROGRAM_ID,
+        "memo":registration::memo(game_id,entry.party_no,&character_id,&agent_id),
+        "game_id":game_id, "party_no":entry.party_no, "character_id":character_id,
+        "agent_id":agent_id, "wallet":wallet})
+}
+
+fn h_join(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json::Value {
+    h_join_with_verifier(state, game_id, body, registration::verify)
+}
+
+fn h_join_with_verifier(
+    state: &AppState, game_id: u64, body: &serde_json::Value,
+    verify: impl FnOnce(&Proof, &str) -> Result<Receipt, &'static str>,
+) -> serde_json::Value {
+    if !body.as_object().is_some_and(|obj| obj.keys().all(|key| matches!(
+        key.as_str(), "name" | "model" | "prompt" | "recover" | "recovery_secret" | "owner_key" | "token" | "registration"
+    ))) { return err_json("bad_params", "неизвестное поле join"); }
+    let proof = match body.get("registration") {
+        Some(value) => match Proof::parse(value) {
+            Ok(proof) => Some(proof), Err(code) => return registration_error(code),
+        },
+        None => None,
+    };
+    let recovering = body["recover"] == true;
+    if proof.is_some() && body.get("owner_key").is_some() {
+        return registration_error("registration_owner_key_forbidden");
+    }
+    let mut verified = None;
+    let mut checked_party = None;
+    if !recovering {
+        if let Some(proof) = &proof {
+            let (character_id, agent_id) = match registration_identity(body) {
+                Ok(ids) => ids, Err(code) => return registration_error(code),
+            };
+            // No network call while holding snapshot_lock or games.
+            let party_no = {
+                let _transaction = state.snapshot_lock.lock().unwrap_or_else(|e| e.into_inner());
+                let games = state.games.lock().unwrap_or_else(|e| e.into_inner());
+                let Some(entry) = games.get(&game_id) else { return err_json("unknown_game", "партия не найдена"); };
+                entry.party_no
+            };
+            let expected = registration::memo(game_id, party_no, &character_id, &agent_id);
+            verified = match verify(proof, &expected) {
+                Ok(receipt) => Some(receipt), Err(code) => return registration_error(code),
+            };
+            checked_party = Some(party_no);
+        } else if state.require_devnet_registration {
+            return registration_error("registration_required");
         }
     }
+    let _transaction = state.snapshot_lock.lock().unwrap_or_else(|e| e.into_inner());
     let backup = {
         let games = state.games.lock().unwrap_or_else(|e| e.into_inner());
-        games.get(&game_id).map(|e| e.clone())
+        let entry = games.get(&game_id);
+        if checked_party.is_some() && entry.map(|e| e.party_no) != checked_party {
+            return registration_error("registration_game_changed");
+        }
+        entry.cloned()
     };
-    let response = h_join_inner(state, game_id, body);
-    if response["ok"] != true {
-        return response;
-    }
-    // Аудит 27.09 (S4): join принят только при устойчивой записи; при сбое
-    // диска мутация откатывается и повтор join даёт чистый результат.
+    let response = h_join_inner(state, game_id, body, proof.as_ref(), verified);
+    if response["ok"] != true { return response; }
     if let Err(e) = save_snapshot_locked(state) {
         eprintln!("[ERROR] snapshot save after join: {e}");
         if let Some(entry) = backup {
-            state
-                .games
-                .lock()
-                .unwrap_or_else(|e| e.into_inner())
-                .insert(game_id, entry);
+            state.games.lock().unwrap_or_else(|e| e.into_inner()).insert(game_id, entry);
         }
         return err_json("storage_failed", "изменение не принято: не удалось записать состояние на диск; повтори запрос");
     }
     response
 }
 
-fn h_join_inner(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json::Value {
+fn h_join_inner(state: &AppState, game_id: u64, body: &serde_json::Value, proof: Option<&Proof>, verified: Option<Receipt>) -> serde_json::Value {
     let name = body
         .get("name")
         .and_then(|v| v.as_str())
@@ -1136,6 +1223,15 @@ fn h_join_inner(state: &AppState, game_id: u64, body: &serde_json::Value) -> ser
                     .is_some_and(|current| secret_matches(current, &agent.token)),
             };
             if !valid { return err_json("bad_recovery_secret", "recover требует секрет восстановления; для старой сессии нужен действующий token"); }
+            // Recovery never upgrades or overwrites the persisted receipt.
+            if let Some(proof) = proof {
+                if !agent.registration.as_ref().is_some_and(|r| r.wallet == proof.wallet && r.signature == proof.signature) {
+                    return registration_error("registration_recovery_mismatch");
+                }
+            }
+            if agent.registration.is_some() && body.get("owner_key").is_some() {
+                return registration_error("registration_owner_key_forbidden");
+            }
             let enrolled_secret = if agent.recovery_hash.is_none() {
                 match random_hex() {
                     Ok(secret) => Some(secret),
@@ -1154,6 +1250,7 @@ fn h_join_inner(state: &AppState, game_id: u64, body: &serde_json::Value) -> ser
                 "ok": true, "recovered": true, "game_id": game_id,
                 "agent_id": stored_agent_id, "character_id": character_id, "owner_id": stored_owner_id,
                 "token": token, "recovery_secret": enrolled_secret, "faction_idx": faction_idx,
+                "registration": entry.agents[i].registration,
                 "warning": "токен перевыпущен; предыдущий отозван", "state": v
             });
         }
@@ -1181,6 +1278,7 @@ fn h_join_inner(state: &AppState, game_id: u64, body: &serde_json::Value) -> ser
         owner_id: owner_id.clone(),
         token: token.clone(),
         recovery_hash: recovery_hash(&recovery_secret),
+        registration: verified.clone(),
         model,
         faction_idx,
     });
@@ -1188,6 +1286,7 @@ fn h_join_inner(state: &AppState, game_id: u64, body: &serde_json::Value) -> ser
     let v = state_json(game_id, entry);
     serde_json::json!({"ok": true, "agent_id": agent_id, "character_id": character_id, "owner_id": owner_id,
         "token": token, "recovery_secret": recovery_secret, "faction_idx": faction_idx,
+        "registration": verified,
         "warning": if placeholder_warn { Some("имя/model похожи на плейсхолдер из примера — подставь реальные значения; сохрани token и recovery_secret сразу; восстановление требует recovery_secret") } else { None },
         "state": v})
 }
@@ -1923,12 +2022,17 @@ fn h_export(state: &AppState) -> String {
     state.completed.lock().unwrap_or_else(|e| e.into_inner()).join("\n")
 }
 
-fn root_doc() -> serde_json::Value {
+fn root_doc(state: &AppState) -> serde_json::Value {
     serde_json::json!({
         "ok": true,
         "alashi arena v0": "off-chain партии на чистых правилах (alashi-rules)",
+        "execution_mode": "http_simulated",
+        "registration": {"mode":"agent_start_v1", "network":"devnet",
+            "required":state.require_devnet_registration, "memo_program_id":registration::MEMO_PROGRAM_ID,
+            "meaning":"identity lifecycle receipt only; no payment, escrow or settlement proof"},
         "endpoints": {
             "POST /game/new": "{\"entry_fee\"?, \"phase_duration\"?, \"grace_s\"? (0..=30, дефолт 3), \"vote_weight_mode\"? (0 legacy | 1 contribution), \"lobby_duration\"? (сек, дефолт = фаза x 5 — окно джойна можно растянуть независимо от фаз), \"label\"? (до 32 байт, видно всем)} → game_id + party_no",
+            "POST /game/:id/registration": "read-only Memo proposal: name/model/prompt/recovery_secret/wallet; no token or transaction",
             "POST /game/:id/join": "{\"name\", \"model\", \"prompt\"} → agent_id + token",
             "GET  /game/:id/state": "публичное состояние партии; recent_actions[].seq/event_id стабильны после рестарта; recent_actions_range.first_seq/last_seq — окно ответа, retained_first_seq — начало сохранённого журнала",
             "GET  /game/:id/wait?r=1&p=market&t=30": "long-poll: спит до смены фазы (r/p — известные тебе раунд и фаза, t — таймаут сек, макс 60); ответ как /state + changed/timeout",
@@ -1978,8 +2082,12 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
             }
         }
     } else { None };
-    let (status, body) = match (req.method.as_str(), segs.as_slice()) {        ("GET", []) => ("200 OK", root_doc().to_string()),
+    let (status, body) = match (req.method.as_str(), segs.as_slice()) {        ("GET", []) => ("200 OK", root_doc(state).to_string()),
         ("POST", ["game", "new"]) => { ("200 OK", h_new_game(state, &body_v).to_string()) },
+        ("POST", ["game", id, "registration"]) => { match id.parse::<u64>() {
+            Ok(id) => ("200 OK", h_registration(state, id, &body_v).to_string()),
+            Err(_) => ("400 Bad Request", err_json("bad_id", "game_id не число").to_string()),
+        } },
         ("POST", ["game", id, "join"]) => { match id.parse::<u64>() {
             Ok(id) => ("200 OK", h_join(state, id, &body_v).to_string()),
             Err(_) => ("400 Bad Request", err_json("bad_id", "game_id не число").to_string()),
