@@ -1066,3 +1066,186 @@ fn failed_snapshot_does_not_ack_terminal_advance_or_mutate_crank() {
     assert_eq!(borsh::to_vec(&state.games.lock().unwrap()[&gid].sim.game).unwrap(),before);
     assert!(state.completed.lock().unwrap().is_empty());
 }
+
+fn confirmed_match_agent(state: &AppState, n: u64) -> Value {
+    let id = format!("{n:064x}");
+    let secret = format!("{:064x}", n + 10_000);
+    let wallet = Pubkey::new_unique().to_string();
+    let proposal = h_registration_v2(state, &json!({"agent_record_id":id,
+        "wallet":wallet,"recovery_secret":secret}));
+    assert_eq!(proposal["ok"], true, "{proposal}");
+    let proof = json!({"agent_record_id":id,"wallet":wallet,
+        "recovery_secret":secret,"signature":"2".repeat(88)});
+    let confirmed = h_confirm_v2_with_verifier(state, &proof, |p, memo| {
+        assert_eq!(memo, proposal["memo"]);
+        Ok(Receipt { mode:"agent_start_v1".into(),network:"devnet".into(),
+            wallet:p.wallet.clone(),signature:p.signature.clone(),slot:42,
+            fee_lamports:"5000".into(),commitment:"confirmed".into() })
+    });
+    assert_eq!(confirmed["ok"], true, "{confirmed}");
+    json!({"agent_record_id":id,"recovery_secret":secret})
+}
+
+#[test]
+fn match_requires_confirmed_agent_and_correct_recovery_secret() {
+    let state = isolated();
+    let agent = confirmed_match_agent(&state, 1);
+    assert_eq!(h_match(&state, &json!({"agent_record_id":"bad",
+        "recovery_secret":agent["recovery_secret"]}))["error"], "bad_params");
+    assert_eq!(h_match(&state, &json!({"agent_record_id":"ff".repeat(32),
+        "recovery_secret":agent["recovery_secret"]}))["error"], "unknown_agent");
+    assert_eq!(h_match(&state, &json!({"agent_record_id":agent["agent_record_id"],
+        "recovery_secret":"ff".repeat(32)}))["error"], "bad_recovery_secret");
+    assert_eq!(h_match(&state, &json!({"agent_record_id":agent["agent_record_id"],
+        "recovery_secret":agent["recovery_secret"],"phase_duration":1}))["error"], "bad_params");
+    let pending = "ee".repeat(32);
+    let secret = "dd".repeat(32);
+    state.registrations.lock().unwrap().insert(pending.clone(), RegisteredAgent {
+        wallet:Pubkey::new_unique().to_string(),owner_id:owner_id_of(&secret),
+        character_id:character_id_v2(&owner_id_of(&secret),&pending),
+        recovery_hash:recovery_hash(&secret).unwrap(),challenge:"cc".repeat(32),
+        receipt:None,created_at:now(),
+    });
+    assert_eq!(h_match(&state, &json!({"agent_record_id":pending,
+        "recovery_secret":secret}))["error"], "registration_required");
+    assert!(state.games.lock().unwrap().is_empty());
+}
+
+#[test]
+fn match_creates_one_waiting_lobby_and_recovers_joined_slot_after_restart() {
+    let state = isolated();
+    let agent = confirmed_match_agent(&state, 2);
+    let first = h_match(&state, &agent);
+    assert_eq!(first["ok"], true, "{first}");
+    assert_eq!(first["joined"], false);
+    assert_eq!(first["waiting_for_players"], true);
+    assert_eq!(first["phase"], "lobby");
+    let gid = first["game_id"].as_u64().unwrap();
+    {
+        let games = state.games.lock().unwrap();
+        let entry = &games[&gid];
+        assert!(entry.managed_match);
+        assert_eq!(entry.entry_fee, 10 * PESO);
+        assert_eq!(entry.label.as_deref(), Some("Public Match"));
+        assert_eq!(entry.sim.game.phase_duration, 30);
+        assert_eq!(entry.sim.game.faction_count, 0);
+    }
+    assert_eq!(h_match(&state, &agent), first);
+    let restored = restore(&state);
+    assert_eq!(h_match(&restored, &agent), first);
+    let join_body = json!({"agent_record_id":agent["agent_record_id"],
+        "recovery_secret":agent["recovery_secret"],"name":"Player",
+        "model":"test-harness","strategy_hash":"aa".repeat(32)});
+    let joined = h_join(&restored, gid, &join_body);
+    assert_eq!(joined["ok"], true, "{joined}");
+    let again = h_match(&restored, &agent);
+    assert_eq!(again["game_id"], first["game_id"]);
+    assert_eq!(again["joined"], true);
+    assert_eq!(again["waiting_for_players"], true);
+    assert_eq!(restored.games.lock().unwrap().len(), 1);
+    let restored = restore(&restored);
+    assert_eq!(h_match(&restored, &agent)["joined"], true);
+    let mut recovery = join_body.clone();
+    recovery["recover"] = json!(true);
+    let rotated = h_join(&restored, gid, &recovery);
+    assert_eq!(rotated["recovered"], true, "{rotated}");
+    assert_ne!(rotated["token"], joined["token"]);
+    assert!(!again.to_string().contains(joined["token"].as_str().unwrap()));
+    assert!(!again.to_string().contains(agent["recovery_secret"].as_str().unwrap()));
+}
+
+#[test]
+fn concurrent_match_requests_share_one_managed_lobby() {
+    let state = isolated();
+    let agents: Vec<Value> = (1..=8).map(|n| confirmed_match_agent(&state, n + 10)).collect();
+    let barrier = Arc::new(std::sync::Barrier::new(agents.len()));
+    let threads: Vec<_> = agents.into_iter().map(|agent| {
+        let state = state.clone();
+        let barrier = barrier.clone();
+        std::thread::spawn(move || { barrier.wait(); h_match(&state, &agent) })
+    }).collect();
+    let results: Vec<Value> = threads.into_iter().map(|thread| thread.join().unwrap()).collect();
+    let game_id = results[0]["game_id"].clone();
+    assert!(results.iter().all(|result| result["ok"] == true
+        && result["game_id"] == game_id && result["joined"] == false), "{results:?}");
+    assert_eq!(state.games.lock().unwrap().len(), 1);
+    assert_eq!(restore(&state).games.lock().unwrap().len(), 1);
+}
+
+#[test]
+fn match_reuses_available_lobby_and_waits_for_closing_managed_lobby() {
+    let state = isolated();
+    let agent = confirmed_match_agent(&state, 30);
+    let organizer_gid = create(&state);
+    let reused = h_match(&state, &agent);
+    assert_eq!(reused["game_id"], organizer_gid);
+    assert_eq!(state.games.lock().unwrap().len(), 1);
+    state.games.lock().unwrap().get_mut(&organizer_gid).unwrap().sim.game.phase_ends_at = now() + 1;
+    let managed = h_match(&state, &agent);
+    assert_eq!(managed["ok"], true, "{managed}");
+    assert_ne!(managed["game_id"], organizer_gid);
+    let managed_gid = managed["game_id"].as_u64().unwrap();
+    state.games.lock().unwrap().get_mut(&managed_gid).unwrap().sim.game.phase_ends_at = now() + 1;
+    assert_eq!(h_match(&state, &agent)["error"], "match_wait");
+    assert_eq!(state.games.lock().unwrap().len(), 2);
+}
+
+#[test]
+fn match_respects_arena_cap_and_snapshot_failure_rolls_back() {
+    let state = isolated();
+    let agent = confirmed_match_agent(&state, 40);
+    let gid = create(&state);
+    {
+        let mut games = state.games.lock().unwrap();
+        let mut full = games[&gid].clone();
+        full.sim.game.phase = Phase::Market;
+        games.insert(gid, full.clone());
+        for id in 1000..1000 + MAX_ACTIVE_GAMES as u64 - 1 {
+            games.insert(id, full.clone());
+        }
+    }
+    assert_eq!(state.games.lock().unwrap().len(), MAX_ACTIVE_GAMES);
+    assert_eq!(h_match(&state, &agent)["error"], "arena_full");
+    state.games.lock().unwrap().clear();
+    std::fs::remove_file(&state.snapshot_path).unwrap();
+    std::fs::create_dir(&state.snapshot_path).unwrap();
+    assert_eq!(h_match(&state, &agent)["error"], "storage_failed");
+    assert!(state.games.lock().unwrap().is_empty());
+    std::fs::remove_dir(&state.snapshot_path).unwrap();
+    assert_eq!(h_match(&state, &agent)["ok"], true);
+    assert_eq!(state.games.lock().unwrap().len(), 1);
+}
+
+#[test]
+fn confirm_retry_cannot_observe_receipt_before_snapshot_commit() {
+    use std::sync::mpsc;
+    use std::time::Duration;
+    let state = isolated();
+    let agent = confirmed_match_agent(&state, 50);
+    let id = agent["agent_record_id"].as_str().unwrap().to_string();
+    let secret = agent["recovery_secret"].as_str().unwrap().to_string();
+    let wallet = state.registrations.lock().unwrap()[&id].wallet.clone();
+    let _transaction = state.snapshot_lock.lock().unwrap();
+    // Model A's uncommitted receipt. A failed save would restore the old receipt.
+    state.registrations.lock().unwrap().get_mut(&id).unwrap()
+        .receipt.as_mut().unwrap().signature = "3".repeat(88);
+    let (started_tx, started_rx) = mpsc::channel();
+    let (result_tx, result_rx) = mpsc::channel();
+    let state2 = state.clone();
+    let request = json!({"agent_record_id":id,"wallet":wallet,
+        "recovery_secret":secret,"signature":"3".repeat(88)});
+    let thread = std::thread::spawn(move || {
+        started_tx.send(()).unwrap();
+        result_tx.send(h_confirm_v2_with_verifier(&state2, &request,
+            |_,_| panic!("cached receipt or conflict must skip RPC"))).unwrap();
+    });
+    started_rx.recv().unwrap();
+    assert!(result_rx.recv_timeout(Duration::from_millis(250)).is_err(),
+        "confirm acknowledged an uncommitted receipt");
+    state.registrations.lock().unwrap().get_mut(&id).unwrap()
+        .receipt.as_mut().unwrap().signature = "2".repeat(88);
+    drop(_transaction);
+    let result = result_rx.recv_timeout(Duration::from_secs(2)).unwrap();
+    thread.join().unwrap();
+    assert_eq!(result["error"], "registration_conflict", "{result}");
+}

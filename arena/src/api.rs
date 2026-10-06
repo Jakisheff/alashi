@@ -40,6 +40,8 @@ pub const MAX_PHASE_LOG: usize = 512;
 pub const MAX_BY_LEN: usize = 64;
 pub const MAX_REGISTERED_AGENTS: usize = 1000;
 pub const MAX_CONFIRM_VERIFIERS: u64 = 4;
+pub const MATCH_LOBBY_DURATION_S: i64 = 900;
+pub const MATCH_MIN_JOIN_TIME_S: i64 = 60;
 pub const MAX_RECENT_OPS: usize = 64;
 pub const SESSION_LIFETIME_S: i64 = 86_400;
 
@@ -135,6 +137,7 @@ pub struct GameEntry {
     pub party_no: u64,
     /// Человекочитаемая метка партии (необязательная, из POST /game/new).
     pub label: Option<String>,
+    pub managed_match: bool,
     pub settlement_error: Option<String>,
 }
 
@@ -198,6 +201,7 @@ fn save_snapshot_locked(state: &AppState) -> std::io::Result<()> {
                 "game_id": gid,
                 "party_no": e.party_no,
                 "label": e.label,
+                "managed_match": e.managed_match,
                 "settlement_error": e.settlement_error,
                 "entry_fee": e.entry_fee,
                 "created": e.created,
@@ -426,6 +430,7 @@ pub fn load_snapshot(state: &AppState) -> Result<(), String> {
                 phase_log: g["phase_log"].as_array().cloned().unwrap_or_default(),
                 party_no: g["party_no"].as_u64().unwrap_or(0),
                 label: g["label"].as_str().map(|s| s.to_string()),
+                managed_match: g["managed_match"].as_bool().unwrap_or(false),
                 settlement_error: g["settlement_error"].as_str().map(str::to_string),
                 insiders,
             };
@@ -1098,6 +1103,11 @@ fn json_num(v: impl Into<u64>) -> serde_json::Value {
 
 fn h_new_game(state: &AppState, body: &serde_json::Value) -> serde_json::Value {
     let _transaction = state.snapshot_lock.lock().unwrap_or_else(|e| e.into_inner());
+    h_new_game_locked(state, body, false)
+}
+
+// Caller holds snapshot_lock so matchmaking can select or create atomically.
+fn h_new_game_locked(state: &AppState, body: &serde_json::Value, managed_match: bool) -> serde_json::Value {
     // Аудит 27.09 (S2): неизвестные поля отклоняются, а не игнорируются
     if let Some(obj) = body.as_object() {
         for key in obj.keys() {
@@ -1192,6 +1202,7 @@ fn h_new_game(state: &AppState, body: &serde_json::Value) -> serde_json::Value {
         insiders: Default::default(),
         party_no,
         label,
+        managed_match,
         settlement_error: None,
     };
     let v = state_json(game_id, &entry);
@@ -1337,6 +1348,9 @@ fn h_confirm_v2_with_verifier(
         Ok(value) => value, Err(code) => return registration_error(code),
     };
     let candidate = {
+        // A cached receipt is visible only after its snapshot transaction commits.
+        // The verifying RPC below runs after this lock is released.
+        let _transaction = state.snapshot_lock.lock().unwrap_or_else(|e| e.into_inner());
         let records = state.registrations.lock().unwrap_or_else(|e| e.into_inner());
         if let Some(record) = records.get(id) {
             if record.wallet != proof.wallet || !secret_matches(&hash, &record.recovery_hash) {
@@ -2366,6 +2380,63 @@ fn h_agent_profile(state: &AppState, id: &str) -> serde_json::Value {
         "registered":true,"active_slots":slots["active_slots"]})
 }
 
+fn match_result(game_id: u64, entry: &GameEntry, joined: bool) -> serde_json::Value {
+    serde_json::json!({"ok":true,"game_id":game_id,"party_no":entry.party_no,
+        "phase":phase_name(entry.sim.game.phase),"joined":joined,
+        "waiting_for_players":entry.sim.game.phase == Phase::Lobby
+            && entry.sim.game.faction_count < MIN_FACTIONS})
+}
+
+fn h_match(state: &AppState, body: &serde_json::Value) -> serde_json::Value {
+    if !body.as_object().is_some_and(|o| o.keys().all(|key|
+        matches!(key.as_str(), "agent_record_id" | "recovery_secret"))) {
+        return err_json("bad_params", "неизвестное поле match");
+    }
+    let id = body["agent_record_id"].as_str().unwrap_or("");
+    let secret = body["recovery_secret"].as_str().unwrap_or("");
+    if !hex32(id) || !hex32(secret) { return err_json("bad_params", "agent_record_id/recovery_secret: 64 lowercase hex"); }
+    let hash = recovery_hash(secret).expect("validated recovery secret");
+    let _transaction = state.snapshot_lock.lock().unwrap_or_else(|e| e.into_inner());
+    let character_id = {
+        let records = state.registrations.lock().unwrap_or_else(|e| e.into_inner());
+        let Some(record) = records.get(id) else { return err_json("unknown_agent", "агент не зарегистрирован"); };
+        if !secret_matches(&record.recovery_hash, &hash) {
+            return err_json("bad_recovery_secret", "неверный секрет восстановления");
+        }
+        if record.receipt.is_none() { return err_json("registration_required", "регистрация не подтверждена"); }
+        record.character_id.clone()
+    };
+    let t = now();
+    {
+        let games = state.games.lock().unwrap_or_else(|e| e.into_inner());
+        let active = |entry: &GameEntry| !matches!(entry.sim.game.phase, Phase::Finished | Phase::Aborted);
+        if let Some((&gid, entry)) = games.iter().filter(|(_, entry)| active(entry)
+            && entry.agents.iter().any(|agent| agent.character_id == character_id))
+            .min_by_key(|(gid, _)| *gid) {
+            return match_result(gid, entry, true);
+        }
+        if let Some((&gid, entry)) = games.iter().filter(|(_, entry)|
+            entry.sim.game.phase == Phase::Lobby
+                && entry.sim.game.faction_count < MAX_FACTIONS
+                && entry.sim.game.phase_ends_at.saturating_sub(t) >= MATCH_MIN_JOIN_TIME_S)
+            .max_by_key(|(gid, entry)| (entry.sim.game.faction_count, std::cmp::Reverse(**gid))) {
+            return match_result(gid, entry, false);
+        }
+        if games.values().any(|entry| entry.managed_match && entry.sim.game.phase == Phase::Lobby) {
+            return err_json("match_wait", "текущее лобби закрывается; повтори поиск после смены фазы");
+        }
+    }
+    let created = h_new_game_locked(state, &serde_json::json!({
+        "entry_fee":10 * PESO,"phase_duration":30,"grace_s":DEFAULT_GRACE_S,
+        "lobby_duration":MATCH_LOBBY_DURATION_S,"vote_weight_mode":VOTE_WEIGHT_LEGACY,
+        "epoch":"classic","label":"Public Match",
+    }), true);
+    if created["ok"] != true { return created; }
+    let gid = created["game_id"].as_u64().expect("created game id");
+    let games = state.games.lock().unwrap_or_else(|e| e.into_inner());
+    match_result(gid, &games[&gid], false)
+}
+
 /// Отчёт «Цукерберг/Muse» 27.09, раздел 8: история пары персонажей по
 /// проверяемым событиям завершённых партий. Только факты журнала
 /// действий, без интерпретации мотивов.
@@ -2600,6 +2671,7 @@ fn root_doc(state: &AppState) -> serde_json::Value {
             "POST /agents/registration": "v2 stable stateless Memo proposal: agent_record_id/wallet/recovery_secret",
             "POST /agents/confirm": "v2 verified devnet receipt: agent_record_id/recovery_secret/wallet/signature",
             "GET /agents/:record_id": "confirmed public identity and active game slots, without credentials",
+            "POST /agents/match": "confirmed agent identity/secret → existing slot or bounded public lobby",
             "GET /agents/capabilities": "versioned platform contract",
             "POST /game/:id/registration": "legacy v1 game-bound Memo proposal",
             "POST /game/:id/join": "v2: agent_record_id/recovery_secret/name/model/strategy_hash → game token; legacy v1: name/model/prompt/registration",
@@ -2664,6 +2736,7 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
             "hosted_inference":false,"onchain_game_settlement":false,
         }).to_string()),
         ("GET", ["agents", id]) => ("200 OK", h_agent_profile(state, id).to_string()),
+        ("POST", ["agents", "match"]) => ("200 OK", h_match(state, &body_v).to_string()),
         ("POST", ["agents", "registration"]) => ("200 OK", h_registration_v2(state, &body_v).to_string()),
         ("POST", ["agents", "confirm"]) => {
             let result = h_confirm_v2(state, &body_v);
