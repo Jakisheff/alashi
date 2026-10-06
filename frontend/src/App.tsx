@@ -1,7 +1,8 @@
 import { ContactShadows, Environment, Lightformer, OrbitControls } from '@react-three/drei'
 import { Canvas, useThree } from '@react-three/fiber'
 import { Bloom, EffectComposer } from '@react-three/postprocessing'
-import { Suspense, useEffect } from 'react'
+import { Suspense, useCallback, useEffect } from 'react'
+import { useArenaFeed } from './feed'
 import { GenieModel } from './genie/GenieModel'
 import type { GenieClip } from './genie/pose'
 import { useScene } from './store'
@@ -29,29 +30,28 @@ const LINES: Partial<Record<GenieClip, string[]>> = {
   rejected: ["Didn't work. At least now it's reproducible."],
 }
 
-// Picks a line for each triggered clip; Degenie types it on its own screen (ScreenText).
-function useLines() {
-  const { clip, take, captions, say } = useScene()
-  useEffect(() => {
-    const options = LINES[clip]
-    if (captions && options) say(options[take % options.length])
-    // Only a new trigger speaks; returning to idle keeps the current line on screen.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [take])
-}
-
 export default function App() {
-  const { clip, captions, speech, play, toggleCaptions } = useScene()
-  useLines()
+  const { clip, captions, speech, play, say, toggleCaptions } = useScene()
+  const feed = useArenaFeed()
+
+  // Manual triggers (buttons, keys 1-4) also get a joke from the brief; arena events bring their own text.
+  const trigger = useCallback(
+    (c: GenieClip) => {
+      play(c)
+      const options = LINES[c]
+      if (captions && options) say(options[Math.floor(Math.random() * options.length)])
+    },
+    [play, say, captions],
+  )
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const i = Number(e.key) - 1
-      if (CLIPS[i]) play(CLIPS[i])
+      if (CLIPS[i]) trigger(CLIPS[i])
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [play])
+  }, [trigger])
 
   return (
     <div className="relative h-full bg-[#ece6da] text-stone-800">
@@ -82,22 +82,37 @@ export default function App() {
 
       <div className="absolute top-3 left-3 flex items-center gap-2 rounded-full bg-white/80 px-3 py-1 text-sm">
         <span className="font-semibold">Degenie</span>
-        <span className="rounded-full bg-stone-800 px-2 text-xs tracking-wide text-white uppercase">preview</span>
-        <span className="hidden text-stone-500 sm:inline">no live game data</span>
+        {feed.mode === 'live' ? (
+          <>
+            <span className="rounded-full bg-[#1f4a43] px-2 text-xs tracking-wide text-white uppercase">live</span>
+            <span className="hidden text-stone-500 sm:inline">
+              {feed.error
+                ? 'reconnecting…'
+                : feed.state
+                  ? `HTTP game · simulated balances · round ${feed.state.round} · ${feed.state.phase}`
+                  : 'connecting…'}
+            </span>
+          </>
+        ) : (
+          <>
+            <span className="rounded-full bg-stone-800 px-2 text-xs tracking-wide text-white uppercase">preview</span>
+            <span className="hidden text-stone-500 sm:inline">sample events, not a real game</span>
+          </>
+        )}
       </div>
 
       <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-1 rounded-full bg-white/80 p-1 font-mono text-xs whitespace-nowrap sm:text-sm">
         {CLIPS.map((c, i) => (
           <button
             key={c}
-            onClick={() => play(c)}
+            onClick={() => trigger(c)}
             className={`rounded-full px-2.5 py-0.5 ${c === clip ? 'bg-[#1f4a43] text-white' : 'hover:bg-stone-200'}`}
           >
             <span className="hidden opacity-50 sm:inline">{i + 1} </span>{c}
           </button>
         ))}
         <button onClick={toggleCaptions} className="rounded-full px-2.5 py-0.5 hover:bg-stone-200" aria-pressed={captions}>
-          {captions ? 'text on' : 'text off'}
+          {captions ? 'jokes on' : 'jokes off'}
         </button>
       </div>
       <p className="sr-only" aria-live="polite">

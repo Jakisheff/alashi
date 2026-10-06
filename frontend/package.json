@@ -11,7 +11,8 @@
     "typecheck": "tsc -b",
     "dev:host": "vite --host",
     "check:pose": "node --experimental-strip-types --no-warnings scripts/pose-check.ts",
-    "export:poses": "node --experimental-strip-types --no-warnings scripts/export-poses.ts"
+    "export:poses": "node --experimental-strip-types --no-warnings scripts/export-poses.ts",
+    "check:events": "node --experimental-strip-types --no-warnings scripts/events-check.ts"
   },
   "dependencies": {
     "@react-three/drei": "10.7.9",

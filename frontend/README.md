@@ -6,6 +6,7 @@ React + TypeScript + Vite, сцена на React Three Fiber + Drei, стор Zu
 npm ci
 npm run dev        # http://localhost:5173
 npm run check:pose
+npm run check:events
 npm run typecheck
 npm run lint
 npm run build
@@ -26,3 +27,11 @@ npm run build
 1. `npm run export:poses` — сэмплирует `src/genie/pose.ts` в `art/poses.json` (30 fps).
 2. В Blender выполнить `art/desk_genie.py` и вызвать `main("export")` (через Blender MCP или Text Editor).
    Скрипт строит модель, риг, клипы и пишет `public/models/desk-genie.glb`; рендер-превью — в `art/renders/`.
+
+## Арена
+
+`src/events.ts` — курсор, дедупликация и правило пропуска по контракту `PUBLIC_EVENTS_FOR_DIN` (docs a3d8ed8);
+`src/feed.ts` — лента для Degenie: каждое событие печатается на экране, затем `act` → `accepted`/`rejected`.
+
+- `?api=<base>&game=<id>` — живая партия через `GET <base>/game/<id>/state` (same-origin; опрос 2 с, пауза в скрытой вкладке).
+- Без параметров — постановочный поток, помеченный в HUD как PREVIEW «sample events, not a real game».
