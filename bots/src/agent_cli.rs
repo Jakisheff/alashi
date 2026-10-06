@@ -39,7 +39,7 @@ fn pubkey(text: &str) -> Result<Pubkey, Value> {
     text.parse()
         .map_err(|_| error("invalid_pubkey", "expected a base58 public key"))
 }
-fn devnet(rpc: &RpcClient) -> Result<(), Value> {
+pub(super) fn devnet(rpc: &RpcClient) -> Result<(), Value> {
     let genesis = rpc
         .get_genesis_hash()
         .map_err(|_| error("rpc_unavailable", "cannot verify cluster genesis"))?;
@@ -51,7 +51,7 @@ fn devnet(rpc: &RpcClient) -> Result<(), Value> {
     }
     Ok(())
 }
-fn read_key(path: &str) -> Result<Keypair, Value> {
+pub(super) fn read_key(path: &str) -> Result<Keypair, Value> {
     let mut file = std::fs::File::open(path)
         .map_err(|_| error("key_unavailable", "cannot open local keypair file"))?;
     let metadata = file

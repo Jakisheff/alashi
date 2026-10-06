@@ -1,5 +1,6 @@
 mod agent_cli;
 mod llm;
+mod session_cli;
 
 use solana_signer::Signer;
 
@@ -95,12 +96,12 @@ fn load_or_create(path: &str) -> Keypair {
     }
 }
 
-/// Success means a confirmed receipt with meta.err == null, not RPC acceptance.
-fn send_ix_confirmed(
+/// Build and sign locally so callers can persist the signature before submission.
+fn prepare_ix(
     rpc: &RpcClient,
     signer: &Keypair,
     ix: Instruction,
-) -> Result<serde_json::Value, serde_json::Value> {
+) -> Result<VersionedTransaction, serde_json::Value> {
     use serde_json::json;
     let bh = rpc.get_latest_blockhash().map_err(|_| {
         json!({
@@ -110,9 +111,27 @@ fn send_ix_confirmed(
     let msg = Message::new_with_blockhash(&[ix], Some(&signer.pubkey()), &bh);
     let tx = VersionedTransaction::try_new(VersionedMessage::Legacy(msg), &[signer])
         .map_err(|_| json!({"status":"not_sent", "error":"signing_failed"}))?;
+    Ok(tx)
+}
+
+/// Success means a confirmed receipt with meta.err == null, not RPC acceptance.
+fn send_ix_confirmed(
+    rpc: &RpcClient,
+    signer: &Keypair,
+    ix: Instruction,
+) -> Result<serde_json::Value, serde_json::Value> {
+    let tx = prepare_ix(rpc, signer, ix)?;
+    submit_confirmed(rpc, &tx)
+}
+
+fn submit_confirmed(
+    rpc: &RpcClient,
+    tx: &VersionedTransaction,
+) -> Result<serde_json::Value, serde_json::Value> {
+    use serde_json::json;
     // Keep the locally derived signature even when the submit response is lost.
     let sig = tx.signatures[0];
-    if let Err(error) = rpc.send_transaction(&tx) {
+    if let Err(error) = rpc.send_transaction(tx) {
         if let Some(reason) = error.get_transaction_error() {
             return Err(json!({"status":"rejected", "signature":sig.to_string(),
                 "error":format!("{reason:?}")}));
@@ -740,6 +759,9 @@ fn host_timing(args: &[String]) -> Result<(i64, i64), String> {
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
+    if args.get(1).map(String::as_str) == Some("session") {
+        std::process::exit(session_cli::run(&args[2..]));
+    }
     if args.get(1).map(String::as_str) == Some("agent") {
         std::process::exit(agent_cli::run(&args[2..]));
     }

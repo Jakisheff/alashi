@@ -1,9 +1,84 @@
 # AGENT_GUIDE, как подключить своего агента к партии Alashi
 
-Runbook для любого агента или человека: подключиться к живой партии,
-играть свои ходы, получить выплату. Никакой платформы не нужно: RPC, ключ,
-транзакции. Проверено e2e 31.08: третья фракция (join-режим) сыграла полную
-партию 6 раундов и выиграла её у обоих ботов хоста, выплата пришла на кошелёк.
+## Выбранный путь демо 07.10: одна регистрация в devnet, игра через HTTP
+
+`bots session` подписывает **один Memo при подключении** локальным кошельком.
+Арена независимо проверяет devnet receipt и привязывает его к идентичности агента.
+После этого все решения отправляются через HTTP. Игровые деньги и выплаты здесь
+симулируются: Memo не является escrow, оплатой входа или blockchain settlement игры.
+Подтверждение работы более суток/consumption ещё не реализовано.
+
+Зависимость клиента — установленный `curl`. Новых Rust dependencies нет.
+Сервер запускается с `ALASHI_REQUIRE_DEVNET_REGISTRATION=1`, чтобы новые участники
+не могли обойти регистрацию. Используй HTTPS или loopback HTTP через SSH-туннель.
+Кошелёк, prompt и session-файл остаются на компьютере владельца вне репозитория.
+Ключ должен быть обычным файлом с правами `600` или строже; keypair на сервер не копировать.
+
+```sh
+export ALASHI_RPC=https://api.devnet.solana.com
+# Только connect читает локальный ключ и подписывает Memo.
+cargo run --quiet --locked --manifest-path bots/Cargo.toml -- session connect \
+  --url http://127.0.0.1:8092 --game 1 \
+  --key /absolute/private/agent-keypair.json \
+  --name IvanAgent --model zai-coding-plan/glm-5.3-flash \
+  --prompt-file /absolute/private/strategy.txt \
+  --session-file /absolute/private/agent-session.json
+
+# Эти команды не читают ключ и не вызывают Solana RPC.
+cargo run --quiet --locked --manifest-path bots/Cargo.toml -- session inspect \
+  --session-file /absolute/private/agent-session.json
+printf '%s\n' '{"action":"produce","by":"llm"}' | \
+  cargo run --quiet --locked --manifest-path bots/Cargo.toml -- session act \
+  --session-file /absolute/private/agent-session.json
+```
+
+`--game` — числовой HTTP game ID. `act` принимает один JSON до 4096 байт:
+`action`, необязательный объект `params`, необязательный `by` (`llm`, `heuristic`,
+`unknown`). Параметры — существующий HTTP контракт арены; правила и номера фракций
+бери из текущего `state`. В частности, target HTTP-фракции — индекс, не Solana PDA.
+
+Все команды дают один JSON в stdout, `0` при успехе, ненулевой код при ошибке.
+Успешный публичный ответ содержит `command`, `execution: "offchain_http"`,
+`game_id`, `party_no`, `wallet`, `agent_id`, `character_id`, `your_faction_idx`,
+`your_faction`, `registration`, а также `state`, если арена вернула его.
+`registration` имеет поля `mode: "agent_start_v1"`, `network: "devnet"`, `wallet`,
+`signature`, `slot`, `fee_lamports` (десятичная строка), `commitment: "confirmed"`.
+Token, recovery secret и приватный prompt не печатаются. Ошибки HTTP возвращаются
+со статическим текстом, без исходного тела ответа.
+
+Session-файл создаётся атомарно с правами `600`, содержит секрет восстановления,
+идентичность, прогресс receipt и token. Не передавай файл модели и не публикуй его.
+Параллельный connect блокируется соседним `.lock`; после аварии удалить lock можно
+только убедившись, что прежний процесс завершён. Другие настройки в тот же файл
+не записываются: несовпадение конфигурации вызывает ошибку.
+
+Подпись сохраняется **до отправки транзакции**. Повтор той же команды connect
+использует сохранённую signature и recovery secret; новую транзакцию автоматически
+не создаёт. Если результат неизвестен, команда возвращает `registration_unknown`
+с signature и завершает работу. При повторе сначала проверяется существующая receipt.
+После подтверждения HTTP recovery/join может повторяться без новой комиссии.
+Авария между сохранением signature и отправкой может потребовать ручной проверки:
+клиент сознательно не переподписывает такую регистрацию автоматически.
+
+API: `POST /game/:id/registration` выдаёт точный Memo
+`alashi:agent-start:v1:devnet:<game_id>:<party_no>:<character_id>:<agent_id>`.
+Клиент проверяет эти поля и генезис devnet. Memo program:
+`MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr`.
+`POST /game/:id/join` принимает сохранённую identity/secret +
+`registration: {wallet, signature}`; восстановление использует `recover: true`
+без proof. Публичный state содержит `execution_mode: "http_simulated"` и
+`factions[].registration`. Эти данные — подтверждение подключения, не каждого хода.
+
+В модели/OpenCode разрешай только локальную обёртку inspect/join/act/wait;
+путь session-файла подставляет обёртка. Рабочая модель проверена оператором:
+`zai-coding-plan/glm-5.3-flash`. Запуск модели и правила доступа к инструментам
+не являются частью протокола арены.
+
+## Legacy: каждый ход в Solana (не выбран для текущего демо)
+
+Дальнейшие разделы описывают отдельный исторический onchain classic режим с
+entry escrow и отдельными подписями ходов. Не смешивать его с HTTP session выше.
+Историческая проверка 31.08 относится к этому режиму, не к новому Memo onboarding.
 
 ## 0. Локальный JSON-клиент для OpenCode и других агентов (classic, devnet)
 
