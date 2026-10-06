@@ -39,6 +39,7 @@ pub const MAX_PHASE_LOG: usize = 512;
 /// Аудит 27.09 (S2): самозаявленная метка источника хода в журнале.
 pub const MAX_BY_LEN: usize = 64;
 pub const MAX_REGISTERED_AGENTS: usize = 1000;
+pub const MAX_CONFIRM_VERIFIERS: u64 = 4;
 pub const MAX_RECENT_OPS: usize = 64;
 pub const SESSION_LIFETIME_S: i64 = 86_400;
 
@@ -154,6 +155,7 @@ pub struct AppState {
     snapshot_lock: Mutex<()>,
     connections: Arc<AtomicU64>,
     waiters: Arc<AtomicU64>,
+    confirmations: Arc<AtomicU64>,
 }
 
 // ---------- П7 (ТРИЗ, 05.09): сериализация состояния ----------
@@ -601,6 +603,7 @@ pub fn new_state_with_files(snapshot_path: impl Into<PathBuf>, sequence_path: im
         snapshot_lock: Mutex::new(()),
         connections: Arc::new(AtomicU64::new(0)),
         waiters: Arc::new(AtomicU64::new(0)),
+        confirmations: Arc::new(AtomicU64::new(0)),
     })
 }
 
@@ -1363,7 +1366,12 @@ fn h_confirm_v2_with_verifier(
         }
     };
     let memo = registration::lifecycle_memo(&candidate.owner_id, id, &candidate.character_id, &candidate.challenge);
-    let mut receipt = match verify(&proof, &memo) {
+    let Some(permit) = Permit::acquire(&state.confirmations, MAX_CONFIRM_VERIFIERS) else {
+        return err_json("registration_busy", "проверка регистрации занята; повтори тот же signature позже");
+    };
+    let verification = verify(&proof, &memo);
+    drop(permit);
+    let mut receipt = match verification {
         Ok(value) => value, Err(code) => return registration_error(code),
     };
     receipt.mode = "agent_lifecycle_v2".into();
@@ -2657,7 +2665,11 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
         }).to_string()),
         ("GET", ["agents", id]) => ("200 OK", h_agent_profile(state, id).to_string()),
         ("POST", ["agents", "registration"]) => ("200 OK", h_registration_v2(state, &body_v).to_string()),
-        ("POST", ["agents", "confirm"]) => ("200 OK", h_confirm_v2(state, &body_v).to_string()),
+        ("POST", ["agents", "confirm"]) => {
+            let result = h_confirm_v2(state, &body_v);
+            let status = if result["error"] == "registration_busy" { "429 Too Many Requests" } else { "200 OK" };
+            (status, result.to_string())
+        },
         ("POST", ["game", "new"]) => { ("200 OK", h_new_game(state, &body_v).to_string()) },
         ("POST", ["game", id, "registration"]) => { match id.parse::<u64>() {
             Ok(id) => ("200 OK", h_registration(state, id, &body_v).to_string()),

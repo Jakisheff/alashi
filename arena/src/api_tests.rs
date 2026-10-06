@@ -960,6 +960,51 @@ fn v2_stateless_confirm_storage_failure_keeps_signature_retryable() {
 }
 
 #[test]
+fn v2_confirm_rpc_capacity_fails_fast_with_http_429_and_releases_permits() {
+    use std::io::Read;
+    let state = isolated();
+    let id = "cd".repeat(32);
+    let secret = "ab".repeat(32);
+    let wallet = Pubkey::new_unique().to_string();
+    assert_eq!(h_registration_v2(&state,&json!({"agent_record_id":id,
+        "wallet":wallet,"recovery_secret":secret}))["ok"],true);
+    let proof = json!({"agent_record_id":id,"wallet":wallet,
+        "recovery_secret":secret,"signature":"2".repeat(88)});
+    let before = std::fs::read(&state.snapshot_path).unwrap();
+    let held: Vec<_> = (0..MAX_CONFIRM_VERIFIERS).map(|_|
+        Permit::acquire(&state.confirmations,MAX_CONFIRM_VERIFIERS).unwrap()).collect();
+    let start = std::time::Instant::now();
+    assert_eq!(h_confirm_v2_with_verifier(&state,&proof,|_,_|panic!("busy must skip RPC"))["error"],
+        "registration_busy");
+    assert!(start.elapsed() < std::time::Duration::from_secs(1));
+    assert_eq!(std::fs::read(&state.snapshot_path).unwrap(),before);
+    let listener = TcpListener::bind("127.0.0.1:0").unwrap();
+    let mut client = TcpStream::connect(listener.local_addr().unwrap()).unwrap();
+    let (mut server,_) = listener.accept().unwrap();
+    handle(&state,&Request { method:"POST".into(),path:"/agents/confirm".into(),
+        body:proof.to_string().into_bytes() },&mut server);
+    drop(server);
+    let mut wire = String::new(); client.read_to_string(&mut wire).unwrap();
+    assert!(wire.starts_with("HTTP/1.1 429 Too Many Requests"),"{wire}");
+    assert!(wire.contains("registration_busy"));
+    drop(held);
+    assert_eq!(state.confirmations.load(Ordering::SeqCst),0);
+    assert_eq!(h_confirm_v2_with_verifier(&state,&proof,|_,_|Err("registration_rpc_timeout"))["error"],
+        "registration_rpc_timeout");
+    assert_eq!(state.confirmations.load(Ordering::SeqCst),0);
+    let confirmed = h_confirm_v2_with_verifier(&state,&proof,|p,_|Ok(Receipt {
+        mode:"agent_start_v1".into(),network:"devnet".into(),wallet:p.wallet.clone(),
+        signature:p.signature.clone(),slot:42,fee_lamports:"5000".into(),commitment:"confirmed".into(),
+    }));
+    assert_eq!(confirmed["ok"],true);
+    assert_eq!(state.confirmations.load(Ordering::SeqCst),0);
+    let held: Vec<_> = (0..MAX_CONFIRM_VERIFIERS).map(|_|
+        Permit::acquire(&state.confirmations,MAX_CONFIRM_VERIFIERS).unwrap()).collect();
+    assert_eq!(h_confirm_v2_with_verifier(&state,&proof,|_,_|panic!("cached receipt must skip RPC")),confirmed);
+    drop(held);
+}
+
+#[test]
 fn finished_v2_action_replays_after_snapshot_reload_without_public_secrets() {
     let state = isolated();
     let gid = create(&state);
