@@ -29,13 +29,8 @@ pub fn scan(rpc_url: &str) -> (usize, crate::Aggregated) {
     println!("fetched {} accounts", accounts.len());
     let mut games: Vec<Game> = vec![];
     let mut factions: BTreeMap<Pubkey, Vec<Faction>> = BTreeMap::new();
-    let mut game_ids: BTreeMap<Pubkey, Pubkey> = BTreeMap::new();
 
-    fn to_pk(a: &solana_address::Address) -> Pubkey {
-        Pubkey::new_from_array(a.to_bytes())
-    }
-    for (addr, acc) in accounts {
-        let pk = to_pk(&addr);
+    for (_, acc) in accounts {
         let mut data: &[u8] = &acc.data;
         if acc.data.len() >= 8 && acc.data[..8] == game_disc {
             if let Err(e) = Game::try_deserialize(&mut data) {

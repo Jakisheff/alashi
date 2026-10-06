@@ -160,10 +160,6 @@ fn onchain_faction(svm: &LiteSVM, faction: &Pubkey) -> Vec<u8> {
     out
 }
 
-fn sim_bytes(sim: &Simulator) -> (Vec<u8>, Vec<Vec<u8>>) {
-    sim.state_bytes()
-}
-
 fn ix_initialize(id: u64, admin: Pubkey, game: Pubkey) -> Instruction {
     Instruction::new_with_bytes(
         alashi::id(),
