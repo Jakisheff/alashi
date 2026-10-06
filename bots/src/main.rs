@@ -1,6 +1,6 @@
+mod agent_cli;
 mod llm;
 
-use solana_signature::Signature as SigAlias;
 use solana_signer::Signer;
 
 use {
@@ -22,22 +22,11 @@ use {
     },
 };
 
-const RPC_URL: &str = "https://api.devnet.solana.com";
 const ENTRY_FEE: u64 = 50_000_000;
 const PHASE_DURATION: i64 = 15;
 
 fn demo_mode() -> bool {
     std::env::var("ALASHI_DEMO").is_ok()
-}
-
-fn phase_len(base: i64, phase_marker: &str) -> i64 {
-    if demo_mode() && phase_marker == "law" {
-        45
-    } else if demo_mode() {
-        30
-    } else {
-        base
-    }
 }
 
 fn demo_say(msg: &str) {
@@ -106,31 +95,96 @@ fn load_or_create(path: &str) -> Keypair {
     }
 }
 
-fn send_ix(rpc: &RpcClient, signer: &Keypair, ix: Instruction) -> bool {
-    let bh = match rpc.get_latest_blockhash() {
-        Ok(bh) => bh,
-        Err(e) => {
-            println!("  blockhash err: {e}");
-            return false;
-        }
-    };
+/// Success means a confirmed receipt with meta.err == null, not RPC acceptance.
+fn send_ix_confirmed(
+    rpc: &RpcClient,
+    signer: &Keypair,
+    ix: Instruction,
+) -> Result<serde_json::Value, serde_json::Value> {
+    use serde_json::json;
+    let bh = rpc.get_latest_blockhash().map_err(|_| {
+        json!({
+            "status":"not_sent", "error":"blockhash_unavailable"
+        })
+    })?;
     let msg = Message::new_with_blockhash(&[ix], Some(&signer.pubkey()), &bh);
-    let tx = match VersionedTransaction::try_new(VersionedMessage::Legacy(msg), &[signer]) {
-        Ok(tx) => tx,
-        Err(e) => {
-            println!("  tx build err: {e}");
-            return false;
+    let tx = VersionedTransaction::try_new(VersionedMessage::Legacy(msg), &[signer])
+        .map_err(|_| json!({"status":"not_sent", "error":"signing_failed"}))?;
+    // Keep the locally derived signature even when the submit response is lost.
+    let sig = tx.signatures[0];
+    if let Err(error) = rpc.send_transaction(&tx) {
+        if let Some(reason) = error.get_transaction_error() {
+            return Err(json!({"status":"rejected", "signature":sig.to_string(),
+                "error":format!("{reason:?}")}));
         }
-    };
-    match rpc.send_transaction(&tx) {
-        Ok(sig) => {
-            capture_events(rpc, &sig);
-            println!("  tx https://explorer.solana.com/tx/{sig}?cluster=devnet");
+        // A transport error is ambiguous. Read the receipt before advising a retry.
+        return wait_receipt(rpc, &sig, Duration::from_secs(10));
+    }
+    wait_receipt(rpc, &sig, Duration::from_secs(30))
+}
+
+fn receipt_result(
+    sig: &str,
+    tx: &serde_json::Value,
+) -> Option<Result<serde_json::Value, serde_json::Value>> {
+    use serde_json::json;
+    let meta = tx.get("meta")?.as_object()?;
+    let err = meta.get("err")?;
+    let slot = tx.get("slot")?.as_u64()?;
+    if !err.is_null() {
+        return Some(Err(json!({"status":"failed", "signature":sig,
+            "slot":slot, "error":err})));
+    }
+    Some(Ok(
+        json!({"status":"confirmed", "signature":sig, "slot":slot,
+        "block_time":tx.get("blockTime"), "log_messages":meta.get("logMessages")}),
+    ))
+}
+
+fn wait_receipt(
+    rpc: &RpcClient,
+    sig: &solana_signature::Signature,
+    timeout: Duration,
+) -> Result<serde_json::Value, serde_json::Value> {
+    use serde_json::json;
+    use solana_rpc_client_api::request::RpcRequest;
+    let started = std::time::Instant::now();
+    loop {
+        if let Ok(tx) = rpc.send::<serde_json::Value>(
+            RpcRequest::GetTransaction,
+            json!([sig.to_string(), {"encoding":"json", "commitment":"confirmed",
+                "maxSupportedTransactionVersion":0}]),
+        ) {
+            if let Some(result) = receipt_result(&sig.to_string(), &tx) {
+                return result;
+            }
+        }
+        if started.elapsed() >= timeout {
+            break;
+        }
+        sleep(Duration::from_millis(500));
+    }
+    Err(json!({"status":"unknown", "signature":sig.to_string(),
+        "error":"confirmation_unavailable", "retry":"inspect signature and state before resubmitting"}))
+}
+
+fn send_ix(rpc: &RpcClient, signer: &Keypair, ix: Instruction) -> bool {
+    match send_ix_confirmed(rpc, signer, ix) {
+        Ok(receipt) => {
+            capture_events(&receipt);
+            println!(
+                "  confirmed tx https://explorer.solana.com/tx/{}?cluster=devnet",
+                receipt["signature"].as_str().unwrap_or_default()
+            );
             let _ = std::io::Write::flush(&mut std::io::stdout());
             true
         }
-        Err(e) => {
-            println!("  tx err: {e}");
+        Err(err) => {
+            eprintln!("  tx result: {err}");
+            if err["status"] == "unknown" {
+                eprintln!("Receipt unknown: host/guest stopped. Inspect signature and chain state before resuming; do not resubmit blindly.");
+                std::process::exit(3);
+            }
             false
         }
     }
@@ -181,13 +235,13 @@ fn ensure_funds(rpc: &RpcClient, who: &str, kp: &Keypair) {
     }
 }
 
-fn ix_initialize(admin: Pubkey, game: Pubkey, game_id: u64) -> Instruction {
+fn ix_initialize(admin: Pubkey, game: Pubkey, game_id: u64, phase_duration: i64) -> Instruction {
     Instruction::new_with_bytes(
         id(),
         &instruction::Initialize {
             game_id,
             entry_fee: ENTRY_FEE,
-            phase_duration: PHASE_DURATION,
+            phase_duration,
             entropy_mode: 0,
             epoch: 0,
         }
@@ -395,41 +449,44 @@ fn llm_decide(
     llm::parse_json_block(&raw)
 }
 
-
-
-fn capture_events(rpc: &RpcClient, sig: &solana_signature::Signature) {
-    use solana_signature::Signature as _Sig;
-    use solana_commitment_config::CommitmentConfig;
-    use solana_rpc_client_api::config::RpcTransactionConfig;
-    use std::io::Write as _;
-    use solana_transaction_status_client_types::UiTransactionEncoding;
-    let cfg = RpcTransactionConfig {
-        encoding: Some(UiTransactionEncoding::Json),
-        commitment: Some(CommitmentConfig::confirmed()),
-        max_supported_transaction_version: Some(0),
-    };
-    for _ in 0..5 {
-        if let Ok(tx) = rpc.get_transaction_with_config(sig, cfg.clone()) {
-            if let Some(meta) = tx.transaction.meta {
-                let logs: Option<Vec<String>> = meta.log_messages.into();
-                if let Some(logs) = logs {
-                    if let Ok(mut out) = std::fs::OpenOptions::new()
-                        .create(true)
-                        .append(true)
-                        .open("../data/events_stream.jsonl")
-                    {
-                        for line in &logs {
-                            if line.starts_with("Program data: ") {
-                                let _ = out.write_all(format!("{line}\n").as_bytes());
-                            }
-                        }
-                    }
-                }
-            }
+/// Preserve the legacy export stream, but only from confirmed successful Alashi invocations.
+fn capture_events(receipt: &serde_json::Value) {
+    use std::io::Write;
+    if let Some(logs) = receipt["log_messages"].as_array() {
+        let lines = alashi_event_logs(logs);
+        if lines.is_empty() {
             return;
         }
-        std::thread::sleep(Duration::from_millis(700));
+        if let Ok(mut out) = std::fs::OpenOptions::new()
+            .create(true)
+            .append(true)
+            .open("../data/events_stream.jsonl")
+        {
+            for line in lines {
+                let _ = writeln!(out, "{line}");
+            }
+        }
     }
+}
+
+fn alashi_event_logs(logs: &[serde_json::Value]) -> Vec<&str> {
+    let program = id().to_string();
+    let mut stack: Vec<&str> = Vec::new();
+    let mut result = Vec::new();
+    for value in logs {
+        let Some(line) = value.as_str() else { continue };
+        if let Some(rest) = line.strip_prefix("Program ") {
+            if let Some((key, _)) = rest.split_once(" invoke [") {
+                stack.push(key);
+            } else if rest.ends_with(" success") || rest.contains(" failed:") {
+                stack.pop();
+            }
+        }
+        if line.starts_with("Program data: ") && stack.last().copied() == Some(program.as_str()) {
+            result.push(line);
+        }
+    }
+    result
 }
 
 fn register_agent(wallet: &str, model: &str, prompt: &str) {
@@ -482,7 +539,7 @@ fn discover_factions(rpc: &RpcClient, game: &Pubkey) -> Vec<Pubkey> {
         with_context: Some(false),
         sort_results: None,
     };
-    match rpc.get_program_accounts_with_config(&id(), cfg) {
+    match rpc.get_program_ui_accounts_with_config(&id(), cfg) {
         Ok(accs) => accs.iter().map(|(k, _)| *k).collect(),
         Err(e) => {
             println!("[ERROR] discover_factions: {e}");
@@ -661,13 +718,50 @@ fn run_join_mode(rpc: &RpcClient, game_str: &str, key_path: &str, name: &str) {
     }
 }
 
-fn main() {
-    let rpc = RpcClient::new_with_commitment(rpc_url(), CommitmentConfig::confirmed());
+fn host_timing(args: &[String]) -> Result<(i64, i64), String> {
+    let number = |flag: &str, default: i64| -> Result<i64, String> {
+        if let Some(i) = args.iter().position(|a| a == flag) {
+            args.get(i + 1)
+                .and_then(|s| s.parse::<i64>().ok())
+                .filter(|n| *n > 0 && *n <= 86400)
+                .ok_or_else(|| format!("{flag} requires seconds in 1..86400"))
+        } else {
+            Ok(default)
+        }
+    };
+    let duration = number("--phase-duration", PHASE_DURATION)?;
+    // 5 lobby intervals + 18 phases, plus time for confirmations and settlement.
+    let timeout = number("--timeout", (duration * 23 + 120).max(12 * 60))?;
+    if timeout < duration * 23 + 30 {
+        return Err("--timeout must cover lobby + 18 phases + at least 30 seconds".into());
+    }
+    Ok((duration, timeout))
+}
 
+fn main() {
     let args: Vec<String> = std::env::args().collect();
+    if args.get(1).map(String::as_str) == Some("agent") {
+        std::process::exit(agent_cli::run(&args[2..]));
+    }
+    if args.iter().any(|a| a == "--help" || a == "-h") {
+        println!("bots [--phase-duration SECONDS] [--timeout SECONDS] [--no-llm]\nbots --game PUBKEY --name NAME --key LOCAL_FILE\nbots agent inspect|join|act --help");
+        return;
+    }
+    let (phase_duration, host_timeout) = match host_timing(&args) {
+        Ok(timing) => timing,
+        Err(error) => {
+            eprintln!("{error}");
+            std::process::exit(2);
+        }
+    };
+    let rpc = RpcClient::new_with_timeout_and_commitment(
+        rpc_url(),
+        Duration::from_secs(10),
+        CommitmentConfig::confirmed(),
+    );
     if let Some(game_str) = flag_value(&args, "--game") {
-        let key_path = flag_value(&args, "--key")
-            .unwrap_or_else(|| format!("{KEYS_DIR}/join.json"));
+        let key_path =
+            flag_value(&args, "--key").unwrap_or_else(|| format!("{KEYS_DIR}/join.json"));
         let name = flag_value(&args, "--name").unwrap_or_else(|| "Guest".to_string());
         run_join_mode(&rpc, &game_str, &key_path, &name);
         return;
@@ -680,10 +774,18 @@ fn main() {
         "greedy-v1",
         "greedy-heuristic-v1",
     );
-    let llm_cfg = llm::llm_config();
+    let llm_cfg = if args.iter().any(|a| a == "--no-llm") {
+        None
+    } else {
+        llm::llm_config()
+    };
     register_agent(
         &bot2_kp.pubkey().to_string(),
-        llm_cfg.as_ref().map(|c| c.model.clone()).unwrap_or_default().as_str(),
+        llm_cfg
+            .as_ref()
+            .map(|c| c.model.clone())
+            .unwrap_or_default()
+            .as_str(),
         llm::SYSTEM,
     );
     println!("rpc: {}", rpc_url());
@@ -693,7 +795,7 @@ fn main() {
     ensure_funds(&rpc, "bot1", &bot1_kp);
     ensure_funds(&rpc, "bot2", &bot2_kp);
 
-    let llm = llm::llm_config();
+    let llm = llm_cfg;
     println!(
         "Botagul brain: {}",
         if llm.is_some() {
@@ -737,7 +839,7 @@ fn main() {
     if !send_ix(
         &rpc,
         &bots[0].kp,
-        ix_initialize(bots[0].kp.pubkey(), game, game_id),
+        ix_initialize(bots[0].kp.pubkey(), game, game_id, phase_duration),
     ) {
         println!("[ERROR] initialize не отправился");
         return;
@@ -761,7 +863,7 @@ fn main() {
     let mut hb = 0u32;
     loop {
         hb += 1;
-        if now() - started > 12 * 60 {
+        if now() - started > host_timeout {
             println!("timeout, party unfinished");
             break;
         }
@@ -1045,7 +1147,9 @@ fn main() {
             }
             state::Phase::Law => {
                 if g.law_card != 255 {
-                    demo_say("РАССКАЗЧИК: теперь ЖЮРИ — подключи кошелёк и проголосуй ПРОТИВ, 45 секунд");
+                    demo_say(
+                        "РАССКАЗЧИК: теперь ЖЮРИ — подключи кошелёк и проголосуй ПРОТИВ, 45 секунд",
+                    );
                 }
                 for (i, b) in bots.iter_mut().enumerate() {
                     if b.voted {
@@ -1164,19 +1268,16 @@ fn main() {
                     send_ix(
                         &rpc,
                         &bots[0].kp,
-                        ix_settle(
-                            bots[0].kp.pubkey(),
-                            game,
-                            &fkeys,
-                            &wallets,
-                            g.admin,
-                        ),
+                        ix_settle(bots[0].kp.pubkey(), game, &fkeys, &wallets, g.admin),
                     );
                     sleep(Duration::from_secs(5));
                     let after = rpc.get_balance(&game).unwrap_or(0);
                     println!("bank after settle: {after} lamports");
                     let rake_wallet = rpc.get_balance(&g.admin).unwrap_or(0);
-                    println!("rake receiver ({}) balance: {} lamports", g.admin, rake_wallet);
+                    println!(
+                        "rake receiver ({}) balance: {} lamports",
+                        g.admin, rake_wallet
+                    );
                 }
                 println!("game: https://explorer.solana.com/address/{game}?cluster=devnet");
                 break;

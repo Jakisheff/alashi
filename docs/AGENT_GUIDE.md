@@ -5,6 +5,104 @@ Runbook для любого агента или человека: подключ
 транзакции. Проверено e2e 31.08: третья фракция (join-режим) сыграла полную
 партию 6 раундов и выиграла её у обоих ботов хоста, выплата пришла на кошелёк.
 
+## 0. Локальный JSON-клиент для OpenCode и других агентов (classic, devnet)
+
+Новый режим `bots agent` отдаёт **один JSON в stdout**; код выхода `0` означает успешный
+результат команды, ненулевой — ошибку. Он не вызывает LLM, не создаёт ключ, не запрашивает
+airdrop и не хранит ключ на сервере. OpenCode выбирает действие, этот клиент локально
+подписывает его. Проверенный модельный идентификатор оператора: `zai-coding-plan/glm-5.3-flash`;
+модель не является частью протокола Alashi.
+
+Команды выполняются **на компьютере владельца**, из корня репозитория. Перед запуском
+подготовь отдельный devnet keypair с правами `600`, положи его вне репозитория и пополни
+devnet SOL. Не передавай содержимое keypair в промпт, модель, логи или сервер. Значения
+переменных ниже — локальные пути и публичные адреса; ключ не показывается:
+
+```sh
+export ALASHI_RPC=https://api.devnet.solana.com
+ALASHI_GAME='<game public key from host>'
+ALASHI_WALLET='<your public wallet address>'
+ALASHI_DEVNET_KEYPAIR='/absolute/private/path/agent.json'
+
+# Только чтение: state и твоя фракция; подпись не нужна.
+cargo run --quiet --locked --manifest-path bots/Cargo.toml -- \
+  agent inspect --game "$ALASHI_GAME" --wallet "$ALASHI_WALLET"
+
+# Подписанный join; уже существующая фракция возвращает already_joined без оплаты.
+cargo run --quiet --locked --manifest-path bots/Cargo.toml -- \
+  agent join --game "$ALASHI_GAME" --name IvanAgent --key "$ALASHI_DEVNET_KEYPAIR"
+
+# Ровно одно решение JSON через stdin. Сначала inspect и проверь фазу.
+printf '%s\n' '{"action":"produce"}' | \
+  cargo run --quiet --locked --manifest-path bots/Cargo.toml -- \
+  agent act --game "$ALASHI_GAME" --key "$ALASHI_DEVNET_KEYPAIR"
+```
+
+Все три команды проверяют genesis devnet, owner, discriminator и PDA Game; фракции
+также проверяются на owner/PDA/принадлежность игре. Используй доверенный RPC: genesis
+защищает от случайного выбора другой сети, а не от лживого сервера. Game.account_lamports показывает баланс аккаунта вместе с резервом rent, а не только банк игры. Изменяющие команды
+поддерживают `epoch=0` (classic). `inspect` возвращает `state`, `your_faction` (либо null),
+`observed_slot` и `commitment: confirmed`. `available_action_types` учитывает фазу,
+текущий stamp, живую фракцию и право вето; баланс, параметры и целевой аккаунт проверяет
+программа. Список не обещает успех каждой операции. `cash` — игровые единицы, `1000000`
+равно одному песо; price_table — целые песо за единицу товара; `entry_fee_lamports` и выплаты — lamports devnet SOL. Все `u64`
+денежные значения и `game_id` в JSON представлены десятичными строками.
+
+Действия:
+
+```json
+{"action":"sell","params":{"units":2}}
+{"action":"buy","params":{"units":1}}
+{"action":"produce"}
+{"action":"donkey"}
+{"action":"bribe","params":{"to":"<target faction pubkey>","amount":"5000000"}}
+{"action":"vote","params":{"choice":"yes"}}
+{"action":"veto"}
+```
+
+Каждая строка — отдельный вызов, а не один JSON-документ. `bribe.to` — **PDA фракции**,
+не адрес кошелька. `name` ограничен 16 **UTF-8 байтами**, не 16 символами.
+
+Подтверждённый ответ join/act имеет форму:
+
+```json
+{"ok":true,"command":"act","network":"devnet","program_id":"…","game":"…","wallet":"…","faction":"…","receipt":{"status":"confirmed","signature":"…","slot":123,"block_time":0,"log_messages":[]}}
+```
+
+Это пример схемы, не результат настоящей транзакции. `confirmed` появляется только
+после `getTransaction(commitment=confirmed)` с `meta.err=null`. Значение `ok=true`
+означает выполнение действия, не прибыль или победу. Повторный join своей существующей
+фракции возвращает `status: already_joined`, `receipt: null` и не подписывает транзакцию.
+
+Ошибка транзакции возвращает `ok: false`, ненулевой exit code и `receipt.status`:
+
+- `not_sent`: блокхэш или подпись не подготовлены;
+- `rejected`: известная ошибка preflight, операция не принята;
+- `failed`: подтверждённая транзакция имеет `meta.err`;
+- `unknown`: отправка/подтверждение неоднозначны; signature сохранена, если транзакция
+  была подписана. Legacy host/guest останавливается с exit code 3 при unknown. **Не повторяй ход автоматически:** сначала проверь signature в devnet
+  и заново прочитай state. Истёкший ответ не означает отказа цепи.
+
+Ошибки ввода/сети/аккаунта возвращают `error: {code, message}` без содержимого ключа или
+адреса RPC. Вывод Cargo идёт в stderr. В обёртке для модели разрешай только inspect,
+join, act и ограниченное ожидание; сам путь keypair подставляет локальная обёртка.
+
+Хост для агента, которому нужно время на решения (кошельки host остаются локально):
+
+```sh
+cargo run --quiet --locked --manifest-path /absolute/path/alashi/bots/Cargo.toml -- \
+  --phase-duration 45 --timeout 2000 --no-llm
+```
+
+Рабочий каталог хоста должен быть отдельным приватным каталогом с `bots/keys/bot1.json`
+и `bot2.json`; без них старый host создаёт кошельки и может запросить airdrop. Лобби длится
+`5 × phase_duration`, затем 18 фаз. `--timeout` должен покрывать весь матч. Без флагов
+прежние значения сохранены: 15 секунд/фаза, 720 секунд timeout; при увеличении длительности
+фазы timeout по умолчанию увеличивается автоматически. `--no-llm` исключает чтение LLM
+credentials хостом. Host открывает фракции гостей перед advance/settle. Внешний CLI играет
+только своей фракцией; завершение игры обеспечивает host. Не менять program/rules ради
+подключения агента.
+
 ## 1. Lock the target
 
 - Программа: `3jwunaFDRrSWFfeJ5hFZu3DmxPNTmkdoCweHDvqcXTqC` (devnet, задеплоена 05.10.2026)
@@ -55,10 +153,10 @@ Runbook для любого агента или человека: подключ
 блокирует партию после вступления гостя. Правильный хост переоткрывает
 список фракций по цепи:
 
-`getProgramAccounts(program, filters=[Memcmp(offset=8, game)])`
+`getProgramAccounts(program, filters=[Memcmp(offset=8, game)], encoding="base64")`
 
-Публичный devnet RPC этот вызов ограничивает: хосту рекомендуется Helius
-(free tier). Guest ничего этого не делает: он играет свои ходы и ждёт,
+Вызов с явным base64 проверен на публичном devnet RPC 05.10.2026; см.
+[отчёт деплоя](ops/DEVNET_DEPLOY_20261005.md). Лимиты RPC всё равно нужно учитывать. Guest ничего этого не делает: он играет свои ходы и ждёт,
 пока host двигает фазы. Settle выплатит на кошелёк каждой фракции
 50/30/15/5 по рангу богатства, рейк 5% админу.
 
@@ -67,7 +165,7 @@ Runbook для любого агента или человека: подключ
 ```bash
 cd bots
 ALASHI_RPC=<rpc> cargo run --release -- \
-  --game <GAME_PUBKEY> --name <ИМЯ_ДО_16_СИМВ> [--key путь/к/ключу.json]
+  --game <GAME_PUBKEY> --name <ИМЯ_ДО_16_БАЙТ> [--key путь/к/ключу.json]
 ```
 
 Ключ создастся сам (`bots/keys/join.json` по умолчанию), при нехватке
