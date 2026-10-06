@@ -419,19 +419,22 @@ def build():
         box(f"{side}-palm", (0.26, 0.16, 0.22), hd, m["teal"], 0.07, 4)
         cylinder(f"{side}-palm-button", 0.062, 0.03, hd + Vector((0, -0.085, 0.01)), m["orange"],
                  rot=(math.pi / 2, 0, 0), verts=24, edge=0.01)
-        xs = (-0.09, -0.03, 0.03, 0.09)
-        joints, fingers = [], []
-        for i, fx in enumerate(xs):
-            joints.append(sphere(f"{side}-k{i}", 0.042, hd + Vector((fx, -0.01, -0.115)), m["joint"], segs=(14, 8)))
-            fingers.append(capsule(f"{side}-p{i}", 0.04, 0.13, hd + Vector((fx, -0.014, -0.175)), m["ivory"]))
-            joints.append(sphere(f"{side}-m{i}", 0.034, hd + Vector((fx, -0.02, -0.24)), m["joint"], segs=(14, 8)))
-            fingers.append(capsule(f"{side}-d{i}", 0.037, 0.11, hd + Vector((fx, -0.045, -0.285)), m["ivory"],
-                                   rot=(-0.5, 0, 0)))
-        joints.append(sphere(f"{side}-tk", 0.04, hd + Vector((0.13 * sx, -0.04, -0.03)), m["joint"], segs=(14, 8)))
-        fingers.append(capsule(f"{side}-t", 0.04, 0.13, hd + Vector((0.17 * sx, -0.06, -0.07)), m["ivory"],
-                               rot=(-0.3, -0.8 * sx, 0)))
-        join(joints, f"{side}-knuckles")
-        join(fingers, f"{side}-fingers")
+        # Fingers in two posable groups: "point" (index + middle, thumb side) and "curl" (ring + pinky).
+        knuckles, groups = [], {"point": [], "curl": []}
+        for i, fx in enumerate((-0.09, -0.03, 0.03, 0.09)):
+            grp = groups["point" if fx * sx > 0 else "curl"]
+            knuckles.append(sphere(f"{side}-k{i}", 0.042, hd + Vector((fx, -0.01, -0.115)), m["joint"], segs=(14, 8)))
+            grp.append(capsule(f"{side}-p{i}", 0.04, 0.13, hd + Vector((fx, -0.014, -0.175)), m["ivory"]))
+            grp.append(sphere(f"{side}-m{i}", 0.034, hd + Vector((fx, -0.02, -0.24)), m["joint"], segs=(14, 8)))
+            grp.append(capsule(f"{side}-d{i}", 0.037, 0.11, hd + Vector((fx, -0.045, -0.285)), m["ivory"],
+                               rot=(-0.5, 0, 0)))
+        knuckles.append(sphere(f"{side}-tk", 0.04, hd + Vector((0.13 * sx, -0.04, -0.03)), m["joint"], segs=(14, 8)))
+        join(knuckles, f"{side}-knuckles")
+        join(groups["point"], f"{side}-point")
+        join(groups["curl"], f"{side}-curl")
+        capsule(f"{side}-thumb", 0.04, 0.13, hd + Vector((0.17 * sx, -0.06, -0.07)), m["ivory"], rot=(-0.3, -0.8 * sx, 0))
+        JOINTS[f"{side}-fingers"] = (hd + Vector((0.06 * sx, -0.01, -0.115)), hd + Vector((-0.06 * sx, -0.01, -0.115)),
+                                     hd + Vector((0.13 * sx, -0.04, -0.03)))
 
     # Smoke tail: a tapering NURBS tube; the R3F scene gives it a moving glow shader.
     cu = bpy.data.curves.new("tail", "CURVE")
@@ -484,7 +487,10 @@ def bone_for(name):
             return f"{side}-arm"
         if name.startswith((f"{side}-elbow", f"{side}-forearm", f"{side}-wrist")):
             return f"{side}-forearm"
-        if name.startswith((f"{side}-palm", f"{side}-knuckles", f"{side}-fingers")):
+        for part in ("point", "curl", "thumb"):
+            if name == f"{side}-{part}":
+                return f"{side}-{part}"
+        if name.startswith((f"{side}-palm", f"{side}-knuckles")):
             return f"{side}-hand"
     if name.startswith("tail-spark-"):
         return f"tail-{int(name.split('-')[2])}"
@@ -519,6 +525,8 @@ def rig(col):
         bone(f"{side}-arm", sh, "body")
         bone(f"{side}-forearm", el, f"{side}-arm")
         bone(f"{side}-hand", wr, f"{side}-forearm")
+        for part, head in zip(("point", "curl", "thumb"), JOINTS[f"{side}-fingers"]):
+            bone(f"{side}-{part}", head, f"{side}-hand")
     prev = "body"
     for i in range(len(TAIL_PTS) - 1):
         name = "tail" if i == 0 else f"tail-{i}"
@@ -560,6 +568,11 @@ def apply_pose(arm, p, t):
     pb["right-arm"].rotation_euler = (-p["lArmFwd"], 0, -p["lArmOut"])
     pb["left-forearm"].rotation_euler = (-p["rElbow"], 0, 0)
     pb["right-forearm"].rotation_euler = (-p["lElbow"], 0, 0)
+    for side, k in (("left", "r"), ("right", "l")):
+        grip, point = p[f"{k}Grip"], p[f"{k}Point"]
+        pb[f"{side}-curl"].rotation_euler = (-grip * 1.3, 0, 0)  # curl toward the palm (-Y)
+        pb[f"{side}-point"].rotation_euler = (-grip * (1 - point) * 1.3, 0, 0)
+        pb[f"{side}-thumb"].rotation_euler = (-grip * 0.8, 0, 0)
     for side in ("left", "right"):
         pb[f"{side}-pupil"].location = (p["lookX"] * 0.045, p["lookY"] * 0.05, 0)
     cover = max(lid_cover(p["eyeOpen"], p["lid"]), 0.001)

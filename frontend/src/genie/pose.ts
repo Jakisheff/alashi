@@ -13,6 +13,10 @@ export type Pose = {
   lArmOut: number
   lArmFwd: number
   lElbow: number
+  rGrip: number // 0 open hand, 1 fist
+  lGrip: number
+  rPoint: number // 1 keeps index + middle straight while the rest curl
+  lPoint: number
   browL: number // + raises
   browR: number
   browTilt: number // + worried (inner ends up), - scheming
@@ -42,6 +46,10 @@ const REST: Pose = {
   lArmOut: 0.4,
   lArmFwd: 0.3,
   lElbow: 0.8,
+  rGrip: 0.25,
+  lGrip: 0.25,
+  rPoint: 0,
+  lPoint: 0,
   browL: 0,
   browR: 0.35, // asymmetric smirk is the character's default
   browTilt: 0,
@@ -104,6 +112,8 @@ const OFFSETS: Record<Exclude<GenieClip, 'idle'>, Offsets> = {
     browR: [[0, 0], [0.4, 0.3], [0.9, 0.2], [1.1, 0]],
     browTilt: [[0, 0], [0.25, -0.3], [0.6, -0.2], [1.1, 0]],
     lookX: [[0, 0], [0.3, 0.4], [0.9, 0.3], [1.1, 0]],
+    rGrip: [[0, 0], [0.3, 0.75], [0.9, 0.75], [1.1, 0]],
+    rPoint: [[0, 0], [0.3, 1], [0.9, 1], [1.1, 0]],
     lid: [[0, 0], [0.25, 0.15], [0.45, -0.1], [1.1, 0]],
   },
   // Nod, near (left) hand up in a quick "yes", little hop, pleased squint.
@@ -113,6 +123,7 @@ const OFFSETS: Record<Exclude<GenieClip, 'idle'>, Offsets> = {
     lArmFwd: [[0, 0], [0.3, 1.1], [0.55, 1.4], [0.9, 1.0], [1.2, 0]],
     lArmOut: [[0, 0], [0.3, 0.7], [0.55, 0.8], [0.9, 0.6], [1.2, 0]],
     lElbow: [[0, 0], [0.3, 0.8], [0.55, 1.1], [0.9, 0.8], [1.2, 0]],
+    lGrip: [[0, 0], [0.25, 0.75], [0.9, 0.75], [1.2, 0]],
     browL: [[0, 0], [0.3, 0.5], [0.9, 0.4], [1.2, 0]],
     browR: [[0, 0], [0.3, 0.3], [0.9, 0.2], [1.2, 0]],
     lid: [[0, 0], [0.3, 0.12], [0.9, 0.1], [1.2, 0]],
@@ -128,6 +139,8 @@ const OFFSETS: Record<Exclude<GenieClip, 'idle'>, Offsets> = {
     rArmOut: [[0, 0], [0.7, 0], [0.95, 0.7], [1.2, 0.6], [1.6, 0]],
     lArmOut: [[0, 0], [0.7, 0], [0.95, 0.7], [1.2, 0.6], [1.6, 0]],
     lElbow: [[0, 0], [0.7, 0], [0.95, 0.5], [1.2, 0.5], [1.6, 0]],
+    rGrip: [[0, 0], [0.7, 0], [0.95, -0.25], [1.2, -0.25], [1.6, 0]],
+    lGrip: [[0, 0], [0.7, 0], [0.95, -0.25], [1.2, -0.25], [1.6, 0]],
     lookX: [[0, 0], [0.3, 0.6], [0.7, 0.6], [0.95, -0.2], [1.6, 0]],
     lookY: [[0, 0], [0.3, -0.5], [0.7, -0.5], [0.95, 0.1], [1.6, 0]],
     browTilt: [[0, 0], [0.15, 0.5], [1.2, 0.45], [1.6, 0]],
