@@ -596,7 +596,8 @@ fn lifecycle_v2_golden_fixture_and_durable_two_game_join() {
     assert_eq!(h_registration_v2(&state,&request)["memo"],proposal["memo"]);
     let restored = restore(&state);
     assert_eq!(h_registration_v2(&restored,&request)["memo"],proposal["memo"]);
-    assert_eq!(h_registration_v2(&restored,&json!({"agent_record_id":id,"wallet":wallet,"recovery_secret":"ef".repeat(32)}))["error"],"registration_conflict");
+    assert_ne!(h_registration_v2(&restored,&json!({"agent_record_id":id,"wallet":wallet,
+        "recovery_secret":"ef".repeat(32)}))["memo"],proposal["memo"]);
     let proof = json!({"agent_record_id":id,"wallet":wallet,"recovery_secret":secret,"signature":"2".repeat(88)});
     let confirmed = h_confirm_v2_with_verifier(&restored,&proof,|p,m| {
         assert_eq!(p.wallet,wallet);
@@ -607,6 +608,12 @@ fn lifecycle_v2_golden_fixture_and_durable_two_game_join() {
     });
     assert_eq!(confirmed["registration"]["mode"],"agent_lifecycle_v2");
     assert_eq!(h_confirm_v2_with_verifier(&restored,&proof,|_,_|panic!("repeat must not call RPC"))["registration"],confirmed["registration"]);
+    let waiting = h_agent_profile(&restored,&id);
+    assert_eq!(waiting["registered"],true);
+    assert_eq!(waiting["active_slots"],json!([]));
+    assert_eq!(waiting["character_id"],proposal["character_id"]);
+    assert_eq!(h_agent_profile(&restored,&"ef".repeat(32))["error"],"unknown_agent");
+    assert_eq!(h_agent_profile(&restored,"bad-id")["error"],"bad_agent_record_id");
     let restored = restore(&restored);
     let join_body = json!({"agent_record_id":id,"recovery_secret":secret,"name":"Player",
         "model":"glm-5.3-flash","strategy_hash":agent_id_of("glm-5.3-flash","test")});
@@ -617,6 +624,16 @@ fn lifecycle_v2_golden_fixture_and_durable_two_game_join() {
     assert_eq!(first["character_id"],second["character_id"]);
     assert_eq!(first["registration"],confirmed["registration"]);
     assert_eq!(second["registration"],confirmed["registration"]);
+    let profile = h_agent_profile(&restored,&id);
+    assert_eq!(profile["active_slots"].as_array().unwrap().len(),2);
+    let public_profile = profile.to_string();
+    for private in [secret.as_str(),wallet.as_str(),first["token"].as_str().unwrap(),
+        proof["signature"].as_str().unwrap(),"glm-5.3-flash"] {
+        assert!(!public_profile.contains(private),"public profile leaked: {private}");
+    }
+    for field in ["wallet","signature","recovery_hash","token","challenge","model","prompt"] {
+        assert!(profile.get(field).is_none(),"public profile field: {field}");
+    }
     assert_ne!(first["token"],second["token"]);
     assert_eq!(h_join(&restored,gid1,&join_body)["error"],"already_joined");
     let mut bad=join_body.clone();
@@ -702,7 +719,7 @@ fn lifecycle_v2_fail_closed_platform_and_proposal_storage() {
     assert_eq!(proposal["ok"],true,"{proposal}");
     let proof=json!({"agent_record_id":id,"wallet":wallet,"recovery_secret":secret,"signature":"2".repeat(88)});
     assert_eq!(h_confirm_v2_with_verifier(&state,&proof,|_,_|Err("registration_memo_mismatch"))["error"],"registration_memo_mismatch");
-    assert!(state.registrations.lock().unwrap()[&id].receipt.is_none());
+    assert!(state.registrations.lock().unwrap().is_empty());
 }
 
 #[test]
@@ -773,7 +790,7 @@ fn lifecycle_v2_two_owners_same_strategy_have_separate_game_sessions() {
 }
 
 #[test]
-fn v2_pending_quota_keeps_a_delayed_signed_memo_confirmable() {
+fn v2_stateless_proposals_do_not_allocate_under_public_flood() {
     let state = isolated();
     let secret = "ab".repeat(32);
     let wallet = Pubkey::new_unique().to_string();
@@ -781,20 +798,19 @@ fn v2_pending_quota_keeps_a_delayed_signed_memo_confirmable() {
     let first = json!({"agent_record_id":first_id,"wallet":wallet,"recovery_secret":secret});
     let proposal = h_registration_v2(&state, &first);
     assert_eq!(proposal["ok"], true);
-    let second_id = "de".repeat(32);
-    assert_eq!(h_registration_v2(&state,&json!({"agent_record_id":second_id,
-        "wallet":wallet,"recovery_secret":secret}))["error"],"pending_wallet_limit");
-    for i in 1..MAX_PENDING_REGISTRATIONS {
+    let snapshot = std::fs::read(&state.snapshot_path).unwrap();
+    assert!(state.registrations.lock().unwrap().is_empty());
+    for i in 1..=MAX_REGISTERED_AGENTS + 1 {
         let id = format!("{i:064x}");
         let wallet = Pubkey::new_unique().to_string();
         assert_eq!(h_registration_v2(&state,&json!({"agent_record_id":id,
             "wallet":wallet,"recovery_secret":secret}))["ok"],true);
     }
-    assert_eq!(h_registration_v2(&state,&json!({"agent_record_id":second_id,
-        "wallet":Pubkey::new_unique().to_string(),"recovery_secret":secret}))["error"],"pending_full");
-    state.registrations.lock().unwrap().get_mut(&first_id).unwrap().created_at =
-        now() - 7 * 86_400;
-    save_snapshot(&state).unwrap();
+    assert!(state.registrations.lock().unwrap().is_empty());
+    assert_eq!(std::fs::read(&state.snapshot_path).unwrap(),snapshot);
+    let mut old_snapshot: Value = serde_json::from_slice(&snapshot).unwrap();
+    old_snapshot["saved_at"] = json!(now() - 7 * 86_400);
+    std::fs::write(&state.snapshot_path, old_snapshot.to_string()).unwrap();
     let state = restore(&state);
     let repeated = h_registration_v2(&state,&first);
     assert_eq!(repeated["memo"],proposal["memo"]);
@@ -808,10 +824,139 @@ fn v2_pending_quota_keeps_a_delayed_signed_memo_confirmable() {
     });
     assert_eq!(confirmed["ok"],true,"{confirmed}");
     assert_eq!(h_confirm_v2_with_verifier(&state,&proof,|_,_|panic!("retry must not call RPC")),confirmed);
-    assert_eq!(state.registrations.lock().unwrap().len(),MAX_PENDING_REGISTRATIONS);
-    assert_eq!(restore(&state).registrations.lock().unwrap().len(),MAX_PENDING_REGISTRATIONS);
-    assert_eq!(h_registration_v2(&state,&json!({"agent_record_id":second_id,
-        "wallet":Pubkey::new_unique().to_string(),"recovery_secret":secret}))["ok"],true);
+    assert_eq!(state.registrations.lock().unwrap().len(),1);
+    assert_eq!(restore(&state).registrations.lock().unwrap().len(),1);
+}
+
+#[test]
+fn v2_stateless_challenge_has_exact_domain_and_framing() {
+    let key = "11".repeat(32);
+    let secret = "ab".repeat(32);
+    let id = "cd".repeat(32);
+    let owner = owner_id_of(&secret);
+    let character = character_id_v2(&owner, &id);
+    let wallet = "11111111111111111111111111111111";
+    assert_eq!(lifecycle_challenge(&key,wallet,&owner,&id,&character),
+        "ba257eea386be15c0384fb56c34498678008f31c4e1930535e535059ce953fa4");
+    assert_ne!(lifecycle_challenge(&key,wallet,&owner,&id,&character),
+        lifecycle_challenge(&key,&Pubkey::new_unique().to_string(),&owner,&id,&character));
+}
+
+#[test]
+fn v2_stateless_confirm_rejects_wrong_signer_memo_and_secret() {
+    let state = isolated();
+    let id = "cd".repeat(32);
+    let secret = "ab".repeat(32);
+    let wallet = Pubkey::new_unique().to_string();
+    let proposal = h_registration_v2(&state,&json!({"agent_record_id":id,
+        "wallet":wallet,"recovery_secret":secret}));
+    assert_eq!(proposal["ok"],true);
+    let proof = json!({"agent_record_id":id,"wallet":wallet,
+        "recovery_secret":secret,"signature":"2".repeat(88)});
+    let status = json!({"value":[{"slot":123,"err":null,"confirmationStatus":"confirmed"}]});
+    let tx = json!({"slot":123,"meta":{"err":null,"fee":5000},"transaction":{
+        "signatures":[proof["signature"]],
+        "message":{"accountKeys":[{"pubkey":wallet,"signer":true}],
+            "instructions":[{"programId":registration::MEMO_PROGRAM_ID,"parsed":proposal["memo"]}]}}});
+    let mut forged_signer = tx.clone();
+    forged_signer["transaction"]["message"]["accountKeys"][0]["signer"] = json!(false);
+    assert_eq!(h_confirm_v2_with_verifier(&state,&proof,|p,m|
+        registration::validate_receipt(p,m,&status,&forged_signer))["error"],"registration_wallet_not_signer");
+    let mut forged_memo = tx.clone();
+    forged_memo["transaction"]["message"]["instructions"][0]["parsed"] = json!("wrong memo");
+    assert_eq!(h_confirm_v2_with_verifier(&state,&proof,|p,m|
+        registration::validate_receipt(p,m,&status,&forged_memo))["error"],"registration_memo_mismatch");
+    let mut wrong_secret = proof.clone(); wrong_secret["recovery_secret"] = json!("ef".repeat(32));
+    assert_eq!(h_confirm_v2_with_verifier(&state,&wrong_secret,|p,m|
+        registration::validate_receipt(p,m,&status,&tx))["error"],"registration_memo_mismatch");
+    assert!(state.registrations.lock().unwrap().is_empty());
+    assert_eq!(h_confirm_v2_with_verifier(&state,&proof,|p,m|
+        registration::validate_receipt(p,m,&status,&tx))["ok"],true);
+    assert_eq!(state.registrations.lock().unwrap().len(),1);
+}
+
+#[test]
+fn v2_concurrent_conflicting_confirms_store_only_one_identity() {
+    let state = isolated();
+    let id = "cd".repeat(32);
+    let barrier = std::sync::Arc::new(std::sync::Barrier::new(2));
+    let mut workers = Vec::new();
+    for (secret, signature) in [("ab".repeat(32),"2".repeat(88)),
+        ("ef".repeat(32),"3".repeat(88))] {
+        let wallet = Pubkey::new_unique().to_string();
+        assert_eq!(h_registration_v2(&state,&json!({"agent_record_id":id,
+            "wallet":wallet,"recovery_secret":secret}))["ok"],true);
+        let proof = json!({"agent_record_id":id,"wallet":wallet,
+            "recovery_secret":secret,"signature":signature});
+        let state = state.clone();
+        let barrier = barrier.clone();
+        workers.push(std::thread::spawn(move || h_confirm_v2_with_verifier(&state,&proof,|p,_| {
+            barrier.wait();
+            Ok(Receipt { mode:"agent_start_v1".into(),network:"devnet".into(),
+                wallet:p.wallet.clone(),signature:p.signature.clone(),slot:42,
+                fee_lamports:"5000".into(),commitment:"confirmed".into() })
+        })));
+    }
+    let results: Vec<Value> = workers.into_iter().map(|worker| worker.join().unwrap()).collect();
+    assert_eq!(results.iter().filter(|result| result["ok"] == true).count(),1,"{results:?}");
+    assert_eq!(results.iter().filter(|result| result["error"] == "registration_conflict").count(),1,"{results:?}");
+    assert_eq!(restore(&state).registrations.lock().unwrap().len(),1);
+}
+
+#[test]
+fn v2_legacy_pending_challenge_remains_valid_after_stateless_upgrade() {
+    let state = isolated();
+    let id = "cd".repeat(32);
+    let secret = "ab".repeat(32);
+    let wallet = Pubkey::new_unique().to_string();
+    let owner_id = owner_id_of(&secret);
+    let character_id = character_id_v2(&owner_id,&id);
+    let challenge = "ef".repeat(32);
+    state.registrations.lock().unwrap().insert(id.clone(), RegisteredAgent {
+        wallet:wallet.clone(), owner_id:owner_id.clone(), character_id:character_id.clone(),
+        recovery_hash:recovery_hash(&secret).unwrap(), challenge:challenge.clone(),
+        receipt:None,created_at:now()-7*86_400,
+    });
+    save_snapshot(&state).unwrap();
+    let state = restore(&state);
+    let proposal = h_registration_v2(&state,&json!({"agent_record_id":id,
+        "wallet":wallet,"recovery_secret":secret}));
+    assert_eq!(proposal["memo"],registration::lifecycle_memo(&owner_id,&id,&character_id,&challenge));
+    assert!(state.proposal_key.lock().unwrap().is_none());
+    let proof = json!({"agent_record_id":id,"wallet":wallet,
+        "recovery_secret":secret,"signature":"2".repeat(88)});
+    assert_eq!(h_confirm_v2_with_verifier(&state,&proof,|p,m| {
+        assert_eq!(m,proposal["memo"]);
+        Ok(Receipt { mode:"agent_start_v1".into(),network:"devnet".into(),
+            wallet:p.wallet.clone(),signature:p.signature.clone(),slot:42,
+            fee_lamports:"5000".into(),commitment:"confirmed".into() })
+    })["ok"],true);
+}
+
+#[test]
+fn v2_stateless_confirm_storage_failure_keeps_signature_retryable() {
+    let state = isolated();
+    let id = "cd".repeat(32);
+    let secret = "ab".repeat(32);
+    let wallet = Pubkey::new_unique().to_string();
+    let proposal = h_registration_v2(&state,&json!({"agent_record_id":id,
+        "wallet":wallet,"recovery_secret":secret}));
+    assert_eq!(proposal["ok"],true);
+    let proof = json!({"agent_record_id":id,"wallet":wallet,
+        "recovery_secret":secret,"signature":"2".repeat(88)});
+    std::fs::remove_file(&state.snapshot_path).unwrap();
+    std::fs::create_dir(&state.snapshot_path).unwrap();
+    let verify = |p:&Proof,m:&str| {
+        assert_eq!(m,proposal["memo"]);
+        Ok(Receipt { mode:"agent_start_v1".into(),network:"devnet".into(),
+            wallet:p.wallet.clone(),signature:p.signature.clone(),slot:42,
+            fee_lamports:"5000".into(),commitment:"confirmed".into() })
+    };
+    assert_eq!(h_confirm_v2_with_verifier(&state,&proof,verify)["error"],"storage_failed");
+    assert!(state.registrations.lock().unwrap().is_empty());
+    std::fs::remove_dir(&state.snapshot_path).unwrap();
+    assert_eq!(h_confirm_v2_with_verifier(&state,&proof,verify)["ok"],true);
+    assert_eq!(restore(&state).registrations.lock().unwrap().len(),1);
 }
 
 #[test]

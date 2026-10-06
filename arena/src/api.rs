@@ -39,7 +39,6 @@ pub const MAX_PHASE_LOG: usize = 512;
 /// Аудит 27.09 (S2): самозаявленная метка источника хода в журнале.
 pub const MAX_BY_LEN: usize = 64;
 pub const MAX_REGISTERED_AGENTS: usize = 1000;
-pub const MAX_PENDING_REGISTRATIONS: usize = 64;
 pub const MAX_RECENT_OPS: usize = 64;
 pub const SESSION_LIFETIME_S: i64 = 86_400;
 
@@ -147,6 +146,7 @@ pub struct AppState {
     pub require_devnet_registration: bool,
     pub require_platform_v2: bool,
     pub registrations: Mutex<HashMap<String, RegisteredAgent>>,
+    proposal_key: Mutex<Option<String>>,
     snapshot_path: PathBuf,
     sequence_path: PathBuf,
     // ponytail: one transaction gate for this single-file arena. Split persistence
@@ -225,6 +225,7 @@ fn save_snapshot_locked(state: &AppState) -> std::io::Result<()> {
         "master_seed": state.master_seed.load(Ordering::SeqCst),
         "games": arr,
         "registrations": *state.registrations.lock().unwrap_or_else(|e| e.into_inner()),
+        "proposal_key": state.proposal_key.lock().unwrap_or_else(|e| e.into_inner()).clone(),
         "completed": completed.clone(),
         "completed_replay": *state.completed_replay.lock().unwrap_or_else(|e| e.into_inner()),
     });
@@ -284,6 +285,13 @@ pub fn load_snapshot(state: &AppState) -> Result<(), String> {
             Ok(records) => records, Err(_) => return fail("битый registry агентов".into()),
         },
         None => HashMap::new(),
+    };
+    let proposal_key = match doc.get("proposal_key") {
+        None | Some(serde_json::Value::Null) => None,
+        Some(value) => match value.as_str().filter(|key| hex32(key)) {
+            Some(key) => Some(key.to_string()),
+            None => return fail("битый ключ lifecycle proposal".into()),
+        },
     };
     if registrations.len() > MAX_REGISTERED_AGENTS { return fail("registry агентов переполнен".into()); }
     for (id, record) in &registrations {
@@ -426,6 +434,7 @@ pub fn load_snapshot(state: &AppState) -> Result<(), String> {
             }
         }
         *state.registrations.lock().unwrap_or_else(|e| e.into_inner()) = registrations;
+        *state.proposal_key.lock().unwrap_or_else(|e| e.into_inner()) = proposal_key;
         *state.completed_replay.lock().unwrap_or_else(|e| e.into_inner()) = completed_replay;
         if let Some(arr) = doc["completed"].as_array() {
             for c in arr {
@@ -586,6 +595,7 @@ pub fn new_state_with_files(snapshot_path: impl Into<PathBuf>, sequence_path: im
         require_devnet_registration: std::env::var("ALASHI_REQUIRE_DEVNET_REGISTRATION").as_deref() == Ok("1"),
         require_platform_v2: std::env::var("ALASHI_REQUIRE_PLATFORM_V2").as_deref() == Ok("1"),
         registrations: Mutex::new(HashMap::new()),
+        proposal_key: Mutex::new(None),
         snapshot_path: snapshot_path.into(),
         sequence_path: sequence_path.into(),
         snapshot_lock: Mutex::new(()),
@@ -1227,6 +1237,43 @@ fn lifecycle_response(id: &str, record: &RegisteredAgent) -> serde_json::Value {
     })
 }
 
+// The proposal key is written once before the first stateless Memo is returned.
+// Call only while holding snapshot_lock; losing the key would invalidate a signed Memo.
+fn proposal_key_locked(state: &AppState) -> Result<String, &'static str> {
+    let mut key = state.proposal_key.lock().unwrap_or_else(|e| e.into_inner());
+    if let Some(existing) = key.as_ref() { return Ok(existing.clone()); }
+    let generated = random_hex().map_err(|_| "entropy_unavailable")?;
+    *key = Some(generated.clone());
+    drop(key);
+    if let Err(e) = save_snapshot_locked(state) {
+        eprintln!("[ERROR] snapshot save after proposal key generation: {e}");
+        *state.proposal_key.lock().unwrap_or_else(|e| e.into_inner()) = None;
+        return Err("storage_failed");
+    }
+    Ok(generated)
+}
+
+fn lifecycle_challenge(key_hex: &str, wallet: &str, owner_id: &str,
+    id: &str, character_id: &str) -> String {
+    let key = hex_dec(key_hex).expect("validated lifecycle proposal key");
+    let mut pad = [0x36u8; 64];
+    for (dst, src) in pad.iter_mut().zip(key.iter()) { *dst ^= src; }
+    let mut inner = Sha256::new();
+    inner.update(pad);
+    for field in ["alashi-lifecycle-proposal-v2:devnet:alashi.network", wallet,
+        owner_id, id, character_id] {
+        inner.update((field.len() as u64).to_le_bytes());
+        inner.update(field.as_bytes());
+    }
+    let inner_hash = inner.finalize();
+    pad.fill(0x5c);
+    for (dst, src) in pad.iter_mut().zip(key.iter()) { *dst ^= src; }
+    let mut outer = Sha256::new();
+    outer.update(pad);
+    outer.update(inner_hash);
+    hex_enc(&outer.finalize())
+}
+
 fn h_registration_v2(state: &AppState, body: &serde_json::Value) -> serde_json::Value {
     if !body.as_object().is_some_and(|o| o.keys().all(|k|
         matches!(k.as_str(), "agent_record_id" | "wallet" | "recovery_secret"))) {
@@ -1242,7 +1289,7 @@ fn h_registration_v2(state: &AppState, body: &serde_json::Value) -> serde_json::
     let owner_id = owner_id_of(secret);
     let character_id = character_id_v2(&owner_id, id);
     let _transaction = state.snapshot_lock.lock().unwrap_or_else(|e| e.into_inner());
-    let mut records = state.registrations.lock().unwrap_or_else(|e| e.into_inner());
+    let records = state.registrations.lock().unwrap_or_else(|e| e.into_inner());
     if let Some(record) = records.get(id) {
         if record.wallet != wallet || !secret_matches(&record.recovery_hash, &hash) {
             return err_json("registration_conflict", "agent_record_id занят другим wallet/secret");
@@ -1252,27 +1299,16 @@ fn h_registration_v2(state: &AppState, body: &serde_json::Value) -> serde_json::
     if records.len() >= MAX_REGISTERED_AGENTS {
         return err_json("registry_full", "лимит зарегистрированных агентов достигнут");
     }
-    if records.values().filter(|record| record.receipt.is_none()).count() >= MAX_PENDING_REGISTRATIONS {
-        return err_json("pending_full", "лимит незавершённых регистраций достигнут");
-    }
-    if records.values().any(|record| record.receipt.is_none() && record.wallet == wallet) {
-        return err_json("pending_wallet_limit", "для wallet уже есть незавершённая регистрация");
-    }
-    let challenge = match random_hex() {
+    drop(records);
+    let key = match proposal_key_locked(state) {
         Ok(value) => value,
-        Err(_) => return err_json("entropy_unavailable", "не удалось создать challenge"),
+        Err(code) => return err_json(code, "предложение регистрации недоступно"),
     };
+    let challenge = lifecycle_challenge(&key, wallet, &owner_id, id, &character_id);
     let record = RegisteredAgent {
         wallet: wallet.to_string(), owner_id, character_id,
         recovery_hash: hash, challenge, receipt: None, created_at: now(),
     };
-    records.insert(id.to_string(), record.clone());
-    drop(records);
-    if let Err(e) = save_snapshot_locked(state) {
-        eprintln!("[ERROR] snapshot save after lifecycle proposal: {e}");
-        state.registrations.lock().unwrap_or_else(|e| e.into_inner()).remove(id);
-        return err_json("storage_failed", "предложение регистрации не сохранено");
-    }
     lifecycle_response(id, &record)
 }
 
@@ -1291,51 +1327,73 @@ fn h_confirm_v2_with_verifier(
     let id = body["agent_record_id"].as_str().unwrap_or("");
     let secret = body["recovery_secret"].as_str().unwrap_or("");
     if !hex32(id) || !hex32(secret) { return err_json("bad_params", "agent_record_id/recovery_secret: 64 lowercase hex"); }
+    let hash = recovery_hash(secret).expect("validated recovery secret");
     let proof = match Proof::parse(&serde_json::json!({
         "wallet": body["wallet"], "signature": body["signature"]
     })) {
         Ok(value) => value, Err(code) => return registration_error(code),
     };
-    let pending = {
+    let candidate = {
         let records = state.registrations.lock().unwrap_or_else(|e| e.into_inner());
-        let Some(record) = records.get(id) else { return err_json("unknown_agent", "предложение регистрации не найдено"); };
-        if record.wallet != proof.wallet ||
-            !recovery_hash(secret).is_some_and(|hash| secret_matches(&hash, &record.recovery_hash)) {
-            return err_json("registration_conflict", "wallet или recovery_secret не совпадает");
-        }
-        if let Some(receipt) = &record.receipt {
-            return if receipt.signature == proof.signature {
-                serde_json::json!({"ok":true,"agent_record_id":id,"registration":receipt})
-            } else {
-                err_json("registration_conflict", "для агента уже сохранён другой receipt")
+        if let Some(record) = records.get(id) {
+            if record.wallet != proof.wallet || !secret_matches(&hash, &record.recovery_hash) {
+                return err_json("registration_conflict", "wallet или recovery_secret не совпадает");
+            }
+            if let Some(receipt) = &record.receipt {
+                return if receipt.signature == proof.signature {
+                    serde_json::json!({"ok":true,"agent_record_id":id,"registration":receipt})
+                } else {
+                    err_json("registration_conflict", "для агента уже сохранён другой receipt")
+                };
+            }
+            record.clone()
+        } else {
+            if records.len() >= MAX_REGISTERED_AGENTS {
+                return err_json("registry_full", "лимит зарегистрированных агентов достигнут");
+            }
+            drop(records);
+            let Some(key) = state.proposal_key.lock().unwrap_or_else(|e| e.into_inner()).clone() else {
+                return err_json("unknown_agent", "предложение регистрации не найдено");
             };
+            let owner_id = owner_id_of(secret);
+            let character_id = character_id_v2(&owner_id, id);
+            let challenge = lifecycle_challenge(&key, &proof.wallet, &owner_id, id, &character_id);
+            RegisteredAgent { wallet: proof.wallet.clone(), owner_id, character_id,
+                recovery_hash: hash.clone(), challenge, receipt: None, created_at: now() }
         }
-        record.clone()
     };
-    let memo = registration::lifecycle_memo(&pending.owner_id, id, &pending.character_id, &pending.challenge);
+    let memo = registration::lifecycle_memo(&candidate.owner_id, id, &candidate.character_id, &candidate.challenge);
     let mut receipt = match verify(&proof, &memo) {
         Ok(value) => value, Err(code) => return registration_error(code),
     };
     receipt.mode = "agent_lifecycle_v2".into();
     let _transaction = state.snapshot_lock.lock().unwrap_or_else(|e| e.into_inner());
     let mut records = state.registrations.lock().unwrap_or_else(|e| e.into_inner());
-    let Some(record) = records.get_mut(id) else { return err_json("unknown_agent", "предложение регистрации пропало"); };
-    if record.wallet != pending.wallet || record.challenge != pending.challenge ||
-        !secret_matches(&record.recovery_hash, &pending.recovery_hash) {
-        return err_json("registration_conflict", "предложение регистрации изменилось");
+    let before = records.get(id).cloned();
+    if let Some(record) = &before {
+        if record.wallet != candidate.wallet || record.challenge != candidate.challenge ||
+            !secret_matches(&record.recovery_hash, &candidate.recovery_hash) {
+            return err_json("registration_conflict", "предложение регистрации изменилось");
+        }
+        if let Some(existing) = &record.receipt {
+            return if existing.signature == proof.signature {
+                serde_json::json!({"ok":true,"agent_record_id":id,"registration":existing})
+            } else {
+                err_json("registration_conflict", "для агента уже сохранён другой receipt")
+            };
+        }
+    } else if records.len() >= MAX_REGISTERED_AGENTS {
+        return err_json("registry_full", "лимит зарегистрированных агентов достигнут");
     }
-    if let Some(existing) = &record.receipt {
-        return if existing.signature == proof.signature {
-            serde_json::json!({"ok":true,"agent_record_id":id,"registration":existing})
-        } else {
-            err_json("registration_conflict", "для агента уже сохранён другой receipt")
-        };
-    }
-    record.receipt = Some(receipt.clone());
+    let mut confirmed = before.clone().unwrap_or(candidate);
+    confirmed.receipt = Some(receipt.clone());
+    records.insert(id.to_string(), confirmed);
     drop(records);
     if let Err(e) = save_snapshot_locked(state) {
         eprintln!("[ERROR] snapshot save after lifecycle confirmation: {e}");
-        state.registrations.lock().unwrap_or_else(|e| e.into_inner()).get_mut(id).unwrap().receipt = None;
+        let mut records = state.registrations.lock().unwrap_or_else(|e| e.into_inner());
+        if let Some(previous) = before { records.insert(id.to_string(), previous); }
+        else { records.remove(id); }
         return err_json("storage_failed", "подтверждение регистрации не сохранено; повтори с той же подписью");
     }
     serde_json::json!({"ok":true,"agent_record_id":id,"registration":receipt})
@@ -2286,6 +2344,20 @@ fn h_slots(state: &AppState, raw_path: &str) -> serde_json::Value {
     serde_json::json!({"ok": true, "character_id": character_id, "active_slots": found})
 }
 
+fn h_agent_profile(state: &AppState, id: &str) -> serde_json::Value {
+    if !hex32(id) { return err_json("bad_agent_record_id", "agent_record_id: 64 lowercase hex"); }
+    let character_id = {
+        let records = state.registrations.lock().unwrap_or_else(|e| e.into_inner());
+        let Some(record) = records.get(id).filter(|record| record.receipt.is_some()) else {
+            return err_json("unknown_agent", "агент не найден");
+        };
+        record.character_id.clone()
+    };
+    let slots = h_slots(state, &format!("/slots?character_id={character_id}"));
+    serde_json::json!({"ok":true,"agent_record_id":id,"character_id":character_id,
+        "registered":true,"active_slots":slots["active_slots"]})
+}
+
 /// Отчёт «Цукерберг/Muse» 27.09, раздел 8: история пары персонажей по
 /// проверяемым событиям завершённых партий. Только факты журнала
 /// действий, без интерпретации мотивов.
@@ -2517,8 +2589,9 @@ fn root_doc(state: &AppState) -> serde_json::Value {
             "meaning":"persistent identity lifecycle receipt only; no payment, escrow or settlement proof"},
         "endpoints": {
             "POST /game/new": "{\"entry_fee\"?, \"phase_duration\"?, \"grace_s\"? (0..=30, дефолт 3), \"vote_weight_mode\"? (0 legacy | 1 contribution), \"lobby_duration\"? (сек, дефолт = фаза x 5 — окно джойна можно растянуть независимо от фаз), \"label\"? (до 32 байт, видно всем)} → game_id + party_no",
-            "POST /agents/registration": "v2 durable Memo proposal: agent_record_id/wallet/recovery_secret",
+            "POST /agents/registration": "v2 stable stateless Memo proposal: agent_record_id/wallet/recovery_secret",
             "POST /agents/confirm": "v2 verified devnet receipt: agent_record_id/recovery_secret/wallet/signature",
+            "GET /agents/:record_id": "confirmed public identity and active game slots, without credentials",
             "GET /agents/capabilities": "versioned platform contract",
             "POST /game/:id/registration": "legacy v1 game-bound Memo proposal",
             "POST /game/:id/join": "v2: agent_record_id/recovery_secret/name/model/strategy_hash → game token; legacy v1: name/model/prompt/registration",
@@ -2582,6 +2655,7 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
             "phases":["lobby","market","action","law","finished"],
             "hosted_inference":false,"onchain_game_settlement":false,
         }).to_string()),
+        ("GET", ["agents", id]) => ("200 OK", h_agent_profile(state, id).to_string()),
         ("POST", ["agents", "registration"]) => ("200 OK", h_registration_v2(state, &body_v).to_string()),
         ("POST", ["agents", "confirm"]) => ("200 OK", h_confirm_v2(state, &body_v).to_string()),
         ("POST", ["game", "new"]) => { ("200 OK", h_new_game(state, &body_v).to_string()) },
