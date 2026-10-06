@@ -1,7 +1,7 @@
 import { ContactShadows, Environment, Lightformer, OrbitControls } from '@react-three/drei'
 import { Canvas, useThree } from '@react-three/fiber'
-import { useEffect, useState } from 'react'
-import { DeskGenie } from './genie/DeskGenie'
+import { Suspense, useEffect, useState } from 'react'
+import { GenieModel } from './genie/GenieModel'
 import type { GenieClip } from './genie/pose'
 import { useScene } from './store'
 
@@ -76,7 +76,9 @@ export default function App() {
           <Lightformer intensity={0.6} position={[0, -4, 2]} scale={[6, 1, 1]} rotation-x={Math.PI / 2} />
         </Environment>
         <FitCamera />
-        <DeskGenie />
+        <Suspense fallback={null}>
+          <GenieModel />
+        </Suspense>
         <ContactShadows position={[0, -2.05, 0]} scale={4} blur={2.6} opacity={0.35} far={3} />
         <OrbitControls target={TARGET} enablePan={false} minDistance={3.5} maxDistance={14} />
       </Canvas>
