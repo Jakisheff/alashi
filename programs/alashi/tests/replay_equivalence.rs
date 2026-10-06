@@ -4,7 +4,7 @@ use {
     anchor_lang::{
         prelude::Pubkey,
         solana_program::{instruction::Instruction, system_program},
-        AccountDeserialize, AccountSerialize, InitSpace, InstructionData, ToAccountMetas,
+        AccountDeserialize, AccountSerialize, InstructionData, ToAccountMetas,
     },
     litesvm::LiteSVM,
     solana_clock::Clock,

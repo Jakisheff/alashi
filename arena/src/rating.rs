@@ -64,7 +64,7 @@ pub fn rate_party(players: &[(String, u64)], ratings: &mut HashMap<String, Ratin
     let sum_q: Vec<f64> = players
         .iter()
         .enumerate()
-        .map(|(q, (_, rq))| {
+        .map(|(_, (_, rq))| {
             let mut s = 0.0;
             for (i, (_, ri)) in players.iter().enumerate() {
                 if *ri >= *rq {

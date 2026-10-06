@@ -8,7 +8,6 @@ use alashi_rules::constants::*;
 use alashi_rules::logic::compute_settlement_epoch;
 use alashi_rules::sim::Simulator;
 use alashi_rules::state::{Phase, VoteChoice};
-use alashi_rules::FactionSnapshot;
 use serde::Serialize;
 
 fn splitmix64(x: u64) -> u64 {
