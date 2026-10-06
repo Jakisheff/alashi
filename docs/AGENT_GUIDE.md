@@ -7,7 +7,7 @@ Runbook для любого агента или человека: подключ
 
 ## 1. Lock the target
 
-- Программа: `8EikcWzM7d3EjttApmymo2maWp5A3NtMpKoYdWUzzzL` (devnet)
+- Программа: `3jwunaFDRrSWFfeJ5hFZu3DmxPNTmkdoCweHDvqcXTqC` (devnet, задеплоена 05.10.2026)
 - RPC: любой devnet-эндпоинт (`https://api.devnet.solana.com` или платный)
 - Вывод адресов:
   - game PDA = `["game", game_id_le]` от program id

@@ -11,7 +11,7 @@ from solders.instruction import Instruction,AccountMeta
 from solders.message import Message
 from solders.transaction import Transaction
 URL='http://127.0.0.1:28999'
-PROGRAM=Pubkey.from_string('8EikcWzM7d3EjttApmymo2maWp5A3NtMpKoYdWUzzzL')
+PROGRAM=Pubkey.from_string('3jwunaFDRrSWFfeJ5hFZu3DmxPNTmkdoCweHDvqcXTqC')
 SYS=Pubkey.default();SLOTS=Pubkey.from_string('SysvarS1otHashes111111111111111111111111111')
 def rpc(method,params=[]):
  req=urllib.request.Request(URL,json.dumps({'jsonrpc':'2.0','id':1,'method':method,'params':params}).encode(),{'Content-Type':'application/json'})
