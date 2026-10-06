@@ -13,6 +13,7 @@ use alashi_rules::sim::Simulator;
 use alashi_rules::state::{Faction, Game, Phase, VoteChoice};
 use borsh;
 use sha2::{Digest, Sha256};
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::net::{TcpListener, TcpStream};
 use std::path::PathBuf;
@@ -36,6 +37,9 @@ pub const RECENT_ACTIONS_LIMIT: usize = 12;
 pub const MAX_PHASE_LOG: usize = 512;
 /// Аудит 27.09 (S2): самозаявленная метка источника хода в журнале.
 pub const MAX_BY_LEN: usize = 64;
+pub const MAX_REGISTERED_AGENTS: usize = 1000;
+pub const MAX_RECENT_OPS: usize = 64;
+pub const SESSION_LIFETIME_S: i64 = 86_400;
 
 #[derive(Clone)]
 pub struct AgentRec {
@@ -47,11 +51,39 @@ pub struct AgentRec {
     /// Владелец персонажа (хэш секрета): виден организатору клуба,
     /// чтобы отличать разных людей от одного оператора.
     pub owner_id: String,
+    pub agent_record_id: Option<String>,
     pub token: String,
+    pub session_expires_at: Option<i64>,
     pub recovery_hash: Option<String>,
     pub registration: Option<Receipt>,
     pub model: String,
     pub faction_idx: usize,
+}
+
+#[derive(Clone, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct RegisteredAgent {
+    pub wallet: String,
+    pub owner_id: String,
+    pub character_id: String,
+    pub recovery_hash: String,
+    pub challenge: String,
+    pub receipt: Option<Receipt>,
+}
+
+#[derive(Clone, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct OpRecord {
+    pub id: u64,
+    pub request_hash: String,
+    pub response: serde_json::Value,
+}
+
+#[derive(Clone, Default, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct OpState {
+    pub last: u64,
+    pub recent: Vec<OpRecord>,
 }
 
 #[derive(Clone)]
@@ -68,6 +100,7 @@ pub struct GameEntry {
     pub grace_s: i64,
     /// Полный протокол партии для /export: каждый ход с фазой и раундом.
     pub action_log: Vec<serde_json::Value>,
+    pub op_state: HashMap<String, OpState>,
     /// Итоги закрытых фаз (закон: карта, да/нет, прошёл/вето).
     pub phase_log: Vec<serde_json::Value>,
     /// П5 (ТРИЗ, 05.09): кто купил инспект лицензии в этой партии
@@ -88,6 +121,8 @@ pub struct AppState {
     pub completed: Mutex<Vec<String>>,
     pub master_seed: AtomicU64,
     pub require_devnet_registration: bool,
+    pub require_platform_v2: bool,
+    pub registrations: Mutex<HashMap<String, RegisteredAgent>>,
     snapshot_path: PathBuf,
     sequence_path: PathBuf,
     // ponytail: one transaction gate for this single-file arena. Split persistence
@@ -147,12 +182,14 @@ fn save_snapshot_locked(state: &AppState) -> std::io::Result<()> {
                 "wallets": e.wallets.iter().map(|w| w.to_string()).collect::<Vec<_>>(),
                 "agents": e.agents.iter().map(|a| serde_json::json!({
                     "name": a.name, "agent_id": a.agent_id, "character_id": a.character_id,
-                    "owner_id": a.owner_id, "token": a.token,
+                    "owner_id": a.owner_id, "agent_record_id": a.agent_record_id,
+                    "token": a.token, "session_expires_at": a.session_expires_at,
                     "model": a.model, "faction_idx": a.faction_idx, "recovery_hash": a.recovery_hash,
                     "registration": a.registration,
                 })).collect::<Vec<_>>(),
                 "insiders": e.insiders.iter().cloned().collect::<Vec<_>>(),
                 "action_log": e.action_log,
+                "op_state": e.op_state,
                 "phase_log": e.phase_log,
             })
         })
@@ -163,6 +200,7 @@ fn save_snapshot_locked(state: &AppState) -> std::io::Result<()> {
         "next_id_hint": state.next_id.load(Ordering::SeqCst),
         "master_seed": state.master_seed.load(Ordering::SeqCst),
         "games": arr,
+        "registrations": *state.registrations.lock().unwrap_or_else(|e| e.into_inner()),
         "completed": completed.clone(),
     });
     drop(completed);
@@ -222,6 +260,22 @@ pub fn load_snapshot(state: &AppState) -> Result<(), String> {
     if doc.get("v").and_then(|v| v.as_u64()) != Some(1) {
         return fail("неизвестная версия снимка".into());
     }
+    let registrations: HashMap<String, RegisteredAgent> = match doc.get("registrations") {
+        Some(value) => match serde_json::from_value(value.clone()) {
+            Ok(records) => records, Err(_) => return fail("битый registry агентов".into()),
+        },
+        None => HashMap::new(),
+    };
+    if registrations.len() > MAX_REGISTERED_AGENTS { return fail("registry агентов переполнен".into()); }
+    for (id, record) in &registrations {
+        if !hex32(id) || !hex32(&record.owner_id) || !hex32(&record.character_id)
+            || !hex32(&record.recovery_hash) || !hex32(&record.challenge)
+            || registration::validate_wallet(&record.wallet).is_err()
+            || record.receipt.as_ref().is_some_and(|r| r.mode != "agent_lifecycle_v2"
+                || r.wallet != record.wallet || r.network != "devnet") {
+            return fail("битая запись registry агентов".into());
+        }
+    }
     let Some(games_arr) = doc.get("games").and_then(|g| g.as_array()) else {
         return fail("в снимке нет массива games".into());
     };
@@ -266,6 +320,8 @@ pub fn load_snapshot(state: &AppState) -> Result<(), String> {
                         // стратегии (отчёт 27.09, миграция без потери данных)
                         character_id: a["character_id"].as_str().unwrap_or(&agent_id).to_string(),
                         owner_id: a["owner_id"].as_str().unwrap_or("legacy").to_string(),
+                        agent_record_id: a["agent_record_id"].as_str().map(str::to_string),
+                        session_expires_at: a["session_expires_at"].as_i64(),
                         token: a["token"].as_str()?.to_string(),
                         recovery_hash: a["recovery_hash"].as_str().map(str::to_string),
                         registration: match a.get("registration").filter(|v| !v.is_null()) {
@@ -305,6 +361,23 @@ pub fn load_snapshot(state: &AppState) -> Result<(), String> {
                 }
                 previous = Some(seq);
             }
+            let op_state: HashMap<String, OpState> = match g.get("op_state") {
+                Some(value) => match serde_json::from_value(value.clone()) {
+                    Ok(state) => state, Err(_) => return fail(format!("партия {gid}: битые op_state")),
+                },
+                None => HashMap::new(),
+            };
+            for (id, ops) in &op_state {
+                if !hex32(id) || ops.recent.len() > MAX_RECENT_OPS
+                    || (ops.last == 0) != ops.recent.is_empty()
+                    || ops.recent.last().is_some_and(|r| r.id != ops.last)
+                    || ops.recent.iter().any(|r| !hex32(&r.request_hash)
+                        || r.response["op_id"].as_u64() != Some(r.id)
+                        || r.response["op_consumed"] != true)
+                    || ops.recent.windows(2).any(|w| w[0].id.checked_add(1) != Some(w[1].id)) {
+                    return fail(format!("партия {gid}: нарушен порядок op_state"));
+                }
+            }
             let entry = GameEntry {
                 sim,
                 entry_fee: g["entry_fee"].as_u64().unwrap_or(10 * PESO),
@@ -313,6 +386,7 @@ pub fn load_snapshot(state: &AppState) -> Result<(), String> {
                 created: g["created"].as_i64().unwrap_or(now()),
                 grace_s: g["grace_s"].as_i64().unwrap_or(3),
                 action_log,
+                op_state,
                 phase_log: g["phase_log"].as_array().cloned().unwrap_or_default(),
                 party_no: g["party_no"].as_u64().unwrap_or(0),
                 label: g["label"].as_str().map(|s| s.to_string()),
@@ -325,6 +399,7 @@ pub fn load_snapshot(state: &AppState) -> Result<(), String> {
                 state.next_id.store(gid.saturating_add(1), Ordering::SeqCst);
             }
         }
+        *state.registrations.lock().unwrap_or_else(|e| e.into_inner()) = registrations;
         if let Some(arr) = doc["completed"].as_array() {
             for c in arr {
                 if let Some(s) = c.as_str() {
@@ -418,7 +493,7 @@ pub fn agent_id_of(model: &str, prompt: &str) -> String {
 
 /// Отчёт «Цукерберг/Muse» 27.09, раздел 6: владелец персонажа — хэш
 /// секрета (owner_key клиента или recovery_secret сессии). Секрет
-/// остаётся у владельца, сервер хранит только хэш.
+/// передаётся backend при POST; сервер хранит только хэш.
 pub fn owner_id_of(owner_key: &str) -> String {
     let mut h = Sha256::new();
     h.update(b"alashi-owner-v1");
@@ -429,6 +504,34 @@ pub fn owner_id_of(owner_key: &str) -> String {
 
 /// Персонаж = владелец + имя. Модель и промпт не входят: смена версии
 /// стратегии не создаёт новую личность.
+fn hex32(value: &str) -> bool {
+    value.len() == 64 && value.bytes().all(|b| b.is_ascii_hexdigit() && !b.is_ascii_uppercase())
+}
+
+fn sha256_hex(token: &str) -> String {
+    hex_enc(&Sha256::digest(token.as_bytes()))
+}
+
+fn agent_token_matches(agent: &AgentRec, token: &str) -> bool {
+    if agent.agent_record_id.is_some() {
+        agent.session_expires_at.is_some_and(|t| now() < t)
+            && hex32(token)
+            && secret_matches(&agent.token, &sha256_hex(token))
+    } else {
+        secret_matches(&agent.token, token)
+    }
+}
+
+pub fn character_id_v2(owner_id: &str, agent_record_id: &str) -> String {
+    let mut h = Sha256::new();
+    h.update(b"alashi-character-v2");
+    h.update((owner_id.len() as u64).to_le_bytes());
+    h.update(owner_id.as_bytes());
+    h.update((agent_record_id.len() as u64).to_le_bytes());
+    h.update(agent_record_id.as_bytes());
+    hex_enc(&h.finalize())
+}
+
 pub fn character_id_of(owner_id: &str, name: &str) -> String {
     let mut h = Sha256::new();
     h.update(b"alashi-character-v1");
@@ -453,6 +556,8 @@ pub fn new_state_with_files(snapshot_path: impl Into<PathBuf>, sequence_path: im
         completed: Mutex::new(Vec::new()),
         master_seed: AtomicU64::new(master_seed_from_env_or_os()),
         require_devnet_registration: std::env::var("ALASHI_REQUIRE_DEVNET_REGISTRATION").as_deref() == Ok("1"),
+        require_platform_v2: std::env::var("ALASHI_REQUIRE_PLATFORM_V2").as_deref() == Ok("1"),
+        registrations: Mutex::new(HashMap::new()),
         snapshot_path: snapshot_path.into(),
         sequence_path: sequence_path.into(),
         snapshot_lock: Mutex::new(()),
@@ -558,6 +663,7 @@ fn settle_and_record_locked(state: &AppState, game_id: u64) {
                     serde_json::json!({
                         "name": a.name,
                         "agent_id": a.agent_id,
+                        "agent_record_id": a.agent_record_id,
                         "character_id": a.character_id,
                         "owner_id": a.owner_id,
                         "model": a.model,
@@ -608,7 +714,7 @@ fn settle_and_record_locked(state: &AppState, game_id: u64) {
                 "party_no": entry.party_no,
                 "label": entry.label,
                 "execution_mode": "http_simulated",
-                "registration_mode": "devnet_agent_start_v1",
+                "registration_mode": registration_mode(entry),
                 "entry_fee": entry.entry_fee,
                 "vote_weight_mode": entry.sim.game.vote_weight_mode,
                 "epoch": entry.sim.game.epoch,
@@ -747,6 +853,16 @@ fn phase_name(p: Phase) -> &'static str {
     }
 }
 
+fn registration_mode(entry: &GameEntry) -> &'static str {
+    let v2 = entry.agents.iter().any(|a| a.agent_record_id.is_some());
+    let v1 = entry.agents.iter().any(|a| a.agent_record_id.is_none());
+    match (v1, v2) {
+        (true, true) => "mixed_devnet_registration",
+        (false, true) => "devnet_agent_lifecycle_v2",
+        _ => "devnet_agent_start_v1",
+    }
+}
+
 fn state_json(game_id: u64, entry: &GameEntry) -> serde_json::Value {
     let g = &entry.sim.game;
     let stamp = g.stamp();
@@ -755,7 +871,7 @@ fn state_json(game_id: u64, entry: &GameEntry) -> serde_json::Value {
     serde_json::json!({
         "game_id": game_id,
         "execution_mode": "http_simulated",
-        "registration_mode": "devnet_agent_start_v1",
+        "registration_mode": registration_mode(entry),
         // канон партии: одинаков до и после рестарта арены
         "party_no": entry.party_no,
         "settlement_error": entry.settlement_error,
@@ -844,6 +960,7 @@ fn state_json(game_id: u64, entry: &GameEntry) -> serde_json::Value {
                 "idx": i,
                 "name": f.name,
                 "agent_id": entry.agents.iter().find(|a| a.faction_idx == i).map(|a| a.agent_id.clone()),
+                "agent_record_id": entry.agents.iter().find(|a| a.faction_idx == i).and_then(|a| a.agent_record_id.clone()),
                 "character_id": entry.agents.iter().find(|a| a.faction_idx == i).map(|a| a.character_id.clone()),
                 "registration": entry.agents.iter().find(|a| a.faction_idx == i).and_then(|a| a.registration.clone()),
                 "cash": f.cash,
@@ -998,6 +1115,7 @@ fn h_new_game(state: &AppState, body: &serde_json::Value) -> serde_json::Value {
         created: now(),
         grace_s,
         action_log: vec![],
+        op_state: HashMap::new(),
         phase_log: vec![],
         insiders: Default::default(),
         party_no,
@@ -1039,7 +1157,204 @@ fn registration_error(code: &str) -> serde_json::Value {
     err_json(code, "регистрация devnet не подтверждена; сохрани прежнюю подпись и повтори проверку без новой транзакции")
 }
 
+fn lifecycle_response(id: &str, record: &RegisteredAgent) -> serde_json::Value {
+    serde_json::json!({
+        "ok": true, "mode": "agent_lifecycle_v2", "network": "devnet",
+        "wallet": record.wallet, "owner_id": record.owner_id,
+        "agent_record_id": id, "character_id": record.character_id,
+        "memo": registration::lifecycle_memo(&record.owner_id, id, &record.character_id, &record.challenge),
+        "memo_program_id": registration::MEMO_PROGRAM_ID,
+        "registration": record.receipt,
+    })
+}
+
+fn h_registration_v2(state: &AppState, body: &serde_json::Value) -> serde_json::Value {
+    if !body.as_object().is_some_and(|o| o.keys().all(|k|
+        matches!(k.as_str(), "agent_record_id" | "wallet" | "recovery_secret"))) {
+        return err_json("bad_params", "неизвестное поле регистрации v2");
+    }
+    let id = body["agent_record_id"].as_str().unwrap_or("");
+    let wallet = body["wallet"].as_str().unwrap_or("");
+    let secret = body["recovery_secret"].as_str().unwrap_or("");
+    if !hex32(id) { return err_json("bad_agent_record_id", "agent_record_id: 64 lowercase hex"); }
+    if let Err(code) = registration::validate_wallet(wallet) { return registration_error(code); }
+    let Some(hash) = recovery_hash(secret) else { return err_json("bad_recovery_secret", "recovery_secret: 64 hex"); };
+    if !hex32(secret) { return err_json("bad_recovery_secret", "recovery_secret: 64 lowercase hex"); }
+    let owner_id = owner_id_of(secret);
+    let character_id = character_id_v2(&owner_id, id);
+    let _transaction = state.snapshot_lock.lock().unwrap_or_else(|e| e.into_inner());
+    let mut records = state.registrations.lock().unwrap_or_else(|e| e.into_inner());
+    if let Some(record) = records.get(id) {
+        if record.wallet != wallet || !secret_matches(&record.recovery_hash, &hash) {
+            return err_json("registration_conflict", "agent_record_id занят другим wallet/secret");
+        }
+        return lifecycle_response(id, record);
+    }
+    if records.len() >= MAX_REGISTERED_AGENTS {
+        return err_json("registry_full", "лимит зарегистрированных агентов достигнут");
+    }
+    let challenge = match random_hex() {
+        Ok(value) => value,
+        Err(_) => return err_json("entropy_unavailable", "не удалось создать challenge"),
+    };
+    let record = RegisteredAgent {
+        wallet: wallet.to_string(), owner_id, character_id,
+        recovery_hash: hash, challenge, receipt: None,
+    };
+    records.insert(id.to_string(), record.clone());
+    drop(records);
+    if let Err(e) = save_snapshot_locked(state) {
+        eprintln!("[ERROR] snapshot save after lifecycle proposal: {e}");
+        state.registrations.lock().unwrap_or_else(|e| e.into_inner()).remove(id);
+        return err_json("storage_failed", "предложение регистрации не сохранено");
+    }
+    lifecycle_response(id, &record)
+}
+
+fn h_confirm_v2(state: &AppState, body: &serde_json::Value) -> serde_json::Value {
+    h_confirm_v2_with_verifier(state, body, registration::verify)
+}
+
+fn h_confirm_v2_with_verifier(
+    state: &AppState, body: &serde_json::Value,
+    verify: impl FnOnce(&Proof, &str) -> Result<Receipt, &'static str>,
+) -> serde_json::Value {
+    if !body.as_object().is_some_and(|o| o.keys().all(|k|
+        matches!(k.as_str(), "agent_record_id" | "wallet" | "recovery_secret" | "signature"))) {
+        return err_json("bad_params", "неизвестное поле подтверждения v2");
+    }
+    let id = body["agent_record_id"].as_str().unwrap_or("");
+    let secret = body["recovery_secret"].as_str().unwrap_or("");
+    if !hex32(id) || !hex32(secret) { return err_json("bad_params", "agent_record_id/recovery_secret: 64 lowercase hex"); }
+    let proof = match Proof::parse(&serde_json::json!({
+        "wallet": body["wallet"], "signature": body["signature"]
+    })) {
+        Ok(value) => value, Err(code) => return registration_error(code),
+    };
+    let pending = {
+        let records = state.registrations.lock().unwrap_or_else(|e| e.into_inner());
+        let Some(record) = records.get(id) else { return err_json("unknown_agent", "предложение регистрации не найдено"); };
+        if record.wallet != proof.wallet ||
+            !recovery_hash(secret).is_some_and(|hash| secret_matches(&hash, &record.recovery_hash)) {
+            return err_json("registration_conflict", "wallet или recovery_secret не совпадает");
+        }
+        if let Some(receipt) = &record.receipt {
+            return if receipt.signature == proof.signature {
+                serde_json::json!({"ok":true,"agent_record_id":id,"registration":receipt})
+            } else {
+                err_json("registration_conflict", "для агента уже сохранён другой receipt")
+            };
+        }
+        record.clone()
+    };
+    let memo = registration::lifecycle_memo(&pending.owner_id, id, &pending.character_id, &pending.challenge);
+    let mut receipt = match verify(&proof, &memo) {
+        Ok(value) => value, Err(code) => return registration_error(code),
+    };
+    receipt.mode = "agent_lifecycle_v2".into();
+    let _transaction = state.snapshot_lock.lock().unwrap_or_else(|e| e.into_inner());
+    let mut records = state.registrations.lock().unwrap_or_else(|e| e.into_inner());
+    let Some(record) = records.get_mut(id) else { return err_json("unknown_agent", "предложение регистрации пропало"); };
+    if record.wallet != pending.wallet || record.challenge != pending.challenge ||
+        !secret_matches(&record.recovery_hash, &pending.recovery_hash) {
+        return err_json("registration_conflict", "предложение регистрации изменилось");
+    }
+    if let Some(existing) = &record.receipt {
+        return if existing.signature == proof.signature {
+            serde_json::json!({"ok":true,"agent_record_id":id,"registration":existing})
+        } else {
+            err_json("registration_conflict", "для агента уже сохранён другой receipt")
+        };
+    }
+    record.receipt = Some(receipt.clone());
+    drop(records);
+    if let Err(e) = save_snapshot_locked(state) {
+        eprintln!("[ERROR] snapshot save after lifecycle confirmation: {e}");
+        state.registrations.lock().unwrap_or_else(|e| e.into_inner()).get_mut(id).unwrap().receipt = None;
+        return err_json("storage_failed", "подтверждение регистрации не сохранено; повтори с той же подписью");
+    }
+    serde_json::json!({"ok":true,"agent_record_id":id,"registration":receipt})
+}
+
+fn h_join_v2(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json::Value {
+    if !body.as_object().is_some_and(|o| o.keys().all(|k|
+        matches!(k.as_str(), "agent_record_id" | "recovery_secret" | "name" | "model" | "strategy_hash" | "recover"))) {
+        return err_json("bad_params", "неизвестное поле join v2");
+    }
+    let id = body["agent_record_id"].as_str().unwrap_or("");
+    let secret = body["recovery_secret"].as_str().unwrap_or("");
+    let name = body["name"].as_str().unwrap_or("");
+    let model = body["model"].as_str().unwrap_or("");
+    let strategy_hash = body["strategy_hash"].as_str().unwrap_or("");
+    let recover = body["recover"] == true;
+    if !hex32(id) || !hex32(secret) || !hex32(strategy_hash) || name.is_empty() || name.len() > MAX_NAME || model.len() > 128 {
+        return err_json("bad_params", "неверные поля join v2");
+    }
+    let token = match random_hex() {
+        Ok(token) => token, Err(_) => return err_json("entropy_unavailable", "не удалось создать token"),
+    };
+    let _transaction = state.snapshot_lock.lock().unwrap_or_else(|e| e.into_inner());
+    let record = {
+        let records = state.registrations.lock().unwrap_or_else(|e| e.into_inner());
+        let Some(record) = records.get(id) else { return err_json("unknown_agent", "агент не зарегистрирован"); };
+        if !recovery_hash(secret).is_some_and(|hash| secret_matches(&hash, &record.recovery_hash)) {
+            return err_json("bad_recovery_secret", "неверный секрет восстановления");
+        }
+        if record.receipt.is_none() { return err_json("registration_required", "регистрация не подтверждена"); }
+        record.clone()
+    };
+    let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
+    let Some(entry) = games.get_mut(&game_id) else { return err_json("unknown_game", "партия не найдена"); };
+    let backup = entry.clone();
+    let expires = now().saturating_add(SESSION_LIFETIME_S);
+    let response = if let Some(i) = entry.agents.iter().position(|a| a.agent_record_id.as_deref() == Some(id)) {
+        if !recover { return err_json("already_joined", "агент уже в партии; используй recover:true"); }
+        let agent = &mut entry.agents[i];
+        agent.token = sha256_hex(&token);
+        agent.session_expires_at = Some(expires);
+        agent.agent_id = strategy_hash.to_string();
+        agent.model = model.to_string();
+        let faction_idx = agent.faction_idx;
+        let agent_id = agent.agent_id.clone();
+        let view = state_json(game_id, entry);
+        serde_json::json!({"ok":true,"recovered":true,"game_id":game_id,"party_no":entry.party_no,
+            "agent_record_id":id,"agent_id":agent_id,"character_id":record.character_id,
+            "owner_id":record.owner_id,"token":token,"session_expires_at":expires,
+            "faction_idx":faction_idx,"registration":record.receipt,"state":view})
+    } else {
+        if recover { return err_json("unknown_agent", "агент ещё не участвовал в партии"); }
+        if entry.agents.len() >= MAX_FACTIONS as usize { return err_json("game_full", "мест нет"); }
+        let mut h = Sha256::new();
+        h.update(record.character_id.as_bytes());
+        h.update(&game_id.to_le_bytes());
+        let wallet = Pubkey::new_from_array(h.finalize().into());
+        if let Err(e) = entry.sim.join(wallet, name) { return err_json("join_failed", &format!("{e:?}")); }
+        let faction_idx = entry.sim.factions.len() - 1;
+        entry.wallets.push(wallet);
+        entry.agents.push(AgentRec {
+            name:name.to_string(), agent_id:strategy_hash.to_string(),
+            character_id:record.character_id.clone(), owner_id:record.owner_id.clone(),
+            agent_record_id:Some(id.to_string()), token:sha256_hex(&token),
+            session_expires_at:Some(expires), recovery_hash:None,
+            registration:record.receipt.clone(), model:model.to_string(), faction_idx,
+        });
+        let view = state_json(game_id, entry);
+        serde_json::json!({"ok":true,"game_id":game_id,"party_no":entry.party_no,
+            "agent_record_id":id,"agent_id":strategy_hash,"character_id":record.character_id,
+            "owner_id":record.owner_id,"token":token,"session_expires_at":expires,
+            "faction_idx":faction_idx,"registration":record.receipt,"state":view})
+    };
+    drop(games);
+    if let Err(e) = save_snapshot_locked(state) {
+        eprintln!("[ERROR] snapshot save after join v2: {e}");
+        state.games.lock().unwrap_or_else(|e| e.into_inner()).insert(game_id, backup);
+        return err_json("storage_failed", "join v2 не сохранён");
+    }
+    response
+}
+
 fn h_registration(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json::Value {
+    if state.require_platform_v2 { return registration_error("platform_registration_required"); }
     if !body.as_object().is_some_and(|obj| obj.keys().all(|k|
         matches!(k.as_str(), "name" | "model" | "prompt" | "recovery_secret" | "wallet"))) {
         return err_json("bad_params", "неизвестные поля предложения регистрации");
@@ -1074,6 +1389,8 @@ fn h_join_with_verifier(
     state: &AppState, game_id: u64, body: &serde_json::Value,
     verify: impl FnOnce(&Proof, &str) -> Result<Receipt, &'static str>,
 ) -> serde_json::Value {
+    if body.get("agent_record_id").is_some() { return h_join_v2(state, game_id, body); }
+    if state.require_platform_v2 { return registration_error("platform_registration_required"); }
     if !body.as_object().is_some_and(|obj| obj.keys().all(|key| matches!(
         key.as_str(), "name" | "model" | "prompt" | "recover" | "recovery_secret" | "owner_key" | "token" | "registration"
     ))) { return err_json("bad_params", "неизвестное поле join"); }
@@ -1278,6 +1595,8 @@ fn h_join_inner(state: &AppState, game_id: u64, body: &serde_json::Value, proof:
         owner_id: owner_id.clone(),
         token: token.clone(),
         recovery_hash: recovery_hash(&recovery_secret),
+        agent_record_id: None,
+        session_expires_at: None,
         registration: verified.clone(),
         model,
         faction_idx,
@@ -1378,14 +1697,70 @@ fn log_to_json(l: &ActionLog) -> serde_json::Value {
     })
 }
 
+fn op_response(mut value: serde_json::Value, op_id: Option<u64>, consumed: bool) -> serde_json::Value {
+    if let Some(id) = op_id {
+        value["op_id"] = serde_json::json!(id);
+        value["op_consumed"] = serde_json::json!(consumed);
+    }
+    value
+}
+
 fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json::Value {
     let _transaction = state.snapshot_lock.lock().unwrap_or_else(|e| e.into_inner());
-    // Аудит 27.09 (S2): неизвестные поля тела и params отклоняются,
-    // а не сохраняются в журнал
+    let token = body["token"].as_str().unwrap_or("");
+    let (v2_id, valid_token) = {
+        let games = state.games.lock().unwrap_or_else(|e| e.into_inner());
+        let Some(entry) = games.get(&game_id) else {
+            return op_response(err_json("unknown_game", "партия не найдена"), body["op_id"].as_u64(), false);
+        };
+        let found = entry.agents.iter().find(|a| agent_token_matches(a, token));
+        (
+            found.and_then(|a| a.agent_record_id.clone()),
+            found.is_some_and(|a| !state.require_platform_v2 || a.agent_record_id.is_some()),
+        )
+    };
+    if !valid_token {
+        return op_response(err_json("bad_token", "токен не найден или истёк"), body["op_id"].as_u64(), false);
+    }
+    let op_id = if v2_id.is_some() {
+        match body["op_id"].as_u64().filter(|id| *id > 0) {
+            Some(id) => Some(id),
+            None => return err_json("op_id_required", "v2 action требует положительный op_id"),
+        }
+    } else {
+        if body.get("op_id").is_some() { return err_json("bad_params", "op_id нужен только v2 сессии"); }
+        None
+    };
+    let request_hash = v2_id.as_ref().map(|_| {
+        let normalized = serde_json::json!({
+            "action": body["action"].as_str().unwrap_or(""),
+            "by": body["by"].as_str().unwrap_or("unknown"),
+            "params": body.get("params").cloned().unwrap_or(serde_json::json!({})),
+        });
+        sha256_hex(&normalized.to_string())
+    });
+    if let (Some(id), Some(agent_id), Some(hash)) = (op_id, v2_id.as_ref(), request_hash.as_ref()) {
+        let games = state.games.lock().unwrap_or_else(|e| e.into_inner());
+        let entry = &games[&game_id];
+        let ops = entry.op_state.get(agent_id).cloned().unwrap_or_default();
+        if id <= ops.last {
+            if let Some(saved) = ops.recent.iter().find(|r| r.id == id) {
+                return if secret_matches(&saved.request_hash, hash) {
+                    saved.response.clone()
+                } else {
+                    op_response(err_json("op_conflict", "op_id уже использован для другого запроса"), op_id, false)
+                };
+            }
+            return op_response(err_json("op_stale", "op_id старше сохранённого окна ответов"), op_id, false);
+        }
+        if ops.last.checked_add(1) != Some(id) {
+            return op_response(err_json("op_out_of_order", "op_id должен идти по порядку"), op_id, false);
+        }
+    }
     if let Some(obj) = body.as_object() {
         for key in obj.keys() {
-            if !matches!(key.as_str(), "token" | "action" | "params" | "by") {
-                return err_json("bad_params", &format!("неизвестное поле: {key}"));
+            if !matches!(key.as_str(), "token" | "action" | "params" | "by" | "op_id") {
+                return op_response(err_json("bad_params", &format!("неизвестное поле: {key}")), op_id, false);
             }
         }
     }
@@ -1402,38 +1777,40 @@ fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json
         "barter_accept" => &["offer"],
         "bribe" => &["to", "amount"],
         "vote" => &["choice"],
-        _ => {
-            return err_json("bad_action", "sell|sell_credit|buy|buy_hard|sell_hard|produce|shuttle|roof|customs|bid_license|inspect_license|sell_vote|barter_propose|barter_accept|offer_vote|accept_vote_offer|donkey|bribe|vote|veto")
-        }
+        _ => return op_response(err_json("bad_action", "неизвестное действие"), op_id, false),
     };
+    if v2_id.is_some() && body.get("params").is_some_and(|p| !p.is_object()) {
+        return op_response(err_json("bad_params", "params должен быть объектом"), op_id, false);
+    }
     if let Some(params) = body.get("params").and_then(|v| v.as_object()) {
         for key in params.keys() {
             if !allowed.contains(&key.as_str()) {
-                return err_json("bad_params", &format!("неизвестное поле params: {key}"));
+                return op_response(err_json("bad_params", &format!("неизвестное поле params: {key}")), op_id, false);
             }
         }
     }
     let backup = {
         let games = state.games.lock().unwrap_or_else(|e| e.into_inner());
-        games.get(&game_id).map(|e| e.clone())
+        games.get(&game_id).cloned()
     };
-    let response = h_act_inner(state, game_id, body);
-    // Authenticated rules rejections are events too. Invalid input/token produces
-    // no action_log and must not write a snapshot or consume a sequence.
+    let mut response = h_act_inner(state, game_id, body);
     if response.get("action_log").is_none() {
-        return response;
+        return op_response(response, op_id, false);
     }
-    // Publish an event only after saving it, including ok:false attempts.
+    response = op_response(response, op_id, op_id.is_some());
+    if let (Some(id), Some(agent_id), Some(hash)) = (op_id, v2_id, request_hash) {
+        let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
+        let ops = games.get_mut(&game_id).unwrap().op_state.entry(agent_id).or_default();
+        ops.last = id;
+        ops.recent.push(OpRecord { id, request_hash: hash, response: response.clone() });
+        if ops.recent.len() > MAX_RECENT_OPS { ops.recent.remove(0); }
+    }
     if let Err(e) = save_snapshot_locked(state) {
         eprintln!("[ERROR] snapshot save after act: {e}");
         if let Some(entry) = backup {
-            state
-                .games
-                .lock()
-                .unwrap_or_else(|e| e.into_inner())
-                .insert(game_id, entry);
+            state.games.lock().unwrap_or_else(|e| e.into_inner()).insert(game_id, entry);
         }
-        return err_json("storage_failed", "изменение не принято: не удалось записать состояние на диск; повтори запрос");
+        return op_response(err_json("storage_failed", "изменение не сохранено; повтори запрос"), op_id, false);
     }
     response
 }
@@ -1453,7 +1830,7 @@ fn h_act_inner(state: &AppState, game_id: u64, body: &serde_json::Value) -> serd
     let Some(entry) = games.get_mut(&game_id) else {
         return err_json("unknown_game", "партия не найдена или закрыта");
     };
-    let Some(agent) = entry.agents.iter().find(|a| a.token == token) else {
+    let Some(agent) = entry.agents.iter().find(|a| agent_token_matches(a, token)) else {
         return err_json("bad_token", "токен не найден");
     };
     let idx = agent.faction_idx;
@@ -2029,14 +2406,20 @@ fn root_doc(state: &AppState) -> serde_json::Value {
         "execution_mode": "http_simulated",
         "registration": {"mode":"agent_start_v1", "network":"devnet",
             "required":state.require_devnet_registration, "memo_program_id":registration::MEMO_PROGRAM_ID,
-            "meaning":"identity lifecycle receipt only; no payment, escrow or settlement proof"},
+            "meaning":"game-bound legacy receipt only; no payment, escrow or settlement proof"},
+        "platform_registration": {"mode":"agent_lifecycle_v2", "network":"devnet",
+            "required":state.require_platform_v2, "memo_program_id":registration::MEMO_PROGRAM_ID,
+            "meaning":"persistent identity lifecycle receipt only; no payment, escrow or settlement proof"},
         "endpoints": {
             "POST /game/new": "{\"entry_fee\"?, \"phase_duration\"?, \"grace_s\"? (0..=30, дефолт 3), \"vote_weight_mode\"? (0 legacy | 1 contribution), \"lobby_duration\"? (сек, дефолт = фаза x 5 — окно джойна можно растянуть независимо от фаз), \"label\"? (до 32 байт, видно всем)} → game_id + party_no",
-            "POST /game/:id/registration": "read-only Memo proposal: name/model/prompt/recovery_secret/wallet; no token or transaction",
-            "POST /game/:id/join": "{\"name\", \"model\", \"prompt\"} → agent_id + token",
+            "POST /agents/registration": "v2 durable Memo proposal: agent_record_id/wallet/recovery_secret",
+            "POST /agents/confirm": "v2 verified devnet receipt: agent_record_id/recovery_secret/wallet/signature",
+            "GET /agents/capabilities": "versioned platform contract",
+            "POST /game/:id/registration": "legacy v1 game-bound Memo proposal",
+            "POST /game/:id/join": "v2: agent_record_id/recovery_secret/name/model/strategy_hash → game token; legacy v1: name/model/prompt/registration",
             "GET  /game/:id/state": "публичное состояние партии; recent_actions[].seq/event_id стабильны после рестарта; recent_actions_range.first_seq/last_seq — окно ответа, retained_first_seq — начало сохранённого журнала",
             "GET  /game/:id/wait?r=1&p=market&t=30": "long-poll: спит до смены фазы (r/p — известные тебе раунд и фаза, t — таймаут сек, макс 60); ответ как /state + changed/timeout",
-            "POST /game/:id/act": "{\"token\", \"action\": sell|buy|produce|donkey|bribe|vote|veto, \"params\"}",
+            "POST /game/:id/act": "v2: token/op_id/action/params; legacy v1: token/action/params",
             "POST /game/:id/advance": "permissionless кранк (как ончейн); в грейс-окне до grace_until отказ GraceWindow",
             "GET  /games": "активные партии",
             "GET  /ui": "зрительский экран живой арены (app/arena.html)",
@@ -2083,6 +2466,19 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
         }
     } else { None };
     let (status, body) = match (req.method.as_str(), segs.as_slice()) {        ("GET", []) => ("200 OK", root_doc(state).to_string()),
+        ("GET", ["agents", "capabilities"]) => ("200 OK", serde_json::json!({
+            "ok":true,"protocol_version":2,"registration":"devnet_agent_lifecycle_v2",
+            "execution":"offchain_http","required_op_id":"strict_positive_u64_sequence",
+            "game_session_lifetime_s":SESSION_LIFETIME_S,"max_cached_ops":MAX_RECENT_OPS,
+            "actions":["sell","sell_credit","buy","produce","shuttle","roof","customs",
+                "bid_license","inspect_license","offer_vote","accept_vote_offer",
+                "barter_propose","barter_accept","buy_hard","sell_hard","donkey",
+                "bribe","vote","veto"],
+            "phases":["lobby","market","action","law","finished"],
+            "hosted_inference":false,"onchain_game_settlement":false,
+        }).to_string()),
+        ("POST", ["agents", "registration"]) => ("200 OK", h_registration_v2(state, &body_v).to_string()),
+        ("POST", ["agents", "confirm"]) => ("200 OK", h_confirm_v2(state, &body_v).to_string()),
         ("POST", ["game", "new"]) => { ("200 OK", h_new_game(state, &body_v).to_string()) },
         ("POST", ["game", id, "registration"]) => { match id.parse::<u64>() {
             Ok(id) => ("200 OK", h_registration(state, id, &body_v).to_string()),

@@ -61,6 +61,10 @@ pub fn memo(game_id: u64, party_no: u64, character_id: &str, agent_id: &str) -> 
     format!("alashi:agent-start:v1:devnet:{game_id}:{party_no}:{character_id}:{agent_id}")
 }
 
+pub fn lifecycle_memo(owner_id: &str, agent_record_id: &str, character_id: &str, challenge: &str) -> String {
+    format!("alashi:agent-lifecycle:v2:devnet:alashi.network:{owner_id}:{agent_record_id}:{character_id}:{challenge}")
+}
+
 pub fn validate_genesis(value: &Value) -> Result<(), &'static str> {
     if value.as_str() == Some(DEVNET_GENESIS) {
         Ok(())
@@ -306,6 +310,16 @@ mod tests {
         inner["transaction"]["message"]["instructions"] = json!([]);
         assert!(validate_receipt(&proof, &memo, &status, &inner).is_err());
         assert!(validate_receipt(&proof, &format!("{memo}:extra"), &status, &tx).is_err());
+    }
+    #[test]
+    fn lifecycle_memo_has_stable_global_scope() {
+        let owner="d8d041d59e9d55c61790d37a8e2bc3f17b9c8f4d350062a090ea8b5d64a086fa";
+        let agent="cd".repeat(32);
+        let character="6d92bd091fb2d69e295fe5bba10caa3628abf2cac55bc80f7c74a018c4465c71";
+        let challenge="ef".repeat(32);
+        assert_eq!(lifecycle_memo(owner,&agent,character,&challenge),
+            format!("alashi:agent-lifecycle:v2:devnet:alashi.network:{owner}:{agent}:{character}:{challenge}"));
+        assert!(!lifecycle_memo(owner,&agent,character,&challenge).contains(":42:"));
     }
     #[test]
     fn request_is_bounded_and_memo_scoped() {

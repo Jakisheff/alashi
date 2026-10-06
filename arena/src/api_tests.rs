@@ -576,3 +576,198 @@ fn registration_storage_failure_rolls_back_receipt_and_allows_same_signature_ret
     assert_eq!(retry["ok"],true,"{retry}");
     assert_eq!(restore(&state).games.lock().unwrap()[&gid].agents[0].registration.as_ref().unwrap().signature,body["registration"]["signature"].as_str().unwrap());
 }
+
+#[test]
+fn lifecycle_v2_golden_fixture_and_durable_two_game_join() {
+    let state = isolated();
+    let gid1 = create(&state);
+    let gid2 = create(&state);
+    let id = "cd".repeat(32);
+    let secret = "ab".repeat(32);
+    let wallet = Pubkey::new_unique().to_string();
+    let request = json!({"agent_record_id":id,"wallet":wallet,"recovery_secret":secret});
+    assert_eq!(owner_id_of(&secret), "d8d041d59e9d55c61790d37a8e2bc3f17b9c8f4d350062a090ea8b5d64a086fa");
+    assert_eq!(character_id_v2(&owner_id_of(&secret), &id), "6d92bd091fb2d69e295fe5bba10caa3628abf2cac55bc80f7c74a018c4465c71");
+    assert_eq!(agent_id_of("glm-5.3-flash", "test"), "bcf7a4c486fd2c390bdc97df49b4cd019aeb8db20a72fa65a05361f5210c2240");
+    assert_eq!(sha256_hex(&json!({"action":"produce","by":"unknown","params":{}}).to_string()),
+        "a88e262c2b076da69909339a813ff4bca5eb0942a18c43d4e6b8159f43a1a46a");
+    let proposal = h_registration_v2(&state, &request);
+    assert_eq!(proposal["ok"],true,"{proposal}");
+    assert_eq!(h_registration_v2(&state,&request)["memo"],proposal["memo"]);
+    let restored = restore(&state);
+    assert_eq!(h_registration_v2(&restored,&request)["memo"],proposal["memo"]);
+    assert_eq!(h_registration_v2(&restored,&json!({"agent_record_id":id,"wallet":wallet,"recovery_secret":"ef".repeat(32)}))["error"],"registration_conflict");
+    let proof = json!({"agent_record_id":id,"wallet":wallet,"recovery_secret":secret,"signature":"2".repeat(88)});
+    let confirmed = h_confirm_v2_with_verifier(&restored,&proof,|p,m| {
+        assert_eq!(p.wallet,wallet);
+        assert_eq!(m,proposal["memo"]);
+        Ok(Receipt { mode:"agent_start_v1".into(), network:"devnet".into(),
+            wallet:p.wallet.clone(),signature:p.signature.clone(),slot:42,
+            fee_lamports:"5000".into(),commitment:"confirmed".into() })
+    });
+    assert_eq!(confirmed["registration"]["mode"],"agent_lifecycle_v2");
+    assert_eq!(h_confirm_v2_with_verifier(&restored,&proof,|_,_|panic!("repeat must not call RPC"))["registration"],confirmed["registration"]);
+    let restored = restore(&restored);
+    let join_body = json!({"agent_record_id":id,"recovery_secret":secret,"name":"Player",
+        "model":"glm-5.3-flash","strategy_hash":agent_id_of("glm-5.3-flash","test")});
+    let first = h_join(&restored,gid1,&join_body);
+    let second = h_join(&restored,gid2,&join_body);
+    assert_eq!(first["ok"],true,"{first}");
+    assert_eq!(second["ok"],true,"{second}");
+    assert_eq!(first["character_id"],second["character_id"]);
+    assert_eq!(first["registration"],confirmed["registration"]);
+    assert_eq!(second["registration"],confirmed["registration"]);
+    assert_ne!(first["token"],second["token"]);
+    assert_eq!(h_join(&restored,gid1,&join_body)["error"],"already_joined");
+    let mut bad=join_body.clone();
+    bad["recovery_secret"]=json!("ef".repeat(32));
+    assert_eq!(h_join(&restored,gid2,&bad)["error"],"bad_recovery_secret");
+    let snapshot=std::fs::read_to_string(&restored.snapshot_path).unwrap();
+    assert!(!snapshot.contains(first["token"].as_str().unwrap()));
+    assert!(!snapshot.contains(secret.as_str()));
+    assert_eq!(h_state(&restored,gid1)["state"]["factions"][0]["agent_record_id"],id);
+    let mut recovery=join_body.clone(); recovery["recover"]=json!(true);
+    let recovered=h_join(&restored,gid1,&recovery);
+    assert_eq!(recovered["ok"],true,"{recovered}");
+    assert_ne!(recovered["token"],first["token"]);
+    assert_eq!(h_act(&restored,gid1,&json!({"token":first["token"],"op_id":1,"action":"produce"}))["error"],"bad_token");
+    let mut changed=recovery.clone(); changed["model"]=json!("other-model");
+    changed["strategy_hash"]=json!("bb".repeat(32));
+    let updated=h_join(&restored,gid1,&changed);
+    assert_eq!(updated["ok"],true,"{updated}");
+    assert_eq!(updated["agent_id"],"bb".repeat(32));
+    assert_eq!(updated["character_id"],first["character_id"]);
+    assert_eq!(updated["registration"],first["registration"]);
+}
+
+#[test]
+fn lifecycle_v2_action_idempotency_survives_restart_and_recovery() {
+    let state=isolated();
+    let gid=create(&state);
+    let id="cd".repeat(32);
+    let secret="ab".repeat(32);
+    let wallet=Pubkey::new_unique().to_string();
+    let proposal=h_registration_v2(&state,&json!({"agent_record_id":id,"wallet":wallet,"recovery_secret":secret}));
+    assert_eq!(proposal["ok"],true);
+    let proof=json!({"agent_record_id":id,"wallet":wallet,"recovery_secret":secret,"signature":"2".repeat(88)});
+    assert_eq!(h_confirm_v2_with_verifier(&state,&proof,|p,_|Ok(Receipt {
+        mode:"agent_start_v1".into(),network:"devnet".into(),wallet:p.wallet.clone(),
+        signature:p.signature.clone(),slot:42,fee_lamports:"5000".into(),commitment:"confirmed".into(),
+    }))["ok"],true);
+    let join_body=json!({"agent_record_id":id,"recovery_secret":secret,"name":"Player",
+        "model":"m","strategy_hash":"aa".repeat(32)});
+    let joined=h_join(&state,gid,&join_body);
+    assert_eq!(joined["ok"],true,"{joined}");
+    state.games.lock().unwrap().get_mut(&gid).unwrap().sim.game.phase=Phase::Action;
+    let act=json!({"token":joined["token"],"op_id":1,"action":"produce","by":"llm"});
+    let first=h_act(&state,gid,&act);
+    assert_eq!(first["op_consumed"],true,"{first}");
+    assert_eq!(h_act(&state,gid,&act),first);
+    assert_eq!(state.games.lock().unwrap()[&gid].action_log.len(),1);
+    let mut conflict=act.clone(); conflict["action"]=json!("donkey");
+    assert_eq!(h_act(&state,gid,&conflict)["error"],"op_conflict");
+    let mut gap=act.clone(); gap["op_id"]=json!(3);
+    assert_eq!(h_act(&state,gid,&gap)["error"],"op_out_of_order");
+    let restored=restore(&state);
+    assert_eq!(h_act(&restored,gid,&act),first);
+    let mut recovery=join_body.clone(); recovery["recover"]=json!(true);
+    let rotated=h_join(&restored,gid,&recovery);
+    let mut next=act.clone(); next["token"]=rotated["token"].clone(); next["op_id"]=json!(2);
+    let second=h_act(&restored,gid,&next);
+    assert_eq!(second["op_consumed"],true,"{second}");
+    assert_eq!(restored.games.lock().unwrap()[&gid].action_log.len(),2);
+    let mut old=act.clone(); old["token"]=rotated["token"].clone();
+    assert_eq!(h_act(&restored,gid,&old),first);
+    let mut cross=next.clone();
+    let other=create(&restored); cross["op_id"]=json!(1);
+    assert_eq!(h_act(&restored,other,&cross)["error"],"bad_token");
+}
+
+#[test]
+fn lifecycle_v2_fail_closed_platform_and_proposal_storage() {
+    let mut state=isolated();
+    Arc::get_mut(&mut state).unwrap().require_platform_v2=true;
+    let gid=create(&state);
+    assert_eq!(h_join(&state,gid,&json!({"name":"legacy","model":"m","prompt":"p"}))["error"],"platform_registration_required");
+    assert_eq!(h_registration(&state,gid,&json!({}))["error"],"platform_registration_required");
+    let id="cd".repeat(32); let secret="ab".repeat(32);
+    let wallet=Pubkey::new_unique().to_string();
+    let req=json!({"agent_record_id":id,"wallet":wallet,"recovery_secret":secret});
+    std::fs::remove_file(&state.snapshot_path).unwrap();
+    std::fs::create_dir(&state.snapshot_path).unwrap();
+    assert_eq!(h_registration_v2(&state,&req)["error"],"storage_failed");
+    assert!(state.registrations.lock().unwrap().is_empty());
+    std::fs::remove_dir(&state.snapshot_path).unwrap();
+    let proposal=h_registration_v2(&state,&req);
+    assert_eq!(proposal["ok"],true,"{proposal}");
+    let proof=json!({"agent_record_id":id,"wallet":wallet,"recovery_secret":secret,"signature":"2".repeat(88)});
+    assert_eq!(h_confirm_v2_with_verifier(&state,&proof,|_,_|Err("registration_memo_mismatch"))["error"],"registration_memo_mismatch");
+    assert!(state.registrations.lock().unwrap()[&id].receipt.is_none());
+}
+
+#[test]
+fn lifecycle_v2_session_expires_and_old_op_ids_cannot_replay_after_cache_trim() {
+    let state=isolated(); let gid=create(&state);
+    let id="cd".repeat(32); let secret="ab".repeat(32);
+    let wallet=Pubkey::new_unique().to_string();
+    assert_eq!(h_registration_v2(&state,&json!({"agent_record_id":id,"wallet":wallet,"recovery_secret":secret}))["ok"],true);
+    let proof=json!({"agent_record_id":id,"wallet":wallet,"recovery_secret":secret,"signature":"2".repeat(88)});
+    assert_eq!(h_confirm_v2_with_verifier(&state,&proof,|p,_|Ok(Receipt {
+        mode:"agent_start_v1".into(),network:"devnet".into(),wallet:p.wallet.clone(),
+        signature:p.signature.clone(),slot:42,fee_lamports:"5000".into(),commitment:"confirmed".into(),
+    }))["ok"],true);
+    let body=json!({"agent_record_id":id,"recovery_secret":secret,"name":"Player",
+        "model":"m","strategy_hash":"aa".repeat(32)});
+    let joined=h_join(&state,gid,&body);
+    assert_eq!(joined["ok"],true);
+    state.games.lock().unwrap().get_mut(&gid).unwrap().sim.game.phase=Phase::Action;
+    for op_id in 1..=65u64 {
+        let result=h_act(&state,gid,&json!({"token":joined["token"],"op_id":op_id,"action":"produce"}));
+        assert_eq!(result["op_consumed"],true,"{result}");
+    }
+    assert_eq!(state.games.lock().unwrap()[&gid].op_state[&id].recent.len(),MAX_RECENT_OPS);
+    assert_eq!(h_act(&state,gid,&json!({"token":joined["token"],"op_id":1,"action":"produce"}))["error"],"op_stale");
+    let last=h_act(&state,gid,&json!({"token":joined["token"],"op_id":65,"action":"produce"}));
+    assert_eq!(last["op_consumed"],true);
+    state.games.lock().unwrap().get_mut(&gid).unwrap().agents[0].session_expires_at=Some(now()-1);
+    assert_eq!(h_act(&state,gid,&json!({"token":joined["token"],"op_id":66,"action":"produce"}))["error"],"bad_token");
+    let mut recovery=body.clone(); recovery["recover"]=json!(true);
+    let rotated=h_join(&state,gid,&recovery);
+    assert_eq!(rotated["ok"],true);
+    assert_eq!(h_act(&state,gid,&json!({"token":joined["token"],"op_id":66,"action":"produce"}))["error"],"bad_token");
+    assert_eq!(h_act(&state,gid,&json!({"token":rotated["token"],"op_id":66,"action":"produce"}))["op_consumed"],true);
+}
+
+#[test]
+fn lifecycle_v2_two_owners_same_strategy_have_separate_game_sessions() {
+    let state=isolated();
+    let gid=create(&state);
+    let strategy="aa".repeat(32);
+    let mut joined=Vec::new();
+    for (id,secret,name) in [
+        ("cd".repeat(32),"ab".repeat(32),"Alpha"),
+        ("de".repeat(32),"bc".repeat(32),"Beta"),
+    ] {
+        let wallet=Pubkey::new_unique().to_string();
+        assert_eq!(h_registration_v2(&state,&json!({"agent_record_id":id,"wallet":wallet,"recovery_secret":secret}))["ok"],true);
+        let proof=json!({"agent_record_id":id,"wallet":wallet,"recovery_secret":secret,"signature":"2".repeat(88)});
+        assert_eq!(h_confirm_v2_with_verifier(&state,&proof,|p,_|Ok(Receipt {
+            mode:"agent_start_v1".into(),network:"devnet".into(),wallet:p.wallet.clone(),
+            signature:p.signature.clone(),slot:42,fee_lamports:"5000".into(),commitment:"confirmed".into(),
+        }))["ok"],true);
+        let result=h_join(&state,gid,&json!({"agent_record_id":id,"recovery_secret":secret,
+            "name":name,"model":"same","strategy_hash":strategy}));
+        assert_eq!(result["ok"],true,"{result}");
+        joined.push(result);
+    }
+    assert_eq!(joined[0]["agent_id"],joined[1]["agent_id"]);
+    assert_ne!(joined[0]["owner_id"],joined[1]["owner_id"]);
+    assert_ne!(joined[0]["character_id"],joined[1]["character_id"]);
+    assert_ne!(joined[0]["token"],joined[1]["token"]);
+    state.games.lock().unwrap().get_mut(&gid).unwrap().sim.game.phase=Phase::Action;
+    for (i,player) in joined.iter().enumerate() {
+        let result=h_act(&state,gid,&json!({"token":player["token"],"op_id":1,"action":"produce"}));
+        assert_eq!(result["op_consumed"],true,"{result}");
+        assert_eq!(state.games.lock().unwrap()[&gid].action_log[i]["actor"],i);
+    }
+}
