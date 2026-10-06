@@ -305,7 +305,13 @@ function withFaction(result, session) {
   return { ...result, game_id: session.game_id, your_faction_idx: session.faction_idx,
     your_faction: result.state?.factions?.[session.faction_idx] ?? null };
 }
+function validateIdentity(name, model) {
+  if (!name || !model) fail('usage', 'start needs --name and --model');
+  if (Buffer.byteLength(name, 'utf8') > 16) fail('invalid_name', '--name must be at most 16 UTF-8 bytes');
+  if (Buffer.byteLength(model, 'utf8') > 128) fail('invalid_model', '--model must be at most 128 UTF-8 bytes');
+}
 async function run(command, options, deps = {}) {
+  if (command === 'start') validateIdentity(options['--name'], options['--model']);
   const dir = deps.dir || privatePath();
   const path = join(dir, 'agent.json');
   const release = lock(path);
@@ -314,7 +320,6 @@ async function run(command, options, deps = {}) {
     if (command === 'start') {
       const name = options['--name'];
       const model = options['--model'];
-      if (!name || !model) fail('usage', 'start needs --name and --model');
       let profile = readPrivate(path);
       if (!profile) { profile = newProfile(); savePrivate(path, profile); }
       if (profile.schema !== 'alashi.bootstrap.v1' || !hex32(profile.agent_record_id) || !hex32(profile.recovery_secret)) fail('invalid_profile', 'private agent profile invalid');
@@ -350,4 +355,4 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1
     process.exitCode = 1;
   });
 }
-export { lock, solanaRpc, frameHash, profileIds, checkProposal, newProfile, registration, joinGame, matchGame, actionBody, act, run, b58, apiBase, withFaction, fundIfNeeded, http };
+export { validateIdentity, lock, solanaRpc, frameHash, profileIds, checkProposal, newProfile, registration, joinGame, matchGame, actionBody, act, run, b58, apiBase, withFaction, fundIfNeeded, http };

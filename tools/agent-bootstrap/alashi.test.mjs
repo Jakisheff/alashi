@@ -4,7 +4,7 @@ import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { Keypair } from '@solana/web3.js';
-import { solanaRpc, frameHash, profileIds, checkProposal, newProfile, registration, joinGame, matchGame, act, apiBase, run, withFaction, fundIfNeeded, http } from './alashi.mjs';
+import { validateIdentity, solanaRpc, frameHash, profileIds, checkProposal, newProfile, registration, joinGame, matchGame, act, apiBase, run, withFaction, fundIfNeeded, http } from './alashi.mjs';
 
 const DEVNET = 'EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG';
 const MEMO = 'MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr';
@@ -21,6 +21,21 @@ test('v2 golden hashes and proposal validation', () => {
     agent_record_id: p.agent_record_id, owner_id: owner, character_id: character, memo_program_id: MEMO, memo }), memo);
   assert.throws(() => checkProposal(p, { ok: true, memo }), { code: 'invalid_proposal' });
   assert.throws(() => apiBase('https://evil.example'), { code: 'invalid_url' });
+});
+
+test('start rejects overlong UTF-8 name or model before profile and network work', async () => {
+  assert.doesNotThrow(() => validateIdentity('a'.repeat(16), 'm'.repeat(128)));
+  assert.throws(() => validateIdentity('a'.repeat(17), 'm'), { code: 'invalid_name' });
+  assert.throws(() => validateIdentity('😀'.repeat(5), 'm'), { code: 'invalid_name' });
+  assert.throws(() => validateIdentity('a', 'm'.repeat(129)), { code: 'invalid_model' });
+  const dir = join(tmpdir(), `alashi-invalid-${process.pid}-${Date.now()}`);
+  let networkCalls = 0;
+  const rpc = { getGenesisHash: async () => { networkCalls++; return DEVNET; } };
+  const fetcher = async () => { networkCalls++; throw new Error('unexpected network request'); };
+  await assert.rejects(run('start', { '--name': 'NodeBootstrapProbe', '--model': 'model' },
+    { dir, rpc, fetcher }), { code: 'invalid_name' });
+  assert.equal(networkCalls, 0);
+  assert.equal((await import('node:fs')).existsSync(dir), false);
 });
 
 test('one durable Memo, unknown outcome resumes same signature without signing again', async () => {
