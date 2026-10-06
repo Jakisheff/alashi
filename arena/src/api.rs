@@ -32,12 +32,15 @@ pub const MAX_LOBBY_DURATION: i64 = 7 * 86_400;
 /// пилота и меняются одной строкой.
 pub const MAX_ACTIVE_GAMES: usize = 100;
 pub const MAX_COMPLETED_GAMES: usize = 250;
+pub const MAX_COMPLETED_REPLAY_GAMES: usize = 16;
 pub const MAX_ACTION_LOG: usize = 256;
 pub const RECENT_ACTIONS_LIMIT: usize = 12;
 pub const MAX_PHASE_LOG: usize = 512;
 /// Аудит 27.09 (S2): самозаявленная метка источника хода в журнале.
 pub const MAX_BY_LEN: usize = 64;
 pub const MAX_REGISTERED_AGENTS: usize = 1000;
+pub const MAX_PENDING_REGISTRATIONS: usize = 64;
+pub const PENDING_REGISTRATION_LIFETIME_S: i64 = 3_600;
 pub const MAX_RECENT_OPS: usize = 64;
 pub const SESSION_LIFETIME_S: i64 = 86_400;
 
@@ -69,6 +72,8 @@ pub struct RegisteredAgent {
     pub recovery_hash: String,
     pub challenge: String,
     pub receipt: Option<Receipt>,
+    #[serde(default)]
+    pub created_at: i64,
 }
 
 #[derive(Clone, Serialize, Deserialize)]
@@ -84,6 +89,24 @@ pub struct OpRecord {
 pub struct OpState {
     pub last: u64,
     pub recent: Vec<OpRecord>,
+}
+
+#[derive(Clone, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct CompletedSession {
+    pub token_hash: String,
+    pub expires_at: i64,
+    pub op_state: OpState,
+}
+
+fn valid_op_state(ops: &OpState) -> bool {
+    ops.recent.len() <= MAX_RECENT_OPS
+        && (ops.last == 0) == ops.recent.is_empty()
+        && !ops.recent.last().is_some_and(|r| r.id != ops.last)
+        && !ops.recent.iter().any(|r| !hex32(&r.request_hash)
+            || r.response["op_id"].as_u64() != Some(r.id)
+            || r.response["op_consumed"] != true)
+        && !ops.recent.windows(2).any(|w| w[0].id.checked_add(1) != Some(w[1].id))
 }
 
 #[derive(Clone)]
@@ -119,6 +142,7 @@ pub struct AppState {
     pub games: Mutex<HashMap<u64, GameEntry>>,
     pub next_id: AtomicU64,
     pub completed: Mutex<Vec<String>>,
+    completed_replay: Mutex<HashMap<u64, HashMap<String, CompletedSession>>>,
     pub master_seed: AtomicU64,
     pub require_devnet_registration: bool,
     pub require_platform_v2: bool,
@@ -202,6 +226,7 @@ fn save_snapshot_locked(state: &AppState) -> std::io::Result<()> {
         "games": arr,
         "registrations": *state.registrations.lock().unwrap_or_else(|e| e.into_inner()),
         "completed": completed.clone(),
+        "completed_replay": *state.completed_replay.lock().unwrap_or_else(|e| e.into_inner()),
     });
     drop(completed);
     drop(games);
@@ -226,12 +251,6 @@ fn save_snapshot_locked(state: &AppState) -> std::io::Result<()> {
     std::io::Write::write_all(&mut file, doc.to_string().as_bytes())?;
     file.sync_all()?;
     std::fs::rename(&tmp, p)
-}
-
-fn persist_snapshot_locked(state: &AppState) {
-    if let Err(e) = save_snapshot_locked(state) {
-        eprintln!("[ERROR] snapshot save: {e}");
-    }
 }
 
 /// Аудит 27.09 (S4): повреждённый снимок не молчит. Отсутствие файла —
@@ -275,6 +294,19 @@ pub fn load_snapshot(state: &AppState) -> Result<(), String> {
                 || r.wallet != record.wallet || r.network != "devnet") {
             return fail("битая запись registry агентов".into());
         }
+    }
+    let completed_replay: HashMap<u64, HashMap<String, CompletedSession>> =
+        match doc.get("completed_replay") {
+            Some(value) => match serde_json::from_value(value.clone()) {
+                Ok(records) => records,
+                Err(_) => return fail("битый архив повторов".into()),
+            },
+            None => HashMap::new(),
+        };
+    if completed_replay.len() > MAX_COMPLETED_REPLAY_GAMES || completed_replay.values().any(|sessions|
+        sessions.len() > MAX_FACTIONS as usize || sessions.iter().any(|(id, session)|
+            !hex32(id) || !hex32(&session.token_hash) || !valid_op_state(&session.op_state))) {
+        return fail("битый архив повторов".into());
     }
     let Some(games_arr) = doc.get("games").and_then(|g| g.as_array()) else {
         return fail("в снимке нет массива games".into());
@@ -368,13 +400,7 @@ pub fn load_snapshot(state: &AppState) -> Result<(), String> {
                 None => HashMap::new(),
             };
             for (id, ops) in &op_state {
-                if !hex32(id) || ops.recent.len() > MAX_RECENT_OPS
-                    || (ops.last == 0) != ops.recent.is_empty()
-                    || ops.recent.last().is_some_and(|r| r.id != ops.last)
-                    || ops.recent.iter().any(|r| !hex32(&r.request_hash)
-                        || r.response["op_id"].as_u64() != Some(r.id)
-                        || r.response["op_consumed"] != true)
-                    || ops.recent.windows(2).any(|w| w[0].id.checked_add(1) != Some(w[1].id)) {
+                if !hex32(id) || !valid_op_state(ops) {
                     return fail(format!("партия {gid}: нарушен порядок op_state"));
                 }
             }
@@ -400,6 +426,7 @@ pub fn load_snapshot(state: &AppState) -> Result<(), String> {
             }
         }
         *state.registrations.lock().unwrap_or_else(|e| e.into_inner()) = registrations;
+        *state.completed_replay.lock().unwrap_or_else(|e| e.into_inner()) = completed_replay;
         if let Some(arr) = doc["completed"].as_array() {
             for c in arr {
                 if let Some(s) = c.as_str() {
@@ -554,6 +581,7 @@ pub fn new_state_with_files(snapshot_path: impl Into<PathBuf>, sequence_path: im
         games: Mutex::new(HashMap::new()),
         next_id: AtomicU64::new(1),
         completed: Mutex::new(Vec::new()),
+        completed_replay: Mutex::new(HashMap::new()),
         master_seed: AtomicU64::new(master_seed_from_env_or_os()),
         require_devnet_registration: std::env::var("ALASHI_REQUIRE_DEVNET_REGISTRATION").as_deref() == Ok("1"),
         require_platform_v2: std::env::var("ALASHI_REQUIRE_PLATFORM_V2").as_deref() == Ok("1"),
@@ -639,23 +667,42 @@ fn record_phase_close(entry: &mut GameEntry, closing: (Phase, u8, u8)) {
     }
 }
 
-fn settle_and_record_locked(state: &AppState, game_id: u64) {
-    let mut rec = None;
-    let mut backup = None;
+#[derive(Debug, PartialEq, Eq)]
+enum SettlementFailure { Missing, Rules, Storage }
+
+fn settle_and_record_locked(state: &AppState, game_id: u64) -> Result<(), SettlementFailure> {
+    let rec: String;
+    let backup: GameEntry;
+    let mut replay = HashMap::new();
+    let completed_before = state.completed.lock().unwrap_or_else(|e| e.into_inner()).clone();
+    let replay_before = state.completed_replay.lock().unwrap_or_else(|e| e.into_inner()).clone();
     {
         let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
         if let Some(entry) = games.get_mut(&game_id) {
-            backup = Some(entry.clone());
+            backup = entry.clone();
             let (ranks, payouts, rake, bank, breakdown) = match runner::try_settle(&entry.sim, entry.entry_fee, false) {
                 Ok(plan) => plan,
                 Err(error) => {
                     eprintln!("[ERROR] game {game_id} settlement: {error}");
                     entry.settlement_error = Some(error);
                     drop(games);
-                    persist_snapshot_locked(state);
-                    return;
+                    if let Err(e) = save_snapshot_locked(state) {
+                        eprintln!("[ERROR] snapshot save after settlement error: {e}");
+                        state.games.lock().unwrap_or_else(|e| e.into_inner())
+                            .insert(game_id, backup);
+                        return Err(SettlementFailure::Storage);
+                    }
+                    return Err(SettlementFailure::Rules);
                 }
             };
+            for agent in &entry.agents {
+                if let (Some(id), Some(expires_at)) = (&agent.agent_record_id, agent.session_expires_at) {
+                    replay.insert(id.clone(), CompletedSession {
+                        token_hash: agent.token.clone(), expires_at,
+                        op_state: entry.op_state.get(id).cloned().unwrap_or_default(),
+                    });
+                }
+            }
             let agents: Vec<serde_json::Value> = entry
                 .agents
                 .iter()
@@ -739,16 +786,29 @@ fn settle_and_record_locked(state: &AppState, game_id: u64) {
                 "actions": entry.action_log,
                 "events": events,
             });
-            rec = Some(v.to_string());
-        }
+            rec = v.to_string();
+        } else { return Err(SettlementFailure::Missing); }
         games.remove(&game_id);
-        if let Some(r) = rec {
-            // Removal and insertion must be one snapshot-visible change.
-            // Аудит 27.09 (S2): архив завершённых партий ограничен.
-            let mut completed = state.completed.lock().unwrap_or_else(|e| e.into_inner());
-            completed.push(r.clone());
-            while completed.len() > MAX_COMPLETED_GAMES {
-                completed.remove(0);
+        // Removal and insertion must be one snapshot-visible change.
+        // Аудит 27.09 (S2): архив завершённых партий ограничен.
+        let mut completed = state.completed.lock().unwrap_or_else(|e| e.into_inner());
+        completed.push(rec);
+        while completed.len() > MAX_COMPLETED_GAMES {
+            completed.remove(0);
+        }
+        let retained_ids: std::collections::HashSet<u64> = completed.iter().filter_map(|line|
+            serde_json::from_str::<serde_json::Value>(line).ok()
+                .and_then(|v| v["game_id"].as_u64())).collect();
+        let mut archive = state.completed_replay.lock().unwrap_or_else(|e| e.into_inner());
+        if !replay.is_empty() { archive.insert(game_id, replay); }
+        archive.retain(|id, _| retained_ids.contains(id));
+        if archive.len() > MAX_COMPLETED_REPLAY_GAMES {
+            for line in completed.iter() {
+                if archive.len() <= MAX_COMPLETED_REPLAY_GAMES { break; }
+                if let Some(id) = serde_json::from_str::<serde_json::Value>(line).ok()
+                    .and_then(|v| v["game_id"].as_u64()) {
+                    archive.remove(&id);
+                }
             }
         }
     }
@@ -756,20 +816,12 @@ fn settle_and_record_locked(state: &AppState, game_id: u64) {
     // партия возвращается в активные и не теряется
     if let Err(e) = save_snapshot_locked(state) {
         eprintln!("[ERROR] snapshot save after settle: {e}");
-        let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
-        if let Some(entry) = backup {
-            games.insert(game_id, entry);
-        }
-        drop(games);
-        // записанный рекорд этой партии убираем из архива
-        let mut completed = state.completed.lock().unwrap_or_else(|e| e.into_inner());
-        completed.retain(|line| {
-            serde_json::from_str::<serde_json::Value>(line)
-                .ok()
-                .and_then(|v| v["game_id"].as_u64())
-                != Some(game_id)
-        });
+        state.games.lock().unwrap_or_else(|e| e.into_inner()).insert(game_id, backup);
+        *state.completed.lock().unwrap_or_else(|e| e.into_inner()) = completed_before;
+        *state.completed_replay.lock().unwrap_or_else(|e| e.into_inner()) = replay_before;
+        return Err(SettlementFailure::Storage);
     }
+    Ok(())
 }
 
 /// Один тик кранка: двигает все партии, чьё время фазы вышло.
@@ -780,6 +832,7 @@ pub fn crank_once(state: &AppState) {
     let mut to_expire: Vec<u64> = Vec::new();
     let mut changed = false;
     let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
+    let before = games.clone();
     for (&gid, entry) in games.iter_mut() {
         let seed = round_seed(state, gid, entry.sim.game.round);
         match entry.sim.game.phase {
@@ -825,9 +878,6 @@ pub fn crank_once(state: &AppState) {
         }
     }
     drop(games);
-    for gid in to_settle {
-        settle_and_record_locked(state, gid);
-    }
     if !to_expire.is_empty() {
         changed = true;
         let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
@@ -836,7 +886,16 @@ pub fn crank_once(state: &AppState) {
         }
     }
     if changed {
-        persist_snapshot_locked(state);
+        if let Err(e) = save_snapshot_locked(state) {
+            eprintln!("[ERROR] snapshot save after crank: {e}");
+            *state.games.lock().unwrap_or_else(|e| e.into_inner()) = before;
+            return;
+        }
+    }
+    for gid in to_settle {
+        if let Err(e) = settle_and_record_locked(state, gid) {
+            eprintln!("[ERROR] game {gid} settlement after crank: {e:?}");
+        }
     }
 }
 
@@ -1184,28 +1243,53 @@ fn h_registration_v2(state: &AppState, body: &serde_json::Value) -> serde_json::
     let character_id = character_id_v2(&owner_id, id);
     let _transaction = state.snapshot_lock.lock().unwrap_or_else(|e| e.into_inner());
     let mut records = state.registrations.lock().unwrap_or_else(|e| e.into_inner());
+    let before = records.clone();
+    let cutoff = now().saturating_sub(PENDING_REGISTRATION_LIFETIME_S);
+    records.retain(|_, record| record.receipt.is_some() || record.created_at > cutoff);
     if let Some(record) = records.get(id) {
         if record.wallet != wallet || !secret_matches(&record.recovery_hash, &hash) {
+            *records = before;
             return err_json("registration_conflict", "agent_record_id занят другим wallet/secret");
         }
-        return lifecycle_response(id, record);
+        let response = lifecycle_response(id, record);
+        if records.len() != before.len() {
+            drop(records);
+            if let Err(e) = save_snapshot_locked(state) {
+                eprintln!("[ERROR] snapshot save after pending reap: {e}");
+                *state.registrations.lock().unwrap_or_else(|e| e.into_inner()) = before;
+                return err_json("storage_failed", "изменение registry не сохранено");
+            }
+        }
+        return response;
     }
     if records.len() >= MAX_REGISTERED_AGENTS {
+        *records = before;
         return err_json("registry_full", "лимит зарегистрированных агентов достигнут");
+    }
+    if records.values().filter(|record| record.receipt.is_none()).count() >= MAX_PENDING_REGISTRATIONS {
+        *records = before;
+        return err_json("pending_full", "лимит незавершённых регистраций достигнут");
+    }
+    if records.values().any(|record| record.receipt.is_none() && record.wallet == wallet) {
+        *records = before;
+        return err_json("pending_wallet_limit", "для wallet уже есть незавершённая регистрация");
     }
     let challenge = match random_hex() {
         Ok(value) => value,
-        Err(_) => return err_json("entropy_unavailable", "не удалось создать challenge"),
+        Err(_) => {
+            *records = before;
+            return err_json("entropy_unavailable", "не удалось создать challenge");
+        }
     };
     let record = RegisteredAgent {
         wallet: wallet.to_string(), owner_id, character_id,
-        recovery_hash: hash, challenge, receipt: None,
+        recovery_hash: hash, challenge, receipt: None, created_at: now(),
     };
     records.insert(id.to_string(), record.clone());
     drop(records);
     if let Err(e) = save_snapshot_locked(state) {
         eprintln!("[ERROR] snapshot save after lifecycle proposal: {e}");
-        state.registrations.lock().unwrap_or_else(|e| e.into_inner()).remove(id);
+        *state.registrations.lock().unwrap_or_else(|e| e.into_inner()) = before;
         return err_json("storage_failed", "предложение регистрации не сохранено");
     }
     lifecycle_response(id, &record)
@@ -1237,6 +1321,10 @@ fn h_confirm_v2_with_verifier(
         if record.wallet != proof.wallet ||
             !recovery_hash(secret).is_some_and(|hash| secret_matches(&hash, &record.recovery_hash)) {
             return err_json("registration_conflict", "wallet или recovery_secret не совпадает");
+        }
+        if record.receipt.is_none()
+            && record.created_at <= now().saturating_sub(PENDING_REGISTRATION_LIFETIME_S) {
+            return err_json("proposal_expired", "предложение истекло; запроси новый challenge до подписи");
         }
         if let Some(receipt) = &record.receipt {
             return if receipt.signature == proof.signature {
@@ -1705,13 +1793,51 @@ fn op_response(mut value: serde_json::Value, op_id: Option<u64>, consumed: bool)
     value
 }
 
+fn action_request_hash(body: &serde_json::Value) -> String {
+    let normalized = serde_json::json!({
+        "action": body["action"].as_str().unwrap_or(""),
+        "by": body["by"].as_str().unwrap_or("unknown"),
+        "params": body.get("params").cloned().unwrap_or(serde_json::json!({})),
+    });
+    sha256_hex(&normalized.to_string())
+}
+
+fn completed_action_replay(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json::Value {
+    let op_id = body["op_id"].as_u64();
+    let token = body["token"].as_str().unwrap_or("");
+    let archive = state.completed_replay.lock().unwrap_or_else(|e| e.into_inner());
+    let Some(sessions) = archive.get(&game_id) else {
+        return op_response(err_json("unknown_game", "партия не найдена"), op_id, false);
+    };
+    let token_hash = sha256_hex(token);
+    let Some(session) = sessions.values().find(|session| hex32(token) && now() < session.expires_at
+        && secret_matches(&session.token_hash, &token_hash)) else {
+        return op_response(err_json("bad_token", "токен не найден или истёк"), op_id, false);
+    };
+    let Some(id) = op_id.filter(|id| *id > 0) else {
+        return err_json("op_id_required", "v2 action требует положительный op_id");
+    };
+    if let Some(saved) = session.op_state.recent.iter().find(|record| record.id == id) {
+        return if secret_matches(&saved.request_hash, &action_request_hash(body)) {
+            saved.response.clone()
+        } else {
+            op_response(err_json("op_conflict", "op_id уже использован для другого запроса"), Some(id), false)
+        };
+    }
+    if id <= session.op_state.last {
+        op_response(err_json("op_stale", "op_id старше сохранённого окна ответов"), Some(id), false)
+    } else {
+        op_response(err_json("game_finished", "партия уже завершена"), Some(id), false)
+    }
+}
+
 fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json::Value {
     let _transaction = state.snapshot_lock.lock().unwrap_or_else(|e| e.into_inner());
     let token = body["token"].as_str().unwrap_or("");
     let (v2_id, valid_token) = {
         let games = state.games.lock().unwrap_or_else(|e| e.into_inner());
         let Some(entry) = games.get(&game_id) else {
-            return op_response(err_json("unknown_game", "партия не найдена"), body["op_id"].as_u64(), false);
+            return completed_action_replay(state, game_id, body);
         };
         let found = entry.agents.iter().find(|a| agent_token_matches(a, token));
         (
@@ -1731,14 +1857,7 @@ fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json
         if body.get("op_id").is_some() { return err_json("bad_params", "op_id нужен только v2 сессии"); }
         None
     };
-    let request_hash = v2_id.as_ref().map(|_| {
-        let normalized = serde_json::json!({
-            "action": body["action"].as_str().unwrap_or(""),
-            "by": body["by"].as_str().unwrap_or("unknown"),
-            "params": body.get("params").cloned().unwrap_or(serde_json::json!({})),
-        });
-        sha256_hex(&normalized.to_string())
-    });
+    let request_hash = v2_id.as_ref().map(|_| action_request_hash(body));
     if let (Some(id), Some(agent_id), Some(hash)) = (op_id, v2_id.as_ref(), request_hash.as_ref()) {
         let games = state.games.lock().unwrap_or_else(|e| e.into_inner());
         let entry = &games[&game_id];
@@ -2127,7 +2246,16 @@ fn h_advance(state: &AppState, game_id: u64) -> serde_json::Value {
             let v = state_json(game_id, entry);
             drop(games);
             if finished {
-                settle_and_record_locked(state, game_id);
+                match settle_and_record_locked(state, game_id) {
+                    Ok(()) => {}
+                    Err(SettlementFailure::Storage) => {
+                        state.games.lock().unwrap_or_else(|e| e.into_inner()).insert(game_id, backup);
+                        return err_json("storage_failed", "изменение не принято: не удалось записать состояние на диск; повтори запрос");
+                    }
+                    Err(SettlementFailure::Rules | SettlementFailure::Missing) => {
+                        return err_json("settlement_failed", "завершение партии не удалось; проверь состояние партии");
+                    }
+                }
             } else if let Err(e) = save_snapshot_locked(state) {
                 eprintln!("[ERROR] snapshot save after advance: {e}");
                 state

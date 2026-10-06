@@ -509,7 +509,7 @@ fn registration_is_persisted_public_and_recovery_and_actions_need_no_rpc() {
 
 fn settle_and_record_locked_for_test(state:&AppState,gid:u64) {
     let _lock=state.snapshot_lock.lock().unwrap();
-    settle_and_record_locked(state,gid);
+    assert_eq!(settle_and_record_locked(state,gid),Ok(()));
 }
 
 #[test]
@@ -770,4 +770,99 @@ fn lifecycle_v2_two_owners_same_strategy_have_separate_game_sessions() {
         assert_eq!(result["op_consumed"],true,"{result}");
         assert_eq!(state.games.lock().unwrap()[&gid].action_log[i]["actor"],i);
     }
+}
+
+#[test]
+fn v2_pending_proposals_expire_and_have_a_small_quota() {
+    let state = isolated();
+    let secret = "ab".repeat(32);
+    let wallet = Pubkey::new_unique().to_string();
+    let first_id = "cd".repeat(32);
+    let first = json!({"agent_record_id":first_id,"wallet":wallet,"recovery_secret":secret});
+    let proposal = h_registration_v2(&state, &first);
+    assert_eq!(proposal["ok"], true);
+    let second_id = "de".repeat(32);
+    assert_eq!(h_registration_v2(&state,&json!({"agent_record_id":second_id,
+        "wallet":wallet,"recovery_secret":secret}))["error"],"pending_wallet_limit");
+    for i in 1..MAX_PENDING_REGISTRATIONS {
+        let id = format!("{i:064x}");
+        let wallet = Pubkey::new_unique().to_string();
+        assert_eq!(h_registration_v2(&state,&json!({"agent_record_id":id,
+            "wallet":wallet,"recovery_secret":secret}))["ok"],true);
+    }
+    assert_eq!(h_registration_v2(&state,&json!({"agent_record_id":second_id,
+        "wallet":Pubkey::new_unique().to_string(),"recovery_secret":secret}))["error"],"pending_full");
+    state.registrations.lock().unwrap().get_mut(&first_id).unwrap().created_at =
+        now() - PENDING_REGISTRATION_LIFETIME_S - 1;
+    let proof = json!({"agent_record_id":first_id,"wallet":wallet,
+        "recovery_secret":secret,"signature":"2".repeat(88)});
+    assert_eq!(h_confirm_v2_with_verifier(&state,&proof,|_,_|panic!("expired proposal must not call RPC"))["error"],"proposal_expired");
+    let refreshed = h_registration_v2(&state,&first);
+    assert_eq!(refreshed["ok"],true,"{refreshed}");
+    assert_ne!(refreshed["memo"],proposal["memo"]);
+    assert_eq!(state.registrations.lock().unwrap().len(),MAX_PENDING_REGISTRATIONS);
+    assert_eq!(restore(&state).registrations.lock().unwrap().len(),MAX_PENDING_REGISTRATIONS);
+}
+
+#[test]
+fn finished_v2_action_replays_after_snapshot_reload_without_public_secrets() {
+    let state = isolated();
+    let gid = create(&state);
+    let id = "cd".repeat(32);
+    let secret = "ab".repeat(32);
+    let wallet = Pubkey::new_unique().to_string();
+    assert_eq!(h_registration_v2(&state,&json!({"agent_record_id":id,
+        "wallet":wallet,"recovery_secret":secret}))["ok"],true);
+    let proof = json!({"agent_record_id":id,"wallet":wallet,
+        "recovery_secret":secret,"signature":"2".repeat(88)});
+    assert_eq!(h_confirm_v2_with_verifier(&state,&proof,|p,_|Ok(Receipt {
+        mode:"agent_start_v1".into(),network:"devnet".into(),wallet:p.wallet.clone(),
+        signature:p.signature.clone(),slot:42,fee_lamports:"5000".into(),commitment:"confirmed".into(),
+    }))["ok"],true);
+    let joined = h_join(&state,gid,&json!({"agent_record_id":id,"recovery_secret":secret,
+        "name":"Player","model":"m","strategy_hash":"aa".repeat(32)}));
+    assert_eq!(joined["ok"],true,"{joined}");
+    join(&state,gid,1);
+    state.games.lock().unwrap().get_mut(&gid).unwrap().sim.game.phase = Phase::Action;
+    let act = json!({"token":joined["token"],"op_id":1,"action":"produce"});
+    let first = h_act(&state,gid,&act);
+    assert_eq!(first["op_consumed"],true,"{first}");
+    state.games.lock().unwrap().get_mut(&gid).unwrap().sim.game.phase = Phase::Finished;
+    settle_and_record_locked_for_test(&state,gid);
+    assert_eq!(h_act(&state,gid,&act),first);
+    let restored = restore(&state);
+    assert_eq!(h_act(&restored,gid,&act),first);
+    let mut conflict = act.clone(); conflict["action"] = json!("donkey");
+    assert_eq!(h_act(&restored,gid,&conflict)["error"],"op_conflict");
+    let mut next = act.clone(); next["op_id"] = json!(2);
+    assert_eq!(h_act(&restored,gid,&next)["error"],"game_finished");
+    assert_eq!(h_act(&restored,gid,&json!({"token":"ef".repeat(32),"op_id":1,
+        "action":"produce"}))["error"],"bad_token");
+    assert!(!h_export(&restored).contains(joined["token"].as_str().unwrap()));
+    assert!(!h_export(&restored).contains(&sha256_hex(joined["token"].as_str().unwrap())));
+}
+
+#[test]
+fn failed_snapshot_does_not_ack_terminal_advance_or_mutate_crank() {
+    let state = isolated();
+    let gid = create(&state);
+    join(&state,gid,0); join(&state,gid,1);
+    {
+        let mut games = state.games.lock().unwrap();
+        let entry = games.get_mut(&gid).unwrap();
+        entry.sim.game.phase = Phase::Law;
+        entry.sim.game.round = ROUNDS;
+        entry.sim.game.phase_ends_at = 0;
+    }
+    save_snapshot(&state).unwrap();
+    let before = borsh::to_vec(&state.games.lock().unwrap()[&gid].sim.game).unwrap();
+    std::fs::remove_file(&state.snapshot_path).unwrap();
+    std::fs::create_dir(&state.snapshot_path).unwrap();
+    let advanced = h_advance(&state,gid);
+    assert_eq!(advanced["error"],"storage_failed","{advanced}");
+    assert_eq!(borsh::to_vec(&state.games.lock().unwrap()[&gid].sim.game).unwrap(),before);
+    assert!(state.completed.lock().unwrap().is_empty());
+    crank_once(&state);
+    assert_eq!(borsh::to_vec(&state.games.lock().unwrap()[&gid].sim.game).unwrap(),before);
+    assert!(state.completed.lock().unwrap().is_empty());
 }
