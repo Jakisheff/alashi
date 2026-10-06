@@ -40,7 +40,6 @@ pub const MAX_PHASE_LOG: usize = 512;
 pub const MAX_BY_LEN: usize = 64;
 pub const MAX_REGISTERED_AGENTS: usize = 1000;
 pub const MAX_PENDING_REGISTRATIONS: usize = 64;
-pub const PENDING_REGISTRATION_LIFETIME_S: i64 = 3_600;
 pub const MAX_RECENT_OPS: usize = 64;
 pub const SESSION_LIFETIME_S: i64 = 86_400;
 
@@ -72,6 +71,7 @@ pub struct RegisteredAgent {
     pub recovery_hash: String,
     pub challenge: String,
     pub receipt: Option<Receipt>,
+    /// Informational only: an issued Memo must remain confirmable after delays.
     #[serde(default)]
     pub created_at: i64,
 }
@@ -1243,43 +1243,24 @@ fn h_registration_v2(state: &AppState, body: &serde_json::Value) -> serde_json::
     let character_id = character_id_v2(&owner_id, id);
     let _transaction = state.snapshot_lock.lock().unwrap_or_else(|e| e.into_inner());
     let mut records = state.registrations.lock().unwrap_or_else(|e| e.into_inner());
-    let before = records.clone();
-    let cutoff = now().saturating_sub(PENDING_REGISTRATION_LIFETIME_S);
-    records.retain(|_, record| record.receipt.is_some() || record.created_at > cutoff);
     if let Some(record) = records.get(id) {
         if record.wallet != wallet || !secret_matches(&record.recovery_hash, &hash) {
-            *records = before;
             return err_json("registration_conflict", "agent_record_id занят другим wallet/secret");
         }
-        let response = lifecycle_response(id, record);
-        if records.len() != before.len() {
-            drop(records);
-            if let Err(e) = save_snapshot_locked(state) {
-                eprintln!("[ERROR] snapshot save after pending reap: {e}");
-                *state.registrations.lock().unwrap_or_else(|e| e.into_inner()) = before;
-                return err_json("storage_failed", "изменение registry не сохранено");
-            }
-        }
-        return response;
+        return lifecycle_response(id, record);
     }
     if records.len() >= MAX_REGISTERED_AGENTS {
-        *records = before;
         return err_json("registry_full", "лимит зарегистрированных агентов достигнут");
     }
     if records.values().filter(|record| record.receipt.is_none()).count() >= MAX_PENDING_REGISTRATIONS {
-        *records = before;
         return err_json("pending_full", "лимит незавершённых регистраций достигнут");
     }
     if records.values().any(|record| record.receipt.is_none() && record.wallet == wallet) {
-        *records = before;
         return err_json("pending_wallet_limit", "для wallet уже есть незавершённая регистрация");
     }
     let challenge = match random_hex() {
         Ok(value) => value,
-        Err(_) => {
-            *records = before;
-            return err_json("entropy_unavailable", "не удалось создать challenge");
-        }
+        Err(_) => return err_json("entropy_unavailable", "не удалось создать challenge"),
     };
     let record = RegisteredAgent {
         wallet: wallet.to_string(), owner_id, character_id,
@@ -1289,7 +1270,7 @@ fn h_registration_v2(state: &AppState, body: &serde_json::Value) -> serde_json::
     drop(records);
     if let Err(e) = save_snapshot_locked(state) {
         eprintln!("[ERROR] snapshot save after lifecycle proposal: {e}");
-        *state.registrations.lock().unwrap_or_else(|e| e.into_inner()) = before;
+        state.registrations.lock().unwrap_or_else(|e| e.into_inner()).remove(id);
         return err_json("storage_failed", "предложение регистрации не сохранено");
     }
     lifecycle_response(id, &record)
@@ -1321,10 +1302,6 @@ fn h_confirm_v2_with_verifier(
         if record.wallet != proof.wallet ||
             !recovery_hash(secret).is_some_and(|hash| secret_matches(&hash, &record.recovery_hash)) {
             return err_json("registration_conflict", "wallet или recovery_secret не совпадает");
-        }
-        if record.receipt.is_none()
-            && record.created_at <= now().saturating_sub(PENDING_REGISTRATION_LIFETIME_S) {
-            return err_json("proposal_expired", "предложение истекло; запроси новый challenge до подписи");
         }
         if let Some(receipt) = &record.receipt {
             return if receipt.signature == proof.signature {

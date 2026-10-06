@@ -773,7 +773,7 @@ fn lifecycle_v2_two_owners_same_strategy_have_separate_game_sessions() {
 }
 
 #[test]
-fn v2_pending_proposals_expire_and_have_a_small_quota() {
+fn v2_pending_quota_keeps_a_delayed_signed_memo_confirmable() {
     let state = isolated();
     let secret = "ab".repeat(32);
     let wallet = Pubkey::new_unique().to_string();
@@ -793,15 +793,25 @@ fn v2_pending_proposals_expire_and_have_a_small_quota() {
     assert_eq!(h_registration_v2(&state,&json!({"agent_record_id":second_id,
         "wallet":Pubkey::new_unique().to_string(),"recovery_secret":secret}))["error"],"pending_full");
     state.registrations.lock().unwrap().get_mut(&first_id).unwrap().created_at =
-        now() - PENDING_REGISTRATION_LIFETIME_S - 1;
+        now() - 7 * 86_400;
+    save_snapshot(&state).unwrap();
+    let state = restore(&state);
+    let repeated = h_registration_v2(&state,&first);
+    assert_eq!(repeated["memo"],proposal["memo"]);
     let proof = json!({"agent_record_id":first_id,"wallet":wallet,
         "recovery_secret":secret,"signature":"2".repeat(88)});
-    assert_eq!(h_confirm_v2_with_verifier(&state,&proof,|_,_|panic!("expired proposal must not call RPC"))["error"],"proposal_expired");
-    let refreshed = h_registration_v2(&state,&first);
-    assert_eq!(refreshed["ok"],true,"{refreshed}");
-    assert_ne!(refreshed["memo"],proposal["memo"]);
+    let confirmed = h_confirm_v2_with_verifier(&state,&proof,|p,m| {
+        assert_eq!(m,proposal["memo"]);
+        Ok(Receipt { mode:"agent_start_v1".into(), network:"devnet".into(),
+            wallet:p.wallet.clone(),signature:p.signature.clone(),slot:42,
+            fee_lamports:"5000".into(),commitment:"confirmed".into() })
+    });
+    assert_eq!(confirmed["ok"],true,"{confirmed}");
+    assert_eq!(h_confirm_v2_with_verifier(&state,&proof,|_,_|panic!("retry must not call RPC")),confirmed);
     assert_eq!(state.registrations.lock().unwrap().len(),MAX_PENDING_REGISTRATIONS);
     assert_eq!(restore(&state).registrations.lock().unwrap().len(),MAX_PENDING_REGISTRATIONS);
+    assert_eq!(h_registration_v2(&state,&json!({"agent_record_id":second_id,
+        "wallet":Pubkey::new_unique().to_string(),"recovery_secret":secret}))["ok"],true);
 }
 
 #[test]
