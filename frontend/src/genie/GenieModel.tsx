@@ -1,8 +1,10 @@
 import { useAnimations, useGLTF } from '@react-three/drei'
-import { useEffect, useRef } from 'react'
-import { LoopOnce, LoopRepeat, type AnimationAction, type Group } from 'three'
+import { useFrame } from '@react-three/fiber'
+import { useEffect, useMemo, useRef } from 'react'
+import { LoopOnce, LoopRepeat, type AnimationAction, type Group, type Mesh } from 'three'
 import { useScene } from '../store'
 import { CLIP_SECONDS, type GenieClip } from './pose'
+import { createSmokeMaterial } from './smoke'
 
 // Built by art/desk_genie.py in Blender; clips are sampled from pose.ts.
 const MODEL = '/models/desk-genie.glb'
@@ -24,6 +26,21 @@ export function GenieModel() {
   const clip = useScene((s) => s.clip)
   const take = useScene((s) => s.take)
   const current = useRef<AnimationAction | null>(null)
+  const smoke = useMemo(() => createSmokeMaterial(), [])
+
+  // The GLB tail carries a placeholder glass material; swap in the animated smoke shader.
+  useEffect(() => {
+    scene.traverse((o) => {
+      const mesh = o as Mesh
+      if (mesh.isMesh && !Array.isArray(mesh.material) && mesh.material.name === 'tail-smoke') {
+        mesh.material = smoke.material
+        mesh.renderOrder = 1
+      }
+    })
+  }, [scene, smoke])
+  useFrame((state) => {
+    if (!reducedMotion) smoke.uniforms.uTime.value = state.clock.elapsedTime
+  })
 
   useEffect(() => {
     const name = frozen?.clip ?? clip

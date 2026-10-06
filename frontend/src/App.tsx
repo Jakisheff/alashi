@@ -1,5 +1,6 @@
 import { ContactShadows, Environment, Lightformer, OrbitControls } from '@react-three/drei'
 import { Canvas, useThree } from '@react-three/fiber'
+import { Bloom, EffectComposer } from '@react-three/postprocessing'
 import { Suspense, useEffect, useState } from 'react'
 import { GenieModel } from './genie/GenieModel'
 import type { GenieClip } from './genie/pose'
@@ -81,6 +82,10 @@ export default function App() {
         </Suspense>
         <ContactShadows position={[0, -2.05, 0]} scale={4} blur={2.6} opacity={0.35} far={3} />
         <OrbitControls target={TARGET} enablePan={false} minDistance={3.5} maxDistance={14} />
+        {/* Bloom picks up only emissive parts: screen face, rim light, tail smoke and sparks. */}
+        <EffectComposer>
+          <Bloom mipmapBlur intensity={0.9} luminanceThreshold={0.9} luminanceSmoothing={0.25} />
+        </EffectComposer>
       </Canvas>
 
       <div className="absolute top-3 left-3 flex items-center gap-2 rounded-full bg-white/80 px-3 py-1 text-sm">

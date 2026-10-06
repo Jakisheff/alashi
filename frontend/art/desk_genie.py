@@ -14,22 +14,31 @@ import os
 
 import bpy
 from mathutils import Matrix, Vector
+from mathutils.bvhtree import BVHTree
 
 ART = os.path.dirname(os.path.abspath(__file__))
 COL = "DeskGenie"
 GLB = os.path.join(ART, "..", "public", "models", "desk-genie.glb")
 
-# Face constants shared by the build and the rig (must match src/genie/DeskGenie.tsx).
-EYE_Z, EYE_HALF, LID_H, LID_REST = 0.07, 0.138, 0.18, 0.3
-BROW_R, BROW_ARC = 0.14, 1.3
-TAIL_PTS = [(0, 0, -0.62), (0, -0.02, -0.97), (-0.08, -0.05, -1.32), (0.05, -0.05, -1.64),
-            (0.35, -0.02, -1.77), (0.55, 0, -1.62), (0.5, 0, -1.42)]
+# Face constants shared by the build and the rig.
+SCREEN_Z = 0.2  # screen centre height
+EYE_Z, EYE_R, LID_REST = SCREEN_Z + 0.06, 0.13, 0.3
+EYE_HALF = EYE_R * 1.15
+EYE_TOP = EYE_Z + EYE_HALF
+EYES_X = {"left": 0.23, "right": -0.2}  # anatomical left is +X
+BROW_R, BROW_ARC = 0.15, 1.3
+BROW_Z = EYE_Z + 0.18 - BROW_R  # arc centre; the arc top sits 0.18 above the eye centre
+MOUTH = (0.06, SCREEN_Z - 0.12)  # (x, z) of the grin's circle centre
+# Tail: wide at the body, curling into a smoke spiral on the viewer's left.
+TAIL_PTS = [(0, 0, -0.5), (0.04, -0.02, -0.85), (0.1, -0.04, -1.2), (0.0, -0.04, -1.52),
+            (-0.28, -0.02, -1.7), (-0.55, 0, -1.6), (-0.62, 0, -1.38), (-0.48, 0, -1.26), (-0.4, 0, -1.36)]
+TAIL_R = [0.31, 0.29, 0.25, 0.2, 0.15, 0.11, 0.075, 0.045, 0.015]
+JOINTS = {}  # bone heads filled by build() for the arms
 
 
-def lid_offset(eye_open, lid):
-    """Lid centre above the eye centre: blink closes whatever the lid leaves open."""
-    cover = 1 - min(max(eye_open, 0), 1) * (1 - min(max(lid, 0), 1))
-    return EYE_HALF - cover * 2 * EYE_HALF + LID_H / 2
+def lid_cover(eye_open, lid):
+    """Share of the eye hidden by the lid shutter: blink closes whatever the lid leaves open."""
+    return 1 - min(max(eye_open, 0), 1) * (1 - min(max(lid, 0), 1))
 
 
 # ---------- scene plumbing ----------
@@ -45,7 +54,9 @@ def reset():
     else:
         col = bpy.data.collections.new(COL)
         bpy.context.scene.collection.children.link(col)
-    for blocks in (bpy.data.meshes, bpy.data.curves, bpy.data.armatures, bpy.data.materials, bpy.data.actions):
+    for a in list(bpy.data.actions):  # clips keep a fake user, so drop them explicitly before rebuilding
+        bpy.data.actions.remove(a)
+    for blocks in (bpy.data.meshes, bpy.data.curves, bpy.data.armatures, bpy.data.materials):
         for b in list(blocks):
             if b.users == 0:
                 blocks.remove(b)
@@ -216,136 +227,222 @@ def join(objs, name):
 
 # ---------- the character ----------
 
+def surface_hit(bvh, origin, direction):
+    hit = bvh.ray_cast(Vector(origin), Vector(direction).normalized())
+    if hit[0] is None:
+        raise RuntimeError(f"no surface from {origin} along {direction}")
+    return hit[0], hit[1]
+
+
+def front(bvh, x, z):
+    """Point and normal on the body's front face at (x, z)."""
+    return surface_hit(bvh, (x, -3, z), (0, 1, 0))
+
+
+def align(o, normal, axis=(0, -1, 0)):
+    """Rotate o so that its local `axis` follows the surface normal."""
+    o.rotation_mode = "QUATERNION"
+    o.rotation_quaternion = Vector(axis).rotation_difference(normal)
+    return o
+
+
+def tube(name, points, thickness, mat):
+    """Round tube through world-space points."""
+    cu = bpy.data.curves.new(name, "CURVE")
+    cu.dimensions = "3D"
+    cu.bevel_depth = thickness
+    cu.bevel_resolution = 3
+    cu.use_fill_caps = True
+    sp = cu.splines.new("POLY")
+    sp.points.add(len(points) - 1)
+    for p, c in zip(sp.points, points):
+        p.co = (*c, 1)
+    o = bpy.data.objects.new(name, cu)
+    bpy.context.collection.objects.link(o)
+    if mat:
+        cu.materials.append(mat)
+    apply_all(o)
+    return finish(o)
+
+
+def cut(target, cutter):
+    m = target.modifiers.new("Cut", "BOOLEAN")
+    m.object = cutter
+    m.operation = "DIFFERENCE"
+    m.solver = "EXACT"
+    apply_all(target)
+    bpy.data.objects.remove(cutter, do_unlink=True)
+
+
+def body_mesh():
+    """Square top that tapers toward the tail: three rings of (half width, half depth) at heights."""
+    rings = [(0.62, 0.66, 0.52), (0.02, 0.66, 0.52), (-0.6, 0.36, 0.34)]
+    verts = [(sx * w, sy * d, z) for z, w, d in rings for sx, sy in ((-1, -1), (1, -1), (1, 1), (-1, 1))]
+    faces = [(0, 1, 2, 3), (11, 10, 9, 8)]  # caps wound outward (top up, bottom down)
+    for r in range(2):
+        for i in range(4):
+            a, b = r * 4 + i, r * 4 + (i + 1) % 4
+            faces.append((a + 4, b + 4, b, a))
+    me = bpy.data.meshes.new("body-shell")
+    me.from_pydata(verts, [], faces)
+    o = bpy.data.objects.new("body-shell", me)
+    bpy.context.collection.objects.link(o)
+    return o
+
+
 def build():
     m = {
-        "ivory": material("ivory-plastic", "#ebe1cc", rough=0.45, coat=0.15),
-        "teal": material("teal-rubber", "#1f4a43", rough=0.55),
+        "ivory": material("ivory-plastic", "#e9dfc9", rough=0.5, coat=0.1),
+        "teal": material("teal-rubber", "#21493f", rough=0.55),
         "orange": material("orange-rubber", "#e06a2c", rough=0.6),
-        "joint": material("joint-dark", "#30332f", rough=0.5, metal=0.2),
-        "screen": material("screen-glass", "#1c1e1a", rough=0.15, coat=0.8, emit="#1f2a22", strength=0.6),
-        "glow": material("face-glow", "#ffd27a", rough=0.4, emit="#ffbf4d", strength=0.9),
-        "pupil": material("pupil", "#2a2820", rough=0.6),
-        "brow": material("brow", "#c2b291", rough=0.5),
-        "steel": material("steel", "#8d8a80", rough=0.3, metal=0.8),
-        "tail": material("tail-glass", "#2fa392", rough=0.08, emit="#14786b", strength=0.8, alpha=0.55, coat=1.0),
-        "spark": material("tail-spark", "#fff1b0", emit="#ffe08a", strength=1.6),
+        "joint": material("joint-dark", "#2c302d", rough=0.45, metal=0.3),
+        "steel": material("steel", "#9b968a", rough=0.3, metal=0.85),
+        "screen": material("screen-glass", "#15171a", rough=0.12, coat=1.0, emit="#1b2420", strength=0.5),
+        "glow": material("face-glow", "#ffd98f", rough=0.4, emit="#ffc766", strength=1.6),
+        "cyan": material("screen-rim", "#6ee7ff", emit="#6ee7ff", strength=2.5),
+        "pupil": material("pupil", "#2a261d", rough=0.6),
+        "glint": material("eye-glint", "#ffffff", emit="#ffffff", strength=3.0),
+        "brow": material("brow", "#b8a888", rough=0.5),
+        "tail": material("tail-smoke", "#3fbfa8", rough=0.1, emit="#1f9c88", strength=1.2, alpha=0.6, coat=1.0),
+        "spark": material("tail-spark", "#fff1b0", emit="#ffe9a0", strength=4.0),
     }
+    if hasattr(m["tail"], "surface_render_method"):
+        m["tail"].surface_render_method = "BLENDED"
 
-    m["glint"] = material("eye-glint", "#ffffff", emit="#ffffff", strength=2.0)
-
-    # Head-body: a soft, pillowy CRT housing (bevelled cage + subdivision), narrower at the bottom.
-    bpy.ops.mesh.primitive_cube_add(size=1)
-    shell = active()
-    shell.name = "body-shell"
-    shell.data.transform(Matrix.Diagonal((1.3, 1.0, 1.15, 1)))
-    for v in shell.data.vertices:
-        if v.co.z < 0:
-            v.co.x *= 0.9
-    bevel(shell, 0.26, 3, angle=False)
+    # Body: square top tapering to the tail, softened by bevel + subdivision; screen recess cut in.
+    shell = body_mesh()
+    bevel(shell, 0.2, 3, angle=False)
     shell.modifiers.new("Subsurf", "SUBSURF").levels = 2
-    # Screen recess cut into the front face (front face is y = -0.5).
-    cutter = box("cutter", (0.9, 0.2, 0.7), (0.02, -0.55, 0.07), None, 0.08, 6)
-    boolean = shell.modifiers.new("Recess", "BOOLEAN")
-    boolean.object = cutter
-    boolean.operation = "DIFFERENCE"
-    boolean.solver = "EXACT"
     apply_all(shell)
-    bpy.data.objects.remove(cutter, do_unlink=True)
+    cut(shell, box("cutter", (0.94, 0.2, 0.56), (0.02, -0.6, SCREEN_Z), None, 0.1, 6))
     finish(shell, m["ivory"])
+    bvh = BVHTree.FromObject(shell, bpy.context.evaluated_depsgraph_get())
 
-    # Screen: dark glass, a raised ivory lip around the opening and a dark gasket inside it.
-    box("screen", (0.86, 0.04, 0.66), (0.02, -0.45, 0.07), m["screen"], 0.06, 5)
-    rounded_rect("screen-lip", 0.94, 0.74, 0.11, 0.024, (0.02, -0.49, 0.07), m["ivory"])
-    rounded_rect("screen-gasket", 0.87, 0.67, 0.07, 0.012, (0.02, -0.468, 0.07), m["joint"])
+    # Panel seams down the front corners, cut as shallow grooves that follow the surface.
+    for sx in (1, -1):
+        pts = []
+        for i in range(10):
+            z = -0.08 - i * 0.055
+            w = 0.66 if z > 0.02 else 0.36 + (0.66 - 0.36) * (z + 0.6) / 0.62
+            loc, _ = front(bvh, sx * (w - 0.17), z)
+            pts.append(loc)
+        cut(shell, tube("seam", pts, 0.011, None))
+    bvh = BVHTree.FromObject(shell, bpy.context.evaluated_depsgraph_get())
+    shell.data.polygons.foreach_set("use_smooth", [True] * len(shell.data.polygons))
 
-    # Face on the screen (front of the glass is y = -0.47).
-    fy = -0.475
-    for side, x in (("left", 0.22), ("right", -0.18)):
-        disc(f"{side}-eye", 0.12, (x, fy, EYE_Z), m["glow"], scale=(1, 1.15, 1))
-        disc(f"{side}-pupil", 0.055, (x, fy - 0.003, EYE_Z), m["pupil"])
-        disc(f"{side}-pupil-glint", 0.016, (x + 0.022, fy - 0.0045, EYE_Z + 0.024), m["glint"], verts=16)
-    # Lids: patches of screen that slide over the eyes (rest coverage 0.3 = sly).
-    lid_z = EYE_Z + lid_offset(1, LID_REST)
-    for side, x, tilt in (("left", 0.22, 0.12), ("right", -0.18, -0.12)):
-        bpy.ops.mesh.primitive_plane_add(size=1, location=(x, fy - 0.006, lid_z), rotation=(math.pi / 2, tilt, 0))
+    # Screen glass, raised lip, dark gasket and a thin cyan rim light along the top and right.
+    box("screen", (0.9, 0.04, 0.52), (0.02, -0.5, SCREEN_Z), m["screen"], 0.08, 5)
+    lip_y = front(bvh, 0.02, SCREEN_Z + 0.33)[0].y
+    rounded_rect("screen-lip", 0.98, 0.6, 0.13, 0.024, (0.02, lip_y + 0.004, SCREEN_Z), m["ivory"])
+    rounded_rect("screen-gasket", 0.91, 0.53, 0.09, 0.012, (0.02, -0.523, SCREEN_Z), m["joint"])
+    rim = [(x, SCREEN_Z + 0.245) for x in (-0.1, 0.1, 0.3)]
+    rim += [(0.39 + 0.07 * math.sin(a), SCREEN_Z + 0.175 + 0.07 * math.cos(a)) for a in (0.4, 0.8, 1.2, 1.57)]
+    rim += [(0.46, SCREEN_Z + z) for z in (0.12, 0.0, -0.1)]
+    tube("screen-rim", [(x, -0.527, z) for x, z in rim], 0.006, m["cyan"])
+
+    # Face on the glass (front of the glass is y = -0.52).
+    fy = -0.525
+    for side, x in EYES_X.items():
+        disc(f"{side}-eye", EYE_R, (x, fy, EYE_Z), m["glow"], scale=(1, 1.15, 1))
+        disc(f"{side}-pupil", 0.062, (x, fy - 0.003, EYE_Z), m["pupil"])
+        disc(f"{side}-pupil-glint", 0.018, (x + 0.025, fy - 0.0045, EYE_Z + 0.028), m["glint"], verts=16)
+    # Lids: screen-coloured shutters hanging from the eye top; the rig scales their height (= cover).
+    for side, tilt in (("left", 0.12), ("right", -0.12)):
+        bpy.ops.mesh.primitive_plane_add(size=1, location=(EYES_X[side], fy - 0.006, EYE_TOP),
+                                         rotation=(math.pi / 2, tilt, 0))
         lid = active()
         lid.name = f"{side}-lid"
-        lid.data.transform(Matrix.Diagonal((0.3, LID_H, 1, 1)))
+        lid.data.transform(Matrix.Translation((0, -EYE_HALF, 0)) @ Matrix.Diagonal((0.34, 2 * EYE_HALF + 0.01, 1, 1)))
         finish(lid, m["screen"], smooth=False)
-    # Arched brow ridges, asymmetric: the character's left brow sits higher (smirk).
-    for side, x, raise_, tilt in (("left", 0.22, 0.021, -0.1), ("right", -0.18, 0.0, 0.05)):
-        arc(f"{side}-brow", BROW_R, math.pi / 2 - BROW_ARC / 2, math.pi / 2 + BROW_ARC / 2, 0.03,
-            (x, fy - 0.012, 0.27 - BROW_R + raise_), m["brow"], rot_y=tilt)
-    # Crooked grin: lower half circle; the rig scales it vertically for smile/frown.
-    arc("mouth", 0.1, math.pi, 2 * math.pi, 0.022, (0.07, fy - 0.004, -0.13), m["glow"], rot_y=-0.12)
+    for side, raise_, tilt in (("left", 0.021, -0.1), ("right", 0.0, 0.05)):
+        arc(f"{side}-brow", BROW_R, math.pi / 2 - BROW_ARC / 2, math.pi / 2 + BROW_ARC / 2, 0.034,
+            (EYES_X[side], fy - 0.014, BROW_Z + raise_), m["brow"], rot_y=tilt)
+    arc("mouth", 0.11, math.pi, 2 * math.pi, 0.024, (MOUTH[0], fy - 0.004, MOUTH[1]), m["glow"], rot_y=-0.14)
 
-    # Forest-teal side "ears": dark rim, orange slot at the front, speaker holes at the back.
+    # Front details placed on the surface: orange vent, three ports, slotted grille, sensor.
+    for i, z in enumerate((-0.17, -0.225)):
+        loc, n = front(bvh, -0.17, z)
+        align(box(f"vent-{i}", (0.2, 0.035, 0.036), loc, m["orange"], 0.014, 3), n)
+    for i, x in enumerate((0.14, 0.21, 0.28)):
+        loc, n = front(bvh, x, -0.2)
+        sphere(f"port-{i}", 0.022, loc - n * 0.008, m["joint"], segs=(12, 6))
+    for i in range(4):
+        loc, n = front(bvh, 0.21, -0.33 - i * 0.04)
+        align(box(f"grille-{i}", (0.2, 0.02, 0.016), loc - n * 0.004, m["joint"], 0.007, 2), n)
+    loc, n = front(bvh, 0.44, SCREEN_Z + 0.36)
+    align(cylinder("sensor", 0.035, 0.03, loc, m["steel"], verts=24, edge=0.008), n, axis=(0, 0, 1))
+    loc, n = surface_hit(bvh, (0.12, -0.05, 2), (0, 0, -1))
+    box("top-button", (0.26, 0.15, 0.08), loc, m["orange"], 0.03, 4)
+    box("top-ridge", (0.5, 0.36, 0.05), loc + Vector((-0.12, 0.06, -0.012)), m["joint"], 0.02, 3)
+
+    # Ears: teal discs with a steel rim, a raised inner step and an orange gripped pill.
     for sx in (1, -1):
         side = "left" if sx > 0 else "right"
-        cylinder(f"{side}-ear", 0.34, 0.12, (0.66 * sx, 0, 0.05), m["teal"], rot=(0, math.pi / 2, 0), edge=0.05,
-                 segments=4)
-        bpy.ops.mesh.primitive_torus_add(major_radius=0.29, minor_radius=0.018, location=(0.72 * sx, 0, 0.05),
+        loc, _ = surface_hit(bvh, (2 * sx, 0.04, SCREEN_Z), (-sx, 0, 0))
+        cx = loc.x + 0.02 * sx
+        cylinder(f"{side}-ear", 0.4, 0.13, (cx, 0.04, SCREEN_Z), m["teal"], rot=(0, math.pi / 2, 0), edge=0.05, segments=4)
+        bpy.ops.mesh.primitive_torus_add(major_radius=0.4, minor_radius=0.018, location=(cx - 0.06 * sx, 0.04, SCREEN_Z),
                                          rotation=(0, math.pi / 2, 0))
-        finish(active(), m["joint"]).name = f"{side}-ear-rim"
-        box(f"{side}-ear-slot", (0.04, 0.07, 0.24), (0.735 * sx, -0.11, 0.05), m["orange"], 0.02, 4)
-        holes = [(0, 0)] + [(0.045 * math.cos(i * math.pi / 3), 0.045 * math.sin(i * math.pi / 3)) for i in range(6)] \
-            + [(0.09 * math.cos(i * math.pi / 6), 0.09 * math.sin(i * math.pi / 6)) for i in range(12)]
-        join([sphere(f"{side}-hole-{i}", 0.012, (0.722 * sx, 0.11 + dy, 0.05 + dz), m["joint"], scale=(0.4, 1, 1),
-                     segs=(10, 6)) for i, (dy, dz) in enumerate(holes)], f"{side}-ear-grille")
+        finish(active(), m["steel"]).name = f"{side}-ear-rim"
+        cylinder(f"{side}-ear-step", 0.29, 0.04, (cx + 0.07 * sx, 0.04, SCREEN_Z), m["teal"], rot=(0, math.pi / 2, 0),
+                 edge=0.015, segments=3)
+        box(f"{side}-ear-pill", (0.05, 0.11, 0.27), (cx + 0.1 * sx, -0.02, SCREEN_Z), m["orange"], 0.05, 5)
+        join([box(f"{side}-grip-{i}", (0.02, 0.07, 0.012), (cx + 0.127 * sx, -0.02, SCREEN_Z + dz), m["joint"], 0.004, 2)
+              for i, dz in enumerate((-0.06, 0, 0.06))], f"{side}-ear-grips")
 
-    # Top button, sensor, vents and ports.
-    box("top-button", (0.26, 0.14, 0.07), (0.12, 0.0, 0.58), m["orange"], 0.025, 4)
-    sphere("sensor", 0.03, (0.42, -0.495, 0.46), m["steel"], segs=(16, 8))
-    for i, z in enumerate((-0.305, -0.355)):
-        box(f"vent-{i}", (0.2, 0.03, 0.03), (0.12, -0.5, z), m["orange"], 0.012, 3)
-    for i, x in enumerate((-0.32, -0.25, -0.18)):
-        sphere(f"port-{i}", 0.02, (x, -0.495, -0.33), m["joint"], segs=(12, 6))
-
-    # Rounded "chin" under the body; a dark collar where the tail comes out.
-    sphere("lower-housing", 0.5, (0, 0, -0.56), m["ivory"], scale=(0.86, 0.72, 0.5), segs=(48, 24))
-    bpy.ops.mesh.primitive_torus_add(major_radius=0.43, minor_radius=0.014, location=(0, 0, -0.56))
-    seam = finish(active(), m["joint"])
-    seam.name = "seam-ring"
-    seam.scale = (1, 0.82, 1)
-    bpy.ops.mesh.primitive_torus_add(major_radius=0.21, minor_radius=0.035, location=(0, 0, -0.79))
+    # Dark collar where the body hands over to the tail.
+    bpy.ops.mesh.primitive_torus_add(major_radius=0.3, minor_radius=0.05, location=(0, 0, -0.56))
     collar = finish(active(), m["joint"])
     collar.name = "tail-collar"
-    collar.scale = (1, 0.85, 1)
+    collar.scale = (1.05, 0.95, 1)
 
-    # Arms hang straight down at rest; the rig poses them (rest pose = all zeros).
+    # Arms: dark socket in the body side, ball shoulder, ribbed joints, barrel forearm, big hands.
     for sx in (1, -1):
         side = "left" if sx > 0 else "right"
-        sh = Vector((0.58 * sx, -0.15, -0.38))
+        sock, _ = surface_hit(bvh, (2 * sx, -0.1, -0.22), (-sx, 0, 0))
+        cylinder(f"{side}-socket", 0.14, 0.1, sock + Vector((0.01 * sx, 0, 0)), m["joint"], rot=(0, math.pi / 2, 0),
+                 edge=0.03)
+        sh = sock + Vector((0.11 * sx, 0, 0))
         el = sh + Vector((0, 0, -0.32))
-        hd = el + Vector((0, 0, -0.38))
-        sphere(f"{side}-shoulder", 0.11, sh, m["joint"])
-        capsule(f"{side}-upper-arm", 0.088, 0.32, sh + Vector((0, 0, -0.16)), m["ivory"])
-        sphere(f"{side}-elbow", 0.086, el, m["joint"])
-        capsule(f"{side}-forearm", 0.083, 0.28, el + Vector((0, 0, -0.15)), m["ivory"])
-        cylinder(f"{side}-wrist", 0.09, 0.05, el + Vector((0, 0, -0.29)), m["orange"], verts=24, edge=0.012)
-        box(f"{side}-palm", (0.2, 0.12, 0.18), hd, m["teal"], 0.055, 4)
-        disc(f"{side}-palm-pad", 0.05, hd + Vector((0, -0.062, 0.005)), m["orange"])
-        xs = (-0.069, -0.023, 0.023, 0.069)
-        join([sphere(f"{side}-k{i}", 0.032, hd + Vector((fx, -0.01, -0.085)), m["joint"], segs=(12, 8))
-              for i, fx in enumerate(xs)], f"{side}-knuckles")
-        fingers = [capsule(f"{side}-f{i}", 0.03, 0.12, hd + Vector((fx, -0.01, -0.145)), m["ivory"])
-                   for i, fx in enumerate(xs)]
-        fingers.append(capsule(f"{side}-t", 0.03, 0.1, hd + Vector((0.11 * sx, -0.025, -0.01)), m["ivory"],
-                               rot=(0, -0.9 * sx, 0)))
+        wr = el + Vector((0, 0, -0.36))
+        hd = wr + Vector((0, 0, -0.14))
+        JOINTS[side] = (sh, el, wr)
+        sphere(f"{side}-shoulder", 0.105, sh, m["joint"])
+        capsule(f"{side}-upper-arm", 0.1, 0.3, sh + Vector((0, 0, -0.16)), m["ivory"])
+        for dz in (0.035, -0.035):
+            bpy.ops.mesh.primitive_torus_add(major_radius=0.085, minor_radius=0.022, location=el + Vector((0, 0, dz)))
+            finish(active(), m["joint"]).name = f"{side}-elbow-rib"
+        sphere(f"{side}-forearm", 0.13, el + Vector((0, 0, -0.19)), m["ivory"], scale=(0.95, 0.95, 1.35))
+        for dz in (0.03, -0.01):
+            bpy.ops.mesh.primitive_torus_add(major_radius=0.08, minor_radius=0.02, location=wr + Vector((0, 0, dz)))
+            finish(active(), m["joint"]).name = f"{side}-wrist-rib"
+        box(f"{side}-palm", (0.26, 0.16, 0.22), hd, m["teal"], 0.07, 4)
+        cylinder(f"{side}-palm-button", 0.062, 0.03, hd + Vector((0, -0.085, 0.01)), m["orange"],
+                 rot=(math.pi / 2, 0, 0), verts=24, edge=0.01)
+        xs = (-0.09, -0.03, 0.03, 0.09)
+        joints, fingers = [], []
+        for i, fx in enumerate(xs):
+            joints.append(sphere(f"{side}-k{i}", 0.042, hd + Vector((fx, -0.01, -0.115)), m["joint"], segs=(14, 8)))
+            fingers.append(capsule(f"{side}-p{i}", 0.04, 0.13, hd + Vector((fx, -0.014, -0.175)), m["ivory"]))
+            joints.append(sphere(f"{side}-m{i}", 0.034, hd + Vector((fx, -0.02, -0.24)), m["joint"], segs=(14, 8)))
+            fingers.append(capsule(f"{side}-d{i}", 0.037, 0.11, hd + Vector((fx, -0.045, -0.285)), m["ivory"],
+                                   rot=(-0.5, 0, 0)))
+        joints.append(sphere(f"{side}-tk", 0.04, hd + Vector((0.13 * sx, -0.04, -0.03)), m["joint"], segs=(14, 8)))
+        fingers.append(capsule(f"{side}-t", 0.04, 0.13, hd + Vector((0.17 * sx, -0.06, -0.07)), m["ivory"],
+                               rot=(-0.3, -0.8 * sx, 0)))
+        join(joints, f"{side}-knuckles")
         join(fingers, f"{side}-fingers")
 
-    # Glass tail: a tapering NURBS tube that curls up at the tip, with sparks inside.
-    pts = TAIL_PTS
-    radii = [0.23 * (1 - i / 6) ** 1.1 + 0.015 for i in range(7)]
+    # Smoke tail: a tapering NURBS tube; the R3F scene gives it a moving glow shader.
     cu = bpy.data.curves.new("tail", "CURVE")
     cu.dimensions = "3D"
     cu.bevel_depth = 1.0
-    cu.bevel_resolution = 6
-    cu.resolution_u = 16
+    cu.bevel_resolution = 8
+    cu.resolution_u = 20
     cu.use_fill_caps = True
     sp = cu.splines.new("NURBS")
-    sp.points.add(len(pts) - 1)
-    for p, (x, y, z), r in zip(sp.points, pts, radii):
+    sp.points.add(len(TAIL_PTS) - 1)
+    for p, (x, y, z), r in zip(sp.points, TAIL_PTS, TAIL_R):
         p.co = (x, y, z, 1)
         p.radius = r
     sp.order_u = 4
@@ -355,14 +452,10 @@ def build():
     cu.materials.append(m["tail"])
     apply_all(tail)
     finish(tail)
-    if hasattr(m["tail"], "surface_render_method"):
-        m["tail"].surface_render_method = "BLENDED"
-    # Sparks only where the tube is thick enough to keep them inside.
     for i in (1, 2, 3):
         for j, f in enumerate((0.3, 0.7)):
-            a, b_ = Vector(pts[i]), Vector(pts[i + 1])
-            c = a.lerp(b_, f) + Vector((0.04 * (1 if (i + j) % 2 else -1), 0, 0))
-            sphere(f"tail-spark-{i}-{j}", 0.014, c, m["spark"], segs=(10, 6))
+            c = Vector(TAIL_PTS[i]).lerp(Vector(TAIL_PTS[i + 1]), f) + Vector((0.06 * (1 if (i + j) % 2 else -1), 0, 0))
+            sphere(f"tail-spark-{i}-{j}", 0.022, c, m["spark"], segs=(10, 6))
 
     return m
 
@@ -373,11 +466,10 @@ def build():
 # from src/genie/pose.ts map onto bone-local transforms one to one.
 
 FACE_BONES = {  # bone: head position
-    "left-pupil": (0.22, -0.478, EYE_Z), "right-pupil": (-0.18, -0.478, EYE_Z),
-    "left-lid": (0.22, -0.481, EYE_Z + lid_offset(1, LID_REST)),
-    "right-lid": (-0.18, -0.481, EYE_Z + lid_offset(1, LID_REST)),
-    "left-brow": (0.22, -0.485, 0.27 - BROW_R + 0.021), "right-brow": (-0.18, -0.485, 0.27 - BROW_R),
-    "mouth": (0.07, -0.479, -0.13),
+    **{f"{side}-pupil": (x, -0.528, EYE_Z) for side, x in EYES_X.items()},
+    **{f"{side}-lid": (x, -0.531, EYE_TOP) for side, x in EYES_X.items()},
+    "left-brow": (EYES_X["left"], -0.539, BROW_Z + 0.021), "right-brow": (EYES_X["right"], -0.539, BROW_Z),
+    "mouth": (MOUTH[0], -0.529, MOUTH[1]),
 }
 
 
@@ -385,12 +477,12 @@ def bone_for(name):
     for b in FACE_BONES:
         if name == b or name.startswith(b + "-"):
             return b
-    if name in ("left-eye", "right-eye"):
+    if name.startswith(("left-eye", "right-eye")):
         return "face"
     for side in ("left", "right"):
         if name in (f"{side}-shoulder", f"{side}-upper-arm"):
             return f"{side}-arm"
-        if name in (f"{side}-elbow", f"{side}-forearm", f"{side}-wrist"):
+        if name.startswith((f"{side}-elbow", f"{side}-forearm", f"{side}-wrist")):
             return f"{side}-forearm"
         if name.startswith((f"{side}-palm", f"{side}-knuckles", f"{side}-fingers")):
             return f"{side}-hand"
@@ -419,13 +511,14 @@ def rig(col):
         return b
 
     bone("body", (0, 0, 0))
-    bone("face", (0.02, -0.47, EYE_Z), "body")
+    bone("face", (0.02, -0.52, SCREEN_Z), "body")
     for name, head in FACE_BONES.items():
         bone(name, head, "face")
     for sx, side in ((1, "left"), (-1, "right")):
-        bone(f"{side}-arm", (0.58 * sx, -0.15, -0.38), "body")
-        bone(f"{side}-forearm", (0.58 * sx, -0.15, -0.70), f"{side}-arm")
-        bone(f"{side}-hand", (0.58 * sx, -0.15, -1.0), f"{side}-forearm")
+        sh, el, wr = JOINTS[side]
+        bone(f"{side}-arm", sh, "body")
+        bone(f"{side}-forearm", el, f"{side}-arm")
+        bone(f"{side}-hand", wr, f"{side}-forearm")
     prev = "body"
     for i in range(len(TAIL_PTS) - 1):
         name = "tail" if i == 0 else f"tail-{i}"
@@ -469,9 +562,9 @@ def apply_pose(arm, p, t):
     pb["right-forearm"].rotation_euler = (-p["lElbow"], 0, 0)
     for side in ("left", "right"):
         pb[f"{side}-pupil"].location = (p["lookX"] * 0.045, p["lookY"] * 0.05, 0)
-    lid_y = lid_offset(p["eyeOpen"], p["lid"]) - lid_offset(1, LID_REST)
-    pb["left-lid"].location = (0, lid_y, 0)
-    pb["right-lid"].location = (0, lid_y, 0)
+    cover = max(lid_cover(p["eyeOpen"], p["lid"]), 0.001)
+    pb["left-lid"].scale = (1, cover, 1)
+    pb["right-lid"].scale = (1, cover, 1)
     pb["left-lid"].rotation_euler = (0, 0, -p["browTilt"] * 0.45)
     pb["right-lid"].rotation_euler = (0, 0, p["browTilt"] * 0.45)
     pb["left-brow"].location = (0, (p["browR"] - 0.35) * 0.06, 0)
@@ -565,6 +658,17 @@ def render(name):
     os.makedirs(os.path.dirname(path), exist_ok=True)
     bpy.context.scene.render.filepath = path
     bpy.ops.render.render(write_still=True)
+    return path
+
+
+def closeup(name, target, offset=(0.9, -1.6, 0.3), lens=85):
+    cam = bpy.data.objects["Camera"]
+    keep = (cam.location.copy(), cam.rotation_euler.copy(), cam.data.lens)
+    cam.location = Vector(target) + Vector(offset)
+    cam.data.lens = lens
+    look_at(cam, target)
+    path = render(name)
+    cam.location, cam.rotation_euler, cam.data.lens = keep
     return path
 
 
