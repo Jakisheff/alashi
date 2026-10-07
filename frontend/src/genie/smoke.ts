@@ -44,7 +44,8 @@ export function createSmokeMaterial() {
         vec3 flow = vec3(0.0, uTime * 0.45, uTime * 0.15);
         float wisp = fbm(vObjPos * 3.2 + flow);
         float vein = smoothstep(0.55, 0.8, fbm(vObjPos * 6.5 - flow * 1.7));
-        float rim = pow(1.0 - abs(dot(normalize(vNormal), normalize(vViewPosition))), 2.2);
+        // clamp: abs(dot) can round past 1, and pow() of a negative base is NaN (bloom smears it into a black frame)
+        float rim = pow(clamp(1.0 - abs(dot(normalize(vNormal), normalize(vViewPosition))), 0.0, 1.0), 2.2);
         totalEmissiveRadiance *= 0.25 + 1.1 * wisp * wisp + 0.9 * vein;
         totalEmissiveRadiance += vec3(0.35, 0.95, 0.85) * rim * 0.8;
         diffuseColor.a = clamp(0.45 + 0.45 * rim + 0.3 * wisp + 0.25 * vein, 0.0, 0.95);`,
