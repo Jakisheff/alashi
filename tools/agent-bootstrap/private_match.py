@@ -276,8 +276,12 @@ def run(args):
     game = joined[0].get('game_id')
     if not numeric(game) or game == 0 or joined[1].get('game_id') != game:
         raise Stop('agents were assigned different games')
+    if joined[0].get('faction_idx') == joined[1].get('faction_idx') \
+            or not all(numeric(x.get('faction_idx')) for x in joined):
+        raise Stop('agents were assigned the same or invalid faction')
     deadline = time.monotonic() + 1800
     used = [0, 0]
+    accepted = [0, 0]
     while time.monotonic() < deadline:
         replies = []
         for home, name, model in zip(homes, names, models):
@@ -299,6 +303,8 @@ def run(args):
             ended = terminal(reply, game, identities)
             if ended:
                 ended['model_decisions'] = used
+                ended['accepted_actions'] = accepted
+                ended['e2e_verified'] = all(count > 0 for count in accepted)
                 return ended
             replies.append(reply)
         options = []
@@ -323,6 +329,8 @@ def run(args):
                              '--json', json.dumps(decision, separators=(',', ':')))
                 if reply.get('op_consumed') is not True:
                     raise Stop('action outcome unresolved; saved operation requires review')
+                if reply.get('ok') is True:
+                    accepted[i] += 1
                 print(json.dumps({'status': 'action', 'game_id': game, 'player': i,
                                   'accepted': reply.get('ok') is True, 'decision_count': used[i]}), flush=True)
         else:

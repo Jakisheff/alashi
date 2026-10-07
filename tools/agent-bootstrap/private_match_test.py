@@ -117,7 +117,8 @@ class Checks(unittest.TestCase):
             calls.append((str(home), command, options))
             if command == 'start':
                 self.assertIn('--existing-only', options)
-                return {'ok': True, 'status': 'joined', 'game_id': 3}
+                return {'ok': True, 'status': 'joined', 'game_id': 3,
+                        'faction_idx': 0 if str(home).endswith('codex') else 1}
             if command == 'state':
                 states += 1
                 return live if states <= 2 else finished
@@ -136,6 +137,8 @@ class Checks(unittest.TestCase):
             outcome = match.run(args)
         self.assertEqual(outcome['status'], 'finished')
         self.assertEqual(outcome['model_decisions'], [1, 1])
+        self.assertEqual(outcome['accepted_actions'], [1, 1])
+        self.assertTrue(outcome['e2e_verified'])
         self.assertEqual([c[1] for c in calls], ['start', 'start', 'state', 'state', 'act', 'act', 'state'])
 
 
