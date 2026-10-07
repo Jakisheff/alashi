@@ -27,6 +27,30 @@ class Stop(Exception):
     pass
 
 
+class ProviderFailure(Stop):
+    def __init__(self, model, failure, elapsed_ms, timeout_s, exit_code=None):
+        self.failure = failure
+        self.diagnostic = {'failure': failure, 'model': model, 'elapsed_ms': elapsed_ms,
+                           'timeout_s': timeout_s, 'exit_code': exit_code}
+        super().__init__(f'{model} {failure}')
+
+
+def provider_run(model, command, timeout_s, **kwargs):
+    started = time.monotonic()
+    try:
+        result = subprocess.run(command, timeout=timeout_s, **kwargs)
+    except subprocess.TimeoutExpired:
+        raise ProviderFailure(model, 'timeout', round((time.monotonic() - started) * 1000),
+                              timeout_s) from None
+    except OSError:
+        raise ProviderFailure(model, 'os_error', round((time.monotonic() - started) * 1000),
+                              timeout_s) from None
+    elapsed_ms = round((time.monotonic() - started) * 1000)
+    if result.returncode:
+        raise ProviderFailure(model, 'nonzero_exit', elapsed_ms, timeout_s, result.returncode)
+    return result, elapsed_ms
+
+
 def frame_hash(prefix, parts):
     h = hashlib.sha256(prefix.encode())
     for part in parts:
@@ -240,13 +264,12 @@ def model_decision(kind, safe, actions, timeout_s):
                        '-c', 'web_search="disabled"', '--model', 'gpt-6-sol',
                        '--skip-git-repo-check', '--ephemeral', '-C', temporary,
                        '--output-schema', str(schema), '-o', str(answer), '-']
-            try:
-                result = subprocess.run(command, input=prompt, text=True, stdout=subprocess.DEVNULL,
-                                        stderr=subprocess.DEVNULL, timeout=timeout)
-            except (OSError, subprocess.TimeoutExpired):
-                raise Stop('Codex decision unavailable') from None
-            if result.returncode or not answer.is_file() or answer.stat().st_size > 4096:
-                raise Stop('Codex decision unavailable')
+            _, elapsed_ms = provider_run('gpt-6-sol', command, timeout, input=prompt, text=True,
+                                         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            if not answer.is_file():
+                raise ProviderFailure('gpt-6-sol', 'missing_output', elapsed_ms, timeout)
+            if answer.stat().st_size > 4096:
+                raise ProviderFailure('gpt-6-sol', 'oversized_output', elapsed_ms, timeout)
             raw = answer.read_text().strip()
         else:
             write_opencode_config(root)
@@ -264,13 +287,11 @@ def model_decision(kind, safe, actions, timeout_s):
             command = ['opencode', 'run', '--pure', '--agent', 'alashi-choice',
                        '--model', 'zai-coding-plan/glm-5.3-flash', '--format', 'json',
                        '--dir', temporary, prompt]
-            try:
-                result = subprocess.run(command, cwd=temporary, text=True,
-                                        capture_output=True, timeout=timeout)
-            except (OSError, subprocess.TimeoutExpired):
-                raise Stop('OpenCode decision unavailable') from None
-            if result.returncode or len(result.stdout) > MAX_OUTPUT:
-                raise Stop('OpenCode decision unavailable')
+            result, elapsed_ms = provider_run('zai-coding-plan/glm-5.3-flash', command, timeout,
+                                              cwd=temporary, text=True, capture_output=True)
+            if len(result.stdout) > MAX_OUTPUT:
+                raise ProviderFailure('zai-coding-plan/glm-5.3-flash', 'oversized_output',
+                                      elapsed_ms, timeout)
             raw = opencode_text(result.stdout)
     return choice(raw, actions)
 
@@ -314,6 +335,9 @@ def run(args):
     deadline = time.monotonic() + 1800
     used = [0, 0]
     accepted = [0, 0]
+    timeouts = [0, 0]
+    stale = [0, 0]
+    rejected = [0, 0]
     attempted = set()
     while time.monotonic() < deadline:
         replies = []
@@ -340,7 +364,10 @@ def run(args):
             if ended:
                 ended['model_decisions'] = used
                 ended['accepted_actions'] = accepted
-                ended['e2e_verified'] = all(count > 0 for count in accepted)
+                ended['model_timeouts'] = timeouts
+                ended['stale_choices'] = stale
+                ended['rejected_actions'] = rejected
+                ended['both_models_acted'] = all(count > 0 for count in accepted)
                 return ended
             if retry_rejected:
                 state = view(reply, game)
@@ -363,15 +390,27 @@ def run(args):
             for i in actionable:
                 safe = options[i][0]
                 attempted.add((i, safe['round'], safe['phase']))
+            decisions = {}
             with ThreadPoolExecutor(max_workers=2) as pool:
-                future = {i: pool.submit(model_decision, ['codex', 'opencode'][i],
-                                         *options[i], decision_timeout(options[i][0], deadline))
-                          for i in actionable}
-                decisions = {i: task.result() for i, task in future.items()}
+                future = {}
+                for i in actionable:
+                    used[i] += 1
+                    future[i] = pool.submit(model_decision, ['codex', 'opencode'][i],
+                                            *options[i], decision_timeout(options[i][0], deadline))
+                for i, task in future.items():
+                    try:
+                        decisions[i] = task.result()
+                    except ProviderFailure as error:
+                        if error.failure != 'timeout':
+                            raise
+                        timeouts[i] += 1
+                        print(json.dumps({'status': 'model_timeout', 'game_id': game,
+                                          'player': i, 'decision_count': used[i],
+                                          **error.diagnostic}), flush=True)
             for i, decision in decisions.items():
-                used[i] += 1
                 fresh = node(homes[i], args.url, 'state', '--game', str(game))
                 if fresh.get('finished') is True:
+                    stale[i] += 1
                     continue
                 current = view(fresh, game)
                 previous = options[i][0]
@@ -379,6 +418,7 @@ def run(args):
                         or current['own_idx'] != previous['own_idx'] \
                         or decision_timeout(current, deadline) < 2 \
                         or {key: value for key, value in decision.items() if key != 'by'} not in candidates(current):
+                    stale[i] += 1
                     print(json.dumps({'status': 'stale_choice', 'game_id': game, 'player': i,
                                       'decision_count': used[i]}), flush=True)
                     continue
@@ -388,6 +428,8 @@ def run(args):
                     raise Stop('action outcome unresolved; saved operation requires review')
                 if reply.get('ok') is True:
                     accepted[i] += 1
+                else:
+                    rejected[i] += 1
                 print(json.dumps({'status': 'action', 'game_id': game, 'player': i,
                                   'accepted': reply.get('ok') is True, 'decision_count': used[i]}), flush=True)
         else:
@@ -403,6 +445,10 @@ def main():
     args = parser.parse_args()
     try:
         print(json.dumps(run(args)))
+    except ProviderFailure as error:
+        print(json.dumps({'ok': False, 'status': 'stopped', 'reason': 'provider_failure',
+                          **error.diagnostic}))
+        sys.exit(1)
     except (Stop, OSError, ValueError, KeyError, TypeError, json.JSONDecodeError) as error:
         print(json.dumps({'ok': False, 'status': 'stopped', 'reason': str(error)
                           if isinstance(error, Stop) else 'invalid private input'}))
