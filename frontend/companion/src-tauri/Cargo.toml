@@ -1,0 +1,15 @@
+# Own workspace: the repo root Cargo.toml is the on-chain workspace and must not pick this up
+[workspace]
+
+[package]
+name = "alashi-companion"
+version = "0.1.0"
+edition = "2021"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["macos-private-api"] }
+serde = { version = "1", features = ["derive"] }
+tauri-plugin-http = "2"

@@ -1,0 +1,22 @@
+@import 'tailwindcss';
+@source '../../src/log';
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  background: transparent;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* In a plain browser tab (no Tauri) show a checkerboard so transparency problems are visible */
+html.browser body {
+  background: repeating-conic-gradient(#d4d4d8 0 25%, #52525b 0 50%) 0 0 / 32px 32px;
+}
+
+/* The log board is a full page on the site; inside the panel it fills the panel instead of the viewport */
+.panel .min-h-dvh {
+  min-height: 100%;
+}

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Degenie",
+  "version": "0.1.0",
+  "identifier": "network.alashi.companion",
+  "build": {
+    "beforeDevCommand": "npx vite --config vite.config.ts",
+    "beforeBuildCommand": "npx vite build --config vite.config.ts",
+    "devUrl": "http://localhost:5180",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "macOSPrivateApi": true,
+    "windows": [
+      {
+        "label": "main",
+        "title": "Degenie",
+        "width": 400,
+        "height": 400,
+        "transparent": true,
+        "decorations": false,
+        "shadow": false,
+        "alwaysOnTop": true,
+        "skipTaskbar": true,
+        "resizable": false,
+        "focus": false,
+        "visibleOnAllWorkspaces": true
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": [
+      "app",
+      "dmg"
+    ],
+    "icon": [
+      "icons/icon.png"
+    ],
+    "category": "Entertainment",
+    "shortDescription": "Degenie, the alashi desktop companion"
+  }
+}
