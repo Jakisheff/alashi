@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Private, bounded two-harness match using saved Node bootstrap identities."""
 import argparse
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import hashlib
 import http.client
 import json
@@ -229,11 +229,13 @@ def opencode_text(output):
     return texts[-1].strip()
 
 
-def decision_timeout(safe, deadline):
+def decision_timeout(safe, deadline, state_requested_at=None):
     if safe['now'] is None or safe['grace_until'] is None:
         return 0
-    return max(0, min(20, safe['grace_until'] - safe['now'] - 2,
-                      deadline - time.monotonic()))
+    current = time.monotonic()
+    age = max(0, current - state_requested_at) if state_requested_at is not None else 0
+    return max(0, min(20, safe['grace_until'] - safe['now'] - 2 - age,
+                      deadline - current))
 
 
 def write_opencode_config(root):
@@ -244,14 +246,21 @@ def write_opencode_config(root):
     return config
 
 
-def model_decision(kind, safe, actions, timeout_s):
+def model_decision(kind, safe, actions, cutoff):
+    started = time.monotonic()
+    allowance = max(0, cutoff - started)
+    def remaining(model):
+        left = cutoff - time.monotonic()
+        if left < 5:
+            raise ProviderFailure(model, 'budget_expired',
+                                  round((time.monotonic() - started) * 1000), allowance)
+        return left
     prompt = ('Choose one strategically best action for your Alashi faction. Game money is simulated. '
               'Return only JSON {"choice":integer}, the zero-based index into candidates. '
               'No tools, files, shell, web, wallet, or other commands. '
               + json.dumps({'state': safe, 'candidates': actions}, separators=(',', ':')))
     with tempfile.TemporaryDirectory(prefix='alashi-model-') as temporary:
         root = Path(temporary)
-        timeout = max(1, min(20, int(timeout_s)))
         if kind == 'codex':
             schema = root / 'schema.json'
             schema.write_text(json.dumps({'type': 'object', 'additionalProperties': False,
@@ -264,6 +273,7 @@ def model_decision(kind, safe, actions, timeout_s):
                        '-c', 'web_search="disabled"', '--model', 'gpt-6-sol',
                        '--skip-git-repo-check', '--ephemeral', '-C', temporary,
                        '--output-schema', str(schema), '-o', str(answer), '-']
+            timeout = remaining('gpt-6-sol')
             _, elapsed_ms = provider_run('gpt-6-sol', command, timeout, input=prompt, text=True,
                                          stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             if not answer.is_file():
@@ -273,11 +283,18 @@ def model_decision(kind, safe, actions, timeout_s):
             raw = answer.read_text().strip()
         else:
             write_opencode_config(root)
+            model = 'zai-coding-plan/glm-5.3-flash'
             try:
                 resolved = subprocess.run(['opencode', 'debug', 'config', '--pure'], cwd=temporary,
-                                          text=True, capture_output=True, timeout=15)
+                                          text=True, capture_output=True,
+                                          timeout=min(15, remaining(model)))
                 effective = json.loads(resolved.stdout)
-            except (OSError, subprocess.TimeoutExpired, json.JSONDecodeError):
+            except subprocess.TimeoutExpired:
+                if cutoff - time.monotonic() < 1:
+                    raise ProviderFailure(model, 'budget_expired',
+                                          round((time.monotonic() - started) * 1000), allowance) from None
+                raise Stop('OpenCode permission check unavailable') from None
+            except (OSError, json.JSONDecodeError):
                 raise Stop('OpenCode permission check unavailable') from None
             agent = (effective.get('agent') or {}).get('alashi-choice') or {}
             if resolved.returncode or effective.get('permission') != {'*': 'deny'} \
@@ -287,6 +304,7 @@ def model_decision(kind, safe, actions, timeout_s):
             command = ['opencode', 'run', '--pure', '--agent', 'alashi-choice',
                        '--model', 'zai-coding-plan/glm-5.3-flash', '--format', 'json',
                        '--dir', temporary, prompt]
+            timeout = remaining('zai-coding-plan/glm-5.3-flash')
             result, elapsed_ms = provider_run('zai-coding-plan/glm-5.3-flash', command, timeout,
                                               cwd=temporary, text=True, capture_output=True)
             if len(result.stdout) > MAX_OUTPUT:
@@ -338,6 +356,7 @@ def run(args):
     timeouts = [0, 0]
     stale = [0, 0]
     rejected = [0, 0]
+    budget_expired = [0, 0]
     attempted = set()
     while time.monotonic() < deadline:
         replies = []
@@ -357,6 +376,7 @@ def run(args):
                         or session(home, game).get('pending_act') is not None:
                     raise Stop('pending operation unresolved')
                 retry_rejected = retry.get('ok') is False
+            state_requested_at = time.monotonic()
             reply = node(home, args.url, 'state', '--game', str(game))
             if reply.get('ok') is not True:
                 raise Stop('game state unavailable')
@@ -367,71 +387,84 @@ def run(args):
                 ended['model_timeouts'] = timeouts
                 ended['stale_choices'] = stale
                 ended['rejected_actions'] = rejected
+                ended['budget_expired'] = budget_expired
                 ended['both_models_acted'] = all(count > 0 for count in accepted)
                 return ended
             if retry_rejected:
                 state = view(reply, game)
                 attempted.add((i, state['round'], state['phase']))
-            replies.append(reply)
+            replies.append((reply, state_requested_at))
         options = []
-        for reply in replies:
+        for reply, state_requested_at in replies:
             safe = view(reply, game)
             actions = candidates(safe)
             if safe['grace_until'] is not None and safe['now'] is not None \
                     and safe['now'] >= safe['grace_until']:
                 actions = []
-            options.append((safe, actions))
-        actionable = [i for i, (safe, actions) in enumerate(options)
+            options.append((safe, actions, state_requested_at))
+        actionable = [i for i, (safe, actions, requested_at) in enumerate(options)
                       if actions and (i, safe['round'], safe['phase']) not in attempted
-                      and decision_timeout(safe, deadline) >= 5]
+                      and decision_timeout(safe, deadline, requested_at) >= 5]
         if actionable:
             if any(used[i] >= 20 for i in actionable):
                 raise Stop('per-model decision cap reached')
-            for i in actionable:
-                safe = options[i][0]
-                attempted.add((i, safe['round'], safe['phase']))
-            decisions = {}
             with ThreadPoolExecutor(max_workers=2) as pool:
                 future = {}
                 for i in actionable:
+                    safe, actions, requested_at = options[i]
+                    allowance = decision_timeout(safe, deadline, requested_at)
+                    if allowance < 5:
+                        continue
+                    attempted.add((i, safe['round'], safe['phase']))
                     used[i] += 1
-                    future[i] = pool.submit(model_decision, ['codex', 'opencode'][i],
-                                            *options[i], decision_timeout(options[i][0], deadline))
-                for i, task in future.items():
+                    cutoff = time.monotonic() + allowance
+                    task = pool.submit(model_decision, ['codex', 'opencode'][i],
+                                       safe, actions, cutoff)
+                    future[task] = i
+                if not future:
+                    time.sleep(2)
+                for task in as_completed(future):
+                    i = future[task]
                     try:
-                        decisions[i] = task.result()
+                        decision = task.result()
                     except ProviderFailure as error:
-                        if error.failure != 'timeout':
+                        if error.failure == 'timeout':
+                            timeouts[i] += 1
+                            status = 'model_timeout'
+                        elif error.failure == 'budget_expired':
+                            budget_expired[i] += 1
+                            status = 'budget_expired'
+                        else:
                             raise
-                        timeouts[i] += 1
-                        print(json.dumps({'status': 'model_timeout', 'game_id': game,
+                        print(json.dumps({'status': status, 'game_id': game,
                                           'player': i, 'decision_count': used[i],
                                           **error.diagnostic}), flush=True)
-            for i, decision in decisions.items():
-                fresh = node(homes[i], args.url, 'state', '--game', str(game))
-                if fresh.get('finished') is True:
-                    stale[i] += 1
-                    continue
-                current = view(fresh, game)
-                previous = options[i][0]
-                if current['round'] != previous['round'] or current['phase'] != previous['phase'] \
-                        or current['own_idx'] != previous['own_idx'] \
-                        or decision_timeout(current, deadline) < 2 \
-                        or {key: value for key, value in decision.items() if key != 'by'} not in candidates(current):
-                    stale[i] += 1
-                    print(json.dumps({'status': 'stale_choice', 'game_id': game, 'player': i,
-                                      'decision_count': used[i]}), flush=True)
-                    continue
-                reply = node(homes[i], args.url, 'act', '--game', str(game),
-                             '--json', json.dumps(decision, separators=(',', ':')))
-                if reply.get('op_consumed') is not True:
-                    raise Stop('action outcome unresolved; saved operation requires review')
-                if reply.get('ok') is True:
-                    accepted[i] += 1
-                else:
-                    rejected[i] += 1
-                print(json.dumps({'status': 'action', 'game_id': game, 'player': i,
-                                  'accepted': reply.get('ok') is True, 'decision_count': used[i]}), flush=True)
+                        continue
+                    fresh_requested_at = time.monotonic()
+                    fresh = node(homes[i], args.url, 'state', '--game', str(game))
+                    if fresh.get('finished') is True:
+                        stale[i] += 1
+                        continue
+                    current = view(fresh, game)
+                    previous = options[i][0]
+                    if current['round'] != previous['round'] or current['phase'] != previous['phase'] \
+                            or current['own_idx'] != previous['own_idx'] \
+                            or decision_timeout(current, deadline, fresh_requested_at) < 2 \
+                            or {key: value for key, value in decision.items() if key != 'by'} not in candidates(current):
+                        stale[i] += 1
+                        print(json.dumps({'status': 'stale_choice', 'game_id': game, 'player': i,
+                                          'decision_count': used[i]}), flush=True)
+                        continue
+                    reply = node(homes[i], args.url, 'act', '--game', str(game),
+                                 '--json', json.dumps(decision, separators=(',', ':')))
+                    if reply.get('op_consumed') is not True:
+                        raise Stop('action outcome unresolved; saved operation requires review')
+                    if reply.get('ok') is True:
+                        accepted[i] += 1
+                    else:
+                        rejected[i] += 1
+                    print(json.dumps({'status': 'action', 'game_id': game, 'player': i,
+                                      'accepted': reply.get('ok') is True, 'decision_count': used[i]}), flush=True)
         else:
             time.sleep(2)
     raise Stop('30-minute match deadline reached')

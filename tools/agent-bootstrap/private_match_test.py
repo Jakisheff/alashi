@@ -99,6 +99,8 @@ class Checks(unittest.TestCase):
         deadline = time.monotonic() + 1800
         self.assertEqual(match.decision_timeout({'now': 100, 'grace_until': 130}, deadline), 20)
         self.assertEqual(match.decision_timeout({'now': 128, 'grace_until': 130}, deadline), 0)
+        with patch.object(match.time, 'monotonic', return_value=100):
+            self.assertEqual(match.decision_timeout({'now': 100, 'grace_until': 130}, 1000, 85), 13)
 
     def test_provider_failures_keep_only_safe_diagnostics(self):
         cases = [
@@ -126,7 +128,7 @@ class Checks(unittest.TestCase):
             return subprocess.CompletedProcess(command, 0)
         with patch.object(match.subprocess, 'run', side_effect=oversized):
             with self.assertRaises(match.ProviderFailure) as caught:
-                match.model_decision('codex', {'phase': 'market'}, [{'action': 'sell'}], 8)
+                match.model_decision('codex', {'phase': 'market'}, [{'action': 'sell'}], match.time.monotonic() + 8)
         self.assertEqual(caught.exception.diagnostic['failure'], 'oversized_output')
         self.assertEqual(caught.exception.diagnostic['model'], 'gpt-6-sol')
         self.assertNotIn('private-content', str(caught.exception) + json.dumps(caught.exception.diagnostic))
@@ -311,6 +313,158 @@ class Checks(unittest.TestCase):
         self.assertEqual(outcome['model_decisions'], [2, 2])
         self.assertEqual(outcome['accepted_actions'], [2, 1])
         self.assertEqual(outcome['model_timeouts'], [0, 1])
+
+    def test_fast_player_submits_while_slower_peer_is_still_pending(self):
+        faction = {'cash': 2_000_000, 'goods': 1, 'influence': 1, 'vote_weight': 1,
+                   'acted': False, 'voted': False, 'is_president': False, 'alive': True}
+        live = {'ok': True, 'game_id': 3, 'state': {
+            'game_id': 3, 'execution_mode': 'http_simulated', 'phase': 'market',
+            'epoch': 'classic', 'round': 1, 'now': 1, 'grace_until': 100,
+            'price_now': 1, 'factions': [faction, faction]}}
+        finished = {'ok': True, 'game_id': 3, 'finished': True,
+                    'result': {'game_id': 3, 'party_no': 19, 'final_cash': [1, 2]}}
+        slow_started = threading.Event()
+        release_slow = threading.Event()
+        fast_acted = threading.Event()
+        calls = []
+        state_calls = 0
+        outcome = []
+        errors = []
+        def fake_node(home, url, command, *options):
+            nonlocal state_calls
+            idx = 0 if str(home).endswith('codex') else 1
+            if command == 'start':
+                return {'ok': True, 'status': 'joined', 'game_id': 3, 'faction_idx': idx}
+            if command == 'state':
+                state_calls += 1
+                return {**live, 'your_faction_idx': idx} if state_calls <= 4 else finished
+            if command == 'act':
+                calls.append(idx)
+                if idx == 1:
+                    fast_acted.set()
+                return {'ok': True, 'op_id': 1, 'op_consumed': True}
+            self.fail('unexpected command')
+        def choose(kind, safe, actions, timeout_s):
+            if kind == 'codex':
+                slow_started.set()
+                if not release_slow.wait(2):
+                    raise AssertionError('slow peer not released')
+            return {**actions[0], 'by': 'llm'}
+        args = SimpleNamespace(url='http://127.0.0.1:18094',
+                               codex_home='/private/codex', opencode_home='/private/opencode')
+        def execute():
+            try:
+                outcome.append(match.run(args))
+            except BaseException as error:
+                errors.append(error)
+        with patch.object(match, 'profile', side_effect=lambda home: {'agent_record_id': str(home)}), \
+             patch.object(match, 'server_profile'), \
+             patch.object(match, 'session', return_value={'pending_act': None}), \
+             patch.object(match, 'node', side_effect=fake_node), \
+             patch.object(match, 'model_decision', side_effect=choose), \
+             patch.object(match.time, 'sleep'):
+            worker = threading.Thread(target=execute, daemon=True)
+            worker.start()
+            self.assertTrue(slow_started.wait(1))
+            submitted_before_release = fast_acted.wait(0.3)
+            release_slow.set()
+            worker.join(2)
+        self.assertFalse(worker.is_alive())
+        self.assertEqual(errors, [])
+        self.assertTrue(submitted_before_release)
+        self.assertEqual(calls, [1, 0])
+        self.assertEqual(outcome[0]['accepted_actions'], [1, 1])
+
+    def test_opencode_preflight_uses_same_end_to_end_budget(self):
+        clock = [0.0]
+        provider_timeouts = []
+        config_timeouts = []
+        effective = {'permission': {'*': 'deny'}, 'agent': {'alashi-choice': {
+            'permission': {'*': 'deny'}, 'model': 'zai-coding-plan/glm-5.3-flash'}}}
+        def fake_run(command, **kwargs):
+            if command[:3] == ['opencode', 'debug', 'config']:
+                config_timeouts.append(kwargs['timeout'])
+                clock[0] += 4
+                return subprocess.CompletedProcess(command, 0, stdout=json.dumps(effective))
+            provider_timeouts.append(kwargs['timeout'])
+            output = json.dumps({'type': 'text', 'part': {'type': 'text', 'text': '{"choice":0}'}})
+            return subprocess.CompletedProcess(command, 0, stdout=output)
+        with patch.object(match.time, 'monotonic', side_effect=lambda: clock[0]), \
+             patch.object(match.subprocess, 'run', side_effect=fake_run):
+            decision = match.model_decision('opencode', {'phase': 'market'}, [{'action': 'sell'}], 10)
+        self.assertEqual(decision['action'], 'sell')
+        self.assertEqual(config_timeouts, [10])
+        self.assertEqual(len(provider_timeouts), 1)
+        self.assertGreater(provider_timeouts[0], 5)
+        self.assertLessEqual(provider_timeouts[0], 6)
+        clock[0] = 0
+        provider_timeouts.clear()
+        def expired_run(command, **kwargs):
+            if command[:3] == ['opencode', 'debug', 'config']:
+                clock[0] += 6
+                return subprocess.CompletedProcess(command, 0, stdout=json.dumps(effective))
+            provider_timeouts.append(kwargs['timeout'])
+            return subprocess.CompletedProcess(command, 0, stdout='')
+        with patch.object(match.time, 'monotonic', side_effect=lambda: clock[0]), \
+             patch.object(match.subprocess, 'run', side_effect=expired_run):
+            with self.assertRaises(match.ProviderFailure) as caught:
+                match.model_decision('opencode', {'phase': 'market'}, [{'action': 'sell'}], 10)
+        self.assertEqual(caught.exception.failure, 'budget_expired')
+        self.assertEqual(provider_timeouts, [])
+        clock[0] = 0
+        def config_times_out(command, **kwargs):
+            self.assertEqual(command[:3], ['opencode', 'debug', 'config'])
+            self.assertEqual(kwargs['timeout'], 10)
+            clock[0] += 10
+            raise subprocess.TimeoutExpired(command, kwargs['timeout'], output='private-output')
+        with patch.object(match.time, 'monotonic', side_effect=lambda: clock[0]), \
+             patch.object(match.subprocess, 'run', side_effect=config_times_out):
+            with self.assertRaises(match.ProviderFailure) as caught:
+                match.model_decision('opencode', {'phase': 'market'}, [{'action': 'sell'}], 10)
+        self.assertEqual(caught.exception.failure, 'budget_expired')
+        self.assertNotIn('private-output', str(caught.exception) + json.dumps(caught.exception.diagnostic))
+
+    def test_old_snapshot_and_expired_fresh_state_never_submit(self):
+        faction = {'cash': 2_000_000, 'goods': 1, 'influence': 1, 'vote_weight': 1,
+                   'acted': False, 'voted': False, 'is_president': False, 'alive': True}
+        clock = [0.0]
+        state_calls = 0
+        calls = []
+        def fake_node(home, url, command, *options):
+            nonlocal state_calls
+            idx = 0 if str(home).endswith('codex') else 1
+            if command == 'start':
+                return {'ok': True, 'status': 'joined', 'game_id': 3, 'faction_idx': idx}
+            if command == 'state':
+                state_calls += 1
+                if state_calls == 3:
+                    clock[0] += 22
+                if state_calls > 3:
+                    return {'ok': True, 'game_id': 3, 'finished': True,
+                            'result': {'game_id': 3, 'party_no': 19, 'final_cash': [1, 2]}}
+                factions = [dict(faction), dict(faction)]
+                factions[1]['acted'] = True
+                return {'ok': True, 'game_id': 3, 'your_faction_idx': idx,
+                        'state': {'game_id': 3, 'execution_mode': 'http_simulated', 'phase': 'market',
+                                  'epoch': 'classic', 'round': 1, 'now': 100, 'grace_until': 122,
+                                  'price_now': 1, 'factions': factions}}
+            if command == 'act':
+                calls.append(idx)
+                return {'ok': True, 'op_id': 1, 'op_consumed': True}
+            self.fail('unexpected command')
+        args = SimpleNamespace(url='http://127.0.0.1:18094',
+                               codex_home='/private/codex', opencode_home='/private/opencode')
+        with patch.object(match, 'profile', side_effect=lambda home: {'agent_record_id': str(home)}), \
+             patch.object(match, 'server_profile'), \
+             patch.object(match, 'session', return_value={'pending_act': None}), \
+             patch.object(match, 'node', side_effect=fake_node), \
+             patch.object(match, 'model_decision', return_value={'action': 'sell',
+                                                                 'params': {'units': 1}, 'by': 'llm'}), \
+             patch.object(match.time, 'monotonic', side_effect=lambda: clock[0]), \
+             patch.object(match.time, 'sleep'):
+            outcome = match.run(args)
+        self.assertEqual(calls, [])
+        self.assertEqual(outcome['stale_choices'], [1, 0])
 
     def test_stale_model_choice_is_not_submitted_after_phase_change(self):
         faction = {'cash': 2_000_000, 'goods': 1, 'influence': 1, 'vote_weight': 1,
