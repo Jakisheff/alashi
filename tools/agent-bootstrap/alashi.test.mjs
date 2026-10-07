@@ -1,10 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { mkdtempSync, readFileSync, rmSync, statSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { Keypair } from '@solana/web3.js';
-import { validateIdentity, solanaRpc, frameHash, profileIds, checkProposal, newProfile, registration, joinGame, matchGame, act, apiBase, run, withFaction, fundIfNeeded, http } from './alashi.mjs';
+import { Keypair, SolanaJSONRPCError } from '@solana/web3.js';
+import { validateIdentity, solanaRpc, frameHash, profileIds, checkProposal, newProfile, registration, joinGame, matchGame, act, apiBase, run, withFaction, fundIfNeeded, http, publicError } from './alashi.mjs';
 
 const DEVNET = 'EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG';
 const MEMO = 'MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr';
@@ -327,6 +327,61 @@ test('ambiguous saved airdrop gives manual funding path without another request'
 });
 
 
+test('faucet RPC code survives failure without exposing provider cause', async () => {
+  const dir = mkdtempSync(join(tmpdir(), 'alashi-faucet-code-offline-'));
+  let profile;
+  let requests = 0;
+  let memoSends = 0;
+  const rpc = {
+    getGenesisHash: async () => DEVNET,
+    getBalance: async () => 0,
+    requestAirdrop: async () => {
+      requests++;
+      throw Object.assign(new SolanaJSONRPCError({
+        code: -32603, message: 'private-token https://rpc.invalid',
+        data: { secret: 'private-token' },
+      }), { cause: { authorization: 'private-token', url: 'https://rpc.invalid' } });
+    },
+    getLatestBlockhash: async () => { memoSends++; throw new Error('unexpected Memo'); },
+  };
+  const fetcher = async (url) => {
+    assert.ok(url.endsWith('/agents/registration'));
+    profile = JSON.parse(readFileSync(join(dir, 'agent.json')));
+    const { owner, character } = profileIds(profile);
+    return response({ ok: true, mode: 'agent_lifecycle_v2', network: 'devnet',
+      wallet: profile.wallet, agent_record_id: profile.agent_record_id,
+      owner_id: owner, character_id: character, memo_program_id: MEMO,
+      memo: `alashi:agent-lifecycle:v2:devnet:alashi.network:${owner}:${profile.agent_record_id}:${character}:${'ef'.repeat(32)}`,
+      registration: null });
+  };
+  try {
+    await assert.rejects(run('start', { '--name': 'FaucetProbe', '--model': 'offline',
+      '--url': 'http://127.0.0.1:18094' }, { dir, rpc, fetcher }), error => {
+      assert.equal(error.code, 'faucet_unavailable');
+      assert.equal(error.rpc_code, -32603);
+      const output = publicError(error);
+      assert.equal(output.error.code, 'faucet_unavailable');
+      assert.equal(output.error.rpc_code, -32603);
+      assert.ok(output.error.message.includes(profile.wallet));
+      assert.ok(!JSON.stringify(output).includes('private-token'));
+      assert.ok(!JSON.stringify(output).includes('rpc.invalid'));
+      return true;
+    });
+    const saved = JSON.parse(readFileSync(join(dir, 'agent.json')));
+    assert.equal(statSync(join(dir, 'agent.json')).mode & 0o777, 0o600);
+    assert.equal(saved.wallet, profile.wallet);
+    assert.ok(saved.memo);
+    assert.equal(saved.signature, null);
+    assert.equal(saved.registration, null);
+    assert.equal(requests, 1);
+    assert.equal(memoSends, 0);
+    assert.equal('rpc_code' in publicError({ code: 'faucet_unavailable',
+      message: 'safe', rpc_code: Number.MAX_SAFE_INTEGER + 1 }).error, false);
+    assert.equal('rpc_code' in publicError({ code: 'faucet_unavailable',
+      message: 'safe', rpc_code: '-32603' }).error, false);
+  } finally { rmSync(dir, { recursive: true, force: true }); }
+});
+
 test('first faucet RPC failure gives same-wallet recovery without repeat request', async () => {
   const profile = newProfile();
   const wallet = Keypair.fromSecretKey(Uint8Array.from(profile.secret_key)).publicKey;
@@ -339,6 +394,8 @@ test('first faucet RPC failure gives same-wallet recovery without repeat request
     assert.equal(error.code, 'faucet_unavailable');
     assert.match(error.message, new RegExp(wallet.toBase58()));
     assert.doesNotMatch(error.message, /32603/);
+    assert.equal('rpc_code' in error, false);
+    assert.equal('rpc_code' in (publicError(error).error), false);
     return true;
   });
   assert.equal(requests, 1);
@@ -395,11 +452,13 @@ test('faucet 429 exposes the same public wallet for manual devnet funding', asyn
     requestAirdrop: async address => {
       assert.equal(address.toBase58(), wallet.toBase58());
       requests++;
-      throw new Error('HTTP 429');
+      throw Object.assign(new Error('HTTP 429'), { code: -32005 });
     },
   };
   await assert.rejects(fundIfNeeded(rpc, wallet, profile, () => {}, async () => {}), error => {
     assert.equal(error.code, 'faucet_rate_limited');
+    assert.equal(publicError(error).error.rpc_code, -32005);
+    assert.equal('http_status' in publicError(error).error, false);
     assert.match(error.message, new RegExp(wallet.toBase58()));
     return true;
   });

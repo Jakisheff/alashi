@@ -35,7 +35,11 @@ const b58 = bytes => {
   for (const byte of source) { if (byte !== 0) break; out = '1' + out; }
   return out || '1';
 };
-const fail = (code, message) => { throw Object.assign(new Error(message), { code }); };
+const fail = (code, message, cause) => {
+  const error = Object.assign(new Error(message), { code });
+  if (Number.isSafeInteger(cause?.code)) error.rpc_code = cause.code;
+  throw error;
+};
 const json = value => process.stdout.write(JSON.stringify(value) + '\n');
 
 function privatePath() {
@@ -152,8 +156,8 @@ async function fundIfNeeded(rpc, wallet, profile, save, sleep = delay) {
         break;
       } catch (error) {
         if (!/429|rate.?limit|too many requests/i.test(String(error)))
-          fail('faucet_unavailable', `devnet faucet is unavailable; retry later with the same private profile, or fund public wallet ${wallet.toBase58()} manually on devnet`);
-        if (attempt === 1) fail('faucet_rate_limited', `devnet faucet returned 429; retry later with the same profile, or fund public wallet ${wallet.toBase58()} manually on devnet`);
+          fail('faucet_unavailable', `devnet faucet is unavailable; retry later with the same private profile, or fund public wallet ${wallet.toBase58()} manually on devnet`, error);
+        if (attempt === 1) fail('faucet_rate_limited', `devnet faucet returned 429; retry later with the same profile, or fund public wallet ${wallet.toBase58()} manually on devnet`, error);
         await sleep(2000);
       }
     }
@@ -351,13 +355,21 @@ async function run(command, options, deps = {}) {
     fail('usage', 'commands: start, state, act, retry');
   } finally { release(); }
 }
+function publicError(error) {
+  const known = typeof error?.code === 'string' && /^[a-zA-Z_]{1,48}$/.test(error.code);
+  const detail = { code: known ? error.code : 'unavailable',
+    message: known ? error.message : 'request failed; private progress preserved' };
+  if (['faucet_unavailable', 'faucet_rate_limited'].includes(detail.code) &&
+      Number.isSafeInteger(error.rpc_code)) detail.rpc_code = error.rpc_code;
+  return { ok: false, error: detail };
+}
 if (process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1])) {
   run(process.argv[2], readOptions(process.argv.slice(3))).then(result => {
     json(result);
     if (result.ok === false) process.exitCode = 1;
   }).catch(error => {
-    json({ ok: false, error: { code: error.code || 'unavailable', message: error.code ? error.message : 'request failed; private progress preserved' } });
+    json(publicError(error));
     process.exitCode = 1;
   });
 }
-export { validateIdentity, lock, solanaRpc, frameHash, profileIds, checkProposal, newProfile, registration, joinGame, matchGame, actionBody, act, run, b58, apiBase, withFaction, fundIfNeeded, http };
+export { validateIdentity, lock, solanaRpc, frameHash, profileIds, checkProposal, newProfile, registration, joinGame, matchGame, actionBody, act, run, b58, apiBase, withFaction, fundIfNeeded, http, publicError };
