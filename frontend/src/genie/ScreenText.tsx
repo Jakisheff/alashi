@@ -32,7 +32,8 @@ export function ScreenText() {
   const speech = useScene((s) => s.speech)
   const speechId = useScene((s) => s.speechId)
   const pages = useMemo(() => paginate(speech), [speech])
-  const [shown, setShown] = useState('')
+  // typed text and the length of the page it belongs to (the cursor shows while typing)
+  const [shown, setShown] = useState({ text: '', of: 0 })
   const clock = useRef({ id: -1, page: 0, t: 0 })
 
   useFrame((_, delta) => {
@@ -40,16 +41,16 @@ export function ScreenText() {
     if (c.id !== speechId) Object.assign(c, { id: speechId, page: 0, t: 0 })
     const page = pages[c.page]
     if (page === undefined) {
-      if (shown) setShown('')
+      if (shown.text) setShown({ text: '', of: 0 })
       return
     }
     c.t += delta
     const typed = page.slice(0, Math.floor(c.t * CHARS_PER_SECOND))
-    if (typed !== shown) setShown(typed)
+    if (typed !== shown.text) setShown({ text: typed, of: page.length })
     if (c.t > page.length / CHARS_PER_SECOND + HOLD_SECONDS) Object.assign(c, { page: c.page + 1, t: 0 })
   })
 
-  const cursor = shown && shown.length < (pages[clock.current.page]?.length ?? 0) ? '_' : ''
+  const cursor = shown.text && shown.text.length < shown.of ? '_' : ''
   return (
     <Text
       position={[0, 0, 0.002]}
@@ -63,7 +64,7 @@ export function ScreenText() {
       color={GLOW}
       material-toneMapped={false}
     >
-      {shown + cursor}
+      {shown.text + cursor}
     </Text>
   )
 }

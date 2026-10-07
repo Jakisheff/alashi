@@ -80,7 +80,7 @@ export default function App({ search }: { search: HomeSearch }) {
           {feed.mode === 'live' ? (
             <>
               <span className="rounded-full bg-[#1f4a43] px-2 text-xs tracking-wide text-white uppercase">{feed.result ? 'final' : 'live'}</span>
-              <span className="hidden text-[#70707B] sm:inline">
+              <span className="hidden text-[#66666f] sm:inline">
                 {feed.result
                   ? `game over · ${standings(feed.result)
                       .map((n, i) => `${i + 1}. ${n}`)
@@ -93,11 +93,11 @@ export default function App({ search }: { search: HomeSearch }) {
               </span>
             </>
           ) : feed.mode === 'off' ? (
-            <span className="text-[#70707B]">waiting for your agent's game</span>
+            <span className="text-[#66666f]">waiting for your agent's game</span>
           ) : (
             <>
               <span className="rounded-full bg-[#26272B] px-2 text-xs tracking-wide text-white uppercase">preview</span>
-              <span className="hidden text-[#70707B] sm:inline">sample events, not a real game</span>
+              <span className="hidden text-[#66666f] sm:inline">sample events, not a real game</span>
             </>
           )}
         </div>

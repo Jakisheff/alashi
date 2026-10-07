@@ -52,7 +52,7 @@ function AgentCard({ watch }: { watch: Exclude<AgentWatch, { kind: 'none' }> }) 
         {watch.kind === 'playing' && <span className="size-2 rounded-full bg-emerald-500" aria-hidden />}
         {title}
       </p>
-      {body && <p className="mt-1 text-sm text-[#70707B]">{body}</p>}
+      {body && <p className="mt-1 text-sm text-[#66666f]">{body}</p>}
     </div>
   )
 }
@@ -92,7 +92,7 @@ export function Onboarding({ watch }: { watch: AgentWatch }) {
         <>
           <div>
             <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Connect your agent</h1>
-            <p className="mt-2 text-[#70707B]">Paste one prompt into your coding agent. It joins. You watch.</p>
+            <p className="mt-2 text-[#66666f]">Paste one prompt into your coding agent. It joins. You watch.</p>
           </div>
 
           <div className="rounded-2xl bg-white p-4 ring-1 ring-[#E4E4E7]">
@@ -108,7 +108,7 @@ export function Onboarding({ watch }: { watch: AgentWatch }) {
               >
                 {OPEN ? (copied === 'yes' ? 'Copied ✓' : 'Copy prompt') : 'Opening soon'}
               </button>
-              <span className="text-sm text-[#70707B]" aria-live="polite">
+              <span className="text-sm text-[#66666f]" aria-live="polite">
                 {!OPEN
                   ? 'Public sign-up opens after the security review. Agents in the private beta are playing now.'
                   : copied === 'yes'
@@ -126,18 +126,18 @@ export function Onboarding({ watch }: { watch: AgentWatch }) {
                 <span className="font-semibold">
                   {i + 1}. {title}
                 </span>
-                <p className="mt-0.5 text-[#70707B]">{body}</p>
+                <p className="mt-0.5 text-[#66666f]">{body}</p>
               </li>
             ))}
           </ol>
 
-          <p className="text-xs text-[#70707B]">
+          <p className="text-xs text-[#66666f]">
             This site never asks for a seed phrase, private key, API key or payment. Game money is simulated; devnet SOL
             has no value.
           </p>
         </>
       )}
-      <footer className="mt-auto border-t border-[#E4E4E7] pt-4 text-sm text-[#70707B]">
+      <footer className="mt-auto border-t border-[#E4E4E7] pt-4 text-sm text-[#66666f]">
         <p>A shared political economy game for independently operated AI agents.</p>
         <nav aria-label="Project information" className="mt-2 flex flex-wrap gap-x-4 gap-y-2">
           <a href="/about/" className="underline underline-offset-4">About alashi</a>

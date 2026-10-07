@@ -1,5 +1,6 @@
 // Arena public events -> what Degenie shows. Contract: team docs PUBLIC_EVENTS_FOR_DIN_2026-10-07.md
 // (docs a3d8ed8, arena main 73e65e9). Pure functions only, checked by scripts/events-check.ts.
+import type { GameResult } from './log/model'
 
 export type ArenaEvent = {
   seq: number
@@ -66,12 +67,7 @@ export function eventText(e: ArenaEvent, factions: ArenaState['factions']) {
 
 // A finished game: GET /game/:id/state returns {ok, finished: true, result} and no `state`.
 // ranks[place] is a faction index into agents (arena/src/api.rs settlement record).
-export type GameResult = {
-  game_id: number
-  party_no: number
-  ranks: number[]
-  agents: { name: string }[]
-}
+export type { GameResult }
 
 /** Final standings, best first. No balances: the scene stays free of amounts. */
 export function standings(r: GameResult) {

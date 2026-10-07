@@ -46,9 +46,8 @@ export const KIND_TITLE: Record<InteractionKind, string> = {
   credit: 'credit',
 }
 
-/** Simulated game cash, compact: 1.2M, 340K. */
-export const formatCash = (v: number) =>
-  Math.abs(v) >= 1e6 ? `${(v / 1e6).toFixed(1).replace(/\.0$/, '')}M` : Math.abs(v) >= 1e3 ? `${Math.round(v / 1e3)}K` : String(v)
+/** Simulated game cash, compact: the log's formatter, so both pages round alike */
+export { cash as formatCash } from '../log/model'
 
 /** Dark graph-page tokens (the graph keeps its own dark canvas, like HackAlem). */
 export const ui = {

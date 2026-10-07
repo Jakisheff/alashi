@@ -34,6 +34,8 @@ export function GenieModel({ frozen = null }: { frozen?: { clip: GenieClip; t: n
         mesh.renderOrder = 1
       }
     })
+    // The GLB scene is cached across visits; the next mount finds this material by the same name and swaps it again
+    return () => smoke.material.dispose()
   }, [scene, smoke])
   useFrame((state) => {
     if (!reducedMotion) smoke.uniforms.uTime.value = state.clock.elapsedTime

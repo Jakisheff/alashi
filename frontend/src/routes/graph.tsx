@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useEffect } from 'react'
+import { parseAgentId } from '../agent'
 import { GraphPage } from '../graph/GraphPage'
 
 export type GraphSearch = {
@@ -11,18 +12,15 @@ export type GraphSearch = {
   mock?: 'large'
 }
 
-const hex64 = (v: unknown) => (typeof v === 'string' && /^[0-9a-f]{64}$/.test(v) ? v : undefined)
+const hex64 = (v: unknown) => (typeof v === 'string' ? (parseAgentId(v) ?? undefined) : undefined)
 
 export const Route = createFileRoute('/graph')({
-  validateSearch: (s: Record<string, unknown>): GraphSearch => {
-    const out: GraphSearch = {}
-    const focus = hex64(s.focus)
-    const agent = hex64(s.agent)
-    if (focus) out.focus = focus
-    if (agent) out.agent = agent
-    if (s.mock === 'large') out.mock = 'large'
-    return out
-  },
+  // Every key explicit, even undefined: the router merges this over the raw query, so a dropped key kept its raw value
+  validateSearch: (s: Record<string, unknown>): GraphSearch => ({
+    focus: hex64(s.focus),
+    agent: hex64(s.agent),
+    mock: s.mock === 'large' ? 'large' : undefined,
+  }),
   component: GraphRoute,
 })
 
@@ -32,8 +30,13 @@ function GraphRoute() {
   useEffect(() => {
     const prev = document.title
     document.title = 'Agent network · alashi'
+    // Not a landing page (mock data): index.html's robots tag says index for the whole SPA
+    const robots = document.querySelector('meta[name=robots]')
+    const indexed = robots?.getAttribute('content')
+    robots?.setAttribute('content', 'noindex')
     return () => {
       document.title = prev
+      if (indexed) robots?.setAttribute('content', indexed)
     }
   }, [])
   return (

@@ -1,6 +1,7 @@
 // Game log: one exchange-style tape built from what GET /game/:id/state really returns.
 // Finished game: {finished, result} with registrations, phases (law votes), actions (params, cash_after) and settle.
 // Live game: {state} with only the last 12 public actions (no params, no amounts). Pure functions: scripts/log-check.ts.
+import type { ArenaEvent, ArenaState } from '../events'
 
 export type Registration = { signature: string; slot: number; fee_lamports: string; network: string; commitment: string }
 
@@ -46,16 +47,9 @@ export type GameResult = {
   finished_at: number
 }
 
-export type LiveAction = { seq: number; round: number; phase: string; actor: number | null; action: string; ok: boolean; ts: number }
-
-export type LiveState = {
-  game_id: number
-  party_no: number
-  round: number
-  phase: string
-  factions: { idx: number; name: string }[]
-  recent_actions: LiveAction[]
-}
+/** The fields of the arena's public state the log reads (events.ts has the full feed types) */
+export type LiveAction = Pick<ArenaEvent, 'seq' | 'round' | 'phase' | 'actor' | 'action' | 'ok' | 'ts'>
+export type LiveState = Pick<ArenaState, 'game_id' | 'party_no' | 'round' | 'phase' | 'factions'> & { recent_actions: LiveAction[] }
 
 export type StateResponse = { ok: boolean; state?: LiveState; finished?: boolean; result?: GameResult; error?: string }
 

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
-import { Link } from '@tanstack/react-router'
+import { Link, useNavigate } from '@tanstack/react-router'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { cash, toLog, type EntryKind, type GameLog, type LogEntry, type StateResponse } from './model'
+import { cash, explorerTx, toLog, type EntryKind, type GameLog, type LogEntry, type StateResponse } from './model'
 
 // Game feed as one neon board (Cyberpunk-2077-style HUD): stat readouts, a scrolling ticker, a leaderboard and the
 // event tape, newest first. Finished games come with the full recorded history; live games expose only the last 12
@@ -30,7 +30,7 @@ const VIO = '#b026ff'
 const GRN = '#39ff88'
 const BADGE: Record<EntryKind, [string, string]> = {
   chain: ['TX', VIO],
-  phase: ['PHASE', '#6b7280'],
+  phase: ['PHASE', '#8a8f98'],
   move: ['MOVE', C],
   law: ['LAW', Y],
   settle: ['SETTLE', GRN],
@@ -208,7 +208,7 @@ export function LogPage({ game, api = '' }: { game: string; api?: string }) {
                       {p.payout !== undefined && <span style={{ color: GRN }}>PAYOUT +{cash(p.payout)}</span>}
                       {p.registration?.signature && (
                         <a
-                          href={`https://explorer.solana.com/tx/${p.registration.signature}?cluster=${p.registration.network}`}
+                          href={explorerTx(p.registration)}
                           target="_blank"
                           rel="noreferrer"
                           className="mono underline underline-offset-2"
@@ -296,9 +296,9 @@ export function LogPage({ game, api = '' }: { game: string; api?: string }) {
                             ) : (
                               e.text
                             )}
-                            {e.detail && <div className="text-[#6b7280] lg:hidden">{e.detail}</div>}
+                            {e.detail && <div className="text-[#8a8f98] lg:hidden">{e.detail}</div>}
                           </td>
-                          <td className="hidden px-2 py-1.5 text-[#6b7280] lg:table-cell">{e.detail}</td>
+                          <td className="hidden px-2 py-1.5 text-[#8a8f98] lg:table-cell">{e.detail}</td>
                           <td className="px-3 py-1.5 text-right whitespace-nowrap" style={e.delta === undefined ? { color: '#2f2f3a' } : glow(e.delta > 0 ? GRN : RED)}>
                             {e.delta === undefined ? '·' : `${e.delta > 0 ? '+' : ''}${cash(e.delta)}`}
                           </td>
@@ -348,8 +348,15 @@ function StatusChip({ log }: { log: GameLog }) {
 
 function GamePicker({ game }: { game: string }) {
   const [value, setValue] = useState(game)
+  const navigate = useNavigate()
   return (
-    <div className="flex items-center gap-1 text-xs">
+    <form
+      className="flex items-center gap-1 text-xs"
+      onSubmit={(e) => {
+        e.preventDefault() // Enter in the field opens the game too
+        void navigate({ to: '/log', search: { game: value || '1' } })
+      }}
+    >
       <label htmlFor="game" className="tracking-[.2em] text-[#8a8f98] uppercase">
         game
       </label>
@@ -361,9 +368,9 @@ function GamePicker({ game }: { game: string }) {
         style={{ borderColor: `${C}66`, color: C }}
         inputMode="numeric"
       />
-      <Link to="/log" search={{ game: value || '1' }} className="h-7 border px-2 leading-7 font-bold tracking-[.2em] uppercase" style={{ ...cut(6), borderColor: Y, color: Y }}>
+      <button type="submit" className="h-7 border px-2 leading-7 font-bold tracking-[.2em] uppercase" style={{ ...cut(6), borderColor: Y, color: Y }}>
         Open
-      </Link>
-    </div>
+      </button>
+    </form>
   )
 }

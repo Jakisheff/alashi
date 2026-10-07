@@ -16,8 +16,13 @@ function LogRoute() {
   useEffect(() => {
     const prev = document.title
     document.title = `Game ${game} log · alashi`
+    // Not a landing page: index.html's robots tag says index for the whole SPA
+    const robots = document.querySelector('meta[name=robots]')
+    const indexed = robots?.getAttribute('content')
+    robots?.setAttribute('content', 'noindex')
     return () => {
       document.title = prev
+      if (indexed) robots?.setAttribute('content', indexed)
     }
   }, [game])
   return <LogPage key={game} game={game} api={api} />

@@ -1,6 +1,6 @@
 // Force layout off the main thread. Same forces as the HackAlem engine (charge, link, collide, pull to the party
 // centre); the page only applies the positions it receives and paints. Protocol: see layout.ts.
-import { forceCollide, forceLink, forceManyBody, forceSimulation, forceX, forceY, type Simulation, type SimulationNodeDatum } from 'd3'
+import { forceCollide, forceLink, forceManyBody, forceSimulation, forceX, forceY, type Simulation, type SimulationNodeDatum } from 'd3-force'
 
 type Node = SimulationNodeDatum & { cx: number; cy: number; r: number }
 
