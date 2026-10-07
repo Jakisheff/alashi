@@ -385,3 +385,52 @@ test('matchmaker reports an existing slot and recovery join uses no new Memo', a
     assert.equal(recover, true);
   } finally { rmSync(dir, { recursive: true, force: true }); }
 });
+
+test('faucet 429 exposes the same public wallet for manual devnet funding', async () => {
+  const profile = newProfile();
+  const wallet = Keypair.fromSecretKey(Uint8Array.from(profile.secret_key)).publicKey;
+  let requests = 0;
+  const rpc = {
+    getBalance: async () => 0,
+    requestAirdrop: async address => {
+      assert.equal(address.toBase58(), wallet.toBase58());
+      requests++;
+      throw new Error('HTTP 429');
+    },
+  };
+  await assert.rejects(fundIfNeeded(rpc, wallet, profile, () => {}, async () => {}), error => {
+    assert.equal(error.code, 'faucet_rate_limited');
+    assert.match(error.message, new RegExp(wallet.toBase58()));
+    return true;
+  });
+  assert.equal(requests, 2);
+  assert.equal(profile.wallet, wallet.toBase58());
+  assert.equal(profile.signature, null);
+});
+
+test('CLI exits nonzero when arena JSON says ok false', async () => {
+  const { createServer } = await import('node:http');
+  const { spawn } = await import('node:child_process');
+  const { writeFileSync } = await import('node:fs');
+  const dir = mkdtempSync(join(tmpdir(), 'alashi-cli-rejected-'));
+  const server = createServer((_, reply) => {
+    reply.setHeader('content-type', 'application/json');
+    reply.end(JSON.stringify({ ok: false, error: 'WrongPhase' }));
+  });
+  await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+  try {
+    writeFileSync(join(dir, 'game-7.json'), JSON.stringify({ schema: 'alashi.game.v2', game_id: 7,
+      token: 'ab'.repeat(32), faction_idx: 0 }), { mode: 0o600 });
+    const child = spawn(process.execPath, [new URL('./alashi.mjs', import.meta.url).pathname,
+      'state', '--game', '7', '--url', `http://127.0.0.1:${server.address().port}`],
+    { env: { ...process.env, ALASHI_AGENT_HOME: dir }, stdio: ['ignore', 'pipe', 'pipe'] });
+    let output = '';
+    for await (const chunk of child.stdout) output += chunk;
+    const code = await new Promise(resolve => child.once('close', resolve));
+    assert.equal(code, 1);
+    assert.equal(JSON.parse(output).ok, false);
+  } finally {
+    await new Promise(resolve => server.close(resolve));
+    rmSync(dir, { recursive: true, force: true });
+  }
+});

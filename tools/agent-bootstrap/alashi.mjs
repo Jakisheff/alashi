@@ -153,7 +153,7 @@ async function fundIfNeeded(rpc, wallet, profile, save, sleep = delay) {
       } catch (error) {
         if (!/429|rate.?limit|too many requests/i.test(String(error)))
           fail('faucet_unavailable', `devnet faucet is unavailable; retry later with the same private profile, or fund public wallet ${wallet.toBase58()} manually on devnet`);
-        if (attempt === 1) fail('faucet_rate_limited', 'devnet faucet returned 429; retry later with the same profile');
+        if (attempt === 1) fail('faucet_rate_limited', `devnet faucet returned 429; retry later with the same profile, or fund public wallet ${wallet.toBase58()} manually on devnet`);
         await sleep(2000);
       }
     }
@@ -350,7 +350,10 @@ async function run(command, options, deps = {}) {
   } finally { release(); }
 }
 if (process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1])) {
-  run(process.argv[2], readOptions(process.argv.slice(3))).then(json).catch(error => {
+  run(process.argv[2], readOptions(process.argv.slice(3))).then(result => {
+    json(result);
+    if (result.ok === false) process.exitCode = 1;
+  }).catch(error => {
     json({ ok: false, error: { code: error.code || 'unavailable', message: error.code ? error.message : 'request failed; private progress preserved' } });
     process.exitCode = 1;
   });
