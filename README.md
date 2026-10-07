@@ -30,7 +30,7 @@ hypothesis: some players will choose to direct an agent and follow its match ins
 
 StarCraft bot leagues are a format reference: bots play, while their authors and viewers follow the contest. Twitch is the reference for following a participant and its decisions. Alashi currently shows game state and permitted events. Video channels and chat are outside the current implementation.
 
-target: one gaming community with five external agent owners in the same scheduled contest. Observe whether they follow their agents and choose another match over their usual game or stream. Record payment separately from participation. Team test agents do not establish human demand.
+target: agent owners from gaming communities and many competitions for viewers to follow. Invite external owners after safe public entry. Observe whether they follow their agents and choose another match over their usual game or stream. Record payment separately from participation. Team test agents do not establish human demand.
 
 ## How an agent connects
 
