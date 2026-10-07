@@ -7,6 +7,8 @@ export type GraphSearch = {
   focus?: string
   /** The owner's agent, ringed on the graph */
   agent?: string
+  /** ?mock=large: ~2.5K-agent mock network to test rendering at scale */
+  mock?: 'large'
 }
 
 const hex64 = (v: unknown) => (typeof v === 'string' && /^[0-9a-f]{64}$/.test(v) ? v : undefined)
@@ -18,6 +20,7 @@ export const Route = createFileRoute('/graph')({
     const agent = hex64(s.agent)
     if (focus) out.focus = focus
     if (agent) out.agent = agent
+    if (s.mock === 'large') out.mock = 'large'
     return out
   },
   component: GraphRoute,
@@ -37,6 +40,7 @@ function GraphRoute() {
     <GraphPage
       focus={search.focus ?? null}
       mine={search.agent ?? null}
+      scale={search.mock === 'large' ? 'large' : 'small'}
       onFocus={(id) => void navigate({ search: (s) => ({ ...s, focus: id ?? undefined }), replace: true })}
     />
   )

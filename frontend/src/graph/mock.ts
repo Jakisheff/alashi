@@ -19,7 +19,9 @@ function rng(seed: number) {
   }
 }
 
-export function mockGraph(seed = 7): GraphData {
+/** large: ~3K agents in ~110 parties with a few big ones (HackAlem-scale stress test for the renderer). */
+export function mockGraph(seed = 7, scale: 'small' | 'large' = 'small'): GraphData {
+  const PARTIES = scale === 'large' ? 110 : 10
   const r = rng(seed)
   const pick = <T,>(a: T[]) => a[Math.floor(r() * a.length)]
   const kind = (): InteractionKind => {
@@ -44,9 +46,10 @@ export function mockGraph(seed = 7): GraphData {
     return a
   }
 
-  for (let p = 0; p < 10; p++) {
-    const size = 3 + Math.floor(r() * 9)
-    const finished = p < 7
+  for (let p = 0; p < PARTIES; p++) {
+    // large: mostly small parties, a long tail of big ones (up to ~120 agents)
+    const size = scale === 'large' ? 3 + Math.floor(r() ** 4 * 110) : 3 + Math.floor(r() * 9)
+    const finished = p < PARTIES * 0.7
     const round = finished ? ROUNDS : 3 + Math.floor(r() * 8)
     const game = Math.floor(p / 2) + 1
     parties.push({

@@ -1,4 +1,5 @@
 import * as d3 from 'd3'
+import { ALPHA_MIN, createPhysics } from './layout'
 import { KIND_TITLE, ROLE_COLOR, ROLE_TITLE, formatCash, roleSymbolPath } from './roles'
 import type { GraphAgent, GraphData, GraphEdge, GraphParty } from './types'
 import { DEFAULT_VIEW, type GraphView } from './view'
@@ -45,7 +46,6 @@ const DIM = '#3c3c44'
 const EDGE = '#777786'
 const ORIGIN = { x: 0, y: 0 }
 const NO_ROLE = 'role unknown'
-let instance = 0
 
 const LOG_MIN = Math.log(5e5)
 const LOG_SPAN = Math.log(5e7) - LOG_MIN
@@ -95,10 +95,10 @@ type GLink = {
 type Hull = [number, GNode[]]
 type Box = { x: number; y: number; w: number; h: number }
 
-// ponytail: SVG + per-element transitions hold ~2.2K nodes / ~3.1K edges in HackAlem's overview;
-// if it starts to lag (hover, timelapse, drag), move edges and nodes to Canvas and keep labels and halos in SVG.
+// Rendering: nodes, links, party hulls and labels are painted on one <canvas> per frame (batched by style), so a
+// 2.5K-agent / 8.5K-link network stays interactive. The transparent SVG on top only carries zoom/drag/hover events
+// and the pulse ring. HackAlem drew every element as SVG with per-element transitions, which stalled at this size.
 export function createAgentGraph(el: HTMLElement, cb: AgentGraphCallbacks = {}): AgentGraph {
-  const uid = `ag-${++instance}`
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   const duration = (ms: number) => (reduced ? 0 : ms)
   let destroyed = false
@@ -110,50 +110,28 @@ export function createAgentGraph(el: HTMLElement, cb: AgentGraphCallbacks = {}):
     .style('background', BG)
     .style('background-image', 'radial-gradient(ellipse at 50% 45%, #252334 0%, transparent 65%)')
     .style('overflow', 'hidden')
+  const canvas = root.append('canvas').attr('data-graph', '').style('position', 'absolute').style('inset', '0').node()!
+  const ctx = canvas.getContext('2d')!
   const svg = root
     .append('svg')
     .attr('width', '100%')
     .attr('height', '100%')
+    .style('position', 'absolute')
+    .style('inset', '0')
     .style('display', 'block')
     .style('cursor', 'grab')
     .attr('aria-label', 'Interactive agent interaction graph')
     .attr('role', 'group')
-  svg.append('style').text(
-    '@keyframes daiDash{to{stroke-dashoffset:-20}}' +
-      '.dai-flow{stroke-dasharray:6 4;animation:daiDash 1.4s linear infinite}' +
-      '@keyframes daiSeed{0%,100%{stroke-opacity:1}50%{stroke-opacity:.35}}' +
-      '.dai-seed{animation:daiSeed 1.8s ease-in-out 1}' +
-      '.n:focus{outline:none}.n:focus .c{stroke:#fff;stroke-width:3}' +
-      '@media(prefers-reduced-motion:reduce){.dai-flow,.dai-seed{animation:none}}',
-  )
-  const defs = svg.append('defs')
-  const glow = defs.append('filter').attr('id', `${uid}-glow`).attr('x', '-100%').attr('y', '-100%').attr('width', '300%').attr('height', '300%')
-  glow.append('feGaussianBlur').attr('stdDeviation', 3).attr('result', 'blur')
-  const merge = glow.append('feMerge')
-  merge.append('feMergeNode').attr('in', 'blur')
-  merge.append('feMergeNode').attr('in', 'SourceGraphic')
-  const arrow = defs
-    .append('marker')
-    .attr('id', `${uid}-arr`)
-    .attr('viewBox', '0 -4 8 8')
-    .attr('refX', 7)
-    .attr('refY', 0)
-    .attr('markerWidth', 7)
-    .attr('markerHeight', 7)
-    .attr('markerUnits', 'userSpaceOnUse')
-    .attr('orient', 'auto')
-  arrow.append('path').attr('d', 'M0,-3.5L8,0L0,3.5').attr('fill', '#b4b4be')
-  /** Arrowhead stays 3.5-10 px on screen at any zoom: in graph units its size is inverse to the scale */
-  const arrowSize = () => {
-    const px = Math.min(10, Math.max(3.5, 7 * k))
-    arrow.attr('markerWidth', px / k).attr('markerHeight', px / k)
-  }
   const g = svg.append('g')
-  const gH = g.append('g')
-  const gL = g.append('g')
-  const gN = g.append('g')
-  const gT = g.append('g')
   const gR = g.append('g')
+  // Pinch and wheel over the graph always belong to the graph. A Mac trackpad pinch arrives as ctrl+wheel: d3-zoom
+  // lets it through once the zoom limit is reached, and the browser then zooms the whole page (controls vanish).
+  // Safari also sends its own gesture events; touch screens get touch-action: none.
+  const keepGesture = (e: Event) => e.preventDefault()
+  el.addEventListener('wheel', keepGesture, { passive: false })
+  el.addEventListener('gesturestart', keepGesture)
+  el.addEventListener('gesturechange', keepGesture)
+  svg.style('touch-action', 'none')
   const tip = root
     .append('div')
     .style('position', 'absolute')
@@ -168,6 +146,8 @@ export function createAgentGraph(el: HTMLElement, cb: AgentGraphCallbacks = {}):
     .style('font', `13px/1.4 ${SANS}`)
     .style('min-width', '220px')
     .style('box-shadow', '0 8px 28px rgba(0,0,0,.45)')
+  // Canvas has no focusable elements: a screen-reader/keyboard list of the visible agents stands in for them
+  const a11y = root.append('ul').attr('class', 'sr-only').attr('aria-label', 'Agents on the graph')
 
   let N = new Map<string, GNode>()
   let E: GLink[] = []
@@ -188,51 +168,50 @@ export function createAgentGraph(el: HTMLElement, cb: AgentGraphCallbacks = {}):
   let layoutT: d3.Timer | null = null
   // Overview: the whole network is laid out in the background ahead of time (while a neighbourhood is open) and remembered.
   // Switching modes does not relay the network: each mode restores its positions and camera.
-  type ONode = d3.SimulationNodeDatum & { id: string; o: GNode }
+  type ONode = { id: string; x: number; y: number }
   const ovPos = new Map<string, { x: number; y: number }>()
   let ovAlpha = 0
   /** Which mode the main simulation holds: its alpha is unfinished physics of that mode only */
   let simMode: GraphView['mode'] | null = null
-  let ovSim: d3.Simulation<ONode, undefined> | null = null
-  let ovT: d3.Timer | null = null
+  // Background overview layout in its own worker; every snapshot lands in ovPos
+  const ovPhys = createPhysics<ONode>(
+    () => {
+      for (const d of ovPhys.nodes()) ovPos.set(d.id, { x: d.x, y: d.y })
+    },
+    () => undefined,
+  )
   const cams = new Map<string, { t: d3.ZoomTransform; focus: string | null }>()
 
-  let linkSel = gL.selectAll<SVGPathElement, GLink>('path')
-  let nodeSel = gN.selectAll<SVGGElement, GNode>('g.n')
-  let textSel = gT.selectAll<SVGTextElement, GNode>('text')
-  let hullSel = gH.selectAll<SVGGElement, Hull>('g.h')
+  let T = d3.zoomIdentity
+  let hullGroups: Hull[] = []
+  let shownLabels: GNode[] = []
+  let leaving: { nodes: GNode[]; edges: GLink[] } = { nodes: [], edges: [] }
 
   const zoom = d3
     .zoom<SVGSVGElement, unknown>()
     .scaleExtent([0.15, 6])
     .on('zoom', (e: d3.D3ZoomEvent<SVGSVGElement, unknown>) => {
       g.attr('transform', e.transform.toString())
+      T = e.transform
       k = e.transform.k
       // The user moves the camera (wheel, drag): the pending 'fit after settling' is dropped,
       // otherwise a few seconds later the camera would jump away from what they were looking at
       if (e.sourceEvent) pendingFit = false
-      arrowSize()
       labels(0)
+      requestDraw()
     })
-  svg.call(zoom).on('dblclick.zoom', null)
 
-  // On large graphs a frame is bound by SVG redraw (~55 ms at 2.2K nodes), not physics (~10 ms):
-  // up to 3 ticks per frame, so the layout settles in ~4 s instead of ~11.
-  const sim = d3
-    .forceSimulation<GNode>()
-    .alphaMin(0.02)
-    .stop()
-    .on('tick', () => {
-      const extra = Math.min(2, Math.floor(sim.nodes().length / 1000))
-      if (extra) sim.tick(extra)
-      draw()
-    })
-    .on('end', () => {
+  // Force layout runs in a Web Worker (layout.worker.ts): the main thread only applies positions and paints,
+  // so a 2.5K-agent layout no longer blocks hover, zoom or the rest of the page.
+  const sim = createPhysics<GNode>(
+    () => draw(),
+    () => {
       if (pendingFit) {
         pendingFit = false
         fit(500)
       }
-    })
+    },
+  )
 
   function setData(d: GraphData) {
     // Node and edge objects are reused by id/key: positions, velocities and fx/fy survive,
@@ -426,87 +405,39 @@ export function createAgentGraph(el: HTMLElement, cb: AgentGraphCallbacks = {}):
     return T
   }
 
-  /**
-   * Party centre of a node in the overview; in a neighbourhood: the origin.
-   * One simulation serves all modes: sim.nodes(new) reinitialises old forces whose accessor remembers the centres
-   * of the old node set. So a party missing from the map (turned on by a filter) gets the default centre instead of failing.
-   */
+  /** Party centre of a node in the overview; in a neighbourhood: the origin. Unknown parties fall back to the origin. */
   function centers(nodes: GNode[]) {
     const C = V.mode === 'overview' ? clusterCenters(nodes) : null
     return (o: GNode) => (C && C.get(o.n.party ?? -1)) || ORIGIN
   }
 
-  function forces<T extends d3.SimulationNodeDatum & { id: string }>(
-    s: d3.Simulation<T, undefined>,
-    links: { source: string | T; target: string | T }[],
-    center: (d: T) => { x: number; y: number },
-    radius: (d: T) => number,
-    pull: number,
-  ) {
-    s.force('charge', d3.forceManyBody<T>().strength(-V.charge).distanceMax(400))
-      .force(
-        'link',
-        d3
-          .forceLink<T, { source: string | T; target: string | T }>(links)
-          .id((d) => d.id)
-          .distance(V.linkDist)
-          .strength(0.6),
-      )
-      .force(
-        'collide',
-        d3.forceCollide<T>((d) => radius(d) + 2),
-      )
-      .force('cx', d3.forceX<T>((d) => center(d).x).strength(pull))
-      .force('cy', d3.forceY<T>((d) => center(d).y).strength(pull))
-  }
-
-  /** Background overview layout: ~10 ms of physics per frame, result in ovPos. */
+  /** Background overview layout in the worker; snapshots fill ovPos. */
   function precomputeOverview() {
-    ovT?.stop()
-    ovSim?.stop()
     const all = [...N.values()]
     const C = clusterCenters(all)
-    const center = (d: ONode) => C.get(d.o.n.party ?? -1) ?? ORIGIN
+    const center = (o: GNode) => C.get(o.n.party ?? -1) ?? ORIGIN
     const nodes: ONode[] = all.map((o) => {
-      const c = C.get(o.n.party ?? -1) ?? ORIGIN
+      const c = center(o)
       const p = ovPos.get(o.id) ?? { x: c.x + (Math.random() - 0.5) * 60, y: c.y + (Math.random() - 0.5) * 60 }
-      return { id: o.id, o, x: p.x, y: p.y }
+      return { id: o.id, x: p.x, y: p.y }
     })
-    const s = d3.forceSimulation(nodes).alphaMin(0.02).stop()
-    forces(
-      s,
-      E.map((l) => ({ source: l.source.id, target: l.target.id })),
-      center,
-      (d) => R(d.o),
-      V.clusterPull,
+    const byId = new Map(nodes.map((d) => [d.id, d]))
+    ovPhys.start(
+      nodes,
+      E.map((l) => [byId.get(l.source.id)!, byId.get(l.target.id)!]),
+      { center: (i) => center(all[i]), radius: (i) => R(all[i]), charge: V.charge, linkDist: V.linkDist, pull: V.clusterPull, alpha: 1, silent: true },
     )
-    ovSim = s
-    const save = () => {
-      for (const d of s.nodes()) ovPos.set(d.id, { x: d.x!, y: d.y! })
-    }
-    ovT = d3.timer(() => {
-      const t0 = performance.now()
-      while (performance.now() - t0 < 10 && s.alpha() >= s.alphaMin()) s.tick()
-      if (s.alpha() < s.alphaMin()) {
-        save()
-        stopPrecompute()
-      }
-    })
   }
   function stopPrecompute() {
-    ovT?.stop()
-    ovSim?.stop()
-    ovT = null
-    ovSim = null
+    if (ovPhys.running()) ovPhys.stop()
   }
-  /** Take the background layout (even unfinished). Returns the alpha to continue from. */
+  /** Take the background layout (even unfinished: ovPos holds its latest snapshot). Returns the alpha to continue from. */
   function takeOverview() {
     let alpha = ovAlpha
     ovAlpha = 0
-    if (ovSim) {
-      for (const d of ovSim.nodes()) ovPos.set(d.id, { x: d.x!, y: d.y! })
-      alpha = Math.max(alpha, ovSim.alpha())
-      stopPrecompute()
+    if (ovPhys.running()) {
+      alpha = Math.max(alpha, ovPhys.alpha())
+      ovPhys.stop()
     }
     return alpha
   }
@@ -570,13 +501,17 @@ export function createAgentGraph(el: HTMLElement, cb: AgentGraphCallbacks = {}):
     }
     const center = centers(nodes)
     const pull = V.mode === 'overview' ? V.clusterPull : 0.04
-    const configure = () => {
+    // warmUntil: ticks run inside the worker before the first frame while alpha is above it
+    const run = (alpha: number, warmUntil = 1) => {
       for (const o of nodes) {
         o.fx = V.mode === 'local' && o.id === V.focus ? 0 : null
         o.fy = o.fx
       }
-      sim.nodes(nodes)
-      forces(sim, edges, center, R, pull)
+      sim.start(
+        nodes,
+        edges.map((l) => [l.source, l.target]),
+        { center: (i) => center(nodes[i]), radius: (i) => R(nodes[i]), charge: V.charge, linkDist: V.linkDist, pull, alpha, warmUntil },
+      )
       simMode = V.mode
     }
 
@@ -591,18 +526,14 @@ export function createAgentGraph(el: HTMLElement, cb: AgentGraphCallbacks = {}):
       }
       if (fresh) alpha = Math.max(alpha, fresh > nodes.length * 0.5 ? 1 : 0.3)
       if (alpha > 0.5) {
-        // Background did not finish: run the start synchronously, the rest settles on screen
+        // Background did not finish: the worker runs the chaotic start before the first frame, the rest settles on screen
         for (const o of nodes) Object.assign(o, ovPos.get(o.id))
-        configure()
-        sim.alpha(alpha)
-        for (let i = 0; i < (reduced ? 240 : 55) && sim.alpha() > 0.45; i++) sim.tick()
+        run(alpha, reduced ? ALPHA_MIN : 0.45)
         draw()
-        if (!reduced) sim.restart()
         return !reduced
       }
       morph(nodes, (o) => ovPos.get(o.id)!, animate, () => {
-        configure()
-        if (alpha >= sim.alphaMin() && !reduced) sim.alpha(alpha).restart()
+        if (alpha >= ALPHA_MIN && !reduced) run(alpha)
       })
       return false
     }
@@ -614,144 +545,107 @@ export function createAgentGraph(el: HTMLElement, cb: AgentGraphCallbacks = {}):
       o.x = c.x + (Math.random() - 0.5) * 60
       o.y = c.y + (Math.random() - 0.5) * 60
     }
-    configure()
     if (reduced) {
-      sim.alpha(0.5)
-      for (let i = 0; i < 180; i++) sim.tick()
-      draw()
+      // reduced motion: the worker settles the layout completely before the first frame
+      run(0.5, ALPHA_MIN)
       return false
     }
-    sim.alpha(animate ? 0.5 : 0.3).restart()
+    run(animate ? 0.5 : 0.3)
     return true
   }
 
-  // ---------- drawing ----------
-  function render(animate: boolean) {
-    const dur = duration(animate ? 350 : 0)
-    linkSel = gL
-      .selectAll<SVGPathElement, GLink>('path')
-      .data(vis.edges, (l) => l.id)
-      .join(
-        (en) => en.append('path').attr('fill', 'none').attr('opacity', 0).style('stroke', EDGE),
-        (up) => up,
-        (ex) => ex.transition().duration(dur).attr('opacity', 0).remove(),
-      )
-      .attr('stroke-width', ew)
-      // Arrowheads always: direction of the deal is visible when paused and on screenshots; the dash is an extra
-      .attr('marker-end', `url(#${uid}-arr)`)
-    nodeSel = gN
-      .selectAll<SVGGElement, GNode>('g.n')
-      .data(vis.nodes, (o) => o.id)
-      .join(
-        (en) => {
-          const s = en.append('g').attr('class', 'n').style('cursor', 'pointer').attr('opacity', 0)
-          s.append('path').attr('class', 'c')
-          return s
-        },
-        (up) => up,
-        (ex) => ex.transition().duration(dur).attr('opacity', 0).remove(),
-      )
-    nodeSel
-      .attr('tabindex', 0)
-      .attr('role', 'button')
-      .attr('aria-label', (o) => `${label(o)}, ${roleTitle(o)}`)
-      .on('keydown', (e: KeyboardEvent, o) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault()
-          cb.onSelect?.(o.id)
-        }
-      })
-      .on('focus', (_e, o) => hover(o.id))
-      .on('blur', () => hover(null))
-    // Node shape = role (★ ◆ ▶ ▼ ● ■), area equal to a circle of radius R
-    nodeSel
-      .select<SVGPathElement>('path.c')
-      .each(function (o) {
-        const sym = roleSymbolPath(o.stub ? null : o.n.role, R(o))
-        this.setAttribute('d', sym.d)
-        if (sym.rotate) this.setAttribute('transform', `rotate(${sym.rotate})`)
-        else this.removeAttribute('transform')
-      })
-      .style('fill', color)
-      // White ring: the owner's agent. Dashed: an agent that left the game (alive: false).
-      .attr('stroke', (o) => (!lit(o) ? BG : isMine(o) ? '#ffffff' : o.n.alive === false ? '#d4d4d8' : BG))
-      .attr('stroke-width', (o) => (isMine(o) ? 2 : o.n.alive === false ? 1.4 : 0.8))
-      .attr('stroke-dasharray', (o) => (o.n.alive === false ? '2.5 2' : null))
-      .attr('class', (o) => 'c' + (isMine(o) ? ' dai-seed' : ''))
-    nodeSel.selectAll('circle.f').remove()
-    nodeSel
-      .filter((o) => o.id === V.focus)
-      .insert('circle', 'path.c')
-      .attr('class', 'f')
-      .attr('r', (o) => R(o) + 6)
-      .attr('fill', 'none')
-      .attr('stroke', '#ffffff')
-      .attr('stroke-opacity', 0.55)
-      .attr('stroke-width', 1.5)
-    nodeSel
-      .on('mouseenter', (e: MouseEvent, o) => hover(o.id, e))
-      .on('mousemove', (e: MouseEvent) => moveTip(e))
-      .on('mouseleave', () => hover(null))
-      .on('click', (e: MouseEvent, o) => {
-        e.stopPropagation()
-        cb.onSelect?.(o.id)
-      })
-    nodeSel.call(
-      d3
-        .drag<SVGGElement, GNode>()
-        .on('start', (_e, o) => {
-          pendingFit = false
-          svg.style('cursor', 'grabbing')
-          if (usesSim()) sim.alphaTarget(0.25).restart()
-          o.fx = o.x
-          o.fy = o.y
-        })
-        .on('drag', (e: d3.D3DragEvent<SVGGElement, GNode, GNode>, o) => {
-          o.fx = e.x
-          o.fy = e.y
-          if (!usesSim()) {
-            o.x = e.x
-            o.y = e.y
-            draw()
-          }
-        })
-        .on('end', (_e, o) => {
-          svg.style('cursor', 'grab')
-          if (usesSim()) sim.alphaTarget(0)
-          if (!(V.mode === 'local' && o.id === V.focus && usesSim())) {
-            o.fx = null
-            o.fy = null
-          }
-        }),
-    )
-    textSel = gT
-      .selectAll<SVGTextElement, GNode>('text')
-      .data(vis.nodes, (o) => o.id)
-      .join(
-        (en) =>
-          en
-            .append('text')
-            .attr('opacity', 0)
-            .attr('text-anchor', 'middle')
-            .style('font-family', MONO)
-            .attr('font-weight', 500)
-            .style('pointer-events', 'none')
-            .style('paint-order', 'stroke')
-            .attr('stroke', BG)
-            .attr('stroke-width', 3),
-        (up) => up,
-        (ex) => ex.remove(),
-      )
-      .text(label)
-      .attr('fill', (o) => (o.id === V.focus ? '#ffffff' : '#b4b4bc'))
-    hulls(animate)
-    opac(animate ? 400 : 0)
-    labels(animate ? 300 : 0)
-    flows()
-    draw()
+  // ---------- drawing (canvas) ----------
+  // Alpha of every drawn item animates toward a target (enter/exit fades, hover dimming): one timer, not 11K transitions.
+  // Keys: node id, 'L'+link id, 'T'+node id (label), 'H'+party id (hull).
+  const alpha = new Map<string, number>()
+  const goal = new Map<string, number>()
+  let from = new Map<string, number>()
+  let fadeStart = 0
+  let fadeMs = 0
+  let fadeT: d3.Timer | null = null
+  const A = (key: string) => alpha.get(key) ?? 0
+  function setGoal(key: string, v: number) {
+    goal.set(key, v)
+  }
+  function fade(ms: number) {
+    const dur = duration(ms)
+    fadeT?.stop()
+    fadeT = null
+    if (!dur) {
+      for (const [key, v] of goal) alpha.set(key, v)
+      settleGoals()
+      requestDraw()
+      return
+    }
+    from = new Map(alpha)
+    fadeStart = performance.now()
+    fadeMs = dur
+    fadeT = d3.timer(() => {
+      const p = Math.min(1, (performance.now() - fadeStart) / fadeMs)
+      const e = d3.easeCubicOut(p)
+      for (const [key, v] of goal) {
+        const a0 = from.get(key) ?? 0
+        alpha.set(key, a0 + (v - a0) * e)
+      }
+      requestDraw()
+      if (p >= 1) {
+        fadeT?.stop()
+        fadeT = null
+        settleGoals()
+      }
+    })
+  }
+  /** After a fade: forget fully transparent items and drop the exiting ones. */
+  function settleGoals() {
+    for (const [key, v] of goal) {
+      if (v === 0) {
+        goal.delete(key)
+        alpha.delete(key)
+      }
+    }
+    leaving = { nodes: [], edges: [] }
+    // hulls and labels that faded out leave the draw lists, so a later highlight cannot bring them back
+    hullGroups = hullGroups.filter((d) => goal.has('H' + d[0]))
+    shownLabels = shownLabels.filter((o) => goal.has('T' + o.id))
   }
 
-  function hulls(animate: boolean) {
+  // Role shapes as Path2D, cached by role and radius (score sizes repeat)
+  const shapes = new Map<string, Path2D>()
+  function shape(o: GNode) {
+    const role = o.stub ? null : o.n.role
+    const r = Math.round(R(o) * 4) / 4
+    const key = `${role}|${r}`
+    let p = shapes.get(key)
+    if (!p) {
+      const sym = roleSymbolPath(role, r)
+      p = new Path2D()
+      p.addPath(new Path2D(sym.d), sym.rotate ? new DOMMatrix().rotate(sym.rotate) : undefined)
+      shapes.set(key, p)
+    }
+    return p
+  }
+
+  function render(animate: boolean) {
+    const dur = animate ? 350 : 0
+    const nodeIds = new Set(vis.nodes.map((o) => o.id))
+    const edgeIds = new Set(vis.edges.map((l) => l.id))
+    // Items that left the view fade out from where they are
+    leaving = {
+      nodes: [...new Set([...leaving.nodes, ...[...N.values()].filter((o) => !nodeIds.has(o.id) && A(o.id) > 0)])],
+      edges: [...new Set([...leaving.edges, ...E.filter((l) => !edgeIds.has(l.id) && A('L' + l.id) > 0)])],
+    }
+    for (const o of leaving.nodes) setGoal(o.id, 0)
+    for (const l of leaving.edges) setGoal('L' + l.id, 0)
+    hulls()
+    qt = null
+    a11yList()
+    opac(dur)
+    labels(animate ? 300 : 0)
+    flows()
+    requestDraw()
+  }
+
+  function hulls() {
     const groups: Hull[] =
       V.mode === 'overview'
         ? [
@@ -761,55 +655,20 @@ export function createAgentGraph(el: HTMLElement, cb: AgentGraphCallbacks = {}):
             ),
           ]
         : []
-    hullSel = gH
-      .selectAll<SVGGElement, Hull>('g.h')
-      .data(groups, (d) => d[0])
-      .join(
-        (en) => {
-          const s = en.append('g').attr('class', 'h').attr('opacity', 0)
-          s.append('path')
-          s.append('text')
-            .attr('text-anchor', 'middle')
-            .style('font-family', SANS)
-            .attr('font-size', 12)
-            .attr('font-weight', 500)
-            .attr('fill', '#a1a1aa')
-          return s
-        },
-        (up) => up,
-        (ex) => ex.transition().duration(duration(300)).attr('opacity', 0).remove(),
-      )
-    hullSel
-      .transition()
-      .duration(duration(animate ? 400 : 0))
-      .attr('opacity', 1)
-    const hc = (d: Hull) => (V.colorBy === 'party' ? CL[d[0] % CL.length] : '#ffffff')
-    hullSel.select('path').attr('fill', hc).attr('fill-opacity', 0.025).attr('stroke', hc).attr('stroke-opacity', 0.08)
-    hullSel.select('text').text((d) => {
-      const p = passports.get(d[0])
-      return `${p ? p.label : `party ${d[0]}`} · ${d[1].length} agents${p ? ` · ${p.finished ? 'finished' : `round ${p.round} · ${p.phase}`}` : ''}`
-    })
+    const ids = new Set(groups.map((d) => 'H' + d[0]))
+    for (const d of hullGroups) if (!ids.has('H' + d[0])) setGoal('H' + d[0], 0)
+    // keep exiting hulls drawable while they fade
+    hullGroups = [...groups, ...hullGroups.filter((d) => !ids.has('H' + d[0]) && A('H' + d[0]) > 0)]
   }
 
+  const hullTitle = (d: Hull) => {
+    const p = passports.get(d[0])
+    return `${p ? p.label : `party ${d[0]}`} · ${d[1].length} agents${p ? ` · ${p.finished ? 'finished' : `round ${p.round} · ${p.phase}`}` : ''}`
+  }
   const hullLine = d3.line().curve(d3.curveCatmullRomClosed.alpha(0.6))
-  function drawHulls() {
-    hullSel.each(function (d) {
-      const pts: [number, number][] = []
-      for (const o of d[1]) {
-        const r = R(o) + 14
-        for (let a = 0; a < 8; a++) pts.push([o.x + r * Math.cos((a * Math.PI) / 4), o.y + r * Math.sin((a * Math.PI) / 4)])
-      }
-      const h = d3.polygonHull(pts)
-      if (!h) return
-      const s = d3.select(this)
-      s.select('path').attr('d', hullLine(h))
-      s.select('text')
-        .attr('x', d3.mean(d[1], (o) => o.x) ?? 0)
-        .attr('y', (d3.min(h, (p) => p[1]) ?? 0) - 8)
-    })
-  }
 
-  function path(l: GLink) {
+  /** Link geometry: straight, or a quadratic curve when both directions exist. End point stops at the target's edge. */
+  function geom(l: GLink) {
     const s = l.source
     const t = l.target
     const dx = t.x - s.x
@@ -820,18 +679,276 @@ export function createAgentGraph(el: HTMLElement, cb: AgentGraphCallbacks = {}):
     const uy = dy / len
     const ex = t.x - ux * rt
     const ey = t.y - uy * rt
-    if (!l.recip) return `M${s.x},${s.y}L${ex},${ey}`
+    if (!l.recip) return { sx: s.x, sy: s.y, ex, ey, cx: NaN, cy: NaN, dx: ux, dy: uy }
     const off = Math.min(28, len * 0.18)
-    const mx = (s.x + t.x) / 2 - uy * off
-    const my = (s.y + t.y) / 2 + ux * off
-    return `M${s.x},${s.y}Q${mx},${my} ${ex},${ey}`
+    const cx = (s.x + t.x) / 2 - uy * off
+    const cy = (s.y + t.y) / 2 + ux * off
+    const tl = Math.hypot(ex - cx, ey - cy) || 1
+    return { sx: s.x, sy: s.y, ex, ey, cx, cy, dx: (ex - cx) / tl, dy: (ey - cy) / tl }
   }
 
+  /** Positions changed (physics tick, morph, drag): repaint on the next frame and rebuild the hit-test tree lazily. */
   function draw() {
-    linkSel.attr('d', path)
-    nodeSel.attr('transform', (o) => `translate(${o.x},${o.y})`)
-    drawHulls()
+    qt = null
     labels(0)
+    requestDraw()
+  }
+  let frame = 0
+  function requestDraw() {
+    if (!frame && !destroyed) frame = requestAnimationFrame(paint)
+  }
+
+  function paint() {
+    frame = 0
+    const dpr = window.devicePixelRatio || 1
+    const W = el.clientWidth
+    const Hh = el.clientHeight
+    if (canvas.width !== Math.round(W * dpr) || canvas.height !== Math.round(Hh * dpr)) {
+      canvas.width = Math.round(W * dpr)
+      canvas.height = Math.round(Hh * dpr)
+      canvas.style.width = `${W}px`
+      canvas.style.height = `${Hh}px`
+    }
+    ctx.setTransform(1, 0, 0, 1, 0, 0)
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.setTransform(dpr * T.k, 0, 0, dpr * T.k, dpr * T.x, dpr * T.y)
+    const now = performance.now()
+    const H = hoverId ? nb(hoverId) : null
+
+    // hulls
+    for (const d of hullGroups) {
+      const a = A('H' + d[0])
+      if (a < 0.01) continue
+      const pts: [number, number][] = []
+      for (const o of d[1]) {
+        const r = R(o) + 14
+        for (let i = 0; i < 8; i++) pts.push([o.x + r * Math.cos((i * Math.PI) / 4), o.y + r * Math.sin((i * Math.PI) / 4)])
+      }
+      const h = d3.polygonHull(pts)
+      if (!h) continue
+      const hc = V.colorBy === 'party' ? CL[d[0] % CL.length] : '#ffffff'
+      ctx.beginPath()
+      hullLine.context(ctx)(h)
+      ctx.globalAlpha = 0.025 * a
+      ctx.fillStyle = hc
+      ctx.fill()
+      ctx.globalAlpha = 0.08 * a
+      ctx.strokeStyle = hc
+      ctx.lineWidth = 1 / k
+      ctx.stroke()
+      ctx.globalAlpha = a
+      ctx.fillStyle = '#a1a1aa'
+      ctx.font = `500 ${Math.min(12, 12 / k)}px ${SANS}`
+      ctx.textAlign = 'center'
+      ctx.fillText(hullTitle(d), d3.mean(d[1], (o) => o.x) ?? 0, (d3.min(h, (q) => q[1]) ?? 0) - 8)
+    }
+
+    // links, batched by colour, alpha and width; running dashes drawn separately
+    const arrowPx = Math.min(10, Math.max(3.5, 7 * k)) / k
+    const batches = new Map<string, GLink[]>()
+    const dashed: GLink[] = []
+    for (const l of [...vis.edges, ...leaving.edges]) {
+      const a = A('L' + l.id)
+      if (a < 0.01) continue
+      if (flowing.has(l)) {
+        dashed.push(l)
+        continue
+      }
+      const hot = !!H && (l.source.id === hoverId || l.target.id === hoverId)
+      const key = `${hot ? color(l.source) : EDGE}|${a.toFixed(2)}|${ew(l).toFixed(2)}`
+      push(batches, key, l)
+    }
+    const strokeLinks = (list: GLink[], col: string, a: number, w: number) => {
+      ctx.globalAlpha = a
+      ctx.strokeStyle = col
+      ctx.lineWidth = w
+      ctx.beginPath()
+      const heads = new Path2D()
+      for (const l of list) {
+        const q = geom(l)
+        ctx.moveTo(q.sx, q.sy)
+        if (isNaN(q.cx)) ctx.lineTo(q.ex, q.ey)
+        else ctx.quadraticCurveTo(q.cx, q.cy, q.ex, q.ey)
+        // arrowhead: tip at the end point, 8x7 marker scaled to arrowPx
+        const bx = q.ex - q.dx * arrowPx
+        const by = q.ey - q.dy * arrowPx
+        const nx = -q.dy * arrowPx * 0.44
+        const ny = q.dx * arrowPx * 0.44
+        heads.moveTo(q.ex, q.ey)
+        heads.lineTo(bx + nx, by + ny)
+        heads.lineTo(bx - nx, by - ny)
+        heads.closePath()
+      }
+      ctx.stroke()
+      ctx.fillStyle = '#b4b4be'
+      ctx.fill(heads)
+    }
+    for (const [key, list] of batches) {
+      const [col, a, w] = key.split('|')
+      strokeLinks(list, col, +a, +w)
+    }
+    if (dashed.length) {
+      ctx.setLineDash([6, 4])
+      ctx.lineDashOffset = -((now / 1400) * 20) % 20
+      for (const l of dashed) {
+        const hot = !!H && (l.source.id === hoverId || l.target.id === hoverId)
+        strokeLinks([l], hot ? color(l.source) : EDGE, A('L' + l.id), ew(l))
+      }
+      ctx.setLineDash([])
+    }
+
+    // nodes: plain ones batched by fill and alpha; rings, glow and focus drawn one by one on top
+    const plain = new Map<string, Path2D>()
+    const special: GNode[] = []
+    for (const o of [...vis.nodes, ...leaving.nodes]) {
+      const a = A(o.id)
+      if (a < 0.01 || isNaN(o.x)) continue
+      if (isMine(o) || o.n.alive === false || o.id === hoverId || o.id === V.focus) {
+        special.push(o)
+        continue
+      }
+      const key = `${color(o)}|${a.toFixed(2)}`
+      let p = plain.get(key)
+      if (!p) plain.set(key, (p = new Path2D()))
+      p.addPath(shape(o), new DOMMatrix().translate(o.x, o.y))
+    }
+    ctx.lineWidth = 0.8
+    ctx.strokeStyle = BG
+    for (const [key, p] of plain) {
+      const [col, a] = key.split('|')
+      ctx.globalAlpha = +a
+      ctx.fillStyle = col
+      ctx.fill(p)
+      ctx.stroke(p)
+    }
+    for (const o of special) {
+      ctx.save()
+      ctx.translate(o.x, o.y)
+      ctx.globalAlpha = A(o.id)
+      if (o.id === V.focus) {
+        ctx.beginPath()
+        ctx.arc(0, 0, R(o) + 6, 0, Math.PI * 2)
+        ctx.globalAlpha = 0.55 * A(o.id)
+        ctx.strokeStyle = '#ffffff'
+        ctx.lineWidth = 1.5
+        ctx.stroke()
+        ctx.globalAlpha = A(o.id)
+      }
+      if (o.id === hoverId || o.id === V.focus) {
+        ctx.shadowColor = color(o)
+        ctx.shadowBlur = 6 * T.k * dpr
+      }
+      ctx.fillStyle = color(o)
+      ctx.fill(shape(o))
+      ctx.shadowBlur = 0
+      // White ring: the owner's agent. Dashed: an agent that left the game (alive: false).
+      ctx.strokeStyle = !lit(o) ? BG : isMine(o) ? '#ffffff' : o.n.alive === false ? '#d4d4d8' : BG
+      ctx.lineWidth = isMine(o) ? 2 : o.n.alive === false ? 1.4 : 0.8
+      if (o.n.alive === false) ctx.setLineDash([2.5, 2])
+      ctx.stroke(shape(o))
+      ctx.setLineDash([])
+      ctx.restore()
+    }
+
+    // labels (already culled for overlaps)
+    ctx.textAlign = 'center'
+    ctx.lineJoin = 'round'
+    const off = Math.min(12, 14 / k)
+    for (const o of shownLabels) {
+      const a = A('T' + o.id)
+      if (a < 0.01) continue
+      const fs = fontSize(o)
+      ctx.globalAlpha = a
+      ctx.font = `500 ${fs}px ${MONO}`
+      ctx.lineWidth = Math.min(3, 3 / k)
+      ctx.strokeStyle = BG
+      ctx.strokeText(label(o), o.x, o.y + R(o) + off)
+      ctx.fillStyle = o.id === V.focus ? '#ffffff' : '#b4b4bc'
+      ctx.fillText(label(o), o.x, o.y + R(o) + off)
+    }
+    ctx.globalAlpha = 1
+    if (dashed.length && !reduced) requestDraw() // keep the dashes running
+  }
+
+  // ---------- hit testing and pointer input ----------
+  let qt: d3.Quadtree<GNode> | null = null
+  function nodeAt(e: MouseEvent | PointerEvent): GNode | undefined {
+    const [x, y] = T.invert(d3.pointer(e, svg.node()))
+    qt ??= d3.quadtree<GNode>().x((o) => o.x).y((o) => o.y).addAll(vis.nodes.filter((o) => !isNaN(o.x)))
+    const o = qt.find(x, y, (12 * V.nodeScale + 6) / Math.min(1, k) + 4)
+    return o && Math.hypot(o.x - x, o.y - y) <= R(o) + 4 / k ? o : undefined
+  }
+  svg
+    .on('pointermove', (e: PointerEvent) => {
+      if (e.buttons) return
+      const o = nodeAt(e)
+      svg.style('cursor', o ? 'pointer' : 'grab')
+      if ((o?.id ?? null) !== hoverId) hover(o?.id ?? null, e)
+      else if (o) moveTip(e)
+    })
+    .on('pointerleave', () => hover(null))
+    .on('click', (e: MouseEvent) => {
+      const o = nodeAt(e)
+      if (o) cb.onSelect?.(o.id)
+      else cb.onBackground?.()
+    })
+  // Drag before zoom: when a node is under the pointer, drag consumes the gesture; otherwise zoom/pan gets it
+  svg.call(
+    d3
+      .drag<SVGSVGElement, unknown, GNode>()
+      .container(() => g.node()!)
+      // no node under the pointer: d3-drag gets null and lets the zoom behaviour take the gesture
+      .subject((e) => nodeAt(e.sourceEvent) ?? (null as unknown as GNode))
+      .on('start', (e: d3.D3DragEvent<SVGSVGElement, unknown, GNode>) => {
+        const o = e.subject
+        pendingFit = false
+        svg.style('cursor', 'grabbing')
+        o.fx = o.x
+        o.fy = o.y
+        if (usesSim()) {
+          sim.fix(o, o.x, o.y)
+          sim.alphaTarget(0.25)
+        }
+      })
+      .on('drag', (e: d3.D3DragEvent<SVGSVGElement, unknown, GNode>) => {
+        const o = e.subject
+        o.fx = e.x
+        o.fy = e.y
+        // move it under the pointer right away; the worker echoes the pinned position on its next frame
+        o.x = e.x
+        o.y = e.y
+        if (usesSim()) sim.fix(o, e.x, e.y)
+        draw()
+      })
+      .on('end', (e: d3.D3DragEvent<SVGSVGElement, unknown, GNode>) => {
+        const o = e.subject
+        svg.style('cursor', 'grab')
+        if (usesSim()) sim.alphaTarget(0)
+        if (!(V.mode === 'local' && o.id === V.focus && usesSim())) {
+          o.fx = null
+          o.fy = null
+          if (usesSim()) sim.free(o)
+        }
+      }),
+  )
+  svg.call(zoom).on('dblclick.zoom', null)
+
+  /** Keyboard and screen readers: the visible agents as buttons (top 200 by score in big overviews). */
+  function a11yList() {
+    const list = [...vis.nodes].filter((o) => !o.ghost).sort((a, b) => (b.n.score || 0) - (a.n.score || 0)).slice(0, 200)
+    a11y
+      .selectAll<HTMLLIElement, GNode>('li')
+      .data(list, (o) => o.id)
+      .join((en) => {
+        const li = en.append('li')
+        li.append('button').attr('type', 'button')
+        return li
+      })
+      .select('button')
+      .text((o) => `${label(o)}, ${roleTitle(o)}`)
+      .on('focus', (_e, o) => hover(o.id))
+      .on('blur', () => hover(null))
+      .on('click', (_e, o) => cb.onSelect?.(o.id))
   }
 
   // ---------- highlight state ----------
@@ -843,40 +960,26 @@ export function createAgentGraph(el: HTMLElement, cb: AgentGraphCallbacks = {}):
   }
 
   function opac(ms: number) {
-    const dur = duration(ms)
-    nodeSel.select('path.c').attr('filter', (o) => (o.id === hoverId || o.id === V.focus ? `url(#${uid}-glow)` : null))
     const H = hoverId ? nb(hoverId) : null
     const hot = (l: GLink) => l.source.id === hoverId || l.target.id === hoverId
-    nodeSel
-      .transition()
-      .duration(dur)
-      .attr('opacity', (o) => (o.ghost ? 0.07 : 1) * (H ? (H.has(o.id) ? 1 : 0.12) : 1))
-    linkSel
-      .transition()
-      .duration(dur)
-      // opacity, not stroke-opacity: the marker arrowhead fades too
-      .attr('opacity', (l) => {
-        if (l.ghost) return 0.03
-        if (H) return hot(l) ? 0.95 : 0.04
-        if (V.focus && (l.source.id === V.focus || l.target.id === V.focus)) return 0.7
-        return 0.32
-      })
-      // style, not attr: works for any CSS colour value
-      .style('stroke', (l) => (H && hot(l) ? color(l.source) : EDGE))
-    hullSel
-      .transition()
-      .duration(dur)
-      .attr('opacity', H ? 0.35 : 1)
+    for (const o of vis.nodes) setGoal(o.id, (o.ghost ? 0.07 : 1) * (H ? (H.has(o.id) ? 1 : 0.12) : 1))
+    for (const l of vis.edges) {
+      setGoal(
+        'L' + l.id,
+        l.ghost ? 0.03 : H ? (hot(l) ? 0.95 : 0.04) : V.focus && (l.source.id === V.focus || l.target.id === V.focus) ? 0.7 : 0.32,
+      )
+    }
+    for (const d of hullGroups) if (goal.get('H' + d[0]) !== 0) setGoal('H' + d[0], H ? 0.35 : 1)
+    fade(ms)
   }
+
+  const fontSize = (o: GNode) => Math.min(o.id === V.focus ? 12 : 10, (o.id === V.focus ? 14 : 12) / k)
 
   // Labels: at most 12px on screen (selected: 14px); overlapping ones are dropped greedily by rank
   // (hovered > selected > score). A grid instead of pairwise checks: runs on every tick and zoom.
   function labels(ms: number) {
-    const dur = duration(ms)
     const H = hoverId ? nb(hoverId) : null
-    const fontSize = (o: GNode) => Math.min(o.id === V.focus ? 12 : 10, (o.id === V.focus ? 14 : 12) / k)
     const off = Math.min(12, 14 / k)
-    hullSel.select('text').attr('font-size', Math.min(12, 12 / k))
     const few = V.mode === 'local' && vis.nodes.length <= 30
     const important = (o: GNode) => o.id === hoverId || o.id === V.focus
     const ranked = vis.nodes
@@ -887,12 +990,16 @@ export function createAgentGraph(el: HTMLElement, cb: AgentGraphCallbacks = {}):
           Number(b.id === V.focus) - Number(a.id === V.focus) ||
           (b.n.score || 0) - (a.n.score || 0),
       )
-    const shown = new Set<string>()
+    const shown: GNode[] = []
     const cw = 80 / k
     const ch = 20 / k
     const grid = new Map<string, Box[]>()
     const hits = (a: Box, b: Box) => a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y
+    // Only labels inside the viewport (plus a margin) compete for space
+    const [vx0, vy0] = T.invert([-100, -100])
+    const [vx1, vy1] = T.invert([el.clientWidth + 100, el.clientHeight + 100])
     for (const o of ranked) {
+      if (o.x < vx0 || o.x > vx1 || o.y < vy0 || o.y > vy1) continue
       const font = fontSize(o)
       const pad = 6 / k
       const w = label(o).length * font * 0.65 + pad * 2
@@ -901,29 +1008,31 @@ export function createAgentGraph(el: HTMLElement, cb: AgentGraphCallbacks = {}):
       for (let i = Math.floor(box.x / cw); i <= Math.floor((box.x + box.w) / cw); i++)
         for (let j = Math.floor(box.y / ch); j <= Math.floor((box.y + box.h) / ch); j++) cells.push(`${i},${j}`)
       if (important(o) || !cells.some((c) => grid.get(c)?.some((b) => hits(box, b)))) {
-        shown.add(o.id)
+        shown.push(o)
         for (const c of cells) push(grid, c, box)
       }
     }
-    // Move and scale only visible labels: re-laying thousands of hidden <text> per tick costs ~20 ms
-    textSel
-      .filter((o) => shown.has(o.id))
-      .attr('x', (o) => o.x)
-      .attr('y', (o) => o.y + R(o) + off)
-      .attr('font-size', fontSize)
-      .attr('stroke-width', Math.min(3, 3 / k))
-    const op = (o: GNode) => (shown.has(o.id) ? 1 : 0)
-    if (dur) textSel.interrupt().transition().duration(dur).attr('opacity', op)
-    else textSel.interrupt().attr('opacity', op)
+    const now = new Set(shown.map((o) => o.id))
+    for (const o of shownLabels) if (!now.has(o.id)) setGoal('T' + o.id, 0)
+    for (const o of shown) setGoal('T' + o.id, 1)
+    // Labels that are fading out stay in the draw list until transparent
+    shownLabels = [...shown, ...shownLabels.filter((o) => !now.has(o.id) && A('T' + o.id) > 0.01)]
+    if (ms) fade(ms)
+    else for (const o of shownLabels) alpha.set('T' + o.id, goal.get('T' + o.id) ?? 0)
   }
 
+  // Running dash on the hovered agent's links, the selected agent's links, or every link of a neighbourhood
+  let flowing = new Set<GLink>()
   function flows() {
-    linkSel.classed('dai-flow', (l) => {
-      if (reduced || V.flow !== 'dash' || l.ghost) return false
-      if (hoverId) return l.source.id === hoverId || l.target.id === hoverId
-      if (V.mode === 'local') return true
-      return !!V.focus && (l.source.id === V.focus || l.target.id === V.focus)
-    })
+    flowing = new Set(
+      vis.edges.filter((l) => {
+        if (reduced || V.flow !== 'dash' || l.ghost) return false
+        if (hoverId) return l.source.id === hoverId || l.target.id === hoverId
+        if (V.mode === 'local') return true
+        return !!V.focus && (l.source.id === V.focus || l.target.id === V.focus)
+      }),
+    )
+    requestDraw()
   }
 
   function hover(id: string | null, ev?: MouseEvent) {
@@ -1068,7 +1177,7 @@ export function createAgentGraph(el: HTMLElement, cb: AgentGraphCallbacks = {}):
       cams.set(camKey(prev), { t: d3.zoomTransform(svg.node()!), focus: prev.focus })
       if (prev.mode === 'overview') {
         for (const o of vis.nodes) if (!isNaN(px(o))) ovPos.set(o.id, { x: px(o), y: py(o) })
-        ovAlpha = simMode === 'overview' && sim.alpha() >= sim.alphaMin() ? sim.alpha() : 0
+        ovAlpha = simMode === 'overview' && sim.running() && sim.alpha() >= ALPHA_MIN ? sim.alpha() : 0
       }
     }
     V = { ...V, ...nv }
@@ -1089,7 +1198,7 @@ export function createAgentGraph(el: HTMLElement, cb: AgentGraphCallbacks = {}):
       }
     }
     if (first) {
-      nodeSel.attr('opacity', 0)
+      for (const key of goal.keys()) if (!key.startsWith('T')) alpha.set(key, 0)
       opac(700)
       first = false
     }
@@ -1103,12 +1212,12 @@ export function createAgentGraph(el: HTMLElement, cb: AgentGraphCallbacks = {}):
     const dw = w - size.w
     const dh = h - size.h
     size = { w, h }
+    requestDraw()
     if (first || destroyed || (!dw && !dh)) return
     const t = d3.zoomTransform(svg.node()!)
     svg.call(zoom.transform, d3.zoomIdentity.translate(t.x + dw / 2, t.y + dh / 2).scale(t.k))
   })
   resize.observe(el)
-  svg.on('click', () => cb.onBackground?.())
 
   return {
     setData,
@@ -1126,7 +1235,13 @@ export function createAgentGraph(el: HTMLElement, cb: AgentGraphCallbacks = {}):
       resize.disconnect()
       camT?.stop()
       layoutT?.stop()
-      sim.stop()
+      fadeT?.stop()
+      cancelAnimationFrame(frame)
+      sim.terminate()
+      ovPhys.terminate()
+      el.removeEventListener('wheel', keepGesture)
+      el.removeEventListener('gesturestart', keepGesture)
+      el.removeEventListener('gesturechange', keepGesture)
       root.selectAll('*').interrupt().remove()
     },
   }

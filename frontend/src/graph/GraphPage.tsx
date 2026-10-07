@@ -13,10 +13,10 @@ import { useGraphView } from './view'
 
 const toolBtn = 'h-[30px] cursor-pointer whitespace-nowrap rounded-lg border px-2.5 text-xs font-medium'
 
-type Props = { focus: string | null; mine: string | null; onFocus: (id: string | null) => void }
+type Props = { focus: string | null; mine: string | null; onFocus: (id: string | null) => void; scale?: 'small' | 'large' }
 
-export function GraphPage({ focus: wanted, mine, onFocus }: Props) {
-  const data = useMemo(() => mockGraph(), [])
+export function GraphPage({ focus: wanted, mine, onFocus, scale = 'small' }: Props) {
+  const data = useMemo(() => mockGraph(7, scale), [scale])
   // An id that is not in the data (stale link) selects nothing
   const focus = wanted && data.agents.some((a) => a.id === wanted) ? wanted : null
   // The engine keeps its callback from mount: read the latest onFocus through a ref
