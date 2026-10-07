@@ -321,6 +321,8 @@ async function run(command, options, deps = {}) {
       const name = options['--name'];
       const model = options['--model'];
       let profile = readPrivate(path);
+      if (options['--existing-only'] !== undefined && options['--existing-only'] !== 'true') fail('usage', '--existing-only accepts only true');
+      if (options['--existing-only'] === 'true' && !profile?.registration) fail('existing_registration_required', 'saved confirmed registration required');
       if (!profile) { profile = newProfile(); savePrivate(path, profile); }
       if (profile.schema !== 'alashi.bootstrap.v1' || !hex32(profile.agent_record_id) || !hex32(profile.recovery_secret)) fail('invalid_profile', 'private agent profile invalid');
       const rpc = deps.rpc || solanaRpc();

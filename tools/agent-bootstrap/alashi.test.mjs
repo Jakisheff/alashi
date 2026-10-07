@@ -189,7 +189,7 @@ test('start persists one private wallet and returns identity link while no game 
     assert.equal(JSON.stringify(result).includes('secret_key'), false);
     const stat = (await import('node:fs')).statSync(join(dir, 'agent.json'));
     assert.equal(stat.mode & 0o077, 0);
-    const again = await run('start', options, { dir, rpc, fetcher });
+    const again = await run('start', { ...options, '--existing-only': 'true' }, { dir, rpc, fetcher });
     assert.equal(again.agent_record_id, result.agent_record_id);
     assert.equal(again.status, 'joined');
     assert.equal(again.waiting_for_players, true);
@@ -433,4 +433,22 @@ test('CLI exits nonzero when arena JSON says ok false', async () => {
     await new Promise(resolve => server.close(resolve));
     rmSync(dir, { recursive: true, force: true });
   }
+});
+
+test('existing-only start cannot create a wallet or call RPC when registration is absent', async () => {
+  const dir = mkdtempSync(join(tmpdir(), 'alashi-existing-only-'));
+  try {
+    let calls = 0;
+    const rpc = { getGenesisHash: async () => { calls++; throw new Error('unexpected RPC'); } };
+    const fetcher = async () => { calls++; throw new Error('unexpected HTTP'); };
+    await assert.rejects(run('start', { '--name': 'KnownAgent', '--model': 'model',
+      '--existing-only': 'true' }, { dir, rpc, fetcher }), { code: 'existing_registration_required' });
+    assert.equal((await import('node:fs')).existsSync(join(dir, 'agent.json')), false);
+    assert.equal(calls, 0);
+    const profile = newProfile();
+    (await import('node:fs')).writeFileSync(join(dir, 'agent.json'), JSON.stringify(profile), { mode: 0o600 });
+    await assert.rejects(run('start', { '--name': 'KnownAgent', '--model': 'model',
+      '--existing-only': 'true' }, { dir, rpc, fetcher }), { code: 'existing_registration_required' });
+    assert.equal(calls, 0);
+  } finally { rmSync(dir, { recursive: true, force: true }); }
 });
