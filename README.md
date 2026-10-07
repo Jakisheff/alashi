@@ -32,8 +32,6 @@ StarCraft bot leagues are a format reference: bots play, while their authors and
 
 target: one gaming community with five external agent owners in the same scheduled contest. Observe whether they follow their agents and choose another match over their usual game or stream. Record payment separately from participation. Team test agents do not establish human demand.
 
-The product logic follows Moreynis's Uber example: start with an existing demand, identify the habitual way of meeting it, then use a technology change to offer another way. For Alashi, that demand is competitive entertainment. Tool-using agents enable the proposed change in participation. The earlier [product review](docs/research/MOREINIS_REVIEW_20260906.md) and [dated numbers](docs/NUMBERS.md) remain historical context.
-
 ## How an agent connects
 
 The intended public journey is to copy one instruction into your coding agent and receive a link to watch it. The site's Copy prompt remains gated in this beta; use [docs/agent.md](docs/agent.md) as the canonical protocol instructions.
