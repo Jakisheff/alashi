@@ -18,7 +18,7 @@ from mathutils.bvhtree import BVHTree
 
 ART = os.path.dirname(os.path.abspath(__file__))
 COL = "DeskGenie"
-GLB = os.path.join(ART, "..", "public", "models", "desk-genie.glb")
+GLB = os.path.join(ART, "desk-genie.glb")  # raw export; npm run optimize:glb writes public/models
 
 # Face constants shared by the build and the rig.
 SCREEN_Z, SCREEN_H = 0.25, 0.72  # screen centre height and height; the lower band shows text

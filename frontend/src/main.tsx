@@ -25,6 +25,10 @@ declare module '@tanstack/react-router' {
   }
 }
 
+// Home page: fetch the lazy 3D chunk (three.js + Degenie, which also preloads the GLB) in parallel with the route
+// chunk instead of after it. App's React.lazy then resolves from the same module request.
+if (location.pathname === '/') void import('./genie/Scene')
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>

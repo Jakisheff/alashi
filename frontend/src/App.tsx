@@ -1,29 +1,15 @@
-import { Environment, Lightformer, OrbitControls } from '@react-three/drei'
-import { Canvas, useThree } from '@react-three/fiber'
-import { Bloom, EffectComposer } from '@react-three/postprocessing'
-import { Suspense, useCallback, useEffect, useMemo } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useMemo } from 'react'
+import { useShallow } from 'zustand/react/shallow'
 import { standings } from './events'
 import { useAgentWatch } from './agent'
 import { useArenaFeed } from './feed'
-import { GenieModel } from './genie/GenieModel'
 import { Onboarding } from './Onboarding'
 import type { GenieClip } from './genie/pose'
 import type { HomeSearch } from './routes/index'
 import { useScene } from './store'
 
-const TARGET: [number, number, number] = [0.15, -0.4, 0]
-const VIEW_DIR = [1.05, 0.3, 5.8] // camera offset from TARGET on a wide screen
-
-// Keep the whole genie in frame on narrow screens: back the camera off as the aspect drops.
-function FitCamera() {
-  const camera = useThree((s) => s.camera)
-  const aspect = useThree((s) => s.size.width / s.size.height)
-  useEffect(() => {
-    const k = Math.max(1, 0.85 / aspect)
-    camera.position.set(TARGET[0] + VIEW_DIR[0] * k, TARGET[1] + VIEW_DIR[1] * k, TARGET[2] + VIEW_DIR[2] * k)
-  }, [camera, aspect])
-  return null
-}
+// three.js + the model load in their own chunk: the onboarding text paints first
+const Scene = lazy(() => import('./genie/Scene'))
 
 const CLIPS: GenieClip[] = ['idle', 'act', 'accepted', 'rejected']
 
@@ -35,7 +21,10 @@ const LINES: Partial<Record<GenieClip, string[]>> = {
 }
 
 export default function App({ search }: { search: HomeSearch }) {
-  const { clip, captions, speech, play, say, toggleCaptions } = useScene()
+  // Only what this component shows: `take`/`speechId` bumps do not re-render it
+  const { clip, captions, speech, play, say, toggleCaptions } = useScene(
+    useShallow((s) => ({ clip: s.clip, captions: s.captions, speech: s.speech, play: s.play, say: s.say, toggleCaptions: s.toggleCaptions })),
+  )
   const api = search.api ?? ''
   // Manual pose buttons are a demo tool, kept out of the main page (team onboarding P0).
   const demo = search.demo === true
@@ -69,31 +58,9 @@ export default function App({ search }: { search: HomeSearch }) {
     <div className="flex min-h-full flex-col bg-[#F4F4F5] text-[#1A1A1E] lg:grid lg:h-dvh lg:min-h-0 lg:grid-cols-[minmax(24rem,30rem)_minmax(0,1fr)] lg:grid-rows-[minmax(0,1fr)]">
       <Onboarding watch={watch} />
       <div className="relative order-1 h-[clamp(14rem,40svh,22rem)] min-h-0 min-w-0 shrink-0 overflow-hidden lg:order-none lg:h-full">
-        <Canvas
-          dpr={[1, 2]}
-          camera={{ fov: 32 }}
-          fallback={<p className="p-6">WebGL is unavailable. Degenie is {clip}.</p>}
-        >
-          <color attach="background" args={['#F4F4F5']} />
-          <ambientLight intensity={0.35} />
-          <directionalLight position={[3, 4, 5]} intensity={1.6} />
-          <Environment resolution={256}>
-            <Lightformer intensity={2} position={[-3, 3, 4]} scale={[5, 3, 1]} />
-            <Lightformer intensity={1.2} position={[4, 1, -3]} scale={[3, 5, 1]} color="#cfe9e3" />
-            <Lightformer intensity={0.6} position={[0, -4, 2]} scale={[6, 1, 1]} rotation-x={Math.PI / 2} />
-          </Environment>
-          <FitCamera />
-          <Suspense fallback={null}>
-            <GenieModel frozen={frozen} />
-          </Suspense>
-          <OrbitControls target={TARGET} enablePan={false} minDistance={3.5} maxDistance={14} />
-          {/* Bloom picks up only emissive parts: screen face, rim light, tail smoke and sparks. mipmapBlur off: a single
-              NaN pixel spread into a black block for one frame (A/B in DIN-UI-INTEGRATION-20261007-01); the
-              smoke shader clamp in smoke.ts fixes the NaN source, this keeps any other one local. */}
-          <EffectComposer>
-            <Bloom mipmapBlur={false} intensity={0.9} luminanceThreshold={1} luminanceSmoothing={0.25} />
-          </EffectComposer>
-        </Canvas>
+        <Suspense fallback={null}>
+          <Scene frozen={frozen} />
+        </Suspense>
 
         <div className="absolute top-3 left-3 flex items-center gap-2 rounded-full bg-white/90 px-3 py-1 text-sm ring-1 ring-[#E4E4E7]">
           <span className="font-semibold">Degenie</span>

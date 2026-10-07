@@ -14,7 +14,8 @@
     "export:poses": "node --experimental-strip-types --no-warnings scripts/export-poses.ts",
     "check:events": "node --experimental-strip-types --no-warnings scripts/events-check.ts",
     "check:graph": "node --experimental-strip-types --no-warnings scripts/graph-check.ts",
-    "check:log": "node --experimental-strip-types --no-warnings scripts/log-check.ts"
+    "check:log": "node --experimental-strip-types --no-warnings scripts/log-check.ts",
+    "optimize:glb": "node --experimental-strip-types --no-warnings scripts/optimize-glb.ts"
   },
   "dependencies": {
     "@react-three/drei": "10.7.9",
@@ -30,6 +31,9 @@
     "zustand": "5.0.15"
   },
   "devDependencies": {
+    "@gltf-transform/core": "4.5.1",
+    "@gltf-transform/extensions": "4.5.1",
+    "@gltf-transform/functions": "4.5.1",
     "@tailwindcss/vite": "4.3.3",
     "@tanstack/router-plugin": "1.168.40",
     "@types/d3": "7.4.3",
@@ -38,6 +42,7 @@
     "@types/react-dom": "19.3.0",
     "@types/three": "0.186.0",
     "@vitejs/plugin-react": "6.1.1",
+    "meshoptimizer": "1.3.0",
     "oxlint": "1.85.0",
     "tailwindcss": "4.3.3",
     "typescript": "6.0.3",

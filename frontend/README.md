@@ -24,7 +24,7 @@ npm run build
 
 ## DeskGenie
 
-Персонаж — `public/models/desk-genie.glb` (риг + клипы `idle`, `act`, `accepted`, `rejected`),
+Персонаж — `public/models/desk-genie.glb` (сцена: `src/genie/Scene.tsx`, грузится лениво; 60 fps максимум, пауза вне экрана) (риг + клипы `idle`, `act`, `accepted`, `rejected`),
 грузится в `src/genie/GenieModel.tsx` через `useGLTF` и `useAnimations`. Клипы: кнопки внизу или клавиши 1–4.
 
 - `?pose=accepted&t=0.55` замораживает позу: кадры для ревью и скриншотов.
@@ -36,7 +36,9 @@ npm run build
 
 1. `npm run export:poses` — сэмплирует `src/genie/pose.ts` в `art/poses.json` (30 fps).
 2. В Blender выполнить `art/desk_genie.py` и вызвать `main("export")` (через Blender MCP или Text Editor).
-   Скрипт строит модель, риг, клипы и пишет `public/models/desk-genie.glb`; рендер-превью — в `art/renders/`.
+   Скрипт строит модель, риг, клипы и пишет сырой `art/desk-genie.glb`; рендер-превью — в `art/renders/`.
+3. `npm run optimize:glb` — meshopt-сжатие (нормали 12 бит) в `public/models/desk-genie.glb`: 1,58 МБ → ~0,41 МБ.
+   `useGLTF` декодирует meshopt сам; скрипт падает, если пропали `text-anchor` или клипы.
 
 ## Арена
 
