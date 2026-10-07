@@ -9,4 +9,11 @@ export default defineConfig({
   base: process.env.BASE ?? '/',
   // tanstackRouter must come before react(); autoCodeSplitting lazy-loads each route's component
   plugins: [tanstackRouter({ target: 'react', autoCodeSplitting: true }), react(), tailwindcss()],
+  // Dev only: read the public arena GET routes from the live site (same paths nginx exposes; POST stays closed there)
+  server: {
+    proxy: {
+      '/game': { target: 'https://alashi.network', changeOrigin: true },
+      '/agents': { target: 'https://alashi.network', changeOrigin: true },
+    },
+  },
 })

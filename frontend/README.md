@@ -4,7 +4,8 @@ React + TypeScript + Vite, SPA на TanStack Router (файловые маршр
 страница — отдельный ленивый чанк), сцена на React Three Fiber + Drei, стор Zustand, данные арены через TanStack Query,
 стили Tailwind 4.
 
-Маршруты: `/` — Degenie и онбординг (`routes/index.tsx`), `/graph` — граф агентов (`routes/graph.tsx`).
+Маршруты: `/` — Degenie и онбординг (`routes/index.tsx`), `/graph` — граф агентов (`routes/graph.tsx`),
+`/log?game=<id>` — лог партии (`routes/log.tsx`). В dev `/game/*` и `/agents/*` проксируются на alashi.network (только GET).
 Параметры адреса проверяются в `validateSearch` маршрута. `src/routeTree.gen.ts` генерирует плагин при dev/build,
 файл в Git (нужен `tsc -b` до сборки). На сервере nginx должен отдавать `index.html` на неизвестные пути
 (`try_files $uri $uri/ /index.html`), иначе прямая ссылка на `/graph` даст 404.
@@ -15,6 +16,7 @@ npm run dev        # http://localhost:5173
 npm run check:pose
 npm run check:events
 npm run check:graph
+npm run check:log
 npm run typecheck
 npm run lint
 npm run build
@@ -54,4 +56,14 @@ npm run build
   `src/graph/types.ts`; публичные события арены пока не содержат адресатов и сумм, поэтому живых данных нет.
 - `?focus=<agent_record_id>` открывает окружение агента, `?agent=<id>` обводит «вашего агента».
 - `npm run check:graph` — инварианты мока (рёбра = принятые сделки, один президент на партию).
+
+## Лог партии
+
+`/log?game=<id>` (`src/log/`): лента как у биржи, новые строки сверху и подсвечиваются. Источник — `GET /game/:id/state`.
+
+- Завершённая партия: регистрации агентов (транзакции Solana devnet со ссылкой на Explorer), фазы раундов, ходы
+  с деньгами после хода и Δ, решения по законам (голоса, принят/отклонён), расчёт и выплаты. «▶ Replay» проигрывает партию.
+- Живая партия: арена публикует только последние 12 действий без сумм и адресатов; строки копятся с момента открытия.
+- Деньги игры симулированы; на блокчейне только регистрация. `npm run check:log` — модель ленты.
+- Для сайта нужен точный маршрут `/log` в nginx (как у `/graph`).
 
