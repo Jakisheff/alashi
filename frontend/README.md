@@ -7,6 +7,7 @@ npm ci
 npm run dev        # http://localhost:5173
 npm run check:pose
 npm run check:events
+npm run check:graph
 npm run typecheck
 npm run lint
 npm run build
@@ -35,3 +36,15 @@ npm run build
 
 - `?api=<base>&game=<id>` — живая партия через `GET <base>/game/<id>/state` (same-origin; опрос 2 с, пауза в скрытой вкладке).
 - Без параметров — постановочный поток, помеченный в HUD как PREVIEW «sample events, not a real game».
+
+## Граф агентов
+
+Отдельная страница `/graph/` (`graph/index.html` → `src/graph/`): кто с кем торгует, даёт взятки и покупает голоса.
+Движок — порт D3-графа HackAlem `dai-front` (`money-graph.ts`, `graph-settings`, `graph-timeline`, 67d9d60):
+узел — агент, кластер — партия, ребро — сделки агент → агент, таймлапс — раунды.
+
+- Сейчас данные мок (`src/graph/mock.ts`, сид фиксирован), страница помечена MOCK DATA. Контракт данных для бэкенда —
+  `src/graph/types.ts`; публичные события арены пока не содержат адресатов и сумм, поэтому живых данных нет.
+- `?focus=<agent_record_id>` открывает окружение агента, `?agent=<id>` обводит «вашего агента».
+- `npm run check:graph` — инварианты мока (рёбра = принятые сделки, один президент на партию).
+
