@@ -30,6 +30,47 @@ fn restore(state: &AppState) -> Arc<AppState> {
 }
 
 #[test]
+fn canonical_startup_guard_requires_valid_snapshot_key_and_sequence() {
+    let state = isolated();
+    assert_eq!(validate_existing_state(&state, None).unwrap_err().kind(), std::io::ErrorKind::NotFound);
+
+    std::fs::create_dir_all(state.snapshot_path.parent().unwrap()).unwrap();
+    std::fs::write(&state.snapshot_path, "{broken").unwrap();
+    assert_eq!(validate_existing_state(&state, None).unwrap_err().kind(), std::io::ErrorKind::InvalidData);
+
+    save_snapshot(&state).unwrap();
+    assert_eq!(validate_existing_state(&state, None).unwrap_err().kind(), std::io::ErrorKind::InvalidData);
+    *state.proposal_key.lock().unwrap() = Some("bad".into());
+    save_snapshot(&state).unwrap();
+    assert_eq!(validate_existing_state(&state, None).unwrap_err().kind(), std::io::ErrorKind::InvalidData);
+
+    *state.proposal_key.lock().unwrap() = Some("a".repeat(64));
+    save_snapshot(&state).unwrap();
+    assert_eq!(validate_existing_state(&state, None).unwrap_err().kind(), std::io::ErrorKind::NotFound);
+    for invalid in ["", "not-a-number", "0", "17", "18446744073709551615", "18446744073709551616"] {
+        std::fs::write(&state.sequence_path, invalid).unwrap();
+        assert_eq!(validate_existing_state(&state, None).unwrap_err().kind(), std::io::ErrorKind::InvalidData);
+    }
+    std::fs::write(&state.sequence_path, "20").unwrap();
+    validate_existing_state(&state, None).unwrap();
+    let expected = hex_enc(&Sha256::digest(&[0xaa; 32]));
+    validate_existing_state(&state, Some(&expected)).unwrap();
+    for invalid in ["bad", &"0".repeat(64)] {
+        assert_eq!(validate_existing_state(&state, Some(invalid)).unwrap_err().kind(),
+            std::io::ErrorKind::InvalidData);
+    }
+}
+
+#[test]
+#[ignore = "read-only check of an explicitly supplied canonical snapshot"]
+fn existing_canonical_snapshot_passes_guard() {
+    let snapshot = std::env::var("ALASHI_STATE_FILE").unwrap();
+    let sequence = std::env::var("ALASHI_SEQ_FILE").unwrap();
+    let expected = std::env::var("ALASHI_EXPECT_PROPOSAL_KEY_SHA256").ok();
+    validate_existing_state(&new_state_with_files(snapshot, sequence), expected.as_deref()).unwrap();
+}
+
+#[test]
 fn invalid_creation_parameters_cannot_reach_the_crank() {
     let state = isolated();
     for body in [

@@ -2849,6 +2849,44 @@ fn accept_connections(listener: TcpListener, state: Arc<AppState>) {
     }
 }
 
+// Public canonical runtime must never silently start with a fresh proposal key
+// or a reset party counter. Keep local development's clean-start behavior.
+fn validate_existing_state(state: &AppState, expected_key_hash: Option<&str>) -> std::io::Result<()> {
+    let txt = std::fs::read_to_string(&state.snapshot_path)?;
+    let doc: serde_json::Value = serde_json::from_str(&txt)
+        .map_err(|e| std::io::Error::new(std::io::ErrorKind::InvalidData, e))?;
+    let key = doc.get("proposal_key").and_then(|v| v.as_str())
+        .filter(|key| hex32(key))
+        .ok_or_else(|| std::io::Error::new(std::io::ErrorKind::InvalidData,
+            "canonical snapshot has no valid proposal_key"))?;
+    if let Some(expected) = expected_key_hash {
+        let key_bytes = hex_dec(key).expect("validated proposal_key");
+        if !hex32(expected) || hex_enc(&Sha256::digest(&key_bytes)) != expected {
+            return Err(std::io::Error::new(std::io::ErrorKind::InvalidData,
+                "canonical proposal_key fingerprint mismatch"));
+        }
+    }
+    let seq = std::fs::read_to_string(&state.sequence_path)?;
+    if seq.trim().parse::<u64>().ok().filter(|n| (18..u64::MAX).contains(n)).is_none() {
+        return Err(std::io::Error::new(std::io::ErrorKind::InvalidData,
+            "canonical party sequence is invalid"));
+    }
+    Ok(())
+}
+
+fn load_before_bind(state: &AppState) -> std::io::Result<()> {
+    if std::env::var("ALASHI_REQUIRE_EXISTING_STATE").as_deref() == Ok("1") {
+        let expected = match std::env::var("ALASHI_EXPECT_PROPOSAL_KEY_SHA256") {
+            Ok(value) => Some(value),
+            Err(std::env::VarError::NotPresent) => None,
+            Err(_) => return Err(std::io::Error::new(std::io::ErrorKind::InvalidData,
+                "canonical proposal_key fingerprint is invalid")),
+        };
+        validate_existing_state(state, expected.as_deref())?;
+    }
+    load_snapshot(state).map_err(|msg| std::io::Error::new(std::io::ErrorKind::InvalidData, msg))
+}
+
 /// Поднять API и вернуть фактический адрес (порт 0 = свободный).
 /// Для тестов и arenad.
 pub fn serve_on(
@@ -2856,7 +2894,7 @@ pub fn serve_on(
     addr: &str,
     tick_ms: u64,
 ) -> std::io::Result<std::net::SocketAddr> {
-    load_snapshot(&state).map_err(|msg| std::io::Error::new(std::io::ErrorKind::InvalidData, msg))?;
+    load_before_bind(&state)?;
     let listener = TcpListener::bind(addr)?;
     let local = listener.local_addr()?;
     let crank_state = Arc::clone(&state);
@@ -2869,7 +2907,7 @@ pub fn serve_on(
 }
 
 pub fn serve(state: Arc<AppState>, addr: &str, tick_ms: u64) -> std::io::Result<()> {
-    load_snapshot(&state).map_err(|msg| std::io::Error::new(std::io::ErrorKind::InvalidData, msg))?;
+    load_before_bind(&state)?;
     let listener = TcpListener::bind(addr)?;
     let crank_state = Arc::clone(&state);
     std::thread::spawn(move || loop {
