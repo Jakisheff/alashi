@@ -33,19 +33,17 @@ export type AgentWatch =
   | { kind: 'loading' | 'unreachable' | 'unknown'; game: number | null }
   | { kind: 'waiting' | 'playing'; game: number | null; slot: AgentSlot | null }
 
-export function useAgentWatch(): AgentWatch {
-  const q = new URLSearchParams(location.search) // read here: the pure helpers above also run under node checks
-  const RAW = q.get('agent')
-  const API = q.get('api') ?? '' // same-origin by default
-  const id = parseAgentId(RAW)
+/** raw: the ?agent= value as given (undefined when absent); api: arena base, same-origin when empty. */
+export function useAgentWatch(raw: string | undefined, api = ''): AgentWatch {
+  const id = parseAgentId(raw ?? null)
   const [game, setGame] = useState<number | null>(null)
   const profile = useQuery({
-    queryKey: ['agent', API, id],
+    queryKey: ['agent', api, id],
     enabled: id !== null,
     refetchInterval: 5000,
     retry: 1, // the poll retries anyway; show "can't reach" quickly
     queryFn: async () => {
-      const res = await fetch(`${API}/agents/${id}`)
+      const res = await fetch(`${api}/agents/${id}`)
       if (!res.ok) throw new Error(`agent ${res.status}`)
       return (await res.json()) as AgentProfile
     },
@@ -53,7 +51,7 @@ export function useAgentWatch(): AgentWatch {
   const next = followGame(game, profile.data)
   if (next !== game) setGame(next) // adjust state during render: no extra effect pass
 
-  if (RAW === null) return { kind: 'none' }
+  if (raw === undefined) return { kind: 'none' }
   if (id === null) return { kind: 'invalid' }
   const data = profile.data
   if (!data) return { kind: profile.isError ? 'unreachable' : 'loading', game: next }

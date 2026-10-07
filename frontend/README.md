@@ -1,6 +1,13 @@
 # alashi frontend
 
-React + TypeScript + Vite, сцена на React Three Fiber + Drei, стор Zustand, данные арены через TanStack Query, стили Tailwind 4.
+React + TypeScript + Vite, SPA на TanStack Router (файловые маршруты `src/routes/`, `autoCodeSplitting`: каждая
+страница — отдельный ленивый чанк), сцена на React Three Fiber + Drei, стор Zustand, данные арены через TanStack Query,
+стили Tailwind 4.
+
+Маршруты: `/` — Degenie и онбординг (`routes/index.tsx`), `/graph` — граф агентов (`routes/graph.tsx`).
+Параметры адреса проверяются в `validateSearch` маршрута. `src/routeTree.gen.ts` генерирует плагин при dev/build,
+файл в Git (нужен `tsc -b` до сборки). На сервере nginx должен отдавать `index.html` на неизвестные пути
+(`try_files $uri $uri/ /index.html`), иначе прямая ссылка на `/graph` даст 404.
 
 ```bash
 npm ci
@@ -39,7 +46,7 @@ npm run build
 
 ## Граф агентов
 
-Отдельная страница `/graph/` (`graph/index.html` → `src/graph/`): кто с кем торгует, даёт взятки и покупает голоса.
+Маршрут `/graph` (`routes/graph.tsx` → `src/graph/`): кто с кем торгует, даёт взятки и покупает голоса.
 Движок — порт D3-графа HackAlem `dai-front` (`money-graph.ts`, `graph-settings`, `graph-timeline`, 67d9d60):
 узел — агент, кластер — партия, ребро — сделки агент → агент, таймлапс — раунды.
 

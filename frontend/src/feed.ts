@@ -6,9 +6,6 @@ import { useScene } from './store'
 // A game id (?game=<id>, or the watched agent's game) reads the arena's public GET /game/:id/state,
 // same-origin unless ?api=<base> (no /api prefix per Ivan). Without one the page plays a clearly labelled
 // sample stream so the scene is never silently fake.
-const q = new URLSearchParams(location.search)
-const API = q.get('api') ?? ''
-export const GAME_PARAM = q.get('game')
 
 const EVENT_SECONDS = 3.2 // one reaction at a time: act, then accepted/rejected
 const QUEUE_MAX = 6 // a long backlog is trimmed to the latest events instead of replayed
@@ -44,15 +41,15 @@ function useSampleState(enabled: boolean) {
 
 /** Feeds arena events to Degenie: types each line on its screen and plays act -> accepted/rejected. */
 // `sample: false` (an owner watching their agent) keeps Degenie idle instead of playing invented trades.
-export function useArenaFeed(game: string | null, sample = true) {
+export function useArenaFeed(game: string | null, sample = true, api = '') {
   const mode: 'live' | 'sample' | 'off' = game ? 'live' : sample ? 'sample' : 'off'
   const live = useQuery({
-    queryKey: ['arena-state', API, game],
+    queryKey: ['arena-state', api, game],
     enabled: mode === 'live',
     // Paused while the tab is hidden (react-query default); stops for good once the game is finished.
     refetchInterval: (query) => (query.state.data?.finished ? false : 2000),
     queryFn: async () => {
-      const res = await fetch(`${API}/game/${game}/state`)
+      const res = await fetch(`${api}/game/${game}/state`)
       if (!res.ok) throw new Error(`state ${res.status}`)
       return (await res.json()) as { state?: ArenaState; finished?: boolean; result?: GameResult }
     },

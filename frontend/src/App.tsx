@@ -1,13 +1,14 @@
 import { Environment, Lightformer, OrbitControls } from '@react-three/drei'
 import { Canvas, useThree } from '@react-three/fiber'
 import { Bloom, EffectComposer } from '@react-three/postprocessing'
-import { Suspense, useCallback, useEffect } from 'react'
+import { Suspense, useCallback, useEffect, useMemo } from 'react'
 import { standings } from './events'
 import { useAgentWatch } from './agent'
-import { GAME_PARAM, useArenaFeed } from './feed'
+import { useArenaFeed } from './feed'
 import { GenieModel } from './genie/GenieModel'
 import { Onboarding } from './Onboarding'
 import type { GenieClip } from './genie/pose'
+import type { HomeSearch } from './routes/index'
 import { useScene } from './store'
 
 const TARGET: [number, number, number] = [0.15, -0.4, 0]
@@ -25,8 +26,6 @@ function FitCamera() {
 }
 
 const CLIPS: GenieClip[] = ['idle', 'act', 'accepted', 'rejected']
-// Manual pose buttons are a demo tool, kept out of the main page (team onboarding P0).
-const DEMO = new URLSearchParams(location.search).has('demo')
 
 // Lines from CHARACTER_BRIEF_2026-10-07.md, in English for the demo.
 const LINES: Partial<Record<GenieClip, string[]>> = {
@@ -35,11 +34,16 @@ const LINES: Partial<Record<GenieClip, string[]>> = {
   rejected: ["Didn't work. At least now it's reproducible."],
 }
 
-export default function App() {
+export default function App({ search }: { search: HomeSearch }) {
   const { clip, captions, speech, play, say, toggleCaptions } = useScene()
-  const watch = useAgentWatch()
+  const api = search.api ?? ''
+  // Manual pose buttons are a demo tool, kept out of the main page (team onboarding P0).
+  const demo = search.demo === true
+  const watch = useAgentWatch(search.agent, api)
   const watchedGame = 'game' in watch && watch.game !== null ? String(watch.game) : null
-  const feed = useArenaFeed(GAME_PARAM ?? watchedGame, watch.kind === 'none')
+  const feed = useArenaFeed(search.game ?? watchedGame, watch.kind === 'none', api)
+  // Stable object: GenieModel replays the clip when it changes
+  const frozen = useMemo(() => (search.pose ? { clip: search.pose, t: search.t ?? 0.5 } : null), [search.pose, search.t])
 
   // Manual triggers (buttons, keys 1-4) also get a joke from the brief; arena events bring their own text.
   const trigger = useCallback(
@@ -52,14 +56,14 @@ export default function App() {
   )
 
   useEffect(() => {
-    if (!DEMO) return
+    if (!demo) return
     const onKey = (e: KeyboardEvent) => {
       const i = Number(e.key) - 1
       if (CLIPS[i]) trigger(CLIPS[i])
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [trigger])
+  }, [trigger, demo])
 
   return (
     <div className="flex min-h-full flex-col bg-[#F4F4F5] text-[#1A1A1E] lg:grid lg:h-dvh lg:min-h-0 lg:grid-cols-[minmax(24rem,30rem)_minmax(0,1fr)] lg:grid-rows-[minmax(0,1fr)]">
@@ -80,7 +84,7 @@ export default function App() {
           </Environment>
           <FitCamera />
           <Suspense fallback={null}>
-            <GenieModel />
+            <GenieModel frozen={frozen} />
           </Suspense>
           <OrbitControls target={TARGET} enablePan={false} minDistance={3.5} maxDistance={14} />
           {/* Bloom picks up only emissive parts: screen face, rim light, tail smoke and sparks. mipmapBlur off: a single
@@ -118,7 +122,7 @@ export default function App() {
           )}
         </div>
 
-        {DEMO && (
+        {demo && (
           <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-1 rounded-full bg-white/80 p-1 font-mono text-xs whitespace-nowrap sm:text-sm">
             {CLIPS.map((c, i) => (
               <button

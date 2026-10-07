@@ -3,7 +3,7 @@ import { createPortal, useFrame } from '@react-three/fiber'
 import { useEffect, useMemo, useRef } from 'react'
 import { LoopOnce, LoopRepeat, type AnimationAction, type Group, type Mesh } from 'three'
 import { useScene } from '../store'
-import { CLIP_SECONDS, type GenieClip } from './pose'
+import type { GenieClip } from './pose'
 import { ScreenText } from './ScreenText'
 import { createSmokeMaterial } from './smoke'
 
@@ -11,16 +11,11 @@ import { createSmokeMaterial } from './smoke'
 const MODEL = `${import.meta.env.BASE_URL}models/desk-genie.glb`
 const FADE = 0.2
 
-// ?pose=<clip>&t=<seconds> freezes a pose: deterministic frames for review and screenshots.
-const frozen = (() => {
-  const q = new URLSearchParams(location.search)
-  const clip = q.get('pose')
-  return clip && clip in CLIP_SECONDS ? { clip: clip as GenieClip, t: Number(q.get('t') ?? 0.5) } : null
-})()
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-export function GenieModel() {
+/** frozen (?pose=<clip>&t=<seconds>) holds one pose: deterministic frames for review and screenshots. */
+export function GenieModel({ frozen = null }: { frozen?: { clip: GenieClip; t: number } | null }) {
   const group = useRef<Group>(null)
   const { scene, animations } = useGLTF(MODEL)
   const { actions, mixer } = useAnimations(animations, group)
@@ -65,7 +60,7 @@ export function GenieModel() {
     // Reduced motion: no hovering loop, reactions still play.
     if (reducedMotion && name === 'idle') next.paused = true
     current.current = next
-  }, [clip, take, actions])
+  }, [clip, take, actions, frozen])
 
   // One-shot clips hand back to idle when they finish.
   useEffect(() => {
@@ -74,7 +69,7 @@ export function GenieModel() {
     }
     mixer.addEventListener('finished', onFinished)
     return () => mixer.removeEventListener('finished', onFinished)
-  }, [mixer, actions])
+  }, [mixer, actions, frozen])
 
   return (
     <group ref={group} position={[0, 0.15, 0]} rotation-y={0.35}>

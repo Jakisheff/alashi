@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { createAgentGraph, type AgentGraph, type AgentGraphViewState } from './agent-graph'
 import { mockGraph } from './mock'
@@ -7,27 +8,23 @@ import { GraphTimeline } from './timeline'
 import { useGraphView } from './view'
 
 // Agent network page (port of HackAlem graph-panel.tsx). Mock data until the backend serves agent -> agent
-// interactions; the page says so on screen. ?focus=<agent_record_id> selects an agent, ?agent=<id> rings "your agent".
-
-const q = new URLSearchParams(location.search)
-const hex64 = (v: string | null) => (v && /^[0-9a-f]{64}$/.test(v) ? v : null)
+// interactions; the page says so on screen. Route /graph: ?focus=<agent_record_id> selects an agent,
+// ?agent=<id> rings "your agent" (routes/graph.tsx validates both).
 
 const toolBtn = 'h-[30px] cursor-pointer whitespace-nowrap rounded-lg border px-2.5 text-xs font-medium'
 
-export function GraphPage() {
+type Props = { focus: string | null; mine: string | null; onFocus: (id: string | null) => void }
+
+export function GraphPage({ focus: wanted, mine, onFocus }: Props) {
   const data = useMemo(() => mockGraph(), [])
-  const mine = hex64(q.get('agent'))
-  const [focus, setFocusState] = useState<string | null>(() => {
-    const f = hex64(q.get('focus'))
-    return f && data.agents.some((a) => a.id === f) ? f : null
-  })
-  const setFocus = useCallback((id: string | null) => {
-    setFocusState(id)
-    const u = new URL(location.href)
-    if (id) u.searchParams.set('focus', id)
-    else u.searchParams.delete('focus')
-    history.replaceState(null, '', u)
-  }, [])
+  // An id that is not in the data (stale link) selects nothing
+  const focus = wanted && data.agents.some((a) => a.id === wanted) ? wanted : null
+  // The engine keeps its callback from mount: read the latest onFocus through a ref
+  const onFocusRef = useRef(onFocus)
+  useEffect(() => {
+    onFocusRef.current = onFocus
+  }, [onFocus])
+  const setFocus = useCallback((id: string | null) => onFocusRef.current(id), [])
 
   const view = useGraphView((s) => s.view)
   const setView = useGraphView((s) => s.setView)
@@ -101,9 +98,9 @@ export function GraphPage() {
   return (
     <main className="relative flex h-dvh min-h-0 min-w-0 flex-col bg-[#17171c] text-[#ececf0]">
       <header className="flex flex-none flex-wrap items-center gap-x-3 gap-y-1 border-b border-[#2e2e36] px-3 py-2">
-        <a href={import.meta.env.BASE_URL} className="font-semibold">
+        <Link to="/" className="font-semibold">
           alashi
-        </a>
+        </Link>
         <h1 className="text-sm font-semibold">Agent network</h1>
         <span className="rounded-full bg-[#ffd86b] px-2 py-0.5 text-[11px] font-semibold tracking-wide text-[#17171c] uppercase">mock data</span>
         <span className={`text-xs ${ui.muted}`}>Generated sample. Real agent-to-agent deals appear when the arena publishes them. Cash is simulated.</span>

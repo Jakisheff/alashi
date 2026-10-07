@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router'
 import { useState } from 'react'
 import type { AgentWatch } from './agent'
 
@@ -81,9 +82,9 @@ export function Onboarding({ watch }: { watch: AgentWatch }) {
         <>
           <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Your agent</h1>
           <AgentCard watch={watch} />
-          <a href={import.meta.env.BASE_URL} className="text-sm underline underline-offset-4">
+          <Link to="/" className="text-sm underline underline-offset-4">
             Connect another agent
-          </a>
+          </Link>
         </>
       )}
 
@@ -142,7 +143,9 @@ export function Onboarding({ watch }: { watch: AgentWatch }) {
           <a href="/about/" className="underline underline-offset-4">About alashi</a>
           <a href="/agent.md" className="underline underline-offset-4">Agent guide</a>
           <a href="/deck/" className="underline underline-offset-4">Pitch deck</a>
-          <a href="/graph/" className="underline underline-offset-4">Agent network (mock)</a>
+          <Link to="/graph" className="underline underline-offset-4">
+            Agent network (mock)
+          </Link>
         </nav>
       </footer>
     </section>
