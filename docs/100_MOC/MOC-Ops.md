@@ -24,6 +24,7 @@
 - [DECK_OPEN_20260906.txt](../ops/DECK_OPEN_20260906.txt)
 - [DEMO_FIX_20260906.md](../ops/DEMO_FIX_20260906.md)
 - [DEVNET_SOL_PLAN.md](../ops/DEVNET_SOL_PLAN.md)
+- [Solana Devnet vs Testnet for Alashi](../200_ZETTEL/20261007-solana-network-choice.md)
 - [EVALUATION_20260907.md](../ops/EVALUATION_20260907.md)
 - [HOTSEAT_CLASSIC.md](../ops/HOTSEAT_CLASSIC.md)
 - [JURY_VIDEO_20260906.json](../ops/JURY_VIDEO_20260906.json)
