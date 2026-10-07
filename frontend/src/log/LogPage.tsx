@@ -3,9 +3,9 @@ import { Link } from '@tanstack/react-router'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { cash, toLog, type EntryKind, type GameLog, type LogEntry, type StateResponse } from './model'
 
-// Exchange-style game log: newest first, new rows flash, green/red for gains and rejections.
-// Finished games come with the full recorded history; live games expose only the last 12 public actions,
-// so live rows accumulate from the moment the page is opened.
+// Game feed as one neon board (Cyberpunk-2077-style HUD): stat readouts, a scrolling ticker, a leaderboard and the
+// event tape, newest first. Finished games come with the full recorded history; live games expose only the last 12
+// public actions, so live rows accumulate from the moment the page is opened.
 
 type Filter = 'all' | 'moves' | 'decisions' | 'phases' | 'chain'
 const FILTERS: [Filter, string][] = [
@@ -22,13 +22,22 @@ const pass = (f: Filter, e: LogEntry) =>
   (f === 'phases' && (e.kind === 'phase' || e.kind === 'settle')) ||
   (f === 'chain' && e.kind === 'chain')
 
+// Neon palette: yellow = signal, cyan = data, red = alarm, violet = chain, green = credit
+const Y = '#fcee0a'
+const C = '#00f0ff'
+const RED = '#ff003c'
+const VIO = '#b026ff'
+const GRN = '#39ff88'
 const BADGE: Record<EntryKind, [string, string]> = {
-  chain: ['TX', 'bg-[#9945ff]/20 text-[#c9a7ff]'],
-  phase: ['PHASE', 'bg-[#27272e] text-[#a1a1aa]'],
-  move: ['MOVE', 'bg-[#1f3a5f] text-[#8ec5ff]'],
-  law: ['LAW', 'bg-[#4a3a12] text-[#ffd86b]'],
-  settle: ['SETTLE', 'bg-[#123d2f] text-[#5fe3b0]'],
+  chain: ['TX', VIO],
+  phase: ['PHASE', '#6b7280'],
+  move: ['MOVE', C],
+  law: ['LAW', Y],
+  settle: ['SETTLE', GRN],
 }
+/** Cut corners like the in-game HUD panels */
+const cut = (px = 12) => ({ clipPath: `polygon(0 0, calc(100% - ${px}px) 0, 100% ${px}px, 100% 100%, ${px}px 100%, 0 calc(100% - ${px}px))` })
+const glow = (c: string) => ({ color: c, textShadow: `0 0 6px ${c}99, 0 0 18px ${c}44` })
 
 const time = (ts: number | null) =>
   ts === null ? '—' : new Date(ts * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })
@@ -82,172 +91,255 @@ export function LogPage({ game, api = '' }: { game: string; api?: string }) {
   const moves = entries.filter((e) => e.kind === 'move')
   const accepted = moves.filter((e) => e.ok).length
   const laws = entries.filter((e) => e.kind === 'law')
+  const latest = [...visible].reverse().filter((e) => e.kind !== 'phase').slice(0, 10)
+  const maxCash = Math.max(1, ...(log?.players.map((p) => p.cash ?? 0) ?? [1]))
 
   return (
-    <main className="flex min-h-dvh flex-col bg-[#101014] font-sans text-[#ececf0]">
-      <style>{'@keyframes logIn{from{background:rgba(255,216,107,.22)}to{background:transparent}}.log-in{animation:logIn 1.6s ease-out}'}</style>
-      <header className="flex flex-wrap items-center gap-x-3 gap-y-2 border-b border-[#26262c] px-4 py-3">
-        <Link to="/" className="font-semibold">
+    <main className="cp relative flex min-h-dvh flex-col overflow-hidden bg-[#06060a] text-[#e8e6e3]">
+      <style>{`
+        @font-face { font-family: Jura; src: url(${import.meta.env.BASE_URL}fonts/Jura.ttf); font-display: swap; }
+        .cp { font-family: Jura, ui-sans-serif, system-ui, sans-serif; }
+        .cp .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+        .cp-grid { background-image: linear-gradient(rgba(0,240,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,240,255,.05) 1px, transparent 1px); background-size: 40px 40px; }
+        .cp-scan::after { content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 30;
+          background: repeating-linear-gradient(to bottom, rgba(255,255,255,.025) 0 1px, transparent 1px 3px); mix-blend-mode: overlay; }
+        @keyframes cpIn { 0% { opacity: 0; transform: translateX(-8px); background: rgba(252,238,10,.28) }
+          12% { opacity: 1; transform: translateX(3px) } 18% { transform: translateX(-2px); clip-path: inset(0 0 40% 0) }
+          24% { transform: none; clip-path: inset(0) } 100% { background: transparent } }
+        .cp-in { animation: cpIn 1.4s ease-out }
+        @keyframes cpTicker { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+        .cp-ticker { animation: cpTicker 40s linear infinite }
+        @keyframes cpBlink { 50% { opacity: .25 } }
+        .cp-blink { animation: cpBlink 1.2s steps(1) infinite }
+        @media (prefers-reduced-motion: reduce) { .cp-in, .cp-ticker, .cp-blink { animation: none } }
+      `}</style>
+      <div className="cp-grid pointer-events-none absolute inset-0" />
+      <div className="cp-scan pointer-events-none absolute inset-0" />
+
+      {/* top bar */}
+      <header className="relative z-10 flex flex-wrap items-center gap-x-4 gap-y-2 border-b px-4 py-3" style={{ borderColor: `${Y}55` }}>
+        <Link to="/" className="text-lg font-bold tracking-[.25em] uppercase" style={glow(Y)}>
           alashi
         </Link>
-        <h1 className="text-sm font-semibold">Game log</h1>
+        <span className="text-xs tracking-[.4em] uppercase" style={{ color: C }}>
+          // game feed
+        </span>
         <GamePicker game={game} />
         {log && <StatusChip log={log} />}
-        <span className="text-xs text-[#a1a1aa]">HTTP game · simulated balances · only registrations are Solana transactions</span>
+        <span className="ml-auto text-[11px] tracking-wider text-[#8a8f98] uppercase">sim balances · on-chain: registrations only</span>
       </header>
 
-      {q.isPending && <p className="p-6 text-sm text-[#a1a1aa]">Loading game {game}…</p>}
-      {q.isError && <p className="p-6 text-sm text-[#ff9e9e]">Can&apos;t reach the arena: {(q.error as Error).message}</p>}
+      {q.isPending && <p className="relative z-10 p-6 text-sm tracking-widest uppercase" style={glow(C)}>Connecting to game {game}…</p>}
+      {q.isError && (
+        <p className="relative z-10 p-6 text-sm uppercase" style={glow(RED)}>
+          Link down: {(q.error as Error).message}
+        </p>
+      )}
       {q.data && !log && (
-        <p className="p-6 text-sm text-[#a1a1aa]">
-          Game {game} not found{q.data.error ? ` (${q.data.error})` : ''}.
+        <p className="relative z-10 p-6 text-sm uppercase" style={glow(RED)}>
+          Game {game} not found{q.data.error ? ` · ${q.data.error}` : ''}
         </p>
       )}
 
       {log && (
-        <div className="grid min-h-0 flex-1 md:grid-cols-[300px_minmax(0,1fr)]">
-          <aside className="flex flex-col gap-4 border-b border-[#26262c] p-4 md:border-r md:border-b-0">
-            <div className="grid grid-cols-2 gap-2 text-xs">
-              <Stat label="Round" value={`${log.round} · ${log.phase}`} />
-              <Stat label="Moves" value={`${accepted}/${moves.length} accepted`} />
-              <Stat label="Laws" value={`${laws.filter((l) => l.ok).length} passed / ${laws.length}`} />
-              <Stat label="Bank" value={log.bank !== undefined ? cash(log.bank) : '—'} />
+        <>
+          {/* readouts */}
+          <div className="relative z-10 grid grid-cols-2 gap-2 px-4 pt-4 sm:grid-cols-3 lg:grid-cols-6">
+            <Readout label="Round" value={String(log.round)} sub={log.phase} color={Y} />
+            <Readout label="Moves" value={`${accepted}/${moves.length}`} sub="accepted" color={C} />
+            <Readout label="Laws" value={`${laws.filter((l) => l.ok).length}/${laws.length}`} sub="passed" color={Y} />
+            <Readout label="Bank" value={log.bank !== undefined ? cash(log.bank) : '—'} sub="sim cash" color={GRN} />
+            <Readout label="Rake" value={log.rake !== undefined ? cash(log.rake) : '—'} sub="house" color={RED} />
+            <Readout label="Players" value={String(log.players.length)} sub={`party ${log.party_no}`} color={VIO} />
+          </div>
+
+          {/* ticker */}
+          <div className="relative z-10 mx-4 mt-3 overflow-hidden border-y py-1.5" style={{ borderColor: `${C}44`, background: `${C}0a` }}>
+            <div className="cp-ticker mono flex w-max gap-10 text-xs whitespace-nowrap">
+              {[0, 1].map((dup) => (
+                <div key={dup} className="flex gap-10" aria-hidden={dup === 1}>
+                  {latest.length === 0 ? (
+                    <span style={{ color: C }}>NO SIGNAL</span>
+                  ) : (
+                    latest.map((e) => (
+                      <span key={e.key}>
+                        <span style={{ color: BADGE[e.kind][1] }}>▲ {BADGE[e.kind][0]}</span>{' '}
+                        <span className="text-[#e8e6e3]">{e.actor ? `${e.actor} ` : ''}{e.text}</span>
+                        {e.delta !== undefined && <span style={{ color: e.delta > 0 ? GRN : RED }}> {e.delta > 0 ? '+' : ''}{cash(e.delta)}</span>}
+                      </span>
+                    ))
+                  )}
+                </div>
+              ))}
             </div>
-            <div>
-              <div className="mb-2 text-[11px] font-semibold tracking-[.06em] text-[#a1a1aa]">PLAYERS</div>
-              <ul className="flex flex-col gap-2">
-                {[...log.players]
-                  .sort((a, b) => (a.rank ?? 99) - (b.rank ?? 99))
-                  .map((p) => (
-                    <li key={p.idx} className="rounded-lg border border-[#26262c] bg-[#17171c] p-2.5 text-xs">
-                      <div className="flex items-center gap-2">
-                        {p.rank && <span className="font-mono text-[#ffd86b]">#{p.rank}</span>}
-                        <span className="font-mono font-semibold">{p.name}</span>
-                        {p.cash !== undefined && <span className="ml-auto font-mono">{cash(p.cash)}</span>}
+          </div>
+
+          <div className="relative z-10 grid min-h-0 flex-1 gap-4 p-4 md:grid-cols-[300px_minmax(0,1fr)]">
+            {/* leaderboard */}
+            <aside className="flex flex-col gap-2">
+              <div className="text-[11px] tracking-[.35em] uppercase" style={{ color: C }}>
+                // leaderboard
+              </div>
+              {[...log.players]
+                .sort((a, b) => (a.rank ?? 99) - (b.rank ?? 99))
+                .map((p) => (
+                  <div key={p.idx} className="relative border p-3" style={{ ...cut(14), borderColor: p.rank === 1 ? `${Y}aa` : '#2a2a35', background: p.rank === 1 ? `${Y}0d` : '#0d0d14' }}>
+                    <div className="flex items-baseline gap-3">
+                      <span className="text-3xl leading-none font-bold" style={glow(p.rank === 1 ? Y : C)}>
+                        {p.rank ? String(p.rank).padStart(2, '0') : '--'}
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <div className="mono truncate text-sm font-semibold">{p.name}</div>
+                        {p.model && <div className="mono truncate text-[11px] text-[#8a8f98]">{p.model}</div>}
                       </div>
-                      {p.model && <div className="mt-0.5 font-mono text-[#a1a1aa]">{p.model}</div>}
-                      {p.payout !== undefined && <div className="mt-0.5 text-[#5fe3b0]">payout +{cash(p.payout)}</div>}
+                      {p.cash !== undefined && (
+                        <span className="mono text-sm" style={glow(GRN)}>
+                          {cash(p.cash)}
+                        </span>
+                      )}
+                    </div>
+                    {p.cash !== undefined && (
+                      <div className="mt-2 h-1 bg-[#1b1b24]">
+                        <div className="h-full" style={{ width: `${Math.max(2, (p.cash / maxCash) * 100)}%`, background: p.rank === 1 ? Y : C, boxShadow: `0 0 8px ${p.rank === 1 ? Y : C}` }} />
+                      </div>
+                    )}
+                    <div className="mt-2 flex flex-wrap items-center justify-between gap-2 text-[11px]">
+                      {p.payout !== undefined && <span style={{ color: GRN }}>PAYOUT +{cash(p.payout)}</span>}
                       {p.registration?.signature && (
                         <a
                           href={`https://explorer.solana.com/tx/${p.registration.signature}?cluster=${p.registration.network}`}
                           target="_blank"
                           rel="noreferrer"
-                          className="mt-1 block truncate font-mono text-[#c9a7ff] underline underline-offset-2"
+                          className="mono underline underline-offset-2"
+                          style={{ color: VIO }}
                         >
-                          devnet tx {p.registration.signature.slice(0, 10)}…
+                          TX {p.registration.signature.slice(0, 8)}…
                         </a>
                       )}
-                    </li>
-                  ))}
-              </ul>
-            </div>
-            {log.partial && (
-              <p className="text-xs leading-snug text-[#a1a1aa]">
-                Live view: the arena publishes only the last 12 actions, without amounts or targets. Rows collect from the moment you
-                opened this page.
-              </p>
-            )}
-          </aside>
-
-          <section className="flex min-h-0 min-w-0 flex-col">
-            <div className="flex flex-wrap items-center gap-2 border-b border-[#26262c] px-4 py-2">
-              {FILTERS.map(([f, label]) => (
-                <button
-                  key={f}
-                  type="button"
-                  aria-pressed={filter === f}
-                  onClick={() => setFilter(f)}
-                  className={`h-7 cursor-pointer rounded-md px-2.5 text-xs font-medium ${filter === f ? 'bg-[#ececf0] text-[#101014]' : 'text-[#a1a1aa] hover:text-[#ececf0]'}`}
-                >
-                  {label}
-                </button>
-              ))}
-              {log.status === 'final' && (
-                <button
-                  type="button"
-                  onClick={() => setShown(shown === null || shown >= entries.length ? 0 : null)}
-                  className="ml-auto h-7 cursor-pointer rounded-md border border-[#33333b] px-2.5 text-xs font-medium hover:bg-[#1f1f25]"
-                >
-                  {shown !== null && shown < entries.length ? `■ Stop replay (${shown}/${entries.length})` : '▶ Replay game'}
-                </button>
+                    </div>
+                  </div>
+                ))}
+              {log.partial && (
+                <p className="text-[11px] leading-snug text-[#8a8f98]">
+                  LIVE: the arena publishes only the last 12 actions, without amounts or targets. Rows collect from the moment this
+                  board opened.
+                </p>
               )}
-            </div>
-            <div className="min-h-0 flex-1 overflow-auto">
-              <table className="w-full border-collapse font-mono text-xs">
-                <thead className="sticky top-0 bg-[#101014] text-left text-[11px] text-[#71717a]">
-                  <tr className="border-b border-[#26262c]">
-                    <th className="px-3 py-2 font-medium">Time</th>
-                    <th className="hidden px-2 py-2 font-medium sm:table-cell">Rnd</th>
-                    <th className="hidden px-2 py-2 font-medium sm:table-cell">Phase</th>
-                    <th className="px-2 py-2 font-medium">Type</th>
-                    <th className="hidden px-2 py-2 font-medium sm:table-cell">Who</th>
-                    <th className="px-2 py-2 font-medium">What</th>
-                    <th className="hidden px-2 py-2 font-medium lg:table-cell">Details</th>
-                    <th className="px-3 py-2 text-right font-medium">Δ cash</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {rows.map((e) => (
-                    <tr key={e.key} className={`border-b border-[#1c1c22] hover:bg-[#17171c] ${isFresh(e.key) ? 'log-in' : ''}`}>
-                      <td className="px-2 py-1.5 whitespace-nowrap text-[#a1a1aa] sm:px-3">{time(e.ts)}</td>
-                      <td className="hidden px-2 py-1.5 text-[#a1a1aa] sm:table-cell">{e.round || '—'}</td>
-                      <td className="hidden px-2 py-1.5 text-[#a1a1aa] sm:table-cell">{e.phase}</td>
-                      <td className="px-2 py-1.5">
-                        <span className={`rounded px-1.5 py-0.5 text-[10px] font-semibold ${BADGE[e.kind][1]}`}>{BADGE[e.kind][0]}</span>
-                      </td>
-                      <td className="hidden px-2 py-1.5 whitespace-nowrap sm:table-cell">{e.actor ?? ''}</td>
-                      {/* Red only for rejected moves; a rejected law is an ordinary vote outcome */}
-                      <td
-                        className={`px-2 py-1.5 ${e.kind === 'move' && e.ok === false ? 'text-[#ff7a7a]' : e.kind === 'law' ? (e.ok ? 'text-[#ffd86b]' : 'text-[#a1a1aa]') : ''}`}
-                      >
-                        {e.actor && <span className="mr-1.5 text-[#a1a1aa] sm:hidden">{e.actor}</span>}
-                        {e.href ? (
-                          <a href={e.href} target="_blank" rel="noreferrer" className="underline underline-offset-2">
-                            {e.text}
-                          </a>
-                        ) : (
-                          e.text
-                        )}
-                        {e.detail && <div className="text-[#71717a] lg:hidden">{e.detail}</div>}
-                      </td>
-                      <td className="hidden px-2 py-1.5 text-[#71717a] lg:table-cell">{e.detail}</td>
-                      <td
-                        className={`px-3 py-1.5 text-right whitespace-nowrap ${e.delta === undefined ? 'text-[#3f3f46]' : e.delta > 0 ? 'text-[#4ade80]' : 'text-[#f87171]'}`}
-                      >
-                        {e.delta === undefined ? '·' : `${e.delta > 0 ? '+' : ''}${cash(e.delta)}`}
-                      </td>
+            </aside>
+
+            {/* tape */}
+            <section className="flex min-h-0 min-w-0 flex-col border" style={{ ...cut(18), borderColor: `${C}33`, background: '#08080dcc' }}>
+              <div className="flex flex-wrap items-center gap-1 border-b px-3 py-2" style={{ borderColor: `${C}33` }}>
+                {FILTERS.map(([f, label]) => (
+                  <button
+                    key={f}
+                    type="button"
+                    aria-pressed={filter === f}
+                    onClick={() => setFilter(f)}
+                    className="h-7 cursor-pointer px-3 text-[11px] font-bold tracking-[.2em] uppercase"
+                    style={filter === f ? { ...cut(6), background: Y, color: '#06060a' } : { color: '#8a8f98' }}
+                  >
+                    {label}
+                  </button>
+                ))}
+                {log.status === 'final' && (
+                  <button
+                    type="button"
+                    onClick={() => setShown(shown === null || shown >= entries.length ? 0 : null)}
+                    className="ml-auto h-7 cursor-pointer border px-3 text-[11px] font-bold tracking-[.2em] uppercase"
+                    style={{ ...cut(6), borderColor: Y, ...glow(Y) }}
+                  >
+                    {shown !== null && shown < entries.length ? `■ stop ${shown}/${entries.length}` : '▶ replay'}
+                  </button>
+                )}
+              </div>
+              <div className="min-h-0 flex-1 overflow-auto">
+                <table className="mono w-full border-collapse text-xs">
+                  <thead className="sticky top-0 z-10 bg-[#08080d] text-left text-[10px] tracking-[.2em] uppercase" style={{ color: `${C}aa` }}>
+                    <tr>
+                      <th className="px-3 py-2 font-medium">Time</th>
+                      <th className="hidden px-2 py-2 font-medium sm:table-cell">Rnd</th>
+                      <th className="hidden px-2 py-2 font-medium sm:table-cell">Phase</th>
+                      <th className="px-2 py-2 font-medium">Sig</th>
+                      <th className="hidden px-2 py-2 font-medium sm:table-cell">Who</th>
+                      <th className="px-2 py-2 font-medium">Event</th>
+                      <th className="hidden px-2 py-2 font-medium lg:table-cell">Data</th>
+                      <th className="px-3 py-2 text-right font-medium whitespace-nowrap" title="Change of this player's balance since its previous recorded state">
+                        Δ bal
+                      </th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-              {rows.length === 0 && <p className="p-6 text-sm text-[#a1a1aa]">No rows yet.</p>}
-            </div>
-          </section>
-        </div>
+                  </thead>
+                  <tbody>
+                    {rows.map((e) => {
+                      const col = BADGE[e.kind][1]
+                      const bad = e.kind === 'move' && e.ok === false
+                      return (
+                        <tr key={e.key} className={`border-t border-[#ffffff0a] hover:bg-[#ffffff08] ${isFresh(e.key) ? 'cp-in' : ''}`}>
+                          <td className="px-3 py-1.5 whitespace-nowrap" style={{ color: `${C}cc` }}>
+                            {time(e.ts)}
+                          </td>
+                          <td className="hidden px-2 py-1.5 text-[#8a8f98] sm:table-cell">{e.round ? `R${e.round}` : '—'}</td>
+                          <td className="hidden px-2 py-1.5 text-[#8a8f98] uppercase sm:table-cell">{e.phase}</td>
+                          <td className="px-2 py-1.5">
+                            <span className="inline-block border px-1.5 py-px text-[10px] font-bold tracking-wider" style={{ borderColor: bad ? RED : col, color: bad ? RED : col, boxShadow: `0 0 6px ${bad ? RED : col}55` }}>
+                              {bad ? 'FAIL' : BADGE[e.kind][0]}
+                            </span>
+                          </td>
+                          <td className="hidden px-2 py-1.5 whitespace-nowrap sm:table-cell">{e.actor ?? ''}</td>
+                          <td className="px-2 py-1.5" style={bad ? glow(RED) : e.kind === 'law' ? (e.ok ? glow(Y) : { color: '#8a8f98' }) : e.kind === 'settle' ? glow(GRN) : undefined}>
+                            {e.actor && <span className="mr-1.5 text-[#8a8f98] sm:hidden">{e.actor}</span>}
+                            {e.href ? (
+                              <a href={e.href} target="_blank" rel="noreferrer" className="underline underline-offset-2" style={{ color: VIO }}>
+                                {e.text}
+                              </a>
+                            ) : (
+                              e.text
+                            )}
+                            {e.detail && <div className="text-[#6b7280] lg:hidden">{e.detail}</div>}
+                          </td>
+                          <td className="hidden px-2 py-1.5 text-[#6b7280] lg:table-cell">{e.detail}</td>
+                          <td className="px-3 py-1.5 text-right whitespace-nowrap" style={e.delta === undefined ? { color: '#2f2f3a' } : glow(e.delta > 0 ? GRN : RED)}>
+                            {e.delta === undefined ? '·' : `${e.delta > 0 ? '+' : ''}${cash(e.delta)}`}
+                          </td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
+                {rows.length === 0 && <p className="p-6 text-sm tracking-widest uppercase text-[#8a8f98]">No signal yet.</p>}
+              </div>
+            </section>
+          </div>
+        </>
       )}
     </main>
   )
 }
 
-function Stat({ label, value }: { label: string; value: string }) {
+function Readout({ label, value, sub, color }: { label: string; value: string; sub: string; color: string }) {
   return (
-    <div className="rounded-lg border border-[#26262c] bg-[#17171c] px-2.5 py-2">
-      <div className="text-[10px] tracking-wide text-[#71717a] uppercase">{label}</div>
-      <div className="mt-0.5 font-mono">{value}</div>
+    <div className="relative border px-3 py-2" style={{ ...cut(10), borderColor: `${color}55`, background: `${color}08` }}>
+      <div className="text-[10px] tracking-[.3em] text-[#8a8f98] uppercase">{label}</div>
+      <div className="mono text-2xl leading-tight font-bold" style={glow(color)}>
+        {value}
+      </div>
+      <div className="text-[10px] tracking-[.2em] uppercase" style={{ color: `${color}aa` }}>
+        {sub}
+      </div>
+      <span className="absolute top-0 right-0 h-2 w-2" style={{ background: color }} />
     </div>
   )
 }
 
 function StatusChip({ log }: { log: GameLog }) {
+  const live = log.status === 'live'
   return (
     <span className="flex items-center gap-2 text-xs">
-      <span
-        className={`rounded-full px-2 py-0.5 font-semibold tracking-wide uppercase ${log.status === 'live' ? 'bg-[#123d2f] text-[#5fe3b0]' : 'bg-[#27272e] text-[#ececf0]'}`}
-      >
-        {log.status === 'live' ? '● live' : 'final'}
+      <span className="border px-2 py-0.5 font-bold tracking-[.25em] uppercase" style={{ ...cut(6), borderColor: live ? RED : Y, ...glow(live ? RED : Y) }}>
+        {live ? <span className="cp-blink">● live</span> : 'final'}
       </span>
-      <span className="font-mono text-[#a1a1aa]">
-        game {log.game_id} · party {log.party_no}
+      <span className="mono text-[#8a8f98]">
+        G{log.game_id} · P{log.party_no}
       </span>
     </span>
   )
@@ -257,17 +349,18 @@ function GamePicker({ game }: { game: string }) {
   const [value, setValue] = useState(game)
   return (
     <div className="flex items-center gap-1 text-xs">
-      <label htmlFor="game" className="text-[#a1a1aa]">
+      <label htmlFor="game" className="tracking-[.2em] text-[#8a8f98] uppercase">
         game
       </label>
       <input
         id="game"
         value={value}
         onChange={(e) => setValue(e.target.value.replace(/\D/g, ''))}
-        className="h-7 w-14 rounded-md border border-[#33333b] bg-[#17171c] px-2 font-mono"
+        className="mono h-7 w-14 border bg-transparent px-2"
+        style={{ borderColor: `${C}66`, color: C }}
         inputMode="numeric"
       />
-      <Link to="/log" search={{ game: value || '1' }} className="h-7 rounded-md border border-[#33333b] px-2 leading-7 hover:bg-[#1f1f25]">
+      <Link to="/log" search={{ game: value || '1' }} className="h-7 border px-2 leading-7 font-bold tracking-[.2em] uppercase" style={{ ...cut(6), borderColor: Y, color: Y }}>
         Open
       </Link>
     </div>
