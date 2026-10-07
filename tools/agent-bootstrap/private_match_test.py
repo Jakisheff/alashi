@@ -44,10 +44,11 @@ class Checks(unittest.TestCase):
             thread.start()
             try:
                 url = f'http://127.0.0.1:{server.server_port}'
-                match.server_profile(url, local)
-                Handler.character = 'wrong-character'
-                with self.assertRaises(match.Stop):
+                with patch.object(match, 'loopback', return_value=('127.0.0.1', server.server_port)):
                     match.server_profile(url, local)
+                    Handler.character = 'wrong-character'
+                    with self.assertRaises(match.Stop):
+                        match.server_profile(url, local)
             finally:
                 server.shutdown()
                 thread.join()
@@ -63,6 +64,8 @@ class Checks(unittest.TestCase):
                 match.profile(home / 'missing')
             with self.assertRaises(match.Stop):
                 match.loopback('https://alashi.network')
+            with self.assertRaises(match.Stop):
+                match.loopback('http://127.0.0.1:8095')
 
     def test_numeric_view_choice_and_terminal(self):
         faction = {'cash': 2_000_000, 'goods': 1, 'influence': 1, 'vote_weight': 1,
@@ -89,6 +92,19 @@ class Checks(unittest.TestCase):
         with self.assertRaises(match.Stop):
             match.terminal({'ok': True, 'finished': True, 'game_id': 3,
                             'result': {'game_id': 4, 'party_no': 19, 'final_cash': [1, 2]}}, 3, [])
+
+    def test_model_timeout_is_bounded_by_live_phase(self):
+        import time
+        deadline = time.monotonic() + 1800
+        self.assertEqual(match.decision_timeout({'now': 100, 'grace_until': 130}, deadline), 20)
+        self.assertEqual(match.decision_timeout({'now': 128, 'grace_until': 130}, deadline), 0)
+
+    def test_opencode_config_denies_all_tools_for_selected_agent(self):
+        with tempfile.TemporaryDirectory() as d:
+            config = match.write_opencode_config(Path(d))
+            self.assertEqual(config['permission'], {'*': 'deny'})
+            self.assertEqual(config['agent']['alashi-choice']['permission'], {'*': 'deny'})
+            self.assertEqual(json.loads((Path(d) / 'opencode.json').read_text()), config)
 
     def test_opencode_text_requires_no_tools_and_strict_choice(self):
         text = json.dumps({'type': 'text', 'part': {'type': 'text', 'text': '{"choice":1}'}})
@@ -121,7 +137,7 @@ class Checks(unittest.TestCase):
                         'faction_idx': 0 if str(home).endswith('codex') else 1}
             if command == 'state':
                 states += 1
-                return live if states <= 2 else finished
+                return live if states <= 4 else finished
             if command == 'act':
                 return {'ok': True, 'op_id': 1, 'op_consumed': True}
             self.fail('unexpected command')
@@ -139,7 +155,117 @@ class Checks(unittest.TestCase):
         self.assertEqual(outcome['model_decisions'], [1, 1])
         self.assertEqual(outcome['accepted_actions'], [1, 1])
         self.assertTrue(outcome['e2e_verified'])
-        self.assertEqual([c[1] for c in calls], ['start', 'start', 'state', 'state', 'act', 'act', 'state'])
+        self.assertEqual([c[1] for c in calls], ['start', 'start', 'state', 'state',
+                                                 'state', 'act', 'state', 'act', 'state'])
+
+
+    def test_consumed_rejected_retry_clears_pending_and_continues(self):
+        seen = []
+        pending_checks = 0
+        def fake_session(home, game):
+            nonlocal pending_checks
+            if str(home).endswith('codex'):
+                pending_checks += 1
+                return {'schema': 'alashi.game.v2', 'game_id': game,
+                        'pending_act': {'op_id': 1} if pending_checks == 1 else None}
+            return {'schema': 'alashi.game.v2', 'game_id': game, 'pending_act': None}
+        def fake_node(home, url, command, *options):
+            seen.append(command)
+            if command == 'start':
+                return {'ok': True, 'status': 'joined', 'game_id': 3,
+                        'faction_idx': 0 if str(home).endswith('codex') else 1}
+            if command == 'retry':
+                return {'ok': False, 'error': 'WrongPhase', 'op_id': 1, 'op_consumed': True}
+            if command == 'state':
+                return {'ok': True, 'game_id': 3, 'finished': True,
+                        'result': {'game_id': 3, 'party_no': 19, 'final_cash': [1, 2]}}
+            self.fail('unexpected command')
+        args = SimpleNamespace(url='http://127.0.0.1:18094',
+                               codex_home='/private/codex', opencode_home='/private/opencode')
+        with patch.object(match, 'profile', side_effect=lambda home: {'agent_record_id': str(home)}), \
+             patch.object(match, 'server_profile'), \
+             patch.object(match, 'session', side_effect=fake_session), \
+             patch.object(match, 'node', side_effect=fake_node):
+            outcome = match.run(args)
+        self.assertEqual(outcome['status'], 'finished')
+        self.assertIn('retry', seen)
+
+    def test_consumed_rejection_does_not_ask_model_twice_in_same_phase(self):
+        faction = {'cash': 2_000_000, 'goods': 1, 'influence': 1, 'vote_weight': 1,
+                   'acted': False, 'voted': False, 'is_president': False, 'alive': True}
+        state_calls = 0
+        model_calls = []
+        def fake_node(home, url, command, *options):
+            nonlocal state_calls
+            idx = 0 if str(home).endswith('codex') else 1
+            if command == 'start':
+                return {'ok': True, 'status': 'joined', 'game_id': 3, 'faction_idx': idx}
+            if command == 'act':
+                return {'ok': idx == 1, 'op_id': 1, 'op_consumed': True}
+            if command == 'state':
+                state_calls += 1
+                if state_calls > 4:
+                    return {'ok': True, 'game_id': 3, 'finished': True,
+                            'result': {'game_id': 3, 'party_no': 19, 'final_cash': [1, 2]}}
+                factions = [dict(faction), dict(faction)]
+                if state_calls > 2:
+                    factions[1]['acted'] = True
+                return {'ok': True, 'game_id': 3, 'your_faction_idx': idx,
+                        'state': {'game_id': 3, 'execution_mode': 'http_simulated', 'phase': 'market',
+                                  'epoch': 'classic', 'round': 1, 'now': 1, 'grace_until': 100,
+                                  'price_now': 1, 'factions': factions}}
+            self.fail('unexpected command')
+        def choose(kind, safe, actions, deadline):
+            model_calls.append(kind)
+            return {'action': 'sell', 'params': {'units': 1}, 'by': 'llm'}
+        args = SimpleNamespace(url='http://127.0.0.1:18094',
+                               codex_home='/private/codex', opencode_home='/private/opencode')
+        with patch.object(match, 'profile', side_effect=lambda home: {'agent_record_id': str(home)}), \
+             patch.object(match, 'server_profile'), \
+             patch.object(match, 'session', return_value={'schema': 'alashi.game.v2', 'game_id': 3,
+                                                         'pending_act': None}), \
+             patch.object(match, 'node', side_effect=fake_node), \
+             patch.object(match, 'model_decision', side_effect=choose), \
+             patch.object(match.time, 'sleep'):
+            match.run(args)
+        self.assertEqual(model_calls, ['codex', 'opencode'])
+
+    def test_stale_model_choice_is_not_submitted_after_phase_change(self):
+        faction = {'cash': 2_000_000, 'goods': 1, 'influence': 1, 'vote_weight': 1,
+                   'acted': False, 'voted': False, 'is_president': False, 'alive': True}
+        state_calls = 0
+        acts = []
+        def fake_node(home, url, command, *options):
+            nonlocal state_calls
+            idx = 0 if str(home).endswith('codex') else 1
+            if command == 'start':
+                return {'ok': True, 'status': 'joined', 'game_id': 3, 'faction_idx': idx}
+            if command == 'act':
+                acts.append(idx)
+                return {'ok': True, 'op_id': 1, 'op_consumed': True}
+            if command == 'state':
+                state_calls += 1
+                if state_calls > 4:
+                    return {'ok': True, 'game_id': 3, 'finished': True,
+                            'result': {'game_id': 3, 'party_no': 19, 'final_cash': [1, 2]}}
+                phase = 'market' if state_calls <= 2 else 'lobby'
+                return {'ok': True, 'game_id': 3, 'your_faction_idx': idx,
+                        'state': {'game_id': 3, 'execution_mode': 'http_simulated', 'phase': phase,
+                                  'epoch': 'classic', 'round': 1, 'now': 1, 'grace_until': 100,
+                                  'price_now': 1, 'factions': [faction, faction]}}
+            self.fail('unexpected command')
+        args = SimpleNamespace(url='http://127.0.0.1:18094',
+                               codex_home='/private/codex', opencode_home='/private/opencode')
+        with patch.object(match, 'profile', side_effect=lambda home: {'agent_record_id': str(home)}), \
+             patch.object(match, 'server_profile'), \
+             patch.object(match, 'session', return_value={'schema': 'alashi.game.v2', 'game_id': 3,
+                                                         'pending_act': None}), \
+             patch.object(match, 'node', side_effect=fake_node), \
+             patch.object(match, 'model_decision', return_value={'action': 'sell',
+                                                                 'params': {'units': 1}, 'by': 'llm'}), \
+             patch.object(match.time, 'sleep'):
+            match.run(args)
+        self.assertEqual(acts, [])
 
 
 if __name__ == '__main__':
