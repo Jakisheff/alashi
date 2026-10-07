@@ -45,7 +45,8 @@ npm run build
 `src/events.ts` — курсор, дедупликация и правило пропуска по контракту `PUBLIC_EVENTS_FOR_DIN` (docs a3d8ed8);
 `src/feed.ts` — лента для Degenie: каждое событие печатается на экране, затем `act` → `accepted`/`rejected`.
 
-- `?api=<base>&game=<id>` — живая партия через `GET <base>/game/<id>/state` (same-origin; опрос 2 с, пауза в скрытой вкладке).
+- `?game=<id>` — живая партия через `GET /game/<id>/state` (same-origin; опрос 2 с, пауза в скрытой вкладке). `id` — только целое > 0.
+- `?api=<base>` — другая арена, **только в `npm run dev`**: в сборке параметр игнорируется, иначе любая ссылка показывала бы чужие тексты на alashi.network.
 - Без параметров — постановочный поток, помеченный в HUD как PREVIEW «sample events, not a real game».
 
 ## Граф агентов

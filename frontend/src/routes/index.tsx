@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import App from '../App'
+import { devApi, gameId } from '../feed'
 import { CLIP_SECONDS, type GenieClip } from '../genie/pose'
 
 // Search params of the Degenie page, checked here (main.tsx skips JSON parsing so long hex ids stay strings).
@@ -24,15 +25,18 @@ const str = (v: unknown) => (typeof v === 'number' ? String(v) : typeof v === 's
 const defined = <T extends object>(o: T) => Object.fromEntries(Object.entries(o).filter(([, v]) => v !== undefined)) as T
 
 export const Route = createFileRoute('/')({
-  validateSearch: (s: Record<string, unknown>): HomeSearch =>
-    defined({
+  validateSearch: (s: Record<string, unknown>): HomeSearch => ({
+    ...defined({
       agent: str(s.agent),
-      game: str(s.game),
-      api: typeof s.api === 'string' ? s.api : undefined, // '' means same-origin
       demo: s.demo === undefined || s.demo === false ? undefined : true, // bare ?demo decodes to ''
       pose: typeof s.pose === 'string' && s.pose in CLIP_SECONDS ? (s.pose as GenieClip) : undefined,
       t: s.t !== undefined && Number.isFinite(Number(s.t)) ? Number(s.t) : undefined,
     }),
+    // Explicit even when undefined: the router merges this result over the raw query, so a dropped key would keep
+    // the raw value (?game=../x, ?api=<any site>). Undefined values are left out of links.
+    game: gameId(s.game),
+    api: devApi(s.api),
+  }),
   component: Home,
 })
 

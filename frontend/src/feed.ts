@@ -4,8 +4,20 @@ import { advance, eventText, resultText, type ArenaEvent, type ArenaState, type 
 import { useScene } from './store'
 
 // A game id (?game=<id>, or the watched agent's game) reads the arena's public GET /game/:id/state,
-// same-origin unless ?api=<base> (no /api prefix per Ivan). Without one the page plays a clearly labelled
+// same-origin unless ?api=<base> in dev (no /api prefix per Ivan). Without one the page plays a clearly labelled
 // sample stream so the scene is never silently fake.
+
+/** ?game=: a positive integer, since it goes straight into the fetch path. The router may pass a number. */
+export function gameId(v: unknown): string | undefined {
+  const s = typeof v === 'number' ? String(v) : v
+  return typeof s === 'string' && /^[1-9][0-9]*$/.test(s) ? s : undefined
+}
+
+/** ?api=<base> points the page at another arena. Dev only: on the public site any link could show another server's
+ *  names and text under alashi.network (DIN-SEC-20261007-01). '' means same-origin. */
+export function devApi(v: unknown): string | undefined {
+  return import.meta.env.DEV && typeof v === 'string' ? v : undefined
+}
 
 const EVENT_SECONDS = 3.2 // one reaction at a time: act, then accepted/rejected
 const QUEUE_MAX = 6 // a long backlog is trimmed to the latest events instead of replayed
