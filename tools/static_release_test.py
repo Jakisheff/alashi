@@ -1,6 +1,8 @@
 """Focused offline checks for the static release pointer switch."""
 import fcntl
 import json
+import subprocess
+import sys
 from pathlib import Path
 import tempfile
 import unittest
@@ -37,12 +39,19 @@ class StaticReleaseTest(unittest.TestCase):
             "deck": "r10", "release": name
         }))
 
+    def command(self, action, *args):
+        return subprocess.run(
+            [sys.executable, str(Path(release.__file__)), action, *args,
+             "--root", str(self.root), "--state-dir", str(self.state)],
+            check=True, capture_output=True, text=True,
+        )
+
     def test_two_publishes_and_rollback_keep_old_urls(self):
-        release.run("publish", self.root, self.state, "one")
-        release.run("publish", self.root, self.state, "two")
+        self.command("publish", "one")
+        self.command("publish", "two")
         self.assertEqual(release.pointer(self.root, "current"), "two")
         self.assertEqual(release.pointer(self.root, "previous"), "one")
-        release.run("rollback", self.root, self.state, None)
+        self.command("rollback")
         self.assertEqual(release.pointer(self.root, "current"), "one")
         self.assertEqual(release.pointer(self.root, "previous"), "two")
         self.assertTrue((self.root / "releases" / "base" / "assets" / "app.js").is_file())
