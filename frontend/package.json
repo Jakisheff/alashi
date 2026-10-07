@@ -17,7 +17,8 @@
     "check:log": "node --experimental-strip-types --no-warnings scripts/log-check.ts",
     "optimize:glb": "node --experimental-strip-types --no-warnings scripts/optimize-glb.ts",
     "companion": "cd companion && tauri dev",
-    "companion:build": "cd companion && tauri build"
+    "companion:build": "cd companion && tauri build",
+    "companion:build:mac": "cd companion && tauri build --target universal-apple-darwin"
   },
   "dependencies": {
     "@react-three/drei": "10.7.9",

@@ -2,3 +2,5 @@
 [toolchain]
 channel = "stable"
 profile = "minimal"
+# Both Mac CPUs for the universal build (npm run companion:build:mac)
+targets = ["aarch64-apple-darwin", "x86_64-apple-darwin"]
