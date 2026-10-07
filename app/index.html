@@ -83,7 +83,7 @@ const DISC = {
 const conn = new solanaWeb3.Connection(RPC, 'confirmed');
 let gameKey = null, game = null, wallet = null, myFaction = null;
 const fmt = l => (l/1e9).toFixed(3)+' SOL';
-const peso = l => (l/1e6)+' песо';
+const alashi = l => (l/1e6)+' alashi';
 
 function log(s){ document.getElementById('status').textContent = s; }
 
@@ -150,7 +150,7 @@ async function refresh(){
     const bank = await conn.getBalance(gameKey);
     document.getElementById('bank').textContent = fmt(bank);
     const price = Math.max(1, PRICE_TABLE[Math.min(game.sold, 15)] + game.active_shift + game.active_boom);
-    document.getElementById('price').textContent = price+' песо';
+    document.getElementById('price').textContent = price+' alashi';
     document.getElementById('sold').textContent = game.sold;
     document.getElementById('law').textContent = game.phase===3 ? (LAWS[game.law_card]||'?') + (game.veto_pending?' · ВЕТО':'') : '—';
     document.getElementById('yes').textContent = game.yes;
@@ -166,7 +166,7 @@ async function refresh(){
     for (const f of facs) {
       html += '<div class="faction"><div class="avatar">'+(PERSONAS[f.name]?PERSONAS[f.name].split(' ')[0]:'🤖')+'</div>'+
         '<div><div class="fname">'+esc(f.name)+'</div><div class="fdesc">'+(PERSONAS[f.name]||'').slice(2)+'</div></div>'+
-        '<div class="nums">'+peso(Number(f.cash))+'<br>товар: '+f.goods+' · влияние: '+f.influence+'</div></div>';
+        '<div class="nums">'+alashi(Number(f.cash))+'<br>товар: '+f.goods+' · влияние: '+f.influence+'</div></div>';
     }
     document.getElementById('factions').innerHTML = html || '—';
   } catch(e) { log('обновление: '+e.message); }

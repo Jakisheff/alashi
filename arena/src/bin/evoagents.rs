@@ -125,22 +125,22 @@ struct Params {
 
 /// Полный прогон эволюции; возвращает (уровни лестницы, история фитнеса).
 ///
-/// `target_pesos` = None: максимизируем выплату (сильнейший уровень).
+/// `target_alashi` = None: максимизируем выплату (сильнейший уровень).
 /// Иначе подгоняем выплату под цель: фитнес = −|выплата − цель|, так уровень
 /// калибруется по силе, а не гонится за максимумом.
-fn evolve(p: &Params, opponents: &[&str], cfg: &GameConfig, target_pesos: Option<f64>)
+fn evolve(p: &Params, opponents: &[&str], cfg: &GameConfig, target_alashi: Option<f64>)
           -> (Vec<(usize, Genome, f64)>, Vec<f64>) {
     let seats = opponents.len() + 1;
     let sched = schedule(p.base_seed, p.seeds, seats);
     let scored = |g: &Genome| {
         let payout = fitness(g, &sched, opponents, cfg);
-        let s = match target_pesos {
+        let s = match target_alashi {
             Some(t) => -(payout - t).abs(),
             None => payout,
         };
         (s, payout)
     };
-    let mut rng = Rng::new(p.base_seed ^ target_pesos.map(|t| t.to_bits()).unwrap_or(0));
+    let mut rng = Rng::new(p.base_seed ^ target_alashi.map(|t| t.to_bits()).unwrap_or(0));
     let mut population: Vec<Genome> = (0..p.population)
         .map(|_| {
             let mut v = [0u8; 6];
@@ -259,7 +259,7 @@ fn main() {
     eprintln!("evoagents: {} поколений на уровень, популяция {}, сидов {}, соперники [{}]",
               params.generations, params.population, params.seeds, opponents.join(","));
 
-    // Целевые уровни силы (млн песо) + финальный уровень «максимум».
+    // Целевые уровни силы (млн alashi) + финальный уровень «максимум».
     let targets_arg = flag(&args, "--targets").unwrap_or_else(|| "6,10,14,18".to_string());
     let mut targets: Vec<Option<f64>> = targets_arg
         .split(',')
@@ -281,9 +281,9 @@ fn main() {
         let (levels, history) = evolve(&p, &opponents, &cfg, *target);
         let (_, genome, payout) = levels.last().expect("ladder nonempty").clone();
         match target {
-            Some(t) => eprintln!("цель {:>5.1}M: достигнуто {:>7.3}M песо [{:?}]",
+            Some(t) => eprintln!("цель {:>5.1}M: достигнуто {:>7.3}M alashi [{:?}]",
                                  t / 1e6, payout / 1e6, genome),
-            None => eprintln!("максимум  : достигнуто {:>7.3}M песо [{:?}]", payout / 1e6, genome),
+            None => eprintln!("максимум  : достигнуто {:>7.3}M alashi [{:?}]", payout / 1e6, genome),
         }
         targets_out.push(*target);
         ladder.push((idx, genome, payout));
@@ -299,7 +299,7 @@ fn main() {
     let verify_seeds: usize = flag(&args, "--verify-seeds").and_then(|v| v.parse().ok()).unwrap_or(8);
     let verification = verify(&ladder, params.base_seed ^ 0x5EED, verify_seeds, &opponents, &cfg);
     for (i, v) in verification.iter().enumerate() {
-        eprintln!("проверка: уровень {} против {}: средняя разница выплат {:+.3} песо за {} пар",
+        eprintln!("проверка: уровень {} против {}: средняя разница выплат {:+.3} alashi за {} пар",
                   i + 2, i + 1,
                   v["mean_payout_delta"].as_f64().unwrap_or(0.0) / 1_000_000.0,
                   v["paired_matches"]);
@@ -315,10 +315,10 @@ fn main() {
         "gene_names": GENE_NAMES,
         "gene_min": GENE_MIN, "gene_max": GENE_MAX,
         "levels": ladder.iter().enumerate().map(|(i, (_, g, f))| serde_json::json!({
-            "level": i + 1, "target_pesos": targets_out[i].map(|t| t / 1e6),
-            "achieved_pesos": f / 1_000_000.0, "genome": g,
+            "level": i + 1, "target_alashi": targets_out[i].map(|t| t / 1e6),
+            "achieved_alashi": f / 1_000_000.0, "genome": g,
         })).collect::<Vec<_>>(),
-        "fitness_histories_pesos": histories.iter()
+        "fitness_histories_alashi": histories.iter()
             .map(|h| h.iter().map(|f| f / 1_000_000.0).collect::<Vec<_>>())
             .collect::<Vec<_>>(),
         "verification": verification,

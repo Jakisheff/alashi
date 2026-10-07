@@ -348,7 +348,7 @@ def report(results, summary, c, out):
     lines = ['Сравнение агентов Alashi', '',
              f"Вариант A: {c['baseline']['label']}. Вариант B: {c['candidate']['label']}.", '',
              f"Завершено пар: {summary['completed_pairs']} из {summary['planned_pairs']}. Полных групп seed: {summary['complete_seed_clusters']}.",
-             f"Среднее изменение выплаты B - A: {fmt(summary['mean_delta_complete_clusters'])} игровых песо."]
+             f"Среднее изменение выплаты B - A: {fmt(summary['mean_delta_complete_clusters'])} игровых alashi."]
     ci = summary['cluster_bootstrap_95']
     lines += [f"95% bootstrap-интервал по группам seed: {fmt(ci[0])} ... {fmt(ci[1])}." if ci else 'Для интервала недостаточно полных групп seed.', '',
               'Позиции внутри одного seed зависимы. Интервал строится по средним полных групп; пары с ошибками остаются в журнале. Это исследовательская оценка на выбранных соперниках, не доказательство общего улучшения модели.', '',

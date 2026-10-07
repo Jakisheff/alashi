@@ -10,4 +10,4 @@ changes={'#76e1b5':'#35dcff','#f8be67':'#ff42c8','#8fc9ff':'#35dcff','#dcafff':'
 for old,new in changes.items():base=base.replace(old,new)
 proof=json.loads((root/'docs/ops/CYBER_LOCAL_PROOF_20260906.json').read_text());proof['transactions']=[x for x in proof['transactions'] if x['instruction'] in ['join','settle']]
 extra=(root/'tools/cyber_overlay.js').read_text().replace('__PROOF__',json.dumps(proof,ensure_ascii=False).replace('<','\\u003c'))
-base=base.replace("text(money(a.cash_after)+' песо',1288,752,48,'#fff',750)","text(money(a.cash_after)+' песо',1288,752,48,'#b6ff42',750)");base=base.replace('</script>',extra+'</script>');(root/'app/alashi-cyber-demo.html').write_text(base)
+base=base.replace("text(money(a.cash_after)+' alashi',1288,752,48,'#fff',750)","text(money(a.cash_after)+' alashi',1288,752,48,'#b6ff42',750)");base=base.replace('</script>',extra+'</script>');(root/'app/alashi-cyber-demo.html').write_text(base)

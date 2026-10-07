@@ -5,7 +5,7 @@ import json
 import sys
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--bid-peso', type=int, default=4)
+parser.add_argument('--bid-alashi', type=int, default=4)
 args = parser.parse_args()
 request = json.load(sys.stdin)
 o = request['observation']
@@ -15,8 +15,8 @@ response = {'action': 'pass', 'cost_usd': 0}
 if phase == 'market' and o['goods'][me] > 0:
     response.update(action='sell', units=o['goods'][me])
 elif phase == 'action':
-    if o['round'] == 4 and o['cash'][me] >= (args.bid_peso + 2) * 1_000_000:
-        response.update(action='bid', amount=args.bid_peso * 1_000_000)
+    if o['round'] == 4 and o['cash'][me] >= (args.bid_alashi + 2) * 1_000_000:
+        response.update(action='bid', amount=args.bid_alashi * 1_000_000)
     else:
         response.update(action='produce')
 elif phase == 'law' and o.get('decision_stage') != 'post_vote':

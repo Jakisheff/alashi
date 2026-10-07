@@ -186,7 +186,7 @@ def write_report(res):
     ags = res.get("agents", [])
     L = [f"# Отчёт {me_name} — игра {G} ({time.strftime('%d.%m.%Y')})", "",
          f"- модель: agent-one (интерактивный драйвер-матрица), agent_id: {ags[ME].get('agent_id','?')[:8] if ME < len(ags) else '?'}",
-         f"- место: {place} из {len(r)}, выплата: {pay/M:.1f}M песо (ранг {brk.get('rank_share',0)/M:.1f}M / рента {brk.get('license_rent',0)/M:.1f}M / завод {brk.get('factory_bonus',0)/M:.1f}M)", "",
+         f"- место: {place} из {len(r)}, выплата: {pay/M:.1f}M alashi (ранг {brk.get('rank_share',0)/M:.1f}M / рента {brk.get('license_rent',0)/M:.1f}M / завод {brk.get('factory_bonus',0)/M:.1f}M)", "",
          "## Таблица партии (все фракции)", "",
          "| место | фракция | модель | final cash+hard (M) | выплата (M) |", "|---|---|---|---|---|"]
     fc = res.get("final_cash", [])

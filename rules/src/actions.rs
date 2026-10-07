@@ -375,12 +375,12 @@ pub fn exchange(game: &Game, f: &mut Faction, to_hard: bool) -> Result<u64, Game
         return Err(GameError::WrongPhase);
     }
     if to_hard {
-        let pesos = f.cash;
-        let got = pesos * EXCHANGE_NUM / EXCHANGE_DEN;
+        let amount = f.cash;
+        let got = amount * EXCHANGE_NUM / EXCHANGE_DEN;
         if got == 0 {
             return Err(GameError::NotEnoughCash);
         }
-        f.cash -= pesos;
+        f.cash -= amount;
         f.hard += got;
         Ok(got)
     } else {

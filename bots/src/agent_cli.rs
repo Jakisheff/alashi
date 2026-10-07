@@ -242,7 +242,7 @@ fn inspect(rpc: &RpcClient, key: Pubkey, wallet: Option<Pubkey>) -> ResultJson {
             "active_tax_bps":game.active_tax_bps,"active_price_shift":game.active_price_shift,
             "active_boom":game.active_boom,"price_table":constants::PRICE_TABLE.iter().map(|n|n.to_string()).collect::<Vec<_>>(),
             "factions":factions},"your_faction":mine,
-        "units":{"cash":"game units; 1000000 = 1 peso","price_table":"whole pesos per unit","entry_fee_lamports":"devnet SOL; 1000000000 = 1 SOL","account_lamports":"devnet lamports held by Game, including rent reserve"},
+        "units":{"cash":"game units; 1000000 = 1 alashi","price_table":"whole alashi per unit","entry_fee_lamports":"devnet SOL; 1000000000 = 1 SOL","account_lamports":"devnet lamports held by Game, including rent reserve"},
         "note":"available_action_types are phase/stamp hints; balances and targets are validated by the program"}),
     )
 }

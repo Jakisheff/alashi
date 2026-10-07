@@ -392,7 +392,7 @@ fn main() {
                 None => "цены не заданы".into(),
             };
             println!(
-                "[agent] партия окончена: моё место {} из {}, выплата {} песо; LLM за партию: {}in/{}out ({})",
+                "[agent] партия окончена: моё место {} из {}, выплата {} alashi; LLM за партию: {}in/{}out ({})",
                 my_place,
                 ranks.len(),
                 payout / 1_000_000,
@@ -560,9 +560,9 @@ fn decide(
                 r#"{"action":"sell","units":N} или {"action":"buy","units":N} — одна рыночная операция за раунд. Цена падает с каждым проданным лотом (таблица price_table)."#
             },
             "action" => if epoch_90s {
-                r#"{"action":"produce"} (+2 товара), {"action":"bribe","to":IDX,"amount":N} (+1 влияние), {"action":"donkey"} (1 товар за 1 песо). ЭПОХА 90-х дополнительно: {"action":"shuttle"} (+3 товара, серый товар: таможня может конфисковать при закрытии фазы), {"action":"roof","to":IDX} (крыша: гасит первый анти-богатый закон против цели, 20% кэша), {"action":"buy_hard"} / {"action":"sell_hard"} (валютчик: весь кэш ↔ твёрдая валюта ×0.8, не девальвирует, ход не сжигает), {"action":"bid_license","amount":N} (слепой аукцион лицензии в r4: победитель платит ставку в банк, получает ренту в сеттле — РЕНТА НЕ ВХОДИТ В РАНГ), {"action":"inspect_license"} (5M: узнать доход лицензии до ставок; если ты уже в курсе — не трать), {"action":"customs","tight":true|false} (ТОЛЬКО если ты президент: граница вслепую, tight=досмотр серых, loose=дань с серых в твою пользу). Одно основное действие (не сжигают ход: buy_hard/sell_hard/bid/inspect/customs)."#
+                r#"{"action":"produce"} (+2 товара), {"action":"bribe","to":IDX,"amount":N} (+1 влияние), {"action":"donkey"} (1 товар за 1 alashi). ЭПОХА 90-х дополнительно: {"action":"shuttle"} (+3 товара, серый товар: таможня может конфисковать при закрытии фазы), {"action":"roof","to":IDX} (крыша: гасит первый анти-богатый закон против цели, 20% кэша), {"action":"buy_hard"} / {"action":"sell_hard"} (валютчик: весь кэш ↔ твёрдая валюта ×0.8, не девальвирует, ход не сжигает), {"action":"bid_license","amount":N} (слепой аукцион лицензии в r4: победитель платит ставку в банк, получает ренту в сеттле — РЕНТА НЕ ВХОДИТ В РАНГ), {"action":"inspect_license"} (5M: узнать доход лицензии до ставок; если ты уже в курсе — не трать), {"action":"customs","tight":true|false} (ТОЛЬКО если ты президент: граница вслепую, tight=досмотр серых, loose=дань с серых в твою пользу). Одно основное действие (не сжигают ход: buy_hard/sell_hard/bid/inspect/customs)."#
             } else {
-                r#"{"action":"produce"} (+2 товара), {"action":"donkey"} (1 товар за 1 песо), {"action":"bribe","to":IDX,"amount":N} (+влияние). Одно действие."#
+                r#"{"action":"produce"} (+2 товара), {"action":"donkey"} (1 товар за 1 alashi), {"action":"bribe","to":IDX,"amount":N} (+влияние). Одно действие."#
             },
             "law" if me["voted"] == true => {
                 r#"Голос уже подан. До подсчёта выбери {"action":"veto"}, если используешь право президента, или {"action":"pass"}, чтобы завершить решения. Повторно голосовать нельзя."#
@@ -584,7 +584,7 @@ fn decide(
         // свой инсайд state не показывает — LLM должен видеть yield,
         // за который заплачено 5M (иначе ставка вслепую даже после inspect)
         if let Some(y) = mem.license_yield {
-            user.push_str(&format!("\nИнсайд: доход лицензии = {} песо.", y / 1_000_000));
+            user.push_str(&format!("\nИнсайд: доход лицензии = {} alashi.", y / 1_000_000));
         }
         let (a, mut p) = decide_inner(cfg, s, me, prompt, mem, &user, attempts, ask_to, budget_s, t0, &llm_ctx, spent);
         // двойной судья со свапом позиций для закона (паттерн
@@ -788,7 +788,7 @@ fn write_self_report(
     let mut body = format!(
         "# Отчёт {name} — игра {game} ({date})\n\n\
 - модель: {model}\n\
-- место: {my_place} из {of}, выплата: {:.1}M песо (ранг {}M / рента {}M / завод {}M)\n\n",
+- место: {my_place} из {of}, выплата: {:.1}M alashi (ранг {}M / рента {}M / завод {}M)\n\n",
         m(&Value::from(my_payout)),
         my_brk("rank_share"),
         my_brk("license_rent"),
