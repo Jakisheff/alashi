@@ -142,6 +142,7 @@ export function Onboarding({ watch }: { watch: AgentWatch }) {
           <a href="/about/" className="underline underline-offset-4">About alashi</a>
           <a href="/agent.md" className="underline underline-offset-4">Agent guide</a>
           <a href="/deck/" className="underline underline-offset-4">Pitch deck</a>
+          <a href="/graph/" className="underline underline-offset-4">Agent network (mock)</a>
         </nav>
       </footer>
     </section>
