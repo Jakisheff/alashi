@@ -43,8 +43,9 @@ function useSampleState(enabled: boolean) {
 }
 
 /** Feeds arena events to Degenie: types each line on its screen and plays act -> accepted/rejected. */
-export function useArenaFeed(game: string | null) {
-  const mode: 'live' | 'sample' = game ? 'live' : 'sample'
+// `sample: false` (an owner watching their agent) keeps Degenie idle instead of playing invented trades.
+export function useArenaFeed(game: string | null, sample = true) {
+  const mode: 'live' | 'sample' | 'off' = game ? 'live' : sample ? 'sample' : 'off'
   const live = useQuery({
     queryKey: ['arena-state', API, game],
     enabled: mode === 'live',
@@ -56,8 +57,8 @@ export function useArenaFeed(game: string | null) {
       return (await res.json()) as { state?: ArenaState; finished?: boolean; result?: GameResult }
     },
   })
-  const sample = useSampleState(mode === 'sample')
-  const state = mode === 'live' ? (live.data?.state ?? null) : sample
+  const sampleState = useSampleState(mode === 'sample')
+  const state = mode === 'live' ? (live.data?.state ?? null) : mode === 'sample' ? sampleState : null
   const result = (mode === 'live' && live.data?.finished && live.data.result) || null
 
   const cursor = useRef<Cursor>(null)

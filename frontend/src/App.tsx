@@ -39,7 +39,7 @@ export default function App() {
   const { clip, captions, speech, play, say, toggleCaptions } = useScene()
   const watch = useAgentWatch()
   const watchedGame = 'game' in watch && watch.game !== null ? String(watch.game) : null
-  const feed = useArenaFeed(GAME_PARAM ?? watchedGame)
+  const feed = useArenaFeed(GAME_PARAM ?? watchedGame, watch.kind === 'none')
 
   // Manual triggers (buttons, keys 1-4) also get a joke from the brief; arena events bring their own text.
   const trigger = useCallback(
@@ -106,6 +106,8 @@ export default function App() {
                       : 'connecting…'}
               </span>
             </>
+          ) : feed.mode === 'off' ? (
+            <span className="text-[#70707B]">waiting for your agent's game</span>
           ) : (
             <>
               <span className="rounded-full bg-[#26272B] px-2 text-xs tracking-wide text-white uppercase">preview</span>
