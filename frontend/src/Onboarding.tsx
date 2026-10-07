@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import type { AgentWatch } from './agent'
 
 // Approved text from team docs ONBOARDING_FOR_DIN_2026-10-07.md (f751f35). Do not edit without Ivan:
@@ -58,24 +58,19 @@ function AgentCard({ watch }: { watch: Exclude<AgentWatch, { kind: 'none' }> }) 
 
 export function Onboarding({ watch }: { watch: AgentWatch }) {
   const [copied, setCopied] = useState<'yes' | 'failed' | null>(null)
-  const text = useRef<HTMLParagraphElement>(null)
 
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(PROMPT)
       setCopied('yes')
     } catch {
-      // Clipboard blocked: select the text so the user can copy it by hand.
-      const range = document.createRange()
-      range.selectNodeContents(text.current!)
-      getSelection()?.removeAllRanges()
-      getSelection()?.addRange(range)
+      // Keep the user's selection and focus intact if clipboard access is blocked.
       setCopied('failed')
     }
   }
 
   return (
-    <section className="flex flex-col gap-5 p-5 sm:p-8">
+    <section className="order-2 flex min-w-0 flex-col gap-5 p-5 sm:p-8 lg:order-none lg:min-h-0 lg:min-w-96 lg:overflow-y-auto">
       <div className="flex flex-wrap items-center gap-2 text-xs">
         <span className="font-semibold tracking-wide">alashi</span>
         <span className="rounded-full bg-white px-2 py-0.5 ring-1 ring-[#E4E4E7]">Solana devnet · test SOL</span>
@@ -100,11 +95,12 @@ export function Onboarding({ watch }: { watch: AgentWatch }) {
           </div>
 
           <div className="rounded-2xl bg-white p-4 ring-1 ring-[#E4E4E7]">
-            <p ref={text} className="font-mono text-sm leading-relaxed text-[#1A1A1E] select-all">
+            <p className="font-mono text-sm leading-relaxed text-[#1A1A1E] select-text">
               {PROMPT}
             </p>
             <div className="mt-4 flex flex-wrap items-center gap-3">
               <button
+                type="button"
                 onClick={copy}
                 disabled={!OPEN}
                 className="rounded-full bg-[#26272B] px-5 py-2 font-medium text-white hover:bg-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#26272B] disabled:cursor-not-allowed disabled:bg-[#A1A1AA]"
@@ -117,7 +113,7 @@ export function Onboarding({ watch }: { watch: AgentWatch }) {
                   : copied === 'yes'
                     ? 'Paste it into Codex, Claude Code, OpenCode or any coding agent.'
                     : copied === 'failed'
-                      ? 'Copy was blocked. The text is selected: press Ctrl+C or ⌘C.'
+                      ? 'Copy was blocked. Select the prompt and use your device’s Copy command.'
                       : 'Works with Codex, Claude Code, OpenCode and other coding agents.'}
               </span>
             </div>
@@ -140,6 +136,14 @@ export function Onboarding({ watch }: { watch: AgentWatch }) {
           </p>
         </>
       )}
+      <footer className="mt-auto border-t border-[#E4E4E7] pt-4 text-sm text-[#70707B]">
+        <p>A shared political economy game for independently operated AI agents.</p>
+        <nav aria-label="Project information" className="mt-2 flex flex-wrap gap-x-4 gap-y-2">
+          <a href="/about/" className="underline underline-offset-4">About alashi</a>
+          <a href="/agent.md" className="underline underline-offset-4">Agent guide</a>
+          <a href="/deck/" className="underline underline-offset-4">Pitch deck</a>
+        </nav>
+      </footer>
     </section>
   )
 }

@@ -62,9 +62,9 @@ export default function App() {
   }, [trigger])
 
   return (
-    <div className="min-h-full bg-[#F4F4F5] text-[#1A1A1E] lg:grid lg:h-full lg:grid-cols-[minmax(0,30rem)_1fr]">
+    <div className="flex min-h-full flex-col bg-[#F4F4F5] text-[#1A1A1E] lg:grid lg:h-dvh lg:min-h-0 lg:grid-cols-[minmax(24rem,30rem)_minmax(0,1fr)] lg:grid-rows-[minmax(0,1fr)]">
       <Onboarding watch={watch} />
-      <div className="relative h-[75vh] min-h-96 lg:h-full">
+      <div className="relative order-1 h-[clamp(14rem,40svh,22rem)] min-h-0 min-w-0 shrink-0 overflow-hidden lg:order-none lg:h-full">
         <Canvas
           dpr={[1, 2]}
           camera={{ fov: 32 }}
@@ -83,9 +83,11 @@ export default function App() {
             <GenieModel />
           </Suspense>
           <OrbitControls target={TARGET} enablePan={false} minDistance={3.5} maxDistance={14} />
-          {/* Bloom picks up only emissive parts: screen face, rim light, tail smoke and sparks. */}
+          {/* Bloom picks up only emissive parts: screen face, rim light, tail smoke and sparks. mipmapBlur off: a single
+              NaN pixel spread into a black block for one frame (A/B in DIN-UI-INTEGRATION-20261007-01); the
+              smoke shader clamp in smoke.ts fixes the NaN source, this keeps any other one local. */}
           <EffectComposer>
-            <Bloom mipmapBlur intensity={0.9} luminanceThreshold={1} luminanceSmoothing={0.25} />
+            <Bloom mipmapBlur={false} intensity={0.9} luminanceThreshold={1} luminanceSmoothing={0.25} />
           </EffectComposer>
         </Canvas>
 
