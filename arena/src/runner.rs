@@ -382,7 +382,7 @@ pub struct PayoutLine {
 /// Settle по правилам для off-chain партии: банк = взносы, резерв 0.
 /// Вся математика — в rules::compute_settlement_epoch (общая с ончейн),
 /// арена передаёт external_rent=true: рента лицензии здесь экзогенный
-/// песо-поток (в песо-мире арены источник есть).
+/// alashi-поток (в alashi-мире арены источник есть).
 pub fn settle(
     sim: &Simulator,
     entry_fee: u64,

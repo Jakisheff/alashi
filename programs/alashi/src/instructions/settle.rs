@@ -51,7 +51,7 @@ pub fn handle_settle<'a>(ctx: Context<'a, Settle<'a>>) -> Result<()> {
     let bank = **game.to_account_info().lamports.borrow();
     // Единая математика с ареной (rules), но external_rent=false:
     // ончейн v1 не платит ренту лицензии в lamports — источник
-    // отсутствует (ставки — внутренние песо; эскроу-вариант запаркован).
+    // отсутствует (ставки — внутренние alashi; эскроу-вариант запаркован).
     // Завод (из рейка) и ранги cash+hard работают полностью.
     let plan = compute_settlement_epoch(game, &plain, bank, reserve, false, false)?;
 

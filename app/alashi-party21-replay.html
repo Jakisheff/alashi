@@ -45,7 +45,7 @@ function move(s,p){const a=s.a,agent=archive.agents[a.actor],color=colors[a.acto
  else detail='Предложение из журнала';
  wrap(detail,1288,596,550,32);
  if(!a.ok)wrap(({NotEnoughCash:'Не хватило кассы',WrongPhase:'Окно действия закрыто',AlreadyActed:'Действие уже использовано'})[a.err]||a.err,1288,704,530,40,'#ffaca3');
- else if(a.cash_after!==null||a.goods_after!==null){text('ПОСЛЕ ЭТОГО ХОДА',1288,696,24,'#b5c8b8');if(a.cash_after!==null)text(money(a.cash_after)+' песо',1288,752,48,'#fff',750);if(a.goods_after!==null)text('Товар: '+a.goods_after,1288,820,40,'#fff')}
+ else if(a.cash_after!==null||a.goods_after!==null){text('ПОСЛЕ ЭТОГО ХОДА',1288,696,24,'#b5c8b8');if(a.cash_after!==null)text(money(a.cash_after)+' alashi',1288,752,48,'#fff',750);if(a.goods_after!==null)text('Товар: '+a.goods_after,1288,820,40,'#fff')}
  else text('Результат в конце фазы',1288,740,30,'#cbd6c8');
  text('Источник хода: '+(a.by==='fallback'?'резервный алгоритм':a.by?.startsWith('llm')?'метка LLM':'не указан'),1288,876,23,'#a1b4a5');
  text(agent.name+' → '+f.name,48,968,44,color,800);text('Попытка '+s.serial+' / '+archive.actions.length,1872,968,32,'#c3d0c3',600,'right');

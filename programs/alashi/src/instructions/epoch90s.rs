@@ -1,7 +1,7 @@
 //! SPEC_EPOCH_90S: инструкции M-действий (epoch=1). Логика целиком в
 //! alashi_rules::actions (общая с симулятором), здесь — контексты,
 //! события и тонкие обёртки. Все игровые деньги — внутренние поля
-//! аккаунтов (песо), lamports не двигаются (кроме join/settle).
+//! аккаунтов (alashi), lamports не двигаются (кроме join/settle).
 
 use crate::{events::*, state::*};
 use alashi_rules::actions;

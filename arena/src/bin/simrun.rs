@@ -176,7 +176,7 @@ fn main() {
     for name in &names {
         let g = games_cnt.get(name).copied().unwrap_or(0);
         eprintln!(
-            "{:>8}: побед {:>3}/{:<3} ср.ранг {:>5.2} ср.выплата {:>8.2} песо",
+            "{:>8}: побед {:>3}/{:<3} ср.ранг {:>5.2} ср.выплата {:>8.2} alashi",
             name,
             wins.get(name).copied().unwrap_or(0),
             g,

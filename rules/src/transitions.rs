@@ -20,7 +20,7 @@ pub struct AdvanceResult {
     pub roof_blocked: bool,
     /// «взаимозачёт» сжёг векселя.
     pub amnesty_burned: bool,
-    /// сколько песо съела девальвация при входе в новый раунд.
+    /// сколько alashi съела девальвация при входе в новый раунд.
     pub depreciation_burned: u64,
 }
 

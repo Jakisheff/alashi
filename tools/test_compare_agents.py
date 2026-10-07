@@ -50,7 +50,7 @@ class EvaluationTests(unittest.TestCase):
     def test_external_protocol_matches_builtin_greedy(self):
         baseline = self.game()
         self.config['candidate'] = {'label':'external', 'command':[
-            sys.executable, 'tools/eval_policy_example.py', '--bid-peso', '4']}
+            sys.executable, 'tools/eval_policy_example.py', '--bid-alashi', '4']}
         candidate = self.game('candidate')
         self.assertEqual(candidate['status'], 'completed')
         self.assertEqual(baseline['game'], candidate['game'])

@@ -387,7 +387,7 @@ fn llm_decide(
 ) -> Option<serde_json::Value> {
     const TPL: &str = "Доступные действия JSON: \"action\":\"sell\",\"units\":N / \"action\":\"buy\",\"units\":N / \"action\":\"produce\" / \"action\":\"bribe\",\"amount\":N / \"action\":\"donkey\" / \"action\":\"vote\",\"choice\":\"yes|no|abstain\",\"veto\":true|false (объект в фигурных скобках, veto только если ты президент)";
     let user = format!(
-        "Фаза: {}. Раунд {}/6. Твоё состояние: {} песо, {} товаров, влияние {}. На базаре продано {} единиц, следующая цена ~{} песо. Закон на голосовании: {}. Ты президент: {}. {}",
+        "Фаза: {}. Раунд {}/6. Твоё состояние: {} alashi, {} товаров, влияние {}. На базаре продано {} единиц, следующая цена ~{} alashi. Закон на голосовании: {}. Ты президент: {}. {}",
         phase, round, cash / 1_000_000, goods, influence, sold, price_hint, law, president_is_me, TPL
     );
     let raw = llm::llm_ask(cfg, llm::SYSTEM, &user)?;

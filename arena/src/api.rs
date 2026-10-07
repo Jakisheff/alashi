@@ -584,7 +584,7 @@ fn settle_and_record(state: &AppState, game_id: u64) {
                 "final_promissory": entry.sim.factions.iter().map(|f| f.promissory).collect::<Vec<_>>(),
                 "final_goods": entry.sim.factions.iter().map(|f| f.goods).collect::<Vec<_>>(),
                 "final_influence": entry.sim.factions.iter().map(|f| f.influence).collect::<Vec<_>>(),
-                // кастдев 02.09: прозрачный сеттл — откуда каждый песо
+                // кастдев 02.09: прозрачный сеттл — откуда каждый alashi
                 // выплаты: доля ранга, рента лицензии, завод
                 "payout_breakdown": breakdown,
                 "phases": entry.phase_log,
