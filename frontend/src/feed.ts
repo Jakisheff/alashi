@@ -58,17 +58,21 @@ export function useArenaFeed(game: string | null, sample = true, api = '') {
   const live = useQuery({
     queryKey: ['arena-state', api, game],
     enabled: mode === 'live',
-    // Paused while the tab is hidden (react-query default); stops for good once the game is finished.
-    refetchInterval: (query) => (query.state.data?.finished ? false : 2000),
+    // Paused while the tab is hidden (react-query default); stops for good once the game is finished or unknown.
+    refetchInterval: (query) => (query.state.data?.finished || query.state.data?.ok === false ? false : 2000),
     queryFn: async () => {
       const res = await fetch(`${api}/game/${game}/state`)
       if (!res.ok) throw new Error(`state ${res.status}`)
-      return (await res.json()) as { state?: ArenaState; finished?: boolean; result?: GameResult }
+      return (await res.json()) as { ok?: boolean; state?: ArenaState; finished?: boolean; result?: GameResult }
     },
   })
   const sampleState = useSampleState(mode === 'sample')
-  const state = mode === 'live' ? (live.data?.state ?? null) : mode === 'sample' ? sampleState : null
-  const result = (mode === 'live' && live.data?.finished && live.data.result) || null
+  // Only cast, not parsed: a reshaped response is ignored instead of crashing the page
+  const liveState = live.data?.state
+  const okState = liveState && Array.isArray(liveState.recent_actions) && Array.isArray(liveState.factions) ? liveState : null
+  const liveResult = live.data?.finished ? live.data.result : undefined
+  const state = mode === 'live' ? okState : mode === 'sample' ? sampleState : null
+  const result = (mode === 'live' && liveResult && Array.isArray(liveResult.ranks) && Array.isArray(liveResult.agents) && liveResult) || null
 
   const cursor = useRef<Cursor>(null)
   const queue = useRef<{ text: string; ok: boolean }[]>([])

@@ -11,10 +11,14 @@ const CHARS_PER_SECOND = 32
 const HOLD_SECONDS = 1.8
 const GLOW = new Color(1.5, 1.15, 0.55) // above 1 so the bloom pass picks it up, like the eyes
 
+// Jura has no emoji: for a missing glyph troika fetches fallback fonts from cdn.jsdelivr.net (a third-party request
+// that a CSP would block). The screen drops them; captions and the bubble keep the full line.
+const NO_GLYPH = /[\p{Extended_Pictographic}️‍]/gu
+
 function paginate(text: string) {
   const pages: string[] = []
   let page = ''
-  for (const word of text.split(/\s+/).filter(Boolean)) {
+  for (const word of text.replace(NO_GLYPH, '').split(/\s+/).filter(Boolean)) {
     if (page && (page + ' ' + word).length > PAGE_CHARS) {
       pages.push(page)
       page = word
@@ -45,7 +49,7 @@ export function ScreenText() {
     if (c.t > page.length / CHARS_PER_SECOND + HOLD_SECONDS) Object.assign(c, { page: c.page + 1, t: 0 })
   })
 
-  const cursor = shown && shown.length < (pages[clock.current.page]?.length ?? 0) ? '▍' : ''
+  const cursor = shown && shown.length < (pages[clock.current.page]?.length ?? 0) ? '_' : ''
   return (
     <Text
       position={[0, 0, 0.002]}

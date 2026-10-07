@@ -13,6 +13,9 @@ const TARGET: [number, number, number] = [0.15, -0.4, 0]
 const VIEW_DIR = [1.05, 0.3, 5.8] // camera offset from TARGET on a wide screen
 const FPS = 60 // the idle bob is slow: rendering above 60 on 120 Hz screens buys nothing
 const maxDpr = () => Math.min(window.devicePixelRatio || 1, 2)
+// Orbiting only with a mouse/trackpad: on touch screens OrbitControls sets touch-action:none on the canvas, so a swipe
+// over the top of the page would spin the genie instead of scrolling
+const ORBIT = window.matchMedia('(pointer: fine)').matches
 
 // Keep the whole genie in frame on narrow screens: back the camera off as the aspect drops.
 function FitCamera() {
@@ -21,6 +24,7 @@ function FitCamera() {
   useEffect(() => {
     const k = Math.max(1, 0.85 / aspect)
     camera.position.set(TARGET[0] + VIEW_DIR[0] * k, TARGET[1] + VIEW_DIR[1] * k, TARGET[2] + VIEW_DIR[2] * k)
+    camera.lookAt(...TARGET) // OrbitControls aims too when present; without them (touch) this is the only aim
   }, [camera, aspect])
   return null
 }
@@ -116,7 +120,7 @@ function SceneImpl({ frozen }: { frozen: { clip: GenieClip; t: number } | null }
       <Suspense fallback={null}>
         <GenieModel frozen={frozen} />
       </Suspense>
-      <OrbitControls target={TARGET} enablePan={false} minDistance={3.5} maxDistance={14} />
+      {ORBIT && <OrbitControls target={TARGET} enablePan={false} minDistance={3.5} maxDistance={14} />}
       {/* Bloom picks up only emissive parts: screen face, rim light, tail smoke and sparks. mipmapBlur off: a single
           NaN pixel spread into a black block for one frame (A/B in DIN-UI-INTEGRATION-20261007-01); the
           smoke shader clamp in smoke.ts fixes the NaN source, this keeps any other one local. */}

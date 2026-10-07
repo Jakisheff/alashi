@@ -219,8 +219,10 @@ export function fromState(s: LiveState): GameLog {
   }
 }
 
+/** The response is only cast, not parsed: a changed shape gives null (the page's "not found" view), not a render crash. */
 export function toLog(r: StateResponse): GameLog | null {
-  if (r.finished && r.result) return fromResult(r.result)
-  if (r.state) return fromState(r.state)
+  const res = r?.finished ? r.result : undefined
+  if (res && [res.agents, res.actions, res.phases, res.ranks, res.final_cash, res.payouts].every(Array.isArray)) return fromResult(res)
+  if (r?.state && Array.isArray(r.state.factions) && Array.isArray(r.state.recent_actions)) return fromState(r.state)
   return null
 }

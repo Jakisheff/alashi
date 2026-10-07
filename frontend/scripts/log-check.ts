@@ -31,4 +31,7 @@ assert.equal(cash(-1_250_000), '−1.25M')
 const live = fromState({ game_id: 1, party_no: 2, round: 3, phase: 'market', factions: [{ idx: 0, name: 'A' }], recent_actions: [{ seq: 7, round: 3, phase: 'market', actor: 0, action: 'sell', ok: true, ts: 5 }] })
 assert.deepEqual([live.status, live.partial, live.entries[0].text], ['live', true, 'sold goods'])
 assert.equal(toLog({ ok: false, error: 'unknown_game' }), null)
+// A reshaped response is rejected, not rendered into a crash
+assert.equal(toLog({ ok: true, finished: true, result: { ...r, actions: undefined } as unknown as GameResult }), null)
+assert.equal(toLog({ ok: true, state: { game_id: 1 } as never }), null)
 console.log('log check ok')

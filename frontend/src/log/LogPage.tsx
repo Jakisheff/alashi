@@ -46,7 +46,8 @@ const REPLAY_MS = 450
 export function LogPage({ game, api = '' }: { game: string; api?: string }) {
   const q = useQuery({
     queryKey: ['game-log', api, game],
-    refetchInterval: (query) => (query.state.data?.finished ? false : 2000),
+    // Stops once the game is finished, or unknown to the arena ({ok:false, error:'unknown_game'})
+    refetchInterval: (query) => (query.state.data?.finished || query.state.data?.ok === false ? false : 2000),
     queryFn: async () => {
       const res = await fetch(`${api}/game/${game}/state`)
       if (!res.ok) throw new Error(`state ${res.status}`)

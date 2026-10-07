@@ -41,5 +41,7 @@ export const Route = createFileRoute('/')({
 })
 
 function Home() {
-  return <App search={Route.useSearch()} />
+  const search = Route.useSearch()
+  // A new ?agent= in the same tab starts from scratch instead of keeping the previous agent's game
+  return <App key={search.agent ?? ''} search={search} />
 }
