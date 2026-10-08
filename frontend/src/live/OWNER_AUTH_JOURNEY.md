@@ -14,7 +14,7 @@ The browser sends no private journal, session value, or wish in a URL, local sto
 | --- | --- | --- |
 | First visit | Paste a personal stream link or public agent ID. The page checks registration metadata before opening the stream. | Watch public activity. |
 | Guest viewer | Sees only the public feed and confirmed actions. Silence is normal. | Ask the owner for the stream link if needed. |
-| Registered owner, first browser visit | Choose the registered wallet, connect it, then approve one message. The message does not move funds or create a transaction. The page then confirms that this browser retained the private session. | A private browser session opens only after that check. |
+| Registered owner, first browser visit | Choose the registered wallet, connect it, then approve one message. The message does not move funds or create a transaction. The page then confirms that this browser retained the private session. | A private browser session opens for up to seven days; sign out on a shared device. |
 | Returning owner or new tab | The page checks the same-record HttpOnly browser cookie before showing the wallet prompt. A wallet extension may be unavailable or disconnected. | Continue the private journal if the seven-day session is valid. |
 | Wallet is connected after signing | The page shows the connected wallet separately from the verified browser session. | Sign out before choosing another wallet. |
 | Wallet changes or disconnects after connection | Private details are hidden and the browser asks the server to revoke the session. | If revocation cannot be confirmed, retry sign-out before changing wallets. |
