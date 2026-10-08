@@ -6,11 +6,14 @@ use sha2::{Digest, Sha256};
 use solana_ed25519::ed_sigs::{SigningKey, VerificationKey};
 use solana_signature::Signature;
 use std::{
-    io::{Read, Write},
+    io::{BufRead, BufReader, Read, Write},
     net::TcpStream,
     path::PathBuf,
+    process::{Command, Stdio},
     sync::atomic::{AtomicU64, Ordering},
-    time::Duration,
+    sync::mpsc,
+    thread,
+    time::{Duration, Instant},
 };
 
 const RECORD: &str = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
@@ -66,6 +69,31 @@ fn isolated_state() -> (std::sync::Arc<AppState>, PathBuf) {
     (state, root)
 }
 
+fn read_provider_request(stream: &mut TcpStream) -> Value {
+    let mut reader = BufReader::new(stream);
+    let mut line = String::new();
+    reader.read_line(&mut line).unwrap();
+    let mut content_length = 0;
+    loop {
+        line.clear();
+        reader.read_line(&mut line).unwrap();
+        if line == "\r\n" || line.is_empty() {
+            break;
+        }
+        if let Some(value) = line.to_ascii_lowercase().strip_prefix("content-length:") {
+            content_length = value.trim().parse::<usize>().unwrap();
+        }
+    }
+    let mut body = vec![0; content_length];
+    reader.read_exact(&mut body).unwrap();
+    serde_json::from_slice(&body).unwrap()
+}
+
+fn respond_provider(stream: &mut TcpStream, body: &Value) {
+    let body = body.to_string();
+    write!(stream, "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{}", body.len(), body).unwrap();
+}
+
 fn request(port: u16, method: &str, path: &str, body: Option<&Value>) -> Value {
     request_with_headers(port, method, path, body, None, None)
 }
@@ -101,9 +129,64 @@ fn request_with_headers(
     serde_json::from_str(&text[body_at..]).unwrap()
 }
 
+const RECORD_B: &str = "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
+
+fn register_v2_fixture(
+    state: &AppState,
+    record: &str,
+    secret_bytes: [u8; 32],
+    seed: [u8; 32],
+) -> String {
+    let key = SigningKey::from(seed);
+    let vk: [u8; 32] = VerificationKey::from(&key).into();
+    let wallet = alashi_rules::anchor_lang::prelude::Pubkey::new_from_array(vk).to_string();
+    state.registrations.lock().unwrap().insert(
+        record.to_string(),
+        RegisteredAgent {
+            wallet: wallet.clone(),
+            owner_id: format!("{:064x}", seed[0]),
+            character_id: format!("{:064x}", seed[0] + 1),
+            recovery_hash: format!("{:x}", Sha256::digest(secret_bytes)),
+            challenge: "d".repeat(64),
+            receipt: Some(Receipt {
+                mode: "agent_lifecycle_v2".into(),
+                network: "devnet".into(),
+                wallet,
+                signature: "offline-fixture".into(),
+                slot: 0,
+                fee_lamports: "0".into(),
+                commitment: "confirmed".into(),
+            }),
+            created_at: 1,
+        },
+    );
+    format!("{:02x}", secret_bytes[0]).repeat(32)
+}
+
+fn post_game_message(port: u16, game_id: u64, token: &str, phase_id: &str, body: Value) -> Value {
+    let mut body = body;
+    body["token"] = json!(token);
+    body["phase_instance_id"] = json!(phase_id);
+    request(
+        port,
+        "POST",
+        &format!("/game/{game_id}/live/messages"),
+        Some(&body),
+    )
+}
+
+struct KillChild(std::process::Child);
+
+impl Drop for KillChild {
+    fn drop(&mut self) {
+        let _ = self.0.kill();
+        let _ = self.0.wait();
+    }
+}
+
 fn fixture() -> (u16, u64, String, String, String, String, PathBuf) {
     let (state, root) = isolated_state();
-    let addr = serve_on(state, "127.0.0.1:0", 60).unwrap();
+    let addr = serve_on(state.clone(), "127.0.0.1:0", 60).unwrap();
     let created = request(
         addr.port(),
         "POST",
@@ -200,6 +283,42 @@ fn v2_live_and_game_messages_are_scoped_idempotent_and_cursor_readable() {
         )["error"],
         "message_conflict"
     );
+    let mut cue_conflict = message.clone();
+    cue_conflict["gesture_cue"] = json!("facepalm");
+    assert_eq!(
+        request(
+            port,
+            "POST",
+            &format!("/game/{game_id}/live/messages"),
+            Some(&cue_conflict)
+        )["error"],
+        "message_conflict"
+    );
+
+    let mut invalid_cue = message.clone();
+    invalid_cue["client_message_id"] = json!("msg_invalid_cue");
+    invalid_cue["gesture_cue"] = json!("wink");
+    assert_eq!(
+        request(
+            port,
+            "POST",
+            &format!("/game/{game_id}/live/messages"),
+            Some(&invalid_cue)
+        )["error"],
+        "bad_gesture_cue"
+    );
+    std::thread::sleep(Duration::from_millis(5100));
+    let cued = request(
+        port,
+        "POST",
+        &format!("/game/{game_id}/live/messages"),
+        Some(&json!({
+            "token": game_token, "client_message_id": "msg_with_cue",
+            "phase_instance_id": phase_id, "text": "message with a cue",
+            "gesture_cue": "thumbsUp"
+        })),
+    );
+    assert_eq!(cued["ok"], true, "{cued}");
 
     let mut wrong_author = message.clone();
     wrong_author["token"] = json!("00".repeat(32));
@@ -227,12 +346,19 @@ fn v2_live_and_game_messages_are_scoped_idempotent_and_cursor_readable() {
         .unwrap();
     assert_eq!(published["author_agent_record_id"], RECORD);
     assert_eq!(published["text"], "public game message");
+    assert!(published.get("gesture_cue").is_none());
+    let cued_event = rows
+        .iter()
+        .find(|e| e["message_id"] == cued["message_id"])
+        .unwrap();
+    assert_eq!(cued_event["gesture_cue"], "thumbsUp");
+    assert!(!rows.iter().any(|e| e["message_id"] == "msg_invalid_cue"));
     let resumed = request(
         port,
         "GET",
         &format!(
             "/game/{game_id}/live/events?after={}&limit=20",
-            first["seq"].as_u64().unwrap()
+            cued["seq"].as_u64().unwrap()
         ),
         None,
     );
@@ -311,7 +437,7 @@ fn v2_live_and_game_messages_are_scoped_idempotent_and_cursor_readable() {
         "GET",
         &format!(
             "/game/{game_id}/live/events?after={}&limit=20",
-            first["seq"].as_u64().unwrap()
+            cued["seq"].as_u64().unwrap()
         ),
         None,
     );
@@ -680,7 +806,7 @@ fn ambient_messages_project_across_personal_streams_and_reply_as_recipient() {
         &format!("/agents/{RECORD}/live/messages"),
         Some(&json!({
             "live_token":token_a,"client_message_id":"ambient-a-1","text":"hello, B",
-            "to_agent_record_id":SECOND
+            "gesture_cue":"thumbsUp","to_agent_record_id":SECOND
         })),
     );
     assert_eq!(first["ok"], true, "{first}");
@@ -700,6 +826,7 @@ fn ambient_messages_project_across_personal_streams_and_reply_as_recipient() {
     assert_eq!(initial["seq"], first["seq"]);
     assert_eq!(initial["room_id"], format!("agent:{RECORD}"));
     assert_eq!(initial["context_kind"], "ambient");
+    assert_eq!(initial["gesture_cue"], "thumbsUp");
 
     let forged = request(
         addr.port(),
@@ -718,7 +845,7 @@ fn ambient_messages_project_across_personal_streams_and_reply_as_recipient() {
         &format!("/agents/{RECORD}/live/messages"),
         Some(&json!({
             "live_token":token_b,"client_message_id":"ambient-b-1","text":"hello, A",
-            "to_agent_record_id":RECORD,"reply_to_message_id":first["message_id"]
+            "gesture_cue":"facepalm","to_agent_record_id":RECORD,"reply_to_message_id":first["message_id"]
         })),
     );
     assert_eq!(reply["ok"], true, "{reply}");
@@ -736,6 +863,7 @@ fn ambient_messages_project_across_personal_streams_and_reply_as_recipient() {
         .unwrap();
     assert_eq!(reply_event["author_agent_record_id"], SECOND);
     assert_eq!(reply_event["reply_to_message_id"], first["message_id"]);
+    assert_eq!(reply_event["gesture_cue"], "facepalm");
     let b_again = request(
         addr.port(),
         "GET",
@@ -754,4 +882,279 @@ fn ambient_messages_project_across_personal_streams_and_reply_as_recipient() {
             .count(),
         1
     );
+}
+
+#[test]
+fn actual_agent_process_keeps_wish_private_and_voluntarily_publishes_cued_reply() {
+    const WISH: &str = "PROCESS_PRIVATE_WISH_SENTINEL";
+    const PRIVATE_REPLY: &str = "PROCESS_OWNER_REPLY_SENTINEL";
+    const PRIVATE_CUE: &str = "facepalm";
+    const PUBLIC_REPLY: &str = "A voluntary public reply";
+    const PUBLIC_CUE: &str = "realization";
+
+    let root = std::env::temp_dir().join(format!("alashi_runner_process_{}", std::process::id()));
+    let _ = std::fs::remove_dir_all(&root);
+    std::fs::create_dir_all(&root).unwrap();
+    let state = new_state_with_files(root.join("state.json"), root.join("sequence"));
+    let recovery_a = register_v2_fixture(&state, RECORD, [0x11; 32], [7; 32]);
+    let recovery_b = register_v2_fixture(&state, RECORD_B, [0x22; 32], [8; 32]);
+    save_snapshot(&state).unwrap();
+    let addr = serve_on(state.clone(), "127.0.0.1:0", 60).unwrap();
+    let port = addr.port();
+    let created = request(
+        port,
+        "POST",
+        "/game/new",
+        Some(&json!({
+            "entry_fee":1,"phase_duration":120,"lobby_duration":5,"grace_s":0,
+            "label":"SYNTHETIC_RUNNER_TEST"
+        })),
+    );
+    assert_eq!(created["ok"], true, "{created}");
+    let game_id = created["game_id"].as_u64().unwrap();
+
+    let recovery_path = root.join("agent-a-recovery");
+    std::fs::write(&recovery_path, &recovery_a).unwrap();
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::PermissionsExt;
+        std::fs::set_permissions(&recovery_path, std::fs::Permissions::from_mode(0o600)).unwrap();
+    }
+
+    let mock_listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+    let mock_addr = mock_listener.local_addr().unwrap();
+    let (model_tx, model_rx) = mpsc::channel();
+    let (first_response_tx, first_response_rx) = mpsc::channel();
+    let mock = thread::spawn(move || {
+        let (mut stream, _) = mock_listener.accept().unwrap();
+        let first_request = read_provider_request(&mut stream);
+        model_tx.send(first_request).unwrap();
+        let first_content = first_response_rx
+            .recv_timeout(Duration::from_secs(20))
+            .expect("test releases first mock response");
+        respond_provider(
+            &mut stream,
+            &json!({
+                "choices":[{"message":{"content":first_content}}],
+                "usage":{"prompt_tokens":2,"completion_tokens":3}
+            }),
+        );
+
+        let (mut stream, _) = mock_listener.accept().unwrap();
+        let second_request = read_provider_request(&mut stream);
+        model_tx.send(second_request).unwrap();
+        respond_provider(
+            &mut stream,
+            &json!({
+                "choices":[{"message":{"content":json!({
+                    "public_message":PUBLIC_REPLY,
+                    "gesture_cue":PUBLIC_CUE
+                }).to_string()}}],
+                "usage":{"prompt_tokens":2,"completion_tokens":2}
+            }),
+        );
+    });
+
+    let child = Command::new(env!("CARGO_BIN_EXE_agent"))
+        .args([
+            "--url",
+            &format!("http://127.0.0.1:{port}"),
+            "--game",
+            &game_id.to_string(),
+            "--name",
+            "RunnerA",
+            "--model",
+            "mock-runner",
+            "--agent-record-id",
+            RECORD,
+            "--recovery-file",
+            recovery_path.to_str().unwrap(),
+            "--public-speech",
+        ])
+        .env("ALASHI_ALLOW_INSECURE_HTTP", "1")
+        .env("ALASHI_LLM_KEY", "mock-test-key-local-only")
+        .env("ALASHI_TEST_MOCK_LLM_BASE", format!("http://{mock_addr}"))
+        .stdout(Stdio::null())
+        .stderr(Stdio::null())
+        .spawn()
+        .unwrap();
+    let _child = KillChild(child);
+
+    let joined_before_deadline = Instant::now() + Duration::from_secs(8);
+    let mut joined = false;
+    while Instant::now() < joined_before_deadline {
+        let state = request(port, "GET", &format!("/game/{game_id}/state"), None);
+        if state["state"]["factions"]
+            .as_array()
+            .is_some_and(|v| !v.is_empty())
+        {
+            joined = true;
+            break;
+        }
+        thread::sleep(Duration::from_millis(20));
+    }
+    assert!(joined, "actual runner did not join its isolated game");
+
+    let (owner_key, _) = test_owner();
+    let challenge = request_with_headers(
+        port,
+        "POST",
+        &format!("/agents/{RECORD}/owner/challenge"),
+        Some(&json!({})),
+        None,
+        Some(OWNER_ORIGIN),
+    );
+    assert_eq!(challenge["ok"], true, "{challenge}");
+    let signature = Signature::from(
+        owner_key
+            .sign(challenge["message"].as_str().unwrap().as_bytes())
+            .to_bytes(),
+    )
+    .to_string();
+    let owner_login = request_with_headers(
+        port,
+        "POST",
+        &format!("/agents/{RECORD}/owner/session"),
+        Some(&json!({
+            "challenge_id":challenge["challenge_id"], "signature":signature
+        })),
+        None,
+        Some(OWNER_ORIGIN),
+    );
+    assert_eq!(owner_login["ok"], true, "{owner_login}");
+    let owner_session = owner_login["owner_session"].as_str().unwrap().to_string();
+    let admission = request_with_headers(
+        port,
+        "POST",
+        &format!("/agents/{RECORD}/owner/wishes"),
+        Some(&json!({
+            "game_id":game_id, "client_wish_id":"runner-wish-1", "text":WISH
+        })),
+        Some(&owner_session),
+        Some(OWNER_ORIGIN),
+    );
+    assert_eq!(admission["ok"], true, "{admission}");
+
+    // Give the first faction one legal market sale in this isolated fixture.
+    {
+        let mut games = state.games.lock().unwrap();
+        games.get_mut(&game_id).unwrap().sim.factions[0].goods = 3;
+    }
+    save_snapshot(&state).unwrap();
+
+    // Starting B releases the two-agent lobby; the real runner is already polling.
+    let strategy_hash = arena::api::agent_id_of("fixture-b", "base strategy only");
+    let joined_b = request(
+        port,
+        "POST",
+        &format!("/game/{game_id}/join"),
+        Some(&json!({
+            "agent_record_id":RECORD_B, "recovery_secret":recovery_b, "name":"RunnerB",
+            "model":"fixture-b", "strategy_hash":strategy_hash
+        })),
+    );
+    assert_eq!(joined_b["ok"], true, "{joined_b}");
+    let first_request = model_rx
+        .recv_timeout(Duration::from_secs(15))
+        .expect("actual runner called loopback mock provider");
+    assert!(first_request["messages"][1]["content"]
+        .as_str()
+        .unwrap()
+        .contains(WISH));
+    let current = request(port, "GET", &format!("/game/{game_id}/state"), None);
+    let phase_id = current["state"]["phase_instance_id"].as_str().unwrap();
+    let b_message = post_game_message(
+        port,
+        game_id,
+        joined_b["token"].as_str().unwrap(),
+        &phase_id,
+        json!({
+            "client_message_id":"runner-addressed-1",
+            "text":"A public hello",
+            "to_agent_record_id":RECORD
+        }),
+    );
+    assert_eq!(b_message["ok"], true, "{b_message}");
+    first_response_tx
+        .send(
+            json!({
+                "action":"sell",
+                "params":{"units":1,"privatewish":WISH},
+                "public_message":WISH,
+                "gesture_cue":PRIVATE_CUE,
+                "owner_reply":PRIVATE_REPLY
+            })
+            .to_string(),
+        )
+        .unwrap();
+
+    let until = Instant::now() + Duration::from_secs(20);
+    let mut owner_replied = false;
+    let mut public_reply = None;
+    while Instant::now() < until {
+        let owner_state = request_with_headers(
+            port,
+            "GET",
+            &format!("/agents/{RECORD}/owner/wishes?after=0&limit=10"),
+            None,
+            Some(&owner_session),
+            None,
+        );
+        owner_replied = owner_state["wishes"].as_array().is_some_and(|rows| {
+            rows.iter().any(|w| {
+                w["text"] == WISH && w["status"] == "replied" && w["reply"] == PRIVATE_REPLY
+            })
+        });
+        let feed = request(
+            port,
+            "GET",
+            &format!("/game/{game_id}/live/events?after=0&limit=100"),
+            None,
+        );
+        if let Some(rows) = feed["events"].as_array() {
+            public_reply = rows
+                .iter()
+                .find(|event| event["kind"] == "agent_message" && event["text"] == PUBLIC_REPLY)
+                .cloned();
+        }
+        if owner_replied && public_reply.is_some() {
+            break;
+        }
+        thread::sleep(Duration::from_millis(100));
+    }
+    mock.join().unwrap();
+    assert!(
+        owner_replied,
+        "owner journal did not reach a real replied status"
+    );
+    let public_reply = public_reply.expect("runner did not publish voluntary reply");
+    assert_eq!(public_reply["author_agent_record_id"], RECORD);
+    assert_eq!(public_reply["gesture_cue"], PUBLIC_CUE);
+    assert_eq!(public_reply["to_agent_record_id"], RECORD_B);
+    assert_eq!(public_reply["reply_to_message_id"], b_message["message_id"]);
+    assert!(!public_reply.to_string().contains(WISH));
+    let feed = request(
+        port,
+        "GET",
+        &format!("/game/{game_id}/live/events?after=0&limit=100"),
+        None,
+    );
+    assert!(
+        !feed.to_string().contains(WISH),
+        "private wish leaked to public feed"
+    );
+    assert!(
+        !feed.to_string().contains(PRIVATE_REPLY),
+        "owner reply leaked to public feed"
+    );
+    assert!(
+        !feed.to_string().contains(PRIVATE_CUE),
+        "private gesture cue leaked to public feed"
+    );
+    let second_request = model_rx.recv_timeout(Duration::from_secs(1)).unwrap();
+    assert!(second_request["messages"][1]["content"]
+        .as_str()
+        .unwrap()
+        .contains("A public hello"));
+    let _ = std::fs::remove_dir_all(root);
 }

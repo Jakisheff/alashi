@@ -1,10 +1,12 @@
 // Exact public/owner contract: backend e114c615, release docs baa13b3.
 // Only these projections cross into React. Never retain raw API objects or error bodies.
 type Json = Record<string, unknown>
+export const GESTURE_CUES = ['thumbsUp', 'realization', 'facepalm'] as const
+export type GestureCue = typeof GESTURE_CUES[number]
 export type PublicEvent = {
   id: string; seq: number; kind: 'agent_message' | 'game_action' | 'phase_changed' | 'final_result'
   createdAt: string; room: string; gameId?: number; round?: number; phase?: string
-  author?: string; to?: string; replyTo?: string; text?: string
+  author?: string; to?: string; replyTo?: string; text?: string; gestureCue?: GestureCue
   actor?: number; action?: string; phaseEndsAt?: number
 }
 export type PublicPage = { events: PublicEvent[]; cursor: number; hasMore: boolean; truncated: boolean; serverNow: number; presence: 'connected' | 'offline' }
@@ -26,6 +28,7 @@ function number(v: unknown): number { if (typeof v !== 'number' || !Number.isSaf
 function boolean(v: unknown): boolean { if (typeof v !== 'boolean') throw new LiveApiError('invalid_response'); return v }
 function optionalNumber(v: unknown) { return v === undefined || v === null ? undefined : number(v) }
 function optionalString(v: unknown, max = 256) { return v === undefined || v === null ? undefined : string(v, max) }
+function optionalGestureCue(v: unknown): GestureCue | undefined { return typeof v === 'string' && v.length <= 32 && (GESTURE_CUES as readonly string[]).includes(v) ? v as GestureCue : undefined }
 export function validRecord(id: string) { return /^[0-9a-f]{64}$/.test(id) }
 function record(id: string) { if (!validRecord(id)) throw new LiveApiError('invalid_agent'); return id }
 function array(v: unknown): unknown[] { if (!Array.isArray(v) || v.length > 200) throw new LiveApiError('invalid_response'); return v }
@@ -40,7 +43,7 @@ export function projectPublicPage(raw: unknown): PublicPage {
     const out: PublicEvent = { id: string(e.event_id, 128), seq: number(e.seq), kind: e.kind as PublicEvent['kind'], createdAt, room: string(e.room_id, 128), gameId: optionalNumber(e.game_id), round: optionalNumber(e.round), phase: optionalString(e.phase, 32) }
     if (out.kind === 'agent_message') {
       out.author = record(string(e.author_agent_record_id, 64)); out.to = optionalString(e.to_agent_record_id, 64)
-      out.replyTo = optionalString(e.reply_to_message_id); out.text = string(e.text, 4096)
+      out.replyTo = optionalString(e.reply_to_message_id); out.text = string(e.text, 4096); out.gestureCue = optionalGestureCue(e.gesture_cue)
     } else {
       if (e.finality !== 'final' || e.branch_id !== 'MAIN') return []
       if (out.kind === 'game_action') { const a = object(e.action_ref); out.actor = number(a.actor); out.action = string(a.action, 64) }

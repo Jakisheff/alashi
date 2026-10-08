@@ -6,7 +6,7 @@ import { OwnerPanel } from './api/OwnerPanel'
 import { usePublicStream } from './api/usePublicStream'
 import { MarketTrade, type TradePreview } from './market/MarketTrade'
 import { ScenarioAction, type ScenarioPreview } from './actions'
-import { LivingGenie } from './reactions'
+import { LivingGenie, type ReactionPreview } from './reactions'
 import './live.css'
 import './stream.css'
 
@@ -32,18 +32,28 @@ function ConnectedStream({ record, onChange }: { record: string; onChange: () =>
   const [now, setNow] = useState(Date.now)
   const [following, setFollowing] = useState(true)
   const [trade, setTrade] = useState<TradePreview | ScenarioPreview | null>(null)
-  const feed = useRef<HTMLDivElement>(null), take = useRef(0)
+  const [reaction, setReaction] = useState<ReactionPreview | null>(null)
+  const feed = useRef<HTMLDivElement>(null), take = useRef(0), reactionTake = useRef(0), tradeRef = useRef<TradePreview | ScenarioPreview | null>(null), seenCueEvents = useRef(new Set<string>())
   const slotRef = useRef(slots)
   useEffect(() => { slotRef.current = slots }, [slots])
   const event = useCallback((e: PublicEvent) => {
-    if (e.kind === 'agent_message' && e.author === record) { useScene.getState().say(e.text ?? ''); useScene.getState().play('act') }
+    if (e.kind === 'agent_message' && e.author === record) {
+      useScene.getState().say(e.text ?? ''); useScene.getState().play('act')
+      // Event IDs are canonical across cursor retries; an old event never replays a cue.
+      if (e.gestureCue && !tradeRef.current && !seenCueEvents.current.has(e.id)) {
+        seenCueEvents.current.add(e.id)
+        setReaction({ kind: e.gestureCue, take: ++reactionTake.current, playing: true, speed: 1, seek: null })
+      }
+    }
     if (e.kind === 'game_action' && slotRef.current.some((s) => s.gameId === e.gameId && s.actor === e.actor) && ['buy', 'sell', 'donkey', 'bribe', 'vote'].includes(e.action ?? '')) {
       const action = e.action === 'donkey' ? 'mule' : e.action as TradePreview['action'] | ScenarioPreview['action']
-      setTrade({ action, take: ++take.current, playing: true, speed: 1, entry: 'bottom', seek: null })
+      const preview = { action, take: ++take.current, playing: true, speed: 1, entry: 'bottom' as const, seek: null }
+      tradeRef.current = preview; setReaction(null); setTrade(preview)
     }
   }, [record])
   const stream = usePublicStream(api, record, event)
-  const finish = useCallback(() => setTrade(null), [])
+  const finish = useCallback(() => { tradeRef.current = null; setTrade(null) }, [])
+  const finishReaction = useCallback(() => setReaction(null), [])
   const ignoreTime = useCallback(() => {}, [])
   useEffect(() => {
     let stopped = false, timer = 0
@@ -67,7 +77,7 @@ function ConnectedStream({ record, onChange }: { record: string; onChange: () =>
     <section className="live-frame" aria-label="Real public agent stream">
       <div className="live-host"><span className="live-avatar">α</span><div><strong>Agent {short(record)}</strong><span>Personal stream · Degenie</span></div><span className="live-air">{stream.presence === 'connected' ? 'Agent online' : stream.presence === 'offline' ? 'Agent offline' : 'Presence unknown'}</span></div>
       <div className="live-context"><span>{slot ? `Game ${slot.gameId} · round ${slot.round}` : profileError ? 'Game context unavailable' : 'Between games'}</span><strong>{slot?.phase ?? 'Personal room'}</strong><div className="live-deadline"><b>{seconds === null ? '—' : `${Math.floor(seconds / 60).toString().padStart(2, '0')}:${(seconds % 60).toString().padStart(2, '0')}`}</b><small>{seconds === null ? 'awaiting server context' : seconds === 0 ? 'awaiting next phase' : 'phase ends in'}</small></div></div>
-      <div className="live-hero" data-action={trade?.action ?? 'idle'}><StreamHeroBoundary><Suspense fallback={<p className="live-hero-fallback">Loading Degenie…</p>}><Scene frozen={null} background="#102c25" interactive={false}>{trade ? trade.action === 'buy' || trade.action === 'sell' ? <MarketTrade preview={{ ...trade, action: trade.action }} onTime={ignoreTime} onFinished={finish} /> : <ScenarioAction preview={{ ...trade, action: trade.action }} onTime={ignoreTime} onFinished={finish} /> : <LivingGenie />}</Scene></Suspense></StreamHeroBoundary></div>
+      <div className="live-hero" data-action={trade?.action ?? 'idle'}><StreamHeroBoundary><Suspense fallback={<p className="live-hero-fallback">Loading Degenie…</p>}><Scene frozen={null} background="#102c25" interactive={false}>{trade ? trade.action === 'buy' || trade.action === 'sell' ? <MarketTrade preview={{ ...trade, action: trade.action }} onTime={ignoreTime} onFinished={finish} /> : <ScenarioAction preview={{ ...trade, action: trade.action }} onTime={ignoreTime} onFinished={finish} /> : <LivingGenie reaction={reaction} onFinished={finishReaction} />}</Scene></Suspense></StreamHeroBoundary></div>
       <div className="live-transcript"><div className="live-transcript-head"><span><i />Public feed</span><small>{stream.connection === 'connected' ? 'Server events' : stream.connection === 'connecting' ? 'Connecting…' : 'Reconnecting…'}</small></div>
         {stream.gap && <p className="live-network" role="status">Some earlier history is no longer available.</p>}
         <div ref={feed} className="live-feed" tabIndex={0} aria-label="Public agent messages and accepted actions" onScroll={() => { const el = feed.current; if (el) setFollowing(el.scrollHeight - el.scrollTop - el.clientHeight < 24) }}>

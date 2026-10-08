@@ -59,6 +59,7 @@ impl LiveClient {
         game_token: &str,
         phase_instance_id: &str,
         text: &str,
+        gesture_cue: Option<&str>,
         to_agent_record_id: Option<&str>,
         reply_to_message_id: Option<&str>,
     ) -> Result<Value, &'static str> {
@@ -74,12 +75,16 @@ impl LiveClient {
         if let Some(reply) = reply_to_message_id {
             body["reply_to_message_id"] = json!(reply);
         }
+        if let Some(cue) = gesture_cue.filter(|cue| valid_gesture_cue(cue)) {
+            body["gesture_cue"] = json!(cue);
+        }
         self.post_value(&format!("/game/{game_id}/live/messages"), &body.to_string())
     }
 
     pub(super) fn post_ambient_message(
         &self,
         text: &str,
+        gesture_cue: Option<&str>,
         to_agent_record_id: Option<&str>,
         reply_to_message_id: Option<&str>,
         about_game_id: Option<u64>,
@@ -95,6 +100,9 @@ impl LiveClient {
         }
         if let Some(reply) = reply_to_message_id {
             body["reply_to_message_id"] = json!(reply);
+        }
+        if let Some(cue) = gesture_cue.filter(|cue| valid_gesture_cue(cue)) {
+            body["gesture_cue"] = json!(cue);
         }
         if let Some(game) = about_game_id {
             body["about_game_id"] = json!(game);
@@ -279,4 +287,8 @@ fn post_json(base: &str, path: &str, body: &str) -> Result<Value, &'static str> 
     } else {
         Err("live_request_rejected")
     }
+}
+
+fn valid_gesture_cue(cue: &str) -> bool {
+    matches!(cue, "thumbsUp" | "realization" | "facepalm")
 }

@@ -293,6 +293,7 @@ fn message(
             "client_message_id",
             "phase_instance_id",
             "text",
+            "gesture_cue",
             "to_agent_record_id",
             "reply_to_message_id",
         ]
@@ -302,6 +303,7 @@ fn message(
             "live_token",
             "client_message_id",
             "text",
+            "gesture_cue",
             "to_agent_record_id",
             "reply_to_message_id",
             "about_game_id",
@@ -316,6 +318,15 @@ fn message(
         return response_error("bad_params");
     }
     let text = body["text"].as_str().unwrap_or("").trim();
+    let gesture_cue = match body.get("gesture_cue") {
+        None => None,
+        Some(Value::String(cue))
+            if matches!(cue.as_str(), "thumbsUp" | "realization" | "facepalm") =>
+        {
+            Some(cue.as_str())
+        }
+        Some(_) => return response_error("bad_gesture_cue"),
+    };
     let client_id = body["client_message_id"].as_str().unwrap_or("");
     if text.is_empty()
         || text.len() > MAX_TEXT_BYTES
@@ -374,7 +385,13 @@ fn message(
         (id.clone(), None)
     };
     let key = format!("{author}:{client_id}");
-    let request_hash = sha256_hex(&json!({"room":room,"text":text,"to":recipient,"reply":reply,"phase":body["phase_instance_id"],"about_game_id":body["about_game_id"],"about_round":body["about_round"]}).to_string());
+    // Preserve the pre-cue fingerprint for retries of messages accepted by an
+    // older binary; a present cue becomes part of the immutable receipt.
+    let mut fingerprint = json!({"room":room,"text":text,"to":recipient,"reply":reply,"phase":body["phase_instance_id"],"about_game_id":body["about_game_id"],"about_round":body["about_round"]});
+    if let Some(cue) = gesture_cue {
+        fingerprint["gesture_cue"] = json!(cue);
+    }
+    let request_hash = sha256_hex(&fingerprint.to_string());
     let t = now();
     let active = active_games(state);
     let mut live = state.live.lock().unwrap_or_else(|e| e.into_inner());
@@ -498,6 +515,9 @@ fn message(
     let next = live.next_seq + 1;
     let mut event = json!({"room_id":room,"kind":"agent_message","visibility":"public","author_agent_record_id":author,
         "to_agent_record_id":recipient,"reply_to_message_id":reply,"message_id":format!("m{next}"),"text":text,"created_at_epoch":t});
+    if let Some(cue) = gesture_cue {
+        event["gesture_cue"] = json!(cue);
+    }
     if let Some(gid) = game_id {
         let (phase_id, _, round, phase) = context.unwrap();
         event["game_id"] = json!(gid);

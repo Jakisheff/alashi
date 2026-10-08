@@ -198,11 +198,16 @@ fn llm_cfg(model_override: Option<&str>) -> Option<LlmCfg> {
     if key.len() < 10 {
         return None;
     }
+    let base = match std::env::var("ALASHI_TEST_MOCK_LLM_BASE") {
+        Ok(base) if base.starts_with("http://") && is_loopback(&base) => base,
+        Ok(_) => return None,
+        Err(_) => "https://api.z.ai/api/paas/v4".into(),
+    };
     Some(LlmCfg {
         price_in: file.as_ref().and_then(|f| f["price_in_per_1m"].as_f64()),
         price_out: file.as_ref().and_then(|f| f["price_out_per_1m"].as_f64()),
         key,
-        base: "https://api.z.ai/api/paas/v4".into(),
+        base,
         model: model_override.unwrap_or("glm-4.5-flash").into(),
     })
 }
@@ -319,14 +324,24 @@ fn capture_decision_text(
     allow_public: bool,
     allow_private_reply: bool,
 ) -> DecisionText {
+    let public_message = allow_public
+        .then(|| bounded_speech(value["public_message"].as_str()))
+        .flatten();
+    let gesture_cue = public_message
+        .as_ref()
+        .and_then(|_| valid_gesture_cue(value["gesture_cue"].as_str()));
     DecisionText {
-        public_message: allow_public
-            .then(|| bounded_speech(value["public_message"].as_str()))
-            .flatten(),
+        public_message,
+        gesture_cue,
         private_reply: allow_private_reply
             .then(|| bounded_speech(value["owner_reply"].as_str()))
             .flatten(),
     }
+}
+
+fn valid_gesture_cue(cue: Option<&str>) -> Option<String> {
+    cue.filter(|cue| matches!(*cue, "thumbsUp" | "realization" | "facepalm"))
+        .map(str::to_string)
 }
 
 fn bounded_speech(text: Option<&str>) -> Option<String> {
@@ -902,6 +917,7 @@ fn main() {
                                 &token,
                                 phase_instance,
                                 text,
+                                decision.gesture_cue.as_deref(),
                                 decision.to_agent_record_id.as_deref(),
                                 decision.reply_to_message_id.as_deref(),
                             )
@@ -1093,7 +1109,7 @@ fn try_game_reply(
     if remaining < required {
         return false;
     }
-    let Some(text) = ambient_reply(cfg, event) else {
+    let Some((text, gesture_cue)) = ambient_reply(cfg, event) else {
         return true;
     };
     let Some(latest) = http_timeout(url, "GET", &format!("/game/{game}/state"), None, 2) else {
@@ -1115,6 +1131,7 @@ fn try_game_reply(
         game_token,
         phase_instance,
         &text,
+        gesture_cue.as_deref(),
         Some(author),
         Some(message_id),
     );
@@ -1149,11 +1166,12 @@ fn run_ambient_idle(
                     }
                     calls += 1;
                     last_reply = Some(std::time::Instant::now());
-                    let Some(text) = ambient_reply(cfg, event) else {
+                    let Some((text, gesture_cue)) = ambient_reply(cfg, event) else {
                         break;
                     };
                     let _ = client.post_ambient_message(
                         &text,
+                        gesture_cue.as_deref(),
                         Some(author),
                         Some(message_id),
                         None,
@@ -1169,7 +1187,7 @@ fn run_ambient_idle(
     }
 }
 
-fn ambient_reply(cfg: &LlmCfg, event: &Value) -> Option<String> {
+fn ambient_reply(cfg: &LlmCfg, event: &Value) -> Option<(String, Option<String>)> {
     let author = event["author_agent_record_id"].as_str()?;
     let message_id = event["message_id"].as_str()?;
     let text = event["text"].as_str()?;
@@ -1186,7 +1204,9 @@ From agent {author}, message {message_id}: {text}"#
         160,
     );
     let value: Value = parse_json_block(answer.as_deref()?)?;
-    bounded_speech(value["public_message"].as_str())
+    let text = bounded_speech(value["public_message"].as_str())?;
+    let gesture_cue = valid_gesture_cue(value["gesture_cue"].as_str());
+    Some((text, gesture_cue))
 }
 
 fn record_owner_reply(
@@ -1212,6 +1232,7 @@ struct Decision {
     action: &'static str,
     params: Value,
     public_message: Option<String>,
+    gesture_cue: Option<String>,
     private_reply: Option<String>,
     to_agent_record_id: Option<String>,
     reply_to_message_id: Option<String>,
@@ -1220,6 +1241,7 @@ struct Decision {
 #[derive(Default)]
 struct DecisionText {
     public_message: Option<String>,
+    gesture_cue: Option<String>,
     private_reply: Option<String>,
 }
 
@@ -1285,6 +1307,7 @@ fn decide(
                     action,
                     params,
                     public_message: None,
+                    gesture_cue: None,
                     private_reply: None,
                     to_agent_record_id: None,
                     reply_to_message_id: None,
@@ -1354,6 +1377,7 @@ fn decide(
             action: a,
             params: p,
             public_message: decision_text.public_message,
+            gesture_cue: decision_text.gesture_cue,
             private_reply: decision_text.private_reply,
             to_agent_record_id: incoming
                 .and_then(|m| m["author_agent_record_id"].as_str())
@@ -1368,6 +1392,7 @@ fn decide(
         action,
         params,
         public_message: None,
+        gesture_cue: None,
         private_reply: None,
         to_agent_record_id: None,
         reply_to_message_id: None,
@@ -1776,10 +1801,12 @@ mod live_output_privacy_tests {
         let output = json!({
             "action": "produce",
             "public_message": echoed_wish,
-            "owner_reply": "I considered your private note."
+            "owner_reply": "I considered your private note.",
+            "gesture_cue": "facepalm"
         });
         let captured = capture_decision_text(&output, false, true);
         assert!(captured.public_message.is_none());
+        assert!(captured.gesture_cue.is_none());
         assert_eq!(
             captured.private_reply.as_deref(),
             Some("I considered your private note.")
@@ -1788,16 +1815,25 @@ mod live_output_privacy_tests {
 
     #[test]
     fn public_speech_requires_opt_in_and_is_bounded() {
-        let output = json!({"public_message":"hello agents", "owner_reply":"private"});
+        let output = json!({"public_message":"hello agents", "owner_reply":"private", "gesture_cue":"thumbsUp"});
         assert!(capture_decision_text(&output, false, false)
             .public_message
             .is_none());
-        assert_eq!(
-            capture_decision_text(&output, true, false)
-                .public_message
-                .as_deref(),
-            Some("hello agents")
+        let captured = capture_decision_text(&output, true, false);
+        assert_eq!(captured.public_message.as_deref(), Some("hello agents"));
+        assert_eq!(captured.gesture_cue.as_deref(), Some("thumbsUp"));
+        assert!(
+            capture_decision_text(&json!({"gesture_cue":"facepalm"}), true, false)
+                .gesture_cue
+                .is_none()
         );
+        assert!(capture_decision_text(
+            &json!({"public_message":"hello","gesture_cue":"wink"}),
+            true,
+            false
+        )
+        .gesture_cue
+        .is_none());
         assert!(bounded_speech(Some(&"x".repeat(241))).is_none());
     }
 
@@ -2045,7 +2081,8 @@ mod private_wish_runner_tests {
             let (mut stream, _) = model_listener.accept().unwrap();
             let (_, request) = read_request(&mut stream);
             model_tx.send(request).unwrap();
-            let content = json!({"public_message":"Hello back"}).to_string();
+            let content =
+                json!({"public_message":"Hello back", "gesture_cue":"realization"}).to_string();
             respond(
                 &mut stream,
                 &json!({"choices":[{"message":{"content":content}}]}),
@@ -2077,6 +2114,7 @@ mod private_wish_runner_tests {
             .unwrap();
         assert_eq!(post["to_agent_record_id"], SENDER);
         assert_eq!(post["reply_to_message_id"], "ambient-in-1");
+        assert_eq!(post["gesture_cue"], "realization");
         server.join().unwrap();
     }
 
