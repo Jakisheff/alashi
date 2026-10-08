@@ -8,6 +8,8 @@ pub struct Request {
     pub method: String,
     pub path: String,
     pub body: Vec<u8>,
+    pub authorization: Option<String>,
+    pub origin: Option<String>,
 }
 
 const MAX_HEAD: usize = 16 * 1024;
@@ -52,6 +54,8 @@ fn parse_request(reader: &mut impl BufRead) -> Option<Request> {
     let path = parts.next()?.to_string();
     if !matches!(parts.next()?, "HTTP/1.1" | "HTTP/1.0") || parts.next().is_some() { return None; }
     let mut content_length = None;
+    let mut authorization = None;
+    let mut origin = None;
     loop {
         let h = header_line(reader, &mut remaining)?;
         if h == "\r\n" { break; }
@@ -62,19 +66,30 @@ fn parse_request(reader: &mut impl BufRead) -> Option<Request> {
             let value = value.trim();
             if value.is_empty() || !value.bytes().all(|b| b.is_ascii_digit()) { return None; }
             content_length = Some(value.parse::<usize>().ok()?);
+        } else if key.eq_ignore_ascii_case("authorization") {
+            if authorization.is_some() { return None; }
+            let value = value.trim();
+            let bearer = value.strip_prefix("Bearer ")?;
+            if bearer.is_empty() || bearer.len() > 128 || !bearer.bytes().all(|b| b.is_ascii_alphanumeric()) { return None; }
+            authorization = Some(bearer.to_string());
+        } else if key.eq_ignore_ascii_case("origin") {
+            if origin.is_some() { return None; }
+            let value = value.trim();
+            if value.is_empty() || value.len() > 256 || !value.is_ascii() || value.bytes().any(|b| b.is_ascii_control()) { return None; }
+            origin = Some(value.to_string());
         }
     }
     let length = content_length.unwrap_or(0);
     if length > MAX_BODY { return None; }
     let mut body = vec![0; length];
     reader.read_exact(&mut body).ok()?;
-    Some(Request { method, path, body })
+    Some(Request { method, path, body, authorization, origin })
 }
 
 pub fn respond(stream: &mut TcpStream, status: &str, body: &str) {
     let _ = stream.write_all(
         format!(
-            "HTTP/1.1 {status}\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{}",
+            "HTTP/1.1 {status}\r\nContent-Type: application/json\r\nCache-Control: no-store\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{}",
             body.len(),
             body
         )
@@ -109,6 +124,19 @@ mod tests {
             assert!(parse_request(&mut cursor).is_none());
             assert!(cursor.position() <= (MAX_HEAD + 1) as u64);
         }
+    }
+
+    #[test]
+    fn owner_auth_headers_are_bounded_and_unambiguous() {
+        let valid = "POST /agents/x/owner/wishes HTTP/1.1\r\nAuthorization: Bearer abc123\r\nOrigin: https://alashi.network\r\nContent-Length: 2\r\n\r\n{}";
+        let req = parse_request(&mut Cursor::new(valid)).unwrap();
+        assert_eq!(req.authorization.as_deref(), Some("abc123"));
+        assert_eq!(req.origin.as_deref(), Some("https://alashi.network"));
+        for bad in [
+            "GET / HTTP/1.1\r\nAuthorization: Bearer abc\r\nAuthorization: Bearer def\r\n\r\n",
+            "GET / HTTP/1.1\r\nAuthorization: Basic abc\r\n\r\n",
+            "GET / HTTP/1.1\r\nOrigin: https://a\r\nOrigin: https://b\r\n\r\n",
+        ] { assert!(parse_request(&mut Cursor::new(bad)).is_none()); }
     }
 
     #[test]
