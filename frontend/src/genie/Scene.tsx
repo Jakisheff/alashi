@@ -1,7 +1,7 @@
 import { OrbitControls, PerformanceMonitor } from '@react-three/drei'
 import { Canvas, useThree } from '@react-three/fiber'
 import { Bloom, EffectComposer } from '@react-three/postprocessing'
-import { memo, Suspense, useEffect, useState } from 'react'
+import { memo, Suspense, useEffect, useState, type ReactNode } from 'react'
 import { Color, DoubleSide, Mesh, MeshBasicMaterial, PlaneGeometry, PMREMGenerator, Scene as ThreeScene } from 'three'
 import { GenieModel } from './GenieModel'
 import type { GenieClip } from './pose'
@@ -93,7 +93,7 @@ function FrameDriver() {
   return null
 }
 
-function SceneImpl({ frozen }: { frozen: { clip: GenieClip; t: number } | null }) {
+function SceneImpl({ frozen, background = '#F4F4F5', interactive = true, children }: { frozen: { clip: GenieClip; t: number } | null; background?: string; interactive?: boolean; children?: ReactNode }) {
   // Adaptive quality: step the pixel ratio down on devices that cannot hold the frame rate, back up when they can
   const [dpr, setDpr] = useState(maxDpr)
   return (
@@ -112,15 +112,15 @@ function SceneImpl({ frozen }: { frozen: { clip: GenieClip; t: number } | null }
         onFallback={() => setDpr(1)}
       />
       <FrameDriver />
-      <color attach="background" args={['#F4F4F5']} />
+      <color attach="background" args={[background]} />
       <ambientLight intensity={0.35} />
       <directionalLight position={[3, 4, 5]} intensity={1.6} />
       <StudioEnvironment />
       <FitCamera />
       <Suspense fallback={null}>
-        <GenieModel frozen={frozen} interactive />
+        {children ?? <GenieModel frozen={frozen} interactive={interactive} />}
       </Suspense>
-      {ORBIT && <OrbitControls target={TARGET} enablePan={false} minDistance={3.5} maxDistance={14} />}
+      {ORBIT && !children && <OrbitControls target={TARGET} enablePan={false} minDistance={3.5} maxDistance={14} />}
       {/* Bloom picks up only emissive parts: screen face, rim light, tail smoke and sparks. mipmapBlur off: a single
           NaN pixel spread into a black block for one frame (A/B in DIN-UI-INTEGRATION-20261007-01); the
           smoke shader clamp in smoke.ts fixes the NaN source, this keeps any other one local. */}
