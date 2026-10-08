@@ -428,22 +428,37 @@ def build():
         box(f"{side}-palm", (0.26, 0.16, 0.22), hd, m["teal"], 0.07, 4)
         cylinder(f"{side}-palm-button", 0.062, 0.03, hd + Vector((0, -0.085, 0.01)), m["orange"],
                  rot=(math.pi / 2, 0, 0), verts=24, edge=0.01)
-        # Fingers in two posable groups: "point" (index + middle, thumb side) and "curl" (ring + pinky).
-        knuckles, groups = [], {"point": [], "curl": []}
+        # Three phalanges per finger, two per thumb. Index and middle can extend independently.
+        # Place the socket and its entire finger chain on the outer palm edge together.
+        # Translating only the animated finger leaves it detached from the black socket.
+        finger_base = hd + Vector((0, -0.06, 0))
+        knuckles = []
+        groups = {part: {"proximal": [], "middle": [], "distal": []} for part in ("point", "middle", "curl")}
         for i, fx in enumerate((-0.09, -0.03, 0.03, 0.09)):
-            grp = groups["point" if fx * sx > 0 else "curl"]
-            knuckles.append(sphere(f"{side}-k{i}", 0.042, hd + Vector((fx, -0.01, -0.115)), m["joint"], segs=(14, 8)))
-            grp.append(capsule(f"{side}-p{i}", 0.04, 0.13, hd + Vector((fx, -0.014, -0.175)), m["ivory"]))
-            grp.append(sphere(f"{side}-m{i}", 0.034, hd + Vector((fx, -0.02, -0.24)), m["joint"], segs=(14, 8)))
-            grp.append(capsule(f"{side}-d{i}", 0.037, 0.11, hd + Vector((fx, -0.045, -0.285)), m["ivory"],
-                               rot=(-0.5, 0, 0)))
-        knuckles.append(sphere(f"{side}-tk", 0.04, hd + Vector((0.13 * sx, -0.04, -0.03)), m["joint"], segs=(14, 8)))
+            grp = groups[("middle" if abs(fx) < 0.05 else "point") if fx * sx > 0 else "curl"]
+            knuckles.append(sphere(f"{side}-k{i}", 0.042, finger_base + Vector((fx, -0.01, -0.115)), m["joint"], segs=(14, 8)))
+            grp["proximal"].append(capsule(f"{side}-p{i}", 0.04, 0.115, finger_base + Vector((fx, -0.014, -0.1725)), m["ivory"]))
+            grp["proximal"].append(sphere(f"{side}-m{i}", 0.034, finger_base + Vector((fx, -0.015, -0.23)), m["joint"], segs=(14, 8)))
+            grp["middle"].append(capsule(f"{side}-s{i}", 0.038, 0.085, finger_base + Vector((fx, -0.02, -0.2725)), m["ivory"]))
+            grp["middle"].append(sphere(f"{side}-n{i}", 0.032, finger_base + Vector((fx, -0.025, -0.315)), m["joint"], segs=(14, 8)))
+            grp["distal"].append(capsule(f"{side}-d{i}", 0.035, 0.07, finger_base + Vector((fx, -0.034, -0.35)), m["ivory"],
+                               rot=(-0.25, 0, 0)))
+        thumb_head = hd + Vector((0.13 * sx, -0.075, -0.03))
+        knuckles.append(sphere(f"{side}-tk", 0.04, thumb_head, m["joint"], segs=(14, 8)))
         join(knuckles, f"{side}-knuckles")
-        join(groups["point"], f"{side}-point")
-        join(groups["curl"], f"{side}-curl")
-        capsule(f"{side}-thumb", 0.04, 0.13, hd + Vector((0.17 * sx, -0.06, -0.07)), m["ivory"], rot=(-0.3, -0.8 * sx, 0))
-        JOINTS[f"{side}-fingers"] = (hd + Vector((0.06 * sx, -0.01, -0.115)), hd + Vector((-0.06 * sx, -0.01, -0.115)),
-                                     hd + Vector((0.13 * sx, -0.04, -0.03)))
+        for part, pieces in groups.items():
+            join(pieces["proximal"], f"{side}-{part}")
+            join(pieces["middle"], f"{side}-{part}-mid")
+            join(pieces["distal"], f"{side}-{part}-tip")
+        thumb_dir = Vector((0.65 * sx, -0.23, -0.725)).normalized()
+        thumb_rotation = Vector((0, 0, -1)).rotation_difference(thumb_dir).to_euler()
+        thumb_joint = thumb_head + thumb_dir * 0.09
+        join([capsule(f"{side}-thumb-base", 0.04, 0.09, thumb_head + thumb_dir * 0.045, m["ivory"], rot=thumb_rotation),
+              sphere(f"{side}-thumb-joint", 0.033, thumb_joint, m["joint"], segs=(14, 8))], f"{side}-thumb")
+        capsule(f"{side}-thumb-tip", 0.036, 0.07, thumb_joint + thumb_dir * 0.035, m["ivory"], rot=thumb_rotation)
+        JOINTS[f"{side}-thumb-tip"] = thumb_joint
+        JOINTS[f"{side}-fingers"] = (finger_base + Vector((0.06 * sx, -0.01, -0.115)),
+                                     finger_base + Vector((-0.06 * sx, -0.01, -0.115)), thumb_head)
 
     # Smoke tail: a tapering NURBS tube; the R3F scene gives it a moving glow shader.
     cu = bpy.data.curves.new("tail", "CURVE")
@@ -496,9 +511,9 @@ def bone_for(name):
             return f"{side}-arm"
         if name.startswith((f"{side}-elbow", f"{side}-forearm", f"{side}-wrist")):
             return f"{side}-forearm"
-        for part in ("point", "curl", "thumb"):
-            if name == f"{side}-{part}":
-                return f"{side}-{part}"
+        for part in ("point", "middle", "curl", "thumb"):
+            if name in (f"{side}-{part}", f"{side}-{part}-mid", f"{side}-{part}-tip"):
+                return name
         if name.startswith((f"{side}-palm", f"{side}-knuckles")):
             return f"{side}-hand"
     if name.startswith("tail-spark-"):
@@ -536,6 +551,12 @@ def rig(col):
         bone(f"{side}-hand", wr, f"{side}-forearm")
         for part, head in zip(("point", "curl", "thumb"), JOINTS[f"{side}-fingers"]):
             bone(f"{side}-{part}", head, f"{side}-hand")
+        bone(f"{side}-middle", JOINTS[f"{side}-fingers"][0] + Vector((-0.03 * sx, 0, 0)), f"{side}-hand")
+        for part in ("point", "middle", "curl"):
+            head = eb[f"{side}-{part}"].head.copy() + Vector((0, -0.005, -0.115))
+            bone(f"{side}-{part}-mid", head, f"{side}-{part}")
+            bone(f"{side}-{part}-tip", head + Vector((0, -0.01, -0.085)), f"{side}-{part}-mid")
+        bone(f"{side}-thumb-tip", JOINTS[f"{side}-thumb-tip"], f"{side}-thumb")
     prev = "body"
     for i in range(len(TAIL_PTS) - 1):
         name = "tail" if i == 0 else f"tail-{i}"
@@ -568,20 +589,127 @@ def rig(col):
     return arm
 
 
+def wind_up_hands(arm, amount, turn, middle):
+    """Bake two-bone reach and wrist turns into the GLB, only for the crank gesture.
+    Anatomical left (screen-right) stays palm-up, matching the supplied frame reference.
+    """
+    pb = arm.pose.bones
+    bpy.context.view_layer.update()
+    body_matrix = pb["body"].matrix @ arm.data.bones["body"].matrix_local.inverted()
+    rest_rotation = arm.data.bones["left-arm"].matrix_local.to_3x3().to_4x4()
+
+    def blend_matrix(bone, desired, weight=amount):
+        original = bone.matrix_basis.copy()
+        bone.matrix = desired
+        target = bone.matrix_basis.copy()
+        loc0, rot0, scale0 = original.decompose()
+        loc1, rot1, scale1 = target.decompose()
+        bone.matrix_basis = Matrix.LocRotScale(loc0.lerp(loc1, weight), rot0.slerp(rot1, weight), scale0.lerp(scale1, weight))
+        bpy.context.view_layer.update()
+
+    def reach(side, wrist, hand_rotation):
+        shoulder = arm.data.bones[f"{side}-arm"].head_local.copy()
+        l1 = (arm.data.bones[f"{side}-forearm"].head_local - shoulder).length
+        l2 = (arm.data.bones[f"{side}-hand"].head_local - arm.data.bones[f"{side}-forearm"].head_local).length
+        # Move the winding arm along a wrist path before solving its elbow.
+        # Blending each joint's world target separately stretches the arm and twists the wrist.
+        if side == "right":
+            original_wrist = body_matrix.inverted() @ pb[f"{side}-hand"].head
+            original_elbow = body_matrix.inverted() @ pb[f"{side}-forearm"].head
+            wrist = original_wrist.lerp(wrist, amount)
+        delta = wrist - shoulder
+        distance = min(delta.length, l1 + l2 - 0.005)
+        axis = delta.normalized()
+        wrist = shoulder + axis * distance
+        pole = Vector((1 if side == "left" else -1, 0.1, -0.65))
+        if side == "right":
+            start_pole = original_elbow - shoulder
+            start_pole = (start_pole - axis * start_pole.dot(axis)).normalized()
+            end_pole = (pole - axis * pole.dot(axis)).normalized()
+            pole = start_pole.lerp(end_pole, amount)
+        pole = (pole - axis * pole.dot(axis)).normalized()
+        along = (l1*l1 - l2*l2 + distance*distance) / (2 * distance)
+        elbow = shoulder + axis * along + pole * math.sqrt(max(0, l1*l1 - along*along))
+        for name, origin, end in ((f"{side}-arm", shoulder, elbow), (f"{side}-forearm", elbow, wrist)):
+            direction = (end-origin).normalized()
+            swing = Vector((0, 0, -1)).rotation_difference(direction).to_matrix().to_4x4()
+            if side == "right" and name.endswith("forearm"):
+                # Pronate the forearm around its own axis, keeping the wrist straight.
+                # The orange palm button then faces down throughout the winding.
+                normal = (swing.to_3x3() @ Vector((0, -1, 0))).normalized()
+                down = Vector((0, 0, -1))
+                down = (down - direction * down.dot(direction)).normalized()
+                roll = math.atan2(direction.dot(normal.cross(down)), normal.dot(down))
+                # Keep the same rotation branch as the elbow passes the +/-pi boundary.
+                # Scaling a wrapped signed angle by the entry blend produces a visible snap.
+                if roll < 0:
+                    roll += 2 * math.pi
+                swing = Matrix.Rotation(roll * amount, 4, direction) @ swing
+            blend_matrix(pb[name], body_matrix @ Matrix.Translation(origin) @ swing @ rest_rotation,
+                         1 if side == "right" else amount)
+        if side == "right":
+            # Keep the wrist aligned with its forearm; the arm describes the circle.
+            pb[f"{side}-hand"].rotation_euler = (0, 0, 0)
+        else:
+            blend_matrix(pb[f"{side}-hand"], body_matrix @ Matrix.Translation(wrist) @ hand_rotation @ rest_rotation)
+
+    # Palm (-Y) faces up; the knuckles point towards the viewer.
+    fist_rotation = Matrix(((1, 0, 0, 0), (0, 0, 1, 0), (0, -1, 0, 0), (0, 0, 0, 1)))
+    reach("left", Vector((0.27, -0.64, -0.30)), fist_rotation)
+    # The second closed fist circles above/beside it, rather than spinning its wrist.
+    finish = min(max((middle - 0.85) / 0.15, 0), 1)
+    finish = finish * finish * (3 - 2 * finish)
+    radius = 0.075 * (1 - finish)
+    wrist = Vector((-0.43 - 0.09*finish + radius*math.sin(turn), -0.61,
+                    -0.22 - 0.08*finish + radius*math.cos(turn)))
+    reach("right", wrist, None)
+    for side in ("left", "right"):
+        for part in ("point", "curl", "middle"):
+            finger = pb[f"{side}-{part}"]
+            finger.rotation_euler.x = finger.rotation_euler.x * (1-amount) - 1.35 * amount
+            pb[f"{side}-{part}-mid"].rotation_euler.x = -1.3 * amount
+            pb[f"{side}-{part}-tip"].rotation_euler.x = -0.75 * amount
+        thumb = pb[f"{side}-thumb"]
+        thumb.rotation_euler.x = thumb.rotation_euler.x * (1-amount) - 0.6 * amount
+        pb[f"{side}-thumb-tip"].rotation_euler = (-0.4 * amount, (0.5 if side == "left" else -0.5) * amount, 0)
+    finger = pb["left-middle"]
+    # With palm up, -pi/2 sends the middle finger straight up from the knuckle.
+    finger.rotation_euler.x += (-math.pi/2 + 1.35) * middle * amount
+    pb["left-middle-mid"].rotation_euler.x += 1.3 * middle * amount
+    pb["left-middle-tip"].rotation_euler.x += 1.0 * middle * amount
+
+
 def apply_pose(arm, p, t):
     pb = arm.pose.bones
     pb["body"].location = (0, p["y"], 0)
     pb["body"].rotation_euler = (p["tiltX"], 0, p["tiltZ"])  # yaw stays in the scene
+    # Reach baking must not carry a wrist transform from the preceding sampled frame.
+    for side in ("left", "right"):
+        pb[f"{side}-hand"].rotation_euler = (0, 0, 0)
+        for part in ("arm", "forearm", "hand"):
+            pb[f"{side}-{part}"].location = (0, 0, 0)
     # Anatomical left (+X) is the preview's "r" side.
     pb["left-arm"].rotation_euler = (-p["rArmFwd"], 0, p["rArmOut"])
     pb["right-arm"].rotation_euler = (-p["lArmFwd"], 0, -p["lArmOut"])
     pb["left-forearm"].rotation_euler = (-p["rElbow"], 0, 0)
     pb["right-forearm"].rotation_euler = (-p["lElbow"], 0, 0)
     for side, k in (("left", "r"), ("right", "l")):
+        for part in ("point", "middle", "curl", "thumb"):
+            pb[f"{side}-{part}"].location = (0, 0, 0)
+        for part in ("point", "middle", "curl"):
+            pb[f"{side}-{part}-mid"].rotation_euler = (0, 0, 0)
+            pb[f"{side}-{part}-tip"].rotation_euler = (0, 0, 0)
+        pb[f"{side}-thumb-tip"].rotation_euler = (0, 0, 0)
         grip, point = p[f"{k}Grip"], p[f"{k}Point"]
         pb[f"{side}-curl"].rotation_euler = (-grip * 1.3, 0, 0)  # curl toward the palm (-Y)
         pb[f"{side}-point"].rotation_euler = (-grip * (1 - point) * 1.3, 0, 0)
+        middle = max(point, p.get(f"{k}Middle", 0))
+        pb[f"{side}-middle"].rotation_euler = (-grip * (1 - middle) * 1.3, 0, 0)
         pb[f"{side}-thumb"].rotation_euler = (-grip * 0.8, 0, 0)
+        for part, extension in (("point", point), ("middle", middle), ("curl", 0)):
+            pb[f"{side}-{part}-mid"].rotation_euler.x = -grip * (1 - extension) * 0.45
+            pb[f"{side}-{part}-tip"].rotation_euler.x = -grip * (1 - extension) * 0.3
+        pb[f"{side}-thumb-tip"].rotation_euler = (-grip * 0.2, (1 if side == "left" else -1) * grip * 0.25, 0)
     for side in ("left", "right"):
         pb[f"{side}-pupil"].location = (p["lookX"] * 0.045, p["lookY"] * 0.05, 0)
     cover = max(lid_cover(p["eyeOpen"], p["lid"]), 0.001)
@@ -602,6 +730,9 @@ def apply_pose(arm, p, t):
         pb[name].rotation_euler = (0.16 * k * math.sin(2 * w * t - i * 0.7) * p["tailSway"], 0,
                                    0.1 * k * math.cos(2 * w * t - i * 0.6) * p["tailSway"])
 
+    if p.get("crank", 0) > 0:
+        wind_up_hands(arm, p["crank"], p["crankTurn"], p["rMiddle"])
+
 
 def animate(arm):
     with open(os.path.join(ART, "poses.json")) as f:
@@ -613,9 +744,13 @@ def animate(arm):
         action = bpy.data.actions.new(clip)
         action.use_fake_user = True
         arm.animation_data.action = action
+        previous_eulers = {}
         for f, p in enumerate(frames):
             apply_pose(arm, p, f / fps)
             for pb in arm.pose.bones:
+                if pb.name in previous_eulers:
+                    pb.rotation_euler = pb.rotation_euler.to_quaternion().to_euler(pb.rotation_mode, previous_eulers[pb.name])
+                previous_eulers[pb.name] = pb.rotation_euler.copy()
                 pb.keyframe_insert("location", frame=f + 1)
                 pb.keyframe_insert("rotation_euler", frame=f + 1)
                 pb.keyframe_insert("scale", frame=f + 1)

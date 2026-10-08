@@ -1,6 +1,6 @@
 // Pure pose math for DeskGenie: clip + time -> pose. No React, no three.js.
 
-export type GenieClip = 'idle' | 'act' | 'accepted' | 'rejected'
+export type GenieClip = 'idle' | 'act' | 'accepted' | 'rejected' | 'fuckOff'
 
 export type Pose = {
   y: number // hover height
@@ -17,6 +17,10 @@ export type Pose = {
   lGrip: number
   rPoint: number // 1 keeps index + middle straight while the rest curl
   lPoint: number
+  crank: number // blend into the two-hand wind-up gesture
+  crankTurn: number
+  rMiddle: number // 1 extends only the middle finger
+  lMiddle: number
   browL: number // + raises
   browR: number
   browTilt: number // + worried (inner ends up), - scheming
@@ -33,6 +37,7 @@ export const CLIP_SECONDS: Record<GenieClip, number> = {
   act: 1.1,
   accepted: 1.2,
   rejected: 1.6,
+  fuckOff: 5.8,
 }
 
 const REST: Pose = {
@@ -48,6 +53,10 @@ const REST: Pose = {
   lElbow: 0.8,
   rGrip: 0.25,
   lGrip: 0.25,
+  crank: 0,
+  crankTurn: 0,
+  rMiddle: 0,
+  lMiddle: 0,
   rPoint: 0,
   lPoint: 0,
   browL: 0,
@@ -102,6 +111,19 @@ function idle(time: number, motion: number): Pose {
 type Offsets = Partial<Record<keyof Pose, Key[]>>
 
 const OFFSETS: Record<Exclude<GenieClip, 'idle'>, Offsets> = {
+  // Anatomical left fist stays palm-up; the right hand winds it before the reveal.
+  fuckOff: {
+    crank: [[0, 0], [0.75, 1], [5.0, 1], [5.8, 0]],
+    crankTurn: [[0, 0], [1.0, 0], [3.9, Math.PI * 6], [5.8, Math.PI * 6]],
+    rGrip: [[0, 0], [0.65, 0.75], [5.0, 0.75], [5.8, 0]],
+    lGrip: [[0, 0], [0.65, 0.75], [5.0, 0.75], [5.8, 0]],
+    rMiddle: [[0, 0], [1.65, 0], [2.3, 0.25], [3.0, 0.65], [3.9, 1], [5.0, 1], [5.8, 0]],
+    browTilt: [[0, 0], [0.4, -0.12], [5.0, -0.12], [5.8, 0]],
+    browR: [[0, 0], [0.4, 0.25], [5.0, 0.25], [5.8, 0]],
+    lid: [[0, 0], [0.4, 0.12], [5.0, 0.12], [5.8, 0]],
+    smile: [[0, 0], [0.4, 0.3], [5.0, 0.3], [5.8, 0]],
+    lookY: [[0, 0], [0.75, -0.4], [3.6, -0.4], [4.0, 0], [5.8, 0]],
+  },
   // Anticipation, confident point, settle.
   act: {
     tiltX: [[0, 0], [0.25, -0.2], [0.45, 0.25], [1.1, 0]],
@@ -157,6 +179,12 @@ export function poseAt(clip: GenieClip, t: number, time: number, motion = 1): Po
   const offsets = OFFSETS[clip]
   for (const key of Object.keys(offsets) as (keyof Pose)[]) {
     pose[key] += track(offsets[key]!, t) * motion
+  }
+  if (clip === 'fuckOff') {
+    // The winding fist should stay still while the other hand circles it.
+    pose.y *= 1 - pose.crank
+    pose.tiltX *= 1 - pose.crank
+    pose.tiltZ *= 1 - pose.crank
   }
   return pose
 }

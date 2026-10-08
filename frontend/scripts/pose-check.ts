@@ -3,7 +3,7 @@ import assert from 'node:assert/strict'
 import { CLIP_SECONDS, poseAt, type GenieClip } from '../src/genie/pose.ts'
 
 const time = 2.3
-for (const clip of ['act', 'accepted', 'rejected'] as GenieClip[]) {
+for (const clip of ['act', 'accepted', 'rejected', 'fuckOff'] as GenieClip[]) {
   const idle = poseAt('idle', 0, time)
   for (const t of [0, CLIP_SECONDS[clip]]) {
     assert.deepEqual(poseAt(clip, t, time), idle, `${clip} at t=${t} is not the idle pose`)

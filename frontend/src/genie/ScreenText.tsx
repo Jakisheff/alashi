@@ -31,6 +31,7 @@ function paginate(text: string) {
 export function ScreenText() {
   const speech = useScene((s) => s.speech)
   const speechId = useScene((s) => s.speechId)
+  const clip = useScene((s) => s.clip)
   const pages = useMemo(() => paginate(speech), [speech])
   // typed text and the length of the page it belongs to (the cursor shows while typing)
   const [shown, setShown] = useState({ text: '', of: 0 })
@@ -47,7 +48,8 @@ export function ScreenText() {
     c.t += delta
     const typed = page.slice(0, Math.floor(c.t * CHARS_PER_SECOND))
     if (typed !== shown.text) setShown({ text: typed, of: page.length })
-    if (c.t > page.length / CHARS_PER_SECOND + HOLD_SECONDS) Object.assign(c, { page: c.page + 1, t: 0 })
+    const holdReaction = clip === 'fuckOff' && c.page === pages.length - 1
+    if (!holdReaction && c.t > page.length / CHARS_PER_SECOND + HOLD_SECONDS) Object.assign(c, { page: c.page + 1, t: 0 })
   })
 
   const cursor = shown.text && shown.text.length < shown.of ? '_' : ''

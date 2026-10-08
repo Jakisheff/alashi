@@ -22,10 +22,11 @@ class SceneBoundary extends Component<{ children: ReactNode }, { failed: boolean
   }
 }
 
-const CLIPS: GenieClip[] = ['idle', 'act', 'accepted', 'rejected']
+const CLIPS: GenieClip[] = ['idle', 'act', 'accepted', 'rejected', 'fuckOff']
 
-// Lines from CHARACTER_BRIEF_2026-10-07.md, in English for the demo.
+// Demo jokes from the character brief; the poke reaction uses Din's requested line.
 const LINES: Partial<Record<GenieClip, string[]>> = {
+  fuckOff: ['Иди пососи'],
   act: ["Don't rub the lamp. Clear the context.", 'You said "small fix". I heard that.'],
   accepted: ['Wish granted. Estimate: two sprints.'],
   rejected: ["Didn't work. At least now it's reproducible."],
@@ -45,12 +46,12 @@ export default function App({ search }: { search: HomeSearch }) {
   // Stable object: GenieModel replays the clip when it changes
   const frozen = useMemo(() => (search.pose ? { clip: search.pose, t: search.t ?? 0.5 } : null), [search.pose, search.t])
 
-  // Manual triggers (buttons, keys 1-4) also get a joke from the brief; arena events bring their own text.
+  // Manual triggers (buttons, keys 1-5) also get a joke from the brief; arena events bring their own text.
   const trigger = useCallback(
     (c: GenieClip) => {
       play(c)
       const options = LINES[c]
-      if (captions && options) say(options[Math.floor(Math.random() * options.length)])
+      if ((captions || c === 'fuckOff') && options) say(options[Math.floor(Math.random() * options.length)])
     },
     [play, say, captions],
   )
@@ -111,7 +112,7 @@ export default function App({ search }: { search: HomeSearch }) {
                 className={`rounded-full px-2.5 py-0.5 ${c === clip ? 'bg-[#26272B] text-white' : 'hover:bg-[#E4E4E7]'}`}
               >
                 <span className="hidden opacity-50 sm:inline">{i + 1} </span>
-                {c}
+                {c === 'fuckOff' ? 'fuck off' : c}
               </button>
             ))}
             <button

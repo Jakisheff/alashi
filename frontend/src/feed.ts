@@ -93,12 +93,15 @@ export function useArenaFeed(game: string | null, sample = true, api = '') {
   useEffect(() => {
     const timers: ReturnType<typeof setTimeout>[] = []
     const id = setInterval(() => {
+      if (useScene.getState().clip === 'fuckOff') return
       const next = queue.current.shift()
       if (!next) return
       const { say, play } = useScene.getState()
       say(next.text)
       play('act')
-      timers.push(setTimeout(() => useScene.getState().play(next.ok ? 'accepted' : 'rejected'), 1100))
+      timers.push(setTimeout(() => {
+        if (useScene.getState().clip !== 'fuckOff') useScene.getState().play(next.ok ? 'accepted' : 'rejected')
+      }, 1100))
     }, EVENT_SECONDS * 1000)
     return () => {
       clearInterval(id)

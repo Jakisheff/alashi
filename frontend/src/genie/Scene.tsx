@@ -118,7 +118,7 @@ function SceneImpl({ frozen }: { frozen: { clip: GenieClip; t: number } | null }
       <StudioEnvironment />
       <FitCamera />
       <Suspense fallback={null}>
-        <GenieModel frozen={frozen} />
+        <GenieModel frozen={frozen} interactive />
       </Suspense>
       {ORBIT && <OrbitControls target={TARGET} enablePan={false} minDistance={3.5} maxDistance={14} />}
       {/* Bloom picks up only emissive parts: screen face, rim light, tail smoke and sparks. mipmapBlur off: a single
