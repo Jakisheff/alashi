@@ -2890,6 +2890,16 @@ fn owner_query(raw: &str) -> Result<(u64, usize), &'static str> {
     Ok((after,limit))
 }
 
+fn owner_credential(req: &Request) -> Result<String, &'static str> {
+    let cookie = owner_auth::browser_token(req.cookie.as_deref())?;
+    match (req.authorization.as_deref(), cookie) {
+        (Some(_), Some(_)) => Err("ambiguous_owner_credentials"),
+        (Some(bearer), None) => Ok(bearer.to_string()),
+        (None, Some(cookie)) => Ok(cookie),
+        (None, None) => Err("owner_session_invalid"),
+    }
+}
+
 fn live_result(value: serde_json::Value) -> (&'static str, String) {
     let status = match value["error"].as_str() {
         None => "200 OK",
@@ -2898,7 +2908,7 @@ fn live_result(value: serde_json::Value) -> (&'static str, String) {
         Some("rate_limited" | "budget_exhausted") => "429 Too Many Requests",
         Some("storage_failed") => "503 Service Unavailable",
         Some("owner_origin_forbidden" | "wish_forbidden") => "403 Forbidden",
-        Some("owner_session_invalid" | "owner_session_expired" | "game_token_invalid" | "owner_signature_invalid") => "401 Unauthorized",
+        Some("owner_session_invalid" | "owner_session_expired" | "owner_cookie_invalid" | "game_token_invalid" | "owner_signature_invalid") => "401 Unauthorized",
         Some("idempotency_conflict" | "wish_status_conflict" | "no_active_game") => "409 Conflict",
         Some("wish_quota_exhausted" | "owner_challenge_rate_limited") => "429 Too Many Requests",
         Some(_) => "400 Bad Request",
@@ -2935,6 +2945,78 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
         crate::http::respond_html(stream, "200 OK", &html, "text/html; charset=utf-8");
         return;
     }
+    // Browser credentials are never serialized into JSON. Only these owner routes
+    // may set or clear the HttpOnly cookie.
+    match (req.method.as_str(), segs.as_slice()) {
+        ("POST", ["agents", id, "owner", "browser", "session"]) => {
+            if req.authorization.is_some() {
+                let (status, body) = live_result(err_json("ambiguous_owner_credentials", "browser login uses wallet proof only"));
+                respond(stream, status, &body);
+                return;
+            }
+            let (value, cookie) = owner_auth::h_finish_owner_browser_challenge(
+                state, id, req.origin.as_deref().unwrap_or(""), &body_v,
+            );
+            let (status, body) = live_result(value);
+            crate::http::respond_with_cookie(stream, status, &body, cookie.as_deref());
+            return;
+        }
+        ("GET", ["agents", id, "owner", "browser", "session"]) => {
+            if req.path.contains('?') {
+                respond(stream, "403 Forbidden", &err_json("method_or_query_forbidden", "no URL credentials").to_string());
+                return;
+            }
+            let value = if req.authorization.is_some() {
+                err_json("ambiguous_owner_credentials", "browser restore uses cookie only")
+            } else {
+                match owner_auth::browser_token(req.cookie.as_deref()) {
+                    Ok(Some(raw)) => owner_auth::h_restore_owner_browser_session(state, id, &raw),
+                    Ok(None) => err_json("owner_session_invalid", "owner session required"),
+                    Err(code) => err_json(code, code),
+                }
+            };
+            let clear_on_result = matches!(
+                value["error"].as_str(),
+                Some("owner_session_invalid" | "owner_session_expired" | "owner_cookie_invalid")
+            );
+            let (status, body) = live_result(value);
+            let clear = if clear_on_result && owner_auth::record_id_ok(id)
+                && owner_auth::has_browser_cookie(req.cookie.as_deref())
+            {
+                Some(owner_auth::browser_cookie(id, "", 0))
+            } else { None };
+            crate::http::respond_with_cookie(stream, status, &body, clear.as_deref());
+            return;
+        }
+        ("POST", ["agents", id, "owner", "browser", "logout"]) => {
+            let value = if req.authorization.is_some() {
+                err_json("ambiguous_owner_credentials", "browser logout uses cookie only")
+            } else {
+                match owner_auth::browser_token(req.cookie.as_deref()) {
+                    Ok(Some(raw)) => owner_auth::h_revoke_owner_session(
+                        state, id, req.origin.as_deref().unwrap_or(""), &raw,
+                    ),
+                    Ok(None) => err_json("owner_session_invalid", "owner session required"),
+                    Err(code) => err_json(code, code),
+                }
+            };
+            // Failed persistence leaves the server session valid: retain the
+            // cookie so an explicit sign-out can retry durably.
+            let clear_on_result = value["ok"] == true || matches!(
+                value["error"].as_str(),
+                Some("owner_session_invalid" | "owner_session_expired" | "owner_cookie_invalid")
+            );
+            let (status, body) = live_result(value);
+            let clear = if clear_on_result && owner_auth::record_id_ok(id)
+                && owner_auth::origin_ok(req.origin.as_deref().unwrap_or(""))
+            {
+                Some(owner_auth::browser_cookie(id, "", 0))
+            } else { None };
+            crate::http::respond_with_cookie(stream, status, &body, clear.as_deref());
+            return;
+        }
+        _ => {}
+    }
     let _wait_permit = if req.method == "GET" && matches!(segs.as_slice(), ["game", _, "wait"]) {
         match Permit::acquire(&state.waiters, MAX_WAITERS) {
             Some(permit) => Some(permit),
@@ -2947,11 +3029,17 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
     let (status, body) = match (req.method.as_str(), segs.as_slice()) {
         ("POST", ["agents", id, "owner", "challenge"]) => live_result(owner_auth::h_begin_owner_challenge(state,id,req.origin.as_deref().unwrap_or(""))),
         ("POST", ["agents", id, "owner", "session"]) => live_result(owner_auth::h_finish_owner_challenge(state,id,req.origin.as_deref().unwrap_or(""),&body_v)),
-        ("POST", ["agents", id, "owner", "revoke"]) => live_result(owner_auth::h_revoke_owner_session(state,id,req.origin.as_deref().unwrap_or(""),req.authorization.as_deref().unwrap_or(""))),
-        ("POST", ["agents", id, "owner", "wishes"]) => live_result(wishes::h_submit_wish(state,id,req.origin.as_deref().unwrap_or(""),req.authorization.as_deref().unwrap_or(""),&body_v)),
-        ("GET", ["agents", id, "owner", "wishes"]) => match owner_query(&req.path) {
-            Ok((after,limit)) => live_result(wishes::h_owner_wishes_after(state,id,req.authorization.as_deref().unwrap_or(""),after,limit)),
+        ("POST", ["agents", id, "owner", "revoke"]) => match owner_credential(req) {
+            Ok(raw) => live_result(owner_auth::h_revoke_owner_session(state,id,req.origin.as_deref().unwrap_or(""),&raw)),
             Err(code) => live_result(err_json(code,code)),
+        },
+        ("POST", ["agents", id, "owner", "wishes"]) => match owner_credential(req) {
+            Ok(raw) => live_result(wishes::h_submit_wish(state,id,req.origin.as_deref().unwrap_or(""),&raw,&body_v)),
+            Err(code) => live_result(err_json(code,code)),
+        },
+        ("GET", ["agents", id, "owner", "wishes"]) => match (owner_query(&req.path), owner_credential(req)) {
+            (Ok((after,limit)), Ok(raw)) => live_result(wishes::h_owner_wishes_after(state,id,&raw,after,limit)),
+            (Err(code), _) | (_, Err(code)) => live_result(err_json(code,code)),
         },
         ("POST", ["game", id, "owner", "wishes", "claim"]) => match id.parse::<u64>() {
             Ok(id) => {

@@ -15,6 +15,14 @@ const enabled = import.meta.env.VITE_LIVE_API_ENABLED === 'true'
 const stageLabel = import.meta.env.VITE_LIVE_STAGE_LABEL ?? ''
 const api = createLiveApi(import.meta.env.VITE_LIVE_API_PATH ?? '')
 const short = (id: string) => `${id.slice(0, 6)}…${id.slice(-4)}`
+function agentReference(value: string) {
+  const raw = value.trim()
+  if (validRecord(raw)) return raw
+  try {
+    const link = new URL(raw, window.location.origin)
+    return link.origin === window.location.origin && link.pathname === '/stream' ? link.searchParams.get('agent')?.trim() ?? '' : ''
+  } catch { return '' }
+}
 class StreamHeroBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
   state = { failed: false }
   static getDerivedStateFromError() { return { failed: true } }
@@ -29,6 +37,7 @@ function publicText(e: PublicEvent) {
 function ConnectedStream({ record, onChange }: { record: string; onChange: () => void }) {
   const [slots, setSlots] = useState<AgentSlot[]>([])
   const [profileError, setProfileError] = useState('')
+  const [shareNotice, setShareNotice] = useState('')
   const [now, setNow] = useState(Date.now)
   const [following, setFollowing] = useState(true)
   const [trade, setTrade] = useState<TradePreview | ScenarioPreview | null>(null)
@@ -55,6 +64,11 @@ function ConnectedStream({ record, onChange }: { record: string; onChange: () =>
   const finish = useCallback(() => { tradeRef.current = null; setTrade(null) }, [])
   const finishReaction = useCallback(() => setReaction(null), [])
   const ignoreTime = useCallback(() => {}, [])
+  const copyPublicLink = useCallback(async () => {
+    const link = `${window.location.origin}/stream?agent=${record}`
+    try { await navigator.clipboard.writeText(link); setShareNotice('Public stream link copied.') }
+    catch { setShareNotice('Copy this public stream link from the address bar.') }
+  }, [record])
   useEffect(() => {
     let stopped = false, timer = 0
     const controller = new AbortController()
@@ -89,7 +103,8 @@ function ConnectedStream({ record, onChange }: { record: string; onChange: () =>
       <footer className="live-frame-footer"><span>Browser · {stream.connection}</span><span>Public stream</span></footer>
     </section>
     <aside className="live-sidebar"><span className="live-eyebrow">Your agent. Its voice.</span><h1>Watch. Listen.<br />Give a little guidance.</h1><p className="live-description">The public stream shows voluntary messages and confirmed game actions. Your wishes stay in a separate private journal.</p>
-      <div className="stream-connection"><span>Feed · {stream.connection}</span><button onClick={stream.reconnect}>Reconnect</button><button onClick={onChange}>Change agent</button></div>
+      <div className="stream-connection"><span>Feed · {stream.connection}</span><button onClick={stream.reconnect}>Reconnect</button><button onClick={() => void copyPublicLink()}>Copy public link</button><button onClick={onChange}>Change agent</button></div>
+      {shareNotice && <p className="owner-notice" role="status">{shareNotice}</p>}
       {stream.error && <p className="owner-warning" role="status">{stream.error} The last received history is preserved.</p>}
       {profileError && <p className="owner-warning" role="status">{profileError}</p>}
       {stageLabel && <p className="owner-warning">{stageLabel}</p>}
@@ -100,10 +115,27 @@ function ConnectedStream({ record, onChange }: { record: string; onChange: () =>
   </div>
 }
 export default function StreamPage() {
-  const [input, setInput] = useState(''), [record, setRecord] = useState(''), [error, setError] = useState('')
+  const [input, setInput] = useState(() => new URLSearchParams(window.location.search).get('agent') ?? '')
+  const [record, setRecord] = useState(''), [error, setError] = useState(''), [opening, setOpening] = useState(false)
+  const openAgent = useCallback(async (value: string) => {
+    const id = agentReference(value)
+    if (!validRecord(id)) { setError('Paste this agent’s stream link or its 64-character public ID.'); return }
+    setOpening(true); setError('')
+    try {
+      await api.profile(id)
+      window.history.replaceState({}, '', `/stream?agent=${id}`)
+      setRecord(id)
+    } catch (e) { setError(friendlyError(e)) }
+    finally { setOpening(false) }
+  }, [])
+  useEffect(() => {
+    const linked = new URLSearchParams(window.location.search).get('agent')
+    if (linked) void openAgent(linked)
+  }, [openAgent])
   useEffect(() => { const title = document.title; document.title = 'Alashi · live stream'; return () => { document.title = title } }, [])
+  const changeAgent = useCallback(() => { window.history.replaceState({}, '', '/stream'); setRecord(''); setError('') }, [])
   return <main className="live-page stream-page" lang="en"><header className="live-header"><Link to="/" className="live-brand">alashi<span>.</span></Link><span className="live-header-label">Personal stream</span><span className="live-preview-label">{stageLabel || (enabled ? 'Live connection · preview' : 'Integration preview')}</span></header>
     {!enabled ? <section className="stream-connect"><span className="live-eyebrow">Live D</span><h1>A real connection is on its way.</h1><p>The backend release is being verified. Real wallet access and private wishes are not enabled on this site yet.</p><Link to="/live">Explore the animation demo →</Link></section>
-    : record ? <ConnectedStream key={record} record={record} onChange={() => setRecord('')} /> : <section className="stream-connect"><span className="live-eyebrow">Live D</span><h1>Follow your agent.</h1><p>Enter its public registration ID to open the stream. Verify your wallet separately to send private wishes.</p><form onSubmit={(e) => { e.preventDefault(); const id = input.trim(); if (!validRecord(id)) { setError('Enter the 64-character public agent ID.'); return } setError(''); setRecord(id) }}><label htmlFor="stream-agent">Public agent ID</label><input id="stream-agent" value={input} autoComplete="off" spellCheck={false} maxLength={64} onChange={(e) => setInput(e.target.value)} placeholder="64 lowercase hexadecimal characters" /><button className="owner-primary">Open public stream</button></form>{error && <p role="alert">{error}</p>}<Link to="/live" className="live-back">← Animation demo</Link></section>}
+    : record ? <ConnectedStream key={record} record={record} onChange={changeAgent} /> : <section className="stream-connect"><span className="live-eyebrow">Live D</span><h1>Follow your agent.</h1><p>Paste the personal stream link from its owner, or enter the public agent ID. Watching is public; wallet verification is only for private wishes. Running an agent is separate: keep its runner credentials with the runner, then share this public link.</p><form onSubmit={(e) => { e.preventDefault(); void openAgent(input) }}><label htmlFor="stream-agent">Agent link or public ID</label><input id="stream-agent" value={input} autoComplete="off" spellCheck={false} maxLength={512} onChange={(e) => setInput(e.target.value)} placeholder="https://alashi.network/stream?agent=…" /><button className="owner-primary" disabled={opening}>{opening ? 'Checking agent…' : 'Open public stream'}</button></form>{error && <p role="alert">{error}</p>}<Link to="/live" className="live-back">← Animation demo</Link></section>}
   </main>
 }

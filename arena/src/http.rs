@@ -10,6 +10,7 @@ pub struct Request {
     pub body: Vec<u8>,
     pub authorization: Option<String>,
     pub origin: Option<String>,
+    pub cookie: Option<String>,
 }
 
 const MAX_HEAD: usize = 16 * 1024;
@@ -56,6 +57,7 @@ fn parse_request(reader: &mut impl BufRead) -> Option<Request> {
     let mut content_length = None;
     let mut authorization = None;
     let mut origin = None;
+    let mut cookie = None;
     loop {
         let h = header_line(reader, &mut remaining)?;
         if h == "\r\n" { break; }
@@ -77,19 +79,30 @@ fn parse_request(reader: &mut impl BufRead) -> Option<Request> {
             let value = value.trim();
             if value.is_empty() || value.len() > 256 || !value.is_ascii() || value.bytes().any(|b| b.is_ascii_control()) { return None; }
             origin = Some(value.to_string());
+        } else if key.eq_ignore_ascii_case("cookie") {
+            if cookie.is_some() { return None; }
+            let value = value.trim();
+            if value.len() > 4096 || !value.is_ascii() || value.bytes().any(|b| b.is_ascii_control()) { return None; }
+            cookie = Some(value.to_string());
         }
     }
     let length = content_length.unwrap_or(0);
     if length > MAX_BODY { return None; }
     let mut body = vec![0; length];
     reader.read_exact(&mut body).ok()?;
-    Some(Request { method, path, body, authorization, origin })
+    Some(Request { method, path, body, authorization, origin, cookie })
 }
 
 pub fn respond(stream: &mut TcpStream, status: &str, body: &str) {
+    respond_with_cookie(stream, status, body, None);
+}
+
+/// The cookie header is constructed only from a validated record id and a server token.
+pub fn respond_with_cookie(stream: &mut TcpStream, status: &str, body: &str, cookie: Option<&str>) {
+    let set_cookie = cookie.map(|v| format!("Set-Cookie: {v}\r\n")).unwrap_or_default();
     let _ = stream.write_all(
         format!(
-            "HTTP/1.1 {status}\r\nContent-Type: application/json\r\nCache-Control: no-store\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{}",
+            "HTTP/1.1 {status}\r\nContent-Type: application/json\r\nCache-Control: no-store\r\n{set_cookie}Content-Length: {}\r\nConnection: close\r\n\r\n{}",
             body.len(),
             body
         )
@@ -137,6 +150,17 @@ mod tests {
             "GET / HTTP/1.1\r\nAuthorization: Basic abc\r\n\r\n",
             "GET / HTTP/1.1\r\nOrigin: https://a\r\nOrigin: https://b\r\n\r\n",
         ] { assert!(parse_request(&mut Cursor::new(bad)).is_none()); }
+    }
+
+    #[test]
+    fn cookie_header_is_single_and_bounded() {
+        let req = parse_request(&mut Cursor::new(
+            "GET /agents/x/owner/browser/session HTTP/1.1\r\nCookie: a=1; __Secure-alashi-owner=abc\r\n\r\n"
+        )).unwrap();
+        assert_eq!(req.cookie.as_deref(), Some("a=1; __Secure-alashi-owner=abc"));
+        assert!(parse_request(&mut Cursor::new(
+            "GET / HTTP/1.1\r\nCookie: a=1\r\nCookie: b=2\r\n\r\n"
+        )).is_none());
     }
 
     #[test]

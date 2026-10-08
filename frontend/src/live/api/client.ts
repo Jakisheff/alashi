@@ -14,10 +14,10 @@ export const WISH_STATUSES = ['received', 'consumed', 'replied', 'deferred', 'de
 export type Wish = { id: string; seq: number; statusSeq: number; gameId: number; text: string; status: typeof WISH_STATUSES[number]; reply: string | null; acceptedAt: number }
 export type WishPage = { wishes: Wish[]; cursor: number; lastSeq: number; remaining: Record<string, number> }
 export type Challenge = { id: string; wallet: string; message: string; issuedAt: number; expiresAt: number }
-export type OwnerSession = { token: string; expiresAt: number }
+export type OwnerSession = { wallet: string; expiresAt: number }
 export type Admission = { id: string; remaining: number }
 export type AgentSlot = { gameId: number; actor: number; phase: string; round: number }
-const codes = ['cursor_expired', 'cursor_ahead', 'owner_session_invalid', 'owner_session_expired', 'owner_signature_invalid', 'owner_origin_forbidden', 'owner_challenge_rate_limited', 'owner_challenge_expired', 'owner_challenge_invalid', 'owner_challenge_used', 'unknown_agent', 'registration_required', 'wish_quota_exhausted', 'no_active_game', 'idempotency_conflict', 'bad_wish', 'storage_failed']
+const codes = ['cursor_expired', 'cursor_ahead', 'owner_session_invalid', 'owner_session_expired', 'owner_cookie_invalid', 'owner_signature_invalid', 'owner_origin_forbidden', 'owner_challenge_rate_limited', 'owner_challenge_expired', 'owner_challenge_invalid', 'owner_challenge_used', 'unknown_agent', 'registration_required', 'wish_quota_exhausted', 'no_active_game', 'idempotency_conflict', 'bad_wish', 'storage_failed']
 export class LiveApiError extends Error {
   readonly code: string
   constructor(code: string) { super(code); this.name = 'LiveApiError'; this.code = code }
@@ -86,10 +86,10 @@ export function mergeWishes(previous: Wish[], next: Wish[]) {
 export function createLiveApi(prefix = '', fetcher: typeof fetch = fetch) {
   if (prefix && !/^\/[a-zA-Z0-9/_-]+$/.test(prefix)) throw new LiveApiError('invalid_api_path')
   const base = prefix.replace(/\/$/, '')
-  async function request(path: string, signal?: AbortSignal, body?: unknown, token?: string): Promise<Json> {
+  async function request(path: string, signal?: AbortSignal, body?: unknown, browserSession = false): Promise<Json> {
     let response: Response
     try {
-      response = await fetcher(`${base}${path}`, { method: body === undefined ? 'GET' : 'POST', credentials: 'omit', cache: 'no-store', redirect: 'error', referrerPolicy: 'no-referrer', signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(10_000)]) : AbortSignal.timeout(10_000), headers: { Accept: 'application/json', ...(body === undefined ? {} : { 'Content-Type': 'application/json' }), ...(token ? { Authorization: `Bearer ${token}` } : {}) }, ...(body === undefined ? {} : { body: JSON.stringify(body) }) })
+      response = await fetcher(`${base}${path}`, { method: body === undefined ? 'GET' : 'POST', credentials: browserSession ? 'include' : 'omit', cache: 'no-store', redirect: 'error', referrerPolicy: 'no-referrer', signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(10_000)]) : AbortSignal.timeout(10_000), headers: { Accept: 'application/json', ...(body === undefined ? {} : { 'Content-Type': 'application/json' }) }, ...(body === undefined ? {} : { body: JSON.stringify(body) }) })
     } catch { if (signal?.aborted) throw new DOMException('Aborted', 'AbortError'); throw new LiveApiError('network') }
     let v: Json
     try { v = object(await response.json()) } catch { throw new LiveApiError('unavailable') }
@@ -101,10 +101,11 @@ export function createLiveApi(prefix = '', fetcher: typeof fetch = fetch) {
     profile: async (id: string, signal?: AbortSignal): Promise<AgentSlot[]> => { const v = await request(`/agents/${record(id)}`, signal); if (v.agent_record_id !== id || v.registered !== true) throw new LiveApiError('invalid_response'); return array(v.active_slots).map((raw) => { const slot = object(raw); return { gameId: number(slot.game_id), actor: number(slot.faction_idx), phase: string(slot.phase, 32), round: number(slot.round) } }) },
     public: async (id: string, after: number, signal?: AbortSignal) => projectPublicPage(await request(`/agents/${record(id)}/live/events?after=${number(after)}&limit=100`, signal)),
     challenge: async (id: string, signal?: AbortSignal): Promise<Challenge> => { const v = await request(`${owner(id)}/challenge`, signal, {}); return { id: string(v.challenge_id, 128), wallet: string(v.wallet, 64), message: string(v.message, 1024), issuedAt: number(v.issued_at), expiresAt: number(v.expires_at) } },
-    session: async (id: string, challengeId: string, signature: string, signal?: AbortSignal): Promise<OwnerSession> => { const v = await request(`${owner(id)}/session`, signal, { challenge_id: challengeId, signature }); return { token: string(v.owner_session, 256), expiresAt: number(v.expires_at) } },
-    revoke: async (id: string, token: string) => { await request(`${owner(id)}/revoke`, undefined, {}, token) },
-    wishes: async (id: string, token: string, after: number, signal?: AbortSignal) => projectWishes(await request(`${owner(id)}/wishes?after=${number(after)}&limit=100`, signal, undefined, token)),
-    submit: async (id: string, token: string, wish: { game_id: number; client_wish_id: string; text: string }, signal?: AbortSignal): Promise<Admission> => { const v = await request(`${owner(id)}/wishes`, signal, wish, token); const remaining = number(v.remaining); if (remaining > 3) throw new LiveApiError('invalid_response'); return { id: string(v.wish_id, 128), remaining } },
+    browserSession: async (id: string, challengeId: string, signature: string, signal?: AbortSignal): Promise<{ expiresAt: number }> => { const v = await request(`${owner(id)}/browser/session`, signal, { challenge_id: challengeId, signature }, true); return { expiresAt: number(v.expires_at) } },
+    restoreBrowserSession: async (id: string, signal?: AbortSignal): Promise<OwnerSession> => { const v = await request(`${owner(id)}/browser/session`, signal, undefined, true); return { wallet: string(v.wallet, 64), expiresAt: number(v.expires_at) } },
+    logoutBrowserSession: async (id: string, signal?: AbortSignal) => { await request(`${owner(id)}/browser/logout`, signal, {}, true) },
+    wishes: async (id: string, after: number, signal?: AbortSignal) => projectWishes(await request(`${owner(id)}/wishes?after=${number(after)}&limit=100`, signal, undefined, true)),
+    submit: async (id: string, wish: { game_id: number; client_wish_id: string; text: string }, signal?: AbortSignal): Promise<Admission> => { const v = await request(`${owner(id)}/wishes`, signal, wish, true); const remaining = number(v.remaining); if (remaining > 3) throw new LiveApiError('invalid_response'); return { id: string(v.wish_id, 128), remaining } },
   }
 }
 export type LiveApi = ReturnType<typeof createLiveApi>
@@ -115,7 +116,7 @@ export function friendlyError(error: unknown) {
     network: 'Connection interrupted. Try again when the connection returns.', unavailable: 'The live service is unavailable. Please try again.', invalid_response: 'The live service returned an unexpected response.',
     invalid_agent: 'Enter a registered agent ID (64 lowercase hexadecimal characters).', unknown_agent: 'This agent is not registered.', registration_required: 'This agent needs a confirmed registration.',
     owner_origin_forbidden: 'Owner access is not enabled for this site yet.', owner_signature_invalid: 'The signature could not be verified.',
-    owner_session_invalid: 'Your owner session ended. Verify your wallet again.', owner_session_expired: 'Your owner session expired. Verify your wallet again.',
+    owner_session_invalid: 'No active private browser session was found. Verify the registered wallet.', owner_session_expired: 'Your private browser session ended. Verify the registered wallet again.', owner_cookie_invalid: 'This private browser session is no longer valid. Verify the registered wallet again.', browser_cookie_missing: 'Browser sign-in could not be saved. Allow cookies for this site and try again.',
     owner_challenge_rate_limited: 'Too many verification attempts. Please wait a few minutes.', owner_challenge_expired: 'The verification request expired. Please try again.',
     wish_quota_exhausted: 'All three wishes for this game have been used.', no_active_game: 'This agent is no longer in that active game. Refresh its private journal.',
     idempotency_conflict: 'This submission ID was already used. Refresh the journal before trying a new wish.',
