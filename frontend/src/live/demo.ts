@@ -14,7 +14,7 @@ export type DemoEvent = {
   to?: string
   reply_to_message_id?: string
   clip?: GenieClip
-  action?: 'sell'
+  action?: 'sell' | 'buy'
   actor?: 'alpha'
   ok?: boolean
 }

@@ -2,10 +2,15 @@ import { Component, lazy, Suspense, useCallback, useEffect, useRef, useState, ty
 import { Link } from '@tanstack/react-router'
 import { useScene } from '../store'
 import { demoState, formatDuration, SCENARIOS, type Scenario } from './demo'
-import { MarketSale, SALE_SECONDS, type SaleEntry, type SalePreview } from './sale/MarketSale'
+import { MarketTrade, TRADE_SECONDS, type TradeAction, type TradeEntry, type TradePreview } from './market/MarketTrade'
+import { ScenarioAction, ACTION_SECONDS, ACTION_META, actionStageAt, type ScenarioActionName } from './actions'
+import { LivingGenie, REACTION_SECONDS, REACTION_KEYFRAMES, type ReactionKind, type ReactionPreview } from './reactions'
 import './live.css'
 
 const Scene = lazy(() => import('../genie/Scene'))
+type PreviewAction = TradeAction | ScenarioActionName
+type ActionPreview = Omit<TradePreview, 'action'> & { action: PreviewAction }
+const isScenario = (action: PreviewAction): action is ScenarioActionName => action === 'mule' || action === 'bribe' || action === 'vote'
 const clock = (time: number) => new Date(time).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
 
 class HeroBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
@@ -25,11 +30,14 @@ export default function LivePage() {
   const [session, setSession] = useState(() => Date.now())
   const [now, setNow] = useState(() => Date.now())
   const [following, setFollowing] = useState(true)
-  const [sale, setSale] = useState<SalePreview | null>(null)
-  const [saleTime, setSaleTime] = useState(0)
-  const [saleEntry, setSaleEntry] = useState<SaleEntry>('bottom')
-  const saleTake = useRef(0)
-  const finishSale = useCallback(() => setSale((s) => s ? { ...s, playing: false } : null), [])
+  const [trade, setTrade] = useState<ActionPreview | null>(null)
+  const [reaction, setReaction] = useState<ReactionPreview | null>(null)
+  const [reactionTime, setReactionTime] = useState(0)
+  const finishReaction = useCallback(() => setReaction((s) => s ? { ...s, playing: false } : null), [])
+  const [tradeTime, setTradeTime] = useState(0)
+  const [tradeEntry, setTradeEntry] = useState<TradeEntry>('bottom')
+  const tradeTake = useRef(0)
+  const finishTrade = useCallback(() => setTrade((s) => s ? { ...s, playing: false } : null), [])
   const feed = useRef<HTMLDivElement>(null)
   const lastSpoken = useRef('')
   const state = demoState(scenario, elapsed)
@@ -73,10 +81,10 @@ export default function LivePage() {
   }, [latestSpeech, session])
 
   useEffect(() => {
-    if (latest?.kind === 'game_action' && latest.action === 'sell' && latest.actor === 'alpha' && latest.ok === true) {
-      setSale({ take: ++saleTake.current, playing: true, speed: 1, entry: 'bottom', seek: null })
-      setSaleTime(0)
-      useScene.getState().say('Selling goods.')
+    if (latest?.kind === 'game_action' && (latest.action === 'sell' || latest.action === 'buy') && latest.actor === 'alpha' && latest.ok === true) {
+      setTrade({ action: latest.action, take: ++tradeTake.current, playing: true, speed: 1, entry: 'bottom', seek: null })
+      setTradeTime(0)
+      useScene.getState().say(latest.action === 'buy' ? 'Buying goods.' : 'Selling goods.')
     } else if (latest && !latest.host && latest.clip) useScene.getState().play(latest.clip)
   }, [latest, session])
 
@@ -91,17 +99,36 @@ export default function LivePage() {
     lastSpoken.current = ''
     setRunning(true)
     setFollowing(true)
-    setSale(null)
+    setTrade(null)
+    setReaction(null)
     useScene.getState().play('idle')
     useScene.getState().say('')
   }
 
-  const previewSale = () => {
+  const previewTrade = (action: PreviewAction) => {
+    setReaction(null)
     setRunning(false)
-    setSaleTime(0)
-    setSale({ take: ++saleTake.current, playing: true, speed: 1, entry: saleEntry, seek: null })
-    useScene.getState().say('Selling goods.')
+    setTradeTime(0)
+    setTrade({ action, take: ++tradeTake.current, playing: true, speed: 1, entry: tradeEntry, seek: null })
+    useScene.getState().say(isScenario(action) ? actionStageAt(action, 0).text : action === 'buy' ? 'Deal. Take my coin.' : 'Selling goods.')
   }
+
+  const previewReaction = (kind: ReactionKind) => {
+    setRunning(false); setTrade(null); setReactionTime(0)
+    setReaction({ kind, take: ++tradeTake.current, playing: true, speed: 1, seek: null })
+    useScene.getState().say('')
+  }
+  const duration = trade && isScenario(trade.action) ? ACTION_SECONDS : TRADE_SECONDS
+  const scenarioStage = trade && isScenario(trade.action) ? actionStageAt(trade.action, tradeTime) : null
+  const tradeStage = !trade ? '' : scenarioStage ? (tradeTime < 6.5 ? scenarioStage.label : '') : tradeTime >= 5.5 ? '' : trade.action === 'buy'
+    ? tradeTime < 2.7 ? 'Paying' : tradeTime < 3.65 ? 'Receiving' : 'Purchased'
+    : tradeTime < 2.8 ? 'Offering' : tradeTime < 3.65 ? 'Payment' : 'Sold'
+  useEffect(() => {
+    if (scenarioStage) { useScene.getState().say(scenarioStage.text); return }
+    if (tradeStage === 'Paying') useScene.getState().say('Deal. Take my coin.')
+    if (tradeStage === 'Receiving') useScene.getState().say('Careful... got it!')
+    if (tradeStage === 'Purchased') useScene.getState().say('Mine. Excellent.')
+  }, [tradeStage, trade?.take, scenarioStage])
 
   return (
     <main className="live-page" lang="en">
@@ -128,8 +155,9 @@ export default function LivePage() {
 
           <div className="live-hero">
             <HeroBoundary><Suspense fallback={<p className="live-hero-fallback">Loading Degenie…</p>}><Scene frozen={null} background="#102c25" interactive={false}>
-              {sale ? <MarketSale preview={sale} onTime={setSaleTime} onFinished={finishSale} /> : undefined}
+              {trade ? isScenario(trade.action) ? <ScenarioAction preview={{ ...trade, action: trade.action }} onTime={setTradeTime} onFinished={finishTrade} /> : <MarketTrade preview={{ ...trade, action: trade.action }} onTime={setTradeTime} onFinished={finishTrade} /> : <LivingGenie reaction={reaction} onTime={setReactionTime} onFinished={finishReaction} />}
             </Scene></Suspense></HeroBoundary>
+            {tradeStage && <div className="live-trade-stage" aria-live="polite"><span>{trade?.action.toUpperCase()}</span>{tradeStage}</div>}
           </div>
 
           <div className="live-transcript">
@@ -175,29 +203,42 @@ export default function LivePage() {
             <div className="live-playback-meta"><span>{ended ? 'Demo finished' : running ? 'Playing' : 'Paused'} · {formatDuration(elapsed)}</span><span>Classic: 30s + 3s grace</span></div>
           </div>
 
-          <div className="live-sale-controls" aria-label="Sale animation preview">
+          <div className="live-sale-controls" aria-label="Market animation preview">
             <span className="live-control-label">Animation preview · local</span>
             <div className="live-sale-launch">
-              <button onClick={previewSale}>{sale ? '↻ Replay sale' : '▶ Market sale'}</button>
-              <label>Entrance<select aria-label="Prop entrance" value={saleEntry} onChange={(e) => {
-                const entry = e.target.value as SaleEntry
-                setSaleEntry(entry)
-                setSale((s) => s ? { ...s, entry } : null)
+              <button aria-pressed={trade?.action === 'buy'} onClick={() => previewTrade('buy')}>{trade?.action === 'buy' ? '↻ Replay Buy' : '▶ Buy'}</button>
+              <button aria-pressed={trade?.action === 'sell'} onClick={() => previewTrade('sell')}>{trade?.action === 'sell' ? '↻ Replay Sell' : '▶ Sell'}</button>
+              {(['mule', 'bribe', 'vote'] as const).map((action) => <button key={action} aria-pressed={trade?.action === action} onClick={() => previewTrade(action)}>{trade?.action === action ? '↻ Replay ' : '▶ '}{ACTION_META[action].label}</button>)}
+              <label>Entrance<select aria-label="Prop entrance" value={tradeEntry} onChange={(e) => {
+                const entry = e.target.value as TradeEntry
+                setTradeEntry(entry)
+                setTrade((s) => s ? { ...s, entry } : null)
               }}><option value="bottom">From below</option><option value="side">From the right</option></select></label>
             </div>
-            {sale && <>
+            {trade && <>
               <div className="live-sale-timeline">
-                <button aria-label={sale.playing ? 'Pause sale animation' : 'Resume sale animation'} onClick={() => setSale((s) => s ? { ...s, playing: !s.playing, seek: null } : null)}>{sale.playing ? 'Ⅱ' : '▶'}</button>
-                <input aria-label="Sale frame" type="range" min={0} max={SALE_SECONDS} step={.01} value={saleTime} onChange={(e) => {
+                <button aria-label={trade.playing ? 'Pause trade animation' : 'Resume trade animation'} onClick={() => tradeTime >= duration ? previewTrade(trade.action) : setTrade((s) => s ? { ...s, playing: !s.playing, seek: null } : null)}>{trade.playing ? 'Ⅱ' : '▶'}</button>
+                <input aria-label="Trade frame" type="range" min={0} max={duration} step={.01} value={tradeTime} onChange={(e) => {
                   const t = Number(e.target.value)
-                  setSaleTime(t)
-                  setSale((s) => s ? { ...s, playing: false, seek: t } : null)
+                  setTradeTime(t)
+                  setTrade((s) => s ? { ...s, playing: false, seek: t } : null)
                 }} />
-                <output>{saleTime.toFixed(1)} s</output>
+                <output>{tradeTime.toFixed(1)} s</output>
               </div>
-              <button className="live-sale-close" onClick={() => { setSale(null); useScene.getState().say(''); useScene.getState().play('idle') }}>Close preview</button>
+              <button className="live-sale-close" onClick={() => { setTrade(null); useScene.getState().say(''); useScene.getState().play('idle') }}>Close preview</button>
             </>}
-            <p>Counter → crate to the buyer → coin in return. Props appear only during the sale.</p>
+            <p>{trade && isScenario(trade.action) ? trade.action === 'mule' ? 'Conceal the parcel → carry the cargo → a quiet handoff.' : trade.action === 'bribe' ? 'Meet the official → offer the envelope → a discreet exchange.' : 'Lift the ballot → line it up → drop it into the box.' : trade?.action === 'buy' ? 'Coin to the seller → catch the crate → enjoy the purchase.' : 'Crate to the buyer → coin in return → a cheeky wink.'} Props appear only during the action.</p>
+          </div>
+
+          <div className="live-sale-controls" aria-label="Reaction preview">
+            <span className="live-control-label">Body language · local preview</span>
+            <div className="live-sale-launch">{(['thumbsUp', 'realization', 'facepalm'] as const).map((kind) => <button key={kind} aria-pressed={reaction?.kind === kind} onClick={() => previewReaction(kind)}>{kind === 'thumbsUp' ? 'Thumbs up' : kind === 'realization' ? 'Realization' : 'Facepalm'}</button>)}</div>
+            {reaction && <>
+              <div className="live-sale-timeline"><button aria-label={reaction.playing ? 'Pause reaction' : 'Resume reaction'} onClick={() => reactionTime >= REACTION_SECONDS ? previewReaction(reaction.kind) : setReaction((s) => s ? { ...s, playing: !s.playing, seek: null } : null)}>{reaction.playing ? 'Ⅱ' : '▶'}</button><input aria-label="Reaction frame" type="range" min={0} max={REACTION_SECONDS} step={.01} value={reactionTime} onChange={(e) => { const t = Number(e.target.value); setReactionTime(t); setReaction((s) => s ? { ...s, playing: false, seek: t } : null) }} /><output>{reactionTime.toFixed(1)} s</output></div>
+              <div className="live-sale-launch">{REACTION_KEYFRAMES[reaction.kind].map((frame) => <button key={frame.time} onClick={() => { setReactionTime(frame.time); setReaction((s) => s ? { ...s, playing: false, seek: frame.time } : null) }}>{frame.time}s · {frame.label}</button>)}</div>
+              <button className="live-sale-close" onClick={() => setReaction(null)}>Return to living idle</button>
+            </>}
+            <p>Glances and gentle whole-body movement continue between actions. Meaningful reactions need an explicit agent cue.</p>
           </div>
 
           <dl className="live-statuses">

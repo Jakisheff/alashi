@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as GraphRouteImport } from './routes/graph'
 import { Route as LiveRouteImport } from './routes/live'
 import { Route as LogRouteImport } from './routes/log'
+import { Route as StreamRouteImport } from './routes/stream'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,18 +35,25 @@ const LogRoute = LogRouteImport.update({
   path: '/log',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StreamRoute = StreamRouteImport.update({
+  id: '/stream',
+  path: '/stream',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/graph': typeof GraphRoute
   '/live': typeof LiveRoute
   '/log': typeof LogRoute
+  '/stream': typeof StreamRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/graph': typeof GraphRoute
   '/live': typeof LiveRoute
   '/log': typeof LogRoute
+  '/stream': typeof StreamRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +61,14 @@ export interface FileRoutesById {
   '/graph': typeof GraphRoute
   '/live': typeof LiveRoute
   '/log': typeof LogRoute
+  '/stream': typeof StreamRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/graph' | '/live' | '/log'
+  fullPaths: '/' | '/graph' | '/live' | '/log' | '/stream'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/graph' | '/live' | '/log'
-  id: '__root__' | '/' | '/graph' | '/live' | '/log'
+  to: '/' | '/graph' | '/live' | '/log' | '/stream'
+  id: '__root__' | '/' | '/graph' | '/live' | '/log' | '/stream'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +76,7 @@ export interface RootRouteChildren {
   GraphRoute: typeof GraphRoute
   LiveRoute: typeof LiveRoute
   LogRoute: typeof LogRoute
+  StreamRoute: typeof StreamRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +109,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LogRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/stream': {
+      id: '/stream'
+      path: '/stream'
+      fullPath: '/stream'
+      preLoaderRoute: typeof StreamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,6 +124,7 @@ const rootRouteChildren: RootRouteChildren = {
   GraphRoute: GraphRoute,
   LiveRoute: LiveRoute,
   LogRoute: LogRoute,
+  StreamRoute: StreamRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
