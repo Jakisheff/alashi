@@ -3,6 +3,12 @@
 //! фоновый поток по таймеру ИЛИ permissionless POST /advance (как ончейн).
 
 use crate::http::{read_request, respond, Request};
+#[path = "live.rs"]
+mod live;
+#[path = "owner_auth.rs"]
+mod owner_auth;
+#[path = "wishes.rs"]
+mod wishes;
 use crate::runner::{self, ActionLog};
 use crate::registration::{self, Proof, Receipt};
 use crate::strategies::{ActionAction, LawAction, MarketAction};
@@ -152,6 +158,9 @@ pub struct AppState {
     pub require_devnet_registration: bool,
     pub require_platform_v2: bool,
     pub registrations: Mutex<HashMap<String, RegisteredAgent>>,
+    live: Mutex<live::LiveState>,
+    owner_auth: Mutex<owner_auth::OwnerAuthState>,
+    wishes: Mutex<wishes::WishState>,
     proposal_key: Mutex<Option<String>>,
     snapshot_path: PathBuf,
     sequence_path: PathBuf,
@@ -187,13 +196,36 @@ fn hex_dec(s: &str) -> Option<Vec<u8>> {
         .collect()
 }
 
+// A parseable but incomplete private journal must not reset the three-wish
+// allowance after restart. The maps are redundant on purpose for idempotency;
+// require them to agree before serving owner writes.
+fn valid_wish_state(state: &wishes::WishState) -> bool {
+    let mut counts = HashMap::<String, u8>::new();
+    let mut admission_seqs = std::collections::HashSet::new();
+    let mut status_seqs = std::collections::HashSet::new();
+    if state.wishes.len() != state.idempotency.len() { return false; }
+    for (id, wish) in &state.wishes {
+        let key = format!("{}:{}:{}", wish.agent_record_id, wish.game_id, wish.client_wish_id);
+        if id != &wish.wish_id || state.idempotency.get(&key) != Some(id)
+            || wish.seq == 0 || wish.status_seq < wish.seq || wish.status_seq > state.next_seq
+            || wish.consumptions > 1 || !admission_seqs.insert(wish.seq)
+            || !status_seqs.insert(wish.status_seq) { return false; }
+        let game_key = format!("{}:{}", wish.agent_record_id, wish.game_id);
+        let count = counts.entry(game_key).or_default();
+        let Some(next) = count.checked_add(1) else { return false; };
+        *count = next;
+        if next > 3 { return false; }
+    }
+    counts == state.accepted_per_game
+}
+
 pub fn save_snapshot(state: &AppState) -> std::io::Result<()> {
     let _writer = state.snapshot_lock.lock().unwrap_or_else(|e| e.into_inner());
     save_snapshot_locked(state)
 }
 
 // Caller holds snapshot_lock for the full mutation -> save -> rollback cycle.
-fn save_snapshot_locked(state: &AppState) -> std::io::Result<()> {
+pub(super) fn save_snapshot_locked(state: &AppState) -> std::io::Result<()> {
     let games = state.games.lock().unwrap_or_else(|e| e.into_inner());
     let completed = state.completed.lock().unwrap_or_else(|e| e.into_inner());
     let arr: Vec<serde_json::Value> = games
@@ -233,6 +265,9 @@ fn save_snapshot_locked(state: &AppState) -> std::io::Result<()> {
         "master_seed": state.master_seed.load(Ordering::SeqCst),
         "games": arr,
         "registrations": *state.registrations.lock().unwrap_or_else(|e| e.into_inner()),
+        "live": *state.live.lock().unwrap_or_else(|e| e.into_inner()),
+        "owner_auth": *state.owner_auth.lock().unwrap_or_else(|e| e.into_inner()),
+        "wishes": *state.wishes.lock().unwrap_or_else(|e| e.into_inner()),
         "proposal_key": state.proposal_key.lock().unwrap_or_else(|e| e.into_inner()).clone(),
         "completed": completed.clone(),
         "completed_replay": *state.completed_replay.lock().unwrap_or_else(|e| e.into_inner()),
@@ -310,6 +345,25 @@ pub fn load_snapshot(state: &AppState) -> Result<(), String> {
                 || r.wallet != record.wallet || r.network != "devnet") {
             return fail("битая запись registry агентов".into());
         }
+    }
+    let mut live_state: live::LiveState = match doc.get("live") {
+        Some(value) => match serde_json::from_value(value.clone()) {
+            Ok(value) if live::validate(&value) => value,
+            _ => return fail("битый live journal".into()),
+        },
+        None => live::LiveState::default(),
+    };
+    live::clear_loaded_presence(&mut live_state);
+    let owner_auth_state: owner_auth::OwnerAuthState = match doc.get("owner_auth") {
+        Some(value) => serde_json::from_value(value.clone()).map_err(|_| "битый owner auth snapshot".to_string())?,
+        None => owner_auth::OwnerAuthState::default(),
+    };
+    let wish_state: wishes::WishState = match doc.get("wishes") {
+        Some(value) => serde_json::from_value(value.clone()).map_err(|_| "битый приватный wish journal".to_string())?,
+        None => wishes::WishState::default(),
+    };
+    if !valid_wish_state(&wish_state) {
+        return fail("несогласованный приватный wish journal или лимит".into());
     }
     let completed_replay: HashMap<u64, HashMap<String, CompletedSession>> =
         match doc.get("completed_replay") {
@@ -443,6 +497,9 @@ pub fn load_snapshot(state: &AppState) -> Result<(), String> {
             }
         }
         *state.registrations.lock().unwrap_or_else(|e| e.into_inner()) = registrations;
+        *state.live.lock().unwrap_or_else(|e| e.into_inner()) = live_state;
+        *state.owner_auth.lock().unwrap_or_else(|e| e.into_inner()) = owner_auth_state;
+        *state.wishes.lock().unwrap_or_else(|e| e.into_inner()) = wish_state;
         *state.proposal_key.lock().unwrap_or_else(|e| e.into_inner()) = proposal_key;
         *state.completed_replay.lock().unwrap_or_else(|e| e.into_inner()) = completed_replay;
         if let Some(arr) = doc["completed"].as_array() {
@@ -587,6 +644,28 @@ pub fn character_id_of(owner_id: &str, name: &str) -> String {
     h.finalize().iter().map(|b| format!("{:02x}", b)).collect()
 }
 
+pub(super) fn active_game_for_record(state: &AppState, record_id: &str, game_id: u64) -> bool {
+    state.games.lock().unwrap_or_else(|e| e.into_inner()).get(&game_id).is_some_and(|entry| {
+        !matches!(entry.sim.game.phase, Phase::Finished | Phase::Aborted)
+            && entry.agents.iter().any(|a| a.agent_record_id.as_deref() == Some(record_id))
+    })
+}
+
+pub(super) fn active_game_ids_for_record(state: &AppState, record_id: &str) -> Vec<u64> {
+    state.games.lock().unwrap_or_else(|e| e.into_inner()).iter()
+        .filter_map(|(&id, entry)| {
+            (!matches!(entry.sim.game.phase, Phase::Finished | Phase::Aborted)
+                && entry.agents.iter().any(|a| a.agent_record_id.as_deref() == Some(record_id))).then_some(id)
+        }).collect()
+}
+
+pub(super) fn game_record_for_token(state: &AppState, token: &str, game_id: u64) -> Option<String> {
+    state.games.lock().unwrap_or_else(|e| e.into_inner()).get(&game_id)
+        .filter(|entry| !matches!(entry.sim.game.phase, Phase::Finished | Phase::Aborted))
+        .and_then(|entry| entry.agents.iter().find(|a| agent_token_matches(a, token)))
+        .and_then(|agent| agent.agent_record_id.clone())
+}
+
 pub fn new_state() -> Arc<AppState> {
     new_state_with_files(
         state_file(),
@@ -604,6 +683,9 @@ pub fn new_state_with_files(snapshot_path: impl Into<PathBuf>, sequence_path: im
         require_devnet_registration: std::env::var("ALASHI_REQUIRE_DEVNET_REGISTRATION").as_deref() == Ok("1"),
         require_platform_v2: std::env::var("ALASHI_REQUIRE_PLATFORM_V2").as_deref() == Ok("1"),
         registrations: Mutex::new(HashMap::new()),
+        live: Mutex::new(live::LiveState::default()),
+        owner_auth: Mutex::new(owner_auth::OwnerAuthState::default()),
+        wishes: Mutex::new(wishes::WishState::default()),
         proposal_key: Mutex::new(None),
         snapshot_path: snapshot_path.into(),
         sequence_path: sequence_path.into(),
@@ -696,6 +778,7 @@ fn settle_and_record_locked(state: &AppState, game_id: u64) -> Result<(), Settle
     let mut replay = HashMap::new();
     let completed_before = state.completed.lock().unwrap_or_else(|e| e.into_inner()).clone();
     let replay_before = state.completed_replay.lock().unwrap_or_else(|e| e.into_inner()).clone();
+    let live_before = state.live.lock().unwrap_or_else(|e| e.into_inner()).clone();
     {
         let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
         if let Some(entry) = games.get_mut(&game_id) {
@@ -806,6 +889,7 @@ fn settle_and_record_locked(state: &AppState, game_id: u64) -> Result<(), Settle
                 "actions": entry.action_log,
                 "events": events,
             });
+            live::append_final(state, game_id, &v);
             rec = v.to_string();
         } else { return Err(SettlementFailure::Missing); }
         games.remove(&game_id);
@@ -839,6 +923,7 @@ fn settle_and_record_locked(state: &AppState, game_id: u64) -> Result<(), Settle
         state.games.lock().unwrap_or_else(|e| e.into_inner()).insert(game_id, backup);
         *state.completed.lock().unwrap_or_else(|e| e.into_inner()) = completed_before;
         *state.completed_replay.lock().unwrap_or_else(|e| e.into_inner()) = replay_before;
+        *state.live.lock().unwrap_or_else(|e| e.into_inner()) = live_before;
         return Err(SettlementFailure::Storage);
     }
     Ok(())
@@ -853,6 +938,7 @@ pub fn crank_once(state: &AppState) {
     let mut changed = false;
     let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
     let before = games.clone();
+    let live_before = state.live.lock().unwrap_or_else(|e| e.into_inner()).clone();
     for (&gid, entry) in games.iter_mut() {
         let seed = round_seed(state, gid, entry.sim.game.round);
         match entry.sim.game.phase {
@@ -897,7 +983,13 @@ pub fn crank_once(state: &AppState) {
             }
         }
     }
+    let changed_phases: Vec<u64> = games.iter().filter_map(|(&id, entry)| {
+        before.get(&id).filter(|old| live::phase_instance(id, old) != live::phase_instance(id, entry)).map(|_| id)
+    }).collect();
     drop(games);
+    for id in changed_phases {
+        if let Some(entry) = state.games.lock().unwrap_or_else(|e| e.into_inner()).get(&id) { live::append_phase(state, id, entry); }
+    }
     if !to_expire.is_empty() {
         changed = true;
         let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
@@ -908,6 +1000,7 @@ pub fn crank_once(state: &AppState) {
     if changed {
         if let Err(e) = save_snapshot_locked(state) {
             eprintln!("[ERROR] snapshot save after crank: {e}");
+            *state.live.lock().unwrap_or_else(|e| e.into_inner()) = live_before;
             *state.games.lock().unwrap_or_else(|e| e.into_inner()) = before;
             return;
         }
@@ -956,6 +1049,7 @@ fn state_json(game_id: u64, entry: &GameEntry) -> serde_json::Value {
         "settlement_error": entry.settlement_error,
         "label": entry.label,
         "phase": phase_name(g.phase),
+        "phase_instance_id": live::phase_instance(game_id, entry),
         "round": g.round,
         "entry_fee": entry.entry_fee,
         "phase_ends_at": g.phase_ends_at,
@@ -1210,11 +1304,14 @@ fn h_new_game_locked(state: &AppState, body: &serde_json::Value, managed_match: 
     let v = state_json(game_id, &entry);
     games.insert(game_id, entry);
     drop(games);
+    let live_before = state.live.lock().unwrap_or_else(|e| e.into_inner()).clone();
+    if let Some(entry) = state.games.lock().unwrap_or_else(|e| e.into_inner()).get(&game_id) { live::append_phase(state, game_id, entry); }
     // Аудит 27.09 (S4): создание подтверждается только устойчивой записью.
     // party_no уже расходуется в файле последовательности: при сбое диска
     // номер пропускается, партия не создаётся наполовину.
     if let Err(e) = save_snapshot_locked(state) {
         eprintln!("[ERROR] snapshot save after create: {e}");
+        *state.live.lock().unwrap_or_else(|e| e.into_inner()) = live_before;
         state
             .games
             .lock()
@@ -1501,7 +1598,15 @@ fn h_join_v2(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_
             "faction_idx":faction_idx,"registration":record.receipt,"state":view})
     };
     drop(games);
+    let live_before = state.live.lock().unwrap_or_else(|e| e.into_inner()).clone();
+    live::joined(state, id, game_id);
+    if let Some(entry) = state.games.lock().unwrap_or_else(|e| e.into_inner()).get(&game_id) {
+        if live::phase_instance(game_id, &backup) != live::phase_instance(game_id, entry) {
+            live::append_phase(state, game_id, entry);
+        }
+    }
     if let Err(e) = save_snapshot_locked(state) {
+        *state.live.lock().unwrap_or_else(|e| e.into_inner()) = live_before;
         eprintln!("[ERROR] snapshot save after join v2: {e}");
         state.games.lock().unwrap_or_else(|e| e.into_inner()).insert(game_id, backup);
         return err_json("storage_failed", "join v2 не сохранён");
@@ -1981,9 +2086,15 @@ fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json
         let games = state.games.lock().unwrap_or_else(|e| e.into_inner());
         games.get(&game_id).cloned()
     };
+    let live_before = state.live.lock().unwrap_or_else(|e| e.into_inner()).clone();
     let mut response = h_act_inner(state, game_id, body);
     if response.get("action_log").is_none() {
         return op_response(response, op_id, false);
+    }
+    if response["action_log"]["ok"] == true {
+        if let Some(entry) = state.games.lock().unwrap_or_else(|e| e.into_inner()).get(&game_id) {
+            live::append_action(state, game_id, entry);
+        }
     }
     response = op_response(response, op_id, op_id.is_some());
     if let (Some(id), Some(agent_id), Some(hash)) = (op_id, v2_id, request_hash) {
@@ -1995,12 +2106,43 @@ fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json
     }
     if let Err(e) = save_snapshot_locked(state) {
         eprintln!("[ERROR] snapshot save after act: {e}");
+        *state.live.lock().unwrap_or_else(|e| e.into_inner()) = live_before;
         if let Some(entry) = backup {
             state.games.lock().unwrap_or_else(|e| e.into_inner()).insert(game_id, entry);
         }
         return op_response(err_json("storage_failed", "изменение не сохранено; повтори запрос"), op_id, false);
     }
     response
+}
+
+// The accepted action log is public. Persist only fields that the named rule
+// actually reads, with their rule-level primitive types; an LLM's extra JSON
+// keys must never become a covert channel for an owner's private wish.
+fn public_action_params(action: &str, params: &serde_json::Value) -> serde_json::Value {
+    let keys: &[&str] = match action {
+        "sell" | "sell_credit" | "buy" => &["units"],
+        "roof" => &["to", "tariff"],
+        "customs" => &["tight"],
+        "bid_license" => &["amount"],
+        "offer_vote" => &["to", "price"],
+        "barter_propose" => &["goods", "price", "to"],
+        "barter_accept" => &["offer"],
+        "bribe" => &["to", "amount"],
+        "vote" => &["choice"],
+        _ => &[],
+    };
+    let mut out = serde_json::Map::new();
+    for &key in keys {
+        let Some(value) = params.get(key) else { continue; };
+        let safe = match key {
+            "tariff" => value.as_str().filter(|v| matches!(*v, "black" | "red")).map(|v| serde_json::json!(v)),
+            "choice" => value.as_str().filter(|v| matches!(*v, "yes" | "no" | "abstain")).map(|v| serde_json::json!(v)),
+            "tight" => value.as_bool().map(|v| serde_json::json!(v)),
+            _ => value.as_u64().map(|v| serde_json::json!(v)),
+        };
+        if let Some(value) = safe { out.insert(key.to_string(), value); }
+    }
+    serde_json::Value::Object(out)
 }
 
 fn h_act_inner(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json::Value {
@@ -2257,7 +2399,7 @@ fn h_act_inner(state: &AppState, game_id: u64, body: &serde_json::Value) -> serd
         "phase": phase_name(entry.sim.game.phase),
         "actor": idx,
         "action": action,
-        "params": if ok { p } else { serde_json::Value::Null },
+        "params": if ok { public_action_params(action, &p) } else { serde_json::Value::Null },
         "by": by,
         "ok": ok,
         "err": err,
@@ -2307,17 +2449,20 @@ fn h_advance(state: &AppState, game_id: u64) -> serde_json::Value {
     let closing = (entry.sim.game.phase, entry.sim.game.round, entry.sim.game.law_card);
     // Аудит 27.09 (S4): копия для отката при сбое записи
     let backup = entry.clone();
+    let live_before = state.live.lock().unwrap_or_else(|e| e.into_inner()).clone();
     match entry.sim.advance(t, seed) {
         Ok(_) => {
             entry.sim.game.phase_ends_at = t.saturating_add(entry.sim.game.phase_duration);
             record_phase_close(entry, closing);
             let finished = entry.sim.game.phase == Phase::Finished;
             let v = state_json(game_id, entry);
+            live::append_phase(state, game_id, entry);
             drop(games);
             if finished {
                 match settle_and_record_locked(state, game_id) {
                     Ok(()) => {}
                     Err(SettlementFailure::Storage) => {
+                        *state.live.lock().unwrap_or_else(|e| e.into_inner()) = live_before;
                         state.games.lock().unwrap_or_else(|e| e.into_inner()).insert(game_id, backup);
                         return err_json("storage_failed", "изменение не принято: не удалось записать состояние на диск; повтори запрос");
                     }
@@ -2327,6 +2472,7 @@ fn h_advance(state: &AppState, game_id: u64) -> serde_json::Value {
                 }
             } else if let Err(e) = save_snapshot_locked(state) {
                 eprintln!("[ERROR] snapshot save after advance: {e}");
+                *state.live.lock().unwrap_or_else(|e| e.into_inner()) = live_before;
                 state
                     .games
                     .lock()
@@ -2689,6 +2835,20 @@ fn root_doc(state: &AppState) -> serde_json::Value {
             "GET /agents/:record_id": "confirmed public identity and active game slots, without credentials",
             "POST /agents/match": "confirmed agent identity/secret → existing slot or bounded public lobby",
             "GET /agents/capabilities": "versioned platform contract",
+            "POST /agents/:id/live/session": "v2 recovery secret -> harness-only stream token; never send this secret to browser",
+            "POST /agents/:id/live/revoke": "v2 recovery secret revokes stream token",
+            "POST /agents/:id/live/presence": "harness token renews public connected lease",
+            "POST /agents/:id/live/messages": "voluntary ambient public agent message",
+            "GET /agents/:id/live/events?after=&limit=": "public personal timeline and addressed messages",
+            "POST /game/:id/live/messages": "voluntary public game-room message with v2 game token and phase instance",
+            "GET /game/:id/live/events?after=&limit=": "public game-room journal cursor",
+            "POST /agents/:id/owner/challenge": "exact-origin off-chain registered-wallet signMessage challenge",
+            "POST /agents/:id/owner/session": "signed challenge -> owner-only bearer session",
+            "POST /agents/:id/owner/revoke": "revoke owner-only bearer session",
+            "POST /agents/:id/owner/wishes": "bearer-only private wish admission, three per agent/game",
+            "GET /agents/:id/owner/wishes?after=&limit=": "bearer-only private status cursor and remaining allowance",
+            "POST /game/:id/owner/wishes/claim": "harness game token claims private wish lease",
+            "POST /game/:id/owner/wishes/:wish_id/status": "harness game token reports private processing status",
             "POST /game/:id/registration": "legacy v1 game-bound Memo proposal",
             "POST /game/:id/join": "v2: agent_record_id/recovery_secret/name/model/strategy_hash → game token; legacy v1: name/model/prompt/registration",
             "GET  /game/:id/state": "публичное состояние партии; recent_actions[].seq/event_id стабильны после рестарта; recent_actions_range.first_seq/last_seq — окно ответа, retained_first_seq — начало сохранённого журнала",
@@ -2706,6 +2866,41 @@ fn root_doc(state: &AppState) -> serde_json::Value {
     })
 }
 
+fn owner_query(raw: &str) -> Result<(u64, usize), &'static str> {
+    let mut after = 0;
+    let mut limit = 100;
+    if let Some((_,query)) = raw.split_once('?') {
+        let mut seen = std::collections::HashSet::new();
+        for pair in query.split('&') {
+            let (key,value) = pair.split_once('=').ok_or("bad_cursor")?;
+            if !seen.insert(key) { return Err("bad_cursor"); }
+            match key {
+                "after" => after = value.parse().map_err(|_| "bad_cursor")?,
+                "limit" => limit = value.parse().map_err(|_| "bad_cursor")?,
+                _ => return Err("bad_cursor"),
+            }
+        }
+    }
+    if !(1..=100).contains(&limit) { return Err("bad_limit"); }
+    Ok((after,limit))
+}
+
+fn live_result(value: serde_json::Value) -> (&'static str, String) {
+    let status = match value["error"].as_str() {
+        None => "200 OK",
+        Some("bad_token" | "bad_credentials") => "401 Unauthorized",
+        Some("message_conflict" | "cursor_expired" | "stale_context") => "409 Conflict",
+        Some("rate_limited" | "budget_exhausted") => "429 Too Many Requests",
+        Some("storage_failed") => "503 Service Unavailable",
+        Some("owner_origin_forbidden" | "wish_forbidden") => "403 Forbidden",
+        Some("owner_session_invalid" | "owner_session_expired" | "game_token_invalid" | "owner_signature_invalid") => "401 Unauthorized",
+        Some("idempotency_conflict" | "wish_status_conflict" | "no_active_game") => "409 Conflict",
+        Some("wish_quota_exhausted" | "owner_challenge_rate_limited") => "429 Too Many Requests",
+        Some(_) => "400 Bad Request",
+    };
+    (status, value.to_string())
+}
+
 pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
     let path = req.path.split('?').next().unwrap_or("").to_string();
     let segs: Vec<&str> = path
@@ -2713,6 +2908,11 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
         .split('/')
         .filter(|s| !s.is_empty())
         .collect();
+    if req.method == "OPTIONS" || (req.method == "POST" && req.path.contains('?')
+        && (path.contains("/owner/") || path.contains("/live/"))) {
+        respond(stream, "403 Forbidden", &err_json("method_or_query_forbidden", "owner/live requests use allowed methods and no URL credentials").to_string());
+        return;
+    }
     let body_v = if req.method == "POST" {
         match serde_json::from_slice::<serde_json::Value>(&req.body) {
             Ok(value) if value.is_object() => value,
@@ -2739,7 +2939,51 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
             }
         }
     } else { None };
-    let (status, body) = match (req.method.as_str(), segs.as_slice()) {        ("GET", []) => ("200 OK", root_doc(state).to_string()),
+    let (status, body) = match (req.method.as_str(), segs.as_slice()) {
+        ("POST", ["agents", id, "owner", "challenge"]) => live_result(owner_auth::h_begin_owner_challenge(state,id,req.origin.as_deref().unwrap_or(""))),
+        ("POST", ["agents", id, "owner", "session"]) => live_result(owner_auth::h_finish_owner_challenge(state,id,req.origin.as_deref().unwrap_or(""),&body_v)),
+        ("POST", ["agents", id, "owner", "revoke"]) => live_result(owner_auth::h_revoke_owner_session(state,id,req.origin.as_deref().unwrap_or(""),req.authorization.as_deref().unwrap_or(""))),
+        ("POST", ["agents", id, "owner", "wishes"]) => live_result(wishes::h_submit_wish(state,id,req.origin.as_deref().unwrap_or(""),req.authorization.as_deref().unwrap_or(""),&body_v)),
+        ("GET", ["agents", id, "owner", "wishes"]) => match owner_query(&req.path) {
+            Ok((after,limit)) => live_result(wishes::h_owner_wishes_after(state,id,req.authorization.as_deref().unwrap_or(""),after,limit)),
+            Err(code) => live_result(err_json(code,code)),
+        },
+        ("POST", ["game", id, "owner", "wishes", "claim"]) => match id.parse::<u64>() {
+            Ok(id) => {
+                let allowed = body_v.as_object().is_some_and(|o| o.keys().all(|k| matches!(k.as_str(), "token" | "after" | "limit")));
+                let token = body_v["token"].as_str().unwrap_or("");
+                let after = body_v.get("after").map(serde_json::Value::as_u64).unwrap_or(Some(0));
+                let limit = body_v.get("limit").map(serde_json::Value::as_u64).unwrap_or(Some(10));
+                match (allowed, after, limit) {
+                    (true, Some(after), Some(limit)) if (1..=100).contains(&limit) =>
+                        live_result(wishes::h_harness_claim_wishes(state,id,token,after,limit as usize)),
+                    _ => live_result(err_json("bad_wish_claim","invalid claim cursor or limit")),
+                }
+            }
+            Err(_) => live_result(err_json("bad_id","game_id не число")),
+        },
+        ("POST", ["game", id, "owner", "wishes", wish_id, "status"]) => match id.parse::<u64>() {
+            Ok(id) => {
+                let mut status_body = body_v.clone();
+                if let Some(obj) = status_body.as_object_mut() { obj.remove("token"); }
+                live_result(wishes::h_harness_update_wish(state,id,body_v["token"].as_str().unwrap_or(""),wish_id,&status_body))
+            },
+            Err(_) => live_result(err_json("bad_id","game_id не число")),
+        },
+        ("POST", ["agents", id, "live", "session"]) => live_result(live::session(state,id,&body_v)),
+        ("POST", ["agents", id, "live", "revoke"]) => live_result(live::revoke(state,id,&body_v)),
+        ("POST", ["agents", id, "live", "presence"]) => live_result(live::presence(state,id,&body_v)),
+        ("POST", ["agents", id, "live", "messages"]) => live_result(live::ambient_message(state,id,&body_v)),
+        ("GET", ["agents", id, "live", "events"]) => live_result(live::personal_events(state,id,&req.path)),
+        ("POST", ["game", id, "live", "messages"]) => match id.parse::<u64>() {
+            Ok(id) => live_result(live::game_message(state,id,&body_v)),
+            Err(_) => live_result(err_json("bad_id","game_id не число")),
+        },
+        ("GET", ["game", id, "live", "events"]) => match id.parse::<u64>() {
+            Ok(id) => live_result(live::game_events(state,id,&req.path)),
+            Err(_) => live_result(err_json("bad_id","game_id не число")),
+        },
+        ("GET", []) => ("200 OK", root_doc(state).to_string()),
         ("GET", ["agents", "capabilities"]) => ("200 OK", serde_json::json!({
             "ok":true,"protocol_version":2,"registration":"devnet_agent_lifecycle_v2",
             "execution":"offchain_http","required_op_id":"strict_positive_u64_sequence",
@@ -2750,6 +2994,8 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
                 "bribe","vote","veto"],
             "phases":["lobby","market","action","law","finished"],
             "hosted_inference":false,"onchain_game_settlement":false,
+            "live_channel_version":1,"owner_auth":"registered_wallet_sign_message",
+            "owner_wishes_per_agent_game":3,
         }).to_string()),
         ("GET", ["agents", id]) => ("200 OK", h_agent_profile(state, id).to_string()),
         ("POST", ["agents", "match"]) => ("200 OK", h_match(state, &body_v).to_string()),

@@ -1,6 +1,27 @@
 use super::*;
 use serde_json::{json, Value};
 
+#[test]
+fn private_wish_snapshot_cannot_reset_three_per_game_counter() {
+    let mut journal = wishes::WishState::default();
+    let id = "a".repeat(64);
+    let record = "b".repeat(64);
+    journal.next_seq = 1;
+    journal.wishes.insert(id.clone(), wishes::Wish {
+        wish_id: id.clone(), seq: 1, status_seq: 1, agent_record_id: record.clone(),
+        game_id: 7, client_wish_id: "client-1".into(), request_hash: "hash".into(),
+        text: "test-only private wish".into(), status: wishes::WishStatus::Received,
+        admission_remaining: 2, consumptions: 0, accepted_at: 1, status_at: 1,
+        lease: None, reply: None,
+    });
+    journal.idempotency.insert(format!("{record}:7:client-1"), id);
+    assert!(!valid_wish_state(&journal), "missing counter must fail closed");
+    journal.accepted_per_game.insert(format!("{record}:7"), 1);
+    assert!(valid_wish_state(&journal));
+    journal.accepted_per_game.insert(format!("{record}:7"), 0);
+    assert!(!valid_wish_state(&journal), "reduced counter must fail closed");
+}
+
 fn isolated() -> Arc<AppState> {
     static NEXT: AtomicU64 = AtomicU64::new(1);
     let dir = std::env::temp_dir().join(format!(
@@ -21,6 +42,34 @@ fn join(state: &AppState, gid: u64, i: usize) -> Value {
     let result = h_join(state, gid, &json!({"name": format!("Demo{i}"), "model": format!("demo-{i}"), "prompt": "regression"}));
     assert_eq!(result["ok"], true, "{result}");
     result
+}
+
+#[test]
+fn accepted_action_projects_only_rule_params_into_public_history() {
+    let state = isolated();
+    let gid = create(&state);
+    let actor = join(&state, gid, 0);
+    for i in 1..6 { join(&state, gid, i); }
+    crank_once(&state);
+    assert_eq!(state.games.lock().unwrap()[&gid].sim.game.phase, Phase::Market);
+    {
+        let mut games = state.games.lock().unwrap();
+        let sim = &mut games.get_mut(&gid).unwrap().sim;
+        sim.game.epoch = alashi_rules::constants::EPOCH_90S;
+        sim.factions[0].goods = 1;
+    }
+    let marker = "PRIVATE_WISH_MARKER_DO_NOT_EXPORT";
+    let result = h_act(&state, gid, &json!({
+        "token": actor["token"], "action": "barter_propose",
+        "params": {"goods": 1, "price": 1, "to": marker}
+    }));
+    assert_eq!(result["ok"], true, "{result}");
+    let logged = state.games.lock().unwrap()[&gid].action_log[0].clone();
+    assert_eq!(logged["params"], json!({"goods": 1, "price": 1}));
+    assert!(!h_state(&state, gid).to_string().contains(marker));
+    state.games.lock().unwrap().get_mut(&gid).unwrap().sim.game.phase = Phase::Finished;
+    settle_and_record_locked_for_test(&state, gid);
+    assert!(!h_export(&state).contains(marker));
 }
 
 fn restore(state: &AppState) -> Arc<AppState> {
@@ -1022,7 +1071,7 @@ fn v2_confirm_rpc_capacity_fails_fast_with_http_429_and_releases_permits() {
     let listener = TcpListener::bind("127.0.0.1:0").unwrap();
     let mut client = TcpStream::connect(listener.local_addr().unwrap()).unwrap();
     let (mut server,_) = listener.accept().unwrap();
-    handle(&state,&Request { method:"POST".into(),path:"/agents/confirm".into(),
+    handle(&state,&Request { method:"POST".into(),path:"/agents/confirm".into(),authorization:None,origin:None,
         body:proof.to_string().into_bytes() },&mut server);
     drop(server);
     let mut wire = String::new(); client.read_to_string(&mut wire).unwrap();
