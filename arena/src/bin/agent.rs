@@ -581,6 +581,17 @@ fn main() {
         }
     }
     let token = j["token"].as_str().unwrap().to_string();
+    let mut next_op_id = if agent_record_id.is_some() {
+        match j["next_op_id"].as_u64().filter(|id| *id > 0) {
+            Some(id) => id,
+            None => {
+                eprintln!("[ERROR] v2 join omitted a valid next_op_id; stopping safely");
+                return;
+            }
+        }
+    } else {
+        0
+    };
     let harness = agent_record_id
         .as_ref()
         .map(|_| live_client::HarnessClient::new(&url));
@@ -936,6 +947,7 @@ fn main() {
                 my_log.push(format!("r{} {}: pass after vote", s["round"], phase));
                 continue;
             }
+            let action_op_id = agent_record_id.as_ref().map(|_| next_op_id);
             let body = action_request_body(
                 &token,
                 action,
@@ -945,9 +957,24 @@ fn main() {
                 } else {
                     "fallback"
                 },
+                action_op_id,
             );
-            let rr = http(&url, "POST", &format!("/game/{}/act", game), Some(&body));
-            if let Some(rr) = rr {
+            let act_path = format!("/game/{}/act", game);
+            let mut rr = http(&url, "POST", &act_path, Some(&body));
+            if rr.is_none() {
+                // A lost response is ambiguous: replay the exact request with the same id.
+                std::thread::sleep(Duration::from_millis(200));
+                rr = http(&url, "POST", &act_path, Some(&body));
+            }
+            let Some(rr) = rr else {
+                eprintln!("[agent] action outcome unknown after same-op retry; stopping to avoid a different body under this op_id");
+                return;
+            };
+            if let Err(error) = advance_op_id(&mut next_op_id, action_op_id, &rr) {
+                eprintln!("[agent] unsafe op_id response ({error}); stopping without fallback");
+                return;
+            }
+            {
                 let ok_s = if rr["ok"] == true {
                     "ok".into()
                 } else {
@@ -978,12 +1005,26 @@ fn main() {
                             my_log.push(format!("r{} {}: fallback pass", s["round"], phase));
                             continue;
                         }
-                        let body = serde_json::json!({
-                            "token": token, "action": a2, "params": p2, "by": "fallback",
-                        })
-                        .to_string();
-                        let r2 = http(&url, "POST", &format!("/game/{}/act", game), Some(&body));
-                        let ok2 = r2.as_ref().map(|v| v["ok"] == true).unwrap_or(false);
+                        let fallback_op_id = if agent_record_id.is_some() {
+                            Some(next_op_id)
+                        } else {
+                            None
+                        };
+                        let body = action_request_body(&token, a2, &p2, "fallback", fallback_op_id);
+                        let mut r2 = http(&url, "POST", &act_path, Some(&body));
+                        if r2.is_none() {
+                            std::thread::sleep(Duration::from_millis(200));
+                            r2 = http(&url, "POST", &act_path, Some(&body));
+                        }
+                        let Some(r2) = r2 else {
+                            eprintln!("[agent] fallback outcome unknown after same-op retry; stopping safely");
+                            return;
+                        };
+                        if let Err(error) = advance_op_id(&mut next_op_id, fallback_op_id, &r2) {
+                            eprintln!("[agent] unsafe fallback op_id response ({error}); stopping");
+                            return;
+                        }
+                        let ok2 = r2["ok"] == true;
                         my_log.push(format!(
                             "r{} {}: fallback {} {} -> {}",
                             s["round"].as_u64().unwrap_or(0),
@@ -1061,8 +1102,44 @@ fn safe_wish_params(action: &str, params: &Value) -> Option<Value> {
     Some(params.clone())
 }
 
-fn action_request_body(token: &str, action: &str, params: &Value, by: &str) -> String {
-    serde_json::json!({"token":token,"action":action,"params":params,"by":by}).to_string()
+fn advance_op_id(
+    next_op_id: &mut u64,
+    expected: Option<u64>,
+    response: &Value,
+) -> Result<(), &'static str> {
+    let Some(expected) = expected else {
+        return Ok(());
+    };
+    if response["op_id"].as_u64() != Some(expected) {
+        return Err("op_id_mismatch");
+    }
+    let consumed = response["op_consumed"]
+        .as_bool()
+        .ok_or("missing_op_consumed")?;
+    if matches!(
+        response["error"].as_str(),
+        Some("op_conflict" | "op_stale" | "op_out_of_order")
+    ) {
+        return Err("op_sequence_conflict");
+    }
+    if consumed {
+        *next_op_id = expected.checked_add(1).ok_or("op_id_exhausted")?;
+    }
+    Ok(())
+}
+
+fn action_request_body(
+    token: &str,
+    action: &str,
+    params: &Value,
+    by: &str,
+    op_id: Option<u64>,
+) -> String {
+    let mut body = serde_json::json!({"token":token,"action":action,"params":params,"by":by});
+    if let Some(id) = op_id {
+        body["op_id"] = serde_json::json!(id);
+    }
+    body.to_string()
 }
 
 fn logged_action_params(private_wish: bool, params: &Value) -> String {
@@ -1814,6 +1891,42 @@ mod live_output_privacy_tests {
     }
 
     #[test]
+    fn v2_operation_counter_advances_only_on_explicit_consumption() {
+        let mut next = 4;
+        assert!(advance_op_id(
+            &mut next,
+            Some(4),
+            &json!({"op_id":4,"op_consumed":false,"error":"bad_params"})
+        )
+        .is_ok());
+        assert_eq!(next, 4);
+        assert!(advance_op_id(
+            &mut next,
+            Some(4),
+            &json!({"op_id":4,"op_consumed":true,"ok":true})
+        )
+        .is_ok());
+        assert_eq!(next, 5);
+        assert_eq!(
+            advance_op_id(
+                &mut next,
+                Some(5),
+                &json!({"op_id":5,"op_consumed":true,"error":"op_conflict"})
+            ),
+            Err("op_sequence_conflict")
+        );
+        assert_eq!(next, 5);
+        assert_eq!(
+            advance_op_id(&mut next, Some(5), &json!({"op_id":6,"op_consumed":true})),
+            Err("op_id_mismatch")
+        );
+        assert_eq!(
+            advance_op_id(&mut next, Some(5), &json!({"op_id":5})),
+            Err("missing_op_consumed")
+        );
+    }
+
+    #[test]
     fn public_speech_requires_opt_in_and_is_bounded() {
         let output = json!({"public_message":"hello agents", "owner_reply":"private", "gesture_cue":"thumbsUp"});
         assert!(capture_decision_text(&output, false, false)
@@ -1967,8 +2080,13 @@ mod private_wish_runner_tests {
             safe_wish_params("sell", &json!({"units":3})),
             Some(json!({"units":3}))
         );
-        let act_body =
-            action_request_body("game-token", decision.action, &decision.params, "fallback");
+        let act_body = action_request_body(
+            "game-token",
+            decision.action,
+            &decision.params,
+            "fallback",
+            Some(1),
+        );
         assert!(
             !act_body.contains(wish_text),
             "private echo reached the /act payload"

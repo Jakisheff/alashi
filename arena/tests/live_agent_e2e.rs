@@ -177,10 +177,16 @@ fn post_game_message(port: u16, game_id: u64, token: &str, phase_id: &str, body:
 
 struct KillChild(std::process::Child);
 
-impl Drop for KillChild {
-    fn drop(&mut self) {
+impl KillChild {
+    fn stop(&mut self) {
         let _ = self.0.kill();
         let _ = self.0.wait();
+    }
+}
+
+impl Drop for KillChild {
+    fn drop(&mut self) {
+        self.stop();
     }
 }
 
@@ -209,6 +215,7 @@ fn fixture() -> (u16, u64, String, String, String, String, PathBuf) {
     );
     assert_eq!(joined["ok"], true, "{joined}");
     assert_eq!(joined["agent_record_id"], RECORD);
+    assert_eq!(joined["next_op_id"], 1);
     let game_token = joined["token"].as_str().unwrap().to_string();
     let phase_id = joined["state"]["phase_instance_id"]
         .as_str()
@@ -978,7 +985,7 @@ fn actual_agent_process_keeps_wish_private_and_voluntarily_publishes_cued_reply(
         .stderr(Stdio::null())
         .spawn()
         .unwrap();
-    let _child = KillChild(child);
+    let mut child = KillChild(child);
 
     let joined_before_deadline = Instant::now() + Duration::from_secs(8);
     let mut joined = false;
@@ -1079,7 +1086,7 @@ fn actual_agent_process_keeps_wish_private_and_voluntarily_publishes_cued_reply(
         .send(
             json!({
                 "action":"sell",
-                "params":{"units":1,"privatewish":WISH},
+                "params":{"units":99},
                 "public_message":WISH,
                 "gesture_cue":PRIVATE_CUE,
                 "owner_reply":PRIVATE_REPLY
@@ -1091,6 +1098,7 @@ fn actual_agent_process_keeps_wish_private_and_voluntarily_publishes_cued_reply(
     let until = Instant::now() + Duration::from_secs(20);
     let mut owner_replied = false;
     let mut public_reply = None;
+    let mut accepted_action: Option<Value> = None;
     while Instant::now() < until {
         let owner_state = request_with_headers(
             port,
@@ -1116,18 +1124,27 @@ fn actual_agent_process_keeps_wish_private_and_voluntarily_publishes_cued_reply(
                 .iter()
                 .find(|event| event["kind"] == "agent_message" && event["text"] == PUBLIC_REPLY)
                 .cloned();
+            accepted_action = rows
+                .iter()
+                .find(|event| event["kind"] == "game_action" && event["action_ref"]["actor"] == 0)
+                .cloned();
         }
-        if owner_replied && public_reply.is_some() {
+        if owner_replied && public_reply.is_some() && accepted_action.is_some() {
             break;
         }
         thread::sleep(Duration::from_millis(100));
     }
     mock.join().unwrap();
+    child.stop();
     assert!(
         owner_replied,
         "owner journal did not reach a real replied status"
     );
     let public_reply = public_reply.expect("runner did not publish voluntary reply");
+    let accepted_action = accepted_action.expect("runner did not submit an accepted game action");
+    assert!(accepted_action["action_ref"]["action"].is_string());
+    assert!(!accepted_action.to_string().contains(WISH));
+    assert!(!accepted_action.to_string().contains(PRIVATE_REPLY));
     assert_eq!(public_reply["author_agent_record_id"], RECORD);
     assert_eq!(public_reply["gesture_cue"], PUBLIC_CUE);
     assert_eq!(public_reply["to_agent_record_id"], RECORD_B);
@@ -1151,6 +1168,19 @@ fn actual_agent_process_keeps_wish_private_and_voluntarily_publishes_cued_reply(
         !feed.to_string().contains(PRIVATE_CUE),
         "private gesture cue leaked to public feed"
     );
+    let resumed = request(
+        port,
+        "POST",
+        &format!("/game/{game_id}/join"),
+        Some(&json!({
+            "agent_record_id":RECORD, "recovery_secret":recovery_a, "name":"RunnerA",
+            "model":"mock-runner", "strategy_hash":arena::api::agent_id_of(
+                "mock-runner", "Стратег: играй рационально, следи за таблицей цен и влиянием."
+            ), "recover":true
+        })),
+    );
+    assert_eq!(resumed["ok"], true, "{resumed}");
+    assert_eq!(resumed["next_op_id"], 3);
     let second_request = model_rx.recv_timeout(Duration::from_secs(1)).unwrap();
     assert!(second_request["messages"][1]["content"]
         .as_str()

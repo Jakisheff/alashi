@@ -1558,6 +1558,11 @@ fn h_join_v2(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_
     let mut games = state.games.lock().unwrap_or_else(|e| e.into_inner());
     let Some(entry) = games.get_mut(&game_id) else { return err_json("unknown_game", "партия не найдена"); };
     let backup = entry.clone();
+    // Only the authenticated v2 join/recovery caller sees the next action op.
+    // It remains stable across runner restarts and session renewal.
+    let Some(next_op_id) = entry.op_state.get(id).map_or(Some(1), |ops| ops.last.checked_add(1)) else {
+        return err_json("op_id_exhausted", "лимит операций достигнут");
+    };
     let expires = now().saturating_add(SESSION_LIFETIME_S);
     let response = if let Some(i) = entry.agents.iter().position(|a| a.agent_record_id.as_deref() == Some(id)) {
         if !recover { return err_json("already_joined", "агент уже в партии; используй recover:true"); }
@@ -1571,7 +1576,7 @@ fn h_join_v2(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_
         let view = state_json(game_id, entry);
         serde_json::json!({"ok":true,"recovered":true,"game_id":game_id,"party_no":entry.party_no,
             "agent_record_id":id,"agent_id":agent_id,"character_id":record.character_id,
-            "owner_id":record.owner_id,"token":token,"session_expires_at":expires,
+            "owner_id":record.owner_id,"token":token,"next_op_id":next_op_id,"session_expires_at":expires,
             "faction_idx":faction_idx,"registration":record.receipt,"state":view})
     } else {
         if recover { return err_json("unknown_agent", "агент ещё не участвовал в партии"); }
@@ -1594,7 +1599,7 @@ fn h_join_v2(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_
         let view = state_json(game_id, entry);
         serde_json::json!({"ok":true,"game_id":game_id,"party_no":entry.party_no,
             "agent_record_id":id,"agent_id":strategy_hash,"character_id":record.character_id,
-            "owner_id":record.owner_id,"token":token,"session_expires_at":expires,
+            "owner_id":record.owner_id,"token":token,"next_op_id":next_op_id,"session_expires_at":expires,
             "faction_idx":faction_idx,"registration":record.receipt,"state":view})
     };
     drop(games);
