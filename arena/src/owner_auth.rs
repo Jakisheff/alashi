@@ -7,6 +7,8 @@ use std::{collections::HashMap, str::FromStr};
 
 const CHALLENGE_TTL_S: i64 = 300;
 const SESSION_TTL_S: i64 = 1800;
+const BROWSER_SESSION_TTL_S: i64 = 7 * 24 * 60 * 60;
+const BROWSER_COOKIE_NAME: &str = "__Secure-alashi-owner";
 const CHALLENGE_WINDOW_S: i64 = 300;
 const MAX_CHALLENGES_PER_WINDOW: usize = 5;
 const DEFAULT_OWNER_ORIGIN: &str = "https://alashi.network";
@@ -173,11 +175,12 @@ fn verify_wallet_signature(wallet: &str, message: &str, encoded: &str) -> bool {
 }
 
 /// Ed25519 verification occurs before taking the persistence transaction gate.
-pub fn h_finish_owner_challenge(
+fn finish_owner_challenge(
     state: &AppState,
     record_id: &str,
     origin: &str,
     body: &Value,
+    ttl_s: i64,
 ) -> Value {
     if !origin_ok(origin) {
         return err("owner_origin_forbidden");
@@ -231,13 +234,14 @@ pub fn h_finish_owner_challenge(
         return err("owner_challenge_expired");
     }
     c.used_at = Some(issued_at);
+    auth.sessions.retain(|_, session| session.revoked_at.is_none() && session.expires_at > issued_at);
     let hash = session_hash(&raw_session);
     let session = OwnerSession {
         agent_record_id: record_id.to_string(),
         wallet,
         session_hash: hash.clone(),
         issued_at,
-        expires_at: issued_at.saturating_add(SESSION_TTL_S),
+        expires_at: issued_at.saturating_add(ttl_s),
         revoked_at: None,
     };
     auth.sessions.insert(hash, session.clone());
@@ -247,6 +251,54 @@ pub fn h_finish_owner_challenge(
         return err("storage_failed");
     }
     json!({"ok":true,"owner_session":raw_session,"expires_at":session.expires_at,"scope":["owner_wishes"]})
+}
+
+pub fn h_finish_owner_challenge(
+    state: &AppState, record_id: &str, origin: &str, body: &Value,
+) -> Value {
+    finish_owner_challenge(state, record_id, origin, body, SESSION_TTL_S)
+}
+
+pub fn h_finish_owner_browser_challenge(
+    state: &AppState, record_id: &str, origin: &str, body: &Value,
+) -> (Value, Option<String>) {
+    let mut result = finish_owner_challenge(state, record_id, origin, body, BROWSER_SESSION_TTL_S);
+    let raw = result.as_object_mut().and_then(|o| o.remove("owner_session"));
+    let cookie = raw.and_then(|v| v.as_str().map(|s| browser_cookie(record_id, s, BROWSER_SESSION_TTL_S)));
+    (result, cookie)
+}
+
+pub fn record_id_ok(record_id: &str) -> bool { hex32(record_id) }
+
+pub fn browser_cookie(record_id: &str, raw: &str, max_age: i64) -> String {
+    debug_assert!(hex32(record_id));
+    debug_assert!(raw.is_empty() || hex32(raw));
+    format!("{BROWSER_COOKIE_NAME}={raw}; Path=/agents/{record_id}/owner; Max-Age={max_age}; Secure; HttpOnly; SameSite=Strict")
+}
+
+pub fn has_browser_cookie(cookie_header: Option<&str>) -> bool {
+    cookie_header.unwrap_or("").split(';').any(|part| {
+        part.trim().split_once('=').is_some_and(|(name, _)| name == BROWSER_COOKIE_NAME)
+    })
+}
+
+/// Parse only our record-scoped cookie; all other site cookies are ignored.
+pub fn browser_token(cookie_header: Option<&str>) -> Result<Option<String>, &'static str> {
+    let mut found = None;
+    for part in cookie_header.unwrap_or("").split(';') {
+        let Some((name, value)) = part.trim().split_once('=') else { continue };
+        if name != BROWSER_COOKIE_NAME { continue; }
+        if found.is_some() || !hex32(value) { return Err("owner_cookie_invalid"); }
+        found = Some(value.to_string());
+    }
+    Ok(found)
+}
+
+pub fn h_restore_owner_browser_session(state: &AppState, record_id: &str, raw: &str) -> Value {
+    match owner_session_for(state, record_id, raw) {
+        Ok(session) => json!({"ok":true,"wallet":session.wallet,"expires_at":session.expires_at}),
+        Err(code) => err(code),
+    }
 }
 
 pub fn owner_session_for(
@@ -322,6 +374,19 @@ pub fn h_revoke_owner_session(
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn browser_cookie_is_record_scoped_and_unambiguous() {
+        let id = "a".repeat(64);
+        let token = "b".repeat(64);
+        let header = browser_cookie(&id, &token, BROWSER_SESSION_TTL_S);
+        assert!(header.contains(&format!("Path=/agents/{id}/owner")));
+        assert!(header.contains("Max-Age=604800; Secure; HttpOnly; SameSite=Strict"));
+        assert!(!header.contains("Domain="));
+        assert_eq!(browser_token(Some(&format!("other=1; {BROWSER_COOKIE_NAME}={token}"))).unwrap(), Some(token.clone()));
+        assert_eq!(browser_token(Some(&format!("{BROWSER_COOKIE_NAME}={token}; {BROWSER_COOKIE_NAME}={token}"))), Err("owner_cookie_invalid"));
+        assert_eq!(browser_token(Some(&format!("{BROWSER_COOKIE_NAME}=bad"))), Err("owner_cookie_invalid"));
+    }
+
     #[test]
     fn canonical_message_binds_origin() {
         let c = OwnerChallenge {

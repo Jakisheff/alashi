@@ -1071,7 +1071,7 @@ fn v2_confirm_rpc_capacity_fails_fast_with_http_429_and_releases_permits() {
     let listener = TcpListener::bind("127.0.0.1:0").unwrap();
     let mut client = TcpStream::connect(listener.local_addr().unwrap()).unwrap();
     let (mut server,_) = listener.accept().unwrap();
-    handle(&state,&Request { method:"POST".into(),path:"/agents/confirm".into(),authorization:None,origin:None,
+    handle(&state,&Request { method:"POST".into(),path:"/agents/confirm".into(),authorization:None,origin:None,cookie:None,
         body:proof.to_string().into_bytes() },&mut server);
     drop(server);
     let mut wire = String::new(); client.read_to_string(&mut wire).unwrap();

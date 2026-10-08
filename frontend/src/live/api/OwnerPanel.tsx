@@ -3,16 +3,21 @@ import { LiveApiError, friendlyError, mergeWishes, type LiveApi, type OwnerSessi
 import { availableWallets, signOwnerChallenge, type Wallet } from './wallet'
 
 type Pending = { game_id: number; client_wish_id: string; text: string }
-const statusLabels: Record<Wish['status'], string> = { received: 'Received', consumed: 'Processing', replied: 'Replied', deferred: 'Deferred', declined: 'Declined', expired: 'Expired' }
+type Access = 'restoring' | 'guest' | 'owner'
+const statusLabels: Record<Wish['status'], string> = { received: 'Received privately', consumed: 'Agent considering it', replied: 'Agent replied', deferred: 'Saved for later', declined: 'Not used', expired: 'Game ended' }
+const short = (value: string) => `${value.slice(0, 4)}…${value.slice(-4)}`
+const sessionTime = (seconds: number) => new Date(seconds * 1000).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })
+
 export function OwnerPanel({ api, record, currentGame }: { api: LiveApi; record: string; currentGame?: number }) {
-  // Owner credentials and drafts live only in this private component's memory.
-  const credential = useRef<OwnerSession | null>(null)
+  // The HttpOnly cookie is never visible here. Drafts and private history stay in memory.
   const generation = useRef(0)
   const authRequest = useRef<AbortController | null>(null)
   const journalRequest = useRef<AbortController | null>(null)
   const submitting = useRef(false)
   const wallet = useRef<Wallet | null>(null)
-  const [verified, setVerified] = useState('')
+  const [access, setAccess] = useState<Access>('restoring')
+  const [session, setSession] = useState<OwnerSession | null>(null)
+  const [connectedWallet, setConnectedWallet] = useState('')
   const [busy, setBusy] = useState(false)
   const [sending, setSending] = useState(false)
   const [error, setError] = useState('')
@@ -27,37 +32,88 @@ export function OwnerPanel({ api, record, currentGame }: { api: LiveApi; record:
   const [journalOnline, setJournalOnline] = useState(false)
   const [walletChoice, setWalletChoice] = useState(0)
   const [wallets, setWallets] = useState(availableWallets)
-  const clear = useCallback((message = '') => {
-    generation.current++; authRequest.current?.abort(); journalRequest.current?.abort(); submitting.current = false; credential.current = null; wallet.current = null
-    setVerified(''); setBusy(false); setSending(false); setDraft(''); setPending(null); setWishes([]); setRemaining({}); setGame(''); setError(message); setNotice(''); setJournalReady(false); setJournalOnline(false)
+  const [logoutRetry, setLogoutRetry] = useState(false)
+
+  const invalidatePrivate = useCallback(() => {
+    generation.current++; authRequest.current?.abort(); journalRequest.current?.abort(); submitting.current = false; wallet.current = null
   }, [])
+  const clearPrivate = useCallback((message = '') => {
+    invalidatePrivate()
+    setAccess('guest'); setSession(null); setConnectedWallet(''); setBusy(false); setSending(false); setDraft(''); setPending(null); setWishes([]); setRemaining({}); setGame(''); setError(message); setNotice(''); setJournalReady(false); setJournalOnline(false)
+  }, [invalidatePrivate])
+
+  const restore = useCallback(async () => {
+    generation.current++; authRequest.current?.abort(); journalRequest.current?.abort()
+    const ticket = generation.current, controller = new AbortController(); authRequest.current = controller
+    setAccess('restoring'); setError(''); setNotice(''); setLogoutRetry(false)
+    try {
+      const next = await api.restoreBrowserSession(record, controller.signal)
+      if (controller.signal.aborted || ticket !== generation.current) return
+      if (next.expiresAt * 1000 <= Date.now()) throw new LiveApiError('owner_session_expired')
+      const providers = availableWallets()
+      const matching = providers.find(({ wallet: candidate }) => candidate.publicKey?.toString() === next.wallet)?.wallet
+      const alreadyConnected = providers.some(({ wallet: candidate }) => !!candidate.publicKey?.toString())
+      if (alreadyConnected && !matching) {
+        let revoked = true
+        try { await api.logoutBrowserSession(record) } catch { revoked = false; setLogoutRetry(true) }
+        if (ticket !== generation.current) return
+        wallet.current = null; setSession(null); setConnectedWallet(''); setAccess('guest')
+        setError(revoked ? 'A different wallet is already connected. The saved private session was ended before you choose another wallet.' : 'A different wallet is already connected. Private details were hidden, but sign-out could not be confirmed. Retry sign out before choosing another wallet.')
+        return
+      }
+      wallet.current = matching ?? null; setConnectedWallet(matching ? next.wallet : ''); setSession(next); setAccess('owner')
+    } catch (e) {
+      if (controller.signal.aborted || ticket !== generation.current) return
+      wallet.current = null; setSession(null); setConnectedWallet(''); setAccess('guest')
+      if (e instanceof LiveApiError && ['owner_session_invalid', 'owner_session_expired'].includes(e.code)) setError(e.code === 'owner_session_expired' ? friendlyError(e) : '')
+      else setError(`Private session could not be checked. ${friendlyError(e)}`)
+    }
+  }, [api, record])
+
   useEffect(() => {
-    const hide = () => clear()
-    window.addEventListener('pagehide', hide)
-    // Cancel the latest request, which can change after this effect mounted.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    return () => { window.removeEventListener('pagehide', hide); generation.current++; authRequest.current?.abort(); credential.current = null; wallet.current = null }
-  }, [clear])
+    // Start after mount so cleanup can cancel the current record's requests before they expose state.
+    const start = window.setTimeout(() => { void restore() }, 0)
+    return () => { window.clearTimeout(start); invalidatePrivate() }
+  }, [restore, invalidatePrivate])
+
   useEffect(() => {
-    if (!verified || !wallet.current) return
-    const provider = wallet.current
-    const changed = () => clear('Wallet changed or disconnected. Verify ownership again.')
-    provider.on?.('accountChanged', changed); provider.on?.('disconnect', changed)
+    if (access !== 'owner' || !session) return
     const timer = window.setInterval(() => {
-      if (provider.publicKey?.toString() !== verified) changed()
-      else if (credential.current && credential.current.expiresAt * 1000 <= Date.now()) clear('Your owner session expired. Verify ownership again.')
-    }, 1000)
-    return () => { window.clearInterval(timer); provider.removeListener?.('accountChanged', changed); provider.removeListener?.('disconnect', changed) }
-  }, [verified, clear])
+      if (session.expiresAt * 1000 <= Date.now()) clearPrivate('Your private browser session ended. Verify the registered wallet again.')
+    }, 30_000)
+    return () => window.clearInterval(timer)
+  }, [access, session, clearPrivate])
+
+  const signOut = useCallback(async (message = '') => {
+    // Hide private state and abort in-flight reads before the network revoke can wait or fail.
+    clearPrivate()
+    setBusy(true); setError(''); setNotice('')
+    try {
+      await api.logoutBrowserSession(record)
+      clearPrivate(message)
+      setLogoutRetry(false)
+    } catch (e) {
+      clearPrivate(`Sign-out could not be confirmed. Your private details are hidden here. Try again when you are online. ${friendlyError(e)}`)
+      setLogoutRetry(true)
+    } finally { setBusy(false) }
+  }, [api, clearPrivate, record])
+
   useEffect(() => {
-    if (!verified || !credential.current || sending) return
-    const token = credential.current.token, ticket = generation.current, controller = new AbortController()
-    journalRequest.current = controller
+    if (access !== 'owner' || !wallet.current || !connectedWallet) return
+    const provider = wallet.current
+    const changed = () => { void signOut('Wallet changed or disconnected. You have been signed out.') }
+    provider.on?.('accountChanged', changed); provider.on?.('disconnect', changed)
+    return () => { provider.removeListener?.('accountChanged', changed); provider.removeListener?.('disconnect', changed) }
+  }, [access, connectedWallet, signOut])
+
+  useEffect(() => {
+    if (access !== 'owner' || !session || sending) return
+    const ticket = generation.current, controller = new AbortController(); journalRequest.current = controller
     let cursor = 0, timer = 0, failures = 0
     async function poll() {
       let delay = 2000
       try {
-        const page = await api.wishes(record, token, cursor, controller.signal)
+        const page = await api.wishes(record, cursor, controller.signal)
         if (controller.signal.aborted || ticket !== generation.current) return
         if (page.cursor < cursor) throw new LiveApiError('invalid_response')
         cursor = page.cursor
@@ -65,19 +121,21 @@ export function OwnerPanel({ api, record, currentGame }: { api: LiveApi; record:
         failures = 0; delay = cursor < page.lastSeq ? 20 : 2000
       } catch (e) {
         if (controller.signal.aborted || ticket !== generation.current) return
-        if (e instanceof LiveApiError && ['owner_session_invalid', 'owner_session_expired'].includes(e.code)) { clear(friendlyError(e)); return }
+        if (e instanceof LiveApiError && ['owner_session_invalid', 'owner_session_expired'].includes(e.code)) { clearPrivate(friendlyError(e)); return }
         setJournalOnline(false); failures++; delay = Math.min(30_000, 2000 * 2 ** Math.min(failures, 4))
       }
       if (!controller.signal.aborted) timer = window.setTimeout(poll, delay)
     }
     void poll()
     return () => { controller.abort(); window.clearTimeout(timer) }
-  }, [api, record, verified, refresh, sending, clear])
+  }, [api, record, access, session, refresh, sending, clearPrivate])
 
   const selectedGame = game || (currentGame && Object.hasOwn(remaining, String(currentGame)) ? String(currentGame) : Object.keys(remaining).at(-1) ?? '')
   const allowance = Object.hasOwn(remaining, selectedGame) ? remaining[selectedGame] : null
+
   async function verify() {
-    clear(); const ticket = generation.current, controller = new AbortController(); authRequest.current = controller; setBusy(true)
+    clearPrivate()
+    const ticket = generation.current, controller = new AbortController(); authRequest.current = controller; setBusy(true)
     try {
       const provider = wallets[walletChoice]?.wallet
       if (!provider) throw new LiveApiError('wallet_missing')
@@ -87,53 +145,59 @@ export function OwnerPanel({ api, record, currentGame }: { api: LiveApi; record:
       if (ticket !== generation.current) return
       const signature = await signOwnerChallenge(provider, challenge, record, window.location.origin)
       if (ticket !== generation.current) return
-      const session = await api.session(record, challenge.id, signature, controller.signal)
-      if (ticket !== generation.current) { void api.revoke(record, session.token).catch(() => {}); return }
-      if (!session.token || session.expiresAt * 1000 <= Date.now()) throw new LiveApiError('owner_session_expired')
-      if (provider.publicKey?.toString() !== challenge.wallet) { void api.revoke(record, session.token).catch(() => {}); throw new LiveApiError('wallet_mismatch') }
-      credential.current = session; wallet.current = provider; setVerified(challenge.wallet); setError('')
-    } catch (e) { if (ticket === generation.current) setError(friendlyError(e)) }
+      const next = await api.browserSession(record, challenge.id, signature, controller.signal)
+      if (ticket !== generation.current) { await api.logoutBrowserSession(record).catch(() => {}); return }
+      // The session response alone does not prove a Secure cookie was retained by this browser.
+      let persisted: OwnerSession
+      try { persisted = await api.restoreBrowserSession(record, controller.signal) }
+      catch (e) {
+        if (e instanceof LiveApiError && ['owner_session_invalid', 'owner_session_expired', 'owner_cookie_invalid'].includes(e.code)) throw new LiveApiError('browser_cookie_missing')
+        throw e
+      }
+      if (ticket !== generation.current) return
+      if (next.expiresAt * 1000 <= Date.now() || persisted.expiresAt * 1000 <= Date.now() || provider.publicKey?.toString() !== challenge.wallet || persisted.wallet !== challenge.wallet) throw new LiveApiError('owner_session_expired')
+      wallet.current = provider; setSession(persisted); setConnectedWallet(challenge.wallet); setAccess('owner'); setError(''); setNotice('Private browser session is active. Your wallet signature did not move funds or create a transaction.')
+    } catch (e) { if (ticket === generation.current) { setAccess('guest'); setError(friendlyError(e)) } }
     finally { if (ticket === generation.current) setBusy(false) }
   }
-  async function disconnect() {
-    const token = credential.current?.token; clear()
-    if (token) try { await api.revoke(record, token) } catch { setError('Signed out locally. Server revocation was unavailable; the session will expire automatically.') }
-  }
+
   async function submit() {
-    if (submitting.current || !credential.current) return
-    const ticket = generation.current, token = credential.current.token
+    if (submitting.current || access !== 'owner') return
+    const ticket = generation.current
     const wish = pending ?? { game_id: Number(selectedGame), client_wish_id: crypto.randomUUID(), text: draft.trim() }
-    if (!Number.isSafeInteger(wish.game_id) || wish.game_id < 1 || !wish.text || new TextEncoder().encode(wish.text).length > 512 || Array.from(wish.text).some((c) => c.charCodeAt(0) < 32 || c.charCodeAt(0) === 127)) { setError('Choose a game and enter up to 512 UTF-8 bytes on one line.'); return }
+    if (!Number.isSafeInteger(wish.game_id) || wish.game_id < 1 || !wish.text || new TextEncoder().encode(wish.text).length > 512 || Array.from(wish.text).some((c) => c.charCodeAt(0) < 32 || c.charCodeAt(0) === 127)) { setError('Choose a game and enter up to 512 characters on one line.'); return }
     submitting.current = true; journalRequest.current?.abort()
     setPending(wish); setSending(true); setError(''); setNotice('')
     const controller = new AbortController(); authRequest.current = controller
     try {
-      const receipt = await api.submit(record, token, wish, controller.signal)
+      const receipt = await api.submit(record, wish, controller.signal)
       if (ticket !== generation.current) return
-      setRemaining((r) => ({ ...r, [wish.game_id]: receipt.remaining })); setPending(null); setDraft(''); setNotice('Received privately. Processing and game actions are separate.'); setRefresh((v) => v + 1)
+      setRemaining((r) => ({ ...r, [wish.game_id]: receipt.remaining })); setPending(null); setDraft(''); setNotice('Received privately. The agent decides when it can use this guidance; game actions stay separate.'); setRefresh((v) => v + 1)
     } catch (e) {
       if (ticket !== generation.current) return
-      if (e instanceof LiveApiError && ['owner_session_invalid', 'owner_session_expired'].includes(e.code)) { clear(friendlyError(e)); return }
+      if (e instanceof LiveApiError && ['owner_session_invalid', 'owner_session_expired'].includes(e.code)) { clearPrivate(friendlyError(e)); return }
       setError(friendlyError(e))
-      // An ambiguous failure keeps this exact ID and text for a safe retry.
+      // An ambiguous failure keeps the exact UUID and text for a safe retry.
       if (e instanceof LiveApiError && ['wish_quota_exhausted', 'no_active_game', 'idempotency_conflict', 'bad_wish'].includes(e.code)) { setPending(null); setRefresh((v) => v + 1) }
     } finally { if (ticket === generation.current) { submitting.current = false; setSending(false) } }
   }
+
   return <section className="owner-panel" aria-label="Private owner wishes" data-private="true">
     <div className="owner-heading"><span className="live-eyebrow">Only you and your agent</span><span className="owner-lock">Private</span></div>
-    <h2>Three wishes.</h2>
-    <p className="live-description">Give your agent private guidance. Each game has three accepted wishes; the agent may reply, defer or decline.</p>
-    {!verified ? <div className="owner-login">
-      <p>Verify the registered wallet with an off-chain message signature.</p>
-      {wallets.length > 0 ? <label>Wallet<select aria-label="Owner wallet" value={walletChoice} disabled={busy} onChange={(e) => setWalletChoice(Number(e.target.value))}>{wallets.map((w, i) => <option key={w.name} value={i}>{w.name}</option>)}</select></label> : <p>No wallet extension detected. <button className="owner-text-button" onClick={() => { setWallets(availableWallets()); setWalletChoice(0) }}>Check again</button></p>}
-      <button className="owner-primary" disabled={busy || !wallets.length} onClick={() => void verify()}>{busy ? 'Check your wallet…' : 'Verify wallet'}</button>
-      {busy && <button className="owner-text-button" onClick={() => clear()}>Cancel</button>}
+    <h2>Three wishes per game.</h2>
+    <p className="live-description">Private guidance is visible only in this browser session and your agent’s private journal. Each accepted game gets three wishes; the agent may use one later, decline it or reply privately.</p>
+    {access === 'restoring' ? <p role="status">Checking this browser for a private session…</p> : access === 'guest' ? <div className="owner-login">
+      <p>To send private wishes: connect the wallet registered to this agent, then approve one message. It does not move funds or create a transaction.</p>
+      {wallets.length > 0 ? <label>Wallet<select aria-label="Owner wallet" value={walletChoice} disabled={busy || logoutRetry} onChange={(e) => setWalletChoice(Number(e.target.value))}>{wallets.map((w, i) => <option key={w.name} value={i}>{w.name}</option>)}</select></label> : <p>No compatible wallet was found. You can still watch the public stream. On mobile, <a href={`https://solflare.com/ul/v1/browse/${encodeURIComponent(window.location.href)}?ref=${encodeURIComponent(window.location.origin)}`}>open this page in Solflare</a>, or copy this public page URL into a supported wallet browser. <button className="owner-text-button" onClick={() => { setWallets(availableWallets()); setWalletChoice(0) }}>Check again</button></p>}
+      {logoutRetry ? <><p className="owner-warning">Sign-out was not confirmed. Do not choose a different wallet until this browser session is cleared.</p><button className="owner-primary" disabled={busy} onClick={() => void signOut()}>Retry sign out</button></> : <button className="owner-primary" disabled={busy || !wallets.length} onClick={() => void verify()}>{busy ? 'Checking wallet…' : 'Connect wallet and verify ownership'}</button>}
+      {!logoutRetry && <button className="owner-text-button" disabled={busy} onClick={() => void restore()}>Check private session again</button>}
     </div> : <>
-      <div className="owner-session"><span>Owner verified · {verified.slice(0, 4)}…{verified.slice(-4)}</span><button onClick={() => void disconnect()}>Sign out</button></div>
-      <div className="owner-quota"><strong>{allowance === null ? '—' : allowance}<span> / 3</span></strong><span>remaining · server balance</span></div>
+      <div className="owner-session"><span>Private browser session · {short(session!.wallet)}</span><button disabled={busy} onClick={() => void signOut()}>Sign out</button></div>
+      <p className="live-description">Active until {sessionTime(session!.expiresAt)}. {connectedWallet ? `Connected wallet: ${short(connectedWallet)}.` : 'No wallet is connected right now.'} Sign out before using a different wallet on this browser.</p>
+      <div className="owner-quota"><strong>{allowance === null ? '—' : allowance}<span> / 3</span></strong><span>remaining in this game · server balance</span></div>
       <label className="owner-game">Game<select aria-label="Wish game" disabled={sending || !!pending} value={selectedGame} onChange={(e) => { setGame(e.target.value); setError('') }}><option value="" disabled>Select game</option>{Object.keys(remaining).map((id) => <option key={id} value={id}>Game {id}</option>)}</select></label>
       {!journalReady && <p role="status">Loading your private journal…</p>}
-      {journalReady && !Object.keys(remaining).length && <p>No game allowance is available yet.</p>}
+      {journalReady && !Object.keys(remaining).length && <p>No active game is available for wishes yet.</p>}
       {journalReady && !journalOnline && <p className="owner-warning" role="status">Private journal reconnecting. Displayed statuses may be out of date.</p>}
       <form onSubmit={(e) => { e.preventDefault(); void submit() }}>
         <label htmlFor="private-wish">Your private wish</label>
