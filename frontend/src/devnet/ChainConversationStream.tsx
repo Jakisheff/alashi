@@ -83,11 +83,11 @@ function Row({ entry, selected, fixture, mode, hasResponse }: {
   const label = receipt ? (proposer ? 'Offer confirmed' : 'Accepted · confirmed')
     : declined ? 'Declined · runner rule' : proposer ? 'Proposal · runner rule' : 'Acceptance · unconfirmed'
   const time = clock(entry.recordedAt)
-  return <li className="chain-talk-row" data-selected={speaker.pda === selected} data-confirmed={Boolean(receipt)}>
+  return <li className="chain-talk-row" data-selected={speaker.pda === selected} data-confirmed={Boolean(receipt)} data-kind={entry.kind}>
     <span className="chain-talk-avatar" aria-hidden="true">{speaker.name.slice(0, 1) || 'α'}</span>
     <article>
       <div className="chain-talk-people"><strong>{speaker.name}</strong><span>to {other.name}</span></div>
-      <div className="chain-talk-meta"><span>Round {entry.round}</span>{time && <time dateTime={entry.recordedAt!}>{time} UTC</time>}<span>Rule-based runner</span></div>
+      <div className="chain-talk-meta"><span>Round {entry.round}</span>{time && <time dateTime={entry.recordedAt!}>{time} UTC</time>}</div>
       {entry.kind === 'offer'
         ? <p className="chain-talk-terms"><span><small>Offers</small>{amount(entry.give)}</span><span aria-hidden="true">⇄</span><span><small>Asks for</small>{amount(entry.receive)}</span></p>
         : <p className="chain-talk-answer">{declined ? reasons[entry.reason] : 'Agrees to this offer.'}</p>}
@@ -95,9 +95,13 @@ function Row({ entry, selected, fixture, mode, hasResponse }: {
         {receipt && (fixture ? <span className="chain-talk-fixture-receipt">Fixture receipt</span>
           : <a href={`https://explorer.solana.com/tx/${receipt.signature}?cluster=devnet`} target="_blank" rel="noopener noreferrer" referrerPolicy="no-referrer" aria-label={`View ${receipt.event} receipt for ${speaker.name}, slot ${receipt.slot}`}>Receipt ↗</a>)}
       </div>
-      {receipt && <span className="chain-talk-slot">{receipt.event} · slot {receipt.slot}</span>}
-      {!receipt && !declined && <p className="chain-talk-caveat">{proposer
-        ? 'A runner proposal is not a confirmed on-chain offer.' : 'Acceptance is not confirmed on-chain yet.'}</p>}
+      <details className="chain-talk-evidence">
+        <summary>Source &amp; confirmation</summary>
+        <p>Source: rule-based runner.</p>
+        {receipt ? <p className="chain-talk-slot">{receipt.event} · slot {receipt.slot}</p>
+          : <p>{declined ? 'An explicit runner response, not an on-chain transaction.' : proposer
+            ? 'A runner proposal is not a confirmed on-chain offer.' : 'Acceptance is not confirmed on-chain yet.'}</p>}
+      </details>
       {proposer && !hasResponse && <p className="chain-talk-response">{mode === 'replay' ? 'No response recorded at this replay position.' : 'No response recorded. Silence does not mean declined.'}</p>}
     </article>
   </li>
@@ -143,6 +147,6 @@ export function ChainConversationStream({ gamePda, mode, selectedPlayer, entries
           : 'None received for this view yet. The journal may be incomplete; silence is not a decline.'}</p>
     </div>}
     {!historyComplete && rows.length > 0 && <p className="chain-talk-incomplete">Partial journal · earlier or missing records may not be available.</p>}
-    <footer className="chain-talk-footer">Runner decisions and confirmed transactions are labelled separately. Private owner instructions stay private.</footer>
+    <footer className="chain-talk-footer"><details><summary>About this journal</summary><p>Runner decisions and confirmed transactions are labelled separately. Private owner instructions stay private.</p></details></footer>
   </section>
 }
