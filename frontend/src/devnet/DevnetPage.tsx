@@ -8,7 +8,7 @@ import type { ChainFaction } from './client'
 import { useScene } from '../store'
 import { validBase58, formatAmount, formatCash, type ChainEvent } from './client'
 import { useChainSnapshot } from './useChainSnapshot'
-import { defaultWinner, eventLabel, liveAdditions, newLiveCursor, playerEvents, visualAction } from './playback'
+import { defaultWinner, eventLabel, liveAdditions, newLiveCursor, playerEvents, playerStandings, visualAction } from './playback'
 import '../live/live.css'
 import './devnet.css'
 const Scene = lazy(() => import('../genie/Scene'))
@@ -35,6 +35,7 @@ function GameViewer({ pda }: { pda: string }) {
   const { snapshot, error, waiting, retry } = useChainSnapshot(pda)
   const [selected, setSelected] = useState('')
   const faction = snapshot?.factions.find((f) => f.pda === selected) ?? (snapshot ? defaultWinner(snapshot) : undefined)
+  const standings = snapshot ? playerStandings(snapshot) : null
   const [current, setCurrent] = useState<ChainEvent | null>(null)
   const [mode, setMode] = useState<'live' | 'replay'>('live')
   const [playing, setPlaying] = useState(false)
@@ -110,7 +111,7 @@ function GameViewer({ pda }: { pda: string }) {
       <div className="live-frame-footer"><span>{error ? 'Last received snapshot' : 'Read-only · no wallet required'}</span><span>{snapshot ? short(snapshot.pda) : short(pda)}</span></div>
     </section>
     <aside className="live-sidebar devnet-sidebar"><span className="live-eyebrow">Real game. Familiar character.</span><h1>Watch the moves.<br />Follow your player.</h1><p className="live-description">Confirmed Solana actions drive the animations. Finished games retain their public action history.</p>
-      {snapshot && <><label className="devnet-player">Player<select aria-label="Choose player" value={faction?.pda ?? ''} onChange={(e) => { reset(); setSelected(e.target.value) }}><option value="" disabled>Choose a player</option>{snapshot.factions.map((f) => <option key={f.pda} value={f.pda}>{f.name} · {short(f.pda)}</option>)}</select></label>
+      {snapshot && <><section className="devnet-leaderboard" aria-label="Players"><div className="devnet-leaderboard-head"><strong>Players</strong><span>{standings?.final ? 'Final payout order · confirmed' : 'Provisional order · latest cash only'}</span></div><ol className="devnet-leaderboard-list">{standings?.factions.map((f, index) => <li key={f.pda}><button type="button" className="devnet-leaderboard-row" aria-pressed={f.pda === faction?.pda} onClick={() => { reset(); setSelected(f.pda) }}><span className="devnet-leaderboard-rank">{String(index + 1).padStart(2, '0')}</span><span className="devnet-leaderboard-name"><strong>{f.name}</strong><small>{short(f.pda)} · {f.goods} goods · {f.influence} influence</small></span><span className="devnet-leaderboard-cash">{formatCash(f.cash)}<small>{standings.final && index === 0 ? 'Verified winner' : 'Latest cash'}</small></span></button></li>)}</ol></section>
         <div className="devnet-resources"><span>Latest confirmed balances{mode === 'replay' ? ' · not replay balances' : ''}</span><strong>{faction ? formatCash(faction.cash) : '—'}</strong>{faction && <p className="devnet-hard">Hard currency: {formatAmount(faction.hard)}</p>}<p>{faction?.goods ?? '—'} goods · {faction?.influence ?? '—'} influence · vote {faction?.vote ?? '—'}{faction && !faction.alive ? ' · exited' : ''}</p></div>
         <div className="live-playback"><button disabled={!observed.length} onClick={() => replay()}>{snapshot.complete ? 'Replay confirmed actions' : 'Play available actions'}</button>{mode === 'replay' && <button disabled={!current} onClick={() => setPlaying((s) => !s)}>{playing ? 'Pause' : 'Resume'}</button>}</div>
         {mode === 'replay' && <><label className="devnet-timeline">Action {Math.min(position + 1, activeEvents.length)} / {activeEvents.length}<input aria-label="Replay action" type="range" min={0} max={Math.max(0, activeEvents.length - 1)} value={Math.max(0, Math.min(position, activeEvents.length - 1))} onChange={(e) => replay(Number(e.target.value), true)} /></label><button className="devnet-text-button" onClick={reset}>Return to latest state</button></>}

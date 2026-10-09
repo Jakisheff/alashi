@@ -45,3 +45,23 @@ export function defaultWinner(snapshot: ChainSnapshot): ChainFaction | undefined
   const winners = snapshot.events.filter((e) => e.type === 'payout' && e.rank === 0)
   return winners.length === 1 ? snapshot.factions.find((f) => f.wallet === winners[0].wallet) : undefined
 }
+
+export function playerStandings(snapshot: ChainSnapshot): { factions: ChainFaction[]; final: boolean } {
+  const payouts = snapshot.events.filter((e) => e.type === 'payout')
+  if (snapshot.settled && snapshot.complete && payouts.length > 0 && payouts.length === snapshot.factions.length) {
+    const ranks = new Map<number, ChainFaction>(), seenFactions = new Set<string>()
+    for (const event of payouts) {
+      const faction = snapshot.factions.find((f) => f.wallet === event.wallet)
+      if (event.rank === undefined || event.rank >= payouts.length || !faction || ranks.has(event.rank) || seenFactions.has(faction.pda)) break
+      ranks.set(event.rank, faction)
+      seenFactions.add(faction.pda)
+    }
+    if (ranks.size === payouts.length && [...ranks.keys()].every((rank) => rank >= 0)) {
+      return { factions: [...ranks].sort(([a], [b]) => a - b).map(([, faction]) => faction), final: true }
+    }
+  }
+  return { factions: [...snapshot.factions].sort((a, b) => {
+    const cashA = BigInt(a.cash), cashB = BigInt(b.cash)
+    return cashA === cashB ? a.pda.localeCompare(b.pda) : cashA > cashB ? -1 : 1
+  }), final: false }
+}

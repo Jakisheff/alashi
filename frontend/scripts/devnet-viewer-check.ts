@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { CHAIN_PROGRAM, chainSnapshot, decodeSnapshot, formatCash, validBase58, ChainApiError } from '../src/devnet/client.ts'
-import { defaultWinner, eventLabel, liveAdditions, newLiveCursor, playerEvents, visualAction } from '../src/devnet/playback.ts'
+import { defaultWinner, eventLabel, liveAdditions, newLiveCursor, playerEvents, playerStandings, visualAction } from '../src/devnet/playback.ts'
 const pda = 'GqHZBaWuJDNERi8xJHXnYF5eWBsLSmEXcAGJYAP94M1b'
 const faction = { pda: '11111111111111111111111111111111', wallet: 'DmqGyi9wBz1RQyueGFRmF7ZuZ4p44YbQKR9LHysbduFo', name: 'Unit fixture', cash: '68800000', hard: '1000000', alive: true, goods: 2, influence: 2, vote: 'Yes' }
 const event = { id: `${'1'.repeat(64)}:0`, signature: '1'.repeat(64), slot: 1, event_index: 0, log_index: 0, block_time: null, type: 'sold', game: pda, faction: faction.pda, units: 1 }
@@ -38,6 +38,12 @@ assert.equal(defaultWinner(winner)?.pda, actor.pda)
 assert.equal(defaultWinner({ ...winner, complete: false }), undefined)
 assert.equal(defaultWinner({ ...winner, settled: false }), undefined)
 assert.equal(defaultWinner({ ...winner, events: [...winner.events, { ...winner.events[0], id: 'ambiguous' }] }), undefined)
+const other = { ...actor, pda: '22222222222222222222222222222222', wallet: '5uiUhsjLhe5YP4Xuwh9Efq6939VrXHwTXZvNtXB8VuJ5', name: actor.name, cash: '99999999' }
+const two = { ...winner, factions: [actor, other], events: [...winner.events, { ...winner.events[0], id: 'other', wallet: other.wallet, rank: 1 }] }
+assert.deepEqual(playerStandings(two), { factions: [actor, other], final: true }, 'final order follows unique confirmed payouts, not cash')
+assert.deepEqual(playerStandings({ ...two, complete: false }), { factions: [other, actor], final: false }, 'partial history uses labelled current cash order')
+assert.deepEqual(playerStandings({ ...two, events: winner.events }), { factions: [other, actor], final: false }, 'missing payout cannot claim final rank')
+assert.deepEqual(playerStandings({ ...two, events: [...winner.events, { ...winner.events[0], id: 'duplicate-wallet', rank: 1 }] }), { factions: [other, actor], final: false }, 'two ranks for one wallet cannot hide another player')
 assert.throws(() => decodeSnapshot({ ...fixture(), commitment: 'processed' }, pda), ChainApiError)
 assert.throws(() => decodeSnapshot({ ...fixture(), journal_through_slot: 2 }, pda), ChainApiError)
 assert.throws(() => decodeSnapshot({ ...fixture(), events: [{ ...event, id: 'unstable' }] }, pda), ChainApiError)
