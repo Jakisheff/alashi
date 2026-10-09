@@ -2938,9 +2938,9 @@ fn live_result(value: serde_json::Value) -> (&'static str, String) {
         Some("bad_token" | "bad_credentials") => "401 Unauthorized",
         Some("message_conflict" | "cursor_expired" | "stale_context") => "409 Conflict",
         Some("rate_limited" | "budget_exhausted") => "429 Too Many Requests",
-        Some("storage_failed") => "503 Service Unavailable",
-        Some("owner_origin_forbidden" | "wish_forbidden") => "403 Forbidden",
-        Some("owner_session_invalid" | "owner_session_expired" | "owner_cookie_invalid" | "game_token_invalid" | "owner_signature_invalid") => "401 Unauthorized",
+        Some("storage_failed" | "owner_handoff_busy" | "pairing_busy") => "503 Service Unavailable",
+        Some("owner_origin_forbidden" | "wish_forbidden" | "pairing_identity_mismatch") => "403 Forbidden",
+        Some("owner_session_invalid" | "owner_session_expired" | "owner_cookie_invalid" | "game_token_invalid" | "owner_signature_invalid" | "owner_handoff_invalid" | "pairing_cookie_invalid" | "pairing_invalid") => "401 Unauthorized",
         Some("idempotency_conflict" | "wish_status_conflict" | "no_active_game" | "no_active_chain_game" | "receipt_pending" | "binding_conflict") => "409 Conflict",
         Some("wish_quota_exhausted" | "owner_challenge_rate_limited") => "429 Too Many Requests",
         Some("runner_token_invalid" | "binding_forbidden") => "403 Forbidden",
@@ -2982,6 +2982,36 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
     // Browser credentials are never serialized into JSON. Only these owner routes
     // may set or clear the HttpOnly cookie.
     match (req.method.as_str(), segs.as_slice()) {
+        ("POST", ["owner", "pairing", "start"]) => {
+            if req.authorization.is_some() {
+                respond(stream, "400 Bad Request", &err_json("ambiguous_owner_credentials", "pairing starts in a browser").to_string());
+                return;
+            }
+            let (value, cookie) = owner_auth::h_start_browser_pairing(state, req.origin.as_deref().unwrap_or(""), req.cookie.as_deref(), &body_v);
+            let (status, body) = live_result(value);
+            crate::http::respond_with_cookie(stream, status, &body, cookie.as_deref());
+            return;
+        }
+        ("POST", ["owner", "pairing", "status"]) => {
+            if req.authorization.is_some() {
+                respond(stream, "400 Bad Request", &err_json("ambiguous_owner_credentials", "pairing status uses browser cookie only").to_string());
+                return;
+            }
+            let (value, cookie) = owner_auth::h_poll_browser_pairing(state, req.origin.as_deref().unwrap_or(""), req.cookie.as_deref(), &body_v);
+            let (status, body) = live_result(value);
+            crate::http::respond_with_cookie(stream, status, &body, cookie.as_deref());
+            return;
+        }
+        ("POST", ["agents", id, "owner", "browser", "handoff"]) => {
+            if req.authorization.is_some() {
+                respond(stream, "400 Bad Request", &err_json("ambiguous_owner_credentials", "browser handoff uses code only").to_string());
+                return;
+            }
+            let (value, cookie) = owner_auth::h_redeem_owner_handoff(state, id, req.origin.as_deref().unwrap_or(""), &body_v);
+            let (status, body) = live_result(value);
+            crate::http::respond_with_cookie(stream, status, &body, cookie.as_deref());
+            return;
+        }
         ("POST", ["agents", id, "owner", "browser", "session"]) => {
             if req.authorization.is_some() {
                 let (status, body) = live_result(err_json("ambiguous_owner_credentials", "browser login uses wallet proof only"));
@@ -3063,6 +3093,20 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
     let (status, body) = match (req.method.as_str(), segs.as_slice()) {
         ("POST", ["agents", id, "owner", "challenge"]) => live_result(owner_auth::h_begin_owner_challenge(state,id,req.origin.as_deref().unwrap_or(""))),
         ("POST", ["agents", id, "owner", "session"]) => live_result(owner_auth::h_finish_owner_challenge(state,id,req.origin.as_deref().unwrap_or(""),&body_v)),
+        ("POST", ["agents", id, "owner", "handoff"]) => {
+            if req.cookie.is_some() || req.authorization.is_none() {
+                live_result(err_json("owner_session_invalid", "handoff issuance requires a wallet-proved bearer"))
+            } else {
+                live_result(owner_auth::h_issue_owner_handoff(state,id,req.origin.as_deref().unwrap_or(""),req.authorization.as_deref().unwrap(),&body_v))
+            }
+        },
+        ("POST", ["agents", id, "owner", "pairing", "complete"]) => {
+            if req.cookie.is_some() || req.authorization.is_none() {
+                live_result(err_json("owner_session_invalid", "pairing completion requires wallet-proved bearer"))
+            } else {
+                live_result(owner_auth::h_complete_browser_pairing(state,id,req.origin.as_deref().unwrap_or(""),req.authorization.as_deref().unwrap(),&body_v))
+            }
+        },
         ("POST", ["agents", id, "owner", "revoke"]) => match owner_credential(req) {
             Ok(raw) => live_result(owner_auth::h_revoke_owner_session(state,id,req.origin.as_deref().unwrap_or(""),&raw)),
             Err(code) => live_result(err_json(code,code)),
@@ -3084,6 +3128,13 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
             (Err(code),_)|(_,Err(code))=>live_result(err_json(code,code)),
         },
         ("POST", ["chain","devnet","games",game,"runner","bind"]) => live_result(chain_wishes::bind(state,game,&body_v)),
+        ("POST", ["chain","devnet","games",game,"runner","bind-wallet"]) => {
+            if req.cookie.is_some() || req.authorization.is_none() {
+                live_result(err_json("owner_session_invalid", "registered-wallet bearer required"))
+            } else {
+                live_result(chain_wishes::bind_wallet(state,game,req.origin.as_deref().unwrap_or(""),req.authorization.as_deref().unwrap(),&body_v))
+            }
+        },
         ("POST", ["chain","devnet","games",game,"runner","wishes","claim"]) => live_result(chain_wishes::claim(state,game,&body_v)),
         ("POST", ["chain","devnet","games",game,"runner","wishes",wish_id,"status"]) => live_result(chain_wishes::status(state,game,wish_id,&body_v)),
         ("POST", ["game", id, "owner", "wishes", "claim"]) => match id.parse::<u64>() {
