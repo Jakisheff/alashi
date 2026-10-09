@@ -46,22 +46,26 @@ export function defaultWinner(snapshot: ChainSnapshot): ChainFaction | undefined
   return winners.length === 1 ? snapshot.factions.find((f) => f.wallet === winners[0].wallet) : undefined
 }
 
-export function playerStandings(snapshot: ChainSnapshot): { factions: ChainFaction[]; final: boolean } {
-  const payouts = snapshot.events.filter((e) => e.type === 'payout')
-  if (snapshot.settled && snapshot.complete && payouts.length > 0 && payouts.length === snapshot.factions.length) {
+export function playerStandings(snapshot: ChainSnapshot): { rows: { faction: ChainFaction; rank: number | null }[]; final: boolean } {
+  if (snapshot.settled && snapshot.complete) {
+    const payouts = snapshot.events.filter((e) => e.type === 'payout')
     const ranks = new Map<number, ChainFaction>(), seenFactions = new Set<string>()
     for (const event of payouts) {
       const faction = snapshot.factions.find((f) => f.wallet === event.wallet)
-      if (event.rank === undefined || event.rank >= payouts.length || !faction || ranks.has(event.rank) || seenFactions.has(faction.pda)) break
+      if (event.rank === undefined || event.rank < 0 || event.rank >= snapshot.factions.length || !faction || ranks.has(event.rank) || seenFactions.has(faction.pda)) break
       ranks.set(event.rank, faction)
       seenFactions.add(faction.pda)
     }
-    if (ranks.size === payouts.length && [...ranks.keys()].every((rank) => rank >= 0)) {
-      return { factions: [...ranks].sort(([a], [b]) => a - b).map(([, faction]) => faction), final: true }
+    if (ranks.size === payouts.length) {
+      const rows: { faction: ChainFaction; rank: number | null }[] = [...ranks].sort(([a], [b]) => a - b).map(([rank, faction]) => ({ faction, rank }))
+      rows.push(...snapshot.factions.filter((faction) => !seenFactions.has(faction.pda)).map((faction) => ({ faction, rank: null })))
+      return { rows, final: true }
     }
+    return { rows: snapshot.factions.map((faction) => ({ faction, rank: null })), final: true }
   }
-  return { factions: [...snapshot.factions].sort((a, b) => {
+  const cashOrder = [...snapshot.factions].sort((a, b) => {
     const cashA = BigInt(a.cash), cashB = BigInt(b.cash)
     return cashA === cashB ? a.pda.localeCompare(b.pda) : cashA > cashB ? -1 : 1
-  }), final: false }
+  })
+  return { rows: cashOrder.map((faction) => ({ faction, rank: null })), final: false }
 }

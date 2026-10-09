@@ -40,10 +40,13 @@ assert.equal(defaultWinner({ ...winner, settled: false }), undefined)
 assert.equal(defaultWinner({ ...winner, events: [...winner.events, { ...winner.events[0], id: 'ambiguous' }] }), undefined)
 const other = { ...actor, pda: '22222222222222222222222222222222', wallet: '5uiUhsjLhe5YP4Xuwh9Efq6939VrXHwTXZvNtXB8VuJ5', name: actor.name, cash: '99999999' }
 const two = { ...winner, factions: [actor, other], events: [...winner.events, { ...winner.events[0], id: 'other', wallet: other.wallet, rank: 1 }] }
-assert.deepEqual(playerStandings(two), { factions: [actor, other], final: true }, 'final order follows unique confirmed payouts, not cash')
-assert.deepEqual(playerStandings({ ...two, complete: false }), { factions: [other, actor], final: false }, 'partial history uses labelled current cash order')
-assert.deepEqual(playerStandings({ ...two, events: winner.events }), { factions: [other, actor], final: false }, 'missing payout cannot claim final rank')
-assert.deepEqual(playerStandings({ ...two, events: [...winner.events, { ...winner.events[0], id: 'duplicate-wallet', rank: 1 }] }), { factions: [other, actor], final: false }, 'two ranks for one wallet cannot hide another player')
+assert.deepEqual(playerStandings(two), { rows: [{ faction: actor, rank: 0 }, { faction: other, rank: 1 }], final: true }, 'final order follows unique confirmed payouts, not cash')
+assert.deepEqual(playerStandings({ ...two, complete: false }), { rows: [{ faction: other, rank: null }, { faction: actor, rank: null }], final: false }, 'partial history uses labelled current cash order')
+assert.deepEqual(playerStandings({ ...two, events: winner.events }), { rows: [{ faction: actor, rank: 0 }, { faction: other, rank: null }], final: true }, 'zero-payout faction stays visible without a fabricated rank')
+const third = { ...other, pda: '33333333333333333333333333333333', wallet: '8'.repeat(44), cash: '1' }
+assert.deepEqual(playerStandings({ ...two, factions: [actor, other, third], events: [winner.events[0], { ...two.events[1], rank: 2 }] }), { rows: [{ faction: actor, rank: 0 }, { faction: other, rank: 2 }, { faction: third, rank: null }], final: true }, 'skipped payout rank is not filled from cash')
+assert.deepEqual(playerStandings({ ...two, events: [] }), { rows: [{ faction: actor, rank: null }, { faction: other, rank: null }], final: true }, 'settled zero-payout game has no fabricated cash ranks')
+assert.deepEqual(playerStandings({ ...two, events: [...winner.events, { ...winner.events[0], id: 'duplicate-wallet', rank: 1 }] }), { rows: [{ faction: actor, rank: null }, { faction: other, rank: null }], final: true }, 'two ranks for one wallet cannot hide another player')
 assert.throws(() => decodeSnapshot({ ...fixture(), commitment: 'processed' }, pda), ChainApiError)
 assert.throws(() => decodeSnapshot({ ...fixture(), journal_through_slot: 2 }, pda), ChainApiError)
 assert.throws(() => decodeSnapshot({ ...fixture(), events: [{ ...event, id: 'unstable' }] }, pda), ChainApiError)
