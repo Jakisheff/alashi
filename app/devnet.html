@@ -31,11 +31,45 @@ const GAME_DISCRIMINATOR = Uint8Array.from([27, 90, 166, 125, 74, 100, 121, 18])
 const FACTION_DISCRIMINATOR = Uint8Array.from([131, 20, 223, 22, 227, 204, 231, 35])
 const PHASES = ['Lobby', 'Market', 'Action', 'Law', 'Finished', 'Aborted']
 const VOTES = ['Yes', 'No', 'Abstain']
-const conn = new solanaWeb3.Connection(RPC, 'confirmed')
+const POLL_MS = 12_000
+const ACTIVITY_MS = 60_000
+let retryAt = 0
+let rateFailures = 0
+class RateLimitError extends Error {}
+async function rpcFetch(url, options) {
+  if (Date.now() < retryAt) throw new RateLimitError('429 RPC cooldown')
+  const controller = new AbortController()
+  const timeout = window.setTimeout(() => controller.abort(), 20_000)
+  try {
+    const response = await fetch(url, { ...options, signal: controller.signal })
+    if (response.status === 429) {
+      rateFailures += 1
+      const header = response.headers.get('Retry-After')
+      const seconds = header === null ? NaN : Number(header)
+      const serverDelay = Number.isFinite(seconds) ? seconds * 1000 : Math.max(0, Date.parse(header) - Date.now())
+      const backoff = Math.min(120_000, 15_000 * 2 ** Math.min(rateFailures - 1, 3))
+      retryAt = Date.now() + Math.max(backoff, serverDelay || 0) + Math.floor(Math.random() * 1000)
+      throw new RateLimitError('429 RPC rate limit')
+    }
+    return response
+  } finally { window.clearTimeout(timeout) }
+}
+// Handle 429 once here; the SDK's automatic retries would multiply every poll.
+const conn = new solanaWeb3.Connection(RPC, { commitment: 'confirmed', disableRetryOnRateLimit: true, fetch: rpcFetch })
 const query = new URLSearchParams(location.search)
 const $ = (id) => document.getElementById(id)
 let gameKey = null
 let refreshTimer = 0
+let inFlight = false
+let generation = 0
+let nextPollAt = 0
+let stopped = false
+let snapshotCache = null
+function scheduleRefresh() {
+  window.clearTimeout(refreshTimer)
+  if (!gameKey || stopped || document.hidden) return
+  refreshTimer = window.setTimeout(() => void refresh(), Math.max(0, nextPollAt - Date.now(), retryAt - Date.now()))
+}
 
 function message(text, warning = false) { const node = $('status'); node.textContent = text; node.className = warning ? 'warning' : '' }
 function setText(id, value) { $(id).textContent = value }
@@ -88,33 +122,78 @@ function renderTransactions(rows) {
   }
 }
 async function refresh() {
-  if (!gameKey) return
+  if (!gameKey || inFlight || stopped || document.hidden) return
+  if (Date.now() < Math.max(nextPollAt, retryAt)) { scheduleRefresh(); return }
+  inFlight = true
+  const key = gameKey, run = generation
+  const current = () => run === generation && !stopped
   try {
-    const account = await conn.getAccountInfo(gameKey, 'confirmed')
+    const account = await conn.getAccountInfo(key, 'confirmed')
+    if (!current()) return
     if (!account) throw new Error('Game account was not found on Solana devnet')
     if (!account.owner.equals(PROGRAM)) throw new Error('Account owner does not match the Alashi program')
-    const state = parseGame(account.data); await verifyGamePda(gameKey, state)
-    const factionAccounts = await conn.getProgramAccounts(PROGRAM, { filters: [{ memcmp: { offset: 8, bytes: gameKey.toBase58() } }], commitment: 'confirmed' })
-    const factions = factionAccounts.filter((entry) => entry.account.owner.equals(PROGRAM)).map((entry) => parseFaction(entry.account.data)).sort((a, b) => a.name.localeCompare(b.name))
+    const state = parseGame(account.data); await verifyGamePda(key, state)
+    if (!current()) return
+    let cache = snapshotCache
+    if (state.factions === 0) {
+      cache = cache ?? { addresses: [], accounts: [], transactions: [], activityAt: 0 }
+      cache = { ...cache, addresses: [], accounts: [] }
+    } else if (!cache || cache.addresses.length !== state.factions) {
+      const entries = await conn.getProgramAccounts(PROGRAM, { filters: [{ memcmp: { offset: 8, bytes: key.toBase58() } }], commitment: 'confirmed' })
+      if (!current()) return
+      cache = { addresses: entries.map((entry) => entry.pubkey), accounts: entries.map((entry) => entry.account), transactions: [], activityAt: 0 }
+    } else if (cache.addresses.length) {
+      cache = { ...cache, accounts: await conn.getMultipleAccountsInfo(cache.addresses, 'confirmed') }
+      if (!current()) return
+    }
+    if (cache.accounts.some((entry) => !entry || !entry.owner.equals(PROGRAM))) throw new Error('Faction account owner does not match the Alashi program')
+    const factions = cache.accounts.map((entry) => parseFaction(entry.data)).sort((a, b) => a.name.localeCompare(b.name))
     if (factions.length !== state.factions) throw new Error('Faction snapshot changed; retrying')
-    const transactions = (await conn.getSignaturesForAddress(gameKey, { limit: 12 }, 'confirmed')).filter((row) => row.err === null)
+    if (!cache.activityAt || state.settled || Date.now() - cache.activityAt >= ACTIVITY_MS) {
+      cache.transactions = (await conn.getSignaturesForAddress(key, { limit: 12 }, 'confirmed')).filter((row) => row.err === null)
+      if (!current()) return
+      cache.activityAt = Date.now()
+    }
+    snapshotCache = cache
     $('viewer').classList.remove('hidden')
     setText('chain-status', state.settled ? 'Settled on-chain' : state.phase === 4 ? 'Finished; settlement pending' : 'Live on-chain state')
     setText('game-id', String(state.gameId)); setText('phase', PHASES[state.phase] ?? `Unknown (${state.phase})`); setText('round', String(state.round))
-    setText('deadline', formatTime(Number(state.endsAt) - Math.floor(Date.now() / 1000))); setText('game-account', `${gameKey.toBase58().slice(0, 10)}…`)
-    renderFactions(factions); renderTransactions(transactions); message('Confirmed devnet state. Refreshes every four seconds.')
-  } catch (error) { message(error instanceof Error ? error.message : 'Could not read the public devnet state. Retrying…', true) }
+    setText('deadline', formatTime(Number(state.endsAt) - Math.floor(Date.now() / 1000))); setText('game-account', `${key.toBase58().slice(0, 10)}…`)
+    renderFactions(factions); renderTransactions(cache.transactions)
+    rateFailures = 0
+    if (state.settled) { stopped = true; message('Confirmed final devnet state. Automatic refresh stopped. Watch game checks again.') }
+    else message('Confirmed devnet state. Refreshes every 12 seconds; activity every minute.')
+  } catch (error) {
+    if (!current()) return
+    const limited = error instanceof RateLimitError || /429|too many requests/i.test(String(error?.message))
+    if (limited && Date.now() >= retryAt) { rateFailures += 1; retryAt = Date.now() + Math.min(120_000, 15_000 * 2 ** Math.min(rateFailures - 1, 3)) }
+    if (limited) message(`Solana devnet is busy. Automatic retry in ${Math.ceil((retryAt - Date.now()) / 1000)} seconds. Repeated clicks will not speed it up.`, true)
+    else message(`${error instanceof Error && error.name !== 'AbortError' ? error.message : 'Could not read the public devnet state.'} Retrying shortly.`, true)
+  } finally {
+    inFlight = false
+    nextPollAt = Date.now() + POLL_MS
+    scheduleRefresh()
+  }
 }
 function openGame(value) {
   const key = publicKey(value.trim())
   if (!key) { message('Enter a valid base58 Game PDA.', true); return }
-  gameKey = key; history.replaceState(null, '', `${location.pathname}?game=${encodeURIComponent(key.toBase58())}`); void refresh()
+  if (gameKey?.equals(key) && !stopped) { scheduleRefresh(); return }
+  generation += 1
+  gameKey = key; snapshotCache = null; stopped = false
+  // A new address may discard old results, but cannot bypass a shared RPC cooldown.
+  nextPollAt = Math.max(nextPollAt, retryAt)
+  $('viewer').classList.add('hidden')
+  history.replaceState(null, '', `${location.pathname}?game=${encodeURIComponent(key.toBase58())}`)
+  message(Date.now() < retryAt ? 'Solana devnet is busy. Waiting for the automatic retry…' : 'Reading confirmed devnet state…')
+  void refresh()
 }
 $('game-form').addEventListener('submit', (event) => { event.preventDefault(); openGame($('game-input').value) })
 const initial = query.get('game')
 if (initial) { $('game-input').value = initial; openGame(initial) }
-refreshTimer = window.setInterval(() => void refresh(), 4_000)
-window.addEventListener('pagehide', () => window.clearInterval(refreshTimer), { once: true })
+document.addEventListener('visibilitychange', () => { if (document.hidden) window.clearTimeout(refreshTimer); else scheduleRefresh() })
+window.addEventListener('pagehide', () => window.clearTimeout(refreshTimer))
+window.addEventListener('pageshow', () => scheduleRefresh())
 </script>
 </body>
 </html>
