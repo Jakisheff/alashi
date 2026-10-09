@@ -9,6 +9,8 @@ mod live;
 mod owner_auth;
 #[path = "wishes.rs"]
 mod wishes;
+#[path = "chain_wishes.rs"]
+mod chain_wishes;
 use crate::runner::{self, ActionLog};
 use crate::registration::{self, Proof, Receipt};
 use crate::strategies::{ActionAction, LawAction, MarketAction};
@@ -161,6 +163,7 @@ pub struct AppState {
     live: Mutex<live::LiveState>,
     owner_auth: Mutex<owner_auth::OwnerAuthState>,
     wishes: Mutex<wishes::WishState>,
+    chain_wishes: Mutex<chain_wishes::ChainWishState>,
     proposal_key: Mutex<Option<String>>,
     snapshot_path: PathBuf,
     sequence_path: PathBuf,
@@ -268,6 +271,7 @@ pub(super) fn save_snapshot_locked(state: &AppState) -> std::io::Result<()> {
         "live": *state.live.lock().unwrap_or_else(|e| e.into_inner()),
         "owner_auth": *state.owner_auth.lock().unwrap_or_else(|e| e.into_inner()),
         "wishes": *state.wishes.lock().unwrap_or_else(|e| e.into_inner()),
+        "chain_wishes": *state.chain_wishes.lock().unwrap_or_else(|e| e.into_inner()),
         "proposal_key": state.proposal_key.lock().unwrap_or_else(|e| e.into_inner()).clone(),
         "completed": completed.clone(),
         "completed_replay": *state.completed_replay.lock().unwrap_or_else(|e| e.into_inner()),
@@ -364,6 +368,13 @@ pub fn load_snapshot(state: &AppState) -> Result<(), String> {
     };
     if !valid_wish_state(&wish_state) {
         return fail("несогласованный приватный wish journal или лимит".into());
+    }
+    let chain_wish_state: chain_wishes::ChainWishState = match doc.get("chain_wishes") {
+        Some(value) => serde_json::from_value(value.clone()).map_err(|_| "битый приватный chain-wish journal".to_string())?,
+        None => chain_wishes::ChainWishState::default(),
+    };
+    if !chain_wishes::validate(&chain_wish_state) {
+        return fail("несогласованный приватный chain-wish journal или лимит".into());
     }
     let completed_replay: HashMap<u64, HashMap<String, CompletedSession>> =
         match doc.get("completed_replay") {
@@ -500,6 +511,7 @@ pub fn load_snapshot(state: &AppState) -> Result<(), String> {
         *state.live.lock().unwrap_or_else(|e| e.into_inner()) = live_state;
         *state.owner_auth.lock().unwrap_or_else(|e| e.into_inner()) = owner_auth_state;
         *state.wishes.lock().unwrap_or_else(|e| e.into_inner()) = wish_state;
+        *state.chain_wishes.lock().unwrap_or_else(|e| e.into_inner()) = chain_wish_state;
         *state.proposal_key.lock().unwrap_or_else(|e| e.into_inner()) = proposal_key;
         *state.completed_replay.lock().unwrap_or_else(|e| e.into_inner()) = completed_replay;
         if let Some(arr) = doc["completed"].as_array() {
@@ -686,6 +698,7 @@ pub fn new_state_with_files(snapshot_path: impl Into<PathBuf>, sequence_path: im
         live: Mutex::new(live::LiveState::default()),
         owner_auth: Mutex::new(owner_auth::OwnerAuthState::default()),
         wishes: Mutex::new(wishes::WishState::default()),
+        chain_wishes: Mutex::new(chain_wishes::ChainWishState::default()),
         proposal_key: Mutex::new(None),
         snapshot_path: snapshot_path.into(),
         sequence_path: sequence_path.into(),
@@ -2854,6 +2867,11 @@ fn root_doc(state: &AppState) -> serde_json::Value {
             "GET /agents/:id/owner/wishes?after=&limit=": "bearer-only private status cursor and remaining allowance",
             "POST /game/:id/owner/wishes/claim": "harness game token claims private wish lease",
             "POST /game/:id/owner/wishes/:wish_id/status": "harness game token reports private processing status",
+            "POST /agents/:id/owner/chain-wishes": "owner-only typed devnet guidance, three per registered agent and chain Game PDA",
+            "GET /agents/:id/owner/chain-wishes?game=&after=&limit=": "owner-only chain guidance status and allowance",
+            "POST /chain/devnet/games/:pda/runner/bind": "loopback runner recovery secret binds matching v2 wallet to live chain faction",
+            "POST /chain/devnet/games/:pda/runner/wishes/claim": "loopback runner capability claims one private chain guidance lease",
+            "POST /chain/devnet/games/:pda/runner/wishes/:wish_id/status": "loopback runner reports processing/verified chain receipt",
             "POST /game/:id/registration": "legacy v1 game-bound Memo proposal",
             "POST /game/:id/join": "v2: agent_record_id/recovery_secret/name/model/strategy_hash → game token; legacy v1: name/model/prompt/registration",
             "GET  /game/:id/state": "публичное состояние партии; recent_actions[].seq/event_id стабильны после рестарта; recent_actions_range.first_seq/last_seq — окно ответа, retained_first_seq — начало сохранённого журнала",
@@ -2890,6 +2908,20 @@ fn owner_query(raw: &str) -> Result<(u64, usize), &'static str> {
     Ok((after,limit))
 }
 
+fn chain_owner_query(raw: &str) -> Result<(String,u64,usize), &'static str> {
+    let (_,query)=raw.split_once('?').ok_or("bad_cursor")?;
+    let mut game=None;let mut after=0;let mut limit=100;
+    let mut seen=std::collections::HashSet::new();
+    for part in query.split('&') {
+        let (key,value)=part.split_once('=').ok_or("bad_cursor")?;
+        if !seen.insert(key) {return Err("bad_cursor")}
+        match key {"game"=>game=Some(value.to_string()),"after"=>after=value.parse().map_err(|_|"bad_cursor")?,
+            "limit"=>limit=value.parse().map_err(|_|"bad_cursor")?,_=>return Err("bad_cursor")}
+    }
+    if !(1..=100).contains(&limit) {return Err("bad_cursor")}
+    Ok((game.ok_or("bad_cursor")?,after,limit))
+}
+
 fn owner_credential(req: &Request) -> Result<String, &'static str> {
     let cookie = owner_auth::browser_token(req.cookie.as_deref())?;
     match (req.authorization.as_deref(), cookie) {
@@ -2909,8 +2941,10 @@ fn live_result(value: serde_json::Value) -> (&'static str, String) {
         Some("storage_failed") => "503 Service Unavailable",
         Some("owner_origin_forbidden" | "wish_forbidden") => "403 Forbidden",
         Some("owner_session_invalid" | "owner_session_expired" | "owner_cookie_invalid" | "game_token_invalid" | "owner_signature_invalid") => "401 Unauthorized",
-        Some("idempotency_conflict" | "wish_status_conflict" | "no_active_game") => "409 Conflict",
+        Some("idempotency_conflict" | "wish_status_conflict" | "no_active_game" | "no_active_chain_game" | "receipt_pending" | "binding_conflict") => "409 Conflict",
         Some("wish_quota_exhausted" | "owner_challenge_rate_limited") => "429 Too Many Requests",
+        Some("runner_token_invalid" | "binding_forbidden") => "403 Forbidden",
+        Some("chain_api_unavailable") => "503 Service Unavailable",
         Some(_) => "400 Bad Request",
     };
     (status, value.to_string())
@@ -3041,6 +3075,17 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
             (Ok((after,limit)), Ok(raw)) => live_result(wishes::h_owner_wishes_after(state,id,&raw,after,limit)),
             (Err(code), _) | (_, Err(code)) => live_result(err_json(code,code)),
         },
+        ("POST", ["agents", id, "owner", "chain-wishes"]) => match owner_credential(req) {
+            Ok(raw) => live_result(chain_wishes::submit(state,id,req.origin.as_deref().unwrap_or(""),&raw,&body_v)),
+            Err(code) => live_result(err_json(code,code)),
+        },
+        ("GET", ["agents", id, "owner", "chain-wishes"]) => match (chain_owner_query(&req.path),owner_credential(req)) {
+            (Ok((game,after,limit)),Ok(raw)) => live_result(chain_wishes::owner_after(state,id,&raw,&game,after,limit)),
+            (Err(code),_)|(_,Err(code))=>live_result(err_json(code,code)),
+        },
+        ("POST", ["chain","devnet","games",game,"runner","bind"]) => live_result(chain_wishes::bind(state,game,&body_v)),
+        ("POST", ["chain","devnet","games",game,"runner","wishes","claim"]) => live_result(chain_wishes::claim(state,game,&body_v)),
+        ("POST", ["chain","devnet","games",game,"runner","wishes",wish_id,"status"]) => live_result(chain_wishes::status(state,game,wish_id,&body_v)),
         ("POST", ["game", id, "owner", "wishes", "claim"]) => match id.parse::<u64>() {
             Ok(id) => {
                 let allowed = body_v.as_object().is_some_and(|o| o.keys().all(|k| matches!(k.as_str(), "token" | "after" | "limit")));

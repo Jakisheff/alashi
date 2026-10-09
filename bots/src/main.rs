@@ -1,7 +1,9 @@
 mod agent_cli;
+mod chain_wish_client;
 mod llm;
 mod session_cli;
 
+use solana_signature::Signature;
 use solana_signer::Signer;
 
 use {
@@ -18,6 +20,7 @@ use {
     solana_transaction::versioned::VersionedTransaction,
     std::{
         path::Path,
+        str::FromStr,
         thread::sleep,
         time::{Duration, SystemTime, UNIX_EPOCH},
     },
@@ -237,6 +240,8 @@ struct Bot {
     voted: bool,
     goods: u16,
     bribed: bool,
+    wish_profile: Option<chain_wish_client::Profile>,
+    wish: Option<chain_wish_client::ChainWishClient>,
 }
 
 fn ensure_funds(rpc: &RpcClient, who: &str, kp: &Keypair) {
@@ -535,6 +540,224 @@ fn faction_cash(rpc: &RpcClient, faction: &Pubkey) -> u64 {
     fetch_faction(rpc, faction).map(|f| f.cash).unwrap_or(0)
 }
 
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+enum WishRun {
+    Pass,
+    Applied(chain_wish_client::Intent),
+    Block,
+}
+
+fn phase_name(phase: state::Phase) -> &'static str {
+    match phase {
+        state::Phase::Market => "market",
+        state::Phase::Action => "action",
+        state::Phase::Law => "law",
+        _ => "other",
+    }
+}
+
+fn wait_for_slot_after(rpc: &RpcClient, floor: u64) -> bool {
+    for _ in 0..20 {
+        if rpc.get_slot().is_ok_and(|slot| slot > floor) {
+            return true;
+        }
+        sleep(Duration::from_millis(500));
+    }
+    false
+}
+
+fn retry_pending_chain_wish(rpc: &RpcClient, client: &mut chain_wish_client::ChainWishClient) {
+    if let Some(signature) = client.pending_signature_without_slot().map(str::to_owned) {
+        if let Ok(signature) = Signature::from_str(&signature) {
+            match wait_receipt(rpc, &signature, Duration::ZERO) {
+                Ok(receipt) => {
+                    if let Some(slot) = receipt["slot"].as_u64() {
+                        let _ = client.record_pending_slot(slot);
+                    }
+                }
+                Err(error) if error["status"] == "failed" => {
+                    let _ = client.mark_pending_unconfirmed();
+                }
+                Err(_) => {}
+            }
+        }
+    }
+    if client.has_pending() {
+        let _ = client.retry_pending();
+    }
+}
+
+fn expire_terminal_wishes(rpc: &RpcClient, client: &mut chain_wish_client::ChainWishClient) {
+    retry_pending_chain_wish(rpc, client);
+    if client.has_pending() {
+        return;
+    }
+    // The server expires queued wishes for a finished game during this claim.
+    // Failure is nonfatal: owner reads perform durable reconciliation on exit.
+    let _ = client.claim();
+}
+
+/// A private wish has no effect until its typed instruction is sent and confirmed.
+/// On an ambiguous send, do not run a fallback action in the same decision slot.
+fn run_chain_wish(
+    rpc: &RpcClient,
+    signer: &Keypair,
+    faction: Pubkey,
+    client: Option<&mut chain_wish_client::ChainWishClient>,
+    game: Pubkey,
+    current: &state::Game,
+    acted: &mut bool,
+    voted: &mut bool,
+) -> WishRun {
+    let Some(client) = client else {
+        return WishRun::Pass;
+    };
+    // A recovered receipt is status-only: do not claim or sign another action
+    // until the existing confirmed signature receives a server acknowledgement.
+    if client.has_pending() {
+        retry_pending_chain_wish(rpc, client);
+        return WishRun::Block;
+    }
+    let wish = match client.claim() {
+        Ok(Some(wish)) => wish,
+        Ok(None) => return WishRun::Pass,
+        Err(_) => return WishRun::Block,
+    };
+    if matches!(wish.intent, chain_wish_client::Intent::Unsupported) {
+        return if client.decline(&wish).is_ok() {
+            WishRun::Pass
+        } else {
+            WishRun::Block
+        };
+    }
+    if !wish.intent.matches_phase(phase_name(current.phase)) {
+        return if client.defer(&wish).is_ok() {
+            WishRun::Pass
+        } else {
+            WishRun::Block
+        };
+    }
+    let Some(faction_state) = fetch_faction(rpc, &faction) else {
+        return if client.defer(&wish).is_ok() {
+            WishRun::Pass
+        } else {
+            WishRun::Block
+        };
+    };
+    let unavailable = !faction_state.alive
+        || faction_state.acted_stamp == current.stamp()
+        || faction_state.voted_stamp == current.stamp()
+        || matches!(wish.intent, chain_wish_client::Intent::SellOne) && faction_state.goods == 0
+        || matches!(wish.intent, chain_wish_client::Intent::BuyOne)
+            && alashi::logic::compute_purchase(
+                1,
+                current.sold_this_round,
+                current.active_price_shift,
+                current.active_boom,
+            )
+            .gross
+                > faction_state.cash
+        || matches!(
+            wish.intent,
+            chain_wish_client::Intent::VoteYes | chain_wish_client::Intent::VoteNo
+        ) && current.law_card == 255;
+    if unavailable {
+        return if client.decline(&wish).is_ok() {
+            WishRun::Pass
+        } else {
+            WishRun::Block
+        };
+    }
+    let ix = match wish.intent {
+        chain_wish_client::Intent::Produce => ix_produce(signer.pubkey(), game, faction),
+        chain_wish_client::Intent::SellOne => ix_sell(1, signer.pubkey(), game, faction),
+        chain_wish_client::Intent::BuyOne => ix_buy(1, signer.pubkey(), game, faction),
+        chain_wish_client::Intent::VoteYes => {
+            ix_vote(state::VoteChoice::Yes, signer.pubkey(), game, faction)
+        }
+        chain_wish_client::Intent::VoteNo => {
+            ix_vote(state::VoteChoice::No, signer.pubkey(), game, faction)
+        }
+        chain_wish_client::Intent::Unsupported => unreachable!(),
+    };
+    let consumed_after_slot = match client.consume(&wish) {
+        Ok(slot) => slot,
+        Err(_) => return WishRun::Block,
+    };
+    if !wait_for_slot_after(rpc, consumed_after_slot) {
+        let _ = client.unconfirmed(&wish);
+        return WishRun::Block;
+    }
+    let tx = match prepare_ix(rpc, signer, ix) {
+        Ok(tx) => tx,
+        Err(_) => {
+            let _ = client.unconfirmed(&wish);
+            return WishRun::Block;
+        }
+    };
+    let signature = tx.signatures[0].to_string();
+    if client.remember_pending(&wish, &signature, None).is_err() {
+        return WishRun::Block;
+    }
+    let receipt = match submit_confirmed(rpc, &tx) {
+        Ok(receipt) => receipt,
+        Err(error) => {
+            if error["status"] == "failed" {
+                let _ = client.mark_pending_unconfirmed();
+            }
+            return WishRun::Block;
+        }
+    };
+    let Some(slot) = receipt["slot"].as_u64() else {
+        return WishRun::Block;
+    };
+    if client.record_pending_slot(slot).is_err() {
+        return WishRun::Block;
+    }
+    retry_pending_chain_wish(rpc, client);
+    capture_events(&receipt);
+    println!("  confirmed tx https://explorer.solana.com/tx/{signature}?cluster=devnet");
+    match wish.intent {
+        chain_wish_client::Intent::VoteYes | chain_wish_client::Intent::VoteNo => *voted = true,
+        _ => *acted = true,
+    }
+    WishRun::Applied(wish.intent)
+}
+
+fn attach_wish_profiles(
+    profiles: Option<chain_wish_client::Profiles>,
+    bots: &mut [Bot],
+) -> Result<Option<chain_wish_client::Profiles>, &'static str> {
+    let Some(profiles) = profiles else {
+        return Ok(None);
+    };
+    let mut matches = 0;
+    for bot in bots {
+        bot.wish_profile = profiles.matching_profile(&bot.kp.pubkey().to_string())?;
+        matches += usize::from(bot.wish_profile.is_some());
+    }
+    if matches == 0 {
+        return Err("chain_wish_profile_has_no_local_signer");
+    }
+    Ok(Some(profiles))
+}
+
+fn bind_wishes(
+    profiles: Option<&chain_wish_client::Profiles>,
+    bots: &mut [Bot],
+    game: &Pubkey,
+) -> Result<(), &'static str> {
+    let Some(profiles) = profiles else {
+        return Ok(());
+    };
+    for bot in bots {
+        if let Some(profile) = bot.wish_profile.take() {
+            bot.wish = Some(profiles.bind(profile, &game.to_string(), &bot.faction.to_string())?);
+        }
+    }
+    Ok(())
+}
+
 /// Список всех фракций партии прямо из цепи (memcmp по Faction.game, offset 8
 /// после дискриминатора). Нужен, когда в партию вступил гость: advance и settle
 /// требуют полный набор фракций, а не только ботов хоста.
@@ -588,6 +811,27 @@ fn run_join_mode(rpc: &RpcClient, game_str: &str, key_path: &str, name: &str) {
     let kp = load_or_create(key_path);
     let name: String = name.chars().take(16).collect();
     let faction = faction_pda(&game, &kp.pubkey());
+    let wish_profiles = match chain_wish_client::Profiles::from_env() {
+        Ok(profiles) => profiles,
+        Err(error) => {
+            eprintln!("[ERROR] chain wish opt-in unavailable: {error}");
+            return;
+        }
+    };
+    let wish_profile = match wish_profiles.as_ref() {
+        Some(profiles) => match profiles.matching_profile(&kp.pubkey().to_string()) {
+            Ok(Some(profile)) => Some(profile),
+            Ok(None) => {
+                eprintln!("[ERROR] chain wish profile has no local signer");
+                return;
+            }
+            Err(error) => {
+                eprintln!("[ERROR] chain wish opt-in unavailable: {error}");
+                return;
+            }
+        },
+        None => None,
+    };
     register_agent(&kp.pubkey().to_string(), "join-v1", "guest-heuristic-v1");
     println!("=== JOIN MODE | rpc: {} ===", rpc_url());
     println!("guest: {} (ключ: {key_path})", kp.pubkey());
@@ -612,7 +856,7 @@ fn run_join_mode(rpc: &RpcClient, game_str: &str, key_path: &str, name: &str) {
     );
     let mut bal = rpc.get_balance(&kp.pubkey()).unwrap_or(0);
     println!("guest balance: {bal} lamports");
-    if bal < g0.entry_fee + 20_000_000 {
+    if wish_profiles.is_none() && bal < g0.entry_fee + 20_000_000 {
         println!("мало средств, пробую devnet airdrop 1 SOL ...");
         if let Ok(sig) = rpc.request_airdrop(&kp.pubkey(), 1_000_000_000) {
             println!("  airdrop tx {sig}");
@@ -648,6 +892,18 @@ fn run_join_mode(rpc: &RpcClient, game_str: &str, key_path: &str, name: &str) {
             return;
         }
     }
+    let mut wish_client = match (wish_profiles.as_ref(), wish_profile) {
+        (Some(profiles), Some(profile)) => {
+            match profiles.bind(profile, &game.to_string(), &faction.to_string()) {
+                Ok(client) => Some(client),
+                Err(error) => {
+                    eprintln!("[ERROR] chain wish binding unavailable before gameplay: {error}");
+                    return;
+                }
+            }
+        }
+        _ => None,
+    };
     println!("в партии. Фазы двигает host, я играю свои ходы.");
 
     let started = now();
@@ -683,6 +939,21 @@ fn run_join_mode(rpc: &RpcClient, game_str: &str, key_path: &str, name: &str) {
                 }
             }
             state::Phase::Market => {
+                if !acted {
+                    match run_chain_wish(
+                        rpc,
+                        &kp,
+                        faction,
+                        wish_client.as_mut(),
+                        game,
+                        &g,
+                        &mut acted,
+                        &mut voted,
+                    ) {
+                        WishRun::Block => acted = true,
+                        WishRun::Applied(_) | WishRun::Pass => {}
+                    }
+                }
                 if !acted && goods > 0 {
                     println!("[market r{}] продаю {} товаров", g.round, goods);
                     if send_ix(rpc, &kp, ix_sell(goods, kp.pubkey(), game, faction)) {
@@ -694,6 +965,21 @@ fn run_join_mode(rpc: &RpcClient, game_str: &str, key_path: &str, name: &str) {
             }
             state::Phase::Action => {
                 if !acted {
+                    match run_chain_wish(
+                        rpc,
+                        &kp,
+                        faction,
+                        wish_client.as_mut(),
+                        game,
+                        &g,
+                        &mut acted,
+                        &mut voted,
+                    ) {
+                        WishRun::Block => acted = true,
+                        WishRun::Applied(_) | WishRun::Pass => {}
+                    }
+                }
+                if !acted {
                     println!("[action r{}] произвожу (+2 товара)", g.round);
                     if send_ix(rpc, &kp, ix_produce(kp.pubkey(), game, faction)) {
                         acted = true;
@@ -701,6 +987,21 @@ fn run_join_mode(rpc: &RpcClient, game_str: &str, key_path: &str, name: &str) {
                 }
             }
             state::Phase::Law => {
+                if !voted {
+                    match run_chain_wish(
+                        rpc,
+                        &kp,
+                        faction,
+                        wish_client.as_mut(),
+                        game,
+                        &g,
+                        &mut acted,
+                        &mut voted,
+                    ) {
+                        WishRun::Block => voted = true,
+                        WishRun::Applied(_) | WishRun::Pass => {}
+                    }
+                }
                 if !voted && g.law_card != 255 {
                     println!("[law r{}] голосую NO", g.round);
                     if send_ix(
@@ -729,6 +1030,9 @@ fn run_join_mode(rpc: &RpcClient, game_str: &str, key_path: &str, name: &str) {
                     kp.pubkey()
                 );
                 println!("game: https://explorer.solana.com/address/{game}?cluster=devnet");
+                if let Some(client) = wish_client.as_mut() {
+                    expire_terminal_wishes(rpc, client);
+                }
                 break;
             }
         }
@@ -791,6 +1095,13 @@ fn main() {
 
     let bot1_kp = load_or_create(&format!("{KEYS_DIR}/bot1.json"));
     let bot2_kp = load_or_create(&format!("{KEYS_DIR}/bot2.json"));
+    let wish_profiles = match chain_wish_client::Profiles::from_env() {
+        Ok(profiles) => profiles,
+        Err(error) => {
+            eprintln!("[ERROR] chain wish opt-in unavailable: {error}");
+            return;
+        }
+    };
     register_agent(
         &bot1_kp.pubkey().to_string(),
         "greedy-v1",
@@ -813,9 +1124,10 @@ fn main() {
     println!("rpc: {}", rpc_url());
     println!("bot1: {}", bot1_kp.pubkey());
     println!("bot2: {}", bot2_kp.pubkey());
-
-    ensure_funds(&rpc, "bot1", &bot1_kp);
-    ensure_funds(&rpc, "bot2", &bot2_kp);
+    if wish_profiles.is_none() {
+        ensure_funds(&rpc, "bot1", &bot1_kp);
+        ensure_funds(&rpc, "bot2", &bot2_kp);
+    }
 
     let llm = llm_cfg;
     println!(
@@ -840,6 +1152,8 @@ fn main() {
             voted: false,
             goods: 0,
             bribed: false,
+            wish_profile: None,
+            wish: None,
         },
         Bot {
             faction: faction_pda(&game, &bot2_kp.pubkey()),
@@ -849,8 +1163,20 @@ fn main() {
             voted: false,
             goods: 0,
             bribed: false,
+            wish_profile: None,
+            wish: None,
         },
     ];
+    let wish_profiles = match attach_wish_profiles(wish_profiles, &mut bots) {
+        Ok(profiles) => profiles,
+        Err(error) => {
+            eprintln!("[ERROR] chain wish opt-in unavailable: {error}");
+            return;
+        }
+    };
+    if wish_profiles.is_some() {
+        println!("chain wishes: opt-in enabled; pre-funded signer wallets required");
+    }
     let faction_keys: Vec<Pubkey> = bots.iter().map(|b| b.faction).collect();
     let mut faction_keys = faction_keys;
 
@@ -879,6 +1205,10 @@ fn main() {
         ix_join("Botagul", bots[1].kp.pubkey(), game, bots[1].faction),
     );
     wait_account(&rpc, &bots[1].faction, "faction2");
+    if let Err(error) = bind_wishes(wish_profiles.as_ref(), &mut bots, &game) {
+        eprintln!("[ERROR] chain wish binding unavailable before gameplay: {error}");
+        return;
+    }
 
     let started = now();
     let mut last_stamp: Option<u16> = None;
@@ -938,6 +1268,35 @@ fn main() {
                     let b = &mut bots[bi];
                     if b.acted {
                         continue;
+                    }
+                    match run_chain_wish(
+                        &rpc,
+                        &b.kp,
+                        b.faction,
+                        b.wish.as_mut(),
+                        game,
+                        &g,
+                        &mut b.acted,
+                        &mut b.voted,
+                    ) {
+                        WishRun::Applied(chain_wish_client::Intent::SellOne) => {
+                            sold_now += 1;
+                            b.goods = fetch_faction(&rpc, &b.faction)
+                                .map(|f| f.goods)
+                                .unwrap_or(b.goods);
+                            continue;
+                        }
+                        WishRun::Applied(_) => {
+                            b.goods = fetch_faction(&rpc, &b.faction)
+                                .map(|f| f.goods)
+                                .unwrap_or(b.goods);
+                            continue;
+                        }
+                        WishRun::Block => {
+                            b.acted = true;
+                            continue;
+                        }
+                        WishRun::Pass => {}
                     }
                     if bi == 1 && llm.is_some() {
                         let f = fetch_faction(&rpc, &b.faction);
@@ -1055,6 +1414,28 @@ fn main() {
                 for (i, b) in bots.iter_mut().enumerate() {
                     if b.acted {
                         continue;
+                    }
+                    match run_chain_wish(
+                        &rpc,
+                        &b.kp,
+                        b.faction,
+                        b.wish.as_mut(),
+                        game,
+                        &g,
+                        &mut b.acted,
+                        &mut b.voted,
+                    ) {
+                        WishRun::Applied(_) => {
+                            b.goods = fetch_faction(&rpc, &b.faction)
+                                .map(|f| f.goods)
+                                .unwrap_or(b.goods);
+                            continue;
+                        }
+                        WishRun::Block => {
+                            b.acted = true;
+                            continue;
+                        }
+                        WishRun::Pass => {}
                     }
                     if i == 0 && !b.bribed && faction_cash(&rpc, &b.faction) >= 5_000_000 {
                         println!(
@@ -1176,6 +1557,23 @@ fn main() {
                 for (i, b) in bots.iter_mut().enumerate() {
                     if b.voted {
                         continue;
+                    }
+                    match run_chain_wish(
+                        &rpc,
+                        &b.kp,
+                        b.faction,
+                        b.wish.as_mut(),
+                        game,
+                        &g,
+                        &mut b.acted,
+                        &mut b.voted,
+                    ) {
+                        WishRun::Applied(_) => continue,
+                        WishRun::Block => {
+                            b.voted = true;
+                            continue;
+                        }
+                        WishRun::Pass => {}
                     }
                     if i == 1 && llm.is_some() {
                         let f = fetch_faction(&rpc, &b.faction);
@@ -1300,6 +1698,11 @@ fn main() {
                         "rake receiver ({}) balance: {} lamports",
                         g.admin, rake_wallet
                     );
+                }
+                for b in bots.iter_mut() {
+                    if let Some(client) = b.wish.as_mut() {
+                        expire_terminal_wishes(&rpc, client);
+                    }
                 }
                 println!("game: https://explorer.solana.com/address/{game}?cluster=devnet");
                 break;
