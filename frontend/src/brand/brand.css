@@ -1,0 +1,20 @@
+:root {
+  --brand-lilac: #A78BFA;
+  --brand-silver: #D9D9E2;
+  --brand-dark: #111018;
+  --brand-light: #F4F2F8;
+}
+.brand-mark { display: inline-flex; align-items: center; gap: 9px; color: var(--brand-dark); }
+.brand-mark > svg { flex: none; width: 28px; height: 26px; }
+.brand-name { display: grid; gap: 2px; font: 17px/1 Georgia, 'Times New Roman', serif; letter-spacing: .14em; }
+.brand-name > span { font: 8px/1.1 ui-sans-serif, system-ui, sans-serif; letter-spacing: .3em; }
+.brand-on-dark .brand-name { color: var(--brand-light); }
+.live-brand { display: inline-flex; align-items: center; flex: none; letter-spacing: normal; }
+.live-brand .brand-name { color: var(--brand-dark); }
+.live-header { gap: 18px; }
+.live-header-label { min-width: 0; }
+@media (max-width: 480px) {
+  .live-header { gap: 10px; height: auto; min-height: 72px; flex-wrap: wrap; padding-block: 12px; }
+  .live-preview-label { margin-left: auto; font-size: 9px; }
+  .live-header-label { font-size: 11px; }
+}

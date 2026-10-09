@@ -21,7 +21,7 @@ timestamps and receipts are illustrative, not production server confirmations.
 ## Market sale preview
 
 The English page includes a 6.4-second sale sequence: counter enters, the agent
-lifts and offers a crate, receives a Bitcoin-marked coin, smiles and winks once,
+lifts and offers a crate, receives a ALASHI ∀ coin, smiles and winks once,
 then returns to its idle hover. Props are hidden outside this sequence. The coin
 mark is decorative; it adds no Bitcoin balance, payment or transaction.
 
@@ -39,7 +39,7 @@ in `art/experiments/`; the meshopt asset is in `public/models/experiments/`.
 
 ## Market buy preview
 
-**Buy / Replay Buy** uses the same props and isolated runtime: a Bitcoin-marked
+**Buy / Replay Buy** uses the same props and isolated runtime: a ALASHI ∀
 coin leaves toward an off-screen seller at a counter on the right, turned sideways.
 The crate waits on that counter until payment, then comes into both supporting
 palms. The buyer stands beside the counter. A small lift, settling motion, smile and brief gold/mint

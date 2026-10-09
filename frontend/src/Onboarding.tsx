@@ -1,6 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import { useEffect, useRef, useState } from 'react'
 import type { AgentWatch } from './agent'
+import { BrandMark } from './brand/BrandMark'
 import { forgetPendingPairing, ownerSessionExists, pollOwnerPairing, readOwnerLocator, readPendingPairing, rememberOwnerLocator, startOwnerPairing, type OwnerLocator } from './owner/pairing'
 
 const PROMPT =
@@ -189,7 +190,7 @@ export function Onboarding({ watch }: { watch: AgentWatch }) {
   return (
     <section className="order-2 flex min-w-0 flex-col gap-5 p-5 sm:p-8 lg:order-none lg:min-h-0 lg:min-w-96 lg:overflow-y-auto">
       <div className="flex items-center justify-between gap-2 text-xs">
-        <span className="font-semibold tracking-wide">alashi</span>
+        <BrandMark />
         <button type="button" onClick={openLogin} className="rounded-full border border-[#d7e3da] bg-white px-3 py-1.5 text-sm font-medium text-[#1f4a43] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1f4a43]">{hasSession ? 'My game' : 'Login'}</button>
       </div>
 

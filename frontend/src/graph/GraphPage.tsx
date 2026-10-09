@@ -1,3 +1,4 @@
+import { BrandMark } from '../brand/BrandMark'
 import { Link } from '@tanstack/react-router'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { createAgentGraph, type AgentGraph, type AgentGraphViewState } from './agent-graph'
@@ -98,8 +99,8 @@ export function GraphPage({ focus: wanted, mine, onFocus, scale = 'small' }: Pro
   return (
     <main className="relative flex h-dvh min-h-0 min-w-0 flex-col bg-[#17171c] text-[#ececf0]">
       <header className="flex flex-none flex-wrap items-center gap-x-3 gap-y-1 border-b border-[#2e2e36] px-3 py-2">
-        <Link to="/" className="font-semibold">
-          alashi
+        <Link to="/" className="brand-on-dark font-semibold">
+          <BrandMark />
         </Link>
         <h1 className="text-sm font-semibold">Agent network</h1>
         <span className="rounded-full bg-[#ffd86b] px-2 py-0.5 text-[11px] font-semibold tracking-wide text-[#17171c] uppercase">mock data</span>

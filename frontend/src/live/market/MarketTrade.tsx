@@ -3,6 +3,7 @@ import { createPortal, useFrame } from '@react-three/fiber'
 import { useEffect, useMemo, useRef } from 'react'
 import { AnimationMixer, Bone, Color, Group, Mesh, PropertyBinding, Quaternion, Vector3, type Material } from 'three'
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils.js'
+import { createBrandCoin } from '../../brand/coin'
 import { ScreenText } from '../../genie/ScreenText'
 import { createSmokeMaterial } from '../../genie/smoke'
 
@@ -83,6 +84,9 @@ export function MarketTrade({ preview, onTime, onFinished }: { preview: TradePre
   }, [heroGLB.animations, bones])
   const props = useMemo(() => {
     const scene = propsGLB.scene.clone(true)
+    // Discard the decorative Bitcoin coin from the cached prop clone.
+    scene.getObjectByName('market-coin')?.removeFromParent()
+    const brandCoin = createBrandCoin(.145, .032)
     const materials: Material[] = []
     scene.traverse((o) => {
       const mesh = o as Mesh
@@ -91,7 +95,7 @@ export function MarketTrade({ preview, onTime, onFinished }: { preview: TradePre
       mesh.material = Array.isArray(mesh.material) ? copies : copies[0]
     })
     const get = (name: string) => { const o = scene.getObjectByName(name); if (!o) throw new Error(`Missing sale prop: ${name}`); return o }
-    return { stand: get('market-stand'), crate: get('market-crate'), coin: get('market-coin'), materials }
+    return { stand: get('market-stand'), crate: get('market-crate'), coin: brandCoin.root, materials: [...materials, ...brandCoin.materials], disposeProps: () => { materials.forEach((m) => m.dispose()); brandCoin.dispose() } }
   }, [propsGLB.scene])
   const anchor = useMemo(() => hero.getObjectByName('text-anchor'), [hero])
   const owned = useRef(props)
@@ -110,7 +114,7 @@ export function MarketTrade({ preview, onTime, onFinished }: { preview: TradePre
     })
     return () => { mixer.stopAllAction(); mixer.uncacheRoot(hero) }
   }, [heroGLB.animations, hero, mixer, smoke])
-  useEffect(() => () => { smoke.material.dispose(); props.materials.forEach((m) => m.dispose()) }, [smoke, props])
+  useEffect(() => () => { smoke.material.dispose(); props.disposeProps() }, [smoke, props])
   useEffect(() => { time.current = 0; reported.current = -1; finished.current = false }, [preview.take, preview.action])
   useEffect(() => { if (preview.seek !== null) { time.current = preview.seek; finished.current = false } }, [preview.seek])
 

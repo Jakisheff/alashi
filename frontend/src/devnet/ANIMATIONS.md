@@ -32,8 +32,8 @@ viewer does not invent thoughts or display private wishes as public speech.
 
 ## Semantics and sequencing
 
-- A Bitcoin symbol is decorative coin artwork; game balances and actual chain
-  amounts remain authoritative. It does not imply a Bitcoin transaction.
+- A ALASHI ∀ symbol is decorative coin artwork; game balances and actual chain
+  amounts remain authoritative. It does not imply a new currency or additional transaction.
 - Donkey purchase pays for one good. Shuttle is a distinct rules action that
   yields grey goods; its current visual reuses Mule choreography. The public
   receipt, not the parcel count drawn in the scene, determines quantities.

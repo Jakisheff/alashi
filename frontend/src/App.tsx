@@ -3,6 +3,7 @@ import { useShallow } from 'zustand/react/shallow'
 import { standings } from './events'
 import { useAgentWatch } from './agent'
 import { useArenaFeed } from './feed'
+import './brand/brand.css'
 import { Onboarding } from './Onboarding'
 import type { GenieClip } from './genie/pose'
 import type { HomeSearch } from './routes/index'
@@ -67,12 +68,12 @@ export default function App({ search }: { search: HomeSearch }) {
   }, [trigger, demo])
 
   return (
-    <div className="flex min-h-full flex-col bg-[#F4F4F5] text-[#1A1A1E] lg:grid lg:h-dvh lg:min-h-0 lg:grid-cols-[minmax(24rem,30rem)_minmax(0,1fr)] lg:grid-rows-[minmax(0,1fr)]">
+    <div className="flex min-h-full flex-col bg-[#F4F2F8] text-[#111018] lg:grid lg:h-dvh lg:min-h-0 lg:grid-cols-[minmax(24rem,30rem)_minmax(0,1fr)] lg:grid-rows-[minmax(0,1fr)]">
       <Onboarding watch={watch} />
       <div className="relative order-1 h-[clamp(14rem,40svh,22rem)] min-h-0 min-w-0 shrink-0 overflow-hidden lg:order-none lg:h-full">
         <SceneBoundary>
           <Suspense fallback={null}>
-            <Scene frozen={frozen} />
+            <Scene frozen={frozen} background="#F4F2F8" />
           </Suspense>
         </SceneBoundary>
 
