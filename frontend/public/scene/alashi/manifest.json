@@ -1,0 +1,177 @@
+{
+  "version": "1.0.0",
+  "title": "ALASHI studio scene: integrated subset",
+  "coordinate_space": {
+    "width": 1000,
+    "height": 1200,
+    "units": "normalized positions below are fractions of the SCENE rectangle, not the full card or viewport"
+  },
+  "palette": {
+    "background": "#111018",
+    "accent": "#A78BFA",
+    "silver": "#D9D9E2",
+    "text": "#F4F2F8"
+  },
+  "layers": [
+    {
+      "name": "backdrop",
+      "z": 0,
+      "opacity": 0.74
+    },
+    {
+      "name": "watermark",
+      "z": 1,
+      "center": [
+        0.5,
+        0.38
+      ],
+      "width": 0.68,
+      "opacity": 0.03
+    },
+    {
+      "name": "halo",
+      "z": 2,
+      "center": [
+        0.5,
+        0.43
+      ],
+      "width": 1,
+      "opacity": 0.12
+    },
+    {
+      "name": "ground_shadow",
+      "z": 3,
+      "center": [
+        0.5,
+        0.87
+      ],
+      "width": 0.5,
+      "height": 0.065,
+      "opacity": 0.65
+    },
+    {
+      "name": "platform",
+      "z": 4,
+      "center": [
+        0.5,
+        0.845
+      ],
+      "image_width": 0.48,
+      "preserve_aspect_ratio": true
+    },
+    {
+      "name": "tail_reflection",
+      "z": 5,
+      "center": [
+        0.5,
+        0.84
+      ],
+      "width": 0.17,
+      "height": 0.032,
+      "opacity": 0.16
+    },
+    {
+      "name": "existing_avatar",
+      "z": 6,
+      "suggested_motion_envelope": [
+        0.14,
+        0.08,
+        0.86,
+        0.78
+      ],
+      "included": false
+    },
+    {
+      "name": "temporary_rewards",
+      "z": 7,
+      "production_start_anchor": "project existing hand bone/attachment into CSS coordinates",
+      "fixed_preview_anchor_is_not_production": true
+    },
+    {
+      "name": "edge_fade",
+      "z": 8
+    }
+  ],
+  "motion": {
+    "backdrop": "static",
+    "reward": "Existing 3D coin, confirmed sale ID only; 1.05s lift at the actual palm; 400ms coalesced platform pulse; no new RAF",
+    "reduced_motion": "No new coin flight or pulse"
+  },
+  "asset_generation": "Raster assets generated via built-in imagegen; WebP encoding only; vector brand mark reconstructed from supplied raster reference",
+  "limitations": [
+    "No source robot model or game integration supplied",
+    "Platform and coin are 2D sprites, not 3D models",
+    "Coin contains only its front face",
+    "Official vector logo preferred if available",
+    "CSS values are starting points requiring motion-envelope checks"
+  ],
+  "assets": [
+    {
+      "path": "backdrop.webp",
+      "bytes": 27658,
+      "width": 1145,
+      "height": 1374,
+      "mode": "RGB",
+      "has_alpha": false,
+      "role": "Empty scene / no robot or platform",
+      "sha256": "bdbcd4fbea7bde252168100e9b07f899575026c9f6aa7773b888e197637d1193"
+    },
+    {
+      "path": "ground-shadow.svg",
+      "bytes": 346,
+      "format": "svg",
+      "viewBox": "0 0 1024 256",
+      "has_alpha": true,
+      "sha256": "d1e70aaf32e89977831d8691a7e223eec361eab995eab752f6a0c2db8ba84ba1"
+    },
+    {
+      "path": "halo-lavender.svg",
+      "bytes": 336,
+      "format": "svg",
+      "viewBox": "0 0 1024 1024",
+      "has_alpha": true,
+      "sha256": "f1a51ebc8b2b5a301f2d1b816e8591e1aaaefd3c3199a07d373e50cf9e0439c3"
+    },
+    {
+      "path": "platform.webp",
+      "bytes": 93910,
+      "width": 2172,
+      "height": 724,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "role": "Fixed-camera alpha sprite",
+      "alpha_visible_bounds_px": [
+        103,
+        187,
+        2070,
+        576
+      ],
+      "alpha_visible_bounds_normalized": [
+        0.04742,
+        0.25829,
+        0.95304,
+        0.79558
+      ],
+      "transparent_pixel_fraction": 0.55508,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "sha256": "fdc39f92c2363cbcc8cb8b6d6649f41d94dc734d238231503bf85d631abe303e"
+    },
+    {
+      "path": "tail-reflection.svg",
+      "bytes": 343,
+      "format": "svg",
+      "viewBox": "0 0 512 128",
+      "has_alpha": true,
+      "sha256": "bdcf958243317dd6019f46d7d6352efa57725a8d181c5ccf30908a514816a0e2"
+    }
+  ],
+  "integration": {
+    "source_archive": "alashi-scene-kit.zip",
+    "archive_status": "Truncated trailing reference; copied core assets recovered with original local-header sizes and CRC32 verified",
+    "watermark": "Official shared frontend/src/brand/geometry.ts contour",
+    "coin": "Existing owned true 3D coin; no flat sprite download",
+    "asset_bytes": 122593,
+    "publication": "Local preparation only"
+  }
+}

@@ -139,11 +139,13 @@ fireworks.update(2.3, false)
 assert.equal(fireworks.group.visible, false, 'Reduced motion / non-victory must hide fireworks')
 // Include the sparks themselves: a valid hero pose can still crop a burst at
 // the portrait canvas edge. Match Scene's camera across narrow/wide viewports.
-for (const aspect of [.8, .9375, 1, 1.15]) {
+const studioFraming = process.env.ALASHI_STUDIO_FRAMING === '1'
+for (const aspect of (studioFraming ? [.8, .9375, 1, 1.15, 2.1] : [.8, .9375, 1, 1.15])) {
   const camera = new PerspectiveCamera(32, aspect, .1, 100)
-  const k = Math.max(1, .85 / aspect)
-  camera.position.set(.15 + 1.05 * k, -.4 + .3 * k, 5.8 * k)
-  camera.lookAt(.15, -.4, 0); camera.updateMatrixWorld(true)
+  const k = Math.max(1, .85 / aspect) * (studioFraming ? 1.14 : 1)
+  const targetY = studioFraming ? -.7 : -.4
+  camera.position.set(.15 + 1.05 * k, targetY + .3 * k, 5.8 * k)
+  camera.lookAt(.15, targetY, 0); camera.updateMatrixWorld(true)
   for (let frame = 0; frame <= REACTION_SECONDS * 30; frame++) {
     fireworks.update(frame / 30, true); fireworks.group.updateMatrixWorld(true)
     for (const child of fireworks.group.children.filter((c) => c.visible)) {

@@ -1,7 +1,7 @@
 // Exact public/owner contract: backend e114c615, release docs baa13b3.
 // Only these projections cross into React. Never retain raw API objects or error bodies.
 type Json = Record<string, unknown>
-export const GESTURE_CUES = ['thumbsUp', 'realization', 'facepalm'] as const
+export const GESTURE_CUES = ['thumbsUp', 'realization', 'facepalm', 'thinking'] as const
 export type GestureCue = typeof GESTURE_CUES[number]
 export type PublicEvent = {
   id: string; seq: number; kind: 'agent_message' | 'game_action' | 'phase_changed' | 'final_result'

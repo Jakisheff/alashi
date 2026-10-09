@@ -13,7 +13,9 @@ export function usePublicStream(api: LiveApi, record: string, onNewEvent?: (even
   const selected = useRef('')
   useEffect(() => {
     const controller = new AbortController()
-    let timer = 0, failures = 0, stopped = false, bootstrapped = false
+    let timer = 0, failures = 0, stopped = false, bootstrapped = false, skipResumeBatch = false
+    const visibility = () => { if (document.hidden) skipResumeBatch = true }
+    document.addEventListener('visibilitychange', visibility)
     if (selected.current !== record) { selected.current = record; cursor.current = 0; retained.current = []; setState(initial) }
     async function poll() {
       let delay = 1800
@@ -34,7 +36,9 @@ export function usePublicStream(api: LiveApi, record: string, onNewEvent?: (even
         retained.current = mergePublic(retained.current, page.events)
         setState((s) => ({ ...s, events: retained.current, connection: 'connected', presence: page.presence, gap: s.gap || page.truncated, error: '', serverOffset: page.serverNow * 1000 - Date.now(), ready: !page.hasMore }))
         // Do not replay old speech on first load/backfill. Silence is a valid state.
-        if (bootstrapped) for (const event of newEvents) eventCallback.current?.(event)
+        if (bootstrapped && !document.hidden && !skipResumeBatch) for (const event of newEvents) eventCallback.current?.(event)
+        // Retain every receipt in the feed, but never animate a hidden-tab backlog on return.
+        if (!document.hidden) skipResumeBatch = false
         if (!page.hasMore) bootstrapped = true
         failures = 0; delay = page.hasMore ? 20 : 1800
       } catch (error) {
@@ -46,7 +50,7 @@ export function usePublicStream(api: LiveApi, record: string, onNewEvent?: (even
       if (!stopped) timer = window.setTimeout(poll, delay)
     }
     void poll()
-    return () => { stopped = true; controller.abort(); window.clearTimeout(timer) }
+    return () => { stopped = true; controller.abort(); window.clearTimeout(timer); document.removeEventListener('visibilitychange', visibility) }
   }, [api, record, retry])
   return { ...state, reconnect: () => setRetry((n) => n + 1) }
 }

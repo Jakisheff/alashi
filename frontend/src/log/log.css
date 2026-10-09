@@ -1,0 +1,44 @@
+.log-content { max-width: 1160px; margin: 40px auto; }
+.log-title { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
+.log-title h1 { margin: 10px 0 0; font-size: 32px; font-weight: 550; letter-spacing: -.04em; }
+.log-picker { width: 240px; font-size: 12px; }
+.log-picker label { display: block; margin-bottom: 8px; color: var(--live-muted); }
+.log-picker > div { display: flex; gap: 8px; }
+.log-picker input { min-width: 0; width: 100%; border: 1px solid var(--live-line); border-radius: 4px; background: transparent; padding: 10px; color: var(--live-ink); font: 13px ui-monospace, monospace; }
+.log-picker button { min-height: 44px; border: 0; border-radius: 4px; background: var(--live-ink); color: var(--live-paper); padding: 8px 16px; }
+.log-picker p { color: #78451f; }
+.log-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin: 30px 0 16px; color: var(--live-muted); font-size: 11px; line-height: 1.6; }
+.log-readouts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; border-block: 1px solid var(--live-line); margin: 0 0 32px; padding: 20px 0; }
+.log-readouts dt { font-size: 11px; color: var(--live-muted); }
+.log-readouts dd { margin: 8px 0 0; font: 22px ui-monospace, monospace; }
+.log-readouts small { display: block; margin-top: 5px; color: var(--live-muted); font: 11px ui-sans-serif, system-ui, sans-serif; }
+.log-layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 40px; }
+.log-players h2 { margin: 0 0 12px; font-size: 14px; font-weight: 600; }
+.log-players ol { margin: 0; padding: 0; list-style: none; }
+.log-players li { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 10px; border-bottom: 1px solid var(--live-line); padding: 16px 0; font-size: 13px; }
+.log-players strong { font-weight: 550; overflow-wrap: anywhere; }
+.log-players small { display: block; margin-top: 5px; color: var(--live-muted); font-size: 10px; overflow-wrap: anywhere; }
+.log-players a { display: inline-block; margin-top: 8px; color: var(--live-green); font-size: 10px; }
+.log-rank { color: var(--live-green); font: 11px ui-monospace, monospace; }
+.log-cash { text-align: right; font: 12px ui-monospace, monospace; }
+.log-toolbar { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; margin-bottom: 12px; }
+.log-toolbar > div { display: flex; flex-wrap: wrap; gap: 16px; }
+.log-toolbar button { min-height: 44px; padding: 8px 0; border: 0; border-bottom: 2px solid transparent; color: var(--live-muted); background: transparent; font-size: 12px; }
+.log-toolbar button[aria-pressed=true] { border-bottom-color: var(--live-ink); color: var(--live-ink); }
+.log-toolbar .log-replay { color: var(--live-green); }
+.log-events { min-width: 0; }
+.log-table-scroll { max-height: 65vh; overflow: auto; border-block: 1px solid var(--live-line); }
+.log-table-scroll table { width: 100%; border-collapse: collapse; text-align: left; font-size: 12px; line-height: 1.5; }
+.log-table-scroll th { position: sticky; top: 0; background: var(--live-paper); font-size: 10px; color: var(--live-muted); font-weight: 500; white-space: nowrap; }
+.log-table-scroll :is(th, td) { padding: 12px 10px; border-bottom: 1px solid var(--live-line); vertical-align: top; }
+.log-table-scroll :is(th, td):first-child { padding-left: 0; }
+.log-table-scroll td:first-child, .log-table-scroll td:last-child { white-space: nowrap; font: 11px/1.5 ui-monospace, monospace; }
+.log-table-scroll td small { display: block; color: var(--live-muted); margin-top: 5px; font-size: 10px; }
+.log-table-scroll tr[data-rejected=true] td:nth-child(3) { color: #78451f; }
+.log-table-scroll a { color: var(--live-green); text-underline-offset: 3px; }
+.log-note { color: var(--live-muted); font-size: 12px; line-height: 1.7; }
+.log-empty { padding: 40px 0; }
+.log-empty h2 { font-size: 20px; font-weight: 500; }
+.log-empty p { color: var(--live-muted); font-size: 13px; }
+@media (max-width: 900px) { .log-layout { grid-template-columns: 1fr; gap: 28px; } }
+@media (max-width: 600px) { .log-content { margin-top: 24px; } .log-readouts { grid-template-columns: 1fr 1fr; } .log-title h1 { font-size: 28px; } .log-table-scroll table { min-width: 600px; } }

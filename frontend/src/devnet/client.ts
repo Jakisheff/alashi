@@ -2,7 +2,7 @@ export const CHAIN_PROGRAM = '3jwunaFDRrSWFfeJ5hFZu3DmxPNTmkdoCweHDvqcXTqC'
 export const PHASES = ['Lobby', 'Market', 'Action', 'Law', 'Finished', 'Aborted'] as const
 export type Phase = typeof PHASES[number]
 export type ChainFaction = { pda: string; wallet: string; name: string; cash: string; hard: string; alive: boolean; goods: number; influence: number; vote: 'Yes' | 'No' | 'Abstain' }
-export type ChainEvent = { id: string; signature: string; slot: number; index: number; logIndex: number; time: number | null; type: string; faction?: string; from?: string; wallet?: string; rank?: number; round?: number; phase?: Phase; units?: number; amount?: string; choice?: number }
+export type ChainEvent = { id: string; signature: string; slot: number; index: number; logIndex: number; time: number | null; type: string; faction?: string; from?: string; wallet?: string; rank?: number; round?: number; phase?: Phase; phaseDuration?: number; card?: number; yes?: number; no?: number; passed?: boolean; goods?: number; revenue?: string; cost?: string; price?: string; units?: number; amount?: string; choice?: number }
 export type ChainSnapshot = { pda: string; gameId: string; phase: Phase; round: number; endsAt: number; settled: boolean; epoch: number; snapshotSlot: number; journalThroughSlot: number; factions: ChainFaction[]; events: ChainEvent[]; complete: boolean; fetchedAt: string }
 const alphabet = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
 export function validBase58(value: string, size = 32): boolean {
@@ -53,9 +53,11 @@ export function decodeSnapshot(value: unknown, pda: string): ChainSnapshot {
     const event: ChainEvent = { id, signature, slot: integer(e.slot), index: integer(e.event_index), logIndex: integer(e.log_index), time: e.block_time === null || e.block_time === undefined ? null : integer(e.block_time), type: text(e.type, 64) }
     for (const key of ['faction', 'from'] as const) if (e[key] !== undefined) { event[key] = address(e[key]); if (!actors.has(event[key])) throw new ChainApiError('invalid') }
     if (e.wallet !== undefined) { event.wallet = address(e.wallet); if (!wallets.has(event.wallet)) throw new ChainApiError('invalid') }
-    for (const key of ['rank', 'round', 'units', 'choice'] as const) if (e[key] !== undefined) event[key] = integer(e[key])
+    for (const key of ['rank', 'round', 'units', 'choice', 'card', 'yes', 'no', 'goods'] as const) if (e[key] !== undefined) event[key] = integer(e[key])
     if (e.phase !== undefined) event.phase = typeof e.phase === 'number' ? phase(PHASES[integer(e.phase)]) : phase(e.phase)
-    if (e.amount !== undefined) event.amount = money(e.amount)
+    if (event.type === 'game_initialized' && e.phase_duration !== undefined) { event.phaseDuration = integer(e.phase_duration); if (event.phaseDuration === 0) throw new ChainApiError('invalid') }
+    for (const key of ['amount', 'revenue', 'cost', 'price'] as const) if (e[key] !== undefined) event[key] = money(e[key])
+    if (e.passed !== undefined) event.passed = boolean(e.passed)
     return event
   })
   // Preserve backend transaction order within a slot. Do not sort equal-slot transactions by signature.

@@ -1,0 +1,13 @@
+.studio-stage { position: absolute; inset: 0; isolation: isolate; background: #111018; overflow: hidden; }
+.studio-decoration, .studio-model, .studio-edges { position: absolute; inset: 0; }
+.studio-decoration, .studio-edges { pointer-events: none; }
+.studio-decoration > * { position: absolute; pointer-events: none; }
+.studio-backdrop { inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: .74; }
+.studio-watermark { width: 68%; height: auto; left: 50%; top: 38%; transform: translate(-50%, -50%); opacity: .03; }
+.studio-halo { width: 100%; left: 50%; top: 43%; transform: translate(-50%, -50%); opacity: .12; }
+.studio-shadow { width: 50%; height: 6.5%; left: 50%; top: 87%; transform: translate(-50%, -50%); opacity: .65; }
+.studio-platform { width: 48%; height: auto; left: 50%; top: 84.5%; transform: translate(-50%, -50%); }
+.studio-reflection { width: 17%; height: 3.2%; left: 50%; top: 84%; transform: translate(-50%, -50%); opacity: .16; }
+.studio-pulse { width: 44%; height: 5%; left: 50%; top: 85%; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(ellipse, #d9d9e2aa, #a78bfa66 48%, transparent 72%); opacity: 0; }
+.studio-model { z-index: 6; }
+.studio-edges { z-index: 8; background: linear-gradient(to bottom, #111018 0%, transparent 12%, transparent 93%, #111018 100%); }

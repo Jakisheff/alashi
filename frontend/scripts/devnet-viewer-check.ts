@@ -62,3 +62,13 @@ liveAdditions(rebaseline, [e], true)
 assert.deepEqual(liveAdditions(rebaseline, [older, f], true), [], 'missing prior tail rebaselines without animation')
 assert.deepEqual(liveAdditions(rebaseline, [older, f, { ...f, id: `${'4'.repeat(64)}:0`, signature: '4'.repeat(64) }], true).length, 1)
 console.log('counter-contract slot, stable receipt ID and explicit/default-winner selection checks passed')
+
+// Public evidence stays typed; malformed law/timer values cannot enter presentation.
+const law = decodeSnapshot({ ...fixture(), events: [{ ...event, type: 'law_drawn', card: 5, round: 1 }] }, pda).events[0]
+assert.match(eventLabel(law, actor), /Subsidy for the richest/)
+const timed = decodeSnapshot({ ...fixture(), events: [{ ...event, type: 'game_initialized', phase_duration: 15 }] }, pda).events[0]
+assert.equal(timed.phaseDuration, 15)
+assert.throws(() => decodeSnapshot({ ...fixture(), events: [{ ...event, type: 'game_initialized', phase_duration: 0 }] }, pda), ChainApiError)
+assert.throws(() => decodeSnapshot({ ...fixture(), events: [{ ...event, type: 'law_result', passed: 'true' }] }, pda), ChainApiError)
+assert.throws(() => decodeSnapshot({ ...fixture(), events: [{ ...event, revenue: '18446744073709551616' }] }, pda), ChainApiError)
+console.log('public law details, authoritative phase duration and numeric validation checks passed')

@@ -3,15 +3,10 @@
 .devnet-form input { flex: 1 1 300px; min-width: 0; padding: 10px 13px; border: 1px solid var(--live-line); border-radius: 3px; background: #F4F2F8; color: var(--live-ink); font-size: 12px; }
 .devnet-form button, .devnet-error button { min-height: 44px; padding: 10px 14px; border: 0; border-radius: 3px; background: var(--live-ink); color: #F4F2F8; font-size: 12px; }
 .devnet-form p { flex-basis: 100%; margin: 0; font-size: 12px; color: #9b542d; }
-.devnet-layout { max-width: 1280px; grid-template-columns: 160px minmax(280px, 1.2fr) minmax(300px, 1fr); gap: 32px; align-items: start; }
 .devnet-players, .devnet-stage, .devnet-journal { min-width: 0; }
-.devnet-journal { padding-left: 24px; border-left: 1px solid var(--live-line); }
 .devnet-stage-title { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 16px; margin-bottom: 12px; }
 .devnet-stage-title h1 { margin: 0; max-width: 100%; overflow-wrap: anywhere; color: var(--live-ink); font-size: 28px; font-weight: 650; line-height: 1.2; letter-spacing: -.035em; }
 .devnet-stage-title > span { color: var(--live-muted); font: 11px ui-monospace, monospace; }
-.devnet-frame { width: 100%; min-height: 0; aspect-ratio: auto; border-radius: 3px; box-shadow: none; }
-.devnet-stage-context { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; padding: 14px 18px 0; color: #c5bed3; font: 10px/1.5 ui-monospace, monospace; }
-.devnet-frame .live-hero { position: relative; inset: auto; height: 360px; }
 .devnet-current { margin: 18px 0 8px; }
 .devnet-current > span { color: var(--live-muted); font-size: 11px; }
 .devnet-current h2 { margin: 6px 0 0; font-size: 23px; font-weight: 600; line-height: 1.25; letter-spacing: -.025em; overflow-wrap: anywhere; }
@@ -51,8 +46,6 @@
 .devnet-resources p { color: var(--live-muted); font-size: 12px; }
 .devnet-owner-access { margin-top: 16px; border-top: 1px solid var(--live-line); color: var(--live-muted); font-size: 12px; }
 .devnet-owner-access .devnet-owner-entry { margin-top: 0; }
-.devnet-journal .chain-talk-list { max-height: 620px; }
-.devnet-journal .chain-talk { margin: 0; padding: 0; border-top: 0; }
 .devnet-action-history { border-top: 1px solid var(--live-line); margin-top: 16px; font-size: 12px; }
 .devnet-action-list { max-height: 280px; overflow-y: auto; overscroll-behavior: contain; }
 .devnet-action-list .live-event { padding: 10px 0; border-top: 1px solid var(--live-line); }
@@ -70,26 +63,108 @@
 .devnet-setup ol { padding-left: 20px; }
 .devnet-setup li + li { margin-top: 8px; }
 .devnet-setup code { overflow-wrap: anywhere; }
-@media (max-width: 1100px) {
-  .devnet-layout { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 24px; }
-  .devnet-players { grid-column: 1 / -1; }
-  .devnet-leaderboard-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px; }
-  .devnet-leaderboard-list { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); max-height: 180px; column-gap: 16px; margin-top: 10px; }
-  .devnet-leaderboard-name small, .devnet-leaderboard-cash small { display: none; }
-  .devnet-resources { padding: 10px 0; margin: 8px 0 0; }
-  .devnet-resources dl { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 8px; }
-  .devnet-resources dl > div { gap: 6px; }
-  .devnet-players > .live-about { margin-top: 4px; }
-}
-@media (max-width: 700px) {
+
+/* The same portrait frame and model viewport as /live. Details stay outside it. */
+.devnet-layout { max-width: 1040px; grid-template-columns: minmax(0, 1fr) minmax(280px, 360px); align-items: start; }
+.devnet-stage { display: grid; min-width: 0; }
+.devnet-frame { aspect-ratio: 9 / 16; }
+.devnet-sidebar { padding-top: 12px; }
+.devnet-tabs { display: flex; gap: 24px; border-bottom: 1px solid var(--live-line); margin-bottom: 22px; }
+.devnet-tabs button { min-height: 44px; border: 0; border-bottom: 2px solid transparent; background: transparent; padding: 8px 0; color: var(--live-muted); font: inherit; font-size: 13px; }
+.devnet-tabs button[aria-selected=true] { border-bottom-color: var(--live-ink); color: var(--live-ink); font-weight: 600; }
+.devnet-player-overview { display: grid; gap: 7px; }
+.devnet-player-overview > span { font-size: 11px; color: var(--live-green); }
+.devnet-player-overview > strong { font: 30px ui-monospace, monospace; letter-spacing: -.04em; }
+.devnet-player-overview > small { color: var(--live-muted); font-size: 11px; }
+.devnet-resources dl { grid-template-columns: 1fr 1fr; column-gap: 24px; }
+.devnet-leaderboard-row { grid-template-columns: 22px minmax(0, 1fr) auto; }
+.devnet-leaderboard-cash { grid-column: 3; text-align: right; }
+.devnet-context { pointer-events: auto; }
+.devnet-context > strong { font-size: clamp(13px, 4cqw, 18px); }
+.devnet-stage-playback { display: flex; align-items: center; gap: 6px; margin-top: 6px; }
+.devnet-stage-playback button { flex-shrink: 0; min-height: 32px; border: 1px solid #d9d9e233; border-radius: 5px; padding: 4px 7px; background: #11101855; color: #F4F2F8; font-size: 10px; }
+.devnet-stage-playback input { flex: 1; min-width: 0; width: 100%; height: 32px; accent-color: #a78bfa; }
+.devnet-replay-progress { position: relative; overflow: visible; }
+.devnet-replay-seek { position: absolute; inset: -10px 0; width: 100%; height: 22px; margin: 0; opacity: 0; cursor: pointer; }
+.devnet-replay-progress:focus-within { outline: 2px solid #c4b5fd; outline-offset: 5px; }
+.devnet-context .live-deadline b { font-size: clamp(16px, 5cqw, 24px); }
+.devnet-context > span, .devnet-context > strong { padding-right: 100px; }
+.devnet-action-caption { position: absolute; bottom: 27%; left: 6%; right: 6%; z-index: 2; margin: 0; text-align: center; font-size: clamp(10px, 2.8cqw, 13px); color: #d9d9e2; pointer-events: none; text-shadow: 0 1px 6px #111018; }
+.devnet-feed-anchor { position: absolute; inset: 0; z-index: 4; display: flex; flex-direction: column; justify-content: flex-end; pointer-events: none; }
+.devnet-feed { position: sticky; bottom: 0; left: auto; right: auto; flex-shrink: 0; z-index: 4; height: 22%; padding: 0 6% 12px; pointer-events: auto; background: linear-gradient(to bottom, #11101800, #111018d9 28%, #111018ed 100%); transition: height .22s ease; }
+.devnet-feed[data-expanded=true] { height: 58%; background: linear-gradient(to bottom, #11101800, #11101866 18%, #11101899 48%, #111018bf 100%); text-shadow: 0 1px 4px #111018; }
+.devnet-feed-toggle { display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; width: 100%; min-height: 36px; padding: 4px 0; border: 0; background: transparent; color: #F4F2F8; font-size: 11px; text-align: left; }
+.devnet-feed-toggle > span:last-child { color: #c5bed3; font-size: 10px; }
+.devnet-feed-toggle small { margin-left: 6px; color: #c5bed3; }
+.devnet-feed-preview { display: flex; flex-direction: column; justify-content: flex-end; flex: 1; gap: 2px; width: 100%; min-height: 44px; overflow: hidden; text-align: left; padding: 0; border: 0; background: transparent; color: #d9d9e2; font-size: 11px; line-height: 1.3; }
+.devnet-feed-preview span { display: block; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex-shrink: 0; }
+.devnet-feed-preview strong { color: #F4F2F8; font-size: 12px; }
+.devnet-feed-drawer { min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; padding: 0 3px 10px 0; }
+.devnet-feed .chain-talk { --talk-ink: #F4F2F8; --talk-muted: #c5bed3; --talk-line: #d9d9e22b; --talk-green: #c4b5fd; margin: 0; padding: 0; border: 0; color-scheme: dark; font-size: 12px; }
+.devnet-feed .chain-talk-head, .devnet-feed .chain-talk-selected { display: none; }
+.devnet-feed .chain-talk-filters button { font-size: 11px; }
+.devnet-feed .chain-talk-list { max-height: none; overflow: visible; padding-right: 0; }
+.devnet-feed .chain-talk-network { font-size: 10px; margin-top: 0; }
+.devnet-feed .chain-talk-network[data-interrupted=true] { background: transparent; color: #e8c5a6; padding: 8px 0; }
+.devnet-feed .chain-talk-avatar { background: #30293899; }
+.devnet-feed .chain-talk-row[data-selected=true] .chain-talk-avatar { background: #46345f88; }
+.devnet-feed .chain-talk-row { grid-template-columns: 24px minmax(0, 1fr); gap: 8px; padding: 12px 0; }
+.devnet-feed .chain-talk-people strong { font-size: 12px; }
+.devnet-feed .chain-talk-terms { font-size: 13px; }
+.devnet-feed .chain-talk-tag[data-tone=confirmed] { color: #b9dfcb; }
+.devnet-feed .chain-talk-tag[data-tone=declined], .devnet-feed .chain-talk-incomplete { color: #e8c5a6; }
+.devnet-feed .chain-talk-empty { padding: 18px 0; text-align: left; }
+.devnet-feed .chain-talk-empty-mark { display: none; }
+.devnet-feed .chain-talk-empty p { font-size: 11px; }
+.devnet-feed .chain-talk-empty h3 { font-size: 13px; }
+.devnet-page [hidden] { display: none !important; }
+.devnet-frame :is(button, input, a, summary):focus-visible { outline-color: #c4b5fd; outline-offset: 2px; }
+@media (max-width: 760px) {
   .devnet-page { padding-inline: 16px; }
   .devnet-form { gap: 8px; }
   .devnet-form label { flex-basis: 100%; }
-  .devnet-form input { flex-basis: 200px; }
-  .devnet-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .devnet-form input { flex-basis: 160px; }
+  .devnet-layout { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .devnet-sidebar { width: min(100%, 440px); justify-self: center; padding-top: 0; }
   .devnet-stage-title h1 { font-size: 25px; }
-  .devnet-frame .live-hero { height: 268px; }
-  .devnet-journal { padding: 24px 0 0; border-left: 0; border-top: 1px solid var(--live-line); }
-  .devnet-journal .chain-talk-list { max-height: none; overflow: visible; scrollbar-gutter: auto; }
 }
-@media (prefers-reduced-motion: reduce) { .devnet-page *, .devnet-page *::before, .devnet-page *::after { scroll-behavior: auto; } }
+@media (prefers-reduced-motion: reduce) {
+  .devnet-page *, .devnet-page *::before, .devnet-page *::after { scroll-behavior: auto; }
+  .devnet-feed { transition: none; }
+}
+
+.devnet-feed-head { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.devnet-feed-filter { display: grid; place-items: center; flex-shrink: 0; width: 36px; height: 36px; border: 0; border-radius: 50%; color: #c5bed3; background: transparent; }
+.devnet-feed-filter[aria-pressed=true] { color: #F4F2F8; background: #a78bfa33; }
+.devnet-feed-actions, .devnet-feed-thread > ol { margin: 0; padding: 0; list-style: none; }
+.devnet-feed-action { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px solid #d9d9e21a; font-size: 11px; line-height: 1.5; }
+.devnet-feed-action a { flex-shrink: 0; min-height: 32px; color: #c4b5fd; font-size: 10px; padding-block: 7px; }
+.devnet-feed-note { flex-shrink: 0; margin: 6px 0; color: #c5bed3; font-size: 10px; line-height: 1.5; }
+.devnet-feed-note button, .devnet-feed-earlier { border: 0; background: transparent; color: #c4b5fd; min-height: 32px; font-size: 10px; padding: 6px 0; }
+.devnet-feed-latest { position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); padding: 7px 12px; border: 1px solid #d9d9e233; border-radius: 20px; background: #302938; color: #F4F2F8; font-size: 11px; }
+.devnet-feed-drawer { scrollbar-width: none; mask-image: linear-gradient(to bottom, transparent, #000 24px, #000); padding-top: 10px; }
+.devnet-feed-drawer::-webkit-scrollbar { display: none; }
+
+.devnet-feed-toggle { flex: 1; width: auto; min-width: 0; }
+.devnet-feed-filter-control { position: relative; flex-shrink: 0; display: flex; align-items: center; gap: 2px; }
+.devnet-feed-filter { width: 34px; height: 36px; padding: 0; border-radius: 0; color: #c5bed3; opacity: .65; font: 12px ui-sans-serif, system-ui, sans-serif; text-decoration: underline; text-underline-offset: 4px; background: transparent; }
+.devnet-feed-filter[aria-pressed=true] { color: #F4F2F8; opacity: 1; background: transparent; text-decoration-thickness: 2px; }
+.devnet-feed-info { position: relative; display: grid; place-items: center; width: 28px; height: 36px; padding: 0; border: 0; background: transparent; color: #c5bed3; font: 11px Georgia, serif; }
+.devnet-feed-info::before { content: ''; position: absolute; width: 15px; height: 15px; border: 1px solid #c5bed399; border-radius: 50%; pointer-events: none; }
+.devnet-feed-tooltip { position: absolute; z-index: 6; top: 100%; right: 0; width: min(220px, 70cqw); padding: 10px 12px; border-radius: 6px; background: #302938; color: #F4F2F8; box-shadow: 0 4px 16px #11101866; font-size: 11px; line-height: 1.5; }
+.devnet-tabs { gap: 20px; }
+.devnet-setup-panel .devnet-form { display: grid; margin: 0; gap: 10px; }
+.devnet-setup-panel .devnet-form input { width: 100%; padding: 12px; }
+.devnet-setup-panel .devnet-form button { justify-self: start; margin-top: 2px; }
+.devnet-setup-panel .devnet-setup { margin-top: 24px; }
+@media (max-width: 360px) { .devnet-tabs { gap: 15px; } .devnet-tabs button { font-size: 12px; } }
+.devnet-frame .live-host > div { min-width: 0; }
+.devnet-frame .live-host strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.devnet-frame .live-host .devnet-player-address { display: flex; align-items: center; gap: 5px; color: #c5bed3; }
+.devnet-player-address code { font: 10px ui-monospace, monospace; user-select: all; }
+.devnet-player-address button { display: grid; place-items: center; width: 28px; height: 28px; padding: 0; border: 0; background: transparent; color: #c5bed3; }
+.devnet-copy-status { font-size: 9px; }
+.devnet-frame .live-scene { transform: translateY(50px); }
+.devnet-frame .live-frame-footer { display: none; }
+@media (max-width: 360px) { .devnet-player-address code { font-size: 9px; } }
+.devnet-feed { --talk-ink: #F4F2F8; --talk-muted: #c5bed3; --talk-line: #d9d9e22b; --talk-green: #c4b5fd; }

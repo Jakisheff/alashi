@@ -1,3 +1,4 @@
+import { StudioStage } from '../studio/StudioStage'
 import { BrandMark } from '../brand/BrandMark'
 import { Component, lazy, Suspense, useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
 import { Link } from '@tanstack/react-router'
@@ -91,7 +92,7 @@ export default function LivePage() {
 
   useEffect(() => {
     if (latest?.kind === 'game_action' && (latest.action === 'sell' || latest.action === 'buy') && latest.actor === 'alpha' && latest.ok === true) {
-      setTrade({ action: latest.action, take: ++tradeTake.current, playing: true, speed: 1, entry: 'bottom', seek: null })
+      setTrade({ receiptId: latest.action === 'sell' ? `demo:${session}:${latest.event_id}` : undefined, action: latest.action, take: ++tradeTake.current, playing: true, speed: 1, entry: 'bottom', seek: null })
       setTradeTime(0)
       useScene.getState().say(latest.action === 'buy' ? 'Buying goods.' : 'Selling goods.')
     } else if (latest && !latest.host && latest.clip) useScene.getState().play(latest.clip)
@@ -163,9 +164,9 @@ export default function LivePage() {
           </div>
 
           <div className="live-hero" data-action={trade?.action ?? 'idle'} data-reaction={reaction?.kind ?? 'idle'}>
-            <div className="live-scene"><HeroBoundary><Suspense fallback={<p className="live-hero-fallback">Loading Degenie…</p>}><Scene frozen={null} background="#111018" interactive={false}>
+            <div className="live-scene"><HeroBoundary><Suspense fallback={<p className="live-hero-fallback">Loading Degenie…</p>}><StudioStage><Scene frozen={null} background={null} studio interactive={false}>
               {trade ? isScenario(trade.action) ? <ScenarioAction preview={{ ...trade, action: trade.action }} onTime={setTradeTime} onFinished={finishTrade} /> : <MarketTrade preview={{ ...trade, action: trade.action }} onTime={setTradeTime} onFinished={finishTrade} /> : <LivingGenie reaction={reaction} onTime={setReactionTime} onFinished={finishReaction} />}
-            </Scene></Suspense></HeroBoundary></div>
+            </Scene></StudioStage></Suspense></HeroBoundary></div>
             {reaction?.kind === 'thinking' && reactionTime >= .6 && reactionTime < 4.5 && <ThoughtBubble key={reaction.take} text={thinkingText} preview />}
             {tradeStage && <div className="live-trade-stage" aria-live="polite"><span>{trade?.action.toUpperCase()}</span>{tradeStage}</div>}
           </div>
