@@ -11,6 +11,8 @@ mod owner_auth;
 mod wishes;
 #[path = "chain_wishes.rs"]
 mod chain_wishes;
+#[path = "chain_conversations.rs"]
+mod chain_conversations;
 use crate::runner::{self, ActionLog};
 use crate::registration::{self, Proof, Receipt};
 use crate::strategies::{ActionAction, LawAction, MarketAction};
@@ -164,6 +166,7 @@ pub struct AppState {
     owner_auth: Mutex<owner_auth::OwnerAuthState>,
     wishes: Mutex<wishes::WishState>,
     chain_wishes: Mutex<chain_wishes::ChainWishState>,
+    chain_conversations: Mutex<chain_conversations::ConversationState>,
     proposal_key: Mutex<Option<String>>,
     snapshot_path: PathBuf,
     sequence_path: PathBuf,
@@ -272,6 +275,7 @@ pub(super) fn save_snapshot_locked(state: &AppState) -> std::io::Result<()> {
         "owner_auth": *state.owner_auth.lock().unwrap_or_else(|e| e.into_inner()),
         "wishes": *state.wishes.lock().unwrap_or_else(|e| e.into_inner()),
         "chain_wishes": *state.chain_wishes.lock().unwrap_or_else(|e| e.into_inner()),
+        "chain_conversations": *state.chain_conversations.lock().unwrap_or_else(|e| e.into_inner()),
         "proposal_key": state.proposal_key.lock().unwrap_or_else(|e| e.into_inner()).clone(),
         "completed": completed.clone(),
         "completed_replay": *state.completed_replay.lock().unwrap_or_else(|e| e.into_inner()),
@@ -375,6 +379,13 @@ pub fn load_snapshot(state: &AppState) -> Result<(), String> {
     };
     if !chain_wishes::validate(&chain_wish_state) {
         return fail("несогласованный приватный chain-wish journal или лимит".into());
+    }
+    let chain_conversation_state: chain_conversations::ConversationState = match doc.get("chain_conversations") {
+        Some(value) => serde_json::from_value(value.clone()).map_err(|_| "битый публичный chain-conversation journal".to_string())?,
+        None => chain_conversations::ConversationState::default(),
+    };
+    if !chain_conversations::validate(&chain_conversation_state) {
+        return fail("несогласованный chain-conversation journal или лимит".into());
     }
     let completed_replay: HashMap<u64, HashMap<String, CompletedSession>> =
         match doc.get("completed_replay") {
@@ -512,6 +523,7 @@ pub fn load_snapshot(state: &AppState) -> Result<(), String> {
         *state.owner_auth.lock().unwrap_or_else(|e| e.into_inner()) = owner_auth_state;
         *state.wishes.lock().unwrap_or_else(|e| e.into_inner()) = wish_state;
         *state.chain_wishes.lock().unwrap_or_else(|e| e.into_inner()) = chain_wish_state;
+        *state.chain_conversations.lock().unwrap_or_else(|e| e.into_inner()) = chain_conversation_state;
         *state.proposal_key.lock().unwrap_or_else(|e| e.into_inner()) = proposal_key;
         *state.completed_replay.lock().unwrap_or_else(|e| e.into_inner()) = completed_replay;
         if let Some(arr) = doc["completed"].as_array() {
@@ -699,6 +711,7 @@ pub fn new_state_with_files(snapshot_path: impl Into<PathBuf>, sequence_path: im
         owner_auth: Mutex::new(owner_auth::OwnerAuthState::default()),
         wishes: Mutex::new(wishes::WishState::default()),
         chain_wishes: Mutex::new(chain_wishes::ChainWishState::default()),
+        chain_conversations: Mutex::new(chain_conversations::ConversationState::default()),
         proposal_key: Mutex::new(None),
         snapshot_path: snapshot_path.into(),
         sequence_path: sequence_path.into(),
@@ -2922,6 +2935,25 @@ fn chain_owner_query(raw: &str) -> Result<(String,u64,usize), &'static str> {
     Ok((game.ok_or("bad_cursor")?,after,limit))
 }
 
+fn conversation_query(raw: &str) -> Result<(u64, usize), &'static str> {
+    let mut after = 0;
+    let mut limit = 50;
+    if let Some((_, query)) = raw.split_once('?') {
+        let mut seen = std::collections::HashSet::new();
+        for pair in query.split('&') {
+            let (key, value) = pair.split_once('=').ok_or("bad_cursor")?;
+            if !seen.insert(key) { return Err("bad_cursor"); }
+            match key {
+                "after" => after = value.parse().map_err(|_| "bad_cursor")?,
+                "limit" => limit = value.parse().map_err(|_| "bad_cursor")?,
+                _ => return Err("bad_cursor"),
+            }
+        }
+    }
+    if !(1..=100).contains(&limit) { return Err("bad_limit"); }
+    Ok((after, limit))
+}
+
 fn owner_credential(req: &Request) -> Result<String, &'static str> {
     let cookie = owner_auth::browser_token(req.cookie.as_deref())?;
     match (req.authorization.as_deref(), cookie) {
@@ -2938,7 +2970,7 @@ fn live_result(value: serde_json::Value) -> (&'static str, String) {
         Some("bad_token" | "bad_credentials") => "401 Unauthorized",
         Some("message_conflict" | "cursor_expired" | "stale_context") => "409 Conflict",
         Some("rate_limited" | "budget_exhausted") => "429 Too Many Requests",
-        Some("storage_failed" | "owner_handoff_busy" | "pairing_busy") => "503 Service Unavailable",
+        Some("storage_failed" | "owner_handoff_busy" | "pairing_busy" | "journal_full") => "503 Service Unavailable",
         Some("owner_origin_forbidden" | "wish_forbidden" | "pairing_identity_mismatch") => "403 Forbidden",
         Some("owner_session_invalid" | "owner_session_expired" | "owner_cookie_invalid" | "game_token_invalid" | "owner_signature_invalid" | "owner_handoff_invalid" | "pairing_cookie_invalid" | "pairing_invalid") => "401 Unauthorized",
         Some("idempotency_conflict" | "wish_status_conflict" | "no_active_game" | "no_active_chain_game" | "receipt_pending" | "binding_conflict") => "409 Conflict",
@@ -3137,6 +3169,23 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
         },
         ("POST", ["chain","devnet","games",game,"runner","wishes","claim"]) => live_result(chain_wishes::claim(state,game,&body_v)),
         ("POST", ["chain","devnet","games",game,"runner","wishes",wish_id,"status"]) => live_result(chain_wishes::status(state,game,wish_id,&body_v)),
+        ("GET", ["chain","devnet","games",game,"conversations"]) => {
+            if req.cookie.is_some() || req.authorization.is_some() {
+                live_result(err_json("public_credentials_forbidden", "public journal is anonymous"))
+            } else {
+                match conversation_query(&req.path) {
+                    Ok((after, limit)) => live_result(chain_conversations::public_after(state,game,after,limit)),
+                    Err(code) => live_result(err_json(code,code)),
+                }
+            }
+        },
+        ("POST", ["chain","devnet","games",game,"runner","conversations"]) => {
+            if req.path.contains('?') || req.cookie.is_some() || req.authorization.is_some() {
+                live_result(err_json("method_or_query_forbidden", "runner journal uses exact JSON body"))
+            } else {
+                live_result(chain_conversations::runner_report(state,game,req.origin.as_deref().unwrap_or(""),&body_v))
+            }
+        },
         ("POST", ["game", id, "owner", "wishes", "claim"]) => match id.parse::<u64>() {
             Ok(id) => {
                 let allowed = body_v.as_object().is_some_and(|o| o.keys().all(|k| matches!(k.as_str(), "token" | "after" | "limit")));

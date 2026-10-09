@@ -71,6 +71,12 @@ pub(super) enum Confirmed {
     ReceiptPending,
 }
 
+pub(super) enum ConversationReport {
+    Accepted,
+    Retryable,
+    Rejected,
+}
+
 impl Intent {
     fn parse(value: &str) -> Self {
         match value {
@@ -326,6 +332,47 @@ impl ChainWishClient {
         }
     }
 
+    /// Report only an already verified primary-faction acceptance. The server
+    /// imports the preceding open offer from its canonical chain journal.
+    pub(super) fn report_accepted_conversation(
+        &self,
+        offer_id: u64,
+        proposer_faction_pda: &str,
+        signature: &str,
+        slot: u64,
+    ) -> Result<ConversationReport, &'static str> {
+        if !client_entry_id(signature)
+            || proposer_faction_pda.is_empty()
+            || proposer_faction_pda.len() > 64
+        {
+            return Err("chain_conversation_request_invalid");
+        }
+        let body = json!({
+            "runner_token": self.runner_token,
+            "client_entry_id": signature,
+            "kind": "accepted_confirmed",
+            "offer_id": offer_id.to_string(),
+            "proposer_faction_pda": proposer_faction_pda,
+            "signature": signature,
+            "slot": slot.to_string(),
+        });
+        let response = post(
+            &self.base,
+            &format!("/chain/devnet/games/{}/runner/conversations", self.game_pda),
+            &body,
+        )?;
+        if response["ok"] == true {
+            Ok(ConversationReport::Accepted)
+        } else if matches!(
+            error_code(&response),
+            Some("receipt_pending" | "chain_api_unavailable" | "storage_failed")
+        ) {
+            Ok(ConversationReport::Retryable)
+        } else {
+            Ok(ConversationReport::Rejected)
+        }
+    }
+
     fn status(
         &self,
         wish: &Wish,
@@ -471,6 +518,13 @@ fn is_hex64(value: &str) -> bool {
         && value
             .bytes()
             .all(|byte| byte.is_ascii_digit() || (b'a'..=b'f').contains(&byte))
+}
+
+fn client_entry_id(value: &str) -> bool {
+    (1..=96).contains(&value.len())
+        && value
+            .bytes()
+            .all(|byte| byte.is_ascii_alphanumeric() || matches!(byte, b'_' | b'-'))
 }
 
 fn read_profiles(path: &Path) -> Result<Vec<Profile>, &'static str> {
@@ -914,5 +968,91 @@ mod tests {
         let seen = seen.lock().unwrap();
         assert_eq!(seen.len(), 4);
         assert!(seen[2].contains("confirmed-signature") && seen[3].contains("confirmed-signature"));
+    }
+
+    #[test]
+    fn accepted_conversation_retries_with_the_same_receipt_identity() {
+        let listener = TcpListener::bind("127.0.0.1:0").unwrap();
+        let base = format!("http://{}", listener.local_addr().unwrap());
+        let seen = std::sync::Arc::new(std::sync::Mutex::new(Vec::new()));
+        let output = seen.clone();
+        let server = thread::spawn(move || {
+            for response in [
+                None,
+                Some((409, json!({"ok":false,"error":"receipt_pending"}))),
+                Some((200, json!({"ok":true,"entry":{"seq":"2"}}))),
+            ] {
+                let (mut stream, _) = listener.accept().unwrap();
+                let mut head = Vec::new();
+                let mut byte = [0];
+                while !head.ends_with(b"\r\n\r\n") {
+                    stream.read_exact(&mut byte).unwrap();
+                    head.push(byte[0]);
+                }
+                let header = String::from_utf8(head).unwrap();
+                let length = header
+                    .lines()
+                    .find_map(|line| {
+                        line.strip_prefix("Content-Length: ")
+                            .and_then(|n| n.parse::<usize>().ok())
+                    })
+                    .unwrap();
+                let mut body = vec![0; length];
+                stream.read_exact(&mut body).unwrap();
+                output
+                    .lock()
+                    .unwrap()
+                    .push((header, String::from_utf8(body).unwrap()));
+                if let Some((code, response)) = response {
+                    let body = response.to_string();
+                    write!(
+                        stream,
+                        "HTTP/1.1 {code} Test\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{body}",
+                        body.len()
+                    )
+                    .unwrap();
+                }
+            }
+        });
+        let client = ChainWishClient {
+            base,
+            game_pda: "game".into(),
+            faction_pda: "primary".into(),
+            runner_token: "capability-token".into(),
+            pending_store: PendingStore {
+                path: profile_path(),
+            },
+            pending: None,
+        };
+        let signature = "3zW2JtDLAkNNA4eQmTq5ZL9N8qBYXPSNCFNtc2M8De4wLr6LBoz8JFZgKX7fD8NP";
+        assert!(client
+            .report_accepted_conversation(7, "proposer", signature, 42)
+            .is_err());
+        assert!(matches!(
+            client
+                .report_accepted_conversation(7, "proposer", signature, 42)
+                .unwrap(),
+            ConversationReport::Retryable
+        ));
+        assert!(matches!(
+            client
+                .report_accepted_conversation(7, "proposer", signature, 42)
+                .unwrap(),
+            ConversationReport::Accepted
+        ));
+        server.join().unwrap();
+        let seen = seen.lock().unwrap();
+        assert_eq!(seen.len(), 3);
+        assert!(seen.iter().all(|(head, _)| head
+            .starts_with("POST /chain/devnet/games/game/runner/conversations HTTP/1.1")));
+        assert_eq!(seen[0].1, seen[1].1);
+        assert_eq!(seen[1].1, seen[2].1);
+        assert!(seen[0]
+            .1
+            .contains(&format!("\"client_entry_id\":\"{signature}\"")));
+        assert!(seen[0].1.contains("\"kind\":\"accepted_confirmed\""));
+        assert!(seen[0].1.contains("\"offer_id\":\"7\""));
+        assert!(seen[0].1.contains("\"slot\":\"42\""));
+        assert!(!seen[0].1.contains("PRIVATE-MARKER"));
     }
 }
