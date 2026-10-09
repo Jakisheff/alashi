@@ -256,14 +256,13 @@ export function Onboarding({ watch }: { watch: AgentWatch }) {
       )}
       {loginOpen && <dialog ref={dialog} onClose={() => setLoginOpen(false)} aria-label="Connect your agent" className="m-auto max-h-[90dvh] w-[min(92vw,34rem)] overflow-y-auto rounded-2xl border border-[#d7e3da] bg-white p-5 text-[#1A1A1E] shadow-xl backdrop:bg-[#102c25]/50 sm:p-7">
         <div className="flex items-start justify-between gap-3"><div><h2 className="text-xl font-semibold">Connect your agent</h2><p className="mt-1 text-sm text-[#66666f]">Your registered local agent joins a real devnet Game, then this browser signs in automatically.</p></div><button type="button" aria-label="Close login" onClick={() => setLoginOpen(false)} className="text-xl">×</button></div>
-        <ol className="mt-4 list-decimal space-y-2 pl-5 text-sm"><li>Copy the prompt below.</li><li>In your local OpenCode terminal, open a project and paste it. The agent follows <a className="underline" href="/agent.md">the devnet guide</a>.</li><li>Keep this tab open. Once the wallet has joined and bound its Game faction, it pairs this browser and opens your player. The returned one-use owner link works on another device.</li></ol>
         <figure className="mt-4 overflow-hidden rounded-xl border border-[#d7e3da] bg-[#F7F7F8]">
-          <picture>
-            <source media="(prefers-reduced-motion: reduce)" srcSet="/login-opencode-input-still.png" />
-            <img src="/login-opencode-input.gif" alt="An Alashi prompt being typed into OpenCode, without submission or gameplay" className="block w-full" loading="lazy" />
-          </picture>
-          <figcaption className="px-3 py-2 text-xs text-[#66666f]">Example: pasting the prompt into OpenCode.</figcaption>
+          <video controls playsInline preload="none" poster="/login-opencode-example-still.png" width={780} height={1688} aria-label="OpenCode prompt and illustrative example response" className="mx-auto block w-full max-w-[16rem]">
+            <source src="/login-opencode-example.mp4" type="video/mp4" />
+          </video>
+          <figcaption className="px-3 py-2 text-xs text-[#66666f]">Example: prompt and illustrative response in OpenCode.</figcaption>
         </figure>
+        <ol className="mt-4 list-decimal space-y-2 pl-5 text-sm"><li>Copy the prompt below.</li><li>In your local OpenCode terminal, open a project and paste it. The agent follows <a className="underline" href="/agent.md">the devnet guide</a>.</li><li>Keep this tab open. Once the wallet has joined and bound its Game faction, it pairs this browser and opens your player. The returned one-use owner link works on another device.</li></ol>
         <div className="mt-4 rounded-xl bg-[#F7F7F8] p-3 font-mono text-xs leading-relaxed break-words select-text">{resuming ? 'Waiting for the prompt already given to your agent. Start over only if that prompt is lost.' : prompt}</div>
         <div className="mt-4 flex items-center gap-3"><button type="button" onClick={copy} disabled={!pairing && !resuming} className="rounded-full bg-[#1f4a43] px-4 py-2 text-sm font-medium text-white disabled:opacity-50">{resuming ? 'Start over' : copied === 'yes' ? 'Copied ✓' : 'Copy prompt'}</button><span className="text-sm text-[#66666f]" aria-live="polite">{resuming ? 'Waiting for the prompt already given to your agent.' : copied === 'yes' ? 'Waiting for your agent…' : copied === 'failed' ? 'Select and copy the prompt above.' : pairing ? 'Ready to copy' : 'Preparing pairing…'}</span></div>
         {pairingError && <p role="alert" className="mt-3 text-sm text-[#8b372d]">{pairingError} <button type="button" className="underline" onClick={() => void prepare(remembered)}>Retry</button></p>}
