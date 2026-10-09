@@ -4,7 +4,7 @@ Status: **contract frozen for implementation, not yet deployed**. The existing `
 
 ## Browser read
 
-`GET /chain/devnet/games/<canonical-GamePDA>/conversations?after=<decimal-seq>&limit=<1..100>` is anonymous and same-origin. Both query fields are optional; defaults are `after=0&limit=50`. The edge permits GET only, strips Cookie and Authorization, rejects unknown query fields and duplicates, and returns `Cache-Control: no-store`. The response is an ordered page, not a replay of private HTTP arena events. Poll after the prior request completes; use a 12-second active cadence and stop after a terminal Game and a final page. Preserve existing entries during a transient error and label the gap unknown.
+`GET /chain/devnet/games/<canonical-GamePDA>/conversations?after=<decimal-seq>&limit=<1..100>` is anonymous and same-origin. Use `fetch(url, { credentials: 'omit' })` even when the owner is logged in on the same `/devnet` screen. Both query fields are optional; defaults are `after=0&limit=50`. The edge permits GET only, strips Cookie and Authorization, and returns `Cache-Control: no-store`; the endpoint rejects unknown query fields and duplicates. The response is an ordered page, not a replay of private HTTP arena events. Poll after the prior request completes; use a 12-second active cadence and stop after a terminal Game and a final page. Preserve existing entries during a transient error and label the gap unknown.
 
 ```ts
 type PublicConversationPage = {
