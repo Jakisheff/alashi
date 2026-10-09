@@ -9,16 +9,6 @@
 .brand-name { display: grid; gap: 2px; font: 17px/1 Georgia, 'Times New Roman', serif; letter-spacing: .14em; }
 .brand-name > span { font: 8px/1.1 ui-sans-serif, system-ui, sans-serif; letter-spacing: .3em; }
 .brand-on-dark .brand-name { color: var(--brand-light); }
-/* Style the existing home logo without editing Ivan's active Login component. */
-.brand-home > section > div:first-child > span:first-child {
-  display: grid; align-content: center; gap: 3px; min-height: 30px; padding-left: 36px;
-  background: url('/brand/alashi-forall-symbol.svg') left center / 28px 26px no-repeat;
-  color: var(--brand-dark); font: 17px/1 Georgia, 'Times New Roman', serif; letter-spacing: .14em;
-  text-transform: uppercase;
-}
-.brand-home > section > div:first-child > span:first-child::after {
-  content: 'NETWORK'; font: 8px/1.1 ui-sans-serif, system-ui, sans-serif; letter-spacing: .3em;
-}
 .live-brand { display: inline-flex; align-items: center; flex: none; letter-spacing: normal; }
 .live-brand .brand-name { color: var(--brand-dark); }
 .live-header { gap: 18px; }
