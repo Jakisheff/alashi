@@ -21,11 +21,13 @@
     <section class="card"><h2>Confirmed activity</h2><p class="muted">These are confirmed transactions for this Game PDA. This first viewer does not decode transaction instructions, so it does not invent action names.</p><ol id="transactions"></ol></section>
   </section>
 </main>
-<script src="https://unpkg.com/@solana/web3.js@1.95.8/lib/index.iife.min.js"></script>
+<script src="https://unpkg.com/@solana/web3.js@1.95.8/lib/index.iife.min.js" integrity="sha384-ujeTtvHxhu2g5lnu14Roii2ajvVKJ74KQ6eo6GGfAi0IrKZ1YkF8N68Iw5VmIJO0" crossorigin="anonymous"></script>
 <script>
 'use strict'
 const RPC = 'https://api.devnet.solana.com'
 const PROGRAM = new solanaWeb3.PublicKey('3jwunaFDRrSWFfeJ5hFZu3DmxPNTmkdoCweHDvqcXTqC')
+const GAME_DISCRIMINATOR = Uint8Array.from([27, 90, 166, 125, 74, 100, 121, 18])
+const FACTION_DISCRIMINATOR = Uint8Array.from([131, 20, 223, 22, 227, 204, 231, 35])
 const PHASES = ['Lobby', 'Market', 'Action', 'Law', 'Finished', 'Aborted']
 const VOTES = ['Yes', 'No', 'Abstain']
 const conn = new solanaWeb3.Connection(RPC, 'confirmed')
@@ -41,9 +43,10 @@ function formatAlashi(units) { return `${(Number(units) / 1_000_000).toLocaleStr
 function formatTime(seconds) { if (seconds <= 0) return 'awaiting next chain transition'; const min = Math.floor(seconds / 60); return `${min}:${String(seconds % 60).padStart(2, '0')} remaining` }
 function make(tag, text) { const node = document.createElement(tag); node.textContent = text; return node }
 
+function discriminatorIs(bytes, expected) { return expected.every((value, index) => bytes[index] === value) }
 function parseGame(data) {
   const bytes = data instanceof Uint8Array ? data : new Uint8Array(data)
-  if (bytes.length < 137) throw new Error('Game account data is too short')
+  if (bytes.length < 137 || !discriminatorIs(bytes, GAME_DISCRIMINATOR)) throw new Error('Account is not an Alashi Game account')
   const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength)
   return {
     gameId: view.getBigUint64(40, true), phase: bytes[48], round: bytes[49], endsAt: view.getBigInt64(50, true), factions: bytes[58],
@@ -52,7 +55,7 @@ function parseGame(data) {
 }
 function parseFaction(data) {
   const bytes = data instanceof Uint8Array ? data : new Uint8Array(data)
-  if (bytes.length < 76) throw new Error('Faction account data is too short')
+  if (bytes.length < 76 || !discriminatorIs(bytes, FACTION_DISCRIMINATOR)) throw new Error('Account is not an Alashi Faction account')
   const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength)
   let offset = 72
   const length = view.getUint32(offset, true); offset += 4
