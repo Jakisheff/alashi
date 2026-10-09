@@ -83,18 +83,37 @@ export async function pollOwnerPairing(): Promise<{ status: 'waiting'; expiresAt
   }
   throw new Error('invalid_response')
 }
-/** Strip the fragment before any network request or component effect. */
-export function consumeOwnerFragment(): { record: string; code: string } | null {
+type OwnerFragment = { record: string; code: string }
+let capturedFragment: OwnerFragment | null | undefined
+let redemption: Promise<OwnerLocator> | null = null
+
+/** Strip the one-use fragment before the router is constructed. */
+export function primeOwnerFragment(): void {
   const hash = window.location.hash
-  if (!hash.startsWith('#owner=')) return null
+  if (!hash.startsWith('#owner=')) {
+    if (capturedFragment === undefined) capturedFragment = null
+    return
+  }
   window.history.replaceState(window.history.state, '', window.location.pathname + window.location.search)
   const match = /^#owner=([0-9a-f]{64})\.([0-9a-f]{64})$/.exec(hash)
-  return match ? { record: match[1], code: match[2] } : null
+  capturedFragment = match ? { record: match[1], code: match[2] } : null
+  redemption = null
 }
-export async function redeemOwnerFragment(record: string, handoffCode: string, game: string): Promise<OwnerLocator> {
-  if (!validRecord(record) || !code.test(handoffCode) || !validBase58(game)) throw new Error('invalid_link')
-  const value = await post(`/agents/${record}/owner/browser/handoff`, { code: handoffCode, game_pda: game })
-  if (value.agent_record_id !== record || value.game_pda !== game || typeof value.faction_pda !== 'string'
-    || !validBase58(value.faction_pda)) throw new Error('invalid_response')
-  return { record, game, faction: value.faction_pda as string }
+export function consumeOwnerFragment(): OwnerFragment | null {
+  primeOwnerFragment()
+  return capturedFragment ?? null
+}
+export function forgetOwnerFragment(): void {
+  capturedFragment = null
+  redemption = null
+}
+export function redeemOwnerFragment(record: string, handoffCode: string, game: string): Promise<OwnerLocator> {
+  if (!validRecord(record) || !code.test(handoffCode) || !validBase58(game)) return Promise.reject(new Error('invalid_link'))
+  // React StrictMode may replay the effect; only one browser redemption is sent.
+  redemption ??= post(`/agents/${record}/owner/browser/handoff`, { code: handoffCode, game_pda: game }).then((value) => {
+    if (value.agent_record_id !== record || value.game_pda !== game || typeof value.faction_pda !== 'string'
+      || !validBase58(value.faction_pda)) throw new Error('invalid_response')
+    return { record, game, faction: value.faction_pda as string }
+  })
+  return redemption
 }

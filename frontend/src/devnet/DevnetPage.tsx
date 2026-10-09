@@ -6,7 +6,7 @@ import { LivingGenie, type ReactionPreview } from '../live/reactions'
 import { validRecord } from '../live/api/client'
 import type { ChainFaction } from './client'
 import { useScene } from '../store'
-import { consumeOwnerFragment, readOwnerLocator, redeemOwnerFragment, rememberOwnerLocator, type OwnerLocator } from '../owner/pairing'
+import { consumeOwnerFragment, forgetOwnerFragment, readOwnerLocator, redeemOwnerFragment, rememberOwnerLocator, type OwnerLocator } from '../owner/pairing'
 import { validBase58, formatAmount, formatCash, type ChainEvent } from './client'
 import { useChainSnapshot } from './useChainSnapshot'
 import { defaultWinner, eventLabel, liveAdditions, newLiveCursor, playerEvents, playerStandings, visualAction } from './playback'
@@ -141,9 +141,10 @@ export function DevnetPage({ requestedGame, requestedPlayer = '' }: { requestedG
     let stopped = false
     void redeemOwnerFragment(handoff.record, handoff.code, requestedGame).then((locator) => {
       if (stopped) return
+      forgetOwnerFragment()
       rememberOwnerLocator(locator)
       setLinked(locator)
-    }).catch(() => { if (!stopped) setLinkError('This owner link expired or was already used. Reconnect through Login or verify the registered wallet.') })
+    }).catch(() => { if (!stopped) { forgetOwnerFragment(); setLinkError('This owner link expired or was already used. Reconnect through Login or verify the registered wallet.') } })
     return () => { stopped = true }
   }, [handoff, requestedGame])
   const effectiveRemembered = handoff ? null : remembered
