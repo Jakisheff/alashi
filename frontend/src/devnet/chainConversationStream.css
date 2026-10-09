@@ -1,9 +1,9 @@
 .chain-talk {
-  --talk-paper: var(--live-paper, #eef0e9);
-  --talk-ink: var(--live-ink, #1a382f);
-  --talk-muted: var(--live-muted, #67796f);
-  --talk-line: var(--live-line, #d4dcd2);
-  --talk-green: var(--live-green, #267a62);
+  --talk-paper: var(--live-paper, #F4F2F8);
+  --talk-ink: var(--live-ink, #111018);
+  --talk-muted: var(--live-muted, #686371);
+  --talk-line: var(--live-line, #D9D9E2);
+  --talk-green: var(--live-green, #6544a6);
   box-sizing: border-box;
   min-width: 0;
   max-width: 100%;
@@ -24,7 +24,7 @@
 .chain-talk[data-mode=live] .chain-talk-mode { color: var(--talk-green); }
 .chain-talk-selected { margin: 10px 0 16px; color: var(--talk-muted); overflow-wrap: anywhere; }
 .chain-talk-selected strong { color: var(--talk-ink); font-weight: 600; }
-.chain-talk-fixture { margin: 14px 0; padding: 8px 10px; border-left: 3px solid #a56933; color: #78451f; background: #f6ead8; font-size: 11px; }
+.chain-talk-fixture { margin: 14px 0; padding: 8px 10px; border-left: 3px solid #6544a6; color: #78451f; background: #f6ead8; font-size: 11px; }
 .chain-talk-toolbar { display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; align-items: center; }
 .chain-talk-filters { display: flex; gap: 4px; }
 .chain-talk button { font: inherit; cursor: pointer; }
@@ -40,8 +40,8 @@
 .chain-talk-row::before { content: ''; position: absolute; top: 48px; bottom: 0; left: 13px; width: 1px; background: var(--talk-line); }
 .chain-talk-row:last-child::before { display: none; }
 .chain-talk-row article { min-width: 0; }
-.chain-talk-avatar { display: grid; place-items: center; width: 28px; height: 28px; border: 1px solid var(--talk-line); border-radius: 50%; background: #e3e9dd; font: 13px ui-monospace, monospace; }
-.chain-talk-row[data-selected=true] .chain-talk-avatar { color: var(--talk-green); border-color: #96bba6; background: #dceadd; }
+.chain-talk-avatar { display: grid; place-items: center; width: 28px; height: 28px; border: 1px solid var(--talk-line); border-radius: 50%; background: #ece7f4; font: 13px ui-monospace, monospace; }
+.chain-talk-row[data-selected=true] .chain-talk-avatar { color: var(--talk-green); border-color: #A78BFA; background: #ece7f4; }
 .chain-talk-people { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 6px; overflow-wrap: anywhere; }
 .chain-talk-people strong { font-size: 14px; font-weight: 650; }
 .chain-talk-people > span { color: var(--talk-muted); font-size: 12px; }
@@ -69,7 +69,7 @@
 .chain-talk-incomplete { color: #78451f; font-size: 11px; margin: 12px 0 0; }
 .chain-talk-footer { margin-top: 8px; border-top: 1px solid var(--talk-line); color: var(--talk-muted); font-size: 12px; line-height: 1.6; }
 .chain-talk-footer p { margin: 0 0 12px; }
-.chain-talk :is(button, a, ol, summary):focus-visible { outline: 3px solid #a56933; outline-offset: 3px; }
+.chain-talk :is(button, a, ol, summary):focus-visible { outline: 3px solid #6544a6; outline-offset: 3px; }
 @media (max-width: 700px) {
   .chain-talk { margin-top: 24px; padding-top: 18px; }
   .chain-talk h2 { font-size: 24px; }

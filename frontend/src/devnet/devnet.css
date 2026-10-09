@@ -1,7 +1,7 @@
 .devnet-form { max-width: 1280px; margin: 22px auto 0; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 .devnet-form label { font-size: 12px; color: var(--live-muted); }
-.devnet-form input { flex: 1 1 300px; min-width: 0; padding: 10px 13px; border: 1px solid var(--live-line); border-radius: 3px; background: #f7f5eb; color: var(--live-ink); font-size: 12px; }
-.devnet-form button, .devnet-error button { min-height: 44px; padding: 10px 14px; border: 0; border-radius: 3px; background: var(--live-ink); color: #fff2d8; font-size: 12px; }
+.devnet-form input { flex: 1 1 300px; min-width: 0; padding: 10px 13px; border: 1px solid var(--live-line); border-radius: 3px; background: #F4F2F8; color: var(--live-ink); font-size: 12px; }
+.devnet-form button, .devnet-error button { min-height: 44px; padding: 10px 14px; border: 0; border-radius: 3px; background: var(--live-ink); color: #F4F2F8; font-size: 12px; }
 .devnet-form p { flex-basis: 100%; margin: 0; font-size: 12px; color: #9b542d; }
 .devnet-layout { max-width: 1280px; grid-template-columns: 160px minmax(280px, 1.2fr) minmax(300px, 1fr); gap: 32px; align-items: start; }
 .devnet-players, .devnet-stage, .devnet-journal { min-width: 0; }
@@ -10,7 +10,7 @@
 .devnet-stage-title h1 { margin: 0; max-width: 100%; overflow-wrap: anywhere; color: var(--live-ink); font-size: 28px; font-weight: 650; line-height: 1.2; letter-spacing: -.035em; }
 .devnet-stage-title > span { color: var(--live-muted); font: 11px ui-monospace, monospace; }
 .devnet-frame { width: 100%; min-height: 0; aspect-ratio: auto; border-radius: 3px; box-shadow: none; }
-.devnet-stage-context { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; padding: 14px 18px 0; color: #b0c7b7; font: 10px/1.5 ui-monospace, monospace; }
+.devnet-stage-context { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; padding: 14px 18px 0; color: #c5bed3; font: 10px/1.5 ui-monospace, monospace; }
 .devnet-frame .live-hero { position: relative; inset: auto; height: 360px; }
 .devnet-current { margin: 18px 0 8px; }
 .devnet-current > span { color: var(--live-muted); font-size: 11px; }
@@ -21,7 +21,7 @@
 .devnet-controls { border-top: 1px solid var(--live-line); padding-top: 16px; margin-top: 14px; }
 .devnet-controls .live-playback { margin: 0; gap: 8px; }
 .devnet-controls .live-playback button { min-height: 44px; border-radius: 2px; }
-.devnet-controls .live-playback button:first-child { color: #f7f5eb; background: var(--live-ink); border-color: var(--live-ink); }
+.devnet-controls .live-playback button:first-child { color: #F4F2F8; background: var(--live-ink); border-color: var(--live-ink); }
 .devnet-timeline { display: grid; gap: 10px; margin: 16px 0 0; font: 11px ui-monospace, monospace; }
 .devnet-timeline input { width: 100%; min-height: 32px; accent-color: var(--live-green); }
 .devnet-text-button { border: 0; background: none; min-height: 44px; padding: 8px 0; color: var(--live-ink); text-decoration: underline; font-size: 12px; }
@@ -60,11 +60,11 @@
 .devnet-intro { max-width: 640px; margin: 10vh auto; line-height: 1.6; }
 .devnet-page button:disabled { opacity: .5; cursor: default; }
 .devnet-page :is(summary, .live-about a) { min-height: 44px; padding-block: 12px; cursor: pointer; }
-.devnet-page :is(button, a, summary, input):focus-visible { outline: 3px solid #a56933; outline-offset: 3px; }
+.devnet-page :is(button, a, summary, input):focus-visible { outline: 3px solid #6544a6; outline-offset: 3px; }
 .devnet-owner-entry { margin-top: 24px; padding: 16px; border: 1px solid var(--live-line); border-radius: 3px; font-size: 12px; line-height: 1.6; }
 .devnet-owner-entry form { display: grid; gap: 8px; }
-.devnet-owner-entry input { min-width: 0; width: 100%; padding: 8px; border: 1px solid var(--live-line); border-radius: 3px; background: #f7f5eb; color: var(--live-ink); }
-.devnet-owner-entry button { min-height: 44px; padding: 8px; border-radius: 3px; border: 0; background: var(--live-ink); color: #f7f5eb; }
+.devnet-owner-entry input { min-width: 0; width: 100%; padding: 8px; border: 1px solid var(--live-line); border-radius: 3px; background: #F4F2F8; color: var(--live-ink); }
+.devnet-owner-entry button { min-height: 44px; padding: 8px; border-radius: 3px; border: 0; background: var(--live-ink); color: #F4F2F8; }
 .devnet-setup { max-width: 1280px; margin: 16px auto; padding: 0; color: var(--live-muted); font-size: 12px; line-height: 1.6; }
 .devnet-setup summary { color: var(--live-ink); }
 .devnet-setup ol { padding-left: 20px; }

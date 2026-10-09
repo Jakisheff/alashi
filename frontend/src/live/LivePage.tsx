@@ -1,3 +1,4 @@
+import { BrandMark } from '../brand/BrandMark'
 import { Component, lazy, Suspense, useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
 import { Link } from '@tanstack/react-router'
 import { useScene } from '../store'
@@ -141,7 +142,7 @@ export default function LivePage() {
   return (
     <main className="live-page" lang="en">
       <header className="live-header">
-        <Link to="/" className="live-brand" aria-label="Alashi — home">alashi<span>.</span></Link>
+        <Link to="/" className="live-brand" aria-label="ALASHI NETWORK — home"><BrandMark /></Link>
         <span className="live-header-label">Personal stream</span>
         <span className="live-preview-label">Demo</span>
       </header>
@@ -162,7 +163,7 @@ export default function LivePage() {
           </div>
 
           <div className="live-hero" data-action={trade?.action ?? 'idle'} data-reaction={reaction?.kind ?? 'idle'}>
-            <div className="live-scene"><HeroBoundary><Suspense fallback={<p className="live-hero-fallback">Loading Degenie…</p>}><Scene frozen={null} background="#102c25" interactive={false}>
+            <div className="live-scene"><HeroBoundary><Suspense fallback={<p className="live-hero-fallback">Loading Degenie…</p>}><Scene frozen={null} background="#111018" interactive={false}>
               {trade ? isScenario(trade.action) ? <ScenarioAction preview={{ ...trade, action: trade.action }} onTime={setTradeTime} onFinished={finishTrade} /> : <MarketTrade preview={{ ...trade, action: trade.action }} onTime={setTradeTime} onFinished={finishTrade} /> : <LivingGenie reaction={reaction} onTime={setReactionTime} onFinished={finishReaction} />}
             </Scene></Suspense></HeroBoundary></div>
             {reaction?.kind === 'thinking' && reactionTime >= .6 && reactionTime < 4.5 && <ThoughtBubble key={reaction.take} text={thinkingText} preview />}

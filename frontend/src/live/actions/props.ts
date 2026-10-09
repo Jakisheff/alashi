@@ -1,3 +1,4 @@
+import { createBrandCoin } from '../../brand/coin.ts'
 import { DoubleSide, MeshBasicMaterial, PlaneGeometry, BoxGeometry, CylinderGeometry, Group, Mesh, MeshStandardMaterial, SphereGeometry, TorusGeometry, type Texture, type BufferGeometry } from 'three'
 
 /** Every prop is owned here; no cached GLB geometry/material is mutated or disposed. */
@@ -37,12 +38,8 @@ export function createScenarioProps() {
     hasDonkeyTexture = texture !== null
     cutoutMaterial.map = texture; cutoutMaterial.needsUpdate = true
   }
-  const coin = group('one-peso-payment')
-  const coinFace = mesh(coin, cylinder, 'gold', [0, .125, 0], [.12, .035, .12]); coinFace.rotation.x = Math.PI / 2
-  mesh(coin, ring, 'edge', [0, .125, .02], [.103, .103, .1])
-  box(coin, 'paper', [.005, .125, .022], [.023, .12, .008])
-  box(coin, 'paper', [.005, .064, .022], [.073, .017, .008])
-  const oneSerif = box(coin, 'paper', [-.014, .176, .022], [.047, .018, .008]); oneSerif.rotation.z = .45
+  const brandCoin = createBrandCoin(.12, .035, .125)
+  const coin = brandCoin.root; root.add(coin)
   const bag = group('contraband-sack')
   sphere(bag, 'cloth', [0, .265, 0], [.22, .265, .205])
   mesh(bag, cylinder, 'cloth', [0, .50, 0], [.105, .12, .09])
@@ -145,6 +142,7 @@ export function createScenarioProps() {
   const tick2 = box(ballot, 'teal', [.025, .175, .01], [.13, .018, .002]); tick2.rotation.z = .8
 
   function fade(opacity: number) {
+    brandCoin.fade(opacity)
     cutoutMaterial.opacity = opacity
     root.visible = opacity > .001
     for (const material of Object.values(materials)) { material.opacity = opacity; material.depthWrite = opacity > .98 }
@@ -155,7 +153,7 @@ export function createScenarioProps() {
     for (const { node, visible, position, quaternion, scale } of rests) { node.visible = visible; node.position.copy(position); node.quaternion.copy(quaternion); node.scale.copy(scale) }
     for (const child of root.children) { child.visible = false; child.position.set(0, 0, 0); child.rotation.set(0, 0, 0); child.scale.setScalar(1) }
   }
-  function dispose() { cutoutMaterial.dispose(); geometries.forEach((g) => g.dispose()); Object.values(materials).forEach((m) => m.dispose()) }
+  function dispose() { brandCoin.dispose(); cutoutMaterial.dispose(); geometries.forEach((g) => g.dispose()); Object.values(materials).forEach((m) => m.dispose()) }
   return { root, coin, donkeyBillboard, donkeyPicture, setDonkeyTexture, get hasDonkeyTexture() { return hasDonkeyTexture }, bag, parcel, hat, desk, official, officialTorso, officialHead, officialOtherArm, officialHand, officialUpperArm, officialForearm, coverHand, coverUpperArm, coverForearm, paperwork, envelope, urn, ballot, fade, hideAll, dispose }
 }
 export type ScenarioProps = ReturnType<typeof createScenarioProps>

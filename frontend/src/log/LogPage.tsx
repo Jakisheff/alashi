@@ -1,3 +1,4 @@
+import { BrandMark } from '../brand/BrandMark'
 import { useQuery } from '@tanstack/react-query'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { useEffect, useMemo, useRef, useState } from 'react'
@@ -119,8 +120,8 @@ export function LogPage({ game, api = '' }: { game: string; api?: string }) {
 
       {/* top bar */}
       <header className="relative z-10 flex flex-wrap items-center gap-x-4 gap-y-2 border-b px-4 py-3" style={{ borderColor: `${Y}55` }}>
-        <Link to="/" className="text-lg font-bold tracking-[.25em] uppercase" style={glow(Y)}>
-          alashi
+        <Link to="/" className="brand-on-dark">
+          <BrandMark />
         </Link>
         <span className="text-xs tracking-[.4em] uppercase" style={{ color: C }}>
           // game feed
