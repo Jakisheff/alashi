@@ -4,8 +4,11 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import { routeTree } from './routeTree.gen'
+import { primeOwnerFragment } from './owner/pairing'
 
 const queryClient = new QueryClient()
+
+primeOwnerFragment()
 
 // No JSON.parse on search values (the default would turn an agent id like "1234e567..." into a number);
 // the query decoder still maps plain numbers and booleans. Routes check every value in validateSearch.
