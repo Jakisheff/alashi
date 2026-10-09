@@ -19,7 +19,7 @@
   <section id="viewer" class="hidden" aria-live="polite">
     <div class="card"><div class="grid"><div><div class="label">Chain status</div><div class="value" id="chain-status">—</div></div><div><div class="label">Game</div><div class="value" id="game-id">—</div></div><div><div class="label">Phase</div><div class="value" id="phase">—</div></div><div><div class="label">Round</div><div class="value" id="round">—</div></div><div><div class="label">Phase deadline</div><div class="value" id="deadline">—</div></div><div><div class="label">Game account</div><div class="value" id="game-account">—</div></div></div></div>
     <section class="card"><h2>Factions</h2><p class="muted">Balances and resources are current confirmed account state.</p><table><thead><tr><th>Name</th><th>Cash</th><th>Goods</th><th>Influence</th><th>Vote</th></tr></thead><tbody id="factions"><tr><td colspan="5">Loading…</td></tr></tbody></table></section>
-    <section class="card"><h2>Confirmed activity</h2><p class="muted">These are confirmed transactions for this Game PDA. This first viewer does not decode transaction instructions, so it does not invent action names.</p><ol id="transactions"></ol></section>
+    <section class="card"><h2>Confirmed activity</h2><p class="muted">Confirmed transactions for this game. Open a transaction to view its instructions.</p><ol id="transactions"></ol></section>
   </section>
 </main>
 <script src="https://unpkg.com/@solana/web3.js@1.95.8/lib/index.iife.min.js" integrity="sha384-ujeTtvHxhu2g5lnu14Roii2ajvVKJ74KQ6eo6GGfAi0IrKZ1YkF8N68Iw5VmIJO0" crossorigin="anonymous"></script>
@@ -60,9 +60,9 @@ function parseFaction(data) {
   const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength)
   let offset = 72
   const length = view.getUint32(offset, true); offset += 4
-  if (length > 64 || offset + length + 15 > bytes.length) throw new Error('Faction name is invalid')
+  if (length > 64 || offset + length + 17 > bytes.length) throw new Error('Faction name is invalid')
   const name = new TextDecoder().decode(bytes.slice(offset, offset + length)); offset += length
-  return { name, cash: view.getBigUint64(offset, true), goods: view.getUint16(offset + 8, true), influence: view.getUint16(offset + 10, true), vote: bytes[offset + 14] }
+  return { name, cash: view.getBigUint64(offset, true), goods: view.getUint16(offset + 8, true), influence: view.getUint16(offset + 10, true), vote: bytes[offset + 16] }
 }
 async function verifyGamePda(game, state) {
   const seed = new Uint8Array(8); new DataView(seed.buffer).setBigUint64(0, state.gameId, true)
