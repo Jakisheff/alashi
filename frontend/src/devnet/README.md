@@ -1,4 +1,4 @@
-# Animated devnet viewer (uncommitted preparation)
+# Animated devnet viewer
 
 React `/devnet?game=<GamePDA>` reuses the existing stream assets. The backend
 validates on-chain receipts; the frontend projects a bounded public journal.
@@ -27,4 +27,14 @@ These browser checks use synthetic API/cookie fixtures, not a real owner proof,
 chain transaction or influence acceptance. Local manifest CORS errors come from
 the existing absolute production manifest URL; no app exception was observed.
 Actual public API currently unavailable. No new 3D asset version is generated.
-Ivan owns endpoint/runner/release. Direct human commit hold remains in force.
+Ivan owns endpoint/runner/release. The direct user authorized a separate frontend delivery branch and server handoff on 09 October. Release remains coordinated by Ivan.
+
+Delivery: the landing “Watch devnet game” CTA already exists in the base route.
+The same page contains player selection and registered owner entry. The new
+“How to connect your agent” guide explains operator setup, an already joined
+registered wallet and active runner binding, the public Game link and agent ID,
+and wallet verification. It does not offer browser recovery-secret input or
+claim HTTP enrollment joins Solana; finished games are replay-only.
+
+See [ANIMATIONS.md](ANIMATIONS.md) for the full animation inventory, trigger
+contract, asset sizes, scene semantics and remaining acceptance dependencies.
