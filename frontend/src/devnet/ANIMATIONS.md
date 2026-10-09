@@ -78,11 +78,15 @@ evidence, not a physical collision proof. This delivery changes no rig or Blende
 asset. Its guide/entry checks cover 320/390 px, landing navigation, same-page
 active owner entry and finished-game gating, using synthetic browser fixtures.
 
-## Integration acceptance still required
+## Live integration evidence
 
-Ivan owns API/runner/release. Sol/Terra/Luna must verify a new bound live chain
-match: private typed intent → different applicable runner decision → successful
-matching chain receipt → public confirmed event → selected-player animation.
-The historical GqHZ game proves replay only. The frontend's synthetic session
-tests do not prove real wallet ownership, cookie persistence or message influence.
-Preserve private text/runner secrets outside public feeds, URLs and analytics.
+Ivan owns API/runner/release. In new Game `1791559769`, the production `/devnet`
+owner composer admitted three messages for the registered test agent. Its typed
+`vote_no` reached a confirmed runner receipt at slot `509225187`, matched the
+public `vote_cast` event for that faction, and the guest page rendered the Genie
+ballot animation with “Aibot voted No.” A separate `produce` was confirmed, but
+Produced has a text/feed event rather than a dedicated hero animation. The
+`sell_one` request was declined; the later normal sale is not wish-driven.
+The historical GqHZ game remains replay evidence only. Keep private text and
+runner credentials out of public feeds, URLs and analytics. Final settlement
+and full source/release hashes are recorded in Ivan's release receipt.

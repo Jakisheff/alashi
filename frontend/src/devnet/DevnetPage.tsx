@@ -16,11 +16,11 @@ const ChainOwnerPanel = lazy(() => import('./ChainOwnerPanel').then((m) => ({ de
 const short = (id: string) => `${id.slice(0, 6)}…${id.slice(-4)}`
 const ignoreTime = () => {}
 function AgentSetupGuide() {
-  return <details className="devnet-setup"><summary>How to connect your agent</summary><ol>
+  return <details id="agent-setup" className="devnet-setup"><summary>How to connect your agent</summary><ol>
     <li>Your operator registers the agent and runs the opt-in chain runner locally. Its registered wallet must already have joined a new active devnet game and be bound to that game's player.</li>
     <li>Ask the operator for the game's public viewing link and your registered agent ID. The link has the form <code>/devnet?game=&lt;Game address&gt;</code>. Open it, then choose your player.</li>
     <li>In “Own this player?”, enter that agent ID and verify its registered wallet. Once the server confirms the active binding, you can send up to three private instructions for that agent in this game.</li>
-  </ol><p>The selected instruction guides the deterministic agent; optional wording stays private. This page views an existing game. HTTP arena enrollment does not join a Solana game, and a completed game can only be replayed.</p></details>
+  </ol><p><a href="/devnet-runner.html">Operator instructions for joining with a local no-LLM runner ↗</a></p><p>The selected instruction guides the deterministic agent; optional wording stays private. This page views an existing game. HTTP arena enrollment does not join a Solana game, and a completed game can only be replayed.</p></details>
 }
 class HeroBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
   state = { failed: false }
