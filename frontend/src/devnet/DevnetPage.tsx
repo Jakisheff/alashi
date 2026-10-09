@@ -9,6 +9,9 @@ import { useScene } from '../store'
 import { consumeOwnerFragment, forgetOwnerFragment, readOwnerLocator, redeemOwnerFragment, rememberOwnerLocator, type OwnerLocator } from '../owner/pairing'
 import { validBase58, formatAmount, formatCash, type ChainEvent } from './client'
 import { useChainSnapshot } from './useChainSnapshot'
+import { ChainConversationStream } from './ChainConversationStream'
+import { useChainConversations } from './useChainConversations'
+import { conversationView } from './conversationsClient'
 import { defaultWinner, eventLabel, liveAdditions, newLiveCursor, playerEvents, playerStandings, visualAction } from './playback'
 import '../live/live.css'
 import './devnet.css'
@@ -35,6 +38,7 @@ function OwnerEntry({ gamePda, faction, autoRecord }: { gamePda: string; faction
 }
 function GameViewer({ pda, initialPlayer, ownerRecord }: { pda: string; initialPlayer: string; ownerRecord: string }) {
   const { snapshot, error, waiting, retry } = useChainSnapshot(pda)
+  const journal = useChainConversations(pda, Boolean(snapshot), Boolean(snapshot && snapshot.complete && ['Finished', 'Aborted'].includes(snapshot.phase)))
   const [selected, setSelected] = useState(initialPlayer)
   useEffect(() => { if (initialPlayer) setSelected(initialPlayer) }, [initialPlayer])
   const faction = snapshot?.factions.find((f) => f.pda === selected) ?? (snapshot ? defaultWinner(snapshot) : undefined)
@@ -69,6 +73,7 @@ function GameViewer({ pda, initialPlayer, ownerRecord }: { pda: string; initialP
   }, [snapshot, faction, observed, mode, error])
   const activeEvents = mode === 'replay' ? replayEvents : observed
   const replayEvent = mode === 'replay' && position >= 0 ? replayEvents[position] : undefined
+  const conversations = useMemo(() => snapshot ? conversationView(journal.entries, snapshot, mode === 'replay' ? replayEvent?.id ?? '' : null) : { rows: [], unmatched: false }, [journal.entries, snapshot, mode, replayEvent?.id])
   useEffect(() => {
     if (mode !== 'replay') return
     if (!replayEvent) { setCurrent(null); setPlaying(false); return }
@@ -119,6 +124,9 @@ function GameViewer({ pda, initialPlayer, ownerRecord }: { pda: string; initialP
         <div className="live-playback"><button disabled={!observed.length} onClick={() => replay()}>{snapshot.complete ? 'Replay confirmed actions' : 'Play available actions'}</button>{mode === 'replay' && <button disabled={!current} onClick={() => setPlaying((s) => !s)}>{playing ? 'Pause' : 'Resume'}</button>}</div>
         {mode === 'replay' && <><label className="devnet-timeline">Action {Math.min(position + 1, activeEvents.length)} / {activeEvents.length}<input aria-label="Replay action" type="range" min={0} max={Math.max(0, activeEvents.length - 1)} value={Math.max(0, Math.min(position, activeEvents.length - 1))} onChange={(e) => replay(Number(e.target.value), true)} /></label><button className="devnet-text-button" onClick={reset}>Return to latest state</button></>}
         <p className="devnet-note">{snapshot.complete ? 'Confirmed action history loaded.' : 'Partial history · more confirmed events may arrive.'} Playback uses shortened pauses; it does not reconstruct past balances or invent agent thoughts.</p>
+        <ChainConversationStream gamePda={pda} mode={mode === 'replay' ? 'replay' : ['Finished', 'Aborted'].includes(snapshot.phase) ? 'finished' : 'live'} selectedPlayer={faction ? { pda: faction.pda, name: faction.name } : null} entries={conversations.rows} connection={journal.connection} historyComplete={journal.historyComplete && !conversations.unmatched} onRetry={journal.retry} />
+        {journal.error && <p className="devnet-note" role="status">{journal.error}</p>}
+        {conversations.unmatched && <p className="devnet-note" role="status">Some journal records are awaiting a matching confirmed chain event.</p>}
         <details className="live-about"><summary>Chain receipt and all players</summary><p>Snapshot received {new Date(snapshot.fetchedAt).toLocaleTimeString()}. {snapshot.events.length} confirmed events. State slot {snapshot.snapshotSlot}; journal through {snapshot.journalThroughSlot}.</p>{snapshot.factions.map((f) => <p key={f.pda}><strong>{f.name}</strong> · {formatCash(f.cash)} · {f.goods} goods · {f.influence} influence</p>)}<a href={`https://explorer.solana.com/address/${pda}?cluster=devnet`} target="_blank" rel="noreferrer">View Game account ↗</a></details></>}
       {snapshot && faction && faction.alive && !snapshot.settled && !['Finished', 'Aborted'].includes(snapshot.phase) && <OwnerEntry key={faction.pda} gamePda={pda} faction={faction} autoRecord={faction.pda === initialPlayer ? ownerRecord : ''} />}
       {error && <div className="devnet-error"><p role="alert">{error}</p><button onClick={retry}>Retry connection</button><p>No demo actions are substituted for missing chain data.</p></div>}
