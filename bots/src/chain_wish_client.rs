@@ -110,7 +110,7 @@ impl Profiles {
         let Ok(base) = std::env::var("ALASHI_CHAIN_WISH_API") else {
             return Ok(None);
         };
-        let base = validate_loopback_base(&base)?;
+        let base = validate_api_base(&base)?;
         let path = std::env::var("ALASHI_CHAIN_WISH_PROFILE_FILE")
             .map_err(|_| "chain_wish_profile_required")?;
         let profile_path = PathBuf::from(path);
@@ -175,6 +175,30 @@ impl Profiles {
 }
 
 impl ChainWishClient {
+    pub(super) fn bind_public(
+        base: &str,
+        profile_path: &Path,
+        binding: crate::runner_auth::Binding,
+    ) -> Result<Self, &'static str> {
+        let base = validate_api_base(base)?;
+        if binding.runner_token.is_empty()
+            || binding.runner_token.len() > 512
+            || !is_hex64(&binding.record_id)
+        {
+            return Err("chain_wish_bind_rejected");
+        }
+        let pending_store = PendingStore::for_profile(profile_path, &binding.record_id)?;
+        let pending = pending_store.load(&binding.game_pda, &binding.faction_pda)?;
+        Ok(Self {
+            base,
+            game_pda: binding.game_pda,
+            faction_pda: binding.faction_pda,
+            runner_token: binding.runner_token,
+            pending_store,
+            pending,
+        })
+    }
+
     pub(super) fn has_pending(&self) -> bool {
         self.pending.is_some()
     }
@@ -482,7 +506,10 @@ fn read_profiles(path: &Path) -> Result<Vec<Profile>, &'static str> {
     Ok(result)
 }
 
-fn validate_loopback_base(base: &str) -> Result<String, &'static str> {
+fn validate_api_base(base: &str) -> Result<String, &'static str> {
+    if base == "https://alashi.network" {
+        return Ok(base.to_string());
+    }
     if base.bytes().any(|byte| byte <= 32 || byte == 127)
         || base.contains(['?', '#', '@', '\\'])
         || !base.starts_with("http://127.0.0.1:")
@@ -513,7 +540,11 @@ fn post(base: &str, path: &str, body: &Value) -> Result<Value, &'static str> {
         "--max-filesize",
         "65536",
         "--proto",
-        "=http",
+        if base == "https://alashi.network" {
+            "=https"
+        } else {
+            "=http"
+        },
         "--request",
         "POST",
         "--header",
@@ -525,6 +556,9 @@ fn post(base: &str, path: &str, body: &Value) -> Result<Value, &'static str> {
         "--url",
         &format!("{base}{path}"),
     ]);
+    if base == "https://alashi.network" {
+        command.args(["--header", "Origin: https://alashi.network"]);
+    }
     let mut child = command
         .stdin(Stdio::piped())
         .stdout(Stdio::piped())
@@ -601,16 +635,20 @@ mod tests {
     #[test]
     fn rejects_non_loopback_api_bases() {
         for value in [
-            "https://alashi.network",
+            "https://evil.example",
             "http://localhost:8095",
             "http://127.0.0.1:0",
             "http://127.0.0.1:8095/path",
         ] {
-            assert!(validate_loopback_base(value).is_err(), "{value}");
+            assert!(validate_api_base(value).is_err(), "{value}");
         }
         assert_eq!(
-            validate_loopback_base("http://127.0.0.1:8095").unwrap(),
+            validate_api_base("http://127.0.0.1:8095").unwrap(),
             "http://127.0.0.1:8095"
+        );
+        assert_eq!(
+            validate_api_base("https://alashi.network").unwrap(),
+            "https://alashi.network"
         );
     }
 
