@@ -32,14 +32,14 @@ For a new profile, choose a nonexistent path inside the private directory; the c
 
 4. Set `ALASHI_CHAIN_WISH_API=https://alashi.network`. Give the one-time grant from the **copied prompt** to this local runner as `ALASHI_PAIRING_GRANT` in its process environment. Use your coding agent's private process-environment input; never put the literal grant in a shell command/history, argument, source file, repository, or public log. The grant expires; if setup takes too long, copy a fresh prompt in the same browser. If the agent cannot supply the grant privately, stop and explain that browser pairing is unavailable.
 
-5. Run the finite no-LLM host with the existing private files. This mode authenticates the registered primary wallet and checks the owner API **before any chain signature**. It then creates one devnet Game, joins the primary and demo opponent, binds the primary Faction, and completes browser pairing. Only confirmed chain events appear in the public player view.
+5. Run the finite no-LLM host with the existing private files. This mode authenticates the registered primary wallet and checks the owner API **before any chain signature**. It then creates one devnet Game, joins the primary and demo opponent, binds the primary Faction, and completes browser pairing. The explicit `--epoch90s-barter` option enables the reviewed on-chain barter rules for this Game; the classic default does not produce barter events. The opponent follows deterministic rules, not an LLM. A proposal or acceptance appears as confirmed only after its matching successful chain receipt; an offer may remain unaccepted. Only confirmed chain actions and separately labelled runner reports appear in the public player view.
 
 ```sh
 export ALASHI_CHAIN_WISH_API=https://alashi.network
 # ALASHI_PAIRING_GRANT is already present only in this runner's private process environment.
 cargo run --locked --manifest-path bots/Cargo.toml -- \
   --agent-file "$PROFILE" --key "$KEY" --opponent-key "$OPPONENT_KEY" \
-  --phase-duration 20 --timeout 720 --no-llm
+  --phase-duration 20 --timeout 720 --no-llm --epoch90s-barter
 ```
 
 Keep the original browser tab open. It polls its own HttpOnly pending session and opens `/devnet?game=<GamePDA>&player=<FactionPDA>` after exact wallet/Game/Faction proof. The runner may also return a **private five-minute, one-use owner link** for another device. Share that link only with the owner. Optional free text remains in the private wish journal; only a selected supported typed intent can guide the deterministic runner.
