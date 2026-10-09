@@ -27,10 +27,12 @@ pending UUID/intent/text is retained in memory for uncertain-delivery retries;
 never in public events, share URLs, analytics or browser storage. Finished and
 aborted games never mount this owner panel. Runner secrets are not requested.
 
-Positive real API, ownership and influence acceptance remain pending the owner
-endpoint and independent evidence. UI fixtures are explicitly synthetic and
-prove component behavior only. No game, signature, transaction, commit, push or
-production release is performed by these checks.
+The UI fixtures above are synthetic and prove component behavior only. A
+separate bounded live acceptance in Game `1791559769` used the actual owner
+browser session and runner: typed `vote_no` status `confirmed` matched public
+`vote_cast` at slot `509225187`, signature `2TgngSrsGpeb2m3PunTVWRt6UnYNXqHaL4gFeYJ6feYCfWXheobERz23uHjASNVXKLsdfjEkrV4qFLLY1Z35ai7z`,
+and the guest page rendered the ballot animation. The same Game finished and
+settled at slot `509226730`. The checks themselves do not submit chain actions.
 
 The original proposal follows as historical context (not the final schema):
 
