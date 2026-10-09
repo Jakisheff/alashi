@@ -19,23 +19,22 @@
 .chain-talk *, .chain-talk *::before, .chain-talk *::after { box-sizing: border-box; }
 .chain-talk-head { display: flex; justify-content: space-between; align-items: start; gap: 12px; }
 .chain-talk-eyebrow { color: var(--talk-green); font: 10px ui-monospace, monospace; text-transform: uppercase; letter-spacing: .08em; }
-.chain-talk h2 { margin: 6px 0 0; font-size: 26px; line-height: 1.15; letter-spacing: -.04em; font-weight: 600; text-wrap: balance; }
-.chain-talk-mode { flex-shrink: 0; border: 1px solid var(--talk-line); border-radius: 6px; padding: 4px 7px; font: 10px ui-monospace, monospace; letter-spacing: .06em; }
-.chain-talk[data-mode=live] .chain-talk-mode { color: var(--talk-green); background: #e4ece3; border-color: #b8cdbd; }
-.chain-talk[data-mode=live] .chain-talk-mode::before { content: ''; display: inline-block; width: 5px; height: 5px; margin-right: 5px; border-radius: 50%; background: currentColor; }
+.chain-talk h2 { margin: 0; font-size: 23px; line-height: 1.2; letter-spacing: -.035em; font-weight: 600; }
+.chain-talk-mode { flex-shrink: 0; padding: 4px 0; font: 10px ui-monospace, monospace; letter-spacing: .06em; }
+.chain-talk[data-mode=live] .chain-talk-mode { color: var(--talk-green); }
 .chain-talk-selected { margin: 10px 0 16px; color: var(--talk-muted); overflow-wrap: anywhere; }
 .chain-talk-selected strong { color: var(--talk-ink); font-weight: 600; }
 .chain-talk-fixture { margin: 14px 0; padding: 8px 10px; border-left: 3px solid #a56933; color: #78451f; background: #f6ead8; font-size: 11px; }
 .chain-talk-toolbar { display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; align-items: center; }
 .chain-talk-filters { display: flex; gap: 4px; }
 .chain-talk button { font: inherit; cursor: pointer; }
-.chain-talk-filters button { min-height: 44px; padding: 8px 12px; border: 1px solid var(--talk-line); border-radius: 7px; color: var(--talk-ink); background: transparent; }
-.chain-talk-filters button[aria-pressed=true] { border-color: var(--talk-ink); background: var(--talk-ink); color: #f7f5eb; }
+.chain-talk-filters button { min-height: 44px; padding: 8px 0; margin-right: 12px; border: 0; border-bottom: 2px solid transparent; border-radius: 0; color: var(--talk-muted); background: transparent; }
+.chain-talk-filters button[aria-pressed=true] { border-bottom-color: var(--talk-ink); color: var(--talk-ink); font-weight: 600; }
 .chain-talk button:disabled { cursor: default; opacity: .55; }
 .chain-talk-count { color: var(--talk-muted); font: 10px ui-monospace, monospace; }
 .chain-talk-network { display: flex; gap: 8px; align-items: center; justify-content: space-between; margin-top: 12px; padding: 8px 0; color: var(--talk-muted); font-size: 11px; }
-.chain-talk-network[data-interrupted=true] { padding: 8px 10px; background: #f6ead8; color: #78451f; border-radius: 6px; }
-.chain-talk-network button { flex-shrink: 0; min-height: 44px; padding: 5px 10px; border: 1px solid currentColor; border-radius: 5px; background: transparent; color: inherit; }
+.chain-talk-network[data-interrupted=true] { padding: 8px 10px; background: #f6ead8; color: #78451f; border-radius: 2px; }
+.chain-talk-network button { flex-shrink: 0; min-height: 44px; padding: 5px 10px; border: 1px solid currentColor; border-radius: 2px; background: transparent; color: inherit; }
 .chain-talk-list { list-style: none; margin: 0; padding: 0 6px 0 0; max-height: 440px; overflow-y: auto; overscroll-behavior: contain; scrollbar-gutter: stable; scrollbar-width: thin; scrollbar-color: #a6b5a7 transparent; }
 .chain-talk-row { position: relative; display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 10px; padding: 16px 0; border-top: 1px solid var(--talk-line); }
 .chain-talk-row::before { content: ''; position: absolute; top: 48px; bottom: 0; left: 13px; width: 1px; background: var(--talk-line); }
@@ -47,14 +46,14 @@
 .chain-talk-people strong { font-size: 14px; font-weight: 650; }
 .chain-talk-people > span { color: var(--talk-muted); font-size: 12px; }
 .chain-talk-meta { display: flex; flex-wrap: wrap; gap: 2px 8px; margin-top: 2px; color: var(--talk-muted); font: 10px/1.5 ui-monospace, monospace; }
-.chain-talk-terms { display: grid; grid-template-columns: minmax(0, 1fr) 18px minmax(0, 1fr); align-items: center; gap: 8px; margin: 12px 0; padding: 10px 12px; border-radius: 7px; background: #f7f5eb; font: 13px/1.4 ui-monospace, monospace; overflow-wrap: anywhere; }
+.chain-talk-terms { display: grid; grid-template-columns: minmax(0, 1fr) 18px minmax(0, 1fr); align-items: center; gap: 8px; margin: 12px 0; padding: 0; font: 16px/1.4 ui-monospace, monospace; overflow-wrap: anywhere; }
 .chain-talk-terms small { display: block; margin-bottom: 3px; color: var(--talk-muted); font: 10px ui-sans-serif, system-ui, sans-serif; }
 .chain-talk-terms > span:nth-child(2) { color: var(--talk-green); text-align: center; }
 .chain-talk-answer { margin: 8px 0 10px; overflow-wrap: anywhere; }
 .chain-talk-proof { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; }
-.chain-talk-tag { padding: 3px 7px; border: 1px solid var(--talk-line); border-radius: 4px; color: var(--talk-muted); font-size: 11px; }
-.chain-talk-tag[data-tone=confirmed] { color: #24654e; border-color: #b3cdbb; background: #e4ece3; }
-.chain-talk-tag[data-tone=declined] { color: #78451f; background: #f6ead8; border-color: #e5cdaf; }
+.chain-talk-tag { padding: 3px 0; color: var(--talk-muted); font-size: 11px; }
+.chain-talk-tag[data-tone=confirmed] { color: #24654e; }
+.chain-talk-tag[data-tone=declined] { color: #78451f; }
 .chain-talk-proof a { display: inline-flex; align-items: center; min-height: 44px; color: var(--talk-green); font-size: 11px; text-decoration: underline; text-underline-offset: 3px; }
 .chain-talk-fixture-receipt, .chain-talk-slot { color: var(--talk-muted); font: 10px/1.5 ui-monospace, monospace; }
 .chain-talk-slot { display: block; margin-top: 4px; overflow-wrap: anywhere; }
@@ -75,5 +74,5 @@
   .chain-talk { margin-top: 24px; padding-top: 18px; }
   .chain-talk h2 { font-size: 24px; }
   .chain-talk-list { max-height: 420px; }
-  .chain-talk-terms { padding: 10px; gap: 6px; font-size: 12px; }
+  .chain-talk-terms { gap: 6px; font-size: 16px; }
 }

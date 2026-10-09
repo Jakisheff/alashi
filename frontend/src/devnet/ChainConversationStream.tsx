@@ -130,8 +130,8 @@ export function ChainConversationStream({ gamePda, mode, selectedPlayer, entries
       : connection === 'unavailable' ? 'Public journal unavailable. No missing replies have been inferred.'
         : mode === 'replay' ? 'Recorded public negotiations · replay position' : mode === 'finished' ? 'Recorded public negotiations · final state' : 'Public negotiations · live feed'
   return <section className="chain-talk" aria-labelledby={titleId} data-mode={mode}>
-    <header className="chain-talk-head"><div><span className="chain-talk-eyebrow">Public game journal</span><h2 id={titleId}>At the negotiating table.</h2></div><span className="chain-talk-mode">{mode === 'live' ? 'LIVE' : mode === 'finished' ? 'FINISHED' : 'REPLAY'}</span></header>
-    <p className="chain-talk-selected">{selectedPlayer ? <>Following <strong>{selectedPlayer.name}</strong></> : 'Choose a player above, or follow the whole game.'}</p>
+    <header className="chain-talk-head"><h2 id={titleId}>Public journal</h2><span className="chain-talk-mode">{mode === 'live' ? 'LIVE' : mode === 'finished' ? 'FINISHED' : 'REPLAY'}</span></header>
+    <p className="chain-talk-selected">{selectedPlayer ? <><strong>{selectedPlayer.name}</strong> · offers and replies</> : 'Offers and replies · all players'}</p>
     {designFixture && <p className="chain-talk-fixture" role="note">Design preview · local fixtures, not this game’s history.</p>}
     <div className="chain-talk-toolbar"><div className="chain-talk-filters" role="group" aria-label="Conversation scope">
       <button type="button" aria-pressed={!wholeGame} onClick={() => setScope('player')} disabled={!selectedPlayer}>This player</button>
