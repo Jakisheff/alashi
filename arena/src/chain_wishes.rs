@@ -132,6 +132,39 @@ fn binding_live(b: &ChainBinding, at: i64) -> bool {
     at.saturating_sub(b.last_seen_at) <= RUNNER_SECONDS
 }
 
+/// Owner handoff requires an already verified exact binding. A live runner
+/// must be recent; a returning owner may also pair to that same faction after
+/// a confirmed settled Game, without reviving a runner or signing anything.
+pub(super) fn owner_handoff_binding(
+    state: &AppState,
+    record: &str,
+    game: &str,
+    faction: &str,
+    wallet: &str,
+) -> bool {
+    let bound = {
+        let ledger = state.chain_wishes.lock().unwrap_or_else(|e| e.into_inner());
+        ledger.bindings.get(&key(record, game)).and_then(|binding| {
+            (binding.record_id == record
+                && binding.game_pda == game
+                && binding.faction_pda == faction
+                && binding.faction_wallet == wallet)
+                .then(|| binding_live(binding, now()))
+        })
+    };
+    match bound {
+        Some(true) => true,
+        Some(false) => public_chain(game).ok().is_some_and(|view| {
+            view["game"]["phase"] == "Finished"
+                && view["game"]["settled"] == true
+                && view["factions"].as_array().is_some_and(|rows| rows.iter().any(|row| {
+                    row["pda"] == faction && row["wallet"] == wallet
+                }))
+        }),
+        None => false,
+    }
+}
+
 /// One fixed loopback projection. No arbitrary host, URL, or upstream token.
 fn public_chain(game: &str) -> Result<Value, &'static str> {
     if !canonical_pda(game) {
@@ -297,6 +330,44 @@ pub fn bind(state: &AppState, game: &str, body: &Value) -> Value {
         }
         r.wallet.clone()
     };
+    bind_verified(state, game, record, faction, &wallet, None)
+}
+
+/// Public runner binding uses a short owner bearer minted only after the
+/// registered wallet signs the existing owner challenge. It never receives a
+/// recovery secret, browser cookie, or arbitrary Game authority.
+pub fn bind_wallet(
+    state: &AppState,
+    game: &str,
+    origin: &str,
+    bearer: &str,
+    body: &Value,
+) -> Value {
+    if !origin_ok(origin) {
+        return err("owner_origin_forbidden");
+    }
+    if !body.as_object().is_some_and(|o| {
+        o.len() == 2 && o.contains_key("agent_record_id") && o.contains_key("faction_pda")
+    }) {
+        return err("bad_binding");
+    }
+    let (Some(record), Some(faction)) = (
+        body["agent_record_id"].as_str(),
+        body["faction_pda"].as_str(),
+    ) else {
+        return err("bad_binding");
+    };
+    if !hex32(record) || !canonical_pda(game) || !canonical_pda(faction) {
+        return err("bad_binding");
+    }
+    let owner = match owner_session_for(state, record, bearer) {
+        Ok(owner) => owner,
+        Err(code) => return err(code),
+    };
+    bind_verified(state, game, record, faction, &owner.wallet, Some(bearer))
+}
+
+fn bind_verified(state: &AppState, game: &str, record: &str, faction: &str, wallet: &str, bearer: Option<&str>) -> Value {
     let view = match public_chain(game) {
         Ok(v) => v,
         Err(code) => return err(code),
@@ -317,6 +388,12 @@ pub fn bind(state: &AppState, game: &str, body: &Value) -> Value {
         .snapshot_lock
         .lock()
         .unwrap_or_else(|e| e.into_inner());
+    if bearer.is_some_and(|raw| match owner_session_for(state, record, raw) {
+        Ok(owner) => owner.wallet != wallet,
+        Err(_) => true,
+    }) {
+        return err("owner_session_invalid");
+    }
     let mut ledger = state.chain_wishes.lock().unwrap_or_else(|e| e.into_inner());
     let before = ledger.clone();
     // A restarted runner may need a new capability to report its already
@@ -348,7 +425,7 @@ pub fn bind(state: &AppState, game: &str, body: &Value) -> Value {
             record_id: record.to_string(),
             game_pda: game.to_string(),
             faction_pda: faction.to_string(),
-            faction_wallet: wallet.clone(),
+            faction_wallet: wallet.to_string(),
             runner_token_hash: token_hash(&token),
             last_seen_at: at,
         },

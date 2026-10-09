@@ -27,6 +27,18 @@ fn request(
     cookie: Option<&str>,
     origin: Option<&str>,
 ) -> (u16, String, Value) {
+    request_with_bearer(port, method, path, body, cookie, origin, None)
+}
+
+fn request_with_bearer(
+    port: u16,
+    method: &str,
+    path: &str,
+    body: Value,
+    cookie: Option<&str>,
+    origin: Option<&str>,
+    bearer: Option<&str>,
+) -> (u16, String, Value) {
     let payload = if method == "POST" {
         body.to_string()
     } else {
@@ -36,9 +48,10 @@ fn request(
     stream
         .set_read_timeout(Some(Duration::from_secs(4)))
         .unwrap();
-    let raw = format!("{method} {path} HTTP/1.1\r\nHost: localhost\r\nContent-Type: application/json\r\n{}{}Content-Length: {}\r\nConnection: close\r\n\r\n{payload}",
+    let raw = format!("{method} {path} HTTP/1.1\r\nHost: localhost\r\nContent-Type: application/json\r\n{}{}{}Content-Length: {}\r\nConnection: close\r\n\r\n{payload}",
         cookie.map(|c| format!("Cookie: {c}\r\n")).unwrap_or_default(),
-        origin.map(|o| format!("Origin: {o}\r\n")).unwrap_or_default(),payload.len());
+        origin.map(|o| format!("Origin: {o}\r\n")).unwrap_or_default(),
+        bearer.map(|b| format!("Authorization: Bearer {b}\r\n")).unwrap_or_default(),payload.len());
     stream.write_all(raw.as_bytes()).unwrap();
     let mut bytes = Vec::new();
     stream.read_to_end(&mut bytes).unwrap();
@@ -151,7 +164,7 @@ fn owner_chain_wishes_are_private_durable_and_need_a_later_matching_receipt() {
     );
     assert_eq!(binding.0, 200, "{:?}", binding.2);
     assert_eq!(binding.2["faction_wallet"], wallet);
-    let token = binding.2["runner_token"].as_str().unwrap().to_string();
+    let mut token = binding.2["runner_token"].as_str().unwrap().to_string();
     let before_invalid = reads.load(Ordering::SeqCst);
     let invalid_claim = request(
         port,
@@ -208,6 +221,339 @@ fn owner_chain_wishes_are_private_durable_and_need_a_later_matching_receipt() {
         .next()
         .unwrap()
         .to_string();
+
+    // A local runner proves the registered wallet again and keeps this short
+    // bearer only in memory. It may bind through the public wallet-proof path
+    // without sending its recovery secret over that path.
+    let agent_challenge = request(
+        port,
+        "POST",
+        &format!("/agents/{RECORD}/owner/challenge"),
+        json!({}),
+        None,
+        Some(ORIGIN),
+    );
+    assert_eq!(agent_challenge.0, 200);
+    let agent_signature = Signature::from(
+        signing
+            .sign(agent_challenge.2["message"].as_str().unwrap().as_bytes())
+            .to_bytes(),
+    )
+    .to_string();
+    let bearer_login = request(
+        port,
+        "POST",
+        &format!("/agents/{RECORD}/owner/session"),
+        json!({"challenge_id":agent_challenge.2["challenge_id"],"signature":agent_signature}),
+        None,
+        Some(ORIGIN),
+    );
+    assert_eq!(bearer_login.0, 200);
+    let bearer = bearer_login.2["owner_session"]
+        .as_str()
+        .unwrap()
+        .to_string();
+    let remote_bind = request_with_bearer(
+        port,
+        "POST",
+        &format!("/chain/devnet/games/{game}/runner/bind-wallet"),
+        json!({"agent_record_id":RECORD,"faction_pda":faction}),
+        None,
+        Some(ORIGIN),
+        Some(&bearer),
+    );
+    assert_eq!(remote_bind.0, 200, "{:?}", remote_bind.2);
+    assert_eq!(remote_bind.2["faction_wallet"], wallet);
+    token = remote_bind.2["runner_token"].as_str().unwrap().to_string();
+    let wrong_owner = request_with_bearer(
+        port,
+        "POST",
+        &format!("/chain/devnet/games/{game}/runner/bind-wallet"),
+        json!({"agent_record_id":OTHER,"faction_pda":faction}),
+        None,
+        Some(ORIGIN),
+        Some(&bearer),
+    );
+    assert_eq!(wrong_owner.0, 401);
+
+    // Browser-created pairing survives a lost first Set-Cookie/body response:
+    // the same HttpOnly nonce yields exactly the same owner cookie on retry.
+    let wrong_reconnect = request(port,"POST","/owner/pairing/start",
+        json!({"expected_record_id":OTHER}),None,Some(ORIGIN));
+    assert_eq!(wrong_reconnect.0,200);
+    assert!(wrong_reconnect.1.contains("Path=/owner/pairing"));
+    assert!(wrong_reconnect.1.contains("Max-Age=1800"));
+    assert!(wrong_reconnect.1.contains("Secure; HttpOnly; SameSite=Strict"));
+    assert_eq!(request_with_bearer(port,"POST",&format!("/agents/{RECORD}/owner/pairing/complete"),
+        json!({"pairing_grant":wrong_reconnect.2["pairing_grant"],"game_pda":game,"faction_pda":faction}),
+        None,Some(ORIGIN),Some(&bearer)).0,403);
+    let start = request(
+        port,
+        "POST",
+        "/owner/pairing/start",
+        json!({"expected_record_id":RECORD}),
+        None,
+        Some(ORIGIN),
+    );
+    assert_eq!(start.0, 200, "{:?}", start.2);
+    let pair_cookie = start
+        .1
+        .lines()
+        .find(|line| line.to_ascii_lowercase().starts_with("set-cookie:"))
+        .unwrap()
+        .split_once(':')
+        .unwrap()
+        .1
+        .trim()
+        .split(';')
+        .next()
+        .unwrap()
+        .to_string();
+    let grant = start.2["pairing_grant"].as_str().unwrap();
+    assert_eq!(request(port,"POST","/owner/pairing/status",json!({}),
+        Some(&format!("__Secure-alashi-pair={}","0".repeat(64))),Some(ORIGIN)).0,401);
+    assert_eq!(
+        request(
+            port,
+            "POST",
+            "/owner/pairing/status",
+            json!({}),
+            Some(&pair_cookie),
+            Some(ORIGIN)
+        )
+        .2["status"],
+        "waiting"
+    );
+    let complete_body = json!({"pairing_grant":grant,"game_pda":game,"faction_pda":faction});
+    assert_eq!(
+        request_with_bearer(
+            port,
+            "POST",
+            &format!("/agents/{RECORD}/owner/pairing/complete"),
+            complete_body.clone(),
+            None,
+            Some("https://evil.example"),
+            Some(&bearer)
+        )
+        .0,
+        403
+    );
+    let completed = request_with_bearer(
+        port,
+        "POST",
+        &format!("/agents/{RECORD}/owner/pairing/complete"),
+        complete_body.clone(),
+        None,
+        Some(ORIGIN),
+        Some(&bearer),
+    );
+    assert_eq!(completed.0, 200, "{:?}", completed.2);
+    assert_eq!(
+        request_with_bearer(
+            port,
+            "POST",
+            &format!("/agents/{RECORD}/owner/pairing/complete"),
+            complete_body,
+            None,
+            Some(ORIGIN),
+            Some(&bearer)
+        )
+        .0,
+        401
+    );
+    let fallback = completed.2["owner_url"].as_str().unwrap().to_string();
+    assert!(fallback.contains(&format!("?game={game}&player={faction}#owner={RECORD}.")));
+    let fallback_code = fallback.split("#owner=").nth(1).unwrap().split('.').nth(1).unwrap();
+    assert_eq!(request(port,"POST",&format!("/agents/{OTHER}/owner/browser/handoff"),
+        json!({"code":fallback_code,"game_pda":game}),None,Some(ORIGIN)).0,401);
+    assert_eq!(request(port,"POST",&format!("/agents/{RECORD}/owner/browser/handoff"),
+        json!({"code":fallback_code,"game_pda":Pubkey::new_from_array([6;32]).to_string()}),None,Some(ORIGIN)).0,401);
+    let first_poll = request(
+        port,
+        "POST",
+        "/owner/pairing/status",
+        json!({}),
+        Some(&pair_cookie),
+        Some(ORIGIN),
+    );
+    assert_eq!(first_poll.2["status"], "paired");
+    let second_poll = request(
+        port,
+        "POST",
+        "/owner/pairing/status",
+        json!({}),
+        Some(&pair_cookie),
+        Some(ORIGIN),
+    );
+    assert_eq!(second_poll.2["status"], "paired");
+    let owner_cookie_line = |headers: &str| {
+        headers
+            .lines()
+            .find(|line| line.to_ascii_lowercase().starts_with("set-cookie:"))
+            .unwrap()
+            .to_string()
+    };
+    assert_eq!(
+        owner_cookie_line(&first_poll.1),
+        owner_cookie_line(&second_poll.1)
+    );
+    assert!(first_poll.1.contains(&format!("Path=/agents/{RECORD}/owner")));
+    assert!(first_poll.1.contains("Max-Age=604800; Secure; HttpOnly; SameSite=Strict"));
+    let retry_state = new_state_with_files(dir.join("state.json"), dir.join("seq"));
+    load_snapshot(&retry_state).unwrap();
+    let retry_port = serve_on(retry_state, "127.0.0.1:0", 20).unwrap().port();
+    let retry_after_restart = request(retry_port,"POST","/owner/pairing/status",json!({}),Some(&pair_cookie),Some(ORIGIN));
+    assert_eq!(retry_after_restart.2["status"],"paired");
+    assert_eq!(owner_cookie_line(&first_poll.1),owner_cookie_line(&retry_after_restart.1));
+    let returned_cookie = owner_cookie_line(&first_poll.1)
+        .split_once(':')
+        .unwrap()
+        .1
+        .trim()
+        .split(';')
+        .next()
+        .unwrap()
+        .to_string();
+    assert_eq!(
+        request(
+            port,
+            "GET",
+            &format!("/agents/{RECORD}/owner/browser/session"),
+            json!({}),
+            Some(&returned_cookie),
+            None
+        )
+        .0,
+        200
+    );
+    assert_eq!(
+        request(
+            port,
+            "POST",
+            &format!("/agents/{RECORD}/owner/browser/handoff"),
+            json!({"code":fallback_code,"game_pda":game}),
+            None,
+            Some(ORIGIN)
+        )
+        .0,
+        401
+    );
+
+    // A second Copy in the same browser invalidates its prior pending grant.
+    let old_start = request(port,"POST","/owner/pairing/start",json!({}),None,Some(ORIGIN));
+    let old_cookie = old_start.1.lines().find(|line| line.to_ascii_lowercase().starts_with("set-cookie:"))
+        .unwrap().split_once(':').unwrap().1.trim().split(';').next().unwrap().to_string();
+    let new_start = request(port,"POST","/owner/pairing/start",json!({}),Some(&old_cookie),Some(ORIGIN));
+    assert_eq!(new_start.0,200);
+    assert_eq!(request_with_bearer(port,"POST",&format!("/agents/{RECORD}/owner/pairing/complete"),
+        json!({"pairing_grant":old_start.2["pairing_grant"],"game_pda":game,"faction_pda":faction}),
+        None,Some(ORIGIN),Some(&bearer)).0,401);
+    assert_eq!(
+        request(
+            port,
+            "POST",
+            &format!("/agents/{RECORD}/owner/browser/logout"),
+            json!({}),
+            Some(&returned_cookie),
+            Some(ORIGIN)
+        )
+        .0,
+        200
+    );
+    assert_eq!(
+        request(
+            port,
+            "POST",
+            "/owner/pairing/status",
+            json!({}),
+            Some(&pair_cookie),
+            Some(ORIGIN)
+        )
+        .0,
+        401
+    );
+
+    // Reversing completion order is equally exclusive: a redeemed fallback
+    // invalidates the pending browser poll and cannot itself be replayed.
+    let another = request(
+        port,
+        "POST",
+        "/owner/pairing/start",
+        json!({}),
+        None,
+        Some(ORIGIN),
+    );
+    let another_cookie = another
+        .1
+        .lines()
+        .find(|line| line.to_ascii_lowercase().starts_with("set-cookie:"))
+        .unwrap()
+        .split_once(':')
+        .unwrap()
+        .1
+        .trim()
+        .split(';')
+        .next()
+        .unwrap()
+        .to_string();
+    let another_complete = request_with_bearer(
+        port,
+        "POST",
+        &format!("/agents/{RECORD}/owner/pairing/complete"),
+        json!({"pairing_grant":another.2["pairing_grant"],"game_pda":game,"faction_pda":faction}),
+        None,
+        Some(ORIGIN),
+        Some(&bearer),
+    );
+    assert_eq!(another_complete.0, 200);
+    let another_code = another_complete.2["owner_url"]
+        .as_str()
+        .unwrap()
+        .split("#owner=")
+        .nth(1)
+        .unwrap()
+        .split('.')
+        .nth(1)
+        .unwrap();
+    // A process restart between completion and delivery preserves the hashed
+    // grant/link state. The original server is no longer used for this path.
+    let restored = new_state_with_files(dir.join("state.json"), dir.join("seq"));
+    load_snapshot(&restored).unwrap();
+    let restored_port = serve_on(restored, "127.0.0.1:0", 20).unwrap().port();
+    let redeem = request(
+        restored_port,
+        "POST",
+        &format!("/agents/{RECORD}/owner/browser/handoff"),
+        json!({"code":another_code,"game_pda":game}),
+        None,
+        Some(ORIGIN),
+    );
+    assert_eq!(redeem.0, 200, "{:?}", redeem.2);
+    assert_eq!(
+        request(
+            restored_port,
+            "POST",
+            "/owner/pairing/status",
+            json!({}),
+            Some(&another_cookie),
+            Some(ORIGIN)
+        )
+        .0,
+        401
+    );
+    assert_eq!(
+        request(
+            restored_port,
+            "POST",
+            &format!("/agents/{RECORD}/owner/browser/handoff"),
+            json!({"code":another_code,"game_pda":game}),
+            None,
+            Some(ORIGIN)
+        )
+        .0,
+        401
+    );
+
     let path = format!("/agents/{RECORD}/owner/chain-wishes");
     let text = "Private: produce next action";
     let first = json!({"game_pda":game,"client_wish_id":"first","intent":"produce","text":text});
@@ -428,9 +774,24 @@ fn owner_chain_wishes_are_private_durable_and_need_a_later_matching_receipt() {
     );
     assert_eq!(terminal_claim.0, 200, "{:?}", terminal_claim.2);
     assert!(terminal_claim.2["wishes"].as_array().unwrap().is_empty());
+    // A returning owner can pair the same settled faction after the runner
+    // heartbeat expires. Age the persisted fixture, then restart the server.
+    let snapshot_path = dir.join("state.json");
+    let mut snapshot: Value = serde_json::from_slice(&std::fs::read(&snapshot_path).unwrap()).unwrap();
+    snapshot["chain_wishes"]["bindings"][format!("{RECORD}:{game}")]["last_seen_at"] = json!(0);
+    std::fs::write(&snapshot_path, snapshot.to_string()).unwrap();
     let restarted = new_state_with_files(dir.join("state.json"), dir.join("seq"));
     load_snapshot(&restarted).unwrap();
     let restarted_port = serve_on(restarted, "127.0.0.1:0", 60).unwrap().port();
+    let return_start = request(restarted_port, "POST", "/owner/pairing/start",
+        json!({"expected_record_id":RECORD}), None, Some(ORIGIN));
+    assert_eq!(return_start.0, 200);
+    let return_complete = request_with_bearer(restarted_port, "POST",
+        &format!("/agents/{RECORD}/owner/pairing/complete"),
+        json!({"pairing_grant":return_start.2["pairing_grant"],"game_pda":game,"faction_pda":faction}),
+        None, Some(ORIGIN), Some(&bearer));
+    assert_eq!(return_complete.0, 200, "{:?}", return_complete.2);
+    assert_eq!(return_complete.2["game_pda"], game);
     let persisted = request(
         restarted_port,
         "GET",

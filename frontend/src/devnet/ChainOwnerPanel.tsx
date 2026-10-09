@@ -4,6 +4,7 @@ import { availableWallets, signOwnerChallenge, type Wallet } from '../live/api/w
 
 import { createChainOwnerApi, mergeChainWishes, type ChainOwnerApi, type ChainWish as Wish, type ChainPending as Pending, type ChainIntent } from './ownerClient'
 import type { ChainFaction } from './client'
+import { forgetOwnerLocator } from '../owner/pairing'
 import '../live/stream.css'
 const defaultApi = createChainOwnerApi(import.meta.env.VITE_LIVE_API_PATH ?? '')
 const intentLabels: Record<ChainIntent, string> = { produce: 'Produce goods', sell_one: 'Sell one good', buy_one: 'Buy one good', vote_yes: 'Vote Yes', vote_no: 'Vote No' }
@@ -62,6 +63,7 @@ export function ChainOwnerPanel({ api = defaultApi, record, gamePda, faction }: 
       if (alreadyConnected && !matching) {
         let revoked = true
         try { await api.logoutBrowserSession(record) } catch { revoked = false; setLogoutRetry(true) }
+        if (revoked) forgetOwnerLocator()
         if (ticket !== generation.current) return
         wallet.current = null; setSession(null); setConnectedWallet(''); setAccess('guest')
         setError(revoked ? 'A different wallet is already connected. The saved private session was ended before you choose another wallet.' : 'A different wallet is already connected. Private details were hidden, but sign-out could not be confirmed. Retry sign out before choosing another wallet.')
@@ -102,6 +104,7 @@ export function ChainOwnerPanel({ api = defaultApi, record, gamePda, faction }: 
     setBusy(true); setError(''); setNotice('')
     try {
       await api.logoutBrowserSession(record)
+      forgetOwnerLocator()
       clearPrivate(message)
       setLogoutRetry(false)
     } catch (e) {

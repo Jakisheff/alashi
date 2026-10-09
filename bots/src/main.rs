@@ -1,6 +1,7 @@
 mod agent_cli;
 mod chain_wish_client;
 mod llm;
+mod runner_auth;
 mod session_cli;
 
 use solana_signature::Signature;
@@ -19,7 +20,7 @@ use {
     solana_rpc_client::rpc_client::RpcClient,
     solana_transaction::versioned::VersionedTransaction,
     std::{
-        path::Path,
+        path::{Path, PathBuf},
         str::FromStr,
         thread::sleep,
         time::{Duration, SystemTime, UNIX_EPOCH},
@@ -230,6 +231,13 @@ fn fetch_faction(rpc: &RpcClient, faction: &Pubkey) -> Option<state::Faction> {
         }
         Err(_) => None,
     }
+}
+
+struct SelfHost {
+    owner: runner_auth::OwnerSession,
+    agent_file: PathBuf,
+    primary_key_path: String,
+    opponent_key_path: String,
 }
 
 struct Bot {
@@ -797,10 +805,30 @@ fn flag_value(args: &[String], flag: &str) -> Option<String> {
         .cloned()
 }
 
+fn may_join(existing_faction: bool, resume: bool) -> bool {
+    !existing_faction && !resume
+}
+
+fn may_auto_airdrop(
+    has_agent_profile: bool,
+    resume: bool,
+    has_wish_profile: bool,
+    low_balance: bool,
+) -> bool {
+    !has_agent_profile && !resume && !has_wish_profile && low_balance
+}
+
 /// Режим гостя: подключиться к чужой партии (--game <PUBKEY>) и играть
 /// только свои ходы. Фазы двигает host: advance и settle гостю запрещены
 /// (advance требует все фракции партии, settle требует game.admin).
-fn run_join_mode(rpc: &RpcClient, game_str: &str, key_path: &str, name: &str) {
+fn run_join_mode(
+    rpc: &RpcClient,
+    game_str: &str,
+    key_path: &str,
+    name: &str,
+    agent_file: Option<&str>,
+    resume: bool,
+) {
     let game = match game_str.parse::<Pubkey>() {
         Ok(p) => p,
         Err(_) => {
@@ -808,14 +836,31 @@ fn run_join_mode(rpc: &RpcClient, game_str: &str, key_path: &str, name: &str) {
             return;
         }
     };
-    let kp = load_or_create(key_path);
+    if resume && agent_file.is_none() {
+        eprintln!("[ERROR] --resume requires --agent-file for the previously registered agent");
+        return;
+    }
+    let kp = match agent_file {
+        Some(_) => match agent_cli::read_key(key_path) {
+            Ok(key) => key,
+            Err(_) => {
+                eprintln!("[ERROR] registered runner needs an existing mode-600 local key");
+                return;
+            }
+        },
+        None => load_or_create(key_path),
+    };
     let name: String = name.chars().take(16).collect();
     let faction = faction_pda(&game, &kp.pubkey());
-    let wish_profiles = match chain_wish_client::Profiles::from_env() {
-        Ok(profiles) => profiles,
-        Err(error) => {
-            eprintln!("[ERROR] chain wish opt-in unavailable: {error}");
-            return;
+    let wish_profiles = if agent_file.is_some() {
+        None
+    } else {
+        match chain_wish_client::Profiles::from_env() {
+            Ok(profiles) => profiles,
+            Err(error) => {
+                eprintln!("[ERROR] chain wish opt-in unavailable: {error}");
+                return;
+            }
         }
     };
     let wish_profile = match wish_profiles.as_ref() {
@@ -832,7 +877,9 @@ fn run_join_mode(rpc: &RpcClient, game_str: &str, key_path: &str, name: &str) {
         },
         None => None,
     };
-    register_agent(&kp.pubkey().to_string(), "join-v1", "guest-heuristic-v1");
+    if agent_file.is_none() {
+        register_agent(&kp.pubkey().to_string(), "join-v1", "guest-heuristic-v1");
+    }
     println!("=== JOIN MODE | rpc: {} ===", rpc_url());
     println!("guest: {} (ключ: {key_path})", kp.pubkey());
     println!("game: {game}");
@@ -856,7 +903,12 @@ fn run_join_mode(rpc: &RpcClient, game_str: &str, key_path: &str, name: &str) {
     );
     let mut bal = rpc.get_balance(&kp.pubkey()).unwrap_or(0);
     println!("guest balance: {bal} lamports");
-    if wish_profiles.is_none() && bal < g0.entry_fee + 20_000_000 {
+    if may_auto_airdrop(
+        agent_file.is_some(),
+        resume,
+        wish_profiles.is_some(),
+        bal < g0.entry_fee + 20_000_000,
+    ) {
         println!("мало средств, пробую devnet airdrop 1 SOL ...");
         if let Ok(sig) = rpc.request_airdrop(&kp.pubkey(), 1_000_000_000) {
             println!("  airdrop tx {sig}");
@@ -865,8 +917,12 @@ fn run_join_mode(rpc: &RpcClient, game_str: &str, key_path: &str, name: &str) {
         bal = rpc.get_balance(&kp.pubkey()).unwrap_or(0);
         println!("guest balance: {bal} lamports");
     }
-    if rpc.get_account(&faction).is_ok() {
+    let existing_faction = rpc.get_account(&faction).is_ok();
+    if existing_faction {
         println!("фракция уже существует, повторный join не нужен");
+    } else if !may_join(existing_faction, resume) {
+        eprintln!("[ERROR] --resume found no existing faction for this registered wallet; no Join was sent");
+        return;
     } else {
         if bal < g0.entry_fee + 20_000_000 {
             println!(
@@ -892,6 +948,43 @@ fn run_join_mode(rpc: &RpcClient, game_str: &str, key_path: &str, name: &str) {
             return;
         }
     }
+    if resume {
+        let Some(faction_state) = fetch_faction(rpc, &faction) else {
+            eprintln!(
+                "[ERROR] --resume cannot validate the existing faction; no owner link was minted"
+            );
+            return;
+        };
+        if faction_state.game != game || faction_state.wallet != kp.pubkey() {
+            eprintln!("[ERROR] --resume faction does not match this Game and local wallet");
+            return;
+        }
+        let agent_file = Path::new(agent_file.expect("--resume required it"));
+        let owner = match runner_auth::authenticate_owner(agent_file, key_path) {
+            Ok(owner) => owner,
+            Err(error) => {
+                eprintln!("[ERROR] --resume owner proof unavailable: {error}");
+                return;
+            }
+        };
+        let grant = match std::env::var("ALASHI_PAIRING_GRANT") {
+            Ok(grant) => grant,
+            Err(_) => {
+                eprintln!("[ERROR] --resume needs ALASHI_PAIRING_GRANT in the runner environment");
+                return;
+            }
+        };
+        match runner_auth::complete_existing_pairing(
+            &owner,
+            &grant,
+            &game.to_string(),
+            &faction.to_string(),
+        ) {
+            Ok(url) => println!("owner link: {url}"),
+            Err(error) => eprintln!("[ERROR] --resume owner link unavailable: {error}"),
+        }
+        return;
+    }
     let mut wish_client = match (wish_profiles.as_ref(), wish_profile) {
         (Some(profiles), Some(profile)) => {
             match profiles.bind(profile, &game.to_string(), &faction.to_string()) {
@@ -904,6 +997,55 @@ fn run_join_mode(rpc: &RpcClient, game_str: &str, key_path: &str, name: &str) {
         }
         _ => None,
     };
+    if let Some(agent_file) = agent_file {
+        let api = std::env::var("ALASHI_CHAIN_WISH_API").unwrap_or_default();
+        if api != "https://alashi.network" {
+            eprintln!(
+                "[ERROR] registered runner requires ALASHI_CHAIN_WISH_API=https://alashi.network"
+            );
+            return;
+        }
+        let agent_file = Path::new(agent_file);
+        let (_profile, binding) = match runner_auth::authenticate_and_bind(
+            agent_file,
+            key_path,
+            &game.to_string(),
+            &faction.to_string(),
+        ) {
+            Ok(value) => value,
+            Err(error) => {
+                eprintln!("[ERROR] owner proof/bind unavailable: {error}");
+                return;
+            }
+        };
+        wish_client = match chain_wish_client::ChainWishClient::bind_public(
+            &api,
+            agent_file,
+            binding.clone(),
+        ) {
+            Ok(client) => Some(client),
+            Err(error) => {
+                eprintln!("[ERROR] public wish capability unavailable: {error}");
+                return;
+            }
+        };
+        if let Ok(grant) = std::env::var("ALASHI_PAIRING_GRANT") {
+            let owner = match runner_auth::authenticate_owner(agent_file, key_path) {
+                Ok(owner) => owner,
+                Err(error) => {
+                    eprintln!("[ERROR] browser pairing unavailable: {error}");
+                    return;
+                }
+            };
+            match runner_auth::complete_pairing(&owner, &binding, &grant) {
+                Ok(url) => println!("owner link: {url}"),
+                Err(error) => {
+                    eprintln!("[ERROR] browser pairing unavailable: {error}");
+                    return;
+                }
+            }
+        }
+    }
     println!("в партии. Фазы двигает host, я играю свои ходы.");
 
     let started = now();
@@ -1061,6 +1203,23 @@ fn host_timing(args: &[String]) -> Result<(i64, i64), String> {
     Ok((duration, timeout))
 }
 
+#[cfg(test)]
+mod runner_mode_tests {
+    use super::{may_auto_airdrop, may_join};
+    #[test]
+    fn resume_never_joins_a_missing_faction() {
+        assert!(!may_join(false, true));
+        assert!(!may_join(true, true));
+        assert!(may_join(false, false));
+    }
+    #[test]
+    fn registered_resume_never_requests_airdrop() {
+        assert!(!may_auto_airdrop(true, true, false, true));
+        assert!(!may_auto_airdrop(true, false, false, true));
+        assert!(may_auto_airdrop(false, false, false, true));
+    }
+}
+
 fn main() {
     let args: Vec<String> = std::env::args().collect();
     if args.get(1).map(String::as_str) == Some("session") {
@@ -1070,7 +1229,7 @@ fn main() {
         std::process::exit(agent_cli::run(&args[2..]));
     }
     if args.iter().any(|a| a == "--help" || a == "-h") {
-        println!("bots [--phase-duration SECONDS] [--timeout SECONDS] [--no-llm]\nbots --game PUBKEY --name NAME --key LOCAL_FILE\nbots agent inspect|join|act --help");
+        println!("bots [--phase-duration SECONDS] [--timeout SECONDS] [--no-llm] [--agent-file REGISTERED_PROFILE --key PRIMARY_KEY --opponent-key DEMO_OPPONENT_KEY]\nbots --game PUBKEY --name NAME --key LOCAL_FILE [--agent-file REGISTERED_PROFILE] [--resume]\nbots agent inspect|join|act --help");
         return;
     }
     let (phase_duration, host_timeout) = match host_timing(&args) {
@@ -1089,44 +1248,132 @@ fn main() {
         let key_path =
             flag_value(&args, "--key").unwrap_or_else(|| format!("{KEYS_DIR}/join.json"));
         let name = flag_value(&args, "--name").unwrap_or_else(|| "Guest".to_string());
-        run_join_mode(&rpc, &game_str, &key_path, &name);
+        run_join_mode(
+            &rpc,
+            &game_str,
+            &key_path,
+            &name,
+            flag_value(&args, "--agent-file").as_deref(),
+            args.iter().any(|arg| arg == "--resume"),
+        );
         return;
     }
 
-    let bot1_kp = load_or_create(&format!("{KEYS_DIR}/bot1.json"));
-    let bot2_kp = load_or_create(&format!("{KEYS_DIR}/bot2.json"));
-    let wish_profiles = match chain_wish_client::Profiles::from_env() {
-        Ok(profiles) => profiles,
-        Err(error) => {
-            eprintln!("[ERROR] chain wish opt-in unavailable: {error}");
+    // Self-host mode is explicit: the primary is already registered; the second signer is a local deterministic demo opponent.
+    let agent_file = flag_value(&args, "--agent-file");
+    let primary_key = flag_value(&args, "--key");
+    let opponent_key = flag_value(&args, "--opponent-key");
+    let self_host = agent_file.is_some() || primary_key.is_some() || opponent_key.is_some();
+    let runner_agent: Option<SelfHost> = if self_host {
+        let (agent_file, key_path, opponent_path) = match (agent_file, primary_key, opponent_key) {
+            (Some(agent_file), Some(key_path), Some(opponent_path)) => {
+                (agent_file, key_path, opponent_path)
+            }
+            _ => {
+                eprintln!("[ERROR] self-host requires --agent-file, --key, and --opponent-key");
+                return;
+            }
+        };
+        if agent_cli::devnet(&rpc).is_err() {
+            eprintln!("[ERROR] self-host requires Solana devnet");
             return;
         }
+        if std::env::var("ALASHI_CHAIN_WISH_API").ok().as_deref() != Some("https://alashi.network")
+        {
+            eprintln!("[ERROR] self-host requires ALASHI_CHAIN_WISH_API=https://alashi.network before it creates a game");
+            return;
+        }
+        let primary = match agent_cli::read_key(&key_path) {
+            Ok(key) => key,
+            Err(_) => {
+                eprintln!("[ERROR] primary key must be an existing mode-600 keypair");
+                return;
+            }
+        };
+        let opponent = match agent_cli::read_key(&opponent_path) {
+            Ok(key) => key,
+            Err(_) => {
+                eprintln!("[ERROR] opponent key must be an existing mode-600 keypair");
+                return;
+            }
+        };
+        let profile_path = PathBuf::from(agent_file);
+        let owner = match runner_auth::authenticate_owner(&profile_path, &key_path) {
+            Ok(owner) => owner,
+            Err(error) => {
+                eprintln!("[ERROR] registered-wallet API preflight failed before any chain action: {error}");
+                return;
+            }
+        };
+        if primary.pubkey() == opponent.pubkey() {
+            eprintln!("[ERROR] primary and deterministic opponent must use different keys");
+            return;
+        }
+        // Store these only long enough to construct bots below.
+        std::mem::drop(opponent);
+        std::mem::drop(primary);
+        Some(SelfHost {
+            owner,
+            agent_file: profile_path,
+            primary_key_path: key_path,
+            opponent_key_path: opponent_path,
+        })
+    } else {
+        None
     };
-    register_agent(
-        &bot1_kp.pubkey().to_string(),
-        "greedy-v1",
-        "greedy-heuristic-v1",
-    );
-    let llm_cfg = if args.iter().any(|a| a == "--no-llm") {
+    let (bot1_kp, bot2_kp) = if let Some(host) = &runner_agent {
+        (
+            agent_cli::read_key(&host.primary_key_path).expect("checked primary key"),
+            agent_cli::read_key(&host.opponent_key_path).expect("checked opponent key"),
+        )
+    } else {
+        (
+            load_or_create(&format!("{KEYS_DIR}/bot1.json")),
+            load_or_create(&format!("{KEYS_DIR}/bot2.json")),
+        )
+    };
+    let wish_profiles = if self_host {
+        None
+    } else {
+        match chain_wish_client::Profiles::from_env() {
+            Ok(profiles) => profiles,
+            Err(error) => {
+                eprintln!("[ERROR] chain wish opt-in unavailable: {error}");
+                return;
+            }
+        }
+    };
+    let llm_cfg = if self_host || args.iter().any(|a| a == "--no-llm") {
         None
     } else {
         llm::llm_config()
     };
-    register_agent(
-        &bot2_kp.pubkey().to_string(),
-        llm_cfg
-            .as_ref()
-            .map(|c| c.model.clone())
-            .unwrap_or_default()
-            .as_str(),
-        llm::SYSTEM,
-    );
+    // The self-host path is chain-only. It must not create a legacy HTTP registry record.
+    if !self_host {
+        register_agent(
+            &bot1_kp.pubkey().to_string(),
+            "greedy-v1",
+            "greedy-heuristic-v1",
+        );
+        register_agent(
+            &bot2_kp.pubkey().to_string(),
+            llm_cfg
+                .as_ref()
+                .map(|c| c.model.clone())
+                .unwrap_or_default()
+                .as_str(),
+            llm::SYSTEM,
+        );
+    }
     println!("rpc: {}", rpc_url());
     println!("bot1: {}", bot1_kp.pubkey());
     println!("bot2: {}", bot2_kp.pubkey());
-    if wish_profiles.is_none() {
+    if wish_profiles.is_none() && !self_host {
         ensure_funds(&rpc, "bot1", &bot1_kp);
         ensure_funds(&rpc, "bot2", &bot2_kp);
+    }
+    if self_host {
+        println!("self-host: registered primary plus deterministic no-LLM demo opponent; existing pre-funded devnet keys required");
     }
 
     let llm = llm_cfg;
@@ -1205,7 +1452,39 @@ fn main() {
         ix_join("Botagul", bots[1].kp.pubkey(), game, bots[1].faction),
     );
     wait_account(&rpc, &bots[1].faction, "faction2");
-    if let Err(error) = bind_wishes(wish_profiles.as_ref(), &mut bots, &game) {
+    if let Some(host) = runner_agent.as_ref() {
+        let binding = match runner_auth::bind_wallet(
+            &host.owner,
+            &game.to_string(),
+            &bots[0].faction.to_string(),
+        ) {
+            Ok(binding) => binding,
+            Err(error) => {
+                eprintln!("[ERROR] public owner proof/bind unavailable before gameplay: {error}");
+                return;
+            }
+        };
+        bots[0].wish = match chain_wish_client::ChainWishClient::bind_public(
+            "https://alashi.network",
+            &host.agent_file,
+            binding.clone(),
+        ) {
+            Ok(client) => Some(client),
+            Err(error) => {
+                eprintln!("[ERROR] public wish capability unavailable before gameplay: {error}");
+                return;
+            }
+        };
+        if let Ok(grant) = std::env::var("ALASHI_PAIRING_GRANT") {
+            match runner_auth::complete_pairing(&host.owner, &binding, &grant) {
+                Ok(url) => println!("owner link: {url}"),
+                Err(error) => {
+                    eprintln!("[ERROR] browser pairing unavailable: {error}");
+                    return;
+                }
+            }
+        }
+    } else if let Err(error) = bind_wishes(wish_profiles.as_ref(), &mut bots, &game) {
         eprintln!("[ERROR] chain wish binding unavailable before gameplay: {error}");
         return;
     }

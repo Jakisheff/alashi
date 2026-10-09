@@ -6,6 +6,7 @@ import { LivingGenie, type ReactionPreview } from '../live/reactions'
 import { validRecord } from '../live/api/client'
 import type { ChainFaction } from './client'
 import { useScene } from '../store'
+import { consumeOwnerFragment, readOwnerLocator, redeemOwnerFragment, rememberOwnerLocator, type OwnerLocator } from '../owner/pairing'
 import { validBase58, formatAmount, formatCash, type ChainEvent } from './client'
 import { useChainSnapshot } from './useChainSnapshot'
 import { defaultWinner, eventLabel, liveAdditions, newLiveCursor, playerEvents, playerStandings, visualAction } from './playback'
@@ -27,13 +28,15 @@ class HeroBoundary extends Component<{ children: ReactNode }, { failed: boolean 
   static getDerivedStateFromError() { return { failed: true } }
   render() { return this.state.failed ? <p className="live-hero-fallback">3D is unavailable. Confirmed actions remain below.</p> : this.props.children }
 }
-function OwnerEntry({ gamePda, faction }: { gamePda: string; faction: ChainFaction }) {
-  const [input, setInput] = useState(''), [record, setRecord] = useState(''), [error, setError] = useState('')
+function OwnerEntry({ gamePda, faction, autoRecord }: { gamePda: string; faction: ChainFaction; autoRecord: string }) {
+  const [input, setInput] = useState(''), [record, setRecord] = useState(autoRecord), [error, setError] = useState('')
+  useEffect(() => { if (autoRecord) setRecord(autoRecord) }, [autoRecord])
   return record ? <><Suspense fallback={<p>Loading private owner access…</p>}><ChainOwnerPanel key={record} record={record} gamePda={gamePda} faction={faction} /></Suspense><button className="devnet-text-button" onClick={() => { setRecord(''); setInput('') }}>Change registered agent</button></> : <section className="devnet-owner-entry"><h2>Own this player?</h2><p>Enter its registered agent ID to check private owner access. The registered wallet must match this on-chain player.</p><form onSubmit={(e) => { e.preventDefault(); if (!validRecord(input.trim())) { setError('Enter a 64-character registered agent ID.'); return } setError(''); setRecord(input.trim()) }}><label htmlFor="chain-agent">Registered agent ID</label><input id="chain-agent" autoComplete="off" spellCheck={false} value={input} maxLength={64} onChange={(e) => setInput(e.target.value)} /><button>Check private access</button></form>{error && <p role="alert">{error}</p>}</section>
 }
-function GameViewer({ pda }: { pda: string }) {
+function GameViewer({ pda, initialPlayer, ownerRecord }: { pda: string; initialPlayer: string; ownerRecord: string }) {
   const { snapshot, error, waiting, retry } = useChainSnapshot(pda)
-  const [selected, setSelected] = useState('')
+  const [selected, setSelected] = useState(initialPlayer)
+  useEffect(() => { if (initialPlayer) setSelected(initialPlayer) }, [initialPlayer])
   const faction = snapshot?.factions.find((f) => f.pda === selected) ?? (snapshot ? defaultWinner(snapshot) : undefined)
   const standings = snapshot ? playerStandings(snapshot) : null
   const [current, setCurrent] = useState<ChainEvent | null>(null)
@@ -117,16 +120,36 @@ function GameViewer({ pda }: { pda: string }) {
         {mode === 'replay' && <><label className="devnet-timeline">Action {Math.min(position + 1, activeEvents.length)} / {activeEvents.length}<input aria-label="Replay action" type="range" min={0} max={Math.max(0, activeEvents.length - 1)} value={Math.max(0, Math.min(position, activeEvents.length - 1))} onChange={(e) => replay(Number(e.target.value), true)} /></label><button className="devnet-text-button" onClick={reset}>Return to latest state</button></>}
         <p className="devnet-note">{snapshot.complete ? 'Confirmed action history loaded.' : 'Partial history · more confirmed events may arrive.'} Playback uses shortened pauses; it does not reconstruct past balances or invent agent thoughts.</p>
         <details className="live-about"><summary>Chain receipt and all players</summary><p>Snapshot received {new Date(snapshot.fetchedAt).toLocaleTimeString()}. {snapshot.events.length} confirmed events. State slot {snapshot.snapshotSlot}; journal through {snapshot.journalThroughSlot}.</p>{snapshot.factions.map((f) => <p key={f.pda}><strong>{f.name}</strong> · {formatCash(f.cash)} · {f.goods} goods · {f.influence} influence</p>)}<a href={`https://explorer.solana.com/address/${pda}?cluster=devnet`} target="_blank" rel="noreferrer">View Game account ↗</a></details></>}
-      {snapshot && faction && faction.alive && !snapshot.settled && !['Finished', 'Aborted'].includes(snapshot.phase) && <OwnerEntry key={faction.pda} gamePda={pda} faction={faction} />}
+      {snapshot && faction && faction.alive && !snapshot.settled && !['Finished', 'Aborted'].includes(snapshot.phase) && <OwnerEntry key={faction.pda} gamePda={pda} faction={faction} autoRecord={faction.pda === initialPlayer ? ownerRecord : ''} />}
       {error && <div className="devnet-error"><p role="alert">{error}</p><button onClick={retry}>Retry connection</button><p>No demo actions are substituted for missing chain data.</p></div>}
       <Link className="live-back" to="/">← Back to alashi</Link>
     </aside>
   </div>
 }
-export function DevnetPage({ requestedGame }: { requestedGame: string }) {
+export function DevnetPage({ requestedGame, requestedPlayer = '' }: { requestedGame: string; requestedPlayer?: string }) {
   const navigate = useNavigate()
+  // React runs this initializer before effects or data fetches. The one-use
+  // fragment never reaches analytics, referrers, or the chain projection URL.
+  const [handoff] = useState(() => consumeOwnerFragment())
+  const [linked, setLinked] = useState<OwnerLocator | null>(null)
+  const [linkError, setLinkError] = useState('')
+  const [remembered] = useState(() => readOwnerLocator())
   const [input, setInput] = useState(requestedGame), [inputError, setInputError] = useState('')
   const valid = validBase58(requestedGame)
+  useEffect(() => {
+    if (!handoff) return
+    let stopped = false
+    void redeemOwnerFragment(handoff.record, handoff.code, requestedGame).then((locator) => {
+      if (stopped) return
+      rememberOwnerLocator(locator)
+      setLinked(locator)
+    }).catch(() => { if (!stopped) setLinkError('This owner link expired or was already used. Reconnect through Login or verify the registered wallet.') })
+    return () => { stopped = true }
+  }, [handoff, requestedGame])
+  const effectiveRemembered = handoff ? null : remembered
+  const initialPlayer = linked?.faction ?? ((validBase58(requestedPlayer) ? requestedPlayer : '')
+    || (effectiveRemembered?.game === requestedGame ? effectiveRemembered.faction : ''))
+  const ownerRecord = linked?.record ?? (effectiveRemembered?.game === requestedGame && effectiveRemembered.faction === initialPlayer ? effectiveRemembered.record : '')
   useEffect(() => { const title = document.title; document.title = 'Devnet gameplay · alashi'; return () => { document.title = title } }, [])
-  return <main className="live-page devnet-page" lang="en"><header className="live-header"><Link to="/" className="live-brand">alashi<span>.</span></Link><span className="live-header-label">Devnet gameplay</span><span className="live-preview-label">Devnet · confirmed</span></header><form className="devnet-form" onSubmit={(e) => { e.preventDefault(); const pda = input.trim(); if (!validBase58(pda)) { setInputError('Enter a valid Solana Game address.'); return } setInputError(''); void navigate({ to: '/devnet', search: { game: pda } }) }}><label htmlFor="chain-game">Game account</label><input id="chain-game" value={input} onChange={(e) => setInput(e.target.value)} placeholder="Paste a Game address or use your shared link" autoComplete="off" spellCheck={false} /><button>Watch game</button>{inputError && <p role="alert">{inputError}</p>}</form><AgentSetupGuide />{valid ? <GameViewer key={requestedGame} pda={requestedGame} /> : <div className="devnet-intro"><h1>Your game, in motion.</h1><p>Open a shared devnet game link or paste its Game address above. Choose a player and watch confirmed actions, or replay a completed game.</p><p><a href="/devnet?game=GqHZBaWuJDNERi8xJHXnYF5eWBsLSmEXcAGJYAP94M1b">Watch the completed confirmed demo ↗</a></p><p>Public viewing needs no wallet or signing. To guide a player in a new live game, you need an already joined faction, its registered owner wallet, and an opt-in chain runner bound to that faction. This page does not create or join a game; a finished game is replay-only.</p></div>}</main>
+  return <main className="live-page devnet-page" lang="en"><header className="live-header"><Link to="/" className="live-brand">alashi<span>.</span></Link><span className="live-header-label">Devnet gameplay</span><span className="live-preview-label">Devnet · confirmed</span></header><form className="devnet-form" onSubmit={(e) => { e.preventDefault(); const pda = input.trim(); if (!validBase58(pda)) { setInputError('Enter a valid Solana Game address.'); return } setInputError(''); void navigate({ to: '/devnet', search: { game: pda, player: '' } }) }}><label htmlFor="chain-game">Game account</label><input id="chain-game" value={input} onChange={(e) => setInput(e.target.value)} placeholder="Paste a Game address or use your shared link" autoComplete="off" spellCheck={false} /><button>Watch game</button>{inputError && <p role="alert">{inputError}</p>}</form>{linkError && <p role="alert" className="devnet-error">{linkError}</p>}<AgentSetupGuide />{valid ? <GameViewer key={requestedGame} pda={requestedGame} initialPlayer={initialPlayer} ownerRecord={ownerRecord} /> : <div className="devnet-intro"><h1>Your game, in motion.</h1><p>Open a shared devnet game link or paste its Game address above. Choose a player and watch confirmed actions, or replay a completed game.</p><p><a href="/devnet?game=GqHZBaWuJDNERi8xJHXnYF5eWBsLSmEXcAGJYAP94M1b">Watch the completed confirmed demo ↗</a></p><p>Public viewing needs no wallet or signing. To guide a player in a new live game, you need an already joined faction, its registered owner wallet, and an opt-in chain runner bound to that faction. This page does not create or join a game; a finished game is replay-only.</p></div>}</main>
 }
