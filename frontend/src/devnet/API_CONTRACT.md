@@ -8,9 +8,9 @@ The 14:29 wire adds `unconfirmed`: display awaiting chain confirmation, never
 success. A later matching receipt may reconcile it to `confirmed`; stale status
 sequences cannot undo that receipt. Runner `consumed_after_slot` and token remain
 server concerns; the browser uses server-derived event_id/signature/slot.
-Ivan reports subsequent human release approval in his task. Din retains his
-direct no-commit hold until that human instruction can be verified in his task;
-the review archive conveys no publication authorization.
+The direct user authorized publication in a separate frontend branch and server
+handoff on 09 October. Backend and production release remain with Ivan;
+real owner/runner/chain acceptance is a separate gate.
 
 Public projection additionally requires epoch, separate cash/hard, alive,
 confirmed commitment, snapshot/journal slots, stable signature:log_index IDs.

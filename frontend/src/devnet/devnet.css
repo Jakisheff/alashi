@@ -33,3 +33,9 @@
 .devnet-owner-entry form { display: grid; gap: 8px; }
 .devnet-owner-entry input { min-width: 0; width: 100%; padding: 8px; border: 1px solid var(--live-line); border-radius: 6px; background: #f7f5eb; color: var(--live-ink); }
 .devnet-owner-entry button { padding: 8px; border-radius: 6px; border: 0; background: var(--live-ink); color: #f7f5eb; }
+
+.devnet-setup { max-width: 1040px; margin: 16px auto; padding: 12px 16px; border: 1px solid var(--live-line); border-radius: 10px; color: var(--live-muted); font-size: 12px; line-height: 1.6; }
+.devnet-setup summary { color: var(--live-ink); cursor: pointer; }
+.devnet-setup ol { padding-left: 20px; }
+.devnet-setup li + li { margin-top: 8px; }
+.devnet-setup code { overflow-wrap: anywhere; }
