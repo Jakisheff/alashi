@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alashi · devnet game</title>
+<style>
+:root{--bg:#081112;--card:#0e211d;--line:#2b6050;--text:#e7f5ee;--muted:#9fb9ad;--accent:#85dcb8;--warn:#ffd28a}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px system-ui,sans-serif}.wrap{max-width:920px;margin:auto;padding:24px 16px}h1{margin:4px 0 8px;font-size:clamp(1.8rem,5vw,2.7rem)}p{line-height:1.5}.eyebrow{color:var(--accent);font-size:.76rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase}.muted{color:var(--muted)}.card{margin-top:14px;padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--card)}form{display:flex;gap:8px;flex-wrap:wrap}input{flex:1 1 28rem;min-width:0;padding:10px;border:1px solid var(--line);border-radius:8px;background:#06100d;color:var(--text)}button{padding:10px 14px;border:1px solid var(--accent);border-radius:8px;background:#173c30;color:var(--text);font-weight:650;cursor:pointer}.grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(155px,1fr))}.label{color:var(--accent);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase}.value{margin-top:4px;font-size:1.08rem;overflow-wrap:anywhere}table{width:100%;border-collapse:collapse}th,td{padding:9px 4px;border-bottom:1px solid var(--line);text-align:left;font-size:.9rem}th{color:var(--muted);font-weight:600}a{color:var(--accent)}#status{min-height:1.5em;color:var(--muted)}.warning{color:var(--warn)}.hidden{display:none}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <p class="eyebrow">Solana devnet · read-only spectator</p>
+  <h1>Watch an on-chain game</h1>
+  <p class="muted">Paste a Game PDA or open a shared <code>/devnet?game=…</code> link. This viewer reads confirmed public devnet accounts only. It never asks for a wallet, signs nothing and cannot join or change a game.</p>
+  <form id="game-form"><input id="game-input" name="game" autocomplete="off" spellcheck="false" placeholder="Game PDA (base58)" aria-label="Game PDA"><button type="submit">Watch game</button></form>
+  <p id="status" role="status">Enter a Game PDA to begin.</p>
+  <section id="viewer" class="hidden" aria-live="polite">
+    <div class="card"><div class="grid"><div><div class="label">Chain status</div><div class="value" id="chain-status">—</div></div><div><div class="label">Game</div><div class="value" id="game-id">—</div></div><div><div class="label">Phase</div><div class="value" id="phase">—</div></div><div><div class="label">Round</div><div class="value" id="round">—</div></div><div><div class="label">Phase deadline</div><div class="value" id="deadline">—</div></div><div><div class="label">Game account</div><div class="value" id="game-account">—</div></div></div></div>
+    <section class="card"><h2>Factions</h2><p class="muted">Balances and resources are current confirmed account state.</p><table><thead><tr><th>Name</th><th>Cash</th><th>Goods</th><th>Influence</th><th>Vote</th></tr></thead><tbody id="factions"><tr><td colspan="5">Loading…</td></tr></tbody></table></section>
+    <section class="card"><h2>Confirmed activity</h2><p class="muted">These are confirmed transactions for this Game PDA. This first viewer does not decode transaction instructions, so it does not invent action names.</p><ol id="transactions"></ol></section>
+  </section>
+</main>
+<script src="https://unpkg.com/@solana/web3.js@1.95.8/lib/index.iife.min.js"></script>
+<script>
+'use strict'
+const RPC = 'https://api.devnet.solana.com'
+const PROGRAM = new solanaWeb3.PublicKey('3jwunaFDRrSWFfeJ5hFZu3DmxPNTmkdoCweHDvqcXTqC')
+const PHASES = ['Lobby', 'Market', 'Action', 'Law', 'Finished', 'Aborted']
+const VOTES = ['Yes', 'No', 'Abstain']
+const conn = new solanaWeb3.Connection(RPC, 'confirmed')
+const query = new URLSearchParams(location.search)
+const $ = (id) => document.getElementById(id)
+let gameKey = null
+let refreshTimer = 0
+
+function message(text, warning = false) { const node = $('status'); node.textContent = text; node.className = warning ? 'warning' : '' }
+function setText(id, value) { $(id).textContent = value }
+function publicKey(text) { try { return new solanaWeb3.PublicKey(text) } catch { return null } }
+function formatAlashi(units) { return `${(Number(units) / 1_000_000).toLocaleString()} alashi` }
+function formatTime(seconds) { if (seconds <= 0) return 'awaiting next chain transition'; const min = Math.floor(seconds / 60); return `${min}:${String(seconds % 60).padStart(2, '0')} remaining` }
+function make(tag, text) { const node = document.createElement(tag); node.textContent = text; return node }
+
+function parseGame(data) {
+  const bytes = data instanceof Uint8Array ? data : new Uint8Array(data)
+  if (bytes.length < 137) throw new Error('Game account data is too short')
+  const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength)
+  return {
+    gameId: view.getBigUint64(40, true), phase: bytes[48], round: bytes[49], endsAt: view.getBigInt64(50, true), factions: bytes[58],
+    settled: bytes[136] === 1,
+  }
+}
+function parseFaction(data) {
+  const bytes = data instanceof Uint8Array ? data : new Uint8Array(data)
+  if (bytes.length < 76) throw new Error('Faction account data is too short')
+  const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength)
+  let offset = 72
+  const length = view.getUint32(offset, true); offset += 4
+  if (length > 64 || offset + length + 15 > bytes.length) throw new Error('Faction name is invalid')
+  const name = new TextDecoder().decode(bytes.slice(offset, offset + length)); offset += length
+  return { name, cash: view.getBigUint64(offset, true), goods: view.getUint16(offset + 8, true), influence: view.getUint16(offset + 10, true), vote: bytes[offset + 14] }
+}
+async function verifyGamePda(game, state) {
+  const seed = new Uint8Array(8); new DataView(seed.buffer).setBigUint64(0, state.gameId, true)
+  const [expected] = await solanaWeb3.PublicKey.findProgramAddress([new TextEncoder().encode('game'), seed], PROGRAM)
+  if (!expected.equals(game)) throw new Error('This account is not the canonical Alashi Game PDA')
+}
+function renderFactions(factions) {
+  const body = $('factions'); body.replaceChildren()
+  if (!factions.length) { const row = document.createElement('tr'); const cell = make('td', 'No factions have joined yet.'); cell.colSpan = 5; row.append(cell); body.append(row); return }
+  for (const faction of factions) {
+    const row = document.createElement('tr')
+    for (const value of [faction.name, formatAlashi(faction.cash), String(faction.goods), String(faction.influence), VOTES[faction.vote] ?? '—']) row.append(make('td', value))
+    body.append(row)
+  }
+}
+function renderTransactions(rows) {
+  const list = $('transactions'); list.replaceChildren()
+  if (!rows.length) { list.append(make('li', 'No confirmed transactions for this Game PDA yet.')); return }
+  for (const row of rows) {
+    const item = document.createElement('li'), link = document.createElement('a')
+    link.href = `https://explorer.solana.com/tx/${encodeURIComponent(row.signature)}?cluster=devnet`; link.target = '_blank'; link.rel = 'noreferrer'; link.textContent = `${row.signature.slice(0, 8)}…${row.signature.slice(-8)} · slot ${row.slot}`
+    item.append(link); list.append(item)
+  }
+}
+async function refresh() {
+  if (!gameKey) return
+  try {
+    const account = await conn.getAccountInfo(gameKey, 'confirmed')
+    if (!account) throw new Error('Game account was not found on Solana devnet')
+    if (!account.owner.equals(PROGRAM)) throw new Error('Account owner does not match the Alashi program')
+    const state = parseGame(account.data); await verifyGamePda(gameKey, state)
+    const factionAccounts = await conn.getProgramAccounts(PROGRAM, { filters: [{ memcmp: { offset: 8, bytes: gameKey.toBase58() } }], commitment: 'confirmed' })
+    const factions = factionAccounts.filter((entry) => entry.account.owner.equals(PROGRAM)).map((entry) => parseFaction(entry.account.data)).sort((a, b) => a.name.localeCompare(b.name))
+    if (factions.length !== state.factions) throw new Error('Faction snapshot changed; retrying')
+    const transactions = (await conn.getSignaturesForAddress(gameKey, { limit: 12 }, 'confirmed')).filter((row) => row.err === null)
+    $('viewer').classList.remove('hidden')
+    setText('chain-status', state.settled ? 'Settled on-chain' : state.phase === 4 ? 'Finished; settlement pending' : 'Live on-chain state')
+    setText('game-id', String(state.gameId)); setText('phase', PHASES[state.phase] ?? `Unknown (${state.phase})`); setText('round', String(state.round))
+    setText('deadline', formatTime(Number(state.endsAt) - Math.floor(Date.now() / 1000))); setText('game-account', `${gameKey.toBase58().slice(0, 10)}…`)
+    renderFactions(factions); renderTransactions(transactions); message('Confirmed devnet state. Refreshes every four seconds.')
+  } catch (error) { message(error instanceof Error ? error.message : 'Could not read the public devnet state. Retrying…', true) }
+}
+function openGame(value) {
+  const key = publicKey(value.trim())
+  if (!key) { message('Enter a valid base58 Game PDA.', true); return }
+  gameKey = key; history.replaceState(null, '', `${location.pathname}?game=${encodeURIComponent(key.toBase58())}`); void refresh()
+}
+$('game-form').addEventListener('submit', (event) => { event.preventDefault(); openGame($('game-input').value) })
+const initial = query.get('game')
+if (initial) { $('game-input').value = initial; openGame(initial) }
+refreshTimer = window.setInterval(() => void refresh(), 4_000)
+window.addEventListener('pagehide', () => window.clearInterval(refreshTimer), { once: true })
+</script>
+</body>
+</html>
