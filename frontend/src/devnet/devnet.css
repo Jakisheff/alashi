@@ -10,8 +10,18 @@
 .devnet-frame .live-fact { margin-left: 0; }
 .devnet-frame .live-fact a { font-size: 9px; color: var(--live-gold); }
 .devnet-caption { position: absolute; z-index: 2; top: 70%; left: 8%; right: 8%; text-align: center; font-size: 11px; color: var(--live-gold); }
-.devnet-player { display: grid; gap: 8px; font-size: 12px; color: var(--live-muted); margin-top: 24px; }
-.devnet-player select { padding: 10px; border: 1px solid var(--live-line); border-radius: 8px; background: #f7f5eb; color: var(--live-ink); }
+.devnet-leaderboard { margin-top: 24px; }
+.devnet-leaderboard-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 12px; }
+.devnet-leaderboard-head span { color: var(--live-muted); font-size: 11px; }
+.devnet-leaderboard-list { display: grid; gap: 8px; max-height: 340px; overflow-y: auto; list-style: none; padding: 0; margin: 12px 0 0; }
+.devnet-leaderboard-row { width: 100%; display: grid; grid-template-columns: 32px minmax(0, 1fr) auto; align-items: center; gap: 10px; text-align: left; padding: 10px; border: 1px solid var(--live-line); border-radius: 10px; background: #f7f5eb; color: var(--live-ink); }
+.devnet-leaderboard-row[aria-pressed=true] { border-color: var(--live-green); background: #e4ece3; box-shadow: inset 3px 0 var(--live-green); }
+.devnet-leaderboard-rank { color: var(--live-green); font: 20px ui-monospace, monospace; }
+.devnet-leaderboard-name { min-width: 0; overflow-wrap: anywhere; }
+.devnet-leaderboard-name strong, .devnet-leaderboard-name small, .devnet-leaderboard-cash small { display: block; }
+.devnet-leaderboard-name strong { font-size: 12px; }
+.devnet-leaderboard-name small, .devnet-leaderboard-cash small { color: var(--live-muted); font-size: 10px; line-height: 1.5; }
+.devnet-leaderboard-cash { text-align: right; font: 11px ui-monospace, monospace; white-space: nowrap; }
 .devnet-resources { border-block: 1px solid var(--live-line); padding: 16px 0; margin: 20px 0; }
 .devnet-resources span { display: block; color: var(--live-muted); font-size: 11px; }
 .devnet-resources strong { display: block; font: 24px ui-monospace, monospace; margin: 8px 0; overflow-wrap: anywhere; }
