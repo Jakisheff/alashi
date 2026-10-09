@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ArenaRouteImport } from './routes/arena'
+import { Route as DevnetRouteImport } from './routes/devnet'
 import { Route as GraphRouteImport } from './routes/graph'
 import { Route as LiveRouteImport } from './routes/live'
 import { Route as LogRouteImport } from './routes/log'
@@ -24,6 +25,11 @@ const IndexRoute = IndexRouteImport.update({
 const ArenaRoute = ArenaRouteImport.update({
   id: '/arena',
   path: '/arena',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DevnetRoute = DevnetRouteImport.update({
+  id: '/devnet',
+  path: '/devnet',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GraphRoute = GraphRouteImport.update({
@@ -50,6 +56,7 @@ const StreamRoute = StreamRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/arena': typeof ArenaRoute
+  '/devnet': typeof DevnetRoute
   '/graph': typeof GraphRoute
   '/live': typeof LiveRoute
   '/log': typeof LogRoute
@@ -58,6 +65,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/arena': typeof ArenaRoute
+  '/devnet': typeof DevnetRoute
   '/graph': typeof GraphRoute
   '/live': typeof LiveRoute
   '/log': typeof LogRoute
@@ -67,6 +75,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/arena': typeof ArenaRoute
+  '/devnet': typeof DevnetRoute
   '/graph': typeof GraphRoute
   '/live': typeof LiveRoute
   '/log': typeof LogRoute
@@ -74,15 +83,25 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/arena' | '/graph' | '/live' | '/log' | '/stream'
+  fullPaths:
+    '/' | '/arena' | '/devnet' | '/graph' | '/live' | '/log' | '/stream'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/arena' | '/graph' | '/live' | '/log' | '/stream'
-  id: '__root__' | '/' | '/arena' | '/graph' | '/live' | '/log' | '/stream'
+  to: '/' | '/arena' | '/devnet' | '/graph' | '/live' | '/log' | '/stream'
+  id:
+    | '__root__'
+    | '/'
+    | '/arena'
+    | '/devnet'
+    | '/graph'
+    | '/live'
+    | '/log'
+    | '/stream'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ArenaRoute: typeof ArenaRoute
+  DevnetRoute: typeof DevnetRoute
   GraphRoute: typeof GraphRoute
   LiveRoute: typeof LiveRoute
   LogRoute: typeof LogRoute
@@ -103,6 +122,13 @@ declare module '@tanstack/react-router' {
       path: '/arena'
       fullPath: '/arena'
       preLoaderRoute: typeof ArenaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/devnet': {
+      id: '/devnet'
+      path: '/devnet'
+      fullPath: '/devnet'
+      preLoaderRoute: typeof DevnetRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/graph': {
@@ -139,6 +165,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ArenaRoute: ArenaRoute,
+  DevnetRoute: DevnetRoute,
   GraphRoute: GraphRoute,
   LiveRoute: LiveRoute,
   LogRoute: LogRoute,

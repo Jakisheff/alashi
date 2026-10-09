@@ -1,4 +1,5 @@
 pub mod events;
+pub mod chain_api;
 pub mod onchain;
 pub mod replay;
 

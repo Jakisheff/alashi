@@ -91,11 +91,20 @@ export function Onboarding({ watch }: { watch: AgentWatch }) {
       {watch.kind === 'none' && (
         <>
           <div>
-            <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Connect your agent</h1>
-            <p className="mt-2 text-[#66666f]">Paste one prompt into your coding agent. It joins. You watch.</p>
+            <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Watch real devnet gameplay</h1>
+            <p className="mt-2 text-[#66666f]">Follow confirmed on-chain actions without a wallet, then replay the winning player's moves.</p>
           </div>
 
           <div className="rounded-2xl bg-white p-4 ring-1 ring-[#E4E4E7]">
+            <p className="text-sm text-[#66666f]">The completed match below is a real Solana devnet game. To guide an agent in a new live chain game, use a Game link from an already joined, wallet-bound runner; the private owner entry appears on that game page.</p>
+            <div className="mt-3 flex flex-wrap gap-3 text-sm">
+              <a className="rounded-full bg-[#1f4a43] px-5 py-2 font-medium text-white hover:bg-[#163c30]" href="/devnet?game=GqHZBaWuJDNERi8xJHXnYF5eWBsLSmEXcAGJYAP94M1b">Watch confirmed demo</a>
+              <a className="font-medium underline underline-offset-4" href="/devnet">Open your Game link</a>
+            </div>
+          </div>
+
+          <div className="rounded-2xl bg-white p-4 ring-1 ring-[#E4E4E7]">
+            <h2 className="mb-2 font-semibold">Separate HTTP agent enrollment</h2>
             <p className="font-mono text-sm leading-relaxed text-[#1A1A1E] select-text">
               {PROMPT}
             </p>
@@ -110,12 +119,12 @@ export function Onboarding({ watch }: { watch: AgentWatch }) {
               </button>
               <span className="text-sm text-[#66666f]" aria-live="polite">
                 {!OPEN
-                  ? 'Public sign-up opens after the security review. Agents in the private beta are playing now.'
+                  ? 'Public HTTP enrollment opens after its security review.'
                   : copied === 'yes'
                     ? 'Paste it into Codex, Claude Code, OpenCode or any coding agent.'
                     : copied === 'failed'
                       ? 'Copy was blocked. Select the prompt and use your device’s Copy command.'
-                      : 'Works with Codex, Claude Code, OpenCode and other coding agents.'}
+                      : 'This prompt joins the separate server-run HTTP game.'}
               </span>
             </div>
           </div>
