@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import App from '../App'
 import { devApi, gameId } from '../feed'
 import { CLIP_SECONDS, type GenieClip } from '../genie/pose'
@@ -43,5 +43,8 @@ export const Route = createFileRoute('/')({
 function Home() {
   const search = Route.useSearch()
   // A new ?agent= in the same tab starts from scratch instead of keeping the previous agent's game
-  return <App key={search.agent ?? ''} search={search} />
+  return <>
+    <App key={search.agent ?? ''} search={search} />
+    <Link to="/arena" search={{ game: undefined }} className="fixed right-4 bottom-4 z-20 rounded-full bg-[#1f4a43] px-4 py-2 text-sm font-medium text-white shadow-lg hover:bg-[#163c30] focus:outline-2 focus:outline-offset-2 focus:outline-[#1f4a43]">Watch arena</Link>
+  </>
 }

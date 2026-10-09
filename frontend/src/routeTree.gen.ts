@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ArenaRouteImport } from './routes/arena'
 import { Route as GraphRouteImport } from './routes/graph'
 import { Route as LiveRouteImport } from './routes/live'
 import { Route as LogRouteImport } from './routes/log'
@@ -18,6 +19,11 @@ import { Route as StreamRouteImport } from './routes/stream'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArenaRoute = ArenaRouteImport.update({
+  id: '/arena',
+  path: '/arena',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GraphRoute = GraphRouteImport.update({
@@ -43,6 +49,7 @@ const StreamRoute = StreamRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/arena': typeof ArenaRoute
   '/graph': typeof GraphRoute
   '/live': typeof LiveRoute
   '/log': typeof LogRoute
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/arena': typeof ArenaRoute
   '/graph': typeof GraphRoute
   '/live': typeof LiveRoute
   '/log': typeof LogRoute
@@ -58,6 +66,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/arena': typeof ArenaRoute
   '/graph': typeof GraphRoute
   '/live': typeof LiveRoute
   '/log': typeof LogRoute
@@ -65,14 +74,15 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/graph' | '/live' | '/log' | '/stream'
+  fullPaths: '/' | '/arena' | '/graph' | '/live' | '/log' | '/stream'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/graph' | '/live' | '/log' | '/stream'
-  id: '__root__' | '/' | '/graph' | '/live' | '/log' | '/stream'
+  to: '/' | '/arena' | '/graph' | '/live' | '/log' | '/stream'
+  id: '__root__' | '/' | '/arena' | '/graph' | '/live' | '/log' | '/stream'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ArenaRoute: typeof ArenaRoute
   GraphRoute: typeof GraphRoute
   LiveRoute: typeof LiveRoute
   LogRoute: typeof LogRoute
@@ -86,6 +96,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/arena': {
+      id: '/arena'
+      path: '/arena'
+      fullPath: '/arena'
+      preLoaderRoute: typeof ArenaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/graph': {
@@ -121,6 +138,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ArenaRoute: ArenaRoute,
   GraphRoute: GraphRoute,
   LiveRoute: LiveRoute,
   LogRoute: LogRoute,
