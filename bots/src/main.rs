@@ -1,4 +1,5 @@
 mod agent_cli;
+mod barter;
 mod chain_wish_client;
 mod llm;
 mod runner_auth;
@@ -29,6 +30,9 @@ use {
 
 const ENTRY_FEE: u64 = 50_000_000;
 const PHASE_DURATION: i64 = 15;
+const BARTER_DEMO_GOODS: u16 = 1;
+const BARTER_DEMO_PRICE: u64 = 3_000_000;
+const BARTER_REPORT_ATTEMPTS: usize = 18;
 
 fn demo_mode() -> bool {
     std::env::var("ALASHI_DEMO").is_ok()
@@ -267,7 +271,13 @@ fn ensure_funds(rpc: &RpcClient, who: &str, kp: &Keypair) {
     }
 }
 
-fn ix_initialize(admin: Pubkey, game: Pubkey, game_id: u64, phase_duration: i64) -> Instruction {
+fn ix_initialize(
+    admin: Pubkey,
+    game: Pubkey,
+    game_id: u64,
+    phase_duration: i64,
+    epoch: u8,
+) -> Instruction {
     Instruction::new_with_bytes(
         id(),
         &instruction::Initialize {
@@ -275,7 +285,7 @@ fn ix_initialize(admin: Pubkey, game: Pubkey, game_id: u64, phase_duration: i64)
             entry_fee: ENTRY_FEE,
             phase_duration,
             entropy_mode: 0,
-            epoch: 0,
+            epoch,
         }
         .data(),
         accounts::Initialize {
@@ -422,6 +432,45 @@ fn ix_donkey(player: Pubkey, game: Pubkey, faction: Pubkey) -> Instruction {
     )
 }
 
+fn ix_barter_propose(
+    player: Pubkey,
+    game: Pubkey,
+    faction: Pubkey,
+    goods: u16,
+    price: u64,
+) -> Instruction {
+    Instruction::new_with_bytes(
+        id(),
+        &instruction::BarterPropose { goods, price }.data(),
+        accounts::BarterPropose {
+            player,
+            game,
+            faction,
+        }
+        .to_account_metas(None),
+    )
+}
+
+fn ix_barter_accept(
+    offer_id: u64,
+    player: Pubkey,
+    game: Pubkey,
+    faction: Pubkey,
+    seller: Pubkey,
+) -> Instruction {
+    Instruction::new_with_bytes(
+        id(),
+        &instruction::BarterAccept { offer_id }.data(),
+        accounts::BarterAccept {
+            player,
+            game,
+            faction,
+            seller,
+        }
+        .to_account_metas(None),
+    )
+}
+
 fn ix_settle(
     crank: Pubkey,
     game: Pubkey,
@@ -546,6 +595,237 @@ fn register_agent(wallet: &str, model: &str, prompt: &str) {
 
 fn faction_cash(rpc: &RpcClient, faction: &Pubkey) -> u64 {
     fetch_faction(rpc, faction).map(|f| f.cash).unwrap_or(0)
+}
+
+fn epoch_for_barter_demo(enabled: bool) -> u8 {
+    if enabled {
+        constants::EPOCH_90S
+    } else {
+        constants::EPOCH_CLASSIC
+    }
+}
+
+fn barter_demo_allowed(enabled: bool, joining: bool, self_host: bool, no_llm: bool) -> bool {
+    !enabled || (!joining && self_host && no_llm)
+}
+
+fn confirmed_barter_ix(
+    rpc: &RpcClient,
+    signer: &Keypair,
+    ix: Instruction,
+) -> Option<serde_json::Value> {
+    match send_ix_confirmed(rpc, signer, ix) {
+        Ok(receipt) => {
+            capture_events(&receipt);
+            Some(receipt)
+        }
+        Err(error) if error["status"] == "unknown" => {
+            eprintln!("barter receipt unknown; stop and inspect chain state before resuming");
+            std::process::exit(3);
+        }
+        Err(error) => {
+            eprintln!("barter transaction was not confirmed: {error}");
+            None
+        }
+    }
+}
+
+fn report_barter_acceptance(
+    client: Option<&chain_wish_client::ChainWishClient>,
+    game: Pubkey,
+    proposer: Pubkey,
+    offer_id: u64,
+    receipt: &barter::ConfirmedReceipt,
+) {
+    let Some(client) = client else {
+        eprintln!("barter acceptance confirmed on chain; no bound primary journal capability");
+        return;
+    };
+    for attempt in 0..BARTER_REPORT_ATTEMPTS {
+        match client.report_accepted_conversation(
+            offer_id,
+            &proposer.to_string(),
+            &receipt.signature,
+            receipt.slot,
+        ) {
+            Ok(chain_wish_client::ConversationReport::Accepted) => {
+                println!(
+                    "[barter r2] conversation accepted report acknowledged for game {game} at slot {}",
+                    receipt.slot
+                );
+                return;
+            }
+            Ok(chain_wish_client::ConversationReport::Rejected) => {
+                eprintln!("barter acceptance confirmed on chain; conversation report rejected");
+                return;
+            }
+            Ok(chain_wish_client::ConversationReport::Retryable) | Err(_)
+                if attempt + 1 < BARTER_REPORT_ATTEMPTS =>
+            {
+                sleep(Duration::from_secs(1))
+            }
+            Ok(chain_wish_client::ConversationReport::Retryable) | Err(_) => {
+                eprintln!(
+                    "barter acceptance confirmed on chain; conversation report still pending"
+                );
+                return;
+            }
+        }
+    }
+}
+
+/// One deterministic epoch-1 demonstration: in Market r2, the unbound local
+/// opponent opens one public offer and the bound primary accepts it. The on-chain
+/// offer is open to any player; a missing or changed offer is not a decline.
+fn run_barter_demo_market(rpc: &RpcClient, game: Pubkey, current: &state::Game, bots: &mut [Bot]) {
+    if bots.len() != 2 {
+        return;
+    }
+    let buyer = 0usize;
+    let seller = 1usize;
+
+    // A private owner instruction has priority over the presentation schedule.
+    // If it takes or blocks the Market decision, do not add an unrelated barter.
+    match run_chain_wish(
+        rpc,
+        &bots[buyer].kp,
+        bots[buyer].faction,
+        bots[buyer].wish.as_mut(),
+        game,
+        current,
+        &mut bots[buyer].acted,
+        &mut bots[buyer].voted,
+    ) {
+        WishRun::Pass => {}
+        WishRun::Applied(_) => return,
+        WishRun::Block => {
+            bots[buyer].acted = true;
+            return;
+        }
+    }
+
+    let buyer_goods = fetch_faction(rpc, &bots[buyer].faction)
+        .map(|f| f.goods)
+        .unwrap_or(0);
+    if buyer_goods == 0 {
+        eprintln!("barter demo skipped: primary has no goods to sell for barter cash");
+        return;
+    }
+    if !send_ix(
+        rpc,
+        &bots[buyer].kp,
+        ix_sell(
+            buyer_goods,
+            bots[buyer].kp.pubkey(),
+            game,
+            bots[buyer].faction,
+        ),
+    ) {
+        return;
+    }
+    bots[buyer].acted = true;
+
+    let seller_goods = fetch_faction(rpc, &bots[seller].faction)
+        .map(|f| f.goods)
+        .unwrap_or(0);
+    if seller_goods < BARTER_DEMO_GOODS {
+        eprintln!("barter demo skipped: opponent has no goods for the offer");
+        return;
+    }
+    let Some(current) = fetch_game(rpc, &game) else {
+        eprintln!("barter demo skipped: game state unavailable after market sale");
+        return;
+    };
+    if current.epoch != constants::EPOCH_90S || current.phase != state::Phase::Market {
+        eprintln!("barter demo skipped: no longer in epoch-1 Market");
+        return;
+    }
+    let offer_id = current.barter_next_id;
+    let proposer = bots[seller].faction;
+    let offer_receipt = confirmed_barter_ix(
+        rpc,
+        &bots[seller].kp,
+        ix_barter_propose(
+            bots[seller].kp.pubkey(),
+            game,
+            proposer,
+            BARTER_DEMO_GOODS,
+            BARTER_DEMO_PRICE,
+        ),
+    );
+    let Some(offer_receipt) = offer_receipt else {
+        return;
+    };
+    let offer_receipt = barter::with_alashi_logs(&offer_receipt);
+    if barter::verified_offer(
+        &offer_receipt,
+        game,
+        proposer,
+        offer_id,
+        BARTER_DEMO_GOODS,
+        BARTER_DEMO_PRICE,
+    )
+    .is_none()
+    {
+        eprintln!("barter offer receipt lacked the exact successful program event");
+        return;
+    }
+    // Do not use the ordinary fallback sale after a confirmed open offer.
+    bots[seller].acted = true;
+
+    let still_open = fetch_game(rpc, &game)
+        .map(|latest| {
+            latest.barter_offers.iter().any(|offer| {
+                offer.id == offer_id
+                    && offer.from == bots[seller].kp.pubkey()
+                    && offer.goods == BARTER_DEMO_GOODS
+                    && offer.price == BARTER_DEMO_PRICE
+            })
+        })
+        .unwrap_or(false);
+    if !still_open {
+        eprintln!("barter offer is no longer open; no acceptance is claimed");
+        return;
+    }
+
+    let accept_receipt = confirmed_barter_ix(
+        rpc,
+        &bots[buyer].kp,
+        ix_barter_accept(
+            offer_id,
+            bots[buyer].kp.pubkey(),
+            game,
+            bots[buyer].faction,
+            proposer,
+        ),
+    );
+    let Some(accept_receipt) = accept_receipt else {
+        return;
+    };
+    let accept_receipt = barter::with_alashi_logs(&accept_receipt);
+    let Some(receipt) = barter::verified_accept(
+        &accept_receipt,
+        game,
+        bots[buyer].faction,
+        proposer,
+        offer_id,
+    ) else {
+        eprintln!("barter acceptance receipt lacked the exact successful program event");
+        return;
+    };
+    println!(
+        "[barter r2] confirmed open offer {offer_id} and acceptance at slot {}",
+        receipt.slot
+    );
+    // Only the primary's bound capability can report acceptance. The server
+    // imports the preceding opponent offer from canonical chain history.
+    report_barter_acceptance(
+        bots[buyer].wish.as_ref(),
+        game,
+        proposer,
+        offer_id,
+        &receipt,
+    );
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -1205,7 +1485,13 @@ fn host_timing(args: &[String]) -> Result<(i64, i64), String> {
 
 #[cfg(test)]
 mod runner_mode_tests {
-    use super::{may_auto_airdrop, may_join};
+    use super::{
+        barter_demo_allowed, epoch_for_barter_demo, ix_barter_accept, ix_barter_propose,
+        ix_initialize, may_auto_airdrop, may_join,
+    };
+    use alashi::{constants, instruction};
+    use anchor_lang::prelude::Pubkey;
+    use anchor_lang::AnchorDeserialize;
     #[test]
     fn resume_never_joins_a_missing_faction() {
         assert!(!may_join(false, true));
@@ -1218,6 +1504,36 @@ mod runner_mode_tests {
         assert!(!may_auto_airdrop(true, false, false, true));
         assert!(may_auto_airdrop(false, false, false, true));
     }
+
+    #[test]
+    fn barter_mode_is_explicit_host_only_and_keeps_classic_default() {
+        assert_eq!(epoch_for_barter_demo(false), constants::EPOCH_CLASSIC);
+        assert_eq!(epoch_for_barter_demo(true), constants::EPOCH_90S);
+        assert!(barter_demo_allowed(true, false, true, true));
+        assert!(!barter_demo_allowed(true, true, true, true));
+        assert!(!barter_demo_allowed(true, false, false, true));
+        assert!(!barter_demo_allowed(true, false, true, false));
+    }
+
+    #[test]
+    fn barter_builders_encode_existing_epoch_one_instructions() {
+        let admin = Pubkey::new_unique();
+        let game = Pubkey::new_unique();
+        let faction = Pubkey::new_unique();
+        let seller = Pubkey::new_unique();
+        let init = ix_initialize(admin, game, 9, 15, constants::EPOCH_90S);
+        let decoded = instruction::Initialize::try_from_slice(&init.data[8..]).unwrap();
+        assert_eq!(decoded.epoch, constants::EPOCH_90S);
+
+        let offer = ix_barter_propose(admin, game, faction, 1, 3_000_000);
+        let decoded = instruction::BarterPropose::try_from_slice(&offer.data[8..]).unwrap();
+        assert_eq!((decoded.goods, decoded.price), (1, 3_000_000));
+
+        let accept = ix_barter_accept(4, admin, game, faction, seller);
+        let decoded = instruction::BarterAccept::try_from_slice(&accept.data[8..]).unwrap();
+        assert_eq!(decoded.offer_id, 4);
+        assert_eq!(accept.accounts[3].pubkey, seller);
+    }
 }
 
 fn main() {
@@ -1229,7 +1545,7 @@ fn main() {
         std::process::exit(agent_cli::run(&args[2..]));
     }
     if args.iter().any(|a| a == "--help" || a == "-h") {
-        println!("bots [--phase-duration SECONDS] [--timeout SECONDS] [--no-llm] [--agent-file REGISTERED_PROFILE --key PRIMARY_KEY --opponent-key DEMO_OPPONENT_KEY]\nbots --game PUBKEY --name NAME --key LOCAL_FILE [--agent-file REGISTERED_PROFILE] [--resume]\nbots agent inspect|join|act --help");
+        println!("bots [--phase-duration SECONDS] [--timeout SECONDS] [--no-llm] [--epoch90s-barter --agent-file REGISTERED_PROFILE --key PRIMARY_KEY --opponent-key DEMO_OPPONENT_KEY]\nbots --game PUBKEY --name NAME --key LOCAL_FILE [--agent-file REGISTERED_PROFILE] [--resume]\nbots agent inspect|join|act --help");
         return;
     }
     let (phase_duration, host_timeout) = match host_timing(&args) {
@@ -1244,7 +1560,14 @@ fn main() {
         Duration::from_secs(10),
         CommitmentConfig::confirmed(),
     );
+    let barter_demo = args.iter().any(|arg| arg == "--epoch90s-barter");
     if let Some(game_str) = flag_value(&args, "--game") {
+        if barter_demo {
+            eprintln!(
+                "[ERROR] --epoch90s-barter is host-only; join and resume never change a Game epoch"
+            );
+            return;
+        }
         let key_path =
             flag_value(&args, "--key").unwrap_or_else(|| format!("{KEYS_DIR}/join.json"));
         let name = flag_value(&args, "--name").unwrap_or_else(|| "Guest".to_string());
@@ -1264,6 +1587,15 @@ fn main() {
     let primary_key = flag_value(&args, "--key");
     let opponent_key = flag_value(&args, "--opponent-key");
     let self_host = agent_file.is_some() || primary_key.is_some() || opponent_key.is_some();
+    if !barter_demo_allowed(
+        barter_demo,
+        false,
+        self_host,
+        args.iter().any(|arg| arg == "--no-llm"),
+    ) {
+        eprintln!("[ERROR] --epoch90s-barter requires explicit self-host keys and --no-llm");
+        return;
+    }
     let runner_agent: Option<SelfHost> = if self_host {
         let (agent_file, key_path, opponent_path) = match (agent_file, primary_key, opponent_key) {
             (Some(agent_file), Some(key_path), Some(opponent_path)) => {
@@ -1434,7 +1766,13 @@ fn main() {
     if !send_ix(
         &rpc,
         &bots[0].kp,
-        ix_initialize(bots[0].kp.pubkey(), game, game_id, phase_duration),
+        ix_initialize(
+            bots[0].kp.pubkey(),
+            game,
+            game_id,
+            phase_duration,
+            epoch_for_barter_demo(barter_demo),
+        ),
     ) {
         println!("[ERROR] initialize не отправился");
         return;
@@ -1492,6 +1830,7 @@ fn main() {
     let started = now();
     let mut last_stamp: Option<u16> = None;
     let mut hb = 0u32;
+    let mut barter_demo_attempted = false;
     loop {
         hb += 1;
         if now() - started > host_timeout {
@@ -1542,6 +1881,10 @@ fn main() {
                 }
             }
             state::Phase::Market => {
+                if barter_demo && g.round == 2 && !barter_demo_attempted {
+                    barter_demo_attempted = true;
+                    run_barter_demo_market(&rpc, game, &g, &mut bots);
+                }
                 let mut sold_now = g.sold_this_round;
                 for bi in 0..bots.len() {
                     let b = &mut bots[bi];

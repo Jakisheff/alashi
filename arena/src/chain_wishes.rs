@@ -166,7 +166,7 @@ pub(super) fn owner_handoff_binding(
 }
 
 /// One fixed loopback projection. No arbitrary host, URL, or upstream token.
-fn public_chain(game: &str) -> Result<Value, &'static str> {
+pub(super) fn public_chain(game: &str) -> Result<Value, &'static str> {
     if !canonical_pda(game) {
         return Err("bad_game_pda");
     }
@@ -220,7 +220,7 @@ fn binding_for<'a>(
 ) -> Option<&'a ChainBinding> {
     state.bindings.get(&key(record, game))
 }
-fn authorize_runner<'a>(
+pub(super) fn authorize_runner<'a>(
     state: &'a ChainWishState,
     game: &str,
     raw: &str,
