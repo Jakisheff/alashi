@@ -14,7 +14,6 @@ function uprightPalm(normal: Vector3) {
 const TEMPLE_LEFT = uprightPalm(new Vector3(-1, 0, 0))
 const TEMPLE_RIGHT = uprightPalm(new Vector3(1, 0, 0))
 const FACE_PALM = uprightPalm(new Vector3(0, 0, -1))
-const THUMB_PALM = new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), Math.PI / 2)
 
 /** Own rig layer: it only rotates arm joints, never relocates finger sockets. */
 export function createLivingRig(hero: Object3D, clips: AnimationClip[]) {
@@ -56,13 +55,14 @@ export function createLivingRig(hero: Object3D, clips: AnimationClip[]) {
     }
     bone('body').position.y = reduced ? 0 : .07 * Math.sin(time * Math.PI)
   }
-  function reach(side: Side, target: Vector3, palm: Quaternion, weight: number) {
+  function reach(side: Side, target: Vector3, palm: Quaternion | 'neutral' | 'chin' | 'thumb', weight: number, elbowHint?: Vector3) {
     const arm = bone(`${side}-arm`), forearm = bone(`${side}-forearm`), hand = bone(`${side}-hand`)
     const shoulder = arm.position.clone(), l1 = forearm.position.length(), l2 = hand.position.length()
     const delta = target.clone().sub(shoulder)
     const distance = Math.max(Math.abs(l1 - l2) + .003, Math.min(delta.length(), l1 + l2 - .003))
     const axis = delta.lengthSq() > 1e-8 ? delta.normalize() : DOWN.clone()
-    const pole = new Vector3(side === 'left' ? 1 : -1, -.4, -.25)
+    const neutral = typeof palm === 'string'
+    const pole = elbowHint?.clone() ?? new Vector3(side === 'left' ? 1 : -1, neutral ? -.9 : -.4, palm === 'thumb' ? -.5 : neutral ? .9 : -.25)
     pole.addScaledVector(axis, -pole.dot(axis))
     if (pole.lengthSq() < 1e-8) pole.copy(new Vector3(0, 0, 1)).addScaledVector(axis, -axis.z)
     pole.normalize()
@@ -71,6 +71,14 @@ export function createLivingRig(hero: Object3D, clips: AnimationClip[]) {
     const wrist = shoulder.clone().addScaledVector(axis, distance)
     const qa = new Quaternion().setFromUnitVectors(DOWN, elbow.clone().sub(shoulder).normalize())
     const qf = new Quaternion().setFromUnitVectors(DOWN, wrist.clone().sub(elbow).normalize())
+    if (typeof palm === 'string') {
+      const y = wrist.clone().sub(elbow).normalize().negate()
+      const facing = palm === 'thumb' ? new Vector3(side === 'left' ? -1 : 1, 0, .25).normalize() : new Vector3(0, 0, palm === 'chin' ? -1 : 1)
+      const z = facing.addScaledVector(y, -facing.dot(y)).normalize()
+      // Forearm takes the roll; the hand itself stays neutral at its socket.
+      qf.setFromRotationMatrix(new Matrix4().makeBasis(new Vector3().crossVectors(y, z), y, z))
+      palm = qf.clone()
+    }
     arm.quaternion.slerp(qa, weight)
     forearm.quaternion.slerp(qa.clone().invert().multiply(qf), weight)
     hand.quaternion.slerp(qf.clone().invert().multiply(palm), weight)
@@ -114,15 +122,15 @@ export function createLivingRig(hero: Object3D, clips: AnimationClip[]) {
       const nod = pulse(t, 1.35, 1.9, 2.05, 2.6)
       bodyOffset(-.08 * hold + .16 * nod + .05 * anticipation, -.16 * hold, -.075 * hold,
         -.055 * hold, -.035 * anticipation + .045 * hold)
-      reach('left', new Vector3(.87, -.06, .49), THUMB_PALM, hold)
+      reach('left', new Vector3(.92, -.28, .58), 'thumb', hold)
       reach('right', new Vector3(-.85, -.70, .32), PALM_UP, hold * .7)
       for (const part of ['point', 'middle', 'curl']) {
         for (const [suffix, bend] of [['', -1.10], ['-mid', -1.2], ['-tip', -.85]] as const) {
           bone(`left-${part}${suffix}`).quaternion.slerp(new Quaternion().setFromAxisAngle(X, bend), hold)
         }
       }
-      // Mesh thumb is diagonally modelled: its actual tip offset, not -Y,
-      // determines extension. Map that direction to local +X (world up in this palm).
+      // A real thumbs-up extends the thumb across the fist, perpendicular to
+      // the forward-reaching forearm. The wrist stays aligned with that arm.
       const thumbDirection = bone('left-thumb-tip').position.clone().normalize()
       bone('left-thumb').quaternion.slerp(new Quaternion().setFromUnitVectors(thumbDirection, X), hold)
       bone('left-thumb-tip').quaternion.slerp(IDENTITY, hold)
@@ -140,20 +148,72 @@ export function createLivingRig(hero: Object3D, clips: AnimationClip[]) {
         bone(`${side}-thumb`).quaternion.slerp(new Quaternion().setFromUnitVectors(direction, DOWN), hold)
       }
       gaze(0, -.95, bow)
-      bone('mouth').scale.y += (.16 - bone('mouth').scale.y) * hold
+      bone('mouth').scale.y += (-.40 - bone('mouth').scale.y) * bow
       for (const side of ['left', 'right']) {
         bone(`${side}-brow`).position.y += .025 * recoil - .013 * bow
-        bone(`${side}-lid`).scale.y = Math.max(bone(`${side}-lid`).scale.y, .3 + .18 * bow)
+        bone(`${side}-brow`).quaternion.multiply(new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), (side === 'left' ? -.22 : .22) * bow))
+        const lid = bone(`${side}-lid`)
+        lid.scale.y += (.08 - lid.scale.y) * recoil
+        lid.scale.y += (.48 - lid.scale.y) * bow
       }
-    } else {
+    } else if (kind === 'facepalm') {
       // The wrist stays in front of the screen; fingers point up, palm points
       // backward. Lower body / counterbalancing left hand sells the whole sigh.
       bodyOffset(.22 * bow, -.10 * hold, -.075 * bow, -.04 * bow, -.085 * bow, .025 * bow)
       reach('right', new Vector3(-.44, -.025, .70), FACE_PALM, hold)
       reach('left', new Vector3(.89, -.78, .22), PALM_UP, hold * .7)
       gaze(-.15, -.8, bow)
-      bone('mouth').scale.y += (.14 - bone('mouth').scale.y) * hold
+      bone('mouth').scale.y += (-.28 - bone('mouth').scale.y) * bow
+      for (const side of ['left', 'right']) bone(`${side}-brow`).quaternion.multiply(new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), (side === 'left' ? -.12 : .12) * bow))
       for (const side of ['left', 'right']) bone(`${side}-lid`).scale.y = Math.max(bone(`${side}-lid`).scale.y, .3 + .35 * bow)
+    } else if (kind === 'thinking') {
+      const ponder = pulse(t, .4, 1.5, 3.1, 4.6)
+      const nod = pulse(t, 2.05, 2.6, 2.75, 3.25)
+      bodyOffset(.075 * nod, -.12 * ponder, .07 * ponder, -.025 * ponder, -.025 * ponder)
+      reach('right', new Vector3(-.38, -.25, .65), 'chin', hold)
+      for (const part of ['point', 'middle', 'curl']) for (const [suffix, bend] of [['', -1.0], ['-mid', -1.15], ['-tip', -.85]] as const) {
+        bone(`right-${part}${suffix}`).quaternion.slerp(new Quaternion().setFromAxisAngle(X, bend), hold)
+      }
+      const thumbDirection = bone('right-thumb-tip').position.clone().normalize()
+      bone('right-thumb').quaternion.slerp(new Quaternion().setFromUnitVectors(thumbDirection, new Vector3(.85, -.4, .35).normalize()), hold)
+      bone('right-thumb-tip').quaternion.slerp(new Quaternion().setFromAxisAngle(X, -.55), hold)
+      reach('left', new Vector3(.96, -.77, .32), PALM_UP, hold * .65)
+      gaze(-.45, .35, ponder)
+      bone('left-brow').position.y += .022 * ponder
+      bone('right-brow').position.y -= .009 * ponder
+    } else if (kind === 'shrug') {
+      const tilt = pulse(t, .8, 1.8, 3, 4.5)
+      bodyOffset(-.035 * hold, .045 * tilt, .14 * tilt, .025 * tilt, .035 * hold)
+      const levelPalm = bone('body').quaternion.clone().invert().multiply(PALM_UP)
+      reach('left', new Vector3(1.09, -.20, .20), levelPalm, hold, new Vector3(.35, -.8, -.1))
+      reach('right', new Vector3(-1.09, -.20, .20), levelPalm, hold, new Vector3(-.35, -.8, -.1))
+      for (const side of ['left', 'right']) bone(`${side}-brow`).position.y += .025 * hold
+      gaze(.25, .2, tilt)
+      bone('mouth').scale.y += (.35 - bone('mouth').scale.y) * hold
+    } else if (kind === 'lookout') {
+      const left = pulse(t, .15, .8, 1.05, 1.7), right = pulse(t, 1.15, 1.8, 2.25, 3.0)
+      const lean = pulse(t, 2.05, 2.8, 3.1, 4.4)
+      bodyOffset(.07 * lean, -.38 * left + .38 * right, -.035 * left + .04 * right,
+        .04 * (right - left), -.035 * lean, .04 * lean)
+      gaze(-.85 * left + .85 * right, -.1, Math.max(left, right))
+      reach('right', new Vector3(-1.0, -.42, .5), PALM_UP, lean * .8)
+      bone('left-brow').position.y += .014 * lean
+      bone('mouth').scale.y += .18 * lean
+    } else if (kind === 'victory') {
+      const windup = pulse(t, 0, .4, .5, 1.1)
+      const cheer = pulse(t, .45, 1.25, 3.15, 4.6)
+      const rock = Math.sin((t - 1.25) * 5) * .065 * pulse(t, 1.25, 1.7, 2.75, 3.45)
+      bodyOffset(.09 * windup - .1 * cheer, rock, rock * .7,
+        rock * .35, -.055 * windup + .055 * cheer)
+      for (const side of ['left', 'right'] as const) {
+        reach(side, new Vector3(side === 'left' ? .98 : -.98, .05, .48), 'neutral', cheer)
+        for (const part of ['point', 'middle', 'curl']) for (const [suffix, bend] of [['', -.85], ['-mid', -1.15], ['-tip', -.8]] as const) {
+          bone(`${side}-${part}${suffix}`).quaternion.slerp(new Quaternion().setFromAxisAngle(X, bend), cheer)
+        }
+      }
+      gaze(0, .4, cheer)
+      bone('mouth').scale.y += .4 * cheer
+      for (const side of ['left', 'right']) bone(`${side}-brow`).position.y += .025 * cheer
     }
     // Tail already inherits torso motion; a subtle delayed counterbend prevents
     // the body and smoke from reading as a rigid object. Restored every frame.

@@ -7,6 +7,7 @@ import { ScreenText } from '../../genie/ScreenText'
 import { createSmokeMaterial } from '../../genie/smoke'
 import { REACTION_REDUCED_FRAME, REACTION_SECONDS, type ReactionPreview } from './definitions.ts'
 import { createLivingRig } from './rig.ts'
+import { createVictoryFireworks } from './fireworks.ts'
 
 export { IDLE_KEYFRAMES, LIVING_IDLE_SECONDS, REACTION_KEYFRAMES, REACTION_REDUCED_FRAME, REACTION_SECONDS } from './definitions.ts'
 export type { ReactionKind, ReactionPreview } from './definitions.ts'
@@ -39,6 +40,8 @@ export function LivingGenie({ reaction = null, onTime, onFinished }: LivingGenie
   const hero = useMemo(() => clone(glb.scene), [glb.scene])
   const rig = useMemo(() => createLivingRig(hero, glb.animations), [hero, glb.animations])
   const smoke = useMemo(() => createSmokeMaterial(), [])
+  const fireworks = useMemo(() => createVictoryFireworks(), [])
+  useEffect(() => () => fireworks.dispose(), [fireworks])
   const smokeRef = useRef(smoke)
   useEffect(() => { smokeRef.current = smoke }, [smoke])
   const anchor = useMemo(() => hero.getObjectByName('text-anchor'), [hero])
@@ -67,6 +70,7 @@ export function LivingGenie({ reaction = null, onTime, onFinished }: LivingGenie
     const p = playback.current
     const step = Number.isFinite(delta) ? Math.max(0, Math.min(delta, .05)) : 0
     if (!reaction) {
+      fireworks.update(0, false)
       p.key = ''; p.seek = null; p.finished = false
       if (!reduced) p.idleTime += step
       rig.idleAt(p.idleTime, reduced)
@@ -92,6 +96,7 @@ export function LivingGenie({ reaction = null, onTime, onFinished }: LivingGenie
     const poseTime = reduced && reaction.playing && p.time < REACTION_SECONDS
       ? REACTION_REDUCED_FRAME[reaction.kind] : p.time
     rig.reactionAt(reaction.kind, poseTime, p.idleTime, reduced)
+    fireworks.update(p.time, reaction.kind === 'victory' && !reduced)
     smokeRef.current.uniforms.uTime.value = reduced ? 0 : p.idleTime
     if (p.reported < 0 || Math.abs(p.time - p.reported) >= .09) { p.reported = p.time; onTime?.(p.time) }
     if (reaction.playing && p.time >= REACTION_SECONDS && !p.finished) {
@@ -101,8 +106,8 @@ export function LivingGenie({ reaction = null, onTime, onFinished }: LivingGenie
     }
   })
 
-  return <group position={[0, .15, 0]} rotation-y={.35} dispose={null}>
+  return <><group position={[0, .15, 0]} rotation-y={.35} dispose={null}>
     <primitive object={hero} />
     {anchor && createPortal(<ScreenText />, anchor)}
-  </group>
+  </group><primitive object={fireworks.group} /></>
 }

@@ -10,6 +10,11 @@ export type ScenarioPreview = {
 }
 export type ActionStage = { at: number; label: string; text: string }
 
+// Shared with geometry QA; framing changes do not alter action choreography.
+export const scenarioFraming = (action: ScenarioActionName) => action === 'mule'
+  ? { x: -.20, scale: .76 }
+  : action === 'bribe' ? { x: -.12, scale: .82 } : { x: -.10, scale: .86 }
+
 // Preview copy describes gestures, never asserts that a server action succeeded.
 export const ACTION_META: Record<ScenarioActionName, {
   label: string; reducedFrame: number; stages: readonly ActionStage[]; keyframes: readonly number[]
@@ -19,12 +24,12 @@ export const ACTION_META: Record<ScenarioActionName, {
     stages: [
       { at: 0, label: 'Mule preview', text: 'Keep it quiet.' },
       { at: .8, label: 'Checking the coast', text: 'Anyone watching?' },
-      { at: 1.8, label: 'Concealing the parcel', text: 'Just an ordinary bag.' },
-      { at: 3.2, label: 'Carrying the cargo', text: 'Easy does it.' },
-      { at: 4.3, label: 'Quiet handoff', text: 'Special delivery.' },
+      { at: 1.6, label: 'Paying one peso', text: 'One peso.' },
+      { at: 2.65, label: 'Receiving the parcel', text: 'One parcel. No questions.' },
+      { at: 4.3, label: 'Keeping the goods', text: 'Mine now.' },
       { at: 5.7, label: 'Returning', text: 'You saw nothing.' },
       { at: 7.2, label: 'Preview complete', text: 'Ready for the next move.' },
-    ], keyframes: [0, .8, 1.6, 2.35, 2.95, 3.65, 4.3, 4.9, 5.25, 5.55, 6.2, 7.2],
+    ], keyframes: [0, .8, 1.4, 1.9, 2.15, 2.45, 2.7, 2.95, 3.2, 3.45, 3.65, 4.3, 4.9, 5.4, 6.2, 7.2],
   },
   bribe: {
     label: 'Bribe', reducedFrame: 3.7,
@@ -36,7 +41,7 @@ export const ACTION_META: Record<ScenarioActionName, {
       { at: 4.65, label: 'Envelope received', text: 'No further questions.' },
       { at: 5.7, label: 'Returning', text: 'Back to business.' },
       { at: 7.2, label: 'Preview complete', text: 'Ready for the next move.' },
-    ], keyframes: [0, .8, 1.6, 2.5, 3.1, 3.7, 4.15, 4.3, 4.8, 5.4, 6.2, 7.2],
+    ], keyframes: [0, .8, 1.35, 2.0, 2.7, 3.1, 3.65, 3.85, 4.05, 4.35, 4.65, 5.2, 5.4, 6.2, 7.2],
   },
   vote: {
     label: 'Vote', reducedFrame: 3.3,

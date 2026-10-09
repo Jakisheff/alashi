@@ -1,4 +1,4 @@
-import { BoxGeometry, CylinderGeometry, Group, Mesh, MeshStandardMaterial, SphereGeometry, TorusGeometry, type BufferGeometry } from 'three'
+import { DoubleSide, MeshBasicMaterial, PlaneGeometry, BoxGeometry, CylinderGeometry, Group, Mesh, MeshStandardMaterial, SphereGeometry, TorusGeometry, type Texture, type BufferGeometry } from 'three'
 
 /** Every prop is owned here; no cached GLB geometry/material is mutated or disposed. */
 export function createScenarioProps() {
@@ -28,6 +28,21 @@ export function createScenarioProps() {
   const box = (g: Group, color: Finish, pos: [number, number, number], size: [number, number, number], name = '') => mesh(g, cube, color, pos, size, name)
   const sphere = (g: Group, color: Finish, pos: [number, number, number], size: [number, number, number]) => mesh(g, ball, color, pos, size)
 
+  const cutoutMaterial = new MeshBasicMaterial({ transparent: true, alphaTest: .02, side: DoubleSide, toneMapped: false, depthWrite: false })
+  const donkeyBillboard = group('reference-donkey')
+  const donkeyPicture = new Mesh(make(new PlaneGeometry(1, 1)), cutoutMaterial)
+  donkeyPicture.name = 'masked-donkey-cutout'; donkeyBillboard.add(donkeyPicture)
+  let hasDonkeyTexture = false
+  function setDonkeyTexture(texture: Texture | null) {
+    hasDonkeyTexture = texture !== null
+    cutoutMaterial.map = texture; cutoutMaterial.needsUpdate = true
+  }
+  const coin = group('one-peso-payment')
+  const coinFace = mesh(coin, cylinder, 'gold', [0, .125, 0], [.12, .035, .12]); coinFace.rotation.x = Math.PI / 2
+  mesh(coin, ring, 'edge', [0, .125, .02], [.103, .103, .1])
+  box(coin, 'paper', [.005, .125, .022], [.023, .12, .008])
+  box(coin, 'paper', [.005, .064, .022], [.073, .017, .008])
+  const oneSerif = box(coin, 'paper', [-.014, .176, .022], [.047, .018, .008]); oneSerif.rotation.z = .45
   const bag = group('contraband-sack')
   sphere(bag, 'cloth', [0, .265, 0], [.22, .265, .205])
   mesh(bag, cylinder, 'cloth', [0, .50, 0], [.105, .12, .09])
@@ -52,20 +67,59 @@ export function createScenarioProps() {
   box(desk, 'gold', [0, -.24, .316], [.3, .085, .018])
   for (const y of [-.38, -.66]) box(desk, 'grain', [0, y, .311], [.66, .018, .014])
   for (const z of [-.22, 0, .22]) box(desk, 'grain', [0, .002, z], [.85, .005, .01])
-  const official = group('faceless-official')
-  sphere(official, 'sleeve', [0, .30, 0], [.24, .35, .17])
-  sphere(official, 'dark', [0, .78, 0], [.14, .18, .13])
-  mesh(official, cylinder, 'dark', [0, .91, 0], [.19, .055, .16])
-  box(official, 'gold', [-.07, .43, .153], [.06, .07, .014])
-  box(official, 'cream', [0, .50, .16], [.075, .09, .015])
+  const official = group('discreet-official')
+  const officialTorso = group('official-torso', official)
+  sphere(officialTorso, 'sleeve', [0, .30, 0], [.23, .34, .17])
+  box(officialTorso, 'cream', [0, .49, .165], [.13, .16, .025])
+  const tieKnot = box(officialTorso, 'wax', [0, .51, .185], [.045, .045, .02]); tieKnot.rotation.z = Math.PI / 4
+  box(officialTorso, 'wax', [0, .42, .18], [.04, .12, .02])
+  box(officialTorso, 'gold', [-.12, .40, .158], [.06, .075, .022])
+  for (const y of [.20, .29]) sphere(officialTorso, 'gold', [0, y, .164], [.015, .015, .012])
+  const officialHead = group('official-head', officialTorso); officialHead.position.set(0, .67, 0)
+  sphere(officialHead, 'skin', [0, .08, 0], [.155, .19, .135])
+  for (const x of [-.16, .16]) sphere(officialHead, 'skin', [x, .06, 0], [.035, .055, .03])
+  sphere(officialHead, 'skin', [0, .055, .137], [.04, .055, .055])
+  for (const x of [-.069, .069]) {
+    sphere(officialHead, 'paper', [x, .10, .12], [.055, .047, .025])
+    sphere(officialHead, 'dark', [x, .095, .144], [.019, .022, .012])
+    mesh(officialHead, ring, 'gold', [x, .10, .145], [.062, .05, .04])
+    const brow = box(officialHead, 'dark', [x, .157, .121], [.085, .02, .018]); brow.rotation.z = x * -1.8
+    const moustache = sphere(officialHead, 'dark', [x * .5, .01, .14], [.052, .02, .022]); moustache.rotation.z = x * 2
+  }
+  box(officialHead, 'gold', [0, .10, .147], [.027, .011, .009])
+  mesh(officialHead, cylinder, 'sleeve', [0, .255, 0], [.205, .09, .18])
+  box(officialHead, 'dark', [0, .20, .10], [.30, .025, .21])
+  box(officialHead, 'gold', [0, .247, .178], [.065, .047, .012])
   const officialHand = group('official-receiving-hand')
-  box(officialHand, 'sleeve', [.16, -.055, -.1], [.32, .14, .22])
-  box(officialHand, 'cream', [0, -.047, -.1], [.07, .12, .22])
-  sphere(officialHand, 'skin', [-.095, -.043, .016], [.145, .043, .13])
-  // Origin is the top of the receiving palm, not the middle of its volume.
-  for (let i = 0; i < 4; i++) sphere(officialHand, 'skin', [-.155 + i * .048, -.035, .145], [.025, .035, .085])
+  // Horizontal palm, origin at its contact plane. Connected sleeves are posed below.
+  sphere(officialHand, 'skin', [0, -.035, 0], [.10, .035, .095])
+  for (let i = 0; i < 4; i++) sphere(officialHand, 'skin', [-.075 + i * .05, -.025, .103], [.023, .025, .055])
+  sphere(officialHand, 'skin', [-.10, -.025, .03], [.026, .026, .05])
+  const officialUpperArm = group('official-upper-arm')
+  mesh(officialUpperArm, cylinder, 'sleeve', [0, .5, 0], [.075, 1, .075])
+  const officialForearm = group('official-forearm')
+  mesh(officialForearm, cylinder, 'sleeve', [0, .45, 0], [.066, .9, .066])
+  mesh(officialForearm, cylinder, 'cream', [0, .95, 0], [.071, .1, .071])
+  const officialOtherArm = group('official-other-arm', officialTorso)
+  sphere(officialOtherArm, 'sleeve', [.22, .27, .02], [.075, .23, .075])
+  sphere(officialOtherArm, 'skin', [.23, .05, .02], [.07, .075, .07])
+  const coverHand = group('official-cover-hand')
+  sphere(coverHand, 'skin', [0, .028, 0], [.075, .028, .07])
+  for (let i = 0; i < 4; i++) sphere(coverHand, 'skin', [-.055 + i * .036, .018, .06], [.017, .018, .04])
+  const coverUpperArm = group('official-cover-upper-arm')
+  mesh(coverUpperArm, cylinder, 'sleeve', [0, .5, 0], [.066, 1, .066])
+  const coverForearm = group('official-cover-forearm')
+  mesh(coverForearm, cylinder, 'sleeve', [0, .45, 0], [.06, .9, .06])
+  mesh(coverForearm, cylinder, 'cream', [0, .95, 0], [.065, .1, .065])
+  // The envelope goes under an entirely unconvincing stack of routine paperwork.
+  const paperwork = group('official-paperwork')
+  for (let i = 0; i < 3; i++) {
+    const sheet = box(paperwork, 'paper', [i * .015, .008 + i * .018, 0], [.40, .014, .28]); sheet.rotation.y = (i - 1) * .08
+  }
+  box(paperwork, 'ink', [0, .055, -.065], [.25, .003, .012])
+  box(paperwork, 'ink', [-.03, .055, -.025], [.19, .003, .009])
   const envelope = group('sealed-envelope')
-  box(envelope, 'paper', [0, .025, 0], [.38, .05, .27], 'envelope-solid')
+  box(envelope, 'paper', [0, .025, 0], [.46, .05, .27], 'envelope-solid')
   for (const x of [-.09, .09]) {
     const fold = box(envelope, 'cord', [x, .051, 0], [.23, .003, .008]); fold.rotation.y = x > 0 ? -.6 : .6
   }
@@ -90,18 +144,18 @@ export function createScenarioProps() {
   const tick1 = box(ballot, 'teal', [-.04, .15, .01], [.085, .018, .002]); tick1.rotation.z = -.65
   const tick2 = box(ballot, 'teal', [.025, .175, .01], [.13, .018, .002]); tick2.rotation.z = .8
 
-  const receiver = group('mule-receiving-palm')
-  box(receiver, 'dark', [-.2, -.09, -.04], [.4, .16, .24])
-  sphere(receiver, 'cloth', [0, -.045, .02], [.19, .045, .19])
-
   function fade(opacity: number) {
+    cutoutMaterial.opacity = opacity
     root.visible = opacity > .001
     for (const material of Object.values(materials)) { material.opacity = opacity; material.depthWrite = opacity > .98 }
   }
+  const articulated = [officialTorso, officialHead, officialOtherArm]
+  const rests = articulated.map((node) => ({ node, visible: node.visible, position: node.position.clone(), quaternion: node.quaternion.clone(), scale: node.scale.clone() }))
   function hideAll() {
+    for (const { node, visible, position, quaternion, scale } of rests) { node.visible = visible; node.position.copy(position); node.quaternion.copy(quaternion); node.scale.copy(scale) }
     for (const child of root.children) { child.visible = false; child.position.set(0, 0, 0); child.rotation.set(0, 0, 0); child.scale.setScalar(1) }
   }
-  function dispose() { geometries.forEach((g) => g.dispose()); Object.values(materials).forEach((m) => m.dispose()) }
-  return { root, bag, parcel, hat, desk, official, officialHand, envelope, urn, ballot, receiver, fade, hideAll, dispose }
+  function dispose() { cutoutMaterial.dispose(); geometries.forEach((g) => g.dispose()); Object.values(materials).forEach((m) => m.dispose()) }
+  return { root, coin, donkeyBillboard, donkeyPicture, setDonkeyTexture, get hasDonkeyTexture() { return hasDonkeyTexture }, bag, parcel, hat, desk, official, officialTorso, officialHead, officialOtherArm, officialHand, officialUpperArm, officialForearm, coverHand, coverUpperArm, coverForearm, paperwork, envelope, urn, ballot, fade, hideAll, dispose }
 }
 export type ScenarioProps = ReturnType<typeof createScenarioProps>

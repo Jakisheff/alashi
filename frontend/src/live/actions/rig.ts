@@ -1,4 +1,4 @@
-import { Bone, Box3, Object3D, PropertyBinding, Quaternion, Vector3, type AnimationClip } from 'three'
+import { Bone, Box3, Object3D, PropertyBinding, Quaternion, Raycaster, Vector3, type AnimationClip } from 'three'
 import { ramp } from './definitions.ts'
 
 export type Key = readonly [number, number, number, number]
@@ -88,6 +88,43 @@ export function createRig(hero: Object3D, clips: AnimationClip[]) {
     point.y = Math.max(point.y, top + .018)
     return point
   }
-  return { hero, bones, bone, idleAt, reach, palmPoint }
+  const contactRay = new Raycaster()
+  function contactPoint(side: Side) {
+    const point = palmPoint(side)
+    contactRay.set(hero.localToWorld(point.clone().add(new Vector3(0, .3, 0))), DOWN)
+    const hit = contactRay.intersectObject(bone(`${side}-hand`), true)[0]
+    if (hit) point.y = hero.worldToLocal(hit.point.clone()).y + .004
+    return point
+  }
+  function capPoint() {
+    hero.updateMatrixWorld(true)
+    const body = bone('body')
+    const origin = body.localToWorld(new Vector3(0, 1.5, -.025))
+    const direction = DOWN.clone().applyQuaternion(body.getWorldQuaternion(new Quaternion()))
+    contactRay.set(origin, direction)
+    const hit = contactRay.intersectObject(body, true)[0]
+    return hit ? hero.worldToLocal(hit.point.clone().addScaledVector(direction, -.012)) : body.position.clone().add(new Vector3(0, .69, 0))
+  }
+  /** Place an open support palm in hero space despite the torso's lean/yaw.
+   * Iterating against the actual mesh envelope includes the thumb clearance. */
+  function support(side: Side, contact: Vector3, weight = 1) {
+    // The thumb has two joints. Lay it beside the fingers in the palm plane,
+    // rather than leaving an idle thumb raised under a supposedly flat parcel.
+    const thumb = bone(`${side}-thumb`), thumbTip = bone(`${side}-thumb-tip`)
+    const direction = new Vector3(side === 'left' ? .65 : -.65, -1, 0).normalize()
+    thumb.quaternion.slerp(new Quaternion().setFromUnitVectors(thumbTip.position.clone().normalize(), direction), weight)
+    thumbTip.quaternion.slerp(IDENTITY, weight)
+    hero.updateMatrixWorld(true)
+    const body = bone('body')
+    const orientation = hero.getWorldQuaternion(new Quaternion()).multiply(PALM_UP)
+    const palm = body.getWorldQuaternion(new Quaternion()).invert().multiply(orientation)
+    const wrist = contact.clone().sub(new Vector3(0, .19, .29))
+    for (let i = 0; i < 3; i++) {
+      const local = body.worldToLocal(hero.localToWorld(wrist.clone()))
+      reach(side, local, weight, palm)
+      wrist.add(contact.clone().sub(contactPoint(side)))
+    }
+  }
+  return { hero, bones, bone, idleAt, reach, palmPoint, contactPoint, capPoint, support }
 }
 export type ScenarioRig = ReturnType<typeof createRig>

@@ -1,13 +1,14 @@
 import { useGLTF } from '@react-three/drei'
 import { createPortal, useFrame } from '@react-three/fiber'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { Mesh } from 'three'
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils.js'
 import { ScreenText } from '../../genie/ScreenText'
 import { createSmokeMaterial } from '../../genie/smoke'
-import { ACTION_SECONDS, clampTime, type ScenarioPreview } from './definitions.ts'
+import { ACTION_SECONDS, clampTime, scenarioFraming, type ScenarioPreview } from './definitions.ts'
 import { applyScenario, displayTime } from './motion.ts'
 import { createScenarioProps } from './props.ts'
+import { MuleReference } from './MuleReference'
 import { createRig } from './rig.ts'
 
 const HERO = `${import.meta.env.BASE_URL}models/desk-genie.glb?v=20261008-articulated`
@@ -66,9 +67,12 @@ export function ScenarioAction({ preview, onTime, onFinished }: {
     }
   })
 
-  return <group position={[0, .15, 0]} rotation-y={.35} dispose={null}>
+  const framing = scenarioFraming(preview.action)
+  // Keep side characters and the ballot box inside the portrait camera.
+  return <group position={[framing.x, .15, 0]} scale={framing.scale} rotation-y={.35} dispose={null}>
     <primitive object={hero} />
     <primitive object={props.root} />
+    {preview.action === 'mule' && <Suspense fallback={null}><MuleReference props={props} /></Suspense>}
     {anchor && createPortal(<ScreenText />, anchor)}
   </group>
 }

@@ -4,7 +4,8 @@ import { useScene } from '../store'
 import { demoState, formatDuration, SCENARIOS, type Scenario } from './demo'
 import { MarketTrade, TRADE_SECONDS, type TradeAction, type TradeEntry, type TradePreview } from './market/MarketTrade'
 import { ScenarioAction, ACTION_SECONDS, ACTION_META, actionStageAt, type ScenarioActionName } from './actions'
-import { LivingGenie, REACTION_SECONDS, REACTION_KEYFRAMES, type ReactionKind, type ReactionPreview } from './reactions'
+import { LivingGenie, REACTION_SECONDS, REACTION_KEYFRAMES, REACTION_LABELS, REACTION_THOUGHTS, type ReactionKind, type ReactionPreview } from './reactions'
+import { ThoughtBubble } from './ThoughtBubble'
 import './live.css'
 
 const Scene = lazy(() => import('../genie/Scene'))
@@ -33,6 +34,7 @@ export default function LivePage() {
   const [trade, setTrade] = useState<ActionPreview | null>(null)
   const [reaction, setReaction] = useState<ReactionPreview | null>(null)
   const [reactionTime, setReactionTime] = useState(0)
+  const [thinkingText, setThinkingText] = useState(REACTION_THOUGHTS.thinking)
   const finishReaction = useCallback(() => setReaction((s) => s ? { ...s, playing: false } : null), [])
   const [tradeTime, setTradeTime] = useState(0)
   const [tradeEntry, setTradeEntry] = useState<TradeEntry>('bottom')
@@ -116,7 +118,7 @@ export default function LivePage() {
   const previewReaction = (kind: ReactionKind) => {
     setRunning(false); setTrade(null); setReactionTime(0)
     setReaction({ kind, take: ++tradeTake.current, playing: true, speed: 1, seek: null })
-    useScene.getState().say('')
+    useScene.getState().say(kind === 'thinking' ? 'Let me think…' : REACTION_THOUGHTS[kind])
   }
   const duration = trade && isScenario(trade.action) ? ACTION_SECONDS : TRADE_SECONDS
   const scenarioStage = trade && isScenario(trade.action) ? actionStageAt(trade.action, tradeTime) : null
@@ -153,10 +155,11 @@ export default function LivePage() {
             {state.remaining !== null && <div className="live-progress"><i style={{ transform: `scaleX(${Math.max(0, state.remaining) / 30})` }} /></div>}
           </div>
 
-          <div className="live-hero">
-            <HeroBoundary><Suspense fallback={<p className="live-hero-fallback">Loading Degenie…</p>}><Scene frozen={null} background="#102c25" interactive={false}>
+          <div className="live-hero" data-action={trade?.action ?? 'idle'} data-reaction={reaction?.kind ?? 'idle'}>
+            <div className="live-scene"><HeroBoundary><Suspense fallback={<p className="live-hero-fallback">Loading Degenie…</p>}><Scene frozen={null} background="#102c25" interactive={false}>
               {trade ? isScenario(trade.action) ? <ScenarioAction preview={{ ...trade, action: trade.action }} onTime={setTradeTime} onFinished={finishTrade} /> : <MarketTrade preview={{ ...trade, action: trade.action }} onTime={setTradeTime} onFinished={finishTrade} /> : <LivingGenie reaction={reaction} onTime={setReactionTime} onFinished={finishReaction} />}
-            </Scene></Suspense></HeroBoundary>
+            </Scene></Suspense></HeroBoundary></div>
+            {reaction?.kind === 'thinking' && reactionTime >= .6 && reactionTime < 4.5 && <ThoughtBubble key={reaction.take} text={thinkingText} preview />}
             {tradeStage && <div className="live-trade-stage" aria-live="polite"><span>{trade?.action.toUpperCase()}</span>{tradeStage}</div>}
           </div>
 
@@ -227,18 +230,20 @@ export default function LivePage() {
               </div>
               <button className="live-sale-close" onClick={() => { setTrade(null); useScene.getState().say(''); useScene.getState().play('idle') }}>Close preview</button>
             </>}
-            <p>{trade && isScenario(trade.action) ? trade.action === 'mule' ? 'Conceal the parcel → carry the cargo → a quiet handoff.' : trade.action === 'bribe' ? 'Meet the official → offer the envelope → a discreet exchange.' : 'Lift the ballot → line it up → drop it into the box.' : trade?.action === 'buy' ? 'Coin to the seller → catch the crate → enjoy the purchase.' : 'Crate to the buyer → coin in return → a cheeky wink.'} Props appear only during the action.</p>
+            <p>{trade && isScenario(trade.action) ? trade.action === 'mule' ? 'Pay the mule → catch one parcel → keep the goods.' : trade.action === 'bribe' ? 'Meet the official → offer the envelope → a discreet exchange.' : 'Lift the ballot → line it up → drop it into the box.' : trade?.action === 'buy' ? 'Coin to the seller → catch the crate → enjoy the purchase.' : 'Crate to the buyer → coin in return → a cheeky wink.'} Props appear only during the action.</p>
           </div>
 
           <div className="live-sale-controls" aria-label="Reaction preview">
             <span className="live-control-label">Body language · local preview</span>
-            <div className="live-sale-launch">{(['thumbsUp', 'realization', 'facepalm'] as const).map((kind) => <button key={kind} aria-pressed={reaction?.kind === kind} onClick={() => previewReaction(kind)}>{kind === 'thumbsUp' ? 'Thumbs up' : kind === 'realization' ? 'Realization' : 'Facepalm'}</button>)}</div>
+            <div className="live-sale-launch">{(Object.keys(REACTION_LABELS) as ReactionKind[]).map((kind) => <button key={kind} aria-pressed={reaction?.kind === kind} onClick={() => previewReaction(kind)}>{REACTION_LABELS[kind]}</button>)}</div>
             {reaction && <>
               <div className="live-sale-timeline"><button aria-label={reaction.playing ? 'Pause reaction' : 'Resume reaction'} onClick={() => reactionTime >= REACTION_SECONDS ? previewReaction(reaction.kind) : setReaction((s) => s ? { ...s, playing: !s.playing, seek: null } : null)}>{reaction.playing ? 'Ⅱ' : '▶'}</button><input aria-label="Reaction frame" type="range" min={0} max={REACTION_SECONDS} step={.01} value={reactionTime} onChange={(e) => { const t = Number(e.target.value); setReactionTime(t); setReaction((s) => s ? { ...s, playing: false, seek: t } : null) }} /><output>{reactionTime.toFixed(1)} s</output></div>
               <div className="live-sale-launch">{REACTION_KEYFRAMES[reaction.kind].map((frame) => <button key={frame.time} onClick={() => { setReactionTime(frame.time); setReaction((s) => s ? { ...s, playing: false, seek: frame.time } : null) }}>{frame.time}s · {frame.label}</button>)}</div>
-              <button className="live-sale-close" onClick={() => setReaction(null)}>Return to living idle</button>
+              {reaction.kind === 'thinking' && <label className="live-thought-editor">Demo thought text<textarea rows={2} maxLength={280} value={thinkingText} onChange={(e) => setThinkingText(e.target.value)} /></label>}
+              <button className="live-sale-close" onClick={() => { setReaction(null); useScene.getState().say('') }}>Return to living idle</button>
             </>}
-            <p>Glances and gentle whole-body movement continue between actions. Meaningful reactions need an explicit agent cue.</p>
+            <p>Glances and gentle whole-body movement continue between actions. Reactions above are previews; the live agent needs an explicit cue. Celebrations in a real stream require a confirmed win.</p>
+            {reaction && <p className="live-thought"><span>Preview thought</span>“{reaction.kind === 'thinking' ? thinkingText : REACTION_THOUGHTS[reaction.kind]}”</p>}
           </div>
 
           <dl className="live-statuses">
