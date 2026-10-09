@@ -51,18 +51,24 @@ export function ScenarioAction({ preview, onTime, onFinished }: {
     return () => { smoke.material.dispose(); props.dispose() }
   }, [hero, smoke, props])
   useEffect(() => {
-    time.current = clampTime(preview.seek ?? 0); lastReport.current = -1; finished.current = false
-  }, [preview.take, preview.action, preview.seek])
+    time.current = 0; lastReport.current = -1; finished.current = false
+  }, [preview.take, preview.action])
+  useEffect(() => {
+    if (preview.seek !== null) {
+      time.current = clampTime(preview.seek); lastReport.current = -1; finished.current = false
+    }
+  }, [preview.seek, preview.take, preview.action])
 
   useFrame((_, delta) => {
     const speed = Number.isFinite(preview.speed) ? Math.max(0, preview.speed) : 1
-    if (preview.playing && !finished.current) time.current = Math.min(ACTION_SECONDS, time.current + Math.min(delta, .05) * speed)
+    const elapsed = Number.isFinite(delta) ? Math.max(0, delta) : 0
+    if (preview.playing && !finished.current) time.current = Math.min(ACTION_SECONDS, time.current + elapsed * speed)
     const actual = time.current
     const shown = displayTime(preview.action, actual, reduced, preview.playing)
     applyScenario(rig, props, preview, shown, reduced)
     smokeRef.current.uniforms.uTime.value = reduced ? 0 : shown
     if (Math.abs(actual - lastReport.current) >= .09) { lastReport.current = actual; onTime(actual) }
-    if (actual >= ACTION_SECONDS && !finished.current) {
+    if (preview.playing && actual >= ACTION_SECONDS && !finished.current) {
       finished.current = true; onTime(ACTION_SECONDS); onFinished()
     }
   })

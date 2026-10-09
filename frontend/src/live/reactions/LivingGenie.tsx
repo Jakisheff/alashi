@@ -68,7 +68,8 @@ export function LivingGenie({ reaction = null, onTime, onFinished }: LivingGenie
 
   useFrame((_state, delta) => {
     const p = playback.current
-    const step = Number.isFinite(delta) ? Math.max(0, Math.min(delta, .05)) : 0
+    const elapsed = Number.isFinite(delta) ? Math.max(0, delta) : 0
+    const step = Math.min(elapsed, .05)
     if (!reaction) {
       fireworks.update(0, false)
       p.key = ''; p.seek = null; p.finished = false
@@ -91,7 +92,7 @@ export function LivingGenie({ reaction = null, onTime, onFinished }: LivingGenie
     // First frame after a seek is exact, even while playing. Pausing freezes the
     // *whole* pose (blink, tail and smoke too), so frame QA is repeatable.
     const speed = Number.isFinite(reaction.speed) ? Math.max(0, reaction.speed) : 1
-    if (reaction.playing && !p.finished && !sought) p.time = clampTime(p.time + step * speed)
+    if (reaction.playing && !p.finished && !sought) p.time = clampTime(p.time + elapsed * speed)
     p.idleTime = p.base + p.time
     const poseTime = reduced && reaction.playing && p.time < REACTION_SECONDS
       ? REACTION_REDUCED_FRAME[reaction.kind] : p.time

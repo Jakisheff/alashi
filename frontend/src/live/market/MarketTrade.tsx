@@ -117,7 +117,10 @@ export function MarketTrade({ preview, onTime, onFinished }: { preview: TradePre
   useFrame((state, delta) => {
     if (!root.current) return
     const props = owned.current
-    if (preview.playing && !finished.current) time.current = Math.min(TRADE_SECONDS, time.current + Math.min(delta, .05) * preview.speed)
+    // The action follows elapsed time, including a slow frame or a suspended tab.
+    const elapsed = Number.isFinite(delta) ? Math.max(0, delta) : 0
+    const speed = Number.isFinite(preview.speed) ? Math.max(0, preview.speed) : 1
+    if (preview.playing && !finished.current) time.current = Math.min(TRADE_SECONDS, time.current + elapsed * speed)
     const actual = time.current
     const t = reduced && preview.playing ? (actual < 5.4 ? 4.25 : 6.4) : actual
     const opacity = ramp(t, 0, .6) * (1 - ramp(t, 5.5, 6.4))
@@ -207,7 +210,7 @@ export function MarketTrade({ preview, onTime, onFinished }: { preview: TradePre
     fade(props.materials, opacity)
     if (!reduced) smokeRef.current.uniforms.uTime.value = state.clock.elapsedTime
     if (Math.abs(actual - reported.current) > .09) { reported.current = actual; onTime(actual) }
-    if (actual >= TRADE_SECONDS && !finished.current) { finished.current = true; onTime(TRADE_SECONDS); onFinished() }
+    if (preview.playing && actual >= TRADE_SECONDS && !finished.current) { finished.current = true; onTime(TRADE_SECONDS); onFinished() }
   })
 
   return <group ref={root} position={[0, .15, 0]} rotation-y={.35}>
