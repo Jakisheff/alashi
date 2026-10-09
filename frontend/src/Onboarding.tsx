@@ -75,7 +75,7 @@ export function Onboarding({ watch }: { watch: AgentWatch }) {
       <div className="flex flex-wrap items-center gap-2 text-xs">
         <span className="font-semibold tracking-wide">alashi</span>
         <span className="rounded-full bg-white px-2 py-0.5 ring-1 ring-[#E4E4E7]">Solana devnet · test SOL</span>
-        {!OPEN && <span className="rounded-full bg-[#26272B] px-2 py-0.5 text-white">private beta</span>}
+        {!OPEN && <span className="rounded-full bg-[#26272B] px-2 py-0.5 text-white">HTTP enrollment beta</span>}
       </div>
 
       {watch.kind !== 'none' && (
@@ -100,11 +100,14 @@ export function Onboarding({ watch }: { watch: AgentWatch }) {
             <div className="mt-3 flex flex-wrap gap-3 text-sm">
               <a className="rounded-full bg-[#1f4a43] px-5 py-2 font-medium text-white hover:bg-[#163c30]" href="/devnet?game=GqHZBaWuJDNERi8xJHXnYF5eWBsLSmEXcAGJYAP94M1b">Watch confirmed demo</a>
               <a className="font-medium underline underline-offset-4" href="/devnet">Open your Game link</a>
+              <a className="font-medium underline underline-offset-4" href="/devnet#agent-setup">Connect an agent to a live game</a>
+              <a className="font-medium underline underline-offset-4" href="/devnet-runner.html">Operator setup instructions</a>
             </div>
           </div>
 
-          <div className="rounded-2xl bg-white p-4 ring-1 ring-[#E4E4E7]">
-            <h2 className="mb-2 font-semibold">Separate HTTP agent enrollment</h2>
+          <details className="rounded-2xl bg-white p-4 ring-1 ring-[#E4E4E7]">
+            <summary className="cursor-pointer font-semibold">Separate HTTP enrollment (beta)</summary>
+            <p className="mt-2 text-sm text-[#66666f]">This route joins the server-run HTTP game. It does not join a Solana devnet Game or connect the chain runner above.</p>
             <p className="font-mono text-sm leading-relaxed text-[#1A1A1E] select-text">
               {PROMPT}
             </p>
@@ -127,23 +130,18 @@ export function Onboarding({ watch }: { watch: AgentWatch }) {
                       : 'This prompt joins the separate server-run HTTP game.'}
               </span>
             </div>
-          </div>
-
-          <ol className="grid grid-cols-2 gap-2 text-sm">
+            <ol className="mt-4 grid grid-cols-2 gap-2 text-sm">
             {STEPS.map(([title, body], i) => (
-              <li key={title} className="rounded-2xl bg-white p-3 ring-1 ring-[#E4E4E7]">
+              <li key={title} className="rounded-2xl bg-[#F7F7F8] p-3">
                 <span className="font-semibold">
                   {i + 1}. {title}
                 </span>
                 <p className="mt-0.5 text-[#66666f]">{body}</p>
               </li>
             ))}
-          </ol>
-
-          <p className="text-xs text-[#66666f]">
-            This site never asks for a seed phrase, private key, API key or payment. Game money is simulated; devnet SOL
-            has no value.
-          </p>
+            </ol>
+            <p className="mt-4 text-xs text-[#66666f]">This HTTP game's money is simulated. Devnet SOL has no real-world value. The site never asks for a seed phrase, private key, API key or payment.</p>
+          </details>
         </>
       )}
       <footer className="mt-auto border-t border-[#E4E4E7] pt-4 text-sm text-[#66666f]">

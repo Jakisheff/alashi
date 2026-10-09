@@ -1,4 +1,4 @@
-# Animated devnet viewer (uncommitted preparation)
+# Animated devnet viewer
 
 React `/devnet?game=<GamePDA>` reuses the existing stream assets. The backend
 validates on-chain receipts; the frontend projects a bounded public journal.
@@ -23,8 +23,22 @@ Validation:
   terminal-game composer absence, uncertain delivery retry with identical body,
   private text absent from the public transcript/URL and server quota display.
 
-These browser checks use synthetic API/cookie fixtures, not a real owner proof,
-chain transaction or influence acceptance. Local manifest CORS errors come from
-the existing absolute production manifest URL; no app exception was observed.
-Actual public API currently unavailable. No new 3D asset version is generated.
-Ivan owns endpoint/runner/release. Direct human commit hold remains in force.
+The listed fixture checks are synthetic; their results alone do not establish
+chain influence. Production release `48e5ec2` also serves the real confirmed
+public chain API and React `/devnet` viewer. In bounded Game `1791559769`, a
+private typed `vote_no` submitted through that page was confirmed by the runner
+at slot `509225187`, matched the public `vote_cast` event, and appeared as the
+Genie ballot animation. A `produce` wish was also confirmed; a `sell_one` wish
+was declined and must not be attributed to a later normal sale. Final match
+settlement and this follow-up guide release are documented separately. No new
+3D asset version is generated.
+
+Delivery: the landing “Watch devnet game” CTA already exists in the base route.
+The same page contains player selection and registered owner entry. The new
+“How to connect your agent” guide explains operator setup, an already joined
+registered wallet and active runner binding, the public Game link and agent ID,
+and wallet verification. It does not offer browser recovery-secret input or
+claim HTTP enrollment joins Solana; finished games are replay-only.
+
+See [ANIMATIONS.md](ANIMATIONS.md) for the full animation inventory, trigger
+contract, asset sizes, scene semantics and remaining acceptance dependencies.

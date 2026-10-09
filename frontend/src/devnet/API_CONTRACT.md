@@ -8,9 +8,9 @@ The 14:29 wire adds `unconfirmed`: display awaiting chain confirmation, never
 success. A later matching receipt may reconcile it to `confirmed`; stale status
 sequences cannot undo that receipt. Runner `consumed_after_slot` and token remain
 server concerns; the browser uses server-derived event_id/signature/slot.
-Ivan reports subsequent human release approval in his task. Din retains his
-direct no-commit hold until that human instruction can be verified in his task;
-the review archive conveys no publication authorization.
+The direct user authorized publication in a separate frontend branch and server
+handoff on 09 October. Backend and production release remain with Ivan;
+real owner/runner/chain acceptance is a separate gate.
 
 Public projection additionally requires epoch, separate cash/hard, alive,
 confirmed commitment, snapshot/journal slots, stable signature:log_index IDs.
@@ -27,10 +27,12 @@ pending UUID/intent/text is retained in memory for uncertain-delivery retries;
 never in public events, share URLs, analytics or browser storage. Finished and
 aborted games never mount this owner panel. Runner secrets are not requested.
 
-Positive real API, ownership and influence acceptance remain pending the owner
-endpoint and independent evidence. UI fixtures are explicitly synthetic and
-prove component behavior only. No game, signature, transaction, commit, push or
-production release is performed by these checks.
+The UI fixtures above are synthetic and prove component behavior only. A
+separate bounded live acceptance in Game `1791559769` used the actual owner
+browser session and runner: typed `vote_no` status `confirmed` matched public
+`vote_cast` at slot `509225187`, signature `2TgngSrsGpeb2m3PunTVWRt6UnYNXqHaL4gFeYJ6feYCfWXheobERz23uHjASNVXKLsdfjEkrV4qFLLY1Z35ai7z`,
+and the guest page rendered the ballot animation. The same Game finished and
+settled at slot `509226730`. The checks themselves do not submit chain actions.
 
 The original proposal follows as historical context (not the final schema):
 
@@ -60,6 +62,6 @@ Backend validates devnet genesis/program, canonical Game/Faction owners/discrimi
 
 Cache and bound RPC work server-side. Browser performs a single completion-based poll, respects 429 Retry-After and network backoff, pauses when hidden, and stops on a complete settled snapshot. No browser `getTransaction` fanout. Max 2000 events retained per response; if truncated or temporarily incomplete, `history_complete:false` and clearly label a partial history; never claim full replay. Errors return JSON with `ok:false`; unavailable history cannot produce demo/fake events. Cached archive for actual Game GqHZBaWuJDNERi8xJHXnYF5eWBsLSmEXcAGJYAP94M1b should retain its confirmed full action journal. No new game or transaction is requested.
 
-Production currently serves standalone `app/devnet.html` for `/devnet`. Ivan must coordinate changing that exact route to the React frontend `/devnet` component from the immutable release, and expose this GET-only endpoint. Existing standalone viewer can remain an explicit fallback. No backend restart or Nginx edit by Din. Required receipt: endpoint schema/path, exact source/data SHA, real game journal validation, served React version and independent guest browser confirmation.
+Production release `48e5ec2` serves the React `/devnet` route and exact GET-only `/chain/devnet/games/<GamePDA>` endpoint. The earlier standalone `app/devnet.html` is historical fallback source, not the current public route. The public GqHZ Game returned a complete 72-event confirmed journal; the bounded new Game `1791559769` established a private typed `vote_no` receipt matching a confirmed public `vote_cast` and the same-page Genie ballot animation. API/source/data hashes, independent browser evidence and the final match result belong in Ivan's release receipt. No backend route change is part of this frontend guide follow-up.
 
 UI: responsive portrait stream, choose a chain faction, existing idle/action scenes; live confirmed events queue without replacing an unfinished action. Initial backfill is not live action. Explicit replay controls for finished/history events, compressed pauses labelled as a replay; confirmed latest balances remain clearly separate from replay position. Unsupported actions stay truthful text/idle. No inferred model thoughts or emotion. Canonical rules/src/logic.rs uses zero-based rank: only a confirmed payout with rank 0 for the selected faction wallet may trigger victory.
