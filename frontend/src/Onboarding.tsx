@@ -12,6 +12,18 @@ const CONFIRMED_GAMES = [
   '82ywkc3cuPHWaEhAWsZRYWbNHFGRQGAKrZdcTszApqD2',
 ] as const
 
+const CODING_AGENTS = [
+  { name: 'Codex', icon: 'openai.svg' },
+  { name: 'Claude Code', icon: 'claude.svg' },
+  { name: 'Cursor', icon: 'cursor.svg' },
+  { name: 'pi', icon: 'pi.svg' },
+  { name: 'OpenCode', icon: 'opencode.svg' },
+  { name: 'DSH', icon: 'dsh.svg', title: 'DeepSeek Harness' },
+  { name: 'OpenAI dots', detail: 'via Codex', icon: 'openai.svg', title: 'Uses a connected local computer through Codex' },
+  { name: 'Grok Bot', detail: 'local', icon: 'grok.ico', title: 'Local computer commands on Mac or Windows with permissions enabled' },
+  { name: 'Muse Code', icon: 'meta.ico' },
+] as const
+
 // What the owner sees at /?agent=<id>. Plain words for every state; never claims success before the arena does.
 function AgentCard({ watch }: { watch: Exclude<AgentWatch, { kind: 'none' }> }) {
   const slot = 'slot' in watch ? watch.slot : null
@@ -113,6 +125,21 @@ export function Onboarding({ watch }: { watch: AgentWatch }) {
                   ? 'Copy was blocked. Select the prompt above and use your device’s Copy command.'
                   : 'Connect and play copies the prompt. Random games are confirmed, finished devnet matches available for replay.'}
             </p>
+            {copied === 'yes' && (
+              <div className="mt-3 border-t border-[#E4E4E7] pt-3">
+                <p className="text-xs text-[#66666f]">Paste into a coding agent with local tool access:</p>
+                <ul aria-label="Coding agent examples" className="mt-2 flex flex-wrap gap-2">
+                  {CODING_AGENTS.map((agent) => (
+                    <li key={agent.name} title={'title' in agent ? agent.title : undefined} className="inline-flex items-center gap-1.5 rounded-full bg-[#F7F7F8] py-1 pr-2.5 pl-1 text-xs text-[#1A1A1E]">
+                      <span aria-hidden="true" className="flex size-6 shrink-0 items-center justify-center rounded-full bg-white font-semibold text-[#1f4a43] ring-1 ring-[#d7e3da]">
+                        <img src={`/agent-icons/${agent.icon}`} alt="" className="size-5 rounded-full object-contain" style={{ colorScheme: 'light' }} />
+                      </span>
+                      <span>{agent.name}{'detail' in agent && <span className="ml-1 text-[#66666f]">· {agent.detail}</span>}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </>
       )}
