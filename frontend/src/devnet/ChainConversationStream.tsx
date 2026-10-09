@@ -1,4 +1,4 @@
-import { useId, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { validBase58 } from './client'
 import './chainConversationStream.css'
 
@@ -10,6 +10,7 @@ import './chainConversationStream.css'
 export type ConversationPlayer = { pda: string; name: string }
 export type ConversationAmount = { quantity: string; asset: 'goods' | 'influence' | 'alashi' }
 export type ConversationReceipt = {
+  eventId?: string
   gamePda: string
   offerId: string
   proposerPda: string
@@ -37,6 +38,8 @@ export type ChainConversationEntry = PublicEntry & (
   | { kind: 'response'; outcome: 'declined_rule'; reason: ConversationDecline }
 )
 export type ChainConversationStreamProps = {
+  variant?: 'page' | 'stage'
+  confirmedActions?: readonly { id: string; label: string; signature: string; selected?: boolean }[]
   gamePda: string
   mode: 'live' | 'replay' | 'finished'
   selectedPlayer: ConversationPlayer | null
@@ -108,9 +111,39 @@ function Row({ entry, selected, fixture, mode, hasResponse }: {
   </li>
 }
 
-export function ChainConversationStream({ gamePda, mode, selectedPlayer, entries, connection, historyComplete, onRetry, designFixture = false }: ChainConversationStreamProps) {
+export function ChainConversationStream({ gamePda, mode, selectedPlayer, entries, connection, historyComplete, onRetry, designFixture = false, variant = 'page', confirmedActions = [] }: ChainConversationStreamProps) {
   const titleId = useId()
-  const [scope, setScope] = useState<'player' | 'all'>('player')
+  const [expanded, setExpanded] = useState(false)
+  const [filterInfo, setFilterInfo] = useState(false)
+  const [scope, setScope] = useState<'player' | 'all'>(variant === 'stage' ? 'all' : 'player')
+  const [visibleCount, setVisibleCount] = useState(20)
+  const [following, setFollowing] = useState(true)
+  const [historyStart, setHistoryStart] = useState<string | null>(null)
+  const [previewCount, setPreviewCount] = useState(5)
+  const previewElement = useRef<HTMLButtonElement>(null)
+  const drawer = useRef<HTMLDivElement>(null)
+  const section = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const element = previewElement.current
+    if (variant !== 'stage' || !element) return
+    const fit = () => {
+      if (!element.clientHeight) return
+      const style = getComputedStyle(element)
+      const line = parseFloat(style.lineHeight), gap = parseFloat(style.rowGap) || 0
+      if (line > 0) setPreviewCount(Math.max(1, Math.floor((element.clientHeight + gap) / (line + gap))))
+    }
+    const observer = new ResizeObserver(fit)
+    observer.observe(element)
+    fit()
+    return () => observer.disconnect()
+  }, [variant])
+  useEffect(() => {
+    if ((!expanded && !filterInfo) || variant !== 'stage') return
+    const dismiss = (event: PointerEvent) => { if (event.target instanceof Node && !section.current?.contains(event.target)) { setExpanded(false); setFilterInfo(false) } }
+    document.addEventListener('pointerdown', dismiss)
+    return () => document.removeEventListener('pointerdown', dismiss)
+  }, [expanded, filterInfo, variant])
+    const anchor = useRef<{ height: number; top: number } | null>(null)
   // Do not sort by wall-clock timestamps: preserve the verified journal order.
   // Filter contexts before deriving responses, so another Game cannot fill a gap.
   const ids = new Set<string>()
@@ -124,12 +157,28 @@ export function ChainConversationStream({ gamePda, mode, selectedPlayer, entries
     || (e.kind === 'offer' && gameEntries.some((reply) => reply.kind === 'response' && reply.inReplyTo === e.id && reply.counterparty?.pda === selectedPlayer.pda)))
   const hasResponse = (offer: ChainConversationEntry) => gameEntries.some((e) => e.kind === 'response'
     && e.offerId === offer.offerId && e.proposer.pda === offer.proposer.pda && (e.inReplyTo ? e.inReplyTo === offer.id : e.counterparty?.pda === offer.counterparty?.pda))
+  const actions = wholeGame ? confirmedActions : confirmedActions.filter((action) => action.selected)
+  const heldStart = historyStart ? actions.findIndex((action) => action.id === historyStart) : -1
+  const timeline = actions.slice(!following && heldStart >= 0 ? heldStart : -visibleCount)
+  const lastId = actions.at(-1)?.id
+  const lastEntryId = rows.at(-1)?.id
+  useEffect(() => {
+    if (variant !== 'stage' || !expanded || !drawer.current) return
+    const el = drawer.current
+    if (anchor.current) { el.scrollTop = anchor.current.top + el.scrollHeight - anchor.current.height; anchor.current = null }
+    else if (following) el.scrollTop = el.scrollHeight
+  }, [variant, expanded, visibleCount, following, lastId, lastEntryId, scope])
+  const loadEarlier = () => {
+    if (!drawer.current || visibleCount >= actions.length || anchor.current) return
+    anchor.current = { height: drawer.current.scrollHeight, top: drawer.current.scrollTop }
+    setFollowing(false); setHistoryStart(actions[Math.max(0, actions.length - visibleCount - 20)]?.id ?? null); setVisibleCount((count) => count + 20)
+  }
   const interrupted = connection === 'reconnecting' || connection === 'unavailable'
   const network = connection === 'loading' ? 'Loading public journal…'
     : connection === 'reconnecting' ? 'Reconnecting. Showing the last received records; missing replies are unknown.'
       : connection === 'unavailable' ? 'Public journal unavailable. No missing replies have been inferred.'
         : mode === 'replay' ? 'Recorded public negotiations · replay position' : mode === 'finished' ? 'Recorded public negotiations · final state' : 'Public negotiations · live feed'
-  return <section className="chain-talk" aria-labelledby={titleId} data-mode={mode}>
+  const journal = <section className="chain-talk" aria-labelledby={titleId} data-mode={mode}>
     <header className="chain-talk-head"><h2 id={titleId}>Public journal</h2><span className="chain-talk-mode">{mode === 'live' ? 'LIVE' : mode === 'finished' ? 'FINISHED' : 'REPLAY'}</span></header>
     <p className="chain-talk-selected">{selectedPlayer ? <><strong>{selectedPlayer.name}</strong> · offers and replies</> : 'Offers and replies · all players'}</p>
     {designFixture && <p className="chain-talk-fixture" role="note">Design preview · local fixtures, not this game’s history.</p>}
@@ -151,4 +200,48 @@ export function ChainConversationStream({ gamePda, mode, selectedPlayer, entries
     {!historyComplete && rows.length > 0 && <p className="chain-talk-incomplete">Partial journal · earlier or missing records may not be available.</p>}
     <footer className="chain-talk-footer"><details><summary>About this journal</summary><p>Confirmed program events and runner-reported decisions are labelled separately. Open offers are available to any player. Private owner instructions stay private.</p></details></footer>
   </section>
+  if (variant !== 'stage') return journal
+  const latest = actions.at(-1)
+  const preview = latest?.label ?? (connection === 'loading' ? 'Loading public feed…' : interrupted ? 'Journal unavailable' : 'No records yet.')
+  // Chain actions retain their canonical order. Negotiations with a matching
+  // receipt replace that action's generic row; runner replies remain inside
+  // their offer thread, never fabricated as a chain event.
+  const linked = new Set(actions.map((action) => action.id))
+  const unlinked = rows.filter((entry) => !('receipt' in entry && entry.receipt?.eventId && linked.has(entry.receipt.eventId)) && entry.kind === 'offer')
+  return <div className="devnet-feed-anchor"><div ref={section} className="live-transcript devnet-feed" data-expanded={expanded} onKeyDown={(e) => {
+    if (e.key === 'Escape' && (expanded || filterInfo)) { e.stopPropagation(); setExpanded(false); setFilterInfo(false); e.currentTarget.querySelector<HTMLButtonElement>('.devnet-feed-toggle')?.focus() }
+  }}>
+    <div className="devnet-feed-head">
+      <button type="button" className="devnet-feed-toggle" aria-expanded={expanded} aria-controls={`${titleId}-drawer`} onClick={() => { setExpanded((open) => !open); setFollowing(true) }}>
+        <span>Public feed <small>{actions.length}</small></span>
+      </button>
+      <div className="devnet-feed-filter-control">
+        <button type="button" className="devnet-feed-filter" disabled={!selectedPlayer} aria-label={wholeGame ? `Filter feed to ${selectedPlayer?.name ?? 'selected player'}` : 'Show all players in feed'} aria-pressed={!wholeGame} onClick={() => { setScope(wholeGame ? 'player' : 'all'); setVisibleCount(20); setHistoryStart(null); anchor.current = null; setFollowing(true) }}>me</button>
+        <button type="button" className="devnet-feed-info" aria-label="About the player filter" aria-expanded={filterInfo} aria-describedby={filterInfo ? `${titleId}-filter-info` : undefined} onClick={() => setFilterInfo((open) => !open)}>i</button>
+        {filterInfo && <div role="tooltip" id={`${titleId}-filter-info`} className="devnet-feed-tooltip">Show actions only for {selectedPlayer?.name ?? 'the selected player'}. “me” refers to the player you are watching.</div>}
+      </div>
+    </div>
+    <button ref={previewElement} type="button" className="devnet-feed-preview" hidden={expanded} onClick={() => { setExpanded(true); setFollowing(true) }} aria-label="Open public feed">{actions.length ? actions.slice(-previewCount).map((action, index, recent) => <span key={action.id} style={{ opacity: recent.length === 1 ? 1 : .25 + .75 * index / (recent.length - 1) }}>{action.label}</span>) : <span>{preview}</span>}</button>
+    <div id={`${titleId}-drawer`} ref={drawer} className="devnet-feed-drawer" hidden={!expanded} tabIndex={0} aria-label="Public feed history" onScroll={(e) => {
+      const el = e.currentTarget
+      const atLatest = el.scrollHeight - el.scrollTop - el.clientHeight < 28
+      setFollowing(atLatest)
+      if (!atLatest) setHistoryStart(timeline[0]?.id ?? null)
+      if (el.scrollTop < 40 && !atLatest) loadEarlier()
+    }}>
+      {visibleCount < actions.length && <button type="button" className="devnet-feed-earlier" onClick={loadEarlier}>Earlier actions ↑</button>}
+      <ol className="devnet-feed-actions" aria-label="Confirmed actions, oldest first">
+        {timeline.map((action) => {
+          const entry = rows.find((row) => 'receipt' in row && row.receipt?.eventId === action.id)
+          const replies = entry?.kind === 'offer' ? rows.filter((row) => row.kind === 'response' && row.inReplyTo === entry.id && !('receipt' in row && row.receipt)) : []
+          return entry ? <li key={action.id} className="devnet-feed-thread"><ol><Row entry={entry} selected={selectedPlayer?.pda} fixture={designFixture} mode={mode} hasResponse={hasResponse(entry)} />{replies.map((reply) => <Row key={reply.id} entry={reply} selected={selectedPlayer?.pda} fixture={designFixture} mode={mode} hasResponse={false} />)}</ol></li>
+            : <li key={action.id} className="devnet-feed-action" data-event-id={action.id}><span>{action.label}</span><a href={`https://explorer.solana.com/tx/${action.signature}?cluster=devnet`} target="_blank" rel="noopener noreferrer">Receipt ↗</a></li>
+        })}
+      </ol>
+      {unlinked.length > 0 && <ol className="chain-talk-list" aria-label="Public proposals without matched receipt">{unlinked.map((entry) => <Row key={entry.id} entry={entry} selected={selectedPlayer?.pda} fixture={designFixture} mode={mode} hasResponse={hasResponse(entry)} />)}</ol>}
+      {!actions.length && !rows.length && <p className="devnet-feed-note">{preview}</p>}
+    </div>
+    {!following && expanded && <button type="button" className="devnet-feed-latest" onClick={() => { anchor.current = null; setFollowing(true) }}>Latest ↓</button>}
+    {expanded && <div className="devnet-feed-note" role="status">{!wholeGame && selectedPlayer ? `${selectedPlayer.name} · ` : ''}{interrupted ? <>Journal unavailable. Actions retained. {onRetry && <button type="button" onClick={onRetry}>Retry</button>}</> : !historyComplete ? 'Negotiation history may be incomplete.' : ''}</div>}
+  </div></div>
 }

@@ -18,14 +18,15 @@ const maxDpr = () => Math.min(window.devicePixelRatio || 1, 2)
 const ORBIT = window.matchMedia('(pointer: fine)').matches
 
 // Keep the whole genie in frame on narrow screens: back the camera off as the aspect drops.
-function FitCamera() {
+function FitCamera({ studio = false }: { studio?: boolean }) {
   const camera = useThree((s) => s.camera)
   const aspect = useThree((s) => s.size.width / s.size.height)
   useEffect(() => {
-    const k = Math.max(1, 0.85 / aspect)
-    camera.position.set(TARGET[0] + VIEW_DIR[0] * k, TARGET[1] + VIEW_DIR[1] * k, TARGET[2] + VIEW_DIR[2] * k)
-    camera.lookAt(...TARGET) // OrbitControls aims too when present; without them (touch) this is the only aim
-  }, [camera, aspect])
+    const k = Math.max(1, 0.85 / aspect) * (studio ? 1.14 : 1)
+    const target: [number, number, number] = studio ? [TARGET[0], -.7, TARGET[2]] : TARGET
+    camera.position.set(target[0] + VIEW_DIR[0] * k, target[1] + VIEW_DIR[1] * k, target[2] + VIEW_DIR[2] * k)
+    camera.lookAt(...target) // OrbitControls aims too when present; without them (touch) this is the only aim
+  }, [camera, aspect, studio])
   return null
 }
 
@@ -93,7 +94,7 @@ function FrameDriver() {
   return null
 }
 
-function SceneImpl({ frozen, background = '#F4F4F5', interactive = true, children }: { frozen: { clip: GenieClip; t: number } | null; background?: string; interactive?: boolean; children?: ReactNode }) {
+function SceneImpl({ frozen, background = '#F4F4F5', interactive = true, studio = false, children }: { frozen: { clip: GenieClip; t: number } | null; background?: string | null; interactive?: boolean; studio?: boolean; children?: ReactNode }) {
   // Adaptive quality: step the pixel ratio down on devices that cannot hold the frame rate, back up when they can
   const [dpr, setDpr] = useState(maxDpr)
   return (
@@ -102,7 +103,7 @@ function SceneImpl({ frozen, background = '#F4F4F5', interactive = true, childre
       frameloop="demand"
       camera={{ fov: 32 }}
       // The composer below does the multisampling; canvas MSAA on top of it was paid twice
-      gl={{ antialias: false }}
+      gl={{ antialias: false, ...(background === null ? { alpha: true } : {}) }}
       fallback={<p className="p-6">WebGL is unavailable.</p>}
     >
       <PerformanceMonitor
@@ -112,11 +113,11 @@ function SceneImpl({ frozen, background = '#F4F4F5', interactive = true, childre
         onFallback={() => setDpr(1)}
       />
       <FrameDriver />
-      <color attach="background" args={[background]} />
+      {background !== null && <color attach="background" args={[background]} />}
       <ambientLight intensity={0.35} />
       <directionalLight position={[3, 4, 5]} intensity={1.6} />
       <StudioEnvironment />
-      <FitCamera />
+      <FitCamera studio={studio} />
       <Suspense fallback={null}>
         {children ?? <GenieModel frozen={frozen} interactive={interactive} />}
       </Suspense>

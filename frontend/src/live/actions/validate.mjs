@@ -25,11 +25,13 @@ const bounds = (o) => new Box3().setFromObject(o)
 const collisionWarnings = {}
 const framing = new Group()
 framing.rotation.y = .35
-const cameras = [.60, .80, 1, 1.20].map((aspect) => {
+const studioFraming = process.env.ALASHI_STUDIO_FRAMING === '1'
+const cameras = (studioFraming ? [.60, .80, .9375, 1.20, 2.1] : [.60, .80, 1, 1.20]).map((aspect) => {
   const camera = new PerspectiveCamera(32, aspect, .1, 100)
-  const k = Math.max(1, .85 / aspect)
-  camera.position.set(.15 + 1.05 * k, -.4 + .3 * k, 5.8 * k)
-  camera.lookAt(.15, -.4, 0); camera.updateMatrixWorld(true)
+  const k = Math.max(1, .85 / aspect) * (studioFraming ? 1.14 : 1)
+  const targetY = studioFraming ? -.7 : -.4
+  camera.position.set(.15 + 1.05 * k, targetY + .3 * k, 5.8 * k)
+  camera.lookAt(.15, targetY, 0); camera.updateMatrixWorld(true)
   return camera
 })
 let worstFrame = { extent: 0 }

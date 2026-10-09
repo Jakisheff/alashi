@@ -1,4 +1,4 @@
-import type { ChainEvent, ChainFaction, ChainSnapshot } from './client.ts'
+import { formatCash, type ChainEvent, type ChainFaction, type ChainSnapshot } from './client.ts'
 export type VisualAction = 'buy' | 'sell' | 'mule' | 'bribe' | 'vote' | 'victory'
 export type LiveCursor = { ready: boolean; tailId: string | null; seen: Set<string> }
 export function newLiveCursor(): LiveCursor { return { ready: false, tailId: null, seen: new Set() } }
@@ -25,15 +25,19 @@ export function visualAction(event: ChainEvent, faction: ChainFaction): VisualAc
 export function playerEvents(events: ChainEvent[], faction: ChainFaction): ChainEvent[] {
   return events.filter((e) => e.faction === faction.pda || e.from === faction.pda || e.wallet === faction.wallet || ['phase_advanced', 'law_drawn', 'law_result', 'settled', 'game_initialized', 'game_aborted'].includes(e.type))
 }
+// Card IDs mirror rules/src/constants.rs and arena/src/api.rs::law_name.
+const lawNames = ['Status quo', 'Tax 10%', 'Tax 20%', 'Production subsidy', 'Subsidy for the poorest', 'Subsidy for the richest', 'Embargo', 'Boom', 'Mutual offset']
 export function eventLabel(event: ChainEvent, faction: ChainFaction): string {
+  if (event.type === 'law_drawn' || event.type === 'law_vetoed') return `Law ${event.type === 'law_drawn' ? 'drawn' : 'vetoed'} · ${event.card === undefined ? 'card unavailable' : lawNames[event.card] ?? `Card #${event.card}`}`
+  if (event.type === 'law_result') return `Law ${event.passed === undefined ? 'result' : event.passed ? 'passed' : 'rejected'}${event.yes !== undefined && event.no !== undefined ? ` · Yes ${event.yes} / No ${event.no}` : ''}`
   const verb = visualAction(event, faction)
   if (verb === 'victory') return `${faction.name} won · confirmed payout`
-  if (verb === 'buy') return `${faction.name} bought ${event.units ?? 'goods'}`
-  if (verb === 'sell') return `${faction.name} sold ${event.units ?? 'goods'}`
+  if (verb === 'buy') return `${faction.name} bought ${event.units !== undefined ? `${event.units} goods` : 'goods'}${event.cost !== undefined ? ` · ${formatCash(event.cost)}` : ''}`
+  if (verb === 'sell') return `${faction.name} sold ${event.units !== undefined ? `${event.units} goods` : 'goods'}${event.revenue !== undefined ? ` · ${formatCash(event.revenue)}` : ''}`
   if (verb === 'mule') return `${faction.name} received goods via Mule`
-  if (verb === 'bribe') return `${faction.name} gave a bribe`
+  if (verb === 'bribe') return `${faction.name} gave a bribe${event.amount !== undefined ? ` · ${formatCash(event.amount)}` : ''}`
   if (verb === 'vote') return `${faction.name} voted ${['Yes', 'No', 'Abstain'][event.choice ?? -1] ?? ''}`.trim()
-  if (event.type === 'produced') return `${faction.name} produced goods`
+  if (event.type === 'produced') return `${faction.name} produced ${event.goods !== undefined ? `${event.goods} goods` : 'goods'}`
   if (event.type === 'phase_advanced') return `${event.phase ?? 'Phase change'} · round ${event.round ?? '—'}`
   if (event.type === 'settled') return 'Game settled on-chain'
   if (event.type === 'game_aborted') return 'Game aborted on-chain'

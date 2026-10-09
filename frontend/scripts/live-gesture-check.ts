@@ -11,4 +11,6 @@ if (page.events.length !== 2) throw new Error('private event entered public proj
 if (page.events[0].gestureCue !== 'realization') throw new Error('valid public cue missing')
 if (page.events[1].gestureCue !== undefined) throw new Error('unknown cue must not react')
 if (mergePublic(page.events, [page.events[0]]).length !== 2) throw new Error('cursor retry duplicated canonical event')
-console.log('live gesture projection: PASS')
+const thoughts = projectPublicPage({ ...base, events: [event('thought', 1, 'public', 'thinking'), event('private-thought', 2, 'private', 'thinking')] })
+if (thoughts.events.length !== 1 || thoughts.events[0].gestureCue !== 'thinking' || thoughts.events[0].text !== 'public') throw new Error('only explicitly published thinking messages may animate')
+console.log('live gesture projection and public thinking cue: PASS')

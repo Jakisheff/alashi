@@ -3,6 +3,7 @@ import { createPortal, useFrame } from '@react-three/fiber'
 import { useEffect, useMemo, useRef } from 'react'
 import { AnimationMixer, Bone, Color, Group, Mesh, PropertyBinding, Quaternion, Vector3, type Material } from 'three'
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils.js'
+import { useStudioConfirmation } from '../../studio/confirmation'
 import { createBrandCoin } from '../../brand/coin'
 import { ScreenText } from '../../genie/ScreenText'
 import { createSmokeMaterial } from '../../genie/smoke'
@@ -10,7 +11,7 @@ import { createSmokeMaterial } from '../../genie/smoke'
 export const TRADE_SECONDS = 6.4
 export type TradeEntry = 'bottom' | 'side'
 export type TradeAction = 'sell' | 'buy'
-export type TradePreview = { action: TradeAction; take: number; playing: boolean; speed: number; entry: TradeEntry; seek: number | null }
+export type TradePreview = { receiptId?: string; action: TradeAction; take: number; playing: boolean; speed: number; entry: TradeEntry; seek: number | null }
 const HERO = `${import.meta.env.BASE_URL}models/desk-genie.glb?v=20261008-articulated`
 const PROPS = `${import.meta.env.BASE_URL}models/experiments/market-sale-props.glb?v=sale-local-bitcoin-2`
 const GOLD_SPARK = new Color(2.4, 1.65, .45)
@@ -61,6 +62,9 @@ function fade(materials: Material[], amount: number) {
 
 export function MarketTrade({ preview, onTime, onFinished }: { preview: TradePreview; onTime: (t: number) => void; onFinished: () => void }) {
   const heroGLB = useGLTF(HERO), propsGLB = useGLTF(PROPS)
+  const confirmation = useStudioConfirmation()
+  const receipt = useRef({ epoch: null as number | null, tried: false, active: false, canceled: false })
+  useEffect(() => { receipt.current = { epoch: confirmation?.capture() ?? null, tried: false, active: false, canceled: false } }, [preview.take, preview.receiptId, confirmation])
   const root = useRef<Group>(null)
   const sparkle = useRef<Group>(null)
   const hero = useMemo(() => clone(heroGLB.scene), [heroGLB.scene])
@@ -95,7 +99,7 @@ export function MarketTrade({ preview, onTime, onFinished }: { preview: TradePre
       mesh.material = Array.isArray(mesh.material) ? copies : copies[0]
     })
     const get = (name: string) => { const o = scene.getObjectByName(name); if (!o) throw new Error(`Missing sale prop: ${name}`); return o }
-    return { stand: get('market-stand'), crate: get('market-crate'), coin: brandCoin.root, materials: [...materials, ...brandCoin.materials], disposeProps: () => { materials.forEach((m) => m.dispose()); brandCoin.dispose() } }
+    return { stand: get('market-stand'), crate: get('market-crate'), coin: brandCoin.root, fadeCoin: brandCoin.fade, materials: [...materials, ...brandCoin.materials], disposeProps: () => { materials.forEach((m) => m.dispose()); brandCoin.dispose() } }
   }, [propsGLB.scene])
   const anchor = useMemo(() => hero.getObjectByName('text-anchor'), [hero])
   const owned = useRef(props)
@@ -168,6 +172,7 @@ export function MarketTrade({ preview, onTime, onFinished }: { preview: TradePre
     props.stand.rotation.set(0, buying ? -Math.PI / 2 : 0, 0)
     props.stand.scale.setScalar(buying ? .95 : 1)
     props.stand.visible = opacity > .001
+    let receiptOpacity = 1
     if (buying) {
       const rightHand = bones.get('right-hand')!
       const rightPalm = root.current.worldToLocal(rightHand.localToWorld(new Vector3(0, -.23, .165)))
@@ -200,6 +205,20 @@ export function MarketTrade({ preview, onTime, onFinished }: { preview: TradePre
       props.coin.rotation.set(0, .16 + Math.sin(receive * Math.PI) * Math.PI * 2, .05)
       const shrink = 1 - ramp(t, 4.9, 5.4); props.coin.scale.setScalar(Math.max(.001, shrink))
     }
+    if (!buying && preview.receiptId && confirmation) {
+      const cue = receipt.current
+      if (!cue.tried && t >= 3.65) { cue.tried = true; cue.active = preview.playing && t < 4.70 && confirmation.confirm(preview.receiptId, cue.epoch) }
+      if (cue.active && !confirmation.current(cue.epoch)) { cue.active = false; cue.canceled = true }
+      if (cue.active) {
+        // The existing 3D coin stays anchored to the actual animated palm, never a CSS guess.
+        const rise = ramp(t, 4.10, 4.70)
+        props.coin.visible = t >= 3.65 && t < 4.70
+        props.coin.position.copy(palmPoint).add(new Vector3(.12 * rise, .14 + .5 * rise, .10 + .06 * Math.sin(rise * Math.PI)))
+        props.coin.rotation.set(0, .16, .05 + .12 * Math.sin(rise * Math.PI))
+        props.coin.scale.setScalar((.65 + .35 * ramp(t, 3.65, 3.81)) * (1 - .55 * rise))
+        receiptOpacity = ramp(t, 3.65, 3.81) * (1 - rise)
+      } else if (cue.canceled) props.coin.visible = false
+    }
     // A brief bloom of sparks sells the catch; no effect in reduced-motion mode.
     if (sparkle.current) {
       const burst = (t - 3.65) / .65
@@ -212,6 +231,7 @@ export function MarketTrade({ preview, onTime, onFinished }: { preview: TradePre
       }
     }
     fade(props.materials, opacity)
+    props.fadeCoin(opacity * receiptOpacity)
     if (!reduced) smokeRef.current.uniforms.uTime.value = state.clock.elapsedTime
     if (Math.abs(actual - reported.current) > .09) { reported.current = actual; onTime(actual) }
     if (preview.playing && actual >= TRADE_SECONDS && !finished.current) { finished.current = true; onTime(TRADE_SECONDS); onFinished() }

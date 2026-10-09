@@ -48,6 +48,9 @@
 .live-message { display: flex; gap: 8px; }
 .live-message-avatar { display: grid; flex-shrink: 0; place-items: center; height: 24px; width: 24px; border-radius: 50%; background: #302938; color: #D9D9E2; font-size: 13px; }
 .live-mine .live-message-avatar { background: #46345f; color: var(--live-gold); }
+.live-shared-thought { margin: 5px 0 0; padding: 7px 10px; border-left: 2px solid #a78bfa99; background: #a78bfa0d; color: #e2daf3; }
+.live-shared-thought > small { display: block; margin-bottom: 3px; color: #c4b5fd; font-size: 9px; }
+.live-shared-thought > p { margin: 0; }
 .live-event-meta { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px; font-size: 10px; }
 .live-event-meta strong { font-weight: 650; color: #F4F2F8; }
 .live-mine .live-event-meta strong { color: var(--live-gold); }

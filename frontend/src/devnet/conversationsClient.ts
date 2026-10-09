@@ -119,7 +119,7 @@ export function conversationView(entries: readonly PublicConversationEntry[], sn
       round: e.round, recordedAt: e.created_at, source: e.source, ...(e.in_reply_to ? { inReplyTo: e.in_reply_to } : {}) }
     const receipt = e.receipt ? { gamePda: e.game_pda, offerId: e.offer_id, proposerPda: proposer.pda,
       counterpartyPda: counterparty?.pda ?? null, event: e.kind === 'offer_confirmed' ? 'BarterProposed' as const : 'BarterAccepted' as const,
-      signature: e.receipt.signature, slot: e.receipt.slot } : undefined
+      signature: e.receipt.signature, slot: e.receipt.slot, eventId: e.receipt.event_id } : undefined
     if (e.kind === 'offer_confirmed') {
       offers.set(e.entry_id, e)
       rows.push({ ...base, kind: 'offer', give: { quantity: String(e.goods), asset: 'goods' }, receive: { quantity: formatAmount(e.price!), asset: 'alashi' }, receipt })

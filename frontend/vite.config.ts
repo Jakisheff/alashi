@@ -31,7 +31,7 @@ export default defineConfig({
       '/chain': {
         target: 'https://alashi.network', changeOrigin: true,
         bypass(req: import('node:http').IncomingMessage, res: import('node:http').ServerResponse | undefined) {
-          if (req.method !== 'GET' || !/^\/chain\/devnet\/games\/[1-9A-HJ-NP-Za-km-z]{32,44}$/.test((req.url ?? '').split('?')[0])) { if (res) { res.statusCode = 403; res.end() } return false }
+          if (req.method !== 'GET' || !/^\/chain\/devnet\/games\/[1-9A-HJ-NP-Za-km-z]{32,44}(\/conversations)?$/.test((req.url ?? '').split('?')[0])) { if (res) { res.statusCode = 403; res.end() } return false }
         },
       },
       '/game': { target: 'https://alashi.network', changeOrigin: true },
