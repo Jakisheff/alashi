@@ -104,4 +104,14 @@ function harness() {
   h.document.hidden = false; h.events.pageshow(); await h.advance(0)
   assert.equal(h.calls.filter(([m]) => m === 'game').length, 2)
 }
-console.log('devnet RPC polling: 7 behavior checks passed')
+// Hiding during an in-flight game read must not start discovery or activity reads.
+{
+  const h = harness(); let finish
+  h.api.game = () => new Promise((resolve) => { finish = resolve })
+  h.open(); h.document.hidden = true; h.events.visibilitychange()
+  finish(h.game(false, 1)); await flush()
+  assert.deepEqual(h.calls.map(([method]) => method), ['game'])
+  h.document.hidden = false; h.events.visibilitychange(); await h.advance(12_000)
+  assert.equal(h.calls.filter(([method]) => method === 'game').length, 2)
+}
+console.log('devnet RPC polling: 8 behavior checks passed')

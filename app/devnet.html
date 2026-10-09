@@ -126,7 +126,7 @@ async function refresh() {
   if (Date.now() < Math.max(nextPollAt, retryAt)) { scheduleRefresh(); return }
   inFlight = true
   const key = gameKey, run = generation
-  const current = () => run === generation && !stopped
+  const current = () => run === generation && !stopped && !document.hidden
   try {
     const account = await conn.getAccountInfo(key, 'confirmed')
     if (!current()) return
