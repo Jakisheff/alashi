@@ -1,6 +1,6 @@
 import { useGLTF } from '@react-three/drei'
 import { createPortal, useFrame } from '@react-three/fiber'
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Bone, Color, Euler, Group, Mesh, PropertyBinding, Quaternion, Vector3, type Material } from 'three'
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils.js'
 import { useStudioConfirmation } from '../../studio/confirmation'
@@ -8,6 +8,7 @@ import { createBrandCoin } from '../../brand/coin'
 import { ScreenText } from '../../genie/ScreenText'
 import { createSmokeMaterial } from '../../genie/smoke'
 import { PURCHASE_CONTACT, purchaseMotionAt, type PurchaseResult } from './purchase'
+import { saleMotionAt } from './sale'
 
 export const TRADE_SECONDS = 6.4
 export type TradeEntry = 'bottom' | 'side'
@@ -19,7 +20,6 @@ const GOLD_SPARK = new Color(2.4, 1.65, .45)
 const MINT_SPARK = new Color(.6, 1.8, 1.25)
 const smooth = (v: number) => { const x = Math.min(1, Math.max(0, v)); return x * x * (3 - 2 * x) }
 const ramp = (t: number, a: number, b: number) => smooth((t - a) / (b - a))
-const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 type Key = [number, number, number, number]
 function path(t: number, keys: Key[]) {
   if (t <= keys[0][0]) return new Vector3(...keys[0].slice(1) as [number, number, number])
@@ -62,6 +62,13 @@ function fade(materials: Material[], amount: number) {
 }
 
 export function MarketTrade({ preview, onTime, onFinished }: { preview: TradePreview; onTime: (t: number) => void; onFinished: () => void }) {
+  const [reduced, setReduced] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+  useEffect(() => {
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const update = () => setReduced(media.matches)
+    media.addEventListener('change', update)
+    return () => media.removeEventListener('change', update)
+  }, [])
   const heroGLB = useGLTF(HERO), propsGLB = useGLTF(PROPS)
   const confirmation = useStudioConfirmation()
   const receipt = useRef({ epoch: null as number | null, tried: false, active: false, canceled: false })
@@ -108,6 +115,7 @@ export function MarketTrade({ preview, onTime, onFinished }: { preview: TradePre
   const smokeRef = useRef(smoke)
   useEffect(() => { owned.current = props; smokeRef.current = smoke }, [props, smoke])
   const time = useRef(0), reported = useRef(-1), finished = useRef(false)
+  const firstFrame = useRef(true)
   const palmUp = useMemo(() => new Quaternion().setFromAxisAngle(new Vector3(1, 0, 0), -Math.PI / 2), [])
 
   useEffect(() => {
@@ -117,8 +125,8 @@ export function MarketTrade({ preview, onTime, onFinished }: { preview: TradePre
     })
   }, [hero, smoke])
   useEffect(() => () => { smoke.material.dispose(); props.disposeProps() }, [smoke, props])
-  useEffect(() => { time.current = 0; reported.current = -1; finished.current = false }, [preview.take, preview.action])
-  useEffect(() => { if (preview.seek !== null) { time.current = preview.seek; finished.current = false } }, [preview.seek])
+  useEffect(() => { time.current = 0; reported.current = -1; finished.current = false; firstFrame.current = true }, [preview.take, preview.action])
+  useEffect(() => { if (preview.seek !== null) { time.current = Number.isFinite(preview.seek) ? Math.max(0, Math.min(TRADE_SECONDS, preview.seek)) : 0; reported.current = -1; finished.current = false; firstFrame.current = true } }, [preview.seek, preview.take, preview.action])
 
   useFrame((_state, delta) => {
     if (!root.current) return
@@ -126,7 +134,10 @@ export function MarketTrade({ preview, onTime, onFinished }: { preview: TradePre
     // The action follows elapsed time, including a slow frame or a suspended tab.
     const elapsed = Number.isFinite(delta) ? Math.max(0, delta) : 0
     const speed = Number.isFinite(preview.speed) ? Math.max(0, preview.speed) : 1
-    if (preview.playing && !finished.current) time.current = Math.min(TRADE_SECONDS, time.current + elapsed * speed)
+    // A new take/seek starts exactly, even if the previous canvas frame was long ago.
+    const started = firstFrame.current
+    firstFrame.current = false
+    if (preview.playing && !finished.current && !started) time.current = Math.min(TRADE_SECONDS, time.current + elapsed * speed)
     const actual = time.current
     const t = reduced && preview.playing ? (actual < 5.4 ? 4.25 : 6.4) : actual
     const opacity = ramp(t, 0, .6) * (1 - ramp(t, 5.5, 6.4))
@@ -136,7 +147,7 @@ export function MarketTrade({ preview, onTime, onFinished }: { preview: TradePre
     for (const { bone, position, quaternion, scale } of idleLayer.rest) {
       bone.position.copy(position); bone.quaternion.copy(quaternion); bone.scale.copy(scale)
     }
-    const idleTime = reduced ? 0 : actual % 4
+    const idleTime = reduced || t >= TRADE_SECONDS ? 0 : actual % 4
     for (const { bone, property, sample } of idleLayer.tracks) {
       const values = sample.evaluate(idleTime)
       if (property === 'quaternion') bone.quaternion.fromArray(values)
@@ -147,8 +158,8 @@ export function MarketTrade({ preview, onTime, onFinished }: { preview: TradePre
     const buying = preview.action === 'buy'
     const body = bones.get('body')!
     body.position.y = reduced ? 0 : .07 * Math.sin(idleTime * Math.PI)
-    if (buying) {
-      const motion = purchaseMotionAt(t, reduced)
+    {
+      const motion = buying ? purchaseMotionAt(t, reduced) : saleMotionAt(t, reduced)
       body.quaternion.multiply(new Quaternion().setFromEuler(new Euler(motion.pitch, motion.yaw, motion.roll, 'YXZ')))
       body.position.add(new Vector3(motion.x, motion.y, motion.z))
       body.position.y -= reduced ? 0 : .07 * Math.sin(idleTime * Math.PI) * (1 - motion.idleWeight)
@@ -161,7 +172,7 @@ export function MarketTrade({ preview, onTime, onFinished }: { preview: TradePre
       }
     }
     // Counterrotate the supporting palms as the torso tilts under the crate.
-    const palm = buying ? body.quaternion.clone().invert().multiply(palmUp) : palmUp
+    const palm = body.quaternion.clone().invert().multiply(palmUp)
     reach(bones, 'left', path(t, buying ? [[0,.82,-.8,.42],[.9,.88,-.53,.36],[1.35,1.05,-.41,.34],[1.85,1.22,-.43,.32],[2.3,.66,-.65,.44],[2.85,.34,-.82,.42],[3.65,.28,-.80,.43],[4.25,.28,-.76,.43],[4.7,.28,-.80,.43],[5.5,.82,-.8,.42]] : [[0,.82,-.8,.42],[1.45,.82,-.8,.42],[1.85,.82,-.50,.34],[2.15,.83,-.36,.32],[2.8,1.23,-.32,.29],[3.2,1.16,-.48,.32],[3.65,1.02,-.48,.34],[4.15,.94,-.27,.33],[4.65,.94,-.27,.33],[5.5,.82,-.8,.42]]), palm, weight)
     reach(bones, 'right', buying ? path(t, [[0,-.79,-.72,.4],[2,-.79,-.72,.4],[2.8,-.36,-.82,.42],[3.65,-.28,-.80,.43],[4.25,-.28,-.76,.43],[4.7,-.28,-.80,.43],[5.5,-.79,-.72,.4]]) : new Vector3(-.79, -.72, .4), palm, weight)
     // Smile and wink once after payment, then return to the normal sly expression.
@@ -214,7 +225,11 @@ export function MarketTrade({ preview, onTime, onFinished }: { preview: TradePre
       props.crate.visible = opacity > .001 && t < 3.25
       const stock = new Vector3(.82, -.745, .59)
       const held = stock.clone().lerp(palmPoint, ramp(t, 1.45, 1.75))
-      if (t > 2.8) held.lerp(new Vector3(2.9, -.24, .20), ramp(t, 2.8, 3.25))
+      if (t > 2.8) {
+        const pass = ramp(t, 2.8, 3.25)
+        held.lerp(new Vector3(2.9, -.24, .20), pass)
+        held.y += .13 * Math.sin(pass * Math.PI)
+      }
       props.crate.position.copy(held.add(offset)); props.crate.rotation.set(0, -.12 * ramp(t, 1.5, 2.1), 0)
       const receive = ramp(t, 3.0, 3.65)
       props.coin.visible = opacity > .001 && t >= 3 && t < 5.45

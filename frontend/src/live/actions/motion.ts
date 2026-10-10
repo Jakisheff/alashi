@@ -25,12 +25,14 @@ function pose(rig: ScenarioRig, action: ScenarioActionName, time: number, reduce
   // End pose is sampled from idle time zero, exactly matching the starting pose.
   rig.idleAt(time >= ACTION_SECONDS ? 0 : time, reduced)
   const weight = ramp(time, .0, .65) * (1 - ramp(time, 5.85, 6.6))
-  const body = rig.bone('body'), turn = path(time, BODY[action])
+  const body = rig.bone('body'), turn = path(Math.max(0, time - .25), BODY[action]).multiplyScalar(1 - ramp(time, 6.35, 6.6))
   body.quaternion.multiply(new Quaternion().setFromEuler(new Euler(turn.z, turn.x, turn.y, 'YXZ')))
-  // Follow the reach with the whole silhouette, including the tail. Vertical
-  // motion remains exclusively the familiar ±.07 idle hover from the rig.
+  // Quiet the idle hover while acting, so the parcel's catch supplies the dip.
   body.position.x += -.5 * turn.y
   body.position.z += .35 * turn.z
+  const catchDip = action === 'mule' ? ramp(time, 3.3, 3.55) * (1 - ramp(time, 3.65, 4.15)) : 0
+  body.position.y *= 1 - .7 * weight
+  body.position.y -= .04 * catchDip
   rig.reach('left', path(time, LEFT[action]), weight)
   rig.reach('right', path(time, RIGHT[action]), weight)
   if (time > .55 && time < 6.45) {
@@ -41,23 +43,33 @@ function pose(rig: ScenarioRig, action: ScenarioActionName, time: number, reduce
   }
   if (action !== 'vote') {
     const glance = action === 'mule'
-      ? path(time, [[0,0,0,0],[.8,-.055,.01,0],[1.4,.06,0,0],[2.5,.035,-.035,0],[4.35,.03,-.045,0],[4.75,-.055,.015,0],[5.3,.035,0,0],[6.6,0,0,0]])
-      : path(time, [[0,0,0,0],[.85,.045,0,0],[1.35,-.06,.015,0],[2.4,.055,-.035,0],[3.4,.045,-.02,0],[4.8,.055,-.04,0],[5.35,-.045,.01,0],[6.6,0,0,0]])
+      ? path(time + .2, [[0,0,0,0],[.8,-.055,.01,0],[1.4,.06,0,0],[2.5,.035,-.035,0],[4.35,.03,-.045,0],[4.75,-.055,.015,0],[5.3,.035,0,0],[6.6,0,0,0]])
+      : path(time + .2, [[0,0,0,0],[.85,.045,0,0],[1.35,-.06,.015,0],[2.4,.055,-.035,0],[3.4,.045,-.02,0],[4.8,.055,-.04,0],[5.35,-.045,.01,0],[6.6,0,0,0]])
+    const attention = ramp(time, 0, .35) * (1 - ramp(time, 5.85, 6.6))
     for (const side of ['left', 'right']) {
-      rig.bone(`${side}-pupil`).position.x += glance.x * weight
-      rig.bone(`${side}-pupil`).position.y += glance.y * weight
+      rig.bone(`${side}-pupil`).position.x += glance.x * attention
+      rig.bone(`${side}-pupil`).position.y += glance.y * attention
       rig.bone(`${side}-brow`).position.y += (side === 'left' ? .03 : -.01) * weight
     }
     const surprise = action === 'mule' ? ramp(time, 3.55, 3.8) * (1 - ramp(time, 4.1, 4.4)) : 0
     rig.bone('left-lid').scale.y *= 1 - .8 * surprise
     rig.bone('right-lid').scale.y *= 1 - .8 * surprise
     rig.bone('mouth').scale.y += .28 * surprise
-    // Counter-curve through the smoke skeleton follows the torso, with delayed tip recoil.
-    for (let i = 0; i <= 7; i++) {
-      const tail = rig.bone(i ? `tail-${i}` : 'tail')
-      tail.rotation.z += weight * (turn.y * -.55 + .018 * Math.sin(time * 3 - i * .45))
-      tail.rotation.x += weight * turn.z * .16
+  } else {
+    const look = ramp(time, .05, .6) * (1 - ramp(time, 4.7, 5.5))
+    const down = ramp(time, 3.35, 3.8)
+    for (const side of ['left', 'right']) {
+      rig.bone(`${side}-pupil`).position.x += .035 * look
+      rig.bone(`${side}-pupil`).position.y -= (.016 + .022 * down) * look
     }
+  }
+  // The tail trails the torso; its tip follows last, including after the ballot drop.
+  for (let i = 0; i <= 7; i++) {
+    const lag = .38 + i * .035
+    const follow = path(Math.max(0, time - lag), BODY[action])
+    const tail = rig.bone(i ? `tail-${i}` : 'tail')
+    tail.rotation.z += weight * follow.y * -.55
+    tail.rotation.x += weight * (follow.z * .16 + .018 * catchDip)
   }
   if (action === 'mule') {
     const contact = path(time, [[0,.8,-.5,.6],[1.5,.99,-.22,.64],[2.2,.99,-.22,.64],[2.65,1,-.43,.64],[3.3,1,-.43,.64],[3.55,.92,-.50,.64],[3.85,.80,-.43,.64],[4.3,.62,-.50,.64],[5.65,.58,-.55,.64],[6.6,.8,-.6,.64]])

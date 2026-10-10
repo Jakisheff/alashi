@@ -10,6 +10,8 @@ assert.ok(validBase58(pda)); assert.ok(!validBase58('not-a-key')); assert.ok(!va
 assert.equal(formatCash('18446744073709551615'), '18446744073709.551615 alashi')
 assert.equal(visualAction(accepted, actor), 'sell')
 for (const [type, action] of Object.entries({ goods_bought: 'buy', donkey_bought: 'mule', shuttled_ev: 'mule', bribe_given: 'bribe', vote_cast: 'vote' })) assert.equal(visualAction({ ...accepted, type }, actor), action)
+assert.match(eventLabel({ ...accepted, type: 'donkey_bought' }, actor), /goods via Mule/)
+assert.match(eventLabel({ ...accepted, type: 'shuttled_ev' }, actor), /grey goods via Shuttle/)
 assert.equal(visualAction({ ...accepted, faction: pda }, actor), null)
 assert.equal(visualAction({ ...accepted, type: 'produced' }, actor), null, 'production does not invent an emotional cue')
 assert.equal(visualAction({ ...accepted, type: 'payout', wallet: actor.wallet, rank: 1 }, actor), null)

@@ -34,7 +34,7 @@ export function eventLabel(event: ChainEvent, faction: ChainFaction): string {
   if (verb === 'victory') return `${faction.name} won · confirmed payout`
   if (verb === 'buy') return `${faction.name} bought ${event.units !== undefined ? `${event.units} goods` : 'goods'}${event.cost !== undefined ? ` · ${formatCash(event.cost)}` : ''}`
   if (verb === 'sell') return `${faction.name} sold ${event.units !== undefined ? `${event.units} goods` : 'goods'}${event.revenue !== undefined ? ` · ${formatCash(event.revenue)}` : ''}`
-  if (verb === 'mule') return `${faction.name} received goods via Mule`
+  if (verb === 'mule') return `${faction.name} received ${event.type === 'shuttled_ev' ? 'grey goods via Shuttle' : 'goods via Mule'}`
   if (verb === 'bribe') return `${faction.name} gave a bribe${event.amount !== undefined ? ` · ${formatCash(event.amount)}` : ''}`
   if (verb === 'vote') return `${faction.name} voted ${['Yes', 'No', 'Abstain'][event.choice ?? -1] ?? ''}`.trim()
   if (event.type === 'produced') return `${faction.name} produced ${event.goods !== undefined ? `${event.goods} goods` : 'goods'}`

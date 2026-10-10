@@ -16,6 +16,15 @@ const props = createScenarioProps(), root = new Group()
 root.add(glb.scene, props.root)
 props.setDonkeyTexture(new Texture()) // Geometry-only stand-in for the browser-owned cached map.
 const rest = new Map(Array.from(rig.bones, ([name, bone]) => [name, bone.position.toArray()]))
+for (const action of ['mule', 'bribe', 'vote']) {
+  rig.idleAt(.15, false)
+  const body = rig.bone('body').quaternion.clone(), eye = rig.bone('left-pupil').position.clone()
+  applyScenario(rig, props, { action, entry: 'bottom' }, .15)
+  assert(rig.bone('left-pupil').position.distanceTo(eye) > .001, `${action}: eyes must anticipate the torso`)
+  assert.deepEqual(rig.bone('body').quaternion.toArray(), body.toArray(), `${action}: torso moved before its preparation`)
+}
+applyScenario(rig, props, { action: 'mule', entry: 'bottom' }, 3.55)
+assert(rig.bone('body').position.y < -.05, 'Catching the parcel must lower the body')
 const snapshot = () => {
   const values = []
   root.traverse((o) => values.push([o.name, o.visible, ...o.position.toArray(), ...o.quaternion.toArray(), ...o.scale.toArray()]))

@@ -112,6 +112,18 @@ for (const side of ['left', 'right']) {
 }
 rig.reactionAt('thinking', 2.65, 2.65)
 assert.ok(rig.bone('right-hand').quaternion.angleTo(new Quaternion()) < .01, 'Thinking must keep its wrist neutral')
+for (const kind of ['thinking', 'lookout']) {
+  const time = kind === 'thinking' ? .3 : .1
+  rig.idleAt(time)
+  const body = rig.bone('body').quaternion.clone(), eye = rig.bone('left-pupil').position.clone()
+  rig.reactionAt(kind, time, time)
+  assert.ok(rig.bone('left-pupil').position.distanceTo(eye) > .0001, `${kind}: eyes must anticipate the torso`)
+  assert.deepEqual(rig.bone('body').quaternion.toArray(), body.toArray(), `${kind}: torso moved before its preparation`)
+}
+rig.idleAt(.8)
+const leftArm = rig.bone('left-arm').quaternion.clone(), rightArm = rig.bone('right-arm').quaternion.clone()
+rig.reactionAt('victory', .8, .8)
+assert.ok(rig.bone('left-arm').quaternion.angleTo(leftArm) > rig.bone('right-arm').quaternion.angleTo(rightArm), 'Victory must lead with one arm')
 rig.idleAt(0)
 const origin = snapshot(hero)
 rig.idleAt(LIVING_IDLE_SECONDS)

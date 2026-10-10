@@ -1,7 +1,12 @@
 # Mule / Bribe / Vote visual previews
 
-Local modules only. No changes to MarketTrade, LivePage, routes, CSS, shared
-reaction logic, canonical Blender files, server docs or Git state.
+Animation review follows the mandatory [Lasseter canon](../../../../docs/200_ZETTEL/20261010-lasseter-animation-canon.md).
+The 10 October pass adds eye anticipation, a whole-body parcel catch and delayed
+tail response across these scenes. Existing hand support and ballot clearance
+remain acceptance criteria. Run `npm run check:animations` from `frontend`.
+
+These scenes run in the local preview, public stream and devnet viewer.
+The parent selects events and owns confirmation; this module owns poses and props.
 
 ## Integration
 
@@ -37,8 +42,8 @@ Cached loader assets are not disposed when a preview unmounts.
 [`mule-courier-v1.webp`](../../../public/images/live/mule-courier-v1.webp) is a
 transparent, generated/edit-derived adaptation of Amir's
 `degenie-five-actions-concept-20261008.png`. It reconstructs the masked donkey
-with packbags from that reference; it is **not a literal pixel crop**.
-The supplied WebP is **640 × 768 pixels, 77,834 bytes**, with alpha transparency.
+with packbags from that reference; it is not a literal pixel crop.
+The supplied WebP is 640 × 768 pixels, 77,834 bytes, with alpha transparency.
 
 `MuleReference.tsx` mounts only for Mule and lazily loads the asset through Drei
 `useTexture` using `BASE_URL`. Bribe, Vote and reactions do not request it.
@@ -48,19 +53,19 @@ and is retained across replays. The final scene contains no procedural donkey.
 
 ## Game semantics and artistic interpretation
 
-- **Mule / Donkey:** [`donkey`](../../../../rules/src/actions.rs) charges
-  `DONKEY_PRICE * PESO`, with `DONKEY_PRICE = 1`, and adds **one good**. The
+- Mule / Donkey: [`donkey`](../../../../rules/src/actions.rs) charges
+  `DONKEY_PRICE * PESO`, with `DONKEY_PRICE = 1`, and adds one good. The
   animation therefore pays one peso, receives one parcel and keeps it beside
   the agent's own sack. It does not depict selling or delivering outgoing goods.
-  **Shuttle is distinct:** its base reward is three grey goods, with the active
+  Shuttle is distinct: its base reward is three grey goods, with the active
   goods subsidy applied by the rules. Mule does not mark its received good grey.
-- **Bribe:** the official, desk and paperwork are an **artistic metaphor** for a
+- Bribe: the official, desk and paperwork are an artistic metaphor for a
   discreet exchange. The actual `bribe` rule transfers the payment to another
   (rival) faction and increases the paying faction's influence by
   `amount / BRIBE_PRICE`, subject to rule validation. There is no official NPC
   receiving the money in the game state.
-- **Vote:** the original ballot gesture, timing and public API are preserved.
-  Only scene scale (.86) and horizontal offset (-.10) change to fit the whole urn.
+- Vote: the original ballot gesture, timing and public API are preserved.
+  The 10 October pass adds earlier gaze and delayed torso/tail response while keeping the ballot release times and hand targets.
 
 All scenes remain visual previews; an animation is not evidence that an action
 was accepted by the server.
@@ -104,8 +109,8 @@ triangle-intersection proof and do not replace visual review. Opaque action
 frames are projected at 20 Hz through four camera aspects (.60, .80, 1, 1.20);
 the final maximum normalized extent was .9792 (Vote), below the .98 limit.
 
-Completed browser review includes captured sequences from **two full playbacks
-per action**, 31 paused keyframes, 38 transition frames in .1-second increments,
+Completed browser review includes captured sequences from two full playbacks
+per action, 31 paused keyframes, 38 transition frames in .1-second increments,
 reverse scrubs, both entrances, eight mobile frames and reduced-motion playback
 plus paused scrubbing. Enlarged contact crops were inspected after correcting
 the floating props and cap. There were no page errors or mobile horizontal

@@ -43,6 +43,9 @@ those criteria and include the relevant principles and visual evidence in the PR
 Keep the character's intent and the confirmed consequence of its action readable.
 Ivan owns the truth and provenance of event data; Din owns its visual expression.
 Describe any deliberate exception and its effect on readability in the PR.
+For frontend animation changes, run `npm run build` and `npm run check:animations`
+from `frontend/`, then review the changed scenes in the browser. Geometry checks
+do not replace visual review or a new viewer's comprehension test.
 
 ## Game implementation
 
