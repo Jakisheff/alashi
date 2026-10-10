@@ -9,6 +9,7 @@ import { ScreenText } from '../../genie/ScreenText'
 import { createSmokeMaterial } from '../../genie/smoke'
 import { PURCHASE_CONTACT, purchaseMotionAt, type PurchaseResult } from './purchase'
 import { saleMotionAt } from './sale'
+import { BUY_COUNTER, poseTradeHands, purchaseCrateOpacity, purchaseCratePosition } from './hands'
 
 export const TRADE_SECONDS = 6.4
 export type TradeEntry = 'bottom' | 'side'
@@ -20,42 +21,6 @@ const GOLD_SPARK = new Color(2.4, 1.65, .45)
 const MINT_SPARK = new Color(.6, 1.8, 1.25)
 const smooth = (v: number) => { const x = Math.min(1, Math.max(0, v)); return x * x * (3 - 2 * x) }
 const ramp = (t: number, a: number, b: number) => smooth((t - a) / (b - a))
-type Key = [number, number, number, number]
-function path(t: number, keys: Key[]) {
-  if (t <= keys[0][0]) return new Vector3(...keys[0].slice(1) as [number, number, number])
-  for (let i = 1; i < keys.length; i++) {
-    if (t <= keys[i][0]) {
-      const a = keys[i - 1], b = keys[i], k = ramp(t, a[0], b[0])
-      return new Vector3(a[1], a[2], a[3]).lerp(new Vector3(b[1], b[2], b[3]), k)
-    }
-  }
-  const last = keys.at(-1)!
-  return new Vector3(last[1], last[2], last[3])
-}
-
-// Preview pose layer shared by buy and sell. Bone lengths/positions stay fixed: solve the elbow and rotate joints.
-function reach(bones: Map<string, Bone>, side: string, target: Vector3, palm: Quaternion, weight: number) {
-  const arm = bones.get(`${side}-arm`)!, forearm = bones.get(`${side}-forearm`)!, hand = bones.get(`${side}-hand`)!
-  const shoulder = arm.position.clone(), l1 = forearm.position.length(), l2 = hand.position.length()
-  const delta = target.clone().sub(shoulder), distance = Math.min(delta.length(), l1 + l2 - .003)
-  const axis = delta.normalize(), pole = new Vector3(side === 'left' ? 1 : -1, -.4, -.25)
-  pole.addScaledVector(axis, -pole.dot(axis)).normalize()
-  const along = (l1 * l1 - l2 * l2 + distance * distance) / (2 * distance)
-  const elbow = shoulder.clone().addScaledVector(axis, along).addScaledVector(pole, Math.sqrt(Math.max(0, l1 * l1 - along * along)))
-  const wrist = shoulder.clone().addScaledVector(axis, distance)
-  const down = new Vector3(0, -1, 0)
-  const qa = new Quaternion().setFromUnitVectors(down, elbow.clone().sub(shoulder).normalize())
-  const qf = new Quaternion().setFromUnitVectors(down, wrist.clone().sub(elbow).normalize())
-  arm.quaternion.slerp(qa, weight)
-  forearm.quaternion.slerp(qa.clone().invert().multiply(qf), weight)
-  hand.quaternion.slerp(qf.clone().invert().multiply(palm), weight)
-  for (const part of ['point', 'middle', 'curl']) {
-    for (const [suffix, bend] of [['', 0], ['-mid', 0], ['-tip', 0]] as const) {
-      const bone = bones.get(`${side}-${part}${suffix}`)!
-      bone.quaternion.slerp(new Quaternion().setFromAxisAngle(new Vector3(1, 0, 0), bend), weight)
-    }
-  }
-}
 
 function fade(materials: Material[], amount: number) {
   for (const m of materials) { m.opacity = amount; m.depthWrite = amount > .98 }
@@ -108,7 +73,9 @@ export function MarketTrade({ preview, onTime, onFinished }: { preview: TradePre
       mesh.material = Array.isArray(mesh.material) ? copies : copies[0]
     })
     const get = (name: string) => { const o = scene.getObjectByName(name); if (!o) throw new Error(`Missing sale prop: ${name}`); return o }
-    return { stand: get('market-stand'), crate: get('market-crate'), coin: brandCoin.root, fadeCoin: brandCoin.fade, materials: [...materials, ...brandCoin.materials], disposeProps: () => { materials.forEach((m) => m.dispose()); brandCoin.dispose() } }
+    const crate = get('market-crate'), crateMaterials: Material[] = []
+    crate.traverse((o) => { const mesh = o as Mesh; if (mesh.isMesh) crateMaterials.push(...(Array.isArray(mesh.material) ? mesh.material : [mesh.material])) })
+    return { stand: get('market-stand'), crate, crateMaterials, coin: brandCoin.root, fadeCoin: brandCoin.fade, materials: [...materials, ...brandCoin.materials], disposeProps: () => { materials.forEach((m) => m.dispose()); brandCoin.dispose() } }
   }, [propsGLB.scene])
   const anchor = useMemo(() => hero.getObjectByName('text-anchor'), [hero])
   const owned = useRef(props)
@@ -154,7 +121,6 @@ export function MarketTrade({ preview, onTime, onFinished }: { preview: TradePre
       else if (property === 'scale') bone.scale.fromArray(values)
       else bone.position.fromArray(values)
     }
-    const weight = ramp(t, .55, 1.1) * (1 - ramp(t, 4.9, 5.6))
     const buying = preview.action === 'buy'
     const body = bones.get('body')!
     body.position.y = reduced ? 0 : .07 * Math.sin(idleTime * Math.PI)
@@ -173,8 +139,7 @@ export function MarketTrade({ preview, onTime, onFinished }: { preview: TradePre
     }
     // Counterrotate the supporting palms as the torso tilts under the crate.
     const palm = body.quaternion.clone().invert().multiply(palmUp)
-    reach(bones, 'left', path(t, buying ? [[0,.82,-.8,.42],[.9,.88,-.53,.36],[1.35,1.05,-.41,.34],[1.85,1.22,-.43,.32],[2.3,.66,-.65,.44],[2.85,.34,-.82,.42],[3.65,.28,-.80,.43],[4.25,.28,-.76,.43],[4.7,.28,-.80,.43],[5.5,.82,-.8,.42]] : [[0,.82,-.8,.42],[1.45,.82,-.8,.42],[1.85,.82,-.50,.34],[2.15,.83,-.36,.32],[2.8,1.23,-.32,.29],[3.2,1.16,-.48,.32],[3.65,1.02,-.48,.34],[4.15,.94,-.27,.33],[4.65,.94,-.27,.33],[5.5,.82,-.8,.42]]), palm, weight)
-    reach(bones, 'right', buying ? path(t, [[0,-.79,-.72,.4],[2,-.79,-.72,.4],[2.8,-.36,-.82,.42],[3.65,-.28,-.80,.43],[4.25,-.28,-.76,.43],[4.7,-.28,-.80,.43],[5.5,-.79,-.72,.4]]) : new Vector3(-.79, -.72, .4), palm, weight)
+    poseTradeHands(bones, buying, t, palm)
     // Smile and wink once after payment, then return to the normal sly expression.
     bones.get('mouth')!.scale.y = .6 + .22 * ramp(t, 3.65, 4.15) * (1 - ramp(t, 4.65, 5.3))
     const wink = buying ? 0 : ramp(t, 3.85, 4.0) * (1 - ramp(t, 4.18, 4.4))
@@ -195,7 +160,7 @@ export function MarketTrade({ preview, onTime, onFinished }: { preview: TradePre
     // with straight supporting fingers, rather than intersecting the hand volume.
     const palmPoint = root.current.worldToLocal(hand.localToWorld(new Vector3(0, -.23, .165)))
     const offset = preview.entry === 'bottom' ? new Vector3(0, -1.8 * (1 - opacity), 0) : new Vector3(3.1 * (1 - opacity), 0, 0)
-    props.stand.position.copy((buying ? new Vector3(1.0, -.61, .22) : new Vector3(0, -.8, .62)).add(offset))
+    props.stand.position.copy((buying ? BUY_COUNTER.clone() : new Vector3(0, -.8, .62)).add(offset))
     props.stand.rotation.set(0, buying ? -Math.PI / 2 : 0, 0)
     props.stand.scale.setScalar(buying ? .95 : 1)
     props.stand.visible = opacity > .001
@@ -204,16 +169,9 @@ export function MarketTrade({ preview, onTime, onFinished }: { preview: TradePre
       const rightHand = bones.get('right-hand')!
       const rightPalm = root.current.worldToLocal(rightHand.localToWorld(new Vector3(0, -.23, .165)))
       const receive = ramp(t, 2.7, PURCHASE_CONTACT)
-      // Both palms sit under the crate; the bottom stays above the palm buttons/fingers.
-      const supported = palmPoint.clone().add(rightPalm).multiplyScalar(.5)
-      supported.y = Math.max(palmPoint.y, rightPalm.y)
-      // The buyer stays beside the stall: goods wait on the right-hand counter
-      // until payment has left, then travel into his palms. Seller stays off-screen.
-      props.crate.visible = opacity > .001
-      props.crate.position.copy(new Vector3(1.0, -.555, .44).lerp(supported, receive).add(offset))
-      // After contact the settling comes from the supporting body and palms,
-      // rather than letting the crate oscillate independently through the hands.
-      props.crate.position.y += .13 * Math.sin(receive * Math.PI)
+      // Fade the goods while both palms still support them, then withdraw the arms.
+      props.crate.visible = opacity > .001 && purchaseCrateOpacity(t) > .001
+      props.crate.position.copy(purchaseCratePosition(t, palmPoint, rightPalm).add(offset))
       props.crate.rotation.set(0, -.18 * (1 - receive), .045 * Math.sin(receive * Math.PI))
       const pay = ramp(t, 1.3, 2.35)
       props.coin.visible = opacity > .001 && t >= .65 && t < 2.4
@@ -263,6 +221,7 @@ export function MarketTrade({ preview, onTime, onFinished }: { preview: TradePre
       }
     }
     fade(props.materials, opacity)
+    if (buying) fade(props.crateMaterials, opacity * purchaseCrateOpacity(t))
     props.fadeCoin(opacity * receiptOpacity)
     if (!reduced) smokeRef.current.uniforms.uTime.value = actual
     if (Math.abs(actual - reported.current) > .09) { reported.current = actual; onTime(actual) }
