@@ -1,5 +1,10 @@
 # Live D preview
 
+Every animation change follows the mandatory [Lasseter canon](../../../docs/200_ZETTEL/20261010-lasseter-animation-canon.md).
+State intent and key poses before implementation, review the applicable principles
+in the rendered sequence, and attach phone-sized visual evidence before handoff.
+Run `npm run build` and `npm run check:animations` from `frontend`.
+
 `/live` is a separate React route for Din's responsive 9:16 stream design.
 It reuses the current Degenie GLB and scene, with a green background and viewer
 interaction disabled. The home page and desktop companion keep their defaults.
@@ -25,8 +30,8 @@ lifts and offers a crate, receives a ALASHI ∀ coin, smiles and winks once,
 then returns to its idle hover. Props are hidden outside this sequence. The coin
 mark is decorative; it adds no Bitcoin balance, payment or transaction.
 
-Use **Sell / Replay Sell** to play it, the timeline to inspect frames,
-and **Entrance** to choose below or right. A successful sale by Alpha in the
+Use Sell / Replay Sell to play it, the timeline to inspect frames,
+and Entrance to choose below or right. A successful sale by Alpha in the
 conversation fixture also triggers it. Reduced motion shows a representative
 pose while playing. The guarded `/stream` maps confirmed own-actor Buy/Sell events to these scenes.
 Production backend/Nginx release remains a coordinated dependency.
@@ -39,7 +44,7 @@ in `art/experiments/`; the meshopt asset is in `public/models/experiments/`.
 
 ## Market buy preview
 
-**Buy / Replay Buy** uses the same props and isolated runtime: a ALASHI ∀
+Buy / Replay Buy uses the same props and isolated runtime: a ALASHI ∀
 coin leaves toward an off-screen seller at a counter on the right, turned sideways.
 The crate waits on that counter until payment, then comes into both supporting
 palms. The buyer stands beside the counter. A small lift, settling motion, smile and brief gold/mint

@@ -6,6 +6,14 @@ this delivery adds the connection guide and this inventory, not another model.
 `/live` is the local animation preview. `/devnet?game=<GamePDA>` consumes the
 confirmed chain journal and has same-page player selection and private owner access.
 
+Animation handoff and acceptance follow the mandatory [Lasseter canon](../../../docs/200_ZETTEL/20261010-lasseter-animation-canon.md).
+Ivan owns confirmed event data; Din owns readable intent, movement and contact.
+Every scene change needs a stated intent, key poses and a review of each
+principle's application. Correct failed contact or unclear staging before
+handoff, attach phone-sized visual evidence and record untested criteria.
+Run `npm run build` and `npm run check:animations` from `frontend` for animation
+changes; successful geometry checks supplement visual acceptance.
+
 ## Available scenes
 
 | Animation | Duration | Behavior and props | `/devnet` trigger |
@@ -16,7 +24,7 @@ confirmed chain journal and has same-page player selection and private owner acc
 | Mule | 7.2 s | Look around, pay courier donkey, receive parcel, retain goods and wink | `donkey_bought` or `shuttled_ev` for the selected faction |
 | Bribe | 7.2 s | Discreet glances, chest-level envelope exchange with a stylized official and paperwork | `bribe_given` from the selected faction |
 | Vote | 7.2 s | Turn toward urn, raise ballot, release through slot and recover | `vote_cast` for the selected faction |
-| Victory | 5.2 s | Whole-body celebration, raised fists and three finite fireworks bursts behind the character | Confirmed `payout` with rank **0** and the selected faction wallet |
+| Victory | 5.2 s | Whole-body celebration, raised fists and three finite fireworks bursts behind the character | Confirmed `payout` with rank 0 and the selected faction wallet |
 | Thumbs up | 5.2 s | Raised thumb, neutral wrist and whole-body nod | Explicit preview or separately agreed public agent cue |
 | Realization | 5.2 s | Hands outside temples, bow and downward gaze, then recover | Explicit preview or separately agreed public agent cue |
 | Facepalm | 5.2 s | Palm approaches the upper face; body sighs and bows | Explicit preview or separately agreed public agent cue |
@@ -57,9 +65,9 @@ viewer does not invent thoughts or display private wishes as public speech.
 
 ## Assets and inspection
 
-Shared hero: `public/models/desk-genie.glb`, **564,672 bytes**. Buy/Sell props:
-`public/models/experiments/market-sale-props.glb`, **214,056 bytes**, loaded on
-trade. Mule cutout: `public/images/live/mule-courier-v1.webp`, **77,834 bytes**,
+Shared hero: `public/models/desk-genie.glb`, 564,672 bytes. Buy/Sell props:
+`public/models/experiments/market-sale-props.glb`, 214,056 bytes, loaded on
+trade. Mule cutout: `public/images/live/mule-courier-v1.webp`, 77,834 bytes,
 loaded for Mule only. It is a generated adaptation of Amir's donkey reference,
 not a literal crop or articulated donkey. Other props/fireworks are procedural.
 Runtime reactions do not duplicate the GLB per animation. Normal browser caching

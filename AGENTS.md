@@ -42,7 +42,15 @@ animated actions or their event contracts. Review animation changes against
 those criteria and include the relevant principles and visual evidence in the PR.
 Keep the character's intent and the confirmed consequence of its action readable.
 Ivan owns the truth and provenance of event data; Din owns its visual expression.
-Describe any deliberate exception and its effect on readability in the PR.
+This standing rule covers every action, reaction, idle, legacy clip and new scene,
+including previews, public streams and replay. Before implementation, state the
+character's intent and key poses; record each principle's application or the
+reason it does not apply. The visual reference specifies appearance; Lasseter's
+canon specifies staging and movement. Check both against the rendered scene.
+Do not mark animation work ready until the applicable principles pass visual
+review and the evidence is attached. Correct failed contacts or unclear staging
+before handoff. Record untested criteria and any deliberate exception, its reason
+and visual evidence; passing geometry checks alone cannot establish readiness.
 For frontend animation changes, run `npm run build` and `npm run check:animations`
 from `frontend/`, then review the changed scenes in the browser. Geometry checks
 do not replace visual review or a new viewer's comprehension test.
