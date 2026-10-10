@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Монета Alashi</title>
+<style>
+  *{box-sizing:border-box}body{margin:0;background:#111018;color:#F4F2F8;font-family:system-ui,sans-serif;text-align:center}
+  h1{font-family:Georgia,serif;font-weight:400;letter-spacing:.12em;font-size:22px;margin:24px 0 8px}p{color:#aaa4bb;font-size:13px;margin:0 16px 16px}
+  canvas{display:block;width:min(82vh,100%);height:auto;aspect-ratio:1;margin:auto}
+  nav{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin:16px}button{font:inherit;color:inherit;background:#211c30;border:1px solid #5b4d75;padding:9px 14px;border-radius:7px;cursor:pointer}button:focus-visible{outline:2px solid #A78BFA;outline-offset:3px}
+</style>
+<h1>ALASHI NETWORK</h1>
+<p>Монета по выбранному концепту Амира</p>
+<canvas aria-label="Объёмная монета: лиловое поле, серебристый обод и рельефный знак ∀"></canvas>
+<nav aria-label="Ракурс монеты"><button data-view="reference">Как на концепте</button><button data-view="front">Спереди</button><button data-view="back">Оборотная сторона</button><button id="download">Скачать PNG</button></nav>
+<script type="module" src="./brand-coin-review.ts"></script>
+</html>
