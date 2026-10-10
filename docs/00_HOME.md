@@ -4,6 +4,8 @@
 
 ## Карта
 
+- [Канон анимации по Лассетеру](200_ZETTEL/20261010-lasseter-animation-canon.md): решение Амира, требования к работе Ивана и Дина.
+
 - [MOC-Product](100_MOC/MOC-Product.md): продукт, питч, позиционирование
 - [MOC-Specs](100_MOC/MOC-Specs.md): спецификации механик и архитектура
 - [MOC-Evidence](100_MOC/MOC-Evidence.md): канон чисел и данные партий

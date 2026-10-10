@@ -4,6 +4,7 @@ import { BrandMark } from '../brand/BrandMark'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { Component, lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { MarketTrade, type TradePreview } from '../live/market/MarketTrade'
+import { PurchaseReceipt } from '../live/market/PurchaseReceipt'
 import { ScenarioAction, type ScenarioPreview } from '../live/actions'
 import { LivingGenie, type ReactionPreview } from '../live/reactions'
 import { validRecord } from '../live/api/client'
@@ -69,6 +70,9 @@ function GameViewer({ pda, initialPlayer, ownerRecord, setup, detailsTab, onTabC
   const [playing, setPlaying] = useState(false)
   const [position, setPosition] = useState(-1)
   const [take, setTake] = useState(0)
+  const [tradeClock, setTradeClock] = useState({ take: -1, time: 0 })
+  const tradeTime = tradeClock.take === take ? tradeClock.time : 0
+  const reportTradeTime = useCallback((time: number) => { setTradeClock({ take, time }) }, [take])
   const [replayRevision, setReplayRevision] = useState(0)
   const [replayEvents, setReplayEvents] = useState<ChainEvent[]>([])
   const [now, setNow] = useState(Date.now())
@@ -137,7 +141,10 @@ function GameViewer({ pda, initialPlayer, ownerRecord, setup, detailsTab, onTabC
   }, [snapshot, faction, selected, observed])
   const running = mode === 'live' || playing
   const preview = { take, playing: running, speed: 1, seek: null, entry: 'bottom' as const }
-  const trade: TradePreview | null = action === 'buy' || action === 'sell' ? { ...preview, action, receiptId: mode === 'live' && action === 'sell' ? current?.id : undefined } : null
+  const trade: TradePreview | null = action === 'buy' || action === 'sell' ? {
+    ...preview, action, receiptId: mode === 'live' ? current?.id : undefined,
+    purchase: action === 'buy' && current?.type === 'goods_bought' ? { source: 'solana', replay: mode === 'replay', units: current.units, cost: current.cost } : undefined,
+  } : null
   const scenario: ScenarioPreview | null = action === 'mule' || action === 'bribe' || action === 'vote' ? { ...preview, action } : null
   const reaction: ReactionPreview | null = action === 'victory' ? { ...preview, kind: 'victory' } : null
   const connection = error ? (snapshot ? 'Reconnecting' : 'Unavailable') : !snapshot ? 'Connecting' : mode === 'replay' ? 'Replay' : snapshot.settled ? 'Finished' : 'On-chain'
@@ -176,7 +183,7 @@ function GameViewer({ pda, initialPlayer, ownerRecord, setup, detailsTab, onTabC
             </>}
           </div>}
         </div>
-        <div ref={heroElement} className="live-hero" data-action={action ?? 'idle'}><div className="live-scene"><HeroBoundary><Suspense fallback={<p className="live-hero-fallback">Loading Degenie…</p>}><StudioStage><Scene frozen={null} background={null} studio interactive={false}>{trade ? <MarketTrade preview={trade} onTime={ignoreTime} onFinished={finish} /> : scenario ? <ScenarioAction preview={scenario} onTime={ignoreTime} onFinished={finish} /> : <LivingGenie reaction={reaction} onFinished={finish} />}</Scene></StudioStage></Suspense></HeroBoundary></div></div>
+        <div ref={heroElement} className="live-hero" data-action={action ?? 'idle'}><div className="live-scene"><HeroBoundary><Suspense fallback={<p className="live-hero-fallback">Loading Degenie…</p>}><StudioStage><Scene frozen={null} background={null} studio interactive={false}>{trade ? <MarketTrade preview={trade} onTime={reportTradeTime} onFinished={finish} /> : scenario ? <ScenarioAction preview={scenario} onTime={ignoreTime} onFinished={finish} /> : <LivingGenie reaction={reaction} onFinished={finish} />}</Scene></StudioStage></Suspense></HeroBoundary></div>{trade?.action === 'buy' && <PurchaseReceipt result={trade.purchase} time={tradeTime} />}</div>
         <p className="devnet-action-caption" role="status">{displayEvent && faction ? eventLabel(displayEvent, faction) : waiting ? 'Loading actions…' : 'No confirmed actions yet.'}</p>
         {snapshot && <ChainConversationStream variant="stage" confirmedActions={feedEvents.map((e) => { const actor = snapshot.factions.find((f) => f.pda === e.faction || f.pda === e.from || f.wallet === e.wallet) ?? faction; return { id: e.id, label: actor ? eventLabel(e, actor) : e.type, signature: e.signature, selected: selectedEventIds.has(e.id) } })} gamePda={pda} mode={mode === 'replay' ? 'replay' : ['Finished', 'Aborted'].includes(snapshot.phase) ? 'finished' : 'live'} selectedPlayer={faction ? { pda: faction.pda, name: faction.name } : null} entries={conversations.rows} connection={journal.connection} historyComplete={journal.historyComplete && !conversations.unmatched} onRetry={journal.retry} />}
         <footer className="live-frame-footer"><span>{mode === 'replay' ? 'Replay · shortened pauses' : error ? 'Last received snapshot' : 'Confirmed actions'}</span><span>{short(pda)}</span></footer>

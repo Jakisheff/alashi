@@ -39,6 +39,7 @@ export function ScenarioAction({ preview, onTime, onFinished }: {
   const anchor = useMemo(() => hero.getObjectByName('text-anchor'), [hero])
   const reduced = useReducedMotion()
   const time = useRef(0), lastReport = useRef(-1), finished = useRef(false)
+  const firstFrame = useRef(true)
 
   useEffect(() => {
     smokeRef.current = smoke
@@ -51,18 +52,20 @@ export function ScenarioAction({ preview, onTime, onFinished }: {
     return () => { smoke.material.dispose(); props.dispose() }
   }, [hero, smoke, props])
   useEffect(() => {
-    time.current = 0; lastReport.current = -1; finished.current = false
+    time.current = 0; lastReport.current = -1; finished.current = false; firstFrame.current = true
   }, [preview.take, preview.action])
   useEffect(() => {
     if (preview.seek !== null) {
-      time.current = clampTime(preview.seek); lastReport.current = -1; finished.current = false
+      time.current = clampTime(preview.seek); lastReport.current = -1; finished.current = false; firstFrame.current = true
     }
   }, [preview.seek, preview.take, preview.action])
 
   useFrame((_, delta) => {
     const speed = Number.isFinite(preview.speed) ? Math.max(0, preview.speed) : 1
     const elapsed = Number.isFinite(delta) ? Math.max(0, delta) : 0
-    if (preview.playing && !finished.current) time.current = Math.min(ACTION_SECONDS, time.current + elapsed * speed)
+    const started = firstFrame.current
+    firstFrame.current = false
+    if (preview.playing && !finished.current && !started) time.current = Math.min(ACTION_SECONDS, time.current + elapsed * speed)
     const actual = time.current
     const shown = displayTime(preview.action, actual, reduced, preview.playing)
     applyScenario(rig, props, preview, shown, reduced)

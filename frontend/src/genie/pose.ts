@@ -40,6 +40,10 @@ export const CLIP_SECONDS: Record<GenieClip, number> = {
   fuckOff: 5.8,
 }
 
+export const CLIP_REDUCED_FRAME: Record<GenieClip, number> = {
+  idle: 0, act: .45, accepted: .55, rejected: .95, fuckOff: 3.9,
+}
+
 const REST: Pose = {
   y: 0,
   tiltX: 0,

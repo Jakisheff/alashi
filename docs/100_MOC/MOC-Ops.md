@@ -65,3 +65,7 @@
 
 - [MOC-Evidence](MOC-Evidence.md)
 - [MOC-Product](MOC-Product.md)
+
+## Проверка анимации
+
+- [Ревью по Лассетеру, 10.10.2026](../ops/ANIMATION_REVIEW_20261010.md): исходное состояние main 485e8ba, до доработки покупки.

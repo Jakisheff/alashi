@@ -1,8 +1,13 @@
-# Living Genie — isolated runtime layer
+# Living Genie: runtime layer
+
+Animation review follows the mandatory [Lasseter canon](../../../../docs/200_ZETTEL/20261010-lasseter-animation-canon.md).
+The 10 October pass separates eye and body timing, staggers the hands in Shrug
+and Victory, and makes the tail follow each gesture's effort. Run
+`npm run check:animations` from `frontend`, then review the poses in the browser.
 
 This directory supplies a Canvas child for the `/live` preview and the real stream.
 The parent owns page integration, event/cue selection, controls and browser review.
-No page, API, existing hero component, market/action runtime or Blender file is modified.
+This module owns its skeleton and visual effects; confirmed event selection remains with the parent.
 
 ```tsx
 import { LivingGenie, REACTION_SECONDS, REACTION_KEYFRAMES } from './reactions'

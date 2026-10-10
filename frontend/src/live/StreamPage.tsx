@@ -8,6 +8,7 @@ import { createLiveApi, friendlyError, validRecord, type AgentSlot, type PublicE
 import { OwnerPanel } from './api/OwnerPanel'
 import { usePublicStream } from './api/usePublicStream'
 import { MarketTrade, type TradePreview } from './market/MarketTrade'
+import { PurchaseReceipt } from './market/PurchaseReceipt'
 import { ScenarioAction, type ScenarioPreview } from './actions'
 import { LivingGenie, type ReactionPreview } from './reactions'
 import { ThoughtBubble } from './ThoughtBubble'
@@ -45,6 +46,9 @@ function ConnectedStream({ record, onChange }: { record: string; onChange: () =>
   const [now, setNow] = useState(Date.now)
   const [following, setFollowing] = useState(true)
   const [trade, setTrade] = useState<TradePreview | ScenarioPreview | null>(null)
+  const [tradeClock, setTradeClock] = useState({ take: -1, time: 0 })
+  const tradeTime = tradeClock.take === trade?.take ? tradeClock.time : 0
+  const reportTradeTime = useCallback((time: number) => { setTradeClock({ take: trade?.take ?? -1, time }) }, [trade?.take])
   const [reaction, setReaction] = useState<ReactionPreview | null>(null)
   const [sharedThought, setSharedThought] = useState('')
   const [reactionTime, setReactionTime] = useState(0)
@@ -68,7 +72,7 @@ function ConnectedStream({ record, onChange }: { record: string; onChange: () =>
     if (e.kind === 'game_action' && slotRef.current.some((s) => s.gameId === e.gameId && s.actor === e.actor) && ['buy', 'sell', 'donkey', 'bribe', 'vote'].includes(e.action ?? '')) {
       const action = e.action === 'donkey' ? 'mule' : e.action as TradePreview['action'] | ScenarioPreview['action']
       if (!stageInViewport(heroElement.current)) return
-      const preview = { receiptId: action === 'sell' ? e.id : undefined, action, take: ++take.current, playing: true, speed: 1, entry: 'bottom' as const, seek: null }
+      const preview = { receiptId: action === 'sell' || action === 'buy' ? e.id : undefined, purchase: action === 'buy' ? { source: 'arena' as const } : undefined, action, take: ++take.current, playing: true, speed: 1, entry: 'bottom' as const, seek: null }
       if (tradeRef.current) { pending.current = [...pending.current, preview].slice(-2); return }
       tradeRef.current = preview; setReaction(null); setTrade(preview)
     }
@@ -115,7 +119,7 @@ function ConnectedStream({ record, onChange }: { record: string; onChange: () =>
     <section className="live-frame" aria-label="Real public agent stream">
       <div className="live-host"><span className="live-avatar">α</span><div><strong>Agent {short(record)}</strong><span>Personal stream · Degenie</span></div><span className="live-air">{stream.presence === 'connected' ? 'Agent online' : stream.presence === 'offline' ? 'Agent offline' : 'Presence unknown'}</span></div>
       <div className="live-context"><span>{slot ? `Game ${slot.gameId} · round ${slot.round}` : profileError ? 'Game context unavailable' : 'Between games'}</span><strong>{slot?.phase ?? 'Personal room'}</strong><div className="live-deadline"><b>{seconds === null ? '—' : `${Math.floor(seconds / 60).toString().padStart(2, '0')}:${(seconds % 60).toString().padStart(2, '0')}`}</b><small>{seconds === null ? 'awaiting server context' : seconds === 0 ? 'awaiting next phase' : 'phase ends in'}</small></div></div>
-      <div ref={heroElement} className="live-hero" data-action={trade?.action ?? 'idle'}><StreamHeroBoundary><Suspense fallback={<p className="live-hero-fallback">Loading Degenie…</p>}><StudioStage><Scene frozen={null} background={null} studio interactive={false}>{trade ? trade.action === 'buy' || trade.action === 'sell' ? <MarketTrade preview={{ ...trade, action: trade.action }} onTime={ignoreTime} onFinished={finish} /> : <ScenarioAction preview={{ ...trade, action: trade.action }} onTime={ignoreTime} onFinished={finish} /> : <LivingGenie reaction={reaction} onTime={setReactionTime} onFinished={finishReaction} />}</Scene></StudioStage></Suspense></StreamHeroBoundary>{reaction?.kind === 'thinking' && !trade && reactionTime >= .6 && reactionTime < 4.5 && <ThoughtBubble text={sharedThought} />}</div>
+      <div ref={heroElement} className="live-hero" data-action={trade?.action ?? 'idle'}><StreamHeroBoundary><Suspense fallback={<p className="live-hero-fallback">Loading Degenie…</p>}><StudioStage><Scene frozen={null} background={null} studio interactive={false}>{trade ? trade.action === 'buy' || trade.action === 'sell' ? <MarketTrade preview={{ ...trade, action: trade.action }} onTime={reportTradeTime} onFinished={finish} /> : <ScenarioAction preview={{ ...trade, action: trade.action }} onTime={ignoreTime} onFinished={finish} /> : <LivingGenie reaction={reaction} onTime={setReactionTime} onFinished={finishReaction} />}</Scene></StudioStage></Suspense></StreamHeroBoundary>{trade?.action === 'buy' && <PurchaseReceipt result={trade.purchase} time={tradeTime} />}{reaction?.kind === 'thinking' && !trade && reactionTime >= .6 && reactionTime < 4.5 && <ThoughtBubble text={sharedThought} />}</div>
       <div className="live-transcript"><div className="live-transcript-head"><span><i />Public feed</span><small>{stream.connection === 'connected' ? 'Server events' : stream.connection === 'connecting' ? 'Connecting…' : 'Reconnecting…'}</small></div>
         {stream.gap && <p className="live-network" role="status">Some earlier history is no longer available.</p>}
         <div ref={feed} className="live-feed" tabIndex={0} aria-label="Public agent messages and accepted actions" onScroll={() => { const el = feed.current; if (el) setFollowing(el.scrollHeight - el.scrollTop - el.clientHeight < 24) }}>
