@@ -17,7 +17,7 @@ import type { ReactionPreview } from './reactions'
 <LivingGenie reaction={reaction} onTime={setSeconds} onFinished={() => setReaction(null)} />
 ```
 
-`reaction?: { kind: 'thumbsUp' | 'realization' | 'facepalm' | 'thinking' | 'shrug' | 'lookout' | 'victory'; take: number;
+`reaction?: { kind: 'thumbsUp' | 'realization' | 'facepalm' | 'thinking' | 'shrug' | 'lookout' | 'victory' | 'dance'; take: number;
 playing: boolean; speed: number; seek: number | null } | null`
 
 - Missing/null reaction: normal sly eyes, blink, hover and smoke, with sparse whole-body
@@ -27,7 +27,7 @@ playing: boolean; speed: number; seek: number | null } | null`
 - `playing: false` freezes all motion, including blink/smoke. `seek` clamps to 0–5.2s.
   `speed` affects playback only; zero stops advancement. `onTime` reports roughly every
   0.09 animation seconds and on seeks. Completion fires once when playback reaches 5.2s.
-- All seven reactions last `REACTION_SECONDS = 5.2`. Paused end-frame inspection does
+- All eight reactions last `REACTION_SECONDS = 5.2`. Paused end-frame inspection does
   not fire completion. A backward seek permits playback/completion again.
 - Idle phase is captured at the start of a take to avoid a snap from a glance. Within
   that take every seek is deterministic; use a fresh mount for an idle-phase-zero QA pass.
@@ -64,6 +64,7 @@ two independent instances and reduced motion. Parent browser review covers pause
 | Living idle | 0, 4, 5.3, 6.3, 8.2, 14.8, 16.3, 19, 24 | Eye anticipation, both body turns, curious tilt, cycle seam |
 | Thinking / Shrug / Look around | 0, .6, 1.5, 2.65, 3.9, 5.2 | Eyes/body lead, chin/open hands, smooth recovery |
 | Victory | 0, .5, 1.25, 2.3, 3.1, 3.9, 5.2 | Bounded rise, fists up, three finite bursts inside the portrait canvas |
+| Dance | 0, .45, .9, 1.37, 2.8, 4.1, 5.2 | Gather fists, alternate pumps and weight, change expression, settle |
 | Reduced playback | Per-kind `REACTION_REDUCED_FRAME` | Representative pose held still; fireworks hidden |
 
 ## Local checks
@@ -76,12 +77,16 @@ node --experimental-strip-types src/live/reactions/check-rig.mjs
 ./node_modules/.bin/oxlint src/live/reactions
 ```
 
-The GLB check samples 1099 frames (30 fps, all seven reactions), checks finite transforms,
+The GLB check samples 1256 frames (30 fps, all eight reactions), checks finite transforms,
 unchanged joint positions/lengths, hand bounds against casing/screen/ear mesh bounds,
 backward seeks across reactions, both idle endpoints and cycle seam, actual thumb axis and neutral wrist, per-frame joint rotation continuity, actual fingertip
 vertices against closed palm/button surfaces (2mm tolerance), deterministic fireworks and projected spark bounds across four camera aspects,
 whole-body turns, reduced idle and cached scene isolation. These are conservative geometric
 checks, not rendered proof of good contact, silhouette, facial expression or composition.
+Dance additionally checks alternating fist depth and opposite weight shifts, wrapped
+thumbs and neutral wrists. It checks the change to compressed lips and a static reduced
+pose. Actual hero vertices are projected through the shared scene camera at each frame
+to catch cropping of Dance; bounds cover the studio's wide aspect too.
 
 Changed paths: `LivingGenie.tsx`, `definitions.ts`, `rig.ts`, `index.ts`, `check-rig.mjs`,
 `fireworks.ts`, and this `README.md`, all within `frontend/src/live/reactions/`.
@@ -93,3 +98,11 @@ Thinking combines an asymmetrical brow, tilted body and a closed fist with the t
 `REACTION_LABELS` and `REACTION_THOUGHTS` power local preview controls. Thoughts are explicitly preview copy, not an agent inner monologue. Real streams use only voluntarily published agent words/cues. New kinds require a separately reviewed backend cue contract; a final game event alone does not prove this agent won. Never infer private wishes, emotion from silence, or victory from a generic game finish.
 
 Geometry checks are regression evidence, not proof of anatomy or visual quality; inspect staged keyframes in the browser before publishing.
+
+Dance is a 5.2-second local preview inspired by Trump's YMCA fist pumps. Both elbows
+stay bent while closed fists alternate; the rigid body shifts weight and the tail follows.
+A tilted smirk changes to compressed, downturned lips with narrowed eyes. The motion
+uses an authored 128 BPM rhythm, with smooth preparation and recovery. It adds no
+music file or fireworks. The existing public gesture allowlist does not include Dance.
+[Reference, Lasseter application and rendered review](../../../../docs/ops/DEGENIE_DANCE_20261010.md)
+record the source and visual evidence.

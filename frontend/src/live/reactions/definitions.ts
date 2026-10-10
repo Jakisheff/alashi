@@ -1,14 +1,14 @@
-export type ReactionKind = 'thumbsUp' | 'realization' | 'facepalm' | 'thinking' | 'shrug' | 'lookout' | 'victory'
+export type ReactionKind = 'thumbsUp' | 'realization' | 'facepalm' | 'thinking' | 'shrug' | 'lookout' | 'victory' | 'dance'
 export const REACTION_LABELS: Record<ReactionKind, string> = {
   thumbsUp: 'Thumbs up', realization: 'Realization', facepalm: 'Facepalm',
-  thinking: 'Thinking', shrug: 'Shrug', lookout: 'Look around', victory: 'Victory',
+  thinking: 'Thinking', shrug: 'Shrug', lookout: 'Look around', victory: 'Victory', dance: 'Dance',
 }
 // Preview copy only. The real stream must show the agent's actual public words,
 // never invent an inner monologue or expose a private wish.
 export const REACTION_THOUGHTS: Record<ReactionKind, string> = {
   thumbsUp: 'That worked. Nice.', realization: 'Oops. My mistake.',
   facepalm: 'Not my best move.', thinking: 'A safe trade… or a bold move?',
-  shrug: 'Could go either way.', lookout: 'Anyone watching?', victory: 'Now that is a finish!',
+  shrug: 'Could go either way.', lookout: 'Anyone watching?', victory: 'Now that is a finish!', dance: 'Feeling the rhythm.',
 }
 export type ReactionPreview = {
   kind: ReactionKind
@@ -70,11 +70,18 @@ export const REACTION_KEYFRAMES = {
     { time: 3.1, label: 'Last burst / proud nod' }, { time: 3.9, label: 'Settle' },
     { time: 5.2, label: 'Idle restored' },
   ],
+  dance: [
+    { time: 0, label: 'Idle' }, { time: .45, label: 'Gather fists / anticipate the beat' },
+    { time: .9, label: 'Left fist forward / weight shift' },
+    { time: 1.37, label: 'Right fist forward / narrowed eyes' },
+    { time: 2.8, label: 'Pursed lips / keep the rhythm' },
+    { time: 4.1, label: 'Ease out' }, { time: 5.2, label: 'Idle restored' },
+  ],
 } as const satisfies Record<ReactionKind, readonly { time: number; label: string }[]>
 
 export const REACTION_REDUCED_FRAME: Record<ReactionKind, number> = {
   thumbsUp: 2.65, realization: 2.3, facepalm: 2.25,
-  thinking: 2.65, shrug: 2.65, lookout: 2.8, victory: 2.3,
+  thinking: 2.65, shrug: 2.65, lookout: 2.8, victory: 2.3, dance: 1.37,
 }
 export const IDLE_KEYFRAMES = [
   { time: 0, label: 'Normal idle' },

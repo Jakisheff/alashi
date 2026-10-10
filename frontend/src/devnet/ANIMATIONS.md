@@ -31,6 +31,7 @@ changes; successful geometry checks supplement visual acceptance.
 | Thinking | 5.2 s | Fist under chin, brow/gaze and asymmetrical body tilt | Explicit preview or separately agreed public agent cue |
 | Shrug | 5.2 s | Forearms raised about 46 degrees, horizontal upward palms, sideways tilt | Explicit preview or separately agreed public agent cue |
 | Look around | 5.2 s | Eyes lead left/right torso turns and a curious lean | Explicit preview or separately agreed public agent cue |
+| Dance | 5.2 s | Alternating closed fists, rhythmic weight shift and a smirk changing to compressed lips | Local Body language preview; no confirmed-event mapping |
 
 Legacy GLB clips also remain available: `idle` (4 s loop), `act` (1.1 s),
 `accepted` (1.2 s), `rejected` (1.6 s), and `fuckOff` (5.8 s, existing local
