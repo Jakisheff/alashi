@@ -12,7 +12,7 @@
     "dev:host": "vite --host",
     "check:pose": "node --experimental-strip-types --no-warnings scripts/pose-check.ts",
     "check:purchase": "node --experimental-strip-types --no-warnings scripts/purchase-check.ts && node --experimental-strip-types --no-warnings scripts/trade-contact-check.ts",
-    "check:animations": "npm run check:pose && npm run check:purchase && node --experimental-strip-types --no-warnings scripts/legacy-animation-check.ts && ALASHI_STUDIO_FRAMING=1 node --experimental-strip-types --no-warnings src/live/reactions/check-rig.mjs && ALASHI_STUDIO_FRAMING=1 node --experimental-strip-types --no-warnings src/live/actions/validate.mjs",
+    "check:animations": "node --experimental-strip-types --no-warnings scripts/brand-coin-check.ts && npm run check:pose && npm run check:purchase && node --experimental-strip-types --no-warnings scripts/legacy-animation-check.ts && ALASHI_STUDIO_FRAMING=1 node --experimental-strip-types --no-warnings src/live/reactions/check-rig.mjs && ALASHI_STUDIO_FRAMING=1 node --experimental-strip-types --no-warnings src/live/actions/validate.mjs",
     "export:poses": "node --experimental-strip-types --no-warnings scripts/export-poses.ts",
     "check:events": "node --experimental-strip-types --no-warnings scripts/events-check.ts",
     "check:graph": "node --experimental-strip-types --no-warnings scripts/graph-check.ts",
