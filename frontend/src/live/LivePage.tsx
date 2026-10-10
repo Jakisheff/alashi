@@ -5,6 +5,8 @@ import { Link } from '@tanstack/react-router'
 import { useScene } from '../store'
 import { demoState, formatDuration, SCENARIOS, type Scenario } from './demo'
 import { MarketTrade, TRADE_SECONDS, type TradeAction, type TradeEntry, type TradePreview } from './market/MarketTrade'
+import { PurchaseReceipt } from './market/PurchaseReceipt'
+import { DEMO_PURCHASE } from './market/purchase'
 import { ScenarioAction, ACTION_SECONDS, ACTION_META, actionStageAt, type ScenarioActionName } from './actions'
 import { LivingGenie, REACTION_SECONDS, REACTION_KEYFRAMES, REACTION_LABELS, REACTION_THOUGHTS, type ReactionKind, type ReactionPreview } from './reactions'
 import { ThoughtBubble } from './ThoughtBubble'
@@ -92,7 +94,7 @@ export default function LivePage() {
 
   useEffect(() => {
     if (latest?.kind === 'game_action' && (latest.action === 'sell' || latest.action === 'buy') && latest.actor === 'alpha' && latest.ok === true) {
-      setTrade({ receiptId: latest.action === 'sell' ? `demo:${session}:${latest.event_id}` : undefined, action: latest.action, take: ++tradeTake.current, playing: true, speed: 1, entry: 'bottom', seek: null })
+      setTrade({ receiptId: `demo:${session}:${latest.event_id}`, purchase: latest.action === 'buy' ? { source: 'demo' } : undefined, action: latest.action, take: ++tradeTake.current, playing: true, speed: 1, entry: 'bottom', seek: null })
       setTradeTime(0)
       useScene.getState().say(latest.action === 'buy' ? 'Buying goods.' : 'Selling goods.')
     } else if (latest && !latest.host && latest.clip) useScene.getState().play(latest.clip)
@@ -119,7 +121,7 @@ export default function LivePage() {
     setReaction(null)
     setRunning(false)
     setTradeTime(0)
-    setTrade({ action, take: ++tradeTake.current, playing: true, speed: 1, entry: tradeEntry, seek: null })
+    setTrade({ purchase: action === 'buy' ? DEMO_PURCHASE : undefined, action, take: ++tradeTake.current, playing: true, speed: 1, entry: tradeEntry, seek: null })
     useScene.getState().say(isScenario(action) ? actionStageAt(action, 0).text : action === 'buy' ? 'Deal. Take my coin.' : 'Selling goods.')
   }
 
@@ -168,7 +170,8 @@ export default function LivePage() {
               {trade ? isScenario(trade.action) ? <ScenarioAction preview={{ ...trade, action: trade.action }} onTime={setTradeTime} onFinished={finishTrade} /> : <MarketTrade preview={{ ...trade, action: trade.action }} onTime={setTradeTime} onFinished={finishTrade} /> : <LivingGenie reaction={reaction} onTime={setReactionTime} onFinished={finishReaction} />}
             </Scene></StudioStage></Suspense></HeroBoundary></div>
             {reaction?.kind === 'thinking' && reactionTime >= .6 && reactionTime < 4.5 && <ThoughtBubble key={reaction.take} text={thinkingText} preview />}
-            {tradeStage && <div className="live-trade-stage" aria-live="polite"><span>{trade?.action.toUpperCase()}</span>{tradeStage}</div>}
+            {trade?.action === 'buy' && <PurchaseReceipt result={trade.purchase} time={tradeTime} />}
+            {tradeStage && !(trade?.action === 'buy' && tradeTime >= 3.65) && <div className="live-trade-stage" aria-live="polite"><span>{trade?.action.toUpperCase()}</span>{tradeStage}</div>}
           </div>
 
           <div className="live-transcript">
@@ -238,7 +241,7 @@ export default function LivePage() {
               </div>
               <button className="live-sale-close" onClick={() => { setTrade(null); useScene.getState().say(''); useScene.getState().play('idle') }}>Close preview</button>
             </>}
-            <p>{trade && isScenario(trade.action) ? trade.action === 'mule' ? 'Pay the mule → catch one parcel → keep the goods.' : trade.action === 'bribe' ? 'Meet the official → offer the envelope → a discreet exchange.' : 'Lift the ballot → line it up → drop it into the box.' : trade?.action === 'buy' ? 'Coin to the seller → catch the crate → enjoy the purchase.' : 'Crate to the buyer → coin in return → a cheeky wink.'} Props appear only during the action.</p>
+            <p>{trade && isScenario(trade.action) ? trade.action === 'mule' ? 'Pay the mule → catch one parcel → keep the goods.' : trade.action === 'bribe' ? 'Meet the official → offer the envelope → a discreet exchange.' : 'Lift the ballot → line it up → drop it into the box.' : trade?.action === 'buy' ? 'Look at the crate → pay → take its weight → see goods and cost. Receipt numbers are example values for this demo.' : 'Crate to the buyer → coin in return → a cheeky wink.'} Props appear only during the action.</p>
           </div>
 
           <div className="live-sale-controls" aria-label="Reaction preview">

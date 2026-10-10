@@ -32,7 +32,19 @@ logic and unnecessary tooling before adding abstractions or automation.
 - Use relative markdown links inside the repo (GitHub-compatible), not
   wiki-links and not absolute paths.
 
-## Implementation
+## Animation canon
+
+Amir's decision on 10 October 2026: John Lasseter's *Principles of Traditional
+Animation Applied to 3D Computer Animation* (1987) is the mandatory animation
+canon for Alashi. Ivan and Din must read the [project application and acceptance
+criteria](docs/200_ZETTEL/20261010-lasseter-animation-canon.md) before changing
+animated actions or their event contracts. Review animation changes against
+those criteria and include the relevant principles and visual evidence in the PR.
+Keep the character's intent and the confirmed consequence of its action readable.
+Ivan owns the truth and provenance of event data; Din owns its visual expression.
+Describe any deliberate exception and its effect on readability in the PR.
+
+## Game implementation
 
 `rules/` owns game actions and transitions. The HTTP arena and Anchor instruction
 wrappers call those functions. Keep account validation and events in the wrappers.

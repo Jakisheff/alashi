@@ -4,6 +4,8 @@
 
 ## Файлы
 
+- [Канон анимации по Лассетеру](../200_ZETTEL/20261010-lasseter-animation-canon.md): обязательная основа работы Ивана и Дина, критерии приёмки сцен.
+
 - [README.md](../README.md)
 - [product.md](../product.md)
 - [roadmap.md](../roadmap.md)
