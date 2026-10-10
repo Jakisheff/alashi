@@ -7,7 +7,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils.js'
 import { MeshoptDecoder } from 'meshoptimizer'
 import { createLivingRig } from './rig.ts'
-import { REACTION_KEYFRAMES, REACTION_SECONDS, LIVING_IDLE_SECONDS } from './definitions.ts'
+import { REACTION_KEYFRAMES, REACTION_REDUCED_FRAME, REACTION_SECONDS, LIVING_IDLE_SECONDS } from './definitions.ts'
 import { createVictoryFireworks } from './fireworks.ts'
 
 const bytes = await readFile(new URL('../../../public/models/desk-genie.glb', import.meta.url))
@@ -19,6 +19,7 @@ function snapshot(object) {
 }
 const sourceBefore = snapshot(glb.scene)
 const hero = clone(glb.scene), rig = createLivingRig(hero, glb.animations)
+const jointNames = [...rig.bones.keys()]
 rig.idleAt(0)
 const jointPositions = new Map([...rig.bones].filter(([name]) => /-(arm|forearm|hand|point|middle|curl|thumb)(-mid|-tip)?$/.test(name)).map(([name, node]) => [name, node.position.clone()]))
 const core = new Box3(new Vector3(-.48, -.10, -.30), new Vector3(.48, .60, .45))
@@ -49,7 +50,7 @@ for (const kind of Object.keys(REACTION_KEYFRAMES)) {
     for (const [name, position] of jointPositions) assert.ok(rig.bone(name).position.distanceTo(position) < 1e-5, `${kind} ${time}: translated socket ${name}`)
     assert.ok(snapshot(hero).every(Number.isFinite), `${kind} ${time}: invalid transform`)
     const joints = [...rig.bones.values()].map((b) => b.quaternion.clone())
-    if (previous) joints.forEach((q, i) => assert.ok(q.angleTo(previous[i]) < .35, `${kind} ${time}: abrupt joint rotation`))
+    if (previous) joints.forEach((q, i) => assert.ok(q.angleTo(previous[i]) < .35, `${kind} ${time}: abrupt joint rotation at ${jointNames[i]} (${q.angleTo(previous[i]).toFixed(3)} rad)`))
     previous = joints
     for (const side of ['left', 'right']) rig.bone(`${side}-hand`).traverse((o) => {
       if (!o.isMesh) return
@@ -124,6 +125,33 @@ rig.idleAt(.8)
 const leftArm = rig.bone('left-arm').quaternion.clone(), rightArm = rig.bone('right-arm').quaternion.clone()
 rig.reactionAt('victory', .8, .8)
 assert.ok(rig.bone('left-arm').quaternion.angleTo(leftArm) > rig.bone('right-arm').quaternion.angleTo(rightArm), 'Victory must lead with one arm')
+function danceHands(time) {
+  rig.reactionAt('dance', time, 0); hero.updateMatrixWorld(true)
+  const inverseBody = rig.bone('body').matrixWorld.clone().invert()
+  return ['left', 'right'].map((side) => {
+    const hand = rig.bone(`${side}-hand`), forearm = rig.bone(`${side}-forearm`)
+    const handAxis = new Vector3(0, -1, 0).applyQuaternion(hand.getWorldQuaternion(new Quaternion()))
+    const armAxis = hand.getWorldPosition(new Vector3()).sub(forearm.getWorldPosition(new Vector3())).normalize()
+    assert.ok(handAxis.dot(armAxis) > .999, 'Dance fist must keep a neutral wrist')
+    const thumbAxis = rig.bone(`${side}-thumb-tip`).getWorldPosition(new Vector3()).sub(rig.bone(`${side}-thumb`).getWorldPosition(new Vector3())).normalize()
+      .applyQuaternion(hand.getWorldQuaternion(new Quaternion()).invert())
+    assert.ok(thumbAxis.x * (side === 'left' ? 1 : -1) < -.7, 'Dance thumb must wrap across the fist')
+    return hand.getWorldPosition(new Vector3()).applyMatrix4(inverseBody)
+  })
+}
+const firstBeat = danceHands(.9), secondBeat = danceHands(1.37)
+assert.ok(firstBeat[0].z - secondBeat[0].z > .15 && secondBeat[1].z - firstBeat[1].z > .15, 'Dance fists must alternate forward and back')
+rig.reactionAt('dance', .9, 0)
+assert.ok(rig.bone('body').position.x > .04, 'Dance weight shift must follow the first fist')
+assert.ok(rig.bone('mouth').scale.y > 0, 'Dance should begin with a smirk')
+rig.reactionAt('dance', 1.37, 0)
+assert.ok(rig.bone('body').position.x < -.04, 'Dance must transfer weight to the opposite side')
+rig.reactionAt('dance', 2.8, 0)
+assert.ok(rig.bone('mouth').scale.y < 0 && rig.bone('mouth').scale.x < .7, 'Dance must change to compressed, downturned lips')
+rig.reactionAt('dance', REACTION_REDUCED_FRAME.dance, 1, true)
+const reducedDance = snapshot(hero)
+rig.reactionAt('dance', REACTION_REDUCED_FRAME.dance, 19, true)
+assert.deepEqual(snapshot(hero), reducedDance, 'Reduced Dance must hold one still pose')
 rig.idleAt(0)
 const origin = snapshot(hero)
 rig.idleAt(LIVING_IDLE_SECONDS)
@@ -158,7 +186,27 @@ for (const aspect of (studioFraming ? [.8, .9375, 1, 1.15, 2.1] : [.8, .9375, 1,
   const targetY = studioFraming ? -.7 : -.4
   camera.position.set(.15 + 1.05 * k, targetY + .3 * k, 5.8 * k)
   camera.lookAt(.15, targetY, 0); camera.updateMatrixWorld(true)
+  const placement = new Matrix4().makeRotationY(.35).setPosition(0, .15, 0)
+  const cameraClip = camera.projectionMatrix.clone().multiply(camera.matrixWorldInverse).multiply(placement), meshClip = new Matrix4()
+  const danceMeshes = []; hero.traverse((o) => {
+    if (o.isMesh && o.visible) danceMeshes.push({ mesh: o, bounds: o.isSkinnedMesh || o.morphTargetInfluences?.some(Boolean) ? null : new Box3().setFromBufferAttribute(o.geometry.attributes.position) })
+  })
   for (let frame = 0; frame <= REACTION_SECONDS * 30; frame++) {
+    rig.reactionAt('dance', frame / 30, frame / 30); hero.updateMatrixWorld(true)
+    for (const { mesh, bounds } of danceMeshes) {
+      meshClip.multiplyMatrices(cameraClip, mesh.matrixWorld)
+      // A projected mesh box proves containment; inspect vertices only near an edge.
+      let nearEdge = !bounds
+      if (bounds) for (const x of [bounds.min.x, bounds.max.x]) for (const y of [bounds.min.y, bounds.max.y]) for (const z of [bounds.min.z, bounds.max.z]) {
+        vertex.set(x, y, z).applyMatrix4(meshClip)
+        if (Math.abs(vertex.x) >= .99 || Math.abs(vertex.y) >= .99) nearEdge = true
+      }
+      if (!nearEdge) continue
+      for (let i = 0; i < mesh.geometry.attributes.position.count; i++) {
+        mesh.getVertexPosition(i, vertex).applyMatrix4(meshClip)
+        if (Math.abs(vertex.x) >= .99 || Math.abs(vertex.y) >= .99) assert.fail(`Dance crops ${mesh.name} at ${aspect}, ${frame / 30}s (${vertex.x.toFixed(3)}, ${vertex.y.toFixed(3)})`)
+      }
+    }
     fireworks.update(frame / 30, true); fireworks.group.updateMatrixWorld(true)
     for (const child of fireworks.group.children.filter((c) => c.visible)) {
       const positions = child.geometry.attributes.position
@@ -170,4 +218,4 @@ for (const aspect of (studioFraming ? [.8, .9375, 1, 1.15, 2.1] : [.8, .9375, 1,
   }
 }
 fireworks.dispose()
-console.log(`PASS: ${checked} GLB frames, sockets, finite transforms, rotation continuity, hand/casing bounds and fingertip/palm surface clearance (2mm), backward seeks, idle endpoints/seam, neutral thumbs-up wrist, body turns, reduced idle, cached scene isolation, deterministic bounded fireworks.`)
+console.log(`PASS: ${checked} GLB frames, sockets, finite transforms, rotation continuity, hand/casing bounds and fingertip/palm surface clearance (2mm), backward seeks, idle endpoints/seam, neutral wrists, alternating Dance fists and weight, facial change, reduced Dance, body turns, reduced idle, cached scene isolation, deterministic bounded fireworks and Dance framing.`)
