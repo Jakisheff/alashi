@@ -81,6 +81,14 @@ pub mod alashi {
         crate::instructions::donkey::handle_configure_donkey_oracles(ctx)
     }
 
+    pub fn init_donkey_source(
+        ctx: Context<InitDonkeySource>,
+        round: u8,
+        recent_slot: u64,
+    ) -> Result<()> {
+        crate::instructions::donkey::handle_init_donkey_source(ctx, round, recent_slot)
+    }
+
     pub fn attempt_donkey(ctx: Context<AttemptDonkey>) -> Result<()> {
         crate::instructions::donkey::handle_attempt_donkey(ctx)
     }
@@ -101,7 +109,7 @@ pub mod alashi {
         crate::instructions::close_game::handle_close_game(ctx)
     }
 
-    pub fn advance(ctx: Context<Advance>) -> Result<()> {
+    pub fn advance<'info>(ctx: Context<'info, Advance<'info>>) -> Result<()> {
         crate::instructions::advance::handle_advance(ctx)
     }
 

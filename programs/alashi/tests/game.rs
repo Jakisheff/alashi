@@ -20,6 +20,114 @@ const VOTE_WEIGHT_CONTRIB: u8 = alashi_rules::constants::VOTE_WEIGHT_CONTRIB;
 const SLOT_HASHES_ID: Pubkey = solana_sysvar::slot_hashes::ID;
 
 const SB_DEVNET_PID: &str = "Aio4gaXjXzJNVLtzwtNVmSqGKpANtXhybbkhtAC94ji2";
+const SB_QUEUE: &str = "EYiAmGSdsQTuCw413V5BzaruWuCCSDgTPtBGvLkXHbe7";
+const SB_STATE: &str = "4UFmCebEmzESoDTtHrmaftXj7YAsAH4HMios3yMWyVUT";
+const SB_ORACLE: &str = "Hdu1niJgqVGhesoxgy37p6WBunVDoBacZJZVK7VRRevg";
+const SB_NATIVE_MINT: &str = "So11111111111111111111111111111111111111112";
+const SB_TOKEN: &str = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
+const SB_ATA: &str = "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL";
+const SB_LUT: &str = "AddressLookupTab1e1111111111111111111111111";
+const EPOCH2_FIXTURE_SLOT: u64 = 424_242;
+
+fn sb_key(value: &str) -> Pubkey { value.parse().unwrap() }
+
+fn assert_fixture(data: &[u8], expected_len: usize, expected_sha256: &str) {
+    assert_eq!(data.len(), expected_len);
+    let digest = solana_sha256_hasher::hash(data).to_bytes();
+    let actual = digest.iter().map(|byte| format!("{byte:02x}")).collect::<String>();
+    assert_eq!(actual, expected_sha256);
+}
+
+fn set_epoch2_clock(svm: &mut LiteSVM, slot: u64) {
+    let mut clock = svm.get_sysvar::<solana_clock::Clock>();
+    clock.slot = slot;
+    clock.unix_timestamp = slot as i64;
+    svm.set_sysvar(&clock);
+    svm.set_sysvar(&SlotHashes::new(&[
+        (slot - 1, Hash::new_from_array([7; 32])),
+        (slot - 2, Hash::new_from_array([6; 32])),
+    ]));
+}
+
+fn install_real_provider_fixture(svm: &mut LiteSVM) {
+    use solana_account::Account as SysAccount;
+    let provider = sb_key(SB_DEVNET_PID);
+    let executable = include_bytes!("fixtures/switchboard_devnet_509984/provider.elf");
+    assert_fixture(executable, 2_108_896, "fbb0ba2f36af9be4b16b2a94c41e8678e9ec73a638ad8a71ac3a11f1737c1451");
+    svm.add_program(provider, executable).unwrap();
+    for (key, owner, lamports, data, len, sha256) in [
+        (SB_QUEUE, SB_DEVNET_PID, 444_599_680, include_bytes!("fixtures/switchboard_devnet_509984/queue.bin").as_slice(), 6_280, "261a50cdad3f2b35e81cdddf5da638e36f02fbcd7df90de5705a8fdc4f6a578a"),
+        (SB_STATE, SB_DEVNET_PID, 15_757_440, include_bytes!("fixtures/switchboard_devnet_509984/state.bin").as_slice(), 2_136, "515b99f11aac13cfc21e4808722b6320445069070182eac508b283819209aa4e"),
+        (SB_ORACLE, SB_DEVNET_PID, 34_410_240, include_bytes!("fixtures/switchboard_devnet_509984/oracle.bin").as_slice(), 4_816, "47ae6d6d33f1ad6da6b20a7154c30803a2599a37f9aae9b18b45f20817c83616"),
+        (SB_NATIVE_MINT, SB_TOKEN, 1_509_155_950_425, include_bytes!("fixtures/switchboard_devnet_509984/native_mint.bin").as_slice(), 82, "b0f919425a529f4971ef8dabd535aec34947d5c8c4885df80dae91635b98c5f3"),
+    ] {
+        assert_fixture(data, len, sha256);
+        svm.set_account(sb_key(key), SysAccount {
+            lamports, data: data.to_vec(), owner: sb_key(owner), executable: false,
+            rent_epoch: u64::MAX,
+        }).unwrap();
+    }
+    set_epoch2_clock(svm, EPOCH2_FIXTURE_SLOT);
+}
+
+fn epoch2_source(game: &Pubkey, round: u8) -> Pubkey {
+    Pubkey::find_program_address(
+        &[alashi::donkey_state::DONKEY_SOURCE_SEED, game.as_ref(), &[round]], &alashi::id(),
+    ).0
+}
+
+fn init_epoch2_sources(svm: &mut LiteSVM, admin: &Keypair, game: Pubkey) -> Vec<Pubkey> {
+    let provider = sb_key(SB_DEVNET_PID);
+    let token = sb_key(SB_TOKEN);
+    let mint = sb_key(SB_NATIVE_MINT);
+    let ata = sb_key(SB_ATA);
+    let lut_program = sb_key(SB_LUT);
+    let authority = Pubkey::find_program_address(
+        &[alashi::constants::DONKEY_ORACLE_SEED, game.as_ref()], &alashi::id(),
+    ).0;
+    (1..=alashi::constants::ROUNDS).map(|round| {
+        let source = epoch2_source(&game, round);
+        let escrow = Pubkey::find_program_address(
+            &[source.as_ref(), token.as_ref(), mint.as_ref()], &ata,
+        ).0;
+        let lut_signer = Pubkey::find_program_address(&[b"LutSigner", source.as_ref()], &provider).0;
+        let lut = Pubkey::find_program_address(
+            &[lut_signer.as_ref(), &(EPOCH2_FIXTURE_SLOT - 1).to_le_bytes()], &lut_program,
+        ).0;
+        let ix = Instruction::new_with_bytes(
+            alashi::id(),
+            &alashi::instruction::InitDonkeySource { round, recent_slot: EPOCH2_FIXTURE_SLOT - 1 }.data(),
+            alashi::accounts::InitDonkeySource {
+                admin: admin.pubkey(), game, randomness: source, authority,
+                reward_escrow: escrow, queue: sb_key(SB_QUEUE), system_program: system_program::ID,
+                token_program: token, associated_token_program: ata, native_mint: mint,
+                switchboard_state: sb_key(SB_STATE), lut_signer, lut,
+                lut_program, switchboard_program: provider,
+            }.to_account_metas(None),
+        );
+        assert!(send(svm, admin, ix), "provider CPI Init round {round}");
+        source
+    }).collect()
+}
+
+fn configure_epoch2(svm: &mut LiteSVM, admin: &Keypair, game: Pubkey, sources: &[Pubkey]) -> Pubkey {
+    let config = Pubkey::find_program_address(
+        &[alashi::constants::DONKEY_ORACLE_SEED, game.as_ref()], &alashi::id(),
+    ).0;
+    let mut metas = alashi::accounts::ConfigureDonkeyOracles {
+        admin: admin.pubkey(), game, oracle: config, system_program: system_program::ID,
+    }.to_account_metas(None);
+    metas.extend(sources.iter().map(|source| {
+        anchor_lang::solana_program::instruction::AccountMeta::new_readonly(*source, false)
+    }));
+    metas.extend((0..alashi::constants::ROUNDS).map(|_| {
+        anchor_lang::solana_program::instruction::AccountMeta::new_readonly(sb_key(SB_ORACLE), false)
+    }));
+    assert!(send(svm, admin, Instruction::new_with_bytes(
+        alashi::id(), &alashi::instruction::ConfigureDonkeyOracles {}.data(), metas,
+    )));
+    config
+}
 
 fn rng_account_bytes(seed_slot: u64, reveal_slot: u64, value_first: u8) -> Vec<u8> {
     let mut d = Vec::with_capacity(408);
@@ -1568,6 +1676,7 @@ fn epoch2_unconfigured_lobby_rejects_join_before_fee_and_can_abort() {
 #[test]
 fn epoch2_configured_lobby_accepts_join() {
     let (mut svm, admin) = setup();
+    install_real_provider_fixture(&mut svm);
     let player = Keypair::new();
     svm.airdrop(&player.pubkey(), 2_000_000_000).unwrap();
     let id = 9_203;
@@ -1599,34 +1708,8 @@ fn epoch2_configured_lobby_accepts_join() {
             .to_account_metas(None),
         )
     ));
-    let sources: Vec<Pubkey> = (0..alashi::constants::ROUNDS)
-        .map(|_| Pubkey::new_unique())
-        .collect();
-    for source in &sources {
-        install_rng(&mut svm, source, 0, 0, 0);
-        let mut account = svm.get_account(source).unwrap();
-        account.data[8..40].fill(4); // nonzero Switchboard authority
-        svm.set_account(*source, account).unwrap();
-    }
-    let mut metas = alashi::accounts::ConfigureDonkeyOracles {
-        admin: admin.pubkey(),
-        game,
-        oracle,
-        system_program: system_program::ID,
-    }
-    .to_account_metas(None);
-    metas.extend(sources.iter().map(|source| {
-        anchor_lang::solana_program::instruction::AccountMeta::new_readonly(*source, false)
-    }));
-    assert!(send(
-        &mut svm,
-        &admin,
-        Instruction::new_with_bytes(
-            alashi::id(),
-            &alashi::instruction::ConfigureDonkeyOracles {}.data(),
-            metas,
-        )
-    ));
+    let sources = init_epoch2_sources(&mut svm, &admin, game);
+    assert_eq!(configure_epoch2(&mut svm, &admin, game, &sources), oracle);
     let mut join = ix_join("Configured", player.pubkey(), game, faction);
     join.accounts.push(anchor_lang::solana_program::instruction::AccountMeta::new_readonly(oracle, false));
     let game_before = svm.get_account(&game).unwrap().lamports;
@@ -1653,6 +1736,7 @@ fn synthetic_epoch2_draw_is_win(value: u8, game: &Pubkey, faction: &Pubkey) -> b
 
 fn synthetic_epoch2_case(want_win: Option<bool>, two_tickets: bool, precommit_abort: bool) {
     let (mut svm, admin) = setup();
+    install_real_provider_fixture(&mut svm);
     let other = Keypair::new();
     svm.airdrop(&other.pubkey(), 2_000_000_000).unwrap();
     let id = match want_win { Some(true) => 9_204, Some(false) => 9_205, None => 9_206 };
@@ -1685,34 +1769,8 @@ fn synthetic_epoch2_case(want_win: Option<bool>, two_tickets: bool, precommit_ab
             .to_account_metas(None),
         )
     ));
-    let sources: Vec<Pubkey> = (0..alashi::constants::ROUNDS)
-        .map(|_| Pubkey::new_unique())
-        .collect();
-    for source in &sources {
-        install_rng(&mut svm, source, 0, 0, 0);
-        let mut account = svm.get_account(source).unwrap();
-        account.data[8..40].fill(4);
-        svm.set_account(*source, account).unwrap();
-    }
-    let mut metas = alashi::accounts::ConfigureDonkeyOracles {
-        admin: admin.pubkey(),
-        game,
-        oracle,
-        system_program: system_program::ID,
-    }
-    .to_account_metas(None);
-    metas.extend(sources.iter().map(|source| {
-        anchor_lang::solana_program::instruction::AccountMeta::new_readonly(*source, false)
-    }));
-    assert!(send(
-        &mut svm,
-        &admin,
-        Instruction::new_with_bytes(
-            alashi::id(),
-            &alashi::instruction::ConfigureDonkeyOracles {}.data(),
-            metas,
-        )
-    ));
+    let sources = init_epoch2_sources(&mut svm, &admin, game);
+    assert_eq!(configure_epoch2(&mut svm, &admin, game, &sources), oracle);
     for (wallet, name, faction_pda) in [(&admin, "A", faction), (&other, "B", other_faction)] {
         let mut join = ix_join(name, wallet.pubkey(), game, faction_pda);
         join.accounts.push(anchor_lang::solana_program::instruction::AccountMeta::new_readonly(oracle, false));
@@ -1724,7 +1782,7 @@ fn synthetic_epoch2_case(want_win: Option<bool>, two_tickets: bool, precommit_ab
     let mut g = game_state(&svm, &game);
     g.phase = alashi::state::Phase::Action;
     g.round = 2;
-    g.phase_ends_at = 0;
+    g.phase_ends_at = (EPOCH2_FIXTURE_SLOT + 100) as i64;
     let mut game_account = svm.get_account(&game).unwrap();
     let mut bytes = Vec::new();
     g.try_serialize(&mut bytes).unwrap();
@@ -1810,15 +1868,13 @@ fn synthetic_epoch2_case(want_win: Option<bool>, two_tickets: bool, precommit_ab
         let mut abort = ix_advance(admin.pubkey(), game, vec![faction, other_faction]);
         abort.accounts.push(anchor_lang::solana_program::instruction::AccountMeta::new(oracle, false));
         assert!(!send(&mut svm, &admin, abort.clone()));
-        clock.unix_timestamp += 1;
+        set_epoch2_clock(&mut svm, EPOCH2_FIXTURE_SLOT + 100);
+        clock = svm.get_sysvar::<solana_clock::Clock>();
+        clock.unix_timestamp = game_state(&svm, &game).phase_ends_at
+            + alashi::constants::DONKEY_COMMIT_GRACE_SECONDS;
         svm.set_sysvar(&clock);
-        svm.warp_to_slot(200);
-        install_rng(&mut svm, &sources[1], 201, 0, 0);
-        let mut source = svm.get_account(&sources[1]).unwrap();
-        source.data[8..40].fill(4);
-        svm.set_account(sources[1], source).unwrap();
         let mut late_commit = abort.clone();
-        late_commit.accounts.push(anchor_lang::solana_program::instruction::AccountMeta::new_readonly(sources[1], false));
+        late_commit.accounts.push(anchor_lang::solana_program::instruction::AccountMeta::new(sources[1], false));
         assert!(!send(&mut svm, &admin, late_commit));
         assert!(send(&mut svm, &admin, abort));
         assert_eq!(game_state(&svm, &game).phase, alashi::state::Phase::Aborted);
@@ -1832,33 +1888,41 @@ fn synthetic_epoch2_case(want_win: Option<bool>, two_tickets: bool, precommit_ab
         return;
     }
 
-    svm.warp_to_slot(200);
-    install_rng(&mut svm, &sources[1], 199, 0, 0);
-    let mut source = svm.get_account(&sources[1]).unwrap();
-    source.data[8..40].fill(4);
-    svm.set_account(sources[1], source).unwrap();
+    let commit_clock = EPOCH2_FIXTURE_SLOT + 100;
+    set_epoch2_clock(&mut svm, commit_clock);
     let advance = |source: Pubkey| {
         let mut ix = ix_advance(admin.pubkey(), game, vec![faction, other_faction]);
         ix.accounts.push(anchor_lang::solana_program::instruction::AccountMeta::new(oracle, false));
-        ix.accounts.push(anchor_lang::solana_program::instruction::AccountMeta::new_readonly(source, false));
+        ix.accounts.push(anchor_lang::solana_program::instruction::AccountMeta::new(source, false));
+        ix.accounts.push(anchor_lang::solana_program::instruction::AccountMeta::new_readonly(sb_key(SB_QUEUE), false));
+        ix.accounts.push(anchor_lang::solana_program::instruction::AccountMeta::new(sb_key(SB_ORACLE), false));
+        ix.accounts.push(anchor_lang::solana_program::instruction::AccountMeta::new_readonly(sb_key(SB_DEVNET_PID), false));
         ix
     };
-    set_law_seed(&mut svm, 0);
     assert!(!send(&mut svm, &admin, advance(sources[0])));
-    // An older commitment cannot be substituted for the commit bundled with
-    // Action→Law. The synthetic fixture below models Switchboard's next-slot
-    // commitment; it does not execute the provider CPI.
+    let mut wrong_oracle = advance(sources[1]);
+    let selected_oracle_index = wrong_oracle.accounts.len() - 2;
+    wrong_oracle.accounts[selected_oracle_index] =
+        anchor_lang::solana_program::instruction::AccountMeta::new(sb_key(SB_STATE), false);
+    assert!(!send(&mut svm, &admin, wrong_oracle));
+    let pristine = svm.get_account(&sources[1]).unwrap();
+    assert_eq!(u64::from_le_bytes(pristine.data[104..112].try_into().unwrap()), 0);
+    let mut stale = pristine.clone();
+    stale.data[104..112].copy_from_slice(&(commit_clock - 2).to_le_bytes());
+    svm.set_account(sources[1], stale).unwrap();
     assert!(!send(&mut svm, &admin, advance(sources[1])));
-    install_rng(&mut svm, &sources[1], 201, 0, 0);
-    let mut source = svm.get_account(&sources[1]).unwrap();
-    source.data[8..40].fill(4);
-    svm.set_account(sources[1], source).unwrap();
+    svm.set_account(sources[1], pristine).unwrap();
     assert!(send(&mut svm, &admin, advance(sources[1])));
     assert_eq!(game_state(&svm, &game).phase, alashi::state::Phase::Law);
-    assert_eq!(game_state(&svm, &game).commit_slot, 201);
+    assert_eq!(game_state(&svm, &game).commit_slot, commit_clock - 1);
+    let account = svm.get_account(&oracle).unwrap();
+    let mut data: &[u8] = &account.data;
+    let config = alashi::donkey_state::DonkeyOracleConfig::try_deserialize(&mut data).unwrap();
+    assert_eq!(config.committed_rounds_mask & 0b10, 0b10);
+    assert!(!send(&mut svm, &admin, advance(sources[1])));
 
     if want_win.is_none() {
-        svm.warp_to_slot(250);
+        set_epoch2_clock(&mut svm, commit_clock + 50);
         for _ in 0..=alashi::constants::MAX_VRF_RETRIES {
             set_law_seed(&mut svm, 0);
             let mut ix = ix_advance(admin.pubkey(), game, vec![faction, other_faction]);
@@ -1877,10 +1941,11 @@ fn synthetic_epoch2_case(want_win: Option<bool>, two_tickets: bool, precommit_ab
 
     let win = want_win.unwrap();
     let chosen = (0..=255).find(|value| synthetic_epoch2_draw_is_win(*value, &game, &faction) == win).unwrap();
-    svm.warp_to_slot(202);
-    install_rng(&mut svm, &sources[1], 201, 202, chosen);
+    let reveal_clock = commit_clock + 2;
+    set_epoch2_clock(&mut svm, reveal_clock);
     let mut source = svm.get_account(&sources[1]).unwrap();
-    source.data[8..40].fill(4);
+    source.data[144..152].copy_from_slice(&reveal_clock.to_le_bytes());
+    source.data[152] = chosen;
     svm.set_account(sources[1], source).unwrap();
     let reveal = |include_ticket: bool| {
         let mut ix = ix_reveal_law(admin.pubkey(), game, sources[1]);

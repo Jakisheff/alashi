@@ -39,8 +39,12 @@ pub fn handle_reveal_law(ctx: Context<RevealLaw>) -> Result<()> {
     let rng = ctx.accounts.randomness.to_account_info();
     let owner = rng.owner;
     require!(
-        owner.as_ref() == ON_DEMAND_DEVNET_PID.as_ref()
-            || owner.as_ref() == ON_DEMAND_MAINNET_PID.as_ref(),
+        if game.epoch == EPOCH_DONKEY_RISK {
+            owner.as_ref() == ON_DEMAND_DEVNET_PID.as_ref()
+        } else {
+            owner.as_ref() == ON_DEMAND_DEVNET_PID.as_ref()
+                || owner.as_ref() == ON_DEMAND_MAINNET_PID.as_ref()
+        },
         GameError::RandomnessMismatch
     );
     let data = RandomnessAccountData::parse(rng.data.borrow())
@@ -70,6 +74,10 @@ pub fn handle_reveal_law(ctx: Context<RevealLaw>) -> Result<()> {
                 .0;
         require_keys_eq!(config.key(), expected, GameError::DonkeyOracleInvalid);
         require_keys_eq!(config.game, game.key(), GameError::DonkeyOracleInvalid);
+        require!(
+            config.committed_rounds_mask & (1 << (game.round - 1)) != 0,
+            GameError::DonkeyOracleInvalid
+        );
         require_keys_eq!(
             config.accounts[(game.round - 1) as usize],
             rng.key(),
@@ -77,7 +85,8 @@ pub fn handle_reveal_law(ctx: Context<RevealLaw>) -> Result<()> {
         );
         require!(
             data.queue.as_ref() == config.queue.as_ref()
-                && data.authority.as_ref() == config.authority.as_ref(),
+                && data.authority.as_ref() == config.authority.as_ref()
+                && data.oracle.as_ref() == config.oracles[(game.round - 1) as usize].as_ref(),
             GameError::RandomnessMismatch
         );
         let due = config.round == game.round && !config.resolved;
