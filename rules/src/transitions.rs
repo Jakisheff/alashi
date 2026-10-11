@@ -105,6 +105,9 @@ fn advance_inner(
     if game.phase == Phase::Action && game.entropy_mode == ENTROPY_SWITCHBOARD {
         let (_, seed_slot) = vrf_commit.ok_or(GameError::RandomnessMismatch)?;
         if game.epoch == EPOCH_DONKEY_RISK {
+            if now >= game.phase_ends_at.saturating_add(DONKEY_COMMIT_GRACE_SECONDS) {
+                return Err(GameError::RandomnessNotReady);
+            }
             validate_donkey_commit_slot(seed_slot, slot)?;
         } else {
             validate_vrf_seed_slot(seed_slot, slot)?;

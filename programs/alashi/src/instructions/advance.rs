@@ -98,14 +98,15 @@ pub fn handle_advance(ctx: Context<Advance>) -> Result<()> {
     let gkey = ctx.accounts.game.key();
 
     let game = &mut ctx.accounts.game;
-    let can_abort_uncommitted = game.epoch == EPOCH_DONKEY_RISK
+    let past_commit_grace = game.epoch == EPOCH_DONKEY_RISK
         && game.phase == Phase::Action
         && game.entropy_mode == ENTROPY_SWITCHBOARD
-        && now >= game.phase_ends_at.saturating_add(DONKEY_COMMIT_GRACE_SECONDS)
+        && now >= game.phase_ends_at.saturating_add(DONKEY_COMMIT_GRACE_SECONDS);
+    let can_abort_uncommitted = past_commit_grace
         && ctx.remaining_accounts.len() == game.faction_count as usize + 1;
     let wants_rng = game.phase == Phase::Action
         && game.entropy_mode == ENTROPY_SWITCHBOARD
-        && !can_abort_uncommitted;
+        && !past_commit_grace;
     // A Lobby with too few factions must still be able to abort if an admin
     // never configured the oracle. It cannot enter Market without the PDA.
     let needs_config = needs_donkey_config(game);

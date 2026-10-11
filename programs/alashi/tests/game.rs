@@ -1812,6 +1812,14 @@ fn synthetic_epoch2_case(want_win: Option<bool>, two_tickets: bool, precommit_ab
         assert!(!send(&mut svm, &admin, abort.clone()));
         clock.unix_timestamp += 1;
         svm.set_sysvar(&clock);
+        svm.warp_to_slot(200);
+        install_rng(&mut svm, &sources[1], 201, 0, 0);
+        let mut source = svm.get_account(&sources[1]).unwrap();
+        source.data[8..40].fill(4);
+        svm.set_account(sources[1], source).unwrap();
+        let mut late_commit = abort.clone();
+        late_commit.accounts.push(anchor_lang::solana_program::instruction::AccountMeta::new_readonly(sources[1], false));
+        assert!(!send(&mut svm, &admin, late_commit));
         assert!(send(&mut svm, &admin, abort));
         assert_eq!(game_state(&svm, &game).phase, alashi::state::Phase::Aborted);
         assert_eq!(faction_state(&svm, &faction).cash, 0);
