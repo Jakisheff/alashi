@@ -664,6 +664,5 @@ fn managed_chain_match_requires_wallet_bearer_and_forwards_only_public_wallet() 
     assert_eq!(assigned.body["game_pda"], "isolated-test-game");
     worker.join().unwrap();
     std::env::remove_var("ALASHI_MATCH_PORT");
-    drop(server);
     std::fs::remove_dir_all(root).unwrap();
 }
