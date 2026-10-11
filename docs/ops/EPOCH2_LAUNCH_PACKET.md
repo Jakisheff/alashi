@@ -1,5 +1,16 @@
 # Epoch 2 devnet launch packet — preparation only
 
+> **Superseded launch inputs (2026-10-12):** PR32 is a draft candidate for
+> Alashi-owned Switchboard Init, Commit and Reveal CPI. The provider's observed
+> `Clock.slot - 1` seed is handled in that candidate, but a successful real
+> provider reveal, updated crank/bots adapter, program upgrade and funded Game
+> are still unproven. The 530,256-byte binary, 500-byte oracle config, budget
+> subtotals and external commit/reveal commands below describe the earlier
+> candidate and **must not be used to fund or launch PR32**. Requote rent,
+> transaction fees and provider costs against the final PR32 binary and
+> adapter before any human-local execution. This document grants no signing
+> or upgrade authority.
+
 Status on 2026-10-11: source for epoch-2 donkey risk is merged; the upgraded Solana program, refreshed chain API, six real Switchboard sources, and a provider roundtrip are **not** deployed or proven. This packet does not authorize a transaction. The existing frontend can show old confirmed replay and candidate epoch-2 event types; it cannot prove a live epoch-2 Game.
 
 **Provider gate — FAIL CLOSED:** the SDK's compatibility queue PDA `DLfvpUBDZaHi2D4nAKxdkNwCVDU7esu5WKHwfHdjbeTs` is absent on devnet; it is not the default queue returned by `getDefaultQueue()`. The actual pinned 3.10.6 default queue `EYiAmGSdsQTuCw413V5BzaruWuCCSDgTPtBGvLkXHbe7` exists, has nine listed oracles, and is owned by the executable Switchboard program. Its queue authority is `2KgowxogBrGqRcgXQEmqFvC3PGtCu66qERNJevYW8Ajh`; source authority is separately set by the source payer. A bounded unsigned, unsent simulation of the pinned SDK `RandomnessInit` then `RandomnessCommit` against that queue returned provider `seed_slot = Clock.slot − 1` (fresh observed Clock `509984257`, seed `509984256`). The reviewed epoch-2 Alashi Program candidate currently requires `Clock.slot + 1` in atomic commit+Advance. **These are incompatible; do not upgrade, create sources or fund a Game.** The [unsigned simulation receipt](evidence/epoch2-switchboard-unsigned-simulation.json) has SHA-256 `cdd708a826d9e2ba133b707568cf859478b44fb9d5fe6f46b17a826e348a26e9`; its six public source IDs are simulation placeholders, not created accounts or funded signers. No signature, broadcast or real oracle reveal occurred. Source protocol repair and independent RNG review are required before live readiness or a complete provider cost quote. Simply changing +1 to −1 is unsafe: the current Program checks source/freshness but does not prove that the exact Switchboard commit preceded Advance in the same transaction, and deployed recommit-after-reveal semantics are not established.
