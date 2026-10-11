@@ -102,7 +102,7 @@ fn advance_inner(
             game.phase = Phase::Action;
             // M9: доход лицензии фиксируется сидом входа в раунд аукциона,
             // инсайдеры могут узнать его до ставок
-            if game.epoch == EPOCH_90S
+            if has_90s_rules(game.epoch)
                 && game.round == AUCTION_ROUND
                 && game.license_yield == 0
             {
@@ -116,7 +116,7 @@ fn advance_inner(
             game.phase = Phase::Law;
             let president = elect_president_factions(factions);
             game.president = president;
-            if game.epoch == EPOCH_90S {
+            if has_90s_rules(game.epoch) {
                 // SPEC_EPOCH_90S M3+M7+M8: граница раунда.
                 // Президент выбрал режим вслепую (customs_tight, M8);
                 // при отсутствии решения — старый RNG-режим M3.
@@ -258,7 +258,7 @@ fn advance_inner(
                     }
                     // M10 скупка голосов: голос проданного идёт по выбору
                     // покупателя, если покупатель проголосовал
-                    let choice = if game.epoch == EPOCH_90S && f.vote_sold {
+                    let choice = if has_90s_rules(game.epoch) && f.vote_sold {
                         match factions
                             .iter()
                             .find(|x| x.wallet == f.vote_sold_to && x.alive)
@@ -280,7 +280,7 @@ fn advance_inner(
             // SPEC_EPOCH_90S M2: крыша гасит первый анти-богатый закон
             // против хозяина (он богатейший), контракт сгорает
             if passed
-                && game.epoch == EPOCH_90S
+                && has_90s_rules(game.epoch)
                 && (game.law_card == ANTI_RICH_TAX10 || game.law_card == ANTI_RICH_TAX20)
             {
                 let rich = factions
@@ -302,7 +302,7 @@ fn advance_inner(
             game.last_law_passed = passed;
             if passed {
                 game.laws_passed += 1;
-                if game.epoch == EPOCH_90S && game.law_card == LAW_AMNESTY {
+                if has_90s_rules(game.epoch) && game.law_card == LAW_AMNESTY {
                     // M4 «взаимозачёт»: непогашенные векселя сгорают
                     game.amnesty_used = true;
                     for f in factions.iter_mut() {
@@ -338,7 +338,7 @@ fn advance_inner(
             } else {
                 game.round += 1;
                 game.phase = Phase::Market;
-                if game.epoch == EPOCH_90S {
+                if has_90s_rules(game.epoch) {
                     // M1 девальвация: кэш ×0.62 в начале каждого раунда
                     // (твёрдая валюта M6 не девальвирует)
                     for f in factions.iter_mut() {
@@ -416,7 +416,7 @@ pub fn reveal_law_card(game: &mut Game, card: u8) -> Result<u8, GameError> {
 /// сида, только в эпохе 90-х. Аудит 27.09 (S1): единый источник для
 /// слот-хэш вывода и VRF reveal — правило живёт только здесь.
 pub fn apply_special_law_card(game: &mut Game, seed: u64, drawn: u8) -> u8 {
-    if game.epoch == EPOCH_90S
+    if has_90s_rules(game.epoch)
         && !game.amnesty_used
         && drawn != LAW_AMNESTY
         && ((seed >> 16) & 1) == 1

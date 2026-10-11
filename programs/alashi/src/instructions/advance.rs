@@ -1,8 +1,5 @@
 use crate::{
-    constants::*,
-    error::GameError,
-    events::*,
-    state::*,
+    constants::*, donkey_state::DonkeyOracleConfig, error::GameError, events::*, state::*,
 };
 use alashi_rules::transitions;
 use anchor_lang::prelude::*;
@@ -57,6 +54,38 @@ fn verify_switchboard(rng: &AccountInfo, clock_slot: u64) -> Result<(Pubkey, u64
     Ok((*rng.key, data.seed_slot))
 }
 
+fn verify_donkey_round_rng(
+    rng: &AccountInfo,
+    oracle: &DonkeyOracleConfig,
+    round: u8,
+    clock_slot: u64,
+) -> Result<(Pubkey, u64)> {
+    require!(round > 0 && round <= ROUNDS, GameError::DonkeyOracleInvalid);
+    require_keys_eq!(
+        oracle.accounts[(round - 1) as usize],
+        *rng.key,
+        GameError::RandomnessMismatch
+    );
+    let verified = verify_switchboard(rng, clock_slot)?;
+    let data = RandomnessAccountData::parse(rng.data.borrow())
+        .map_err(|_| GameError::RandomnessMismatch)?;
+    require!(
+        data.queue.as_ref() == oracle.queue.as_ref()
+            && data.authority.as_ref() == oracle.authority.as_ref(),
+        GameError::RandomnessMismatch
+    );
+    require!(
+        data.seed_slot > oracle.max_attempt_slot,
+        GameError::RandomnessNotReady
+    );
+    Ok(verified)
+}
+
+fn needs_donkey_config(game: &Game) -> bool {
+    game.epoch == EPOCH_DONKEY_RISK
+        && !(game.phase == Phase::Lobby && game.faction_count < MIN_FACTIONS)
+}
+
 pub fn handle_advance(ctx: Context<Advance>) -> Result<()> {
     let clock = Clock::get()?;
     let now = clock.unix_timestamp;
@@ -64,7 +93,10 @@ pub fn handle_advance(ctx: Context<Advance>) -> Result<()> {
 
     let game = &mut ctx.accounts.game;
     let wants_rng = game.phase == Phase::Action && game.entropy_mode == ENTROPY_SWITCHBOARD;
-    let expected = game.faction_count as usize + usize::from(wants_rng);
+    // A Lobby with too few factions must still be able to abort if an admin
+    // never configured the oracle. It cannot enter Market without the PDA.
+    let needs_config = needs_donkey_config(game);
+    let expected = game.faction_count as usize + usize::from(needs_config) + usize::from(wants_rng);
     require!(
         ctx.remaining_accounts.len() == expected,
         GameError::InvalidFactionSet
@@ -85,10 +117,48 @@ pub fn handle_advance(ctx: Context<Advance>) -> Result<()> {
         }
     }
 
+    let mut oracle = if needs_config {
+        let ai = &ctx.remaining_accounts[game.faction_count as usize];
+        require!(ai.is_writable, GameError::DonkeyOracleInvalid);
+        let config = Account::<DonkeyOracleConfig>::try_from(ai)?;
+        let expected_pda =
+            Pubkey::find_program_address(&[DONKEY_ORACLE_SEED, gkey.as_ref()], &crate::id()).0;
+        require_keys_eq!(config.key(), expected_pda, GameError::DonkeyOracleInvalid);
+        require_keys_eq!(config.game, gkey, GameError::DonkeyOracleInvalid);
+        require!(
+            game.entropy_mode == ENTROPY_SWITCHBOARD,
+            GameError::DonkeyOracleInvalid
+        );
+        Some(config)
+    } else {
+        None
+    };
+    if let Some(config) = oracle.as_ref() {
+        if config.round == game.round && !config.resolved {
+            for ticket in &config.tickets[..config.ticket_count as usize] {
+                require!(
+                    checked.iter().any(|f| f.key() == *ticket),
+                    GameError::InvalidFactionSet
+                );
+            }
+        }
+        if game.phase == Phase::Law && game.law_card != NO_LAW {
+            require!(
+                config.resolved || config.ticket_count == 0,
+                GameError::DonkeyOracleInvalid
+            );
+        }
+    }
+
     // энтропия фазы: VRF-коммит для карты закона в режиме 1
     let vrf_commit = if wants_rng {
-        let rng_ai = ctx.remaining_accounts[game.faction_count as usize].clone();
-        Some(verify_switchboard(&rng_ai, clock.slot)?)
+        let rng_ai =
+            ctx.remaining_accounts[game.faction_count as usize + usize::from(needs_config)].clone();
+        Some(if let Some(config) = oracle.as_ref() {
+            verify_donkey_round_rng(&rng_ai, config, game.round, clock.slot)?
+        } else {
+            verify_switchboard(&rng_ai, clock.slot)?
+        })
     } else {
         None
     };
@@ -130,6 +200,23 @@ pub fn handle_advance(ctx: Context<Advance>) -> Result<()> {
         });
     }
     if res.aborted {
+        if let Some(config) = oracle.as_mut() {
+            if config.round == prev_round && !config.resolved {
+                for ticket in &config.tickets[..config.ticket_count as usize] {
+                    emit!(DonkeyResolved {
+                        game: gkey,
+                        faction: *ticket,
+                        round: prev_round,
+                        success: false,
+                        goods: 0,
+                        fee: DONKEY_RISK_FEE,
+                        reason: 1,
+                    });
+                }
+                config.resolved = true;
+            }
+            config.exit(&crate::id())?;
+        }
         for f in checked.iter_mut() {
             f.exit(&crate::id())?;
         }
@@ -160,6 +247,9 @@ pub fn handle_advance(ctx: Context<Advance>) -> Result<()> {
     for f in checked.iter_mut() {
         f.exit(&crate::id())?;
     }
+    if let Some(config) = oracle.as_mut() {
+        config.exit(&crate::id())?;
+    }
 
     emit!(PhaseAdvanced {
         game: gkey,
@@ -167,4 +257,22 @@ pub fn handle_advance(ctx: Context<Advance>) -> Result<()> {
         phase: game.phase,
     });
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn empty_epoch2_lobby_can_abort_but_cannot_enter_market_without_config() {
+        let mut game = Game::default();
+        game.epoch = EPOCH_DONKEY_RISK;
+        game.phase = Phase::Lobby;
+        game.faction_count = MIN_FACTIONS - 1;
+        assert!(!needs_donkey_config(&game));
+        game.faction_count = MIN_FACTIONS;
+        assert!(needs_donkey_config(&game));
+        game.phase = Phase::Action;
+        assert!(needs_donkey_config(&game));
+    }
 }

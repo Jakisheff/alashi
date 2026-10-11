@@ -30,6 +30,13 @@ pub const LAW_EMBARGO: u8 = 6;
 pub const LAW_BOOM: u8 = 7;
 pub const DECK_SIZE: u8 = 8;
 pub const DONKEY_PRICE: u64 = 1;
+/// Epoch 2: a paid Action gamble, resolved only from verified future VRF.
+pub const EPOCH_DONKEY_RISK: u8 = 2;
+pub const DONKEY_ORACLE_SEED: &[u8] = b"donkey-oracles";
+pub const DONKEY_RISK_FEE: u64 = 5 * PESO;
+pub const DONKEY_RISK_REWARD: u16 = 5;
+pub const DONKEY_RISK_SUCCESS_COUNT: u8 = 3;
+pub const DONKEY_RISK_OUTCOMES: u8 = 5;
 pub const PAYOUT_SHARES: [u64; 4] = [50, 30, 15, 5];
 
 pub const ENTROPY_SLOTHASH: u8 = 0;
@@ -48,6 +55,11 @@ pub const SKIP_VOTE_WEIGHT: u16 = 2;
 // ---------- SPEC_EPOCH_90S: эпоха 90-х (epoch = 1) ----------
 pub const EPOCH_CLASSIC: u8 = 0;
 pub const EPOCH_90S: u8 = 1;
+/// Epoch 2 keeps the 90s economy and laws; only its donkey action changes.
+/// Match known epochs explicitly so a future epoch is never enabled by range.
+pub const fn has_90s_rules(epoch: u8) -> bool {
+    epoch == EPOCH_90S || epoch == EPOCH_DONKEY_RISK
+}
 // M1 девальвация: кэш ×0.62 в начале каждого раунда r>=2.
 // Калибровка по фактуре: тенге 4.7/USD (15.11.1993) -> 50+/USD (11.1994),
 // падение ×10.6 за год; 5 девальваций партии по ×0.62 дают ×0.09.

@@ -621,6 +621,8 @@ fn event_associated(
         | Sold { faction, .. }
         | GoodsBought { faction, .. }
         | DonkeyBought { faction, .. }
+        | DonkeyAttempted { faction, .. }
+        | DonkeyResolved { faction, .. }
         | VoteCast { faction, .. }
         | SoldCreditEv { faction, .. }
         | ShuttledEv { faction, .. }
@@ -658,6 +660,7 @@ fn stringify_u64(v: &mut Value) {
             "entry_fee",
             "revenue",
             "cost",
+            "fee",
             "amount",
             "price",
             "pot",

@@ -1511,6 +1511,131 @@ fn test_expired_lobby_refunds_and_closes_empty_or_single_player() {
 }
 
 #[test]
+fn epoch2_unconfigured_lobby_rejects_join_before_fee_and_can_abort() {
+    let (mut svm, admin) = setup();
+    let player = Keypair::new();
+    svm.airdrop(&player.pubkey(), 2_000_000_000).unwrap();
+    let id = 9_202;
+    let game = game_pda(id);
+    let faction = faction_pda(&game, &player.pubkey());
+    let initialize = alashi::instruction::Initialize {
+        game_id: id,
+        entry_fee: FEE,
+        phase_duration: 10,
+        entropy_mode: alashi::constants::ENTROPY_SWITCHBOARD,
+        epoch: alashi::constants::EPOCH_DONKEY_RISK,
+    };
+    let ix = Instruction::new_with_bytes(
+        alashi::id(),
+        &initialize.data(),
+        alashi::accounts::Initialize {
+            admin: admin.pubkey(),
+            game,
+            system_program: system_program::ID,
+        }
+        .to_account_metas(None),
+    );
+    assert!(send(&mut svm, &admin, ix));
+    let player_before = svm.get_account(&player.pubkey()).unwrap().lamports;
+    let game_before = svm.get_account(&game).unwrap().lamports;
+    assert!(!send(
+        &mut svm,
+        &player,
+        ix_join("Unconfigured", player.pubkey(), game, faction)
+    ));
+    // A rejected transaction still pays the LiteSVM signature fee, but it
+    // must not transfer the game's entry fee or create a faction.
+    assert_eq!(
+        player_before - svm.get_account(&player.pubkey()).unwrap().lamports,
+        5_000
+    );
+    assert_eq!(svm.get_account(&game).unwrap().lamports, game_before);
+    assert_eq!(game_state(&svm, &game).faction_count, 0);
+    assert!(svm.get_account(&faction).is_none());
+
+    let mut clock = svm.get_sysvar::<solana_clock::Clock>();
+    clock.unix_timestamp = game_state(&svm, &game).phase_ends_at;
+    svm.set_sysvar(&clock);
+    set_law_seed(&mut svm, 0);
+    assert!(send(
+        &mut svm,
+        &admin,
+        ix_advance(admin.pubkey(), game, vec![])
+    ));
+    assert_eq!(game_state(&svm, &game).phase, alashi::state::Phase::Aborted);
+}
+
+#[test]
+fn epoch2_configured_lobby_accepts_join() {
+    let (mut svm, admin) = setup();
+    let player = Keypair::new();
+    svm.airdrop(&player.pubkey(), 2_000_000_000).unwrap();
+    let id = 9_203;
+    let game = game_pda(id);
+    let faction = faction_pda(&game, &player.pubkey());
+    let oracle = Pubkey::find_program_address(
+        &[alashi::constants::DONKEY_ORACLE_SEED, game.as_ref()],
+        &alashi::id(),
+    )
+    .0;
+    let initialize = alashi::instruction::Initialize {
+        game_id: id,
+        entry_fee: FEE,
+        phase_duration: 10,
+        entropy_mode: alashi::constants::ENTROPY_SWITCHBOARD,
+        epoch: alashi::constants::EPOCH_DONKEY_RISK,
+    };
+    assert!(send(
+        &mut svm,
+        &admin,
+        Instruction::new_with_bytes(
+            alashi::id(),
+            &initialize.data(),
+            alashi::accounts::Initialize {
+                admin: admin.pubkey(),
+                game,
+                system_program: system_program::ID,
+            }
+            .to_account_metas(None),
+        )
+    ));
+    let sources: Vec<Pubkey> = (0..alashi::constants::ROUNDS)
+        .map(|_| Pubkey::new_unique())
+        .collect();
+    for source in &sources {
+        install_rng(&mut svm, source, 0, 0, 0);
+        let mut account = svm.get_account(source).unwrap();
+        account.data[8..40].fill(4); // nonzero Switchboard authority
+        svm.set_account(*source, account).unwrap();
+    }
+    let mut metas = alashi::accounts::ConfigureDonkeyOracles {
+        admin: admin.pubkey(),
+        game,
+        oracle,
+        system_program: system_program::ID,
+    }
+    .to_account_metas(None);
+    metas.extend(sources.iter().map(|source| {
+        anchor_lang::solana_program::instruction::AccountMeta::new_readonly(*source, false)
+    }));
+    assert!(send(
+        &mut svm,
+        &admin,
+        Instruction::new_with_bytes(
+            alashi::id(),
+            &alashi::instruction::ConfigureDonkeyOracles {}.data(),
+            metas,
+        )
+    ));
+    let mut join = ix_join("Configured", player.pubkey(), game, faction);
+    join.accounts.push(anchor_lang::solana_program::instruction::AccountMeta::new_readonly(oracle, false));
+    let game_before = svm.get_account(&game).unwrap().lamports;
+    assert!(send(&mut svm, &player, join));
+    assert_eq!(game_state(&svm, &game).faction_count, 1);
+    assert_eq!(svm.get_account(&game).unwrap().lamports - game_before, FEE);
+}
+
+#[test]
 fn test_close_settled_game_rejects_redirection_and_duplicates() {
     let mut party = start_party(902, FEE, 0);
     let crank = Keypair::new();

@@ -70,8 +70,14 @@ pub enum GameError {
     NotAdmin,
     #[msg("invalid vote weight mode")]
     InvalidVoteWeightMode,
-    #[msg("invalid epoch (0 classic | 1 90s)")]
+    #[msg("invalid epoch (0 classic | 1 90s | 2 donkey risk)")]
     InvalidEpoch,
+    #[msg("donkey risk is unavailable in the final round")]
+    NoMarketRemaining,
+    #[msg("donkey reward would overflow goods")]
+    DonkeyRewardOverflow,
+    #[msg("donkey oracle configuration is missing or invalid")]
+    DonkeyOracleInvalid,
     #[msg("wallet already joined this game")]
     DuplicateWallet,
     #[msg("at most eight open barter offers per game")]
