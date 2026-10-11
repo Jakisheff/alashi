@@ -246,7 +246,14 @@ fn tick(
         submit(
             rpc,
             key,
-            ix_initialize(key.pubkey(), address, m.id, duration, constants::EPOCH_90S),
+            ix_initialize(
+                key.pubkey(),
+                address,
+                m.id,
+                duration,
+                constants::ENTROPY_SLOTHASH,
+                constants::EPOCH_90S,
+            ),
         )?;
         return Err("initializing");
     };
