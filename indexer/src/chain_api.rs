@@ -237,7 +237,7 @@ impl ChainApi {
             "getProgramAccounts",
             json!([alashi::id().to_string(),
             {"encoding":"base64","commitment":"confirmed","withContext":true,
-             "filters":[{"memcmp":{"offset":8,"bytes":key_s}}]}]),
+             "filters":faction_filters(&key_s)}]),
         )?;
         let rows = discovered["value"].as_array().ok_or(Error::Upstream)?;
         if rows.len() > 6 {
@@ -558,6 +558,14 @@ fn faction_pda(game: &Pubkey, wallet: &Pubkey) -> Pubkey {
     )
     .0
 }
+fn faction_filters(game: &str) -> Value {
+    json!([
+        {"memcmp":{"offset":0,"bytes":base64::engine::general_purpose::STANDARD.encode(
+            crate::onchain::account_disc("account:Faction")),"encoding":"base64"}},
+        {"memcmp":{"offset":8,"bytes":game}},
+    ])
+}
+
 fn decode_account<T: AccountDeserialize>(v: &Value, name: &str) -> Result<T, Error> {
     if v["owner"].as_str() != Some(&alashi::id().to_string()) {
         return Err(Error::BadGame);
@@ -687,6 +695,27 @@ mod tests {
     use super::*;
     use std::io::{Read, Write};
     use std::net::TcpListener;
+    #[test]
+    fn faction_discovery_filter_excludes_donkey_config_collision() {
+        let game = Pubkey::new_unique().to_string();
+        let filters = faction_filters(&game);
+        let discriminator = filters[0]["memcmp"]["bytes"].as_str().unwrap();
+        assert_eq!(filters[0]["memcmp"]["offset"], 0);
+        assert_eq!(filters[0]["memcmp"]["encoding"], "base64");
+        assert_eq!(
+            base64::engine::general_purpose::STANDARD
+                .decode(discriminator)
+                .unwrap(),
+            crate::onchain::account_disc("account:Faction")
+        );
+        assert_ne!(
+            crate::onchain::account_disc("account:Faction"),
+            crate::onchain::account_disc("account:DonkeyOracleConfig")
+        );
+        assert_eq!(filters[1]["memcmp"]["offset"], 8);
+        assert_eq!(filters[1]["memcmp"]["bytes"], game);
+    }
+
     #[test]
     fn foreign_stack_and_wrong_game_are_not_events() {
         let game = Pubkey::new_unique();
