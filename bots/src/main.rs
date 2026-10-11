@@ -6,6 +6,7 @@ mod llm;
 mod runner_auth;
 mod session_cli;
 mod match_host;
+mod sponsorship;
 
 use solana_signature::Signature;
 use solana_signer::Signer;

@@ -330,7 +330,7 @@ fn tick(
     Ok((view, false))
 }
 
-fn read_match(stream: &mut TcpStream) -> Option<String> {
+fn read_match(stream: &mut TcpStream) -> Option<(bool, String)> {
     stream.set_read_timeout(Some(Duration::from_secs(3))).ok()?;
     let mut reader = BufReader::new(stream);
     let mut remaining = 2048;
@@ -340,7 +340,8 @@ fn read_match(stream: &mut TcpStream) -> Option<String> {
         .take(remaining + 1)
         .read_line(&mut line)
         .ok()?;
-    if n as u64 > remaining || line != "POST /match HTTP/1.1\r\n" {
+    let funding = line == "POST /fund HTTP/1.1\r\n";
+    if n as u64 > remaining || (!funding && line != "POST /match HTTP/1.1\r\n") {
         return None;
     }
     remaining -= n as u64;
@@ -377,7 +378,7 @@ fn read_match(stream: &mut TcpStream) -> Option<String> {
     if body.as_object()?.len() != 1 {
         return None;
     }
-    Some(body["wallet"].as_str()?.into())
+    Some((funding, body["wallet"].as_str()?.into()))
 }
 
 pub fn run(args: &[String]) -> Result<(), String> {
@@ -433,6 +434,7 @@ pub fn run(args: &[String]) -> Result<(), String> {
         .parse::<u16>()
         .map_err(|_| "invalid_port")?;
     let listener = TcpListener::bind(("127.0.0.1", port)).map_err(|_| "bind_failed")?;
+    let sponsorship = sponsorship::Host::start(&key, path.with_extension("funding.json"))?;
     let book = Arc::new(Mutex::new(book));
     let worker_book = Arc::clone(&book);
     let worker_path = path.clone();
@@ -504,8 +506,9 @@ pub fn run(args: &[String]) -> Result<(), String> {
         let Ok(mut stream) = stream else {
             continue;
         };
-        let body = if let Some(wallet) = read_match(&mut stream) {
-            request(&mut book.lock().unwrap(), &path, &wallet, now())
+        let body = if let Some((funding, wallet)) = read_match(&mut stream) {
+            if funding { sponsorship.request(&wallet) }
+            else { request(&mut book.lock().unwrap(), &path, &wallet, now()) }
         } else {
             json!({"ok":false,"error":"invalid_request"})
         };
@@ -547,13 +550,16 @@ mod tests {
         for player_count in [1, 2, 0] {
             let host = Keypair::new();
             let players: Vec<_> = (0..player_count).map(|_| Keypair::new()).collect();
-            for key in std::iter::once(&host).chain(players.iter()) {
+            for key in std::iter::once(&host) {
                 let sig = rpc.request_airdrop(&key.pubkey(), 2_000_000_000).unwrap();
                 let started = Instant::now();
                 while !rpc.confirm_transaction(&sig).unwrap() {
                     assert!(started.elapsed() < Duration::from_secs(20));
                     sleep(Duration::from_millis(100));
                 }
+            }
+            for player in &players {
+                sponsorship::fund_local_player(&rpc, &host, player);
             }
             let mut m = Match {
                 id: SystemTime::now()
@@ -689,7 +695,7 @@ mod tests {
 
     #[test]
     fn local_host_rejects_ambiguous_framing_and_extra_fields() {
-        fn parse(raw: String) -> Option<String> {
+        fn parse(raw: String) -> Option<(bool, String)> {
             let listener = TcpListener::bind("127.0.0.1:0").unwrap();
             let address = listener.local_addr().unwrap();
             let writer = std::thread::spawn(move || {
