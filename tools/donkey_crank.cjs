@@ -249,9 +249,10 @@ async function loadSnapshot(connection, web3, sb, config, clock) {
     randomness = new sb.Randomness(program, sourceKey);
     providerData = await randomness.loadData();
   } catch (error) {
-    if (game.phase !== 'Action') throw error;
-    // No provider data can authorize a commit. Keep observing until the
-    // bounded grace elapses, then use the source-free technical abort.
+    if (game.phase !== 'Action' && game.phase !== 'Law') throw error;
+    // A source read can never authorize a commit or reveal. After Law's
+    // source-backed timeout, the program's ordinary Advance owns the bounded
+    // retry/abort path using only already-validated Game/config/faction data.
     return { gameKey, game, oracleKey, oracle, source: null,
       factionKeys: factionNames.map((name) => key(web3, name)) };
   }
@@ -262,6 +263,9 @@ async function loadSnapshot(connection, web3, sb, config, clock) {
     authority: providerData.authority.toBase58(),
     seedSlot: bignum(providerData.seedSlot),
     revealSlot: bignum(providerData.revealSlot),
+    // Needed only for the bounded gateway proof request; never logged or
+    // accepted as a client-selected entropy value.
+    seedSlothash: Buffer.from(providerData.seedSlothash),
     oracle: providerData.oracle.toBase58(),
   };
   const expectedOracle = oracle.oracles[game.round - 1];
@@ -280,7 +284,7 @@ async function resumePending(connection, web3, stateFile, gamePda) {
   if (!fs.existsSync(stateFile)) return false;
   const state = readJson(stateFile);
   if (state.game_pda !== gamePda ||
-      !['advance_with_alashi_commit', 'abort_uncommitted', 'reveal_donkey_law'].includes(state.kind)) {
+      !['advance_with_alashi_commit', 'abort_uncommitted', 'advance_law_timeout', 'reveal_donkey_law'].includes(state.kind)) {
     fail('pending_state_binding_invalid');
   }
   const status = (await connection.getSignatureStatuses([state.signature],
@@ -361,7 +365,8 @@ async function main(argv) {
   const snapshot = await loadSnapshot(connection, web3, sb, config, clock);
   let plan;
   if (!snapshot.source) {
-    plan = core.planWithoutSource(snapshot.game, clock.unixTime);
+    plan = core.planWithoutSource(snapshot.game, snapshot.oracle, config.faction_pdas,
+      clock.unixTime, clock.slot);
   } else {
     try {
       plan = core.planStep(snapshot.game, snapshot.oracle, snapshot.source,
@@ -376,7 +381,7 @@ async function main(argv) {
     return { status: 'read_only', step: plan.kind, game_pda: config.game_pda,
       round: snapshot.game.round, source: snapshot.source?.address || null };
   }
-  if (!['advance_with_alashi_commit', 'abort_uncommitted', 'reveal_and_resolve'].includes(plan.kind)) {
+  if (!['advance_with_alashi_commit', 'abort_uncommitted', 'advance_law_timeout', 'reveal_and_resolve'].includes(plan.kind)) {
     return { status: plan.kind, game_pda: config.game_pda, round: snapshot.game.round,
       phase: snapshot.game.phase };
   }
@@ -398,6 +403,14 @@ async function main(argv) {
       key(web3, snapshot.oracle.queue), key(web3, snapshot.oracle.oracles[snapshot.game.round - 1]),
       sb.ON_DEMAND_DEVNET_PID);
     return sendRecorded(connection, web3, config, signer, plan.kind, [gameIx], stateFile);
+  }
+  if (plan.kind === 'advance_law_timeout') {
+    // The program owns retry counting and terminal abort. This ordinary Advance
+    // has no randomness account, so it cannot recommit or charge a new attempt.
+    gameIx = advanceIx(web3, signer.publicKey, snapshot.gameKey,
+      snapshot.factionKeys, snapshot.oracleKey, null);
+    return sendRecorded(connection, web3, config, signer,
+      'advance_law_timeout', [gameIx], stateFile);
   }
   if (plan.kind === 'reveal_and_resolve') {
     const proofFile = process.env.ALASHI_REVEAL_PROOF_FILE;
@@ -499,4 +512,4 @@ if (require.main === module) {
 }
 
 module.exports = { main, command, runBounded, parseClock, advanceIx, revealDonkeyLawIx,
-  readRevealProof, privateStatePath, sendRecorded, resumePending, loadSnapshot };
+  readRevealProof, privateStatePath, sendRecorded, resumePending, loadSnapshot, key };

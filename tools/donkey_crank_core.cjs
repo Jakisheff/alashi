@@ -6,16 +6,33 @@ const PHASES = ['Lobby', 'Market', 'Action', 'Law', 'Finished', 'Aborted'];
 const DEVNET_GENESIS = 'EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG';
 const COMMIT_GRACE_SECONDS = 30n;
 const UNASSIGNED_ORACLE = '11111111111111111111111111111111';
+const REVEAL_TIMEOUT_SLOTS = 25n;
 
 function abortUncommittedEligible(game, unixTime) {
   return game.epoch === 2 && game.entropyMode === 1 && game.phase === 'Action' &&
     BigInt(unixTime) >= game.phaseEndsAt + COMMIT_GRACE_SECONDS;
 }
 
-function planWithoutSource(game, unixTime) {
+function lawTimeoutEligible(game, oracle, factions, unixTime, slot) {
+  if (game.epoch !== 2 || game.entropyMode !== 1 || game.phase !== 'Law' ||
+      game.lawCard !== 255 || game.round < 1 || game.round > 6 || game.commitSlot === 0n ||
+      !oracle || !Array.isArray(oracle.accounts) || oracle.accounts.length !== 6 ||
+      !Number.isInteger(oracle.committedRoundsMask) ||
+      (oracle.committedRoundsMask & (1 << (game.round - 1))) === 0 ||
+      oracle.accounts[game.round - 1] !== game.vrfAccount || oracle.round !== game.round ||
+      !Array.isArray(factions) || factions.length !== game.factionCount ||
+      new Set(factions).size !== factions.length) return false;
+  return BigInt(unixTime) >= game.phaseEndsAt &&
+    BigInt(slot) - game.commitSlot > REVEAL_TIMEOUT_SLOTS;
+}
+
+function planWithoutSource(game, oracle, factions, unixTime, slot) {
   if (game.phase === 'Finished' || game.phase === 'Aborted') return { kind: 'terminal' };
   if (abortUncommittedEligible(game, unixTime)) return { kind: 'abort_uncommitted' };
-  if (game.phase === 'Action') return { kind: 'wait_provider_source' };
+  if (lawTimeoutEligible(game, oracle, factions, unixTime, slot)) {
+    return { kind: 'advance_law_timeout' };
+  }
+  if (game.phase === 'Action' || game.phase === 'Law') return { kind: 'wait_provider_source' };
   return { kind: 'no_operator_step' };
 }
 
@@ -155,6 +172,10 @@ function planStep(game, oracle, source, factions, unixTime, slot) {
       throw new Error('provider_revealed_without_alashi');
     }
     if (game.commitSlot >= BigInt(slot)) return { kind: 'wait_seed_slot' };
+    if (BigInt(unixTime) >= game.phaseEndsAt &&
+        BigInt(slot) - game.commitSlot > REVEAL_TIMEOUT_SLOTS) {
+      return { kind: 'advance_law_timeout', tickets };
+    }
     return { kind: 'reveal_and_resolve', tickets };
   }
   return { kind: 'no_operator_step' };
@@ -168,6 +189,6 @@ function singleAlashiReveal(kind, gameIx, gameProgram) {
   return [gameIx];
 }
 
-module.exports = { DEVNET_GENESIS, COMMIT_GRACE_SECONDS, UNASSIGNED_ORACLE,
-  abortUncommittedEligible, planWithoutSource, discriminator, decodeGame, decodeOracle,
+module.exports = { DEVNET_GENESIS, COMMIT_GRACE_SECONDS, REVEAL_TIMEOUT_SLOTS, UNASSIGNED_ORACLE,
+  abortUncommittedEligible, lawTimeoutEligible, planWithoutSource, discriminator, decodeGame, decodeOracle,
   decodeFactionIdentity, dueTickets, planStep, singleAlashiReveal };

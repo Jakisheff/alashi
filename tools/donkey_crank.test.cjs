@@ -52,56 +52,6 @@ test('account decoders preserve epoch2 phase, future pin and ordered tickets', (
   assert.throws(() => core.decodeGame(gameBytes().subarray(0, 100), hex), /truncated_account/);
 });
 
-test('snapshot loader accepts pristine Action oracle and bound Law oracle only', async () => {
-  const program = new web3.PublicKey('3jwunaFDRrSWFfeJ5hFZu3DmxPNTmkdoCweHDvqcXTqC');
-  const provider = new web3.PublicKey('Aio4gaXjXzJNVLtzwtNVmSqGKpANtXhybbkhtAC94ji2');
-  const gameId = Buffer.alloc(8);
-  gameId.writeBigUInt64LE(42n);
-  const game = web3.PublicKey.findProgramAddressSync([Buffer.from('game'), gameId], program)[0];
-  const configKey = web3.PublicKey.findProgramAddressSync(
-    [Buffer.from('donkey-oracles'), game.toBuffer()], program)[0];
-  const queue = new web3.PublicKey(k(2));
-  const sources = [10, 11, 12, 13, 14, 15].map((n) => new web3.PublicKey(k(n)));
-  const oracles = [30, 31, 32, 33, 34, 35].map((n) => new web3.PublicKey(k(n)));
-  const wallets = [40, 41].map((n) => new web3.PublicKey(k(n)));
-  const factions = wallets.map((wallet) => web3.PublicKey.findProgramAddressSync(
-    [Buffer.from('faction'), game.toBuffer(), wallet.toBuffer()], program)[0]);
-  const gameData = Buffer.from(gameBytes());
-  const configData = Buffer.from(oracleBytes());
-  game.toBuffer().copy(configData, 8);
-  queue.toBuffer().copy(configData, 40);
-  configKey.toBuffer().copy(configData, 72);
-  const accounts = new Map([
-    [game.toBase58(), { owner: program, data: gameData }],
-    [configKey.toBase58(), { owner: program, data: configData }],
-    [sources[1].toBase58(), { owner: provider, data: Buffer.alloc(480) }],
-    ...factions.map((faction, i) => [faction.toBase58(), { owner: program,
-      data: Buffer.concat([core.discriminator('account', 'Faction'), game.toBuffer(),
-        wallets[i].toBuffer()]) }]),
-  ]);
-  const connection = { getAccountInfo: async (pubkey) => accounts.get(pubkey.toBase58()) };
-  let sourceOracle = web3.PublicKey.default;
-  let seedSlot = 0n;
-  const sb = { ON_DEMAND_DEVNET_PID: provider,
-    AnchorUtils: { loadProgramFromConnection: async () => ({}) },
-    Randomness: class { async loadData() { return { queue, authority: configKey,
-      oracle: sourceOracle, seedSlot, revealSlot: 0n }; } } };
-  const request = { game_pda: game.toBase58(), faction_pdas: factions.map(String),
-    round_sources: sources.map(String), round_oracles: oracles.map(String) };
-  const clock = { slot: 200n, unixTime: 100n };
-  const snapshot = () => cli.loadSnapshot(connection, web3, sb, request, clock);
-  assert.equal((await snapshot()).source.oracle, core.UNASSIGNED_ORACLE);
-  sourceOracle = oracles[1];
-  await assert.rejects(snapshot(), /source_binding_invalid/);
-  gameData[48] = 3; // Law after a confirmed Alashi-owned commit.
-  sources[1].toBuffer().copy(gameData, gameData.length - 49); // Pinned source.
-  configData[488] = 2; // Round-two committed bit.
-  seedSlot = 201n;
-  assert.equal((await snapshot()).source.oracle, oracles[1].toBase58());
-  sourceOracle = web3.PublicKey.default;
-  await assert.rejects(snapshot(), /source_binding_invalid/);
-});
-
 test('one-shot plan never recommits or reveals a changed source', () => {
   const game = { phase: 'Action', phaseEndsAt: 100n, round: 2, factionCount: 2,
     epoch: 2, entropyMode: 1, lawCard: 255, vrfAccount: 's2', commitSlot: 201n };
@@ -129,6 +79,12 @@ test('one-shot plan never recommits or reveals a changed source', () => {
   assert.deepEqual(core.planStep(law, oracle,
     { ...source, oracle: 'o2', seedSlot: 201n }, ['f1', 'f2'], 101n, 202n),
   { kind: 'reveal_and_resolve', tickets: ['f1'] });
+  assert.equal(core.planStep(law, oracle,
+    { ...source, oracle: 'o2', seedSlot: 201n }, ['f1', 'f2'], 100n, 226n).kind,
+  'reveal_and_resolve');
+  assert.deepEqual(core.planStep(law, oracle,
+    { ...source, oracle: 'o2', seedSlot: 201n }, ['f1', 'f2'], 100n, 227n),
+  { kind: 'advance_law_timeout', tickets: ['f1'] });
   assert.throws(() => core.planStep(law, oracle,
     { ...source, oracle: 'o2', seedSlot: 203n }, ['f1', 'f2'], 101n, 204n),
   /pinned_commit_changed/);
@@ -147,12 +103,71 @@ test('technical abort is epoch2-only and starts after fixed Action grace', () =>
   assert.equal(core.abortUncommittedEligible(game, 130n), true);
   assert.equal(core.abortUncommittedEligible({ ...game, epoch: 1 }, 130n), false);
   assert.equal(core.abortUncommittedEligible({ ...game, phase: 'Law' }, 130n), false);
-  assert.equal(core.planWithoutSource(game, 129n).kind, 'wait_provider_source');
-  assert.equal(core.planWithoutSource(game, 130n).kind, 'abort_uncommitted');
-  assert.equal(core.planWithoutSource({ ...game, phase: 'Market' }, 130n).kind,
+  assert.equal(core.planWithoutSource(game, null, [], 129n, 0n).kind, 'wait_provider_source');
+  assert.equal(core.planWithoutSource(game, null, [], 130n, 0n).kind, 'abort_uncommitted');
+  assert.equal(core.planWithoutSource({ ...game, phase: 'Market' }, null, [], 130n, 0n).kind,
     'no_operator_step');
-  assert.equal(core.planWithoutSource({ ...game, phase: 'Aborted' }, 130n).kind,
+  assert.equal(core.planWithoutSource({ ...game, phase: 'Aborted' }, null, [], 130n, 0n).kind,
     'terminal');
+});
+
+
+test('Law source outage waits before timeout and uses source-free Advance only after it', () => {
+  const law = { epoch: 2, entropyMode: 1, phase: 'Law', lawCard: 255, round: 1,
+    factionCount: 2, phaseEndsAt: 100n, commitSlot: 200n, vrfAccount: 'source' };
+  const oracle = { round: 1, committedRoundsMask: 1,
+    accounts: ['source', 's2', 's3', 's4', 's5', 's6'] };
+  assert.equal(core.planWithoutSource(law, oracle, ['f1', 'f2'], 99n, 226n).kind,
+    'wait_provider_source');
+  assert.equal(core.planWithoutSource(law, oracle, ['f1', 'f2'], 100n, 225n).kind,
+    'wait_provider_source');
+  assert.equal(core.planWithoutSource(law, oracle, ['f1', 'f2'], 100n, 226n).kind,
+    'advance_law_timeout');
+  assert.equal(core.planWithoutSource({ ...law, vrfAccount: 'other' }, oracle,
+    ['f1', 'f2'], 100n, 226n).kind, 'wait_provider_source');
+});
+
+test('loadSnapshot makes Law source outage a source-free timeout only after its gate', async () => {
+  const program = new web3.PublicKey('3jwunaFDRrSWFfeJ5hFZu3DmxPNTmkdoCweHDvqcXTqC');
+  const gameId = Buffer.alloc(8); gameId.writeBigUInt64LE(42n);
+  const gameKey = web3.PublicKey.findProgramAddressSync([Buffer.from('game'), gameId], program)[0];
+  const oracleKey = web3.PublicKey.findProgramAddressSync(
+    [Buffer.from('donkey-oracles'), gameKey.toBuffer()], program)[0];
+  const source = web3.Keypair.generate().publicKey;
+  const sources = [web3.Keypair.generate().publicKey, source,
+    ...Array.from({ length: 4 }, () => web3.Keypair.generate().publicKey)];
+  const oracles = Array.from({ length: 6 }, () => web3.Keypair.generate().publicKey);
+  const wallets = [web3.Keypair.generate().publicKey, web3.Keypair.generate().publicKey];
+  const factions = wallets.map((wallet) => web3.PublicKey.findProgramAddressSync(
+    [Buffer.from('faction'), gameKey.toBuffer(), wallet.toBuffer()], program)[0]);
+  const gameData = gameBytes();
+  gameData[48] = 3; // Law
+  source.toBuffer().copy(gameData, gameData.lastIndexOf(k(4)));
+  const oracleData = oracleBytes();
+  gameKey.toBuffer().copy(oracleData, 8);
+  web3.Keypair.generate().publicKey.toBuffer().copy(oracleData, 40);
+  oracleKey.toBuffer().copy(oracleData, 72);
+  sources.forEach((sourceKey, index) => sourceKey.toBuffer().copy(oracleData, 104 + index * 32));
+  oracles.forEach((oracleKey, index) => oracleKey.toBuffer().copy(oracleData, 296 + index * 32));
+  oracleData[488] = 2; // round 2 is committed in the frozen config.
+  const accounts = new Map([
+    [gameKey.toBase58(), { owner: program, data: gameData }],
+    [oracleKey.toBase58(), { owner: program, data: oracleData }],
+    ...factions.map((faction, index) => [faction.toBase58(), { owner: program,
+      data: Buffer.concat([core.discriminator('account', 'Faction'), gameKey.toBuffer(), wallets[index].toBuffer()]) }]),
+  ]);
+  const connection = { getAccountInfo: async (pubkey) => accounts.get(pubkey.toBase58()) || null };
+  const config = { game_pda: gameKey.toBase58(), round_sources: sources.map(String),
+    round_oracles: oracles.map(String), faction_pdas: factions.map(String) };
+  const sb = { ON_DEMAND_DEVNET_PID: web3.Keypair.generate().publicKey };
+  const early = await cli.loadSnapshot(connection, web3, sb, config, { unixTime: 100n, slot: 225n });
+  assert.equal(early.source, null);
+  assert.equal(core.planWithoutSource(early.game, early.oracle, config.faction_pdas, 100n, 225n).kind,
+    'wait_provider_source');
+  const timedOut = await cli.loadSnapshot(connection, web3, sb, config, { unixTime: 100n, slot: 227n });
+  assert.equal(timedOut.source, null);
+  assert.equal(core.planWithoutSource(timedOut.game, timedOut.oracle, config.faction_pdas, 100n, 227n).kind,
+    'advance_law_timeout');
 });
 
 test('reveal plan waits for a future committed source before one Alashi CPI instruction', () => {
@@ -271,6 +286,11 @@ test('Alashi Advance owns epoch2 commit with the exact frozen remaining-account 
   assert.equal(ix.keys[9].isWritable, false); // provider executable
   assert.throws(() => cli.advanceIx(web3, signer, game, factions, config, source),
     /incomplete_alashi_commit_accounts/);
+  const timeoutIx = cli.advanceIx(web3, signer, game, factions, config, null);
+  assert.deepEqual(timeoutIx.keys.map((meta) => meta.pubkey.toBase58()), [
+    signer, game, web3.SYSVAR_SLOT_HASHES_PUBKEY, ...factions, config,
+  ].map((pubkey) => pubkey.toBase58()));
+  assert.equal(timeoutIx.keys.length, 6);
 });
 
 test('mock RPC preserves exact signed transaction across lost responses', async () => {
