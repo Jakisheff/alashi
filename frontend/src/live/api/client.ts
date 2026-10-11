@@ -1,3 +1,4 @@
+import { inspectOwnerWish } from '../../owner/wishText.ts'
 // Exact public/owner contract: backend e114c615, release docs baa13b3.
 // Only these projections cross into React. Never retain raw API objects or error bodies.
 type Json = Record<string, unknown>
@@ -105,7 +106,7 @@ export function createLiveApi(prefix = '', fetcher: typeof fetch = fetch) {
     restoreBrowserSession: async (id: string, signal?: AbortSignal): Promise<OwnerSession> => { const v = await request(`${owner(id)}/browser/session`, signal, undefined, true); return { wallet: string(v.wallet, 64), expiresAt: number(v.expires_at) } },
     logoutBrowserSession: async (id: string, signal?: AbortSignal) => { await request(`${owner(id)}/browser/logout`, signal, {}, true) },
     wishes: async (id: string, after: number, signal?: AbortSignal) => projectWishes(await request(`${owner(id)}/wishes?after=${number(after)}&limit=100`, signal, undefined, true)),
-    submit: async (id: string, wish: { game_id: number; client_wish_id: string; text: string }, signal?: AbortSignal): Promise<Admission> => { const v = await request(`${owner(id)}/wishes`, signal, wish, true); const remaining = number(v.remaining); if (remaining > 3) throw new LiveApiError('invalid_response'); return { id: string(v.wish_id, 128), remaining } },
+    submit: async (id: string, wish: { game_id: number; client_wish_id: string; text: string }, signal?: AbortSignal): Promise<Admission> => { if (!inspectOwnerWish(wish.text).valid) throw new LiveApiError('bad_wish'); const v = await request(`${owner(id)}/wishes`, signal, wish, true); const remaining = number(v.remaining); if (remaining > 3) throw new LiveApiError('invalid_response'); return { id: string(v.wish_id, 128), remaining } },
   }
 }
 export type LiveApi = ReturnType<typeof createLiveApi>
@@ -118,6 +119,7 @@ export function friendlyError(error: unknown) {
     owner_origin_forbidden: 'Owner access is not enabled for this site yet.', owner_signature_invalid: 'The signature could not be verified.',
     owner_session_invalid: 'No active private browser session was found. Verify the registered wallet.', owner_session_expired: 'Your private browser session ended. Verify the registered wallet again.', owner_cookie_invalid: 'This private browser session is no longer valid. Verify the registered wallet again.', browser_cookie_missing: 'Browser sign-in could not be saved. Allow cookies for this site and try again.',
     owner_challenge_rate_limited: 'Too many verification attempts. Please wait a few minutes.', owner_challenge_expired: 'The verification request expired. Please try again.',
+    bad_wish: 'Enter a private instruction of up to 140 characters on one line.',
     wish_quota_exhausted: 'All three wishes for this game have been used.', no_active_game: 'This agent is no longer in that active game. Refresh its private journal.',
     idempotency_conflict: 'This submission ID was already used. Refresh the journal before trying a new wish.',
     wallet_missing: 'Open this page in a browser with a Solana wallet extension.', wallet_mismatch: 'Select the wallet registered to this agent.', wallet_rejected: 'Wallet verification was cancelled or unavailable.',
