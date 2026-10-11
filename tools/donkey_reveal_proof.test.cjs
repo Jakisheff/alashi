@@ -39,8 +39,16 @@ test('gateway timeout or error is not retried', async () => {
     calls++;
     const error = new Error('aborted');
     error.name = 'AbortError';
+    error.cause = { code: 'ABORT_ERR' };
     throw error;
-  }, 'https://gateway.example', {}), /gateway_proof_timeout_or_unavailable/);
+  }, 'https://gateway.example', {}), (error) => {
+    assert.match(error.message, /gateway_proof_timeout_or_unavailable/);
+    assert.equal(error.gateway_diagnostic.stage, 'timeout');
+    assert.equal(error.gateway_diagnostic.error_name, 'AbortError');
+    assert.equal(error.gateway_diagnostic.error_code, 'ABORT_ERR');
+    assert.equal(typeof error.gateway_diagnostic.elapsed_ms, 'number');
+    return true;
+  });
   assert.equal(calls, 1);
 });
 
@@ -52,8 +60,32 @@ test('redirect responses fail after one request and cannot forward the POST', as
     assert.equal(options.redirect, 'error');
     return { ok: false, status: 307, json: async () => ({}) };
   }, 'https://gateway.example', { rpc: 'https://rpc.example/path-token' }),
-  /gateway_proof_timeout_or_unavailable/);
+  (error) => {
+    assert.match(error.message, /gateway_proof_timeout_or_unavailable/);
+    assert.equal(error.gateway_diagnostic.stage, 'http');
+    assert.equal(error.gateway_diagnostic.http_status, 307);
+    return true;
+  });
   assert.equal(calls, 1);
+});
+
+test('gateway network diagnostics retain only bounded transport fields', async () => {
+  await assert.rejects(() => helper.fetchGatewayProof(async () => {
+    const network = new TypeError('fetch failed at https://secret.example/path-token');
+    network.cause = { code: 'ENOTFOUND' };
+    throw network;
+  }, 'https://gateway.example/private-prefix', {}), (error) => {
+    assert.match(error.message, /gateway_proof_timeout_or_unavailable/);
+    assert.deepEqual(error.gateway_diagnostic, {
+      stage: 'network',
+      error_name: 'TypeError',
+      error_code: 'ENOTFOUND',
+      elapsed_ms: error.gateway_diagnostic.elapsed_ms,
+    });
+    assert.equal(typeof error.gateway_diagnostic.elapsed_ms, 'number');
+    assert.doesNotMatch(JSON.stringify(error.gateway_diagnostic), /secret|path-token|gateway\.example/i);
+    return true;
+  });
 });
 
 test('pinned SDK encoder owns gateway value serialization', () => {

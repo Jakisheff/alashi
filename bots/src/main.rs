@@ -3775,13 +3775,20 @@ fn main() {
                 }
             }
             state::Phase::Law => {
-                if g.law_card != 255 {
+                let law_revealed = g.law_card != constants::NO_LAW;
+                if !law_revealed && hb % 5 == 1 {
+                    eprintln!(
+                        "[law r{}] waiting for verified law reveal or canonical timeout crank",
+                        g.round
+                    );
+                }
+                if law_revealed {
                     demo_say(
                         "РАССКАЗЧИК: теперь ЖЮРИ — подключи кошелёк и проголосуй ПРОТИВ, 45 секунд",
                     );
                 }
                 for (i, b) in bots.iter_mut().enumerate() {
-                    if b.voted {
+                    if !law_revealed || b.voted {
                         continue;
                     }
                     match run_chain_wish(
@@ -3866,7 +3873,7 @@ fn main() {
                         b.voted = true;
                     }
                 }
-                if g.round == 3 && g.president == bots[0].kp.pubkey() && !g.veto_pending {
+                if law_revealed && g.round == 3 && g.president == bots[0].kp.pubkey() && !g.veto_pending {
                     demo_say("РАССКАЗЧИК: президент Aibot кладёт СЛЕПОЕ ВЕТО до подсчёта голосов — как на столе бумажками");
                     println!("[law r{}] Aibot (president) vetoes", g.round);
                     send_ix(
