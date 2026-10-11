@@ -5,6 +5,7 @@ const { createHash } = require('node:crypto');
 const PHASES = ['Lobby', 'Market', 'Action', 'Law', 'Finished', 'Aborted'];
 const DEVNET_GENESIS = 'EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG';
 const COMMIT_GRACE_SECONDS = 30n;
+const UNASSIGNED_ORACLE = '11111111111111111111111111111111';
 
 function abortUncommittedEligible(game, unixTime) {
   return game.epoch === 2 && game.entropyMode === 1 && game.phase === 'Action' &&
@@ -88,6 +89,8 @@ function decodeOracle(data, mapKey) {
   const queue = r.key(mapKey);
   const authority = r.key(mapKey);
   const accounts = Array.from({ length: 6 }, () => r.key(mapKey));
+  const oracles = Array.from({ length: 6 }, () => r.key(mapKey));
+  const committedRoundsMask = r.u8();
   const round = r.u8();
   const ticketCount = r.u8();
   const tickets = Array.from({ length: 6 }, () => r.key(mapKey));
@@ -96,7 +99,10 @@ function decodeOracle(data, mapKey) {
   r.u8(); // bump
   if (round > 6 || ticketCount > 6 || resolved > 1 ||
       new Set(accounts).size !== 6) throw new Error('invalid_oracle_state');
-  return { game, queue, authority, accounts, round, ticketCount,
+  if (new Set(oracles).size !== 6 || committedRoundsMask > 0x3f) {
+    throw new Error('invalid_oracle_state');
+  }
+  return { game, queue, authority, accounts, oracles, committedRoundsMask, round, ticketCount,
     tickets: tickets.slice(0, ticketCount), maxAttemptSlot, resolved: Boolean(resolved) };
 }
 
@@ -128,13 +134,22 @@ function planStep(game, oracle, source, factions, unixTime, slot) {
     if (source.revealSlot !== 0n || source.seedSlot !== 0n) {
       throw new Error('source_precommitted_or_revealed');
     }
-    if (oracle.maxAttemptSlot >= BigInt(slot) + 1n) {
+    if ((oracle.committedRoundsMask & (1 << (game.round - 1))) !== 0) {
+      throw new Error('source_round_already_committed');
+    }
+    if (source.oracle !== UNASSIGNED_ORACLE) {
+      throw new Error('source_oracle_not_unassigned');
+    }
+    if (oracle.maxAttemptSlot >= BigInt(slot)) {
       throw new Error('attempt_slot_not_before_commit');
     }
-    return { kind: 'commit_and_advance', tickets };
+    return { kind: 'advance_with_alashi_commit', tickets };
   }
   if (game.phase === 'Law' && game.lawCard === 255 &&
       game.vrfAccount === source.address && game.commitSlot > 0n) {
+    if (source.oracle !== oracle.oracles[game.round - 1]) {
+      throw new Error('selected_oracle_mismatch');
+    }
     if (source.seedSlot !== game.commitSlot) throw new Error('pinned_commit_changed');
     if (source.revealSlot !== 0n) {
       throw new Error('provider_revealed_without_alashi');
@@ -145,15 +160,14 @@ function planStep(game, oracle, source, factions, unixTime, slot) {
   return { kind: 'no_operator_step' };
 }
 
-function orderedBundle(kind, providerIx, gameIx, providerProgram, gameProgram) {
-  if (!['commit_and_advance', 'reveal_and_resolve'].includes(kind) ||
-      providerIx.programId.toString() !== providerProgram ||
+function singleAlashiReveal(kind, gameIx, gameProgram) {
+  if (kind !== 'reveal_and_resolve' ||
       gameIx.programId.toString() !== gameProgram) {
-    throw new Error('invalid_atomic_bundle');
+    throw new Error('invalid_alashi_reveal');
   }
-  return [providerIx, gameIx];
+  return [gameIx];
 }
 
-module.exports = { DEVNET_GENESIS, COMMIT_GRACE_SECONDS,
+module.exports = { DEVNET_GENESIS, COMMIT_GRACE_SECONDS, UNASSIGNED_ORACLE,
   abortUncommittedEligible, planWithoutSource, discriminator, decodeGame, decodeOracle,
-  decodeFactionIdentity, dueTickets, planStep, orderedBundle };
+  decodeFactionIdentity, dueTickets, planStep, singleAlashiReveal };

@@ -10,6 +10,9 @@ const core = require('./donkey_crank_core.cjs');
 const spikeRequire = createRequire(path.resolve(__dirname, '../spike/package.json'));
 
 const ALASHI_PID = '3jwunaFDRrSWFfeJ5hFZu3DmxPNTmkdoCweHDvqcXTqC';
+const TOKEN_PROGRAM_ID = 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA';
+const NATIVE_MINT = 'So11111111111111111111111111111111111111112';
+const ATA_PROGRAM_ID = 'ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL';
 const MODES = new Set(['inspect', 'step', 'worker']);
 
 function fail(code) { throw new Error(code); }
@@ -34,6 +37,35 @@ function readSigner(web3, file) {
     fail('invalid_signer_file');
   }
   return web3.Keypair.fromSecretKey(Uint8Array.from(bytes));
+}
+
+function strictBase64(value, length) {
+  if (typeof value !== 'string' || value.length === 0) fail('invalid_reveal_proof');
+  const decoded = Buffer.from(value, 'base64');
+  if (decoded.length !== length || decoded.toString('base64') !== value) {
+    fail('invalid_reveal_proof');
+  }
+  return decoded;
+}
+
+function readRevealProof(file) {
+  const stat = fs.lstatSync(file);
+  if (!stat.isFile() || stat.isSymbolicLink() || (stat.mode & 0o077) !== 0) {
+    fail('reveal_proof_file_must_be_0600');
+  }
+  let parsed;
+  try { parsed = JSON.parse(fs.readFileSync(file, 'utf8')); }
+  catch { fail('invalid_reveal_proof'); }
+  if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed) ||
+      Object.keys(parsed).sort().join(',') !== 'recovery_id,signature_base64,value_base64' ||
+      !Number.isInteger(parsed.recovery_id) || parsed.recovery_id < 0 || parsed.recovery_id > 255) {
+    fail('invalid_reveal_proof');
+  }
+  return {
+    signature: strictBase64(parsed.signature_base64, 64),
+    recoveryId: parsed.recovery_id,
+    value: strictBase64(parsed.value_base64, 32),
+  };
 }
 
 function privateStatePath(file) {
@@ -83,25 +115,69 @@ function instruction(web3, name, keys) {
   });
 }
 
-function advanceIx(web3, signer, game, factions, oracle, source) {
-  return instruction(web3, 'advance', [
+function advanceIx(web3, signer, game, factions, oracle, source, queue, selectedOracle, provider) {
+  const keys = [
     { pubkey: signer, isSigner: true, isWritable: false },
     { pubkey: game, isSigner: false, isWritable: true },
     { pubkey: web3.SYSVAR_SLOT_HASHES_PUBKEY, isSigner: false, isWritable: false },
     ...factions.map((pubkey) => ({ pubkey, isSigner: false, isWritable: true })),
     { pubkey: oracle, isSigner: false, isWritable: true },
-    ...(source ? [{ pubkey: source, isSigner: false, isWritable: false }] : []),
-  ]);
+  ];
+  if (source || queue || selectedOracle || provider) {
+    if (!source || !queue || !selectedOracle || !provider) fail('incomplete_alashi_commit_accounts');
+    keys.push(
+      { pubkey: source, isSigner: false, isWritable: true },
+      { pubkey: queue, isSigner: false, isWritable: false },
+      { pubkey: selectedOracle, isSigner: false, isWritable: true },
+      { pubkey: provider, isSigner: false, isWritable: false },
+    );
+  }
+  return instruction(web3, 'advance', keys);
 }
 
-function revealIx(web3, signer, game, source, oracle, tickets) {
-  return instruction(web3, 'reveal_law', [
-    { pubkey: signer, isSigner: true, isWritable: false },
-    { pubkey: game, isSigner: false, isWritable: true },
-    { pubkey: source, isSigner: false, isWritable: false },
-    { pubkey: oracle, isSigner: false, isWritable: true },
-    ...tickets.map((pubkey) => ({ pubkey, isSigner: false, isWritable: true })),
-  ]);
+function revealDonkeyLawIx(web3, signer, snapshot, proof, provider) {
+  if (!snapshot.sourceKey || !snapshot.source || !Array.isArray(snapshot.oracle.tickets) ||
+      !Buffer.isBuffer(proof.signature) || proof.signature.length !== 64 ||
+      !Buffer.isBuffer(proof.value) || proof.value.length !== 32 ||
+      !Number.isInteger(proof.recoveryId) || proof.recoveryId < 0 || proof.recoveryId > 255) {
+    fail('invalid_reveal_instruction');
+  }
+  const providerKey = key(web3, provider);
+  const oracle = key(web3, snapshot.oracle.oracles[snapshot.game.round - 1]);
+  const queue = key(web3, snapshot.oracle.queue);
+  const stats = web3.PublicKey.findProgramAddressSync(
+    [Buffer.from('OracleRandomnessStats'), oracle.toBuffer()], providerKey)[0];
+  const providerState = web3.PublicKey.findProgramAddressSync([Buffer.from('STATE')], providerKey)[0];
+  const escrow = web3.PublicKey.findProgramAddressSync([
+    snapshot.sourceKey.toBuffer(), key(web3, TOKEN_PROGRAM_ID).toBuffer(), key(web3, NATIVE_MINT).toBuffer(),
+  ], key(web3, ATA_PROGRAM_ID))[0];
+  const factions = new Map(snapshot.factionKeys.map((faction) => [faction.toBase58(), faction]));
+  const due = snapshot.oracle.tickets.map((ticket) => factions.get(ticket));
+  if (due.some((faction) => !faction)) fail('invalid_reveal_instruction');
+  const keys = [
+    { pubkey: signer, isSigner: true, isWritable: true },
+    { pubkey: snapshot.gameKey, isSigner: false, isWritable: true },
+    { pubkey: snapshot.sourceKey, isSigner: false, isWritable: true },
+    { pubkey: oracle, isSigner: false, isWritable: false },
+    { pubkey: queue, isSigner: false, isWritable: false },
+    { pubkey: stats, isSigner: false, isWritable: true },
+    { pubkey: web3.SYSVAR_SLOT_HASHES_PUBKEY, isSigner: false, isWritable: false },
+    { pubkey: web3.SystemProgram.programId, isSigner: false, isWritable: false },
+    { pubkey: escrow, isSigner: false, isWritable: true },
+    { pubkey: key(web3, TOKEN_PROGRAM_ID), isSigner: false, isWritable: false },
+    { pubkey: key(web3, NATIVE_MINT), isSigner: false, isWritable: false },
+    { pubkey: providerState, isSigner: false, isWritable: false },
+    { pubkey: providerKey, isSigner: false, isWritable: false },
+    { pubkey: snapshot.oracleKey, isSigner: false, isWritable: true },
+    ...due.map((pubkey) => ({ pubkey, isSigner: false, isWritable: true })),
+  ];
+  return new web3.TransactionInstruction({
+    programId: key(web3, ALASHI_PID), keys,
+    data: Buffer.concat([
+      core.discriminator('global', 'reveal_donkey_law'), proof.signature,
+      Buffer.from([proof.recoveryId]), proof.value,
+    ]),
+  });
 }
 
 async function account(connection, pubkey, owner, code) {
@@ -127,9 +203,11 @@ async function loadSnapshot(connection, web3, sb, config, clock) {
   }
   const oracle = core.decodeOracle((await account(connection, oracleKey, programKey,
     'oracle_missing_or_wrong_owner')).data, mapKey);
-  if (oracle.game !== config.game_pda ||
+  if (oracle.game !== config.game_pda || oracle.authority !== oracleKey.toBase58() ||
       !Array.isArray(config.round_sources) || config.round_sources.length !== 6 ||
-      oracle.accounts.some((value, i) => value !== config.round_sources[i])) {
+      !Array.isArray(config.round_oracles) || config.round_oracles.length !== 6 ||
+      oracle.accounts.some((value, i) => value !== config.round_sources[i]) ||
+      oracle.oracles.some((value, i) => value !== config.round_oracles[i])) {
     fail('configured_sources_mismatch');
   }
   const factionNames = config.faction_pdas;
@@ -184,9 +262,16 @@ async function loadSnapshot(connection, web3, sb, config, clock) {
     authority: providerData.authority.toBase58(),
     seedSlot: bignum(providerData.seedSlot),
     revealSlot: bignum(providerData.revealSlot),
+    oracle: providerData.oracle.toBase58(),
   };
+  const expectedOracle = oracle.oracles[game.round - 1];
+  const sourceOracleValid = game.phase === 'Action'
+    ? source.oracle === core.UNASSIGNED_ORACLE
+    : source.oracle === expectedOracle;
   if (source.queue !== oracle.queue || source.authority !== oracle.authority ||
-      source.authority !== config.authority) fail('source_binding_invalid');
+      source.authority !== oracleKey.toBase58() || !sourceOracleValid) {
+    fail('source_binding_invalid');
+  }
   return { gameKey, game, oracleKey, oracle, sourceKey, source,
     factionKeys: factionNames.map((name) => key(web3, name)), randomness };
 }
@@ -195,7 +280,7 @@ async function resumePending(connection, web3, stateFile, gamePda) {
   if (!fs.existsSync(stateFile)) return false;
   const state = readJson(stateFile);
   if (state.game_pda !== gamePda ||
-      !['commit_and_advance', 'reveal_and_resolve', 'abort_uncommitted'].includes(state.kind)) {
+      !['advance_with_alashi_commit', 'abort_uncommitted', 'reveal_donkey_law'].includes(state.kind)) {
     fail('pending_state_binding_invalid');
   }
   const status = (await connection.getSignatureStatuses([state.signature],
@@ -291,15 +376,15 @@ async function main(argv) {
     return { status: 'read_only', step: plan.kind, game_pda: config.game_pda,
       round: snapshot.game.round, source: snapshot.source?.address || null };
   }
-  if (!['commit_and_advance', 'reveal_and_resolve', 'abort_uncommitted'].includes(plan.kind)) {
+  if (!['advance_with_alashi_commit', 'abort_uncommitted', 'reveal_and_resolve'].includes(plan.kind)) {
     return { status: plan.kind, game_pda: config.game_pda, round: snapshot.game.round,
       phase: snapshot.game.phase };
   }
   const signerFile = process.env.ALASHI_CRANK_KEY_FILE;
   if (!signerFile) fail('crank_signer_missing');
   const signer = readSigner(web3, signerFile);
-  if (!same(signer.publicKey, snapshot.oracle.authority)) fail('crank_authority_mismatch');
-  let providerIx;
+  // The source authority is the Alashi config PDA. The operator only pays/signs
+  // outer transactions; it cannot substitute a provider authority key.
   let gameIx;
   if (plan.kind === 'abort_uncommitted') {
     gameIx = advanceIx(web3, signer.publicKey, snapshot.gameKey,
@@ -307,19 +392,23 @@ async function main(argv) {
     return sendRecorded(connection, web3, config, signer,
       'abort_uncommitted', [gameIx], stateFile);
   }
-  if (plan.kind === 'commit_and_advance') {
-    providerIx = await snapshot.randomness.commitIx(key(web3, snapshot.oracle.queue), signer.publicKey);
+  if (plan.kind === 'advance_with_alashi_commit') {
     gameIx = advanceIx(web3, signer.publicKey, snapshot.gameKey,
-      snapshot.factionKeys, snapshot.oracleKey, snapshot.sourceKey);
-  } else {
-    providerIx = await snapshot.randomness.revealIx(signer.publicKey);
-    gameIx = revealIx(web3, signer.publicKey, snapshot.gameKey,
-      snapshot.sourceKey, snapshot.oracleKey,
-      plan.tickets.map((name) => key(web3, name)));
+      snapshot.factionKeys, snapshot.oracleKey, snapshot.sourceKey,
+      key(web3, snapshot.oracle.queue), key(web3, snapshot.oracle.oracles[snapshot.game.round - 1]),
+      sb.ON_DEMAND_DEVNET_PID);
+    return sendRecorded(connection, web3, config, signer, plan.kind, [gameIx], stateFile);
   }
-  const instructions = core.orderedBundle(plan.kind, providerIx, gameIx,
-    sb.ON_DEMAND_DEVNET_PID.toBase58(), ALASHI_PID);
-  return await sendRecorded(connection, web3, config, signer, plan.kind, instructions, stateFile);
+  if (plan.kind === 'reveal_and_resolve') {
+    const proofFile = process.env.ALASHI_REVEAL_PROOF_FILE;
+    if (!proofFile) fail('reveal_proof_file_missing');
+    const revealIx = revealDonkeyLawIx(web3, signer.publicKey, snapshot,
+      readRevealProof(proofFile), sb.ON_DEMAND_DEVNET_PID);
+    const instructions = core.singleAlashiReveal(plan.kind, revealIx, ALASHI_PID);
+    return sendRecorded(connection, web3, config, signer,
+      'reveal_donkey_law', instructions, stateFile);
+  }
+  fail('invalid_crank_plan');
 }
 
 async function runBounded(step, options) {
@@ -388,11 +477,15 @@ if (require.main === module) {
         'faction_set_invalid', 'faction_missing_or_wrong_owner', 'faction_binding_invalid',
         'source_missing_or_wrong_owner', 'source_binding_invalid',
         'epoch2_binding_invalid', 'invalid_ticket_set', 'source_precommitted_or_revealed',
+        'source_round_already_committed', 'selected_oracle_mismatch', 'incomplete_alashi_commit_accounts',
+        'invalid_crank_plan',
         'attempt_slot_not_before_commit', 'pinned_commit_changed',
         'provider_revealed_without_alashi', 'pending_state_binding_invalid',
         'recorded_transaction_rejected', 'pending_signature_unresolved_expired',
         'pending_signature_mismatch', 'lookup_table_unavailable',
-        'atomic_transaction_too_large', 'crank_signer_missing', 'crank_authority_mismatch',
+        'atomic_transaction_too_large', 'crank_signer_missing',
+        'reveal_proof_file_missing', 'reveal_proof_file_must_be_0600',
+        'invalid_reveal_proof', 'invalid_reveal_instruction', 'invalid_alashi_reveal',
         'signer_file_must_be_0600', 'invalid_signer_file', 'state_file_inside_checkout',
         'state_directory_must_be_0700', 'state_file_must_be_0600',
         'crank_state_file_missing',
@@ -405,5 +498,5 @@ if (require.main === module) {
     });
 }
 
-module.exports = { main, command, runBounded, parseClock, advanceIx, revealIx,
-  privateStatePath, sendRecorded, resumePending };
+module.exports = { main, command, runBounded, parseClock, advanceIx, revealDonkeyLawIx,
+  readRevealProof, privateStatePath, sendRecorded, resumePending, loadSnapshot };

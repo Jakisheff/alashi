@@ -46,13 +46,33 @@ const DONKEY_RISK_GOODS: u16 = constants::DONKEY_RISK_REWARD;
 
 const SWITCHBOARD_DEVNET_PROGRAM: &str = "Aio4gaXjXzJNVLtzwtNVmSqGKpANtXhybbkhtAC94ji2";
 
-fn parse_donkey_randomness(args: &[String]) -> Result<Vec<Pubkey>, String> {
-    let raw = flag_value(args, "--donkey-randomness").ok_or_else(|| {
-        "--epoch2-donkey-risk requires --donkey-randomness with six public keys".to_string()
+const SPL_TOKEN_PROGRAM: &str = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
+const ASSOCIATED_TOKEN_PROGRAM: &str = "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL";
+const NATIVE_MINT: &str = "So11111111111111111111111111111111111111112";
+const LOOKUP_TABLE_PROGRAM: &str = "AddressLookupTab1e1111111111111111111111111";
+
+#[derive(Clone, Debug)]
+struct DonkeyOperatorSetup {
+    queue: Pubkey,
+    state: Pubkey,
+    oracles: [Pubkey; constants::ROUNDS as usize],
+}
+
+fn parse_donkey_operator_setup(args: &[String]) -> Result<DonkeyOperatorSetup, String> {
+    let parse = |flag: &str| -> Result<Pubkey, String> {
+        flag_value(args, flag)
+            .ok_or_else(|| format!("--epoch2-donkey-risk requires {flag}"))?
+            .parse()
+            .map_err(|_| format!("{flag} must be a public key"))
+    };
+    let queue = parse("--donkey-queue")?;
+    let state = parse("--donkey-switchboard-state")?;
+    let raw = flag_value(args, "--donkey-oracles").ok_or_else(|| {
+        "--epoch2-donkey-risk requires --donkey-oracles with six public keys".to_string()
     })?;
     let keys: Result<Vec<_>, _> = raw.split(',').map(Pubkey::from_str).collect();
     let keys =
-        keys.map_err(|_| "--donkey-randomness must contain six valid public keys".to_string())?;
+        keys.map_err(|_| "--donkey-oracles must contain six valid public keys".to_string())?;
     if keys.len() != constants::ROUNDS as usize
         || keys.iter().any(|key| *key == Pubkey::default())
         || keys
@@ -60,20 +80,31 @@ fn parse_donkey_randomness(args: &[String]) -> Result<Vec<Pubkey>, String> {
             .enumerate()
             .any(|(i, key)| keys[..i].contains(key))
     {
-        return Err("--donkey-randomness requires six distinct non-default public keys".into());
+        return Err("--donkey-oracles requires six distinct non-default public keys".into());
     }
-    Ok(keys)
+    Ok(DonkeyOperatorSetup {
+        queue,
+        state,
+        oracles: keys.try_into().expect("length verified"),
+    })
 }
 
-fn validate_donkey_randomness(rpc: &RpcClient, keys: &[Pubkey]) -> Result<(), String> {
+fn validate_donkey_operator_setup(
+    rpc: &RpcClient,
+    setup: &DonkeyOperatorSetup,
+) -> Result<(), String> {
     let expected_owner =
         Pubkey::from_str(SWITCHBOARD_DEVNET_PROGRAM).expect("fixed Switchboard devnet id");
-    for key in keys {
+    for key in std::iter::once(&setup.queue)
+        .chain(std::iter::once(&setup.state))
+        .chain(setup.oracles.iter())
+    {
         let account = rpc.get_account(key).map_err(|_| {
-            "configured Switchboard source is unavailable before game creation".to_string()
+            "configured Switchboard queue/state/oracle is unavailable before game creation"
+                .to_string()
         })?;
         if account.owner != expected_owner {
-            return Err("configured source is not a Switchboard devnet randomness account".into());
+            return Err("configured Switchboard queue/state/oracle has the wrong owner".into());
         }
     }
     Ok(())
@@ -161,6 +192,27 @@ fn donkey_oracle_pda(game: &Pubkey) -> Pubkey {
     Pubkey::find_program_address(&[constants::DONKEY_ORACLE_SEED, game.as_ref()], &id()).0
 }
 
+fn donkey_source_pda(game: &Pubkey, round: u8) -> Pubkey {
+    Pubkey::find_program_address(&[b"donkey-source", game.as_ref(), &[round]], &id()).0
+}
+
+fn donkey_init_accounts(
+    game: Pubkey,
+    round: u8,
+    setup: &DonkeyOperatorSetup,
+) -> (Pubkey, Pubkey, Pubkey, Pubkey) {
+    let source = donkey_source_pda(&game, round);
+    let provider =
+        Pubkey::from_str(SWITCHBOARD_DEVNET_PROGRAM).expect("fixed Switchboard devnet id");
+    let token = Pubkey::from_str(SPL_TOKEN_PROGRAM).expect("fixed token program");
+    let mint = Pubkey::from_str(NATIVE_MINT).expect("fixed native mint");
+    let ata = Pubkey::from_str(ASSOCIATED_TOKEN_PROGRAM).expect("fixed ata program");
+    let escrow =
+        Pubkey::find_program_address(&[source.as_ref(), token.as_ref(), mint.as_ref()], &ata).0;
+    let lut_signer = Pubkey::find_program_address(&[b"LutSigner", source.as_ref()], &provider).0;
+    (source, escrow, lut_signer, setup.queue)
+}
+
 /// Reads the immutable, game-bound portion of the epoch-2 source. The program
 /// still validates Switchboard data immediately before debiting the fee; the
 /// runner never treats an operator flag as proof of a future reveal.
@@ -182,11 +234,15 @@ fn donkey_risk_source(
     let mut data: &[u8] = &account.data;
     let config = alashi::DonkeyOracleConfig::try_deserialize(&mut data)
         .map_err(|_| DonkeyRiskReason::OracleConfigUnavailable)?;
-    let randomness = config.accounts[(round - 1) as usize];
+    let index = (round - 1) as usize;
+    let randomness = config.accounts[index];
+    let selected_oracle = config.oracles[index];
     if config.game != *game
         || config.queue == Pubkey::default()
-        || config.authority == Pubkey::default()
+        || config.authority != oracle
         || randomness == Pubkey::default()
+        || selected_oracle == Pubkey::default()
+        || config.committed_rounds_mask & (1 << index) != 0
     {
         return Err(DonkeyRiskReason::OracleConfigUnavailable);
     }
@@ -613,11 +669,52 @@ fn ix_join_epoch2(
     )
 }
 
+fn ix_init_donkey_source(
+    admin: Pubkey,
+    game: Pubkey,
+    round: u8,
+    recent_slot: u64,
+    setup: &DonkeyOperatorSetup,
+) -> Instruction {
+    let (randomness, reward_escrow, lut_signer, queue) = donkey_init_accounts(game, round, setup);
+    let oracle = donkey_oracle_pda(&game);
+    let provider =
+        Pubkey::from_str(SWITCHBOARD_DEVNET_PROGRAM).expect("fixed Switchboard devnet id");
+    let lookup = Pubkey::from_str(LOOKUP_TABLE_PROGRAM).expect("fixed lookup table program");
+    let lut =
+        Pubkey::find_program_address(&[lut_signer.as_ref(), &recent_slot.to_le_bytes()], &lookup).0;
+    let token = Pubkey::from_str(SPL_TOKEN_PROGRAM).expect("fixed token program");
+    let ata = Pubkey::from_str(ASSOCIATED_TOKEN_PROGRAM).expect("fixed ata program");
+    let mint = Pubkey::from_str(NATIVE_MINT).expect("fixed native mint");
+    let metas = vec![
+        AccountMeta::new(admin, true),
+        AccountMeta::new_readonly(game, false),
+        AccountMeta::new(randomness, false),
+        AccountMeta::new_readonly(oracle, false),
+        AccountMeta::new(reward_escrow, false),
+        AccountMeta::new(queue, false),
+        AccountMeta::new_readonly(system_program::ID, false),
+        AccountMeta::new_readonly(token, false),
+        AccountMeta::new_readonly(ata, false),
+        AccountMeta::new_readonly(mint, false),
+        AccountMeta::new_readonly(setup.state, false),
+        AccountMeta::new_readonly(lut_signer, false),
+        AccountMeta::new(lut, false),
+        AccountMeta::new_readonly(lookup, false),
+        AccountMeta::new_readonly(provider, false),
+    ];
+    Instruction::new_with_bytes(
+        id(),
+        &instruction::InitDonkeySource { round, recent_slot }.data(),
+        metas,
+    )
+}
+
 fn ix_configure_donkey_oracles(
     admin: Pubkey,
     game: Pubkey,
     oracle: Pubkey,
-    randomness: &[Pubkey],
+    setup: &DonkeyOperatorSetup,
 ) -> Instruction {
     let mut metas = accounts::ConfigureDonkeyOracles {
         admin,
@@ -627,7 +724,12 @@ fn ix_configure_donkey_oracles(
     }
     .to_account_metas(None);
     metas.extend(
-        randomness
+        (1..=constants::ROUNDS)
+            .map(|round| AccountMeta::new_readonly(donkey_source_pda(&game, round), false)),
+    );
+    metas.extend(
+        setup
+            .oracles
             .iter()
             .map(|key| AccountMeta::new_readonly(*key, false)),
     );
@@ -2062,9 +2164,10 @@ fn host_timing(args: &[String]) -> Result<(i64, i64), String> {
 mod runner_mode_tests {
     use super::{
         advance_instruction, barter_demo_allowed, confirmed_transaction_receipt,
-        donkey_risk_eligibility, epoch_for_barter_demo, ix_attempt_donkey, ix_barter_accept,
-        ix_barter_propose, ix_configure_donkey_oracles, ix_donkey, ix_initialize, ix_join_epoch2,
-        may_auto_airdrop, may_join, DonkeyRiskEligibility, DonkeyRiskInput, DonkeyRiskReason,
+        donkey_init_accounts, donkey_risk_eligibility, donkey_source_pda, epoch_for_barter_demo,
+        ix_attempt_donkey, ix_barter_accept, ix_barter_propose, ix_configure_donkey_oracles,
+        ix_donkey, ix_init_donkey_source, ix_initialize, ix_join_epoch2, may_auto_airdrop,
+        may_join, DonkeyOperatorSetup, DonkeyRiskEligibility, DonkeyRiskInput, DonkeyRiskReason,
         DONKEY_RISK_FEE, DONKEY_RISK_GOODS,
     };
     use alashi::{constants, events::DonkeyResolved, id, instruction, state};
@@ -2253,20 +2356,38 @@ mod runner_mode_tests {
         let game = Pubkey::new_unique();
         let faction = Pubkey::new_unique();
         let oracle = super::donkey_oracle_pda(&game);
-        let sources = (0..constants::ROUNDS)
-            .map(|_| Pubkey::new_unique())
-            .collect::<Vec<_>>();
-        let config = ix_configure_donkey_oracles(admin, game, oracle, &sources);
+        let setup = DonkeyOperatorSetup {
+            queue: Pubkey::new_unique(),
+            state: Pubkey::new_unique(),
+            oracles: std::array::from_fn(|_| Pubkey::new_unique()),
+        };
+        let config = ix_configure_donkey_oracles(admin, game, oracle, &setup);
         instruction::ConfigureDonkeyOracles::try_from_slice(&config.data[8..]).unwrap();
         assert_eq!(config.accounts[2].pubkey, oracle);
-        assert_eq!(config.accounts[4].pubkey, sources[0]);
-        assert_eq!(config.accounts.len(), 4 + constants::ROUNDS as usize);
+        assert_eq!(config.accounts[4].pubkey, donkey_source_pda(&game, 1));
+        assert_eq!(config.accounts[10].pubkey, setup.oracles[0]);
+        assert_eq!(config.accounts.len(), 4 + constants::ROUNDS as usize * 2);
+
+        let init = ix_init_donkey_source(admin, game, 1, 42, &setup);
+        let decoded = instruction::InitDonkeySource::try_from_slice(&init.data[8..]).unwrap();
+        assert_eq!((decoded.round, decoded.recent_slot), (1, 42));
+        let (source, escrow, lut_signer, queue) = donkey_init_accounts(game, 1, &setup);
+        assert_eq!(init.accounts[2].pubkey, source);
+        assert_eq!(init.accounts[4].pubkey, escrow);
+        assert_eq!(init.accounts[5].pubkey, queue);
+        assert_eq!(init.accounts[11].pubkey, lut_signer);
+        assert!(init.accounts[0].is_signer && init.accounts[0].is_writable);
+        assert!(
+            init.accounts[2].is_writable
+                && init.accounts[4].is_writable
+                && init.accounts[5].is_writable
+        );
 
         let join = ix_join_epoch2("A", admin, game, faction, oracle);
         assert_eq!(join.accounts.last().unwrap().pubkey, oracle);
         assert!(!join.accounts.last().unwrap().is_writable);
 
-        let attempt = ix_attempt_donkey(admin, game, faction, oracle, sources[0]);
+        let attempt = ix_attempt_donkey(admin, game, faction, oracle, source);
         instruction::AttemptDonkey::try_from_slice(&attempt.data[8..]).unwrap();
         assert_eq!(
             attempt
@@ -2274,7 +2395,7 @@ mod runner_mode_tests {
                 .iter()
                 .map(|meta| meta.pubkey)
                 .collect::<Vec<_>>(),
-            vec![admin, game, faction, oracle, sources[0]]
+            vec![admin, game, faction, oracle, source]
         );
         assert!(attempt.accounts[2].is_writable && attempt.accounts[3].is_writable);
         assert!(!attempt.accounts[4].is_writable);
@@ -2454,14 +2575,16 @@ fn main() {
         eprintln!("[ERROR] --epoch2-donkey-risk requires explicit self-host keys, --no-llm, and --external-vrf-crank");
         return;
     }
-    let donkey_randomness = if donkey_risk {
-        match parse_donkey_randomness(&args).and_then(|keys| {
-            validate_donkey_randomness(&rpc, &keys)?;
-            Ok(keys)
+    let donkey_setup = if donkey_risk {
+        match parse_donkey_operator_setup(&args).and_then(|setup| {
+            validate_donkey_operator_setup(&rpc, &setup)?;
+            Ok(setup)
         }) {
-            Ok(keys) => Some(keys),
+            Ok(setup) => Some(setup),
             Err(error) => {
-                eprintln!("[ERROR] epoch-2 oracle preflight failed before game creation: {error}");
+                eprintln!(
+                    "[ERROR] epoch-2 operator preflight failed before game creation: {error}"
+                );
                 return;
             }
         }
@@ -2680,12 +2803,30 @@ fn main() {
     if !wait_account(&rpc, &game, "game") {
         return;
     }
-    let donkey_oracle = donkey_randomness.as_ref().map(|sources| {
+    let donkey_oracle = donkey_setup.as_ref().map(|setup| {
+        for round in 1..=constants::ROUNDS {
+            let recent_slot = match rpc.get_slot() {
+                Ok(slot) if slot > 0 => slot,
+                _ => {
+                    eprintln!("[ERROR] epoch-2 source setup has no fresh slot; stopping before Join");
+                    return None;
+                }
+            };
+            let source = donkey_source_pda(&game, round);
+            if !send_ix(
+                &rpc,
+                &bots[0].kp,
+                ix_init_donkey_source(bots[0].kp.pubkey(), game, round, recent_slot, setup),
+            ) || !wait_account(&rpc, &source, "donkey source") {
+                eprintln!("[ERROR] epoch-2 source initialization failed before Join; stopping without entry fees");
+                return None;
+            }
+        }
         let oracle = donkey_oracle_pda(&game);
         if !send_ix(
             &rpc,
             &bots[0].kp,
-            ix_configure_donkey_oracles(bots[0].kp.pubkey(), game, oracle, sources),
+            ix_configure_donkey_oracles(bots[0].kp.pubkey(), game, oracle, setup),
         ) || !wait_account(&rpc, &oracle, "donkey oracle config") {
             eprintln!("[ERROR] epoch-2 oracle configuration failed before Join; stopping without entry fees");
             return None;
@@ -2834,7 +2975,7 @@ fn main() {
                     match advance_instruction(&g, tnow, bots[0].kp.pubkey(), game, &faction_keys) {
                         Ok(ix) => { send_ix(&rpc, &bots[0].kp, ix); }
                         Err(DonkeyRiskReason::CrankUnavailable) if g.phase == state::Phase::Action => {
-                            if hb % 5 == 1 { eprintln!("[action r{}] waiting for external atomic Switchboard commit + Advance", g.round); }
+                            if hb % 5 == 1 { eprintln!("[action r{}] waiting for Alashi CPI commit + Advance crank", g.round); }
                         }
                         Err(reason) => eprintln!("[advance] epoch-2 configuration unavailable: {:?}; external crank must repair it", reason),
                     }
@@ -2987,7 +3128,7 @@ fn main() {
                     match advance_instruction(&g, tnow, bots[0].kp.pubkey(), game, &faction_keys) {
                         Ok(ix) => { send_ix(&rpc, &bots[0].kp, ix); }
                         Err(DonkeyRiskReason::CrankUnavailable) if g.phase == state::Phase::Action => {
-                            if hb % 5 == 1 { eprintln!("[action r{}] waiting for external atomic Switchboard commit + Advance", g.round); }
+                            if hb % 5 == 1 { eprintln!("[action r{}] waiting for Alashi CPI commit + Advance crank", g.round); }
                         }
                         Err(reason) => eprintln!("[advance] epoch-2 configuration unavailable: {:?}; external crank must repair it", reason),
                     }
@@ -3187,7 +3328,7 @@ fn main() {
                     match advance_instruction(&g, tnow, bots[0].kp.pubkey(), game, &faction_keys) {
                         Ok(ix) => { send_ix(&rpc, &bots[0].kp, ix); }
                         Err(DonkeyRiskReason::CrankUnavailable) if g.phase == state::Phase::Action => {
-                            if hb % 5 == 1 { eprintln!("[action r{}] waiting for external atomic Switchboard commit + Advance", g.round); }
+                            if hb % 5 == 1 { eprintln!("[action r{}] waiting for Alashi CPI commit + Advance crank", g.round); }
                         }
                         Err(reason) => eprintln!("[advance] epoch-2 configuration unavailable: {:?}; external crank must repair it", reason),
                     }
@@ -3299,7 +3440,7 @@ fn main() {
                     match advance_instruction(&g, tnow, bots[0].kp.pubkey(), game, &faction_keys) {
                         Ok(ix) => { send_ix(&rpc, &bots[0].kp, ix); }
                         Err(DonkeyRiskReason::CrankUnavailable) if g.phase == state::Phase::Action => {
-                            if hb % 5 == 1 { eprintln!("[action r{}] waiting for external atomic Switchboard commit + Advance", g.round); }
+                            if hb % 5 == 1 { eprintln!("[action r{}] waiting for Alashi CPI commit + Advance crank", g.round); }
                         }
                         Err(reason) => eprintln!("[advance] epoch-2 configuration unavailable: {:?}; external crank must repair it", reason),
                     }
