@@ -6,7 +6,7 @@ const record = 'a'.repeat(64), game = 'GqHZBaWuJDNERi8xJHXnYF5eWBsLSmEXcAGJYAP94
 let checks = 0
 function check(value: unknown, message: string) { assert.ok(value, message); checks++ }
 const accepted = ['a'.repeat(140), 'Ж'.repeat(140), '漢'.repeat(140), '😀'.repeat(140), 'e\u0301'.repeat(70), '👩‍💻'.repeat(46), 'Guidance']
-const rejected = ['', '   ', 'a'.repeat(141), '😀'.repeat(141), 'e\u0301'.repeat(71), 'two\nlines', 'tab\ttext', 'control\u0000', 'delete\u007f', '\ud800', '\udfff']
+const rejected = ['', '   ', 'a'.repeat(141), '😀'.repeat(141), 'e\u0301'.repeat(71), 'two\nlines', 'tab\ttext', 'control\u0000', 'delete\u007f', 'c1\u0080', 'c1\u0085', 'c1\u009f', '\ud800', '\udfff']
 for (const value of accepted) check(inspectOwnerWish(value).valid, 'valid scalar boundary')
 for (const value of rejected) check(!inspectOwnerWish(value).valid, 'invalid admission')
 check(inspectOwnerWish('😀'.repeat(140)).count === 140, 'astral symbols count once')

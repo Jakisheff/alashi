@@ -1,12 +1,12 @@
 # Private instruction admission
 
-Contract: DIN-OWNER-WISH-140-20261011-01, Ivan docs d4a8d5ff16cfddc3314a7481638b3bb7ca962476.
+Contract: DIN-OWNER-WISH-140-20261011-01, Ivan docs d4a8d5ff16cfddc3314a7481638b3bb7ca962476; corrected trim/persist/hash contract at docs 5036a1a289c7786acc3a90b5dbebd04463ba5322.
 
 Each agent has three private instructions per match. The panels trim only outer
 whitespace for a new submission, then count Unicode scalar values (not bytes,
 UTF-16 units or graphemes). Combining marks and ZWJ each count. The maximum is
 140; empty, control-containing or malformed surrogate text is rejected before
-request dispatch. Over-limit input stays editable and is never truncated.
+request dispatch. The C0/C1 control ranges match Rust `char::is_control`. Over-limit input stays editable and is never truncated.
 
 Both panels share the counter and validation with their API clients. Pending
 retries retain their exact text and submission ID; authentication, quota from
