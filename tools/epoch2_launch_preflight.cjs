@@ -7,6 +7,7 @@ const crypto = require('node:crypto');
 
 const GENESIS = 'EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG';
 const PROGRAM = '3jwunaFDRrSWFfeJ5hFZu3DmxPNTmkdoCweHDvqcXTqC';
+const SWITCHBOARD_PROGRAM = 'Aio4gaXjXzJNVLtzwtNVmSqGKpANtXhybbkhtAC94ji2';
 const AUTHORITY = '64WA7wFVJK3GkfSAkfiAWR37bgjCw1RYcj17qEDj4AVJ';
 const LOADER = 'BPFLoaderUpgradeab1e11111111111111111111111';
 const SOURCE_SHA = '31117a3084318f5d9c8dbc3c3f291168545e474728d981f3089a7554c698978d';
@@ -18,13 +19,9 @@ const OLD_BINARY_BYTES = 464392;
 const ENTRY_FEE = 50000000n; // selected two-player acceptance plan, not protocol minimum
 const SIZES = Object.freeze({ programDataNew: BINARY_BYTES + 45,
   programDataOld: OLD_BINARY_BYTES + 45, buffer: BINARY_BYTES + 37,
-  source: 408, game: 909, faction: 246, oracle: 500 });
+  source: 480, game: 909, faction: 246, oracle: 500 });
 
 function fail(message) { throw new Error(message); }
-function decimal(value, name) {
-  if (typeof value !== 'string' || !/^(0|[1-9][0-9]*)$/.test(value)) fail(`invalid_${name}`);
-  return BigInt(value);
-}
 function sha256(path) { return crypto.createHash('sha256').update(fs.readFileSync(path)).digest('hex'); }
 function alphabet58(bytes) {
   const alphabet = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
@@ -90,61 +87,44 @@ async function preflight(input, rpc, verifyFile = (path, bytes, hash) => {
   if (extension < 0n) fail('program_data_balance_exceeds_new_rent');
   const fixed = extension + 6n * rents.source + rents.game + 2n * rents.faction + rents.oracle + 2n * ENTRY_FEE;
   const inputQuote = input.switchboard_quote || null;
-  let dynamic = null;
   let quoteStatus = 'missing';
   if (inputQuote) {
     if (inputQuote.schema !== 'alashi.switchboard_epoch2.quote.v1' ||
-        inputQuote.genesis_hash !== GENESIS || inputQuote.program_id !== PROGRAM ||
+        inputQuote.genesis_hash !== GENESIS || inputQuote.alashi_program_id !== PROGRAM ||
+        inputQuote.program_id !== SWITCHBOARD_PROGRAM ||
         inputQuote.release?.candidate_sha256 !== SOURCE_SHA ||
         inputQuote.release?.rollback_sha256 !== ROLLBACK_SHA ||
         inputQuote.pinned_sdk?.name !== '@switchboard-xyz/on-demand' ||
         inputQuote.pinned_sdk?.version !== '3.10.6' ||
         inputQuote.pinned_sdk?.integrity !== SDK_INTEGRITY ||
         inputQuote.pinned_sdk?.lock_sha256 !== SDK_LOCK_SHA) fail('switchboard_quote_binding');
+    const publicId = s => typeof s === 'string' && /^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(s);
+    if (!input.switchboard || input.switchboard.program_id !== SWITCHBOARD_PROGRAM ||
+        inputQuote.queue !== input.switchboard.queue ||
+        inputQuote.queue_authority !== input.switchboard.queue_authority ||
+        inputQuote.source_authority !== input.switchboard.source_authority ||
+        !publicId(inputQuote.queue) || !publicId(inputQuote.queue_authority) ||
+        !publicId(inputQuote.source_authority) ||
+        !Array.isArray(input.switchboard.sources) || input.switchboard.sources.length !== 6 ||
+        new Set(input.switchboard.sources).size !== 6 || !input.switchboard.sources.every(publicId) ||
+        JSON.stringify(inputQuote.sources) !== JSON.stringify(input.switchboard.sources)) fail('switchboard_quote_source_binding');
     quoteStatus = inputQuote.status;
-    if (quoteStatus === 'ok') {
-      const publicId = s => typeof s === 'string' && /^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(s);
-      if (!input.switchboard || inputQuote.queue !== input.switchboard.queue ||
-          inputQuote.authority !== input.switchboard.authority ||
-          !publicId(inputQuote.queue) || !publicId(inputQuote.authority) ||
-          !Array.isArray(input.switchboard.sources) || input.switchboard.sources.length !== 6 ||
-          new Set(input.switchboard.sources).size !== 6 || !input.switchboard.sources.every(publicId) ||
-          JSON.stringify(inputQuote.sources) !== JSON.stringify(input.switchboard.sources)) fail('switchboard_quote_source_binding');
-      const currentSlot = await rpc('getSlot', [{ commitment:'finalized' }]);
-      if (!Number.isSafeInteger(currentSlot) || !Number.isSafeInteger(inputQuote.observed_slot) ||
-          inputQuote.observed_slot > currentSlot || currentSlot-inputQuote.observed_slot > 150) fail('switchboard_quote_stale_slot');
-      const observedAt = Date.parse(inputQuote.observed_at_utc);
-      if (!Number.isFinite(observedAt) || observedAt > Date.now()+60000 || Date.now()-observedAt > 1800000) fail('switchboard_quote_stale_time');
-      if (!Array.isArray(inputQuote.evidence) || inputQuote.evidence.length < 1 ||
-          (inputQuote.missing || []).length !== 0) fail('switchboard_quote_evidence_incomplete');
-      const fields = ['escrow_rent_lamports', 'lut_rent_lamports', 'provider_fee_cap_lamports',
-        'provider_prefund_lamports', 'aggregate_tx_fee_cap_lamports'];
-      dynamic = Object.fromEntries(fields.map(name => [name, decimal(inputQuote.costs?.[name], name)]));
-      const limits = inputQuote.limits || {};
-      for (const [name, max] of Object.entries({tx_count_max:1000, signatures_max:2000,
-        retries_max:20, bootstrap_attempts_max:6, compute_units_per_tx_max:1400000,
-        priority_fee_micro_lamports_per_cu_max:1000000})) {
-        if (!Number.isSafeInteger(limits[name]) || limits[name] < 0 || limits[name] > max) fail(`invalid_${name}`);
-      }
-      if (limits.tx_count_max < 1 || limits.signatures_max < limits.tx_count_max || limits.bootstrap_attempts_max < 1) fail('invalid_quote_limits');
-    } else if (quoteStatus !== 'unavailable' && quoteStatus !== 'invalid') fail('quote_status');
+    // The pinned helper can only attest partial unsigned observations. A
+    // caller-authored "ok" JSON must never create a false all-in budget.
+    if (quoteStatus !== 'unavailable' && quoteStatus !== 'invalid') fail('complete_quote_not_supported');
   }
-  // Provider fees spend out of a pre-funded balance; count the larger liquidity
-  // requirement once, rather than adding both the prefund and its spending cap.
-  const dynamicTotal = dynamic && dynamic.escrow_rent_lamports + dynamic.lut_rent_lamports +
-    dynamic.aggregate_tx_fee_cap_lamports +
-    (dynamic.provider_prefund_lamports > dynamic.provider_fee_cap_lamports ?
-      dynamic.provider_prefund_lamports : dynamic.provider_fee_cap_lamports);
   const optionalBalances = {};
   for (const [role, pubkey] of Object.entries(input.public_wallets || {})) {
     if (!/^[A-Za-z0-9_]{1,32}$/.test(role) || typeof pubkey !== 'string' || pubkey.length < 32 || pubkey.length > 44) fail('public_wallet_input');
     optionalBalances[role] = { pubkey, lamports: String(await rpc('getBalance', [pubkey, { commitment: 'finalized' }]).then(x => x.value)) };
   }
   return {
-    schema: 'alashi.epoch2.launch_preflight.v1', status: dynamic ? 'priced_for_review' : 'fixed_only',
+    schema: 'alashi.epoch2.launch_preflight.v1', status: 'fixed_only',
     genesis_hash: genesis, program_id: PROGRAM, program_data: programDataAddress,
     upgrade_authority: programData.authority, deployed_slot: programData.slot,
+    deployed_binary_sha256: programData.binary_sha256,
     candidate_sha256: SOURCE_SHA, rollback_sha256: ROLLBACK_SHA,
+    sdk_lock_sha256: SDK_LOCK_SHA,
     rent_lamports: Object.fromEntries(Object.entries(rents).map(([k,v]) => [k, v.toString()])),
     fixed: { extension_lamports: extension.toString(), six_source_rent_lamports: (6n*rents.source).toString(),
       game_rent_lamports: rents.game.toString(), two_faction_rent_lamports: (2n*rents.faction).toString(),
@@ -155,18 +135,19 @@ async function preflight(input, rpc, verifyFile = (path, bytes, hash) => {
       peak_with_separate_buffer_before_dynamic_lamports: (fixed+rents.buffer).toString() },
     switchboard_quote_status: quoteStatus,
     switchboard_quote_slot: inputQuote?.observed_slot ?? null,
-    switchboard_quote_limits: dynamic ? inputQuote.limits : null,
-    dynamic_lamports: dynamic && Object.fromEntries(Object.entries(dynamic).map(([k,v])=>[k,v.toString()])),
-    priced_total_excluding_buffer_lamports: dynamicTotal === null ? null : (fixed + dynamicTotal).toString(),
-    priced_peak_with_buffer_lamports: dynamicTotal === null ? null : (fixed + rents.buffer + dynamicTotal).toString(),
+    priced_total_excluding_buffer_lamports: null,
+    priced_peak_with_buffer_lamports: null,
     public_wallets: optionalBalances,
     gates: ['provider_sdk_seed_slot_compatibility', 'six_configured_funded_sources',
       'human_local_upgrade_authority', 'real_provider_roundtrip', 'program_upgrade_review']
   };
 }
 async function main(argv = process.argv.slice(2)) {
-  if (argv.length !== 2 || argv[0] !== '--input') fail('usage: node tools/epoch2_launch_preflight.cjs --input <public-json-file>');
+  if ((argv.length !== 2 && argv.length !== 4) || argv[0] !== '--input' ||
+      (argv.length === 4 && argv[2] !== '--switchboard-quote-file'))
+    fail('usage: node tools/epoch2_launch_preflight.cjs --input <public-json-file> [--switchboard-quote-file <public-json-file>]');
   const input = JSON.parse(fs.readFileSync(argv[1], 'utf8'));
+  if (argv.length === 4) input.switchboard_quote = JSON.parse(fs.readFileSync(argv[3], 'utf8'));
   const rpc = makeRpc(input.rpc_url);
   const result = await preflight(input, rpc);
   process.stdout.write(`${JSON.stringify(result, null, 2)}\n`);

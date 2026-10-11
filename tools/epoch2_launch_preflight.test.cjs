@@ -5,6 +5,11 @@ const crypto = require('node:crypto');
 const { preflight, makeRpc, parseProgramData, GENESIS, PROGRAM, AUTHORITY, SIZES } = require('./epoch2_launch_preflight.cjs');
 
 const alphabet = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+const SWITCHBOARD_PROGRAM = 'Aio4gaXjXzJNVLtzwtNVmSqGKpANtXhybbkhtAC94ji2';
+const QUEUE = 'EYiAmGSdsQTuCw413V5BzaruWuCCSDgTPtBGvLkXHbe7';
+const QUEUE_AUTHORITY = '2KgowxogBrGqRcgXQEmqFvC3PGtCu66qERNJevYW8Ajh';
+const SOURCE_AUTHORITY = '9jwphYLsGNr9wpewaSMfPVwCa3g8hgq9naQUzgdmjvMo';
+const SOURCES = ['1','2','3','4','5','6'].map(c=>c.repeat(32));
 function decode58(s) {
   let value = 0n;
   for (const c of s) { const n = alphabet.indexOf(c); if (n < 0) throw new Error('base58'); value = value*58n + BigInt(n); }
@@ -26,7 +31,7 @@ function fixture() {
   decoded.writeBigUInt64LE(507743508n, 4); decoded[12] = 1; decode58(AUTHORITY).copy(decoded, 13);
   data.data[0] = decoded.toString('base64');
   const rents = { [SIZES.programDataNew]:2694579320, [SIZES.programDataOld]:2359990200,
-    [SIZES.buffer]:2694538680, [SIZES.source]:2722880, [SIZES.game]:5267960,
+    [SIZES.buffer]:2694538680, [SIZES.source]:3088640, [SIZES.game]:5267960,
     [SIZES.faction]:1899920, [SIZES.oracle]:3190240 };
   const rpc = async (method, params=[]) => {
     if (method === 'getGenesisHash') return GENESIS;
@@ -44,10 +49,11 @@ test('fixed subtotal and separate-buffer peak are exact and read-only', async ()
   const {input,rpc,verifyFile,expectedHash} = fixture();
   const result = await preflight(input,rpc,verifyFile,expectedHash);
   assert.equal(result.status,'fixed_only');
-  assert.equal(result.fixed.subtotal_lamports,'463184440');
-  assert.equal(result.fixed.peak_with_separate_buffer_before_dynamic_lamports,'3157723120');
+  assert.equal(result.fixed.subtotal_lamports,'465379000');
+  assert.equal(result.fixed.peak_with_separate_buffer_before_dynamic_lamports,'3159917680');
   assert.equal(result.program_data,programDataAddress);
   assert.equal(result.upgrade_authority,AUTHORITY);
+  assert.equal(result.deployed_binary_sha256,expectedHash);
 });
 test('mismatched genesis and deployed authority fail closed', async () => {
   const {input,rpc,verifyFile,data,expectedHash} = fixture();
@@ -57,8 +63,11 @@ test('mismatched genesis and deployed authority fail closed', async () => {
 });
 test('unknown dynamic costs cannot become zero or a priced total', async () => {
   const {input,rpc,verifyFile,expectedHash} = fixture();
+  input.switchboard={program_id:SWITCHBOARD_PROGRAM,queue:QUEUE,
+    queue_authority:QUEUE_AUTHORITY,source_authority:SOURCE_AUTHORITY,sources:SOURCES};
   input.switchboard_quote={schema:'alashi.switchboard_epoch2.quote.v1',status:'unavailable',
-    genesis_hash:GENESIS,program_id:PROGRAM,
+    genesis_hash:GENESIS,alashi_program_id:PROGRAM,program_id:SWITCHBOARD_PROGRAM,
+    queue:QUEUE,queue_authority:QUEUE_AUTHORITY,source_authority:SOURCE_AUTHORITY,sources:SOURCES,
     release:{candidate_sha256:'31117a3084318f5d9c8dbc3c3f291168545e474728d981f3089a7554c698978d',
       rollback_sha256:'de492e03624449a36e10a9267563ed46bbaf4eb26204f60306f2c5e10020cde2'},
     pinned_sdk:{name:'@switchboard-xyz/on-demand',version:'3.10.6',
@@ -67,15 +76,17 @@ test('unknown dynamic costs cannot become zero or a priced total', async () => {
     missing:['provider_fee_cap']};
   const result = await preflight(input,rpc,verifyFile,expectedHash);
   assert.equal(result.priced_total_excluding_buffer_lamports,null);
+  assert.equal(result.switchboard_quote_status,'unavailable');
   input.switchboard_quote.status='ok';
-  await assert.rejects(preflight(input,rpc,verifyFile,expectedHash), /switchboard_quote_source_binding/);
+  await assert.rejects(preflight(input,rpc,verifyFile,expectedHash), /complete_quote_not_supported/);
 });
-test('complete fresh quote counts provider prefund/fee once and rejects missing evidence', async () => {
+test('caller-authored complete quote cannot turn partial observations into an all-in budget', async () => {
   const {input,rpc,verifyFile,expectedHash} = fixture();
-  input.switchboard={queue:PROGRAM,authority:AUTHORITY,
-    sources:['1','2','3','4','5','6'].map(c=>c.repeat(32))};
+  input.switchboard={program_id:SWITCHBOARD_PROGRAM,queue:QUEUE,
+    queue_authority:QUEUE_AUTHORITY,source_authority:SOURCE_AUTHORITY,sources:SOURCES};
   input.switchboard_quote={schema:'alashi.switchboard_epoch2.quote.v1',status:'ok',
-    genesis_hash:GENESIS,program_id:PROGRAM,queue:PROGRAM,authority:AUTHORITY,
+    genesis_hash:GENESIS,alashi_program_id:PROGRAM,program_id:SWITCHBOARD_PROGRAM,
+    queue:QUEUE,queue_authority:QUEUE_AUTHORITY,source_authority:SOURCE_AUTHORITY,
     sources:[...input.switchboard.sources],
     release:{candidate_sha256:'31117a3084318f5d9c8dbc3c3f291168545e474728d981f3089a7554c698978d',
       rollback_sha256:'de492e03624449a36e10a9267563ed46bbaf4eb26204f60306f2c5e10020cde2'},
@@ -88,14 +99,9 @@ test('complete fresh quote counts provider prefund/fee once and rejects missing 
     limits:{tx_count_max:10,signatures_max:20,retries_max:2,bootstrap_attempts_max:6,
       compute_units_per_tx_max:1400000,priority_fee_micro_lamports_per_cu_max:0},
     evidence:['mock sdk instructions and fee quote'],missing:[]};
-  const result=await preflight(input,rpc,verifyFile,expectedHash);
-  assert.equal(result.status,'priced_for_review');
-  assert.equal(result.priced_total_excluding_buffer_lamports,'463186040');
-  input.switchboard_quote.missing=['provider_fee'];
-  await assert.rejects(preflight(input,rpc,verifyFile,expectedHash),/switchboard_quote_evidence_incomplete/);
-  input.switchboard_quote.missing=[];
-  input.switchboard_quote.observed_slot=509973300;
-  await assert.rejects(preflight(input,rpc,verifyFile,expectedHash),/switchboard_quote_stale_slot/);
+  await assert.rejects(preflight(input,rpc,verifyFile,expectedHash),/complete_quote_not_supported/);
+  input.switchboard_quote.pinned_sdk.lock_sha256='630381a34b75758075c3623f628897968751604b23c';
+  await assert.rejects(preflight(input,rpc,verifyFile,expectedHash),/switchboard_quote_binding/);
 });
 test('program data parser rejects malformed account', () => {
   assert.throws(()=>parseProgramData(null,PROGRAM),/owner_or_encoding/);
