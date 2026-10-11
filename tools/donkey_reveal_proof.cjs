@@ -22,6 +22,32 @@ function fail(code) { throw new Error(code); }
 function key(web3, value) { return new web3.PublicKey(value); }
 function same(a, b) { return String(a) === String(b); }
 
+function safeDiagnosticToken(value) {
+  const text = typeof value === 'string' ? value : '';
+  return /^[A-Za-z0-9_.-]{1,80}$/.test(text) ? text : undefined;
+}
+
+function gatewayDiagnostic(startedAt, { stage, status, error } = {}) {
+  const diagnostic = {
+    stage,
+    elapsed_ms: Math.max(0, Date.now() - startedAt),
+  };
+  if (Number.isInteger(status) && status >= 100 && status <= 599) {
+    diagnostic.http_status = status;
+  }
+  const errorName = safeDiagnosticToken(error?.name);
+  const errorCode = safeDiagnosticToken(error?.code) || safeDiagnosticToken(error?.cause?.code);
+  if (errorName) diagnostic.error_name = errorName;
+  if (errorCode) diagnostic.error_code = errorCode;
+  return diagnostic;
+}
+
+function failGatewayProof(diagnostic) {
+  const error = new Error('gateway_proof_timeout_or_unavailable');
+  error.gateway_diagnostic = diagnostic;
+  throw error;
+}
+
 function safeHttpsUrl(value, code) {
   let url;
   try { url = new URL(value); } catch { fail(code); }
@@ -46,6 +72,7 @@ async function fetchGatewayProof(fetchImpl, gatewayUrl, request) {
   const endpoint = gatewayEndpoint(gatewayUrl);
   // Never forward a configured RPC URL: it may contain a provider path token.
   const publicRequest = { ...request, rpc: PUBLIC_DEVNET_RPC };
+  const startedAt = Date.now();
   let response;
   try {
     response = await fetchImpl(endpoint, {
@@ -56,12 +83,16 @@ async function fetchGatewayProof(fetchImpl, gatewayUrl, request) {
       redirect: 'error',
     });
   } catch (error) {
-    if (error?.name === 'AbortError' || error?.name === 'TimeoutError') {
-      fail('gateway_proof_timeout_or_unavailable');
-    }
-    fail('gateway_proof_timeout_or_unavailable');
+    const timeout = error?.name === 'AbortError' || error?.name === 'TimeoutError' ||
+      error?.code === 'ABORT_ERR' || error?.cause?.code === 'ABORT_ERR';
+    failGatewayProof(gatewayDiagnostic(startedAt, {
+      stage: timeout ? 'timeout' : 'network',
+      error,
+    }));
   }
-  if (!response?.ok) fail('gateway_proof_timeout_or_unavailable');
+  if (!response?.ok) {
+    failGatewayProof(gatewayDiagnostic(startedAt, { stage: 'http', status: response?.status }));
+  }
   let proof;
   try { proof = await response.json(); } catch { fail('invalid_gateway_proof'); }
   if (!proof || typeof proof !== 'object' || Array.isArray(proof) ||
@@ -203,10 +234,12 @@ if (require.main === module) {
       'proof_file_already_exists', 'reveal_source_unavailable', 'reveal_not_ready', 'unsafe_gateway_url',
       'gateway_uri_unavailable', 'gateway_proof_timeout_or_unavailable', 'invalid_gateway_proof',
       'gateway_proof_source_mismatch', 'pinned_sdk_reveal_encoder_invalid', 'reveal_source_changed']);
-    console.error(JSON.stringify({ ok: false, error: known.has(error.message) ? error.message : 'reveal_proof_preflight_failed' }));
+    const result = { ok: false, error: known.has(error.message) ? error.message : 'reveal_proof_preflight_failed' };
+    if (error?.gateway_diagnostic) result.gateway_diagnostic = error.gateway_diagnostic;
+    console.error(JSON.stringify(result));
     process.exitCode = 1;
   });
 }
 
-module.exports = { GATEWAY_TIMEOUT_MS, PUBLIC_DEVNET_RPC, gatewayEndpoint, fetchGatewayProof, encodeGatewayProof,
+module.exports = { GATEWAY_TIMEOUT_MS, PUBLIC_DEVNET_RPC, gatewayEndpoint, fetchGatewayProof, gatewayDiagnostic, encodeGatewayProof,
   safeProofOutput, writeProofAtomically, main };
