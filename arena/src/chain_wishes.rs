@@ -15,6 +15,7 @@ use std::str::FromStr;
 use std::time::Duration;
 
 const MAX_TEXT: usize = 512;
+const OWNER_TEXT_MAX_CHARS: usize = 140;
 const MAX_WISHES: u8 = 3;
 const LEASE_SECONDS: i64 = 30;
 const RUNNER_SECONDS: i64 = 300;
@@ -126,7 +127,16 @@ fn intent_phase(intent: &str, phase: &str) -> bool {
     )
 }
 fn text_ok(v: &str) -> bool {
-    !v.trim().is_empty() && v.len() <= MAX_TEXT && !v.chars().any(char::is_control)
+    !v.trim().is_empty()
+        && (v.len() <= MAX_TEXT || owner_text(v).is_some())
+        && !v.chars().any(char::is_control)
+}
+fn owner_text(v: &str) -> Option<&str> {
+    let text = v.trim();
+    (!text.is_empty()
+        && text.chars().count() <= OWNER_TEXT_MAX_CHARS
+        && !text.chars().any(char::is_control))
+    .then_some(text)
 }
 fn binding_live(b: &ChainBinding, at: i64) -> bool {
     at.saturating_sub(b.last_seen_at) <= RUNNER_SECONDS
@@ -463,10 +473,14 @@ pub fn submit(state: &AppState, record: &str, origin: &str, session: &str, body:
     ) else {
         return err("bad_chain_wish");
     };
-    if !canonical_pda(game) || !client_id_ok(client) || !intent_ok(intent) || !text_ok(text) {
+    if !canonical_pda(game) || !client_id_ok(client) || !intent_ok(intent) {
         return err("bad_chain_wish");
     }
+    let normalized_text = text.trim();
     let hash = sha256_hex(&format!(
+        "chain-wish-v1\n{record}\n{game}\n{client}\n{intent}\n{normalized_text}"
+    ));
+    let legacy_hash = sha256_hex(&format!(
         "chain-wish-v1\n{record}\n{game}\n{client}\n{intent}\n{text}"
     ));
     // Lost-response retries return the durable admission even after a game ends.
@@ -477,7 +491,7 @@ pub fn submit(state: &AppState, record: &str, origin: &str, session: &str, body:
             .get(&idem(record, game, client))
             .and_then(|id| ledger.wishes.get(id))
         {
-            return if w.request_hash == hash {
+            return if w.request_hash == hash || w.request_hash == legacy_hash {
                 admission(
                     w,
                     MAX_WISHES - *ledger.accepted.get(&key(record, game)).unwrap_or(&0),
@@ -487,6 +501,9 @@ pub fn submit(state: &AppState, record: &str, origin: &str, session: &str, body:
             };
         }
     }
+    let Some(text) = owner_text(text) else {
+        return err("bad_chain_wish");
+    };
     let view = match public_chain(game) {
         Ok(v) => v,
         Err(code) => return err(code),
@@ -508,7 +525,7 @@ pub fn submit(state: &AppState, record: &str, origin: &str, session: &str, body:
         .get(&idem(record, game, client))
         .and_then(|id| ledger.wishes.get(id))
     {
-        return if w.request_hash == hash {
+        return if w.request_hash == hash || w.request_hash == legacy_hash {
             admission(
                 w,
                 MAX_WISHES - *ledger.accepted.get(&key(record, game)).unwrap_or(&0),
@@ -983,6 +1000,21 @@ fn event_for_intent(e: &Value, intent: &str, faction: &str) -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn owner_text_is_140_trimmed_unicode_scalars_without_shrinking_history() {
+        for scalar in ['x', 'Ж', '😀'] {
+            for n in [139, 140] {
+                let text = format!("  {}  ", scalar.to_string().repeat(n));
+                assert_eq!(owner_text(&text).unwrap().chars().count(), n);
+                assert!(text_ok(owner_text(&text).unwrap()));
+            }
+            assert!(owner_text(&scalar.to_string().repeat(141)).is_none());
+        }
+        assert!(text_ok(&"x".repeat(MAX_TEXT)));
+        assert!(owner_text(&"x".repeat(MAX_TEXT)).is_none());
+        assert!(owner_text("  ").is_none());
+        assert!(owner_text("ok\nnot ok").is_none());
+    }
     #[test]
     fn intent_requires_matching_confirmed_event() {
         let faction = "faction";
