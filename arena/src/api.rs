@@ -13,6 +13,8 @@ mod wishes;
 mod chain_wishes;
 #[path = "chain_conversations.rs"]
 mod chain_conversations;
+#[path = "chain_match.rs"]
+mod chain_match;
 use crate::runner::{self, ActionLog};
 use crate::registration::{self, Proof, Receipt};
 use crate::strategies::{ActionAction, LawAction, MarketAction};
@@ -2976,7 +2978,7 @@ fn live_result(value: serde_json::Value) -> (&'static str, String) {
         Some("idempotency_conflict" | "wish_status_conflict" | "no_active_game" | "no_active_chain_game" | "receipt_pending" | "binding_conflict") => "409 Conflict",
         Some("wish_quota_exhausted" | "owner_challenge_rate_limited") => "429 Too Many Requests",
         Some("runner_token_invalid" | "binding_forbidden") => "403 Forbidden",
-        Some("chain_api_unavailable") => "503 Service Unavailable",
+        Some("chain_api_unavailable" | "match_host_unavailable" | "match_capacity" | "host_funds_low") => "503 Service Unavailable",
         Some(_) => "400 Bad Request",
     };
     (status, value.to_string())
@@ -2990,7 +2992,7 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
         .filter(|s| !s.is_empty())
         .collect();
     if req.method == "OPTIONS" || (req.method == "POST" && req.path.contains('?')
-        && (path.contains("/owner/") || path.contains("/live/"))) {
+        && (path.contains("/owner/") || path.contains("/live/") || path.contains("/chain/"))) {
         respond(stream, "403 Forbidden", &err_json("method_or_query_forbidden", "owner/live requests use allowed methods and no URL credentials").to_string());
         return;
     }
@@ -3123,6 +3125,13 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
         }
     } else { None };
     let (status, body) = match (req.method.as_str(), segs.as_slice()) {
+        ("POST", ["agents", id, "chain", "match"]) => {
+            if req.cookie.is_some() || req.authorization.is_none() {
+                live_result(err_json("owner_session_invalid", "registered-wallet bearer required"))
+            } else {
+                live_result(chain_match::assign(state,id,req.origin.as_deref().unwrap_or(""),req.authorization.as_deref().unwrap(),&body_v))
+            }
+        },
         ("POST", ["agents", id, "owner", "challenge"]) => live_result(owner_auth::h_begin_owner_challenge(state,id,req.origin.as_deref().unwrap_or(""))),
         ("POST", ["agents", id, "owner", "session"]) => live_result(owner_auth::h_finish_owner_challenge(state,id,req.origin.as_deref().unwrap_or(""),&body_v)),
         ("POST", ["agents", id, "owner", "handoff"]) => {

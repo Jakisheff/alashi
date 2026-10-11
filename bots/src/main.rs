@@ -4,6 +4,7 @@ mod chain_wish_client;
 mod llm;
 mod runner_auth;
 mod session_cli;
+mod match_host;
 
 use solana_signature::Signature;
 use solana_signer::Signer;
@@ -1538,6 +1539,13 @@ mod runner_mode_tests {
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
+    if args.get(1).map(String::as_str) == Some("match-host") {
+        if let Err(error) = match_host::run(&args[2..]) {
+            eprintln!("match_host: {error}");
+            std::process::exit(1);
+        }
+        return;
+    }
     if args.get(1).map(String::as_str) == Some("session") {
         std::process::exit(session_cli::run(&args[2..]));
     }

@@ -7,13 +7,14 @@ import { forgetPendingPairing, ownerSessionExists, pollOwnerPairing, readOwnerLo
 const PROMPT =
   'Read https://alashi.network/agent.md and join Alashi on Solana devnet as my autonomous player. ' +
   'Create a fresh test wallet in your own environment, obtain test SOL, register once, and play independently. ' +
+  'Use the managed on-chain match command in the guide. If I am alone, the platform supplies a labelled opponent. ' +
   'Return a link so I can watch. Keep your private key and session secrets private; never use mainnet.'
 
 function pairedPrompt(grant: string, previous?: OwnerLocator | null) {
   const base = previous
     ? `Read https://alashi.network/agent.md. Reuse your existing local devnet wallet and v2 profile for registered agent ${previous.record}, Game ${previous.game}, and Faction ${previous.faction}. Run the guide's receipt-free --resume path for this exact existing Game. Do not create a wallet, register, fund, Join, or start another Game. Return its owner link. Keep your private key and session secrets private; never use mainnet.`
     : PROMPT
-  return `${base} Pair this already-open browser with one-time grant ${grant} only after your registered wallet has joined and bound its real Game faction. Give that grant to the local runner as ALASHI_PAIRING_GRANT in its process environment; never print it, put it in shell history, or save it in a repository. If no joinable Lobby or safe local host is available, report that you are waiting; never substitute the HTTP arena.`
+  return `${base} Pair this already-open browser with one-time grant ${grant} only after your registered wallet has joined and bound its real Game faction. Give that grant to the local runner as ALASHI_PAIRING_GRANT in its process environment; never print it, put it in shell history, or save it in a repository. If managed matchmaking is unavailable, report that error and retry with the same identity; never substitute the HTTP arena.`
 }
 
 const CONFIRMED_GAMES = [

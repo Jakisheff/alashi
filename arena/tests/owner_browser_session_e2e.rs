@@ -549,3 +549,121 @@ fn browser_cookie_auth_is_scoped_persistent_revocable_and_csrf_checked() {
     );
     assert_eq!(after_persisted_logout.status, 401);
 }
+
+#[test]
+fn managed_chain_match_requires_wallet_bearer_and_forwards_only_public_wallet() {
+    use std::net::TcpListener;
+    let host = TcpListener::bind("127.0.0.1:0").unwrap();
+    std::env::set_var(
+        "ALASHI_MATCH_PORT",
+        host.local_addr().unwrap().port().to_string(),
+    );
+    let (state, root) = isolated_state();
+    register(&state, RECORD, [7; 32], [0x11; 32]);
+    register(&state, OTHER_RECORD, [8; 32], [0x22; 32]);
+    save_snapshot(&state).unwrap();
+    let server = serve_on(state, "127.0.0.1:0", 60).unwrap();
+    let port = server.port();
+    let (key, wallet) = owner_identity();
+    let challenge = request(
+        port,
+        "POST",
+        &format!("/agents/{RECORD}/owner/challenge"),
+        Some(&json!({})),
+        None,
+        None,
+        Some(ORIGIN),
+    );
+    let signature = Signature::from(
+        key.sign(challenge.body["message"].as_str().unwrap().as_bytes())
+            .to_bytes(),
+    )
+    .to_string();
+    let session = request(
+        port,
+        "POST",
+        &format!("/agents/{RECORD}/owner/session"),
+        Some(&json!({"challenge_id":challenge.body["challenge_id"],"signature":signature})),
+        None,
+        None,
+        Some(ORIGIN),
+    );
+    assert_eq!(session.status, 200);
+    let token = session.body["owner_session"].as_str().unwrap();
+    let path = format!("/agents/{RECORD}/chain/match");
+    for (target, body, cookie, bearer, origin) in [
+        (path.clone(), json!({}), None, None, ORIGIN),
+        (
+            path.clone(),
+            json!({}),
+            Some("cookie=forbidden"),
+            Some(token),
+            ORIGIN,
+        ),
+        (
+            path.clone(),
+            json!({}),
+            None,
+            Some(token),
+            "https://other.example",
+        ),
+        (
+            format!("/agents/{OTHER_RECORD}/chain/match"),
+            json!({}),
+            None,
+            Some(token),
+            ORIGIN,
+        ),
+        (
+            format!("{path}?token=forbidden"),
+            json!({}),
+            None,
+            Some(token),
+            ORIGIN,
+        ),
+        (
+            path.clone(),
+            json!({"wallet":"other-wallet"}),
+            None,
+            Some(token),
+            ORIGIN,
+        ),
+    ] {
+        let result = request(
+            port,
+            "POST",
+            &target,
+            Some(&body),
+            cookie,
+            bearer,
+            Some(origin),
+        );
+        assert_ne!(result.status, 200, "{:?}", result.body);
+    }
+    let worker = std::thread::spawn(move || {
+        let (mut stream, _) = host.accept().unwrap();
+        let request = arena::http::read_request(&stream).unwrap();
+        assert_eq!(request.path, "/match");
+        assert!(request.authorization.is_none());
+        assert_eq!(
+            serde_json::from_slice::<Value>(&request.body).unwrap(),
+            json!({"wallet":wallet})
+        );
+        arena::http::respond(&mut stream, "200 OK", &json!({"ok":true,"network":"devnet","status":"assigned","game_pda":"isolated-test-game"}).to_string());
+    });
+    let assigned = request(
+        port,
+        "POST",
+        &path,
+        Some(&json!({})),
+        None,
+        Some(token),
+        Some(ORIGIN),
+    );
+    assert_eq!(assigned.status, 200);
+    assert_eq!(assigned.body["game_pda"], "isolated-test-game");
+    worker.join().unwrap();
+    std::env::remove_var("ALASHI_MATCH_PORT");
+    drop(server);
+    std::fs::remove_dir_all(root).unwrap();
+}
