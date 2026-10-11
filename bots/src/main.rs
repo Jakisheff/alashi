@@ -8,6 +8,7 @@ mod session_cli;
 
 use solana_signature::Signature;
 use solana_signer::Signer;
+use switchboard_on_demand::accounts::RandomnessAccountData;
 
 use {
     alashi::{accounts, constants, id, instruction, state},
@@ -194,6 +195,148 @@ fn donkey_oracle_pda(game: &Pubkey) -> Pubkey {
 
 fn donkey_source_pda(game: &Pubkey, round: u8) -> Pubkey {
     Pubkey::find_program_address(&[b"donkey-source", game.as_ref(), &[round]], &id()).0
+}
+
+// getSlot can be ahead of the SlotHashes bank used by provider LUT creation.
+// Pick an actual, older entry; the on-chain instruction still enforces age <= 150.
+fn source_recent_slot(data: &[u8], current_slot: u64) -> Option<u64> {
+    let count = usize::try_from(u64::from_le_bytes(data.get(..8)?.try_into().ok()?)).ok()?;
+    if !(17..=512).contains(&count) || data.len() != 8 + count * 40 {
+        return None;
+    }
+    let slot = |index: usize| -> Option<u64> {
+        Some(u64::from_le_bytes(
+            data.get(8 + index * 40..16 + index * 40)?.try_into().ok()?,
+        ))
+    };
+    let newest = slot(0)?;
+    for index in 1..=16 {
+        if slot(index)? == 0 || slot(index)? >= slot(index - 1)? {
+            return None;
+        }
+    }
+    let chosen = slot(16)?;
+    (newest <= current_slot && current_slot - chosen <= 150).then_some(chosen)
+}
+
+fn recent_source_slot(rpc: &RpcClient) -> Result<u64, String> {
+    let hashes = rpc
+        .get_account(&solana_sysvar::slot_hashes::id())
+        .map_err(|_| "SlotHashes unavailable before source Init")?;
+    let current = rpc.get_slot().map_err(|_| "current slot unavailable")?;
+    source_recent_slot(&hashes.data, current)
+        .ok_or_else(|| "SlotHashes malformed or selected source slot stale".to_string())
+}
+
+fn resume_game_allowed(
+    game: &state::Game,
+    key: Pubkey,
+    admin: Pubkey,
+    phase_duration: i64,
+) -> bool {
+    game_pda(game.game_id) == key
+        && game.admin == admin
+        && game.epoch == constants::EPOCH_DONKEY_RISK
+        && game.entropy_mode == constants::ENTROPY_SWITCHBOARD
+        && game.phase == state::Phase::Lobby
+        && game.round == 0
+        && game.faction_count == 0
+        && game.entry_fee == ENTRY_FEE
+        && game.phase_duration == phase_duration
+        && !game.settled
+        && game.vrf_account == Pubkey::default()
+        && game.commit_slot == 0
+}
+
+fn resume_epoch2_game(
+    rpc: &RpcClient,
+    address: &str,
+    admin: Pubkey,
+    phase_duration: i64,
+) -> Result<(u64, Pubkey), String> {
+    let key: Pubkey = address
+        .parse()
+        .map_err(|_| "invalid resume Game public key")?;
+    let account = rpc
+        .get_account(&key)
+        .map_err(|_| "resume Game is unavailable")?;
+    if account.owner != id() {
+        return Err("resume Game has wrong owner".into());
+    }
+    let mut bytes: &[u8] = &account.data;
+    let game =
+        state::Game::try_deserialize(&mut bytes).map_err(|_| "resume Game cannot be decoded")?;
+    if !resume_game_allowed(&game, key, admin, phase_duration) {
+        return Err("resume Game is not the expected empty epoch-2 Lobby".into());
+    }
+    Ok((game.game_id, key))
+}
+
+fn source_is_pristine(data: &[u8], authority: Pubkey, queue: Pubkey) -> bool {
+    use std::mem::offset_of;
+    const DISC: [u8; 8] = [10, 66, 229, 135, 220, 239, 217, 114];
+    if data.len() < RandomnessAccountData::size() || data.get(..8) != Some(DISC.as_slice()) {
+        return false;
+    }
+    let field = |start: usize, len: usize| data.get(8 + start..8 + start + len);
+    field(offset_of!(RandomnessAccountData, authority), 32) == Some(authority.as_ref())
+        && field(offset_of!(RandomnessAccountData, queue), 32) == Some(queue.as_ref())
+        && field(offset_of!(RandomnessAccountData, oracle), 32) == Some(Pubkey::default().as_ref())
+        && field(offset_of!(RandomnessAccountData, seed_slot), 8) == Some([0; 8].as_slice())
+        && field(offset_of!(RandomnessAccountData, reveal_slot), 8) == Some([0; 8].as_slice())
+}
+
+fn check_source(rpc: &RpcClient, game: Pubkey, round: u8, queue: Pubkey) -> Result<bool, String> {
+    let source = donkey_source_pda(&game, round);
+    let response = rpc
+        .get_account_with_commitment(&source, CommitmentConfig::confirmed())
+        .map_err(|_| "source read unavailable; no Init retry")?;
+    let Some(account) = response.value else {
+        return Ok(false);
+    };
+    let provider: Pubkey = SWITCHBOARD_DEVNET_PROGRAM
+        .parse()
+        .expect("fixed provider id");
+    if account.owner != provider
+        || !source_is_pristine(&account.data, donkey_oracle_pda(&game), queue)
+    {
+        return Err(format!(
+            "source round {round} is not pristine/configured; no Init retry"
+        ));
+    }
+    Ok(true)
+}
+
+fn check_oracle_config(
+    rpc: &RpcClient,
+    game: Pubkey,
+    setup: &DonkeyOperatorSetup,
+) -> Result<bool, String> {
+    let oracle = donkey_oracle_pda(&game);
+    let response = rpc
+        .get_account_with_commitment(&oracle, CommitmentConfig::confirmed())
+        .map_err(|_| "oracle config read unavailable; no Configure retry")?;
+    let Some(account) = response.value else {
+        return Ok(false);
+    };
+    if account.owner != id() {
+        return Err("oracle config owner mismatch".into());
+    }
+    let mut bytes: &[u8] = &account.data;
+    let config = alashi::DonkeyOracleConfig::try_deserialize(&mut bytes)
+        .map_err(|_| "oracle config cannot be decoded")?;
+    let sources = std::array::from_fn(|i| donkey_source_pda(&game, (i + 1) as u8));
+    if config.game != game
+        || config.queue != setup.queue
+        || config.authority != oracle
+        || config.accounts != sources
+        || config.oracles != setup.oracles
+        || config.committed_rounds_mask != 0
+        || config.ticket_count != 0
+    {
+        return Err("oracle config differs from frozen six sources/oracles".into());
+    }
+    Ok(true)
 }
 
 fn donkey_init_accounts(
@@ -457,6 +600,62 @@ fn send_ix(rpc: &RpcClient, signer: &Keypair, ix: Instruction) -> bool {
             eprintln!("  tx result: {err}");
             if err["status"] == "unknown" {
                 eprintln!("Receipt unknown: host/guest stopped. Inspect signature and chain state before resuming; do not resubmit blindly.");
+                std::process::exit(3);
+            }
+            false
+        }
+    }
+}
+
+fn send_source_init(rpc: &RpcClient, signer: &Keypair, ix: Instruction, recent_slot: u64) -> bool {
+    let tx = match prepare_ix(rpc, signer, ix) {
+        Ok(tx) => tx,
+        Err(err) => {
+            eprintln!("[ERROR] source Init preparation: {err}");
+            return false;
+        }
+    };
+    let simulation = match rpc.simulate_transaction(&tx) {
+        Ok(value) => value,
+        Err(_) => {
+            eprintln!("[ERROR] source Init simulation unavailable; no send");
+            return false;
+        }
+    };
+    if let Some(err) = simulation.value.err {
+        eprintln!(
+            "[ERROR] source Init simulation recent_slot={recent_slot} context_slot={} err={err:?}",
+            simulation.context.slot
+        );
+        for log in simulation
+            .value
+            .logs
+            .unwrap_or_default()
+            .into_iter()
+            .rev()
+            .take(8)
+            .rev()
+        {
+            eprintln!("  {log}");
+        }
+        return false;
+    }
+    println!(
+        "source Init simulation recent_slot={recent_slot} context_slot={} ok",
+        simulation.context.slot
+    );
+    match submit_confirmed(rpc, &tx) {
+        Ok(receipt) => {
+            println!(
+                "  confirmed tx https://explorer.solana.com/tx/{}?cluster=devnet",
+                receipt["signature"].as_str().unwrap_or_default()
+            );
+            let _ = std::io::Write::flush(&mut std::io::stdout());
+            true
+        }
+        Err(err) => {
+            eprintln!("[ERROR] source Init submitted status: {err}");
+            if err["status"] == "unknown" {
                 std::process::exit(3);
             }
             false
@@ -2167,13 +2366,73 @@ mod runner_mode_tests {
         donkey_init_accounts, donkey_risk_eligibility, donkey_source_pda, epoch_for_barter_demo,
         ix_attempt_donkey, ix_barter_accept, ix_barter_propose, ix_configure_donkey_oracles,
         ix_donkey, ix_init_donkey_source, ix_initialize, ix_join_epoch2, may_auto_airdrop,
-        may_join, DonkeyOperatorSetup, DonkeyRiskEligibility, DonkeyRiskInput, DonkeyRiskReason,
-        DONKEY_RISK_FEE, DONKEY_RISK_GOODS,
+        may_join, resume_game_allowed, source_is_pristine, source_recent_slot, DonkeyOperatorSetup,
+        DonkeyRiskEligibility, DonkeyRiskInput, DonkeyRiskReason, DONKEY_RISK_FEE,
+        DONKEY_RISK_GOODS, ENTRY_FEE,
     };
     use alashi::{constants, events::DonkeyResolved, id, instruction, state};
     use anchor_lang::{prelude::Pubkey, AnchorDeserialize, Event};
     use serde_json::json;
+    use std::mem::offset_of;
     use std::os::unix::fs::PermissionsExt;
+    use switchboard_on_demand::accounts::RandomnessAccountData;
+    #[test]
+    fn existing_source_must_be_pristine_and_bound_to_config() {
+        let authority = Pubkey::new_unique();
+        let queue = Pubkey::new_unique();
+        let mut data = vec![0; 480];
+        data[..8].copy_from_slice(&[10, 66, 229, 135, 220, 239, 217, 114]);
+        let start = 8 + offset_of!(RandomnessAccountData, authority);
+        data[start..start + 32].copy_from_slice(authority.as_ref());
+        let start = 8 + offset_of!(RandomnessAccountData, queue);
+        data[start..start + 32].copy_from_slice(queue.as_ref());
+        assert!(source_is_pristine(&data, authority, queue));
+        assert!(!source_is_pristine(&data, Pubkey::new_unique(), queue));
+        let seed = 8 + offset_of!(RandomnessAccountData, seed_slot);
+        data[seed..seed + 8].copy_from_slice(&123u64.to_le_bytes());
+        assert!(!source_is_pristine(&data, authority, queue));
+    }
+    #[test]
+    fn source_init_uses_an_existing_slot_hash_not_the_ahead_rpc_tip() {
+        let mut data = vec![0; 8 + 20 * 40];
+        data[..8].copy_from_slice(&20u64.to_le_bytes());
+        for i in 0..20 {
+            data[8 + 40 * i..16 + 40 * i].copy_from_slice(&(1000u64 - i as u64).to_le_bytes());
+        }
+        assert_eq!(source_recent_slot(&data, 1002), Some(984));
+        assert_eq!(source_recent_slot(&data, 1200), None);
+        data.extend_from_slice(&[0]);
+        assert_eq!(source_recent_slot(&data, 1002), None);
+        data.pop();
+        data[8 + 40..16 + 40].copy_from_slice(&1000u64.to_le_bytes());
+        assert_eq!(source_recent_slot(&data, 1002), None);
+        data.truncate(8 + 17 * 40 - 1);
+        assert_eq!(source_recent_slot(&data, 1002), None);
+    }
+
+    #[test]
+    fn resume_accepts_only_same_empty_epoch_two_lobby() {
+        let admin = Pubkey::new_unique();
+        let mut game = state::Game {
+            admin,
+            game_id: 123,
+            epoch: 2,
+            entropy_mode: constants::ENTROPY_SWITCHBOARD,
+            phase_duration: 20,
+            entry_fee: ENTRY_FEE,
+            ..Default::default()
+        };
+        let key = super::game_pda(game.game_id);
+        assert!(resume_game_allowed(&game, key, admin, 20));
+        assert!(!resume_game_allowed(&game, Pubkey::new_unique(), admin, 20));
+        assert!(!resume_game_allowed(&game, key, Pubkey::new_unique(), 20));
+        assert!(!resume_game_allowed(&game, key, admin, 21));
+        game.faction_count = 1;
+        assert!(!resume_game_allowed(&game, key, admin, 20));
+        game.faction_count = 0;
+        game.phase = state::Phase::Market;
+        assert!(!resume_game_allowed(&game, key, admin, 20));
+    }
     #[test]
     fn resume_never_joins_a_missing_faction() {
         assert!(!may_join(false, true));
@@ -2521,7 +2780,7 @@ fn main() {
         std::process::exit(agent_cli::run(&args[2..]));
     }
     if args.iter().any(|a| a == "--help" || a == "-h") {
-        println!("bots [--phase-duration SECONDS] [--timeout SECONDS] [--no-llm] [--epoch90s-barter --agent-file REGISTERED_PROFILE --key PRIMARY_KEY --opponent-key DEMO_OPPONENT_KEY]\nbots --game PUBKEY --name NAME --key LOCAL_FILE [--agent-file REGISTERED_PROFILE] [--resume]\nbots agent inspect|join|act --help");
+        println!("bots [--phase-duration SECONDS] [--timeout SECONDS] [--no-llm] [--epoch90s-barter --agent-file REGISTERED_PROFILE --key PRIMARY_KEY --opponent-key DEMO_OPPONENT_KEY]\nbots --epoch2-donkey-risk --resume-epoch2-game GAME_PDA --agent-file REGISTERED_PROFILE --key PRIMARY_KEY --opponent-key LOCAL_KEY --no-llm --external-vrf-crank [oracle setup flags]\nbots --game PUBKEY --name NAME --key LOCAL_FILE [--agent-file REGISTERED_PROFILE] [--resume]\nbots agent inspect|join|act --help");
         return;
     }
     let (phase_duration, host_timeout) = match host_timing(&args) {
@@ -2538,9 +2797,22 @@ fn main() {
     );
     let barter_demo = args.iter().any(|arg| arg == "--epoch90s-barter");
     let donkey_risk = args.iter().any(|arg| arg == "--epoch2-donkey-risk");
+    let resume_epoch2 = flag_value(&args, "--resume-epoch2-game");
     let external_vrf_crank = args.iter().any(|arg| arg == "--external-vrf-crank");
     if barter_demo && donkey_risk {
         eprintln!("[ERROR] choose either --epoch90s-barter or --epoch2-donkey-risk");
+        return;
+    }
+    if args.iter().any(|arg| arg == "--resume-epoch2-game") && resume_epoch2.is_none() {
+        eprintln!("[ERROR] --resume-epoch2-game requires the existing Game public key");
+        return;
+    }
+    if resume_epoch2.is_some() && !donkey_risk {
+        eprintln!("[ERROR] --resume-epoch2-game requires --epoch2-donkey-risk");
+        return;
+    }
+    if resume_epoch2.is_some() && flag_value(&args, "--game").is_some() {
+        eprintln!("[ERROR] --resume-epoch2-game cannot be combined with join-mode --game");
         return;
     }
     if let Some(game_str) = flag_value(&args, "--game") {
@@ -2724,8 +2996,18 @@ fn main() {
     if demo_mode() {
         println!("=== РЕЖИМ ДЕМО: фазы 30с, закон 45с, нарратив для рассказчика ===");
     }
-    let game_id = now() as u64;
-    let game = game_pda(game_id);
+    let (game_id, game) = if let Some(address) = resume_epoch2.as_deref() {
+        match resume_epoch2_game(&rpc, address, bot1_kp.pubkey(), phase_duration) {
+            Ok(existing) => existing,
+            Err(error) => {
+                eprintln!("[ERROR] {error}");
+                return;
+            }
+        }
+    } else {
+        let game_id = now() as u64;
+        (game_id, game_pda(game_id))
+    };
     let mut bots = vec![
         Bot {
             faction: faction_pda(&game, &bot1_kp.pubkey()),
@@ -2785,50 +3067,80 @@ fn main() {
     } else {
         constants::ENTROPY_SLOTHASH
     };
-    if !send_ix(
-        &rpc,
-        &bots[0].kp,
-        ix_initialize(
-            bots[0].kp.pubkey(),
-            game,
-            game_id,
-            phase_duration,
-            entropy_mode,
-            epoch,
-        ),
-    ) {
-        println!("[ERROR] initialize не отправился");
-        return;
+    if resume_epoch2.is_none() {
+        if !send_ix(
+            &rpc,
+            &bots[0].kp,
+            ix_initialize(
+                bots[0].kp.pubkey(),
+                game,
+                game_id,
+                phase_duration,
+                entropy_mode,
+                epoch,
+            ),
+        ) {
+            println!("[ERROR] initialize не отправился");
+            return;
+        }
     }
     if !wait_account(&rpc, &game, "game") {
         return;
     }
     let donkey_oracle = donkey_setup.as_ref().map(|setup| {
         for round in 1..=constants::ROUNDS {
-            let recent_slot = match rpc.get_slot() {
-                Ok(slot) if slot > 0 => slot,
-                _ => {
-                    eprintln!("[ERROR] epoch-2 source setup has no fresh slot; stopping before Join");
+            let source = donkey_source_pda(&game, round);
+            match check_source(&rpc, game, round, setup.queue) {
+                Ok(true) => continue,
+                Ok(false) => {}
+                Err(error) => {
+                    eprintln!("[ERROR] {error}");
+                    return None;
+                }
+            }
+            let recent_slot = match recent_source_slot(&rpc) {
+                Ok(slot) => slot,
+                Err(error) => {
+                    eprintln!("[ERROR] {error}");
                     return None;
                 }
             };
-            let source = donkey_source_pda(&game, round);
-            if !send_ix(
+            if !send_source_init(
                 &rpc,
                 &bots[0].kp,
                 ix_init_donkey_source(bots[0].kp.pubkey(), game, round, recent_slot, setup),
-            ) || !wait_account(&rpc, &source, "donkey source") {
-                eprintln!("[ERROR] epoch-2 source initialization failed before Join; stopping without entry fees");
+                recent_slot,
+            ) || !wait_account(&rpc, &source, "donkey source")
+                || check_source(&rpc, game, round, setup.queue) != Ok(true)
+            {
+                eprintln!("[ERROR] epoch-2 source round {round} initialization failed before Join");
                 return None;
             }
         }
         let oracle = donkey_oracle_pda(&game);
-        if !send_ix(
-            &rpc,
-            &bots[0].kp,
-            ix_configure_donkey_oracles(bots[0].kp.pubkey(), game, oracle, setup),
-        ) || !wait_account(&rpc, &oracle, "donkey oracle config") {
-            eprintln!("[ERROR] epoch-2 oracle configuration failed before Join; stopping without entry fees");
+        match check_oracle_config(&rpc, game, setup) {
+            Ok(true) => {}
+            Ok(false) => {
+                if !send_ix(
+                    &rpc,
+                    &bots[0].kp,
+                    ix_configure_donkey_oracles(bots[0].kp.pubkey(), game, oracle, setup),
+                ) || !wait_account(&rpc, &oracle, "donkey oracle config")
+                {
+                    eprintln!("[ERROR] epoch-2 oracle configuration failed before Join");
+                    return None;
+                }
+            }
+            Err(error) => {
+                eprintln!("[ERROR] {error}");
+                return None;
+            }
+        }
+        if check_oracle_config(&rpc, game, setup) != Ok(true)
+            || (1..=constants::ROUNDS)
+                .any(|round| check_source(&rpc, game, round, setup.queue) != Ok(true))
+        {
+            eprintln!("[ERROR] source/config verification failed before Join");
             return None;
         }
         Some(oracle)
