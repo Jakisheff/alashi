@@ -72,14 +72,26 @@ pub enum GameError {
     InvalidVoteWeightMode,
     #[msg("invalid epoch (0 classic | 1 90s | 2 donkey risk)")]
     InvalidEpoch,
+    #[msg("wallet already joined this game")]
+    DuplicateWallet,
+    #[msg("at most eight open barter offers per game")]
+    TooManyOffers,
     #[msg("donkey risk is unavailable in the final round")]
     NoMarketRemaining,
     #[msg("donkey reward would overflow goods")]
     DonkeyRewardOverflow,
     #[msg("donkey oracle configuration is missing or invalid")]
     DonkeyOracleInvalid,
-    #[msg("wallet already joined this game")]
-    DuplicateWallet,
-    #[msg("at most eight open barter offers per game")]
-    TooManyOffers,
+}
+
+#[cfg(test)]
+mod tests {
+    use super::GameError;
+
+    #[test]
+    fn legacy_error_codes_stay_stable() {
+        assert_eq!(GameError::DuplicateWallet as u32, 35);
+        assert_eq!(GameError::TooManyOffers as u32, 36);
+        assert_eq!(GameError::NoMarketRemaining as u32, 37);
+    }
 }
