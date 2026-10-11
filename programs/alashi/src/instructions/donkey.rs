@@ -15,10 +15,10 @@ use switchboard_on_demand::accounts::RandomnessAccountData;
 use switchboard_on_demand::ON_DEMAND_DEVNET_PID;
 
 const RANDOMNESS_INIT_DISCRIMINATOR: [u8; 8] = [9, 9, 204, 33, 50, 116, 113, 15];
-const TOKEN_PROGRAM: Pubkey = anchor_lang::pubkey!("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA");
-const ASSOCIATED_TOKEN_PROGRAM: Pubkey =
+pub(crate) const TOKEN_PROGRAM: Pubkey = anchor_lang::pubkey!("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA");
+pub(crate) const ASSOCIATED_TOKEN_PROGRAM: Pubkey =
     anchor_lang::pubkey!("ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL");
-const NATIVE_MINT: Pubkey = anchor_lang::pubkey!("So11111111111111111111111111111111111111112");
+pub(crate) const NATIVE_MINT: Pubkey = anchor_lang::pubkey!("So11111111111111111111111111111111111111112");
 const LOOKUP_TABLE_PROGRAM: Pubkey =
     anchor_lang::pubkey!("AddressLookupTab1e1111111111111111111111111");
 

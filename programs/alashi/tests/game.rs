@@ -174,6 +174,38 @@ fn ix_reveal_law(crank: Pubkey, game: Pubkey, rng: Pubkey) -> Instruction {
     )
 }
 
+fn ix_reveal_donkey_law(crank: Pubkey, game: Pubkey, rng: Pubkey, tickets: &[Pubkey]) -> Instruction {
+    let provider = sb_key(SB_DEVNET_PID);
+    let oracle = sb_key(SB_ORACLE);
+    let config = Pubkey::find_program_address(
+        &[alashi::constants::DONKEY_ORACLE_SEED, game.as_ref()], &alashi::id(),
+    ).0;
+    let stats = Pubkey::find_program_address(
+        &[b"OracleRandomnessStats", oracle.as_ref()], &provider,
+    ).0;
+    let escrow = Pubkey::find_program_address(
+        &[rng.as_ref(), sb_key(SB_TOKEN).as_ref(), sb_key(SB_NATIVE_MINT).as_ref()],
+        &sb_key(SB_ATA),
+    ).0;
+    let mut accounts = alashi::accounts::RevealDonkeyLaw {
+        crank, game, randomness: rng, oracle, queue: sb_key(SB_QUEUE), stats,
+        recent_slothashes: SLOT_HASHES_ID, system_program: system_program::ID,
+        reward_escrow: escrow, token_program: sb_key(SB_TOKEN),
+        native_mint: sb_key(SB_NATIVE_MINT), provider_state: sb_key(SB_STATE),
+        provider_program: provider,
+    }.to_account_metas(None);
+    accounts.push(anchor_lang::solana_program::instruction::AccountMeta::new(config, false));
+    accounts.extend(tickets.iter().map(|key|
+        anchor_lang::solana_program::instruction::AccountMeta::new(*key, false)));
+    Instruction::new_with_bytes(
+        alashi::id(),
+        &alashi::instruction::RevealDonkeyLaw {
+            signature: [0; 64], recovery_id: 0, value: [0; 32],
+        }.data(),
+        accounts,
+    )
+}
+
 fn ix_settle_refund(
     crank: Pubkey,
     game: Pubkey,
@@ -1920,6 +1952,22 @@ fn synthetic_epoch2_case(want_win: Option<bool>, two_tickets: bool, precommit_ab
     let config = alashi::donkey_state::DonkeyOracleConfig::try_deserialize(&mut data).unwrap();
     assert_eq!(config.committed_rounds_mask & 0b10, 0b10);
     assert!(!send(&mut svm, &admin, advance(sources[1])));
+
+    if want_win == Some(true) && !two_tickets {
+        let before_source = svm.get_account(&sources[1]).unwrap().data;
+        let before_game = svm.get_account(&game).unwrap().data;
+        // A forged gateway proof cannot reveal, settle, or mint a ticket.
+        svm.expire_blockhash();
+        let ix = ix_reveal_donkey_law(admin.pubkey(), game, sources[1], &[faction]);
+        let msg = Message::new_with_blockhash(&[ix], Some(&admin.pubkey()), &svm.latest_blockhash());
+        let tx = VersionedTransaction::try_new(VersionedMessage::Legacy(msg), &[&admin]).unwrap();
+        let failed = svm.send_transaction(tx).unwrap_err();
+        assert!(failed.meta.logs.iter().any(|line| line.contains("Instruction: RandomnessReveal")));
+        assert!(failed.meta.logs.iter().any(|line| line.contains("SecpRecoverFailure")));
+        assert_eq!(svm.get_account(&sources[1]).unwrap().data, before_source);
+        assert_eq!(svm.get_account(&game).unwrap().data, before_game);
+        assert_eq!(faction_state(&svm, &faction).goods, 0);
+    }
 
     if want_win.is_none() {
         set_epoch2_clock(&mut svm, commit_clock + 50);

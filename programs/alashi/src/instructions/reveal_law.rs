@@ -1,7 +1,12 @@
+use crate::instructions::donkey::{NATIVE_MINT, TOKEN_PROGRAM};
 use crate::{
     constants::*, donkey_state::DonkeyOracleConfig, error::GameError, events::*, state::*,
 };
 use anchor_lang::prelude::*;
+use anchor_lang::solana_program::{
+    instruction::{AccountMeta, Instruction},
+    program::invoke_signed,
+};
 use solana_sha256_hasher::hashv;
 use switchboard_on_demand::accounts::RandomnessAccountData;
 use switchboard_on_demand::ON_DEMAND_DEVNET_PID;
@@ -24,19 +29,260 @@ pub struct RevealLaw<'info> {
     pub randomness: UncheckedAccount<'info>,
 }
 
-pub fn handle_reveal_law(ctx: Context<RevealLaw>) -> Result<()> {
-    let game = &mut ctx.accounts.game;
+/// Epoch-2 reveal signs for the configured source authority by CPI, then
+/// resolves the law and every due ticket in this same transaction/slot.
+#[derive(Accounts)]
+pub struct RevealDonkeyLaw<'info> {
+    #[account(mut)]
+    pub crank: Signer<'info>,
+    #[account(mut, seeds = [GAME_SEED, game.game_id.to_le_bytes().as_ref()], bump = game.bump)]
+    pub game: Account<'info, Game>,
+    /// CHECK: exact pinned provider-owned source, validated before and after CPI.
+    #[account(mut)]
+    pub randomness: UncheckedAccount<'info>,
+    /// CHECK: exact oracle frozen before Join, validated against provider ownership.
+    pub oracle: UncheckedAccount<'info>,
+    /// CHECK: exact queue frozen before Join.
+    pub queue: UncheckedAccount<'info>,
+    /// CHECK: canonical provider stats PDA.
+    #[account(mut)]
+    pub stats: UncheckedAccount<'info>,
+    /// CHECK: canonical sysvar.
+    pub recent_slothashes: UncheckedAccount<'info>,
+    pub system_program: Program<'info, System>,
+    /// CHECK: canonical source native-mint ATA.
+    #[account(mut)]
+    pub reward_escrow: UncheckedAccount<'info>,
+    /// CHECK: fixed token program.
+    pub token_program: UncheckedAccount<'info>,
+    /// CHECK: fixed native mint.
+    pub native_mint: UncheckedAccount<'info>,
+    /// CHECK: canonical provider state PDA.
+    pub provider_state: UncheckedAccount<'info>,
+    /// CHECK: fixed executable Switchboard devnet program.
+    pub provider_program: UncheckedAccount<'info>,
+}
+
+const RANDOMNESS_REVEAL_DISCRIMINATOR: [u8; 8] = [197, 181, 187, 10, 30, 58, 20, 73];
+const ASSOCIATED_TOKEN_PROGRAM: Pubkey =
+    anchor_lang::pubkey!("ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL");
+
+pub fn handle_reveal_donkey_law<'info>(
+    ctx: Context<'info, RevealDonkeyLaw<'info>>,
+    signature: [u8; 64],
+    recovery_id: u8,
+    value: [u8; 32],
+) -> Result<()> {
+    let game = &ctx.accounts.game;
+    require!(
+        game.epoch == EPOCH_DONKEY_RISK,
+        GameError::DonkeyOracleInvalid
+    );
+    require!(
+        game.entropy_mode == ENTROPY_SWITCHBOARD,
+        GameError::InvalidEntropyMode
+    );
+    require!(
+        game.phase == Phase::Law && game.law_card == NO_LAW,
+        GameError::WrongPhase
+    );
+    require!(
+        game.round > 0 && game.round <= ROUNDS,
+        GameError::DonkeyOracleInvalid
+    );
+    let provider = Pubkey::new_from_array(ON_DEMAND_DEVNET_PID.to_bytes());
+    require_keys_eq!(
+        ctx.accounts.provider_program.key(),
+        provider,
+        GameError::DonkeyOracleInvalid
+    );
+    require!(
+        ctx.accounts.provider_program.executable,
+        GameError::DonkeyOracleInvalid
+    );
+    require_keys_eq!(
+        ctx.accounts.randomness.key(),
+        game.vrf_account,
+        GameError::RandomnessMismatch
+    );
+    require_keys_eq!(
+        *ctx.accounts.randomness.to_account_info().owner,
+        provider,
+        GameError::RandomnessMismatch
+    );
+    let config_ai = ctx
+        .remaining_accounts
+        .first()
+        .ok_or(GameError::DonkeyOracleInvalid)?;
+    require!(config_ai.is_writable, GameError::DonkeyOracleInvalid);
+    let config = Account::<DonkeyOracleConfig>::try_from(config_ai)?;
+    let (config_key, bump) =
+        Pubkey::find_program_address(&[DONKEY_ORACLE_SEED, game.key().as_ref()], &crate::id());
+    require_keys_eq!(config.key(), config_key, GameError::DonkeyOracleInvalid);
+    require_keys_eq!(config.game, game.key(), GameError::DonkeyOracleInvalid);
+    require_keys_eq!(config.authority, config_key, GameError::DonkeyOracleInvalid);
+    require!(config.bump == bump, GameError::DonkeyOracleInvalid);
+    let index = (game.round - 1) as usize;
+    require!(
+        config.committed_rounds_mask & (1 << index) != 0,
+        GameError::DonkeyOracleInvalid
+    );
+    require_keys_eq!(
+        config.accounts[index],
+        ctx.accounts.randomness.key(),
+        GameError::RandomnessMismatch
+    );
+    require_keys_eq!(
+        config.oracles[index],
+        ctx.accounts.oracle.key(),
+        GameError::DonkeyOracleInvalid
+    );
+    require_keys_eq!(
+        config.queue,
+        ctx.accounts.queue.key(),
+        GameError::DonkeyOracleInvalid
+    );
+    require_keys_eq!(
+        *ctx.accounts.oracle.to_account_info().owner,
+        provider,
+        GameError::DonkeyOracleInvalid
+    );
+    require_keys_eq!(
+        *ctx.accounts.queue.to_account_info().owner,
+        provider,
+        GameError::DonkeyOracleInvalid
+    );
+    require_keys_eq!(
+        ctx.accounts.recent_slothashes.key(),
+        solana_sysvar::slot_hashes::ID,
+        GameError::DonkeyOracleInvalid
+    );
+    require_keys_eq!(
+        ctx.accounts.token_program.key(),
+        TOKEN_PROGRAM,
+        GameError::DonkeyOracleInvalid
+    );
+    require_keys_eq!(
+        ctx.accounts.native_mint.key(),
+        NATIVE_MINT,
+        GameError::DonkeyOracleInvalid
+    );
+    require_keys_eq!(
+        ctx.accounts.stats.key(),
+        Pubkey::find_program_address(
+            &[b"OracleRandomnessStats", ctx.accounts.oracle.key().as_ref()],
+            &provider
+        )
+        .0,
+        GameError::DonkeyOracleInvalid
+    );
+    require_keys_eq!(
+        ctx.accounts.provider_state.key(),
+        Pubkey::find_program_address(&[b"STATE"], &provider).0,
+        GameError::DonkeyOracleInvalid
+    );
+    require_keys_eq!(
+        ctx.accounts.reward_escrow.key(),
+        Pubkey::find_program_address(
+            &[
+                ctx.accounts.randomness.key().as_ref(),
+                TOKEN_PROGRAM.as_ref(),
+                NATIVE_MINT.as_ref()
+            ],
+            &ASSOCIATED_TOKEN_PROGRAM
+        )
+        .0,
+        GameError::DonkeyOracleInvalid
+    );
+    {
+        let rng = ctx.accounts.randomness.to_account_info();
+        let data = RandomnessAccountData::parse(rng.data.borrow())
+            .map_err(|_| GameError::RandomnessMismatch)?;
+        require!(
+            data.seed_slot == game.commit_slot && data.reveal_slot == 0,
+            GameError::RandomnessMismatch
+        );
+        require!(
+            data.authority.as_ref() == config_key.as_ref()
+                && data.queue.as_ref() == config.queue.as_ref()
+                && data.oracle.as_ref() == ctx.accounts.oracle.key().as_ref(),
+            GameError::RandomnessMismatch
+        );
+    }
+    // The provider verifies the gateway signature. An error in either CPI or
+    // Alashi's later complete-ticket resolution rolls the whole transaction back.
+    let mut data = RANDOMNESS_REVEAL_DISCRIMINATOR.to_vec();
+    data.extend_from_slice(&signature);
+    data.push(recovery_id);
+    data.extend_from_slice(&value);
+    let ix = Instruction {
+        program_id: provider,
+        accounts: vec![
+            AccountMeta::new(ctx.accounts.randomness.key(), false),
+            AccountMeta::new_readonly(ctx.accounts.oracle.key(), false),
+            AccountMeta::new_readonly(ctx.accounts.queue.key(), false),
+            AccountMeta::new(ctx.accounts.stats.key(), false),
+            AccountMeta::new_readonly(config_key, true),
+            AccountMeta::new(ctx.accounts.crank.key(), true),
+            AccountMeta::new_readonly(ctx.accounts.recent_slothashes.key(), false),
+            AccountMeta::new_readonly(System::id(), false),
+            AccountMeta::new(ctx.accounts.reward_escrow.key(), false),
+            AccountMeta::new_readonly(TOKEN_PROGRAM, false),
+            AccountMeta::new_readonly(NATIVE_MINT, false),
+            AccountMeta::new_readonly(ctx.accounts.provider_state.key(), false),
+        ],
+        data,
+    };
+    let game_key = game.key();
+    let bump_seed = [bump];
+    let seeds: &[&[u8]] = &[DONKEY_ORACLE_SEED, game_key.as_ref(), &bump_seed];
+    invoke_signed(
+        &ix,
+        &[
+            ctx.accounts.randomness.to_account_info(),
+            ctx.accounts.oracle.to_account_info(),
+            ctx.accounts.queue.to_account_info(),
+            ctx.accounts.stats.to_account_info(),
+            config_ai.clone(),
+            ctx.accounts.crank.to_account_info(),
+            ctx.accounts.recent_slothashes.to_account_info(),
+            ctx.accounts.system_program.to_account_info(),
+            ctx.accounts.reward_escrow.to_account_info(),
+            ctx.accounts.token_program.to_account_info(),
+            ctx.accounts.native_mint.to_account_info(),
+            ctx.accounts.provider_state.to_account_info(),
+            ctx.accounts.provider_program.to_account_info(),
+        ],
+        &[seeds],
+    )?;
+    drop(config);
+    resolve_law(
+        &mut ctx.accounts.game,
+        &ctx.accounts.randomness.to_account_info(),
+        ctx.remaining_accounts,
+    )
+}
+
+pub fn handle_reveal_law<'info>(ctx: Context<'info, RevealLaw<'info>>) -> Result<()> {
+    resolve_law(
+        &mut ctx.accounts.game,
+        &ctx.accounts.randomness.to_account_info(),
+        ctx.remaining_accounts,
+    )
+}
+
+fn resolve_law<'info>(
+    game: &mut Account<'info, Game>,
+    rng: &AccountInfo<'info>,
+    remaining_accounts: &'info [AccountInfo<'info>],
+) -> Result<()> {
     require!(
         game.entropy_mode == ENTROPY_SWITCHBOARD,
         GameError::InvalidEntropyMode
     );
     require!(game.phase == Phase::Law, GameError::WrongPhase);
     require!(game.law_card == NO_LAW, GameError::LawNotRevealed);
-    require!(
-        *ctx.accounts.randomness.key == game.vrf_account,
-        GameError::RandomnessMismatch
-    );
-    let rng = ctx.accounts.randomness.to_account_info();
+    require!(*rng.key == game.vrf_account, GameError::RandomnessMismatch);
     let owner = rng.owner;
     require!(
         if game.epoch == EPOCH_DONKEY_RISK {
@@ -63,8 +309,7 @@ pub fn handle_reveal_law(ctx: Context<RevealLaw>) -> Result<()> {
             game.round > 0 && game.round <= ROUNDS,
             GameError::DonkeyOracleInvalid
         );
-        let ai = ctx
-            .remaining_accounts
+        let ai = remaining_accounts
             .first()
             .ok_or(GameError::DonkeyOracleInvalid)?;
         require!(ai.is_writable, GameError::DonkeyOracleInvalid);
@@ -92,15 +337,12 @@ pub fn handle_reveal_law(ctx: Context<RevealLaw>) -> Result<()> {
         let due = config.round == game.round && !config.resolved;
         require!(due || config.resolved, GameError::DonkeyOracleInvalid);
         require!(
-            ctx.remaining_accounts.len() == 1 + if due { config.ticket_count as usize } else { 0 },
+            remaining_accounts.len() == 1 + if due { config.ticket_count as usize } else { 0 },
             GameError::InvalidFactionSet
         );
         Some(config)
     } else {
-        require!(
-            ctx.remaining_accounts.is_empty(),
-            GameError::InvalidFactionSet
-        );
+        require!(remaining_accounts.is_empty(), GameError::InvalidFactionSet);
         None
     };
     let mut b = [0u8; 8];
@@ -118,7 +360,7 @@ pub fn handle_reveal_law(ctx: Context<RevealLaw>) -> Result<()> {
             0
         };
         for (i, ticket) in config.tickets[..due_count].iter().enumerate() {
-            let ai = &ctx.remaining_accounts[i + 1];
+            let ai = &remaining_accounts[i + 1];
             require_keys_eq!(*ai.key, *ticket, GameError::InvalidFactionSet);
             require!(ai.is_writable, GameError::InvalidFactionSet);
             let mut faction = Account::<Faction>::try_from(ai)?;
