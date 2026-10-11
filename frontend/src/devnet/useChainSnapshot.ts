@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
-import { chainSnapshot, chainFailure, ChainApiError, type ChainSnapshot } from './client'
+import { chainSnapshot, chainFailure, ChainApiError } from './client'
+import { decodePublicDonkeySnapshot, type PublicDonkeySnapshot } from './donkey/adapter'
 export function useChainSnapshot(pda: string) {
-  const [snapshot, setSnapshot] = useState<ChainSnapshot | null>(null)
+  const [snapshot, setSnapshot] = useState<PublicDonkeySnapshot | null>(null)
   const [error, setError] = useState('')
   const [waiting, setWaiting] = useState(true)
   const [revision, setRevision] = useState(0)
@@ -19,7 +20,7 @@ export function useChainSnapshot(pda: string) {
       if (Date.now() < retryAt.current) { schedule(); return }
       requestInFlight.current = true
       try {
-        const next = await chainSnapshot(pda, controller.signal)
+        const next = await chainSnapshot(pda, controller.signal, fetch, decodePublicDonkeySnapshot)
         if (stopped) return
         setSnapshot(next); setError(''); setWaiting(false); failures = 0
         final = next.settled && next.complete

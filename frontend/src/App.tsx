@@ -11,6 +11,7 @@ import { useScene } from './store'
 
 // three.js + the model load in their own chunk: the onboarding text paints first
 const Scene = lazy(() => import('./genie/Scene'))
+const HomeChainPreview = lazy(() => import('./devnet/HomeChainPreview'))
 
 /** No WebGL, a failed GLB or chunk: the 3D panel stays empty, the onboarding keeps working */
 class SceneBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
@@ -43,7 +44,8 @@ export default function App({ search }: { search: HomeSearch }) {
   const demo = search.demo === true
   const watch = useAgentWatch(search.agent, api)
   const watchedGame = 'game' in watch && watch.game !== null ? String(watch.game) : null
-  const feed = useArenaFeed(search.game ?? watchedGame, watch.kind === 'none', api)
+  const chainPreview = !search.game && watch.kind === 'none' && !demo && !search.pose
+  const feed = useArenaFeed(chainPreview ? null : search.game ?? watchedGame, false, api)
   // Stable object: GenieModel replays the clip when it changes
   const frozen = useMemo(() => (search.pose ? { clip: search.pose, t: search.t ?? 0.5 } : null), [search.pose, search.t])
 
@@ -70,7 +72,7 @@ export default function App({ search }: { search: HomeSearch }) {
   return (
     <div className="flex min-h-full flex-col bg-[#F4F2F8] text-[#111018] lg:grid lg:h-dvh lg:min-h-0 lg:grid-cols-[minmax(24rem,30rem)_minmax(0,1fr)] lg:grid-rows-[minmax(0,1fr)]">
       <Onboarding watch={watch} />
-      <div className="relative order-1 h-[clamp(14rem,40svh,22rem)] min-h-0 min-w-0 shrink-0 overflow-hidden lg:order-none lg:h-full">
+      {chainPreview ? <Suspense fallback={<div className="order-1 flex h-[65svh] items-center justify-center lg:order-none lg:h-full">Loading confirmed replay…</div>}><HomeChainPreview /></Suspense> : <div className="relative order-1 h-[clamp(14rem,40svh,22rem)] min-h-0 min-w-0 shrink-0 overflow-hidden lg:order-none lg:h-full">
         <SceneBoundary>
           <Suspense fallback={null}>
             <Scene frozen={frozen} background="#F4F2F8" />
@@ -94,13 +96,8 @@ export default function App({ search }: { search: HomeSearch }) {
                       : 'connecting…'}
               </span>
             </>
-          ) : feed.mode === 'off' ? (
-            <span className="text-[#66666f]">waiting for your agent's game</span>
           ) : (
-            <>
-              <span className="rounded-full bg-[#26272B] px-2 text-xs tracking-wide text-white uppercase">preview</span>
-              <span className="hidden text-[#66666f] sm:inline">sample events, not a real game</span>
-            </>
+            <span className="text-[#66666f]">{demo || search.pose ? 'Animation preview · illustrative poses' : "waiting for your agent's game"}</span>
           )}
         </div>
 
@@ -125,8 +122,8 @@ export default function App({ search }: { search: HomeSearch }) {
             </button>
           </div>
         )}
-      </div>
-      {/* Real game events only: the preview's sample stream would be read out every few seconds, forever */}
+      </div>}
+      {/* Explicit HTTP watch links keep their own event announcements. Chain replay has its own caption. */}
       <p className="sr-only" aria-live="polite">
         {feed.mode === 'live' && speech ? `Degenie: ${speech}` : ''}
       </p>
