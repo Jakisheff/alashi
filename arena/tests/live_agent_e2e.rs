@@ -511,6 +511,25 @@ fn owner_ed25519_wishes_are_private_quota_atomic_idempotent_and_durable() {
     );
     assert_eq!(bad_proof["error"], "owner_signature_invalid");
 
+    let too_long = request_with_headers(
+        port,
+        "POST",
+        &format!("/agents/{RECORD}/owner/wishes"),
+        Some(&json!({"game_id":game_id,"client_wish_id":"too-long", "text":"😀".repeat(141)})),
+        Some(&owner_session),
+        Some(OWNER_ORIGIN),
+    );
+    assert_eq!(too_long["error"], "bad_wish");
+    let at_limit = request_with_headers(
+        port,
+        "POST",
+        &format!("/agents/{RECORD}/owner/wishes"),
+        Some(&json!({"game_id":game_id,"client_wish_id":"at-limit", "text":" 😀".to_string() + &"😀".repeat(139) + " "})),
+        Some(&owner_session),
+        Some(OWNER_ORIGIN),
+    );
+    assert_eq!(at_limit["remaining"], 2, "{at_limit}");
+
     let mut workers = Vec::new();
     for i in 0..4 {
         let owner = owner_session.clone();
@@ -531,7 +550,7 @@ fn owner_ed25519_wishes_are_private_quota_atomic_idempotent_and_durable() {
     let results: Vec<Value> = workers.into_iter().map(|w| w.join().unwrap()).collect();
     assert_eq!(
         results.iter().filter(|r| r["ok"] == true).count(),
-        3,
+        2,
         "{results:?}"
     );
     assert_eq!(
@@ -539,7 +558,7 @@ fn owner_ed25519_wishes_are_private_quota_atomic_idempotent_and_durable() {
             .iter()
             .filter(|r| r["error"] == "wish_quota_exhausted")
             .count(),
-        1,
+        2,
         "{results:?}"
     );
 
@@ -557,10 +576,9 @@ fn owner_ed25519_wishes_are_private_quota_atomic_idempotent_and_durable() {
         assert_eq!(page["ok"], true, "{page}");
         let wishes = page["wishes"].as_array().unwrap();
         assert_eq!(wishes.len(), 3);
-        assert!(wishes.iter().all(|w| w["text"]
-            .as_str()
-            .unwrap()
-            .starts_with("PRIVATE_WISH_MARKER_")));
+        assert_eq!(wishes.iter().filter(|w| w["text"] == "😀".repeat(140)).count(), 1);
+        assert_eq!(wishes.iter().filter(|w| w["text"]
+            .as_str().unwrap().starts_with("PRIVATE_WISH_MARKER_")).count(), 2);
         (
             wishes
                 .iter()
@@ -630,10 +648,7 @@ fn owner_ed25519_wishes_are_private_quota_atomic_idempotent_and_durable() {
     assert_eq!(claimed["ok"], true, "{claimed}");
     let leased = &claimed["wishes"][0];
     assert_eq!(leased["status"], "received");
-    assert!(leased["text"]
-        .as_str()
-        .unwrap()
-        .starts_with("PRIVATE_WISH_MARKER_"));
+    assert_eq!(leased["text"], "😀".repeat(140));
     let deferred = request(
         port,
         "POST",
