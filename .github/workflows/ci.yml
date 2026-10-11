@@ -56,7 +56,6 @@ jobs:
           node --test tools/hotseat_engine_test.cjs tools/board_view_test.cjs tools/city_rules_test.cjs
           bash -n tools/stack_up.sh
 
-
   # Аудит 27.09 (A2): свежая SBF-сборка и исполнение программы в CI.
   # Раньше replay-тесты не запускались на свежей сборке, и устаревший
   # сценарий 90-х жил незамеченным до 27.09.
