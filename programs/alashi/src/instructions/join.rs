@@ -1,4 +1,6 @@
-use crate::{constants::*, error::GameError, events::*, state::*};
+use crate::{
+    constants::*, donkey_state::DonkeyOracleConfig, error::GameError, events::*, state::*,
+};
 use anchor_lang::prelude::*;
 
 #[derive(Accounts)]
@@ -32,6 +34,27 @@ pub fn handle_join(ctx: Context<Join>, name: String) -> Result<()> {
         ctx.accounts.game.faction_count < MAX_FACTIONS,
         GameError::GameFull
     );
+    // Epoch 2 cannot take an entry fee until its immutable oracle list is
+    // configured. The remaining account is additive; legacy Join is unchanged.
+    if ctx.accounts.game.epoch == EPOCH_DONKEY_RISK {
+        require!(
+            ctx.remaining_accounts.len() == 1,
+            GameError::DonkeyOracleInvalid
+        );
+        let ai = &ctx.remaining_accounts[0];
+        let config = Account::<DonkeyOracleConfig>::try_from(ai)?;
+        let expected = Pubkey::find_program_address(
+            &[DONKEY_ORACLE_SEED, ctx.accounts.game.key().as_ref()],
+            &crate::id(),
+        )
+        .0;
+        require_keys_eq!(config.key(), expected, GameError::DonkeyOracleInvalid);
+        require_keys_eq!(
+            config.game,
+            ctx.accounts.game.key(),
+            GameError::DonkeyOracleInvalid
+        );
+    }
 
     let fee = ctx.accounts.game.entry_fee;
     let cpi_accounts = anchor_lang::system_program::Transfer {

@@ -8,6 +8,7 @@ use serde_json::{json, Value};
 use std::collections::HashMap;
 
 const WISHES_PER_GAME: u8 = 3;
+const OWNER_TEXT_MAX_CHARS: usize = 140;
 const DEFAULT_WISH_MAX_BYTES: usize = 512;
 const MAX_WISH_BYTES: usize = 4096;
 const LEASE_S: i64 = 30;
@@ -98,6 +99,13 @@ fn valid_text(value: &str) -> bool {
         && value.len() <= max_wish_bytes()
         && !value.chars().any(|c| c.is_control())
 }
+fn owner_text(value: &str) -> Option<&str> {
+    let text = value.trim();
+    (!text.is_empty()
+        && text.chars().count() <= OWNER_TEXT_MAX_CHARS
+        && !text.chars().any(char::is_control))
+    .then_some(text)
+}
 /// `admission_remaining` is immutable evidence for this admission; `remaining`
 /// is the current authoritative game allowance and can change after retries.
 fn admission_receipt(wish: &Wish, remaining: u8) -> Value {
@@ -154,7 +162,7 @@ fn submit_fields(body: &Value) -> Result<(u64, &str, &str), &'static str> {
         .ok_or("bad_wish")?;
     let client_id = body["client_wish_id"].as_str().ok_or("bad_wish")?;
     let text = body["text"].as_str().ok_or("bad_wish")?;
-    if !valid_client_id(client_id) || !valid_text(text) {
+    if !valid_client_id(client_id) {
         return Err("bad_wish");
     }
     Ok((game_id, client_id, text))
@@ -179,7 +187,11 @@ pub fn h_submit_wish(
         Ok(v) => v,
         Err(code) => return err(code),
     };
+    let normalized_text = text.trim();
     let request_hash = sha256_hex(&format!(
+        "wish-v1\n{record}\n{game_id}\n{client_id}\n{normalized_text}"
+    ));
+    let legacy_request_hash = sha256_hex(&format!(
         "wish-v1\n{record}\n{game_id}\n{client_id}\n{text}"
     ));
     let at = now();
@@ -201,7 +213,7 @@ pub fn h_submit_wish(
         .get(&ikey)
         .and_then(|id| wishes.wishes.get(id))
     {
-        if existing.request_hash != request_hash {
+        if existing.request_hash != request_hash && existing.request_hash != legacy_request_hash {
             return err("idempotency_conflict");
         }
         let remaining = WISHES_PER_GAME.saturating_sub(
@@ -217,6 +229,9 @@ pub fn h_submit_wish(
     if !active_game_for_record(state, record, game_id) {
         return err("no_active_game");
     }
+    let Some(text) = owner_text(text) else {
+        return err("bad_wish");
+    };
     let gkey = game_key(record, game_id);
     let used = *wishes.accepted_per_game.get(&gkey).unwrap_or(&0);
     if used >= WISHES_PER_GAME {
@@ -516,10 +531,22 @@ pub fn h_harness_update_wish(
 mod tests {
     use super::*;
     #[test]
-    fn input_limits_are_not_a_hidden_140_rule() {
+    fn historical_and_runner_text_limits_remain_separate() {
         assert!(valid_text(&"x".repeat(DEFAULT_WISH_MAX_BYTES)));
         assert!(!valid_text(&"x".repeat(DEFAULT_WISH_MAX_BYTES + 1)));
         assert!(!valid_text("a\u{0000}b"));
+    }
+    #[test]
+    fn owner_instruction_counts_trimmed_unicode_scalars() {
+        for scalar in ['x', 'Ж', '😀'] {
+            for n in [139, 140] {
+                let text = format!("  {}  ", scalar.to_string().repeat(n));
+                assert_eq!(owner_text(&text).unwrap().chars().count(), n);
+            }
+            assert!(owner_text(&scalar.to_string().repeat(141)).is_none());
+        }
+        assert!(owner_text(" \t ").is_none());
+        assert!(owner_text("ok\nnot ok").is_none());
     }
     #[test]
     fn client_id_is_bounded() {

@@ -96,7 +96,7 @@ pub fn rank_factions(factions: &[Faction]) -> Vec<usize> {
 }
 
 pub fn rank_factions_for_epoch(factions: &[Faction], epoch: u8) -> Vec<usize> {
-    let wealth = |f: &Faction| f.cash as u128 + if epoch == alashi_rules::constants::EPOCH_90S { f.hard as u128 } else { 0 };
+    let wealth = |f: &Faction| f.cash as u128 + if alashi_rules::constants::has_90s_rules(epoch) { f.hard as u128 } else { 0 };
     let mut order: Vec<usize> = (0..factions.len()).collect();
     order.sort_by(|&a, &b| wealth(&factions[b]).cmp(&wealth(&factions[a]))
         .then_with(|| factions[a].wallet.cmp(&factions[b].wallet)));

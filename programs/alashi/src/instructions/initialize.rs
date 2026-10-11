@@ -32,9 +32,12 @@ pub fn handle_initialize(
         GameError::InvalidEntropyMode
     );
     require!(
-        epoch == EPOCH_CLASSIC || epoch == EPOCH_90S,
+        epoch == EPOCH_CLASSIC || epoch == EPOCH_90S || epoch == EPOCH_DONKEY_RISK,
         GameError::InvalidEpoch
     );
+    if epoch == EPOCH_DONKEY_RISK {
+        require!(entropy_mode == ENTROPY_SWITCHBOARD, GameError::VrfRequired);
+    }
     // Конституция: банк выше порога обязан играть с VRF-энтропией
     // (SPEC_VRF.md п.4; fallback на slot-hash для крупных банков запрещён).
     if entry_fee.saturating_mul(MAX_FACTIONS as u64) > MAINNET_VRF_THRESHOLD {

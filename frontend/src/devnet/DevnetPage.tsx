@@ -13,6 +13,8 @@ import { useScene } from '../store'
 import { consumeOwnerFragment, forgetOwnerFragment, readOwnerLocator, redeemOwnerFragment, rememberOwnerLocator, type OwnerLocator } from '../owner/pairing'
 import { validBase58, formatAmount, formatCash, type ChainEvent } from './client'
 import { useChainSnapshot } from './useChainSnapshot'
+import { DonkeyRiskPanel } from './donkey/DonkeyRiskPanel'
+import { donkeySnapshotInput, replayJournalPrefix, type PublicDonkeySnapshot } from './donkey/adapter'
 import { ChainConversationStream } from './ChainConversationStream'
 import { useChainConversations } from './useChainConversations'
 import { conversationView } from './conversationsClient'
@@ -74,6 +76,7 @@ function GameViewer({ pda, initialPlayer, ownerRecord, setup, detailsTab, onTabC
   const tradeTime = tradeClock.take === take ? tradeClock.time : 0
   const reportTradeTime = useCallback((time: number) => { setTradeClock({ take, time }) }, [take])
   const [replayRevision, setReplayRevision] = useState(0)
+  const [replaySnapshot, setReplaySnapshot] = useState<PublicDonkeySnapshot | null>(null)
   const [replayEvents, setReplayEvents] = useState<ChainEvent[]>([])
   const [now, setNow] = useState(Date.now())
   const heroElement = useRef<HTMLDivElement>(null)
@@ -82,7 +85,7 @@ function GameViewer({ pda, initialPlayer, ownerRecord, setup, detailsTab, onTabC
   const queue = useRef<ChainEvent[]>([]), liveCursor = useRef(newLiveCursor()), liveEvent = useRef<ChainEvent | null>(null), completedTake = useRef(-1)
   const observed = useMemo(() => faction && snapshot ? playerEvents(snapshot.events, faction) : [], [snapshot, faction])
   const action = current && faction ? visualAction(current, faction) : null
-  const reset = useCallback(() => { queue.current = []; liveEvent.current = null; setCurrent(null); setPosition(-1); setReplayEvents([]); setPlaying(false); setMode('live'); useScene.getState().say('') }, [])
+  const reset = useCallback(() => { queue.current = []; liveEvent.current = null; setCurrent(null); setPosition(-1); setReplayEvents([]); setReplaySnapshot(null); setPlaying(false); setMode('live'); useScene.getState().say('') }, [])
   const finish = useCallback(() => {
     if (completedTake.current === take || (mode === 'replay' && !playing)) return
     completedTake.current = take
@@ -131,7 +134,7 @@ function GameViewer({ pda, initialPlayer, ownerRecord, setup, detailsTab, onTabC
     return () => window.clearTimeout(timer)
   }, [current, action, mode, playing, finish])
   useEffect(() => { const timer = window.setInterval(() => setNow(Date.now()), 1000); return () => { window.clearInterval(timer); useScene.getState().say('') } }, [])
-  const replay = (index = 0, seek = false) => { setReplayEvents(seek && mode === 'replay' ? replayEvents : observed.slice()); queue.current = []; liveEvent.current = null; setCurrent(null); setMode('replay'); setPosition(index); setPlaying(true); setReplayRevision((n) => n + 1) }
+  const replay = (index = 0, seek = false) => { if (!seek || mode !== 'replay') setReplaySnapshot(snapshot); setReplayEvents(seek && mode === 'replay' ? replayEvents : observed.slice()); queue.current = []; liveEvent.current = null; setCurrent(null); setMode('replay'); setPosition(index); setPlaying(true); setReplayRevision((n) => n + 1) }
   useEffect(() => {
     if (initialWinnerReplay.current || selected || !snapshot?.settled || !snapshot.complete || !faction || !observed.length || defaultWinner(snapshot)?.pda !== faction.pda) return
     initialWinnerReplay.current = true
@@ -155,7 +158,9 @@ function GameViewer({ pda, initialPlayer, ownerRecord, setup, detailsTab, onTabC
   const latestFeed = mode === 'replay' ? replayEvents.slice(0, Math.max(0, position + 1)).slice(-4) : observed.slice(-4)
   const displayEvent = current ?? latestFeed.at(-1)
   const selectedEventIds = new Set(observed.map((e) => e.id))
-  const feedEvents = snapshot ? mode === 'replay' ? snapshot.events.slice(0, replayEvent ? snapshot.events.findIndex((e) => e.id === replayEvent.id) + 1 : 0) : snapshot.events : []
+  const receiptSnapshot = mode === 'replay' ? replaySnapshot : snapshot
+  const feedEvents = receiptSnapshot ? mode === 'replay' ? replayJournalPrefix(receiptSnapshot, replayEvents, position) : receiptSnapshot.events : []
+  const donkeyInput = receiptSnapshot && faction ? donkeySnapshotInput(receiptSnapshot, faction.pda, mode === 'replay' ? feedEvents : null) : null
   const replayPhaseEvent = feedEvents.filter((event) => event.type === 'phase_advanced').at(-1)
   const replayRound = replayEvent?.round ?? replayPhaseEvent?.round
   const replayPhase = replayEvent?.phase ?? replayPhaseEvent?.phase
@@ -216,6 +221,7 @@ function GameViewer({ pda, initialPlayer, ownerRecord, setup, detailsTab, onTabC
       <div className="devnet-current" role="status"><span>{mode === 'replay' ? 'Current replay action' : 'Last confirmed action'}</span><h2>{displayEvent && faction ? eventLabel(displayEvent, faction) : waiting ? 'Loading actions…' : faction ? 'No confirmed actions yet.' : 'Select a player above.'}</h2>
         {displayEvent && <details><summary>Transaction receipt</summary><p>Slot {displayEvent.slot}</p><a href={`https://explorer.solana.com/tx/${displayEvent.signature}?cluster=devnet`} target="_blank" rel="noreferrer">Confirmed transaction ↗</a></details>}
       </div>
+      {donkeyInput && <DonkeyRiskPanel input={donkeyInput} />}
       {snapshot && faction && faction.alive && !snapshot.settled && !['Finished', 'Aborted'].includes(snapshot.phase) && (faction.pda === initialPlayer && ownerRecord ? <OwnerEntry key={faction.pda} gamePda={pda} faction={faction} autoRecord={ownerRecord} /> : <details key={faction.pda} className="devnet-owner-access"><summary>Own this player?</summary><OwnerEntry gamePda={pda} faction={faction} autoRecord="" /></details>)}
       {error && <div className="devnet-error"><p role="alert">{error}</p><button onClick={retry}>Retry connection</button><p>No demo actions are substituted for missing chain data.</p></div>}
 

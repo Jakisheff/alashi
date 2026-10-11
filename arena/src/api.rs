@@ -1092,7 +1092,7 @@ fn state_json(game_id: u64, entry: &GameEntry) -> serde_json::Value {
         // П5 (ТРИЗ, 05.09): производные для расчётов агента — цена
         // СЛЕДУЮЩЕГО юнита и дедлайн окна ставок лицензии (r4 action)
         "price_next": eff_price(g.sold_this_round.saturating_add(1), g.active_price_shift, g.active_boom),
-        "bids_close_at": if g.epoch == alashi_rules::constants::EPOCH_90S
+        "bids_close_at": if alashi_rules::constants::has_90s_rules(g.epoch)
             && g.round == alashi_rules::constants::AUCTION_ROUND
             && g.phase == Phase::Action && !g.license_sold
         { serde_json::json!(g.phase_ends_at.saturating_add(entry.grace_s)) } else { serde_json::Value::Null },
@@ -1103,12 +1103,17 @@ fn state_json(game_id: u64, entry: &GameEntry) -> serde_json::Value {
         "laws_passed": g.laws_passed,
         "last_law_passed": g.last_law_passed,
         "vote_weight_mode": g.vote_weight_mode,
-        "epoch": if g.epoch == alashi_rules::constants::EPOCH_90S { "90s" } else { "classic" },
+        "epoch": match g.epoch {
+            alashi_rules::constants::EPOCH_CLASSIC => "classic",
+            alashi_rules::constants::EPOCH_90S => "90s",
+            alashi_rules::constants::EPOCH_DONKEY_RISK => "donkey_risk",
+            _ => "unknown",
+        },
         "amnesty_used": g.amnesty_used,
         // M8: решение президента скрыто до закрытия фазы, виден факт
         "customs_decided": g.customs_decided,
         // M9: аукцион публичен, доходность скрыта (инсайд через /act)
-        "license_auction": if g.epoch == alashi_rules::constants::EPOCH_90S {
+        "license_auction": if alashi_rules::constants::has_90s_rules(g.epoch) {
             let mut v = serde_json::Map::new();
             v.insert("round".into(), json_num(alashi_rules::constants::AUCTION_ROUND));
             v.insert("sold".into(), serde_json::json!(g.license_sold));

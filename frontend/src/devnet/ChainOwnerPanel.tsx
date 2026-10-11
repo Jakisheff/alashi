@@ -1,3 +1,4 @@
+import { inspectOwnerWish, OWNER_WISH_LIMIT } from '../owner/wishText'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { LiveApiError, friendlyError, type OwnerSession } from '../live/api/client'
 import { availableWallets, signOwnerChallenge, type Wallet } from '../live/api/wallet'
@@ -178,12 +179,15 @@ export function ChainOwnerPanel({ api = defaultApi, record, gamePda, faction }: 
     finally { if (ticket === generation.current) setBusy(false) }
   }
 
+  const wishText = pending?.text ?? draft.trim()
+  const wishValidation = inspectOwnerWish(wishText)
+
   async function submit() {
     if (submitting.current || access !== 'owner') return
     if (!session || session.wallet !== faction.wallet || session.expiresAt * 1000 <= Date.now()) { clearPrivate('Verify this player’s registered wallet again.'); return }
     const ticket = generation.current
     const wish = pending ?? { game_pda: gamePda, intent, client_wish_id: crypto.randomUUID(), text: draft.trim() }
-    if (wish.game_pda !== gamePda || !bound || !wish.text || new TextEncoder().encode(wish.text).length > 512 || Array.from(wish.text).some((c) => c.charCodeAt(0) < 32 || c.charCodeAt(0) === 127)) { setError('Choose an active bound player and enter up to 512 UTF-8 bytes on one line.'); return }
+    if (wish.game_pda !== gamePda || !bound || !inspectOwnerWish(wish.text).valid) { setError('Choose an active bound player and enter up to 140 characters on one line.'); return }
     submitting.current = true; journalRequest.current?.abort()
     setPending(wish); setSending(true); setError(''); setNotice('')
     const controller = new AbortController(); authRequest.current = controller
@@ -203,7 +207,7 @@ export function ChainOwnerPanel({ api = defaultApi, record, gamePda, faction }: 
   return <section className="owner-panel" aria-label="Private owner wishes" data-private="true">
     <div className="owner-heading"><span className="live-eyebrow">Only you and your agent</span><span className="owner-lock">Private</span></div>
     <h2>Guide the next move.</h2>
-    <p className="live-description">Up to three private messages for this agent in this on-chain game. The selected action intent controls the deterministic agent's next applicable choice. Free text stays in your private journal and does not change its action. Admission alone does not create a transaction.</p>
+    <p className="live-description">Up to three private instructions for this agent in this on-chain game, up to 140 characters each. The selected action intent controls the deterministic agent's next applicable choice. Free text stays in your private journal and does not change its action. Admission alone does not create a transaction.</p>
     {access === 'restoring' ? <p role="status">Checking this browser for a private session…</p> : access === 'guest' ? <div className="owner-login">
       <p>To send private wishes: connect the wallet registered to this agent, then approve one message. It does not move funds or create a transaction.</p>
       {wallets.length > 0 ? <label>Wallet<select aria-label="Owner wallet" value={walletChoice} disabled={busy || logoutRetry} onChange={(e) => setWalletChoice(Number(e.target.value))}>{wallets.map((w, i) => <option key={w.name} value={i}>{w.name}</option>)}</select></label> : <p>No compatible wallet was found. You can still watch the public stream. On mobile, <a href={`https://solflare.com/ul/v1/browse/${encodeURIComponent(window.location.href)}?ref=${encodeURIComponent(window.location.origin)}`}>open this page in Solflare</a>, or copy this public page URL into a supported wallet browser. <button className="owner-text-button" onClick={() => { setWallets(availableWallets()); setWalletChoice(0) }}>Check again</button></p>}
@@ -219,8 +223,9 @@ export function ChainOwnerPanel({ api = defaultApi, record, gamePda, faction }: 
       {journalReady && !journalOnline && <p className="owner-warning" role="status">Private journal reconnecting. Displayed statuses may be out of date.</p>}
       {bound && <form onSubmit={(e) => { e.preventDefault(); void submit() }}>
         <label htmlFor="private-wish">Your private wish</label>
-        <input id="private-wish" value={pending?.text ?? draft} disabled={sending || !!pending} autoComplete="off" spellCheck={false} maxLength={512} placeholder="What should your agent consider?" onChange={(e) => setDraft(e.target.value)} />
-        <button className="owner-primary" disabled={sending || !bound || !journalReady || (!pending && (!journalOnline || allowance === null || allowance === 0 || !draft.trim()))}>{sending ? 'Sending privately…' : pending ? 'Retry this same wish' : 'Send private wish'}</button>
+        <input id="private-wish" value={pending?.text ?? draft} disabled={sending || !!pending} autoComplete="off" spellCheck={false} aria-describedby="private-wish-limit" aria-invalid={!!wishText && !wishValidation.valid} placeholder="What should your agent consider?" onChange={(e) => setDraft(e.target.value)} />
+        <p id="private-wish-limit" className={wishValidation.error && wishText ? 'owner-warning' : 'live-description'} aria-live="polite">{wishValidation.count} / {OWNER_WISH_LIMIT} characters{wishText && wishValidation.error ? ` · ${wishValidation.error}` : ''}</p>
+        <button className="owner-primary" disabled={sending || !wishValidation.valid || !bound || !journalReady || (!pending && (!journalOnline || allowance === null || allowance === 0 || !draft.trim()))}>{sending ? 'Sending privately…' : pending ? 'Retry this same wish' : 'Send private wish'}</button>
       </form>}
       {pending && !sending && <p className="owner-warning">Delivery is uncertain. Retry keeps the same submission ID, so it cannot spend another wish. <button className="owner-text-button" onClick={() => { setPending(null); setDraft(''); setRefresh((n) => n + 1); setNotice('Check the journal before sending a new wish: the previous one may have been received.') }}>Discard local draft</button></p>}
       <div className="owner-journal" aria-label="Your private wish history">

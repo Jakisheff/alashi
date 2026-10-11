@@ -1,6 +1,7 @@
 mod agent_cli;
 mod barter;
 mod chain_wish_client;
+mod donkey_risk;
 mod llm;
 mod runner_auth;
 mod session_cli;
@@ -13,7 +14,10 @@ use {
     alashi::{accounts, constants, id, instruction, state},
     anchor_lang::{
         prelude::Pubkey,
-        solana_program::{instruction::Instruction, system_program},
+        solana_program::{
+            instruction::{AccountMeta, Instruction},
+            system_program,
+        },
         AccountDeserialize, InstructionData, ToAccountMetas,
     },
     solana_commitment_config::CommitmentConfig,
@@ -22,6 +26,9 @@ use {
     solana_rpc_client::rpc_client::RpcClient,
     solana_transaction::versioned::VersionedTransaction,
     std::{
+        fs::{self, OpenOptions},
+        io::Write,
+        os::unix::fs::{OpenOptionsExt, PermissionsExt},
         path::{Path, PathBuf},
         str::FromStr,
         thread::sleep,
@@ -34,6 +41,190 @@ const PHASE_DURATION: i64 = 15;
 const BARTER_DEMO_GOODS: u16 = 1;
 const BARTER_DEMO_PRICE: u64 = 3_000_000;
 const BARTER_REPORT_ATTEMPTS: usize = 18;
+// Epoch 2 must never fall through to the epoch 0/1 donkey buy.
+const DONKEY_RISK_FEE: u64 = constants::DONKEY_RISK_FEE;
+const DONKEY_RISK_GOODS: u16 = constants::DONKEY_RISK_REWARD;
+
+const SWITCHBOARD_DEVNET_PROGRAM: &str = "Aio4gaXjXzJNVLtzwtNVmSqGKpANtXhybbkhtAC94ji2";
+
+fn parse_donkey_randomness(args: &[String]) -> Result<Vec<Pubkey>, String> {
+    let raw = flag_value(args, "--donkey-randomness").ok_or_else(|| {
+        "--epoch2-donkey-risk requires --donkey-randomness with six public keys".to_string()
+    })?;
+    let keys: Result<Vec<_>, _> = raw.split(',').map(Pubkey::from_str).collect();
+    let keys =
+        keys.map_err(|_| "--donkey-randomness must contain six valid public keys".to_string())?;
+    if keys.len() != constants::ROUNDS as usize
+        || keys.iter().any(|key| *key == Pubkey::default())
+        || keys
+            .iter()
+            .enumerate()
+            .any(|(i, key)| keys[..i].contains(key))
+    {
+        return Err("--donkey-randomness requires six distinct non-default public keys".into());
+    }
+    Ok(keys)
+}
+
+fn validate_donkey_randomness(rpc: &RpcClient, keys: &[Pubkey]) -> Result<(), String> {
+    let expected_owner =
+        Pubkey::from_str(SWITCHBOARD_DEVNET_PROGRAM).expect("fixed Switchboard devnet id");
+    for key in keys {
+        let account = rpc.get_account(key).map_err(|_| {
+            "configured Switchboard source is unavailable before game creation".to_string()
+        })?;
+        if account.owner != expected_owner {
+            return Err("configured source is not a Switchboard devnet randomness account".into());
+        }
+    }
+    Ok(())
+}
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+enum DonkeyRiskReason {
+    Pending,
+    LegacyEpoch,
+    EntropyUnavailable,
+    OracleConfigUnavailable,
+    CrankUnavailable,
+    WrongPhase,
+    InactiveFaction,
+    ActionAlreadyUsed,
+    NoMarketRemaining,
+    InsufficientCash,
+    GoodsOverflow,
+}
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+enum DonkeyRiskEligibility {
+    Eligible,
+    Ineligible(DonkeyRiskReason),
+}
+
+struct DonkeyRiskInput {
+    epoch: u8,
+    entropy_mode: u8,
+    phase: state::Phase,
+    round: u8,
+    alive: bool,
+    acted: bool,
+    cash: u64,
+    goods: u16,
+    oracle_config_ready: bool,
+    crank_ready: bool,
+    pending: bool,
+}
+
+fn donkey_risk_eligibility(input: DonkeyRiskInput) -> DonkeyRiskEligibility {
+    if input.pending {
+        return DonkeyRiskEligibility::Ineligible(DonkeyRiskReason::Pending);
+    }
+    if input.epoch != constants::EPOCH_DONKEY_RISK {
+        return DonkeyRiskEligibility::Ineligible(DonkeyRiskReason::LegacyEpoch);
+    }
+    if input.entropy_mode != constants::ENTROPY_SWITCHBOARD {
+        return DonkeyRiskEligibility::Ineligible(DonkeyRiskReason::EntropyUnavailable);
+    }
+    if !input.oracle_config_ready {
+        return DonkeyRiskEligibility::Ineligible(DonkeyRiskReason::OracleConfigUnavailable);
+    }
+    if !input.crank_ready {
+        return DonkeyRiskEligibility::Ineligible(DonkeyRiskReason::CrankUnavailable);
+    }
+    if input.phase != state::Phase::Action {
+        return DonkeyRiskEligibility::Ineligible(DonkeyRiskReason::WrongPhase);
+    }
+    if !input.alive {
+        return DonkeyRiskEligibility::Ineligible(DonkeyRiskReason::InactiveFaction);
+    }
+    if input.acted {
+        return DonkeyRiskEligibility::Ineligible(DonkeyRiskReason::ActionAlreadyUsed);
+    }
+    if input.round >= constants::ROUNDS {
+        return DonkeyRiskEligibility::Ineligible(DonkeyRiskReason::NoMarketRemaining);
+    }
+    if input.cash < DONKEY_RISK_FEE {
+        return DonkeyRiskEligibility::Ineligible(DonkeyRiskReason::InsufficientCash);
+    }
+    if input.goods > u16::MAX - DONKEY_RISK_GOODS {
+        return DonkeyRiskEligibility::Ineligible(DonkeyRiskReason::GoodsOverflow);
+    }
+    DonkeyRiskEligibility::Eligible
+}
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+struct DonkeyRiskSource {
+    oracle: Pubkey,
+    randomness: Pubkey,
+}
+
+fn donkey_oracle_pda(game: &Pubkey) -> Pubkey {
+    Pubkey::find_program_address(&[constants::DONKEY_ORACLE_SEED, game.as_ref()], &id()).0
+}
+
+/// Reads the immutable, game-bound portion of the epoch-2 source. The program
+/// still validates Switchboard data immediately before debiting the fee; the
+/// runner never treats an operator flag as proof of a future reveal.
+fn donkey_risk_source(
+    rpc: &RpcClient,
+    game: &Pubkey,
+    round: u8,
+) -> Result<DonkeyRiskSource, DonkeyRiskReason> {
+    if round == 0 || round > constants::ROUNDS {
+        return Err(DonkeyRiskReason::NoMarketRemaining);
+    }
+    let oracle = donkey_oracle_pda(game);
+    let account = rpc
+        .get_account(&oracle)
+        .map_err(|_| DonkeyRiskReason::OracleConfigUnavailable)?;
+    if account.owner != id() {
+        return Err(DonkeyRiskReason::OracleConfigUnavailable);
+    }
+    let mut data: &[u8] = &account.data;
+    let config = alashi::DonkeyOracleConfig::try_deserialize(&mut data)
+        .map_err(|_| DonkeyRiskReason::OracleConfigUnavailable)?;
+    let randomness = config.accounts[(round - 1) as usize];
+    if config.game != *game
+        || config.queue == Pubkey::default()
+        || config.authority == Pubkey::default()
+        || randomness == Pubkey::default()
+    {
+        return Err(DonkeyRiskReason::OracleConfigUnavailable);
+    }
+    // This is a cheap source-owner check only. seed/reveal freshness, queue,
+    // and authority are checked atomically by AttemptDonkey before mutation.
+    let randomness_account = rpc
+        .get_account(&randomness)
+        .map_err(|_| DonkeyRiskReason::OracleConfigUnavailable)?;
+    let devnet_owner = Pubkey::from_str("Aio4gaXjXzJNVLtzwtNVmSqGKpANtXhybbkhtAC94ji2")
+        .expect("fixed Switchboard devnet id");
+    if randomness_account.owner != devnet_owner {
+        return Err(DonkeyRiskReason::OracleConfigUnavailable);
+    }
+    Ok(DonkeyRiskSource { oracle, randomness })
+}
+
+fn unavailable_epoch2_donkey(
+    current: &state::Game,
+    faction: &state::Faction,
+    pending: bool,
+) -> DonkeyRiskEligibility {
+    // The frozen account/config read has not landed yet. Until it does, an
+    // epoch-2 risk attempt is fail-closed and the caller chooses Produce.
+    donkey_risk_eligibility(DonkeyRiskInput {
+        epoch: current.epoch,
+        entropy_mode: current.entropy_mode,
+        phase: current.phase,
+        round: current.round,
+        alive: faction.alive,
+        acted: faction.acted_stamp == current.stamp(),
+        cash: faction.cash,
+        goods: faction.goods,
+        oracle_config_ready: false,
+        crank_ready: false,
+        pending,
+    })
+}
 
 fn demo_mode() -> bool {
     std::env::var("ALASHI_DEMO").is_ok()
@@ -245,6 +436,86 @@ struct SelfHost {
     opponent_key_path: String,
 }
 
+#[derive(Clone, Debug, Eq, PartialEq)]
+struct DonkeyPending {
+    game: Pubkey,
+    faction: Pubkey,
+    round: u8,
+    signature: String,
+    slot: Option<u64>,
+}
+
+fn donkey_pending_path(profile: &Path) -> PathBuf {
+    profile.with_extension("donkey-pending.json")
+}
+
+fn load_donkey_pending(
+    path: &Path,
+    game: Pubkey,
+    faction: Pubkey,
+) -> Result<Option<DonkeyPending>, String> {
+    let Ok(metadata) = fs::metadata(path) else {
+        return Ok(None);
+    };
+    if metadata.permissions().mode() & 0o077 != 0 {
+        return Err("donkey pending state must be mode 0600".into());
+    }
+    let value: serde_json::Value =
+        serde_json::from_slice(&fs::read(path).map_err(|_| "cannot read donkey pending state")?)
+            .map_err(|_| "invalid donkey pending state")?;
+    let parsed = DonkeyPending {
+        game: value["game"]
+            .as_str()
+            .and_then(|v| Pubkey::from_str(v).ok())
+            .ok_or("invalid pending game")?,
+        faction: value["faction"]
+            .as_str()
+            .and_then(|v| Pubkey::from_str(v).ok())
+            .ok_or("invalid pending faction")?,
+        round: value["round"]
+            .as_u64()
+            .and_then(|v| u8::try_from(v).ok())
+            .ok_or("invalid pending round")?,
+        signature: value["signature"]
+            .as_str()
+            .filter(|v| !v.is_empty() && v.len() <= 128)
+            .ok_or("invalid pending signature")?
+            .to_owned(),
+        slot: value["slot"].as_u64(),
+    };
+    Ok((parsed.game == game && parsed.faction == faction).then_some(parsed))
+}
+
+fn save_donkey_pending(path: &Path, pending: &DonkeyPending) -> Result<(), String> {
+    let tmp = path.with_extension("donkey-pending.tmp");
+    let bytes = serde_json::to_vec(&serde_json::json!({
+        "game": pending.game.to_string(), "faction": pending.faction.to_string(),
+        "round": pending.round, "signature": pending.signature, "slot": pending.slot,
+    }))
+    .map_err(|_| "cannot encode donkey pending state")?;
+    let mut file = OpenOptions::new()
+        .write(true)
+        .create_new(true)
+        .mode(0o600)
+        .open(&tmp)
+        .map_err(|_| "cannot create donkey pending state")?;
+    file.write_all(&bytes)
+        .and_then(|_| file.sync_all())
+        .map_err(|_| "cannot persist donkey pending state")?;
+    fs::rename(&tmp, path).map_err(|_| "cannot replace donkey pending state")?;
+    fs::set_permissions(path, fs::Permissions::from_mode(0o600))
+        .map_err(|_| "cannot protect donkey pending state")?;
+    Ok(())
+}
+
+fn clear_donkey_pending(path: &Path) -> Result<(), String> {
+    match fs::remove_file(path) {
+        Ok(()) => Ok(()),
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => Ok(()),
+        Err(_) => Err("cannot remove donkey pending state".into()),
+    }
+}
+
 struct Bot {
     kp: Keypair,
     faction: Pubkey,
@@ -253,6 +524,8 @@ struct Bot {
     voted: bool,
     goods: u16,
     bribed: bool,
+    donkey_pending: Option<DonkeyPending>,
+    donkey_store: Option<PathBuf>,
     wish_profile: Option<chain_wish_client::Profile>,
     wish: Option<chain_wish_client::ChainWishClient>,
 }
@@ -277,6 +550,7 @@ fn ix_initialize(
     game: Pubkey,
     game_id: u64,
     phase_duration: i64,
+    entropy_mode: u8,
     epoch: u8,
 ) -> Instruction {
     Instruction::new_with_bytes(
@@ -285,7 +559,7 @@ fn ix_initialize(
             game_id,
             entry_fee: ENTRY_FEE,
             phase_duration,
-            entropy_mode: 0,
+            entropy_mode,
             epoch,
         }
         .data(),
@@ -310,6 +584,73 @@ fn ix_join(name: &str, player: Pubkey, game: Pubkey, faction: Pubkey) -> Instruc
             game,
             faction,
             system_program: anchor_lang::solana_program::system_program::ID,
+        }
+        .to_account_metas(None),
+    )
+}
+
+fn ix_join_epoch2(
+    name: &str,
+    player: Pubkey,
+    game: Pubkey,
+    faction: Pubkey,
+    oracle: Pubkey,
+) -> Instruction {
+    let mut metas = accounts::Join {
+        player,
+        game,
+        faction,
+        system_program: anchor_lang::solana_program::system_program::ID,
+    }
+    .to_account_metas(None);
+    metas.push(AccountMeta::new_readonly(oracle, false));
+    Instruction::new_with_bytes(
+        id(),
+        &instruction::Join {
+            name: name.to_string(),
+        }
+        .data(),
+        metas,
+    )
+}
+
+fn ix_configure_donkey_oracles(
+    admin: Pubkey,
+    game: Pubkey,
+    oracle: Pubkey,
+    randomness: &[Pubkey],
+) -> Instruction {
+    let mut metas = accounts::ConfigureDonkeyOracles {
+        admin,
+        game,
+        oracle,
+        system_program: system_program::ID,
+    }
+    .to_account_metas(None);
+    metas.extend(
+        randomness
+            .iter()
+            .map(|key| AccountMeta::new_readonly(*key, false)),
+    );
+    Instruction::new_with_bytes(id(), &instruction::ConfigureDonkeyOracles {}.data(), metas)
+}
+
+fn ix_attempt_donkey(
+    player: Pubkey,
+    game: Pubkey,
+    faction: Pubkey,
+    oracle: Pubkey,
+    randomness: Pubkey,
+) -> Instruction {
+    Instruction::new_with_bytes(
+        id(),
+        &instruction::AttemptDonkey {}.data(),
+        accounts::AttemptDonkey {
+            player,
+            game,
+            faction,
+            oracle,
+            randomness,
         }
         .to_account_metas(None),
     )
@@ -392,6 +733,58 @@ fn ix_advance(crank: Pubkey, game: Pubkey, factions: &[Pubkey]) -> Instruction {
         ));
     }
     Instruction::new_with_bytes(id(), &instruction::Advance {}.data(), metas)
+}
+
+fn ix_advance_epoch2(
+    crank: Pubkey,
+    game: Pubkey,
+    factions: &[Pubkey],
+    oracle: Pubkey,
+    randomness: Option<Pubkey>,
+) -> Instruction {
+    let mut metas = accounts::Advance {
+        crank,
+        game,
+        hashes: solana_sysvar::slot_hashes::ID,
+    }
+    .to_account_metas(None);
+    metas.extend(factions.iter().map(|f| AccountMeta::new(*f, false)));
+    metas.push(AccountMeta::new(oracle, false));
+    if let Some(randomness) = randomness {
+        metas.push(AccountMeta::new_readonly(randomness, false));
+    }
+    Instruction::new_with_bytes(id(), &instruction::Advance {}.data(), metas)
+}
+
+fn advance_instruction(
+    current: &state::Game,
+    now: i64,
+    crank: Pubkey,
+    game: Pubkey,
+    factions: &[Pubkey],
+) -> Result<Instruction, DonkeyRiskReason> {
+    if current.epoch != constants::EPOCH_DONKEY_RISK {
+        return Ok(ix_advance(crank, game, factions));
+    }
+    // The operator tool owns Action→Law: it atomically commits the exact
+    // configured Switchboard source and advances the game. A standalone bot
+    // transaction is never a retry substitute for that atomic boundary. Only
+    // the canonical post-grace technical abort may omit the randomness account.
+    if current.phase == state::Phase::Action
+        && now
+            < current
+                .phase_ends_at
+                .saturating_add(constants::DONKEY_COMMIT_GRACE_SECONDS)
+    {
+        return Err(DonkeyRiskReason::CrankUnavailable);
+    }
+    Ok(ix_advance_epoch2(
+        crank,
+        game,
+        factions,
+        donkey_oracle_pda(&game),
+        None,
+    ))
 }
 
 fn ix_buy(units: u16, player: Pubkey, game: Pubkey, faction: Pubkey) -> Instruction {
@@ -592,6 +985,188 @@ fn register_agent(wallet: &str, model: &str, prompt: &str) {
     }));
     let _ = std::fs::create_dir_all("../data");
     let _ = std::fs::write(path, serde_json::to_vec_pretty(&list).unwrap());
+}
+
+enum DonkeyRun {
+    Attempted,
+    Block,
+    Pass(DonkeyRiskReason),
+}
+
+/// Attempts only after the frozen source reads as configured and the external
+/// operator was explicitly required.  It persists the local signature before
+/// submission; ambiguous or malformed receipts block a fallback action.
+fn run_epoch2_donkey(
+    rpc: &RpcClient,
+    bot: &mut Bot,
+    game: Pubkey,
+    current: &state::Game,
+    external_crank: bool,
+) -> DonkeyRun {
+    let source = donkey_risk_source(rpc, &game, current.round);
+    let faction = match fetch_faction(rpc, &bot.faction) {
+        Some(value) => value,
+        None => return DonkeyRun::Pass(DonkeyRiskReason::InactiveFaction),
+    };
+    let eligibility = donkey_risk_eligibility(DonkeyRiskInput {
+        epoch: current.epoch,
+        entropy_mode: current.entropy_mode,
+        phase: current.phase,
+        round: current.round,
+        alive: faction.alive,
+        acted: faction.acted_stamp == current.stamp(),
+        cash: faction.cash,
+        goods: faction.goods,
+        oracle_config_ready: source.is_ok(),
+        crank_ready: external_crank,
+        pending: bot.donkey_pending.is_some(),
+    });
+    if let DonkeyRiskEligibility::Ineligible(reason) = eligibility {
+        return DonkeyRun::Pass(reason);
+    }
+    let source = source.expect("eligibility checked source");
+    let tx = match prepare_ix(
+        rpc,
+        &bot.kp,
+        ix_attempt_donkey(
+            bot.kp.pubkey(),
+            game,
+            bot.faction,
+            source.oracle,
+            source.randomness,
+        ),
+    ) {
+        Ok(tx) => tx,
+        Err(_) => return DonkeyRun::Block,
+    };
+    let pending = DonkeyPending {
+        game,
+        faction: bot.faction,
+        round: current.round,
+        signature: tx.signatures[0].to_string(),
+        slot: None,
+    };
+    let Some(path) = bot.donkey_store.as_ref() else {
+        return DonkeyRun::Block;
+    };
+    if save_donkey_pending(path, &pending).is_err() {
+        return DonkeyRun::Block;
+    }
+    bot.donkey_pending = Some(pending);
+    match submit_confirmed(rpc, &tx) {
+        Ok(receipt) => {
+            if let Some(proof) = donkey_risk::verified_attempt(
+                &receipt,
+                game,
+                bot.faction,
+                current.round,
+                DONKEY_RISK_FEE,
+            ) {
+                if let Some(pending) = bot.donkey_pending.as_mut() {
+                    pending.slot = Some(proof.slot);
+                    let _ = save_donkey_pending(path, pending);
+                }
+                capture_events(&receipt);
+                return DonkeyRun::Attempted;
+            }
+            DonkeyRun::Block
+        }
+        Err(error) if error["status"] == "rejected" || error["status"] == "failed" => {
+            let _ = clear_donkey_pending(path);
+            bot.donkey_pending = None;
+            DonkeyRun::Pass(DonkeyRiskReason::OracleConfigUnavailable)
+        }
+        Err(_) => DonkeyRun::Block,
+    }
+}
+
+/// Normalizes only a successful `getTransaction` result for event proof.
+/// Program logs are emitted before a transaction can still roll back, so a
+/// non-null `meta.err` must never clear a durable pending donkey receipt.
+fn confirmed_transaction_receipt(
+    signature: &str,
+    transaction: &serde_json::Value,
+) -> Option<serde_json::Value> {
+    let slot = transaction.get("slot")?.as_u64()?;
+    let meta = transaction.get("meta")?.as_object()?;
+    if !meta.get("err")?.is_null() {
+        return None;
+    }
+    let logs = meta.get("logMessages")?.as_array()?;
+    if !logs.iter().all(serde_json::Value::is_string) {
+        return None;
+    }
+    Some(serde_json::json!({
+        "status": "confirmed",
+        "signature": signature,
+        "slot": slot,
+        "log_messages": logs,
+    }))
+}
+
+fn find_donkey_resolution(
+    rpc: &RpcClient,
+    pending: &DonkeyPending,
+) -> Result<Option<donkey_risk::Resolution>, ()> {
+    use solana_rpc_client_api::request::RpcRequest;
+    let signatures = rpc
+        .send::<serde_json::Value>(
+            RpcRequest::GetSignaturesForAddress,
+            serde_json::json!([pending.game.to_string(), {"limit": 20, "commitment": "confirmed"}]),
+        )
+        .map_err(|_| ())?;
+    for signature in signatures
+        .as_array()
+        .ok_or(())?
+        .iter()
+        .filter_map(|row| row["signature"].as_str())
+    {
+        let receipt = rpc.send::<serde_json::Value>(
+            RpcRequest::GetTransaction,
+            serde_json::json!([signature, {"encoding":"json", "commitment":"confirmed", "maxSupportedTransactionVersion":0}]),
+        ).map_err(|_| ())?;
+        let Some(receipt) = confirmed_transaction_receipt(signature, &receipt) else {
+            // Keep the durable receipt pending when RPC data is malformed or
+            // describes a rolled-back transaction. A later canonical receipt
+            // may still prove the exact resolution.
+            continue;
+        };
+        if let Some(resolution) = donkey_risk::verified_resolution(
+            &receipt,
+            pending.game,
+            pending.faction,
+            pending.round,
+            DONKEY_RISK_FEE,
+        ) {
+            return Ok(Some(resolution));
+        }
+    }
+    Ok(None)
+}
+
+fn reconcile_donkey_pending(rpc: &RpcClient, bot: &mut Bot) {
+    let Some(pending) = bot.donkey_pending.clone() else {
+        return;
+    };
+    match find_donkey_resolution(rpc, &pending) {
+        Ok(Some(resolution)) => {
+            let label = match resolution {
+                donkey_risk::Resolution::Win => "verified win",
+                donkey_risk::Resolution::Empty => "verified empty draw",
+                donkey_risk::Resolution::Abort => "technical oracle abort",
+            };
+            println!(
+                "[donkey r{}] {label}; clearing pending receipt",
+                pending.round
+            );
+            if let Some(path) = bot.donkey_store.as_ref() {
+                if clear_donkey_pending(path).is_ok() {
+                    bot.donkey_pending = None;
+                }
+            }
+        }
+        Ok(None) | Err(()) => {}
+    }
 }
 
 fn faction_cash(rpc: &RpcClient, faction: &Pubkey) -> u64 {
@@ -1487,12 +2062,16 @@ fn host_timing(args: &[String]) -> Result<(i64, i64), String> {
 #[cfg(test)]
 mod runner_mode_tests {
     use super::{
-        barter_demo_allowed, epoch_for_barter_demo, ix_barter_accept, ix_barter_propose,
-        ix_initialize, may_auto_airdrop, may_join,
+        advance_instruction, barter_demo_allowed, confirmed_transaction_receipt,
+        donkey_risk_eligibility, epoch_for_barter_demo, ix_attempt_donkey, ix_barter_accept,
+        ix_barter_propose, ix_configure_donkey_oracles, ix_donkey, ix_initialize, ix_join_epoch2,
+        may_auto_airdrop, may_join, DonkeyRiskEligibility, DonkeyRiskInput, DonkeyRiskReason,
+        DONKEY_RISK_FEE, DONKEY_RISK_GOODS,
     };
-    use alashi::{constants, instruction};
-    use anchor_lang::prelude::Pubkey;
-    use anchor_lang::AnchorDeserialize;
+    use alashi::{constants, events::DonkeyResolved, id, instruction, state};
+    use anchor_lang::{prelude::Pubkey, AnchorDeserialize, Event};
+    use serde_json::json;
+    use std::os::unix::fs::PermissionsExt;
     #[test]
     fn resume_never_joins_a_missing_faction() {
         assert!(!may_join(false, true));
@@ -1522,7 +2101,14 @@ mod runner_mode_tests {
         let game = Pubkey::new_unique();
         let faction = Pubkey::new_unique();
         let seller = Pubkey::new_unique();
-        let init = ix_initialize(admin, game, 9, 15, constants::EPOCH_90S);
+        let init = ix_initialize(
+            admin,
+            game,
+            9,
+            15,
+            constants::ENTROPY_SLOTHASH,
+            constants::EPOCH_90S,
+        );
         let decoded = instruction::Initialize::try_from_slice(&init.data[8..]).unwrap();
         assert_eq!(decoded.epoch, constants::EPOCH_90S);
 
@@ -1534,6 +2120,275 @@ mod runner_mode_tests {
         let decoded = instruction::BarterAccept::try_from_slice(&accept.data[8..]).unwrap();
         assert_eq!(decoded.offer_id, 4);
         assert_eq!(accept.accounts[3].pubkey, seller);
+    }
+
+    fn risk_input() -> DonkeyRiskInput {
+        DonkeyRiskInput {
+            epoch: constants::EPOCH_DONKEY_RISK,
+            entropy_mode: constants::ENTROPY_SWITCHBOARD,
+            phase: state::Phase::Action,
+            round: 1,
+            alive: true,
+            acted: false,
+            cash: DONKEY_RISK_FEE,
+            goods: u16::MAX - DONKEY_RISK_GOODS,
+            oracle_config_ready: true,
+            crank_ready: true,
+            pending: false,
+        }
+    }
+
+    #[test]
+    fn epoch_two_donkey_risk_accepts_only_the_safe_exact_boundary() {
+        assert_eq!(
+            donkey_risk_eligibility(risk_input()),
+            DonkeyRiskEligibility::Eligible
+        );
+    }
+
+    #[test]
+    fn epoch_two_donkey_risk_rejects_unfunded_or_unusable_attempts() {
+        let mut input = risk_input();
+        input.cash = DONKEY_RISK_FEE - 1;
+        assert_eq!(
+            donkey_risk_eligibility(input),
+            DonkeyRiskEligibility::Ineligible(DonkeyRiskReason::InsufficientCash)
+        );
+
+        let mut input = risk_input();
+        input.goods = u16::MAX - DONKEY_RISK_GOODS + 1;
+        assert_eq!(
+            donkey_risk_eligibility(input),
+            DonkeyRiskEligibility::Ineligible(DonkeyRiskReason::GoodsOverflow)
+        );
+
+        let mut input = risk_input();
+        input.round = constants::ROUNDS;
+        assert_eq!(
+            donkey_risk_eligibility(input),
+            DonkeyRiskEligibility::Ineligible(DonkeyRiskReason::NoMarketRemaining)
+        );
+
+        let mut input = risk_input();
+        input.phase = state::Phase::Market;
+        assert_eq!(
+            donkey_risk_eligibility(input),
+            DonkeyRiskEligibility::Ineligible(DonkeyRiskReason::WrongPhase)
+        );
+    }
+
+    #[test]
+    fn epoch_two_donkey_risk_fails_closed_for_legacy_entropy_or_pending() {
+        let mut input = risk_input();
+        input.epoch = constants::EPOCH_CLASSIC;
+        assert_eq!(
+            donkey_risk_eligibility(input),
+            DonkeyRiskEligibility::Ineligible(DonkeyRiskReason::LegacyEpoch)
+        );
+
+        let mut input = risk_input();
+        input.entropy_mode = constants::ENTROPY_SLOTHASH;
+        assert_eq!(
+            donkey_risk_eligibility(input),
+            DonkeyRiskEligibility::Ineligible(DonkeyRiskReason::EntropyUnavailable)
+        );
+
+        let mut input = risk_input();
+        input.oracle_config_ready = false;
+        assert_eq!(
+            donkey_risk_eligibility(input),
+            DonkeyRiskEligibility::Ineligible(DonkeyRiskReason::OracleConfigUnavailable)
+        );
+
+        let mut input = risk_input();
+        input.crank_ready = false;
+        assert_eq!(
+            donkey_risk_eligibility(input),
+            DonkeyRiskEligibility::Ineligible(DonkeyRiskReason::CrankUnavailable)
+        );
+
+        let mut input = risk_input();
+        input.pending = true;
+        assert_eq!(
+            donkey_risk_eligibility(input),
+            DonkeyRiskEligibility::Ineligible(DonkeyRiskReason::Pending)
+        );
+
+        let mut input = risk_input();
+        input.alive = false;
+        assert_eq!(
+            donkey_risk_eligibility(input),
+            DonkeyRiskEligibility::Ineligible(DonkeyRiskReason::InactiveFaction)
+        );
+
+        let mut input = risk_input();
+        input.acted = true;
+        assert_eq!(
+            donkey_risk_eligibility(input),
+            DonkeyRiskEligibility::Ineligible(DonkeyRiskReason::ActionAlreadyUsed)
+        );
+    }
+
+    #[test]
+    fn epoch_two_action_to_law_is_operator_owned_not_runner_advanced() {
+        let mut game = state::Game::default();
+        game.epoch = constants::EPOCH_DONKEY_RISK;
+        game.entropy_mode = constants::ENTROPY_SWITCHBOARD;
+        game.phase = state::Phase::Action;
+        game.round = 1;
+        game.phase_ends_at = 100;
+        assert_eq!(
+            advance_instruction(&game, 129, Pubkey::new_unique(), Pubkey::new_unique(), &[]),
+            Err(DonkeyRiskReason::CrankUnavailable)
+        );
+        let abort =
+            advance_instruction(&game, 130, Pubkey::new_unique(), Pubkey::new_unique(), &[])
+                .unwrap();
+        assert_eq!(abort.accounts.len(), 4);
+        assert!(abort.accounts[3].is_writable);
+    }
+
+    #[test]
+    fn epoch_two_builders_keep_oracle_accounts_in_canonical_order() {
+        let admin = Pubkey::new_unique();
+        let game = Pubkey::new_unique();
+        let faction = Pubkey::new_unique();
+        let oracle = super::donkey_oracle_pda(&game);
+        let sources = (0..constants::ROUNDS)
+            .map(|_| Pubkey::new_unique())
+            .collect::<Vec<_>>();
+        let config = ix_configure_donkey_oracles(admin, game, oracle, &sources);
+        instruction::ConfigureDonkeyOracles::try_from_slice(&config.data[8..]).unwrap();
+        assert_eq!(config.accounts[2].pubkey, oracle);
+        assert_eq!(config.accounts[4].pubkey, sources[0]);
+        assert_eq!(config.accounts.len(), 4 + constants::ROUNDS as usize);
+
+        let join = ix_join_epoch2("A", admin, game, faction, oracle);
+        assert_eq!(join.accounts.last().unwrap().pubkey, oracle);
+        assert!(!join.accounts.last().unwrap().is_writable);
+
+        let attempt = ix_attempt_donkey(admin, game, faction, oracle, sources[0]);
+        instruction::AttemptDonkey::try_from_slice(&attempt.data[8..]).unwrap();
+        assert_eq!(
+            attempt
+                .accounts
+                .iter()
+                .map(|meta| meta.pubkey)
+                .collect::<Vec<_>>(),
+            vec![admin, game, faction, oracle, sources[0]]
+        );
+        assert!(attempt.accounts[2].is_writable && attempt.accounts[3].is_writable);
+        assert!(!attempt.accounts[4].is_writable);
+    }
+
+    #[test]
+    fn donkey_pending_is_private_bound_and_blocks_retry() {
+        let game = Pubkey::new_unique();
+        let faction = Pubkey::new_unique();
+        let path =
+            std::env::temp_dir().join(format!("alashi-donkey-pending-{}", std::process::id()));
+        let _ = std::fs::remove_file(&path);
+        let pending = super::DonkeyPending {
+            game,
+            faction,
+            round: 2,
+            signature: "knownsig".into(),
+            slot: None,
+        };
+        super::save_donkey_pending(&path, &pending).unwrap();
+        assert_eq!(
+            std::fs::metadata(&path).unwrap().permissions().mode() & 0o077,
+            0
+        );
+        assert_eq!(
+            super::load_donkey_pending(&path, game, faction).unwrap(),
+            Some(pending)
+        );
+        assert!(
+            super::load_donkey_pending(&path, Pubkey::new_unique(), faction)
+                .unwrap()
+                .is_none()
+        );
+        let input = risk_input();
+        assert_eq!(
+            super::donkey_risk_eligibility(super::DonkeyRiskInput {
+                pending: true,
+                ..input
+            }),
+            DonkeyRiskEligibility::Ineligible(DonkeyRiskReason::Pending)
+        );
+        super::clear_donkey_pending(&path).unwrap();
+    }
+
+    fn b64_encode(bytes: &[u8]) -> String {
+        const TABLE: &[u8; 64] =
+            b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+        let mut out = String::new();
+        for chunk in bytes.chunks(3) {
+            let a = chunk[0];
+            let b = *chunk.get(1).unwrap_or(&0);
+            let c = *chunk.get(2).unwrap_or(&0);
+            out.push(TABLE[(a >> 2) as usize] as char);
+            out.push(TABLE[((a & 3) << 4 | b >> 4) as usize] as char);
+            out.push(if chunk.len() > 1 {
+                TABLE[((b & 15) << 2 | c >> 6) as usize] as char
+            } else {
+                '='
+            });
+            out.push(if chunk.len() > 2 {
+                TABLE[(c & 63) as usize] as char
+            } else {
+                '='
+            });
+        }
+        out
+    }
+
+    #[test]
+    fn failed_or_malformed_transaction_logs_never_prove_donkey_resolution() {
+        let game = Pubkey::new_unique();
+        let faction = Pubkey::new_unique();
+        let event = DonkeyResolved {
+            game,
+            faction,
+            round: 2,
+            success: false,
+            goods: 0,
+            fee: DONKEY_RISK_FEE,
+            reason: 1,
+        };
+        let program = id().to_string();
+        let logs = vec![
+            format!("Program {program} invoke [1]"),
+            format!("Program data: {}", b64_encode(&event.data())),
+            format!("Program {program} failed: custom program error"),
+        ];
+        let failed = json!({"slot": 9, "meta": {"err": {"InstructionError": [0, "Custom"]}, "logMessages": logs}});
+        assert!(confirmed_transaction_receipt("failed-sig", &failed).is_none());
+
+        let malformed = json!({"slot": "9", "meta": {"err": null, "logMessages": [1]}});
+        assert!(confirmed_transaction_receipt("bad-sig", &malformed).is_none());
+        assert!(confirmed_transaction_receipt("null-sig", &serde_json::Value::Null).is_none());
+
+        let valid = json!({"slot": 9, "meta": {"err": null, "logMessages": [
+            format!("Program {program} invoke [1]"),
+            format!("Program data: {}", b64_encode(&event.data())),
+            format!("Program {program} success"),
+        ]}});
+        let receipt = confirmed_transaction_receipt("valid-sig", &valid).unwrap();
+        assert_eq!(
+            super::donkey_risk::verified_resolution(&receipt, game, faction, 2, DONKEY_RISK_FEE,),
+            Some(super::donkey_risk::Resolution::Abort)
+        );
+    }
+
+    #[test]
+    fn legacy_donkey_builder_remains_the_existing_buy_instruction() {
+        let signer = Pubkey::new_unique();
+        let game = Pubkey::new_unique();
+        let faction = Pubkey::new_unique();
+        let donkey = ix_donkey(signer, game, faction);
+        instruction::BuyDonkey::try_from_slice(&donkey.data[8..]).unwrap();
     }
 }
 
@@ -1569,10 +2424,16 @@ fn main() {
         CommitmentConfig::confirmed(),
     );
     let barter_demo = args.iter().any(|arg| arg == "--epoch90s-barter");
+    let donkey_risk = args.iter().any(|arg| arg == "--epoch2-donkey-risk");
+    let external_vrf_crank = args.iter().any(|arg| arg == "--external-vrf-crank");
+    if barter_demo && donkey_risk {
+        eprintln!("[ERROR] choose either --epoch90s-barter or --epoch2-donkey-risk");
+        return;
+    }
     if let Some(game_str) = flag_value(&args, "--game") {
-        if barter_demo {
+        if barter_demo || donkey_risk || external_vrf_crank {
             eprintln!(
-                "[ERROR] --epoch90s-barter is host-only; join and resume never change a Game epoch"
+                "[ERROR] epoch demo flags are host-only; join and resume never change a Game epoch"
             );
             return;
         }
@@ -1595,6 +2456,26 @@ fn main() {
     let primary_key = flag_value(&args, "--key");
     let opponent_key = flag_value(&args, "--opponent-key");
     let self_host = agent_file.is_some() || primary_key.is_some() || opponent_key.is_some();
+    if donkey_risk
+        && (!self_host || !args.iter().any(|arg| arg == "--no-llm") || !external_vrf_crank)
+    {
+        eprintln!("[ERROR] --epoch2-donkey-risk requires explicit self-host keys, --no-llm, and --external-vrf-crank");
+        return;
+    }
+    let donkey_randomness = if donkey_risk {
+        match parse_donkey_randomness(&args).and_then(|keys| {
+            validate_donkey_randomness(&rpc, &keys)?;
+            Ok(keys)
+        }) {
+            Ok(keys) => Some(keys),
+            Err(error) => {
+                eprintln!("[ERROR] epoch-2 oracle preflight failed before game creation: {error}");
+                return;
+            }
+        }
+    } else {
+        None
+    };
     if !barter_demo_allowed(
         barter_demo,
         false,
@@ -1739,6 +2620,10 @@ fn main() {
             voted: false,
             goods: 0,
             bribed: false,
+            donkey_pending: None,
+            donkey_store: runner_agent
+                .as_ref()
+                .map(|host| donkey_pending_path(&host.agent_file)),
             wish_profile: None,
             wish: None,
         },
@@ -1750,6 +2635,10 @@ fn main() {
             voted: false,
             goods: 0,
             bribed: false,
+            donkey_pending: None,
+            donkey_store: runner_agent
+                .as_ref()
+                .map(|host| donkey_pending_path(&host.agent_file)),
             wish_profile: None,
             wish: None,
         },
@@ -1771,6 +2660,16 @@ fn main() {
     println!("program: {}", id());
     println!("game {game_id}: https://explorer.solana.com/address/{game}?cluster=devnet");
 
+    let epoch = if donkey_risk {
+        constants::EPOCH_DONKEY_RISK
+    } else {
+        epoch_for_barter_demo(barter_demo)
+    };
+    let entropy_mode = if donkey_risk {
+        constants::ENTROPY_SWITCHBOARD
+    } else {
+        constants::ENTROPY_SLOTHASH
+    };
     if !send_ix(
         &rpc,
         &bots[0].kp,
@@ -1779,25 +2678,81 @@ fn main() {
             game,
             game_id,
             phase_duration,
-            epoch_for_barter_demo(barter_demo),
+            entropy_mode,
+            epoch,
         ),
     ) {
         println!("[ERROR] initialize не отправился");
         return;
     }
-    wait_account(&rpc, &game, "game");
-    send_ix(
-        &rpc,
-        &bots[0].kp,
-        ix_join("Aibot", bots[0].kp.pubkey(), game, bots[0].faction),
-    );
-    wait_account(&rpc, &bots[0].faction, "faction1");
-    send_ix(
-        &rpc,
-        &bots[1].kp,
-        ix_join("Botagul", bots[1].kp.pubkey(), game, bots[1].faction),
-    );
-    wait_account(&rpc, &bots[1].faction, "faction2");
+    if !wait_account(&rpc, &game, "game") {
+        return;
+    }
+    let donkey_oracle = donkey_randomness.as_ref().map(|sources| {
+        let oracle = donkey_oracle_pda(&game);
+        if !send_ix(
+            &rpc,
+            &bots[0].kp,
+            ix_configure_donkey_oracles(bots[0].kp.pubkey(), game, oracle, sources),
+        ) || !wait_account(&rpc, &oracle, "donkey oracle config") {
+            eprintln!("[ERROR] epoch-2 oracle configuration failed before Join; stopping without entry fees");
+            return None;
+        }
+        Some(oracle)
+    });
+    let Some(donkey_oracle) = donkey_oracle
+        .flatten()
+        .or_else(|| (!donkey_risk).then_some(Pubkey::default()))
+    else {
+        return;
+    };
+    let join_primary = if donkey_risk {
+        ix_join_epoch2(
+            "Aibot",
+            bots[0].kp.pubkey(),
+            game,
+            bots[0].faction,
+            donkey_oracle,
+        )
+    } else {
+        ix_join("Aibot", bots[0].kp.pubkey(), game, bots[0].faction)
+    };
+    if !send_ix(&rpc, &bots[0].kp, join_primary) {
+        return;
+    }
+    if !wait_account(&rpc, &bots[0].faction, "faction1") {
+        return;
+    }
+    let join_opponent = if donkey_risk {
+        ix_join_epoch2(
+            "Botagul",
+            bots[1].kp.pubkey(),
+            game,
+            bots[1].faction,
+            donkey_oracle,
+        )
+    } else {
+        ix_join("Botagul", bots[1].kp.pubkey(), game, bots[1].faction)
+    };
+    if !send_ix(&rpc, &bots[1].kp, join_opponent) {
+        return;
+    }
+    if !wait_account(&rpc, &bots[1].faction, "faction2") {
+        return;
+    }
+    if donkey_risk {
+        let Some(path) = bots[0].donkey_store.as_ref() else {
+            eprintln!("[ERROR] epoch-2 runner has no protected pending-state path");
+            return;
+        };
+        match load_donkey_pending(path, game, bots[0].faction) {
+            Ok(pending) => bots[0].donkey_pending = pending,
+            Err(error) => {
+                eprintln!("[ERROR] epoch-2 pending-state validation failed: {error}");
+                return;
+            }
+        }
+    }
     if let Some(host) = runner_agent.as_ref() {
         let binding = match runner_auth::bind_wallet(
             &host.owner,
@@ -1857,6 +2812,9 @@ fn main() {
                 continue;
             }
         };
+        if donkey_risk && hb % 5 == 1 {
+            reconcile_donkey_pending(&rpc, &mut bots[0]);
+        }
         let stamp = g.stamp();
         if last_stamp != Some(stamp) {
             for b in bots.iter_mut() {
@@ -1881,11 +2839,13 @@ fn main() {
             state::Phase::Lobby => {
                 if tnow + 2 >= g.phase_ends_at {
                     println!("[lobby] advance");
-                    send_ix(
-                        &rpc,
-                        &bots[0].kp,
-                        ix_advance(bots[0].kp.pubkey(), game, &faction_keys),
-                    );
+                    match advance_instruction(&g, tnow, bots[0].kp.pubkey(), game, &faction_keys) {
+                        Ok(ix) => { send_ix(&rpc, &bots[0].kp, ix); }
+                        Err(DonkeyRiskReason::CrankUnavailable) if g.phase == state::Phase::Action => {
+                            if hb % 5 == 1 { eprintln!("[action r{}] waiting for external atomic Switchboard commit + Advance", g.round); }
+                        }
+                        Err(reason) => eprintln!("[advance] epoch-2 configuration unavailable: {:?}; external crank must repair it", reason),
+                    }
                 }
             }
             state::Phase::Market => {
@@ -2032,11 +2992,13 @@ fn main() {
                 }
                 if tnow >= g.phase_ends_at {
                     println!("[market r{}] advance", g.round);
-                    send_ix(
-                        &rpc,
-                        &bots[0].kp,
-                        ix_advance(bots[0].kp.pubkey(), game, &faction_keys),
-                    );
+                    match advance_instruction(&g, tnow, bots[0].kp.pubkey(), game, &faction_keys) {
+                        Ok(ix) => { send_ix(&rpc, &bots[0].kp, ix); }
+                        Err(DonkeyRiskReason::CrankUnavailable) if g.phase == state::Phase::Action => {
+                            if hb % 5 == 1 { eprintln!("[action r{}] waiting for external atomic Switchboard commit + Advance", g.round); }
+                        }
+                        Err(reason) => eprintln!("[advance] epoch-2 configuration unavailable: {:?}; external crank must repair it", reason),
+                    }
                 }
             }
             state::Phase::Action => {
@@ -2066,6 +3028,29 @@ fn main() {
                             continue;
                         }
                         WishRun::Pass => {}
+                    }
+                    if i == 0 && g.epoch == constants::EPOCH_DONKEY_RISK {
+                        match run_epoch2_donkey(&rpc, b, game, &g, external_vrf_crank) {
+                            DonkeyRun::Attempted => {
+                                println!("[action r{}] confirmed epoch-2 donkey attempt; awaiting verified Law resolution", g.round);
+                                b.acted = true;
+                                continue;
+                            }
+                            DonkeyRun::Block => {
+                                eprintln!("[action r{}] epoch-2 donkey receipt pending or ambiguous; no fallback action", g.round);
+                                b.acted = true;
+                                continue;
+                            }
+                            DonkeyRun::Pass(reason) => {
+                                println!("[action r{}] epoch-2 donkey unavailable: {:?}; producing instead", g.round, reason);
+                                if send_ix(&rpc, &b.kp, ix_produce(b.kp.pubkey(), game, b.faction))
+                                {
+                                    b.acted = true;
+                                    b.goods += 2;
+                                }
+                                continue;
+                            }
+                        }
                     }
                     if i == 0 && !b.bribed && faction_cash(&rpc, &b.faction) >= 5_000_000 {
                         println!(
@@ -2110,6 +3095,23 @@ fn main() {
                             .and_then(|a| a.as_str())
                             .map(|s| s.to_string());
                         match act.as_deref() {
+                            Some("donkey") if g.epoch == constants::EPOCH_DONKEY_RISK => {
+                                let pending = b
+                                    .wish
+                                    .as_ref()
+                                    .map(|wish| wish.has_pending())
+                                    .unwrap_or(false);
+                                let eligibility = f
+                                    .as_ref()
+                                    .map(|faction| unavailable_epoch2_donkey(&g, faction, pending))
+                                    .unwrap_or(DonkeyRiskEligibility::Ineligible(
+                                        DonkeyRiskReason::InactiveFaction,
+                                    ));
+                                println!(
+                                    "[action r{}] epoch-2 donkey risk disabled: {:?}; producing instead",
+                                    g.round, eligibility
+                                );
+                            }
                             Some("donkey") if cash >= 1_000_000 => {
                                 println!("[action r{}] Botagul (LLM) buys a donkey", g.round);
                                 if send_ix(&rpc, &b.kp, ix_donkey(b.kp.pubkey(), game, b.faction)) {
@@ -2153,6 +3155,25 @@ fn main() {
                                 b.goods += 2;
                             }
                         }
+                    } else if i == 1 && g.epoch == constants::EPOCH_DONKEY_RISK {
+                        let pending = b
+                            .wish
+                            .as_ref()
+                            .map(|wish| wish.has_pending())
+                            .unwrap_or(false);
+                        let eligibility = fetch_faction(&rpc, &b.faction)
+                            .map(|faction| unavailable_epoch2_donkey(&g, &faction, pending))
+                            .unwrap_or(DonkeyRiskEligibility::Ineligible(
+                                DonkeyRiskReason::InactiveFaction,
+                            ));
+                        println!(
+                            "[action r{}] epoch-2 donkey risk disabled: {:?}; producing instead",
+                            g.round, eligibility
+                        );
+                        if send_ix(&rpc, &b.kp, ix_produce(b.kp.pubkey(), game, b.faction)) {
+                            b.acted = true;
+                            b.goods += 2;
+                        }
                     } else if i == 1 && g.round == 4 && llm.is_none() {
                         println!("[action r{}] {} buys a donkey", g.round, b.name);
                         if send_ix(&rpc, &b.kp, ix_donkey(b.kp.pubkey(), game, b.faction)) {
@@ -2171,11 +3192,13 @@ fn main() {
                 }
                 if tnow >= g.phase_ends_at {
                     println!("[action r{}] advance", g.round);
-                    send_ix(
-                        &rpc,
-                        &bots[0].kp,
-                        ix_advance(bots[0].kp.pubkey(), game, &faction_keys),
-                    );
+                    match advance_instruction(&g, tnow, bots[0].kp.pubkey(), game, &faction_keys) {
+                        Ok(ix) => { send_ix(&rpc, &bots[0].kp, ix); }
+                        Err(DonkeyRiskReason::CrankUnavailable) if g.phase == state::Phase::Action => {
+                            if hb % 5 == 1 { eprintln!("[action r{}] waiting for external atomic Switchboard commit + Advance", g.round); }
+                        }
+                        Err(reason) => eprintln!("[advance] epoch-2 configuration unavailable: {:?}; external crank must repair it", reason),
+                    }
                 }
             }
             state::Phase::Law => {
@@ -2281,11 +3304,13 @@ fn main() {
                 }
                 if tnow >= g.phase_ends_at {
                     println!("[law r{}] advance", g.round);
-                    send_ix(
-                        &rpc,
-                        &bots[0].kp,
-                        ix_advance(bots[0].kp.pubkey(), game, &faction_keys),
-                    );
+                    match advance_instruction(&g, tnow, bots[0].kp.pubkey(), game, &faction_keys) {
+                        Ok(ix) => { send_ix(&rpc, &bots[0].kp, ix); }
+                        Err(DonkeyRiskReason::CrankUnavailable) if g.phase == state::Phase::Action => {
+                            if hb % 5 == 1 { eprintln!("[action r{}] waiting for external atomic Switchboard commit + Advance", g.round); }
+                        }
+                        Err(reason) => eprintln!("[advance] epoch-2 configuration unavailable: {:?}; external crank must repair it", reason),
+                    }
                 }
             }
             state::Phase::Aborted => {
