@@ -1651,7 +1651,7 @@ fn synthetic_epoch2_draw_is_win(value: u8, game: &Pubkey, faction: &Pubkey) -> b
     digest.iter().fold(0u8, |r, b| ((r as u16 * 256 + *b as u16) % 5) as u8) < 3
 }
 
-fn synthetic_epoch2_case(want_win: Option<bool>) {
+fn synthetic_epoch2_case(want_win: Option<bool>, two_tickets: bool, precommit_abort: bool) {
     let (mut svm, admin) = setup();
     let other = Keypair::new();
     svm.airdrop(&other.pubkey(), 2_000_000_000).unwrap();
@@ -1739,6 +1739,16 @@ fn synthetic_epoch2_case(want_win: Option<bool>) {
     bytes.resize(faction_account.data.len(), 0);
     faction_account.data = bytes;
     svm.set_account(faction, faction_account).unwrap();
+    if two_tickets {
+        let mut second = faction_state(&svm, &other_faction);
+        second.cash = alashi::constants::DONKEY_RISK_FEE;
+        let mut account = svm.get_account(&other_faction).unwrap();
+        let mut bytes = Vec::new();
+        second.try_serialize(&mut bytes).unwrap();
+        bytes.resize(account.data.len(), 0);
+        account.data = bytes;
+        svm.set_account(other_faction, account).unwrap();
+    }
 
     let attempt = |source: Pubkey| {
         Instruction::new_with_bytes(
@@ -1779,6 +1789,40 @@ fn synthetic_epoch2_case(want_win: Option<bool>) {
     assert_eq!(after_attempt.acted_stamp, game_state(&svm, &game).stamp());
     assert!(!send(&mut svm, &admin, attempt(sources[1])));
     assert_eq!(faction_state(&svm, &faction).cash, 0);
+    if two_tickets {
+        let second_attempt = Instruction::new_with_bytes(
+            alashi::id(),
+            &alashi::instruction::AttemptDonkey {}.data(),
+            alashi::accounts::AttemptDonkey {
+                player: other.pubkey(), game, faction: other_faction,
+                oracle, randomness: sources[1],
+            }.to_account_metas(None),
+        );
+        assert!(send(&mut svm, &other, second_attempt));
+        assert_eq!(faction_state(&svm, &other_faction).cash, 0);
+    }
+
+    if precommit_abort {
+        let mut clock = svm.get_sysvar::<solana_clock::Clock>();
+        clock.unix_timestamp = game_state(&svm, &game).phase_ends_at
+            + alashi::constants::DONKEY_COMMIT_GRACE_SECONDS - 1;
+        svm.set_sysvar(&clock);
+        let mut abort = ix_advance(admin.pubkey(), game, vec![faction, other_faction]);
+        abort.accounts.push(anchor_lang::solana_program::instruction::AccountMeta::new(oracle, false));
+        assert!(!send(&mut svm, &admin, abort.clone()));
+        clock.unix_timestamp += 1;
+        svm.set_sysvar(&clock);
+        assert!(send(&mut svm, &admin, abort));
+        assert_eq!(game_state(&svm, &game).phase, alashi::state::Phase::Aborted);
+        assert_eq!(faction_state(&svm, &faction).cash, 0);
+        assert_eq!(faction_state(&svm, &faction).goods, 0);
+        let before = svm.get_account(&other.pubkey()).unwrap().lamports;
+        assert!(send(&mut svm, &admin,
+            ix_settle_refund(admin.pubkey(), game,
+                vec![faction, other_faction], vec![admin.pubkey(), other.pubkey()])));
+        assert_eq!(svm.get_account(&other.pubkey()).unwrap().lamports - before, FEE);
+        return;
+    }
 
     svm.warp_to_slot(200);
     install_rng(&mut svm, &sources[1], 199, 0, 0);
@@ -1793,8 +1837,17 @@ fn synthetic_epoch2_case(want_win: Option<bool>) {
     };
     set_law_seed(&mut svm, 0);
     assert!(!send(&mut svm, &admin, advance(sources[0])));
+    // An older commitment cannot be substituted for the commit bundled with
+    // Action→Law. The synthetic fixture below models Switchboard's next-slot
+    // commitment; it does not execute the provider CPI.
+    assert!(!send(&mut svm, &admin, advance(sources[1])));
+    install_rng(&mut svm, &sources[1], 201, 0, 0);
+    let mut source = svm.get_account(&sources[1]).unwrap();
+    source.data[8..40].fill(4);
+    svm.set_account(sources[1], source).unwrap();
     assert!(send(&mut svm, &admin, advance(sources[1])));
     assert_eq!(game_state(&svm, &game).phase, alashi::state::Phase::Law);
+    assert_eq!(game_state(&svm, &game).commit_slot, 201);
 
     if want_win.is_none() {
         svm.warp_to_slot(250);
@@ -1816,8 +1869,8 @@ fn synthetic_epoch2_case(want_win: Option<bool>) {
 
     let win = want_win.unwrap();
     let chosen = (0..=255).find(|value| synthetic_epoch2_draw_is_win(*value, &game, &faction) == win).unwrap();
-    svm.warp_to_slot(201);
-    install_rng(&mut svm, &sources[1], 199, 201, chosen);
+    svm.warp_to_slot(202);
+    install_rng(&mut svm, &sources[1], 201, 202, chosen);
     let mut source = svm.get_account(&sources[1]).unwrap();
     source.data[8..40].fill(4);
     svm.set_account(sources[1], source).unwrap();
@@ -1826,30 +1879,54 @@ fn synthetic_epoch2_case(want_win: Option<bool>) {
         ix.accounts.push(anchor_lang::solana_program::instruction::AccountMeta::new(oracle, false));
         if include_ticket {
             ix.accounts.push(anchor_lang::solana_program::instruction::AccountMeta::new(faction, false));
+            if two_tickets {
+                ix.accounts.push(anchor_lang::solana_program::instruction::AccountMeta::new(other_faction, false));
+            }
         }
         ix
     };
     assert!(!send(&mut svm, &admin, reveal(false)));
     assert_eq!(faction_state(&svm, &faction).goods, 0);
+    if two_tickets {
+        let mut omitted = reveal(true);
+        omitted.accounts.pop();
+        assert!(!send(&mut svm, &admin, omitted));
+        assert_eq!(faction_state(&svm, &other_faction).goods, 0);
+    }
     assert!(send(&mut svm, &admin, reveal(true)));
     assert_eq!(faction_state(&svm, &faction).goods, if win { 5 } else { 0 });
     assert_eq!(faction_state(&svm, &faction).cash, 0);
+    if two_tickets {
+        assert_eq!(faction_state(&svm, &other_faction).cash, 0);
+        assert_eq!(faction_state(&svm, &other_faction).goods,
+            if synthetic_epoch2_draw_is_win(chosen, &game, &other_faction) { 5 } else { 0 });
+    }
     assert!(!send(&mut svm, &admin, reveal(true)));
 }
 
 #[test]
 fn epoch2_verified_win_is_paid_once() {
-    synthetic_epoch2_case(Some(true));
+    synthetic_epoch2_case(Some(true), false, false);
 }
 
 #[test]
 fn epoch2_verified_empty_is_paid_once() {
-    synthetic_epoch2_case(Some(false));
+    synthetic_epoch2_case(Some(false), false, false);
 }
 
 #[test]
 fn epoch2_oracle_abort_never_mints_goods() {
-    synthetic_epoch2_case(None);
+    synthetic_epoch2_case(None, false, false);
+}
+
+#[test]
+fn epoch2_multi_ticket_reveal_requires_complete_ordered_set() {
+    synthetic_epoch2_case(Some(true), true, false);
+}
+
+#[test]
+fn epoch2_uncommitted_action_aborts_after_grace_and_refunds() {
+    synthetic_epoch2_case(None, false, true);
 }
 
 #[test]

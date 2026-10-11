@@ -100,3 +100,24 @@ fn epoch2_inherits_90s_actions_and_settlement_but_replaces_donkey() {
     let classic = compute_settlement_epoch(&game, &factions, 100 * PESO, 0, false, false).unwrap();
     assert_eq!(classic.order[0], 1, "classic ranks cash only");
 }
+
+#[test]
+fn only_epoch2_can_abort_an_uncommitted_action_after_grace() {
+    let (mut game, mut faction) = setup();
+    game.phase_ends_at = 100;
+    actions::donkey_risk_attempt(&game, &mut faction).unwrap();
+    assert!(alashi_rules::transitions::abort_uncommitted_donkey(
+        &mut game, 129).is_err());
+    assert_eq!(game.phase, Phase::Action);
+    let result = alashi_rules::transitions::abort_uncommitted_donkey(
+        &mut game, 130).unwrap();
+    assert!(result.aborted);
+    assert_eq!(game.phase, Phase::Aborted);
+    assert_eq!((faction.cash, faction.goods), (0, 0));
+    assert!(alashi_rules::transitions::abort_uncommitted_donkey(
+        &mut game, 130).is_err());
+    game.phase = Phase::Action;
+    game.epoch = EPOCH_90S;
+    assert!(alashi_rules::transitions::abort_uncommitted_donkey(
+        &mut game, 130).is_err());
+}

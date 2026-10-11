@@ -109,6 +109,8 @@ pub const ANTI_RICH_TAX20: u8 = 2;
 // консервативно округлено до 1 SOL на момент реализации 01.09.2026.
 pub const MAINNET_VRF_THRESHOLD: u64 = 1_000_000_000;
 pub const REVEAL_TIMEOUT_SLOTS: u64 = 25;
+/// Provider outage after the Action deadline must not strand paid attempts.
+pub const DONKEY_COMMIT_GRACE_SECONDS: i64 = 30;
 pub const MAX_VRF_RETRIES: u8 = 3;
 
 #[constant]

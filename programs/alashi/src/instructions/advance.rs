@@ -66,9 +66,15 @@ fn verify_donkey_round_rng(
         *rng.key,
         GameError::RandomnessMismatch
     );
-    let verified = verify_switchboard(rng, clock_slot)?;
+    require!(
+        rng.owner.as_ref() == ON_DEMAND_DEVNET_PID.as_ref()
+            || rng.owner.as_ref() == ON_DEMAND_MAINNET_PID.as_ref(),
+        GameError::RandomnessMismatch
+    );
     let data = RandomnessAccountData::parse(rng.data.borrow())
         .map_err(|_| GameError::RandomnessMismatch)?;
+    transitions::validate_donkey_commit_slot(data.seed_slot, clock_slot)?;
+    require!(data.reveal_slot == 0, GameError::RandomnessNotReady);
     require!(
         data.queue.as_ref() == oracle.queue.as_ref()
             && data.authority.as_ref() == oracle.authority.as_ref(),
@@ -78,7 +84,7 @@ fn verify_donkey_round_rng(
         data.seed_slot > oracle.max_attempt_slot,
         GameError::RandomnessNotReady
     );
-    Ok(verified)
+    Ok((*rng.key, data.seed_slot))
 }
 
 fn needs_donkey_config(game: &Game) -> bool {
@@ -92,7 +98,14 @@ pub fn handle_advance(ctx: Context<Advance>) -> Result<()> {
     let gkey = ctx.accounts.game.key();
 
     let game = &mut ctx.accounts.game;
-    let wants_rng = game.phase == Phase::Action && game.entropy_mode == ENTROPY_SWITCHBOARD;
+    let can_abort_uncommitted = game.epoch == EPOCH_DONKEY_RISK
+        && game.phase == Phase::Action
+        && game.entropy_mode == ENTROPY_SWITCHBOARD
+        && now >= game.phase_ends_at.saturating_add(DONKEY_COMMIT_GRACE_SECONDS)
+        && ctx.remaining_accounts.len() == game.faction_count as usize + 1;
+    let wants_rng = game.phase == Phase::Action
+        && game.entropy_mode == ENTROPY_SWITCHBOARD
+        && !can_abort_uncommitted;
     // A Lobby with too few factions must still be able to abort if an admin
     // never configured the oracle. It cannot enter Market without the PDA.
     let needs_config = needs_donkey_config(game);
@@ -175,7 +188,11 @@ pub fn handle_advance(ctx: Context<Advance>) -> Result<()> {
     let prev_card = game.law_card;
     let prev_round = game.round;
     let mut refs: Vec<&mut Faction> = checked.iter_mut().map(|a| &mut **a).collect();
-    let res = transitions::advance(game, &mut refs, now, clock.slot, seed, vrf_commit)?;
+    let res = if can_abort_uncommitted {
+        transitions::abort_uncommitted_donkey(game, now)?
+    } else {
+        transitions::advance(game, &mut refs, now, clock.slot, seed, vrf_commit)?
+    };
 
     // события из результата перехода
     if let Some((randomness, commit_slot)) = res.committed_vrf {

@@ -1,0 +1,25 @@
+# Epoch-2 donkey oracle operator (candidate)
+
+Status: executable source candidate, **not deployed or verified against a real Switchboard roundtrip**. Do not start a funded Game on this runbook alone. A reviewed program upgrade, six pre-created and funded devnet randomness accounts, provider availability, transaction sizing, rollback and a bounded live acceptance are separate release gates. The tool never creates accounts, funds wallets, requests an airdrop, or starts a Game.
+
+`tools/donkey_crank.cjs` performs one bounded step and exits, or a bounded worker repeats those same steps for up to 720 seconds. It uses the versions locked in `spike/package-lock.json` (`npm ci --prefix spike --ignore-scripts`). `inspect` reads canonical devnet Game, faction, oracle config, source and Clock accounts without a signer. `step --execute` requires an existing local mode-0600 Switchboard authority key and a private state directory (0700). It signs only after checking the devnet genesis, executable Alashi program, exact Game/Faction PDAs, epoch 2 + Switchboard, six configured sources, selected round source owner/queue/authority and phase for commit/reveal; the post-grace technical abort deliberately requires no provider source. The operator provides an existing address lookup table if the atomic transaction is too large. No endpoint URL may contain credentials.
+
+Example nonsecret config shape (replace all placeholders with real public keys from the same already configured Game):
+
+```json
+{
+  "game_pda": "<GamePDA>",
+  "faction_pdas": ["<Faction1PDA>", "<Faction2PDA>"],
+  "round_sources": ["<R1>", "<R2>", "<R3>", "<R4>", "<R5>", "<R6>"],
+  "authority": "<existing Switchboard authority public key>",
+  "lookup_table": "<optional existing lookup table public key>"
+}
+```
+
+Set `ALASHI_RPC` to an HTTPS Solana devnet RPC, `ALASHI_CRANK_CONFIG_FILE` to that config path, `ALASHI_CRANK_KEY_FILE` to the already existing local key path, and `ALASHI_CRANK_STATE_FILE` to a JSON path inside a private directory outside Git. Run `node tools/donkey_crank.cjs inspect`, then, only under an approved live plan, start `node tools/donkey_crank.cjs worker --execute --max-seconds 720` alongside the finite bot host. The worker polls every two seconds and stops on Finished/Aborted, signal, error, or time budget. It takes an exclusive lock; inspect ownership before removing a stale lock. A supervisor can restart the worker after the budget if the same Game remains active. `step --execute` remains available for one deliberate step. No automatic Game creation occurs. Keep the signer bytes and private signed-transaction sidecar out of shell arguments, logs and the repository.
+
+At an elapsed Action deadline, the worker has 30 seconds to bundle a valid commit and Advance. If no commit is confirmed by the end of that fixed grace, it instead submits the permissionless epoch-2 technical abort with complete factions and canonical oracle, requiring no provider account. This does not claim a random draw or refund the in-game donkey fee/action. A normal step refuses a precommitted or revealed source. It constructs **one** signed transaction with Switchboard `commitIx` first and Alashi `Advance` second. Epoch 2 accepts only the exact configured unrevealed source whose new `seed_slot` is the transaction slot plus one and after the latest paid attempt. Failure of either instruction rolls back both; old epochs keep their previous-slot rule. After the seed slot, while Law remains unrevealed, a later step constructs **one** transaction with the provider's `revealIx` first, Alashi `RevealLaw` second, canonical oracle config and the exact stored ticket order. No source/seed replacement or caller-supplied draw is accepted. Provider withholding can lead to the on-chain technical abort; it is never presented as a 40% empty draw.
+
+Before submission the tool writes and fsyncs the signed transaction and signature in the 0600 state file, then fsyncs the private directory. A lost RPC response reuses those **same bytes and signature** while its blockhash remains valid. An unknown expired or confirmed failed signature stops for manual chain-receipt review; the operator must check the exact signature and on-chain Game/source state before removing the sidecar and restarting; the tool will not silently sign another commitment or reveal. A confirmed receipt clears the sidecar and the next invocation rereads on-chain phase. The tool reports only public identifiers and status codes, not key bytes, gateway responses or raw signed transactions.
+
+The local gate is `node --test tools/donkey_crank.test.cjs`: synthetic account decoding, phase/source/ticket checks, instruction order and a mocked RPC lost-response retry. It does **not** exercise actual Switchboard CPI, gateway signing, account rent, LUT sufficiency or devnet provider liveness. Use the program's synthetic SBF lifecycle test as a separate contract gate; neither is live oracle proof.
