@@ -26,10 +26,18 @@ pub fn assign(state: &AppState, record: &str, origin: &str, bearer: &str, body: 
         .ok()
         .and_then(|v| v.parse::<u16>().ok())
         .unwrap_or(8098);
-    forward(&owner.wallet, port).unwrap_or_else(err)
+    forward(&owner.wallet, port, false).unwrap_or_else(err)
 }
 
-fn forward(wallet: &str, port: u16) -> Result<Value, &'static str> {
+pub fn fund(wallet: &str) -> Value {
+    let port = std::env::var("ALASHI_MATCH_PORT")
+        .ok()
+        .and_then(|v| v.parse::<u16>().ok())
+        .unwrap_or(8098);
+    forward(wallet, port, true).unwrap_or_else(err)
+}
+
+fn forward(wallet: &str, port: u16, funding: bool) -> Result<Value, &'static str> {
     let address = SocketAddr::from(([127, 0, 0, 1], port));
     let mut stream = TcpStream::connect_timeout(&address, Duration::from_secs(2))
         .map_err(|_| "match_host_unavailable")?;
@@ -41,7 +49,8 @@ fn forward(wallet: &str, port: u16) -> Result<Value, &'static str> {
         .map_err(|_| "match_host_unavailable")?;
     // Only the authenticated public wallet crosses this loopback boundary.
     let body = json!({"wallet":wallet}).to_string();
-    write!(stream,"POST /match HTTP/1.1\r\nHost: localhost\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{body}",body.len()).map_err(|_| "match_host_unavailable")?;
+    let path = if funding { "/fund" } else { "/match" };
+    write!(stream,"POST {path} HTTP/1.1\r\nHost: localhost\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{body}",body.len()).map_err(|_| "match_host_unavailable")?;
     let mut response = String::new();
     stream
         .take(8193)
@@ -59,7 +68,9 @@ fn forward(wallet: &str, port: u16) -> Result<Value, &'static str> {
     let value: Value = serde_json::from_str(body).map_err(|_| "match_host_unavailable")?;
     if value["ok"] == true {
         if value["network"] != "devnet"
-            || !matches!(value["status"].as_str(), Some("assigned" | "preparing"))
+            || !(value["status"] == "preparing"
+                || value["status"] == if funding { "ready" } else { "assigned" })
+            || (funding && (value["wallet"] != wallet || value["target_lamports"] != "100000000"))
         {
             return Err("match_host_unavailable");
         }
@@ -69,6 +80,9 @@ fn forward(wallet: &str, port: u16) -> Result<Value, &'static str> {
             Some("match_capacity") => "match_capacity",
             Some("host_funds_low") => "host_funds_low",
             Some("storage_failed") => "storage_failed",
+            Some("funding_capacity") => "funding_capacity",
+            Some("funding_failed") => "funding_failed",
+            Some("funding_rpc_unavailable") => "funding_rpc_unavailable",
             _ => "match_host_unavailable",
         })
     }
@@ -115,6 +129,39 @@ mod tests {
     }
 
     #[test]
+    fn funding_proxy_forwards_public_wallet_and_checks_the_recipient() {
+        for wrong_wallet in [false, true] {
+            let listener = TcpListener::bind("127.0.0.1:0").unwrap();
+            let port = listener.local_addr().unwrap().port();
+            let worker = std::thread::spawn(move || {
+                let (mut stream, _) = listener.accept().unwrap();
+                let request = crate::http::read_request(&stream).unwrap();
+                assert_eq!(request.path, "/fund");
+                assert!(request.authorization.is_none() && request.cookie.is_none());
+                assert_eq!(
+                    serde_json::from_slice::<Value>(&request.body).unwrap(),
+                    json!({"wallet":"public-wallet"})
+                );
+                crate::http::respond(
+                    &mut stream,
+                    "200 OK",
+                    &json!({"ok":true,
+                    "network":"devnet","status":"preparing","target_lamports":"100000000",
+                    "wallet":if wrong_wallet {"other-wallet"} else {"public-wallet"}})
+                    .to_string(),
+                );
+            });
+            let response = forward("public-wallet", port, true);
+            if wrong_wallet {
+                assert_eq!(response.unwrap_err(), "match_host_unavailable");
+            } else {
+                assert_eq!(response.unwrap()["status"], "preparing");
+            }
+            worker.join().unwrap();
+        }
+    }
+
+    #[test]
     fn proxy_forwards_only_wallet_and_preserves_assignment() {
         let listener = TcpListener::bind("127.0.0.1:0").unwrap();
         let port = listener.local_addr().unwrap().port();
@@ -135,7 +182,7 @@ mod tests {
             );
         });
         assert_eq!(
-            forward("public-wallet", port).unwrap()["game_pda"],
+            forward("public-wallet", port, false).unwrap()["game_pda"],
             "same-game"
         );
         worker.join().unwrap();

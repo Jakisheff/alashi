@@ -425,6 +425,9 @@ fn match_game(opts: &BTreeMap<String, String>, rpc: &RpcClient) -> ResultJson {
     if name.is_empty() || name.len() > 16 {
         return Err(error("invalid_name", "name must contain 1..16 UTF-8 bytes"));
     }
+    let private_profile = session_cli::read_private(Path::new(profile))?;
+    let key = read_key(key_path)?;
+    session_cli::ensure_funding(&private_profile, &key, rpc)?;
     let owner = runner_auth::authenticate_owner(profile, key_path)
         .map_err(|code| error(code, "registered wallet proof failed"))?;
     let mut assignment = runner_auth::match_game(&owner).map_err(|code| {
