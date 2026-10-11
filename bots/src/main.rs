@@ -2780,7 +2780,7 @@ fn main() {
         std::process::exit(agent_cli::run(&args[2..]));
     }
     if args.iter().any(|a| a == "--help" || a == "-h") {
-        println!("bots [--phase-duration SECONDS] [--timeout SECONDS] [--no-llm] [--epoch90s-barter --agent-file REGISTERED_PROFILE --key PRIMARY_KEY --opponent-key DEMO_OPPONENT_KEY]\nbots --epoch2-donkey-risk --resume-epoch2-game GAME_PDA --agent-file REGISTERED_PROFILE --key PRIMARY_KEY --opponent-key LOCAL_KEY --no-llm --external-vrf-crank [oracle setup flags]\nbots --game PUBKEY --name NAME --key LOCAL_FILE [--agent-file REGISTERED_PROFILE] [--resume]\nbots agent inspect|join|act --help");
+        println!("bots [--phase-duration SECONDS] [--timeout SECONDS] [--no-llm] [--epoch90s-barter --agent-file REGISTERED_PROFILE --key PRIMARY_KEY --opponent-key DEMO_OPPONENT_KEY]\nbots --epoch2-donkey-risk --resume-epoch2-game GAME_PDA --agent-file REGISTERED_PROFILE --key PRIMARY_KEY --opponent-key LOCAL_KEY --no-llm --external-vrf-crank [oracle setup flags] [--stop-after-epoch2-config]\nbots --game PUBKEY --name NAME --key LOCAL_FILE [--agent-file REGISTERED_PROFILE] [--resume]\nbots agent inspect|join|act --help");
         return;
     }
     let (phase_duration, host_timeout) = match host_timing(&args) {
@@ -2798,6 +2798,7 @@ fn main() {
     let barter_demo = args.iter().any(|arg| arg == "--epoch90s-barter");
     let donkey_risk = args.iter().any(|arg| arg == "--epoch2-donkey-risk");
     let resume_epoch2 = flag_value(&args, "--resume-epoch2-game");
+    let stop_after_config = args.iter().any(|arg| arg == "--stop-after-epoch2-config");
     let external_vrf_crank = args.iter().any(|arg| arg == "--external-vrf-crank");
     if barter_demo && donkey_risk {
         eprintln!("[ERROR] choose either --epoch90s-barter or --epoch2-donkey-risk");
@@ -2809,6 +2810,10 @@ fn main() {
     }
     if resume_epoch2.is_some() && !donkey_risk {
         eprintln!("[ERROR] --resume-epoch2-game requires --epoch2-donkey-risk");
+        return;
+    }
+    if stop_after_config && resume_epoch2.is_none() {
+        eprintln!("[ERROR] --stop-after-epoch2-config requires explicit Game resume");
         return;
     }
     if resume_epoch2.is_some() && flag_value(&args, "--game").is_some() {
@@ -3151,6 +3156,10 @@ fn main() {
     else {
         return;
     };
+    if stop_after_config {
+        println!("epoch-2 sources and oracle config verified; stopped before Join");
+        return;
+    }
     let join_primary = if donkey_risk {
         ix_join_epoch2(
             "Aibot",
