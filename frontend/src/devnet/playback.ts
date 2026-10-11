@@ -30,6 +30,8 @@ const lawNames = ['Status quo', 'Tax 10%', 'Tax 20%', 'Production subsidy', 'Sub
 export function eventLabel(event: ChainEvent, faction: ChainFaction): string {
   if (event.type === 'law_drawn' || event.type === 'law_vetoed') return `Law ${event.type === 'law_drawn' ? 'drawn' : 'vetoed'} · ${event.card === undefined ? 'card unavailable' : lawNames[event.card] ?? `Card #${event.card}`}`
   if (event.type === 'law_result') return `Law ${event.passed === undefined ? 'result' : event.passed ? 'passed' : 'rejected'}${event.yes !== undefined && event.no !== undefined ? ` · Yes ${event.yes} / No ${event.no}` : ''}`
+  if (event.type === 'donkey_attempted') return `${faction.name} committed 5 in-game alashi + one Action · goods pending`
+  if (event.type === 'donkey_resolved') return `${faction.name} · ${event.reason === 1 ? 'technical oracle abort · 0 goods · no random draw' : event.success === true && event.goods === 5 ? 'indexed draw · +5 goods' : event.success === false && event.goods === 0 ? 'indexed empty draw · 0 goods' : 'donkey result unavailable'}`
   const verb = visualAction(event, faction)
   if (verb === 'victory') return `${faction.name} won · confirmed payout`
   if (verb === 'buy') return `${faction.name} bought ${event.units !== undefined ? `${event.units} goods` : 'goods'}${event.cost !== undefined ? ` · ${formatCash(event.cost)}` : ''}`

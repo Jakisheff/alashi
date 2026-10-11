@@ -2,7 +2,7 @@ export const CHAIN_PROGRAM = '3jwunaFDRrSWFfeJ5hFZu3DmxPNTmkdoCweHDvqcXTqC'
 export const PHASES = ['Lobby', 'Market', 'Action', 'Law', 'Finished', 'Aborted'] as const
 export type Phase = typeof PHASES[number]
 export type ChainFaction = { pda: string; wallet: string; name: string; cash: string; hard: string; alive: boolean; goods: number; influence: number; vote: 'Yes' | 'No' | 'Abstain' }
-export type ChainEvent = { id: string; signature: string; slot: number; index: number; logIndex: number; time: number | null; type: string; faction?: string; from?: string; wallet?: string; rank?: number; round?: number; phase?: Phase; phaseDuration?: number; card?: number; yes?: number; no?: number; passed?: boolean; goods?: number; revenue?: string; cost?: string; price?: string; units?: number; amount?: string; choice?: number }
+export type ChainEvent = { id: string; signature: string; slot: number; index: number; logIndex: number; time: number | null; type: string; faction?: string; from?: string; wallet?: string; rank?: number; round?: number; phase?: Phase; phaseDuration?: number; card?: number; yes?: number; no?: number; passed?: boolean; goods?: number; revenue?: string; cost?: string; price?: string; units?: number; amount?: string; choice?: number; fee?: string; success?: boolean; reason?: 0 | 1 }
 export type ChainSnapshot = { pda: string; gameId: string; phase: Phase; round: number; endsAt: number; settled: boolean; epoch: number; snapshotSlot: number; journalThroughSlot: number; factions: ChainFaction[]; events: ChainEvent[]; complete: boolean; fetchedAt: string }
 const alphabet = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
 export function validBase58(value: string, size = 32): boolean {
@@ -66,7 +66,7 @@ export function decodeSnapshot(value: unknown, pda: string): ChainSnapshot {
   const fetchedAt = text(v.fetched_at, 64); if (!Number.isFinite(Date.parse(fetchedAt))) throw new ChainApiError('invalid')
   return { pda, gameId: money(game.id), phase: phase(game.phase), round: integer(game.round), endsAt: integer(game.phase_ends_at), settled: boolean(game.settled), epoch: integer(game.epoch), snapshotSlot, journalThroughSlot, factions, events, complete: boolean(v.history_complete), fetchedAt }
 }
-export async function chainSnapshot(pda: string, signal?: AbortSignal, fetcher: typeof fetch = fetch): Promise<ChainSnapshot> {
+export async function chainSnapshot<T extends ChainSnapshot = ChainSnapshot>(pda: string, signal?: AbortSignal, fetcher: typeof fetch = fetch, decoder: (value: unknown, pda: string) => T = decodeSnapshot as (value: unknown, pda: string) => T): Promise<T> {
   if (!validBase58(pda)) throw new ChainApiError('invalid')
   let response: Response
   try { response = await fetcher(`/chain/devnet/games/${encodeURIComponent(pda)}`, { credentials: 'omit', cache: 'no-store', redirect: 'error', referrerPolicy: 'no-referrer', headers: { Accept: 'application/json' }, signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(20_000)]) : AbortSignal.timeout(20_000) }) }
@@ -80,7 +80,7 @@ export async function chainSnapshot(pda: string, signal?: AbortSignal, fetcher: 
   if (!response.ok) throw new ChainApiError('unavailable')
   let value: unknown
   try { value = await response.json() } catch { throw new ChainApiError('invalid') }
-  return decodeSnapshot(value, pda)
+  return decoder(value, pda)
 }
 export function chainFailure(error: unknown): string {
   if (error instanceof ChainApiError && error.code === 'rate_limit') return 'Devnet is busy. Retrying after a short pause.'
