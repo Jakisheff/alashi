@@ -240,7 +240,7 @@ fn resume_game_allowed(
         && game.entropy_mode == constants::ENTROPY_SWITCHBOARD
         && game.phase == state::Phase::Lobby
         && game.round == 0
-        && game.faction_count == 0
+        && (game.faction_count == 0 || game.faction_count == 2)
         && game.entry_fee == ENTRY_FEE
         && game.phase_duration == phase_duration
         && !game.settled
@@ -248,12 +248,65 @@ fn resume_game_allowed(
         && game.commit_slot == 0
 }
 
+fn joined_factions_allowed(
+    game: Pubkey,
+    primary_wallet: Pubkey,
+    opponent_wallet: Pubkey,
+    primary: &state::Faction,
+    opponent: &state::Faction,
+) -> bool {
+    primary_wallet != opponent_wallet
+        && primary.game == game
+        && primary.wallet == primary_wallet
+        && primary.name == "Aibot"
+        && opponent.game == game
+        && opponent.wallet == opponent_wallet
+        && opponent.name == "Botagul"
+        && primary.alive
+        && opponent.alive
+        && primary.cash == 0
+        && opponent.cash == 0
+        && primary.goods == 0
+        && opponent.goods == 0
+        && primary.influence == 1
+        && opponent.influence == 1
+        && primary.acted_stamp == 0
+        && opponent.acted_stamp == 0
+}
+
+fn check_joined_factions(
+    rpc: &RpcClient,
+    game: Pubkey,
+    primary_wallet: Pubkey,
+    opponent_wallet: Pubkey,
+) -> Result<(), String> {
+    let read = |wallet: Pubkey| -> Result<state::Faction, String> {
+        let key = faction_pda(&game, &wallet);
+        let account = rpc
+            .get_account(&key)
+            .map_err(|_| "resume faction unavailable")?;
+        if account.owner != id() {
+            return Err("resume faction owner mismatch".into());
+        }
+        let mut bytes: &[u8] = &account.data;
+        state::Faction::try_deserialize(&mut bytes)
+            .map_err(|_| "resume faction cannot be decoded".into())
+    };
+    let primary = read(primary_wallet)?;
+    let opponent = read(opponent_wallet)?;
+    if !joined_factions_allowed(game, primary_wallet, opponent_wallet, &primary, &opponent) {
+        return Err("resume factions do not match the two expected Lobby joins".into());
+    }
+    Ok(())
+}
+
 fn resume_epoch2_game(
     rpc: &RpcClient,
     address: &str,
     admin: Pubkey,
+    opponent: Pubkey,
     phase_duration: i64,
-) -> Result<(u64, Pubkey), String> {
+) -> Result<(u64, Pubkey, bool), String> {
     let key: Pubkey = address
         .parse()
         .map_err(|_| "invalid resume Game public key")?;
@@ -267,9 +320,13 @@ fn resume_epoch2_game(
     let game =
         state::Game::try_deserialize(&mut bytes).map_err(|_| "resume Game cannot be decoded")?;
     if !resume_game_allowed(&game, key, admin, phase_duration) {
-        return Err("resume Game is not the expected empty epoch-2 Lobby".into());
+        return Err("resume Game is not the expected epoch-2 Lobby".into());
     }
-    Ok((game.game_id, key))
+    let already_joined = game.faction_count == 2;
+    if already_joined {
+        check_joined_factions(rpc, key, admin, opponent)?;
+    }
+    Ok((game.game_id, key, already_joined))
 }
 
 fn source_is_pristine(data: &[u8], authority: Pubkey, queue: Pubkey) -> bool {
@@ -2365,10 +2422,10 @@ mod runner_mode_tests {
         advance_instruction, barter_demo_allowed, confirmed_transaction_receipt,
         donkey_init_accounts, donkey_risk_eligibility, donkey_source_pda, epoch_for_barter_demo,
         ix_attempt_donkey, ix_barter_accept, ix_barter_propose, ix_configure_donkey_oracles,
-        ix_donkey, ix_init_donkey_source, ix_initialize, ix_join_epoch2, may_auto_airdrop,
-        may_join, resume_game_allowed, source_is_pristine, source_recent_slot, DonkeyOperatorSetup,
-        DonkeyRiskEligibility, DonkeyRiskInput, DonkeyRiskReason, DONKEY_RISK_FEE,
-        DONKEY_RISK_GOODS, ENTRY_FEE,
+        ix_donkey, ix_init_donkey_source, ix_initialize, ix_join_epoch2, joined_factions_allowed,
+        may_auto_airdrop, may_join, resume_game_allowed, source_is_pristine, source_recent_slot,
+        DonkeyOperatorSetup, DonkeyRiskEligibility, DonkeyRiskInput, DonkeyRiskReason,
+        DONKEY_RISK_FEE, DONKEY_RISK_GOODS, ENTRY_FEE,
     };
     use alashi::{constants, events::DonkeyResolved, id, instruction, state};
     use anchor_lang::{prelude::Pubkey, AnchorDeserialize, Event};
@@ -2411,7 +2468,7 @@ mod runner_mode_tests {
     }
 
     #[test]
-    fn resume_accepts_only_same_empty_epoch_two_lobby() {
+    fn resume_accepts_only_same_empty_or_two_joined_epoch_two_lobby() {
         let admin = Pubkey::new_unique();
         let mut game = state::Game {
             admin,
@@ -2429,9 +2486,65 @@ mod runner_mode_tests {
         assert!(!resume_game_allowed(&game, key, admin, 21));
         game.faction_count = 1;
         assert!(!resume_game_allowed(&game, key, admin, 20));
-        game.faction_count = 0;
+        game.faction_count = 2;
+        assert!(resume_game_allowed(&game, key, admin, 20));
+        game.faction_count = 3;
+        assert!(!resume_game_allowed(&game, key, admin, 20));
         game.phase = state::Phase::Market;
         assert!(!resume_game_allowed(&game, key, admin, 20));
+    }
+    #[test]
+    fn joined_resume_requires_exact_two_canonical_lobby_factions() {
+        let game = Pubkey::new_unique();
+        let primary_wallet = Pubkey::new_unique();
+        let opponent_wallet = Pubkey::new_unique();
+        let primary = state::Faction {
+            game,
+            wallet: primary_wallet,
+            name: "Aibot".into(),
+            alive: true,
+            influence: 1,
+            ..Default::default()
+        };
+        let mut opponent = state::Faction {
+            game,
+            wallet: opponent_wallet,
+            name: "Botagul".into(),
+            alive: true,
+            influence: 1,
+            ..Default::default()
+        };
+        assert!(joined_factions_allowed(
+            game,
+            primary_wallet,
+            opponent_wallet,
+            &primary,
+            &opponent
+        ));
+        assert!(!joined_factions_allowed(
+            game,
+            primary_wallet,
+            Pubkey::new_unique(),
+            &primary,
+            &opponent
+        ));
+        opponent.game = Pubkey::new_unique();
+        assert!(!joined_factions_allowed(
+            game,
+            primary_wallet,
+            opponent_wallet,
+            &primary,
+            &opponent
+        ));
+        opponent.game = game;
+        opponent.goods = 1;
+        assert!(!joined_factions_allowed(
+            game,
+            primary_wallet,
+            opponent_wallet,
+            &primary,
+            &opponent
+        ));
     }
     #[test]
     fn resume_never_joins_a_missing_faction() {
@@ -3001,8 +3114,14 @@ fn main() {
     if demo_mode() {
         println!("=== РЕЖИМ ДЕМО: фазы 30с, закон 45с, нарратив для рассказчика ===");
     }
-    let (game_id, game) = if let Some(address) = resume_epoch2.as_deref() {
-        match resume_epoch2_game(&rpc, address, bot1_kp.pubkey(), phase_duration) {
+    let (game_id, game, already_joined) = if let Some(address) = resume_epoch2.as_deref() {
+        match resume_epoch2_game(
+            &rpc,
+            address,
+            bot1_kp.pubkey(),
+            bot2_kp.pubkey(),
+            phase_duration,
+        ) {
             Ok(existing) => existing,
             Err(error) => {
                 eprintln!("[ERROR] {error}");
@@ -3011,7 +3130,7 @@ fn main() {
         }
     } else {
         let game_id = now() as u64;
-        (game_id, game_pda(game_id))
+        (game_id, game_pda(game_id), false)
     };
     let mut bots = vec![
         Bot {
@@ -3171,7 +3290,7 @@ fn main() {
     } else {
         ix_join("Aibot", bots[0].kp.pubkey(), game, bots[0].faction)
     };
-    if !send_ix(&rpc, &bots[0].kp, join_primary) {
+    if !already_joined && !send_ix(&rpc, &bots[0].kp, join_primary) {
         return;
     }
     if !wait_account(&rpc, &bots[0].faction, "faction1") {
@@ -3188,7 +3307,7 @@ fn main() {
     } else {
         ix_join("Botagul", bots[1].kp.pubkey(), game, bots[1].faction)
     };
-    if !send_ix(&rpc, &bots[1].kp, join_opponent) {
+    if !already_joined && !send_ix(&rpc, &bots[1].kp, join_opponent) {
         return;
     }
     if !wait_account(&rpc, &bots[1].faction, "faction2") {
