@@ -57,6 +57,17 @@ cluster, commitment, Game/Faction, canonical signature/log/slot, ordered journal
 fee string, reason/success/goods. Complete orphan or conflicting attempt/result
 journals are rejected before transcript labels appear.
 
+Task `DIN-DONKEY-TERMINAL-RECEIPT-20261011-01`, read at exact docs
+`1614213a018fe1871c34ee1ca9e69cb8cc52b1b7`, fixes a source-review gap in the
+initial adapter. A complete full journal in a settled, Finished or Aborted Game
+must resolve every attempt, including earlier rounds and other players; an
+orphan rejects the snapshot. This check runs on the fetched journal before any
+replay prefix is taken. A valid terminal journal with a later resolution still
+shows historical pending before that receipt and success/empty/abort afterwards.
+Live Action/Law pending and partial-history unavailable retain their semantics.
+Synthetic pending fixtures now describe an unsettled live Game. No terminal
+abort, refund or random outcome is inferred from a missing receipt.
+
 The production bundle contains no DTO fixtures. Only test scripts and the external
 QA package contain local fixtures, intercepted in the browser with an explicit
 LOCAL DTO QA banner. They are never inserted as public game history by the app.
@@ -86,9 +97,16 @@ All four homepage paths are byte-identical to previously delivered 7f93bef.
 
 ## Verification and limits
 
-- 95 existing pure UI checks and 69 adapter/transport/replay checks pass using
+- 95 existing pure UI checks and 83 adapter/transport/replay checks pass using
   local DTOs and fetch mocks, including bad types, orphan/conflicting resolution,
   Game/player/round, legacy, prefix, eligibility unknown and anonymous request.
+  The terminal-orphan regression failed on the published initial source, then
+  passed with the guard. Fourteen added assertions cover all three terminal
+  indicators, live pending, partial history, success/empty/abort frozen prefixes,
+  earlier rounds and other players. Typecheck and lint pass; final immutable
+  bundle is rebuilt for the new source. The browser results below belong to the
+  earlier adapter delivery; this narrow decoder/test correction changes no DOM,
+  motion, owner controls or transport, so browser and animation QA are not rerun.
 - Existing devnet viewer, devnet owner and browser-cookie owner checks pass.
 - Build and lint exit0. Four existing warnings remain (DevnetPage warning shifted
   to47 after imports; other three unchanged); existing large smoke bundle warning.

@@ -12,6 +12,7 @@ export function decodePublicDonkeySnapshot(value: unknown, gamePda: string): Pub
   const candidate = decodeCandidateDonkeySnapshot(value, gamePda)
   // Reject contradictory complete journals before any transcript can label a result.
   if (candidate.snapshot.complete) {
+    const terminal = candidate.snapshot.settled || candidate.snapshot.phase === 'Finished' || candidate.snapshot.phase === 'Aborted'
     for (const receipt of candidate.receipts) {
       const input: DonkeyRiskInput = { source: 'confirmed-chain', contract: 'candidate',
         game: gamePda, faction: receipt.faction, epoch: candidate.snapshot.epoch,
@@ -19,7 +20,10 @@ export function decodePublicDonkeySnapshot(value: unknown, gamePda: string): Pub
         actionUsed: null, oracleReady: null, marketPriceUnits: null,
         journalComplete: true, journalThroughSlot: candidate.snapshot.journalThroughSlot,
         events: candidate.receipts }
-      if (projectDonkeyRisk(input).kind === 'unavailable') throw new ChainApiError('invalid')
+      const view = projectDonkeyRisk(input)
+      // Validate the full fetched journal here; a valid frozen replay prefix may
+      // still be pending before its later resolution, even for a finished Game.
+      if (view.kind === 'unavailable' || (terminal && view.kind === 'pending')) throw new ChainApiError('invalid')
     }
   }
   const byId = new Map(candidate.receipts.map((receipt) => [receipt.id, receipt]))
