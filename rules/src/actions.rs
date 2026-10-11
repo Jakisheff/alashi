@@ -11,13 +11,8 @@ use anchor_lang::prelude::Pubkey;
 // ---------- фаза Market ----------
 
 /// Продажа: обычная или в кредит (M4, epoch=1, выручка ×1.25 векселем).
-pub fn sell(
-    game: &mut Game,
-    f: &mut Faction,
-    units: u16,
-    credit: bool,
-) -> Result<u64, GameError> {
-    if credit && game.epoch != EPOCH_90S {
+pub fn sell(game: &mut Game, f: &mut Faction, units: u16, credit: bool) -> Result<u64, GameError> {
+    if credit && !has_90s_rules(game.epoch) {
         return Err(GameError::WrongPhase);
     }
     if game.phase != Phase::Market {
@@ -97,7 +92,7 @@ pub fn barter_propose(
     goods: u16,
     price: u64,
 ) -> Result<u64, GameError> {
-    if game.epoch != EPOCH_90S {
+    if !has_90s_rules(game.epoch) {
         return Err(GameError::WrongPhase);
     }
     if game.phase != Phase::Market {
@@ -128,7 +123,7 @@ pub fn barter_accept(
     f_from: &mut Faction,
     offer_id: u64,
 ) -> Result<(), GameError> {
-    if game.epoch != EPOCH_90S {
+    if !has_90s_rules(game.epoch) {
         return Err(GameError::WrongPhase);
     }
     if game.phase != Phase::Market {
@@ -182,7 +177,7 @@ pub fn produce(game: &Game, f: &mut Faction) -> Result<u16, GameError> {
 
 /// M3: серый канал «челнок» (+3 товара, серой маркер до закрытия фазы).
 pub fn shuttle(game: &Game, f: &mut Faction) -> Result<u16, GameError> {
-    if game.epoch != EPOCH_90S {
+    if !has_90s_rules(game.epoch) {
         return Err(GameError::WrongPhase);
     }
     if game.phase != Phase::Action {
@@ -201,6 +196,9 @@ pub fn shuttle(game: &Game, f: &mut Faction) -> Result<u16, GameError> {
 }
 
 pub fn donkey(game: &Game, f: &mut Faction) -> Result<(), GameError> {
+    if game.epoch == EPOCH_DONKEY_RISK {
+        return Err(GameError::DonkeyOracleInvalid);
+    }
     if game.phase != Phase::Action {
         return Err(GameError::WrongPhase);
     }
@@ -218,6 +216,48 @@ pub fn donkey(game: &Game, f: &mut Faction) -> Result<(), GameError> {
     f.goods += 1;
     f.acted_stamp = game.stamp();
     Ok(())
+}
+
+/// Commit the fee and Action before the epoch-2 oracle result is available.
+pub fn donkey_risk_attempt(game: &Game, f: &mut Faction) -> Result<(), GameError> {
+    if game.epoch != EPOCH_DONKEY_RISK || game.entropy_mode != ENTROPY_SWITCHBOARD {
+        return Err(GameError::DonkeyOracleInvalid);
+    }
+    if game.phase != Phase::Action {
+        return Err(GameError::WrongPhase);
+    }
+    if game.round >= ROUNDS {
+        return Err(GameError::NoMarketRemaining);
+    }
+    if !f.alive {
+        return Err(GameError::NotAlive);
+    }
+    if f.acted_stamp == game.stamp() {
+        return Err(GameError::AlreadyActed);
+    }
+    if f.cash < DONKEY_RISK_FEE {
+        return Err(GameError::NotEnoughCash);
+    }
+    // Check both possible outcomes before taking the nonrefundable fee.
+    if f.goods > u16::MAX - DONKEY_RISK_REWARD {
+        return Err(GameError::DonkeyRewardOverflow);
+    }
+    f.cash -= DONKEY_RISK_FEE;
+    f.acted_stamp = game.stamp();
+    Ok(())
+}
+
+/// Called once after a verified oracle reveal. The caller must attest the VRF.
+pub fn donkey_risk_resolve(f: &mut Faction, success: bool) -> Result<u16, GameError> {
+    if success {
+        f.goods = f
+            .goods
+            .checked_add(DONKEY_RISK_REWARD)
+            .ok_or(GameError::DonkeyRewardOverflow)?;
+        Ok(DONKEY_RISK_REWARD)
+    } else {
+        Ok(0)
+    }
 }
 
 /// R1 (REVIEW_EXTERNAL): индексы валидируются вызывающей стороной ДО
@@ -266,7 +306,7 @@ pub fn roof(
     f_to: &mut Faction,
     tariff: u8,
 ) -> Result<Pubkey, GameError> {
-    if game.epoch != EPOCH_90S {
+    if !has_90s_rules(game.epoch) {
         return Err(GameError::WrongPhase);
     }
     if tariff != ROOF_BLACK && tariff != ROOF_RED {
@@ -300,12 +340,8 @@ pub fn roof(
 }
 
 /// M8: президент вслепую выбирает режим границы (не сжигает ход).
-pub fn set_customs(
-    game: &mut Game,
-    f: &Faction,
-    tight: bool,
-) -> Result<(), GameError> {
-    if game.epoch != EPOCH_90S {
+pub fn set_customs(game: &mut Game, f: &Faction, tight: bool) -> Result<(), GameError> {
+    if !has_90s_rules(game.epoch) {
         return Err(GameError::WrongPhase);
     }
     if game.phase != Phase::Action {
@@ -323,12 +359,8 @@ pub fn set_customs(
 }
 
 /// M9: ставка на слепой аукцион лицензии (эскроу кэша).
-pub fn bid_license(
-    game: &mut Game,
-    f: &mut Faction,
-    amount: u64,
-) -> Result<u64, GameError> {
-    if game.epoch != EPOCH_90S {
+pub fn bid_license(game: &mut Game, f: &mut Faction, amount: u64) -> Result<u64, GameError> {
+    if !has_90s_rules(game.epoch) {
         return Err(GameError::WrongPhase);
     }
     if game.phase != Phase::Action || game.round != AUCTION_ROUND {
@@ -348,10 +380,11 @@ pub fn bid_license(
 /// скрывает yield до покупки. Ончейн-инструкция сохраняет плату и
 /// флаг (байт-в-байт с симулятором), скрывание — задача VRF-режима.
 pub fn inspect_license(game: &Game, f: &mut Faction) -> Result<u64, GameError> {
-    if game.epoch != EPOCH_90S {
+    if !has_90s_rules(game.epoch) {
         return Err(GameError::WrongPhase);
     }
-    if game.license_yield == 0 || !matches!(game.phase, Phase::Market | Phase::Action | Phase::Law) {
+    if game.license_yield == 0 || !matches!(game.phase, Phase::Market | Phase::Action | Phase::Law)
+    {
         return Err(GameError::WrongPhase);
     }
     if f.insider {
@@ -368,7 +401,7 @@ pub fn inspect_license(game: &Game, f: &mut Faction) -> Result<u64, GameError> {
 /// M6: валютчик — обмен всего кэша ↔ твёрдой валюты ×0.8 (спред 20%).
 /// Сервисная операция: любая игровая фаза, ход не сжигает.
 pub fn exchange(game: &Game, f: &mut Faction, to_hard: bool) -> Result<u64, GameError> {
-    if game.epoch != EPOCH_90S {
+    if !has_90s_rules(game.epoch) {
         return Err(GameError::WrongPhase);
     }
     if !matches!(game.phase, Phase::Market | Phase::Action | Phase::Law) {
@@ -443,7 +476,7 @@ pub fn offer_vote(
     buyer_cash: u64,
     price: u64,
 ) -> Result<(), GameError> {
-    if game.epoch != EPOCH_90S {
+    if !has_90s_rules(game.epoch) {
         return Err(GameError::WrongPhase);
     }
     if price == 0 {
@@ -469,7 +502,7 @@ pub fn accept_vote_offer(
     f_buyer: &mut Faction,
     f_seller: &mut Faction,
 ) -> Result<u64, GameError> {
-    if game.epoch != EPOCH_90S {
+    if !has_90s_rules(game.epoch) {
         return Err(GameError::WrongPhase);
     }
     if game.phase != Phase::Law {

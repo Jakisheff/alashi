@@ -145,7 +145,7 @@ pub fn compute_settlement_epoch(
     external_rent: bool,
     rent_in_rank: bool,
 ) -> Result<EpochSettlement> {
-    let epoch_90s = game.epoch == EPOCH_90S;
+    let epoch_90s = has_90s_rules(game.epoch);
     let mut snaps: Vec<FactionSnapshot> = factions
         .iter()
         .map(|f| FactionSnapshot {

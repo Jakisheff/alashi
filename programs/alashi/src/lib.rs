@@ -1,6 +1,7 @@
 pub mod constants {
     pub use alashi_rules::constants::*;
 }
+pub mod donkey_state;
 pub mod error {
     pub use alashi_rules::error::*;
 }
@@ -16,6 +17,7 @@ pub mod state {
 use anchor_lang::prelude::*;
 
 pub use constants::*;
+pub use donkey_state::*;
 pub use instructions::*;
 pub use state::*;
 
@@ -73,6 +75,14 @@ pub mod alashi {
 
     pub fn buy_donkey(ctx: Context<BuyDonkey>) -> Result<()> {
         crate::instructions::donkey::handle_buy_donkey(ctx)
+    }
+
+    pub fn configure_donkey_oracles(ctx: Context<ConfigureDonkeyOracles>) -> Result<()> {
+        crate::instructions::donkey::handle_configure_donkey_oracles(ctx)
+    }
+
+    pub fn attempt_donkey(ctx: Context<AttemptDonkey>) -> Result<()> {
+        crate::instructions::donkey::handle_attempt_donkey(ctx)
     }
 
     pub fn settle<'a>(ctx: Context<'a, Settle<'a>>) -> Result<()> {

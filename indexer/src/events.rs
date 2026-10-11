@@ -14,40 +14,189 @@ pub fn event_disc(name: &str) -> [u8; 8] {
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum ParsedEvent {
-    GameInitialized { game: String, game_id: u64, entry_fee: u64, phase_duration: i64 },
-    FactionJoined { game: String, faction: String, name: String, count: u8 },
-    Produced { game: String, faction: String, goods: u16 },
-    Sold { game: String, faction: String, units: u16, revenue: u64 },
-    GoodsBought { game: String, faction: String, units: u16, cost: u64 },
-    BribeGiven { game: String, from: String, to: String, amount: u64, influence_gained: u16 },
-    DonkeyBought { game: String, faction: String, price: u64 },
-    VoteCast { game: String, faction: String, choice: u8 },
-    VetoCast { game: String, president: String },
-    LawDrawn { game: String, round: u8, card: u8 },
-    LawResult { game: String, round: u8, yes: u32, no: u32, passed: bool },
-    LawVetoed { game: String, round: u8, card: u8 },
-    PhaseAdvanced { game: String, round: u8, phase: u8 },
-    Payout { game: String, wallet: String, rank: u8, amount: u64 },
-    Settled { game: String, pot: u64, rake: u64, paid: u64 },
-    LawCommitted { game: String, randomness: String, commit_slot: u64 },
+    GameInitialized {
+        game: String,
+        game_id: u64,
+        entry_fee: u64,
+        phase_duration: i64,
+    },
+    FactionJoined {
+        game: String,
+        faction: String,
+        name: String,
+        count: u8,
+    },
+    Produced {
+        game: String,
+        faction: String,
+        goods: u16,
+    },
+    Sold {
+        game: String,
+        faction: String,
+        units: u16,
+        revenue: u64,
+    },
+    GoodsBought {
+        game: String,
+        faction: String,
+        units: u16,
+        cost: u64,
+    },
+    BribeGiven {
+        game: String,
+        from: String,
+        to: String,
+        amount: u64,
+        influence_gained: u16,
+    },
+    DonkeyBought {
+        game: String,
+        faction: String,
+        price: u64,
+    },
+    DonkeyAttempted {
+        game: String,
+        faction: String,
+        round: u8,
+        fee: u64,
+    },
+    DonkeyResolved {
+        game: String,
+        faction: String,
+        round: u8,
+        success: bool,
+        goods: u16,
+        fee: u64,
+        reason: u8,
+    },
+    VoteCast {
+        game: String,
+        faction: String,
+        choice: u8,
+    },
+    VetoCast {
+        game: String,
+        president: String,
+    },
+    LawDrawn {
+        game: String,
+        round: u8,
+        card: u8,
+    },
+    LawResult {
+        game: String,
+        round: u8,
+        yes: u32,
+        no: u32,
+        passed: bool,
+    },
+    LawVetoed {
+        game: String,
+        round: u8,
+        card: u8,
+    },
+    PhaseAdvanced {
+        game: String,
+        round: u8,
+        phase: u8,
+    },
+    Payout {
+        game: String,
+        wallet: String,
+        rank: u8,
+        amount: u64,
+    },
+    Settled {
+        game: String,
+        pot: u64,
+        rake: u64,
+        paid: u64,
+    },
+    LawCommitted {
+        game: String,
+        randomness: String,
+        commit_slot: u64,
+    },
     // R18 (REVIEW_EXTERNAL): VRF-ветвь раньше терялась — прерванная
     // партия была неотличима от незавершённой
-    VrfRetry { game: String, round: u8, attempt: u8 },
-    GameAborted { game: String, round: u8 },
+    VrfRetry {
+        game: String,
+        round: u8,
+        attempt: u8,
+    },
+    GameAborted {
+        game: String,
+        round: u8,
+    },
     // SPEC_EPOCH_90S: события M-действий
-    SoldCreditEv { game: String, faction: String, units: u16, promissory: u64 },
-    ShuttledEv { game: String, faction: String, goods: u16, grey: u16 },
-    RoofBought { game: String, from: String, to: String, tariff: u8, price: u64 },
-    CustomsSet { game: String, president: String, tight: bool },
-    LicenseBid { game: String, faction: String, amount: u64, total_bid: u64 },
-    LicenseInsight { game: String, faction: String, yield_amount: u64 },
-    Exchanged { game: String, faction: String, to_hard: bool, got: u64 },
-    VoteOffered { game: String, seller: String, buyer: String, price: u64 },
-    VoteSold { game: String, buyer: String, seller: String, price: u64 },
-    BarterProposed { game: String, from: String, offer: u64, goods: u16, price: u64 },
-    BarterAccepted { game: String, by: String, from: String, offer: u64 },
+    SoldCreditEv {
+        game: String,
+        faction: String,
+        units: u16,
+        promissory: u64,
+    },
+    ShuttledEv {
+        game: String,
+        faction: String,
+        goods: u16,
+        grey: u16,
+    },
+    RoofBought {
+        game: String,
+        from: String,
+        to: String,
+        tariff: u8,
+        price: u64,
+    },
+    CustomsSet {
+        game: String,
+        president: String,
+        tight: bool,
+    },
+    LicenseBid {
+        game: String,
+        faction: String,
+        amount: u64,
+        total_bid: u64,
+    },
+    LicenseInsight {
+        game: String,
+        faction: String,
+        yield_amount: u64,
+    },
+    Exchanged {
+        game: String,
+        faction: String,
+        to_hard: bool,
+        got: u64,
+    },
+    VoteOffered {
+        game: String,
+        seller: String,
+        buyer: String,
+        price: u64,
+    },
+    VoteSold {
+        game: String,
+        buyer: String,
+        seller: String,
+        price: u64,
+    },
+    BarterProposed {
+        game: String,
+        from: String,
+        offer: u64,
+        goods: u16,
+        price: u64,
+    },
+    BarterAccepted {
+        game: String,
+        by: String,
+        from: String,
+        offer: u64,
+    },
 }
-
 
 impl ParsedEvent {
     pub fn game(&self) -> &str {
@@ -59,6 +208,8 @@ impl ParsedEvent {
             | Self::GoodsBought { game, .. }
             | Self::BribeGiven { game, .. }
             | Self::DonkeyBought { game, .. }
+            | Self::DonkeyAttempted { game, .. }
+            | Self::DonkeyResolved { game, .. }
             | Self::VoteCast { game, .. }
             | Self::VetoCast { game, .. }
             | Self::LawDrawn { game, .. }
@@ -147,6 +298,23 @@ pub fn parse_log_line(line: &str) -> Option<ParsedEvent> {
             game: e.game.to_string(),
             faction: e.faction.to_string(),
             price: e.price,
+        })
+    } else if raw.starts_with(&event_disc("event:DonkeyAttempted")) {
+        dec!(DonkeyAttempted, body).map(|e| ParsedEvent::DonkeyAttempted {
+            game: e.game.to_string(),
+            faction: e.faction.to_string(),
+            round: e.round,
+            fee: e.fee,
+        })
+    } else if raw.starts_with(&event_disc("event:DonkeyResolved")) {
+        dec!(DonkeyResolved, body).map(|e| ParsedEvent::DonkeyResolved {
+            game: e.game.to_string(),
+            faction: e.faction.to_string(),
+            round: e.round,
+            success: e.success,
+            goods: e.goods,
+            fee: e.fee,
+            reason: e.reason,
         })
     } else if raw.starts_with(&event_disc("event:VoteCast")) {
         dec!(VoteCast, body).map(|e| {
@@ -302,5 +470,53 @@ pub fn parse_log_line(line: &str) -> Option<ParsedEvent> {
         })
     } else {
         None
+    }
+}
+
+#[cfg(test)]
+mod donkey_tests {
+    use super::*;
+    use anchor_lang::{prelude::Pubkey, Event};
+
+    #[test]
+    fn distinct_attempt_and_verified_or_abort_resolution_decode() {
+        let game = Pubkey::new_from_array([7; 32]);
+        let faction = Pubkey::new_from_array([8; 32]);
+        let attempt = DonkeyAttempted {
+            game,
+            faction,
+            round: 2,
+            fee: 5_000_000,
+        };
+        let line = format!(
+            "Program data: {}",
+            base64::engine::general_purpose::STANDARD.encode(attempt.data())
+        );
+        assert!(matches!(
+            parse_log_line(&line),
+            Some(ParsedEvent::DonkeyAttempted {
+                round: 2,
+                fee: 5_000_000,
+                ..
+            })
+        ));
+        for (reason, success, goods) in [(0, true, 5), (0, false, 0), (1, false, 0)] {
+            let event = DonkeyResolved {
+                game,
+                faction,
+                round: 2,
+                success,
+                goods,
+                fee: 5_000_000,
+                reason,
+            };
+            let line = format!(
+                "Program data: {}",
+                base64::engine::general_purpose::STANDARD.encode(event.data())
+            );
+            assert!(
+                matches!(parse_log_line(&line), Some(ParsedEvent::DonkeyResolved { round: 2, fee: 5_000_000, reason: r, .. }) if r == reason)
+            );
+        }
     }
 }
