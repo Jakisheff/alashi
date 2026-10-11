@@ -81,6 +81,14 @@ pub mod alashi {
         crate::instructions::donkey::handle_configure_donkey_oracles(ctx)
     }
 
+    pub fn init_donkey_source(
+        ctx: Context<InitDonkeySource>,
+        round: u8,
+        recent_slot: u64,
+    ) -> Result<()> {
+        crate::instructions::donkey::handle_init_donkey_source(ctx, round, recent_slot)
+    }
+
     pub fn attempt_donkey(ctx: Context<AttemptDonkey>) -> Result<()> {
         crate::instructions::donkey::handle_attempt_donkey(ctx)
     }
@@ -89,8 +97,19 @@ pub mod alashi {
         crate::instructions::settle::handle_settle(ctx)
     }
 
-    pub fn reveal_law(ctx: Context<RevealLaw>) -> Result<()> {
+    pub fn reveal_law<'info>(ctx: Context<'info, RevealLaw<'info>>) -> Result<()> {
         crate::instructions::reveal_law::handle_reveal_law(ctx)
+    }
+
+    pub fn reveal_donkey_law<'info>(
+        ctx: Context<'info, RevealDonkeyLaw<'info>>,
+        signature: [u8; 64],
+        recovery_id: u8,
+        value: [u8; 32],
+    ) -> Result<()> {
+        crate::instructions::reveal_law::handle_reveal_donkey_law(
+            ctx, signature, recovery_id, value,
+        )
     }
 
     pub fn settle_refund<'a>(ctx: Context<'a, SettleRefund<'a>>) -> Result<()> {
@@ -101,7 +120,7 @@ pub mod alashi {
         crate::instructions::close_game::handle_close_game(ctx)
     }
 
-    pub fn advance(ctx: Context<Advance>) -> Result<()> {
+    pub fn advance<'info>(ctx: Context<'info, Advance<'info>>) -> Result<()> {
         crate::instructions::advance::handle_advance(ctx)
     }
 

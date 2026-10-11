@@ -556,6 +556,15 @@ fn owner_chain_wishes_are_private_durable_and_need_a_later_matching_receipt() {
 
     let path = format!("/agents/{RECORD}/owner/chain-wishes");
     let text = "Private: produce next action";
+    let too_long = request(
+        port,
+        "POST",
+        &path,
+        json!({"game_pda":game,"client_wish_id":"too-long","intent":"produce","text":"😀".repeat(141)}),
+        Some(&cookie),
+        Some(ORIGIN),
+    );
+    assert_eq!(too_long.2["error"], "bad_chain_wish");
     let first = json!({"game_pda":game,"client_wish_id":"first","intent":"produce","text":text});
     assert_eq!(
         request(
@@ -604,11 +613,12 @@ fn owner_chain_wishes_are_private_durable_and_need_a_later_matching_receipt() {
         409
     );
     for i in 2..=3 {
+        let instruction = if i == 2 { "😀".repeat(140) } else { text.to_string() };
         let row = request(
             port,
             "POST",
             &path,
-            json!({"game_pda":game,"client_wish_id":format!("wish-{i}"),"intent":"produce","text":text}),
+            json!({"game_pda":game,"client_wish_id":format!("wish-{i}"),"intent":"produce","text":instruction}),
             Some(&cookie),
             Some(ORIGIN),
         );

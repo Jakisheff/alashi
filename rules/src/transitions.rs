@@ -31,12 +31,12 @@ pub fn validate_vrf_seed_slot(seed_slot: u64, slot: u64) -> Result<(), GameError
     }
 }
 
-/// Epoch 2 commits the preconfigured source in the same transaction as
-/// Action→Law. Switchboard commits to the following slot, before its value
-/// can be revealed. Keep the historical modes' previous-slot rule intact.
+/// The deployed Switchboard program writes the previous slot when Alashi
+/// commits the preconfigured source by CPI during Action→Law. Source authority
+/// and the per-round one-shot guard belong to Alashi, not the caller.
 pub fn validate_donkey_commit_slot(seed_slot: u64, slot: u64) -> Result<(), GameError> {
-    match slot.checked_add(1) {
-        Some(next) if seed_slot == next => Ok(()),
+    match slot.checked_sub(1) {
+        Some(previous) if seed_slot == previous => Ok(()),
         _ => Err(GameError::RandomnessNotReady),
     }
 }
@@ -228,8 +228,8 @@ fn advance_inner(
             }
             if game.entropy_mode == ENTROPY_SWITCHBOARD {
                 // Коммит проверен вызывающей стороной (owner Switchboard);
-                // epoch 2 pins the following slot atomically with the provider
-                // commit, while legacy modes retain the previous-slot rule.
+                // epoch 2 pins the source committed by Alashi's own CPI;
+                // the caller cannot provide a precommitted source.
                 // The matching freshness check above runs before mutation.
                 let (acc, seed_slot) =
                     vrf_commit.ok_or(GameError::RandomnessMismatch)?;
@@ -485,11 +485,11 @@ mod tests {
     use super::*;
 
     #[test]
-    fn epoch2_future_commit_does_not_change_legacy_slot_rule() {
-        assert!(validate_donkey_commit_slot(201, 200).is_ok());
-        assert!(validate_donkey_commit_slot(199, 200).is_err());
-        assert!(validate_donkey_commit_slot(202, 200).is_err());
-        assert!(validate_donkey_commit_slot(u64::MAX, u64::MAX).is_err());
+    fn epoch2_cpi_commit_requires_deployed_previous_slot() {
+        assert!(validate_donkey_commit_slot(199, 200).is_ok());
+        assert!(validate_donkey_commit_slot(201, 200).is_err());
+        assert!(validate_donkey_commit_slot(198, 200).is_err());
+        assert!(validate_donkey_commit_slot(0, 0).is_err());
         assert!(validate_vrf_seed_slot(199, 200).is_ok());
         assert!(validate_vrf_seed_slot(201, 200).is_err());
     }

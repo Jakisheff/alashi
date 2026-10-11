@@ -1,11 +1,21 @@
 use crate::{
-    constants::*, donkey_state::DonkeyOracleConfig, error::GameError, events::*, state::*,
+    constants::*,
+    donkey_state::{oracle_queue, DonkeyOracleConfig},
+    error::GameError,
+    events::*,
+    state::*,
 };
 use alashi_rules::transitions;
 use anchor_lang::prelude::*;
+use anchor_lang::solana_program::{
+    instruction::{AccountMeta, Instruction},
+    program::invoke_signed,
+};
 use switchboard_on_demand::accounts::RandomnessAccountData;
 use switchboard_on_demand::ON_DEMAND_DEVNET_PID;
 use switchboard_on_demand::ON_DEMAND_MAINNET_PID;
+
+const RANDOMNESS_COMMIT_DISCRIMINATOR: [u8; 8] = [52, 170, 152, 201, 179, 133, 242, 141];
 
 #[derive(Accounts)]
 pub struct Advance<'info> {
@@ -54,37 +64,119 @@ fn verify_switchboard(rng: &AccountInfo, clock_slot: u64) -> Result<(Pubkey, u64
     Ok((*rng.key, data.seed_slot))
 }
 
-fn verify_donkey_round_rng(
-    rng: &AccountInfo,
-    oracle: &DonkeyOracleConfig,
+fn commit_donkey_round_rng<'info>(
+    rng: &AccountInfo<'info>,
+    queue: &AccountInfo<'info>,
+    selected_oracle: &AccountInfo<'info>,
+    provider: &AccountInfo<'info>,
+    hashes: &AccountInfo<'info>,
+    oracle: &Account<'info, DonkeyOracleConfig>,
+    game_key: Pubkey,
     round: u8,
     clock_slot: u64,
 ) -> Result<(Pubkey, u64)> {
     require!(round > 0 && round <= ROUNDS, GameError::DonkeyOracleInvalid);
+    let index = (round - 1) as usize;
+    require!(
+        oracle.committed_rounds_mask & (1 << index) == 0,
+        GameError::DonkeyOracleInvalid
+    );
     require_keys_eq!(
-        oracle.accounts[(round - 1) as usize],
+        oracle.accounts[index],
         *rng.key,
         GameError::RandomnessMismatch
     );
-    require!(
-        rng.owner.as_ref() == ON_DEMAND_DEVNET_PID.as_ref()
-            || rng.owner.as_ref() == ON_DEMAND_MAINNET_PID.as_ref(),
-        GameError::RandomnessMismatch
+    require_keys_eq!(*queue.key, oracle.queue, GameError::DonkeyOracleInvalid);
+    require_keys_eq!(
+        *selected_oracle.key,
+        oracle.oracles[index],
+        GameError::DonkeyOracleInvalid
     );
-    let data = RandomnessAccountData::parse(rng.data.borrow())
+    require_keys_eq!(
+        *provider.key,
+        Pubkey::new_from_array(ON_DEMAND_DEVNET_PID.to_bytes()),
+        GameError::DonkeyOracleInvalid
+    );
+    require!(
+        provider.executable && rng.is_writable && selected_oracle.is_writable,
+        GameError::DonkeyOracleInvalid
+    );
+    require_keys_eq!(*rng.owner, *provider.key, GameError::RandomnessMismatch);
+    require_keys_eq!(*queue.owner, *provider.key, GameError::DonkeyOracleInvalid);
+    require_keys_eq!(
+        *selected_oracle.owner,
+        *provider.key,
+        GameError::DonkeyOracleInvalid
+    );
+    require_keys_eq!(
+        *hashes.key,
+        solana_sysvar::slot_hashes::ID,
+        GameError::InvalidSettleSet
+    );
+    require_keys_eq!(
+        oracle_queue(selected_oracle)?,
+        oracle.queue,
+        GameError::DonkeyOracleInvalid
+    );
+    let before = RandomnessAccountData::parse(rng.data.borrow())
         .map_err(|_| GameError::RandomnessMismatch)?;
-    transitions::validate_donkey_commit_slot(data.seed_slot, clock_slot)?;
-    require!(data.reveal_slot == 0, GameError::RandomnessNotReady);
     require!(
-        data.queue.as_ref() == oracle.queue.as_ref()
-            && data.authority.as_ref() == oracle.authority.as_ref(),
+        before.seed_slot == 0 && before.reveal_slot == 0,
+        GameError::DonkeyOracleInvalid
+    );
+    require!(
+        before.queue.as_ref() == oracle.queue.as_ref()
+            && before.authority.as_ref() == oracle.key().as_ref(),
+        GameError::RandomnessMismatch
+    );
+    require_keys_eq!(
+        oracle.authority,
+        oracle.key(),
+        GameError::DonkeyOracleInvalid
+    );
+    // `parse` holds a Ref into source data; the provider needs a mutable
+    // borrow of the same account during CPI.
+    drop(before);
+    let ix = Instruction {
+        program_id: *provider.key,
+        accounts: vec![
+            AccountMeta::new(*rng.key, false),
+            AccountMeta::new_readonly(*queue.key, false),
+            AccountMeta::new(*selected_oracle.key, false),
+            AccountMeta::new_readonly(*hashes.key, false),
+            AccountMeta::new_readonly(oracle.key(), true),
+        ],
+        data: RANDOMNESS_COMMIT_DISCRIMINATOR.to_vec(),
+    };
+    let bump = [oracle.bump];
+    let seeds: &[&[u8]] = &[DONKEY_ORACLE_SEED, game_key.as_ref(), &bump];
+    invoke_signed(
+        &ix,
+        &[
+            rng.clone(),
+            queue.clone(),
+            selected_oracle.clone(),
+            hashes.clone(),
+            oracle.to_account_info(),
+            provider.clone(),
+        ],
+        &[seeds],
+    )?;
+    let after = RandomnessAccountData::parse(rng.data.borrow())
+        .map_err(|_| GameError::RandomnessMismatch)?;
+    transitions::validate_donkey_commit_slot(after.seed_slot, clock_slot)?;
+    require!(after.reveal_slot == 0, GameError::RandomnessNotReady);
+    require!(
+        after.queue.as_ref() == oracle.queue.as_ref()
+            && after.authority.as_ref() == oracle.key().as_ref()
+            && after.oracle.as_ref() == selected_oracle.key.as_ref(),
         GameError::RandomnessMismatch
     );
     require!(
-        data.seed_slot > oracle.max_attempt_slot,
+        after.seed_slot > oracle.max_attempt_slot,
         GameError::RandomnessNotReady
     );
-    Ok((*rng.key, data.seed_slot))
+    Ok((*rng.key, after.seed_slot))
 }
 
 fn needs_donkey_config(game: &Game) -> bool {
@@ -92,7 +184,7 @@ fn needs_donkey_config(game: &Game) -> bool {
         && !(game.phase == Phase::Lobby && game.faction_count < MIN_FACTIONS)
 }
 
-pub fn handle_advance(ctx: Context<Advance>) -> Result<()> {
+pub fn handle_advance<'info>(ctx: Context<'info, Advance<'info>>) -> Result<()> {
     let clock = Clock::get()?;
     let now = clock.unix_timestamp;
     let gkey = ctx.accounts.game.key();
@@ -101,16 +193,25 @@ pub fn handle_advance(ctx: Context<Advance>) -> Result<()> {
     let past_commit_grace = game.epoch == EPOCH_DONKEY_RISK
         && game.phase == Phase::Action
         && game.entropy_mode == ENTROPY_SWITCHBOARD
-        && now >= game.phase_ends_at.saturating_add(DONKEY_COMMIT_GRACE_SECONDS);
-    let can_abort_uncommitted = past_commit_grace
-        && ctx.remaining_accounts.len() == game.faction_count as usize + 1;
+        && now
+            >= game
+                .phase_ends_at
+                .saturating_add(DONKEY_COMMIT_GRACE_SECONDS);
+    let can_abort_uncommitted =
+        past_commit_grace && ctx.remaining_accounts.len() == game.faction_count as usize + 1;
     let wants_rng = game.phase == Phase::Action
         && game.entropy_mode == ENTROPY_SWITCHBOARD
         && !past_commit_grace;
     // A Lobby with too few factions must still be able to abort if an admin
     // never configured the oracle. It cannot enter Market without the PDA.
     let needs_config = needs_donkey_config(game);
-    let expected = game.faction_count as usize + usize::from(needs_config) + usize::from(wants_rng);
+    let epoch2_commit = wants_rng && game.epoch == EPOCH_DONKEY_RISK;
+    // Epoch 2 commits inside this instruction: configured source, queue,
+    // preselected oracle, and provider executable follow the config PDA.
+    let expected = game.faction_count as usize
+        + usize::from(needs_config)
+        + usize::from(wants_rng)
+        + if epoch2_commit { 3 } else { 0 };
     require!(
         ctx.remaining_accounts.len() == expected,
         GameError::InvalidFactionSet
@@ -166,10 +267,21 @@ pub fn handle_advance(ctx: Context<Advance>) -> Result<()> {
 
     // энтропия фазы: VRF-коммит для карты закона в режиме 1
     let vrf_commit = if wants_rng {
-        let rng_ai =
-            ctx.remaining_accounts[game.faction_count as usize + usize::from(needs_config)].clone();
-        Some(if let Some(config) = oracle.as_ref() {
-            verify_donkey_round_rng(&rng_ai, config, game.round, clock.slot)?
+        let source_index = game.faction_count as usize + usize::from(needs_config);
+        let rng_ai = ctx.remaining_accounts[source_index].clone();
+        Some(if epoch2_commit {
+            let config = oracle.as_ref().ok_or(GameError::DonkeyOracleInvalid)?;
+            commit_donkey_round_rng(
+                &rng_ai,
+                &ctx.remaining_accounts[source_index + 1],
+                &ctx.remaining_accounts[source_index + 2],
+                &ctx.remaining_accounts[source_index + 3],
+                &ctx.accounts.hashes.to_account_info(),
+                config,
+                gkey,
+                game.round,
+                clock.slot,
+            )?
         } else {
             verify_switchboard(&rng_ai, clock.slot)?
         })
@@ -194,6 +306,10 @@ pub fn handle_advance(ctx: Context<Advance>) -> Result<()> {
     } else {
         transitions::advance(game, &mut refs, now, clock.slot, seed, vrf_commit)?
     };
+    if epoch2_commit && res.committed_vrf.is_some() {
+        let config = oracle.as_mut().ok_or(GameError::DonkeyOracleInvalid)?;
+        config.committed_rounds_mask |= 1 << (prev_round - 1);
+    }
 
     // события из результата перехода
     if let Some((randomness, commit_slot)) = res.committed_vrf {

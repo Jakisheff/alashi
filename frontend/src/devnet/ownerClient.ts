@@ -1,3 +1,4 @@
+import { inspectOwnerWish } from '../owner/wishText.ts'
 import { createLiveApi, LiveApiError, object, validRecord } from '../live/api/client.ts'
 import { validBase58, type ChainFaction } from './client.ts'
 export const CHAIN_INTENTS = ['produce', 'sell_one', 'buy_one', 'vote_yes', 'vote_no'] as const
@@ -54,7 +55,7 @@ export function createChainOwnerApi(prefix = '', fetcher: typeof fetch = fetch) 
       return projectChainWishes(await request(record, `?game=${encodeURIComponent(game)}&after=${number(after)}&limit=100`, signal), game, faction)
     },
     submit: async (record: string, body: ChainPending, signal?: AbortSignal) => {
-      if (!validBase58(body.game_pda) || !CHAIN_INTENTS.includes(body.intent) || !body.text.trim() || new TextEncoder().encode(body.text).length > 512 || !/^[a-zA-Z0-9-]{1,128}$/.test(body.client_wish_id) || Array.from(body.text).some((c) => c.charCodeAt(0) < 32 || c.charCodeAt(0) === 127)) throw new LiveApiError('bad_wish')
+      if (!validBase58(body.game_pda) || !CHAIN_INTENTS.includes(body.intent) || !inspectOwnerWish(body.text).valid || !/^[a-zA-Z0-9-]{1,128}$/.test(body.client_wish_id)) throw new LiveApiError('bad_wish')
       const v = await request(record, '', signal, body)
       if (v.game_pda !== body.game_pda || v.status !== 'received') invalid()
       return { id: text(v.wish_id, 128), remaining: quota(v.remaining) }
