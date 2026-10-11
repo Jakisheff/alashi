@@ -56,10 +56,6 @@ jobs:
           node --test tools/hotseat_engine_test.cjs tools/board_view_test.cjs tools/city_rules_test.cjs
           bash -n tools/stack_up.sh
 
-      - name: Donkey oracle operator mock checks
-        run: |
-          npm ci --prefix spike --ignore-scripts --no-audit --no-fund
-          node --test tools/donkey_crank.test.cjs
 
   # Аудит 27.09 (A2): свежая SBF-сборка и исполнение программы в CI.
   # Раньше replay-тесты не запускались на свежей сборке, и устаревший

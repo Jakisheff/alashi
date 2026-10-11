@@ -757,6 +757,7 @@ fn ix_advance_epoch2(
 
 fn advance_instruction(
     current: &state::Game,
+    now: i64,
     crank: Pubkey,
     game: Pubkey,
     factions: &[Pubkey],
@@ -766,8 +767,14 @@ fn advance_instruction(
     }
     // The operator tool owns Action→Law: it atomically commits the exact
     // configured Switchboard source and advances the game. A standalone bot
-    // transaction is never a retry substitute for that atomic boundary.
-    if current.phase == state::Phase::Action {
+    // transaction is never a retry substitute for that atomic boundary. Only
+    // the canonical post-grace technical abort may omit the randomness account.
+    if current.phase == state::Phase::Action
+        && now
+            < current
+                .phase_ends_at
+                .saturating_add(constants::DONKEY_COMMIT_GRACE_SECONDS)
+    {
         return Err(DonkeyRiskReason::CrankUnavailable);
     }
     Ok(ix_advance_epoch2(
@@ -1072,6 +1079,30 @@ fn run_epoch2_donkey(
     }
 }
 
+/// Normalizes only a successful `getTransaction` result for event proof.
+/// Program logs are emitted before a transaction can still roll back, so a
+/// non-null `meta.err` must never clear a durable pending donkey receipt.
+fn confirmed_transaction_receipt(
+    signature: &str,
+    transaction: &serde_json::Value,
+) -> Option<serde_json::Value> {
+    let slot = transaction.get("slot")?.as_u64()?;
+    let meta = transaction.get("meta")?.as_object()?;
+    if !meta.get("err")?.is_null() {
+        return None;
+    }
+    let logs = meta.get("logMessages")?.as_array()?;
+    if !logs.iter().all(serde_json::Value::is_string) {
+        return None;
+    }
+    Some(serde_json::json!({
+        "status": "confirmed",
+        "signature": signature,
+        "slot": slot,
+        "log_messages": logs,
+    }))
+}
+
 fn find_donkey_resolution(
     rpc: &RpcClient,
     pending: &DonkeyPending,
@@ -1093,10 +1124,12 @@ fn find_donkey_resolution(
             RpcRequest::GetTransaction,
             serde_json::json!([signature, {"encoding":"json", "commitment":"confirmed", "maxSupportedTransactionVersion":0}]),
         ).map_err(|_| ())?;
-        let receipt = serde_json::json!({
-            "status":"confirmed", "signature":signature, "slot":receipt["slot"],
-            "log_messages":receipt["meta"]["logMessages"],
-        });
+        let Some(receipt) = confirmed_transaction_receipt(signature, &receipt) else {
+            // Keep the durable receipt pending when RPC data is malformed or
+            // describes a rolled-back transaction. A later canonical receipt
+            // may still prove the exact resolution.
+            continue;
+        };
         if let Some(resolution) = donkey_risk::verified_resolution(
             &receipt,
             pending.game,
@@ -2028,15 +2061,15 @@ fn host_timing(args: &[String]) -> Result<(i64, i64), String> {
 #[cfg(test)]
 mod runner_mode_tests {
     use super::{
-        advance_instruction, barter_demo_allowed, donkey_risk_eligibility, epoch_for_barter_demo,
-        ix_attempt_donkey, ix_barter_accept, ix_barter_propose, ix_configure_donkey_oracles,
-        ix_donkey, ix_initialize, ix_join_epoch2, may_auto_airdrop, may_join,
-        DonkeyRiskEligibility, DonkeyRiskInput, DonkeyRiskReason, DONKEY_RISK_FEE,
-        DONKEY_RISK_GOODS,
+        advance_instruction, barter_demo_allowed, confirmed_transaction_receipt,
+        donkey_risk_eligibility, epoch_for_barter_demo, ix_attempt_donkey, ix_barter_accept,
+        ix_barter_propose, ix_configure_donkey_oracles, ix_donkey, ix_initialize, ix_join_epoch2,
+        may_auto_airdrop, may_join, DonkeyRiskEligibility, DonkeyRiskInput, DonkeyRiskReason,
+        DONKEY_RISK_FEE, DONKEY_RISK_GOODS,
     };
-    use alashi::{constants, instruction, state};
-    use anchor_lang::prelude::Pubkey;
-    use anchor_lang::AnchorDeserialize;
+    use alashi::{constants, events::DonkeyResolved, id, instruction, state};
+    use anchor_lang::{prelude::Pubkey, AnchorDeserialize, Event};
+    use serde_json::json;
     use std::os::unix::fs::PermissionsExt;
     #[test]
     fn resume_never_joins_a_missing_faction() {
@@ -2202,10 +2235,16 @@ mod runner_mode_tests {
         game.entropy_mode = constants::ENTROPY_SWITCHBOARD;
         game.phase = state::Phase::Action;
         game.round = 1;
+        game.phase_ends_at = 100;
         assert_eq!(
-            advance_instruction(&game, Pubkey::new_unique(), Pubkey::new_unique(), &[]),
+            advance_instruction(&game, 129, Pubkey::new_unique(), Pubkey::new_unique(), &[]),
             Err(DonkeyRiskReason::CrankUnavailable)
         );
+        let abort =
+            advance_instruction(&game, 130, Pubkey::new_unique(), Pubkey::new_unique(), &[])
+                .unwrap();
+        assert_eq!(abort.accounts.len(), 4);
+        assert!(abort.accounts[3].is_writable);
     }
 
     #[test]
@@ -2278,6 +2317,68 @@ mod runner_mode_tests {
             DonkeyRiskEligibility::Ineligible(DonkeyRiskReason::Pending)
         );
         super::clear_donkey_pending(&path).unwrap();
+    }
+
+    fn b64_encode(bytes: &[u8]) -> String {
+        const TABLE: &[u8; 64] =
+            b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+        let mut out = String::new();
+        for chunk in bytes.chunks(3) {
+            let a = chunk[0];
+            let b = *chunk.get(1).unwrap_or(&0);
+            let c = *chunk.get(2).unwrap_or(&0);
+            out.push(TABLE[(a >> 2) as usize] as char);
+            out.push(TABLE[((a & 3) << 4 | b >> 4) as usize] as char);
+            out.push(if chunk.len() > 1 {
+                TABLE[((b & 15) << 2 | c >> 6) as usize] as char
+            } else {
+                '='
+            });
+            out.push(if chunk.len() > 2 {
+                TABLE[(c & 63) as usize] as char
+            } else {
+                '='
+            });
+        }
+        out
+    }
+
+    #[test]
+    fn failed_or_malformed_transaction_logs_never_prove_donkey_resolution() {
+        let game = Pubkey::new_unique();
+        let faction = Pubkey::new_unique();
+        let event = DonkeyResolved {
+            game,
+            faction,
+            round: 2,
+            success: false,
+            goods: 0,
+            fee: DONKEY_RISK_FEE,
+            reason: 1,
+        };
+        let program = id().to_string();
+        let logs = vec![
+            format!("Program {program} invoke [1]"),
+            format!("Program data: {}", b64_encode(&event.data())),
+            format!("Program {program} failed: custom program error"),
+        ];
+        let failed = json!({"slot": 9, "meta": {"err": {"InstructionError": [0, "Custom"]}, "logMessages": logs}});
+        assert!(confirmed_transaction_receipt("failed-sig", &failed).is_none());
+
+        let malformed = json!({"slot": "9", "meta": {"err": null, "logMessages": [1]}});
+        assert!(confirmed_transaction_receipt("bad-sig", &malformed).is_none());
+        assert!(confirmed_transaction_receipt("null-sig", &serde_json::Value::Null).is_none());
+
+        let valid = json!({"slot": 9, "meta": {"err": null, "logMessages": [
+            format!("Program {program} invoke [1]"),
+            format!("Program data: {}", b64_encode(&event.data())),
+            format!("Program {program} success"),
+        ]}});
+        let receipt = confirmed_transaction_receipt("valid-sig", &valid).unwrap();
+        assert_eq!(
+            super::donkey_risk::verified_resolution(&receipt, game, faction, 2, DONKEY_RISK_FEE,),
+            Some(super::donkey_risk::Resolution::Abort)
+        );
     }
 
     #[test]
@@ -2730,7 +2831,7 @@ fn main() {
             state::Phase::Lobby => {
                 if tnow + 2 >= g.phase_ends_at {
                     println!("[lobby] advance");
-                    match advance_instruction(&g, bots[0].kp.pubkey(), game, &faction_keys) {
+                    match advance_instruction(&g, tnow, bots[0].kp.pubkey(), game, &faction_keys) {
                         Ok(ix) => { send_ix(&rpc, &bots[0].kp, ix); }
                         Err(DonkeyRiskReason::CrankUnavailable) if g.phase == state::Phase::Action => {
                             if hb % 5 == 1 { eprintln!("[action r{}] waiting for external atomic Switchboard commit + Advance", g.round); }
@@ -2883,7 +2984,7 @@ fn main() {
                 }
                 if tnow >= g.phase_ends_at {
                     println!("[market r{}] advance", g.round);
-                    match advance_instruction(&g, bots[0].kp.pubkey(), game, &faction_keys) {
+                    match advance_instruction(&g, tnow, bots[0].kp.pubkey(), game, &faction_keys) {
                         Ok(ix) => { send_ix(&rpc, &bots[0].kp, ix); }
                         Err(DonkeyRiskReason::CrankUnavailable) if g.phase == state::Phase::Action => {
                             if hb % 5 == 1 { eprintln!("[action r{}] waiting for external atomic Switchboard commit + Advance", g.round); }
@@ -3083,7 +3184,7 @@ fn main() {
                 }
                 if tnow >= g.phase_ends_at {
                     println!("[action r{}] advance", g.round);
-                    match advance_instruction(&g, bots[0].kp.pubkey(), game, &faction_keys) {
+                    match advance_instruction(&g, tnow, bots[0].kp.pubkey(), game, &faction_keys) {
                         Ok(ix) => { send_ix(&rpc, &bots[0].kp, ix); }
                         Err(DonkeyRiskReason::CrankUnavailable) if g.phase == state::Phase::Action => {
                             if hb % 5 == 1 { eprintln!("[action r{}] waiting for external atomic Switchboard commit + Advance", g.round); }
@@ -3195,7 +3296,7 @@ fn main() {
                 }
                 if tnow >= g.phase_ends_at {
                     println!("[law r{}] advance", g.round);
-                    match advance_instruction(&g, bots[0].kp.pubkey(), game, &faction_keys) {
+                    match advance_instruction(&g, tnow, bots[0].kp.pubkey(), game, &faction_keys) {
                         Ok(ix) => { send_ix(&rpc, &bots[0].kp, ix); }
                         Err(DonkeyRiskReason::CrankUnavailable) if g.phase == state::Phase::Action => {
                             if hb % 5 == 1 { eprintln!("[action r{}] waiting for external atomic Switchboard commit + Advance", g.round); }
