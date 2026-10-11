@@ -2,7 +2,7 @@ use {
     anchor_lang::{
         prelude::Pubkey,
         solana_program::{instruction::Instruction, system_program},
-        AccountDeserialize, InstructionData, ToAccountMetas,
+        AccountDeserialize, AccountSerialize, InstructionData, ToAccountMetas,
     },
     litesvm::LiteSVM,
     solana_keypair::Keypair,
@@ -1508,6 +1508,433 @@ fn test_expired_lobby_refunds_and_closes_empty_or_single_player() {
         assert!(svm.get_account(&game).is_none_or(|a| a.lamports == 0 && a.data.is_empty()));
         if count == 1 { assert!(svm.get_account(&faction).is_none_or(|a| a.lamports == 0 && a.data.is_empty())); }
     }
+}
+
+#[test]
+fn epoch2_unconfigured_lobby_rejects_join_before_fee_and_can_abort() {
+    let (mut svm, admin) = setup();
+    let player = Keypair::new();
+    svm.airdrop(&player.pubkey(), 2_000_000_000).unwrap();
+    let id = 9_202;
+    let game = game_pda(id);
+    let faction = faction_pda(&game, &player.pubkey());
+    let initialize = alashi::instruction::Initialize {
+        game_id: id,
+        entry_fee: FEE,
+        phase_duration: 10,
+        entropy_mode: alashi::constants::ENTROPY_SWITCHBOARD,
+        epoch: alashi::constants::EPOCH_DONKEY_RISK,
+    };
+    let ix = Instruction::new_with_bytes(
+        alashi::id(),
+        &initialize.data(),
+        alashi::accounts::Initialize {
+            admin: admin.pubkey(),
+            game,
+            system_program: system_program::ID,
+        }
+        .to_account_metas(None),
+    );
+    assert!(send(&mut svm, &admin, ix));
+    let player_before = svm.get_account(&player.pubkey()).unwrap().lamports;
+    let game_before = svm.get_account(&game).unwrap().lamports;
+    assert!(!send(
+        &mut svm,
+        &player,
+        ix_join("Unconfigured", player.pubkey(), game, faction)
+    ));
+    // A rejected transaction still pays the LiteSVM signature fee, but it
+    // must not transfer the game's entry fee or create a faction.
+    assert_eq!(
+        player_before - svm.get_account(&player.pubkey()).unwrap().lamports,
+        5_000
+    );
+    assert_eq!(svm.get_account(&game).unwrap().lamports, game_before);
+    assert_eq!(game_state(&svm, &game).faction_count, 0);
+    assert!(svm.get_account(&faction).is_none());
+
+    let mut clock = svm.get_sysvar::<solana_clock::Clock>();
+    clock.unix_timestamp = game_state(&svm, &game).phase_ends_at;
+    svm.set_sysvar(&clock);
+    set_law_seed(&mut svm, 0);
+    assert!(send(
+        &mut svm,
+        &admin,
+        ix_advance(admin.pubkey(), game, vec![])
+    ));
+    assert_eq!(game_state(&svm, &game).phase, alashi::state::Phase::Aborted);
+}
+
+#[test]
+fn epoch2_configured_lobby_accepts_join() {
+    let (mut svm, admin) = setup();
+    let player = Keypair::new();
+    svm.airdrop(&player.pubkey(), 2_000_000_000).unwrap();
+    let id = 9_203;
+    let game = game_pda(id);
+    let faction = faction_pda(&game, &player.pubkey());
+    let oracle = Pubkey::find_program_address(
+        &[alashi::constants::DONKEY_ORACLE_SEED, game.as_ref()],
+        &alashi::id(),
+    )
+    .0;
+    let initialize = alashi::instruction::Initialize {
+        game_id: id,
+        entry_fee: FEE,
+        phase_duration: 10,
+        entropy_mode: alashi::constants::ENTROPY_SWITCHBOARD,
+        epoch: alashi::constants::EPOCH_DONKEY_RISK,
+    };
+    assert!(send(
+        &mut svm,
+        &admin,
+        Instruction::new_with_bytes(
+            alashi::id(),
+            &initialize.data(),
+            alashi::accounts::Initialize {
+                admin: admin.pubkey(),
+                game,
+                system_program: system_program::ID,
+            }
+            .to_account_metas(None),
+        )
+    ));
+    let sources: Vec<Pubkey> = (0..alashi::constants::ROUNDS)
+        .map(|_| Pubkey::new_unique())
+        .collect();
+    for source in &sources {
+        install_rng(&mut svm, source, 0, 0, 0);
+        let mut account = svm.get_account(source).unwrap();
+        account.data[8..40].fill(4); // nonzero Switchboard authority
+        svm.set_account(*source, account).unwrap();
+    }
+    let mut metas = alashi::accounts::ConfigureDonkeyOracles {
+        admin: admin.pubkey(),
+        game,
+        oracle,
+        system_program: system_program::ID,
+    }
+    .to_account_metas(None);
+    metas.extend(sources.iter().map(|source| {
+        anchor_lang::solana_program::instruction::AccountMeta::new_readonly(*source, false)
+    }));
+    assert!(send(
+        &mut svm,
+        &admin,
+        Instruction::new_with_bytes(
+            alashi::id(),
+            &alashi::instruction::ConfigureDonkeyOracles {}.data(),
+            metas,
+        )
+    ));
+    let mut join = ix_join("Configured", player.pubkey(), game, faction);
+    join.accounts.push(anchor_lang::solana_program::instruction::AccountMeta::new_readonly(oracle, false));
+    let game_before = svm.get_account(&game).unwrap().lamports;
+    assert!(send(&mut svm, &player, join));
+    assert_eq!(game_state(&svm, &game).faction_count, 1);
+    assert_eq!(svm.get_account(&game).unwrap().lamports - game_before, FEE);
+}
+
+fn synthetic_epoch2_draw_is_win(value: u8, game: &Pubkey, faction: &Pubkey) -> bool {
+    let mut vrf = [0u8; 32];
+    vrf[0] = value;
+    let digest = solana_sha256_hasher::hashv(&[
+        b"alashi-donkey-risk-v1".as_slice(),
+        vrf.as_slice(),
+        game.as_ref(),
+        faction.as_ref(),
+        &[2],
+        &0u32.to_le_bytes(),
+    ])
+    .to_bytes();
+    assert_ne!(digest, [0xff; 32]);
+    digest.iter().fold(0u8, |r, b| ((r as u16 * 256 + *b as u16) % 5) as u8) < 3
+}
+
+fn synthetic_epoch2_case(want_win: Option<bool>, two_tickets: bool, precommit_abort: bool) {
+    let (mut svm, admin) = setup();
+    let other = Keypair::new();
+    svm.airdrop(&other.pubkey(), 2_000_000_000).unwrap();
+    let id = match want_win { Some(true) => 9_204, Some(false) => 9_205, None => 9_206 };
+    let game = game_pda(id);
+    let faction = faction_pda(&game, &admin.pubkey());
+    let other_faction = faction_pda(&game, &other.pubkey());
+    let oracle = Pubkey::find_program_address(
+        &[alashi::constants::DONKEY_ORACLE_SEED, game.as_ref()],
+        &alashi::id(),
+    )
+    .0;
+    let initialize = alashi::instruction::Initialize {
+        game_id: id,
+        entry_fee: FEE,
+        phase_duration: 0,
+        entropy_mode: alashi::constants::ENTROPY_SWITCHBOARD,
+        epoch: alashi::constants::EPOCH_DONKEY_RISK,
+    };
+    assert!(send(
+        &mut svm,
+        &admin,
+        Instruction::new_with_bytes(
+            alashi::id(),
+            &initialize.data(),
+            alashi::accounts::Initialize {
+                admin: admin.pubkey(),
+                game,
+                system_program: system_program::ID,
+            }
+            .to_account_metas(None),
+        )
+    ));
+    let sources: Vec<Pubkey> = (0..alashi::constants::ROUNDS)
+        .map(|_| Pubkey::new_unique())
+        .collect();
+    for source in &sources {
+        install_rng(&mut svm, source, 0, 0, 0);
+        let mut account = svm.get_account(source).unwrap();
+        account.data[8..40].fill(4);
+        svm.set_account(*source, account).unwrap();
+    }
+    let mut metas = alashi::accounts::ConfigureDonkeyOracles {
+        admin: admin.pubkey(),
+        game,
+        oracle,
+        system_program: system_program::ID,
+    }
+    .to_account_metas(None);
+    metas.extend(sources.iter().map(|source| {
+        anchor_lang::solana_program::instruction::AccountMeta::new_readonly(*source, false)
+    }));
+    assert!(send(
+        &mut svm,
+        &admin,
+        Instruction::new_with_bytes(
+            alashi::id(),
+            &alashi::instruction::ConfigureDonkeyOracles {}.data(),
+            metas,
+        )
+    ));
+    for (wallet, name, faction_pda) in [(&admin, "A", faction), (&other, "B", other_faction)] {
+        let mut join = ix_join(name, wallet.pubkey(), game, faction_pda);
+        join.accounts.push(anchor_lang::solana_program::instruction::AccountMeta::new_readonly(oracle, false));
+        assert!(send(&mut svm, wallet, join));
+    }
+
+    // Synthetic account fixture starts after Market income. The instructions
+    // below still execute in SBF and prove the actual fee/turn and resolution.
+    let mut g = game_state(&svm, &game);
+    g.phase = alashi::state::Phase::Action;
+    g.round = 2;
+    g.phase_ends_at = 0;
+    let mut game_account = svm.get_account(&game).unwrap();
+    let mut bytes = Vec::new();
+    g.try_serialize(&mut bytes).unwrap();
+    bytes.resize(game_account.data.len(), 0);
+    game_account.data = bytes;
+    svm.set_account(game, game_account).unwrap();
+    let mut f = faction_state(&svm, &faction);
+    f.cash = alashi::constants::DONKEY_RISK_FEE;
+    let mut faction_account = svm.get_account(&faction).unwrap();
+    let mut bytes = Vec::new();
+    f.try_serialize(&mut bytes).unwrap();
+    bytes.resize(faction_account.data.len(), 0);
+    faction_account.data = bytes;
+    svm.set_account(faction, faction_account).unwrap();
+    if two_tickets {
+        let mut second = faction_state(&svm, &other_faction);
+        second.cash = alashi::constants::DONKEY_RISK_FEE;
+        let mut account = svm.get_account(&other_faction).unwrap();
+        let mut bytes = Vec::new();
+        second.try_serialize(&mut bytes).unwrap();
+        bytes.resize(account.data.len(), 0);
+        account.data = bytes;
+        svm.set_account(other_faction, account).unwrap();
+    }
+
+    let attempt = |source: Pubkey| {
+        Instruction::new_with_bytes(
+            alashi::id(),
+            &alashi::instruction::AttemptDonkey {}.data(),
+            alashi::accounts::AttemptDonkey {
+                player: admin.pubkey(),
+                game,
+                faction,
+                oracle,
+                randomness: source,
+            }
+            .to_account_metas(None),
+        )
+    };
+    let mut final_round = game_state(&svm, &game);
+    final_round.round = alashi::constants::ROUNDS;
+    let mut account = svm.get_account(&game).unwrap();
+    let mut bytes = Vec::new();
+    final_round.try_serialize(&mut bytes).unwrap();
+    bytes.resize(account.data.len(), 0);
+    account.data = bytes;
+    svm.set_account(game, account).unwrap();
+    assert!(!send(&mut svm, &admin, attempt(sources[5])));
+    assert_eq!(faction_state(&svm, &faction).cash, alashi::constants::DONKEY_RISK_FEE);
+    let mut account = svm.get_account(&game).unwrap();
+    let mut bytes = Vec::new();
+    g.try_serialize(&mut bytes).unwrap();
+    bytes.resize(account.data.len(), 0);
+    account.data = bytes;
+    svm.set_account(game, account).unwrap();
+    assert!(!send(&mut svm, &admin, attempt(sources[0])));
+    assert_eq!(faction_state(&svm, &faction).cash, alashi::constants::DONKEY_RISK_FEE);
+    assert!(send(&mut svm, &admin, attempt(sources[1])));
+    let after_attempt = faction_state(&svm, &faction);
+    assert_eq!(after_attempt.cash, 0);
+    assert_eq!(after_attempt.goods, 0);
+    assert_eq!(after_attempt.acted_stamp, game_state(&svm, &game).stamp());
+    assert!(!send(&mut svm, &admin, attempt(sources[1])));
+    assert_eq!(faction_state(&svm, &faction).cash, 0);
+    if two_tickets {
+        let second_attempt = Instruction::new_with_bytes(
+            alashi::id(),
+            &alashi::instruction::AttemptDonkey {}.data(),
+            alashi::accounts::AttemptDonkey {
+                player: other.pubkey(), game, faction: other_faction,
+                oracle, randomness: sources[1],
+            }.to_account_metas(None),
+        );
+        assert!(send(&mut svm, &other, second_attempt));
+        assert_eq!(faction_state(&svm, &other_faction).cash, 0);
+    }
+
+    if precommit_abort {
+        let mut clock = svm.get_sysvar::<solana_clock::Clock>();
+        clock.unix_timestamp = game_state(&svm, &game).phase_ends_at
+            + alashi::constants::DONKEY_COMMIT_GRACE_SECONDS - 1;
+        svm.set_sysvar(&clock);
+        let mut abort = ix_advance(admin.pubkey(), game, vec![faction, other_faction]);
+        abort.accounts.push(anchor_lang::solana_program::instruction::AccountMeta::new(oracle, false));
+        assert!(!send(&mut svm, &admin, abort.clone()));
+        clock.unix_timestamp += 1;
+        svm.set_sysvar(&clock);
+        svm.warp_to_slot(200);
+        install_rng(&mut svm, &sources[1], 201, 0, 0);
+        let mut source = svm.get_account(&sources[1]).unwrap();
+        source.data[8..40].fill(4);
+        svm.set_account(sources[1], source).unwrap();
+        let mut late_commit = abort.clone();
+        late_commit.accounts.push(anchor_lang::solana_program::instruction::AccountMeta::new_readonly(sources[1], false));
+        assert!(!send(&mut svm, &admin, late_commit));
+        assert!(send(&mut svm, &admin, abort));
+        assert_eq!(game_state(&svm, &game).phase, alashi::state::Phase::Aborted);
+        assert_eq!(faction_state(&svm, &faction).cash, 0);
+        assert_eq!(faction_state(&svm, &faction).goods, 0);
+        let before = svm.get_account(&other.pubkey()).unwrap().lamports;
+        assert!(send(&mut svm, &admin,
+            ix_settle_refund(admin.pubkey(), game,
+                vec![faction, other_faction], vec![admin.pubkey(), other.pubkey()])));
+        assert_eq!(svm.get_account(&other.pubkey()).unwrap().lamports - before, FEE);
+        return;
+    }
+
+    svm.warp_to_slot(200);
+    install_rng(&mut svm, &sources[1], 199, 0, 0);
+    let mut source = svm.get_account(&sources[1]).unwrap();
+    source.data[8..40].fill(4);
+    svm.set_account(sources[1], source).unwrap();
+    let advance = |source: Pubkey| {
+        let mut ix = ix_advance(admin.pubkey(), game, vec![faction, other_faction]);
+        ix.accounts.push(anchor_lang::solana_program::instruction::AccountMeta::new(oracle, false));
+        ix.accounts.push(anchor_lang::solana_program::instruction::AccountMeta::new_readonly(source, false));
+        ix
+    };
+    set_law_seed(&mut svm, 0);
+    assert!(!send(&mut svm, &admin, advance(sources[0])));
+    // An older commitment cannot be substituted for the commit bundled with
+    // Action→Law. The synthetic fixture below models Switchboard's next-slot
+    // commitment; it does not execute the provider CPI.
+    assert!(!send(&mut svm, &admin, advance(sources[1])));
+    install_rng(&mut svm, &sources[1], 201, 0, 0);
+    let mut source = svm.get_account(&sources[1]).unwrap();
+    source.data[8..40].fill(4);
+    svm.set_account(sources[1], source).unwrap();
+    assert!(send(&mut svm, &admin, advance(sources[1])));
+    assert_eq!(game_state(&svm, &game).phase, alashi::state::Phase::Law);
+    assert_eq!(game_state(&svm, &game).commit_slot, 201);
+
+    if want_win.is_none() {
+        svm.warp_to_slot(250);
+        for _ in 0..=alashi::constants::MAX_VRF_RETRIES {
+            set_law_seed(&mut svm, 0);
+            let mut ix = ix_advance(admin.pubkey(), game, vec![faction, other_faction]);
+            ix.accounts.push(anchor_lang::solana_program::instruction::AccountMeta::new(oracle, false));
+            assert!(send(&mut svm, &admin, ix));
+        }
+        assert_eq!(game_state(&svm, &game).phase, alashi::state::Phase::Aborted);
+        assert_eq!(faction_state(&svm, &faction).goods, 0);
+        assert_eq!(faction_state(&svm, &faction).cash, 0);
+        let account = svm.get_account(&oracle).unwrap();
+        let mut data: &[u8] = &account.data;
+        let config = alashi::donkey_state::DonkeyOracleConfig::try_deserialize(&mut data).unwrap();
+        assert!(config.resolved);
+        return;
+    }
+
+    let win = want_win.unwrap();
+    let chosen = (0..=255).find(|value| synthetic_epoch2_draw_is_win(*value, &game, &faction) == win).unwrap();
+    svm.warp_to_slot(202);
+    install_rng(&mut svm, &sources[1], 201, 202, chosen);
+    let mut source = svm.get_account(&sources[1]).unwrap();
+    source.data[8..40].fill(4);
+    svm.set_account(sources[1], source).unwrap();
+    let reveal = |include_ticket: bool| {
+        let mut ix = ix_reveal_law(admin.pubkey(), game, sources[1]);
+        ix.accounts.push(anchor_lang::solana_program::instruction::AccountMeta::new(oracle, false));
+        if include_ticket {
+            ix.accounts.push(anchor_lang::solana_program::instruction::AccountMeta::new(faction, false));
+            if two_tickets {
+                ix.accounts.push(anchor_lang::solana_program::instruction::AccountMeta::new(other_faction, false));
+            }
+        }
+        ix
+    };
+    assert!(!send(&mut svm, &admin, reveal(false)));
+    assert_eq!(faction_state(&svm, &faction).goods, 0);
+    if two_tickets {
+        let mut omitted = reveal(true);
+        omitted.accounts.pop();
+        assert!(!send(&mut svm, &admin, omitted));
+        assert_eq!(faction_state(&svm, &other_faction).goods, 0);
+    }
+    assert!(send(&mut svm, &admin, reveal(true)));
+    assert_eq!(faction_state(&svm, &faction).goods, if win { 5 } else { 0 });
+    assert_eq!(faction_state(&svm, &faction).cash, 0);
+    if two_tickets {
+        assert_eq!(faction_state(&svm, &other_faction).cash, 0);
+        assert_eq!(faction_state(&svm, &other_faction).goods,
+            if synthetic_epoch2_draw_is_win(chosen, &game, &other_faction) { 5 } else { 0 });
+    }
+    assert!(!send(&mut svm, &admin, reveal(true)));
+}
+
+#[test]
+fn epoch2_verified_win_is_paid_once() {
+    synthetic_epoch2_case(Some(true), false, false);
+}
+
+#[test]
+fn epoch2_verified_empty_is_paid_once() {
+    synthetic_epoch2_case(Some(false), false, false);
+}
+
+#[test]
+fn epoch2_oracle_abort_never_mints_goods() {
+    synthetic_epoch2_case(None, false, false);
+}
+
+#[test]
+fn epoch2_multi_ticket_reveal_requires_complete_ordered_set() {
+    synthetic_epoch2_case(Some(true), true, false);
+}
+
+#[test]
+fn epoch2_uncommitted_action_aborts_after_grace_and_refunds() {
+    synthetic_epoch2_case(None, false, true);
 }
 
 #[test]

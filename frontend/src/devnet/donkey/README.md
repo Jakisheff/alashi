@@ -3,13 +3,14 @@
 Task `DIN-DONKEY-RISK-ADAPTER-20261011-01`, exact Ivan task docs
 `3e413d578adfa588402260b4f67d649dcf9ef576`, handoff SHA256
 `2e43bc585c06d84b0bbc24fd72d1d14acbdebef863cbe5bb46a2f054f4fa86de`.
-Base main `cbb6459aa060de53d6183ec58e48a5c3f9a13242`. This integrates the previously
+Integrated main `3a126d8f4aff5cfc7939fe453c7c367fb2ed9f31`. This integrates the previously
 delivered pure UI `736d055` and homepage confirmed-chain replay `7f93bef` into
 a separate frontend branch. It imports the adapter in `/devnet`; it is not a
 production release or an independently verified oracle result.
 
-Current exact candidate: draft PR27 `058caab85e22e00e44426d3684f8c4d065c57662`,
-received at docs `6cd7c4a5346eef7559e667628bd11478045fa7aa`.
+Current exact source: merged PR27 main `3a126d8f4aff5cfc7939fe453c7c367fb2ed9f31`,
+received at docs `d85584e86b36803e9c289d7c5c3304a3a27640e5`. Source CI5/5 is
+Ivan-reported; the candidate adapter still awaits deployed API/provider acceptance.
 Spec SHA256 `73fc5c01fa4c5b77d9f7acd3df3aebfae595917f5fcd83c371fc5f2d33763eea`;
 program events SHA256 `c52d0dbfb275abd336d74b285ba19c4d8b3b338d1e9dc9118a0da6abdcb82f2f`;
 indexer events SHA256 `bacd845eec4a3042add31429a1662b2fa8c02bcc422ac4db6c64a591c3626dc0`.
@@ -108,9 +109,18 @@ All four homepage paths are byte-identical to previously delivered 7f93bef.
   No app change was made for these harness issues. Vite companion alias scan
   warning remains; production build and the route work.
 
-Backend review/CI merge, program/indexer/public API cutover, provider setup/funding
+Backend source PR27 is merged with required CI passing. Program/indexer/public API
+cutover, provider setup/funding
 and a real confirmed attempt/resolve or technical-abort lifecycle remain Ivan's
 release gates. No Game, transaction, faucet, provider, program upgrade, backend,
 Nginx or frontend deployment was performed. No program/SBF test was run by Din.
 Shared animation checks are not repeated because no motion/rig/mapping changed;
 homepage replay includes previously validated six actions unchanged.
+
+Fresh main3a126d8f arrived during artifact handover. Its31changes are outside
+frontend and preserved by a normal merge (no forced remote update). Frontend
+product bytes are unchanged except source-pin/documentation. Read and compared
+merged event/spec hashes above. This delivery includes that current main.
+Browser teardown: used the existing Playwright browser, created and closed only
+our tab1; pre-existing tab0 preserved. Own Vite5199 stopped. No explicit browser
+process/profile was launched by this task; original user/Codex browsers remain.

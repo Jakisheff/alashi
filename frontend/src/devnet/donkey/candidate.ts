@@ -1,7 +1,7 @@
 import { ChainApiError, decodeSnapshot } from '../client.ts'
 import { DONKEY_TERMS, type DonkeyReceipt } from './model.ts'
 
-export const DONKEY_CANDIDATE_SOURCE = '058caab85e22e00e44426d3684f8c4d065c57662'
+export const DONKEY_CANDIDATE_SOURCE = '3a126d8f4aff5cfc7939fe453c7c367fb2ed9f31'
 export const DONKEY_CANDIDATE_SPEC_SHA256 = '73fc5c01fa4c5b77d9f7acd3df3aebfae595917f5fcd83c371fc5f2d33763eea'
 const invalid = (): never => { throw new ChainApiError('invalid') }
 

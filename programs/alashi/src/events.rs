@@ -101,6 +101,27 @@ pub struct DonkeyBought {
 }
 
 #[event]
+pub struct DonkeyAttempted {
+    pub game: Pubkey,
+    pub faction: Pubkey,
+    pub round: u8,
+    pub fee: u64,
+}
+
+/// reason: 0 = verified VRF, 1 = terminal oracle abort. A failed draw has
+/// success=false and goods=0. This never reinterprets legacy DonkeyBought.
+#[event]
+pub struct DonkeyResolved {
+    pub game: Pubkey,
+    pub faction: Pubkey,
+    pub round: u8,
+    pub success: bool,
+    pub goods: u16,
+    pub fee: u64,
+    pub reason: u8,
+}
+
+#[event]
 pub struct Payout {
     pub game: Pubkey,
     pub wallet: Pubkey,

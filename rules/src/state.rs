@@ -58,8 +58,8 @@ pub struct Game {
     pub settled: bool,
     pub entropy_mode: u8,
     pub vote_weight_mode: u8,
-    /// SPEC_EPOCH_90S: 0 = classic, 1 = эпоха 90-х (девальвация,
-    /// крыша, челнок, вексель, завод).
+    /// 0 = classic, 1 = эпоха 90-х, 2 = та же экономика с рискованным ослом
+    /// (девальвация, крыша, челнок, вексель и завод сохраняются).
     pub epoch: u8,
     /// карта «взаимозачёт» (id 8) уже выпадала в этой партии (epoch=1).
     pub amnesty_used: bool,
