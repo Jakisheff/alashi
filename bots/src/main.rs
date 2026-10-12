@@ -1,6 +1,9 @@
 mod agent_cli;
 mod barter;
 mod chain_wish_client;
+mod dialogue;
+mod dialogue_provider;
+mod dialogue_runner;
 mod donkey_risk;
 mod llm;
 mod runner_auth;
@@ -2886,6 +2889,9 @@ mod runner_mode_tests {
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
+    if args.get(1).map(String::as_str) == Some("dialogue") {
+        std::process::exit(dialogue_runner::run(&args[2..]));
+    }
     if args.get(1).map(String::as_str) == Some("session") {
         std::process::exit(session_cli::run(&args[2..]));
     }
