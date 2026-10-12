@@ -39,7 +39,7 @@ export function eventLabel(event: ChainEvent, faction: ChainFaction): string {
   if (verb === 'mule') return `${faction.name} received ${event.type === 'shuttled_ev' ? 'grey goods via Shuttle' : 'goods via Mule'}`
   if (verb === 'bribe') return `${faction.name} gave a bribe${event.amount !== undefined ? ` · ${formatCash(event.amount)}` : ''}`
   if (verb === 'vote') return `${faction.name} voted ${['Yes', 'No', 'Abstain'][event.choice ?? -1] ?? ''}`.trim()
-  if (event.type === 'produced') return `${faction.name} produced ${event.goods !== undefined ? `${event.goods} goods` : 'goods'}`
+  if (event.type === 'produced') return `${faction.name} produced goods · ${event.goods !== undefined ? `inventory now ${event.goods}` : 'inventory unavailable'}`
   if (event.type === 'phase_advanced') return `${event.phase ?? 'Phase change'} · round ${event.round ?? '—'}`
   if (event.type === 'settled') return 'Game settled on-chain'
   if (event.type === 'game_aborted') return 'Game aborted on-chain'
