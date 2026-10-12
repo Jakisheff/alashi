@@ -1,6 +1,6 @@
 # Agent entry and devnet funding
 
-Checked: 13 October 2026 (Asia/Almaty). Source: main `63d3be0443bcdc50795f1f88ce9237cd96e77af1`.
+Checked: 13 October 2026 (Asia/Almaty). Integrated source: main `a08270dd8d6ad72cfa57035faa24d07e90f7aa75` (PR43).
 
 ## Choose the path before creating a wallet
 
@@ -11,7 +11,7 @@ Checked: 13 October 2026 (Asia/Almaty). Source: main `63d3be0443bcdc50795f1f88ce
 | Cloud sandbox without local shell access | No native local signer | Connect an approved local terminal first. A browser-pairing grant does not provide terminal access. |
 | Network allowlist blocks Alashi or devnet RPC | No supported online play through that environment | Request access to the required hosts; report the blocked destination. Funding another wallet cannot fix the network. |
 
-**Public sponsored entry is not yet accepted.** [PR26](https://github.com/Jakisheff/alashi/pull/26) and [PR33](https://github.com/Jakisheff/alashi/pull/33) contain a prepared managed-match/sponsorship path. They are not enabled by building the main revision named above. Obtain an integrated client revision and activation confirmation from the team before paying or registering. See the [public agent guide](../../frontend/public/agent.md).
+**Public sponsored entry is not yet accepted.** [PR43](https://github.com/Jakisheff/alashi/pull/43) integrates the managed-match/sponsorship path from PR26 and PR33. The source revision above includes the client; public service activation and a complete visitor trial remain separate checks. Obtain activation confirmation from the team before paying or registering. See the [public agent guide](../../frontend/public/agent.md).
 
 The target visitor flow uses one local wallet, bounded team sponsorship before the registration Memo, and a managed Game with a labelled heuristic opponent. Visitors do not need to obtain testSOL themselves. Chain fees, account rent and the entry still need a payer. Sponsorship does not make the native runner work in a browser-only environment.
 
@@ -67,7 +67,7 @@ The command creates a new `0600` key file and prints only its public address. It
 
 After activation, follow the team's released [managed registration and Match instructions](../../frontend/public/agent.md#managed-entry--only-after-the-team-confirms-activation) with the same key and profile. The prepared sponsorship target is 0.1 testSOL once per eligible wallet, subject to reserve and admission limits. This is a bounded trial, not guaranteed funding for every subsequent game.
 
-The team must verify a zero-balance visitor completes funding, registration, Join, an independently chosen action and settlement before calling this path available. Retrying an already joined Match must recover the same participation even if its balance is below the initial funding threshold. A review of PR33 found funding currently runs before that recovery; the fix and regression test are outstanding at this document's checkpoint.
+The team must verify a zero-balance visitor completes funding, registration, Join, an independently chosen action and settlement before calling this path available. Retrying an already joined Match must recover the same participation even if its balance is below the initial funding threshold. PR43 now checks the existing confirmed Faction before requesting funding, and its registration-tunnel funding regression test passes. The repeated-Match check with a paid Join and a balance below the funding threshold still needs public execution evidence.
 
 One-wallet eligibility alone does not prevent abuse through newly generated wallets. Operator limits must also bound total transfers, total match cost, concurrent admissions and reserve exposure. The prepared 24 admissions/day at 0.1 testSOL imply up to 2.4 testSOL/day in visitor top-ups, plus opponent, account and transaction costs. A 0.5 testSOL reserve floor is not a daily operating budget.
 
