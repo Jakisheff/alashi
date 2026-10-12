@@ -8,6 +8,7 @@ pub struct PublicFaction {
     pub pda: String,
     pub goods: u64,
     pub cash: u64,
+    pub acted_this_phase: bool,
 }
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct PublicOffer {
@@ -33,6 +34,11 @@ pub struct PublicContext {
     pub phase: String,
     pub phase_ends_at: i64,
     pub observed_cursor: u64,
+    pub produce_yield: u16,
+    pub sold_this_round: u16,
+    pub active_price_shift: i8,
+    pub active_boom: u8,
+    pub active_tax_bps: u16,
     pub factions: Vec<PublicFaction>,
     pub open_offers: Vec<PublicOffer>,
     pub incoming: Vec<PublicMessage>,
@@ -40,6 +46,8 @@ pub struct PublicContext {
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub enum Action {
     Pass,
+    Produce,
+    Sell { units: u16 },
     BarterPropose { goods: u64, price: u64 },
     BarterAccept { offer_id: String },
 }
@@ -69,7 +77,8 @@ fn exact(v: &Value, keys: &[&str]) -> bool {
 }
 impl PublicContext {
     pub fn validate(&self) -> Result<(), &'static str> {
-        if !address(&self.game)
+        if self.active_tax_bps > 10_000
+            || !address(&self.game)
             || !address(&self.faction)
             || !(1..=6).contains(&self.round)
             || !["Market", "Action", "Law", "Finished", "Aborted"].contains(&self.phase.as_str())
@@ -121,14 +130,48 @@ impl PublicContext {
     }
     pub fn to_public_json(&self) -> Result<Value, &'static str> {
         self.validate()?;
+        let own = self
+            .factions
+            .iter()
+            .find(|f| f.pda == self.faction)
+            .ok_or("invalid_context")?;
+        let sell_one = if own.goods > 0 {
+            sale_revenue(self, 1).ok()
+        } else {
+            None
+        };
+        let sell_all = if own.goods > 0 {
+            sale_revenue(self, own.goods as u16).ok()
+        } else {
+            None
+        };
         Ok(
-            json!({"game":self.game,"faction":self.faction,"round":self.round,"phase":self.phase,
-            "observed_cursor":self.observed_cursor,"phase_ends_at":self.phase_ends_at,
-            "factions":self.factions.iter().map(|f| json!({"pda":f.pda,"goods":f.goods,"cash":f.cash})).collect::<Vec<_>>(),
+            json!({"sell_one_net_revenue":sell_one,"sell_all_net_revenue":sell_all,"game":self.game,"faction":self.faction,"round":self.round,"phase":self.phase,
+            "observed_cursor":self.observed_cursor,"phase_ends_at":self.phase_ends_at,"produce_yield":self.produce_yield,"sold_this_round":self.sold_this_round,"active_price_shift":self.active_price_shift,"active_boom":self.active_boom,"active_tax_bps":self.active_tax_bps,"cash_units_per_alashi":alashi::constants::PESO,
+            "factions":self.factions.iter().map(|f| json!({"pda":f.pda,"goods":f.goods,"cash":f.cash,"acted_this_phase":f.acted_this_phase})).collect::<Vec<_>>(),
             "open_offers":self.open_offers.iter().map(|o| json!({"offer_id":o.id,"proposer":o.proposer,"recipient":o.recipient,"goods":o.goods,"price":o.price,"round":o.round})).collect::<Vec<_>>(),
             "incoming":self.incoming.iter().map(|m| json!({"id":m.id,"author":m.author,"recipient":m.recipient,"text":m.text})).collect::<Vec<_>>()}),
         )
     }
+}
+/// Net sale proceeds in raw game cash units; 1 alashi = constants::PESO.
+pub fn sale_revenue(c: &PublicContext, units: u16) -> Result<u64, &'static str> {
+    if units == 0 || c.active_tax_bps > 10_000 || c.sold_this_round.checked_add(units).is_none() {
+        return Err("invalid_sale");
+    }
+    // Prices and the maximum u16 sale size bound the shared engine's gross well below u64.
+    let trade = alashi::logic::compute_sale(
+        units,
+        c.sold_this_round,
+        c.active_price_shift,
+        c.active_boom,
+    );
+    let tax = trade
+        .gross
+        .checked_mul(c.active_tax_bps as u64)
+        .ok_or("invalid_sale")?
+        / 10_000;
+    trade.gross.checked_sub(tax).ok_or("invalid_sale")
 }
 pub fn parse_decision(
     raw: &str,
@@ -146,6 +189,14 @@ pub fn parse_decision(
     let a = &v["action"];
     let action = match a["type"].as_str() {
         Some("pass") if exact(a, &["type"]) => Action::Pass,
+        Some("produce") if exact(a, &["type"]) => Action::Produce,
+        Some("sell") if exact(a, &["type", "units"]) => Action::Sell {
+            units: a["units"]
+                .as_u64()
+                .and_then(|u| u16::try_from(u).ok())
+                .filter(|u| *u > 0)
+                .ok_or("invalid_action")?,
+        },
         Some("barter_propose") if exact(a, &["type", "goods", "price"]) => Action::BarterPropose {
             goods: a["goods"].as_u64().ok_or("invalid_action")?,
             price: a["price"].as_u64().ok_or("invalid_action")?,
@@ -208,6 +259,30 @@ impl Decision {
             .ok_or("invalid_context")?;
         match &self.action {
             Action::Pass => {}
+            Action::Produce => {
+                if c.phase != "Action"
+                    || own.acted_this_phase
+                    || own
+                        .goods
+                        .checked_add(c.produce_yield as u64)
+                        .is_none_or(|g| g > u16::MAX as u64)
+                {
+                    return Err("invalid_action");
+                }
+            }
+            Action::Sell { units } => {
+                if c.phase != "Market"
+                    || own.acted_this_phase
+                    || *units == 0
+                    || *units as u64 > own.goods
+                {
+                    return Err("invalid_action");
+                }
+                let revenue = sale_revenue(c, *units)?;
+                if own.cash.checked_add(revenue).is_none() {
+                    return Err("invalid_action");
+                }
+            }
             Action::BarterPropose { goods, price } => {
                 if c.phase != "Market"
                     || *goods == 0
@@ -336,16 +411,23 @@ mod tests {
             phase: "Market".into(),
             phase_ends_at: 100,
             observed_cursor: 0,
+            produce_yield: 2,
+            sold_this_round: 0,
+            active_price_shift: 0,
+            active_boom: 0,
+            active_tax_bps: 0,
             factions: vec![
                 PublicFaction {
                     pda: Pubkey::new_from_array([1; 32]).to_string(),
                     goods: 3,
                     cash: 20,
+                    acted_this_phase: false,
                 },
                 PublicFaction {
                     pda: Pubkey::new_from_array([2; 32]).to_string(),
                     goods: 2,
                     cash: 10,
+                    acted_this_phase: false,
                 },
             ],
             open_offers: vec![],
@@ -523,5 +605,56 @@ mod tests {
             .is_err(),
             "runner policy can prohibit proposing free goods without rejecting observed offers"
         );
+    }
+    #[test]
+    fn produce_sell_phase_stamps_math_and_freshness() {
+        let mut c = context();
+        let produce = response(json!({"type":"produce"}), Value::Null);
+        assert!(parse_decision(&produce, &c, false).is_err());
+        c.phase = "Action".into();
+        assert_eq!(
+            parse_decision(&produce, &c, false).unwrap().action,
+            Action::Produce
+        );
+        c.factions[0].acted_this_phase = true;
+        assert!(parse_decision(&produce, &c, false).is_err());
+        c.factions[0].acted_this_phase = false;
+        c.factions[0].goods = u16::MAX as u64;
+        assert!(parse_decision(&produce, &c, false).is_err());
+        c.factions[0].goods = 3;
+        c.phase = "Market".into();
+        c.active_tax_bps = 1000;
+        assert_eq!(sale_revenue(&c, 2), Ok(19_800_000));
+        let sell = response(json!({"type":"sell","units":2}), Value::Null);
+        let d = parse_decision(&sell, &c, false).unwrap();
+        assert_eq!(d.action, Action::Sell { units: 2 });
+        for units in [0, 4, 65536] {
+            assert!(parse_decision(
+                &response(json!({"type":"sell","units":units}), Value::Null),
+                &c,
+                false
+            )
+            .is_err());
+        }
+        c.factions[0].cash = u64::MAX;
+        assert!(parse_decision(&sell, &c, false).is_err());
+        c.factions[0].cash = 0;
+        c.factions[0].acted_this_phase = true;
+        assert!(parse_decision(&sell, &c, false).is_err());
+        c.factions[0].acted_this_phase = false;
+        let mut fresh = c.clone();
+        fresh.sold_this_round += 1;
+        assert_eq!(d.validate_fresh(&c, &fresh, false), Err("stale_context"));
+        c.sold_this_round = u16::MAX;
+        assert!(sale_revenue(&c, 1).is_err());
+        c.sold_this_round = 0;
+        c.active_tax_bps = 10001;
+        assert!(c.validate().is_err());
+        assert!(parse_decision(
+            &response(json!({"type":"produce","extra":1}), Value::Null),
+            &context(),
+            false
+        )
+        .is_err());
     }
 }
