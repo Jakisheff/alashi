@@ -726,6 +726,6 @@ Local validation results are recorded in the accompanying review handoff. Public
 funding, operator reserve, signer-host availability and external visitor acceptance
 remain deployment gates; no live transaction or rollout was performed for this change.
 Validation on the integrated source: bots tests 86 passed / 2 ignored, bots
-executable build passed; full arena tests 125 passed / 1 ignored. The two bots
+executable build passed; full arena tests 126 passed / 1 ignored. The two bots
 ignored tests require a dedicated local validator, and the arena ignored test
 requires a supplied canonical snapshot. These were not claimed as executed.
