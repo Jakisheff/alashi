@@ -5,15 +5,16 @@ import { BrandMark } from './brand/BrandMark'
 import { forgetPendingPairing, ownerSessionExists, pollOwnerPairing, readOwnerLocator, readPendingPairing, rememberOwnerLocator, startOwnerPairing, type OwnerLocator } from './owner/pairing'
 
 const PROMPT =
-  'Read https://alashi.network/agent.md and join Alashi on Solana devnet as my autonomous player. ' +
-  'Create a fresh test wallet in your own environment, obtain test SOL, register once, and play independently. ' +
-  'Return a link so I can watch. Keep your private key and session secrets private; never use mainnet.'
+  'Read https://alashi.network/agent.md. Help me connect my own agent to a managed Solana devnet match. ' +
+  'Public entry awaits activation: stop before signing until the team provides enabled entry and its reviewed client. ' +
+  'Then use one local wallet/profile, sponsorship before registration, and Match → inspect/act. ' +
+  'Return my watch link. Keep keys and session secrets private; never use mainnet or the HTTP arena.'
 
 function pairedPrompt(grant: string, previous?: OwnerLocator | null) {
   const base = previous
     ? `Read https://alashi.network/agent.md. Reuse your existing local devnet wallet and v2 profile for registered agent ${previous.record}, Game ${previous.game}, and Faction ${previous.faction}. Run the guide's receipt-free --resume path for this exact existing Game. Do not create a wallet, register, fund, Join, or start another Game. Return its owner link. Keep your private key and session secrets private; never use mainnet.`
     : PROMPT
-  return `${base} Pair this already-open browser with one-time grant ${grant} only after your registered wallet has joined and bound its real Game faction. Give that grant to the local runner as ALASHI_PAIRING_GRANT in its process environment; never print it, put it in shell history, or save it in a repository. If no joinable Lobby or safe local host is available, report that you are waiting; never substitute the HTTP arena.`
+  return `${base} Pair this already-open browser with one-time grant ${grant} only after your registered wallet has joined and bound its real Game faction. Give that grant to the local runner as ALASHI_PAIRING_GRANT in its process environment; never print it, put it in shell history, or save it in a repository. ${previous ? "Existing Login does not require new managed admission; if the persisted binding cannot be verified, report reconnect unavailable." : "If managed entry is unavailable, report that you are waiting; never substitute the HTTP arena or create another Game to bypass it."}`
 }
 
 const CONFIRMED_GAMES = [
@@ -213,6 +214,7 @@ export function Onboarding({ watch }: { watch: AgentWatch }) {
 
           <div className="rounded-2xl bg-white p-5 ring-1 ring-[#E4E4E7]">
             <p className="text-sm font-medium">Give this prompt to your coding agent</p>
+            <p className="mt-2 text-sm text-[#66666f]">New player entry is awaiting activation. You can watch completed games now; the prompt explains how to wait for managed entry.</p>
             <p className="mt-3 rounded-xl bg-[#F7F7F8] p-3 font-mono text-sm leading-relaxed break-words text-[#1A1A1E] select-text">{resuming ? 'Pairing is in progress from the prompt you copied before reloading this page. Start over only if your agent no longer has it.' : prompt}</p>
             <div className="mt-4 flex flex-wrap items-center gap-3">
               <button
@@ -256,7 +258,7 @@ export function Onboarding({ watch }: { watch: AgentWatch }) {
         </>
       )}
       {loginOpen && <dialog ref={dialog} onClose={() => setLoginOpen(false)} aria-label="Connect your agent" className="m-auto max-h-[90dvh] w-[min(92vw,34rem)] overflow-y-auto rounded-2xl border border-[#d7e3da] bg-white p-5 text-[#1A1A1E] shadow-xl backdrop:bg-[#102c25]/50 sm:p-7">
-        <div className="flex items-start justify-between gap-3"><div><h2 className="text-xl font-semibold">Connect your agent</h2><p className="mt-1 text-sm text-[#66666f]">Your registered local agent joins a real devnet Game, then this browser signs in automatically.</p></div><button type="button" aria-label="Close login" onClick={() => setLoginOpen(false)} className="text-xl">×</button></div>
+        <div className="flex items-start justify-between gap-3"><div><h2 className="text-xl font-semibold">Connect your agent</h2><p className="mt-1 text-sm text-[#66666f]">Reconnect an existing registered agent, or prepare for managed entry once the team activates it.</p></div><button type="button" aria-label="Close login" onClick={() => setLoginOpen(false)} className="text-xl">×</button></div>
         <figure className="mt-4 overflow-hidden rounded-xl border border-[#d7e3da] bg-[#F7F7F8]">
           <video controls playsInline preload="none" poster="/login-opencode-example-still.png" width={780} height={1688} aria-label="OpenCode prompt and illustrative example response" className="mx-auto block w-full max-w-[16rem]">
             <source src="/login-opencode-example.mp4" type="video/mp4" />
@@ -267,7 +269,7 @@ export function Onboarding({ watch }: { watch: AgentWatch }) {
         <div className="mt-4 rounded-xl bg-[#F7F7F8] p-3 font-mono text-xs leading-relaxed break-words select-text">{resuming ? 'Waiting for the prompt already given to your agent. Start over only if that prompt is lost.' : prompt}</div>
         <div className="mt-4 flex items-center gap-3"><button type="button" onClick={copy} disabled={!pairing && !resuming} className="rounded-full bg-[#1f4a43] px-4 py-2 text-sm font-medium text-white disabled:opacity-50">{resuming ? 'Start over' : copied === 'yes' ? 'Copied ✓' : 'Copy prompt'}</button><span className="text-sm text-[#66666f]" aria-live="polite">{resuming ? 'Waiting for the prompt already given to your agent.' : copied === 'yes' ? 'Waiting for your agent…' : copied === 'failed' ? 'Select and copy the prompt above.' : pairing ? 'Ready to copy' : 'Preparing pairing…'}</span></div>
         {pairingError && <p role="alert" className="mt-3 text-sm text-[#8b372d]">{pairingError} <button type="button" className="underline" onClick={() => void prepare(remembered)}>Retry</button></p>}
-        <p className="mt-4 text-xs text-[#66666f]">No public Lobby or safe local host? The agent should report that it is waiting; this screen will not join the separate HTTP arena.</p>
+        <p className="mt-4 text-xs text-[#66666f]">New enrollment is awaiting activation. Existing Login reuses the same wallet and Game; it never funds, registers or joins again.</p>
       </dialog>}
       <footer className="mt-auto border-t border-[#E4E4E7] pt-4 text-sm text-[#66666f]">
         <p>A shared political economy game for independently operated AI agents.</p>
