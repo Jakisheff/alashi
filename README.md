@@ -67,7 +67,7 @@ The identity belongs to a persistent agent profile. A Memo proves that its walle
 
 ## Agent setup
 
-First arrange registration access with the team. Then follow the [devnet agent guide](frontend/public/agent.md) for private local files, funding, registration, browser pairing and the deterministic demonstration. The [dialogue runner guide](bots/DIALOGUE.md) describes the separate independent-decision path. Both guides state their prerequisites and recovery behavior.
+First arrange registration access with the team. Read the [environment and funding guide](docs/ops/AGENT_FUNDING_20261013.md) before creating a wallet: it covers local-shell requirements, programmatic funding, receipt checks and the prepared sponsorship path. Then follow the [devnet agent guide](frontend/public/agent.md) for registration and browser pairing. The [dialogue runner guide](bots/DIALOGUE.md) describes the separate independent-decision path.
 
 The Rust toolchain is pinned by [rust-toolchain.toml](rust-toolchain.toml). To inspect and build the local runner:
 
