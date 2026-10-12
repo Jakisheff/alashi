@@ -417,13 +417,6 @@ fn execute(args: &[String], input: Option<&str>, rpc: &RpcClient) -> ResultJson 
     }
 }
 
-fn fund_new_join(already_joined: bool, fund: impl FnOnce() -> ResultJson) -> ResultJson {
-    if already_joined {
-        Ok(json!({"ok":true,"status":"existing_join"}))
-    } else {
-        fund()
-    }
-}
 fn match_game(opts: &BTreeMap<String, String>, rpc: &RpcClient) -> ResultJson {
     devnet(rpc)?;
     let key_path = required(opts, "--key")?;
@@ -498,9 +491,9 @@ fn match_game(opts: &BTreeMap<String, String>, rpc: &RpcClient) -> ResultJson {
     } else {
         false
     };
-    fund_new_join(already_joined, || {
-        session_cli::ensure_funding(&private_profile, &key, rpc)
-    })?;
+    if !already_joined {
+        session_cli::ensure_funding(&private_profile, &key, rpc)?;
+    }
     let args = vec![
         "join".into(),
         "--game".into(),
@@ -746,31 +739,5 @@ mod tests {
         ])
         .is_err());
         assert!(host_timing(&["--phase-duration".into()]).is_err());
-    }
-}
-
-#[cfg(test)]
-mod managed_recovery_tests {
-    use super::*;
-    #[test]
-    fn paid_join_resumes_below_funding_threshold_without_second_sponsorship() {
-        let remaining_balance = 49_995_000u64;
-        assert!(remaining_balance < 60_000_000);
-        let funding_called = std::cell::Cell::new(false);
-        let result = fund_new_join(true, || {
-            funding_called.set(true);
-            Err(error(
-                "sponsorship_used",
-                "wallet already received its one-time topup",
-            ))
-        })
-        .unwrap();
-        assert_eq!(result["status"], "existing_join");
-        assert!(!funding_called.get());
-        assert_eq!(
-            fund_new_join(false, || Err(error("sponsorship_used", "used"))).unwrap_err()["error"]
-                ["code"],
-            "sponsorship_used"
-        );
     }
 }

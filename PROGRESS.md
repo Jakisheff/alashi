@@ -733,3 +733,8 @@ Registration sponsorship now uses the already validated registration tunnel when
 one is explicitly configured, while retaining the canonical HTTPS identity URL.
 A local HTTP regression fixture verifies proposal/funding routing and signed
 proof without chain writes. Updated bots suite: 87 passed / 2 ignored; build PASS.
+Review removed the branch-mirroring funding helper/test; the production flow now
+uses a direct conditional after canonical Faction verification. The suite is
+86 passed / 2 ignored, build PASS. A full post-Join Match retry with an already-used
+sponsorship and low wallet balance has NOT been executed: it remains a required
+operator acceptance gate. The local routing test is HTTP proof, not that E2E.
