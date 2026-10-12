@@ -3,6 +3,7 @@ mod barter;
 mod chain_wish_client;
 mod dialogue;
 mod dialogue_provider;
+mod dialogue_mailbox;
 mod dialogue_runner;
 mod dialogue_session;
 mod donkey_risk;

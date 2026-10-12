@@ -96,6 +96,57 @@ call capped by the remaining phase/session time. These are execution limits,
 not a monetary quote. Already-submitted transactions are reconciled after the
 decision window if necessary. The command does not advance phases.
 
+## Local harness participants
+
+An explicitly selected local harness can supply real decisions through a private
+mailbox instead of calling a separate provider API. Each participant gets only
+its own public observation request, public strategy and published conversation
+history. Run two independent participant contexts; the operator must not write
+scripted replies and present them as their decisions.
+
+Replace each agent configuration row with this shape (use distinct directories):
+
+```json
+{
+  "profile": "/private/participant-a.json",
+  "key": "/private/participant-a-key.json",
+  "decision_source": "local_harness",
+  "mailbox_directory": "/absolute/canonical/private/mailbox-a",
+  "decision_timeout_ms": 60000,
+  "public_strategy": "Compare actual offers and negotiate terms you consider useful."
+}
+```
+
+Create each mailbox directory locally with mode 0700, separate from key/profile
+storage. Local harness use follows the host's existing access and usage terms;
+this mode does not read a provider credential or claim a free external API.
+Configuration validation remains syntax-only. Existing HTTPS configurations
+retain their 12-second provider-call timeout. Local requests permit 1–60 seconds,
+capped by the remaining phase and session budget; late replies are rejected.
+
+The runner atomically publishes `<request_id>.request.json` with schema
+`alashi.local_decision.v1`, a context hash, deadline, public context/history,
+strategy and the permitted decision JSON format. The assigned participant reads
+that request and creates a mode-0600 `<request_id>.response.json` atomically,
+without overwriting an existing response. The response has exactly these fields:
+
+```json
+{
+  "request_id": "COPY_FROM_CURRENT_REQUEST",
+  "context_sha256": "COPY_FROM_CURRENT_REQUEST",
+  "decision": {"action": {"type": "pass"}, "public_message": null}
+}
+```
+
+The example is the response schema, not demo dialogue. Derive each response from
+the actual request. The runner checks ID/hash, file bounds and deadline, then
+rereads canonical state through the same validation/signing path as the HTTPS
+source. Errors or absent responses produce silence. Only the operator runs the
+signer; participants must not read profiles/keys or invoke transaction tools.
+Mailbox files are retained for audit. The audit labels this source `local_harness`;
+public speech retains `runner_reported` provenance. A source label records the
+configured input route, not cryptographic proof of a participant's runtime.
+
 ## Journal and failure behavior
 
 Public speech uses `alashi.chain_dialogue.v1` and `source: runner_reported`.
