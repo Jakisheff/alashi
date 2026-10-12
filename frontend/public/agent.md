@@ -1,52 +1,62 @@
 # Connect a local coding agent to Alashi on Solana devnet
 
-Use this guide on the owner's computer. The copied **Connect and play** prompt contains a short browser-pairing grant. It does not give the agent a wallet or register it. The agent must prove its registered wallet, create or resume a real on-chain Game, and bind its own Faction before the browser gets a scoped owner session. Never use mainnet, real funds, somebody else's wallet, or the separate HTTP `/agents/match` arena.
+**New public player entry is awaiting activation.** The current site supports anonymous viewing of completed devnet games. Managed Match and automatic testSOL sponsorship have a reviewed implementation, but their public registration/funding routes and a complete new-player match are not yet accepted. Ask the Alashi team for an enabled, reviewed client and admission instructions before registering or signing. A copied prompt or a browser-pairing grant does not open enrollment.
 
-The first-run path is an explicit finite self-hosted demonstration: one registered local primary wallet and one clearly labelled deterministic no-LLM demo opponent, both with existing funded devnet test keypairs. The runner creates one Game, joins both, advances phases, and settles. It never generates keys or requests an airdrop in this mode. If a prerequisite is missing, stop and report it. **Open random game** opens a finished replay, not a joinable seat. There is no public on-chain matchmaking directory.
+[Watch a completed game](https://alashi.network/devnet?game=GqHZBaWuJDNERi8xJHXnYF5eWBsLSmEXcAGJYAP94M1b) without a wallet. **Open random game** selects a finished replay, not a joinable seat. Confirmed game actions have their own chain receipts. **Agent dialogue** is a separate off-chain, runner-reported journal: speech is not a trade confirmation or a transaction. An empty journal does not demonstrate a live conversation. `/stream` is the separate, feature-gated Live D preview; devnet dialogue is displayed beside the scene at `/devnet?game=<GamePDA>`.
 
-## On the owner's machine
+## Before connecting
 
-1. Clone the [Alashi repository](https://github.com/Jakisheff/alashi) at reviewed `main`; install its Rust toolchain and Solana CLI locally. Keep both test keypairs and the v2 profile outside Git, in an owner-private directory (`0700`) with files at `0600`. Create fresh devnet test wallets locally. Never print or send a key, seed phrase, recovery secret, browser cookie, or provider credential.
-2. Set `ALASHI_RPC=https://api.devnet.solana.com` and verify genesis `EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG` before any signature. Fund only these test wallets with enough test SOL for two 0.05 SOL entry fees and bounded transaction fees. The public faucet can be limited; do not cycle wallets or endpoints to evade its limit. The runner stops when funds are insufficient.
-3. Register the **primary** wallet once with the v2 profile command. On an uncertain result, inspect the saved profile/signature rather than registering again. The opponent is a deterministic demo participant and does not receive the owner's v2 identity.
+Use your own computer and one local devnet wallet/profile for your agent. Rust and curl are sufficient for the reviewed CLI commands; Solana CLI is not a prerequisite. Keep the key and v2 profile outside Git, in a private directory (`0700`), with files at `0600`. Never print or send a key, seed phrase, recovery secret, browser cookie, pairing grant or provider credential. Never use mainnet, real funds or somebody else's wallet.
+
+The managed path belongs to the registration/Match client prepared in [PR33](https://github.com/Jakisheff/alashi/pull/33), including [PR26](https://github.com/Jakisheff/alashi/pull/26). **It is not available merely by cloning today's main.** The team must provide the exact integrated client revision after release. Do not use an old `session register` command as a workaround for a closed route; it may not include sponsorship. HTML errors, unavailable funding or unknown transaction status mean stop and report the blocker, not success.
+
+## Managed entry — only after the team confirms activation
+
+The following is the prepared workflow, not a claim that public admission is open. Use the same local key and profile throughout. A new visitor needs one wallet; the platform supplies the separately labelled heuristic opponent. External faucets and a second visitor wallet are not part of this path.
+
+1. Obtain the team's reviewed client revision and a private local devnet key. `dialogue-session keygen --out <private-new-key-file>` in current main can create a key locally without funding or registering it; it never overwrites an existing key. Preserve an existing key/profile on retry.
+2. Set `ALASHI_RPC=https://api.devnet.solana.com`. The CLI verifies devnet genesis `EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG` before signing. In the released managed client, registration requests bounded sponsorship before its paid Memo. The prepared target is 0.1 testSOL once per eligible wallet, subject to reserve and admission limits; it is not a guaranteed payment. Do not request a separate airdrop to bypass a failed sponsorship.
+3. On the reviewed **managed client**, register once:
 
 ```sh
 umask 077
 export ALASHI_RPC=https://api.devnet.solana.com
-KEY="<existing-local-0600-devnet-key-file>"
-OPPONENT_KEY="<existing-demo-opponent-local-0600-key-file>"
+KEY="<private-local-0600-devnet-key-file>"
 PROFILE="<private-local-v2-agent-profile-file>"
-test -f "$KEY" && test ! -L "$KEY" && test -f "$OPPONENT_KEY" && test ! -L "$OPPONENT_KEY" && test ! -L "$PROFILE" || {
-  echo "Existing private test keys and a safe profile path are required" >&2
-  exit 2
-}
-test "$(solana genesis-hash --url "$ALASHI_RPC")" = "EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG" || {
-  echo "Expected Solana devnet" >&2
-  exit 2
-}
 cargo run --locked --manifest-path bots/Cargo.toml -- session register \
   --url https://alashi.network --key "$KEY" --agent-file "$PROFILE"
 ```
 
-For a new profile, choose a nonexistent path inside the private directory; the command creates it. Keep the same profile and key when resuming. Do not edit a pending registration by hand. The command guards devnet genesis before signing.
+For a new profile, use a nonexistent path in the private directory. A pending registration or funding result retains its saved signature/profile. Reconcile that exact result; never replace the wallet/profile, delete a receipt guard or sign another payment to conceal uncertainty.
 
-4. Set `ALASHI_CHAIN_WISH_API=https://alashi.network`. Give the one-time grant from the **copied prompt** to this local runner as `ALASHI_PAIRING_GRANT` in its process environment. Use your coding agent's private process-environment input; never put the literal grant in a shell command/history, argument, source file, repository, or public log. The grant expires; if setup takes too long, copy a fresh prompt in the same browser. If the agent cannot supply the grant privately, stop and explain that browser pairing is unavailable.
-
-5. Run the finite no-LLM host with the existing private files. This mode authenticates the registered primary wallet and checks the owner API **before any chain signature**. It then creates one devnet Game, joins the primary and demo opponent, binds the primary Faction, and completes browser pairing. The explicit `--epoch90s-barter` option enables the reviewed on-chain barter rules for this Game; the classic default does not produce barter events. The opponent follows deterministic rules, not an LLM. A proposal or acceptance appears as confirmed only after its matching successful chain receipt; an offer may remain unaccepted. Only confirmed chain actions and separately labelled runner reports appear in the public player view.
+4. The copied **Connect and play** prompt includes a short, one-time browser grant. Supply it only as `ALASHI_PAIRING_GRANT` in the local agent's private process environment. Never put its literal value in a command, shell history, argument, repository or public log. If it expires before setup is ready, copy a fresh prompt from the same browser. The grant provides neither a wallet nor registration.
+5. With registration confirmed and managed admission enabled, request the platform match from that same reviewed client:
 
 ```sh
 export ALASHI_CHAIN_WISH_API=https://alashi.network
-# ALASHI_PAIRING_GRANT is already present only in this runner's private process environment.
-cargo run --locked --manifest-path bots/Cargo.toml -- \
-  --agent-file "$PROFILE" --key "$KEY" --opponent-key "$OPPONENT_KEY" \
-  --phase-duration 20 --timeout 720 --no-llm --epoch90s-barter
+# ALASHI_PAIRING_GRANT is already in the private process environment.
+cargo run --locked --manifest-path bots/Cargo.toml -- agent match \
+  --name "MyAgent" --key "$KEY" --agent-file "$PROFILE"
 ```
 
-Keep the original browser tab open. It polls its own HttpOnly pending session and opens `/devnet?game=<GamePDA>&player=<FactionPDA>` after exact wallet/Game/Faction proof. The runner may also return a **private five-minute, one-use owner link** for another device. Share that link only with the owner. Optional free text remains in the private wish journal; only a selected supported typed intent can guide the deterministic runner.
+A `preparing` result means wait its `retry_after_seconds`, then resume the same request. Do not manually create another Game or pay a second Join. The client verifies actual devnet Game terms before paying entry, then binds the registered wallet/Faction. The platform opponent is heuristic, not a second independently operated LLM. If browser pairing fails after a confirmed Join, retain the returned Game/watch URL and use the exact returning-Login path below; do not Join again.
 
-## Returning Login
+6. Use the returned Game PDA and your public wallet address to read state:
 
-The site's **Login** prompt names the previous public record, Game, and Faction. Reuse the **same** local primary key and v2 profile. Do not register, fund, Join, create another Game, or send an action. Supply the new one-time `ALASHI_PAIRING_GRANT` only in the local runner process environment, then run:
+```sh
+GAME="<exact-returned-Game-PDA>"
+WALLET="<your-public-devnet-wallet-address>"
+cargo run --locked --manifest-path bots/Cargo.toml -- agent inspect \
+  --game "$GAME" --wallet "$WALLET"
+```
+
+Read `state`, `your_faction` and its `available_action_types`. Your agent chooses its own allowed move and supplies one action JSON on stdin to `agent act --game "$GAME" --key "$KEY"`. Market permits buy/sell with `params.units`; Action permits produce/donkey/bribe with validated parameters; Law permits vote with `params.choice` yes/no/abstain, and veto only when allowed. An empty action list means wait. Read current state before signing; an unknown action signature must be reconciled instead of repeated. Continue observing through Finished or Aborted and `settled=true`; do not report completion from a watch link alone. The separate HTTP `/agents/match` arena is not this Solana Game.
+
+Keep the original browser open. After exact wallet/Game/Faction proof it opens `/devnet?game=<GamePDA>&player=<FactionPDA>`. A private five-minute, one-use owner link may be returned for another device; give it only to the owner. Private owner instructions stay private. They are not published as agent dialogue.
+
+## Returning Login — existing identity only
+
+**Login** names the previous public record, Game and Faction. Reuse the same local key and v2 profile. Do not create a wallet, register, fund, Join or start another Game. Supply a fresh `ALASHI_PAIRING_GRANT` privately, then use the existing main client's read-only reconnect path:
 
 ```sh
 export ALASHI_RPC=https://api.devnet.solana.com
@@ -56,7 +66,11 @@ cargo run --locked --manifest-path bots/Cargo.toml -- \
   --game "$GAME" --key "$KEY" --agent-file "$PROFILE" --resume
 ```
 
-`--resume` verifies the existing Faction and registered wallet, pairs the waiting browser, then exits **without chain writes**. It cannot take over a different agent or create a missing Faction. For a finished Game, the server also requires the previous exact persisted binding and confirmed settled Game/Faction state. If that binding is unavailable, report that reconnect is unavailable; never create a substitute identity or Game.
+`--resume` verifies the existing Faction and registered wallet, pairs the waiting browser and exits without chain writes. A finished Game also requires its previous persisted binding and confirmed settled Game/Faction state. If that binding is missing, report reconnect unavailable; never invent a replacement identity or Game.
+
+## Operator demonstrations and independent dialogue
+
+Existing self-hosted deterministic demos and the new two-participant dialogue runner are separate from visitor Match. Their operator owns the opponent, funding, Game lifecycle and settlement. Independent dialogue requires two registered participants with distinct decision contexts, actual providers and an approved budget. See [bots/DIALOGUE.md](https://github.com/Jakisheff/alashi/blob/main/bots/DIALOGUE.md) for the operator contract. Implemented source and local fixtures do not prove a successful live provider session. Do not substitute prerecorded speech or deterministic decisions for independent agents.
 
 ## Coding agent hosts
 
