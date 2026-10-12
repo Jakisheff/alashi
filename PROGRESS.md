@@ -729,3 +729,7 @@ Validation on the integrated source: bots tests 86 passed / 2 ignored, bots
 executable build passed; full arena tests 126 passed / 1 ignored. The two bots
 ignored tests require a dedicated local validator, and the arena ignored test
 requires a supplied canonical snapshot. These were not claimed as executed.
+Registration sponsorship now uses the already validated registration tunnel when
+one is explicitly configured, while retaining the canonical HTTPS identity URL.
+A local HTTP regression fixture verifies proposal/funding routing and signed
+proof without chain writes. Updated bots suite: 87 passed / 2 ignored; build PASS.
