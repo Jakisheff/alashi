@@ -82,7 +82,7 @@ fn validate_url(url: &str) -> Result<String, Value> {
     }
     Ok(url.trim_end_matches('/').to_string())
 }
-fn read_private(path: &Path) -> ResultJson {
+pub(super) fn read_private(path: &Path) -> ResultJson {
     let meta = fs::symlink_metadata(path)
         .map_err(|_| error("session_unavailable", "cannot read private session file"))?;
     if !meta.is_file() || meta.len() > MAX_RESPONSE {
@@ -326,7 +326,7 @@ fn safe_server_error(value: &Value) -> Value {
         | "registration_memo_mismatch"
         | "registration_rpc_timeout"
         | "registration_rpc_failed"
-        | "registration_rpc_response_too_large" | "op_conflict" | "op_stale" | "op_out_of_order" | "bad_op_id" | "agent_not_registered" | "agent_registration_conflict" | "registration_conflict" | "bad_agent_record_id" | "entropy_unavailable" => code,
+        | "registration_rpc_response_too_large" | "op_conflict" | "op_stale" | "op_out_of_order" | "bad_op_id" | "agent_not_registered" | "agent_registration_conflict" | "registration_conflict" | "bad_agent_record_id" | "entropy_unavailable" | "bad_funding_request" | "funding_signature_invalid" | "funding_capacity" | "funding_failed" | "funding_rpc_unavailable" | "host_funds_low" | "match_host_unavailable" => code,
         "GameNotInLobby" | "GameFinished" | "GameFull" | "WrongPhase" | "AlreadyActed"
         | "AlreadyVoted" | "NoUnits" | "NotEnoughGoods" | "NotEnoughCash" | "BribeTooSmall"
         | "BribeTooBig" | "SelfBribe" | "NotAlive" | "TooEarly" | "NotEnoughFactions"
@@ -728,6 +728,46 @@ fn registration_base(options: &BTreeMap<String, String>) -> Result<String, Value
     }
     Ok(tunnel.clone())
 }
+pub(super) fn ensure_funding(profile: &Value, key: &Keypair, rpc: &RpcClient) -> ResultJson {
+    devnet(rpc)?;
+    let balance = rpc.get_balance(&key.pubkey())
+        .map_err(|_| error("funding_rpc_unavailable", "cannot read devnet balance"))?;
+    if balance >= 60_000_000 { return Ok(json!({"ok":true,"status":"already_funded"})); }
+    let base = text(&profile["config"], "url")?;
+    if profile["config"]["wallet"] != key.pubkey().to_string() {
+        return Err(error("agent_config_mismatch", "profile belongs to another wallet"));
+    }
+    let request = json!({"agent_record_id":profile["agent_record_id"],
+        "wallet":profile["config"]["wallet"],"recovery_secret":profile["recovery_secret"]});
+    let proposal = http_json(base, "/agents/registration", Some(&request))?;
+    if proposal["ok"] != true { return Err(safe_server_error(&proposal)); }
+    let memo = profile_proposal(profile, &proposal)?;
+    let message = format!("alashi:devnet-funding:v1:alashi.network:{}:{memo}", key.pubkey());
+    let mut request = request;
+    request["signature"] = json!(key.sign_message(message.as_bytes()).to_string());
+    for attempt in 0..13 {
+        let response = http_json(base, "/agents/funding", Some(&request))?;
+        if response["ok"] != true { return Err(safe_server_error(&response)); }
+        if response["network"] != "devnet" || response["wallet"] != key.pubkey().to_string()
+            || response["target_lamports"] != "100000000" {
+            return Err(error("invalid_funding", "invalid sponsorship response"));
+        }
+        match response["status"].as_str() {
+            Some("ready") => {
+                if rpc.get_balance(&key.pubkey()).map_err(|_| error("funding_rpc_unavailable",
+                    "cannot confirm the sponsored balance"))? < 60_000_000 {
+                    return Err(error("sponsorship_used", "this wallet already used its testSOL sponsorship; contact Alashi"));
+                }
+                return Ok(response);
+            }
+            Some("preparing") if attempt < 12 => sleep(Duration::from_secs(5)),
+            Some("preparing") => return Err(error("funding_pending", "funding is pending; retry the same wallet and profile")),
+            _ => return Err(error("invalid_funding", "unexpected sponsorship status")),
+        }
+    }
+    unreachable!()
+}
+
 fn register(options: &BTreeMap<String, String>, rpc: &RpcClient) -> ResultJson {
     let base = registration_base(options)?;
     let path = Path::new(&options["--agent-file"]);
@@ -751,6 +791,7 @@ fn register(options: &BTreeMap<String, String>, rpc: &RpcClient) -> ResultJson {
         save_private(path, &profile)?;
     }
     if profile["signature"].is_null() {
+        ensure_funding(&profile, &key, rpc)?;
         devnet(rpc)?;
         let tx = prepare_ix(rpc, &key, memo_ix(key.pubkey(), text(&profile, "memo")?))
             .map_err(registration_failure)?;
@@ -1058,6 +1099,54 @@ mod tests {
         save_private(path, &s).unwrap();
         s
     }
+
+    #[test]
+    fn empty_wallet_gets_sponsorship_before_any_paid_memo() {
+        use solana_rpc_client_api::request::RpcRequest;
+        let dir = Temp::new(); let (server, url) = listener(); let key = Keypair::new();
+        let profile = load_or_create_profile(&dir.session(),
+            json!({"url":url,"wallet":key.pubkey().to_string()})).unwrap();
+        let (owner, character) = profile_ids(&profile);
+        let memo = format!("alashi:agent-lifecycle:v2:devnet:alashi.network:{owner}:{}:{character}:{}",
+            profile["agent_record_id"].as_str().unwrap(), "d".repeat(64));
+        let proposal = json!({"ok":true,"mode":"agent_lifecycle_v2","network":"devnet",
+            "wallet":key.pubkey().to_string(),"owner_id":owner,"character_id":character,
+            "agent_record_id":profile["agent_record_id"],"memo_program_id":MEMO_ID,"memo":memo});
+        let (seen, worker) = fixture(server, vec![(200, proposal), (200,
+            json!({"ok":true,"network":"devnet","wallet":key.pubkey().to_string(),
+                "target_lamports":"100000000","status":"ready"}))]);
+        let rpc = RpcClient::new_mock_with_mocks_map("succeeds", [
+            (RpcRequest::GetGenesisHash, json!("EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG")),
+            (RpcRequest::GetBalance, json!({"context":{"slot":1},"value":0})),
+            (RpcRequest::GetBalance, json!({"context":{"slot":2},"value":100000000}))
+        ].into_iter().collect());
+        assert_eq!(ensure_funding(&profile, &key, &rpc).unwrap()["status"], "ready");
+        worker.join().unwrap();
+        let seen = seen.lock().unwrap();
+        assert_eq!(seen.len(), 2);
+        let message = format!("alashi:devnet-funding:v1:alashi.network:{}:{memo}", key.pubkey());
+        assert_eq!(seen[1]["signature"], key.sign_message(message.as_bytes()).to_string());
+        assert_eq!(seen[1]["wallet"], key.pubkey().to_string());
+        assert_eq!(seen[1].as_object().unwrap().len(), 4);
+        assert!(profile["signature"].is_null(), "sponsorship did not sign a paid Memo");
+    }
+
+    #[test]
+    fn existing_balance_skips_sponsorship_and_wrong_genesis_fails_closed() {
+        use solana_rpc_client_api::request::RpcRequest;
+        let key = Keypair::new(); let profile = json!({"config":{"url":"http://127.0.0.1:1",
+            "wallet":key.pubkey().to_string()}});
+        let rpc = RpcClient::new_mock_with_mocks("succeeds", [
+            (RpcRequest::GetGenesisHash, json!("EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG")),
+            (RpcRequest::GetBalance, json!({"context":{"slot":1},"value":60000000}))
+        ].into());
+        assert_eq!(ensure_funding(&profile, &key, &rpc).unwrap()["status"], "already_funded");
+        let rpc = RpcClient::new_mock_with_mocks("succeeds", [
+            (RpcRequest::GetGenesisHash, json!("5eykt4UsFv8P8NJdTREpY1vzqKqZKvdpKuc147dw2N9d"))
+        ].into());
+        assert_eq!(ensure_funding(&profile, &key, &rpc).unwrap_err()["error"]["code"], "wrong_network");
+    }
+
     #[test]
     fn private_file_atomic_permissions_and_immutable_config() {
         use std::os::unix::fs::PermissionsExt;

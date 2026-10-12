@@ -1411,3 +1411,39 @@ fn managed_lobby_closes_soon_after_second_join_and_persists_that_deadline() {
     crank_once(&restored);
     assert_eq!(restored.games.lock().unwrap()[&gid].sim.game.phase, Phase::Market);
 }
+
+#[test]
+fn funding_proves_a_zero_balance_wallet_without_paid_registration() {
+    use solana_ed25519::ed_sigs::{SigningKey, VerificationKey};
+    let state = isolated();
+    let key = SigningKey::from([39u8; 32]);
+    let vk: [u8; 32] = VerificationKey::from(&key).into();
+    let wallet = Pubkey::new_from_array(vk).to_string();
+    let mut body = json!({"agent_record_id":"ab".repeat(32),"wallet":wallet,
+        "recovery_secret":"cd".repeat(32)});
+    let proposal = h_registration_v2(&state, &body);
+    let message = format!("alashi:devnet-funding:v1:alashi.network:{wallet}:{}",
+        proposal["memo"].as_str().unwrap());
+    body["signature"] = json!(solana_signature::Signature::from(
+        key.sign(message.as_bytes()).to_bytes()).to_string());
+    let reply = h_funding_with_host(&state, &body, |proved_wallet| {
+        assert_eq!(proved_wallet, wallet);
+        json!({"ok":true,"status":"preparing","wallet":proved_wallet,"network":"devnet"})
+    });
+    assert_eq!(reply["ok"], true);
+    assert!(state.registrations.lock().unwrap().is_empty(), "no Memo receipt yet");
+    let restored = restore(&state);
+    assert_eq!(h_funding_with_host(&restored, &body, |_| reply.clone()), reply);
+    for field in ["agent_record_id", "wallet", "recovery_secret"] {
+        let mut bad = body.clone();
+        bad[field] = if field == "wallet" { json!(Pubkey::new_unique().to_string()) }
+            else { json!("ee".repeat(32)) };
+        assert_ne!(h_funding_with_host(&state, &bad, |_| panic!("forged proof forwarded"))["ok"], true);
+    }
+    let mut bad = body.clone(); bad["amount"] = json!(1000000000);
+    assert_eq!(h_funding_with_host(&state, &bad, |_| panic!("caller amount forwarded"))["error"], "bad_funding_request");
+    // A Memo signature cannot be reused as a funding authorization.
+    body["signature"] = json!(solana_signature::Signature::from(
+        key.sign(proposal["memo"].as_str().unwrap().as_bytes()).to_bytes()).to_string());
+    assert_eq!(h_funding_with_host(&state, &body, |_| panic!("wrong domain forwarded"))["error"], "funding_signature_invalid");
+}

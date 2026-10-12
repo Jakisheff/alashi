@@ -4,7 +4,7 @@ use serde_json::{json, Value};
 use std::{collections::BTreeMap, io::Read};
 
 const DEVNET_GENESIS: &str = "EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG";
-const USAGE: &str = "bots agent inspect --game PUBKEY [--wallet PUBKEY] | join --game PUBKEY --name NAME --key LOCAL_KEYPAIR | act --game PUBKEY --key LOCAL_KEYPAIR (one JSON action on stdin); ALASHI_RPC selects trusted devnet RPC";
+const USAGE: &str = "bots agent match --name NAME --key LOCAL_KEYPAIR --agent-file PRIVATE_PROFILE | inspect --game PUBKEY [--wallet PUBKEY] | join --game PUBKEY --name NAME --key LOCAL_KEYPAIR | act --game PUBKEY --key LOCAL_KEYPAIR (one JSON action on stdin); ALASHI_RPC selects trusted devnet RPC";
 
 type ResultJson = Result<Value, Value>;
 fn error(code: &str, message: &str) -> Value {
@@ -13,6 +13,7 @@ fn error(code: &str, message: &str) -> Value {
 fn options(args: &[String]) -> Result<BTreeMap<String, String>, Value> {
     let command = args.first().map(String::as_str).unwrap_or("");
     let allowed = match command {
+        "match" => &["--name", "--key", "--agent-file"][..],
         "inspect" => &["--game", "--wallet"][..],
         "join" => &["--game", "--key", "--name"][..],
         "act" => &["--game", "--key"][..],
@@ -90,7 +91,11 @@ pub(super) fn read_key(path: &str) -> Result<Keypair, Value> {
     }
     Ok(key)
 }
-fn checked_game(owner: Pubkey, address: &Pubkey, data: &[u8]) -> Result<state::Game, Value> {
+pub(super) fn checked_game(
+    owner: Pubkey,
+    address: &Pubkey,
+    data: &[u8],
+) -> Result<state::Game, Value> {
     if owner != id() {
         return Err(error("wrong_owner", "Game account is not owned by Alashi"));
     }
@@ -101,7 +106,7 @@ fn checked_game(owner: Pubkey, address: &Pubkey, data: &[u8]) -> Result<state::G
     }
     Ok(game)
 }
-fn checked_faction(
+pub(super) fn checked_faction(
     owner: Pubkey,
     address: &Pubkey,
     game: &Pubkey,
@@ -146,7 +151,7 @@ fn phase_name(phase: state::Phase) -> &'static str {
     }
 }
 fn action_types(game: &state::Game, faction: &state::Faction) -> Vec<&'static str> {
-    if !faction.alive || game.epoch != 0 {
+    if !faction.alive || !matches!(game.epoch, constants::EPOCH_CLASSIC | constants::EPOCH_90S) {
         return vec![];
     }
     match game.phase {
@@ -285,7 +290,7 @@ fn action_ix(
         "bribe" => &["to", "amount"][..],
         "vote" => &["choice"][..],
         "produce" | "donkey" | "veto" => &[][..],
-        _ => return Err(error("invalid_action", "unsupported classic action")),
+        _ => return Err(error("invalid_action", "unsupported action")),
     };
     if object.keys().any(|key| !fields.contains(&key.as_str())) {
         return Err(error("invalid_action", "unknown action parameter"));
@@ -336,6 +341,9 @@ fn action_ix(
 fn execute(args: &[String], input: Option<&str>, rpc: &RpcClient) -> ResultJson {
     let opts = options(args)?;
     let command = args[0].as_str();
+    if command == "match" {
+        return match_game(&opts, rpc);
+    }
     let game_key = pubkey(required(&opts, "--game")?)?;
     // Inspect is also devnet-labelled, so it uses the same guard as writes.
     devnet(rpc)?;
@@ -350,11 +358,8 @@ fn execute(args: &[String], input: Option<&str>, rpc: &RpcClient) -> ResultJson 
     let player = key.pubkey();
     let faction = faction_pda(&game_key, &player);
     let game = game_account(rpc, &game_key)?;
-    if game.epoch != 0 {
-        return Err(error(
-            "unsupported_epoch",
-            "this CLI currently supports classic matches only",
-        ));
+    if !matches!(game.epoch, constants::EPOCH_CLASSIC | constants::EPOCH_90S) {
+        return Err(error("unsupported_epoch", "unsupported game epoch"));
     }
     let ix = if command == "join" {
         let name = required(&opts, "--name")?;
@@ -410,6 +415,121 @@ fn execute(args: &[String], input: Option<&str>, rpc: &RpcClient) -> ResultJson 
             "error":{"code":"transaction_not_confirmed","message":"inspect receipt status and chain state before retrying"},"receipt":receipt}),
         ),
     }
+}
+
+fn fund_new_join(already_joined: bool, fund: impl FnOnce() -> ResultJson) -> ResultJson {
+    if already_joined {
+        Ok(json!({"ok":true,"status":"existing_join"}))
+    } else {
+        fund()
+    }
+}
+fn match_game(opts: &BTreeMap<String, String>, rpc: &RpcClient) -> ResultJson {
+    devnet(rpc)?;
+    let key_path = required(opts, "--key")?;
+    let profile = Path::new(required(opts, "--agent-file")?);
+    let name = required(opts, "--name")?;
+    if name.is_empty() || name.len() > 16 {
+        return Err(error("invalid_name", "name must contain 1..16 UTF-8 bytes"));
+    }
+    let private_profile = session_cli::read_private(Path::new(profile))?;
+    let key = read_key(key_path)?;
+    let owner = runner_auth::authenticate_owner(profile, key_path)
+        .map_err(|code| error(code, "registered wallet proof failed"))?;
+    let mut assignment = runner_auth::match_game(&owner).map_err(|code| {
+        error(
+            code,
+            "managed match unavailable; retry with the same profile",
+        )
+    })?;
+    for _ in 0..12 {
+        if assignment["status"] != "preparing" {
+            break;
+        }
+        sleep(Duration::from_secs(5));
+        assignment = runner_auth::match_game(&owner).map_err(|code| {
+            error(
+                code,
+                "managed match unavailable; retry with the same profile",
+            )
+        })?;
+    }
+    let game_key = pubkey(assignment["game_pda"].as_str().unwrap_or(""))?;
+    if assignment["ok"] != true
+        || assignment["network"] != "devnet"
+        || assignment["program_id"] != id().to_string()
+    {
+        return Err(error("invalid_match", "invalid managed match assignment"));
+    }
+    if assignment["status"] == "preparing" {
+        return Ok(
+            json!({"ok":true,"command":"match","status":"preparing","game":game_key.to_string(),"retry_after_seconds":5}),
+        );
+    }
+    if assignment["status"] != "assigned" {
+        return Err(error("invalid_match", "unexpected match status"));
+    }
+    // Verify the terms on chain before the visitor pays the entry fee.
+    let game = game_account(rpc, &game_key)?;
+    let operator = pubkey(assignment["opponent_wallet"].as_str().unwrap_or(""))?;
+    if game.admin != operator
+        || game.entry_fee != ENTRY_FEE
+        || game.phase_duration != 20
+        || game.epoch != constants::EPOCH_90S
+        || game.entropy_mode != constants::ENTROPY_SLOTHASH
+    {
+        return Err(error(
+            "invalid_match",
+            "managed game terms do not match the published test match",
+        ));
+    }
+    // Recover the authoritative assignment and verify our Faction before asking
+    // for funds. A paid Join must resume even after the one-time sponsor is used.
+    let own_pda = faction_pda(&game_key, &key.pubkey());
+    let existing = rpc
+        .get_account_with_commitment(&own_pda, CommitmentConfig::confirmed())
+        .map_err(|_| error("rpc_unavailable", "cannot check existing managed faction"))?;
+    let already_joined = if let Some(account) = existing.value {
+        let own = checked_faction(account.owner, &own_pda, &game_key, &account.data)?;
+        if own.wallet != key.pubkey() {
+            return Err(error("invalid_faction", "managed faction wallet mismatch"));
+        }
+        true
+    } else {
+        false
+    };
+    fund_new_join(already_joined, || {
+        session_cli::ensure_funding(&private_profile, &key, rpc)
+    })?;
+    let args = vec![
+        "join".into(),
+        "--game".into(),
+        game_key.to_string(),
+        "--key".into(),
+        key_path.into(),
+        "--name".into(),
+        name.into(),
+    ];
+    let mut joined = execute(&args, None, rpc)?;
+    let faction = joined["faction"]
+        .as_str()
+        .ok_or_else(|| error("invalid_match", "missing joined faction"))?;
+    // A browser outage must not hide a confirmed, paid Join from the player.
+    let binding = runner_auth::bind_wallet(&owner, &game_key.to_string(), faction);
+    let pairing = match &binding {
+        Ok(binding) => match std::env::var("ALASHI_PAIRING_GRANT") {
+            Ok(grant) => runner_auth::complete_pairing(&owner, binding, &grant).map(|_| ()),
+            Err(_) => Err("pairing_grant_missing"),
+        },
+        Err(code) => Err(*code),
+    };
+    joined["command"] = json!("match");
+    joined["status"] = json!("joined");
+    joined["browser_paired"] = json!(pairing.is_ok());
+    joined["browser_error"] = json!(pairing.err());
+    joined["watch_url"] = json!(format!("https://alashi.network/devnet?game={game_key}"));
+    joined["opponent"] = json!({"name":"Alashi Bot","wallet":operator.to_string(),"kind":"platform_heuristic","joins_if_alone":true});
+    Ok(joined)
 }
 pub fn run(args: &[String]) -> i32 {
     if args.iter().any(|a| a == "--help" || a == "-h") {
@@ -537,6 +657,13 @@ mod tests {
         game.president = wallet;
         faction.voted_stamp = game.stamp();
         assert_eq!(action_types(&game, &faction), vec!["veto"]);
+        game.epoch = constants::EPOCH_90S;
+        assert_eq!(action_types(&game, &faction), vec!["veto"]);
+        game.phase = state::Phase::Action;
+        faction.acted_stamp = 0;
+        assert!(action_types(&game, &faction).contains(&"produce"));
+        game.epoch = 255;
+        assert!(action_types(&game, &faction).is_empty());
     }
     #[test]
     fn genesis_guard_fails_closed_without_signing() {
@@ -619,5 +746,31 @@ mod tests {
         ])
         .is_err());
         assert!(host_timing(&["--phase-duration".into()]).is_err());
+    }
+}
+
+#[cfg(test)]
+mod managed_recovery_tests {
+    use super::*;
+    #[test]
+    fn paid_join_resumes_below_funding_threshold_without_second_sponsorship() {
+        let remaining_balance = 49_995_000u64;
+        assert!(remaining_balance < 60_000_000);
+        let funding_called = std::cell::Cell::new(false);
+        let result = fund_new_join(true, || {
+            funding_called.set(true);
+            Err(error(
+                "sponsorship_used",
+                "wallet already received its one-time topup",
+            ))
+        })
+        .unwrap();
+        assert_eq!(result["status"], "existing_join");
+        assert!(!funding_called.get());
+        assert_eq!(
+            fund_new_join(false, || Err(error("sponsorship_used", "used"))).unwrap_err()["error"]
+                ["code"],
+            "sponsorship_used"
+        );
     }
 }

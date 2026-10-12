@@ -99,13 +99,20 @@ fn post(path: &str, bearer: Option<&str>, body: &Value) -> Result<Value, &'stati
         return Err("owner_transport");
     }
     let out = child.wait_with_output().map_err(|_| "owner_transport")?;
-    if !out.status.success() || out.stdout.len() > MAX_RESPONSE {
+    if (!out.status.success() && out.status.code() != Some(22)) || out.stdout.len() > MAX_RESPONSE {
         return Err("owner_transport");
     }
     let output = String::from_utf8(out.stdout).map_err(|_| "owner_transport")?;
     let (body, code) = output.rsplit_once('\n').ok_or("owner_transport")?;
     if !(200..300).contains(&code.parse::<u16>().map_err(|_| "owner_transport")?) {
-        return Err("owner_rejected");
+        let response: Value = serde_json::from_str(body).map_err(|_| "owner_transport")?;
+        return Err(match response["error"].as_str() {
+            Some("match_capacity") => "match_capacity",
+            Some("host_funds_low") => "host_funds_low",
+            Some("match_host_unavailable") => "match_host_unavailable",
+            Some("storage_failed") => "storage_failed",
+            _ => "owner_rejected",
+        });
     }
     serde_json::from_str(body).map_err(|_| "owner_transport")
 }
@@ -162,6 +169,14 @@ pub(super) fn bind_wallet(
         return Err("runner_bind_rejected");
     }
     Ok(binding)
+}
+
+pub(super) fn match_game(owner: &OwnerSession) -> Result<Value, &'static str> {
+    post(
+        &format!("/agents/{}/chain/match", owner.agent.record_id),
+        Some(&owner.bearer),
+        &json!({}),
+    )
 }
 
 pub(super) fn authenticate_and_bind(

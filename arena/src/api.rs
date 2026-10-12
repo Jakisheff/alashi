@@ -15,6 +15,8 @@ mod chain_wishes;
 mod chain_conversations;
 #[path = "chain_dialogue.rs"]
 mod chain_dialogue;
+#[path = "chain_match.rs"]
+mod chain_match;
 use crate::runner::{self, ActionLog};
 use crate::registration::{self, Proof, Receipt};
 use crate::strategies::{ActionAction, LawAction, MarketAction};
@@ -1467,6 +1469,34 @@ fn h_registration_v2(state: &AppState, body: &serde_json::Value) -> serde_json::
         recovery_hash: hash, challenge, receipt: None, created_at: now(),
     };
     lifecycle_response(id, &record)
+}
+
+fn h_funding(state: &AppState, body: &serde_json::Value) -> serde_json::Value {
+    h_funding_with_host(state, body, chain_match::fund)
+}
+
+fn h_funding_with_host(state: &AppState, body: &serde_json::Value,
+    host: impl FnOnce(&str) -> serde_json::Value) -> serde_json::Value {
+    if !body.as_object().is_some_and(|o| o.len() == 4 && o.keys().all(|k|
+        matches!(k.as_str(), "agent_record_id" | "wallet" | "recovery_secret" | "signature"))) {
+        return err_json("bad_funding_request", "funding requires the exact local wallet proof");
+    }
+    let proposal = h_registration_v2(state, &serde_json::json!({
+        "agent_record_id":body["agent_record_id"],"wallet":body["wallet"],
+        "recovery_secret":body["recovery_secret"]}));
+    if proposal["ok"] != true { return proposal; }
+    let wallet = body["wallet"].as_str().unwrap_or("");
+    let message = format!("alashi:devnet-funding:v1:alashi.network:{wallet}:{}",
+        proposal["memo"].as_str().unwrap_or(""));
+    let Ok(key) = wallet.parse::<Pubkey>() else {
+        return err_json("funding_signature_invalid", "wallet proof failed");
+    };
+    let signature = body["signature"].as_str().unwrap_or("");
+    if signature.len() > 88 || signature.parse::<solana_signature::Signature>().ok()
+        .is_none_or(|s| !s.verify(key.as_ref(), message.as_bytes())) {
+        return err_json("funding_signature_invalid", "wallet proof failed");
+    }
+    host(wallet)
 }
 
 fn h_confirm_v2(state: &AppState, body: &serde_json::Value) -> serde_json::Value {
@@ -2994,7 +3024,7 @@ fn live_result(value: serde_json::Value) -> (&'static str, String) {
         Some("idempotency_conflict" | "wish_status_conflict" | "no_active_game" | "no_active_chain_game" | "receipt_pending" | "binding_conflict") => "409 Conflict",
         Some("wish_quota_exhausted" | "owner_challenge_rate_limited" | "dialogue_quota_exhausted" | "dialogue_rate_limited") => "429 Too Many Requests",
         Some("runner_token_invalid" | "binding_forbidden") => "403 Forbidden",
-        Some("chain_api_unavailable") => "503 Service Unavailable",
+        Some("chain_api_unavailable" | "match_host_unavailable" | "match_capacity" | "host_funds_low" | "funding_rpc_unavailable" | "funding_capacity" | "funding_failed") => "503 Service Unavailable",
         Some(_) => "400 Bad Request",
     };
     (status, value.to_string())
@@ -3008,7 +3038,7 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
         .filter(|s| !s.is_empty())
         .collect();
     if req.method == "OPTIONS" || (req.method == "POST" && req.path.contains('?')
-        && (path.contains("/owner/") || path.contains("/live/"))) {
+        && (path.contains("/owner/") || path.contains("/live/") || path.contains("/chain/"))) {
         respond(stream, "403 Forbidden", &err_json("method_or_query_forbidden", "owner/live requests use allowed methods and no URL credentials").to_string());
         return;
     }
@@ -3141,6 +3171,13 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
         }
     } else { None };
     let (status, body) = match (req.method.as_str(), segs.as_slice()) {
+        ("POST", ["agents", id, "chain", "match"]) => {
+            if req.cookie.is_some() || req.authorization.is_none() {
+                live_result(err_json("owner_session_invalid", "registered-wallet bearer required"))
+            } else {
+                live_result(chain_match::assign(state,id,req.origin.as_deref().unwrap_or(""),req.authorization.as_deref().unwrap(),&body_v))
+            }
+        },
         ("POST", ["agents", id, "owner", "challenge"]) => live_result(owner_auth::h_begin_owner_challenge(state,id,req.origin.as_deref().unwrap_or(""))),
         ("POST", ["agents", id, "owner", "session"]) => live_result(owner_auth::h_finish_owner_challenge(state,id,req.origin.as_deref().unwrap_or(""),&body_v)),
         ("POST", ["agents", id, "owner", "handoff"]) => {
@@ -3272,6 +3309,12 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
         }).to_string()),
         ("GET", ["agents", id]) => ("200 OK", h_agent_profile(state, id).to_string()),
         ("POST", ["agents", "match"]) => ("200 OK", h_match(state, &body_v).to_string()),
+        ("POST", ["agents", "funding"]) => {
+            if req.path.contains('?') || req.cookie.is_some() || req.authorization.is_some()
+                || req.origin.as_deref().is_some_and(|o| !owner_auth::origin_ok(o)) {
+                live_result(err_json("bad_funding_request", "funding uses a local wallet signature"))
+            } else { live_result(h_funding(state, &body_v)) }
+        },
         ("POST", ["agents", "registration"]) => ("200 OK", h_registration_v2(state, &body_v).to_string()),
         ("POST", ["agents", "confirm"]) => {
             let result = h_confirm_v2(state, &body_v);

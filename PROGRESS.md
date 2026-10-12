@@ -702,3 +702,30 @@ https://github.com/Jakisheff/alashi/actions/runs/38055909057/job/114224311597.
 Общие проверки Rust в том же запуске ещё выполняются. PR остаётся черновиком.
 Факт: 0,2 часа (12 минут с 18:19 до 18:31, включая подтверждение GitHub).
 План: 0,25 часа, до 18:42 закрыт.
+
+11.10 15:14. Автоматический соперник для одиночного входа, прямое поручение Амира. План: 2 часа, до 17:14. Ветка codex/solo-opponent, база main cbb6459. Реализация управляемого devnet-лобби, отдельного соперника и полного завершения матча. Проверки: одиночный вход, повтор запроса, второй внешний игрок, завершение и расчёт. Факт будет записан после проверки.
+Факт: 0,7 часа. 11.10 15:56: механика реализована и проверена. Управляемое ончейн-лобби добавляет Alashi Bot одному посетителю, сохраняет назначение и доводит партию до расчёта. Подписанные локальные игры на программе из devnet подтвердили шесть раундов с выплатами; два посетителя играют без бота. 40 тестов bots, 117 arena, 34 rules и 13 indexer прошли, клиент и frontend собраны, программа проходит host check. Публичное включение ещё не выполнено: требуется согласованный постоянный подписывающий процесс и обновление сервисов. Порядок включения: docs/ops/SOLO_OPPONENT_20261011.md.
+
+12.10 00:51. Автоматическое пополнение devnet для подключения своего агента, прямое поручение Амира «встрой и реши». План: 1 час, до 01:51.
+12.10 01:19. observed: владелец backend Иван передал узкий scope из AMIR-DEVNET-SPONSOR-FUNDING-20261012-01 (docs07ce2bf). Ветка codex/devnet-sponsorship основана на актуальном PR26 a0a75442. Реализован отдельный модуль sponsorship, доказательство владения кошельком до платного Memo и автоматический вызов пополнения из register/Match. Проверенный полный кандидат имеет 57 успешных bots tests и 120 arena tests; bots build прошёл. Проверены повтор выплаты и перезапуск с прежней signed transaction, неверный proof, срок транзакции и ограниченный резерв. Один тест реального validator и один приватного live-провайдера намеренно не выполнялись.
+not_validated: публичное включение, реальный sponsorship и полный регистрация/Match/settled. Тонкое подключение модуля к match-host согласовывается с Иваном; edge и выпуск принадлежат ему. Факт будет записан при завершении задачи.
+
+12.10 01:30. observed: подписанный локальный тест подтвердил перевод 100000000 lamports на новый кошелёк с 0 SOL, восстановление прежней signed transaction, отсутствие второй выплаты и Memo с остатком 99995000 lamports. Полная партия теперь получает средства через sponsorship: один посетитель с ботом и два посетителя завершили шесть раундов с реальными локальными выплатами; пустое Lobby завершилось refund. Прогон 97,00 секунд. not_validated: публичный маршрут и резерв оператора. Тонкие callers подключения модуля включены в отдельную ветку как часть предложения для review/integration Ивана; его действующий host не изменён.
+
+12.10 01:45. observed: итоговые bots57/57, arena121/121 (последовательный прогон) и bots build без compiler warnings PASS. Резерв сохраняется с учётом RPC-quoted комиссии новой и ожидающих выплат. Повтор подписанного локального sponsorship/Memo PASS; полный zero-wallet match fixture PASS за 88,12 секунд. Параллельный запуск арены с локальным validator был прерван на прежнем ambient-agent fixture; последовательный полный прогон PASS. Факт: 0,9 часа.
+Реализация и локальные проверки закрыты. not_validated: GitHub CI итогового PR. Публичное включение принадлежит Ивану; резерв оператора и полный публичный visitor proof ещё не проверены. Центральная публикация own handoff временно не проходит из-за tracked BOARD.md, чужой журнал сохранён.
+
+## 2026-10-13 — managed entry integration on current dialogue main
+
+Integrated the accepted PR26/PR33 backend and bots source onto `f1e568e` in an
+isolated local clone. Kept the current frontend guide, dialogue/local-harness
+modules and canonical registration tunnel. Managed Match now obtains the durable
+assignment and verifies its own on-chain Faction before requesting sponsorship;
+a previously paid Join resumes below the funding threshold without another topup.
+Local validation results are recorded in the accompanying review handoff. Public
+funding, operator reserve, signer-host availability and external visitor acceptance
+remain deployment gates; no live transaction or rollout was performed for this change.
+Validation on the integrated source: bots tests 86 passed / 2 ignored, bots
+executable build passed; full arena tests 125 passed / 1 ignored. The two bots
+ignored tests require a dedicated local validator, and the arena ignored test
+requires a supplied canonical snapshot. These were not claimed as executed.
