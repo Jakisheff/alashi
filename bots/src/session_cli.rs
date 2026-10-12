@@ -13,7 +13,7 @@ use std::{
 
 const MEMO_ID: &str = "MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr";
 const MAX_RESPONSE: u64 = 1_048_576;
-const USAGE: &str = "bots session register --url URL --key LOCAL_KEYPAIR --agent-file PRIVATE | join --agent-file PRIVATE --game ID --name NAME --model MODEL --prompt-file FILE --session-file PRIVATE | inspect --session-file PRIVATE | act --session-file PRIVATE (JSON on stdin) | retry --session-file PRIVATE | legacy connect --url URL --game ID --key LOCAL_KEYPAIR --name NAME --model MODEL --prompt-file FILE --session-file PRIVATE";
+const USAGE: &str = "bots session register --url URL --key LOCAL_KEYPAIR --agent-file PRIVATE [--registration-tunnel http://127.0.0.1:PORT] | join --agent-file PRIVATE --game ID --name NAME --model MODEL --prompt-file FILE --session-file PRIVATE | inspect --session-file PRIVATE | act --session-file PRIVATE (JSON on stdin) | retry --session-file PRIVATE | legacy connect --url URL --game ID --key LOCAL_KEYPAIR --name NAME --model MODEL --prompt-file FILE --session-file PRIVATE";
 type ResultJson = Result<Value, Value>;
 fn error(code: &str, message: &str) -> Value {
     json!({"ok":false,"error":{"code":code,"message":message}})
@@ -34,7 +34,7 @@ fn parse_options(args: &[String]) -> Result<BTreeMap<String, String>, Value> {
             "--prompt-file",
             "--session-file",
         ][..],
-        Some("register") => &["--url", "--key", "--agent-file"][..],
+        Some("register") => &["--url", "--key", "--agent-file", "--registration-tunnel"][..],
         Some("join") => &["--agent-file", "--game", "--name", "--model", "--prompt-file", "--session-file"][..],
         Some("inspect" | "act" | "retry") => &["--session-file"][..],
         _ => return Err(error("usage", USAGE)),
@@ -49,7 +49,7 @@ fn parse_options(args: &[String]) -> Result<BTreeMap<String, String>, Value> {
             return Err(error("usage", "unknown, duplicate or incomplete option"));
         }
     }
-    if allowed.iter().any(|name| !options.contains_key(*name)) {
+    if allowed.iter().any(|name| *name != "--registration-tunnel" && !options.contains_key(*name)) {
         return Err(error("usage", USAGE));
     }
     Ok(options)
@@ -184,6 +184,9 @@ fn http_json(url: &str, path: &str, body: Option<&Value>) -> ResultJson {
     let mut command = Command::new("curl");
     command.args([
         "--disable",
+        "--globoff",
+        "--noproxy",
+        "127.0.0.1,localhost,::1",
         "--silent",
         "--show-error",
         "--connect-timeout",
@@ -713,13 +716,25 @@ fn load_or_create_profile(path: &Path, config: Value) -> ResultJson {
         Err(_) => Err(error("agent_unavailable", "cannot inspect agent profile")),
     }
 }
+// An explicit local SSH transport changes only registration requests, never the
+// canonical identity URL saved in the profile or later runner requests.
+fn registration_base(options: &BTreeMap<String, String>) -> Result<String, Value> {
+    let canonical = validate_url(&options["--url"])?;
+    let Some(tunnel) = options.get("--registration-tunnel") else { return Ok(canonical); };
+    let port = tunnel.strip_prefix("http://127.0.0.1:")
+        .and_then(|s| s.parse::<u16>().ok()).filter(|p| *p != 0);
+    if canonical != "https://alashi.network" || port.is_none() {
+        return Err(error("invalid_registration_tunnel", "use canonical alashi HTTPS URL and explicit http://127.0.0.1:PORT tunnel"));
+    }
+    Ok(tunnel.clone())
+}
 fn register(options: &BTreeMap<String, String>, rpc: &RpcClient) -> ResultJson {
+    let base = registration_base(options)?;
     let path = Path::new(&options["--agent-file"]);
     let _lock = SessionLock::acquire(path)?;
     let key = read_key(&options["--key"])?;
     let config = json!({"url":validate_url(&options["--url"])? ,"wallet":key.pubkey().to_string()});
     let mut profile = load_or_create_profile(path, config)?;
-    let base = text(&profile["config"], "url")?.to_string();
     if profile["registration"].is_object() {
         return Ok(json!({"ok":true,"command":"register","network":"devnet","wallet":profile["config"]["wallet"],
             "agent_record_id":profile["agent_record_id"],"character_id":profile["character_id"],"registration":profile["registration"]}));
@@ -961,6 +976,27 @@ mod tests {
     }
     fn config(url: &str) -> Value {
         json!({"url":url,"game_id":42,"name":"fixture","model":"test-model","prompt":"private strategy prompt","wallet":Keypair::new_from_array([7;32]).pubkey().to_string()})
+    }
+
+    #[test]
+    fn registration_tunnel_is_explicit_loopback_only_and_keeps_canonical_identity() {
+        let mut opts = BTreeMap::from([("--url".into(), "https://alashi.network".into())]);
+        assert_eq!(registration_base(&opts).unwrap(), "https://alashi.network");
+        opts.insert("--registration-tunnel".into(), "http://127.0.0.1:18095".into());
+        assert_eq!(registration_base(&opts).unwrap(), "http://127.0.0.1:18095");
+        assert_eq!(opts["--url"], "https://alashi.network");
+        for bad in ["http://evil.test:8095", "http://127.0.0.1:0", "http://127.0.0.1:8095/path", "http://127.0.0.1:8095?x", "https://127.0.0.1:8095", "http://127.0.0.1:99999"] {
+            opts.insert("--registration-tunnel".into(), bad.into());
+            assert!(registration_base(&opts).is_err(), "{bad}");
+        }
+        opts.insert("--registration-tunnel".into(), "http://127.0.0.1:18095".into());
+        opts.insert("--url".into(), "https://other.test".into());
+        assert!(registration_base(&opts).is_err());
+        let args = ["register", "--url", "https://alashi.network", "--key", "k", "--agent-file", "p"];
+        assert!(parse_options(&args.map(String::from)).is_ok());
+        let mut extended = args.map(String::from).to_vec();
+        extended.extend(["--registration-tunnel".into(), "http://127.0.0.1:18095".into()]);
+        assert!(parse_options(&extended).is_ok());
     }
     fn fixture(
         listener: TcpListener,

@@ -4,6 +4,7 @@ mod chain_wish_client;
 mod dialogue;
 mod dialogue_provider;
 mod dialogue_runner;
+mod dialogue_session;
 mod donkey_risk;
 mod llm;
 mod runner_auth;
@@ -2891,6 +2892,9 @@ fn main() {
     let args: Vec<String> = std::env::args().collect();
     if args.get(1).map(String::as_str) == Some("dialogue") {
         std::process::exit(dialogue_runner::run(&args[2..]));
+    }
+    if args.get(1).map(String::as_str) == Some("dialogue-session") {
+        std::process::exit(dialogue_session::run(&args[2..]));
     }
     if args.get(1).map(String::as_str) == Some("session") {
         std::process::exit(session_cli::run(&args[2..]));

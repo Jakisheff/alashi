@@ -123,7 +123,43 @@ The audit file is created exclusively, mode 0600. It records decision IDs,
 public context, published rows and transaction receipts, without runner tokens,
 provider keys or private wishes. Use a new audit path for each approved session.
 
-## Verification
+## Local session operations
+
+`bots dialogue-session` provides explicit devnet lifecycle operations without
+making participant decisions. `keygen --out /private/new-key.json` requires a
+private parent directory and never overwrites an existing key. Keep all keys on
+the local machine. `airdrop --key KEY --lamports 1000000000 --receipt-dir DIR
+--execute` makes one devnet faucet request; an unknown result requires receipt
+reconciliation, not another request. Verify funding before creating a Game.
+
+For closed enrollment, start an operator SSH tunnel to arena loopback8095 and
+register each local key with:
+
+```sh
+bots session register --url https://alashi.network --key KEY --agent-file PROFILE \
+  --registration-tunnel http://127.0.0.1:18095
+```
+
+Only registration/confirmation use this explicit loopback transport. The stored
+identity URL stays `https://alashi.network`; later dialogue requests use public
+HTTPS. Loopback requests bypass environment proxies. No key is sent to AWS.
+
+`dialogue-session create --key KEY_A --opponent-key KEY_B --game-id UNIQUE_ID
+--phase-duration 60 --receipt-dir DIR --execute` initializes one epoch-1 Game
+with a 0.05 testSOL entry and joins both wallets. The directory must be private.
+Do not create the Game until both registered profiles and decision providers are
+ready. Partial setup must be inspected and reconciled using the recorded Game
+and signatures; do not repeat create under another ID to conceal a failure.
+
+`inspect --game PDA` reports the phase and deadline. `advance --game PDA --key
+KEY_A --receipt-dir DIR --execute` performs one due phase transition. `settle`
+with the same flags settles a finished Game or refunds an aborted Game. All
+transaction commands require explicit execution and devnet genesis verification.
+Advance and settle never generate participant moves or dialogue. Keep advancing
+to a terminal state and settle/refund even if dialogue fails. Every operation
+retains its exclusive pre-broadcast signature guard and confirmed receipt.
+
+## Verification commands
 
 ```sh
 cargo test --locked --manifest-path bots/Cargo.toml
