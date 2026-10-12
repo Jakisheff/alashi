@@ -117,7 +117,6 @@ function GameViewer({ pda, initialPlayer, ownerRecord, setup, detailsTab, onTabC
   const activeEvents = mode === 'replay' ? replayEvents : observed
   const replayEvent = mode === 'replay' && position >= 0 ? replayEvents[position] : undefined
   const dialogue = useChainDialogue(pda, Boolean(snapshot))
-  const conversations = useMemo(() => snapshot ? conversationView(journal.entries, snapshot, mode === 'replay' ? replayEvent?.id ?? '' : null) : { rows: [], unmatched: false }, [journal.entries, snapshot, mode, replayEvent?.id])
   useEffect(() => {
     if (mode !== 'replay') return
     if (!replayEvent) { setCurrent(null); setPlaying(false); return }
@@ -163,6 +162,10 @@ function GameViewer({ pda, initialPlayer, ownerRecord, setup, detailsTab, onTabC
   const selectedEventIds = new Set(observed.map((e) => e.id))
   const receiptSnapshot = mode === 'replay' ? replaySnapshot : snapshot
   const feedEvents = receiptSnapshot ? mode === 'replay' ? replayJournalPrefix(receiptSnapshot, replayEvents, position) : receiptSnapshot.events : []
+  // The completed animation has no current event, but its frozen transcript
+  // still ends at the last confirmed anchor. Seeking back narrows this prefix.
+  const replayAnchor = mode === 'replay' ? feedEvents.at(-1)?.id ?? '' : null
+  const conversations = useMemo(() => receiptSnapshot ? conversationView(journal.entries, receiptSnapshot, replayAnchor) : { rows: [], unmatched: false }, [journal.entries, receiptSnapshot, replayAnchor])
   const donkeyInput = receiptSnapshot && faction ? donkeySnapshotInput(receiptSnapshot, faction.pda, mode === 'replay' ? feedEvents : null) : null
   const replayPhaseEvent = feedEvents.filter((event) => event.type === 'phase_advanced').at(-1)
   const replayRound = replayEvent?.round ?? replayPhaseEvent?.round
@@ -202,7 +205,7 @@ function GameViewer({ pda, initialPlayer, ownerRecord, setup, detailsTab, onTabC
       <DetailsTabs value={detailsTab} onChange={onTabChange} />
       <div id="devnet-details" role="tabpanel" aria-labelledby={`devnet-tab-${detailsTab}`}>
         <div hidden={detailsTab !== 'setup'} className="devnet-setup-panel">{setup}</div>
-        {snapshot && <ChainDialogueStream entries={dialogue.entries} snapshot={snapshot} replayEvent={mode === 'replay' ? replayEvent?.id ?? '' : null} loaded={dialogue.loaded} error={dialogue.error} retry={dialogue.retry} />}
+        {snapshot && <ChainDialogueStream entries={dialogue.entries} snapshot={receiptSnapshot ?? snapshot} replayEvent={replayAnchor} loaded={dialogue.loaded} error={dialogue.error} retry={dialogue.retry} />}
         {detailsTab === 'player' && faction && <div className="devnet-player-overview"><span>{standings?.rows.find((row) => row.faction.pda === faction.pda)?.rank === 0 && standings.final ? 'Verified winner' : 'Selected player'}</span><strong>{formatCash(faction.cash)}</strong><small>Latest confirmed balance{mode === 'replay' ? ' · not replay balance' : ''}</small></div>}
       {snapshot ? <>
         <section hidden={detailsTab !== 'all'} className="devnet-leaderboard" aria-label="Players">
