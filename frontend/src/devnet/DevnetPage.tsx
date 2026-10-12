@@ -18,6 +18,8 @@ import { donkeySnapshotInput, replayJournalPrefix, type PublicDonkeySnapshot } f
 import { ChainConversationStream } from './ChainConversationStream'
 import { useChainConversations } from './useChainConversations'
 import { conversationView } from './conversationsClient'
+import { useChainDialogue } from './dialogueClient'
+import { ChainDialogueStream } from './ChainDialogueStream'
 import { defaultWinner, eventLabel, liveAdditions, newLiveCursor, playerEvents, playerStandings, visualAction } from './playback'
 import '../live/live.css'
 import './devnet.css'
@@ -114,6 +116,7 @@ function GameViewer({ pda, initialPlayer, ownerRecord, setup, detailsTab, onTabC
   }, [])
   const activeEvents = mode === 'replay' ? replayEvents : observed
   const replayEvent = mode === 'replay' && position >= 0 ? replayEvents[position] : undefined
+  const dialogue = useChainDialogue(pda, Boolean(snapshot))
   const conversations = useMemo(() => snapshot ? conversationView(journal.entries, snapshot, mode === 'replay' ? replayEvent?.id ?? '' : null) : { rows: [], unmatched: false }, [journal.entries, snapshot, mode, replayEvent?.id])
   useEffect(() => {
     if (mode !== 'replay') return
@@ -199,6 +202,7 @@ function GameViewer({ pda, initialPlayer, ownerRecord, setup, detailsTab, onTabC
       <DetailsTabs value={detailsTab} onChange={onTabChange} />
       <div id="devnet-details" role="tabpanel" aria-labelledby={`devnet-tab-${detailsTab}`}>
         <div hidden={detailsTab !== 'setup'} className="devnet-setup-panel">{setup}</div>
+        {snapshot && <ChainDialogueStream entries={dialogue.entries} snapshot={snapshot} replayEvent={mode === 'replay' ? replayEvent?.id ?? '' : null} loaded={dialogue.loaded} error={dialogue.error} retry={dialogue.retry} />}
         {detailsTab === 'player' && faction && <div className="devnet-player-overview"><span>{standings?.rows.find((row) => row.faction.pda === faction.pda)?.rank === 0 && standings.final ? 'Verified winner' : 'Selected player'}</span><strong>{formatCash(faction.cash)}</strong><small>Latest confirmed balance{mode === 'replay' ? ' · not replay balance' : ''}</small></div>}
       {snapshot ? <>
         <section hidden={detailsTab !== 'all'} className="devnet-leaderboard" aria-label="Players">
