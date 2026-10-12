@@ -4,15 +4,46 @@ use super::*;
 use crate::dialogue::{
     Action, PublicContext, PublicFaction, PublicMessage, PublicOffer, SessionBudget,
 };
+use crate::dialogue_mailbox::Mailbox;
 use crate::dialogue_provider::Provider;
 use serde_json::{json, Value};
 use std::process::{Command, Stdio};
 
-const USAGE: &str = "bots dialogue --config FILE --execute\nAttaches two registered wallets to an existing devnet epoch-1 Game. Calls the configured providers and signs bounded barter actions. Use --check-config to validate without reading keys or contacting services.";
+const USAGE: &str = "bots dialogue --config FILE --execute\nAttaches two registered wallets to an existing devnet epoch-1 Game. Calls the configured decision sources and signs bounded barter actions. Use --check-config to validate without reading keys or contacting services.";
 struct AgentConfig {
     profile: PathBuf,
     key: String,
-    provider: Provider,
+    source: DecisionSource,
+}
+enum DecisionSource {
+    Https(Provider),
+    Local(Mailbox),
+}
+impl DecisionSource {
+    fn timeout_ms(&self) -> u64 {
+        match self {
+            Self::Https(_) => 12_000,
+            Self::Local(m) => m.timeout_ms,
+        }
+    }
+    fn label(&self) -> &'static str {
+        match self {
+            Self::Https(_) => "https_provider",
+            Self::Local(_) => "local_harness",
+        }
+    }
+    fn decide(
+        &self,
+        id: &str,
+        c: &PublicContext,
+        h: &[Value],
+        timeout: u64,
+    ) -> Result<dialogue::Decision, &'static str> {
+        match self {
+            Self::Https(p) => p.decide_with_history(c, h, timeout),
+            Self::Local(m) => m.decide_with_history(id, c, h, timeout),
+        }
+    }
 }
 struct Config {
     game: Pubkey,
@@ -65,34 +96,66 @@ fn config(v: &Value) -> Result<Config, &'static str> {
         .ok_or("two_agents_required")?;
     let mut agents = Vec::new();
     for r in rows {
-        if !exact(
-            r,
-            &[
-                "profile",
-                "key",
-                "endpoint",
-                "model",
-                "api_key_env",
-                "public_strategy",
-            ],
-        ) {
-            return Err("invalid_agent_config");
-        }
-        let provider = Provider {
-            endpoint: string(r, "endpoint")?,
-            model: string(r, "model")?,
-            api_key_env: string(r, "api_key_env")?,
-            public_strategy: string(r, "public_strategy")?,
+        let source = if r.get("decision_source").is_some() {
+            if !exact(
+                r,
+                &[
+                    "profile",
+                    "key",
+                    "decision_source",
+                    "mailbox_directory",
+                    "decision_timeout_ms",
+                    "public_strategy",
+                ],
+            ) || r["decision_source"] != "local_harness"
+            {
+                return Err("invalid_agent_config");
+            }
+            let mailbox = Mailbox {
+                directory: PathBuf::from(string(r, "mailbox_directory")?),
+                public_strategy: string(r, "public_strategy")?,
+                timeout_ms: r["decision_timeout_ms"].as_u64().ok_or("invalid_budget")?,
+            };
+            mailbox.validate()?;
+            DecisionSource::Local(mailbox)
+        } else {
+            if !exact(
+                r,
+                &[
+                    "profile",
+                    "key",
+                    "endpoint",
+                    "model",
+                    "api_key_env",
+                    "public_strategy",
+                ],
+            ) {
+                return Err("invalid_agent_config");
+            }
+            let provider = Provider {
+                endpoint: string(r, "endpoint")?,
+                model: string(r, "model")?,
+                api_key_env: string(r, "api_key_env")?,
+                public_strategy: string(r, "public_strategy")?,
+            };
+            provider.validate()?;
+            DecisionSource::Https(provider)
         };
-        provider.validate()?;
         agents.push(AgentConfig {
             profile: PathBuf::from(string(r, "profile")?),
             key: string(r, "key")?,
-            provider,
+            source,
         });
     }
     if agents[0].profile == agents[1].profile || agents[0].key == agents[1].key {
         return Err("distinct_agents_required");
+    }
+    if let (DecisionSource::Local(a), DecisionSource::Local(b)) =
+        (&agents[0].source, &agents[1].source)
+    {
+        if a.directory == b.directory {
+            return Err("distinct_mailboxes_required");
+        }
     }
     Ok(Config {
         game,
@@ -371,14 +434,22 @@ fn execute(cfg: Config) -> Result<(), &'static str> {
     let end = started + cfg.seconds * 1000;
     let mut budgets = bindings
         .iter()
-        .map(|b| SessionBudget::new(b.faction_pda.clone(), cfg.calls, end, 12000))
+        .enumerate()
+        .map(|(i, b)| {
+            SessionBudget::new(
+                b.faction_pda.clone(),
+                cfg.calls,
+                end,
+                cfg.agents[i].source.timeout_ms(),
+            )
+        })
         .collect::<Result<Vec<_>, _>>()?;
     let mut turns = [0u16; 2];
     let mut last_context: [Option<PublicContext>; 2] = [None, None];
     let mut transactions = 0u16;
     log(
         &mut audit,
-        json!({"kind":"session_started","game":cfg.game.to_string(),"wallets":keys.iter().map(|k|k.pubkey().to_string()).collect::<Vec<_>>(),"calls_per_agent":cfg.calls,"max_transactions":cfg.transactions,"deadline_ms":end}),
+        json!({"kind":"session_started","game":cfg.game.to_string(),"wallets":keys.iter().map(|k|k.pubkey().to_string()).collect::<Vec<_>>(),"calls_per_agent":cfg.calls,"max_transactions":cfg.transactions,"deadline_ms":end,"decision_sources":cfg.agents.iter().map(|a|a.source.label()).collect::<Vec<_>>()}),
     )?;
     while unix_ms() < end && turns.iter().any(|n| *n < cfg.calls) {
         for i in 0..2 {
@@ -409,19 +480,20 @@ fn execute(cfg: Config) -> Result<(), &'static str> {
             let decision_id = format!("d{started}-{i}-{}", turns[i]);
             last_context[i] = Some(observed.clone());
             let history = feed["entries"].as_array().ok_or("journal_invalid")?;
-            let mut decision = match cfg.agents[i]
-                .provider
-                .decide_with_history(&observed, history, timeout)
-            {
-                Ok(d) => d,
-                Err(e) => {
-                    log(
-                        &mut audit,
-                        json!({"kind":"decision_silent","decision_id":decision_id,"reason":e}),
-                    )?;
-                    continue;
-                }
-            };
+            let mut decision =
+                match cfg.agents[i]
+                    .source
+                    .decide(&decision_id, &observed, history, timeout)
+                {
+                    Ok(d) => d,
+                    Err(e) => {
+                        log(
+                            &mut audit,
+                            json!({"kind":"decision_silent","decision_id":decision_id,"reason":e}),
+                        )?;
+                        continue;
+                    }
+                };
             let (fresh, _) = context(&rpc, &cfg.game, &keys, i, &journal(&cfg.game)?)?;
             if decision.validate_fresh(&observed, &fresh, false).is_err() {
                 log(
@@ -432,7 +504,7 @@ fn execute(cfg: Config) -> Result<(), &'static str> {
             }
             log(
                 &mut audit,
-                json!({"kind":"decision","decision_id":decision_id,"faction":fresh.faction,"public_context":fresh.to_public_json()?,"action":format!("{:?}",decision.action)}),
+                json!({"kind":"decision","decision_id":decision_id,"decision_source":cfg.agents[i].source.label(),"faction":fresh.faction,"public_context":fresh.to_public_json()?,"action":format!("{:?}",decision.action)}),
             )?;
             if !speech_allowed(
                 &feed,
@@ -655,6 +727,24 @@ mod tests {
     fn config_value() -> Value {
         let agent = |suffix: &str| json!({"profile":format!("/private/profile-{suffix}.json"),"key":format!("/private/key-{suffix}.json"),"endpoint":"https://example.org/v1/chat/completions","model":"explicit-model","api_key_env":format!("DIALOGUE_{suffix}_KEY"),"public_strategy":"Choose your own trades from public state."});
         json!({"game":Pubkey::new_from_array([3;32]).to_string(),"agents":[agent("A"),agent("B")],"duration_seconds":60,"calls_per_agent":2,"max_transactions":2,"audit_file":"/private/new-audit.jsonl"})
+    }
+    #[test]
+    fn local_sources_are_explicit_distinct_and_bounded_without_api_keys() {
+        let mut v = config_value();
+        for i in 0..2 {
+            v["agents"][i] = json!({"profile":format!("/private/profile-{i}"),"key":format!("/private/key-{i}"),"decision_source":"local_harness","mailbox_directory":format!("/private/mailbox-{i}"),"decision_timeout_ms":60000,"public_strategy":"Choose independently."});
+        }
+        let c = config(&v).unwrap();
+        assert_eq!(c.agents[0].source.label(), "local_harness");
+        assert_eq!(c.agents[0].source.timeout_ms(), 60000);
+        v["agents"][1]["mailbox_directory"] = v["agents"][0]["mailbox_directory"].clone();
+        assert!(config(&v).is_err());
+        v["agents"][1]["mailbox_directory"] = json!("/private/other");
+        v["agents"][0]["decision_timeout_ms"] = json!(60001);
+        assert!(config(&v).is_err());
+        v["agents"][0]["decision_timeout_ms"] = json!(1000);
+        v["agents"][0]["api_key_env"] = json!("UNUSED_KEY");
+        assert!(config(&v).is_err());
     }
     #[test]
     fn config_is_explicit_distinct_and_bounded() {
