@@ -9,7 +9,7 @@ use crate::dialogue_provider::Provider;
 use serde_json::{json, Value};
 use std::process::{Command, Stdio};
 
-const USAGE: &str = "bots dialogue --config FILE --execute\nAttaches two registered wallets to an existing devnet epoch-1 Game. Calls the configured decision sources and signs bounded barter actions. Use --check-config to validate without reading keys or contacting services.";
+const USAGE: &str = "bots dialogue --config FILE --execute\nAttaches two registered wallets to an existing devnet epoch-1 Game. Calls the configured decision sources and signs bounded produce, sell and barter actions. Use --check-config to validate without reading keys or contacting services.";
 struct AgentConfig {
     profile: PathBuf,
     key: String,
@@ -325,6 +325,7 @@ fn context(
             pda: factions[i].to_string(),
             goods: f.goods as u64,
             cash: f.cash,
+            acted_this_phase: f.acted_stamp == g.stamp(),
         });
     }
     let offers = g
@@ -358,6 +359,11 @@ fn context(
         game: game.to_string(),
         faction: factions[author].to_string(),
         round: g.round,
+        produce_yield: constants::PRODUCE_YIELD + g.active_subsidy_goods as u16,
+        sold_this_round: g.sold_this_round,
+        active_price_shift: g.active_price_shift,
+        active_boom: g.active_boom,
+        active_tax_bps: g.active_tax_bps,
         phase,
         phase_ends_at: g.phase_ends_at,
         observed_cursor: string(feed, "latest_seq")?
@@ -558,6 +564,22 @@ fn execute(cfg: Config) -> Result<(), &'static str> {
             let faction = Pubkey::from_str(&current.faction).map_err(|_| "invalid_faction")?;
             let (ix, offer_id, proposer, goods, price, kind) = match &decision.action {
                 Action::Pass => continue,
+                Action::Produce => (
+                    ix_produce(keys[i].pubkey(), cfg.game, faction),
+                    0,
+                    current.faction.clone(),
+                    None,
+                    None,
+                    "produced",
+                ),
+                Action::Sell { units } => (
+                    ix_sell(*units, keys[i].pubkey(), cfg.game, faction),
+                    0,
+                    current.faction.clone(),
+                    None,
+                    None,
+                    "sold",
+                ),
                 Action::BarterPropose { goods, price } => (
                     ix_barter_propose(keys[i].pubkey(), cfg.game, faction, *goods as u16, *price),
                     next_offer,
@@ -646,7 +668,27 @@ fn execute(cfg: Config) -> Result<(), &'static str> {
                 }
             };
             let scoped = barter::with_alashi_logs(&receipt);
-            let verified = if let (Some(g), Some(p)) = (goods, price) {
+            let verified = if decision.action == Action::Produce {
+                let own = current
+                    .factions
+                    .iter()
+                    .find(|f| f.pda == current.faction)
+                    .ok_or("invalid_faction")?;
+                barter::verified_produced(
+                    &scoped,
+                    cfg.game,
+                    faction,
+                    (own.goods + current.produce_yield as u64) as u16,
+                )
+            } else if let Action::Sell { units } = decision.action {
+                barter::verified_sold(
+                    &scoped,
+                    cfg.game,
+                    faction,
+                    units,
+                    dialogue::sale_revenue(&current, units)?,
+                )
+            } else if let (Some(g), Some(p)) = (goods, price) {
                 barter::verified_offer(&scoped, cfg.game, faction, offer_id, g, p)
             } else {
                 barter::verified_accept(
@@ -662,6 +704,12 @@ fn execute(cfg: Config) -> Result<(), &'static str> {
                 &mut audit,
                 json!({"kind":"transaction_confirmed","decision_id":decision_id,"receipt":receipt}),
             )?;
+            if matches!(decision.action, Action::Produce | Action::Sell { .. }) {
+                // The indexer publishes canonical Produced/Sold events. The barter-only
+                // conversation journal must never receive these different event types.
+                fs::remove_file(&pending[i]).map_err(|_| "pending_storage_failed")?;
+                continue;
+            }
             let mut body = json!({"runner_token":bindings[i].runner_token,"client_entry_id":decision_id,"kind":kind,"offer_id":offer_id.to_string(),"proposer_faction_pda":proposer,"signature":proof.signature,"slot":proof.slot.to_string()});
             if let (Some(g), Some(p)) = (goods, price) {
                 body["goods"] = json!(g);
@@ -773,16 +821,23 @@ mod tests {
             phase: "Market".into(),
             phase_ends_at: 100,
             observed_cursor: 0,
+            produce_yield: 2,
+            sold_this_round: 0,
+            active_price_shift: 0,
+            active_boom: 0,
+            active_tax_bps: 0,
             factions: vec![
                 PublicFaction {
                     pda: a.clone(),
                     goods: 3,
                     cash: 10,
+                    acted_this_phase: false,
                 },
                 PublicFaction {
                     pda: b.clone(),
                     goods: 1,
                     cash: 20,
+                    acted_this_phase: false,
                 },
             ],
             open_offers: vec![],
@@ -841,6 +896,11 @@ mod tests {
             phase: "Market".into(),
             phase_ends_at: 100,
             observed_cursor: 0,
+            produce_yield: 2,
+            sold_this_round: 0,
+            active_price_shift: 0,
+            active_boom: 0,
+            active_tax_bps: 0,
             factions: vec![],
             open_offers: vec![],
             incoming: vec![],

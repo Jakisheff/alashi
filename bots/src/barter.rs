@@ -3,7 +3,7 @@
 
 use {
     alashi::{
-        events::{BarterAccepted, BarterProposed},
+        events::{BarterAccepted, BarterProposed, Produced, Sold},
         id,
     },
     anchor_lang::prelude::Pubkey,
@@ -145,6 +145,43 @@ pub(super) fn verified_accept(
     matching.then_some(identity)
 }
 
+/// Requires exact inventory total from the confirmed, Alashi-scoped event.
+pub(super) fn verified_produced(
+    receipt: &Value,
+    game: Pubkey,
+    faction: Pubkey,
+    goods: u16,
+) -> Option<ConfirmedReceipt> {
+    let identity = receipt_identity(receipt)?;
+    program_data(receipt)
+        .filter_map(|raw| {
+            raw.starts_with(&event_disc("event:Produced"))
+                .then(|| Produced::try_from_slice(&raw[8..]).ok())
+                .flatten()
+        })
+        .any(|e| e.game == game && e.faction == faction && e.goods == goods)
+        .then_some(identity)
+}
+
+/// Requires the exact units and canonical net revenue, not merely a successful tx.
+pub(super) fn verified_sold(
+    receipt: &Value,
+    game: Pubkey,
+    faction: Pubkey,
+    units: u16,
+    revenue: u64,
+) -> Option<ConfirmedReceipt> {
+    let identity = receipt_identity(receipt)?;
+    program_data(receipt)
+        .filter_map(|raw| {
+            raw.starts_with(&event_disc("event:Sold"))
+                .then(|| Sold::try_from_slice(&raw[8..]).ok())
+                .flatten()
+        })
+        .any(|e| e.game == game && e.faction == faction && e.units == units && e.revenue == revenue)
+        .then_some(identity)
+}
+
 /// Filter a confirmed transaction's logs to the executing Alashi program.
 /// A nested program cannot supply evidence for a conversation entry.
 pub(super) fn with_alashi_logs(receipt: &Value) -> Value {
@@ -275,5 +312,68 @@ mod tests {
         });
         let filtered = with_alashi_logs(&receipt);
         assert!(verified_offer(&filtered, game, proposer, 7, 1, 3_000_000).is_none());
+    }
+    #[test]
+    fn gameplay_receipts_require_exact_confirmed_events() {
+        let game = Pubkey::new_unique();
+        let faction = Pubkey::new_unique();
+        let stranger = Pubkey::new_unique();
+        let mut produced = with_alashi_logs(&receipt(
+            Produced {
+                game,
+                faction,
+                goods: 4,
+            }
+            .data(),
+        ));
+        assert!(verified_produced(&produced, game, faction, 4).is_some());
+        assert!(verified_produced(&produced, game, faction, 2).is_none());
+        assert!(verified_produced(&produced, stranger, faction, 4).is_none());
+        assert!(verified_produced(&produced, game, stranger, 4).is_none());
+        produced["status"] = json!("failed");
+        assert!(verified_produced(&produced, game, faction, 4).is_none());
+        let sold = with_alashi_logs(&receipt(
+            Sold {
+                game,
+                faction,
+                units: 1,
+                revenue: 5_000_000,
+            }
+            .data(),
+        ));
+        assert!(verified_sold(&sold, game, faction, 1, 5_000_000).is_some());
+        assert!(verified_sold(&sold, game, faction, 2, 5_000_000).is_none());
+        assert!(verified_sold(&sold, game, faction, 1, 6_000_000).is_none());
+        assert!(verified_sold(&sold, stranger, faction, 1, 5_000_000).is_none());
+        assert!(verified_sold(&sold, game, stranger, 1, 5_000_000).is_none());
+    }
+
+    #[test]
+    fn nested_outsider_gameplay_events_do_not_count() {
+        let game = Pubkey::new_unique();
+        let faction = Pubkey::new_unique();
+        let outsider = Pubkey::new_unique();
+        for event in [
+            Produced {
+                game,
+                faction,
+                goods: 2,
+            }
+            .data(),
+            Sold {
+                game,
+                faction,
+                units: 1,
+                revenue: 5,
+            }
+            .data(),
+        ] {
+            let raw = json!({"status":"confirmed", "signature":"test", "slot":42,
+                "log_messages":[format!("Program {} invoke [1]", id()), format!("Program {outsider} invoke [2]"),
+                    format!("Program data: {}", b64(&event)), format!("Program {outsider} success"), format!("Program {} success", id())]});
+            let scoped = with_alashi_logs(&raw);
+            assert!(verified_produced(&scoped, game, faction, 2).is_none());
+            assert!(verified_sold(&scoped, game, faction, 1, 5).is_none());
+        }
     }
 }

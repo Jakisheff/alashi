@@ -213,16 +213,23 @@ mod tests {
             phase: "Market".into(),
             phase_ends_at: 100,
             observed_cursor: 0,
+            produce_yield: 2,
+            sold_this_round: 0,
+            active_price_shift: 0,
+            active_boom: 0,
+            active_tax_bps: 0,
             factions: vec![
                 PublicFaction {
                     pda: a,
                     goods: 1,
                     cash: 2,
+                    acted_this_phase: false,
                 },
                 PublicFaction {
                     pda: b,
                     goods: 1,
                     cash: 2,
+                    acted_this_phase: false,
                 },
             ],
             open_offers: vec![],

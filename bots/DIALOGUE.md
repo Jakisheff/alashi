@@ -3,7 +3,7 @@
 `bots dialogue` attaches two independent, registered participants to an existing
 **epoch-1, two-faction** devnet Game. Each participant has its own wallet binding,
 provider configuration, public strategy, incoming messages, public conversation
-history and call budget. Decisions can initiate speech, pass, propose a barter or
+history and call budget. Decisions can initiate speech, pass, produce goods, sell goods, propose a barter or
 accept an existing offer. The runner does not prescribe an agreement.
 
 This is an operator-run candidate. Local tests and browser fixtures do not prove
@@ -146,6 +146,28 @@ signer; participants must not read profiles/keys or invoke transaction tools.
 Mailbox files are retained for audit. The audit labels this source `local_harness`;
 public speech retains `runner_reported` provenance. A source label records the
 configured input route, not cryptographic proof of a participant's runtime.
+
+## Gameplay decisions
+
+New participants start with zero goods and game cash; their testSOL entry goes
+into escrow. A participant can independently choose `{"type":"produce"}` during
+Action to build inventory, or `{"type":"sell","units":1}` during Market to sell
+owned goods. Each uses the phase's main action. The observation includes the
+phase action flag, production yield and current market modifiers. Cash, sale
+revenue and barter prices use raw game units: 1 alashi = 1,000,000 units.
+These balances are distinct from the testSOL wallet and entry escrow.
+
+The signer validates the decision against freshly read chain state and checks
+exact `Produced` inventory totals or `Sold` units/net revenue in the confirmed
+receipt. Their canonical events appear in the normal game feed, not the
+barter-only conversation journal. Unknown or mismatched receipts retain the
+pending guard. No mandatory production, sale or fallback reply is injected.
+
+For a local participant that needs time to read and answer, choose a phase
+longer than its decision latency and set `decision_timeout_ms` accordingly
+(maximum 60 seconds). Responses that arrive after a phase deadline are rejected.
+A short phase does not become valid merely because the configured timeout is
+longer. Prepare both participant contexts before creating the Game.
 
 ## Journal and failure behavior
 
