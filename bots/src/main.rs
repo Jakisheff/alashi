@@ -502,6 +502,30 @@ fn demo_say(msg: &str) {
 const KEYS_DIR: &str = "bots/keys";
 const PRICE_TABLE: [u64; 16] = [12, 10, 9, 8, 7, 6, 5, 4, 3, 3, 2, 2, 2, 1, 1, 1];
 
+/// `bots close-settled` closes a settled game only this long after its last phase;
+/// match-host treats a Game PDA missing this long after its match as closed.
+const CLOSED_GAME_MIN_AGE_SECS: i64 = 3600;
+
+/// RPC client errors print the request URL; a provider key in its query must not reach logs.
+fn redact(error: impl std::fmt::Display) -> String {
+    let mut out = String::new();
+    let (mut url, mut query) = (false, false);
+    for c in error.to_string().chars() {
+        if c.is_whitespace() || "()<>\"',".contains(c) {
+            (url, query) = (false, false);
+        } else if query {
+            continue;
+        }
+        out.push(c);
+        url |= out.ends_with("://");
+        if url && c == '?' {
+            out.push_str("***");
+            query = true;
+        }
+    }
+    out
+}
+
 fn now() -> i64 {
     SystemTime::now()
         .duration_since(UNIX_EPOCH)
@@ -514,13 +538,13 @@ fn chain_now(rpc: &RpcClient) -> i64 {
         Ok(slot) => match rpc.get_block_time(slot) {
             Ok(t) => t,
             Err(e) => {
-                println!("[ERROR] get_block_time({slot}): {e}");
+                println!("[ERROR] get_block_time({slot}): {}", redact(e));
                 let _ = std::io::Write::flush(&mut std::io::stdout());
                 0
             }
         },
         Err(e) => {
-            println!("[ERROR] get_slot: {e}");
+            println!("[ERROR] get_slot: {}", redact(e));
             let _ = std::io::Write::flush(&mut std::io::stdout());
             0
         }
@@ -859,7 +883,7 @@ fn ensure_funds(rpc: &RpcClient, who: &str, kp: &Keypair) {
                 println!("  airdrop tx {sig}");
                 sleep(Duration::from_secs(8));
             }
-            Err(e) => println!("  airdrop err: {e}"),
+            Err(e) => println!("  airdrop err: {}", redact(e)),
         }
     }
 }
@@ -1997,17 +2021,29 @@ fn discover_factions(rpc: &RpcClient, game: &Pubkey) -> Vec<Pubkey> {
     })
 }
 
-/// Program account keys whose data has `bytes` at `offset` (gPA memcmp).
 fn program_keys(rpc: &RpcClient, offset: usize, bytes: &[u8]) -> Result<Vec<Pubkey>, String> {
+    program_keys_matching(rpc, &[(offset, bytes)])
+}
+
+/// Program account keys whose data has every `bytes` at its `offset` (gPA memcmp).
+fn program_keys_matching(
+    rpc: &RpcClient,
+    memcmp: &[(usize, &[u8])],
+) -> Result<Vec<Pubkey>, String> {
     use solana_rpc_client_api::{
         config::{RpcAccountInfoConfig, RpcProgramAccountsConfig},
         filter::{Memcmp, RpcFilterType},
         response::UiAccountEncoding,
     };
     let cfg = RpcProgramAccountsConfig {
-        filters: Some(vec![RpcFilterType::Memcmp(Memcmp::new_base58_encoded(
-            offset, bytes,
-        ))]),
+        filters: Some(
+            memcmp
+                .iter()
+                .map(|(offset, bytes)| {
+                    RpcFilterType::Memcmp(Memcmp::new_base58_encoded(*offset, bytes))
+                })
+                .collect(),
+        ),
         // Публичный devnet RPC отвергает getProgramAccounts без encoding
         // (INVALID_PARAMS, 05.10.2026); с base64 тот же запрос проходит.
         account_config: RpcAccountInfoConfig {
@@ -2019,7 +2055,7 @@ fn program_keys(rpc: &RpcClient, offset: usize, bytes: &[u8]) -> Result<Vec<Pubk
     };
     rpc.get_program_ui_accounts_with_config(&id(), cfg)
         .map(|accs| accs.iter().map(|(k, _)| *k).collect())
-        .map_err(|e| e.to_string())
+        .map_err(redact)
 }
 
 fn flag_value(args: &[String], flag: &str) -> Option<String> {
@@ -2429,6 +2465,15 @@ fn host_timing(args: &[String]) -> Result<(i64, i64), String> {
 
 #[cfg(test)]
 mod runner_mode_tests {
+    #[test]
+    fn rpc_errors_hide_provider_keys() {
+        let raw = "error sending request for url (https://devnet.helius-rpc.com/?api-key=0123-abcd): timed out";
+        let shown = super::redact(raw);
+        assert!(!shown.contains("0123-abcd"), "{shown}");
+        assert_eq!(shown, "error sending request for url (https://devnet.helius-rpc.com/?***): timed out");
+        assert_eq!(super::redact("why? no url here"), "why? no url here");
+    }
+
     use super::{
         advance_instruction, barter_demo_allowed, confirmed_transaction_receipt,
         donkey_init_accounts, donkey_risk_eligibility, donkey_source_pda, epoch_for_barter_demo,

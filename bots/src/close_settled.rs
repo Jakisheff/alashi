@@ -6,8 +6,13 @@ use anchor_lang::Discriminator;
 use serde_json::{json, Value};
 
 const USAGE: &str = "bots close-settled --key LOCAL_KEYPAIR [--chain-api https://alashi.network] [--min-age-secs 3600] [--keep GAME_PDA]... [--dry-run]; ALASHI_RPC selects devnet RPC";
-/// The home page replays this game; it is never closed.
-const HOME_GAME: &str = "GqHZBaWuJDNERi8xJHXnYF5eWBsLSmEXcAGJYAP94M1b";
+const KEEP_ALWAYS: [&str; 3] = [
+    // The home page replays this game; it is never closed.
+    "GqHZBaWuJDNERi8xJHXnYF5eWBsLSmEXcAGJYAP94M1b",
+    // README подачи Colosseum, держать до итогов 05.12.2026.
+    "8AKzMbyHjhrBkYfUEj9sPf8g3XW5XN6LsBsqZMXUGFQ1",
+    "D2mkZ4e5zssteJs7Eih8ehtJkFap8SvFp7tY4yorpsX5",
+];
 
 /// Pure close/skip decision. `None` means that input has not been fetched yet:
 /// the caller checks cheap on-chain fields first and passes both on the final call.
@@ -51,6 +56,10 @@ fn decide(
         {
             return Err("archive_not_terminal");
         }
+        // chain-api sets this only after the archive file is on disk.
+        if v["archived"] != true {
+            return Err("not_archived");
+        }
     }
     Ok(())
 }
@@ -59,28 +68,32 @@ fn chain_view(base: &str, address: &Pubkey) -> Option<Value> {
     session_cli::http_json(base, &format!("/chain/devnet/games/{address}"), None).ok()
 }
 
-/// Faction PDAs, wallets and lamports, or None if the set is not exactly `faction_count`.
-fn faction_set(
-    rpc: &RpcClient,
-    address: &Pubkey,
-    count: u8,
-) -> Option<(Vec<Pubkey>, Vec<Pubkey>, Vec<u64>)> {
-    let mut keys = program_keys(rpc, 8, address.as_ref()).ok()?;
+type FactionSet = (Vec<Pubkey>, Vec<Pubkey>, Vec<u64>);
+
+/// Faction PDAs, wallets and lamports. Err: the RPC lookup failed;
+/// Ok(None): the set is not exactly `faction_count` valid factions.
+fn faction_set(rpc: &RpcClient, address: &Pubkey, count: u8) -> Result<Option<FactionSet>, ()> {
+    let filters: [(usize, &[u8]); 2] = [(0, state::Faction::DISCRIMINATOR), (8, address.as_ref())];
+    let mut keys = program_keys_matching(rpc, &filters).map_err(|_| ())?;
     keys.sort();
     if keys.len() != count as usize {
-        return None;
+        return Ok(None);
     }
-    let accounts = rpc.get_multiple_accounts(&keys).ok()?;
+    let accounts = rpc.get_multiple_accounts(&keys).map_err(|_| ())?;
     let mut wallets = vec![];
     let mut lamports = vec![];
     for (key, account) in keys.iter().zip(accounts) {
-        let account = account?;
-        let faction =
-            agent_cli::checked_faction(account.owner, key, address, &account.data).ok()?;
+        let Some(account) = account else {
+            return Ok(None);
+        };
+        let Ok(faction) = agent_cli::checked_faction(account.owner, key, address, &account.data)
+        else {
+            return Ok(None);
+        };
         wallets.push(faction.wallet);
         lamports.push(account.lamports);
     }
-    Some((keys, wallets, lamports))
+    Ok(Some((keys, wallets, lamports)))
 }
 
 fn ix_close_game(
@@ -101,9 +114,13 @@ fn ix_close_game(
 }
 
 fn options(args: &[String]) -> Result<(String, String, i64, Vec<Pubkey>, bool), String> {
-    let mut keep = vec![HOME_GAME.parse::<Pubkey>().unwrap()];
-    let (mut key, mut base, mut min_age, mut dry_run) =
-        (None, "https://alashi.network".to_string(), 3600i64, false);
+    let mut keep: Vec<Pubkey> = KEEP_ALWAYS.iter().map(|k| k.parse().unwrap()).collect();
+    let (mut key, mut base, mut min_age, mut dry_run) = (
+        None,
+        "https://alashi.network".to_string(),
+        CLOSED_GAME_MIN_AGE_SECS,
+        false,
+    );
     let mut i = 0;
     while i < args.len() {
         let value = || {
@@ -123,8 +140,10 @@ fn options(args: &[String]) -> Result<(String, String, i64, Vec<Pubkey>, bool), 
                 min_age = value()?
                     .parse()
                     .ok()
-                    .filter(|v| *v >= 0)
-                    .ok_or("--min-age-secs must be a non-negative integer")?
+                    .filter(|v| *v >= CLOSED_GAME_MIN_AGE_SECS)
+                    .ok_or(format!(
+                        "--min-age-secs must be an integer >= {CLOSED_GAME_MIN_AGE_SECS}"
+                    ))?
             }
             "--keep" => keep.push(
                 value()?
@@ -166,7 +185,7 @@ pub fn run(args: &[String]) -> i32 {
     let games = match program_keys(&rpc, 0, state::Game::DISCRIMINATOR) {
         Ok(keys) => keys,
         Err(e) => {
-            eprintln!("game discovery failed: {e}");
+            eprintln!("game discovery failed: {e}"); // redacted by program_keys
             return 1;
         }
     };
@@ -204,7 +223,11 @@ pub fn run(args: &[String]) -> i32 {
                 println!("{}", line(&format!("skip:{reason}")));
                 continue;
             }
-            let set = faction_set(&rpc, address, game.faction_count);
+            let Ok(set) = faction_set(&rpc, address, game.faction_count) else {
+                failed = true;
+                println!("{}", line("skip:faction_lookup_failed"));
+                continue;
+            };
             if let Err(reason) = check(Some(set.is_some()), None) {
                 println!("{}", line(&format!("skip:{reason}")));
                 continue;
@@ -235,13 +258,18 @@ pub fn run(args: &[String]) -> i32 {
                         out.as_object_mut().unwrap().remove("lamports_to_wallets");
                     }
                 }
-                if out["decision"] == "closed"
-                    && chain_view(&base, address)
-                        .is_none_or(|v| check(Some(true), Some(&v)).is_err())
-                {
-                    failed = true;
-                    out["archive"] = json!("archive_missing_after_close");
-                    eprintln!("[ERROR] archive_missing_after_close {address}: chain-api no longer serves this game");
+                if out["decision"] == "closed" {
+                    match chain_view(&base, address) {
+                        None => eprintln!(
+                            "[WARN] post_close_check_failed {address}: chain-api unreachable"
+                        ),
+                        Some(v) if check(Some(true), Some(&v)).is_err() => {
+                            failed = true;
+                            out["archive"] = json!("archive_missing_after_close");
+                            eprintln!("[ERROR] archive_missing_after_close {address}: chain-api no longer serves this game as archived");
+                        }
+                        Some(_) => {}
+                    }
                 }
             }
             println!("{out}");
@@ -266,7 +294,7 @@ mod tests {
             ..Default::default()
         };
         let terminal = json!({"ok":true,"game_pda":address.to_string(),
-            "game":{"settled":true},"history_complete":true});
+            "game":{"settled":true},"history_complete":true,"archived":true});
         let at = |game: &state::Game, now, keep: &[Pubkey], factions, chain| {
             decide(game, &address, &crank, keep, now, 3600, factions, chain)
         };
@@ -290,6 +318,12 @@ mod tests {
         assert_eq!(
             at(&game, 9_000, &[], Some(false), Some(&terminal)),
             Err("incomplete_factions")
+        );
+        let unarchived = json!({"ok":true,"game_pda":address.to_string(),
+            "game":{"settled":true},"history_complete":true});
+        assert_eq!(
+            at(&game, 9_000, &[], Some(true), Some(&unarchived)),
+            Err("not_archived")
         );
         let partial = json!({"ok":true,"game_pda":address.to_string(),
             "game":{"settled":true},"history_complete":false});
@@ -317,9 +351,11 @@ mod tests {
             at(&market, 9_000, &[], Some(true), Some(&terminal)),
             Err("not_terminal_phase")
         );
-        assert!(options(&["--key".into(), "k".into()])
-            .unwrap()
-            .3
-            .contains(&HOME_GAME.parse().unwrap()));
+        let keep = options(&["--key".into(), "k".into()]).unwrap().3;
+        for pda in KEEP_ALWAYS {
+            assert!(keep.contains(&pda.parse().unwrap()));
+        }
+        let short = ["--key", "k", "--min-age-secs", "3599"].map(String::from);
+        assert!(options(&short).is_err());
     }
 }

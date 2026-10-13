@@ -228,11 +228,24 @@ fn submit(rpc: &RpcClient, key: &Keypair, ix: Instruction) -> Result<(), &'stati
 // the entry fee dropped from 0.05 to 0.005 testSOL on 13 Oct 2026.
 const MAX_RESUMED_ENTRY_FEE: u64 = 50_000_000;
 
-/// A Game PDA still absent an hour after its match was created was closed
-/// (or never initialized); either way the match is over.
-fn missing_game_closed(created_at: i64, at: i64) -> bool {
-    at - created_at >= 3600
+#[derive(Debug, PartialEq)]
+enum MissingGame {
+    /// A lost Initialize reply is retried on the same PDA.
+    Initialize,
+    /// Too old to create a lobby, too young to be closed: wait.
+    Wait,
+    /// `bots close-settled` closed it (or it never existed): the match is over.
+    Done,
 }
+
+fn missing_game(created_at: i64, at: i64) -> MissingGame {
+    match at - created_at {
+        age if age < INITIALIZE_RETRY_SECS => MissingGame::Initialize,
+        age if age < CLOSED_GAME_MIN_AGE_SECS => MissingGame::Wait,
+        _ => MissingGame::Done,
+    }
+}
+const INITIALIZE_RETRY_SECS: i64 = 1800;
 
 fn config_matches(game: &state::Game, admin: &Pubkey, duration: i64) -> bool {
     game.admin == *admin
@@ -253,16 +266,19 @@ fn tick(
         .get_account_with_commitment(&address, CommitmentConfig::confirmed())
         .map_err(|_| "game_read_failed")?;
     let Some(account) = account.value else {
-        // `bots close-settled` removes settled games after an hour; never re-Initialize
-        // a closed game's PDA when a restart finds its match not yet marked done.
-        if missing_game_closed(m.created_at, now()) {
-            let view = View {
-                phase: state::Phase::Finished,
-                ends_at: 0,
-                count: 0,
-                observed_at: now(),
-            };
-            return Ok((view, true));
+        // Never re-Initialize a closed game's PDA when a restart finds its match not yet done.
+        match missing_game(m.created_at, now()) {
+            MissingGame::Initialize => {}
+            MissingGame::Wait => return Err("game_missing_waiting"),
+            MissingGame::Done => {
+                let view = View {
+                    phase: state::Phase::Finished,
+                    ends_at: 0,
+                    count: 0,
+                    observed_at: now(),
+                };
+                return Ok((view, true));
+            }
         }
         // The same persisted PDA makes Initialize safe to retry after a lost reply.
         if rpc
@@ -764,9 +780,12 @@ mod tests {
     }
 
     #[test]
-    fn closed_game_is_done_but_fresh_missing_game_is_initialized() {
-        assert!(!missing_game_closed(1_000, 1_030));
-        assert!(missing_game_closed(1_000, 4_600));
+    fn missing_game_is_initialized_then_waits_then_done() {
+        assert_eq!(missing_game(1_000, 1_030), MissingGame::Initialize);
+        assert_eq!(missing_game(1_000, 2_799), MissingGame::Initialize);
+        assert_eq!(missing_game(1_000, 2_800), MissingGame::Wait);
+        assert_eq!(missing_game(1_000, 4_599), MissingGame::Wait);
+        assert_eq!(missing_game(1_000, 4_600), MissingGame::Done);
     }
 
     #[test]
