@@ -29,6 +29,12 @@ pub fn assign(state: &AppState, record: &str, origin: &str, bearer: &str, body: 
     forward(&owner.wallet, port, false).unwrap_or_else(err)
 }
 
+/// The host owns the sponsorship amount (bots `FUNDING_TARGET`, 0.02 testSOL since
+/// 13 Oct 2026); the arena only bounds it, so a fee change needs no arena release.
+fn sponsor_target_ok(target: &Value) -> bool {
+    target.as_str().and_then(|t| t.parse::<u64>().ok()).is_some_and(|t| (1..=100_000_000).contains(&t))
+}
+
 pub fn fund(wallet: &str) -> Value {
     let port = std::env::var("ALASHI_MATCH_PORT")
         .ok()
@@ -70,7 +76,7 @@ fn forward(wallet: &str, port: u16, funding: bool) -> Result<Value, &'static str
         if value["network"] != "devnet"
             || !(value["status"] == "preparing"
                 || value["status"] == if funding { "ready" } else { "assigned" })
-            || (funding && (value["wallet"] != wallet || value["target_lamports"] != "100000000"))
+            || (funding && (value["wallet"] != wallet || !sponsor_target_ok(&value["target_lamports"])))
         {
             return Err("match_host_unavailable");
         }
@@ -130,7 +136,7 @@ mod tests {
 
     #[test]
     fn funding_proxy_forwards_public_wallet_and_checks_the_recipient() {
-        for wrong_wallet in [false, true] {
+        for (wrong_wallet, target) in [(false, "20000000"), (true, "20000000"), (false, "100000001")] {
             let listener = TcpListener::bind("127.0.0.1:0").unwrap();
             let port = listener.local_addr().unwrap().port();
             let worker = std::thread::spawn(move || {
@@ -146,13 +152,13 @@ mod tests {
                     &mut stream,
                     "200 OK",
                     &json!({"ok":true,
-                    "network":"devnet","status":"preparing","target_lamports":"100000000",
+                    "network":"devnet","status":"preparing","target_lamports":target,
                     "wallet":if wrong_wallet {"other-wallet"} else {"public-wallet"}})
                     .to_string(),
                 );
             });
             let response = forward("public-wallet", port, true);
-            if wrong_wallet {
+            if wrong_wallet || target != "20000000" {
                 assert_eq!(response.unwrap_err(), "match_host_unavailable");
             } else {
                 assert_eq!(response.unwrap()["status"], "preparing");
