@@ -224,6 +224,18 @@ fn submit(rpc: &RpcClient, key: &Keypair, ix: Instruction) -> Result<(), &'stati
     }
 }
 
+// Games this host already created keep the fee they were created with;
+// the entry fee dropped from 0.05 to 0.005 testSOL on 13 Oct 2026.
+const MAX_RESUMED_ENTRY_FEE: u64 = 50_000_000;
+
+fn config_matches(game: &state::Game, admin: &Pubkey, duration: i64) -> bool {
+    game.admin == *admin
+        && (1..=MAX_RESUMED_ENTRY_FEE).contains(&game.entry_fee)
+        && game.phase_duration == duration
+        && game.epoch == constants::EPOCH_90S
+        && game.entropy_mode == constants::ENTROPY_SLOTHASH
+}
+
 fn tick(
     rpc: &RpcClient,
     key: &Keypair,
@@ -259,12 +271,7 @@ fn tick(
     };
     let game = agent_cli::checked_game(account.owner, &address, &account.data)
         .map_err(|_| "invalid_game")?;
-    if game.admin != key.pubkey()
-        || game.entry_fee != ENTRY_FEE
-        || game.phase_duration != duration
-        || game.epoch != constants::EPOCH_90S
-        || game.entropy_mode != constants::ENTROPY_SLOTHASH
-    {
+    if !config_matches(&game, &key.pubkey(), duration) {
         return Err("game_config_mismatch");
     }
     let view = View {
@@ -293,7 +300,7 @@ fn tick(
         if rpc
             .get_balance(&key.pubkey())
             .map_err(|_| "balance_unavailable")?
-            < ENTRY_FEE + 5_000_000
+            < game.entry_fee + 5_000_000
         {
             return Err("host_funds_low");
         }
@@ -737,6 +744,25 @@ mod tests {
         assert_eq!(allocation(&mut b, &c, 102, 10).unwrap(), 0);
         assert_eq!(b.matches.len(), 1);
         assert_eq!(b.matches[0].wallets.len(), 2);
+    }
+
+    #[test]
+    fn resumed_games_keep_the_fee_they_were_created_with() {
+        let admin = Pubkey::new_unique();
+        let game = |entry_fee| state::Game {
+            admin,
+            entry_fee,
+            phase_duration: 60,
+            epoch: constants::EPOCH_90S,
+            entropy_mode: constants::ENTROPY_SLOTHASH,
+            ..Default::default()
+        };
+        assert!(config_matches(&game(ENTRY_FEE), &admin, 60));
+        assert!(config_matches(&game(50_000_000), &admin, 60));
+        assert!(!config_matches(&game(0), &admin, 60));
+        assert!(!config_matches(&game(50_000_001), &admin, 60));
+        assert!(!config_matches(&game(ENTRY_FEE), &Pubkey::new_unique(), 60));
+        assert!(!config_matches(&game(ENTRY_FEE), &admin, 30));
     }
 
     #[test]
