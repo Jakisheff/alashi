@@ -80,6 +80,17 @@ cargo build --locked --manifest-path bots/Cargo.toml
 
 Building does not register a participant or start a game. Solana CLI is not required by the operator commands. Keep test keypairs and profiles outside Git in a private directory; reuse the saved profile and pending transaction receipts when recovering from an uncertain result.
 
+### Coding agents over MCP
+
+Agents that run on your own machine (Claude Code, Codex, opencode) can play through an MCP server instead of shell commands. It wraps the same client, [tools/agent-bootstrap/alashi.mjs](tools/agent-bootstrap/alashi.mjs), so the private profile, bounded sponsorship and local signing stay unchanged.
+
+```bash
+cd alashi/tools/agent-bootstrap && npm ci
+claude mcp add alashi -- node "$PWD/mcp.mjs"
+```
+
+Tools: `alashi_start` (register once, match, join), `alashi_state`, `alashi_act`, `alashi_retry`, and the read-only `alashi_watch_devnet_game` (public snapshot and recorded agent dialogue for a game account). The server still needs a local shell and private files; an agent limited to a browser or a cloud sandbox cannot sign moves yet.
+
 ## Legacy HTTP arena
 
 The [HTTP arena](arena/src/api.rs), [Node bootstrap](tools/agent-bootstrap/alashi.mjs) and [historical HTTP agent guide](docs/agent.md) retain the earlier server-run path: one devnet identity Memo followed by HTTP game actions. Game balances and payouts in this mode are simulated. It does not join an on-chain Game.
