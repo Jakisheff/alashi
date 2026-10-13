@@ -144,6 +144,7 @@ pub fn with_obs<R>(
         alive: &alive,
         sold_counter: g.sold_this_round,
         active_tax_bps: g.active_tax_bps,
+        active_subsidy_goods: g.active_subsidy_goods,
         active_price_shift: g.active_price_shift,
         active_boom: g.active_boom,
         law_card: g.law_card,
@@ -171,6 +172,7 @@ pub fn observation_json(o: &Obs) -> serde_json::Value {
         "vote_weight_mode":o.vote_weight_mode,"acted_stamp":o.acted_stamp,
         "vote_weight":o.vote_weight,"voted":o.voted,"veto_pending":o.veto_pending,
         "sold_counter":o.sold_counter,"active_tax_bps":o.active_tax_bps,
+        "active_subsidy_goods":o.active_subsidy_goods,
         "active_price_shift":o.active_price_shift,"active_boom":o.active_boom,
         "law_card":o.law_card,"president":o.president.to_string(),
         "my_wallet":o.my_wallet.to_string()})
@@ -789,6 +791,39 @@ pub fn run_series(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn observation_tracks_passed_subsidy_and_status_quo() {
+        let wallets = [Pubkey::new_unique(), Pubkey::new_unique()];
+        let mut sim = Simulator::new(1, 10 * PESO, 10, ENTROPY_SLOTHASH);
+        sim.join(wallets[0], "a").unwrap();
+        sim.join(wallets[1], "b").unwrap();
+        assert_eq!(with_obs(&sim, &wallets, 0, |o| o.active_subsidy_goods), 0);
+
+        sim.game.round = 1;
+        sim.game.phase = Phase::Law;
+        sim.game.law_card = LAW_SUBSIDY_PRODUCE;
+        sim.vote(0, VoteChoice::Yes).unwrap();
+        sim.vote(1, VoteChoice::Yes).unwrap();
+        sim.advance(1, 0).unwrap();
+        assert_eq!(with_obs(&sim, &wallets, 0, |o| o.active_subsidy_goods), 1);
+        assert_eq!(
+            with_obs(&sim, &wallets, 0, |o| observation_json(o)["active_subsidy_goods"].as_u64()),
+            Some(1)
+        );
+
+        sim.game.phase = Phase::Law;
+        sim.game.phase_ends_at = 0;
+        sim.game.law_card = LAW_STATUS_QUO;
+        sim.vote(0, VoteChoice::Yes).unwrap();
+        sim.vote(1, VoteChoice::Yes).unwrap();
+        sim.advance(2, 0).unwrap();
+        assert_eq!(with_obs(&sim, &wallets, 0, |o| o.active_subsidy_goods), 0);
+        assert_eq!(
+            with_obs(&sim, &wallets, 0, |o| observation_json(o)["active_subsidy_goods"].as_u64()),
+            Some(0)
+        );
+    }
 
     fn strategies(mix: &[&str], seed: u64) -> Vec<Box<dyn Strategy>> {
         mix.iter()

@@ -302,6 +302,10 @@ async function act(base, session, path, raw, fetcher = fetch) {
     session.pending_act = null;
     session.next_op_id++;
     savePrivate(path, session);
+  } else if (result.op_id === pending.op_id && result.op_consumed === false && result.ok === false &&
+      ['bad_action', 'bad_params', 'bad_choice'].includes(safeError(result))) {
+    session.pending_act = null;
+    savePrivate(path, session);
   }
   return sanitize(result, [session.token]);
 }

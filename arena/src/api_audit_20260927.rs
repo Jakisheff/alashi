@@ -79,6 +79,15 @@ fn corrupt_snapshot_aborts_load_and_original_is_preserved() {
         .collect();
     assert_eq!(backups.len(), 1, "{backups:?}");
     assert_eq!(std::fs::read_to_string(&backups[0]).unwrap(), "{incomplete");
+    assert_eq!(
+        std::fs::read_to_string(p.join("state.json")).unwrap(),
+        "{incomplete"
+    );
+    let second_start = new_state_with_files(p.join("state.json"), p.join("seq"));
+    assert!(load_snapshot(&second_start)
+        .unwrap_err()
+        .contains("повреждён"));
+    assert!(second_start.games.lock().unwrap().is_empty());
 }
 
 #[test]

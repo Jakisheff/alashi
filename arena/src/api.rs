@@ -325,8 +325,9 @@ pub fn load_snapshot(state: &AppState) -> Result<(), String> {
         .snapshot_path
         .with_extension(format!("json.corrupt.{}", now()));
     let fail = |msg: String| -> Result<(), String> {
-        match std::fs::rename(&state.snapshot_path, &backup_path) {
-            Ok(()) => Err(format!("{msg}; оригинал сохранён: {}", backup_path.display())),
+        // Keep the canonical corrupt file in place so a second startup also fails closed.
+        match std::fs::copy(&state.snapshot_path, &backup_path) {
+            Ok(_) => Err(format!("{msg}; оригинал сохранён: {}", backup_path.display())),
             Err(e) => Err(format!("{msg}; сохранить оригинал не удалось: {e}")),
         }
     };
