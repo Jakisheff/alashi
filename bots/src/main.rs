@@ -1,6 +1,7 @@
 mod agent_cli;
 mod barter;
 mod chain_wish_client;
+mod close_settled;
 mod dialogue;
 mod dialogue_provider;
 mod dialogue_mailbox;
@@ -1990,6 +1991,14 @@ fn bind_wishes(
 /// после дискриминатора). Нужен, когда в партию вступил гость: advance и settle
 /// требуют полный набор фракций, а не только ботов хоста.
 fn discover_factions(rpc: &RpcClient, game: &Pubkey) -> Vec<Pubkey> {
+    program_keys(rpc, 8, game.as_ref()).unwrap_or_else(|e| {
+        println!("[ERROR] discover_factions: {e}");
+        Vec::new()
+    })
+}
+
+/// Program account keys whose data has `bytes` at `offset` (gPA memcmp).
+fn program_keys(rpc: &RpcClient, offset: usize, bytes: &[u8]) -> Result<Vec<Pubkey>, String> {
     use solana_rpc_client_api::{
         config::{RpcAccountInfoConfig, RpcProgramAccountsConfig},
         filter::{Memcmp, RpcFilterType},
@@ -1997,8 +2006,7 @@ fn discover_factions(rpc: &RpcClient, game: &Pubkey) -> Vec<Pubkey> {
     };
     let cfg = RpcProgramAccountsConfig {
         filters: Some(vec![RpcFilterType::Memcmp(Memcmp::new_base58_encoded(
-            8,
-            game.as_ref(),
+            offset, bytes,
         ))]),
         // Публичный devnet RPC отвергает getProgramAccounts без encoding
         // (INVALID_PARAMS, 05.10.2026); с base64 тот же запрос проходит.
@@ -2009,13 +2017,9 @@ fn discover_factions(rpc: &RpcClient, game: &Pubkey) -> Vec<Pubkey> {
         with_context: Some(false),
         sort_results: None,
     };
-    match rpc.get_program_ui_accounts_with_config(&id(), cfg) {
-        Ok(accs) => accs.iter().map(|(k, _)| *k).collect(),
-        Err(e) => {
-            println!("[ERROR] discover_factions: {e}");
-            Vec::new()
-        }
-    }
+    rpc.get_program_ui_accounts_with_config(&id(), cfg)
+        .map(|accs| accs.iter().map(|(k, _)| *k).collect())
+        .map_err(|e| e.to_string())
 }
 
 fn flag_value(args: &[String], flag: &str) -> Option<String> {
@@ -2908,6 +2912,9 @@ fn main() {
     }
     if args.get(1).map(String::as_str) == Some("session") {
         std::process::exit(session_cli::run(&args[2..]));
+    }
+    if args.get(1).map(String::as_str) == Some("close-settled") {
+        std::process::exit(close_settled::run(&args[2..]));
     }
     if args.get(1).map(String::as_str) == Some("agent") {
         std::process::exit(agent_cli::run(&args[2..]));
