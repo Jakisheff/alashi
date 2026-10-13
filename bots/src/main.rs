@@ -2013,9 +2013,11 @@ fn bind_wishes(
 
 /// Список всех фракций партии прямо из цепи (memcmp по Faction.game, offset 8
 /// после дискриминатора). Нужен, когда в партию вступил гость: advance и settle
-/// требуют полный набор фракций, а не только ботов хоста.
+/// требуют полный набор фракций, а не только ботов хоста. Дискриминатор Faction
+/// обязателен: DonkeyOracleConfig тоже держит ключ Game на offset 8 (как в chain-api, ca41d30).
 fn discover_factions(rpc: &RpcClient, game: &Pubkey) -> Vec<Pubkey> {
-    program_keys(rpc, 8, game.as_ref()).unwrap_or_else(|e| {
+    use anchor_lang::Discriminator;
+    program_keys_matching(rpc, &[(0, state::Faction::DISCRIMINATOR), (8, game.as_ref())]).unwrap_or_else(|e| {
         println!("[ERROR] discover_factions: {e}");
         Vec::new()
     })
