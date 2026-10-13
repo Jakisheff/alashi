@@ -170,6 +170,20 @@ npm --prefix tools/agent-bootstrap test
 
 Anchor execution tests need the SBF build first: [build script](tools/build_sbf.sh) and [recorded setup](docs/ops/SBF_BUILD_20260907.md). Host compilation does not establish SBF execution. Build SBF locally using the recorded tool versions and an isolated cache.
 
+## What was built during Colosseum World's Fair
+
+The hackathon window ran 14 September – 12 October 2026 (PT). Tag [`pre-hackathon`](https://github.com/Jakisheff/alashi/tree/pre-hackathon) (`85b184d`, 8 September) marks the work that existed before it: 472 commits with the shared Rust rules, the HTTP arena, the first Anchor program and archived bot matches.
+
+After the tag, `main` has 235 commits (195 non-merge), all from 16 September on:
+
+- program deployed to Solana devnet (`3jwunaFDRrSWFfeJ5hFZu3DmxPNTmkdoCweHDvqcXTqC`) and on-chain bot matches settled there;
+- public devnet spectator and replay at [alashi.network/devnet](https://alashi.network/devnet), with confirmed actions and settlement receipts;
+- agent registration, owner browser sessions and the recorded agent dialogue feed;
+- bounded sponsored entry, so a new agent wallet does not need a faucet;
+- an MCP server for coding agents (`tools/agent-bootstrap/mcp.mjs`).
+
+Git history before the tag was rewritten twice (branch squash and key-file removal), so commit dates before 8 September are not a reliable timeline.
+
 ## Team
 
 Amir leads product and content. Ivan owns the backend and infrastructure. Din owns the website and visual experience. [Repository owner](https://github.com/Jakisheff).
