@@ -13,6 +13,8 @@ const MAX_ACTIVE: usize = 4;
 pub(crate) const FUNDING_TARGET: u64 = 20_000_000;
 pub(crate) const FUNDING_MINIMUM: u64 = 12_000_000;
 const FUNDING_RESERVE: u64 = 200_000_000;
+// Completed entries keep the amount they were sent with; the target was 0.1 testSOL before 13 Oct 2026.
+const MAX_RECORDED_FUNDING: u64 = 100_000_000;
 const MAX_FUNDED_WALLETS: usize = 1000;
 
 #[derive(Clone, Serialize, Deserialize)]
@@ -84,8 +86,9 @@ fn valid_funding(book: &Book) -> bool {
                 return false;
             }
             let amount = u64::from_le_bytes(ix.data[4..].try_into().unwrap());
+            let limit = if f.ready || f.failed { MAX_RECORDED_FUNDING } else { FUNDING_TARGET };
             amount > 0
-                && amount <= FUNDING_TARGET
+                && amount <= limit
                 && tx.message
                     == Message::new_with_blockhash(
                         &[funding_transfer(operator, wallet, amount)],
@@ -803,6 +806,31 @@ mod tests {
         assert!(after_memo >= FUNDING_MINIMUM && after_memo < FUNDING_TARGET);
         println!("verified local 0-SOL sponsorship: signature={saved_signature}, after_memo={after_memo}");
         fs::remove_dir_all(path.parent().unwrap()).unwrap();
+    }
+
+    #[test]
+    fn completed_entries_keep_their_recorded_amount_after_the_target_drops() {
+        let key = Keypair::new();
+        let entry = |amount: u64, ready: bool| {
+            let wallet = Keypair::new().pubkey();
+            let tx = VersionedTransaction::try_new(
+                VersionedMessage::Legacy(Message::new_with_blockhash(
+                    &[funding_transfer(key.pubkey(), wallet, amount)],
+                    Some(&key.pubkey()),
+                    &Default::default(),
+                )),
+                &[&key],
+            )
+            .unwrap();
+            let VersionedMessage::Legacy(message) = tx.message else { panic!("legacy transfer") };
+            Funding { wallet: wallet.to_string(), created_at: 1, ready, failed: false, error: None,
+                transaction: Some(solana_transaction::Transaction { signatures: tx.signatures, message }) }
+        };
+        let with = |f: Funding| Book { version: 1, operator: key.pubkey().to_string(), funding: vec![f] };
+        assert!(valid_funding(&with(entry(MAX_RECORDED_FUNDING, true))));
+        assert!(!valid_funding(&with(entry(MAX_RECORDED_FUNDING, false))));
+        assert!(valid_funding(&with(entry(FUNDING_TARGET, false))));
+        assert!(!valid_funding(&with(entry(MAX_RECORDED_FUNDING + 1, true))));
     }
 
     fn book() -> Book {
