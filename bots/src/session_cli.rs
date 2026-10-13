@@ -736,7 +736,7 @@ fn ensure_funding_via(profile: &Value, key: &Keypair, rpc: &RpcClient, base: &st
     devnet(rpc)?;
     let balance = rpc.get_balance(&key.pubkey())
         .map_err(|_| error("funding_rpc_unavailable", "cannot read devnet balance"))?;
-    if balance >= 60_000_000 { return Ok(json!({"ok":true,"status":"already_funded"})); }
+    if balance >= crate::sponsorship::FUNDING_MINIMUM { return Ok(json!({"ok":true,"status":"already_funded"})); }
     if profile["config"]["wallet"] != key.pubkey().to_string() {
         return Err(error("agent_config_mismatch", "profile belongs to another wallet"));
     }
@@ -752,13 +752,13 @@ fn ensure_funding_via(profile: &Value, key: &Keypair, rpc: &RpcClient, base: &st
         let response = http_json(base, "/agents/funding", Some(&request))?;
         if response["ok"] != true { return Err(safe_server_error(&response)); }
         if response["network"] != "devnet" || response["wallet"] != key.pubkey().to_string()
-            || response["target_lamports"] != "100000000" {
+            || response["target_lamports"] != crate::sponsorship::FUNDING_TARGET.to_string().as_str() {
             return Err(error("invalid_funding", "invalid sponsorship response"));
         }
         match response["status"].as_str() {
             Some("ready") => {
                 if rpc.get_balance(&key.pubkey()).map_err(|_| error("funding_rpc_unavailable",
-                    "cannot confirm the sponsored balance"))? < 60_000_000 {
+                    "cannot confirm the sponsored balance"))? < crate::sponsorship::FUNDING_MINIMUM {
                     return Err(error("sponsorship_used", "this wallet already used its testSOL sponsorship; contact Alashi"));
                 }
                 return Ok(response);
@@ -1117,7 +1117,7 @@ mod tests {
             "agent_record_id":profile["agent_record_id"],"memo_program_id":MEMO_ID,"memo":memo});
         let (seen, worker) = fixture(server, vec![(200, proposal), (200,
             json!({"ok":true,"network":"devnet","wallet":key.pubkey().to_string(),
-                "target_lamports":"100000000","status":"ready"}))]);
+                "target_lamports":crate::sponsorship::FUNDING_TARGET.to_string(),"status":"ready"}))]);
         let rpc = RpcClient::new_mock_with_mocks_map("succeeds", [
             (RpcRequest::GetGenesisHash, json!("EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG")),
             (RpcRequest::GetBalance, json!({"context":{"slot":1},"value":0})),
@@ -1148,7 +1148,7 @@ mod tests {
             "agent_record_id":profile["agent_record_id"],"memo_program_id":MEMO_ID,"memo":memo});
         let (seen, worker) = fixture(server, vec![(200, proposal), (200,
             json!({"ok":true,"network":"devnet","wallet":key.pubkey().to_string(),
-                "target_lamports":"100000000","status":"ready"}))]);
+                "target_lamports":crate::sponsorship::FUNDING_TARGET.to_string(),"status":"ready"}))]);
         let rpc = RpcClient::new_mock_with_mocks_map("succeeds", [
             (RpcRequest::GetGenesisHash, json!("EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG")),
             (RpcRequest::GetBalance, json!({"context":{"slot":1},"value":0})),

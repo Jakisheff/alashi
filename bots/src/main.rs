@@ -43,7 +43,7 @@ use {
     },
 };
 
-const ENTRY_FEE: u64 = 50_000_000;
+const ENTRY_FEE: u64 = 5_000_000;
 const PHASE_DURATION: i64 = 15;
 const BARTER_DEMO_GOODS: u16 = 1;
 const BARTER_DEMO_PRICE: u64 = 3_000_000;

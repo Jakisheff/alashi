@@ -9,9 +9,10 @@ use std::{
 
 const MAX_DAILY: usize = 24;
 const MAX_ACTIVE: usize = 4;
-const FUNDING_TARGET: u64 = 100_000_000;
-const FUNDING_MINIMUM: u64 = 60_000_000;
-const FUNDING_RESERVE: u64 = 500_000_000;
+// Lamports (1 SOL = 1_000_000_000). Target covers the 0.005 SOL entry, faction rent and fees for a few games.
+pub(crate) const FUNDING_TARGET: u64 = 20_000_000;
+pub(crate) const FUNDING_MINIMUM: u64 = 12_000_000;
+const FUNDING_RESERVE: u64 = 200_000_000;
 const MAX_FUNDED_WALLETS: usize = 1000;
 
 #[derive(Clone, Serialize, Deserialize)]
@@ -507,7 +508,7 @@ mod tests {
                 ),
                 (
                     RpcRequest::GetBalance,
-                    json!({"context":{"slot":1},"value":600005000u64}),
+                    json!({"context":{"slot":1},"value":FUNDING_TARGET + FUNDING_RESERVE + 5000}),
                 ),
                 (RpcRequest::GetTransaction, Value::Null),
                 (
@@ -530,7 +531,7 @@ mod tests {
             tx.message.instructions[0].data,
             [
                 2u32.to_le_bytes().as_slice(),
-                100000000u64.to_le_bytes().as_slice()
+                FUNDING_TARGET.to_le_bytes().as_slice()
             ]
             .concat()
         );
@@ -548,7 +549,7 @@ mod tests {
                 ),
                 (
                     RpcRequest::GetBalance,
-                    json!({"context":{"slot":1},"value":700005000}),
+                    json!({"context":{"slot":1},"value":2 * FUNDING_TARGET + FUNDING_RESERVE + 5000}),
                 ),
                 (
                     RpcRequest::GetFeeForMessage,
@@ -582,7 +583,7 @@ mod tests {
                 ),
                 (
                     RpcRequest::GetBalance,
-                    json!({"context":{"slot":1},"value":600000000}),
+                    json!({"context":{"slot":1},"value":FUNDING_TARGET + FUNDING_RESERVE}),
                 ),
                 (
                     RpcRequest::GetFeeForMessage,
