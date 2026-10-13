@@ -137,10 +137,10 @@ impl ChainApi {
         }
         // One publisher at a time. A bounded negative cache is deliberately
         // omitted: unknown PDAs cost a single account read, not a scan.
-        let (value, seen_signatures) = self.fetch(&key, previous.as_ref())?;
+        let (mut value, seen_signatures) = self.fetch(&key, previous.as_ref())?;
         let terminal = value["game"]["settled"] == true && value["history_complete"] == true;
         if terminal {
-            self.save_archive(pda, &value);
+            self.archive(pda, &mut value);
         }
         self.cache.lock().unwrap_or_else(|e| e.into_inner()).insert(
             pda.to_owned(),
@@ -183,20 +183,31 @@ impl ChainApi {
                 .as_array()
                 .is_some_and(|a| a.len() <= MAX_EVENTS)
         {
+            let mut value = value;
+            value["archived"] = json!(true);
             Some(value)
         } else {
             None
         }
     }
-    fn save_archive(&self, pda: &str, value: &Value) {
-        let Some(dir) = &self.archive_dir else { return };
+    /// `archived: true` is set only after the file is durably on disk, so a
+    /// caller may close the account knowing the viewer survives it.
+    fn archive(&self, pda: &str, value: &mut Value) {
+        if self.save_archive(pda, value) {
+            value["archived"] = json!(true);
+        }
+    }
+    fn save_archive(&self, pda: &str, value: &Value) -> bool {
+        let Some(dir) = &self.archive_dir else {
+            return false;
+        };
         if std::fs::create_dir_all(dir).is_err() {
-            return;
+            return false;
         }
         let path = dir.join(format!("{pda}.json"));
         let tmp = dir.join(format!(".{pda}.tmp"));
         let Ok(bytes) = serde_json::to_vec(value) else {
-            return;
+            return false;
         };
         #[cfg(unix)]
         use std::os::unix::fs::OpenOptionsExt;
@@ -204,12 +215,11 @@ impl ChainApi {
         opts.write(true).create(true).truncate(true);
         #[cfg(unix)]
         opts.mode(0o600);
-        if let Ok(mut f) = opts.open(&tmp) {
-            use std::io::Write;
-            if f.write_all(&bytes).is_ok() && f.sync_all().is_ok() {
-                let _ = std::fs::rename(tmp, path);
-            }
-        }
+        let Ok(mut f) = opts.open(&tmp) else {
+            return false;
+        };
+        use std::io::Write;
+        f.write_all(&bytes).is_ok() && f.sync_all().is_ok() && std::fs::rename(tmp, path).is_ok()
     }
     fn fetch(
         &self,
@@ -695,6 +705,30 @@ mod tests {
     use super::*;
     use std::io::{Read, Write};
     use std::net::TcpListener;
+    #[test]
+    fn archived_is_set_only_when_the_archive_file_is_written() {
+        let pda = Pubkey::new_unique().to_string();
+        let terminal = json!({"ok":true,"game_pda":pda,"cluster":"devnet",
+            "program_id":alashi::id().to_string(),"game":{"settled":true},
+            "history_complete":true,"events":[]});
+        let mut api = ChainApi::new();
+        api.archive_dir = None;
+        let mut value = terminal.clone();
+        api.archive(&pda, &mut value);
+        assert!(value.get("archived").is_none());
+        assert!(api.load_archive(&pda).is_none());
+
+        let dir = std::env::temp_dir().join(format!("alashi-archive-test-{pda}"));
+        api.archive_dir = Some(dir.clone());
+        let mut value = terminal.clone();
+        api.archive(&pda, &mut value);
+        assert_eq!(value["archived"], true);
+        let loaded = api.load_archive(&pda).unwrap();
+        assert_eq!(loaded["archived"], true);
+        assert_eq!(loaded["game_pda"], pda);
+        let _ = std::fs::remove_dir_all(dir);
+    }
+
     #[test]
     fn faction_discovery_filter_excludes_donkey_config_collision() {
         let game = Pubkey::new_unique().to_string();

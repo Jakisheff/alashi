@@ -179,7 +179,7 @@ impl Drop for SessionLock {
         let _ = fs::remove_file(&self.0);
     }
 }
-fn http_json(url: &str, path: &str, body: Option<&Value>) -> ResultJson {
+pub(crate) fn http_json(url: &str, path: &str, body: Option<&Value>) -> ResultJson {
     let base = validate_url(url)?;
     let mut command = Command::new("curl");
     command.args([
