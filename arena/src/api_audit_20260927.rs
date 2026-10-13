@@ -91,6 +91,32 @@ fn corrupt_snapshot_aborts_load_and_original_is_preserved() {
 }
 
 #[test]
+fn corrupt_typed_journals_keep_canonical_snapshot_and_forensic_copy() {
+    for field in ["owner_auth", "wishes", "chain_wishes", "chain_conversations", "chain_dialogue"] {
+        let (s, p) = isolated(field);
+        assert_eq!(h_new_game(&s, &json!({}))["ok"], true);
+        save_snapshot(&s).unwrap();
+        let mut doc: serde_json::Value = serde_json::from_slice(&std::fs::read(p.join("state.json")).unwrap()).unwrap();
+        doc[field] = json!("invalid typed journal");
+        let bytes = serde_json::to_vec(&doc).unwrap();
+        std::fs::write(p.join("state.json"), &bytes).unwrap();
+
+        let restored = new_state_with_files(p.join("state.json"), p.join("seq"));
+        assert!(load_snapshot(&restored).is_err(), "{field}");
+        assert_eq!(std::fs::read(p.join("state.json")).unwrap(), bytes, "{field}");
+        let backups: Vec<_> = std::fs::read_dir(&p).unwrap()
+            .filter_map(|entry| entry.ok().map(|entry| entry.path()))
+            .filter(|path| path.file_name().is_some_and(|name| name.to_string_lossy().contains("corrupt")))
+            .collect();
+        assert_eq!(backups.len(), 1, "{field}: {backups:?}");
+        assert_eq!(std::fs::read(&backups[0]).unwrap(), bytes, "{field}");
+        let second = new_state_with_files(p.join("state.json"), p.join("seq"));
+        assert!(load_snapshot(&second).is_err(), "{field}");
+        assert!(second.games.lock().unwrap().is_empty(), "{field}");
+    }
+}
+
+#[test]
 fn failed_snapshot_rolls_back_join_and_allows_retry() {
     let (s, p) = isolated("failed-save");
     let id = h_new_game(&s, &json!({}))["game_id"].as_u64().unwrap();
