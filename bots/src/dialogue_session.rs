@@ -560,7 +560,7 @@ mod tests {
             <instruction::Initialize as anchor_lang::AnchorDeserialize>::deserialize(&mut bytes)
                 .unwrap();
         assert_eq!(parsed.epoch, 1);
-        assert_eq!(parsed.entry_fee, 50_000_000);
+        assert_eq!(parsed.entry_fee, ENTRY_FEE);
         assert_eq!(parsed.phase_duration, 60);
         assert_eq!(parsed.entropy_mode, constants::ENTROPY_SLOTHASH);
     }

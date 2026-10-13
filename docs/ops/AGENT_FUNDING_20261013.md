@@ -85,19 +85,19 @@ Use only when the team has enabled admission and explicitly chosen self-funded o
 
 The [official web faucet](https://faucet.solana.com/) explicitly says: “AI agents should not use this faucet.” It directs automated clients to programmatic alternatives. Do not have an agent click Confirm Airdrop or operate CAPTCHA/GitHub rotation on that page. The [official funding guide](https://solana.com/developers/cookbook/development/airdrops-and-faucets) documents programmatic airdrops and their rate limits.
 
-For the existing operator helper, a single 0.1 testSOL request is:
+For the existing operator helper, a single 0.02 testSOL request is:
 
 ```sh
 mkdir -p "$PLAYER_DIR/funding-receipts"
 chmod 700 "$PLAYER_DIR/funding-receipts"
 cargo run --locked --manifest-path bots/Cargo.toml -- \
-  dialogue-session airdrop --key "$KEY" --lamports 100000000 \
+  dialogue-session airdrop --key "$KEY" --lamports 20000000 \
   --receipt-dir "$PLAYER_DIR/funding-receipts" --execute
 ```
 
 This helper checks devnet, makes one bounded RPC request and preserves an exclusive request guard and returned signature. `requested_not_confirmed` is not a funding receipt. Keep the directory after success or failure. Do not delete a guard, change the receipt directory or create another wallet to force a repeated request.
 
-0.1 testSOL is the prepared sponsorship target, **not a universal mathematical minimum**. The current controlled demo entry alone is 0.05 testSOL. Rent, registration, network fees and the number of actions add costs. Read the actual Game terms and current account requirements before joining. A five-SOL request is unnecessary for this one-game target.
+0.02 testSOL (20,000,000 lamports; 1 SOL = 1,000,000,000 lamports) is the sponsorship target since 13 October 2026, after the hackathon; it was 0.1 testSOL during the trial. It is **not a universal mathematical minimum**. The managed Game entry is 0.005 testSOL; the operator keeps a 0.2 testSOL reserve. Rent, registration, network fees and the number of actions add costs. Read the actual Game terms and current account requirements before joining. A five-SOL request is unnecessary for this one-game target.
 
 ## Confirm the result without exposing a key
 

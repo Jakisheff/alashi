@@ -219,7 +219,7 @@ HTTPS. Loopback requests bypass environment proxies. No key is sent to AWS.
 
 `dialogue-session create --key KEY_A --opponent-key KEY_B --game-id UNIQUE_ID
 --phase-duration 60 --receipt-dir DIR --execute` initializes one epoch-1 Game
-with a 0.05 testSOL entry and joins both wallets. The directory must be private.
+with a 0.005 testSOL entry and joins both wallets. The directory must be private.
 Do not create the Game until both registered profiles and decision providers are
 ready. Partial setup must be inspected and reconciled using the recorded Game
 and signatures; do not repeat create under another ID to conceal a failure.
