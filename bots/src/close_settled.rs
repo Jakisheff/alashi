@@ -5,7 +5,7 @@ use super::*;
 use anchor_lang::Discriminator;
 use serde_json::{json, Value};
 
-const USAGE: &str = "bots close-settled --key LOCAL_KEYPAIR [--chain-api https://alashi.network] [--min-age-secs 3600] [--keep GAME_PDA]... [--dry-run]; ALASHI_RPC selects devnet RPC";
+const USAGE: &str = "bots close-settled --key LOCAL_KEYPAIR [--chain-api https://alashi.network] [--min-age-secs 3600] [--admin PUBKEY]... [--keep GAME_PDA]... [--dry-run]; without --admin only games whose admin is the key are closed; ALASHI_RPC selects devnet RPC";
 const KEEP_ALWAYS: [&str; 3] = [
     // The home page replays this game; it is never closed.
     "GqHZBaWuJDNERi8xJHXnYF5eWBsLSmEXcAGJYAP94M1b",
@@ -20,7 +20,7 @@ const KEEP_ALWAYS: [&str; 3] = [
 fn decide(
     game: &state::Game,
     address: &Pubkey,
-    crank: &Pubkey,
+    admins: &[Pubkey],
     keep: &[Pubkey],
     now: i64,
     min_age: i64,
@@ -36,7 +36,7 @@ fn decide(
     if !matches!(game.phase, state::Phase::Finished | state::Phase::Aborted) {
         return Err("not_terminal_phase");
     }
-    if game.admin != *crank {
+    if !admins.contains(&game.admin) {
         return Err("admin_mismatch");
     }
     if game.phase_ends_at > now - min_age {
@@ -113,7 +113,10 @@ fn ix_close_game(
     Instruction::new_with_bytes(id(), &instruction::CloseGame {}.data(), metas)
 }
 
-fn options(args: &[String]) -> Result<(String, String, i64, Vec<Pubkey>, bool), String> {
+type Options = (String, String, i64, Vec<Pubkey>, Vec<Pubkey>, bool);
+
+fn options(args: &[String]) -> Result<Options, String> {
+    let mut admins: Vec<Pubkey> = vec![];
     let mut keep: Vec<Pubkey> = KEEP_ALWAYS.iter().map(|k| k.parse().unwrap()).collect();
     let (mut key, mut base, mut min_age, mut dry_run) = (
         None,
@@ -145,6 +148,11 @@ fn options(args: &[String]) -> Result<(String, String, i64, Vec<Pubkey>, bool), 
                         "--min-age-secs must be an integer >= {CLOSED_GAME_MIN_AGE_SECS}"
                     ))?
             }
+            "--admin" => admins.push(
+                value()?
+                    .parse()
+                    .map_err(|_| "--admin must be a public key")?,
+            ),
             "--keep" => keep.push(
                 value()?
                     .parse()
@@ -154,7 +162,14 @@ fn options(args: &[String]) -> Result<(String, String, i64, Vec<Pubkey>, bool), 
         }
         i += 2;
     }
-    Ok((key.ok_or("--key required")?, base, min_age, keep, dry_run))
+    Ok((
+        key.ok_or("--key required")?,
+        base,
+        min_age,
+        admins,
+        keep,
+        dry_run,
+    ))
 }
 
 pub fn run(args: &[String]) -> i32 {
@@ -162,7 +177,7 @@ pub fn run(args: &[String]) -> i32 {
         println!("{USAGE}");
         return 0;
     }
-    let (key_path, base, min_age, keep, dry_run) = match options(args) {
+    let (key_path, base, min_age, mut admins, keep, dry_run) = match options(args) {
         Ok(o) => o,
         Err(e) => {
             eprintln!("{e}\n{USAGE}");
@@ -190,6 +205,9 @@ pub fn run(args: &[String]) -> i32 {
         }
     };
     let crank = signer.pubkey();
+    if admins.is_empty() {
+        admins.push(crank);
+    }
     let mut failed = false;
     for chunk in games.chunks(100) {
         let accounts = match rpc.get_multiple_accounts(chunk) {
@@ -217,7 +235,9 @@ pub fn run(args: &[String]) -> i32 {
             };
             let now = now();
             let check = |factions: Option<bool>, chain: Option<&Value>| {
-                decide(&game, address, &crank, &keep, now, min_age, factions, chain)
+                decide(
+                    &game, address, &admins, &keep, now, min_age, factions, chain,
+                )
             };
             if let Err(reason) = check(None, None) {
                 println!("{}", line(&format!("skip:{reason}")));
@@ -296,7 +316,7 @@ mod tests {
         let terminal = json!({"ok":true,"game_pda":address.to_string(),
             "game":{"settled":true},"history_complete":true,"archived":true});
         let at = |game: &state::Game, now, keep: &[Pubkey], factions, chain| {
-            decide(game, &address, &crank, keep, now, 3600, factions, chain)
+            decide(game, &address, &[crank], keep, now, 3600, factions, chain)
         };
         assert_eq!(at(&game, 4_600, &[], Some(true), Some(&terminal)), Ok(()));
         assert_eq!(
@@ -351,7 +371,53 @@ mod tests {
             at(&market, 9_000, &[], Some(true), Some(&terminal)),
             Err("not_terminal_phase")
         );
-        let keep = options(&["--key".into(), "k".into()]).unwrap().3;
+        let reserve = Pubkey::new_unique();
+        let reserve_game = state::Game {
+            admin: reserve,
+            ..game.clone()
+        };
+        assert_eq!(
+            decide(
+                &reserve_game,
+                &address,
+                &[crank, reserve],
+                &[],
+                9_000,
+                3600,
+                Some(true),
+                Some(&terminal)
+            ),
+            Ok(())
+        );
+        assert_eq!(
+            decide(
+                &other,
+                &address,
+                &[crank, reserve],
+                &[],
+                9_000,
+                3600,
+                Some(true),
+                Some(&terminal)
+            ),
+            Err("admin_mismatch")
+        );
+        let two = [
+            "--key",
+            "k",
+            "--admin",
+            &crank.to_string(),
+            "--admin",
+            &reserve.to_string(),
+        ]
+        .map(String::from);
+        assert_eq!(options(&two).unwrap().3, vec![crank, reserve]);
+        assert!(options(&["--key", "k"].map(String::from))
+            .unwrap()
+            .3
+            .is_empty());
+        assert!(options(&["--key", "k", "--admin", "x"].map(String::from)).is_err());
+        let keep = options(&["--key".into(), "k".into()]).unwrap().4;
         for pda in KEEP_ALWAYS {
             assert!(keep.contains(&pda.parse().unwrap()));
         }
