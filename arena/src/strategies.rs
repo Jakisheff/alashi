@@ -24,6 +24,7 @@ pub struct Obs<'a> {
     /// Счётчик проданного в раунде (позиция в ценовой таблице).
     pub sold_counter: u16,
     pub active_tax_bps: u16,
+    pub active_subsidy_goods: u8,
     pub active_price_shift: i8,
     pub active_boom: u8,
     /// Карта закона в фазе Law (публична, как ончейн-аккаунт).

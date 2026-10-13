@@ -131,6 +131,40 @@ test('one profile joins two games, no prompt upload, pending op replay is exact'
   } finally { rmSync(dir, { recursive: true, force: true }); }
 });
 
+test('only exact definitive unconsumed action rejection clears pending without debit', async () => {
+  const cases = [
+    [{ ok: false, error: 'bad_action', op_id: 7, op_consumed: false }, false],
+    [{ ok: false, error: { code: 'bad_params' }, op_id: 7, op_consumed: false }, false],
+    [{ ok: false, error: 'bad_choice', op_id: 7, op_consumed: false }, false],
+    [{ ok: false, error: 'bad_token', op_id: 7, op_consumed: false }, true],
+    [{ ok: false, error: 'storage_failed', op_id: 7, op_consumed: false }, true],
+    [{ ok: false, error: 'op_conflict', op_id: 7, op_consumed: false }, true],
+    [{ ok: false, error: 'op_out_of_order', op_id: 7, op_consumed: false }, true],
+    [{ ok: false, error: 'bad_action', op_id: 8, op_consumed: false }, true],
+    [{ ok: false, error: 'bad_action', op_id: 7 }, true],
+    [null, true], // Unknown transport outcome must keep the exact operation.
+  ];
+  for (const [result, keepPending] of cases) {
+    const dir = mkdtempSync(join(tmpdir(), 'alashi-act-reject-'));
+    try {
+      const path = join(dir, 'session.json');
+      const session = { game_id: 42, token: 'ab'.repeat(32), next_op_id: 7, pending_act: null };
+      const action = { action: 'produce', by: 'llm', params: { marker: 'same-payload' } };
+      const send = () => act('https://alashi.network', session, path, JSON.stringify(action), async (_, init) => {
+        const body = JSON.parse(init.body);
+        assert.deepEqual(body, { token: session.token, op_id: 7, ...action });
+        if (!result) throw new Error('lost response');
+        return response(result);
+      });
+      if (result) await send();
+      else await assert.rejects(send(), /lost response/);
+      const saved = JSON.parse(readFileSync(path));
+      assert.equal(saved.next_op_id, 7);
+      assert.deepEqual(saved.pending_act, keepPending ? { op_id: 7, action } : null, JSON.stringify(result));
+    } finally { rmSync(dir, { recursive: true, force: true }); }
+  }
+});
+
 test('start persists one private wallet and returns identity link while no game is open', async () => {
   const dir = mkdtempSync(join(tmpdir(), 'alashi-start-offline-'));
   try {

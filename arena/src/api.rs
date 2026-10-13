@@ -325,8 +325,9 @@ pub fn load_snapshot(state: &AppState) -> Result<(), String> {
         .snapshot_path
         .with_extension(format!("json.corrupt.{}", now()));
     let fail = |msg: String| -> Result<(), String> {
-        match std::fs::rename(&state.snapshot_path, &backup_path) {
-            Ok(()) => Err(format!("{msg}; оригинал сохранён: {}", backup_path.display())),
+        // Keep the canonical corrupt file in place so a second startup also fails closed.
+        match std::fs::copy(&state.snapshot_path, &backup_path) {
+            Ok(_) => Err(format!("{msg}; оригинал сохранён: {}", backup_path.display())),
             Err(e) => Err(format!("{msg}; сохранить оригинал не удалось: {e}")),
         }
     };
@@ -369,32 +370,47 @@ pub fn load_snapshot(state: &AppState) -> Result<(), String> {
     };
     live::clear_loaded_presence(&mut live_state);
     let owner_auth_state: owner_auth::OwnerAuthState = match doc.get("owner_auth") {
-        Some(value) => serde_json::from_value(value.clone()).map_err(|_| "битый owner auth snapshot".to_string())?,
+        Some(value) => match serde_json::from_value(value.clone()) {
+            Ok(value) => value,
+            Err(_) => return fail("битый owner auth snapshot".into()),
+        },
         None => owner_auth::OwnerAuthState::default(),
     };
     let wish_state: wishes::WishState = match doc.get("wishes") {
-        Some(value) => serde_json::from_value(value.clone()).map_err(|_| "битый приватный wish journal".to_string())?,
+        Some(value) => match serde_json::from_value(value.clone()) {
+            Ok(value) => value,
+            Err(_) => return fail("битый приватный wish journal".into()),
+        },
         None => wishes::WishState::default(),
     };
     if !valid_wish_state(&wish_state) {
         return fail("несогласованный приватный wish journal или лимит".into());
     }
     let chain_wish_state: chain_wishes::ChainWishState = match doc.get("chain_wishes") {
-        Some(value) => serde_json::from_value(value.clone()).map_err(|_| "битый приватный chain-wish journal".to_string())?,
+        Some(value) => match serde_json::from_value(value.clone()) {
+            Ok(value) => value,
+            Err(_) => return fail("битый приватный chain-wish journal".into()),
+        },
         None => chain_wishes::ChainWishState::default(),
     };
     if !chain_wishes::validate(&chain_wish_state) {
         return fail("несогласованный приватный chain-wish journal или лимит".into());
     }
     let chain_conversation_state: chain_conversations::ConversationState = match doc.get("chain_conversations") {
-        Some(value) => serde_json::from_value(value.clone()).map_err(|_| "битый публичный chain-conversation journal".to_string())?,
+        Some(value) => match serde_json::from_value(value.clone()) {
+            Ok(value) => value,
+            Err(_) => return fail("битый публичный chain-conversation journal".into()),
+        },
         None => chain_conversations::ConversationState::default(),
     };
     if !chain_conversations::validate(&chain_conversation_state) {
         return fail("несогласованный chain-conversation journal или лимит".into());
     }
     let chain_dialogue_state: chain_dialogue::DialogueState = match doc.get("chain_dialogue") {
-        Some(value) => serde_json::from_value(value.clone()).map_err(|_| "invalid chain-dialogue journal".to_string())?,
+        Some(value) => match serde_json::from_value(value.clone()) {
+            Ok(value) => value,
+            Err(_) => return fail("invalid chain-dialogue journal".into()),
+        },
         None => chain_dialogue::DialogueState::default(),
     };
     if !chain_dialogue::validate(&chain_dialogue_state) {
