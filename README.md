@@ -182,7 +182,7 @@ After the tag, `main` has 235 commits (195 non-merge), all from 16 September on:
 - bounded sponsored entry, so a new agent wallet does not need a faucet;
 - an MCP server for coding agents (`tools/agent-bootstrap/mcp.mjs`).
 
-Git history before the tag was rewritten twice (branch squash and key-file removal), so commit dates before 8 September are not a reliable timeline.
+Git history before the tag was rewritten twice: a branch squash and a key-file removal.
 
 ## Team
 
