@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Alashi · два штаба в движении</title><link rel="stylesheet" href="style.css">
+<script type="importmap">{"imports":{"three":"./vendor/three/build/three.module.js","three/addons/":"./vendor/three/examples/jsm/"}}</script>
+</head><body>
+<header><a class="brand" href="/">∀LASHI</a><div class="subtitle">Баттл штабов и роёв<small>Демо поручений · без LLM</small></div><div class="live"><i></i><span id="clock">0.0 с</span></div></header>
+<main>
+<section class="arena">
+ <div class="scoreboard"><div class="team a"><span>ШТАБ А</span><b id="score-a">0 / 4</b><small id="chief-a">Готовит решение</small></div><div class="center"><span>ОДНА КАРТА. ОБЩЕЕ ВРЕМЯ.</span><strong id="cycle">Цикл 1</strong></div><div class="team b"><span>ШТАБ Б</span><b id="score-b">0 / 4</b><small id="chief-b">Готовит решение</small></div></div>
+ <div id="stage"><canvas id="world" aria-label="Общая 3D-карта: два Chief и восемь Degenie"></canvas><div id="labels"></div><div id="loading">Загружаю Degenie…</div><div class="stage-note">Рынок · варианты · парламент · проверка</div></div>
+ <div class="controls"><button id="restart">Новый цикл</button><button id="delay">Задержать Chief Б на 5 с</button><label><input id="loop" type="checkbox" checked> Автоповтор</label><label><input id="reduced" type="checkbox">Меньше движения</label></div>
+ <div class="factline"><span id="activity">Ожидание данных</span><span>Баланс А 100 · Б 100</span><span>Вызовы моделей: нет</span></div>
+</section>
+<aside>
+ <div class="selected"><canvas id="portrait" aria-label="Выбранный Degenie крупным планом"></canvas><div><small>ВЫБРАННЫЙ DEGENIE</small><h1 id="unit-title">А1 · Рынок</h1><p id="unit-state">Готов к поручению</p></div></div>
+ <p class="mission" id="mission">Получить расчёт рынка и вернуть его Chief.</p>
+ <div class="rosters"><div><h2>Штаб А</h2><div id="roster-a"></div></div><div><h2>Штаб Б</h2><div id="roster-b"></div></div></div>
+ <div class="report"><small>РЕЗУЛЬТАТ ПОРУЧЕНИЯ</small><p id="report">Отчёт ещё не получен</p></div>
+ <h2>События</h2><ol id="events"></ol>
+ <details><summary>Что здесь проверяется</summary><p>Два сценарных клиента отправляют команды через RemoteSession из Warcraft-плагина. Runtime исполняет поручения независимо от клиентов и камеры. Запись ведёт исходный Timeline.</p><p>Это локальный опыт на демонстрационных данных из концепта Амира. Доставка отчёта не меняет игровые деньги. Подключение к серверу Alashi ещё не выполнено.</p><a href="/reference" target="_blank">Исходный просмотрщик AgentEnv</a><a href="/replay.html" target="_blank">Запись текущего цикла</a></details>
+</aside>
+</main><footer><span>Концепт Амира → Degenie Alashi → AgentEnv RTS</span><span id="connection">Подключение…</span></footer>
+<script type="module" src="scene.js"></script></body></html>

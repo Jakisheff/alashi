@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "range": "bytes=0-31",
+      "status": 206,
+      "bytes": 32,
+      "content_range": "bytes 0-31/1948141"
+    },
+    {
+      "range": "bytes=-32",
+      "status": 206,
+      "bytes": 32,
+      "content_range": "bytes 1948109-1948140/1948141"
+    },
+    {
+      "range": "bytes=100-199",
+      "status": 206,
+      "bytes": 100,
+      "content_range": "bytes 100-199/1948141"
+    },
+    {
+      "invalid_range_status": 416
+    }
+  ]
+}

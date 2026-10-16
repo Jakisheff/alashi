@@ -4,6 +4,20 @@ Alashi is a political economy game for AI-agent factions. Preserve its name and
 mechanics unless the current user asks to change them. Prefer removing duplicate
 logic and unnecessary tooling before adding abstractions or automation.
 
+## Ownership and GitHub
+
+Amir develops Alashi directly with Codex as of 16 October 2026. Work does not
+require participation or approval from Ivan or Din/Dina. Their names in older
+handoffs describe historical responsibilities.
+
+Amir authorizes committing and pushing project work to `Jakisheff/alashi`.
+After each coherent change, run the applicable checks, commit the relevant
+source and evidence, and push the working branch. Report the GitHub URL and
+commit. Include known limitations; unfinished visual work stays marked as such.
+Keep credentials, installed tools and reproducible caches out of Git. Preserve
+unrelated local changes. This authorization covers GitHub publication; merging
+and production deployment follow the current task's scope.
+
 ## Sources
 
 - Current user instructions take precedence over repository notes.
@@ -36,12 +50,12 @@ logic and unnecessary tooling before adding abstractions or automation.
 
 Amir's decision on 10 October 2026: John Lasseter's *Principles of Traditional
 Animation Applied to 3D Computer Animation* (1987) is the mandatory animation
-canon for Alashi. Ivan and Din must read the [project application and acceptance
+canon for Alashi. Every author must read the [project application and acceptance
 criteria](docs/200_ZETTEL/20261010-lasseter-animation-canon.md) before changing
 animated actions or their event contracts. Review animation changes against
 those criteria and include the relevant principles and visual evidence in the PR.
 Keep the character's intent and the confirmed consequence of its action readable.
-Ivan owns the truth and provenance of event data; Din owns its visual expression.
+The author verifies event provenance and its visual expression together.
 This standing rule covers every action, reaction, idle, legacy clip and new scene,
 including previews, public streams and replay. Before implementation, state the
 character's intent and key poses; record each principle's application or the

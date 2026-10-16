@@ -738,3 +738,14 @@ uses a direct conditional after canonical Faction verification. The suite is
 86 passed / 2 ignored, build PASS. A full post-Join Match retry with an already-used
 sponsorship and low wallet balance has NOT been executed: it remains a required
 operator acceptance gate. The local routing test is HTTP proof, not that E2E.
+
+
+16.10.2026 11:20. Публикация локальных прототипов Degenie по поручению Амира.
+План: 0,5 часа, до 11:50. Критерий: исходники и результаты проверок доступны
+в GitHub; локальный runtime проходит проверки из новой рабочей папки.
+Амир ведёт проект напрямую с Codex, без участия Ивана и Дины.
+
+16.10 11:29. Пакет подготовлен: исходники прототипов и материалы приёмки
+сохранены в experiments/alashi-watch. Из нового checkout прошли 16 проверок
+RTS, проверка синтаксиса и хешей. Все 52 локальные ссылки доступны; Gitleaks
+не нашёл секретов. Далее: push ветки и draft PR. Визуальная приёмка открыта.
