@@ -166,6 +166,7 @@ def main():
                 dependency_failed = True
             return answer
         except (KeyError, IndexError, TypeError, json.JSONDecodeError):
+            dependency_failed = True
             return None
 
     for i, case in enumerate(cases):
