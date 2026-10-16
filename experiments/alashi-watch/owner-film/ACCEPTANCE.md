@@ -60,5 +60,24 @@ requests and complete provider usage receipts before a measured version can ship
 The failed sandbox transport attempt is retained under `evidence/transport-preflight`.
 It contains no successful model responses and is not benchmark evidence.
 
-Final video decoding, browser playback and current-commit CI results are recorded
-below after those checks complete.
+## Delivered video and browser
+
+observed: FFmpeg 7.1 decoded the complete file with `-xerror`: 3600 frames,
+120.000 seconds, H.264/yuv420p, 1920x1080 at 30 fps. The MP4 is 8,170,430 bytes.
+Its hash is recorded in `evidence/video.json` and `evidence/decode-checks.json`.
+
+The browser reached time 120 with ended=true, paused=true, readyState=4 and no
+media error. Chapter seeking to 47 seconds displayed the sale; reverse seeking
+to 23 seconds removed that future result. Both frames remained stable on pause.
+Key movement phases were inspected during playback. The application viewport
+was measured at 390x844 CSS pixels with scrollWidth=390. Chapter buttons measure
+44 CSS pixels high. The temporary viewport override was reset.
+
+Immediate pause during a pending play request initially produced AbortError in
+the console. The player now catches that expected cancellation. Repeating the
+same action after reload added no errors. Text cleaning initially altered two
+CSS selector commas; they were restored. Text-only extraction is used for the
+final prose check, leaving executable code intact.
+
+GitHub CI runs the film receipt and artifact checks. See the PR checks for the
+latest commit; the decoded MP4 is identical to the copy delivered in Downloads.
