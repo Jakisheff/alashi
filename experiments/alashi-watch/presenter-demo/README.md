@@ -1,6 +1,6 @@
 # ALASHI founder demo
 
-A 120-second English edit of Amir's supplied interview, with the approved RTS map and a circular camera inset. The opening preserves his complete introduction as a Tomorrow School student. The source recording and full interview stay local; only the selected words and cut times are included here.
+A 120-second English edit of Amir's supplied interview, with the approved RTS map and a circular camera inset. The opening preserves his complete introduction as a Tomorrow School student. The source recording and full interview stay local; only the selected words and cut times are included here. Generated video outputs stay local and are excluded from Git.
 
 Audience: Magzhan Madiyev. The edit explains the owner's job in plain terms: give agents work and a budget, inspect the result, then learn from a shared strategy. Sharing improvements is a proposed product rule. The network benefit is a goal, not a measured adoption result.
 
@@ -8,7 +8,7 @@ The map uses scripted assignments and no live model calls. Six workers can run a
 
 Files:
 
-- `ALASHI-demo-english.mp4`: final video.
+- `ALASHI-demo-english.mp4`: local build output, excluded from Git.
 - `index.html`: player with chapter buttons and a phone-size preview.
 - `edit.json`: source cut times and explanatory overlays.
 - `source-alignment.json`: timing for the selected source words.

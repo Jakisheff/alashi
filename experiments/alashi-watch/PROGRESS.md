@@ -175,3 +175,5 @@ not_validated: интерес новых зрителей и работа на �
 19:12: final export failed with ENOSPC. The incomplete MP4 is not deliverable. Source clips, edited presenter track and rendered map remain intact. Removing reproducible package caches and reducing the final compositing graph's memory use before retrying. Revised plan: 1.25 hours, until 19:36.
 
 19:25: final English MP4 completed, 120.000 seconds, 1280×720 at 30 fps. All 3,600 frames and 5,760,000 audio samples decode correctly. Browser playback and phone-width framing reviewed; the Tomorrow School introduction is intact. The separate usage receipt totals 2,634 tokens and the failed quality gate is disclosed. The final copy is in Downloads. Факт: 1,07 часа на монтаж и локальную проверку. GitHub publication and final-head CI follow this completed media work.
+
+Owner correction: exclude the generated founder MP4 from GitHub publication. Keep local video copies, publish source and code changes, and remove the MP4 from the current branch tree. The earlier upload remains in history.
