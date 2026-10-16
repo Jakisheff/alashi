@@ -84,8 +84,10 @@ end-to-end test passes. Targeted tests also check:
   signer result cannot automatically start another signer.
 - A missing trading executor stops before model reservation or execution.
 
-The native signer test and full indexer compilation require GitHub CI in this
-run: local offline compilation lacks a cached `Inflector` dependency.
+GitHub [CI on 0ad4e8b](https://github.com/Jakisheff/alashi/actions/runs/38972315739)
+passed all five jobs, including the native signer context tests, indexer tests,
+program host compilation and fresh SBF execution. Local offline signer/indexer
+compilation lacked a cached `Inflector` dependency; CI supplied that check.
 
 ## Visual acceptance
 
@@ -93,8 +95,14 @@ The approved terrain and Degenie atlas are unchanged.
 [Parallel work](desktop-parallel.png) and
 [confirmed production](desktop-receipt.png) show separate stages.
 [Results and reuse](results-and-reuse.png) link the +2 goods result to the
-public improvement. The [phone frame](phone-map.png) keeps the entire map visible
+public improvement. The [game page](game-linked-usage.png) links the
+actual sale and production events to their strategy runs. The [phone frame](phone-map.png) keeps the entire map visible
 at 390 px without horizontal overflow; detailed receipts remain readable below.
+
+A [connection-loss check](offline-retained-receipts.png) suspended only the local
+test server. Four loaded receipts remained visible; playback stayed at 1.100
+seconds after Play was pressed. The service warning cleared after recovery.
+Loading, unavailable service and a successful empty response are distinct states.
 
 Desktop and phone-sized browser playback were inspected in motion, including
 backward seeking and the receipt stage. Playback expands short events for

@@ -238,3 +238,15 @@ parallel tasks followed by receipt acknowledgment, result and reuse visible.
 The finished game links four attached runs. No token leader is shown for
 unequal sale outcomes. Local secret scan is clean. Preparing the GitHub push;
 fresh Solana execution and two-human onboarding remain unverified.
+
+17.10 02:59. Trading strategy cycle implementation and review completed.
+Observed: two local owner processes, accepted production and sales, normal
+settlement, published improvement and reuse by a third fixture wallet. Recovery
+does not duplicate the accepted trade or model call. Desktop and phone-sized
+review passed; connection loss keeps receipts and freezes movement.
+CI 5/5 passed on 0ad4e8b: https://github.com/Jakisheff/alashi/actions/runs/38972315739.
+A final UI adjustment distinguishes loading from a missing usage service; its
+revision receives another CI run. External model calls: zero. Public deployment,
+fresh integrated Solana execution and two-person onboarding were not performed.
+Факт: 0,8 часа реализации и проверки до финального прогона CI.
+План: 2 часа, до 04:11 закрыт; ожидание последней проверки учитывается в чате.
