@@ -177,3 +177,34 @@ not_validated: интерес новых зрителей и работа на �
 19:25: final English MP4 completed, 120.000 seconds, 1280×720 at 30 fps. All 3,600 frames and 5,760,000 audio samples decode correctly. Browser playback and phone-width framing reviewed; the Tomorrow School introduction is intact. The separate usage receipt totals 2,634 tokens and the failed quality gate is disclosed. The final copy is in Downloads. Факт: 1,07 часа на монтаж и локальную проверку. GitHub publication and final-head CI follow this completed media work.
 
 Owner correction: exclude the generated founder MP4 from GitHub publication. Keep local video copies, publish source and code changes, and remove the MP4 from the current branch tree. The earlier upload remains in history.
+
+16.10 19:49. Strategy sharing implementation. Plan: 3 hours, until 22:49. Implement one persistent cycle in the platform: immutable strategy/fork, bounded execution receipts, rule-checked result, publication and independent adoption. Reuse HTTP arena ownership and rules; no new provider calls or video publication. Acceptance requires independent owner replay, failure/unknown-usage accounting, restart recovery, event-driven Degenie and relevant local/CI checks.
+
+20:12: the first six backend cycle tests pass. Fixed a scaled-price mismatch by
+using canonical compute_sale and asserted 13,600,000 PESO independently. Reused
+arena action application after owner authentication; stored agent credentials
+are hashes and must never be used as raw bearer tokens. HTTP integration follows.
+
+20:20: signed HTTP acceptance passed for original, derivative and third-owner
+adoption. Local test provider: 11 requests, peak concurrency 3, usage fixtures
+600 / 360 / 360. All three isolated starting economies produced canonical
+13,600,000 PESO sales. No external provider calls. UI comparison is scoped to one
+matched case and never labels fixture counts as measured LLM savings.
+
+21:09: scope corrected from an in-game sale to a marketing duel, following Amir's
+explicit clarification. Both teams receive one immutable advertising brief and
+budget. New calls wait for both owners and stop at the common deadline. Final ads
+remain hidden until both submissions or the deadline. A separate host evaluates
+creative quality; token use cannot establish monetary cost or conversion efficacy.
+
+21:20: current implementation is an English marketing duel, not an economic sale.
+The two teams have the same immutable brief and shared deadline. The runner preserves
+paid responses before submission, and local tools explicitly report no model calls.
+Unknown usage remains unknown. Token leader requires reveal and both host decisions;
+monetary savings and conversion results remain unmeasured.
+
+21:33: browser desktop framing shows the whole approved terrain, both upright
+team labels and the common brief. Final ads and task receipts are visible after
+reveal; a rematch shows independent reuse. The old ambient mock failure was
+reproduced as WouldBlock and fixed only in the test reader. Full arena rerun and
+phone-width motion acceptance remain in progress.

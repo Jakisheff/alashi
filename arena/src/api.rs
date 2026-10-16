@@ -7,6 +7,8 @@ use crate::http::{read_request, respond, Request};
 mod live;
 #[path = "owner_auth.rs"]
 mod owner_auth;
+#[path = "strategy_cycle.rs"]
+mod strategy_cycle;
 #[path = "wishes.rs"]
 mod wishes;
 #[path = "chain_wishes.rs"]
@@ -169,6 +171,7 @@ pub struct AppState {
     live: Mutex<live::LiveState>,
     owner_auth: Mutex<owner_auth::OwnerAuthState>,
     wishes: Mutex<wishes::WishState>,
+    strategy_cycle: Mutex<strategy_cycle::StrategyState>,
     chain_wishes: Mutex<chain_wishes::ChainWishState>,
     chain_conversations: Mutex<chain_conversations::ConversationState>,
     chain_dialogue: Mutex<chain_dialogue::DialogueState>,
@@ -279,6 +282,7 @@ pub(super) fn save_snapshot_locked(state: &AppState) -> std::io::Result<()> {
         "live": *state.live.lock().unwrap_or_else(|e| e.into_inner()),
         "owner_auth": *state.owner_auth.lock().unwrap_or_else(|e| e.into_inner()),
         "wishes": *state.wishes.lock().unwrap_or_else(|e| e.into_inner()),
+        "strategy_cycle": *state.strategy_cycle.lock().unwrap_or_else(|e| e.into_inner()),
         "chain_wishes": *state.chain_wishes.lock().unwrap_or_else(|e| e.into_inner()),
         "chain_conversations": *state.chain_conversations.lock().unwrap_or_else(|e| e.into_inner()),
         "chain_dialogue": *state.chain_dialogue.lock().unwrap_or_else(|e| e.into_inner()),
@@ -375,6 +379,13 @@ pub fn load_snapshot(state: &AppState) -> Result<(), String> {
             Err(_) => return fail("битый owner auth snapshot".into()),
         },
         None => owner_auth::OwnerAuthState::default(),
+    };
+    let strategy_state: strategy_cycle::StrategyState = match doc.get("strategy_cycle") {
+        Some(value) => match serde_json::from_value(value.clone()) {
+            Ok(value) if strategy_cycle::validate(&value) => value,
+            _ => return fail("invalid strategy cycle snapshot".into()),
+        },
+        None => strategy_cycle::StrategyState::default(),
     };
     let wish_state: wishes::WishState = match doc.get("wishes") {
         Some(value) => match serde_json::from_value(value.clone()) {
@@ -551,6 +562,7 @@ pub fn load_snapshot(state: &AppState) -> Result<(), String> {
         *state.live.lock().unwrap_or_else(|e| e.into_inner()) = live_state;
         *state.owner_auth.lock().unwrap_or_else(|e| e.into_inner()) = owner_auth_state;
         *state.wishes.lock().unwrap_or_else(|e| e.into_inner()) = wish_state;
+        *state.strategy_cycle.lock().unwrap_or_else(|e| e.into_inner()) = strategy_state;
         *state.chain_wishes.lock().unwrap_or_else(|e| e.into_inner()) = chain_wish_state;
         *state.chain_conversations.lock().unwrap_or_else(|e| e.into_inner()) = chain_conversation_state;
         *state.chain_dialogue.lock().unwrap_or_else(|e| e.into_inner()) = chain_dialogue_state;
@@ -740,6 +752,7 @@ pub fn new_state_with_files(snapshot_path: impl Into<PathBuf>, sequence_path: im
         live: Mutex::new(live::LiveState::default()),
         owner_auth: Mutex::new(owner_auth::OwnerAuthState::default()),
         wishes: Mutex::new(wishes::WishState::default()),
+        strategy_cycle: Mutex::new(strategy_cycle::StrategyState::default()),
         chain_wishes: Mutex::new(chain_wishes::ChainWishState::default()),
         chain_conversations: Mutex::new(chain_conversations::ConversationState::default()),
         chain_dialogue: Mutex::new(chain_dialogue::DialogueState::default()),
@@ -3186,7 +3199,40 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
             }
         }
     } else { None };
+    // Strategy writes share the existing wallet-proved owner session and origin boundary.
     let (status, body) = match (req.method.as_str(), segs.as_slice()) {
+        ("GET", ["strategy-library"]) => live_result(strategy_cycle::public(state)),
+        ("GET", ["agents", id, "owner", "strategies"]) => match owner_credential(req) {
+            Ok(raw) => live_result(strategy_cycle::owned(state,id,&raw)),
+            Err(code) => live_result(err_json(code,code)),
+        },
+        ("POST", ["agents", id, "owner", "strategy-challenges"]) => match owner_credential(req) {
+            Ok(raw) => live_result(strategy_cycle::create_challenge(state,id,req.origin.as_deref().unwrap_or(""),&raw,&body_v)),
+            Err(code) => live_result(err_json(code,code)),
+        },
+        ("POST", ["agents", id, "owner", "strategies"]) => match owner_credential(req) {
+            Ok(raw) => live_result(strategy_cycle::create(state,id,req.origin.as_deref().unwrap_or(""),&raw,&body_v)),
+            Err(code) => live_result(err_json(code,code)),
+        },
+        ("POST", ["agents", id, "owner", "strategies", version, "publish"]) => match owner_credential(req) {
+            Ok(raw) if body_v.as_object().is_some_and(|b|b.is_empty()) => live_result(strategy_cycle::publish(state,id,req.origin.as_deref().unwrap_or(""),&raw,version)),
+            Ok(_) => live_result(err_json("bad_strategy_request","empty body required")),
+            Err(code) => live_result(err_json(code,code)),
+        },
+        ("POST", ["agents", id, "owner", "strategy-runs"]) => match owner_credential(req) {
+            Ok(raw) => live_result(strategy_cycle::start(state,id,req.origin.as_deref().unwrap_or(""),&raw,&body_v)),
+            Err(code) => live_result(err_json(code,code)),
+        },
+        ("POST", ["agents", id, "owner", "strategy-runs", run, action]) => match owner_credential(req) {
+            Ok(raw) => live_result(match *action {
+                "reserve" => strategy_cycle::reserve(state,id,req.origin.as_deref().unwrap_or(""),&raw,run,&body_v),
+                "review" => strategy_cycle::review(state,id,req.origin.as_deref().unwrap_or(""),&raw,run,&body_v),
+                "report" => strategy_cycle::report(state,id,req.origin.as_deref().unwrap_or(""),&raw,run,&body_v),
+                "finish" if body_v.as_object().is_some_and(|b|b.is_empty()) => strategy_cycle::finish(state,id,req.origin.as_deref().unwrap_or(""),&raw,run),
+                _ => err_json("bad_strategy_request","unknown operation"),
+            }),
+            Err(code) => live_result(err_json(code,code)),
+        },
         ("POST", ["agents", id, "chain", "match"]) => {
             if req.cookie.is_some() || req.authorization.is_none() {
                 live_result(err_json("owner_session_invalid", "registered-wallet bearer required"))

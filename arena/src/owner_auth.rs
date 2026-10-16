@@ -795,7 +795,7 @@ fn finish_owner_challenge(
         *state.owner_auth.lock().unwrap_or_else(|e| e.into_inner()) = before;
         return err("storage_failed");
     }
-    json!({"ok":true,"owner_session":raw_session,"expires_at":session.expires_at,"scope":["owner_wishes"]})
+    json!({"ok":true,"owner_session":raw_session,"expires_at":session.expires_at,"scope":["owner_wishes","owner_strategies"]})
 }
 
 pub fn h_finish_owner_challenge(

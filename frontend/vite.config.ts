@@ -5,6 +5,8 @@ import { defineConfig } from 'vite'
 
 // Opt-in SSH tunnel for the isolated Live D staging service. Never send owner
 // requests through the existing production read proxies by accident.
+const strategyTarget = process.env.ALASHI_STRATEGY_API_TARGET
+if (strategyTarget && !/^http:\/\/(127\.0\.0\.1|localhost):[0-9]+$/.test(strategyTarget)) throw new Error('ALASHI_STRATEGY_API_TARGET must be a local SSH tunnel')
 const liveTarget = process.env.ALASHI_LIVE_API_TARGET
 if (liveTarget && !/^http:\/\/(127\.0\.0\.1|localhost):[0-9]+$/.test(liveTarget)) throw new Error('ALASHI_LIVE_API_TARGET must be a local SSH tunnel')
 
@@ -17,6 +19,16 @@ export default defineConfig({
   // Dev only: read the public arena GET routes from the live site (same paths nginx exposes; POST stays closed there)
   server: {
     proxy: {
+      ...(strategyTarget ? { '/strategy-api': {
+        target: strategyTarget, changeOrigin: false,
+        rewrite: (path: string) => path.replace(/^\/strategy-api/, ''),
+        bypass(req: import('node:http').IncomingMessage, res: import('node:http').ServerResponse | undefined) {
+          const path = (req.url ?? '').split('?')[0]
+          const read = req.method === 'GET' && (/^\/strategy-api\/strategy-library$/.test(path) || /^\/strategy-api\/agents\/[0-9a-f]{64}\/owner\/(strategies|browser\/session)$/.test(path))
+          const write = req.method === 'POST' && /^\/strategy-api\/agents\/[0-9a-f]{64}\/owner\/(challenge|session|browser\/(session|logout)|strategy-challenges|strategies(\/[0-9a-f]{64}\/publish)?|strategy-runs(\/[0-9a-f]{64}\/(reserve|report|finish|review))?)$/.test(path)
+          if (!read && !write) { if (res) { res.statusCode = 403; res.end() } return false }
+        },
+      } } : {}),
       ...(liveTarget ? { '/live-api': {
         target: liveTarget, changeOrigin: false,
         rewrite: (path: string) => path.replace(/^\/live-api/, ''),

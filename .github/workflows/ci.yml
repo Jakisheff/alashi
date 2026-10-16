@@ -23,6 +23,8 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npm run check:animations
+      - run: npm run check:strategies
+      - run: node --test ../tools/agent-bootstrap/strategy-run.test.mjs
       - name: Degenie RTS runtime and replay checks
         run: |
           python3 ../experiments/alashi-watch/rts-overview/check_runtime.py

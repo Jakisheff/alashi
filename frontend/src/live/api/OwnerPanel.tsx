@@ -1,5 +1,5 @@
 import { inspectOwnerWish, OWNER_WISH_LIMIT } from '../../owner/wishText'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
 import { LiveApiError, friendlyError, mergeWishes, type LiveApi, type OwnerSession, type Wish } from './client'
 import { availableWallets, signOwnerChallenge, type Wallet } from './wallet'
 
@@ -9,7 +9,7 @@ const statusLabels: Record<Wish['status'], string> = { received: 'Received priva
 const short = (value: string) => `${value.slice(0, 4)}…${value.slice(-4)}`
 const sessionTime = (seconds: number) => new Date(seconds * 1000).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })
 
-export function OwnerPanel({ api, record, currentGame }: { api: LiveApi; record: string; currentGame?: number }) {
+export function OwnerPanel({ api, record, currentGame, ownerContent }: { api: LiveApi; record: string; currentGame?: number; ownerContent?: (session: OwnerSession, invalidate: () => void) => ReactNode }) {
   // The HttpOnly cookie is never visible here. Drafts and private history stay in memory.
   const generation = useRef(0)
   const authRequest = useRef<AbortController | null>(null)
@@ -108,7 +108,7 @@ export function OwnerPanel({ api, record, currentGame }: { api: LiveApi; record:
   }, [access, connectedWallet, signOut])
 
   useEffect(() => {
-    if (access !== 'owner' || !session || sending) return
+    if (ownerContent || access !== 'owner' || !session || sending) return
     const ticket = generation.current, controller = new AbortController(); journalRequest.current = controller
     let cursor = 0, timer = 0, failures = 0
     async function poll() {
@@ -129,7 +129,7 @@ export function OwnerPanel({ api, record, currentGame }: { api: LiveApi; record:
     }
     void poll()
     return () => { controller.abort(); window.clearTimeout(timer) }
-  }, [api, record, access, session, refresh, sending, clearPrivate])
+  }, [api, record, access, session, refresh, sending, clearPrivate, ownerContent])
 
   const selectedGame = game || (currentGame && Object.hasOwn(remaining, String(currentGame)) ? String(currentGame) : Object.keys(remaining).at(-1) ?? '')
   const allowance = Object.hasOwn(remaining, selectedGame) ? remaining[selectedGame] : null
@@ -186,18 +186,19 @@ export function OwnerPanel({ api, record, currentGame }: { api: LiveApi; record:
     } finally { if (ticket === generation.current) { submitting.current = false; setSending(false) } }
   }
 
-  return <section className="owner-panel" aria-label="Private owner wishes" data-private="true">
+  return <section className="owner-panel" aria-label={ownerContent ? "Owner strategy controls" : "Private owner wishes"} data-private="true">
     <div className="owner-heading"><span className="live-eyebrow">Only you and your agent</span><span className="owner-lock">Private</span></div>
-    <h2>Three wishes per game.</h2>
-    <p className="live-description">Private guidance is visible only in this browser session and your agent’s private journal. This browser stays signed in for up to seven days. Sign out anytime, especially on a shared device. Each agent gets three private instructions per game, up to 140 characters each; the agent may use one later, decline it or reply privately.</p>
+    <h2>{ownerContent ? "Your strategies. Your budget." : "Three wishes per game."}</h2>
+    <p className="live-description">{ownerContent ? 'Verify the wallet registered to this agent to create versions and start runs. Your browser session lasts up to seven days. Published strategies and their run receipts are public.' : 'Private guidance is visible only in this browser session and your agent’s private journal. This browser stays signed in for up to seven days. Sign out anytime, especially on a shared device. Each agent gets three private instructions per game, up to 140 characters each; the agent may use one later, decline it or reply privately.'}</p>
     {access === 'restoring' ? <p role="status">Checking this browser for a private session…</p> : access === 'guest' ? <div className="owner-login">
-      <p>To send private wishes: connect the wallet registered to this agent, then approve one message. It does not move funds or create a transaction.</p>
+      <p>Connect the wallet registered to this agent, then approve one message. It does not move funds or create a transaction.</p>
       {wallets.length > 0 ? <label>Wallet<select aria-label="Owner wallet" value={walletChoice} disabled={busy || logoutRetry} onChange={(e) => setWalletChoice(Number(e.target.value))}>{wallets.map((w, i) => <option key={w.name} value={i}>{w.name}</option>)}</select></label> : <p>No compatible wallet was found. You can still watch the public stream. On mobile, <a href={`https://solflare.com/ul/v1/browse/${encodeURIComponent(window.location.href)}?ref=${encodeURIComponent(window.location.origin)}`}>open this page in Solflare</a>, or copy this public page URL into a supported wallet browser. <button className="owner-text-button" onClick={() => { setWallets(availableWallets()); setWalletChoice(0) }}>Check again</button></p>}
       {logoutRetry ? <><p className="owner-warning">Sign-out was not confirmed. Do not choose a different wallet until this browser session is cleared.</p><button className="owner-primary" disabled={busy} onClick={() => void signOut()}>Retry sign out</button></> : <button className="owner-primary" disabled={busy || !wallets.length} onClick={() => void verify()}>{busy ? 'Checking wallet…' : 'Connect wallet and verify ownership'}</button>}
       {!logoutRetry && <button className="owner-text-button" disabled={busy} onClick={() => void restore()}>Check private session again</button>}
     </div> : <>
       <div className="owner-session"><span>Private browser session · {short(session!.wallet)}</span><button disabled={busy} onClick={() => void signOut()}>Sign out</button></div>
       <p className="live-description">Active until {sessionTime(session!.expiresAt)}. {connectedWallet ? `Connected wallet: ${short(connectedWallet)}.` : 'No wallet is connected right now.'} Sign out before using a different wallet on this browser.</p>
+      {ownerContent ? ownerContent(session!, clearPrivate) : <>
       <div className="owner-quota"><strong>{allowance === null ? '—' : allowance}<span> / 3</span></strong><span>remaining in this game · server balance</span></div>
       <label className="owner-game">Game<select aria-label="Wish game" disabled={sending || !!pending} value={selectedGame} onChange={(e) => { setGame(e.target.value); setError('') }}><option value="" disabled>Select game</option>{Object.keys(remaining).map((id) => <option key={id} value={id}>Game {id}</option>)}</select></label>
       {!journalReady && <p role="status">Loading your private journal…</p>}
@@ -215,6 +216,7 @@ export function OwnerPanel({ api, record, currentGame }: { api: LiveApi; record:
         {journalReady && !wishes.some((w) => String(w.gameId) === selectedGame) && <p>No wishes in this game yet.</p>}
       </div>
       <button className="owner-text-button" onClick={() => setRefresh((n) => n + 1)}>Refresh private journal</button>
+      </>}
     </>}
     {error && <p className="owner-warning" role="alert">{error}</p>}
     {notice && <p className="owner-notice" role="status">{notice}</p>}

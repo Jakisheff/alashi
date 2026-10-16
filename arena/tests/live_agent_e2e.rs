@@ -928,7 +928,7 @@ fn actual_agent_process_keeps_wish_private_and_voluntarily_publishes_cued_reply(
         "POST",
         "/game/new",
         Some(&json!({
-            "entry_fee":1,"phase_duration":120,"lobby_duration":5,"grace_s":0,
+            "entry_fee":1,"phase_duration":120,"lobby_duration":120,"grace_s":0,
             "label":"SYNTHETIC_RUNNER_TEST"
         })),
     );
@@ -1064,7 +1064,7 @@ fn actual_agent_process_keeps_wish_private_and_voluntarily_publishes_cued_reply(
     }
     save_snapshot(&state).unwrap();
 
-    // Starting B releases the two-agent lobby; the real runner is already polling.
+    // Both actors must join before this fixture starts the market phase.
     let strategy_hash = arena::api::agent_id_of("fixture-b", "base strategy only");
     let joined_b = request(
         port,
@@ -1076,6 +1076,15 @@ fn actual_agent_process_keeps_wish_private_and_voluntarily_publishes_cued_reply(
         })),
     );
     assert_eq!(joined_b["ok"], true, "{joined_b}");
+    // Advance from an observed join, not from a five-second process-start race.
+    {
+        let mut games = state.games.lock().unwrap();
+        games.get_mut(&game_id).unwrap().sim.game.phase_ends_at =
+            std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_secs() as i64 - 1;
+    }
+    save_snapshot(&state).unwrap();
+    let advanced = request(port, "POST", &format!("/game/{game_id}/advance"), Some(&json!({})));
+    assert_eq!(advanced["ok"], true, "{advanced}");
     let first_request = model_rx
         .recv_timeout(Duration::from_secs(15))
         .expect("actual runner called loopback mock provider");
