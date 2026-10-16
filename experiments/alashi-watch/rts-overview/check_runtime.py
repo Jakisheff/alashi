@@ -17,6 +17,13 @@ checks={}
 try:
     hashes=json.loads((ROOT/'evidence/vendor-hashes.json').read_text())
     checks['unmodified_upstream'] = all(hashlib.sha256((ROOT/'vendor'/name).read_bytes()).hexdigest()==expected for name,expected in hashes.items())
+    request=urllib.request.Request(f'http://127.0.0.1:{port}/assets/degenie-complete-cycle.mp4',headers={'Range':'bytes=0-63'})
+    with urllib.request.urlopen(request) as response:
+        checks['video_byte_ranges']=response.status==206 and response.read()==(ROOT/'assets/degenie-complete-cycle.mp4').read_bytes()[:64]
+    try:
+        urllib.request.urlopen(urllib.request.Request(f'http://127.0.0.1:{port}/assets/degenie-complete-cycle.mp4',headers={'Range':'bytes=999999999-'}))
+        checks['invalid_video_range_rejected']=False
+    except urllib.error.HTTPError as error:checks['invalid_video_range_rejected']=error.code==416
     obs=a.observe()
     checks['own_observation_only']=set(obs['observations'])=={0} and len(obs['observations'][0]['units'])==4
     rejected=a.step({0:[{'command':'assign','unit_id':4},{'command':'assign','unit_id':3},{'command':'accept'}]})['rejected'][0]

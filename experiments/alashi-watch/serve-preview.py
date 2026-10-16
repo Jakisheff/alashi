@@ -4,7 +4,9 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parent
 class RangeHandler(http.server.SimpleHTTPRequestHandler):
     protocol_version='HTTP/1.1'
-    def __init__(self,*args,**kwargs):super().__init__(*args,directory=str(ROOT),**kwargs)
+    def __init__(self,*args,**kwargs):
+        kwargs.setdefault('directory',str(ROOT))
+        super().__init__(*args,**kwargs)
     def end_headers(self):
         self.send_header('Accept-Ranges','bytes')
         super().end_headers()

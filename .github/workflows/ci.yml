@@ -23,6 +23,11 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npm run check:animations
+      - name: Degenie RTS runtime and replay checks
+        run: |
+          python3 ../experiments/alashi-watch/rts-overview/check_runtime.py
+          python3 ../experiments/alashi-watch/rts-overview/check_export.py
+          node ../experiments/alashi-watch/rts-overview/check_visual.mjs
 
   tests:
     name: Rules, arena, indexer, and program compile

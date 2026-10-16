@@ -1,23 +1,16 @@
-<!doctype html>
-<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Alashi · два штаба в движении</title><link rel="stylesheet" href="style.css">
-<script type="importmap">{"imports":{"three":"./vendor/three/build/three.module.js","three/addons/":"./vendor/three/examples/jsm/"}}</script>
-</head><body>
-<header><a class="brand" href="/">∀LASHI</a><div class="subtitle">Баттл штабов и роёв<small>Демо поручений · без LLM</small></div><div class="live"><i></i><span id="clock">0.0 с</span></div></header>
-<main>
-<section class="arena">
- <div class="scoreboard"><div class="team a"><span>ШТАБ А</span><b id="score-a">0 / 4</b><small id="chief-a">Готовит решение</small></div><div class="center"><span>ОДНА КАРТА. ОБЩЕЕ ВРЕМЯ.</span><strong id="cycle">Цикл 1</strong></div><div class="team b"><span>ШТАБ Б</span><b id="score-b">0 / 4</b><small id="chief-b">Готовит решение</small></div></div>
- <div id="stage"><canvas id="world" aria-label="Общая 3D-карта: два Chief и восемь Degenie"></canvas><div id="labels"></div><div id="loading">Загружаю Degenie…</div><div class="stage-note">Рынок · варианты · парламент · проверка</div></div>
- <div class="controls"><button id="restart">Новый цикл</button><button id="delay">Задержать Chief Б на 5 с</button><label><input id="loop" type="checkbox" checked> Автоповтор</label><label><input id="reduced" type="checkbox">Меньше движения</label></div>
- <div class="factline"><span id="activity">Ожидание данных</span><span>Баланс А 100 · Б 100</span><span>Вызовы моделей: нет</span></div>
-</section>
-<aside>
- <div class="selected"><canvas id="portrait" aria-label="Выбранный Degenie крупным планом"></canvas><div><small>ВЫБРАННЫЙ DEGENIE</small><h1 id="unit-title">А1 · Рынок</h1><p id="unit-state">Готов к поручению</p></div></div>
- <p class="mission" id="mission">Получить расчёт рынка и вернуть его Chief.</p>
- <div class="rosters"><div><h2>Штаб А</h2><div id="roster-a"></div></div><div><h2>Штаб Б</h2><div id="roster-b"></div></div></div>
- <div class="report"><small>РЕЗУЛЬТАТ ПОРУЧЕНИЯ</small><p id="report">Отчёт ещё не получен</p></div>
- <h2>События</h2><ol id="events"></ol>
- <details><summary>Что здесь проверяется</summary><p>Два сценарных клиента отправляют команды через RemoteSession из Warcraft-плагина. Runtime исполняет поручения независимо от клиентов и камеры. Запись ведёт исходный Timeline.</p><p>Это локальный опыт на демонстрационных данных из концепта Амира. Доставка отчёта не меняет игровые деньги. Подключение к серверу Alashi ещё не выполнено.</p><a href="/reference" target="_blank">Исходный просмотрщик AgentEnv</a><a href="/replay.html" target="_blank">Запись текущего цикла</a></details>
-</aside>
-</main><footer><span>Концепт Амира → Degenie Alashi → AgentEnv RTS</span><span id="connection">Подключение…</span></footer>
-<script type="module" src="scene.js"></script></body></html>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Alashi · Degenie в реальном времени</title><link rel="stylesheet" href="style.css"><link rel="preload" as="image" href="assets/alashi-terrain.png"><link rel="preload" as="image" href="assets/degenie-atlas.png"></head><body>
+<header><a class="brand" href="/">∀LASHI</a><span class="edition">СОВЕТ ДВУХ ШТАБОВ<small>Демо поручений · сценарные агенты, без LLM</small></span><span class="realtime"><i></i>ОБЩЕЕ ВРЕМЯ <b id="clock">0.0 с</b></span></header>
+<main><section class="arena" aria-label="Карта и управление">
+ <div class="matchbar"><div class="team a"><span class="crest">А</span><div><strong>CHIEF А</strong><small id="chief-a">Выдаёт поручения</small></div><b id="score-a">0 / 4</b></div><div class="round"><span id="cycle">Цикл 1</span><small id="activity">Подключение…</small></div><div class="team b"><b id="score-b">0 / 4</b><div><strong>CHIEF Б</strong><small id="chief-b">Выдаёт поручения</small></div><span class="crest">Б</span></div></div>
+ <div id="stage"><canvas id="world" width="1280" height="720" aria-label="Вся карта Alashi: два Chief и восемь Degenie работают параллельно"></canvas><div id="loading">Подготовка карты Degenie…</div></div>
+ <div class="controls"><button id="restart" class="primary">▶ Новый цикл</button><button id="delay">Задержать Chief Б</button><button id="record">● Записать цикл</button><button id="wide">Развернуть карту</button><a id="record-download" hidden download="alashi-degenie-cycle.webm">Скачать повтор</a><button id="watch">Готовый повтор · 30 к/с</button><label><input id="loop" type="checkbox" checked> Повтор</label><label><input id="reduced" type="checkbox"> Меньше движения</label></div>
+ <div class="factline"><span id="record-status">Поручение → работа → отчёт → проверка → решение Chief</span><span>Баланс А 100 · Б 100</span></div>
+ <div class="squadbar"><div><span class="squad-label">РОЙ А</span><div id="roster-a"></div></div><div><span class="squad-label">РОЙ Б</span><div id="roster-b"></div></div></div>
+</section><aside>
+ <div class="selected"><canvas id="portrait" width="112" height="128" aria-label="Выбранный Degenie крупным планом"></canvas><div><span class="eyebrow">ВЫБРАН DEGENIE</span><h1 id="unit-title">А1 · Рынок</h1><p id="unit-state">Ждёт поручение</p></div></div>
+ <p id="mission">Получить данные и вернуть отчёт Chief.</p><div class="report"><span class="eyebrow">РЕЗУЛЬТАТ ПОРУЧЕНИЯ</span><p id="report">Отчёт ещё не получен</p></div>
+ <div class="flow"><span>ПОРУЧЕНИЕ</span><div id="task-flow"><i>Приказ</i><i>Работа</i><i>Возврат</i><i>Доставлен</i></div></div>
+ <h2>ЖУРНАЛ ШТАБОВ</h2><ol id="events"></ol>
+ <details><summary>О демонстрации и записи</summary><p>Оба Chief используют сценарные решения. Полученный отчёт не является продажей: деньги остаются на балансе. Проверяющий запускается после доставки трёх отчётов своего штаба.</p><p>Пока один Chief думает, уже выданные задачи продолжаются. Карта показывает события локального runtime; живые модели и матч Alashi не подключены.</p><a href="/reference" target="_blank">Контрольный просмотрщик событий</a><a href="/replay.html" target="_blank">Повтор AgentEnv</a><button id="snapshot">Сохранить кадр</button><button id="export-evidence">Сохранить протокол</button><output id="performance">Измеряю движение…</output></details>
+</aside></main><footer><span>КОНЦЕПТ АМИРА · DEGENIE ALASHI</span><span id="connection" role="status">Подключение…</span></footer><dialog id="replay-dialog"><div><span>ПОВТОР ПОРУЧЕНИЙ · 30 КАДРОВ/С</span><button id="close-replay">Закрыть</button></div><video id="replay-player" src="assets/degenie-complete-cycle.mp4" controls loop playsinline></video></dialog><script type="module" src="scene.js"></script></body></html>

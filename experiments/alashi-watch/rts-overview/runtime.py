@@ -9,27 +9,39 @@ import argparse
 import copy
 import json
 import math
+import runpy
 from pathlib import Path
 import sys
 import threading
 import time
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlparse, parse_qs
+from replay_export import ReplayExporter
 
 ROOT = Path(__file__).resolve().parent
+# Reuse the legacy preview's byte-range handler for MP4 seeking.
+RangeHandler = runpy.run_path(str(ROOT.parent / 'serve-preview.py'))['RangeHandler']
 sys.path.insert(0, str(ROOT / 'vendor'))
 from agentenv_rts.session import RemoteSession, OBSERVE, STEP
 from agentenv_rts.timeline import Timeline
 from agentenv_rts import live
 
-COLORS = ['#a78bfa', '#69c8d3']
-ROLES = ['Рынок', 'Варианты', 'Парламент', 'Проверка']
-TARGETS = [(-1.4, -2.8), (0, .5), (1.7, 3.1), (0, -4.6)]
+LAYOUT = json.loads((ROOT / 'map-layout.json').read_text())
+TIMING = LAYOUT['timing']
+COLORS = ['#b99bff', '#b4e9ef']
+ROLES = ['Рынок', 'Анализ', 'Парламент', 'Проверка']
+TARGETS = [route[-1] for route in LAYOUT['routes'][:4]]
 RESULTS = ['Продажа 4 товаров: расчёт 39', 'Сравнение вариантов готово', 'Политический риск проверен', 'Три отчёта согласованы']
 
 def smooth(x):
     x = max(0, min(1, x))
     return x * x * (3 - 2 * x)
+
+
+def route_point(route, progress):
+    p = max(0, min(1, progress))
+    weights = [(1-p)**3, 3*(1-p)**2*p, 3*(1-p)*p*p, p**3]
+    return [sum(point[i]*weight for point, weight in zip(route, weights)) for i in range(2)]
 
 
 class World:
@@ -53,17 +65,16 @@ class World:
             self.units = []
             for side in range(2):
                 for role in range(4):
-                    home = [(-6 if side == 0 else 6) + (role % 2) * .85, (-1.3 if side == 0 else 1.1) + (role // 2) * 1.2]
-                    tx, tz = TARGETS[role]
-                    target = [tx + (-.9 if side == 0 else .9), tz + .7]
+                    route = copy.deepcopy(LAYOUT['routes'][side*4+role])
+                    home, target = route[0], route[-1]
                     self.units.append(dict(id=side * 4 + role, owner=side, role=role,
-                        home=home, target=target, x=home[0], z=home[1], phase='idle',
-                        started=None, duration=5.2 + role * .25, phase_t=0, yaw=0,
+                        home=home, target=target, route=route, x=home[0], z=home[1], phase='idle',
+                        started=None, duration=TIMING['task'] + role * TIMING['roleExtra'], phase_t=0, yaw=0,
                         task_id=f'cycle-{self.cycle}-{side}-{role}', result=None))
             self.timeline = Timeline(dict(game=f'alashi-demo-{self.cycle}', title='Alashi · demo task runtime',
-                map='Два штаба · демо', bounds=dict(min_x=-9, max_x=9, min_y=-7, max_y=7),
+                map='Два штаба · демо', bounds=dict(min_x=0, max_x=LAYOUT['width'], min_y=-LAYOUT['height'], max_y=0),
                 players=[dict(slot=s, label=f'Chief {"АБ"[s]}', race='Degenie', controller='scripted demo', color=COLORS[s]) for s in range(2)],
-                points=[dict(kind='shop', x=x, y=-z, label=ROLES[i]) for i, (x,z) in enumerate(TARGETS)],
+                points=[dict(kind='shop', x=route[-1][0], y=-route[-1][1], label=ROLES[i%4]+' · '+"АБ"[i//4]) for i, route in enumerate(LAYOUT['routes'])],
                 types={'degenie':'Degenie'}, time_limit=0))
             self.emit(None, 'cycle', 'Новое поручение: подготовить решение Chief')
             self.record()
@@ -107,18 +118,22 @@ class World:
                     continue
                 t = now-u['started']; total=u['duration']
                 old = u['phase']
-                if t < .22: phase, p, pt = 'order', 0, t
-                elif t < 1.65: phase, p, pt = 'outbound', smooth((t-.22)/1.43), t-.22
-                elif t < total-1.7: phase, p, pt = 'work', 1, t-1.65
-                elif t < total-.25: phase, p, pt = 'return', 1-smooth((t-(total-1.7))/1.45), t-(total-1.7)
-                elif t < total: phase, p, pt = 'handoff', 0, t-(total-.25)
+                order_end = TIMING['order']
+                work_start = order_end + TIMING['outbound']
+                return_start = total - TIMING['return'] - TIMING['handoff']
+                handoff_start = total - TIMING['handoff']
+                if t < order_end: phase, p, pt = 'order', 0, t
+                elif t < work_start: phase, p, pt = 'outbound', smooth((t-order_end)/TIMING['outbound']), t-order_end
+                elif t < return_start: phase, p, pt = 'work', 1, t-work_start
+                elif t < handoff_start: phase, p, pt = 'return', 1-smooth((t-return_start)/TIMING['return']), t-return_start
+                elif t < total: phase, p, pt = 'handoff', 0, t-handoff_start
                 else: phase, p, pt = 'done', 0, 0
-                hx,hz=u['home']; tx,tz=u['target']
-                arc = math.sin(math.pi*p) * (.45 if u['owner']==0 else -.45)
-                u.update(x=hx+(tx-hx)*p, z=hz+(tz-hz)*p+arc, phase=phase, phase_t=pt)
+                x, z = route_point(u['route'], p)
+                u.update(x=x, z=z, phase=phase, phase_t=pt)
                 if phase in ('order','outbound','return'):
-                    u['yaw'] = math.atan2(tx-hx, tz-hz) + (math.pi if phase=='return' else 0)
-                elif phase in ('work','handoff','done'):
+                    a, b = route_point(u['route'], max(0,p-.01)), route_point(u['route'],min(1,p+.01))
+                    u['yaw'] = math.atan2(b[0]-a[0], b[1]-a[1]) + (math.pi if phase=='return' else 0)
+                else:
                     u['yaw'] = 0
                 if phase != old and phase in ('work','return','done'):
                     if phase == 'return': u['result'] = RESULTS[u['role']]
@@ -170,12 +185,15 @@ def policy(world, port, side):
 
 
 def make_server(world, port):
-    class Handler(SimpleHTTPRequestHandler):
+    exporter = ReplayExporter(ROOT)
+    class Handler(RangeHandler):
         def __init__(self,*args,**kwargs): super().__init__(*args,directory=str(ROOT),**kwargs)
         def log_message(self,*args): pass
         def reply(self,value,status=200,ctype='application/json'):
             data=json.dumps(value,ensure_ascii=False,allow_nan=False).encode() if ctype=='application/json' else value.encode()
-            self.send_response(status);self.send_header('Content-Type',ctype+'; charset=utf-8');self.send_header('Content-Length',str(len(data)))
+            self.send_response(status);
+            if status>=400:self.close_connection=True;self.send_header('Connection','close')
+            self.send_header('Content-Type',ctype+'; charset=utf-8');self.send_header('Content-Length',str(len(data)))
             self.send_header('Cache-Control','no-store');self.end_headers();self.wfile.write(data)
         def player(self,path):
             parts=path.split('/')
@@ -184,7 +202,7 @@ def make_server(world, port):
             parsed=urlparse(self.path);p=parsed.path;s=self.player(p)
             if s is not None and p.endswith('/.well-known/agent-env.json'):
                 return self.reply(dict(capabilities=dict(extensions=[dict(uri=uri,params={'endpoint':'/'+name}) for uri,name in [(OBSERVE,'observe'),(STEP,'step')]])))
-            if p=='/state': return self.reply(world.snapshot())
+            if p=='/state': return self.reply({**world.snapshot(), 'can_export':bool(exporter.ffmpeg)})
             if p=='/timeline':
                 with world.lock:return self.reply(world.timeline.doc())
             if p=='/reference':return self.reply(live.page(),ctype='text/html')
@@ -199,6 +217,22 @@ def make_server(world, port):
             if origin and origin!=f'http://127.0.0.1:{self.server.server_port}':return self.reply({'error':'origin_refused'},403)
             try:n=int(self.headers.get('Content-Length','0'))
             except ValueError:return self.reply({'error':'invalid_length'},400)
+            parsed=urlparse(self.path)
+            if parsed.path.startswith('/demo/export/'):
+                if not 0<=n<=512000:return self.reply({'error':'invalid_length'},413)
+                try:
+                    query=parse_qs(parsed.query);job=query.get('job',[''])[0]
+                    if parsed.path.endswith('/start'):
+                        self.rfile.read(n);result=exporter.start(world.snapshot())
+                    elif parsed.path.endswith('/frame'):
+                        result=exporter.frame(job,int(query.get('index',['-1'])[0]),self.rfile.read(n))
+                    elif parsed.path.endswith('/finish'):
+                        self.rfile.read(n);result=exporter.finish(job)
+                    elif parsed.path.endswith('/cancel'):
+                        self.rfile.read(n);result=exporter.cancel(job)
+                    else:return self.reply({'error':'unknown_export_endpoint'},404)
+                    return self.reply(result)
+                except (ValueError,OSError) as error:return self.reply({'error':str(error)},400)
             if not 0<=n<=16384:return self.reply({'error':'invalid_length'},413)
             try:
                 data=json.loads(self.rfile.read(n) or b'{}');p=urlparse(self.path).path;s=self.player(p)
