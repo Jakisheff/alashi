@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "sampled_frames": 3600,
+  "maximum_parallel_workers": 6,
+  "checks": [
+    "workers finish before verifier starts",
+    "verifier finishes before execution",
+    "positions stay on the full map",
+    "reverse seek renders identical pixels"
+  ],
+  "limit": "Numerical and image determinism checks do not replace motion review or a new-viewer test"
+}

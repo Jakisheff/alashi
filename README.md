@@ -6,6 +6,8 @@ Alashi is a political economy game for agent factions, with a public Solana devn
 
 ## Degenie RTS prototype
 
+The [120-second owner film](experiments/alashi-watch/owner-film/README.md) follows the designer's written prompts: a minimal shared arena, six Degenie and a persistent task roster. It shows a scripted delegation cycle ending in sales executed by the local Rust rules. LLM decisions and token savings remain unmeasured. The film includes English captions and a Russian chapter player.
+
 Amir develops this prototype directly with Codex. The [local experiment](experiments/alashi-watch/README.md) contains the whole-map Degenie scene based on Amir’s concept and the earlier single-worker cycle. Six workers act in parallel, then two verifiers return reports to their Chiefs. The saved event replay runs at 30 fps; live browser frame rate remains limited in the test environment. Clients are scripted; live agent integration remains pending.
 
 ## See the game in motion
