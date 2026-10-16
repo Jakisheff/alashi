@@ -1,0 +1,27 @@
+{
+  "status": "provider-measured",
+  "model": "glm-4.5-flash",
+  "endpoint": "https://api.z.ai/api/paas/v4/chat/completions",
+  "max_requests": 33,
+  "max_output_tokens_all_requests": 6840,
+  "scope": "3 paired frozen final-market states; shared scout overhead included",
+  "billing": {
+    "usd_per_million_input": 0,
+    "usd_per_million_output": 0,
+    "source": "https://docs.z.ai/guides/overview/pricing",
+    "checked_date": "2026-10-16"
+  },
+  "exclusions": [
+    "strategy authoring and discovery",
+    "live-state refresh",
+    "independent owner reproduction",
+    "whole-game win rate"
+  ],
+  "source_sha256": {
+    "experiments/alashi-watch/owner-film/shared_scout.py": "ad491eccdb4aae6e45e10624bbcb83977ff0e945524f6e1921467588bf78643f",
+    "experiments/alashi-watch/owner-film/benchmark.py": "4a55ffca1dfe63bbfb504ce07ffd91fb1e55835943e90b6217bd7f91a9938fd3",
+    "tools/board_agents.py": "32dbc33f23ecec030e3f6a2c9ce3438333e150dffe2a569686ff33e7f7502bdd",
+    "rules/examples/owner_film_oracle.rs": "381f7941d65dd59403b344ef4b51a8b8335d07607a9a798b5d16e8a1d81b52d1"
+  },
+  "dispatch": "Sequential requests after provider concurrency rejection; no latency claim"
+}
