@@ -60,3 +60,13 @@ frontend build, animation suite and source-reference staging checks passed.
 Offline playback froze at 1.500 seconds across two observations with Play active.
 Restarted the isolated review service with persisted A/B seats. Preparing source,
 PNG/JSON evidence and GitHub publication; no generated video is included.
+
+21:58: implementation pushed as ad9a1d0 to PR #57. Only source and PNG/JSON
+acceptance evidence were added. All local checks are complete; verifying the
+new-head GitHub CI now. Production deployment and real provider measurements
+remain outside this delivery.
+
+22:04: all five GitHub jobs passed on ad9a1d0. Implementation/local-acceptance/first-CI
+phase completed in 2.25 hours. Final UTF-8 boundary correction has six passing Node
+tests and is being published separately. Waiting for that final-head CI remains.
+Production deployment and real advertising measurements were not performed.

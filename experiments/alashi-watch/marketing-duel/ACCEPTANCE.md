@@ -49,8 +49,9 @@ not make every station label readable at that scale. See
 - Rust rules: 40 tests passed locally.
 - Full arena: 132 tests passed locally, including the signed HTTP duel,
   seat persistence, owner cookies and the actual agent-process e2e test.
-- Local runner: five Node tests passed, including ambiguous inflight recovery
+- Local runner: six Node tests passed, including ambiguous inflight recovery
   and preserving known usage when an owner tool emits an oversized report.
+  A UTF-8 regression failed before the byte-limit fix and passed afterward.
 - Frontend: TypeScript and production build passed. Task staging and exact hashes
   of the approved terrain, atlas and route layout passed.
 - Animation suite: original pose, trade contact and rig checks passed, including
@@ -61,6 +62,12 @@ socket read returned WouldBlock; the test helper now explicitly uses blocking
 reads and a two-second timeout. A five-second lobby expired before the real test
 agent joined; its fixture now starts from observed joins and explicitly advances
 the lobby. Production game timing and production chat behavior were not changed.
+
+The [core implementation CI](https://github.com/Jakisheff/alashi/actions/runs/38936010694)
+passed all five jobs on ad9a1d0, including fresh SBF execution, program host
+compilation, indexer tests and bots compilation. Those latter checks were not
+repeated locally. The final UTF-8 receipt guard has six passing local Node tests;
+current-head CI is available in [PR 57](https://github.com/Jakisheff/alashi/pull/57).
 
 ## Limits
 

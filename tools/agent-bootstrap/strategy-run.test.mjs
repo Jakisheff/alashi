@@ -54,3 +54,10 @@ test('an oversized owner-tool report keeps its known usage for the failed qualit
  const result=await executeTool({tool:'owned',depends_on:[]},{brief:{}},{},registry);
  assert.equal(result.report,null);assert.equal(result.response_id,null);assert.equal(result.usage.total_tokens,15);
 });
+test('report limits count UTF-8 bytes so malformed output cannot lose known usage',async()=>{
+ const content=JSON.stringify({text:'🙂'.repeat(3000)});
+ assert.equal(parseCompletion(content)===null,true,'oversized UTF-8 report must become a rejected report, not a rejected receipt');
+ const registry={owned:{argv:[process.execPath,'-e',"console.log(JSON.stringify({report:{text:'🙂'.repeat(3000)},response_id:'🙂'.repeat(60),usage:{prompt_tokens:10,completion_tokens:5,total_tokens:15}}))"],no_model_calls:false,max_total_tokens:5000,provider:'local-fixture',model:'fixture'}};
+ const result=await executeTool({tool:'owned',depends_on:[]},{brief:{}},{},registry);
+ assert.equal(result.report,null);assert.equal(result.response_id,null);assert.equal(result.usage.total_tokens,15);
+});

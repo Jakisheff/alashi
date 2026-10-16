@@ -52,10 +52,12 @@ export async function ownerApi(base, profile, origin = 'https://alashi.network')
   if (!/^[0-9a-f]{64}$/.test(bearer)) fail('invalid_owner_session');
   return {request, get:() => request(prefix+'/strategies'), post:(suffix,body)=>request(prefix+suffix,body), record:profile.agent_record_id};
 }
+const safeReport = report => Buffer.byteLength(JSON.stringify(report ?? null), 'utf8') <= 8192 ? report ?? null : null;
+const receiptId = id => typeof id === 'string' && id.length > 0 && Buffer.byteLength(id, 'utf8') <= 200 ? id : null;
 export function parseCompletion(content) {
   if (typeof content !== 'string' || content.length > 8192) return null;
   const match = content.trim().match(/^```(?:json)?\s*\n([\s\S]*?)\n```$/i);
-  try { return JSON.parse(match ? match[1] : content); } catch { return null; }
+  try { return safeReport(JSON.parse(match ? match[1] : content)); } catch { return null; }
 }
 export function providerUsage(raw) {
   if (!raw || !['prompt_tokens','completion_tokens','total_tokens'].every(k => Number.isSafeInteger(raw[k]) && raw[k]>=0) || raw.prompt_tokens+raw.completion_tokens !== raw.total_tokens) return null;
@@ -72,7 +74,7 @@ export function modelProvider({url, key, model, test = false}) {
     if (Number(response.headers.get('content-length'))>1_000_000) fail('provider_response_too_large');
     const text = await response.text(); if (text.length>1_000_000) fail('provider_response_too_large');
     let raw; try { raw = JSON.parse(text); } catch { raw = {}; }
-    return {response_id:typeof raw.id==='string'&&raw.id.length>0&&raw.id.length<=200?raw.id:null,usage:providerUsage(raw.usage),report:parseCompletion(raw.choices?.[0]?.message?.content),request_failed:!response.ok};
+    return {response_id:receiptId(raw.id),usage:providerUsage(raw.usage),report:parseCompletion(raw.choices?.[0]?.message?.content),request_failed:!response.ok};
   }};
 }
 export function messagesFor(run, version, task, reports) {
@@ -105,7 +107,7 @@ export async function executeTool(spec, run, reports, registry = {}) {
     child.on('close',code=>{if(code!==0 || size>65536)no(new Error('owner_tool_failed'));else {try{yes(JSON.parse(text));}catch{no(new Error('invalid_tool_response'));}}});
     child.stdin.on('error',()=>{});child.stdin.end(JSON.stringify({task:spec,brief:run.brief,reports:Object.fromEntries(spec.depends_on.map(id=>[id,reports[id]]))}));
   });
-  return {report:raw.report && JSON.stringify(raw.report).length<=8192?raw.report:null,usage:config.no_model_calls?zeroUsage:providerUsage(raw.usage),response_id:typeof raw.response_id==='string'&&raw.response_id.length>0&&raw.response_id.length<=200?raw.response_id:null,request_failed:raw.request_failed===true};
+  return {report:safeReport(raw.report),usage:config.no_model_calls?zeroUsage:providerUsage(raw.usage),response_id:receiptId(raw.response_id),request_failed:raw.request_failed===true};
 }
 export async function runCycle({api,id,provider,journalPath,tools={},onProgress=()=>{}}) {
   if (!/^[0-9a-f]{64}$/.test(id)) fail('invalid_run');

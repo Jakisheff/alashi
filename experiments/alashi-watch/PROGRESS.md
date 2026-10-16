@@ -208,3 +208,16 @@ team labels and the common brief. Final ads and task receipts are visible after
 reveal; a rematch shows independent reuse. The old ambient mock failure was
 reproduced as WouldBlock and fixed only in the test reader. Full arena rerun and
 phone-width motion acceptance remain in progress.
+
+21:58: pushed ad9a1d0 with the marketing duel, local runner, provenance policy and
+acceptance evidence. Local results: 132 arena tests, 40 rules tests, 5 Node tests,
+frontend build, animation suite and staging/reference checks. Two pre-existing
+fixture races were reproduced and corrected in test code. GitHub CI for the new
+head is pending; the old 96d553c result is not evidence for this implementation.
+
+22:04: GitHub CI run 38936010694 passed all five jobs on ad9a1d0, including SBF,
+program host compilation, indexer and bots. A final UTF-8 receipt-size regression
+failed before the fix and passed afterward (six Node tests). Oversized report
+content is discarded while its known usage is retained. Publishing this small
+runner correction and the completed acceptance record; final-head CI follows.
+Факт: 2,25 часа на реализацию, локальную приёмку и первый полный GitHub CI.
