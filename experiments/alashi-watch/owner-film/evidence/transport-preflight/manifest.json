@@ -1,0 +1,25 @@
+{
+  "model": "glm-4.5-flash",
+  "endpoint": "https://api.z.ai/api/paas/v4/chat/completions",
+  "temperature": 0,
+  "thinking": "disabled",
+  "max_tokens_per_call": 180,
+  "design": "3 paired synthetic final-market fixtures; identical model and roles; only worker context differs",
+  "baseline": "current board_agents.py game rules plus full fixture state for each specialist",
+  "treatment": "task-specific fields and rules, with sufficient task information retained",
+  "limits": "Small context-routing probe, not whole-game win rate, general task performance, dollar savings or live latency proof.",
+  "preflight_usage": {
+    "prompt_tokens": 18,
+    "completion_tokens": 10,
+    "total_tokens": 28,
+    "scope": "Access check before this experiment; excluded equally from both workflow totals"
+  },
+  "source_hashes": {
+    "experiments/alashi-watch/owner-film/benchmark.py": "d8afba5d97dd4551b1252d38bac63d16a5b89be00c74555962b42f2e6ae92b2b",
+    "tools/board_agents.py": "32dbc33f23ecec030e3f6a2c9ce3438333e150dffe2a569686ff33e7f7502bdd",
+    "rules/src/actions.rs": "5921923be90b6c84d3c175bd6d466b56a9b3e80a3a5d3e6aa77912aad8eb27c3",
+    "rules/src/logic.rs": "1c56fe89643f4e739a0f5bbb13230387f1f8272cb4ae8cfd83d6eb6155038359",
+    "rules/src/constants.rs": "aef32d3241551476b7fb0a1be2c31651f83ddd3de9a9ede6babb6544979f563c",
+    "rules/examples/owner_film_oracle.rs": "d5ebb96ceacecfa8085754e23e3156e60527fcc147340adb5a95e6e5084ab2af"
+  }
+}

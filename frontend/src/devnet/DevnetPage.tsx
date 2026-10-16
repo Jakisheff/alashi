@@ -1,6 +1,6 @@
+import { ChainTradingOverview } from './TradingOverview'
 import { stageInViewport } from '../studio/confirmation'
 import { StudioStage } from '../studio/StudioStage'
-import { BrandMark } from '../brand/BrandMark'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { Component, lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { MarketTrade, type TradePreview } from '../live/market/MarketTrade'
@@ -170,7 +170,7 @@ function GameViewer({ pda, initialPlayer, ownerRecord, setup, detailsTab, onTabC
   const replayPhaseEvent = feedEvents.filter((event) => event.type === 'phase_advanced').at(-1)
   const replayRound = replayEvent?.round ?? replayPhaseEvent?.round
   const replayPhase = replayEvent?.phase ?? replayPhaseEvent?.phase
-  return <div className="live-layout devnet-layout">
+  return <>{snapshot && <ChainTradingOverview key={snapshot.pda} snapshot={snapshot} online={!error} />}<div className="live-layout devnet-layout">
     <section className="devnet-stage" aria-label="Confirmed devnet gameplay">
       <div className="live-frame devnet-frame">
         <div className="live-host">
@@ -244,7 +244,7 @@ function GameViewer({ pda, initialPlayer, ownerRecord, setup, detailsTab, onTabC
       </div>
       <Link className="live-back" to="/">← Back to alashi</Link>
     </aside>
-  </div>
+  </div></>
 }
 export function DevnetPage({ requestedGame, requestedPlayer = '' }: { requestedGame: string; requestedPlayer?: string }) {
   const navigate = useNavigate()
@@ -280,7 +280,7 @@ export function DevnetPage({ requestedGame, requestedPlayer = '' }: { requestedG
     void navigate({ to: '/devnet', search: { game: pda, player: '' } }).then(() => window.setTimeout(() => document.getElementById('devnet-tab-player')?.focus(), 0))
   }}><label htmlFor="chain-game">Game account</label><input id="chain-game" autoFocus value={input} onChange={(event) => setInput(event.target.value)} placeholder="Paste a Game address" autoComplete="off" spellCheck={false} /><button>Watch game</button>{inputError && <p role="alert">{inputError}</p>}</form>{linkError && <p role="alert" className="devnet-error">{linkError}</p>}<AgentSetupGuide /></>
   return <main className="live-page devnet-page" lang="en">
-    <header className="live-header"><Link to="/" className="live-brand"><BrandMark /></Link><span className="live-header-label">Devnet gameplay</span><span className="live-preview-label">Devnet · confirmed</span></header>
+    <header className="live-header"><Link to="/" className="live-brand"><span className="chain-arena-brand">ALASHI</span></Link><span className="live-header-label">Devnet gameplay</span><span className="live-preview-label">Devnet · confirmed</span></header>
     {valid ? <GameViewer key={requestedGame} pda={requestedGame} initialPlayer={initialPlayer} ownerRecord={ownerRecord} setup={setup} detailsTab={detailsTab} onTabChange={setDetailsTab} /> : <div className="live-layout devnet-layout">
       <section className="devnet-stage"><div className="live-frame devnet-frame"><div className="live-host"><span className="live-avatar">α</span><div><strong>Degenie</strong><span>Choose a devnet game</span></div></div><div className="live-context"><strong>No game selected</strong></div><div className="live-hero"><div className="live-scene"><HeroBoundary><Suspense fallback={<p className="live-hero-fallback">Loading Degenie…</p>}><StudioStage><Scene frozen={null} background={null} studio interactive={false}><LivingGenie reaction={null} /></Scene></StudioStage></Suspense></HeroBoundary></div></div><footer className="live-frame-footer"><span>Use Setup to open a game</span></footer></div></section>
       <aside className="devnet-sidebar"><div className="devnet-stage-title"><h1>Setup</h1></div><DetailsTabs value="setup" onChange={setDetailsTab} ready={false} /><div id="devnet-details" role="tabpanel" aria-labelledby="devnet-tab-setup" className="devnet-setup-panel">{setup}</div><p className="devnet-note">Public viewing needs no wallet. Finished games are replay-only.</p><a className="live-back" href="/devnet?game=GqHZBaWuJDNERi8xJHXnYF5eWBsLSmEXcAGJYAP94M1b">View the completed demo ↗</a></aside>

@@ -1976,6 +1976,9 @@ mod private_wish_runner_tests {
     };
 
     fn read_request(stream: &mut TcpStream) -> (String, Value) {
+        // Accepted mock sockets may remain nonblocking on the local platform.
+        stream.set_nonblocking(false).unwrap();
+        stream.set_read_timeout(Some(Duration::from_secs(2))).unwrap();
         let mut reader = BufReader::new(stream);
         let mut line = String::new();
         reader.read_line(&mut line).unwrap();

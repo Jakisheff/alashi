@@ -1,0 +1,58 @@
+{
+  "status": "observed",
+  "viewport_checks": [
+    {
+      "width": 390,
+      "height": 844,
+      "horizontal_overflow": 0,
+      "control_height_px": [
+        44,
+        46
+      ],
+      "screenshot": "phone-390-final.jpg"
+    },
+    {
+      "width": 320,
+      "height": 844,
+      "horizontal_overflow": 0,
+      "screenshot": "phone-320-final.jpg",
+      "limitation": "Harness screenshot scaling; physical phone not tested"
+    }
+  ],
+  "selection": "B4 verification heading and pressed state match",
+  "reduced_motion": "Checkbox updates reduced_motion=true; route endpoints tested",
+  "parallel_delay": {
+    "clock": 2.4,
+    "chief_B_thinking_seconds": 3.7,
+    "A_workers_working": 3,
+    "B_workers_idle": 4,
+    "screenshot": "delay-proof.jpg"
+  },
+  "performance": {
+    "observed_live_fps_range": [
+      12,
+      18
+    ],
+    "phone_390_fps": 18.388,
+    "phone_cpu_p95_ms": 8.6,
+    "blank_control_fps": 17,
+    "stable_live_30fps": false
+  },
+  "video": {
+    "file": "../assets/degenie-complete-cycle.mp4",
+    "frames": 347,
+    "fps": 30,
+    "duration_seconds": 11.566666666666666,
+    "full_decode_passed": true,
+    "native_playback": true,
+    "pause": true,
+    "forward_and_backward_seek": true,
+    "method": "event-driven replay from real completed demo cycle, not realtime screen capture"
+  },
+  "visual_fix": "A3 working point moved to [685,700] outside ivy column; final replay regenerated and inspected",
+  "not_validated": [
+    "physical phone",
+    "new viewer comprehension",
+    "live LLM adapter"
+  ]
+}

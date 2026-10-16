@@ -1,0 +1,35 @@
+{
+  "video_sha256": "c7cd552edf7a49fdfc0eb1aac01c0eb5eb8fc22a5539b63699832389ab391833",
+  "browser": "Codex in-app browser",
+  "full_playback": {
+    "duration": 120,
+    "currentTime": 120,
+    "ended": true,
+    "paused": true,
+    "readyState": 4,
+    "media_error": null
+  },
+  "paused_seek_positions": [
+    47,
+    23
+  ],
+  "reverse_seek_future_sale_hidden": true,
+  "phone_viewport": {
+    "width": 390,
+    "height": 844,
+    "scrollWidth": 390,
+    "horizontal_overflow": false
+  },
+  "phone_button_height_css_px": 43.9981575012207,
+  "play_pause_race": {
+    "reproduced": "Two unhandled AbortError messages before fix",
+    "fix": "Catch expected AbortError when the user pauses pending playback",
+    "new_errors_after_retest": 0
+  },
+  "limitations": [
+    "Physical phone not tested",
+    "New-viewer comprehension not tested",
+    "Embedded portrait video text requires outside captions or landscape"
+  ],
+  "temporary_viewport_reset": true
+}

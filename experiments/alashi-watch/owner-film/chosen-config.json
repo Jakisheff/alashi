@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "name": "Alashi task-specific context",
+  "model": "glm-4.5-flash",
+  "context_fields": {
+    "market": ["goods", "sold_this_round", "tax_bps", "price_table_millions"],
+    "legal": ["phase", "cash", "goods", "sold_this_round", "price_table_millions"],
+    "horizon": ["round", "total_rounds", "phase"]
+  },
+  "budget_target_tokens_per_workflow": 10000,
+  "quality_gate": "All reports correct, Chief sells all goods, verifier approves, canonical Rust sale matches the oracle",
+  "scope": "Three synthetic final-market fixtures; inspect evidence/benchmark/summary.json before treating this configuration as validated"
+}

@@ -1,0 +1,4545 @@
+{
+  "source": "SYNTHETIC_LOOPBACK_ACCEPTANCE",
+  "real_model_calls": 0,
+  "test_provider_calls": 16,
+  "publish_derivative_gate": true,
+  "original": "6097b17604936dce7eeb896164cb8b3fc030130124b73aabebb0c2f34d016c37",
+  "improved": "8146a535948fe6d5fd96410d7f93e91c3ba7421ae1a0996de9ab9c6b936079c7",
+  "games": [
+    1,
+    2
+  ],
+  "rounds": [
+    {
+      "challenge": "9def49d9775039eecce4fa21d2052471b6fa1850a24396d53572f3e434c15a5c",
+      "phase": "action",
+      "owners": [
+        1,
+        2
+      ],
+      "intervals": [
+        {
+          "owner": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD",
+          "task": "market",
+          "started": 1792186556078,
+          "finished": 1792186556194
+        },
+        {
+          "owner": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD",
+          "task": "risk",
+          "started": 1792186556079,
+          "finished": 1792186556195
+        },
+        {
+          "owner": "4MfyR4G3NWfVRDWo6iNAHDBZqWMgwZX6FNtMqEW3a9JT",
+          "task": "deliver",
+          "started": 1792186556188,
+          "finished": 1792186556195
+        },
+        {
+          "owner": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD",
+          "task": "deliver",
+          "started": 1792186556455,
+          "finished": 1792186556455
+        }
+      ],
+      "runs": [
+        {
+          "id": "a2f27bfc6f6b5c7c3b6b5307d4233f4d633fe25543f9f30cb5bd7d5052588928",
+          "version": "6097b17604936dce7eeb896164cb8b3fc030130124b73aabebb0c2f34d016c37",
+          "owner": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD",
+          "known_tokens": 360,
+          "receipt": {
+            "action": "produce",
+            "actor": "0",
+            "cash_delta": "0",
+            "confirmed_at": 1792186556,
+            "event": {
+              "action_ref": {
+                "action": "produce",
+                "actor": 0,
+                "params": {},
+                "result": {
+                  "cash_after": 0,
+                  "changes": [
+                    {
+                      "actor": 0,
+                      "cash_after": 0,
+                      "cash_before": 0,
+                      "goods_after": 2,
+                      "goods_before": 0,
+                      "influence_after": 1,
+                      "influence_before": 1
+                    }
+                  ],
+                  "goods_after": 2
+                },
+                "seq": 2
+              },
+              "branch_id": "MAIN",
+              "created_at_epoch": 1792186556,
+              "event_id": "live-5",
+              "finality": "final",
+              "game_id": 1,
+              "kind": "game_action",
+              "phase": "action",
+              "phase_instance_id": "g1-r1-action-1792186854",
+              "room_id": "game:1",
+              "round": 1,
+              "seq": 5,
+              "server_created_at": "2026-10-16T21:35:56Z",
+              "visibility": "public"
+            },
+            "event_id": "live-5",
+            "game": "1",
+            "goods_delta": 2,
+            "mode": "http",
+            "params": {},
+            "source": "server_accepted_rule_action"
+          }
+        },
+        {
+          "id": "2e40b23253324236c20f87271cbaf5d26a05ade3ce16b9e7affc9d1e6712d642",
+          "version": "8146a535948fe6d5fd96410d7f93e91c3ba7421ae1a0996de9ab9c6b936079c7",
+          "owner": "4MfyR4G3NWfVRDWo6iNAHDBZqWMgwZX6FNtMqEW3a9JT",
+          "known_tokens": 120,
+          "receipt": {
+            "action": "produce",
+            "actor": "1",
+            "cash_delta": "0",
+            "confirmed_at": 1792186556,
+            "event": {
+              "action_ref": {
+                "action": "produce",
+                "actor": 1,
+                "params": {},
+                "result": {
+                  "cash_after": 0,
+                  "changes": [
+                    {
+                      "actor": 1,
+                      "cash_after": 0,
+                      "cash_before": 0,
+                      "goods_after": 2,
+                      "goods_before": 0,
+                      "influence_after": 1,
+                      "influence_before": 1
+                    }
+                  ],
+                  "goods_after": 2
+                },
+                "seq": 1
+              },
+              "branch_id": "MAIN",
+              "created_at_epoch": 1792186556,
+              "event_id": "live-4",
+              "finality": "final",
+              "game_id": 1,
+              "kind": "game_action",
+              "phase": "action",
+              "phase_instance_id": "g1-r1-action-1792186854",
+              "room_id": "game:1",
+              "round": 1,
+              "seq": 4,
+              "server_created_at": "2026-10-16T21:35:56Z",
+              "visibility": "public"
+            },
+            "event_id": "live-4",
+            "game": "1",
+            "goods_delta": 2,
+            "mode": "http",
+            "params": {},
+            "source": "server_accepted_rule_action"
+          }
+        }
+      ],
+      "standing": {
+        "accepted_runs": 2,
+        "test_provider": true,
+        "token_leaders": [
+          "2e40b23253324236c20f87271cbaf5d26a05ade3ce16b9e7affc9d1e6712d642"
+        ],
+        "tokens": 120
+      },
+      "lost_response_recovered": false
+    },
+    {
+      "challenge": "843b13415950ce1abb7fe2ad339584c853717470fc3e06dbe511913429cca146",
+      "phase": "market",
+      "owners": [
+        1,
+        2
+      ],
+      "intervals": [
+        {
+          "owner": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD",
+          "task": "market",
+          "started": 1792186557930,
+          "finished": 1792186558133
+        },
+        {
+          "owner": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD",
+          "task": "risk",
+          "started": 1792186557931,
+          "finished": 1792186558133
+        },
+        {
+          "owner": "4MfyR4G3NWfVRDWo6iNAHDBZqWMgwZX6FNtMqEW3a9JT",
+          "task": "deliver",
+          "started": 1792186558132,
+          "finished": 1792186558133
+        },
+        {
+          "owner": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD",
+          "task": "deliver",
+          "started": 1792186558418,
+          "finished": 1792186558418
+        }
+      ],
+      "runs": [
+        {
+          "id": "d3cf35dc8ce2d5fba168a866e688a1263daf8432e6b250d6e027963fb5d2ed81",
+          "version": "6097b17604936dce7eeb896164cb8b3fc030130124b73aabebb0c2f34d016c37",
+          "owner": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD",
+          "known_tokens": 360,
+          "receipt": {
+            "action": "sell",
+            "actor": "0",
+            "cash_delta": "17000000",
+            "confirmed_at": 1792186558,
+            "event": {
+              "action_ref": {
+                "action": "sell",
+                "actor": 0,
+                "params": {
+                  "units": 2
+                },
+                "result": {
+                  "cash_after": 17000000,
+                  "changes": [
+                    {
+                      "actor": 0,
+                      "cash_after": 17000000,
+                      "cash_before": 0,
+                      "goods_after": 0,
+                      "goods_before": 2,
+                      "influence_after": 1,
+                      "influence_before": 1
+                    }
+                  ],
+                  "goods_after": 0
+                },
+                "seq": 4
+              },
+              "branch_id": "MAIN",
+              "created_at_epoch": 1792186558,
+              "event_id": "live-9",
+              "finality": "final",
+              "game_id": 1,
+              "kind": "game_action",
+              "phase": "market",
+              "phase_instance_id": "g1-r2-market-1792186856",
+              "room_id": "game:1",
+              "round": 2,
+              "seq": 9,
+              "server_created_at": "2026-10-16T21:35:58Z",
+              "visibility": "public"
+            },
+            "event_id": "live-9",
+            "game": "1",
+            "goods_delta": -2,
+            "mode": "http",
+            "params": {
+              "units": 2
+            },
+            "source": "server_accepted_rule_action"
+          }
+        },
+        {
+          "id": "72d9de6ce56bb6f6b60447009570015f04bc68c378e0d4d6004670e967bcf7b2",
+          "version": "8146a535948fe6d5fd96410d7f93e91c3ba7421ae1a0996de9ab9c6b936079c7",
+          "owner": "4MfyR4G3NWfVRDWo6iNAHDBZqWMgwZX6FNtMqEW3a9JT",
+          "known_tokens": 120,
+          "receipt": {
+            "action": "sell",
+            "actor": "1",
+            "cash_delta": "22000000",
+            "confirmed_at": 1792186558,
+            "event": {
+              "action_ref": {
+                "action": "sell",
+                "actor": 1,
+                "params": {
+                  "units": 2
+                },
+                "result": {
+                  "cash_after": 22000000,
+                  "changes": [
+                    {
+                      "actor": 1,
+                      "cash_after": 22000000,
+                      "cash_before": 0,
+                      "goods_after": 0,
+                      "goods_before": 2,
+                      "influence_after": 1,
+                      "influence_before": 1
+                    }
+                  ],
+                  "goods_after": 0
+                },
+                "seq": 3
+              },
+              "branch_id": "MAIN",
+              "created_at_epoch": 1792186558,
+              "event_id": "live-8",
+              "finality": "final",
+              "game_id": 1,
+              "kind": "game_action",
+              "phase": "market",
+              "phase_instance_id": "g1-r2-market-1792186856",
+              "room_id": "game:1",
+              "round": 2,
+              "seq": 8,
+              "server_created_at": "2026-10-16T21:35:58Z",
+              "visibility": "public"
+            },
+            "event_id": "live-8",
+            "game": "1",
+            "goods_delta": -2,
+            "mode": "http",
+            "params": {
+              "units": 2
+            },
+            "source": "server_accepted_rule_action"
+          }
+        }
+      ],
+      "standing": {
+        "accepted_runs": 2,
+        "test_provider": true,
+        "token_leaders": [],
+        "tokens": null
+      },
+      "lost_response_recovered": false
+    },
+    {
+      "challenge": "df7046e1628b0d8a40b1164a6d00208ced4d27493f0ab2fc1672e2e8cb3533bc",
+      "phase": "action",
+      "owners": [
+        1,
+        3
+      ],
+      "intervals": [
+        {
+          "owner": "6c5fX1cKYGRNNbozjDdUr2s5vfUuS1XTistmZeG2kZY6",
+          "task": "deliver",
+          "started": 1792186560242,
+          "finished": 1792186560782
+        },
+        {
+          "owner": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD",
+          "task": "market",
+          "started": 1792186560781,
+          "finished": 1792186560782
+        },
+        {
+          "owner": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD",
+          "task": "risk",
+          "started": 1792186560783,
+          "finished": 1792186560783
+        },
+        {
+          "owner": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD",
+          "task": "deliver",
+          "started": 1792186561102,
+          "finished": 1792186561102
+        }
+      ],
+      "runs": [
+        {
+          "id": "c4c52a7c16afa96e6da5668f85a5e71682830742229904bccab063379ba2ebe8",
+          "version": "6097b17604936dce7eeb896164cb8b3fc030130124b73aabebb0c2f34d016c37",
+          "owner": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD",
+          "known_tokens": 360,
+          "receipt": {
+            "action": "produce",
+            "actor": "0",
+            "cash_delta": "0",
+            "confirmed_at": 1792186561,
+            "event": {
+              "action_ref": {
+                "action": "produce",
+                "actor": 0,
+                "params": {},
+                "result": {
+                  "cash_after": 0,
+                  "changes": [
+                    {
+                      "actor": 0,
+                      "cash_after": 0,
+                      "cash_before": 0,
+                      "goods_after": 2,
+                      "goods_before": 0,
+                      "influence_after": 1,
+                      "influence_before": 1
+                    }
+                  ],
+                  "goods_after": 2
+                },
+                "seq": 2
+              },
+              "branch_id": "MAIN",
+              "created_at_epoch": 1792186561,
+              "event_id": "live-30",
+              "finality": "final",
+              "game_id": 2,
+              "kind": "game_action",
+              "phase": "action",
+              "phase_instance_id": "g2-r1-action-1792186859",
+              "room_id": "game:2",
+              "round": 1,
+              "seq": 30,
+              "server_created_at": "2026-10-16T21:36:01Z",
+              "visibility": "public"
+            },
+            "event_id": "live-30",
+            "game": "2",
+            "goods_delta": 2,
+            "mode": "http",
+            "params": {},
+            "source": "server_accepted_rule_action"
+          }
+        },
+        {
+          "id": "5f17bee6941654922fe0a2c7804ecc2662f11f86bfdb3f36780622652cea0483",
+          "version": "8146a535948fe6d5fd96410d7f93e91c3ba7421ae1a0996de9ab9c6b936079c7",
+          "owner": "6c5fX1cKYGRNNbozjDdUr2s5vfUuS1XTistmZeG2kZY6",
+          "known_tokens": 120,
+          "receipt": {
+            "action": "produce",
+            "actor": "1",
+            "cash_delta": "0",
+            "confirmed_at": 1792186560,
+            "event": {
+              "action_ref": {
+                "action": "produce",
+                "actor": 1,
+                "params": {},
+                "result": {
+                  "cash_after": 0,
+                  "changes": [
+                    {
+                      "actor": 1,
+                      "cash_after": 0,
+                      "cash_before": 0,
+                      "goods_after": 2,
+                      "goods_before": 0,
+                      "influence_after": 1,
+                      "influence_before": 1
+                    }
+                  ],
+                  "goods_after": 2
+                },
+                "seq": 1
+              },
+              "branch_id": "MAIN",
+              "created_at_epoch": 1792186560,
+              "event_id": "live-29",
+              "finality": "final",
+              "game_id": 2,
+              "kind": "game_action",
+              "phase": "action",
+              "phase_instance_id": "g2-r1-action-1792186859",
+              "room_id": "game:2",
+              "round": 1,
+              "seq": 29,
+              "server_created_at": "2026-10-16T21:36:00Z",
+              "visibility": "public"
+            },
+            "event_id": "live-29",
+            "game": "2",
+            "goods_delta": 2,
+            "mode": "http",
+            "params": {},
+            "source": "server_accepted_rule_action"
+          }
+        }
+      ],
+      "standing": {
+        "accepted_runs": 2,
+        "test_provider": true,
+        "token_leaders": [
+          "5f17bee6941654922fe0a2c7804ecc2662f11f86bfdb3f36780622652cea0483"
+        ],
+        "tokens": 120
+      },
+      "lost_response_recovered": true
+    },
+    {
+      "challenge": "ef54db54ed6f006a088593b57bf34f0c803357073277ac11b6b0024241182774",
+      "phase": "market",
+      "owners": [
+        1,
+        3
+      ],
+      "intervals": [
+        {
+          "owner": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD",
+          "task": "market",
+          "started": 1792186562571,
+          "finished": 1792186562695
+        },
+        {
+          "owner": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD",
+          "task": "risk",
+          "started": 1792186562578,
+          "finished": 1792186562695
+        },
+        {
+          "owner": "6c5fX1cKYGRNNbozjDdUr2s5vfUuS1XTistmZeG2kZY6",
+          "task": "deliver",
+          "started": 1792186562695,
+          "finished": 1792186562696
+        },
+        {
+          "owner": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD",
+          "task": "deliver",
+          "started": 1792186562994,
+          "finished": 1792186562995
+        }
+      ],
+      "runs": [
+        {
+          "id": "b2db817b457abc2bc2ef01b4f7c84c211943bf148f50c97af664493dccfad885",
+          "version": "6097b17604936dce7eeb896164cb8b3fc030130124b73aabebb0c2f34d016c37",
+          "owner": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD",
+          "known_tokens": 360,
+          "receipt": {
+            "action": "sell",
+            "actor": "0",
+            "cash_delta": "17000000",
+            "confirmed_at": 1792186563,
+            "event": {
+              "action_ref": {
+                "action": "sell",
+                "actor": 0,
+                "params": {
+                  "units": 2
+                },
+                "result": {
+                  "cash_after": 17000000,
+                  "changes": [
+                    {
+                      "actor": 0,
+                      "cash_after": 17000000,
+                      "cash_before": 0,
+                      "goods_after": 0,
+                      "goods_before": 2,
+                      "influence_after": 1,
+                      "influence_before": 1
+                    }
+                  ],
+                  "goods_after": 0
+                },
+                "seq": 4
+              },
+              "branch_id": "MAIN",
+              "created_at_epoch": 1792186563,
+              "event_id": "live-34",
+              "finality": "final",
+              "game_id": 2,
+              "kind": "game_action",
+              "phase": "market",
+              "phase_instance_id": "g2-r2-market-1792186861",
+              "room_id": "game:2",
+              "round": 2,
+              "seq": 34,
+              "server_created_at": "2026-10-16T21:36:03Z",
+              "visibility": "public"
+            },
+            "event_id": "live-34",
+            "game": "2",
+            "goods_delta": -2,
+            "mode": "http",
+            "params": {
+              "units": 2
+            },
+            "source": "server_accepted_rule_action"
+          }
+        },
+        {
+          "id": "5d80aeba7d7d3ec6b1ddcc52c3bc98525fdf354f516e0ad0d4880b6c1c4b757e",
+          "version": "8146a535948fe6d5fd96410d7f93e91c3ba7421ae1a0996de9ab9c6b936079c7",
+          "owner": "6c5fX1cKYGRNNbozjDdUr2s5vfUuS1XTistmZeG2kZY6",
+          "known_tokens": 120,
+          "receipt": {
+            "action": "sell",
+            "actor": "1",
+            "cash_delta": "22000000",
+            "confirmed_at": 1792186562,
+            "event": {
+              "action_ref": {
+                "action": "sell",
+                "actor": 1,
+                "params": {
+                  "units": 2
+                },
+                "result": {
+                  "cash_after": 22000000,
+                  "changes": [
+                    {
+                      "actor": 1,
+                      "cash_after": 22000000,
+                      "cash_before": 0,
+                      "goods_after": 0,
+                      "goods_before": 2,
+                      "influence_after": 1,
+                      "influence_before": 1
+                    }
+                  ],
+                  "goods_after": 0
+                },
+                "seq": 3
+              },
+              "branch_id": "MAIN",
+              "created_at_epoch": 1792186562,
+              "event_id": "live-33",
+              "finality": "final",
+              "game_id": 2,
+              "kind": "game_action",
+              "phase": "market",
+              "phase_instance_id": "g2-r2-market-1792186861",
+              "room_id": "game:2",
+              "round": 2,
+              "seq": 33,
+              "server_created_at": "2026-10-16T21:36:02Z",
+              "visibility": "public"
+            },
+            "event_id": "live-33",
+            "game": "2",
+            "goods_delta": -2,
+            "mode": "http",
+            "params": {
+              "units": 2
+            },
+            "source": "server_accepted_rule_action"
+          }
+        }
+      ],
+      "standing": {
+        "accepted_runs": 2,
+        "test_provider": true,
+        "token_leaders": [],
+        "tokens": null
+      },
+      "lost_response_recovered": false
+    }
+  ],
+  "library": {
+    "challenges": [
+      {
+        "content": {
+          "audience": "Agent owners",
+          "budget": 20000,
+          "cta": "",
+          "facts": [
+            "One alashi is 1000000 game units.",
+            "Market prices depend on transaction order."
+          ],
+          "match_key": "sell-1",
+          "max_words": 0,
+          "owner": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD",
+          "required_terms": [],
+          "round_seconds": 180,
+          "task": "Sell two goods. Compare the actual receipt and model tokens.",
+          "title": "market with equal initial resources",
+          "trading": {
+            "after": 7,
+            "captured_at": 1792186556,
+            "game": "1",
+            "mode": "http",
+            "observation": {
+              "amnesty_used": false,
+              "barter_offers": [],
+              "bids_close_at": null,
+              "boom": 0,
+              "customs_decided": false,
+              "entry_fee": 1,
+              "epoch": "classic",
+              "execution_mode": "http_simulated",
+              "factions": [
+                {
+                  "acted": false,
+                  "acted_stamp": 10,
+                  "agent_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "agent_record_id": "0000000000000000000000000000000000000000000000000000000000000029",
+                  "alive": true,
+                  "cash": 0,
+                  "cash_available": 0,
+                  "character_id": "0000000000000000000000000000000000000000000000000000000000000017",
+                  "goods": 2,
+                  "grey_goods": 0,
+                  "hard": 0,
+                  "idx": 0,
+                  "influence": 1,
+                  "insider": false,
+                  "is_president": true,
+                  "name": "Trader1",
+                  "promissory": 0,
+                  "registration": {
+                    "commitment": "confirmed",
+                    "fee_lamports": "0",
+                    "mode": "agent_lifecycle_v2",
+                    "network": "devnet",
+                    "signature": "offline-fixture",
+                    "slot": 0,
+                    "wallet": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD"
+                  },
+                  "roof_to": null,
+                  "vote_weight": 1,
+                  "voted": false
+                },
+                {
+                  "acted": false,
+                  "acted_stamp": 10,
+                  "agent_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "agent_record_id": "000000000000000000000000000000000000000000000000000000000000002a",
+                  "alive": true,
+                  "cash": 0,
+                  "cash_available": 0,
+                  "character_id": "0000000000000000000000000000000000000000000000000000000000000018",
+                  "goods": 2,
+                  "grey_goods": 0,
+                  "hard": 0,
+                  "idx": 1,
+                  "influence": 1,
+                  "insider": false,
+                  "is_president": false,
+                  "name": "Trader2",
+                  "promissory": 0,
+                  "registration": {
+                    "commitment": "confirmed",
+                    "fee_lamports": "0",
+                    "mode": "agent_lifecycle_v2",
+                    "network": "devnet",
+                    "signature": "offline-fixture",
+                    "slot": 0,
+                    "wallet": "4MfyR4G3NWfVRDWo6iNAHDBZqWMgwZX6FNtMqEW3a9JT"
+                  },
+                  "roof_to": null,
+                  "vote_weight": 1,
+                  "voted": false
+                }
+              ],
+              "game_id": 1,
+              "grace_s": 0,
+              "grace_until": 1792186856,
+              "label": "TEST_STRATEGY_REUSE_1",
+              "last_law_passed": false,
+              "law_card": null,
+              "law_card_name": null,
+              "laws_passed": 0,
+              "license_auction": null,
+              "no_influence": 0,
+              "now": 1792186556,
+              "party_no": 19,
+              "phase": "market",
+              "phase_ends_at": 1792186856,
+              "phase_instance_id": "g1-r2-market-1792186856",
+              "president_idx": 0,
+              "price_next": 10,
+              "price_now": 12,
+              "price_shift": 0,
+              "price_table": [
+                12,
+                10,
+                9,
+                8,
+                7,
+                6,
+                5,
+                4,
+                3,
+                3,
+                2,
+                2,
+                2,
+                1,
+                1,
+                1
+              ],
+              "recent_actions": [
+                {
+                  "action": "produce",
+                  "actor": 1,
+                  "by": "llm",
+                  "event_id": "1:19:1",
+                  "ok": true,
+                  "phase": "action",
+                  "round": 1,
+                  "seq": 1,
+                  "ts": 1792186556
+                },
+                {
+                  "action": "produce",
+                  "actor": 0,
+                  "by": "llm",
+                  "event_id": "1:19:2",
+                  "ok": true,
+                  "phase": "action",
+                  "round": 1,
+                  "seq": 2,
+                  "ts": 1792186556
+                }
+              ],
+              "recent_actions_range": {
+                "first_seq": 1,
+                "last_seq": 2,
+                "limit": 12,
+                "retained_first_seq": 1
+              },
+              "registration_mode": "devnet_agent_lifecycle_v2",
+              "round": 2,
+              "settlement_error": null,
+              "sold_counter": 0,
+              "tax_bps": 0,
+              "veto_pending": false,
+              "vote_weight_mode": 0,
+              "yes_influence": 0
+            },
+            "participants": [
+              {
+                "actor": "0",
+                "cash": "0",
+                "goods": 2,
+                "wallet": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD"
+              },
+              {
+                "actor": "1",
+                "cash": "0",
+                "goods": 2,
+                "wallet": "4MfyR4G3NWfVRDWo6iNAHDBZqWMgwZX6FNtMqEW3a9JT"
+              }
+            ],
+            "phase": "market",
+            "phase_ends_at": 1792186856,
+            "round": 2
+          }
+        },
+        "created_at": 1792186556,
+        "deadline_at": 1792186736,
+        "id": "843b13415950ce1abb7fe2ad339584c853717470fc3e06dbe511913429cca146",
+        "revealed": true,
+        "started_at": 1792186556
+      },
+      {
+        "content": {
+          "audience": "Agent owners",
+          "budget": 20000,
+          "cta": "",
+          "facts": [
+            "One alashi is 1000000 game units.",
+            "Market prices depend on transaction order."
+          ],
+          "match_key": "produce-1",
+          "max_words": 0,
+          "owner": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD",
+          "required_terms": [],
+          "round_seconds": 180,
+          "task": "Produce goods using the current game rules.",
+          "title": "action with equal initial resources",
+          "trading": {
+            "after": 3,
+            "captured_at": 1792186554,
+            "game": "1",
+            "mode": "http",
+            "observation": {
+              "amnesty_used": false,
+              "barter_offers": [],
+              "bids_close_at": null,
+              "boom": 0,
+              "customs_decided": false,
+              "entry_fee": 1,
+              "epoch": "classic",
+              "execution_mode": "http_simulated",
+              "factions": [
+                {
+                  "acted": false,
+                  "acted_stamp": 0,
+                  "agent_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "agent_record_id": "0000000000000000000000000000000000000000000000000000000000000029",
+                  "alive": true,
+                  "cash": 0,
+                  "cash_available": 0,
+                  "character_id": "0000000000000000000000000000000000000000000000000000000000000017",
+                  "goods": 0,
+                  "grey_goods": 0,
+                  "hard": 0,
+                  "idx": 0,
+                  "influence": 1,
+                  "insider": false,
+                  "is_president": false,
+                  "name": "Trader1",
+                  "promissory": 0,
+                  "registration": {
+                    "commitment": "confirmed",
+                    "fee_lamports": "0",
+                    "mode": "agent_lifecycle_v2",
+                    "network": "devnet",
+                    "signature": "offline-fixture",
+                    "slot": 0,
+                    "wallet": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD"
+                  },
+                  "roof_to": null,
+                  "vote_weight": 1,
+                  "voted": false
+                },
+                {
+                  "acted": false,
+                  "acted_stamp": 0,
+                  "agent_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "agent_record_id": "000000000000000000000000000000000000000000000000000000000000002a",
+                  "alive": true,
+                  "cash": 0,
+                  "cash_available": 0,
+                  "character_id": "0000000000000000000000000000000000000000000000000000000000000018",
+                  "goods": 0,
+                  "grey_goods": 0,
+                  "hard": 0,
+                  "idx": 1,
+                  "influence": 1,
+                  "insider": false,
+                  "is_president": false,
+                  "name": "Trader2",
+                  "promissory": 0,
+                  "registration": {
+                    "commitment": "confirmed",
+                    "fee_lamports": "0",
+                    "mode": "agent_lifecycle_v2",
+                    "network": "devnet",
+                    "signature": "offline-fixture",
+                    "slot": 0,
+                    "wallet": "4MfyR4G3NWfVRDWo6iNAHDBZqWMgwZX6FNtMqEW3a9JT"
+                  },
+                  "roof_to": null,
+                  "vote_weight": 1,
+                  "voted": false
+                }
+              ],
+              "game_id": 1,
+              "grace_s": 0,
+              "grace_until": 1792186854,
+              "label": "TEST_STRATEGY_REUSE_1",
+              "last_law_passed": false,
+              "law_card": null,
+              "law_card_name": null,
+              "laws_passed": 0,
+              "license_auction": null,
+              "no_influence": 0,
+              "now": 1792186554,
+              "party_no": 19,
+              "phase": "action",
+              "phase_ends_at": 1792186854,
+              "phase_instance_id": "g1-r1-action-1792186854",
+              "president_idx": null,
+              "price_next": 10,
+              "price_now": 12,
+              "price_shift": 0,
+              "price_table": [
+                12,
+                10,
+                9,
+                8,
+                7,
+                6,
+                5,
+                4,
+                3,
+                3,
+                2,
+                2,
+                2,
+                1,
+                1,
+                1
+              ],
+              "recent_actions": [],
+              "recent_actions_range": {
+                "first_seq": null,
+                "last_seq": null,
+                "limit": 12,
+                "retained_first_seq": null
+              },
+              "registration_mode": "devnet_agent_lifecycle_v2",
+              "round": 1,
+              "settlement_error": null,
+              "sold_counter": 0,
+              "tax_bps": 0,
+              "veto_pending": false,
+              "vote_weight_mode": 0,
+              "yes_influence": 0
+            },
+            "participants": [
+              {
+                "actor": "0",
+                "cash": "0",
+                "goods": 0,
+                "wallet": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD"
+              },
+              {
+                "actor": "1",
+                "cash": "0",
+                "goods": 0,
+                "wallet": "4MfyR4G3NWfVRDWo6iNAHDBZqWMgwZX6FNtMqEW3a9JT"
+              }
+            ],
+            "phase": "action",
+            "phase_ends_at": 1792186854,
+            "round": 1
+          }
+        },
+        "created_at": 1792186554,
+        "deadline_at": 1792186734,
+        "id": "9def49d9775039eecce4fa21d2052471b6fa1850a24396d53572f3e434c15a5c",
+        "revealed": true,
+        "started_at": 1792186554
+      },
+      {
+        "content": {
+          "audience": "Agent owners",
+          "budget": 20000,
+          "cta": "",
+          "facts": [
+            "One alashi is 1000000 game units.",
+            "Market prices depend on transaction order."
+          ],
+          "match_key": "produce-2",
+          "max_words": 0,
+          "owner": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD",
+          "required_terms": [],
+          "round_seconds": 180,
+          "task": "Produce goods using the current game rules.",
+          "title": "action with equal initial resources",
+          "trading": {
+            "after": 28,
+            "captured_at": 1792186559,
+            "game": "2",
+            "mode": "http",
+            "observation": {
+              "amnesty_used": false,
+              "barter_offers": [],
+              "bids_close_at": null,
+              "boom": 0,
+              "customs_decided": false,
+              "entry_fee": 1,
+              "epoch": "classic",
+              "execution_mode": "http_simulated",
+              "factions": [
+                {
+                  "acted": false,
+                  "acted_stamp": 0,
+                  "agent_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "agent_record_id": "0000000000000000000000000000000000000000000000000000000000000029",
+                  "alive": true,
+                  "cash": 0,
+                  "cash_available": 0,
+                  "character_id": "0000000000000000000000000000000000000000000000000000000000000017",
+                  "goods": 0,
+                  "grey_goods": 0,
+                  "hard": 0,
+                  "idx": 0,
+                  "influence": 1,
+                  "insider": false,
+                  "is_president": false,
+                  "name": "Trader1",
+                  "promissory": 0,
+                  "registration": {
+                    "commitment": "confirmed",
+                    "fee_lamports": "0",
+                    "mode": "agent_lifecycle_v2",
+                    "network": "devnet",
+                    "signature": "offline-fixture",
+                    "slot": 0,
+                    "wallet": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD"
+                  },
+                  "roof_to": null,
+                  "vote_weight": 1,
+                  "voted": false
+                },
+                {
+                  "acted": false,
+                  "acted_stamp": 0,
+                  "agent_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "agent_record_id": "000000000000000000000000000000000000000000000000000000000000002b",
+                  "alive": true,
+                  "cash": 0,
+                  "cash_available": 0,
+                  "character_id": "0000000000000000000000000000000000000000000000000000000000000019",
+                  "goods": 0,
+                  "grey_goods": 0,
+                  "hard": 0,
+                  "idx": 1,
+                  "influence": 1,
+                  "insider": false,
+                  "is_president": false,
+                  "name": "Trader3",
+                  "promissory": 0,
+                  "registration": {
+                    "commitment": "confirmed",
+                    "fee_lamports": "0",
+                    "mode": "agent_lifecycle_v2",
+                    "network": "devnet",
+                    "signature": "offline-fixture",
+                    "slot": 0,
+                    "wallet": "6c5fX1cKYGRNNbozjDdUr2s5vfUuS1XTistmZeG2kZY6"
+                  },
+                  "roof_to": null,
+                  "vote_weight": 1,
+                  "voted": false
+                }
+              ],
+              "game_id": 2,
+              "grace_s": 0,
+              "grace_until": 1792186859,
+              "label": "TEST_STRATEGY_REUSE_2",
+              "last_law_passed": false,
+              "law_card": null,
+              "law_card_name": null,
+              "laws_passed": 0,
+              "license_auction": null,
+              "no_influence": 0,
+              "now": 1792186559,
+              "party_no": 20,
+              "phase": "action",
+              "phase_ends_at": 1792186859,
+              "phase_instance_id": "g2-r1-action-1792186859",
+              "president_idx": null,
+              "price_next": 10,
+              "price_now": 12,
+              "price_shift": 0,
+              "price_table": [
+                12,
+                10,
+                9,
+                8,
+                7,
+                6,
+                5,
+                4,
+                3,
+                3,
+                2,
+                2,
+                2,
+                1,
+                1,
+                1
+              ],
+              "recent_actions": [],
+              "recent_actions_range": {
+                "first_seq": null,
+                "last_seq": null,
+                "limit": 12,
+                "retained_first_seq": null
+              },
+              "registration_mode": "devnet_agent_lifecycle_v2",
+              "round": 1,
+              "settlement_error": null,
+              "sold_counter": 0,
+              "tax_bps": 0,
+              "veto_pending": false,
+              "vote_weight_mode": 0,
+              "yes_influence": 0
+            },
+            "participants": [
+              {
+                "actor": "0",
+                "cash": "0",
+                "goods": 0,
+                "wallet": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD"
+              },
+              {
+                "actor": "1",
+                "cash": "0",
+                "goods": 0,
+                "wallet": "6c5fX1cKYGRNNbozjDdUr2s5vfUuS1XTistmZeG2kZY6"
+              }
+            ],
+            "phase": "action",
+            "phase_ends_at": 1792186859,
+            "round": 1
+          }
+        },
+        "created_at": 1792186559,
+        "deadline_at": 1792186739,
+        "id": "df7046e1628b0d8a40b1164a6d00208ced4d27493f0ab2fc1672e2e8cb3533bc",
+        "revealed": true,
+        "started_at": 1792186559
+      },
+      {
+        "content": {
+          "audience": "Agent owners",
+          "budget": 20000,
+          "cta": "",
+          "facts": [
+            "One alashi is 1000000 game units.",
+            "Market prices depend on transaction order."
+          ],
+          "match_key": "sell-2",
+          "max_words": 0,
+          "owner": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD",
+          "required_terms": [],
+          "round_seconds": 180,
+          "task": "Sell two goods. Compare the actual receipt and model tokens.",
+          "title": "market with equal initial resources",
+          "trading": {
+            "after": 32,
+            "captured_at": 1792186561,
+            "game": "2",
+            "mode": "http",
+            "observation": {
+              "amnesty_used": false,
+              "barter_offers": [],
+              "bids_close_at": null,
+              "boom": 0,
+              "customs_decided": false,
+              "entry_fee": 1,
+              "epoch": "classic",
+              "execution_mode": "http_simulated",
+              "factions": [
+                {
+                  "acted": false,
+                  "acted_stamp": 10,
+                  "agent_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "agent_record_id": "0000000000000000000000000000000000000000000000000000000000000029",
+                  "alive": true,
+                  "cash": 0,
+                  "cash_available": 0,
+                  "character_id": "0000000000000000000000000000000000000000000000000000000000000017",
+                  "goods": 2,
+                  "grey_goods": 0,
+                  "hard": 0,
+                  "idx": 0,
+                  "influence": 1,
+                  "insider": false,
+                  "is_president": false,
+                  "name": "Trader1",
+                  "promissory": 0,
+                  "registration": {
+                    "commitment": "confirmed",
+                    "fee_lamports": "0",
+                    "mode": "agent_lifecycle_v2",
+                    "network": "devnet",
+                    "signature": "offline-fixture",
+                    "slot": 0,
+                    "wallet": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD"
+                  },
+                  "roof_to": null,
+                  "vote_weight": 1,
+                  "voted": false
+                },
+                {
+                  "acted": false,
+                  "acted_stamp": 10,
+                  "agent_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "agent_record_id": "000000000000000000000000000000000000000000000000000000000000002b",
+                  "alive": true,
+                  "cash": 0,
+                  "cash_available": 0,
+                  "character_id": "0000000000000000000000000000000000000000000000000000000000000019",
+                  "goods": 2,
+                  "grey_goods": 0,
+                  "hard": 0,
+                  "idx": 1,
+                  "influence": 1,
+                  "insider": false,
+                  "is_president": true,
+                  "name": "Trader3",
+                  "promissory": 0,
+                  "registration": {
+                    "commitment": "confirmed",
+                    "fee_lamports": "0",
+                    "mode": "agent_lifecycle_v2",
+                    "network": "devnet",
+                    "signature": "offline-fixture",
+                    "slot": 0,
+                    "wallet": "6c5fX1cKYGRNNbozjDdUr2s5vfUuS1XTistmZeG2kZY6"
+                  },
+                  "roof_to": null,
+                  "vote_weight": 1,
+                  "voted": false
+                }
+              ],
+              "game_id": 2,
+              "grace_s": 0,
+              "grace_until": 1792186861,
+              "label": "TEST_STRATEGY_REUSE_2",
+              "last_law_passed": false,
+              "law_card": null,
+              "law_card_name": null,
+              "laws_passed": 0,
+              "license_auction": null,
+              "no_influence": 0,
+              "now": 1792186561,
+              "party_no": 20,
+              "phase": "market",
+              "phase_ends_at": 1792186861,
+              "phase_instance_id": "g2-r2-market-1792186861",
+              "president_idx": 1,
+              "price_next": 10,
+              "price_now": 12,
+              "price_shift": 0,
+              "price_table": [
+                12,
+                10,
+                9,
+                8,
+                7,
+                6,
+                5,
+                4,
+                3,
+                3,
+                2,
+                2,
+                2,
+                1,
+                1,
+                1
+              ],
+              "recent_actions": [
+                {
+                  "action": "produce",
+                  "actor": 1,
+                  "by": "llm",
+                  "event_id": "2:20:1",
+                  "ok": true,
+                  "phase": "action",
+                  "round": 1,
+                  "seq": 1,
+                  "ts": 1792186560
+                },
+                {
+                  "action": "produce",
+                  "actor": 0,
+                  "by": "llm",
+                  "event_id": "2:20:2",
+                  "ok": true,
+                  "phase": "action",
+                  "round": 1,
+                  "seq": 2,
+                  "ts": 1792186561
+                }
+              ],
+              "recent_actions_range": {
+                "first_seq": 1,
+                "last_seq": 2,
+                "limit": 12,
+                "retained_first_seq": 1
+              },
+              "registration_mode": "devnet_agent_lifecycle_v2",
+              "round": 2,
+              "settlement_error": null,
+              "sold_counter": 0,
+              "tax_bps": 0,
+              "veto_pending": false,
+              "vote_weight_mode": 0,
+              "yes_influence": 0
+            },
+            "participants": [
+              {
+                "actor": "0",
+                "cash": "0",
+                "goods": 2,
+                "wallet": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD"
+              },
+              {
+                "actor": "1",
+                "cash": "0",
+                "goods": 2,
+                "wallet": "6c5fX1cKYGRNNbozjDdUr2s5vfUuS1XTistmZeG2kZY6"
+              }
+            ],
+            "phase": "market",
+            "phase_ends_at": 1792186861,
+            "round": 2
+          }
+        },
+        "created_at": 1792186561,
+        "deadline_at": 1792186741,
+        "id": "ef54db54ed6f006a088593b57bf34f0c803357073277ac11b6b0024241182774",
+        "revealed": true,
+        "started_at": 1792186561
+      }
+    ],
+    "execution": "agent_challenges",
+    "ok": true,
+    "runs": [
+      {
+        "ad_performance": "not_measured",
+        "brief": {
+          "audience": "Agent owners",
+          "budget": 20000,
+          "cta": "",
+          "facts": [
+            "One alashi is 1000000 game units.",
+            "Market prices depend on transaction order."
+          ],
+          "match_key": "produce-1",
+          "max_words": 0,
+          "owner": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD",
+          "required_terms": [],
+          "round_seconds": 180,
+          "task": "Produce goods using the current game rules.",
+          "title": "action with equal initial resources",
+          "trading": {
+            "after": 3,
+            "captured_at": 1792186554,
+            "game": "1",
+            "mode": "http",
+            "observation": {
+              "amnesty_used": false,
+              "barter_offers": [],
+              "bids_close_at": null,
+              "boom": 0,
+              "customs_decided": false,
+              "entry_fee": 1,
+              "epoch": "classic",
+              "execution_mode": "http_simulated",
+              "factions": [
+                {
+                  "acted": false,
+                  "acted_stamp": 0,
+                  "agent_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "agent_record_id": "0000000000000000000000000000000000000000000000000000000000000029",
+                  "alive": true,
+                  "cash": 0,
+                  "cash_available": 0,
+                  "character_id": "0000000000000000000000000000000000000000000000000000000000000017",
+                  "goods": 0,
+                  "grey_goods": 0,
+                  "hard": 0,
+                  "idx": 0,
+                  "influence": 1,
+                  "insider": false,
+                  "is_president": false,
+                  "name": "Trader1",
+                  "promissory": 0,
+                  "registration": {
+                    "commitment": "confirmed",
+                    "fee_lamports": "0",
+                    "mode": "agent_lifecycle_v2",
+                    "network": "devnet",
+                    "signature": "offline-fixture",
+                    "slot": 0,
+                    "wallet": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD"
+                  },
+                  "roof_to": null,
+                  "vote_weight": 1,
+                  "voted": false
+                },
+                {
+                  "acted": false,
+                  "acted_stamp": 0,
+                  "agent_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "agent_record_id": "000000000000000000000000000000000000000000000000000000000000002a",
+                  "alive": true,
+                  "cash": 0,
+                  "cash_available": 0,
+                  "character_id": "0000000000000000000000000000000000000000000000000000000000000018",
+                  "goods": 0,
+                  "grey_goods": 0,
+                  "hard": 0,
+                  "idx": 1,
+                  "influence": 1,
+                  "insider": false,
+                  "is_president": false,
+                  "name": "Trader2",
+                  "promissory": 0,
+                  "registration": {
+                    "commitment": "confirmed",
+                    "fee_lamports": "0",
+                    "mode": "agent_lifecycle_v2",
+                    "network": "devnet",
+                    "signature": "offline-fixture",
+                    "slot": 0,
+                    "wallet": "4MfyR4G3NWfVRDWo6iNAHDBZqWMgwZX6FNtMqEW3a9JT"
+                  },
+                  "roof_to": null,
+                  "vote_weight": 1,
+                  "voted": false
+                }
+              ],
+              "game_id": 1,
+              "grace_s": 0,
+              "grace_until": 1792186854,
+              "label": "TEST_STRATEGY_REUSE_1",
+              "last_law_passed": false,
+              "law_card": null,
+              "law_card_name": null,
+              "laws_passed": 0,
+              "license_auction": null,
+              "no_influence": 0,
+              "now": 1792186554,
+              "party_no": 19,
+              "phase": "action",
+              "phase_ends_at": 1792186854,
+              "phase_instance_id": "g1-r1-action-1792186854",
+              "president_idx": null,
+              "price_next": 10,
+              "price_now": 12,
+              "price_shift": 0,
+              "price_table": [
+                12,
+                10,
+                9,
+                8,
+                7,
+                6,
+                5,
+                4,
+                3,
+                3,
+                2,
+                2,
+                2,
+                1,
+                1,
+                1
+              ],
+              "recent_actions": [],
+              "recent_actions_range": {
+                "first_seq": null,
+                "last_seq": null,
+                "limit": 12,
+                "retained_first_seq": null
+              },
+              "registration_mode": "devnet_agent_lifecycle_v2",
+              "round": 1,
+              "settlement_error": null,
+              "sold_counter": 0,
+              "tax_bps": 0,
+              "veto_pending": false,
+              "vote_weight_mode": 0,
+              "yes_influence": 0
+            },
+            "participants": [
+              {
+                "actor": "0",
+                "cash": "0",
+                "goods": 0,
+                "wallet": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD"
+              },
+              {
+                "actor": "1",
+                "cash": "0",
+                "goods": 0,
+                "wallet": "4MfyR4G3NWfVRDWo6iNAHDBZqWMgwZX6FNtMqEW3a9JT"
+              }
+            ],
+            "phase": "action",
+            "phase_ends_at": 1792186854,
+            "round": 1
+          }
+        },
+        "budget": 20000,
+        "calls": {
+          "deliver": {
+            "finished_at": 1792186556,
+            "model": "TEST-loopback",
+            "provider": "http://127.0.0.1:51713",
+            "quality_passed": true,
+            "report_hash": "145aca3b23cec6b93f98c38c94f16807f68649d0e0a2f495547242632b7925bd",
+            "reserved": 6639,
+            "response_id": "TEST-produce-1-4MfyR4G3NWfVRDWo6iNAHDBZqWMgwZX6FNtMqEW3a9JT-deliver",
+            "source": "test_provider",
+            "started_at": 1792186556,
+            "status": "reported",
+            "task": "deliver",
+            "usage": {
+              "cached_tokens": 0,
+              "completion_tokens": 20,
+              "prompt_tokens": 100,
+              "total_tokens": 120
+            }
+          },
+          "state": {
+            "finished_at": 1792186555,
+            "model": "none",
+            "provider": "alashi-local-tools",
+            "quality_passed": true,
+            "report_hash": "dac9d2314afaabbb25aa4cc0c988cc240a1bef86b1f6cd50943ef80231bf1a83",
+            "reserved": 0,
+            "response_id": null,
+            "source": "local_tool",
+            "started_at": 1792186555,
+            "status": "reported",
+            "task": "state",
+            "usage": {
+              "cached_tokens": 0,
+              "completion_tokens": 0,
+              "prompt_tokens": 0,
+              "total_tokens": 0
+            }
+          }
+        },
+        "challenge": "9def49d9775039eecce4fa21d2052471b6fa1850a24396d53572f3e434c15a5c",
+        "created_at": 1792186554,
+        "deadline_at": 1792186734,
+        "events": [
+          {
+            "at": 1792186554,
+            "kind": "run_started",
+            "seq": 1,
+            "task": "chief"
+          },
+          {
+            "at": 1792186555,
+            "kind": "task_started",
+            "seq": 2,
+            "task": "state"
+          },
+          {
+            "at": 1792186555,
+            "kind": "report_checked",
+            "seq": 3,
+            "task": "state"
+          },
+          {
+            "at": 1792186556,
+            "kind": "task_started",
+            "seq": 4,
+            "task": "deliver"
+          },
+          {
+            "at": 1792186556,
+            "kind": "report_checked",
+            "seq": 5,
+            "task": "deliver"
+          },
+          {
+            "at": 1792186556,
+            "kind": "trade_confirmed",
+            "seq": 6,
+            "task": "chief"
+          }
+        ],
+        "id": "2e40b23253324236c20f87271cbaf5d26a05ade3ce16b9e7affc9d1e6712d642",
+        "known_tokens": 120,
+        "monetary_cost": null,
+        "owner": "4MfyR4G3NWfVRDWo6iNAHDBZqWMgwZX6FNtMqEW3a9JT",
+        "plan": [
+          {
+            "depends_on": [],
+            "id": "state",
+            "kind": "tool",
+            "tool": "trade_state"
+          },
+          {
+            "depends_on": [
+              "state"
+            ],
+            "id": "deliver",
+            "kind": "model",
+            "tool": null
+          }
+        ],
+        "record": "000000000000000000000000000000000000000000000000000000000000002a",
+        "reserved_tokens": 0,
+        "result": {
+          "artifact": {
+            "action": "produce",
+            "params": {}
+          },
+          "checks": {
+            "limit": "decision_format_only_until_a_matching_game_receipt_is_confirmed",
+            "params": true,
+            "passed": true,
+            "phase_action": true,
+            "schema": true
+          },
+          "finished_at": 1792186556,
+          "trade_receipt": {
+            "action": "produce",
+            "actor": "1",
+            "cash_delta": "0",
+            "confirmed_at": 1792186556,
+            "event": {
+              "action_ref": {
+                "action": "produce",
+                "actor": 1,
+                "params": {},
+                "result": {
+                  "cash_after": 0,
+                  "changes": [
+                    {
+                      "actor": 1,
+                      "cash_after": 0,
+                      "cash_before": 0,
+                      "goods_after": 2,
+                      "goods_before": 0,
+                      "influence_after": 1,
+                      "influence_before": 1
+                    }
+                  ],
+                  "goods_after": 2
+                },
+                "seq": 1
+              },
+              "branch_id": "MAIN",
+              "created_at_epoch": 1792186556,
+              "event_id": "live-4",
+              "finality": "final",
+              "game_id": 1,
+              "kind": "game_action",
+              "phase": "action",
+              "phase_instance_id": "g1-r1-action-1792186854",
+              "room_id": "game:1",
+              "round": 1,
+              "seq": 4,
+              "server_created_at": "2026-10-16T21:35:56Z",
+              "visibility": "public"
+            },
+            "event_id": "live-4",
+            "game": "1",
+            "goods_delta": 2,
+            "mode": "http",
+            "params": {},
+            "source": "server_accepted_rule_action"
+          }
+        },
+        "reveal_pending": false,
+        "review": null,
+        "seat": 1,
+        "status": "completed",
+        "test_provider": true,
+        "unknown_usage": false,
+        "usage_trust": "owner_submitted_provider_receipts",
+        "version": "8146a535948fe6d5fd96410d7f93e91c3ba7421ae1a0996de9ab9c6b936079c7"
+      },
+      {
+        "ad_performance": "not_measured",
+        "brief": {
+          "audience": "Agent owners",
+          "budget": 20000,
+          "cta": "",
+          "facts": [
+            "One alashi is 1000000 game units.",
+            "Market prices depend on transaction order."
+          ],
+          "match_key": "sell-2",
+          "max_words": 0,
+          "owner": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD",
+          "required_terms": [],
+          "round_seconds": 180,
+          "task": "Sell two goods. Compare the actual receipt and model tokens.",
+          "title": "market with equal initial resources",
+          "trading": {
+            "after": 32,
+            "captured_at": 1792186561,
+            "game": "2",
+            "mode": "http",
+            "observation": {
+              "amnesty_used": false,
+              "barter_offers": [],
+              "bids_close_at": null,
+              "boom": 0,
+              "customs_decided": false,
+              "entry_fee": 1,
+              "epoch": "classic",
+              "execution_mode": "http_simulated",
+              "factions": [
+                {
+                  "acted": false,
+                  "acted_stamp": 10,
+                  "agent_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "agent_record_id": "0000000000000000000000000000000000000000000000000000000000000029",
+                  "alive": true,
+                  "cash": 0,
+                  "cash_available": 0,
+                  "character_id": "0000000000000000000000000000000000000000000000000000000000000017",
+                  "goods": 2,
+                  "grey_goods": 0,
+                  "hard": 0,
+                  "idx": 0,
+                  "influence": 1,
+                  "insider": false,
+                  "is_president": false,
+                  "name": "Trader1",
+                  "promissory": 0,
+                  "registration": {
+                    "commitment": "confirmed",
+                    "fee_lamports": "0",
+                    "mode": "agent_lifecycle_v2",
+                    "network": "devnet",
+                    "signature": "offline-fixture",
+                    "slot": 0,
+                    "wallet": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD"
+                  },
+                  "roof_to": null,
+                  "vote_weight": 1,
+                  "voted": false
+                },
+                {
+                  "acted": false,
+                  "acted_stamp": 10,
+                  "agent_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "agent_record_id": "000000000000000000000000000000000000000000000000000000000000002b",
+                  "alive": true,
+                  "cash": 0,
+                  "cash_available": 0,
+                  "character_id": "0000000000000000000000000000000000000000000000000000000000000019",
+                  "goods": 2,
+                  "grey_goods": 0,
+                  "hard": 0,
+                  "idx": 1,
+                  "influence": 1,
+                  "insider": false,
+                  "is_president": true,
+                  "name": "Trader3",
+                  "promissory": 0,
+                  "registration": {
+                    "commitment": "confirmed",
+                    "fee_lamports": "0",
+                    "mode": "agent_lifecycle_v2",
+                    "network": "devnet",
+                    "signature": "offline-fixture",
+                    "slot": 0,
+                    "wallet": "6c5fX1cKYGRNNbozjDdUr2s5vfUuS1XTistmZeG2kZY6"
+                  },
+                  "roof_to": null,
+                  "vote_weight": 1,
+                  "voted": false
+                }
+              ],
+              "game_id": 2,
+              "grace_s": 0,
+              "grace_until": 1792186861,
+              "label": "TEST_STRATEGY_REUSE_2",
+              "last_law_passed": false,
+              "law_card": null,
+              "law_card_name": null,
+              "laws_passed": 0,
+              "license_auction": null,
+              "no_influence": 0,
+              "now": 1792186561,
+              "party_no": 20,
+              "phase": "market",
+              "phase_ends_at": 1792186861,
+              "phase_instance_id": "g2-r2-market-1792186861",
+              "president_idx": 1,
+              "price_next": 10,
+              "price_now": 12,
+              "price_shift": 0,
+              "price_table": [
+                12,
+                10,
+                9,
+                8,
+                7,
+                6,
+                5,
+                4,
+                3,
+                3,
+                2,
+                2,
+                2,
+                1,
+                1,
+                1
+              ],
+              "recent_actions": [
+                {
+                  "action": "produce",
+                  "actor": 1,
+                  "by": "llm",
+                  "event_id": "2:20:1",
+                  "ok": true,
+                  "phase": "action",
+                  "round": 1,
+                  "seq": 1,
+                  "ts": 1792186560
+                },
+                {
+                  "action": "produce",
+                  "actor": 0,
+                  "by": "llm",
+                  "event_id": "2:20:2",
+                  "ok": true,
+                  "phase": "action",
+                  "round": 1,
+                  "seq": 2,
+                  "ts": 1792186561
+                }
+              ],
+              "recent_actions_range": {
+                "first_seq": 1,
+                "last_seq": 2,
+                "limit": 12,
+                "retained_first_seq": 1
+              },
+              "registration_mode": "devnet_agent_lifecycle_v2",
+              "round": 2,
+              "settlement_error": null,
+              "sold_counter": 0,
+              "tax_bps": 0,
+              "veto_pending": false,
+              "vote_weight_mode": 0,
+              "yes_influence": 0
+            },
+            "participants": [
+              {
+                "actor": "0",
+                "cash": "0",
+                "goods": 2,
+                "wallet": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD"
+              },
+              {
+                "actor": "1",
+                "cash": "0",
+                "goods": 2,
+                "wallet": "6c5fX1cKYGRNNbozjDdUr2s5vfUuS1XTistmZeG2kZY6"
+              }
+            ],
+            "phase": "market",
+            "phase_ends_at": 1792186861,
+            "round": 2
+          }
+        },
+        "budget": 20000,
+        "calls": {
+          "deliver": {
+            "finished_at": 1792186562,
+            "model": "TEST-loopback",
+            "provider": "http://127.0.0.1:52045",
+            "quality_passed": true,
+            "report_hash": "b132f337cff48c7326ad6020696d50e2bae173fa8a13767a332a26ae8d7c960f",
+            "reserved": 6945,
+            "response_id": "TEST-sell-2-6c5fX1cKYGRNNbozjDdUr2s5vfUuS1XTistmZeG2kZY6-deliver",
+            "source": "test_provider",
+            "started_at": 1792186562,
+            "status": "reported",
+            "task": "deliver",
+            "usage": {
+              "cached_tokens": 0,
+              "completion_tokens": 20,
+              "prompt_tokens": 100,
+              "total_tokens": 120
+            }
+          },
+          "state": {
+            "finished_at": 1792186562,
+            "model": "none",
+            "provider": "alashi-local-tools",
+            "quality_passed": true,
+            "report_hash": "4185ce50d288f4867b8f9cc83b8a71fc80e6aeb59f352a7195f8f3ae256bae1d",
+            "reserved": 0,
+            "response_id": null,
+            "source": "local_tool",
+            "started_at": 1792186562,
+            "status": "reported",
+            "task": "state",
+            "usage": {
+              "cached_tokens": 0,
+              "completion_tokens": 0,
+              "prompt_tokens": 0,
+              "total_tokens": 0
+            }
+          }
+        },
+        "challenge": "ef54db54ed6f006a088593b57bf34f0c803357073277ac11b6b0024241182774",
+        "created_at": 1792186561,
+        "deadline_at": 1792186741,
+        "events": [
+          {
+            "at": 1792186561,
+            "kind": "run_started",
+            "seq": 1,
+            "task": "chief"
+          },
+          {
+            "at": 1792186562,
+            "kind": "task_started",
+            "seq": 2,
+            "task": "state"
+          },
+          {
+            "at": 1792186562,
+            "kind": "report_checked",
+            "seq": 3,
+            "task": "state"
+          },
+          {
+            "at": 1792186562,
+            "kind": "task_started",
+            "seq": 4,
+            "task": "deliver"
+          },
+          {
+            "at": 1792186562,
+            "kind": "report_checked",
+            "seq": 5,
+            "task": "deliver"
+          },
+          {
+            "at": 1792186562,
+            "kind": "trade_confirmed",
+            "seq": 6,
+            "task": "chief"
+          }
+        ],
+        "id": "5d80aeba7d7d3ec6b1ddcc52c3bc98525fdf354f516e0ad0d4880b6c1c4b757e",
+        "known_tokens": 120,
+        "monetary_cost": null,
+        "owner": "6c5fX1cKYGRNNbozjDdUr2s5vfUuS1XTistmZeG2kZY6",
+        "plan": [
+          {
+            "depends_on": [],
+            "id": "state",
+            "kind": "tool",
+            "tool": "trade_state"
+          },
+          {
+            "depends_on": [
+              "state"
+            ],
+            "id": "deliver",
+            "kind": "model",
+            "tool": null
+          }
+        ],
+        "record": "000000000000000000000000000000000000000000000000000000000000002b",
+        "reserved_tokens": 0,
+        "result": {
+          "artifact": {
+            "action": "sell",
+            "params": {
+              "units": 2
+            }
+          },
+          "checks": {
+            "limit": "decision_format_only_until_a_matching_game_receipt_is_confirmed",
+            "params": true,
+            "passed": true,
+            "phase_action": true,
+            "schema": true
+          },
+          "finished_at": 1792186562,
+          "trade_receipt": {
+            "action": "sell",
+            "actor": "1",
+            "cash_delta": "22000000",
+            "confirmed_at": 1792186562,
+            "event": {
+              "action_ref": {
+                "action": "sell",
+                "actor": 1,
+                "params": {
+                  "units": 2
+                },
+                "result": {
+                  "cash_after": 22000000,
+                  "changes": [
+                    {
+                      "actor": 1,
+                      "cash_after": 22000000,
+                      "cash_before": 0,
+                      "goods_after": 0,
+                      "goods_before": 2,
+                      "influence_after": 1,
+                      "influence_before": 1
+                    }
+                  ],
+                  "goods_after": 0
+                },
+                "seq": 3
+              },
+              "branch_id": "MAIN",
+              "created_at_epoch": 1792186562,
+              "event_id": "live-33",
+              "finality": "final",
+              "game_id": 2,
+              "kind": "game_action",
+              "phase": "market",
+              "phase_instance_id": "g2-r2-market-1792186861",
+              "room_id": "game:2",
+              "round": 2,
+              "seq": 33,
+              "server_created_at": "2026-10-16T21:36:02Z",
+              "visibility": "public"
+            },
+            "event_id": "live-33",
+            "game": "2",
+            "goods_delta": -2,
+            "mode": "http",
+            "params": {
+              "units": 2
+            },
+            "source": "server_accepted_rule_action"
+          }
+        },
+        "reveal_pending": false,
+        "review": null,
+        "seat": 1,
+        "status": "completed",
+        "test_provider": true,
+        "unknown_usage": false,
+        "usage_trust": "owner_submitted_provider_receipts",
+        "version": "8146a535948fe6d5fd96410d7f93e91c3ba7421ae1a0996de9ab9c6b936079c7"
+      },
+      {
+        "ad_performance": "not_measured",
+        "brief": {
+          "audience": "Agent owners",
+          "budget": 20000,
+          "cta": "",
+          "facts": [
+            "One alashi is 1000000 game units.",
+            "Market prices depend on transaction order."
+          ],
+          "match_key": "produce-2",
+          "max_words": 0,
+          "owner": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD",
+          "required_terms": [],
+          "round_seconds": 180,
+          "task": "Produce goods using the current game rules.",
+          "title": "action with equal initial resources",
+          "trading": {
+            "after": 28,
+            "captured_at": 1792186559,
+            "game": "2",
+            "mode": "http",
+            "observation": {
+              "amnesty_used": false,
+              "barter_offers": [],
+              "bids_close_at": null,
+              "boom": 0,
+              "customs_decided": false,
+              "entry_fee": 1,
+              "epoch": "classic",
+              "execution_mode": "http_simulated",
+              "factions": [
+                {
+                  "acted": false,
+                  "acted_stamp": 0,
+                  "agent_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "agent_record_id": "0000000000000000000000000000000000000000000000000000000000000029",
+                  "alive": true,
+                  "cash": 0,
+                  "cash_available": 0,
+                  "character_id": "0000000000000000000000000000000000000000000000000000000000000017",
+                  "goods": 0,
+                  "grey_goods": 0,
+                  "hard": 0,
+                  "idx": 0,
+                  "influence": 1,
+                  "insider": false,
+                  "is_president": false,
+                  "name": "Trader1",
+                  "promissory": 0,
+                  "registration": {
+                    "commitment": "confirmed",
+                    "fee_lamports": "0",
+                    "mode": "agent_lifecycle_v2",
+                    "network": "devnet",
+                    "signature": "offline-fixture",
+                    "slot": 0,
+                    "wallet": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD"
+                  },
+                  "roof_to": null,
+                  "vote_weight": 1,
+                  "voted": false
+                },
+                {
+                  "acted": false,
+                  "acted_stamp": 0,
+                  "agent_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "agent_record_id": "000000000000000000000000000000000000000000000000000000000000002b",
+                  "alive": true,
+                  "cash": 0,
+                  "cash_available": 0,
+                  "character_id": "0000000000000000000000000000000000000000000000000000000000000019",
+                  "goods": 0,
+                  "grey_goods": 0,
+                  "hard": 0,
+                  "idx": 1,
+                  "influence": 1,
+                  "insider": false,
+                  "is_president": false,
+                  "name": "Trader3",
+                  "promissory": 0,
+                  "registration": {
+                    "commitment": "confirmed",
+                    "fee_lamports": "0",
+                    "mode": "agent_lifecycle_v2",
+                    "network": "devnet",
+                    "signature": "offline-fixture",
+                    "slot": 0,
+                    "wallet": "6c5fX1cKYGRNNbozjDdUr2s5vfUuS1XTistmZeG2kZY6"
+                  },
+                  "roof_to": null,
+                  "vote_weight": 1,
+                  "voted": false
+                }
+              ],
+              "game_id": 2,
+              "grace_s": 0,
+              "grace_until": 1792186859,
+              "label": "TEST_STRATEGY_REUSE_2",
+              "last_law_passed": false,
+              "law_card": null,
+              "law_card_name": null,
+              "laws_passed": 0,
+              "license_auction": null,
+              "no_influence": 0,
+              "now": 1792186559,
+              "party_no": 20,
+              "phase": "action",
+              "phase_ends_at": 1792186859,
+              "phase_instance_id": "g2-r1-action-1792186859",
+              "president_idx": null,
+              "price_next": 10,
+              "price_now": 12,
+              "price_shift": 0,
+              "price_table": [
+                12,
+                10,
+                9,
+                8,
+                7,
+                6,
+                5,
+                4,
+                3,
+                3,
+                2,
+                2,
+                2,
+                1,
+                1,
+                1
+              ],
+              "recent_actions": [],
+              "recent_actions_range": {
+                "first_seq": null,
+                "last_seq": null,
+                "limit": 12,
+                "retained_first_seq": null
+              },
+              "registration_mode": "devnet_agent_lifecycle_v2",
+              "round": 1,
+              "settlement_error": null,
+              "sold_counter": 0,
+              "tax_bps": 0,
+              "veto_pending": false,
+              "vote_weight_mode": 0,
+              "yes_influence": 0
+            },
+            "participants": [
+              {
+                "actor": "0",
+                "cash": "0",
+                "goods": 0,
+                "wallet": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD"
+              },
+              {
+                "actor": "1",
+                "cash": "0",
+                "goods": 0,
+                "wallet": "6c5fX1cKYGRNNbozjDdUr2s5vfUuS1XTistmZeG2kZY6"
+              }
+            ],
+            "phase": "action",
+            "phase_ends_at": 1792186859,
+            "round": 1
+          }
+        },
+        "budget": 20000,
+        "calls": {
+          "deliver": {
+            "finished_at": 1792186560,
+            "model": "TEST-loopback",
+            "provider": "http://127.0.0.1:51977",
+            "quality_passed": true,
+            "report_hash": "145aca3b23cec6b93f98c38c94f16807f68649d0e0a2f495547242632b7925bd",
+            "reserved": 6640,
+            "response_id": "TEST-produce-2-6c5fX1cKYGRNNbozjDdUr2s5vfUuS1XTistmZeG2kZY6-deliver",
+            "source": "test_provider",
+            "started_at": 1792186560,
+            "status": "reported",
+            "task": "deliver",
+            "usage": {
+              "cached_tokens": 0,
+              "completion_tokens": 20,
+              "prompt_tokens": 100,
+              "total_tokens": 120
+            }
+          },
+          "state": {
+            "finished_at": 1792186560,
+            "model": "none",
+            "provider": "alashi-local-tools",
+            "quality_passed": true,
+            "report_hash": "d65971f96d3f59043032852878cc475b33fd2664d9562545512c5ad59d2453de",
+            "reserved": 0,
+            "response_id": null,
+            "source": "local_tool",
+            "started_at": 1792186560,
+            "status": "reported",
+            "task": "state",
+            "usage": {
+              "cached_tokens": 0,
+              "completion_tokens": 0,
+              "prompt_tokens": 0,
+              "total_tokens": 0
+            }
+          }
+        },
+        "challenge": "df7046e1628b0d8a40b1164a6d00208ced4d27493f0ab2fc1672e2e8cb3533bc",
+        "created_at": 1792186559,
+        "deadline_at": 1792186739,
+        "events": [
+          {
+            "at": 1792186559,
+            "kind": "run_started",
+            "seq": 1,
+            "task": "chief"
+          },
+          {
+            "at": 1792186560,
+            "kind": "task_started",
+            "seq": 2,
+            "task": "state"
+          },
+          {
+            "at": 1792186560,
+            "kind": "report_checked",
+            "seq": 3,
+            "task": "state"
+          },
+          {
+            "at": 1792186560,
+            "kind": "task_started",
+            "seq": 4,
+            "task": "deliver"
+          },
+          {
+            "at": 1792186560,
+            "kind": "report_checked",
+            "seq": 5,
+            "task": "deliver"
+          },
+          {
+            "at": 1792186560,
+            "kind": "trade_confirmed",
+            "seq": 6,
+            "task": "chief"
+          }
+        ],
+        "id": "5f17bee6941654922fe0a2c7804ecc2662f11f86bfdb3f36780622652cea0483",
+        "known_tokens": 120,
+        "monetary_cost": null,
+        "owner": "6c5fX1cKYGRNNbozjDdUr2s5vfUuS1XTistmZeG2kZY6",
+        "plan": [
+          {
+            "depends_on": [],
+            "id": "state",
+            "kind": "tool",
+            "tool": "trade_state"
+          },
+          {
+            "depends_on": [
+              "state"
+            ],
+            "id": "deliver",
+            "kind": "model",
+            "tool": null
+          }
+        ],
+        "record": "000000000000000000000000000000000000000000000000000000000000002b",
+        "reserved_tokens": 0,
+        "result": {
+          "artifact": {
+            "action": "produce",
+            "params": {}
+          },
+          "checks": {
+            "limit": "decision_format_only_until_a_matching_game_receipt_is_confirmed",
+            "params": true,
+            "passed": true,
+            "phase_action": true,
+            "schema": true
+          },
+          "finished_at": 1792186560,
+          "trade_receipt": {
+            "action": "produce",
+            "actor": "1",
+            "cash_delta": "0",
+            "confirmed_at": 1792186560,
+            "event": {
+              "action_ref": {
+                "action": "produce",
+                "actor": 1,
+                "params": {},
+                "result": {
+                  "cash_after": 0,
+                  "changes": [
+                    {
+                      "actor": 1,
+                      "cash_after": 0,
+                      "cash_before": 0,
+                      "goods_after": 2,
+                      "goods_before": 0,
+                      "influence_after": 1,
+                      "influence_before": 1
+                    }
+                  ],
+                  "goods_after": 2
+                },
+                "seq": 1
+              },
+              "branch_id": "MAIN",
+              "created_at_epoch": 1792186560,
+              "event_id": "live-29",
+              "finality": "final",
+              "game_id": 2,
+              "kind": "game_action",
+              "phase": "action",
+              "phase_instance_id": "g2-r1-action-1792186859",
+              "room_id": "game:2",
+              "round": 1,
+              "seq": 29,
+              "server_created_at": "2026-10-16T21:36:00Z",
+              "visibility": "public"
+            },
+            "event_id": "live-29",
+            "game": "2",
+            "goods_delta": 2,
+            "mode": "http",
+            "params": {},
+            "source": "server_accepted_rule_action"
+          }
+        },
+        "reveal_pending": false,
+        "review": null,
+        "seat": 1,
+        "status": "completed",
+        "test_provider": true,
+        "unknown_usage": false,
+        "usage_trust": "owner_submitted_provider_receipts",
+        "version": "8146a535948fe6d5fd96410d7f93e91c3ba7421ae1a0996de9ab9c6b936079c7"
+      },
+      {
+        "ad_performance": "not_measured",
+        "brief": {
+          "audience": "Agent owners",
+          "budget": 20000,
+          "cta": "",
+          "facts": [
+            "One alashi is 1000000 game units.",
+            "Market prices depend on transaction order."
+          ],
+          "match_key": "sell-1",
+          "max_words": 0,
+          "owner": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD",
+          "required_terms": [],
+          "round_seconds": 180,
+          "task": "Sell two goods. Compare the actual receipt and model tokens.",
+          "title": "market with equal initial resources",
+          "trading": {
+            "after": 7,
+            "captured_at": 1792186556,
+            "game": "1",
+            "mode": "http",
+            "observation": {
+              "amnesty_used": false,
+              "barter_offers": [],
+              "bids_close_at": null,
+              "boom": 0,
+              "customs_decided": false,
+              "entry_fee": 1,
+              "epoch": "classic",
+              "execution_mode": "http_simulated",
+              "factions": [
+                {
+                  "acted": false,
+                  "acted_stamp": 10,
+                  "agent_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "agent_record_id": "0000000000000000000000000000000000000000000000000000000000000029",
+                  "alive": true,
+                  "cash": 0,
+                  "cash_available": 0,
+                  "character_id": "0000000000000000000000000000000000000000000000000000000000000017",
+                  "goods": 2,
+                  "grey_goods": 0,
+                  "hard": 0,
+                  "idx": 0,
+                  "influence": 1,
+                  "insider": false,
+                  "is_president": true,
+                  "name": "Trader1",
+                  "promissory": 0,
+                  "registration": {
+                    "commitment": "confirmed",
+                    "fee_lamports": "0",
+                    "mode": "agent_lifecycle_v2",
+                    "network": "devnet",
+                    "signature": "offline-fixture",
+                    "slot": 0,
+                    "wallet": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD"
+                  },
+                  "roof_to": null,
+                  "vote_weight": 1,
+                  "voted": false
+                },
+                {
+                  "acted": false,
+                  "acted_stamp": 10,
+                  "agent_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "agent_record_id": "000000000000000000000000000000000000000000000000000000000000002a",
+                  "alive": true,
+                  "cash": 0,
+                  "cash_available": 0,
+                  "character_id": "0000000000000000000000000000000000000000000000000000000000000018",
+                  "goods": 2,
+                  "grey_goods": 0,
+                  "hard": 0,
+                  "idx": 1,
+                  "influence": 1,
+                  "insider": false,
+                  "is_president": false,
+                  "name": "Trader2",
+                  "promissory": 0,
+                  "registration": {
+                    "commitment": "confirmed",
+                    "fee_lamports": "0",
+                    "mode": "agent_lifecycle_v2",
+                    "network": "devnet",
+                    "signature": "offline-fixture",
+                    "slot": 0,
+                    "wallet": "4MfyR4G3NWfVRDWo6iNAHDBZqWMgwZX6FNtMqEW3a9JT"
+                  },
+                  "roof_to": null,
+                  "vote_weight": 1,
+                  "voted": false
+                }
+              ],
+              "game_id": 1,
+              "grace_s": 0,
+              "grace_until": 1792186856,
+              "label": "TEST_STRATEGY_REUSE_1",
+              "last_law_passed": false,
+              "law_card": null,
+              "law_card_name": null,
+              "laws_passed": 0,
+              "license_auction": null,
+              "no_influence": 0,
+              "now": 1792186556,
+              "party_no": 19,
+              "phase": "market",
+              "phase_ends_at": 1792186856,
+              "phase_instance_id": "g1-r2-market-1792186856",
+              "president_idx": 0,
+              "price_next": 10,
+              "price_now": 12,
+              "price_shift": 0,
+              "price_table": [
+                12,
+                10,
+                9,
+                8,
+                7,
+                6,
+                5,
+                4,
+                3,
+                3,
+                2,
+                2,
+                2,
+                1,
+                1,
+                1
+              ],
+              "recent_actions": [
+                {
+                  "action": "produce",
+                  "actor": 1,
+                  "by": "llm",
+                  "event_id": "1:19:1",
+                  "ok": true,
+                  "phase": "action",
+                  "round": 1,
+                  "seq": 1,
+                  "ts": 1792186556
+                },
+                {
+                  "action": "produce",
+                  "actor": 0,
+                  "by": "llm",
+                  "event_id": "1:19:2",
+                  "ok": true,
+                  "phase": "action",
+                  "round": 1,
+                  "seq": 2,
+                  "ts": 1792186556
+                }
+              ],
+              "recent_actions_range": {
+                "first_seq": 1,
+                "last_seq": 2,
+                "limit": 12,
+                "retained_first_seq": 1
+              },
+              "registration_mode": "devnet_agent_lifecycle_v2",
+              "round": 2,
+              "settlement_error": null,
+              "sold_counter": 0,
+              "tax_bps": 0,
+              "veto_pending": false,
+              "vote_weight_mode": 0,
+              "yes_influence": 0
+            },
+            "participants": [
+              {
+                "actor": "0",
+                "cash": "0",
+                "goods": 2,
+                "wallet": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD"
+              },
+              {
+                "actor": "1",
+                "cash": "0",
+                "goods": 2,
+                "wallet": "4MfyR4G3NWfVRDWo6iNAHDBZqWMgwZX6FNtMqEW3a9JT"
+              }
+            ],
+            "phase": "market",
+            "phase_ends_at": 1792186856,
+            "round": 2
+          }
+        },
+        "budget": 20000,
+        "calls": {
+          "deliver": {
+            "finished_at": 1792186558,
+            "model": "TEST-loopback",
+            "provider": "http://127.0.0.1:51853",
+            "quality_passed": true,
+            "report_hash": "b132f337cff48c7326ad6020696d50e2bae173fa8a13767a332a26ae8d7c960f",
+            "reserved": 6944,
+            "response_id": "TEST-sell-1-4MfyR4G3NWfVRDWo6iNAHDBZqWMgwZX6FNtMqEW3a9JT-deliver",
+            "source": "test_provider",
+            "started_at": 1792186558,
+            "status": "reported",
+            "task": "deliver",
+            "usage": {
+              "cached_tokens": 0,
+              "completion_tokens": 20,
+              "prompt_tokens": 100,
+              "total_tokens": 120
+            }
+          },
+          "state": {
+            "finished_at": 1792186557,
+            "model": "none",
+            "provider": "alashi-local-tools",
+            "quality_passed": true,
+            "report_hash": "7699276662d58cc4ea88b8c2274631bf91b1349aa65caf04b13ef843fdf62153",
+            "reserved": 0,
+            "response_id": null,
+            "source": "local_tool",
+            "started_at": 1792186557,
+            "status": "reported",
+            "task": "state",
+            "usage": {
+              "cached_tokens": 0,
+              "completion_tokens": 0,
+              "prompt_tokens": 0,
+              "total_tokens": 0
+            }
+          }
+        },
+        "challenge": "843b13415950ce1abb7fe2ad339584c853717470fc3e06dbe511913429cca146",
+        "created_at": 1792186556,
+        "deadline_at": 1792186736,
+        "events": [
+          {
+            "at": 1792186556,
+            "kind": "run_started",
+            "seq": 1,
+            "task": "chief"
+          },
+          {
+            "at": 1792186557,
+            "kind": "task_started",
+            "seq": 2,
+            "task": "state"
+          },
+          {
+            "at": 1792186557,
+            "kind": "report_checked",
+            "seq": 3,
+            "task": "state"
+          },
+          {
+            "at": 1792186558,
+            "kind": "task_started",
+            "seq": 4,
+            "task": "deliver"
+          },
+          {
+            "at": 1792186558,
+            "kind": "report_checked",
+            "seq": 5,
+            "task": "deliver"
+          },
+          {
+            "at": 1792186558,
+            "kind": "trade_confirmed",
+            "seq": 6,
+            "task": "chief"
+          }
+        ],
+        "id": "72d9de6ce56bb6f6b60447009570015f04bc68c378e0d4d6004670e967bcf7b2",
+        "known_tokens": 120,
+        "monetary_cost": null,
+        "owner": "4MfyR4G3NWfVRDWo6iNAHDBZqWMgwZX6FNtMqEW3a9JT",
+        "plan": [
+          {
+            "depends_on": [],
+            "id": "state",
+            "kind": "tool",
+            "tool": "trade_state"
+          },
+          {
+            "depends_on": [
+              "state"
+            ],
+            "id": "deliver",
+            "kind": "model",
+            "tool": null
+          }
+        ],
+        "record": "000000000000000000000000000000000000000000000000000000000000002a",
+        "reserved_tokens": 0,
+        "result": {
+          "artifact": {
+            "action": "sell",
+            "params": {
+              "units": 2
+            }
+          },
+          "checks": {
+            "limit": "decision_format_only_until_a_matching_game_receipt_is_confirmed",
+            "params": true,
+            "passed": true,
+            "phase_action": true,
+            "schema": true
+          },
+          "finished_at": 1792186558,
+          "trade_receipt": {
+            "action": "sell",
+            "actor": "1",
+            "cash_delta": "22000000",
+            "confirmed_at": 1792186558,
+            "event": {
+              "action_ref": {
+                "action": "sell",
+                "actor": 1,
+                "params": {
+                  "units": 2
+                },
+                "result": {
+                  "cash_after": 22000000,
+                  "changes": [
+                    {
+                      "actor": 1,
+                      "cash_after": 22000000,
+                      "cash_before": 0,
+                      "goods_after": 0,
+                      "goods_before": 2,
+                      "influence_after": 1,
+                      "influence_before": 1
+                    }
+                  ],
+                  "goods_after": 0
+                },
+                "seq": 3
+              },
+              "branch_id": "MAIN",
+              "created_at_epoch": 1792186558,
+              "event_id": "live-8",
+              "finality": "final",
+              "game_id": 1,
+              "kind": "game_action",
+              "phase": "market",
+              "phase_instance_id": "g1-r2-market-1792186856",
+              "room_id": "game:1",
+              "round": 2,
+              "seq": 8,
+              "server_created_at": "2026-10-16T21:35:58Z",
+              "visibility": "public"
+            },
+            "event_id": "live-8",
+            "game": "1",
+            "goods_delta": -2,
+            "mode": "http",
+            "params": {
+              "units": 2
+            },
+            "source": "server_accepted_rule_action"
+          }
+        },
+        "reveal_pending": false,
+        "review": null,
+        "seat": 1,
+        "status": "completed",
+        "test_provider": true,
+        "unknown_usage": false,
+        "usage_trust": "owner_submitted_provider_receipts",
+        "version": "8146a535948fe6d5fd96410d7f93e91c3ba7421ae1a0996de9ab9c6b936079c7"
+      },
+      {
+        "ad_performance": "not_measured",
+        "brief": {
+          "audience": "Agent owners",
+          "budget": 20000,
+          "cta": "",
+          "facts": [
+            "One alashi is 1000000 game units.",
+            "Market prices depend on transaction order."
+          ],
+          "match_key": "produce-1",
+          "max_words": 0,
+          "owner": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD",
+          "required_terms": [],
+          "round_seconds": 180,
+          "task": "Produce goods using the current game rules.",
+          "title": "action with equal initial resources",
+          "trading": {
+            "after": 3,
+            "captured_at": 1792186554,
+            "game": "1",
+            "mode": "http",
+            "observation": {
+              "amnesty_used": false,
+              "barter_offers": [],
+              "bids_close_at": null,
+              "boom": 0,
+              "customs_decided": false,
+              "entry_fee": 1,
+              "epoch": "classic",
+              "execution_mode": "http_simulated",
+              "factions": [
+                {
+                  "acted": false,
+                  "acted_stamp": 0,
+                  "agent_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "agent_record_id": "0000000000000000000000000000000000000000000000000000000000000029",
+                  "alive": true,
+                  "cash": 0,
+                  "cash_available": 0,
+                  "character_id": "0000000000000000000000000000000000000000000000000000000000000017",
+                  "goods": 0,
+                  "grey_goods": 0,
+                  "hard": 0,
+                  "idx": 0,
+                  "influence": 1,
+                  "insider": false,
+                  "is_president": false,
+                  "name": "Trader1",
+                  "promissory": 0,
+                  "registration": {
+                    "commitment": "confirmed",
+                    "fee_lamports": "0",
+                    "mode": "agent_lifecycle_v2",
+                    "network": "devnet",
+                    "signature": "offline-fixture",
+                    "slot": 0,
+                    "wallet": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD"
+                  },
+                  "roof_to": null,
+                  "vote_weight": 1,
+                  "voted": false
+                },
+                {
+                  "acted": false,
+                  "acted_stamp": 0,
+                  "agent_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "agent_record_id": "000000000000000000000000000000000000000000000000000000000000002a",
+                  "alive": true,
+                  "cash": 0,
+                  "cash_available": 0,
+                  "character_id": "0000000000000000000000000000000000000000000000000000000000000018",
+                  "goods": 0,
+                  "grey_goods": 0,
+                  "hard": 0,
+                  "idx": 1,
+                  "influence": 1,
+                  "insider": false,
+                  "is_president": false,
+                  "name": "Trader2",
+                  "promissory": 0,
+                  "registration": {
+                    "commitment": "confirmed",
+                    "fee_lamports": "0",
+                    "mode": "agent_lifecycle_v2",
+                    "network": "devnet",
+                    "signature": "offline-fixture",
+                    "slot": 0,
+                    "wallet": "4MfyR4G3NWfVRDWo6iNAHDBZqWMgwZX6FNtMqEW3a9JT"
+                  },
+                  "roof_to": null,
+                  "vote_weight": 1,
+                  "voted": false
+                }
+              ],
+              "game_id": 1,
+              "grace_s": 0,
+              "grace_until": 1792186854,
+              "label": "TEST_STRATEGY_REUSE_1",
+              "last_law_passed": false,
+              "law_card": null,
+              "law_card_name": null,
+              "laws_passed": 0,
+              "license_auction": null,
+              "no_influence": 0,
+              "now": 1792186554,
+              "party_no": 19,
+              "phase": "action",
+              "phase_ends_at": 1792186854,
+              "phase_instance_id": "g1-r1-action-1792186854",
+              "president_idx": null,
+              "price_next": 10,
+              "price_now": 12,
+              "price_shift": 0,
+              "price_table": [
+                12,
+                10,
+                9,
+                8,
+                7,
+                6,
+                5,
+                4,
+                3,
+                3,
+                2,
+                2,
+                2,
+                1,
+                1,
+                1
+              ],
+              "recent_actions": [],
+              "recent_actions_range": {
+                "first_seq": null,
+                "last_seq": null,
+                "limit": 12,
+                "retained_first_seq": null
+              },
+              "registration_mode": "devnet_agent_lifecycle_v2",
+              "round": 1,
+              "settlement_error": null,
+              "sold_counter": 0,
+              "tax_bps": 0,
+              "veto_pending": false,
+              "vote_weight_mode": 0,
+              "yes_influence": 0
+            },
+            "participants": [
+              {
+                "actor": "0",
+                "cash": "0",
+                "goods": 0,
+                "wallet": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD"
+              },
+              {
+                "actor": "1",
+                "cash": "0",
+                "goods": 0,
+                "wallet": "4MfyR4G3NWfVRDWo6iNAHDBZqWMgwZX6FNtMqEW3a9JT"
+              }
+            ],
+            "phase": "action",
+            "phase_ends_at": 1792186854,
+            "round": 1
+          }
+        },
+        "budget": 20000,
+        "calls": {
+          "deliver": {
+            "finished_at": 1792186556,
+            "model": "TEST-loopback",
+            "provider": "http://127.0.0.1:51713",
+            "quality_passed": true,
+            "report_hash": "145aca3b23cec6b93f98c38c94f16807f68649d0e0a2f495547242632b7925bd",
+            "reserved": 6451,
+            "response_id": "TEST-produce-1-6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD-deliver",
+            "source": "test_provider",
+            "started_at": 1792186556,
+            "status": "reported",
+            "task": "deliver",
+            "usage": {
+              "cached_tokens": 0,
+              "completion_tokens": 20,
+              "prompt_tokens": 100,
+              "total_tokens": 120
+            }
+          },
+          "market": {
+            "finished_at": 1792186556,
+            "model": "TEST-loopback",
+            "provider": "http://127.0.0.1:51713",
+            "quality_passed": true,
+            "report_hash": "b483b70700d3a2d897bbe93390aea62aed4e3409aa9cce82c1cfb972576d990a",
+            "reserved": 6287,
+            "response_id": "TEST-produce-1-6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD-market",
+            "source": "test_provider",
+            "started_at": 1792186555,
+            "status": "reported",
+            "task": "market",
+            "usage": {
+              "cached_tokens": 0,
+              "completion_tokens": 20,
+              "prompt_tokens": 100,
+              "total_tokens": 120
+            }
+          },
+          "risk": {
+            "finished_at": 1792186556,
+            "model": "TEST-loopback",
+            "provider": "http://127.0.0.1:51713",
+            "quality_passed": true,
+            "report_hash": "b483b70700d3a2d897bbe93390aea62aed4e3409aa9cce82c1cfb972576d990a",
+            "reserved": 6280,
+            "response_id": "TEST-produce-1-6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD-risk",
+            "source": "test_provider",
+            "started_at": 1792186555,
+            "status": "reported",
+            "task": "risk",
+            "usage": {
+              "cached_tokens": 0,
+              "completion_tokens": 20,
+              "prompt_tokens": 100,
+              "total_tokens": 120
+            }
+          }
+        },
+        "challenge": "9def49d9775039eecce4fa21d2052471b6fa1850a24396d53572f3e434c15a5c",
+        "created_at": 1792186554,
+        "deadline_at": 1792186734,
+        "events": [
+          {
+            "at": 1792186554,
+            "kind": "run_started",
+            "seq": 1,
+            "task": "chief"
+          },
+          {
+            "at": 1792186555,
+            "kind": "task_started",
+            "seq": 2,
+            "task": "risk"
+          },
+          {
+            "at": 1792186555,
+            "kind": "task_started",
+            "seq": 3,
+            "task": "market"
+          },
+          {
+            "at": 1792186556,
+            "kind": "report_checked",
+            "seq": 4,
+            "task": "market"
+          },
+          {
+            "at": 1792186556,
+            "kind": "report_checked",
+            "seq": 5,
+            "task": "risk"
+          },
+          {
+            "at": 1792186556,
+            "kind": "task_started",
+            "seq": 6,
+            "task": "deliver"
+          },
+          {
+            "at": 1792186556,
+            "kind": "report_checked",
+            "seq": 7,
+            "task": "deliver"
+          },
+          {
+            "at": 1792186556,
+            "kind": "trade_confirmed",
+            "seq": 8,
+            "task": "chief"
+          }
+        ],
+        "id": "a2f27bfc6f6b5c7c3b6b5307d4233f4d633fe25543f9f30cb5bd7d5052588928",
+        "known_tokens": 360,
+        "monetary_cost": null,
+        "owner": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD",
+        "plan": [
+          {
+            "depends_on": [],
+            "id": "market",
+            "kind": "model",
+            "tool": null
+          },
+          {
+            "depends_on": [],
+            "id": "risk",
+            "kind": "model",
+            "tool": null
+          },
+          {
+            "depends_on": [
+              "market",
+              "risk"
+            ],
+            "id": "deliver",
+            "kind": "model",
+            "tool": null
+          }
+        ],
+        "record": "0000000000000000000000000000000000000000000000000000000000000029",
+        "reserved_tokens": 0,
+        "result": {
+          "artifact": {
+            "action": "produce",
+            "params": {}
+          },
+          "checks": {
+            "limit": "decision_format_only_until_a_matching_game_receipt_is_confirmed",
+            "params": true,
+            "passed": true,
+            "phase_action": true,
+            "schema": true
+          },
+          "finished_at": 1792186556,
+          "trade_receipt": {
+            "action": "produce",
+            "actor": "0",
+            "cash_delta": "0",
+            "confirmed_at": 1792186556,
+            "event": {
+              "action_ref": {
+                "action": "produce",
+                "actor": 0,
+                "params": {},
+                "result": {
+                  "cash_after": 0,
+                  "changes": [
+                    {
+                      "actor": 0,
+                      "cash_after": 0,
+                      "cash_before": 0,
+                      "goods_after": 2,
+                      "goods_before": 0,
+                      "influence_after": 1,
+                      "influence_before": 1
+                    }
+                  ],
+                  "goods_after": 2
+                },
+                "seq": 2
+              },
+              "branch_id": "MAIN",
+              "created_at_epoch": 1792186556,
+              "event_id": "live-5",
+              "finality": "final",
+              "game_id": 1,
+              "kind": "game_action",
+              "phase": "action",
+              "phase_instance_id": "g1-r1-action-1792186854",
+              "room_id": "game:1",
+              "round": 1,
+              "seq": 5,
+              "server_created_at": "2026-10-16T21:35:56Z",
+              "visibility": "public"
+            },
+            "event_id": "live-5",
+            "game": "1",
+            "goods_delta": 2,
+            "mode": "http",
+            "params": {},
+            "source": "server_accepted_rule_action"
+          }
+        },
+        "reveal_pending": false,
+        "review": null,
+        "seat": 0,
+        "status": "completed",
+        "test_provider": true,
+        "unknown_usage": false,
+        "usage_trust": "owner_submitted_provider_receipts",
+        "version": "6097b17604936dce7eeb896164cb8b3fc030130124b73aabebb0c2f34d016c37"
+      },
+      {
+        "ad_performance": "not_measured",
+        "brief": {
+          "audience": "Agent owners",
+          "budget": 20000,
+          "cta": "",
+          "facts": [
+            "One alashi is 1000000 game units.",
+            "Market prices depend on transaction order."
+          ],
+          "match_key": "sell-2",
+          "max_words": 0,
+          "owner": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD",
+          "required_terms": [],
+          "round_seconds": 180,
+          "task": "Sell two goods. Compare the actual receipt and model tokens.",
+          "title": "market with equal initial resources",
+          "trading": {
+            "after": 32,
+            "captured_at": 1792186561,
+            "game": "2",
+            "mode": "http",
+            "observation": {
+              "amnesty_used": false,
+              "barter_offers": [],
+              "bids_close_at": null,
+              "boom": 0,
+              "customs_decided": false,
+              "entry_fee": 1,
+              "epoch": "classic",
+              "execution_mode": "http_simulated",
+              "factions": [
+                {
+                  "acted": false,
+                  "acted_stamp": 10,
+                  "agent_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "agent_record_id": "0000000000000000000000000000000000000000000000000000000000000029",
+                  "alive": true,
+                  "cash": 0,
+                  "cash_available": 0,
+                  "character_id": "0000000000000000000000000000000000000000000000000000000000000017",
+                  "goods": 2,
+                  "grey_goods": 0,
+                  "hard": 0,
+                  "idx": 0,
+                  "influence": 1,
+                  "insider": false,
+                  "is_president": false,
+                  "name": "Trader1",
+                  "promissory": 0,
+                  "registration": {
+                    "commitment": "confirmed",
+                    "fee_lamports": "0",
+                    "mode": "agent_lifecycle_v2",
+                    "network": "devnet",
+                    "signature": "offline-fixture",
+                    "slot": 0,
+                    "wallet": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD"
+                  },
+                  "roof_to": null,
+                  "vote_weight": 1,
+                  "voted": false
+                },
+                {
+                  "acted": false,
+                  "acted_stamp": 10,
+                  "agent_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "agent_record_id": "000000000000000000000000000000000000000000000000000000000000002b",
+                  "alive": true,
+                  "cash": 0,
+                  "cash_available": 0,
+                  "character_id": "0000000000000000000000000000000000000000000000000000000000000019",
+                  "goods": 2,
+                  "grey_goods": 0,
+                  "hard": 0,
+                  "idx": 1,
+                  "influence": 1,
+                  "insider": false,
+                  "is_president": true,
+                  "name": "Trader3",
+                  "promissory": 0,
+                  "registration": {
+                    "commitment": "confirmed",
+                    "fee_lamports": "0",
+                    "mode": "agent_lifecycle_v2",
+                    "network": "devnet",
+                    "signature": "offline-fixture",
+                    "slot": 0,
+                    "wallet": "6c5fX1cKYGRNNbozjDdUr2s5vfUuS1XTistmZeG2kZY6"
+                  },
+                  "roof_to": null,
+                  "vote_weight": 1,
+                  "voted": false
+                }
+              ],
+              "game_id": 2,
+              "grace_s": 0,
+              "grace_until": 1792186861,
+              "label": "TEST_STRATEGY_REUSE_2",
+              "last_law_passed": false,
+              "law_card": null,
+              "law_card_name": null,
+              "laws_passed": 0,
+              "license_auction": null,
+              "no_influence": 0,
+              "now": 1792186561,
+              "party_no": 20,
+              "phase": "market",
+              "phase_ends_at": 1792186861,
+              "phase_instance_id": "g2-r2-market-1792186861",
+              "president_idx": 1,
+              "price_next": 10,
+              "price_now": 12,
+              "price_shift": 0,
+              "price_table": [
+                12,
+                10,
+                9,
+                8,
+                7,
+                6,
+                5,
+                4,
+                3,
+                3,
+                2,
+                2,
+                2,
+                1,
+                1,
+                1
+              ],
+              "recent_actions": [
+                {
+                  "action": "produce",
+                  "actor": 1,
+                  "by": "llm",
+                  "event_id": "2:20:1",
+                  "ok": true,
+                  "phase": "action",
+                  "round": 1,
+                  "seq": 1,
+                  "ts": 1792186560
+                },
+                {
+                  "action": "produce",
+                  "actor": 0,
+                  "by": "llm",
+                  "event_id": "2:20:2",
+                  "ok": true,
+                  "phase": "action",
+                  "round": 1,
+                  "seq": 2,
+                  "ts": 1792186561
+                }
+              ],
+              "recent_actions_range": {
+                "first_seq": 1,
+                "last_seq": 2,
+                "limit": 12,
+                "retained_first_seq": 1
+              },
+              "registration_mode": "devnet_agent_lifecycle_v2",
+              "round": 2,
+              "settlement_error": null,
+              "sold_counter": 0,
+              "tax_bps": 0,
+              "veto_pending": false,
+              "vote_weight_mode": 0,
+              "yes_influence": 0
+            },
+            "participants": [
+              {
+                "actor": "0",
+                "cash": "0",
+                "goods": 2,
+                "wallet": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD"
+              },
+              {
+                "actor": "1",
+                "cash": "0",
+                "goods": 2,
+                "wallet": "6c5fX1cKYGRNNbozjDdUr2s5vfUuS1XTistmZeG2kZY6"
+              }
+            ],
+            "phase": "market",
+            "phase_ends_at": 1792186861,
+            "round": 2
+          }
+        },
+        "budget": 20000,
+        "calls": {
+          "deliver": {
+            "finished_at": 1792186563,
+            "model": "TEST-loopback",
+            "provider": "http://127.0.0.1:52045",
+            "quality_passed": true,
+            "report_hash": "b132f337cff48c7326ad6020696d50e2bae173fa8a13767a332a26ae8d7c960f",
+            "reserved": 6746,
+            "response_id": "TEST-sell-2-6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD-deliver",
+            "source": "test_provider",
+            "started_at": 1792186562,
+            "status": "reported",
+            "task": "deliver",
+            "usage": {
+              "cached_tokens": 0,
+              "completion_tokens": 20,
+              "prompt_tokens": 100,
+              "total_tokens": 120
+            }
+          },
+          "market": {
+            "finished_at": 1792186562,
+            "model": "TEST-loopback",
+            "provider": "http://127.0.0.1:52045",
+            "quality_passed": true,
+            "report_hash": "ca3fe7b6c94e96e43997972af585afa7c8bab8749e9874e06756114f9dcd8373",
+            "reserved": 6588,
+            "response_id": "TEST-sell-2-6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD-market",
+            "source": "test_provider",
+            "started_at": 1792186562,
+            "status": "reported",
+            "task": "market",
+            "usage": {
+              "cached_tokens": 0,
+              "completion_tokens": 20,
+              "prompt_tokens": 100,
+              "total_tokens": 120
+            }
+          },
+          "risk": {
+            "finished_at": 1792186562,
+            "model": "TEST-loopback",
+            "provider": "http://127.0.0.1:52045",
+            "quality_passed": true,
+            "report_hash": "ca3fe7b6c94e96e43997972af585afa7c8bab8749e9874e06756114f9dcd8373",
+            "reserved": 6581,
+            "response_id": "TEST-sell-2-6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD-risk",
+            "source": "test_provider",
+            "started_at": 1792186562,
+            "status": "reported",
+            "task": "risk",
+            "usage": {
+              "cached_tokens": 0,
+              "completion_tokens": 20,
+              "prompt_tokens": 100,
+              "total_tokens": 120
+            }
+          }
+        },
+        "challenge": "ef54db54ed6f006a088593b57bf34f0c803357073277ac11b6b0024241182774",
+        "created_at": 1792186561,
+        "deadline_at": 1792186741,
+        "events": [
+          {
+            "at": 1792186561,
+            "kind": "run_started",
+            "seq": 1,
+            "task": "chief"
+          },
+          {
+            "at": 1792186562,
+            "kind": "task_started",
+            "seq": 2,
+            "task": "market"
+          },
+          {
+            "at": 1792186562,
+            "kind": "task_started",
+            "seq": 3,
+            "task": "risk"
+          },
+          {
+            "at": 1792186562,
+            "kind": "report_checked",
+            "seq": 4,
+            "task": "market"
+          },
+          {
+            "at": 1792186562,
+            "kind": "report_checked",
+            "seq": 5,
+            "task": "risk"
+          },
+          {
+            "at": 1792186562,
+            "kind": "task_started",
+            "seq": 6,
+            "task": "deliver"
+          },
+          {
+            "at": 1792186563,
+            "kind": "report_checked",
+            "seq": 7,
+            "task": "deliver"
+          },
+          {
+            "at": 1792186563,
+            "kind": "trade_confirmed",
+            "seq": 8,
+            "task": "chief"
+          }
+        ],
+        "id": "b2db817b457abc2bc2ef01b4f7c84c211943bf148f50c97af664493dccfad885",
+        "known_tokens": 360,
+        "monetary_cost": null,
+        "owner": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD",
+        "plan": [
+          {
+            "depends_on": [],
+            "id": "market",
+            "kind": "model",
+            "tool": null
+          },
+          {
+            "depends_on": [],
+            "id": "risk",
+            "kind": "model",
+            "tool": null
+          },
+          {
+            "depends_on": [
+              "market",
+              "risk"
+            ],
+            "id": "deliver",
+            "kind": "model",
+            "tool": null
+          }
+        ],
+        "record": "0000000000000000000000000000000000000000000000000000000000000029",
+        "reserved_tokens": 0,
+        "result": {
+          "artifact": {
+            "action": "sell",
+            "params": {
+              "units": 2
+            }
+          },
+          "checks": {
+            "limit": "decision_format_only_until_a_matching_game_receipt_is_confirmed",
+            "params": true,
+            "passed": true,
+            "phase_action": true,
+            "schema": true
+          },
+          "finished_at": 1792186563,
+          "trade_receipt": {
+            "action": "sell",
+            "actor": "0",
+            "cash_delta": "17000000",
+            "confirmed_at": 1792186563,
+            "event": {
+              "action_ref": {
+                "action": "sell",
+                "actor": 0,
+                "params": {
+                  "units": 2
+                },
+                "result": {
+                  "cash_after": 17000000,
+                  "changes": [
+                    {
+                      "actor": 0,
+                      "cash_after": 17000000,
+                      "cash_before": 0,
+                      "goods_after": 0,
+                      "goods_before": 2,
+                      "influence_after": 1,
+                      "influence_before": 1
+                    }
+                  ],
+                  "goods_after": 0
+                },
+                "seq": 4
+              },
+              "branch_id": "MAIN",
+              "created_at_epoch": 1792186563,
+              "event_id": "live-34",
+              "finality": "final",
+              "game_id": 2,
+              "kind": "game_action",
+              "phase": "market",
+              "phase_instance_id": "g2-r2-market-1792186861",
+              "room_id": "game:2",
+              "round": 2,
+              "seq": 34,
+              "server_created_at": "2026-10-16T21:36:03Z",
+              "visibility": "public"
+            },
+            "event_id": "live-34",
+            "game": "2",
+            "goods_delta": -2,
+            "mode": "http",
+            "params": {
+              "units": 2
+            },
+            "source": "server_accepted_rule_action"
+          }
+        },
+        "reveal_pending": false,
+        "review": null,
+        "seat": 0,
+        "status": "completed",
+        "test_provider": true,
+        "unknown_usage": false,
+        "usage_trust": "owner_submitted_provider_receipts",
+        "version": "6097b17604936dce7eeb896164cb8b3fc030130124b73aabebb0c2f34d016c37"
+      },
+      {
+        "ad_performance": "not_measured",
+        "brief": {
+          "audience": "Agent owners",
+          "budget": 20000,
+          "cta": "",
+          "facts": [
+            "One alashi is 1000000 game units.",
+            "Market prices depend on transaction order."
+          ],
+          "match_key": "produce-2",
+          "max_words": 0,
+          "owner": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD",
+          "required_terms": [],
+          "round_seconds": 180,
+          "task": "Produce goods using the current game rules.",
+          "title": "action with equal initial resources",
+          "trading": {
+            "after": 28,
+            "captured_at": 1792186559,
+            "game": "2",
+            "mode": "http",
+            "observation": {
+              "amnesty_used": false,
+              "barter_offers": [],
+              "bids_close_at": null,
+              "boom": 0,
+              "customs_decided": false,
+              "entry_fee": 1,
+              "epoch": "classic",
+              "execution_mode": "http_simulated",
+              "factions": [
+                {
+                  "acted": false,
+                  "acted_stamp": 0,
+                  "agent_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "agent_record_id": "0000000000000000000000000000000000000000000000000000000000000029",
+                  "alive": true,
+                  "cash": 0,
+                  "cash_available": 0,
+                  "character_id": "0000000000000000000000000000000000000000000000000000000000000017",
+                  "goods": 0,
+                  "grey_goods": 0,
+                  "hard": 0,
+                  "idx": 0,
+                  "influence": 1,
+                  "insider": false,
+                  "is_president": false,
+                  "name": "Trader1",
+                  "promissory": 0,
+                  "registration": {
+                    "commitment": "confirmed",
+                    "fee_lamports": "0",
+                    "mode": "agent_lifecycle_v2",
+                    "network": "devnet",
+                    "signature": "offline-fixture",
+                    "slot": 0,
+                    "wallet": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD"
+                  },
+                  "roof_to": null,
+                  "vote_weight": 1,
+                  "voted": false
+                },
+                {
+                  "acted": false,
+                  "acted_stamp": 0,
+                  "agent_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "agent_record_id": "000000000000000000000000000000000000000000000000000000000000002b",
+                  "alive": true,
+                  "cash": 0,
+                  "cash_available": 0,
+                  "character_id": "0000000000000000000000000000000000000000000000000000000000000019",
+                  "goods": 0,
+                  "grey_goods": 0,
+                  "hard": 0,
+                  "idx": 1,
+                  "influence": 1,
+                  "insider": false,
+                  "is_president": false,
+                  "name": "Trader3",
+                  "promissory": 0,
+                  "registration": {
+                    "commitment": "confirmed",
+                    "fee_lamports": "0",
+                    "mode": "agent_lifecycle_v2",
+                    "network": "devnet",
+                    "signature": "offline-fixture",
+                    "slot": 0,
+                    "wallet": "6c5fX1cKYGRNNbozjDdUr2s5vfUuS1XTistmZeG2kZY6"
+                  },
+                  "roof_to": null,
+                  "vote_weight": 1,
+                  "voted": false
+                }
+              ],
+              "game_id": 2,
+              "grace_s": 0,
+              "grace_until": 1792186859,
+              "label": "TEST_STRATEGY_REUSE_2",
+              "last_law_passed": false,
+              "law_card": null,
+              "law_card_name": null,
+              "laws_passed": 0,
+              "license_auction": null,
+              "no_influence": 0,
+              "now": 1792186559,
+              "party_no": 20,
+              "phase": "action",
+              "phase_ends_at": 1792186859,
+              "phase_instance_id": "g2-r1-action-1792186859",
+              "president_idx": null,
+              "price_next": 10,
+              "price_now": 12,
+              "price_shift": 0,
+              "price_table": [
+                12,
+                10,
+                9,
+                8,
+                7,
+                6,
+                5,
+                4,
+                3,
+                3,
+                2,
+                2,
+                2,
+                1,
+                1,
+                1
+              ],
+              "recent_actions": [],
+              "recent_actions_range": {
+                "first_seq": null,
+                "last_seq": null,
+                "limit": 12,
+                "retained_first_seq": null
+              },
+              "registration_mode": "devnet_agent_lifecycle_v2",
+              "round": 1,
+              "settlement_error": null,
+              "sold_counter": 0,
+              "tax_bps": 0,
+              "veto_pending": false,
+              "vote_weight_mode": 0,
+              "yes_influence": 0
+            },
+            "participants": [
+              {
+                "actor": "0",
+                "cash": "0",
+                "goods": 0,
+                "wallet": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD"
+              },
+              {
+                "actor": "1",
+                "cash": "0",
+                "goods": 0,
+                "wallet": "6c5fX1cKYGRNNbozjDdUr2s5vfUuS1XTistmZeG2kZY6"
+              }
+            ],
+            "phase": "action",
+            "phase_ends_at": 1792186859,
+            "round": 1
+          }
+        },
+        "budget": 20000,
+        "calls": {
+          "deliver": {
+            "finished_at": 1792186561,
+            "model": "TEST-loopback",
+            "provider": "http://127.0.0.1:51977",
+            "quality_passed": true,
+            "report_hash": "145aca3b23cec6b93f98c38c94f16807f68649d0e0a2f495547242632b7925bd",
+            "reserved": 6452,
+            "response_id": "TEST-produce-2-6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD-deliver",
+            "source": "test_provider",
+            "started_at": 1792186561,
+            "status": "reported",
+            "task": "deliver",
+            "usage": {
+              "cached_tokens": 0,
+              "completion_tokens": 20,
+              "prompt_tokens": 100,
+              "total_tokens": 120
+            }
+          },
+          "market": {
+            "finished_at": 1792186560,
+            "model": "TEST-loopback",
+            "provider": "http://127.0.0.1:51977",
+            "quality_passed": true,
+            "report_hash": "b483b70700d3a2d897bbe93390aea62aed4e3409aa9cce82c1cfb972576d990a",
+            "reserved": 6288,
+            "response_id": "TEST-produce-2-6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD-market",
+            "source": "test_provider",
+            "started_at": 1792186560,
+            "status": "reported",
+            "task": "market",
+            "usage": {
+              "cached_tokens": 0,
+              "completion_tokens": 20,
+              "prompt_tokens": 100,
+              "total_tokens": 120
+            }
+          },
+          "risk": {
+            "finished_at": 1792186560,
+            "model": "TEST-loopback",
+            "provider": "http://127.0.0.1:51977",
+            "quality_passed": true,
+            "report_hash": "b483b70700d3a2d897bbe93390aea62aed4e3409aa9cce82c1cfb972576d990a",
+            "reserved": 6281,
+            "response_id": "TEST-produce-2-6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD-risk",
+            "source": "test_provider",
+            "started_at": 1792186560,
+            "status": "reported",
+            "task": "risk",
+            "usage": {
+              "cached_tokens": 0,
+              "completion_tokens": 20,
+              "prompt_tokens": 100,
+              "total_tokens": 120
+            }
+          }
+        },
+        "challenge": "df7046e1628b0d8a40b1164a6d00208ced4d27493f0ab2fc1672e2e8cb3533bc",
+        "created_at": 1792186559,
+        "deadline_at": 1792186739,
+        "events": [
+          {
+            "at": 1792186559,
+            "kind": "run_started",
+            "seq": 1,
+            "task": "chief"
+          },
+          {
+            "at": 1792186560,
+            "kind": "task_started",
+            "seq": 2,
+            "task": "market"
+          },
+          {
+            "at": 1792186560,
+            "kind": "task_started",
+            "seq": 3,
+            "task": "risk"
+          },
+          {
+            "at": 1792186560,
+            "kind": "report_checked",
+            "seq": 4,
+            "task": "market"
+          },
+          {
+            "at": 1792186560,
+            "kind": "report_checked",
+            "seq": 5,
+            "task": "risk"
+          },
+          {
+            "at": 1792186561,
+            "kind": "task_started",
+            "seq": 6,
+            "task": "deliver"
+          },
+          {
+            "at": 1792186561,
+            "kind": "report_checked",
+            "seq": 7,
+            "task": "deliver"
+          },
+          {
+            "at": 1792186561,
+            "kind": "trade_confirmed",
+            "seq": 8,
+            "task": "chief"
+          }
+        ],
+        "id": "c4c52a7c16afa96e6da5668f85a5e71682830742229904bccab063379ba2ebe8",
+        "known_tokens": 360,
+        "monetary_cost": null,
+        "owner": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD",
+        "plan": [
+          {
+            "depends_on": [],
+            "id": "market",
+            "kind": "model",
+            "tool": null
+          },
+          {
+            "depends_on": [],
+            "id": "risk",
+            "kind": "model",
+            "tool": null
+          },
+          {
+            "depends_on": [
+              "market",
+              "risk"
+            ],
+            "id": "deliver",
+            "kind": "model",
+            "tool": null
+          }
+        ],
+        "record": "0000000000000000000000000000000000000000000000000000000000000029",
+        "reserved_tokens": 0,
+        "result": {
+          "artifact": {
+            "action": "produce",
+            "params": {}
+          },
+          "checks": {
+            "limit": "decision_format_only_until_a_matching_game_receipt_is_confirmed",
+            "params": true,
+            "passed": true,
+            "phase_action": true,
+            "schema": true
+          },
+          "finished_at": 1792186561,
+          "trade_receipt": {
+            "action": "produce",
+            "actor": "0",
+            "cash_delta": "0",
+            "confirmed_at": 1792186561,
+            "event": {
+              "action_ref": {
+                "action": "produce",
+                "actor": 0,
+                "params": {},
+                "result": {
+                  "cash_after": 0,
+                  "changes": [
+                    {
+                      "actor": 0,
+                      "cash_after": 0,
+                      "cash_before": 0,
+                      "goods_after": 2,
+                      "goods_before": 0,
+                      "influence_after": 1,
+                      "influence_before": 1
+                    }
+                  ],
+                  "goods_after": 2
+                },
+                "seq": 2
+              },
+              "branch_id": "MAIN",
+              "created_at_epoch": 1792186561,
+              "event_id": "live-30",
+              "finality": "final",
+              "game_id": 2,
+              "kind": "game_action",
+              "phase": "action",
+              "phase_instance_id": "g2-r1-action-1792186859",
+              "room_id": "game:2",
+              "round": 1,
+              "seq": 30,
+              "server_created_at": "2026-10-16T21:36:01Z",
+              "visibility": "public"
+            },
+            "event_id": "live-30",
+            "game": "2",
+            "goods_delta": 2,
+            "mode": "http",
+            "params": {},
+            "source": "server_accepted_rule_action"
+          }
+        },
+        "reveal_pending": false,
+        "review": null,
+        "seat": 0,
+        "status": "completed",
+        "test_provider": true,
+        "unknown_usage": false,
+        "usage_trust": "owner_submitted_provider_receipts",
+        "version": "6097b17604936dce7eeb896164cb8b3fc030130124b73aabebb0c2f34d016c37"
+      },
+      {
+        "ad_performance": "not_measured",
+        "brief": {
+          "audience": "Agent owners",
+          "budget": 20000,
+          "cta": "",
+          "facts": [
+            "One alashi is 1000000 game units.",
+            "Market prices depend on transaction order."
+          ],
+          "match_key": "sell-1",
+          "max_words": 0,
+          "owner": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD",
+          "required_terms": [],
+          "round_seconds": 180,
+          "task": "Sell two goods. Compare the actual receipt and model tokens.",
+          "title": "market with equal initial resources",
+          "trading": {
+            "after": 7,
+            "captured_at": 1792186556,
+            "game": "1",
+            "mode": "http",
+            "observation": {
+              "amnesty_used": false,
+              "barter_offers": [],
+              "bids_close_at": null,
+              "boom": 0,
+              "customs_decided": false,
+              "entry_fee": 1,
+              "epoch": "classic",
+              "execution_mode": "http_simulated",
+              "factions": [
+                {
+                  "acted": false,
+                  "acted_stamp": 10,
+                  "agent_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "agent_record_id": "0000000000000000000000000000000000000000000000000000000000000029",
+                  "alive": true,
+                  "cash": 0,
+                  "cash_available": 0,
+                  "character_id": "0000000000000000000000000000000000000000000000000000000000000017",
+                  "goods": 2,
+                  "grey_goods": 0,
+                  "hard": 0,
+                  "idx": 0,
+                  "influence": 1,
+                  "insider": false,
+                  "is_president": true,
+                  "name": "Trader1",
+                  "promissory": 0,
+                  "registration": {
+                    "commitment": "confirmed",
+                    "fee_lamports": "0",
+                    "mode": "agent_lifecycle_v2",
+                    "network": "devnet",
+                    "signature": "offline-fixture",
+                    "slot": 0,
+                    "wallet": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD"
+                  },
+                  "roof_to": null,
+                  "vote_weight": 1,
+                  "voted": false
+                },
+                {
+                  "acted": false,
+                  "acted_stamp": 10,
+                  "agent_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "agent_record_id": "000000000000000000000000000000000000000000000000000000000000002a",
+                  "alive": true,
+                  "cash": 0,
+                  "cash_available": 0,
+                  "character_id": "0000000000000000000000000000000000000000000000000000000000000018",
+                  "goods": 2,
+                  "grey_goods": 0,
+                  "hard": 0,
+                  "idx": 1,
+                  "influence": 1,
+                  "insider": false,
+                  "is_president": false,
+                  "name": "Trader2",
+                  "promissory": 0,
+                  "registration": {
+                    "commitment": "confirmed",
+                    "fee_lamports": "0",
+                    "mode": "agent_lifecycle_v2",
+                    "network": "devnet",
+                    "signature": "offline-fixture",
+                    "slot": 0,
+                    "wallet": "4MfyR4G3NWfVRDWo6iNAHDBZqWMgwZX6FNtMqEW3a9JT"
+                  },
+                  "roof_to": null,
+                  "vote_weight": 1,
+                  "voted": false
+                }
+              ],
+              "game_id": 1,
+              "grace_s": 0,
+              "grace_until": 1792186856,
+              "label": "TEST_STRATEGY_REUSE_1",
+              "last_law_passed": false,
+              "law_card": null,
+              "law_card_name": null,
+              "laws_passed": 0,
+              "license_auction": null,
+              "no_influence": 0,
+              "now": 1792186556,
+              "party_no": 19,
+              "phase": "market",
+              "phase_ends_at": 1792186856,
+              "phase_instance_id": "g1-r2-market-1792186856",
+              "president_idx": 0,
+              "price_next": 10,
+              "price_now": 12,
+              "price_shift": 0,
+              "price_table": [
+                12,
+                10,
+                9,
+                8,
+                7,
+                6,
+                5,
+                4,
+                3,
+                3,
+                2,
+                2,
+                2,
+                1,
+                1,
+                1
+              ],
+              "recent_actions": [
+                {
+                  "action": "produce",
+                  "actor": 1,
+                  "by": "llm",
+                  "event_id": "1:19:1",
+                  "ok": true,
+                  "phase": "action",
+                  "round": 1,
+                  "seq": 1,
+                  "ts": 1792186556
+                },
+                {
+                  "action": "produce",
+                  "actor": 0,
+                  "by": "llm",
+                  "event_id": "1:19:2",
+                  "ok": true,
+                  "phase": "action",
+                  "round": 1,
+                  "seq": 2,
+                  "ts": 1792186556
+                }
+              ],
+              "recent_actions_range": {
+                "first_seq": 1,
+                "last_seq": 2,
+                "limit": 12,
+                "retained_first_seq": 1
+              },
+              "registration_mode": "devnet_agent_lifecycle_v2",
+              "round": 2,
+              "settlement_error": null,
+              "sold_counter": 0,
+              "tax_bps": 0,
+              "veto_pending": false,
+              "vote_weight_mode": 0,
+              "yes_influence": 0
+            },
+            "participants": [
+              {
+                "actor": "0",
+                "cash": "0",
+                "goods": 2,
+                "wallet": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD"
+              },
+              {
+                "actor": "1",
+                "cash": "0",
+                "goods": 2,
+                "wallet": "4MfyR4G3NWfVRDWo6iNAHDBZqWMgwZX6FNtMqEW3a9JT"
+              }
+            ],
+            "phase": "market",
+            "phase_ends_at": 1792186856,
+            "round": 2
+          }
+        },
+        "budget": 20000,
+        "calls": {
+          "deliver": {
+            "finished_at": 1792186558,
+            "model": "TEST-loopback",
+            "provider": "http://127.0.0.1:51853",
+            "quality_passed": true,
+            "report_hash": "b132f337cff48c7326ad6020696d50e2bae173fa8a13767a332a26ae8d7c960f",
+            "reserved": 6745,
+            "response_id": "TEST-sell-1-6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD-deliver",
+            "source": "test_provider",
+            "started_at": 1792186558,
+            "status": "reported",
+            "task": "deliver",
+            "usage": {
+              "cached_tokens": 0,
+              "completion_tokens": 20,
+              "prompt_tokens": 100,
+              "total_tokens": 120
+            }
+          },
+          "market": {
+            "finished_at": 1792186558,
+            "model": "TEST-loopback",
+            "provider": "http://127.0.0.1:51853",
+            "quality_passed": true,
+            "report_hash": "ca3fe7b6c94e96e43997972af585afa7c8bab8749e9874e06756114f9dcd8373",
+            "reserved": 6587,
+            "response_id": "TEST-sell-1-6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD-market",
+            "source": "test_provider",
+            "started_at": 1792186557,
+            "status": "reported",
+            "task": "market",
+            "usage": {
+              "cached_tokens": 0,
+              "completion_tokens": 20,
+              "prompt_tokens": 100,
+              "total_tokens": 120
+            }
+          },
+          "risk": {
+            "finished_at": 1792186558,
+            "model": "TEST-loopback",
+            "provider": "http://127.0.0.1:51853",
+            "quality_passed": true,
+            "report_hash": "ca3fe7b6c94e96e43997972af585afa7c8bab8749e9874e06756114f9dcd8373",
+            "reserved": 6580,
+            "response_id": "TEST-sell-1-6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD-risk",
+            "source": "test_provider",
+            "started_at": 1792186557,
+            "status": "reported",
+            "task": "risk",
+            "usage": {
+              "cached_tokens": 0,
+              "completion_tokens": 20,
+              "prompt_tokens": 100,
+              "total_tokens": 120
+            }
+          }
+        },
+        "challenge": "843b13415950ce1abb7fe2ad339584c853717470fc3e06dbe511913429cca146",
+        "created_at": 1792186556,
+        "deadline_at": 1792186736,
+        "events": [
+          {
+            "at": 1792186556,
+            "kind": "run_started",
+            "seq": 1,
+            "task": "chief"
+          },
+          {
+            "at": 1792186557,
+            "kind": "task_started",
+            "seq": 2,
+            "task": "market"
+          },
+          {
+            "at": 1792186557,
+            "kind": "task_started",
+            "seq": 3,
+            "task": "risk"
+          },
+          {
+            "at": 1792186558,
+            "kind": "report_checked",
+            "seq": 4,
+            "task": "market"
+          },
+          {
+            "at": 1792186558,
+            "kind": "report_checked",
+            "seq": 5,
+            "task": "risk"
+          },
+          {
+            "at": 1792186558,
+            "kind": "task_started",
+            "seq": 6,
+            "task": "deliver"
+          },
+          {
+            "at": 1792186558,
+            "kind": "report_checked",
+            "seq": 7,
+            "task": "deliver"
+          },
+          {
+            "at": 1792186558,
+            "kind": "trade_confirmed",
+            "seq": 8,
+            "task": "chief"
+          }
+        ],
+        "id": "d3cf35dc8ce2d5fba168a866e688a1263daf8432e6b250d6e027963fb5d2ed81",
+        "known_tokens": 360,
+        "monetary_cost": null,
+        "owner": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD",
+        "plan": [
+          {
+            "depends_on": [],
+            "id": "market",
+            "kind": "model",
+            "tool": null
+          },
+          {
+            "depends_on": [],
+            "id": "risk",
+            "kind": "model",
+            "tool": null
+          },
+          {
+            "depends_on": [
+              "market",
+              "risk"
+            ],
+            "id": "deliver",
+            "kind": "model",
+            "tool": null
+          }
+        ],
+        "record": "0000000000000000000000000000000000000000000000000000000000000029",
+        "reserved_tokens": 0,
+        "result": {
+          "artifact": {
+            "action": "sell",
+            "params": {
+              "units": 2
+            }
+          },
+          "checks": {
+            "limit": "decision_format_only_until_a_matching_game_receipt_is_confirmed",
+            "params": true,
+            "passed": true,
+            "phase_action": true,
+            "schema": true
+          },
+          "finished_at": 1792186558,
+          "trade_receipt": {
+            "action": "sell",
+            "actor": "0",
+            "cash_delta": "17000000",
+            "confirmed_at": 1792186558,
+            "event": {
+              "action_ref": {
+                "action": "sell",
+                "actor": 0,
+                "params": {
+                  "units": 2
+                },
+                "result": {
+                  "cash_after": 17000000,
+                  "changes": [
+                    {
+                      "actor": 0,
+                      "cash_after": 17000000,
+                      "cash_before": 0,
+                      "goods_after": 0,
+                      "goods_before": 2,
+                      "influence_after": 1,
+                      "influence_before": 1
+                    }
+                  ],
+                  "goods_after": 0
+                },
+                "seq": 4
+              },
+              "branch_id": "MAIN",
+              "created_at_epoch": 1792186558,
+              "event_id": "live-9",
+              "finality": "final",
+              "game_id": 1,
+              "kind": "game_action",
+              "phase": "market",
+              "phase_instance_id": "g1-r2-market-1792186856",
+              "room_id": "game:1",
+              "round": 2,
+              "seq": 9,
+              "server_created_at": "2026-10-16T21:35:58Z",
+              "visibility": "public"
+            },
+            "event_id": "live-9",
+            "game": "1",
+            "goods_delta": -2,
+            "mode": "http",
+            "params": {
+              "units": 2
+            },
+            "source": "server_accepted_rule_action"
+          }
+        },
+        "reveal_pending": false,
+        "review": null,
+        "seat": 0,
+        "status": "completed",
+        "test_provider": true,
+        "unknown_usage": false,
+        "usage_trust": "owner_submitted_provider_receipts",
+        "version": "6097b17604936dce7eeb896164cb8b3fc030130124b73aabebb0c2f34d016c37"
+      }
+    ],
+    "server_now": 1792186564,
+    "standings": [
+      {
+        "challenge": "843b13415950ce1abb7fe2ad339584c853717470fc3e06dbe511913429cca146",
+        "conversion_winner": null,
+        "groups": [
+          {
+            "accepted_runs": 0,
+            "test_provider": false,
+            "token_leaders": [],
+            "tokens": null
+          },
+          {
+            "accepted_runs": 2,
+            "test_provider": true,
+            "token_leaders": [],
+            "tokens": null
+          }
+        ],
+        "meaning": "token_leader_only_for_equal_confirmed_action_and_outcome",
+        "monetary_winner": null,
+        "reviews_complete": true
+      },
+      {
+        "challenge": "9def49d9775039eecce4fa21d2052471b6fa1850a24396d53572f3e434c15a5c",
+        "conversion_winner": null,
+        "groups": [
+          {
+            "accepted_runs": 0,
+            "test_provider": false,
+            "token_leaders": [],
+            "tokens": null
+          },
+          {
+            "accepted_runs": 2,
+            "test_provider": true,
+            "token_leaders": [
+              "2e40b23253324236c20f87271cbaf5d26a05ade3ce16b9e7affc9d1e6712d642"
+            ],
+            "tokens": 120
+          }
+        ],
+        "meaning": "token_leader_only_for_equal_confirmed_action_and_outcome",
+        "monetary_winner": null,
+        "reviews_complete": true
+      },
+      {
+        "challenge": "df7046e1628b0d8a40b1164a6d00208ced4d27493f0ab2fc1672e2e8cb3533bc",
+        "conversion_winner": null,
+        "groups": [
+          {
+            "accepted_runs": 0,
+            "test_provider": false,
+            "token_leaders": [],
+            "tokens": null
+          },
+          {
+            "accepted_runs": 2,
+            "test_provider": true,
+            "token_leaders": [
+              "5f17bee6941654922fe0a2c7804ecc2662f11f86bfdb3f36780622652cea0483"
+            ],
+            "tokens": 120
+          }
+        ],
+        "meaning": "token_leader_only_for_equal_confirmed_action_and_outcome",
+        "monetary_winner": null,
+        "reviews_complete": true
+      },
+      {
+        "challenge": "ef54db54ed6f006a088593b57bf34f0c803357073277ac11b6b0024241182774",
+        "conversion_winner": null,
+        "groups": [
+          {
+            "accepted_runs": 0,
+            "test_provider": false,
+            "token_leaders": [],
+            "tokens": null
+          },
+          {
+            "accepted_runs": 2,
+            "test_provider": true,
+            "token_leaders": [],
+            "tokens": null
+          }
+        ],
+        "meaning": "token_leader_only_for_equal_confirmed_action_and_outcome",
+        "monetary_winner": null,
+        "reviews_complete": true
+      }
+    ],
+    "versions": [
+      {
+        "content": {
+          "change": "",
+          "owner": "6TcyBfPdBt1kjsvDZLzmBFnuMaLWiTaAt4RjUr9VA5YD",
+          "parent": null,
+          "plan": [
+            {
+              "depends_on": [],
+              "id": "market",
+              "instruction": "Read market and legal actions.",
+              "kind": "model",
+              "tool": null
+            },
+            {
+              "depends_on": [],
+              "id": "risk",
+              "instruction": "Check inventory and cash.",
+              "kind": "model",
+              "tool": null
+            },
+            {
+              "depends_on": [
+                "market",
+                "risk"
+              ],
+              "id": "deliver",
+              "instruction": "Produce in Action. Sell two goods in Market.",
+              "kind": "model",
+              "tool": null
+            }
+          ],
+          "title": "Trading with two model checks"
+        },
+        "created_at": 1792186554,
+        "id": "6097b17604936dce7eeb896164cb8b3fc030130124b73aabebb0c2f34d016c37",
+        "published": true,
+        "reuse_owners": 0
+      },
+      {
+        "content": {
+          "change": "Replace the two model checks with the local trade_state tool. Keep the same final decision contract.",
+          "owner": "4MfyR4G3NWfVRDWo6iNAHDBZqWMgwZX6FNtMqEW3a9JT",
+          "parent": "6097b17604936dce7eeb896164cb8b3fc030130124b73aabebb0c2f34d016c37",
+          "plan": [
+            {
+              "depends_on": [],
+              "id": "state",
+              "instruction": "Read the canonical shared state.",
+              "kind": "tool",
+              "tool": "trade_state"
+            },
+            {
+              "depends_on": [
+                "state"
+              ],
+              "id": "deliver",
+              "instruction": "Produce in Action. Sell two goods in Market.",
+              "kind": "model",
+              "tool": null
+            }
+          ],
+          "title": "Reuse the structured game state"
+        },
+        "created_at": 1792186554,
+        "id": "8146a535948fe6d5fd96410d7f93e91c3ba7421ae1a0996de9ab9c6b936079c7",
+        "published": true,
+        "reuse_owners": 1
+      }
+    ]
+  }
+}

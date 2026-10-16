@@ -351,7 +351,7 @@ impl ChainApi {
             "pda":p,"wallet":f.wallet.to_string(),"name":f.name,"cash":f.cash.to_string(),
             "hard":f.hard.to_string(),"goods":f.goods,"influence":f.influence,
             "vote":match f.vote { VoteChoice::Yes=>"Yes",VoteChoice::No=>"No",VoteChoice::Abstain=>"Abstain" },
-            "alive":f.alive
+            "alive":f.alive,"acted":f.acted_stamp == game.stamp()
         })).collect::<Vec<_>>();
         let value = json!({"ok":true,"cluster":"devnet","program_id":alashi::id().to_string(),
             "game_pda":key_s,"commitment":"confirmed","snapshot_slot":snapshot_slot,
@@ -359,6 +359,7 @@ impl ChainApi {
             "game":{"id":game.game_id.to_string(),"phase":phase_name(game.phase),"round":game.round,
                 "phase_ends_at":game.phase_ends_at,"settled":game.settled,"epoch":game.epoch},
             "factions":faction_json,"events":journal.events,"winner_faction_pda":winner,
+            "market":{"sold_counter":game.sold_this_round,"price_table":alashi::constants::PRICE_TABLE.iter().map(|p|p.to_string()).collect::<Vec<_>>(),"tax_bps":game.active_tax_bps,"price_shift":game.active_price_shift,"boom":game.active_boom},
             "fetched_at":chrono::Utc::now().to_rfc3339()});
         Ok((value, journal.seen_signatures))
     }

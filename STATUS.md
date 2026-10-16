@@ -149,3 +149,104 @@ not_validated: публичное включение, реальный sponsorsh
 
 12.10 01:45. observed: итоговые bots57/57, arena121/121 (последовательный прогон) и bots build без compiler warnings PASS. Резерв сохраняется с учётом RPC-quoted комиссии новой и ожидающих выплат. Повтор подписанного локального sponsorship/Memo PASS; полный zero-wallet match fixture PASS за 88,12 секунд. Параллельный запуск арены с локальным validator был прерван на прежнем ambient-agent fixture; последовательный полный прогон PASS. Факт: 0,9 часа.
 Реализация и локальные проверки закрыты. not_validated: GitHub CI итогового PR. Публичное включение принадлежит Ивану; резерв оператора и полный публичный visitor proof ещё не проверены. Центральная публикация own handoff временно не проходит из-за tracked BOARD.md, чужой журнал сохранён.
+
+
+16.10.2026 11:20. Публикация локальных прототипов Degenie по поручению Амира.
+План: 0,5 часа, до 11:50. Критерий: исходники и результаты проверок доступны
+в GitHub; локальный runtime проходит проверки из новой рабочей папки.
+Амир ведёт проект напрямую с Codex, без участия Ивана и Дины.
+
+16.10 11:29. Пакет подготовлен: исходники прототипов и материалы приёмки
+сохранены в experiments/alashi-watch. Из нового checkout прошли 16 проверок
+RTS, проверка синтаксиса и хешей. Все 52 локальные ссылки доступны; Gitleaks
+не нашёл секретов. Далее: push ветки и draft PR. Визуальная приёмка открыта.
+
+16.10 11:32. Прототипы опубликованы в ветке codex/alashi-rts-prototypes-20261016.
+Draft PR: https://github.com/Jakisheff/alashi/pull/57. Исходники и доказательства
+доступны в GitHub; main и действующий сайт не менялись. В AGENTS.md закреплены
+прямая работа Амира с Codex и push проектных изменений. Все 16 локальных
+проверок RTS прошли; визуальные ограничения сохранены. GitHub CI ещё не проверен.
+Факт: 0,25 часа (начало 11:17, завершение 11:32).
+
+16.10 11:41. Исправление упавшего RustSec audit в PR #57.
+План: 0,5 часа, до 12:11. Критерий: все четыре Cargo.lock проходят аудит,
+потребители обновлённой зависимости проходят проверки, новый коммит
+отправлен в GitHub и CI завершился успешно.
+
+16.10 11:45. observed: сбой воспроизведён в indexer/Cargo.lock и bots/Cargo.lock.
+Оба файла обновлены с rustls 0.23.45 до 0.23.46; изменены только версия
+и контрольная сумма пакета. Повторный cargo audit на свежей базе RustSec
+для Cargo.lock, arena/Cargo.lock, indexer/Cargo.lock и bots/Cargo.lock
+завершился с кодом 0; уязвимостей нет. Предупреждения не подавлялись.
+Локальные тесты потребителей выполняются. Результат GitHub CI проверяется
+после push; ход проверки сохраняется в PR #57.
+
+16.10.2026 12:19. Доводка общей карты Degenie по концепту Амира.
+План: 1,5 часа, до 13:49. Критерий: быстрый полный цикл двух штабов
+при неподвижной общей камере, плавное параллельное движение и запись.
+Облик сверяется с концептом; проверяются телефонный размер и канон
+Лассетера. Изменения и доказательства отправляются в PR #57.
+
+16.10 12:35. Делаю: переношу общий план на заранее отрисованные кадры Degenie.
+Сделано: декорация по концепту и атлас исходной модели с восемью направлениями.
+Дальше: маршруты по площади и просмотр полного цикла с записью.
+
+16.10 13:33. Делаю: проверяю экспорт повтора и телефонный размер.
+Сделано: карта по концепту, восемь направлений Degenie, шесть параллельных
+поручений, цикл около десяти секунд. Пройдены 16 проверок runtime и 808
+точек маршрутов. Даже пустая контрольная страница показывает около 17 кадров/с;
+живой FPS этой среды отделяется от повтора с явными метками 30 кадров/с.
+Браузерный VideoEncoder завис; выбран нативный FFmpeg и ограниченный
+экспорт кадров. План оставшейся работы: 0,75 часа, до 14:14.
+
+16.10 14:02. Делаю: публикую визуальную версию и проверяю CI.
+Сделано: финальный повтор 347 кадров, 30 кадров/с, 11,57 секунды.
+FFmpeg декодирует весь ролик без ошибок; пауза и перемотка проверены.
+На ширине 390 и 320 нет горизонтального прокручивания. Задержка Chief Б
+не остановила три работающих Degenie штаба А. Исправлен маршрут А3 около
+колонны, ролик пересобран. Живые 30 кадров/с здесь не подтверждены.
+Дальше: push в PR #57 и проверка всех GitHub jobs на новом коммите.
+
+16.10 14:08. Реализация, локальная приёмка и публикация завершены.
+Факт: 1,82 часа (12:19-14:08, без ожидания GitHub CI).
+Коммит cb12cd3 отправлен в PR #57. Сохранены исходники сцены, атлас
+оригинального Degenie и MP4 полного цикла. Все 18 runtime-проверок,
+проверки экспорта и 808 точек маршрутов прошли. Основной frontend
+собран, проверки геометрии и анимаций прошли. Gitleaks утечек не нашёл.
+Живой браузер показывает 12-18 кадров/с; видео собрано по событиям
+в 30 кадров/с. Реальные LLM, физический телефон и новый зритель
+не проверены. Предыдущая задача RustSec: факт 0,17 часа, CI 5/5
+на ff98fe5. CI визуальной версии проверяется отдельно перед отчётом.
+
+17.10 02:11. Trading strategy cycle in progress. План: 2 часа, до 04:11.
+Inspecting the integration between trading, usage accounting and strategy reuse.
+Acceptance requires a reproducible full cycle, failure checks and GitHub CI.
+
+17.10 02:26. The trading brief now captures one shared game state and binds
+strategy decisions to accepted receipts. Source changes cover HTTP execution,
+devnet receipt verification and local signer context guards. Frontend builds.
+Preparing an isolated two-process test covering production, sales, settlement,
+public derivatives and reuse by a third wallet. All model responses are TEST.
+
+17.10 02:37. Server suite passed: the two-process trading cycle, third-owner
+reuse and persistence after restart are verified. The fault test rolls back
+game, public event and strategy receipt together. Frontend build and animation
+checks passed. Checking the rendered map and usage cards before GitHub CI.
+
+17.10 02:50. Browser review passed at desktop and 390 px: original map preserved,
+parallel tasks followed by receipt acknowledgment, result and reuse visible.
+The finished game links four attached runs. No token leader is shown for
+unequal sale outcomes. Local secret scan is clean. Preparing the GitHub push;
+fresh Solana execution and two-human onboarding remain unverified.
+
+17.10 02:59. Trading strategy cycle implementation and review completed.
+Observed: two local owner processes, accepted production and sales, normal
+settlement, published improvement and reuse by a third fixture wallet. Recovery
+does not duplicate the accepted trade or model call. Desktop and phone-sized
+review passed; connection loss keeps receipts and freezes movement.
+CI 5/5 passed on 0ad4e8b: https://github.com/Jakisheff/alashi/actions/runs/38972315739.
+A final UI adjustment distinguishes loading from a missing usage service; its
+revision receives another CI run. External model calls: zero. Public deployment,
+fresh integrated Solana execution and two-person onboarding were not performed.
+Факт: 0,8 часа реализации и проверки до финального прогона CI.
+План: 2 часа, до 04:11 закрыт; ожидание последней проверки учитывается в чате.

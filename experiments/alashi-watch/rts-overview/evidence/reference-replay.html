@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spectator</title>
+<style>:root { --bg: #0e1116; --panel: #161b22; --line: #2a313c; --text: #d8dee6; --dim: #8b949e; --accent: #e6c83c; }
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text);
+  font: 14px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; }
+body { display: grid; grid-template-rows: auto 1fr auto; }
+header { display: flex; justify-content: space-between; align-items: center; padding: 8px 16px;
+  border-bottom: 1px solid var(--line); background: var(--panel); }
+header .title b { font-size: 16px; } header small { color: var(--dim); margin-left: 10px; }
+.clock b { font-variant-numeric: tabular-nums; font-size: 18px; margin-left: 8px; }
+.badge { font-size: 11px; font-weight: 700; letter-spacing: .06em; padding: 2px 8px; border-radius: 10px; }
+.badge.live { background: #b62324; color: #fff; } .badge.over { background: var(--accent); color: #111; }
+.badge.waiting { background: var(--line); color: var(--text); }
+.start-wait:not([hidden]) { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 8;
+  background: rgba(14, 17, 22, .86); border: 1px solid var(--line); border-radius: 10px; padding: 14px 26px;
+  text-align: center; max-width: 80%; }
+.start-wait b { display: block; font-size: 20px; } .start-wait span { color: var(--dim); font-size: 14px; }
+main { display: grid; grid-template-columns: 1fr 320px; min-height: 0; }
+.map { position: relative; min-height: 0; display: flex; align-items: center; justify-content: center; padding: 8px; }
+.client { display: none; min-height: 0; align-items: center; justify-content: center; padding: 8px; background: #000; }
+.client { position: relative; }
+.client img, .client video { width: 100%; height: 100%; object-fit: contain; }
+body.has-client main { grid-template-columns: 1fr 340px; grid-template-rows: auto 1fr; }
+body.has-client .client { display: flex; grid-column: 1; grid-row: 1 / 3; }
+body.has-client .map { grid-column: 2; grid-row: 1; padding: 8px 12px 0; background: var(--panel); border-left: 1px solid var(--line); }
+body.has-client aside { grid-column: 2; grid-row: 2; }
+canvas { max-width: 100%; max-height: 100%; image-rendering: pixelated; border: 1px solid var(--line); border-radius: 4px; }
+aside { border-left: 1px solid var(--line); background: var(--panel); padding: 8px 12px; overflow: auto; }
+h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--dim); margin: 12px 0 6px; }
+.player { border: 1px solid var(--line); border-left: 4px solid var(--c); border-radius: 4px; padding: 6px 8px; margin-bottom: 8px; }
+.player .name { font-weight: 700; } .player .meta { color: var(--dim); font-size: 12px; }
+.player .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px 8px; margin-top: 4px; font-variant-numeric: tabular-nums; }
+.player .stats span { color: var(--dim); font-size: 11px; display: block; }
+ol#events { list-style: none; padding: 0; margin: 0; font-size: 12px; }
+ol#events li { padding: 3px 0; border-bottom: 1px solid var(--line); }
+ol#events li time { color: var(--dim); margin-right: 6px; font-variant-numeric: tabular-nums; }
+footer { display: flex; gap: 10px; align-items: center; padding: 6px 16px; border-top: 1px solid var(--line); background: var(--panel); }
+footer input[type=range] { flex: 1; } footer button { background: none; border: 1px solid var(--line); color: var(--text);
+  border-radius: 4px; width: 32px; height: 26px; cursor: pointer; }
+#pos { color: var(--dim); font-variant-numeric: tabular-nums; min-width: 90px; } .follow { color: var(--dim); font-size: 12px; }
+.plan { border-left: 4px solid var(--c); background: rgba(255,255,255,.03); border-radius: 4px; padding: 6px 8px; margin-bottom: 8px; }
+.plan .who { font-weight: 700; font-size: 12px; display: flex; justify-content: space-between; }
+.plan .who time { color: var(--dim); font-weight: 400; font-variant-numeric: tabular-nums; }
+.plan p { margin: 4px 0 0; font-size: 13px; line-height: 1.35; }
+.player .agent { margin-top: 4px; color: var(--accent); font-size: 12px; font-variant-numeric: tabular-nums; }
+canvas#momentum { width: 100%; height: 70px; border: 1px solid var(--line); border-radius: 4px; image-rendering: auto; }
+.ahead { display: flex; height: 6px; border-radius: 3px; overflow: hidden; margin-top: 6px; background: var(--line); }
+.aheadtext { color: var(--dim); font-size: 12px; margin-top: 3px; }
+ol#events li { border-left: 3px solid var(--c); padding-left: 6px; }
+ol#events li.major { font-weight: 650; color: #fff; }
+/* ?view: the game alone, full-frame; with the game's picture, the map is a minimap in its corner */
+body.view { display: block; background: #000; }
+body.view header, body.view aside, body.view footer, body.view .start-wait { display: none !important; }
+body.view main { display: block; position: fixed; inset: 0; }
+body.view .map { position: absolute; inset: 0; padding: 0; }
+body.view.has-client .client { display: flex; position: absolute; inset: 0; padding: 0; }
+body.view.has-client .map { inset: auto; left: 16px; bottom: 16px; background: none; border: 0; z-index: 2; }
+body.view canvas#map { border: 0; border-radius: 0; }
+body.view:not(.has-client) canvas#map { width: 100%; height: 100%; object-fit: contain; }
+/* ?panel: the sidebar alone, on a transparent page, for a broadcast's page widget */
+html.panel, body.panel { background: transparent; }
+body.panel { display: block; font-size: 18px; }
+body.panel header, body.panel main > section, body.panel footer, body.panel .start-wait { display: none !important; }
+body.panel main { display: block; height: 100%; }
+body.panel aside { height: 100%; border: 0; border-radius: 10px; background: rgba(14, 17, 22, .86); padding: 6px 16px; }
+body.panel h2 { font-size: 15px; } body.panel ol#events { font-size: 16px; } body.panel .plan p { font-size: 16px; }
+body.panel .player .stats span { font-size: 13px; } body.panel canvas#momentum { height: 80px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="title"><b id="title">Spectator</b><small id="sub"></small></div>
+  <div class="clock"><span id="badge" class="badge"></span><b id="clock">0:00</b><small id="limit"></small></div>
+</header>
+<main>
+  <section class="client"><img id="client" alt="The game, live"></section>
+  <section class="map"><canvas id="map"></canvas><div id="waiting" class="start-wait" hidden></div></section>
+  <aside>
+    <h2 id="planhead" hidden>Thinking</h2>
+    <div id="plans"></div>
+    <h2>Players</h2>
+    <div id="players"></div>
+    <h2>Momentum</h2>
+    <canvas id="momentum"></canvas>
+    <div id="ahead" class="ahead"></div><div id="aheadtext" class="aheadtext"></div>
+    <h2>What happened</h2>
+    <ol id="events"></ol>
+  </aside>
+</main>
+<footer>
+  <button id="play" title="Play / pause (space)">▶</button>
+  <input id="scrub" type="range" min="0" max="0" value="0" aria-label="Game time">
+  <span id="pos"></span>
+  <label class="follow"><input id="follow" type="checkbox" checked> follow live</label>
+</footer>
+<script>window.RTS_DATA = {"static":{"game":"alashi-demo-5","title":"Alashi \u00b7 demo task runtime","map":"\u0414\u0432\u0430 \u0448\u0442\u0430\u0431\u0430 \u00b7 \u0434\u0435\u043c\u043e","bounds":{"min_x":-9,"max_x":9,"min_y":-7,"max_y":7},"players":[{"slot":0,"label":"Chief \u0410","race":"Degenie","controller":"scripted demo","color":"#a78bfa"},{"slot":1,"label":"Chief \u0411","race":"Degenie","controller":"scripted demo","color":"#69c8d3"}],"points":[{"kind":"shop","x":-1.4,"y":2.8,"label":"\u0420\u044b\u043d\u043e\u043a"},{"kind":"shop","x":0,"y":-0.5,"label":"\u0412\u0430\u0440\u0438\u0430\u043d\u0442\u044b"},{"kind":"shop","x":1.7,"y":-3.1,"label":"\u041f\u0430\u0440\u043b\u0430\u043c\u0435\u043d\u0442"},{"kind":"shop","x":0,"y":4.6,"label":"\u041f\u0440\u043e\u0432\u0435\u0440\u043a\u0430"}],"types":{"degenie":"Degenie"},"time_limit":0},"frames":[{"t":0.0005,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":0},"1":{"units":4,"score":0}},"events":[{"event_id":"5:1","t":0.0,"side":null,"kind":"cycle","text":"\u041d\u043e\u0432\u043e\u0435 \u043f\u043e\u0440\u0443\u0447\u0435\u043d\u0438\u0435: \u043f\u043e\u0434\u0433\u043e\u0442\u043e\u0432\u0438\u0442\u044c \u0440\u0435\u0448\u0435\u043d\u0438\u0435 Chief","unit":null,"major":true}],"notes":[],"result":""},{"t":0.4365,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":0},"1":{"units":4,"score":0}},"events":[],"notes":[],"result":""},{"t":0.6531,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":0},"1":{"units":4,"score":0}},"events":[],"notes":[],"result":""},{"t":0.6618,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":0},"1":{"units":4,"score":0}},"events":[{"event_id":"5:2","t":0.662,"side":0,"kind":"assigned","text":"\u04101: \u0420\u044b\u043d\u043e\u043a","unit":0,"major":true}],"notes":[],"result":""},{"t":0.6623,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":0},"1":{"units":4,"score":0}},"events":[{"event_id":"5:3","t":0.662,"side":0,"kind":"assigned","text":"\u04102: \u0412\u0430\u0440\u0438\u0430\u043d\u0442\u044b","unit":1,"major":true}],"notes":[],"result":""},{"t":0.6624,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":0},"1":{"units":4,"score":0}},"events":[{"event_id":"5:4","t":0.662,"side":0,"kind":"assigned","text":"\u04103: \u041f\u0430\u0440\u043b\u0430\u043c\u0435\u043d\u0442","unit":2,"major":true}],"notes":[],"result":""},{"t":0.884,"units":[[0,0,"degenie",-5.999975645258042,1.2999959602941302,100,3],[1,0,"degenie",-5.149978725182597,1.299980408562815,100,3],[2,0,"degenie",-5.999977780245374,0.0999826368410162,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":0},"1":{"units":4,"score":0}},"events":[],"notes":[],"result":""},{"t":0.9329,"units":[[0,0,"degenie",-5.999975645258042,1.2999959602941302,100,3],[1,0,"degenie",-5.149978725182597,1.299980408562815,100,3],[2,0,"degenie",-5.999977780245374,0.0999826368410162,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":0},"1":{"units":4,"score":0}},"events":[{"event_id":"5:5","t":0.933,"side":1,"kind":"assigned","text":"\u04111: \u0420\u044b\u043d\u043e\u043a","unit":4,"major":true}],"notes":[],"result":""},{"t":0.9331,"units":[[0,0,"degenie",-5.999975645258042,1.2999959602941302,100,3],[1,0,"degenie",-5.149978725182597,1.299980408562815,100,3],[2,0,"degenie",-5.999977780245374,0.0999826368410162,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":0},"1":{"units":4,"score":0}},"events":[{"event_id":"5:6","t":0.933,"side":1,"kind":"assigned","text":"\u04112: \u0412\u0430\u0440\u0438\u0430\u043d\u0442\u044b","unit":5,"major":true}],"notes":[],"result":""},{"t":0.9332,"units":[[0,0,"degenie",-5.999975645258042,1.2999959602941302,100,3],[1,0,"degenie",-5.149978725182597,1.299980408562815,100,3],[2,0,"degenie",-5.999977780245374,0.0999826368410162,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":0},"1":{"units":4,"score":0}},"events":[{"event_id":"5:7","t":0.933,"side":1,"kind":"assigned","text":"\u04113: \u041f\u0430\u0440\u043b\u0430\u043c\u0435\u043d\u0442","unit":6,"major":true}],"notes":[],"result":""},{"t":1.4232,"units":[[0,0,"degenie",-4.812611892717072,1.1760929174444512,100,3],[1,0,"degenie",-3.7872456226407976,0.11794206742834229,100,3],[2,0,"degenie",-3.821974519670394,-1.5293347073530126,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",5.3934343989096645,-0.6713398232985508,100,3],[5,1,"degenie",6.295347248118885,-0.9794123988500187,100,3],[6,1,"degenie",5.683267885550078,-2.309909784496446,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":0},"1":{"units":4,"score":0}},"events":[],"notes":[],"result":""},{"t":1.9119,"units":[[0,0,"degenie",-3.0066040439459356,1.6931454792846607,100,3],[1,0,"degenie",-1.712614542344757,-0.9763342647149746,100,3],[2,0,"degenie",-0.5022257536167665,-3.307828235147458,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",2.4511285344672884,1.0924499999110275,100,3],[5,1,"degenie",3.602374861410775,-0.7092359750409039,100,3],[6,1,"degenie",4.144559924995004,-2.673209945610009,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":0},"1":{"units":4,"score":0}},"events":[],"notes":[],"result":""},{"t":2.2267,"units":[[0,0,"degenie",-2.337800133138761,2.077386591449835,100,3],[1,0,"degenie",-0.9436903628574891,-1.1888303886085123,100,3],[2,0,"degenie",0.7295252832530457,-3.774229747932261,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",0.5092280977006807,1.8140497525695678,100,3],[5,1,"degenie",1.8245508998440627,-0.9734099204430424,100,3],[6,1,"degenie",3.1285745501352915,-3.3556585539782127,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":0},"1":{"units":4,"score":0}},"events":[],"notes":[],"result":""},{"t":2.3827,"units":[[0,0,"degenie",-2.3,2.0999999999999996,100,3],[1,0,"degenie",-0.9000000000000004,-1.2,100,3],[2,0,"degenie",0.7999999999999998,-3.8,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",-0.1504731359046998,2.0035844669813656,100,3],[5,1,"degenie",1.2204161514250016,-1.1188468000102612,100,3],[6,1,"degenie",2.7832628434092435,-3.6433118760258214,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":0},"1":{"units":4,"score":0}},"events":[{"event_id":"5:8","t":2.382,"side":0,"kind":"work","text":"\u04101: \u0440\u0430\u0431\u043e\u0442\u0430\u0435\u0442","unit":0,"major":true},{"event_id":"5:9","t":2.382,"side":0,"kind":"work","text":"\u04102: \u0440\u0430\u0431\u043e\u0442\u0430\u0435\u0442","unit":1,"major":true},{"event_id":"5:10","t":2.383,"side":0,"kind":"work","text":"\u04103: \u0440\u0430\u0431\u043e\u0442\u0430\u0435\u0442","unit":2,"major":true}],"notes":[],"result":""},{"t":2.4527,"units":[[0,0,"degenie",-2.3,2.0999999999999996,100,3],[1,0,"degenie",-0.9000000000000004,-1.2,100,3],[2,0,"degenie",0.7999999999999998,-3.8,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",-0.34788184420070944,2.058166182546125,100,3],[5,1,"degenie",1.0395651214849337,-1.1645237759433542,100,3],[6,1,"degenie",2.6798666303720777,-3.7315863883069156,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":0},"1":{"units":4,"score":0}},"events":[],"notes":[],"result":""},{"t":2.6078,"units":[[0,0,"degenie",-2.3,2.0999999999999996,100,3],[1,0,"degenie",-0.9000000000000004,-1.2,100,3],[2,0,"degenie",0.7999999999999998,-3.8,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",-0.5,2.0999999999999996,100,3],[5,1,"degenie",0.9000000000000004,-1.2,100,3],[6,1,"degenie",2.6,-3.8,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":0},"1":{"units":4,"score":0}},"events":[{"event_id":"5:11","t":2.608,"side":1,"kind":"work","text":"\u04111: \u0440\u0430\u0431\u043e\u0442\u0430\u0435\u0442","unit":4,"major":true},{"event_id":"5:12","t":2.608,"side":1,"kind":"work","text":"\u04112: \u0440\u0430\u0431\u043e\u0442\u0430\u0435\u0442","unit":5,"major":true},{"event_id":"5:13","t":2.608,"side":1,"kind":"work","text":"\u04113: \u0440\u0430\u0431\u043e\u0442\u0430\u0435\u0442","unit":6,"major":true}],"notes":[],"result":""},{"t":3.1007,"units":[[0,0,"degenie",-2.3,2.0999999999999996,100,3],[1,0,"degenie",-0.9000000000000004,-1.2,100,3],[2,0,"degenie",0.7999999999999998,-3.8,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",-0.5,2.0999999999999996,100,3],[5,1,"degenie",0.9000000000000004,-1.2,100,3],[6,1,"degenie",2.6,-3.8,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":0},"1":{"units":4,"score":0}},"events":[],"notes":[],"result":""},{"t":3.5924,"units":[[0,0,"degenie",-2.3,2.0999999999999996,100,3],[1,0,"degenie",-0.9000000000000004,-1.2,100,3],[2,0,"degenie",0.7999999999999998,-3.8,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",-0.5,2.0999999999999996,100,3],[5,1,"degenie",0.9000000000000004,-1.2,100,3],[6,1,"degenie",2.6,-3.8,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":0},"1":{"units":4,"score":0}},"events":[],"notes":[],"result":""},{"t":4.0811,"units":[[0,0,"degenie",-2.3,2.0999999999999996,100,3],[1,0,"degenie",-0.9000000000000004,-1.2,100,3],[2,0,"degenie",0.7999999999999998,-3.8,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",-0.5,2.0999999999999996,100,3],[5,1,"degenie",0.9000000000000004,-1.2,100,3],[6,1,"degenie",2.6,-3.8,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":0},"1":{"units":4,"score":0}},"events":[],"notes":[],"result":""},{"t":4.1344,"units":[[0,0,"degenie",-2.3,2.0999999999999996,100,3],[1,0,"degenie",-0.9000000000000004,-1.2,100,3],[2,0,"degenie",0.7999999999999998,-3.8,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",-0.5,2.0999999999999996,100,3],[5,1,"degenie",0.9000000000000004,-1.2,100,3],[6,1,"degenie",2.6,-3.8,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":0},"1":{"units":4,"score":0}},"events":[],"notes":[],"result":""},{"t":4.1893,"units":[[0,0,"degenie",-2.3039145606125886,2.0976579140571254,100,3],[1,0,"degenie",-0.9000000000000004,-1.2,100,3],[2,0,"degenie",0.7999999999999998,-3.8,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",-0.5,2.0999999999999996,100,3],[5,1,"degenie",0.9000000000000004,-1.2,100,3],[6,1,"degenie",2.6,-3.8,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":0},"1":{"units":4,"score":0}},"events":[{"event_id":"5:14","t":4.189,"side":0,"kind":"return","text":"\u04101: \u043d\u0435\u0441\u0451\u0442 \u043e\u0442\u0447\u0451\u0442","unit":0,"major":true}],"notes":[],"result":""},{"t":4.3492,"units":[[0,0,"degenie",-2.469246876452267,1.9989616284618064,100,3],[1,0,"degenie",-0.9000000000000004,-1.2,100,3],[2,0,"degenie",0.7999999999999998,-3.8,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",-0.5,2.0999999999999996,100,3],[5,1,"degenie",0.9000000000000004,-1.2,100,3],[6,1,"degenie",2.6,-3.8,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":0},"1":{"units":4,"score":0}},"events":[],"notes":[],"result":""},{"t":4.4381,"units":[[0,0,"degenie",-2.6514843721554064,1.8916909398571937,100,3],[1,0,"degenie",-0.904012679782058,-1.1989743728523663,100,3],[2,0,"degenie",0.7999999999999998,-3.8,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",-0.49976326847239605,2.099934943142082,100,3],[5,1,"degenie",0.9000000000000004,-1.2,100,3],[6,1,"degenie",2.6,-3.8,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":0},"1":{"units":4,"score":0}},"events":[{"event_id":"5:15","t":4.438,"side":0,"kind":"return","text":"\u04102: \u043d\u0435\u0441\u0451\u0442 \u043e\u0442\u0447\u0451\u0442","unit":1,"major":true},{"event_id":"5:16","t":4.438,"side":1,"kind":"return","text":"\u04111: \u043d\u0435\u0441\u0451\u0442 \u043e\u0442\u0447\u0451\u0442","unit":4,"major":true}],"notes":[],"result":""},{"t":4.6275,"units":[[0,0,"degenie",-3.1996442467110304,1.5942079823961033,100,3],[1,0,"degenie",-1.1534404533575326,-1.1347293384203037,100,3],[2,0,"degenie",0.7999999999999998,-3.8,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",-0.1803426148785432,2.0118778009360208,100,3],[5,1,"degenie",0.9000000000000004,-1.2,100,3],[6,1,"degenie",2.6,-3.8,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":0},"1":{"units":4,"score":0}},"events":[],"notes":[],"result":""},{"t":4.682,"units":[[0,0,"degenie",-3.386545620484161,1.5063528952454608,100,3],[1,0,"degenie",-1.286697901142781,-1.099416978711084,100,3],[2,0,"degenie",0.796360101196206,-3.7986691438152564,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",0.009172493067314491,1.9589584492884855,100,3],[5,1,"degenie",0.9000000000000004,-1.2,100,3],[6,1,"degenie",2.6,-3.8,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":0},"1":{"units":4,"score":0}},"events":[{"event_id":"5:17","t":4.682,"side":0,"kind":"return","text":"\u04103: \u043d\u0435\u0441\u0451\u0442 \u043e\u0442\u0447\u0451\u0442","unit":2,"major":true}],"notes":[],"result":""},{"t":4.7357,"units":[[0,0,"degenie",-3.579542999055622,1.4251047932869623,100,3],[1,0,"degenie",-1.4402313318344802,-1.0571807228562966,100,3],[2,0,"degenie",0.7498384610992659,-3.7816585082149503,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",0.23144094096580226,1.8956976351646737,100,3],[5,1,"degenie",0.9228553453822634,-1.1941855909854995,100,3],[6,1,"degenie",2.6,-3.8,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":0},"1":{"units":4,"score":0}},"events":[{"event_id":"5:18","t":4.736,"side":1,"kind":"return","text":"\u04112: \u043d\u0435\u0441\u0451\u0442 \u043e\u0442\u0447\u0451\u0442","unit":5,"major":true}],"notes":[],"result":""},{"t":4.9083,"units":[[0,0,"degenie",-4.232024741496337,1.2333558410085723,100,3],[1,0,"degenie",-2.052325080621587,-0.8607709621930647,100,3],[2,0,"degenie",0.27999391185853817,-3.608833281294347,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",1.137638501112261,1.6139137732797089,100,3],[5,1,"degenie",1.285955664013204,-1.102443887726216,100,3],[6,1,"degenie",2.6,-3.8,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":0},"1":{"units":4,"score":0}},"events":[],"notes":[],"result":""},{"t":4.9756,"units":[[0,0,"degenie",-4.483567987402794,1.1958056302037838,100,3],[1,0,"degenie",-2.32170204293586,-0.7542508926242575,100,3],[2,0,"degenie",-0.008768671739143308,-3.5004046899505505,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",1.5423630874616077,1.4700276986563672,100,3],[5,1,"degenie",1.5240454224083635,-1.043907395076666,100,3],[6,1,"degenie",2.6080913391598592,-3.79306595193435,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":0},"1":{"units":4,"score":0}},"events":[{"event_id":"5:19","t":4.975,"side":1,"kind":"return","text":"\u04113: \u043d\u0435\u0441\u0451\u0442 \u043e\u0442\u0447\u0451\u0442","unit":6,"major":true}],"notes":[],"result":""},{"t":5.4386,"units":[[0,0,"degenie",-5.854108011127477,1.2759434381632435,100,3],[1,0,"degenie",-4.273956624833481,0.5132178960153582,100,3],[2,0,"degenie",-2.9588175376660817,-2.088038557439253,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",4.5427429751880615,-0.09119757898055036,100,3],[5,1,"degenie",4.062463627616852,-0.6990519108881854,100,3],[6,1,"degenie",3.5511612709512854,-3.0338614693512795,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":0},"1":{"units":4,"score":0}},"events":[],"notes":[],"result":""},{"t":5.7388,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.062890311891721,1.2198029276110196,100,3],[2,0,"degenie",-4.877489176160072,-0.7668416157724004,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",5.81987391775991,-0.9721955135347029,100,3],[5,1,"degenie",5.768964397385101,-0.8750367415044531,100,3],[6,1,"degenie",4.582060259247255,-2.490758325221458,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":0},"1":{"units":4,"score":0}},"events":[],"notes":[],"result":""},{"t":5.8739,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-5.508084307208242,-0.2835190703483338,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",5.9992351995261926,-1.0994571426632231,100,3],[5,1,"degenie",6.347389871895608,-0.9904241099341132,100,3],[6,1,"degenie",5.036120182392932,-2.375382458957143,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":1},"1":{"units":4,"score":0}},"events":[{"event_id":"5:20","t":5.874,"side":0,"kind":"done","text":"\u04101: \u043e\u0442\u0447\u0451\u0442 \u0434\u043e\u0441\u0442\u0430\u0432\u043b\u0435\u043d","unit":0,"major":true}],"notes":[],"result":""},{"t":6.097,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-5.9976838007670565,0.09819005501381263,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.839104848577449,-1.0975944441418077,100,3],[6,1,"degenie",5.654863082059771,-2.311178828065655,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":1},"1":{"units":4,"score":0}},"events":[],"notes":[],"result":""},{"t":6.149,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",5.762277851243248,-2.3068257111082193,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":2},"1":{"units":4,"score":1}},"events":[{"event_id":"5:21","t":6.149,"side":0,"kind":"done","text":"\u04102: \u043e\u0442\u0447\u0451\u0442 \u0434\u043e\u0441\u0442\u0430\u0432\u043b\u0435\u043d","unit":1,"major":true},{"event_id":"5:22","t":6.149,"side":1,"kind":"done","text":"\u04111: \u043e\u0442\u0447\u0451\u0442 \u0434\u043e\u0441\u0442\u0430\u0432\u043b\u0435\u043d","unit":4,"major":true}],"notes":[],"result":""},{"t":6.3618,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",5.997797611833969,-2.300055891611999,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":2},"1":{"units":4,"score":1}},"events":[],"notes":[],"result":""},{"t":6.493,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":3},"1":{"units":4,"score":2}},"events":[{"event_id":"5:23","t":6.493,"side":0,"kind":"done","text":"\u04103: \u043e\u0442\u0447\u0451\u0442 \u0434\u043e\u0441\u0442\u0430\u0432\u043b\u0435\u043d","unit":2,"major":true},{"event_id":"5:24","t":6.493,"side":1,"kind":"done","text":"\u04112: \u043e\u0442\u0447\u0451\u0442 \u0434\u043e\u0441\u0442\u0430\u0432\u043b\u0435\u043d","unit":5,"major":true}],"notes":[],"result":""},{"t":6.5112,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":3},"1":{"units":4,"score":2}},"events":[{"event_id":"5:25","t":6.511,"side":0,"kind":"assigned","text":"\u04104: \u041f\u0440\u043e\u0432\u0435\u0440\u043a\u0430","unit":3,"major":true}],"notes":[],"result":""},{"t":6.5989,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":3},"1":{"units":4,"score":2}},"events":[],"notes":[],"result":""},{"t":6.6803,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":3},"1":{"units":4,"score":3}},"events":[{"event_id":"5:26","t":6.68,"side":1,"kind":"done","text":"\u04113: \u043e\u0442\u0447\u0451\u0442 \u0434\u043e\u0441\u0442\u0430\u0432\u043b\u0435\u043d","unit":6,"major":true}],"notes":[],"result":""},{"t":6.7829,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-5.133743084169818,0.10912803764766386,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":3},"1":{"units":4,"score":3}},"events":[],"notes":[],"result":""},{"t":6.8026,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-5.133743084169818,0.10912803764766386,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":3},"1":{"units":4,"score":3}},"events":[{"event_id":"5:27","t":6.803,"side":1,"kind":"assigned","text":"\u04114: \u041f\u0440\u043e\u0432\u0435\u0440\u043a\u0430","unit":7,"major":true}],"notes":[],"result":""},{"t":7.2969,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-3.680646995851297,1.0155979756205156,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",6.277274918321518,-1.5691961675825077,100,3]],"players":{"0":{"units":4,"score":3},"1":{"units":4,"score":3}},"events":[],"notes":[],"result":""},{"t":7.7649,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-1.698281137919821,2.9358473687450073,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",3.705127609270075,1.4252010352734081,100,3]],"players":{"0":{"units":4,"score":3},"1":{"units":4,"score":3}},"events":[],"notes":[],"result":""},{"t":8.1194,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-0.9106717448649926,3.886908400497536,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",1.7188385192395215,3.235307328603118,100,3]],"players":{"0":{"units":4,"score":3},"1":{"units":4,"score":3}},"events":[],"notes":[],"result":""},{"t":8.1701,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-0.9000000000000004,3.8999999999999995,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",1.505899486471181,3.4101608454696963,100,3]],"players":{"0":{"units":4,"score":3},"1":{"units":4,"score":3}},"events":[{"event_id":"5:28","t":8.17,"side":0,"kind":"work","text":"\u04104: \u0440\u0430\u0431\u043e\u0442\u0430\u0435\u0442","unit":3,"major":true}],"notes":[],"result":""},{"t":8.4473,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-0.9000000000000004,3.8999999999999995,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",0.9002567906627856,3.8997934331321833,100,3]],"players":{"0":{"units":4,"score":3},"1":{"units":4,"score":3}},"events":[],"notes":[],"result":""},{"t":8.53,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-0.9000000000000004,3.8999999999999995,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",0.9000000000000004,3.8999999999999995,100,3]],"players":{"0":{"units":4,"score":3},"1":{"units":4,"score":3}},"events":[{"event_id":"5:29","t":8.53,"side":1,"kind":"work","text":"\u04114: \u0440\u0430\u0431\u043e\u0442\u0430\u0435\u0442","unit":7,"major":true}],"notes":[],"result":""},{"t":8.9851,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-0.9000000000000004,3.8999999999999995,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",0.9000000000000004,3.8999999999999995,100,3]],"players":{"0":{"units":4,"score":3},"1":{"units":4,"score":3}},"events":[],"notes":[],"result":""},{"t":9.4631,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-0.9000000000000004,3.8999999999999995,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",0.9000000000000004,3.8999999999999995,100,3]],"players":{"0":{"units":4,"score":3},"1":{"units":4,"score":3}},"events":[],"notes":[],"result":""},{"t":9.9218,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-0.9000000000000004,3.8999999999999995,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",0.9000000000000004,3.8999999999999995,100,3]],"players":{"0":{"units":4,"score":3},"1":{"units":4,"score":3}},"events":[],"notes":[],"result":""},{"t":10.3968,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-0.9000000000000004,3.8999999999999995,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",0.9000000000000004,3.8999999999999995,100,3]],"players":{"0":{"units":4,"score":3},"1":{"units":4,"score":3}},"events":[],"notes":[],"result":""},{"t":10.7141,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-0.9000000000000004,3.8999999999999995,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",0.9000000000000004,3.8999999999999995,100,3]],"players":{"0":{"units":4,"score":3},"1":{"units":4,"score":3}},"events":[],"notes":[],"result":""},{"t":10.7757,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-0.9004363449682131,3.8994647108154186,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",0.9000000000000004,3.8999999999999995,100,3]],"players":{"0":{"units":4,"score":3},"1":{"units":4,"score":3}},"events":[{"event_id":"5:30","t":10.775,"side":0,"kind":"return","text":"\u04104: \u043d\u0435\u0441\u0451\u0442 \u043e\u0442\u0447\u0451\u0442","unit":3,"major":true}],"notes":[],"result":""},{"t":11.007,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-1.2248863407896677,3.5024792737388695,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",0.9000000000000004,3.8999999999999995,100,3]],"players":{"0":{"units":4,"score":3},"1":{"units":4,"score":3}},"events":[],"notes":[],"result":""},{"t":11.0627,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-1.374716389737511,3.320859272668324,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",0.9008417495286709,3.8993228820578163,100,3]],"players":{"0":{"units":4,"score":3},"1":{"units":4,"score":3}},"events":[{"event_id":"5:31","t":11.063,"side":1,"kind":"return","text":"\u04114: \u043d\u0435\u0441\u0451\u0442 \u043e\u0442\u0447\u0451\u0442","unit":7,"major":true}],"notes":[],"result":""},{"t":11.5428,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-3.273627631198283,1.335276097830845,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",2.4802243405210547,2.5867686839445514,100,3]],"players":{"0":{"units":4,"score":3},"1":{"units":4,"score":3}},"events":[],"notes":[],"result":""},{"t":12.0208,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-4.949380013894178,0.2128881307336609,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",5.315294430578801,-0.3747816831040235,100,3]],"players":{"0":{"units":4,"score":3},"1":{"units":4,"score":3}},"events":[],"notes":[],"result":""},{"t":12.4208,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",6.794820034111526,-2.2293926736652554,100,3]],"players":{"0":{"units":4,"score":3},"1":{"units":4,"score":3}},"events":[],"notes":[],"result":""},{"t":12.4741,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",6.843099955858765,-2.2911705950102177,100,3]],"players":{"0":{"units":4,"score":4},"1":{"units":4,"score":3}},"events":[{"event_id":"5:32","t":12.474,"side":0,"kind":"done","text":"\u04104: \u043e\u0442\u0447\u0451\u0442 \u0434\u043e\u0441\u0442\u0430\u0432\u043b\u0435\u043d","unit":3,"major":true}],"notes":[],"result":""},{"t":12.5167,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",6.843099955858765,-2.2911705950102177,100,3]],"players":{"0":{"units":4,"score":4},"1":{"units":4,"score":3}},"events":[{"event_id":"5:33","t":12.517,"side":0,"kind":"accepted","text":"Chief \u0410 \u043f\u0440\u0438\u043d\u044f\u043b \u043f\u0440\u043e\u0432\u0435\u0440\u0435\u043d\u043d\u044b\u0439 \u0440\u0430\u0441\u0447\u0451\u0442 39","unit":null,"major":true}],"notes":[],"result":""},{"t":12.7402,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":4},"1":{"units":4,"score":3}},"events":[],"notes":[],"result":""},{"t":12.8083,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":4},"1":{"units":4,"score":4}},"events":[{"event_id":"5:34","t":12.808,"side":1,"kind":"done","text":"\u04114: \u043e\u0442\u0447\u0451\u0442 \u0434\u043e\u0441\u0442\u0430\u0432\u043b\u0435\u043d","unit":7,"major":true}],"notes":[],"result":""},{"t":12.8315,"units":[[0,0,"degenie",-6.0,1.3,100,3],[1,0,"degenie",-5.15,1.3,100,3],[2,0,"degenie",-6.0,0.10000000000000009,100,3],[3,0,"degenie",-5.15,0.10000000000000009,100,3],[4,1,"degenie",6.0,-1.1,100,3],[5,1,"degenie",6.85,-1.1,100,3],[6,1,"degenie",6.0,-2.3,100,3],[7,1,"degenie",6.85,-2.3,100,3]],"players":{"0":{"units":4,"score":4},"1":{"units":4,"score":4}},"events":[{"event_id":"5:35","t":12.831,"side":1,"kind":"accepted","text":"Chief \u0411 \u043f\u0440\u0438\u043d\u044f\u043b \u043f\u0440\u043e\u0432\u0435\u0440\u0435\u043d\u043d\u044b\u0439 \u0440\u0430\u0441\u0447\u0451\u0442 39","unit":null,"major":true}],"notes":[],"result":"reports_accepted"}],"live":{"t":12.8315,"result":"reports_accepted","over":true,"frames":62}};</script>
+<script>"use strict";
+// The RTS spectator: the map and every unit in view, step by step, live from data.json or from the data a
+// recording embeds (window.RTS_DATA). Game-agnostic: it draws timeline.py's static map and frames. When the env
+// captures the game's own picture (live.client), that is the main view and the map becomes the minimap beside it.
+// Beside them: what the players say they are planning (notes), the feed, each player's card and the momentum graph.
+// ?view is the game alone, full-frame, as a broadcast frames it (the env's spectator view); ?panel is the sidebar
+// alone, on a transparent page, for a broadcast's page widget.
+const $ = id => document.getElementById(id);
+const QUERY = new URLSearchParams(location.search);
+const VIEW = QUERY.has("view"), PANEL = QUERY.has("panel");
+const TERRAIN = ["#2f4a2a", "#46452f", "#1f4466", "#121418"];
+const NEUTRAL = "#b8b8b8";
+const S = {static: null, frames: [], idx: -1, follow: true, playing: false, terrain: null, scale: 1, client: false,
+  video: null, waiting: []};
+const BASE = location.pathname.replace(/\/$/, "");
+
+for (const [on, mode] of [[VIEW, "view"], [PANEL, "panel"]])
+  if (on) { document.body.classList.add(mode); document.documentElement.classList.add(mode); }
+
+function clock(t) {
+  if (t == null) return "0:00";
+  const s = Math.max(0, Math.floor(t)), h = Math.floor(s / 3600), m = Math.floor(s / 60) % 60, sec = s % 60;
+  return (h ? `${h}:${String(m).padStart(2, "0")}` : `${m}`) + ":" + String(sec).padStart(2, "0");
+}
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
+const players = () => (S.static && S.static.players) || [];
+const colorOf = owner => (players().find(p => p.slot === owner) || {}).color || NEUTRAL;
+const labelOf = slot => (players().find(p => p.slot === slot) || {}).label || `player ${slot}`;
+const textOf = e => typeof e === "string" ? e : e.text;
+const majorOf = e => typeof e === "object" && e.major;
+const statsOf = (frame, slot) => ((frame && frame.players) || {})[slot] || ((frame && frame.players) || {})[String(slot)] || {};
+const num = n => n == null ? "–" : n >= 10000 ? `${(n / 1000).toFixed(1)}k` : String(n);
+
+function terrainCanvas(t) {
+  if (!t || !t.codes) return null;
+  const bytes = Uint8Array.from(atob(t.codes), c => c.charCodeAt(0));
+  const c = document.createElement("canvas");
+  c.width = t.width; c.height = t.height;
+  const ctx = c.getContext("2d"), img = ctx.createImageData(t.width, t.height);
+  const rgb = TERRAIN.map(h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16)));
+  for (let j = 0; j < t.height; j++) for (let i = 0; i < t.width; i++) {
+    const code = rgb[Math.min(3, bytes[j * t.width + i] || 0)], p = ((t.height - 1 - j) * t.width + i) * 4;
+    img.data[p] = code[0]; img.data[p + 1] = code[1]; img.data[p + 2] = code[2]; img.data[p + 3] = 255;
+  }
+  ctx.putImageData(img, 0, 0);
+  return c;
+}
+
+function setStatic(st) {
+  S.static = st;
+  S.terrain = terrainCanvas(st.terrain);
+  const b = st.bounds, w = b.max_x - b.min_x, h = b.max_y - b.min_y, side = S.client ? (VIEW ? 300 : 320)
+    : VIEW ? 1600 : 900;
+  S.scale = side / Math.max(w, h);
+  const canvas = $("map");
+  canvas.width = Math.round(w * S.scale); canvas.height = Math.round(h * S.scale);
+  const title = QUERY.get("title") || st.title || "Spectator";
+  $("title").textContent = title;
+  document.title = title;
+  $("sub").textContent = [st.map, players().map(p => `${p.label} (${p.race})`).join(" vs ")].filter(Boolean).join(" · ");
+  $("limit").textContent = st.time_limit ? ` / ${clock(st.time_limit)}` : "";
+}
+
+function toPx(x, y) {
+  const b = S.static.bounds;
+  return [(x - b.min_x) * S.scale, (b.max_y - y) * S.scale];
+}
+
+function draw() {
+  const st = S.static, frame = S.frames[S.idx];
+  if (!st) return;
+  const canvas = $("map"), ctx = canvas.getContext("2d");
+  ctx.fillStyle = "#0b0d10"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+  if (S.terrain) {
+    const t = st.terrain, [x0, y1] = toPx(t.origin[0], t.origin[1] + t.height * t.cell);
+    ctx.imageSmoothingEnabled = false;
+    ctx.drawImage(S.terrain, x0, y1, t.width * t.cell * S.scale, t.height * t.cell * S.scale);
+  }
+  ctx.fillStyle = "rgba(10, 40, 18, .8)";
+  for (const [x, y] of st.trees || []) { const [px, py] = toPx(x, y); ctx.fillRect(px - 1, py - 1, 2, 2); }
+  for (const p of st.points || []) {
+    const [px, py] = toPx(p.x, p.y);
+    if (p.kind === "gold") { ctx.fillStyle = "#f2c84b"; ctx.beginPath(); ctx.moveTo(px, py - 6); ctx.lineTo(px + 6, py);
+      ctx.lineTo(px, py + 6); ctx.lineTo(px - 6, py); ctx.fill(); }
+    else if (p.kind === "start") { ctx.strokeStyle = "rgba(255,255,255,.55)"; ctx.lineWidth = 1.5; ctx.beginPath();
+      ctx.arc(px, py, 14, 0, 2 * Math.PI); ctx.stroke(); }
+    else if (p.kind === "camp") { ctx.fillStyle = "rgba(230,90,70,.7)"; ctx.fillRect(px - 2.5, py - 2.5, 5, 5); }
+    else if (p.kind === "shop") { ctx.fillStyle = "#b07ce8"; ctx.fillRect(px - 4, py - 4, 8, 8); }
+  }
+  const small = S.client ? 0.7 : 1;
+  for (const [, owner, , x, y, hp, kind] of (frame && frame.units) || []) {
+    const [px, py] = toPx(x, y), color = colorOf(owner);
+    ctx.globalAlpha = 0.45 + 0.55 * Math.max(0, Math.min(100, hp)) / 100;
+    ctx.fillStyle = color; ctx.strokeStyle = "rgba(0,0,0,.7)"; ctx.lineWidth = 1;
+    if (kind === 1) { const r = 6 * small; ctx.fillRect(px - r, py - r, 2 * r, 2 * r); ctx.strokeRect(px - r, py - r, 2 * r, 2 * r); }
+    else { const r = (kind === 2 ? 6.5 : kind === 3 ? 3 : 4.5) * small; ctx.beginPath(); ctx.arc(px, py, r, 0, 2 * Math.PI); ctx.fill();
+      if (kind === 2) { ctx.strokeStyle = "#fff"; ctx.lineWidth = 2; } ctx.stroke(); }
+  }
+  ctx.globalAlpha = 1;
+  sidebar(frame);
+  momentum();
+  syncVideo(frame);
+}
+
+// What each player last said it was planning, as of the frame shown.
+function plans() {
+  const latest = new Map();
+  for (let i = S.idx; i >= 0 && latest.size < players().length; i--)
+    for (const n of (S.frames[i].notes || []).slice().reverse())
+      if (n.kind === "plan" && !latest.has(n.slot)) latest.set(n.slot, [S.frames[i].t, n.text]);
+  return [...latest.entries()].sort((a, b) => a[0] - b[0]);
+}
+
+function sidebar(frame) {
+  $("clock").textContent = clock(frame && frame.t);
+  const result = frame && frame.result, live = !S.embedded && !result, waiting = live && S.waiting.length;
+  $("badge").className = "badge " + (result ? "over" : waiting ? "waiting" : live ? "live" : "");
+  $("badge").textContent = result ? result.replace(/_/g, " ").toUpperCase() : waiting ? "WAITING" : live ? "● LIVE"
+    : "REPLAY";
+  const said = plans();
+  $("plans").innerHTML = said.map(([slot, [t, text]]) => `<div class="plan" style="--c:${colorOf(slot)}">
+    <div class="who">${esc(labelOf(slot))}<time>${clock(t)}</time></div><p>${esc(text)}</p></div>`).join("");
+  $("planhead").hidden = !said.length;
+  $("players").innerHTML = players().map(p => {
+    const s = statsOf(frame, p.slot), food = s.food ? `${s.food[0]}/${s.food[1]}` : "–", a = s.agent;
+    const minutes = Math.max(1, (frame && frame.t) || 0) / 60;
+    const agent = a ? `<div class="agent">${a.cost_usd != null ? `$${a.cost_usd.toFixed(2)} so far` : ""}${
+      a.decisions != null ? ` · ${Math.round(a.decisions / minutes)} decisions/min` : ""}</div>` : "";
+    return `<div class="player" style="--c:${p.color}"><div class="name">${esc(p.label)}</div>
+      <div class="meta">${esc(p.race || "")} · ${esc(p.controller || "")}</div>
+      <div class="stats"><div><span>gold</span>${num(s.gold)}</div><div><span>lumber</span>${num(s.lumber)}</div>
+      <div><span>food</span>${food}</div><div><span>army</span>${num(s.army)}</div>
+      <div><span>buildings</span>${s.structures ?? "–"}</div><div><span>score</span>${num(s.score)}</div></div>${agent}</div>`;
+  }).join("");
+  const lines = [];
+  for (let i = S.idx; i >= 0 && lines.length < (PANEL ? 10 : 40); i--)
+    for (const e of (S.frames[i].events || []).slice().reverse())
+      if (lines.length < (PANEL ? 10 : 40) && (!PANEL || majorOf(e) || typeof e === "string")) lines.push([S.frames[i].t, e]);
+  $("events").innerHTML = lines.map(([t, e]) => {
+    const side = typeof e === "object" && e.side != null ? colorOf(e.side) : "transparent";
+    return `<li class="${majorOf(e) ? "major" : ""}" style="--c:${side}"><time>${clock(t)}</time>${esc(textOf(e))}</li>`;
+  }).join("") || '<li class="dim">Nothing yet.</li>';
+  $("scrub").max = Math.max(0, S.frames.length - 1); $("scrub").value = Math.max(0, S.idx);
+  $("pos").textContent = `${S.idx + 1} / ${S.frames.length} steps`;
+}
+
+// Each player's score over the game, its army's value dashed, and who is ahead now.
+function momentum() {
+  const canvas = $("momentum"), ctx = canvas.getContext("2d"), ps = players(), frames = S.frames.slice(0, S.idx + 1);
+  const w = canvas.width = canvas.clientWidth * devicePixelRatio, h = canvas.height = canvas.clientHeight * devicePixelRatio;
+  ctx.clearRect(0, 0, w, h);
+  if (frames.length < 2 || !ps.length || !w) { $("ahead").innerHTML = ""; $("aheadtext").textContent = ""; return; }
+  const t0 = frames[0].t, t1 = Math.max(frames.at(-1).t, t0 + 1), step = Math.max(1, Math.floor(frames.length / w));
+  for (const [key, dash] of [["army", [4, 4]], ["score", []]]) {
+    const top = Math.max(1, ...frames.flatMap(f => ps.map(p => statsOf(f, p.slot)[key] || 0)));
+    for (const p of ps) {
+      ctx.strokeStyle = p.color; ctx.lineWidth = 2 * devicePixelRatio;
+      ctx.setLineDash(dash.map(d => d * devicePixelRatio)); ctx.globalAlpha = dash.length ? 0.55 : 1;
+      ctx.beginPath();
+      for (let i = 0; i < frames.length; i += step) {
+        const f = frames[i], x = (f.t - t0) / (t1 - t0) * w, y = h - 4 - (statsOf(f, p.slot)[key] || 0) / top * (h - 8);
+        i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+      }
+      ctx.stroke();
+    }
+  }
+  ctx.setLineDash([]); ctx.globalAlpha = 1;
+  const now = ps.map(p => [p, statsOf(frames.at(-1), p.slot).score || 0]), total = now.reduce((a, [, s]) => a + s, 0) || 1;
+  $("ahead").innerHTML = now.map(([p, s]) => `<span style="flex:${Math.max(s, 1)};background:${p.color}" title="${esc(p.label)}"></span>`).join("");
+  const lead = now.slice().sort((a, b) => b[1] - a[1]);
+  $("aheadtext").textContent = lead.length > 1 && lead[0][1] > lead[1][1]
+    ? `${lead[0][0].label} ahead by ${Math.round((lead[0][1] - lead[1][1]) / total * 100)}% of the score` : "Level on score";
+}
+
+// A recording with the game's video beside it keeps the two in step by each frame's "w": while it plays, the video
+// is the clock and the frames follow it (tick), so a game with few frames still plays smoothly; a frame picked by
+// hand moves the video to it.
+function syncVideo(frame) {
+  const v = S.video;
+  if (!v || !frame || frame.w == null || !isFinite(v.duration)) return;
+  const next = S.frames[S.idx + 1];
+  if (v.currentTime < frame.w - 0.25 || (next && next.w != null && v.currentTime >= next.w + 0.25))
+    v.currentTime = Math.min(frame.w, v.duration - 0.05);
+  if (S.playing && v.paused) v.play().catch(() => {});
+  if (!S.playing && !v.paused) v.pause();
+}
+
+// The game's picture becomes the main view, and the start notice moves from the map onto it: the map is only the
+// minimap now.
+function onClient() {
+  S.client = true;
+  document.body.classList.add("has-client");
+  $("client").parentElement.append($("waiting"));
+}
+
+// Before the game begins: who it waits for (the game starts once every player has made its first move).
+function waitingFor() {
+  const names = S.waiting.map(labelOf), el = $("waiting");
+  el.hidden = !names.length;
+  if (names.length) {
+    const who = names.length > 1 ? `${names.slice(0, -1).join(", ")} and ${names.at(-1)}` : names[0];
+    el.innerHTML = `<b>Waiting for ${esc(who)}</b><span>The game starts once every player has made its first move</span>`;
+  }
+}
+
+function showClient() {
+  onClient();
+  $("client").src = `${BASE}/client`;
+  if (S.static) setStatic(S.static);
+}
+
+function show(idx) { S.idx = Math.max(0, Math.min(S.frames.length - 1, idx)); draw(); }
+
+async function poll() {
+  try {
+    const since = S.frames.length ? S.frames[S.frames.length - 1].t : -1;
+    const r = await fetch(`${BASE}/data.json?since=${since}`, {cache: "no-store"});
+    const doc = await r.json();
+    if (doc.live && doc.live.client && !S.client) showClient();
+    S.waiting = (doc.live && doc.live.waiting) || [];
+    if (!S.static || (doc.static && doc.static.game !== S.static.game)) { S.frames = []; setStatic(doc.static); }
+    else if (doc.static) S.static.players = doc.static.players;   // names a player gave itself
+    S.frames.push(...doc.frames);
+    if (S.follow || VIEW || PANEL) show(S.frames.length - 1);
+    waitingFor();
+    if (S.idx >= 0) sidebar(S.frames[S.idx]);
+  } catch (e) { /* the env is restarting or gone: try again */ }
+  setTimeout(poll, 1000);
+}
+
+// Replays step a frame per 100 ms; beside the game's video, to the frame the video has reached.
+function tick() {
+  const v = S.video;
+  if (S.playing && v && isFinite(v.duration)) {
+    let i = S.idx;
+    while (i < S.frames.length - 1 && S.frames[i + 1].w != null && S.frames[i + 1].w <= v.currentTime) i++;
+    if (i !== S.idx) show(i);
+    if (v.ended) S.playing = false;
+  } else if (S.playing && S.idx < S.frames.length - 1) show(S.idx + 1); else S.playing = false;
+  $("play").textContent = S.playing ? "❚❚" : "▶";
+  setTimeout(tick, 100);
+}
+
+$("scrub").addEventListener("input", e => { S.follow = false; $("follow").checked = false; show(+e.target.value); });
+$("follow").addEventListener("change", e => { S.follow = e.target.checked; if (S.follow) show(S.frames.length - 1); });
+$("play").addEventListener("click", () => { S.playing = !S.playing; if (S.playing && S.idx >= S.frames.length - 1) show(0);
+  S.follow = false; $("follow").checked = false; syncVideo(S.frames[S.idx]); });
+document.addEventListener("keydown", e => { if (e.key === " ") { e.preventDefault(); $("play").click(); }
+  if (e.key === "ArrowRight") show(S.idx + 1); if (e.key === "ArrowLeft") show(S.idx - 1); });
+
+if (window.RTS_DATA) {
+  S.embedded = true; S.follow = false; $("follow").parentElement.style.display = "none";
+  if (window.RTS_DATA.video) {   // the game's own video, a file beside this page
+    const v = document.createElement("video");
+    v.id = "client"; v.src = window.RTS_DATA.video; v.muted = true; v.playsInline = true; v.preload = "auto";
+    v.onloadedmetadata = () => { S.video = v; onClient(); setStatic(S.static); show(S.idx); };
+    $("client").replaceWith(v);
+  }
+  setStatic(window.RTS_DATA.static); S.frames = window.RTS_DATA.frames || []; show(0); S.playing = true; tick();
+} else { poll(); tick(); }
+</script>
+</body>
+</html>
