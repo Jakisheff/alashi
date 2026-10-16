@@ -232,7 +232,7 @@ pub(super) fn phase_instance(game_id: u64, game: &GameEntry) -> String {
     )
 }
 
-pub(super) fn append_action(state: &AppState, game_id: u64, entry: &GameEntry) {
+pub(super) fn append_action(state: &AppState, game_id: u64, entry: &GameEntry, before: &GameEntry) {
     let Some(action) = entry.action_log.last() else {
         return;
     };
@@ -240,10 +240,26 @@ pub(super) fn append_action(state: &AppState, game_id: u64, entry: &GameEntry) {
         return;
     }
     let t = now();
+    let changes: Vec<_> = before
+        .sim
+        .factions
+        .iter()
+        .zip(&entry.sim.factions)
+        .enumerate()
+        .filter(|(_, (a, b))| a.cash != b.cash || a.goods != b.goods || a.influence != b.influence)
+        .map(|(actor, (a, b))| {
+            json!({"actor":actor,
+            "cash_before":a.cash,"cash_after":b.cash,
+            "goods_before":a.goods,"goods_after":b.goods,
+            "influence_before":a.influence,"influence_after":b.influence})
+        })
+        .collect();
     let event = json!({"room_id":format!("game:{game_id}"),"game_id":game_id,"kind":"game_action",
         "round":action["round"],"phase":action["phase"],"phase_instance_id":phase_instance(game_id,entry),
         "branch_id":"MAIN","finality":"final","visibility":"public",
-        "action_ref":{"seq":action["seq"],"actor":action["actor"],"action":action["action"]},"created_at_epoch":t});
+        "action_ref":{"seq":action["seq"],"actor":action["actor"],"action":action["action"],
+            "params":action["params"],"result":{"cash_after":action["cash_after"],
+                "goods_after":action["goods_after"],"changes":changes}},"created_at_epoch":t});
     state
         .live
         .lock()
@@ -594,6 +610,11 @@ fn events(state: &AppState, room: Option<&str>, personal: Option<&str>, raw: &st
         Ok(v) if v > 0 && v <= MAX_LIMIT as u64 => v as usize,
         _ => return response_error("bad_limit"),
     };
+    // Only expose events after their snapshot commit, including rollback on failure.
+    let _transaction = state
+        .snapshot_lock
+        .lock()
+        .unwrap_or_else(|e| e.into_inner());
     let live = state.live.lock().unwrap_or_else(|e| e.into_inner());
     if after > live.next_seq {
         return response_error("cursor_ahead");
@@ -686,5 +707,62 @@ pub(super) fn validate(live: &LiveState) -> bool {
 pub(super) fn clear_loaded_presence(live: &mut LiveState) {
     for session in live.sessions.values_mut() {
         session.lease_until = 0;
+    }
+}
+
+#[cfg(test)]
+mod commit_tests {
+    use super::*;
+    #[test]
+    fn public_game_and_personal_reads_wait_for_commit_and_hide_rollback() {
+        use std::sync::mpsc;
+        use std::time::Duration;
+        let root = std::env::temp_dir().join(format!("alashi-live-gate-{}", random_hex().unwrap()));
+        let state = super::super::new_state_with_files(root.join("state.json"), root.join("seq"));
+        let id = "a".repeat(64);
+        let guard = state.snapshot_lock.lock().unwrap();
+        {
+            let mut live = state.live.lock().unwrap();
+            live.memberships.insert(id.clone(), vec![1]);
+            live.append(
+                json!({"room_id":"game:1","kind":"game_action","visibility":"public"}),
+                now(),
+            );
+        }
+        let mut handles = Vec::new();
+        let mut results = Vec::new();
+        for personal in [false, true] {
+            let reader = state.clone();
+            let record = id.clone();
+            let (ready_tx, ready_rx) = mpsc::channel();
+            let (done_tx, done_rx) = mpsc::channel();
+            handles.push(std::thread::spawn(move || {
+                ready_tx.send(()).unwrap();
+                done_tx
+                    .send(if personal {
+                        personal_events(&reader, &record, "?after=0&limit=100")
+                    } else {
+                        game_events(&reader, 1, "?after=0&limit=100")
+                    })
+                    .unwrap();
+            }));
+            ready_rx.recv_timeout(Duration::from_secs(1)).unwrap();
+            assert!(
+                done_rx.recv_timeout(Duration::from_millis(100)).is_err(),
+                "public read exposed an uncommitted event"
+            );
+            results.push(done_rx);
+        }
+        *state.live.lock().unwrap() = LiveState::default();
+        drop(guard);
+        for result in results {
+            assert_eq!(
+                result.recv_timeout(Duration::from_secs(1)).unwrap()["events"],
+                json!([])
+            );
+        }
+        for handle in handles {
+            handle.join().unwrap();
+        }
     }
 }

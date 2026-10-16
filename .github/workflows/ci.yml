@@ -24,6 +24,7 @@ jobs:
       - run: npm run build
       - run: npm run check:animations
       - run: npm run check:strategies
+      - run: npm run check:trading
       - run: node --test ../tools/agent-bootstrap/strategy-run.test.mjs
       - name: Degenie RTS runtime and replay checks
         run: |
@@ -54,6 +55,9 @@ jobs:
 
       - name: Bots compile check
         run: cargo build --locked --manifest-path bots/Cargo.toml
+
+      - name: Two-owner match admission tests
+        run: cargo test --locked --manifest-path bots/Cargo.toml match_host::tests
 
       - name: Indexer tests
         run: cargo test --locked --manifest-path indexer/Cargo.toml

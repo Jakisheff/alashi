@@ -524,7 +524,9 @@ fn owner_ed25519_wishes_are_private_quota_atomic_idempotent_and_durable() {
         port,
         "POST",
         &format!("/agents/{RECORD}/owner/wishes"),
-        Some(&json!({"game_id":game_id,"client_wish_id":"at-limit", "text":" 😀".to_string() + &"😀".repeat(139) + " "})),
+        Some(
+            &json!({"game_id":game_id,"client_wish_id":"at-limit", "text":" 😀".to_string() + &"😀".repeat(139) + " "}),
+        ),
         Some(&owner_session),
         Some(OWNER_ORIGIN),
     );
@@ -576,9 +578,23 @@ fn owner_ed25519_wishes_are_private_quota_atomic_idempotent_and_durable() {
         assert_eq!(page["ok"], true, "{page}");
         let wishes = page["wishes"].as_array().unwrap();
         assert_eq!(wishes.len(), 3);
-        assert_eq!(wishes.iter().filter(|w| w["text"] == "😀".repeat(140)).count(), 1);
-        assert_eq!(wishes.iter().filter(|w| w["text"]
-            .as_str().unwrap().starts_with("PRIVATE_WISH_MARKER_")).count(), 2);
+        assert_eq!(
+            wishes
+                .iter()
+                .filter(|w| w["text"] == "😀".repeat(140))
+                .count(),
+            1
+        );
+        assert_eq!(
+            wishes
+                .iter()
+                .filter(|w| w["text"]
+                    .as_str()
+                    .unwrap()
+                    .starts_with("PRIVATE_WISH_MARKER_"))
+                .count(),
+            2
+        );
         (
             wishes
                 .iter()
@@ -997,7 +1013,9 @@ fn actual_agent_process_keeps_wish_private_and_voluntarily_publishes_cued_reply(
         .env("ALASHI_LLM_KEY", "mock-test-key-local-only")
         .env("ALASHI_TEST_MOCK_LLM_BASE", format!("http://{mock_addr}"))
         .stdout(Stdio::null())
-        .stderr(Stdio::null())
+        .stderr(Stdio::from(
+            std::fs::File::create(root.join("agent.stderr.log")).unwrap(),
+        ))
         .spawn()
         .unwrap();
     let mut child = KillChild(child);
@@ -1015,7 +1033,11 @@ fn actual_agent_process_keeps_wish_private_and_voluntarily_publishes_cued_reply(
         }
         thread::sleep(Duration::from_millis(20));
     }
-    assert!(joined, "actual runner did not join its isolated game");
+    assert!(
+        joined,
+        "actual runner did not join: {}",
+        std::fs::read_to_string(root.join("agent.stderr.log")).unwrap_or_default()
+    );
 
     let (owner_key, _) = test_owner();
     let challenge = request_with_headers(
@@ -1079,8 +1101,11 @@ fn actual_agent_process_keeps_wish_private_and_voluntarily_publishes_cued_reply(
     // Advance from an observed join, not from a five-second process-start race.
     {
         let mut games = state.games.lock().unwrap();
-        games.get_mut(&game_id).unwrap().sim.game.phase_ends_at =
-            std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_secs() as i64 - 1;
+        games.get_mut(&game_id).unwrap().sim.game.phase_ends_at = std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .unwrap()
+            .as_secs() as i64
+            - 1;
     }
     save_snapshot(&state).unwrap();
     // The background crank may already have advanced the expired lobby.
@@ -1169,6 +1194,10 @@ fn actual_agent_process_keeps_wish_private_and_voluntarily_publishes_cued_reply(
     let public_reply = public_reply.expect("runner did not publish voluntary reply");
     let accepted_action = accepted_action.expect("runner did not submit an accepted game action");
     assert!(accepted_action["action_ref"]["action"].is_string());
+    assert!(
+        accepted_action["action_ref"]["result"]["changes"].is_array(),
+        "confirmed trade events must carry their historical balance changes"
+    );
     assert!(!accepted_action.to_string().contains(WISH));
     assert!(!accepted_action.to_string().contains(PRIVATE_REPLY));
     assert_eq!(public_reply["author_agent_record_id"], RECORD);
@@ -1213,4 +1242,326 @@ fn actual_agent_process_keeps_wish_private_and_voluntarily_publishes_cued_reply(
         .unwrap()
         .contains("A public hello"));
     let _ = std::fs::remove_dir_all(root);
+}
+
+#[test]
+fn two_owner_agents_trade_with_durable_public_receipts() {
+    let root = std::env::temp_dir().join(format!("alashi_two_owner_trade_{}", std::process::id()));
+    std::fs::create_dir_all(&root).unwrap();
+    let state = new_state_with_files(root.join("state.json"), root.join("sequence"));
+    let secrets = [
+        register_v2_fixture(&state, RECORD, [0x11; 32], [7; 32]),
+        register_v2_fixture(&state, RECORD_B, [0x22; 32], [8; 32]),
+    ];
+    save_snapshot(&state).unwrap();
+    let port = serve_on(state.clone(), "127.0.0.1:0", 60).unwrap().port();
+    let created = request(
+        port,
+        "POST",
+        "/game/new",
+        Some(&json!({
+            "entry_fee":1,"phase_duration":120,"lobby_duration":120,"grace_s":0,
+            "label":"SYNTHETIC_TWO_OWNER_TRADE"
+        })),
+    );
+    assert_eq!(created["ok"], true, "{created}");
+    let game = created["game_id"].as_u64().unwrap();
+    let mut owners = Vec::new();
+    for (record, seed) in [(RECORD, [7; 32]), (RECORD_B, [8; 32])] {
+        let key = SigningKey::from(seed);
+        let challenge = request_with_headers(
+            port,
+            "POST",
+            &format!("/agents/{record}/owner/challenge"),
+            Some(&json!({})),
+            None,
+            Some(OWNER_ORIGIN),
+        );
+        let signature = Signature::from(
+            key.sign(challenge["message"].as_str().unwrap().as_bytes())
+                .to_bytes(),
+        )
+        .to_string();
+        let session = request_with_headers(
+            port,
+            "POST",
+            &format!("/agents/{record}/owner/session"),
+            Some(&json!({"challenge_id":challenge["challenge_id"],"signature":signature})),
+            None,
+            Some(OWNER_ORIGIN),
+        );
+        assert_eq!(session["ok"], true, "{session}");
+        let vk: [u8; 32] = VerificationKey::from(&key).into();
+        owners.push(alashi_rules::anchor_lang::prelude::Pubkey::new_from_array(vk).to_string());
+    }
+    assert_ne!(owners[0], owners[1]);
+    let mut children = Vec::new();
+    let mut providers = Vec::new();
+    let mut gates = Vec::new();
+    let mut requests = Vec::new();
+    for (i, record) in [RECORD, RECORD_B].into_iter().enumerate() {
+        let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+        let provider = listener.local_addr().unwrap();
+        let (gate_tx, gate_rx) = mpsc::channel();
+        let (request_tx, request_rx) = mpsc::channel();
+        gates.push(gate_tx);
+        requests.push(request_rx);
+        providers.push(thread::spawn(move || {
+            let (mut stream, _) = listener.accept().unwrap();
+            stream.set_read_timeout(Some(Duration::from_secs(10))).unwrap();
+            request_tx.send(read_provider_request(&mut stream)).unwrap();
+            gate_rx.recv_timeout(Duration::from_secs(15)).unwrap();
+            respond_provider(&mut stream, &json!({
+                "choices":[{"message":{"content":json!({"action":"sell","params":{"units":if i == 0 {3} else {2}}}).to_string()}}],
+                "usage":{"prompt_tokens":100,"completion_tokens":20}
+            }));
+        }));
+        let recovery = root.join(format!("recovery-{i}"));
+        std::fs::write(&recovery, &secrets[i]).unwrap();
+        #[cfg(unix)]
+        {
+            use std::os::unix::fs::PermissionsExt;
+            std::fs::set_permissions(&recovery, std::fs::Permissions::from_mode(0o600)).unwrap();
+        }
+        children.push(KillChild(
+            Command::new(env!("CARGO_BIN_EXE_agent"))
+                .args([
+                    "--url",
+                    &format!("http://127.0.0.1:{port}"),
+                    "--game",
+                    &game.to_string(),
+                    "--name",
+                    if i == 0 { "TradeA" } else { "TradeB" },
+                    "--model",
+                    "local-test-provider",
+                    "--agent-record-id",
+                    record,
+                    "--recovery-file",
+                    recovery.to_str().unwrap(),
+                ])
+                .env("ALASHI_ALLOW_INSECURE_HTTP", "1")
+                .env("ALASHI_LLM_KEY", "synthetic-local-key-only")
+                .env("ALASHI_TEST_MOCK_LLM_BASE", format!("http://{provider}"))
+                .env("ALASHI_AGENT_LOGS", root.join(format!("logs-{i}")))
+                .stdout(Stdio::null())
+                .stderr(Stdio::from(
+                    std::fs::File::create(root.join(format!("agent-{i}.stderr.log"))).unwrap(),
+                ))
+                .spawn()
+                .unwrap(),
+        ));
+    }
+    let until = Instant::now() + Duration::from_secs(10);
+    loop {
+        let current = request(port, "GET", &format!("/game/{game}/state"), None);
+        if current["state"]["factions"]
+            .as_array()
+            .is_some_and(|f| f.len() == 2)
+        {
+            break;
+        }
+        assert!(
+            Instant::now() < until,
+            "both agent processes must join; diagnostics: {:?}",
+            (0..2)
+                .map(
+                    |i| std::fs::read_to_string(root.join(format!("agent-{i}.stderr.log")))
+                        .unwrap_or_default()
+                )
+                .collect::<Vec<_>>()
+        );
+        thread::sleep(Duration::from_millis(20));
+    }
+    let joined = request(port, "GET", &format!("/game/{game}/state"), None);
+    let factions = joined["state"]["factions"].as_array().unwrap();
+    for (i, record) in [RECORD, RECORD_B].iter().enumerate() {
+        let f = factions
+            .iter()
+            .find(|f| f["agent_record_id"] == *record)
+            .unwrap();
+        assert_eq!(f["registration"]["wallet"], owners[i]);
+        let idx = f["idx"].as_u64().unwrap() as usize;
+        state
+            .games
+            .lock()
+            .unwrap()
+            .get_mut(&game)
+            .unwrap()
+            .sim
+            .factions[idx]
+            .goods = if i == 0 { 3 } else { 2 };
+    }
+    state
+        .games
+        .lock()
+        .unwrap()
+        .get_mut(&game)
+        .unwrap()
+        .sim
+        .game
+        .phase_ends_at = 0;
+    save_snapshot(&state).unwrap();
+    arena::api::crank_once(&state);
+    // Both real processes reach their independent model endpoints before either answers.
+    for request_rx in &requests {
+        let input = request_rx.recv_timeout(Duration::from_secs(10)).unwrap();
+        assert!(input["messages"].is_array());
+    }
+    gates[0].send(()).unwrap();
+    let first_until = Instant::now() + Duration::from_secs(5);
+    loop {
+        let feed = request(
+            port,
+            "GET",
+            &format!("/game/{game}/live/events?after=0&limit=100"),
+            None,
+        );
+        if feed["events"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|e| e["kind"] == "game_action")
+        {
+            break;
+        }
+        assert!(Instant::now() < first_until, "first agent did not trade");
+        thread::sleep(Duration::from_millis(20));
+    }
+    gates[1].send(()).unwrap();
+    let until = Instant::now() + Duration::from_secs(5);
+    let feed = loop {
+        let feed = request(
+            port,
+            "GET",
+            &format!("/game/{game}/live/events?after=0&limit=100"),
+            None,
+        );
+        if feed["events"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|e| e["kind"] == "game_action")
+            .count()
+            == 2
+        {
+            break feed;
+        }
+        assert!(Instant::now() < until, "second agent did not trade");
+        thread::sleep(Duration::from_millis(20));
+    };
+    for child in &mut children {
+        child.stop();
+    }
+    for provider in providers {
+        provider.join().unwrap();
+    }
+    let trades: Vec<_> = feed["events"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|e| e["kind"] == "game_action")
+        .collect();
+    assert_eq!(trades[0]["action_ref"]["action"], "sell");
+    assert_eq!(trades[1]["action_ref"]["action"], "sell");
+    // Price curve [12,10,9,8,7], with PESO = 1,000,000 base units.
+    assert_eq!(
+        trades[0]["action_ref"]["result"]["changes"][0]["cash_before"],
+        0
+    );
+    assert_eq!(
+        trades[0]["action_ref"]["result"]["changes"][0]["cash_after"],
+        31_000_000
+    );
+    assert_eq!(
+        trades[1]["action_ref"]["result"]["changes"][0]["cash_after"],
+        15_000_000
+    );
+    assert_eq!(
+        trades[0]["action_ref"]["result"]["changes"][0]["goods_before"],
+        3
+    );
+    assert_eq!(
+        trades[1]["action_ref"]["result"]["changes"][0]["goods_before"],
+        2
+    );
+    assert!(trades
+        .iter()
+        .all(|e| e["action_ref"]["result"]["changes"][0]["goods_after"] == 0));
+    let current = request(port, "GET", &format!("/game/{game}/state"), None);
+    assert!(
+        current["state"]["recent_actions"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .all(|a| a["by"] == "llm"),
+        "both actions must use the local provider responses"
+    );
+    let recovered = request(
+        port,
+        "POST",
+        &format!("/game/{game}/join"),
+        Some(&json!({
+            "agent_record_id":RECORD,"recovery_secret":secrets[0],"recover":true,
+            "name":"TradeA","model":"local-test-provider","strategy_hash":arena::api::agent_id_of(
+                "local-test-provider","Стратег: играй рационально, следи за таблицей цен и влиянием.")
+        })),
+    );
+    assert_eq!(recovered["ok"], true, "{recovered}");
+    let token = recovered["token"].as_str().unwrap();
+    let repeated = request(
+        port,
+        "POST",
+        &format!("/game/{game}/act"),
+        Some(&json!({"token":token,"op_id":1,"action":"sell","params":{"units":3},"by":"llm"})),
+    );
+    assert_eq!(
+        repeated["ok"], true,
+        "same-operation retry must return the saved response: {repeated}"
+    );
+    let rejected = request(
+        port,
+        "POST",
+        &format!("/game/{game}/act"),
+        Some(&json!({"token":token,"op_id":2,"action":"sell","params":{"units":1},"by":"llm"})),
+    );
+    assert_eq!(rejected["ok"], false);
+    let after_retry = request(
+        port,
+        "GET",
+        &format!("/game/{game}/live/events?after=0&limit=100"),
+        None,
+    );
+    assert_eq!(
+        after_retry["events"], feed["events"],
+        "retry and rejected action must not produce another journey"
+    );
+    let resumed = new_state_with_files(root.join("state.json"), root.join("sequence"));
+    let port2 = serve_on(resumed, "127.0.0.1:0", 60000).unwrap().port();
+    let restored = request(
+        port2,
+        "GET",
+        &format!("/game/{game}/live/events?after=0&limit=100"),
+        None,
+    );
+    assert_eq!(
+        restored["events"], feed["events"],
+        "receipts and event IDs must survive restart"
+    );
+    let public_state = request(port2, "GET", &format!("/game/{game}/state"), None);
+    if let Ok(destination) = std::env::var("ALASHI_TRADING_EVIDENCE_DIR") {
+        let destination = PathBuf::from(destination);
+        std::fs::create_dir_all(&destination).unwrap();
+        std::fs::write(
+            destination.join("events.json"),
+            serde_json::to_vec_pretty(&restored).unwrap(),
+        )
+        .unwrap();
+        std::fs::write(
+            destination.join("public-state.json"),
+            serde_json::to_vec_pretty(&public_state).unwrap(),
+        )
+        .unwrap();
+        // Private runtime state stays outside the repository for browser acceptance.
+        std::fs::write(destination.join("runtime-path.txt"), root.to_str().unwrap()).unwrap();
+    }
 }

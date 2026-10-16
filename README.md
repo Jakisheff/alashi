@@ -8,7 +8,7 @@ Alashi is a political economy game for agent factions, with a public Solana devn
 
 The [120-second owner film](experiments/alashi-watch/owner-film/README.md) follows the designer's written prompts: a minimal shared arena, six Degenie and a persistent task roster. It shows a scripted delegation cycle ending in sales executed by the local Rust rules. LLM decisions and token savings remain unmeasured. The film includes English captions and a Russian chapter player.
 
-Amir develops this prototype directly with Codex. The [local experiment](experiments/alashi-watch/README.md) contains the whole-map Degenie scene based on Amir’s concept and the earlier single-worker cycle. Six workers act in parallel, then two verifiers return reports to their Chiefs. The saved event replay runs at 30 fps; live browser frame rate remains limited in the test environment. Clients are scripted; live agent integration remains pending.
+Amir develops this prototype directly with Codex. The [local experiment](experiments/alashi-watch/README.md) contains the whole-map Degenie scene based on Amir’s concept and the earlier single-worker cycle. Six workers act in parallel, then two verifiers return reports to their Chiefs. The saved event replay runs at 30 fps; live browser frame rate remains limited in the test environment. The original prototype uses scripted clients. On this implementation branch, the `/devnet` viewer and legacy `/arena` page now reuse its whole-map scene for confirmed trading receipts. This projection does not expose agent reasoning or task graphs. [Trading acceptance](experiments/alashi-watch/trading-cycle/ACCEPTANCE.md) separates the public devnet record from the two-process local test. These changes are not deployed to the public site.
 
 ## See the game in motion
 
@@ -119,9 +119,9 @@ claude mcp add alashi -- node "$PWD/mcp.mjs"
 
 Tools: `alashi_start` (register once, match, join), `alashi_state`, `alashi_act`, `alashi_retry`, and the read-only `alashi_watch_devnet_game` (public snapshot and recorded agent dialogue for a game account). The server still needs a local shell and private files; an agent limited to a browser or a cloud sandbox cannot sign moves yet.
 
-## Marketing duels (implementation branch)
+## Agent arena (implementation branch)
 
-The `/strategies` route adds a timed duel on one shared advertising brief. Two
+ALASHI is an arena for testing owner skills and agent teams. Trading is the current game; advertising is the first additional task type in the `/strategies` pilot. That route adds a timed duel on one shared advertising brief. Two
 owners bring their own agent task graphs and locally approved tools. Submissions
 stay hidden until both teams submit or the deadline ends. A separate host reviews
 creative quality before token standings are shown. Public strategy derivatives

@@ -7,6 +7,8 @@ import { defineConfig } from 'vite'
 // requests through the existing production read proxies by accident.
 const strategyTarget = process.env.ALASHI_STRATEGY_API_TARGET
 if (strategyTarget && !/^http:\/\/(127\.0\.0\.1|localhost):[0-9]+$/.test(strategyTarget)) throw new Error('ALASHI_STRATEGY_API_TARGET must be a local SSH tunnel')
+const arenaTarget = process.env.ALASHI_ARENA_API_TARGET
+if (arenaTarget && !/^http:\/\/(127\.0\.0\.1|localhost):[0-9]+$/.test(arenaTarget)) throw new Error('ALASHI_ARENA_API_TARGET must be local')
 const liveTarget = process.env.ALASHI_LIVE_API_TARGET
 if (liveTarget && !/^http:\/\/(127\.0\.0\.1|localhost):[0-9]+$/.test(liveTarget)) throw new Error('ALASHI_LIVE_API_TARGET must be a local SSH tunnel')
 
@@ -19,6 +21,7 @@ export default defineConfig({
   // Dev only: read the public arena GET routes from the live site (same paths nginx exposes; POST stays closed there)
   server: {
     proxy: {
+      '/games': { target: arenaTarget ?? 'https://alashi.network', changeOrigin: !arenaTarget, bypass(req: import('node:http').IncomingMessage, res: import('node:http').ServerResponse | undefined) { if (req.method !== 'GET' || (req.url ?? '').split('?')[0] !== '/games') { if (res) { res.statusCode = 403; res.end() } return false } } },
       ...(strategyTarget ? { '/strategy-api': {
         target: strategyTarget, changeOrigin: false,
         rewrite: (path: string) => path.replace(/^\/strategy-api/, ''),
@@ -46,7 +49,11 @@ export default defineConfig({
           if (req.method !== 'GET' || !/^\/chain\/devnet\/games\/[1-9A-HJ-NP-Za-km-z]{32,44}(\/(conversations|dialogue))?$/.test((req.url ?? '').split('?')[0])) { if (res) { res.statusCode = 403; res.end() } return false }
         },
       },
-      '/game': { target: 'https://alashi.network', changeOrigin: true },
+      '/game': { target: arenaTarget ?? 'https://alashi.network', changeOrigin: !arenaTarget,
+        bypass(req: import('node:http').IncomingMessage, res: import('node:http').ServerResponse | undefined) {
+          if (arenaTarget && (req.method !== 'GET' || !/^\/game\/[1-9][0-9]*\/(state|live\/events)$/.test((req.url ?? '').split('?')[0]))) { if (res) { res.statusCode = 403; res.end() } return false }
+        },
+      },
       '/agents': { target: 'https://alashi.network', changeOrigin: true },
     },
   },

@@ -86,3 +86,36 @@ advertisement artifacts only. Updated desktop and 390px evidence, with no phone
 horizontal overflow. Publishing the final correction and checking its CI.
 Факт: 2.77 часа на реализацию и локальную приёмку с 19:49 до 22:35;
 ожидание итогового GitHub CI учитывается отдельно в финальном отчёте.
+
+17.10.2026 01:02. План: 1,5 часа, до 02:32.
+Audit the two-owner trading path against the demo. Found a disconnected consumer:
+/arena reads trading events but has no Degenie map; /strategies renders only the
+advertisement workflow. Trading public events also omit historical result values.
+Acceptance: two signed fixture owners, separate actual agent processes and local
+providers produce accepted trades; the public map consumes their durable receipts.
+No paid providers, real funds or production deployment.
+
+17.10 01:15: two signed fixture owners and two independent agent processes sold
+3 and 2 goods via separate loopback providers. Historical receipts establish
+31 and 15 game cash (PESO = 1,000,000 base units). A restart test exposed a public
+event read before snapshot commit; the journal now waits on the transaction gate.
+Full arena regression is running. The primary devnet path is also in scope:
+read-only public Game D2mk returned 41 confirmed events, two factions and settled
+state. Adding its confirmed-event map consumer without sending transactions.
+
+17.10 01:34: local acceptance passed 134 arena tests. Both real agent processes
+used their model responses for sales, recovered credentials, replayed an operation
+without charging another sale, and retained receipts across restart. Solana RPC
+independently returned both public devnet sale transactions as successful, with
+matching slots and ALASHI program invocation. The browser rendered both sell
+journeys at 6.000 s, showed the whole map at 390px without overflow, and received
+two new fixture votes without reload. Offline Play held 1.100 s twice; the same
+saved fixture state was restored. Build, animation and trading guards passed.
+Remaining: fresh external two-person onboarding, actual internal-subagent traces,
+trading token accounting and trading strategy lineage. No deployment or spending.
+Preparing the source/evidence commit and final-head CI.
+
+17.10 01:37. Факт: 0,58 часа на реализацию и локальную приёмку (01:02-01:37).
+The final frontend build passed. Source and public PNG/JSON evidence are ready
+for publication; final-head GitHub CI is the remaining verification step. Total
+elapsed time including CI will be reported in the PR and completion message.

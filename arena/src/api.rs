@@ -2200,8 +2200,8 @@ fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json
         return op_response(response, op_id, false);
     }
     if response["action_log"]["ok"] == true {
-        if let Some(entry) = state.games.lock().unwrap_or_else(|e| e.into_inner()).get(&game_id) {
-            live::append_action(state, game_id, entry);
+        if let (Some(entry), Some(before)) = (state.games.lock().unwrap_or_else(|e| e.into_inner()).get(&game_id), backup.as_ref()) {
+            live::append_action(state, game_id, entry, before);
         }
     }
     response = op_response(response, op_id, op_id.is_some());

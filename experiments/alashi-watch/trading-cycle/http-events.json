@@ -1,0 +1,122 @@
+{
+  "events": [
+    {
+      "branch_id": "MAIN",
+      "created_at_epoch": 1792182352,
+      "event_id": "live-1",
+      "finality": "final",
+      "game_id": 1,
+      "grace_until": 1792182472,
+      "kind": "phase_changed",
+      "phase": "lobby",
+      "phase_ends_at": 1792182472,
+      "phase_instance_id": "g1-r0-lobby-1792182472",
+      "room_id": "game:1",
+      "round": 0,
+      "seq": 1,
+      "server_created_at": "2026-10-16T20:25:52Z",
+      "visibility": "public"
+    },
+    {
+      "branch_id": "MAIN",
+      "created_at_epoch": 1792182358,
+      "event_id": "live-2",
+      "finality": "final",
+      "game_id": 1,
+      "grace_until": 1792182478,
+      "kind": "phase_changed",
+      "phase": "market",
+      "phase_ends_at": 1792182478,
+      "phase_instance_id": "g1-r1-market-1792182478",
+      "room_id": "game:1",
+      "round": 1,
+      "seq": 2,
+      "server_created_at": "2026-10-16T20:25:58Z",
+      "visibility": "public"
+    },
+    {
+      "action_ref": {
+        "action": "sell",
+        "actor": 0,
+        "params": {
+          "units": 3
+        },
+        "result": {
+          "cash_after": 31000000,
+          "changes": [
+            {
+              "actor": 0,
+              "cash_after": 31000000,
+              "cash_before": 0,
+              "goods_after": 0,
+              "goods_before": 3,
+              "influence_after": 1,
+              "influence_before": 1
+            }
+          ],
+          "goods_after": 0
+        },
+        "seq": 1
+      },
+      "branch_id": "MAIN",
+      "created_at_epoch": 1792182360,
+      "event_id": "live-3",
+      "finality": "final",
+      "game_id": 1,
+      "kind": "game_action",
+      "phase": "market",
+      "phase_instance_id": "g1-r1-market-1792182478",
+      "room_id": "game:1",
+      "round": 1,
+      "seq": 3,
+      "server_created_at": "2026-10-16T20:26:00Z",
+      "visibility": "public"
+    },
+    {
+      "action_ref": {
+        "action": "sell",
+        "actor": 1,
+        "params": {
+          "units": 2
+        },
+        "result": {
+          "cash_after": 15000000,
+          "changes": [
+            {
+              "actor": 1,
+              "cash_after": 15000000,
+              "cash_before": 0,
+              "goods_after": 0,
+              "goods_before": 2,
+              "influence_after": 1,
+              "influence_before": 1
+            }
+          ],
+          "goods_after": 0
+        },
+        "seq": 2
+      },
+      "branch_id": "MAIN",
+      "created_at_epoch": 1792182360,
+      "event_id": "live-4",
+      "finality": "final",
+      "game_id": 1,
+      "kind": "game_action",
+      "phase": "market",
+      "phase_instance_id": "g1-r1-market-1792182478",
+      "room_id": "game:1",
+      "round": 1,
+      "seq": 4,
+      "server_created_at": "2026-10-16T20:26:00Z",
+      "visibility": "public"
+    }
+  ],
+  "has_more": false,
+  "history_truncated": false,
+  "last_seq": 4,
+  "next_cursor": 4,
+  "ok": true,
+  "oldest_available_seq": 1,
+  "pruned_through_seq": 0,
+  "server_now": 1792182360
+}

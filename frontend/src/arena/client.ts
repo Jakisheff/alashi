@@ -20,12 +20,18 @@ export type ArenaEvent = {
   text?: string
   actor?: number
   action?: string
+  actionSeq?: number
+  changes?: BalanceChange[]
+  confirmed?: boolean
 }
 
+export type BalanceChange = { actor: number; cash_before: number; cash_after: number; goods_before: number; goods_after: number; influence_before: number; influence_after: number }
+export type ArenaFaction = { idx: number; name: string; cash: number; goods: number; record?: string; wallet?: string }
+export type ArenaSnapshot = { finished: boolean; phase: string; round: number; now: number; factions: ArenaFaction[]; label: string }
 export type ArenaEventPage = { events: ArenaEvent[]; cursor: number; more: boolean; truncated: boolean }
 export class ArenaApiError extends Error {
-  readonly code: 'network' | 'unavailable' | 'invalid_response'
-  constructor(code: 'network' | 'unavailable' | 'invalid_response') { super(code); this.code = code }
+  readonly code: 'network' | 'unavailable' | 'invalid_response' | 'cursor_expired'
+  constructor(code: 'network' | 'unavailable' | 'invalid_response' | 'cursor_expired') { super(code); this.code = code }
 }
 
 type Json = Record<string, unknown>
@@ -63,7 +69,7 @@ async function get(path: string, signal?: AbortSignal): Promise<Json> {
   }
   let value: Json
   try { value = object(await response.json()) } catch { throw new ArenaApiError('unavailable') }
-  if (!response.ok || value.ok !== true) throw new ArenaApiError('unavailable')
+  if (!response.ok || value.ok !== true) throw new ArenaApiError(value.error === 'cursor_expired' ? 'cursor_expired' : 'unavailable')
   return value
 }
 
@@ -85,24 +91,51 @@ export async function activeArenaGames(signal?: AbortSignal): Promise<ArenaGame[
   }).sort((a, b) => a.gameId - b.gameId)
 }
 
+export async function arenaState(gameId: number, signal?: AbortSignal): Promise<ArenaSnapshot> {
+  const value = await get(`/game/${integer(gameId, 1)}/state`, signal)
+  if (value.finished === true) {
+    const result = object(value.result), agents = array(result.agents), cash = array(result.final_cash), goods = array(result.final_goods)
+    if (agents.length !== cash.length || agents.length !== goods.length) throw new ArenaApiError('invalid_response')
+    return { finished: true, phase: 'finished', round: 6, now: integer(result.finished_at), label: nullableText(result.label,32), factions: agents.map((raw, idx) => {
+      const agent = object(raw), registration = agent.registration ? object(agent.registration) : null
+      return { idx, name: text(agent.name,80), cash: integer(cash[idx]), goods: integer(goods[idx]), record: agent.agent_record_id ? record(agent.agent_record_id) : undefined, wallet: registration ? text(registration.wallet,64) : undefined }
+    }) }
+  }
+  const state = object(value.state)
+  return { finished: false, phase: text(state.phase, 32), round: integer(state.round), now: integer(state.now), label: nullableText(state.label, 32), factions: array(state.factions).map(raw => {
+    const f = object(raw), registration = f.registration ? object(f.registration) : null
+    return { idx: integer(f.idx), name: text(f.name, 80), cash: integer(f.cash), goods: integer(f.goods), record: f.agent_record_id ? record(f.agent_record_id) : undefined, wallet: registration ? text(registration.wallet, 64) : undefined }
+  }) }
+}
+
+export function projectArenaEvent(raw: unknown): ArenaEvent | null {
+  const event = object(raw)
+  if (event.visibility !== 'public') return null
+  const kind = text(event.kind, 32)
+  if (kind !== 'agent_message' && kind !== 'game_action' && kind !== 'phase_changed' && kind !== 'final_result') return null
+  const createdAt = text(event.server_created_at, 64)
+  if (!Number.isFinite(Date.parse(createdAt))) throw new ArenaApiError('invalid_response')
+  const output: ArenaEvent = { id: text(event.event_id, 128), seq: integer(event.seq, 1), kind, createdAt, round: optionalInteger(event.round), phase: optionalText(event.phase, 32) }
+  if (kind === 'agent_message') { output.author = record(event.author_agent_record_id); output.text = text(event.text, 4096) }
+  if (kind === 'game_action') {
+    const action = object(event.action_ref)
+    output.actor = integer(action.actor); output.action = text(action.action, 64)
+    output.actionSeq = integer(action.seq, 1)
+    output.confirmed = event.finality === 'final'
+    if (action.result !== undefined) {
+      const result = object(action.result)
+      output.changes = array(result.changes).map(raw => {
+        const change = object(raw)
+        return Object.fromEntries(['actor', 'cash_before', 'cash_after', 'goods_before', 'goods_after', 'influence_before', 'influence_after'].map(key => [key, integer(change[key])])) as BalanceChange
+      })
+    }
+  }
+  return output
+}
+
 export async function arenaEvents(gameId: number, after: number, signal?: AbortSignal): Promise<ArenaEventPage> {
   const value = await get(`/game/${integer(gameId, 1)}/live/events?after=${integer(after)}&limit=100`, signal)
-  const events = array(value.events).flatMap((raw): ArenaEvent[] => {
-    const event = object(raw)
-    if (event.visibility !== 'public') return []
-    const kind = text(event.kind, 32)
-    if (kind !== 'agent_message' && kind !== 'game_action' && kind !== 'phase_changed' && kind !== 'final_result') return []
-    const createdAt = text(event.server_created_at, 64)
-    if (!Number.isFinite(Date.parse(createdAt))) throw new ArenaApiError('invalid_response')
-    const output: ArenaEvent = { id: text(event.event_id, 128), seq: integer(event.seq, 1), kind, createdAt, round: optionalInteger(event.round), phase: optionalText(event.phase, 32) }
-    if (kind === 'agent_message') { output.author = record(event.author_agent_record_id); output.text = text(event.text, 4096) }
-    if (kind === 'game_action') {
-      const action = object(event.action_ref)
-      output.actor = integer(action.actor)
-      output.action = text(action.action, 64)
-    }
-    return [output]
-  })
+  const events = array(value.events).flatMap(raw => { const event = projectArenaEvent(raw); return event ? [event] : [] })
   const cursor = integer(value.next_cursor)
   if (events.some((event, index) => event.seq > cursor || (index > 0 && event.seq <= events[index - 1].seq))) throw new ArenaApiError('invalid_response')
   return { events, cursor, more: value.has_more === true, truncated: value.history_truncated === true }

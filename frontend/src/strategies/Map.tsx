@@ -1,11 +1,16 @@
 import { useEffect, useRef, useState } from 'react'
-import { timeline, point, smooth } from './timeline'
+import { timeline, point, smooth, type Stage } from './timeline'
 import type { Run } from './client'
 type Layout = { width: number; height: number; chiefs: number[][]; routes: number[][][]; labels: [string, number, number][] }
 const asset = (file: string) => `${import.meta.env.BASE_URL}strategies/${file}`
+export type MapTeam = { id: string; stages: Stage[]; completed: boolean }
 export function StrategyMap({ runs, online }: { runs: Run[]; online: boolean }) {
+  const starts = runs.flatMap(r => Object.values(r.calls).map(c => c.started_at)), origin = starts.length ? Math.min(...starts) : 0
+  return <DegenieMap teams={runs.map(r => ({ id: r.id, stages: timeline(r, origin), completed: !!r.result }))} online={online} caption={runs.length ? runs.some(r => r.status === 'running') ? 'Live team tasks · staged movement' : 'Recorded team tasks · replay' : 'Waiting for two owners'} />
+}
+export function DegenieMap({ teams, online, caption, trading = false, onTime }: { teams: MapTeam[]; online: boolean; caption: string; trading?: boolean; onTime?: (time: number) => void }) {
   const canvas = useRef<HTMLCanvasElement>(null), slider = useRef<HTMLInputElement>(null), seek = useRef<number | null>(null), [paused, setPaused] = useState(false), [replay, setReplay] = useState(0), [error, setError] = useState('')
-  const current = useRef({ runs, online, paused }); current.current = { runs, online, paused }
+  const current = useRef({ teams, online, paused, onTime }); current.current = { teams, online, paused, onTime }
   useEffect(() => {
     const ctx = canvas.current?.getContext('2d'); if (!ctx) return
     const stage = ctx, terrain = new Image(), atlas = new Image(), controller = new AbortController()
@@ -18,21 +23,20 @@ export function StrategyMap({ runs, online }: { runs: Run[]; online: boolean }) 
         if (disposed) return
         function draw(ms: number) {
           if (disposed) return
-          const { runs: teamRuns, online: connected, paused: stopped } = current.current
-          const starts = teamRuns.flatMap(r => Object.values(r.calls).map(c => c.started_at))
-          const origin = starts.length ? Math.min(...starts) : 0
-          const sides = [0, 1].map(side => teamRuns[side] ? timeline(teamRuns[side], origin) : [])
+          const { teams: teamRuns, online: connected, paused: stopped } = current.current
+          const sides = [0, 1].map(side => teamRuns[side]?.stages ?? [])
           const stages = sides.flat(), duration = stages.length ? Math.max(0, ...stages.map(s => s.end ?? s.work + 1)) + .8 : 0
           if (seek.current !== null) { clock = seek.current; seek.current = null }
           if (connected && !stopped && last && stages.length) clock = Math.min(stages.some(s => s.end === null) ? Infinity : duration, clock + Math.min(.1, (ms - last) / 1000))
           last = ms
           const t = reduced.matches ? duration : clock
           if (slider.current) { slider.current.max = String(duration); slider.current.value = String(t) }
+          current.current.onTime?.(t)
           stage.canvas.dataset.motionTime = t.toFixed(3)
           stage.canvas.dataset.activeTasks = stages.filter(s => t >= s.start && (s.end === null || t < s.end)).map(s => s.task).join(',')
           stage.clearRect(0, 0, 1672, 941); stage.drawImage(terrain, 0, 0, 1672, 941)
           stage.textAlign = 'center'; stage.font = '600 19px system-ui'
-          for (const [label, x, y] of layout.labels) { stage.fillStyle = '#061b2be8'; stage.fillRect(x - 80, y - 18, 160, 30); stage.fillStyle = '#d8f7ff'; stage.fillText(label === 'PARLIAMENT' ? 'COPY CHECK' : label === 'MARKET' ? 'CREATIVE' : label.startsWith('VERIFY') ? 'REVIEW' : 'RESEARCH', x, y + 4) }
+          for (const [label, x, y] of layout.labels) { stage.fillStyle = '#061b2be8'; stage.fillRect(x - 80, y - 18, 160, 30); stage.fillStyle = '#d8f7ff'; stage.fillText(trading ? label === 'ANALYTICS' ? 'PRODUCTION' : label.startsWith('VERIFY') ? 'EXCHANGE' : label : label === 'PARLIAMENT' ? 'COPY CHECK' : label === 'MARKET' ? 'CREATIVE' : label.startsWith('VERIFY') ? 'REVIEW' : 'RESEARCH', x, y + 4) }
           function robot(x: number, y: number, direction: number, clip: number, time: number, label: string, carrying = false, accent = '#63eaff') {
             stage.strokeStyle = accent; stage.lineWidth = 3; stage.beginPath(); stage.ellipse(x, y, 28, 12, 0, 0, Math.PI * 2); stage.stroke()
             const durations = [4.033, 1.133, 1.233], f = reduced.matches ? clip === 2 ? 14 : 0 : Math.floor((time % durations[clip]) / durations[clip] * 24)
@@ -41,10 +45,13 @@ export function StrategyMap({ runs, online }: { runs: Run[]; online: boolean }) 
             if (carrying) { stage.fillStyle = '#ffe183'; stage.fillRect(x + 23, y - 49, 13, 17) }
           }
           for (const side of [0, 1]) {
-            const team = sides[side], r = teamRuns[side], done = !!r?.result && t >= Math.max(0, ...team.map(s => s.end ?? s.work + 1))
+            const team = sides[side], r = teamRuns[side], done = !!r?.completed && t >= Math.max(0, ...team.map(s => s.end ?? s.work + 1))
             robot(...layout.chiefs[side] as [number, number], side ? 7 : 1, done ? 2 : 0, t, side ? 'B' : 'A', false, side ? '#f4c778' : '#63eaff')
             for (let i = 0; i < 4; i++) {
-              const route = layout.routes[i + side * 4], s = team.filter(s => s.route === i && t >= s.start).at(-1)
+              let route = layout.routes[i + side * 4]
+              if (trading && i === 0) route = side ? [route[0], route[1], [1050, 540], [945, 570]] : [route[0], route[1], [740, 620], [795, 635]]
+              if (trading && i === 2) route = side ? [route[0], route[1], [1040, 825], [925, 820]] : [route[0], route[1], [700, 830], [800, 835]]
+              const s = team.filter(s => s.route === i && t >= s.start).at(-1)
               let p = 0, clip = 0, direction = side ? 7 : 1, label = `${side ? 'B' : 'A'}${i + 1}`, carrying = false
               if (s) {
                 if (t < s.work) p = smooth((t - s.start - .16) / .64)
@@ -67,10 +74,10 @@ export function StrategyMap({ runs, online }: { runs: Run[]; online: boolean }) 
     }
     void start()
     return () => { disposed = true; controller.abort(); cancelAnimationFrame(frame) }
-  }, [runs.map(r => r.id).join(':'), replay])
+  }, [teams.map(r => r.id).join(':'), replay, trading])
   return <section className="strategy-map" aria-label="Whole map of Degenie tasks">
-    <div className="map-caption"><span>{runs.length ? runs.some(r => r.status === 'running') ? 'Live team tasks · staged movement' : 'Recorded team tasks · replay' : 'Waiting for two owners'}</span><div><button onClick={() => { setPaused(false); seek.current = 0; setReplay(n => n + 1) }} disabled={!runs.length}>Replay events</button><button onClick={() => setPaused(p => !p)} disabled={!runs.length}>{paused ? "Play replay" : "Pause replay"}</button></div></div>
-    <canvas ref={canvas} width={1672} height={941} role="img" aria-label="Two owner teams send their Degenie to tasks in parallel, use tools, and return reports." />
+    <div className="map-caption"><span>{caption}</span><div><button onClick={() => { setPaused(false); seek.current = 0; setReplay(n => n + 1) }} disabled={!teams.some(t => t.stages.length)}>Replay events</button><button onClick={() => setPaused(p => !p)} disabled={!teams.some(t => t.stages.length)}>{paused ? "Play replay" : "Pause replay"}</button></div></div>
+    <canvas ref={canvas} width={1672} height={941} role="img" aria-label={trading ? "Two owner teams of Degenie visualize confirmed trading receipts on the whole map." : "Two owner teams send their Degenie to tasks in parallel, use tools, and return reports."} />
     <input ref={slider} className="replay-position" aria-label="Replay position in seconds" type="range" min="0" max="20" step="0.1" defaultValue="0" onChange={e => { seek.current = Number(e.target.value); setPaused(true) }} />
     {!online && <p role="status">Connection paused. Movement is frozen at the last confirmed data.</p>}{error && <p role="alert">{error}</p>}
   </section>
