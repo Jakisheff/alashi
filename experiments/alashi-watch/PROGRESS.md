@@ -1,5 +1,18 @@
 # Alashi: зрительский проход по ambitious-work
 
+## 16.10.2026 18:21: демо с автором в кадре
+
+План: 1 час, до 19:21.
+
+target: готовое двухминутное демо на английском из DJI_0088 и DJI_0089.
+Обязательно сохранить представление Амира как студента Tomorrow School.
+Основной экран показывает одобренную RTS-карту; автор объясняет игру в
+круглом окне. Убрать паузы и повторы, сохранить смысл речи. Все элементы
+видео и показанного интерфейса на английском. Исходные записи не менять.
+Критерии: просмотр полного MP4 со звуком, сохранённая фраза Tomorrow School,
+читаемые английские подписи, синхронизация речи и кадра, отсутствие
+неподтверждённых заявлений об экономии. Код и итог публикуются в GitHub.
+
 ## 16.10.2026 17:40: расход токенов для цикла стратегии
 
 План: 0,5 часа, до 18:10.
@@ -152,3 +165,13 @@ not_validated: интерес новых зрителей и работа на �
 Первый 24-секундный фрагмент использует исходные terrain и atlas.
 Исправлена пограничная погрешность времени при прибытии к терминалу.
 Следующий шаг: просмотр фрагмента, полный рендер и звуковые сигналы событий.
+
+18:37 update: supplied English transcript is the editorial source. Preserve the original Tomorrow School introduction. Audience clarification: Magzhan Madiyev, so use plain explanations of owner benefit and short English overlays. Local model alignment is running; no source footage is uploaded. Approved RTS assets are reused. The shown prototype interface is now English; isolated runtime checks and motion checks passed. No further z.ai calls.
+
+18:49 update: ALASHI now uses a normal A; faction badges no longer rotate their letters. Camera crop reviewed against the approved whole-map layout. Scripted cycle check covers 2,112 frames, six parallel tasks and verifier dependencies. English source speech alignment has reached the sharing section. Final composition remains pending.
+
+19:01 update: selected speech totals 119.24 seconds; export target is exactly 120 seconds. Tomorrow School intro frame and circular camera crop reviewed. Nine source clips are ready. Hardware decoding was verified and is used for the remaining clips. English UI fixes pushed as 0a5e3a2. Final export and playback review remain.
+
+19:12: final export failed with ENOSPC. The incomplete MP4 is not deliverable. Source clips, edited presenter track and rendered map remain intact. Removing reproducible package caches and reducing the final compositing graph's memory use before retrying. Revised plan: 1.25 hours, until 19:36.
+
+19:25: final English MP4 completed, 120.000 seconds, 1280×720 at 30 fps. All 3,600 frames and 5,760,000 audio samples decode correctly. Browser playback and phone-width framing reviewed; the Tomorrow School introduction is intact. The separate usage receipt totals 2,634 tokens and the failed quality gate is disclosed. The final copy is in Downloads. Факт: 1,07 часа на монтаж и локальную проверку. GitHub publication and final-head CI follow this completed media work.
