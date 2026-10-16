@@ -1,5 +1,7 @@
-//! Marketing teams compete on one immutable brief. No chain settlement or ad delivery.
-use super::{hex32, now, owner_auth, save_snapshot_locked, sha256_hex, AppState};
+//! Owner task graphs, usage receipts and reusable strategies for a shared challenge.
+use super::{
+    hex32, now, owner_auth, phase_name, save_snapshot_locked, sha256_hex, strategy_trade, AppState,
+};
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 use std::collections::{BTreeMap, BTreeSet};
@@ -47,6 +49,8 @@ pub struct Brief {
     pub cta: String,
     pub max_words: u16,
     pub budget: u64,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub trading: Option<strategy_trade::Context>,
 }
 #[derive(Clone, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -55,6 +59,18 @@ pub struct Challenge {
     pub content: Brief,
     pub created_at: i64,
     pub started_at: Option<i64>,
+}
+impl Challenge {
+    fn deadline(&self) -> Option<i64> {
+        self.started_at.map(|t| {
+            (t + self.content.round_seconds as i64).min(
+                self.content
+                    .trading
+                    .as_ref()
+                    .map_or(i64::MAX, |c| c.phase_ends_at),
+            )
+        })
+    }
 }
 #[derive(Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(deny_unknown_fields)]
@@ -234,18 +250,25 @@ fn valid_brief(c: &Brief) -> bool {
         && c.facts
             .iter()
             .all(|f| !f.trim().is_empty() && f.len() <= 500)
-        && (1..=8).contains(&c.required_terms.len())
-        && c.required_terms
-            .iter()
-            .all(|t| !t.trim().is_empty() && t.len() <= 80 && t.is_ascii())
-        && !c.cta.trim().is_empty()
-        && c.cta.len() <= 120
-        && c.cta.is_ascii()
-        && (20..=200).contains(&c.max_words)
+        && (if let Some(trading) = &c.trading {
+            trading.valid() && c.required_terms.is_empty() && c.cta.is_empty() && c.max_words == 0
+        } else {
+            (1..=8).contains(&c.required_terms.len())
+                && c.required_terms
+                    .iter()
+                    .all(|t| !t.trim().is_empty() && t.len() <= 80 && t.is_ascii())
+                && !c.cta.trim().is_empty()
+                && c.cta.len() <= 120
+                && c.cta.is_ascii()
+                && (20..=200).contains(&c.max_words)
+        })
         && c.budget > 0
         && c.budget <= MAX_BUDGET
 }
 fn checks(brief: &Brief, artifact: &Value) -> Value {
+    if let Some(context) = &brief.trading {
+        return strategy_trade::checks(context, artifact);
+    }
     let keys = artifact.as_object().is_some_and(|o| {
         o.len() == 3
             && ["headline", "body", "cta"]
@@ -320,7 +343,7 @@ pub fn validate(s: &StrategyState) -> bool {
             || *id != sha256_hex(&format!("strategy-run-v2:{}:{}", r.owner, r.client_id))
             || !hex32(&r.record)
             || r.budget != c.content.budget
-            || r.owner == c.content.owner
+            || r.owner == c.content.owner && c.content.trading.is_none()
             || r.calls.len() > v.content.plan.len()
             || r.events.len() > 40
             || (v.content.parent.is_some() && !v.published)
@@ -407,6 +430,18 @@ pub fn validate(s: &StrategyState) -> bool {
             {
                 return false;
             }
+            if let Some(context) = &c.content.trading {
+                if !strategy_trade::valid_receipt(
+                    context,
+                    &r.owner,
+                    &result["artifact"],
+                    &result["trade_receipt"],
+                ) {
+                    return false;
+                }
+            } else if result.get("trade_receipt").is_some() {
+                return false;
+            }
         } else if r.result.is_some() || r.review.is_some() {
             return false;
         }
@@ -470,13 +505,12 @@ fn mutate(state: &AppState, f: impl FnOnce(&mut StrategyState) -> Result<Value>)
 fn revealed(c: &Challenge, data: &StrategyState) -> bool {
     let runs: Vec<_> = data.runs.values().filter(|r| r.challenge == c.id).collect();
     runs.len() == 2 && runs.iter().all(|r| r.status == "completed")
-        || c.started_at
-            .is_some_and(|t| now() >= t + c.content.round_seconds as i64)
+        || c.deadline().is_some_and(|end| now() >= end)
 }
 fn challenge_view(c: &Challenge, data: &StrategyState) -> Value {
     let mut v = serde_json::to_value(c).unwrap();
     v["revealed"] = json!(revealed(c, data));
-    v["deadline_at"] = json!(c.started_at.map(|t| t + c.content.round_seconds as i64));
+    v["deadline_at"] = json!(c.deadline());
     v
 }
 fn view(r: &Run, v: &Version, c: &Challenge, private: bool, reveal: bool) -> Value {
@@ -532,9 +566,13 @@ fn view(r: &Run, v: &Version, c: &Challenge, private: bool, reveal: bool) -> Val
             event.task = task_id(&event.task);
         }
     }
-    json!({"seat":r.seat,"id":r.id,"record":r.record,"owner":r.owner,"version":r.version,"challenge":r.challenge,"brief":c.content,"plan":plan,"budget":r.budget,"known_tokens":r.known(),"reserved_tokens":r.held(),"unknown_usage":r.uncertain() || c.started_at.is_some_and(|t|now()>=t+c.content.round_seconds as i64) && r.calls.values().any(|c|c.usage.is_none()),"test_provider":r.test(),"usage_trust":"owner_submitted_provider_receipts","status":r.status,"calls":calls,"events":events,"result":if private || reveal {r.result.clone()} else {None},"review":if reveal {r.review.clone()} else {None},"reveal_pending":!reveal,"deadline_at":c.started_at.map(|t|t+c.content.round_seconds as i64),"created_at":r.created_at,"monetary_cost":null,"ad_performance":"not_measured"})
+    json!({"seat":r.seat,"id":r.id,"record":r.record,"owner":r.owner,"version":r.version,"challenge":r.challenge,"brief":c.content,"plan":plan,"budget":r.budget,"known_tokens":r.known(),"reserved_tokens":r.held(),"unknown_usage":r.uncertain() || c.deadline().is_some_and(|end|now()>=end) && r.calls.values().any(|c|c.usage.is_none()),"test_provider":r.test(),"usage_trust":"owner_submitted_provider_receipts","status":r.status,"calls":calls,"events":events,"result":if private || reveal {r.result.clone()} else {None},"review":if reveal {r.review.clone()} else {None},"reveal_pending":!reveal,"deadline_at":c.deadline(),"created_at":r.created_at,"monetary_cost":null,"ad_performance":"not_measured"})
 }
 pub fn public(state: &AppState) -> Value {
+    let _tx = state
+        .snapshot_lock
+        .lock()
+        .unwrap_or_else(|e| e.into_inner());
     let data = state
         .strategy_cycle
         .lock()
@@ -575,21 +613,26 @@ pub fn public(state: &AppState) -> Value {
     let standings:Vec<_>=data.challenges.values().map(|c| {
         // Test and provider receipts are ranked separately; this is token use, not money or conversions.
         let participants:Vec<_>=data.runs.values().filter(|r|r.challenge==c.id).collect();
-        let ended=c.started_at.is_some_and(|t|now()>=t+c.content.round_seconds as i64);
-        let reviews_complete=participants.len()==2 && participants.iter().all(|r|r.review.is_some() || ended && r.status!="completed");
+        let ended=c.deadline().is_some_and(|end|now()>=end);
+        let reviews_complete=participants.len()==2 && participants.iter().all(|r|c.content.trading.is_some() && r.status=="completed" || r.review.is_some() || ended && r.status!="completed");
         let leaders:Vec<_>=[false,true].into_iter().map(|test| {
-            let eligible:Vec<_>=data.runs.values().filter(|r|r.challenge==c.id && r.approved() && revealed(c,&data) && r.result.as_ref().is_some_and(|result|c.started_at.is_some_and(|t|result["finished_at"].as_i64().is_some_and(|finished|finished<=t+c.content.round_seconds as i64))) && r.test()==test).collect();
-            let best=if reviews_complete {eligible.iter().map(|r|r.known()).min()} else {None};
+            let eligible:Vec<_>=data.runs.values().filter(|r|r.challenge==c.id && (r.approved() || c.content.trading.is_some() && r.status=="completed") && revealed(c,&data) && r.result.as_ref().is_some_and(|result|c.deadline().is_some_and(|end|result["finished_at"].as_i64().is_some_and(|finished|finished<=end))) && r.test()==test).collect();
+            let comparable = c.content.trading.is_none() || eligible.len()==2 && eligible.windows(2).all(|pair| { let a=pair[0].result.as_ref().unwrap(); let b=pair[1].result.as_ref().unwrap(); a["artifact"]==b["artifact"] && a["trade_receipt"]["cash_delta"]==b["trade_receipt"]["cash_delta"] && a["trade_receipt"]["goods_delta"]==b["trade_receipt"]["goods_delta"] });
+            let best=if reviews_complete && comparable {eligible.iter().map(|r|r.known()).min()} else {None};
             json!({"test_provider":test,"accepted_runs":eligible.len(),"token_leaders":eligible.into_iter().filter(|r|Some(r.known())==best).map(|r|&r.id).collect::<Vec<_>>(),"tokens":best})
-        }).collect();json!({"challenge":c.id,"reviews_complete":reviews_complete,"groups":leaders,"meaning":"lowest_reported_token_use_among_host_accepted_ads","monetary_winner":null,"conversion_winner":null})
+        }).collect();json!({"challenge":c.id,"reviews_complete":reviews_complete,"groups":leaders,"meaning":if c.content.trading.is_some(){"token_leader_only_for_equal_confirmed_action_and_outcome"}else{"lowest_reported_token_use_among_host_accepted_ads"},"monetary_winner":null,"conversion_winner":null})
     }).collect();
-    json!({"ok":true,"execution":"marketing_challenge","versions":versions,"challenges":data.challenges.values().map(|c|challenge_view(c,&data)).collect::<Vec<_>>(),"runs":runs,"standings":standings,"server_now":now()})
+    json!({"ok":true,"execution":"agent_challenges","versions":versions,"challenges":data.challenges.values().map(|c|challenge_view(c,&data)).collect::<Vec<_>>(),"runs":runs,"standings":standings,"server_now":now()})
 }
 pub fn owned(state: &AppState, record: &str, bearer: &str) -> Value {
     let owner = match owner_auth::owner_session_for(state, record, bearer) {
         Ok(o) => o.wallet,
         Err(c) => return err(c),
     };
+    let _tx = state
+        .snapshot_lock
+        .lock()
+        .unwrap_or_else(|e| e.into_inner());
     let data = state
         .strategy_cycle
         .lock()
@@ -620,12 +663,19 @@ pub fn create_challenge(
             "cta",
             "max_words",
             "budget",
+            "trading",
         ],
     ) {
         return err(c);
     }
     let mut content = body.clone();
     content["owner"] = json!(owner);
+    if let Some(request) = body.get("trading").filter(|v| !v.is_null()) {
+        content["trading"] = match strategy_trade::capture(state, request) {
+            Ok(context) => json!(context),
+            Err(code) => return err(code),
+        };
+    }
     let brief: Brief = match serde_json::from_value(content) {
         Ok(b) if valid_brief(&b) => b,
         _ => return err("bad_brief"),
@@ -745,13 +795,21 @@ pub fn start(state: &AppState, record: &str, origin: &str, bearer: &str, body: &
         }
         let v = data.versions.get(version).ok_or("unknown_strategy")?;
         let c = data.challenges.get(challenge).ok_or("unknown_challenge")?;
+        if let Some(trading) = &c.content.trading {
+            if !trading.participants.iter().any(|p| p.wallet == owner) {
+                return Err("trading_owner_forbidden");
+            }
+            if now() >= trading.phase_ends_at {
+                return Err("round_ended");
+            }
+        }
         if v.content.owner != owner && !v.published {
             return Err("strategy_forbidden");
         }
         if v.content.parent.is_some() && !v.published {
             return Err("publish_derivative_first");
         }
-        if c.content.owner == owner {
+        if c.content.owner == owner && c.content.trading.is_none() {
             return Err("host_cannot_compete");
         }
         if data.runs.len() >= MAX_ITEMS {
@@ -840,8 +898,8 @@ pub fn reserve(
             .iter()
             .find(|t| t.id == task)
             .ok_or("bad_task")?;
-        let started = brief.started_at.ok_or("waiting_for_opponent")?;
-        if now() >= started + brief.content.round_seconds as i64 {
+        let deadline = brief.deadline().ok_or("waiting_for_opponent")?;
+        if now() >= deadline {
             return Err("round_ended");
         }
         if !valid_call(spec, cap, source, provider, model) {
@@ -1021,6 +1079,9 @@ pub fn finish(state: &AppState, record: &str, origin: &str, bearer: &str, id: &s
             return Err("verification_required");
         }
         let artifact = r.calls["deliver"].report.clone().unwrap();
+        if brief.content.trading.is_some() {
+            return Err("trade_receipt_required");
+        }
         r.result = Some(
             json!({"checks":checks(&brief.content,&artifact),"artifact":artifact,"finished_at":now()}),
         );
@@ -1059,6 +1120,9 @@ pub fn review(
         let r = data.runs.get_mut(id).unwrap();
         let v = &data.versions[&r.version];
         let brief = &data.challenges[&r.challenge];
+        if brief.content.trading.is_some() {
+            return Err("trading_uses_game_receipts");
+        }
         if owner != brief.content.owner || owner == r.owner {
             return Err("reviewer_forbidden");
         }
@@ -1079,6 +1143,249 @@ pub fn review(
             r.event("reviewer", "host_review_recorded");
         }
         Ok(json!({"ok":true,"run":view(r,v,brief,false,true)}))
+    })
+}
+
+fn trade_ready(data: &StrategyState, id: &str, record: &str) -> Result<()> {
+    let r = data
+        .runs
+        .get(id)
+        .filter(|r| r.record == record)
+        .ok_or("run_forbidden")?;
+    let c = &data.challenges[&r.challenge];
+    if c.content.trading.is_none() {
+        return Err("trading_challenge_required");
+    }
+    if r.status != "running"
+        || !data.versions[&r.version]
+            .content
+            .plan
+            .iter()
+            .all(|t| r.passed(&t.id))
+    {
+        return Err("verification_required");
+    }
+    if c.deadline().is_none_or(|end| now() >= end) {
+        return Err("round_ended");
+    }
+    Ok(())
+}
+pub fn prepare_trade(
+    state: &AppState,
+    record: &str,
+    origin: &str,
+    bearer: &str,
+    id: &str,
+) -> Value {
+    let owner = match own(state, record, origin, bearer) {
+        Ok(o) => o,
+        Err(c) => return err(c),
+    };
+    let _tx = state
+        .snapshot_lock
+        .lock()
+        .unwrap_or_else(|e| e.into_inner());
+    let data = state
+        .strategy_cycle
+        .lock()
+        .unwrap_or_else(|e| e.into_inner());
+    if data.runs.get(id).is_none_or(|r| r.owner != owner) {
+        return err("run_forbidden");
+    }
+    if let Err(code) = trade_ready(&data, id, record) {
+        return err(code);
+    }
+    let run = &data.runs[id];
+    json!({"ok":true,"decision":run.calls["deliver"].report,"trading":data.challenges[&run.challenge].content.trading})
+}
+// Called while h_act holds the transaction lock. The game bearer and strategy
+// owner must identify the same registration; an untrusted report cannot sign.
+pub(super) fn check_http_trade(
+    state: &AppState,
+    game: u64,
+    record: &str,
+    body: &Value,
+) -> Result<()> {
+    let id = body["strategy_run"]
+        .as_str()
+        .filter(|s| hex32(s))
+        .ok_or("bad_strategy_run")?;
+    let data = state
+        .strategy_cycle
+        .lock()
+        .unwrap_or_else(|e| e.into_inner());
+    trade_ready(&data, id, record)?;
+    let r = &data.runs[id];
+    let context = data.challenges[&r.challenge]
+        .content
+        .trading
+        .as_ref()
+        .unwrap();
+    let decision = json!({"action":body["action"],"params":body["params"]});
+    if context.mode != "http"
+        || context.game != game.to_string()
+        || r.calls["deliver"].report.as_ref() != Some(&decision)
+    {
+        return Err("trade_decision_mismatch");
+    }
+    let games = state.games.lock().unwrap_or_else(|e| e.into_inner());
+    let entry = games.get(&game).ok_or("unknown_game")?;
+    if entry.sim.game.round != context.round || phase_name(entry.sim.game.phase) != context.phase {
+        return Err("trading_window_changed");
+    }
+    Ok(())
+}
+fn complete_trade(data: &mut StrategyState, id: &str, receipt: Value) -> Result<()> {
+    if data.runs.values().any(|r| {
+        r.id != id
+            && r.result.as_ref().is_some_and(|v| {
+                v["trade_receipt"]["mode"] == receipt["mode"]
+                    && v["trade_receipt"]["game"] == receipt["game"]
+                    && v["trade_receipt"]["event_id"] == receipt["event_id"]
+            })
+    }) {
+        return Err("trade_receipt_reused");
+    }
+    let r = data.runs.get_mut(id).ok_or("unknown_run")?;
+    let c = &data.challenges[&r.challenge];
+    if r.status == "completed" {
+        return if r
+            .result
+            .as_ref()
+            .is_some_and(|v| v["trade_receipt"] == receipt)
+        {
+            Ok(())
+        } else {
+            Err("idempotency_conflict")
+        };
+    }
+    let at = receipt["confirmed_at"]
+        .as_i64()
+        .ok_or("trade_receipt_mismatch")?;
+    if !data.versions[&r.version]
+        .content
+        .plan
+        .iter()
+        .all(|t| r.passed(&t.id))
+        || r.status != "running"
+        || c.deadline().is_none_or(|end| at > end)
+        || r.calls["deliver"].finished_at.is_none_or(|t| at < t)
+    {
+        return Err("trade_receipt_mismatch");
+    }
+    let artifact = r.calls["deliver"].report.clone().unwrap();
+    r.result = Some(
+        json!({"artifact":artifact,"checks":checks(&c.content,&artifact),"finished_at":at,"trade_receipt":receipt}),
+    );
+    r.status = "completed".into();
+    r.event("chief", "trade_confirmed");
+    Ok(())
+}
+pub(super) fn confirm_http_trade(state: &AppState, id: &str, event: &Value) -> Result<()> {
+    let mut data = state
+        .strategy_cycle
+        .lock()
+        .unwrap_or_else(|e| e.into_inner());
+    let r = data.runs.get(id).ok_or("unknown_run")?;
+    let context = data.challenges[&r.challenge]
+        .content
+        .trading
+        .as_ref()
+        .ok_or("trading_challenge_required")?;
+    let receipt = strategy_trade::http_receipt(
+        context,
+        &r.owner,
+        r.calls["deliver"]
+            .report
+            .as_ref()
+            .ok_or("verification_required")?,
+        event,
+    )?;
+    complete_trade(&mut data, id, receipt)
+}
+pub(super) fn reject_http_trade(state: &AppState, id: &str) {
+    let mut data = state
+        .strategy_cycle
+        .lock()
+        .unwrap_or_else(|e| e.into_inner());
+    if let Some(r) = data.runs.get_mut(id) {
+        r.status = "quality_failed".into();
+        r.event("chief", "trade_rejected");
+    }
+}
+pub fn confirm_chain_trade(
+    state: &AppState,
+    record: &str,
+    origin: &str,
+    bearer: &str,
+    id: &str,
+    body: &Value,
+) -> Value {
+    let owner = match own(state, record, origin, bearer) {
+        Ok(o) => o,
+        Err(c) => return err(c),
+    };
+    if fields(body, &["signature"]).is_err() {
+        return err("bad_trade_receipt");
+    }
+    let Some(signature) = body["signature"].as_str().filter(|s| {
+        (80..=100).contains(&s.len())
+            && s.bytes()
+                .all(|b| b"123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz".contains(&b))
+    }) else {
+        return err("bad_trade_receipt");
+    };
+    let (context, decision) = {
+        let data = state
+            .strategy_cycle
+            .lock()
+            .unwrap_or_else(|e| e.into_inner());
+        let Some(r) = data
+            .runs
+            .get(id)
+            .filter(|r| r.owner == owner && r.record == record)
+        else {
+            return err("run_forbidden");
+        };
+        if r.status == "completed" {
+            return if r
+                .result
+                .as_ref()
+                .is_some_and(|v| v["trade_receipt"]["signature"] == signature)
+            {
+                json!({"ok":true,"run":view(r,&data.versions[&r.version],&data.challenges[&r.challenge],true,false)})
+            } else {
+                err("idempotency_conflict")
+            };
+        }
+        let Some(context) = data.challenges[&r.challenge]
+            .content
+            .trading
+            .clone()
+            .filter(|c| c.mode == "solana")
+        else {
+            return err("trading_challenge_required");
+        };
+        let Some(decision) = r.calls.get("deliver").and_then(|c| c.report.clone()) else {
+            return err("verification_required");
+        };
+        (context, decision)
+    };
+    let snapshot = match super::chain_wishes::public_chain(&context.game) {
+        Ok(v) => v,
+        Err(c) => return err(c),
+    };
+    let receipt =
+        match strategy_trade::chain_receipt(&context, &owner, &decision, &snapshot, signature) {
+            Ok(v) => v,
+            Err(c) => return err(c),
+        };
+    mutate(state, |data| {
+        complete_trade(data, id, receipt)?;
+        let r = &data.runs[id];
+        Ok(
+            json!({"ok":true,"run":view(r,&data.versions[&r.version],&data.challenges[&r.challenge],true,false)}),
+        )
     })
 }
 #[cfg(test)]
@@ -1149,6 +1456,155 @@ mod tests {
     }
     fn plan() -> Value {
         json!([{"id":"research","kind":"model","depends_on":[],"instruction":"Review the brief facts.","tool":null},{"id":"deliver","kind":"model","depends_on":["research"],"instruction":"Write the ad.","tool":null}])
+    }
+    #[test]
+    fn trading_challenge_captures_equal_game_conditions() {
+        let s = fixture();
+        let game = super::super::h_new_game(
+            &s,
+            &json!({"entry_fee":1,"phase_duration":300,"lobby_duration":300,"grace_s":0}),
+        )["game_id"]
+            .as_u64()
+            .unwrap();
+        let mut tokens = Vec::new();
+        for i in [1, 2] {
+            let (record, _) = actor(i);
+            let secret = format!("{i:064x}");
+            s.registrations
+                .lock()
+                .unwrap()
+                .get_mut(&record)
+                .unwrap()
+                .recovery_hash = super::super::recovery_hash(&secret).unwrap();
+            let joined = super::super::h_join_v2(
+                &s,
+                game,
+                &json!({"agent_record_id":record,"recovery_secret":secret,"name":format!("Trader{i}"),"model":"TEST","strategy_hash":"a".repeat(64)}),
+            );
+            assert_eq!(joined["ok"], true, "{joined}");
+            tokens.push(joined["token"].as_str().unwrap().to_string());
+        }
+        s.games
+            .lock()
+            .unwrap()
+            .get_mut(&game)
+            .unwrap()
+            .sim
+            .game
+            .phase_ends_at = 0;
+        super::super::crank_once(&s);
+        s.games
+            .lock()
+            .unwrap()
+            .get_mut(&game)
+            .unwrap()
+            .sim
+            .game
+            .phase_ends_at = 0;
+        super::super::crank_once(&s);
+        let (a, token) = actor(0);
+        let created = create_challenge(
+            &s,
+            &a,
+            ORIGIN,
+            &token,
+            &json!({"match_key":"trade-one","round_seconds":180,"title":"Equal trading decision","audience":"Agent owners","task":"Choose a legal trade from the shared market state.","facts":["One alashi is 1000000 game units."],"required_terms":[],"cta":"","max_words":0,"budget":20000,"trading":{"mode":"http","game":game.to_string()}}),
+        );
+        assert_eq!(created["ok"], true, "{created}");
+        assert_eq!(
+            created["challenge"]["content"]["trading"]["participants"]
+                .as_array()
+                .unwrap()
+                .len(),
+            2
+        );
+        let c = created["challenge"]["id"].as_str().unwrap();
+        let versions = [version(&s, 1, None, true), version(&s, 2, None, true)];
+        let runs = [
+            start_run(&s, 1, &versions[0], c, "trade-player-one"),
+            start_run(&s, 2, &versions[1], c, "trade-player-two"),
+        ];
+        for i in 1..=2 {
+            let (record, bearer) = actor(i);
+            let r = &runs[i - 1];
+            assert_eq!(reserve_call(&s, i, r, "research", 100)["ok"], true);
+            assert_eq!(report_call(&s, i, r, "research", usage(), true)["ok"], true);
+            assert_eq!(reserve_call(&s, i, r, "deliver", 100)["ok"], true);
+            let v = report(
+                &s,
+                &record,
+                ORIGIN,
+                &bearer,
+                r,
+                &json!({"task":"deliver","response_id":format!("trade-{i}"),"usage":if i==1{usage()}else{Value::Null},"report":{"action":"produce","params":{}},"request_failed":false}),
+            );
+            assert_eq!(v["ok"], true, "{v}");
+        }
+        let (record, bearer) = actor(1);
+        assert_eq!(
+            finish(&s, &record, ORIGIN, &bearer, &runs[0])["error"],
+            "trade_receipt_required"
+        );
+        let intent = json!({"token":tokens[0],"op_id":1,"action":"produce","params":{},"by":"llm","strategy_run":runs[0]});
+        assert_eq!(
+            check_http_trade(&s, game + 1, &record, &intent),
+            Err("trade_decision_mismatch")
+        );
+        let mut wrong = intent.clone();
+        wrong["token"] = json!(tokens[1]);
+        assert_eq!(
+            super::super::h_act(&s, game, &wrong)["error"],
+            "run_forbidden"
+        );
+        wrong = intent.clone();
+        wrong["action"] = json!("buy");
+        wrong["params"] = json!({"units":1});
+        assert_eq!(
+            super::super::h_act(&s, game, &wrong)["error"],
+            "trade_decision_mismatch"
+        );
+        let before_events = s.live.lock().unwrap().events.len();
+        let path = s.snapshot_path.clone();
+        let saved = std::fs::read(&path).unwrap();
+        std::fs::remove_file(&path).unwrap();
+        std::fs::create_dir(&path).unwrap();
+        assert_eq!(
+            super::super::h_act(&s, game, &intent)["error"],
+            "storage_failed"
+        );
+        assert_eq!(s.games.lock().unwrap()[&game].sim.factions[0].goods, 0);
+        assert_eq!(s.live.lock().unwrap().events.len(), before_events);
+        assert_eq!(
+            s.strategy_cycle.lock().unwrap().runs[&runs[0]].status,
+            "running"
+        );
+        std::fs::remove_dir(&path).unwrap();
+        std::fs::write(&path, saved).unwrap();
+        let accepted = super::super::h_act(&s, game, &intent);
+        assert_eq!(accepted["ok"], true, "{accepted}");
+        assert_eq!(super::super::h_act(&s, game, &intent), accepted);
+        assert_eq!(s.live.lock().unwrap().events.len(), before_events + 1);
+        let ledger = s.strategy_cycle.lock().unwrap();
+        assert_eq!(
+            ledger.runs[&runs[0]].result.as_ref().unwrap()["trade_receipt"]["goods_delta"],
+            2
+        );
+        assert_eq!(ledger.runs[&runs[1]].known(), 15);
+        assert_eq!(ledger.runs[&runs[1]].held(), 100);
+        assert!(validate(&ledger));
+        let receipt = ledger.runs[&runs[0]].result.as_ref().unwrap()["trade_receipt"].clone();
+        assert_eq!(
+            complete_trade(&mut ledger.clone(), &runs[1], receipt),
+            Err("trade_receipt_reused")
+        );
+        drop(ledger);
+        wrong = intent.clone();
+        wrong["token"] = json!(tokens[1]);
+        wrong["strategy_run"] = json!(runs[1]);
+        assert_eq!(
+            super::super::h_act(&s, game, &wrong)["error"],
+            "verification_required"
+        );
     }
     fn brief(s: &AppState, key: &str, budget: u64) -> String {
         let (a, t) = actor(0);

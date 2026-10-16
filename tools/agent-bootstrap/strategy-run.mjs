@@ -5,6 +5,7 @@ import { readFileSync, writeFileSync, renameSync, lstatSync, openSync, closeSync
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { spawn } from 'node:child_process';
+import { act as gameAct, lock as gameLock } from './alashi.mjs';
 
 const alphabet = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
 export function base58(bytes) {
@@ -50,7 +51,7 @@ export async function ownerApi(base, profile, origin = 'https://alashi.network')
   const s = await request(prefix+'/session',{challenge_id:c.challenge_id,signature:base58(sign(null,Buffer.from(c.message),key))});
   bearer = s.owner_session;
   if (!/^[0-9a-f]{64}$/.test(bearer)) fail('invalid_owner_session');
-  return {request, get:() => request(prefix+'/strategies'), post:(suffix,body)=>request(prefix+suffix,body), record:profile.agent_record_id};
+  return {request, get:() => request(prefix+'/strategies'), post:(suffix,body)=>request(prefix+suffix,body), record:profile.agent_record_id, base, wallet};
 }
 const safeReport = report => Buffer.byteLength(JSON.stringify(report ?? null), 'utf8') <= 8192 ? report ?? null : null;
 const receiptId = id => typeof id === 'string' && id.length > 0 && Buffer.byteLength(id, 'utf8') <= 200 ? id : null;
@@ -79,12 +80,13 @@ export function modelProvider({url, key, model, test = false}) {
 }
 export function messagesFor(run, version, task, reports) {
   const spec = version.content.plan.find(t => t.id === task);
+  if (run.brief.trading) return [{role:'system',content:'You control one ALASHI trading faction. Use the shared game snapshot and your own task reports. Cash is in game units (1000000 = 1 alashi); price_table is whole alashi per good. Return a JSON object. The deliver task must return EXACTLY {"action":"sell","params":{"units":1}}, or buy with units, or {"action":"produce","params":{}} in the action phase. The server checks the current game rules. Do not invent a trade receipt, token count or profit. Other tasks return a useful JSON report. Team instruction: '+spec.instruction}, {role:'user',content:JSON.stringify({task,owner:run.owner,brief:run.brief,dependency_reports:Object.fromEntries(spec.depends_on.map(id=>[id,reports[id]]))})}];
   return [{role:'system',content:'You are an AI marketing specialist in an ALASHI duel. Work only from the shared brief facts. Do not invent savings, audience results or guarantees. Return one JSON object, no commentary. Use English with ASCII punctuation. For the final deliver task return EXACTLY {"headline":"...","body":"...","cta":"..."}. Stay within max_words across all three fields; headline at most 12 words. Include required_terms and copy cta exactly. Intermediate tasks return a useful JSON report. Team instruction: '+spec.instruction},
     {role:'user',content:JSON.stringify({task,brief:run.brief,dependency_reports:Object.fromEntries(spec.depends_on.map(id=>[id,reports[id]]))})}];
 }
 const zeroUsage = {prompt_tokens:0,completion_tokens:0,total_tokens:0,cached_tokens:0};
 export function toolInfo(spec, registry = {}) {
-  if (['brief_extract','copy_check'].includes(spec.tool)) return {source:'local_tool',provider:'alashi-local-tools',model:'none',cap:0};
+  if (['brief_extract','copy_check','trade_state'].includes(spec.tool)) return {source:'local_tool',provider:'alashi-local-tools',model:'none',cap:0};
   const config = registry[spec.tool];
   if (!config || !Array.isArray(config.argv) || !config.argv.length || config.argv.some(s=>typeof s!=='string') || typeof config.no_model_calls!=='boolean') fail('owner_tool_not_configured');
   if (config.no_model_calls) return {source:'local_tool',provider:spec.tool,model:'none',cap:0};
@@ -92,6 +94,10 @@ export function toolInfo(spec, registry = {}) {
   return {source:'provider_reported',provider:config.provider,model:config.model,cap:config.max_total_tokens};
 }
 export async function executeTool(spec, run, reports, registry = {}) {
+  if (spec.tool === 'trade_state') {
+    const c=run.brief.trading;if(!c)fail('trading_challenge_required');
+    return {report:{phase:c.phase,round:c.round,owner:c.participants.find(p=>p.wallet===run.owner),market:c.observation.market??Object.fromEntries(['sold_counter','price_table','price_now','tax_bps','price_shift','boom'].map(k=>[k,c.observation[k]])),allowed_actions:c.phase==='market'?['sell','buy']:['produce']},usage:zeroUsage,response_id:null,request_failed:false};
+  }
   if (spec.tool === 'brief_extract') return {report:{facts:run.brief.facts,audience:run.brief.audience,required_terms:run.brief.required_terms,cta:run.brief.cta},usage:zeroUsage,response_id:null,request_failed:false};
   if (spec.tool === 'copy_check') {
     const draft = spec.depends_on.map(id=>reports[id]).find(r=>r && typeof r.headline==='string' && typeof r.body==='string');
@@ -109,17 +115,18 @@ export async function executeTool(spec, run, reports, registry = {}) {
   });
   return {report:safeReport(raw.report),usage:config.no_model_calls?zeroUsage:providerUsage(raw.usage),response_id:receiptId(raw.response_id),request_failed:raw.request_failed===true};
 }
-export async function runCycle({api,id,provider,journalPath,tools={},onProgress=()=>{}}) {
+export async function runCycle({api,id,provider,journalPath,tools={},trade,onProgress=()=>{}}) {
   if (!/^[0-9a-f]{64}$/.test(id)) fail('invalid_run');
   const lockPath=journalPath+'.lock',fd=openSync(lockPath,'wx',0o600);closeSync(fd);
   try {
     let initial=await api.get(),run=initial.runs.find(r=>r.id===id);
     if (!run || run.record!==api.record) fail('run_not_owned');
+    if(run.brief.trading && run.status!=='completed' && !trade)fail('trade_executor_required');
     const pub=await api.request('/strategy-library'),version=[...initial.versions,...pub.versions].find(v=>v.id===run.version);
     if (!version) fail('strategy_unavailable');
     const journal=existsSync(journalPath)?readPrivate(journalPath):{run:id,record:api.record,calls:{}};
     if(journal.run!==id || journal.record!==api.record)fail('journal_scope_mismatch');
-    if(run.status==='completed')return run;
+    if(run.status==='completed'){if(trade&&run.brief.trading)await trade({api,run,journal,save:()=>save(journalPath,journal)});return run;}
     const waitingUntil=Date.now()+15*60_000;
     while(!run.deadline_at) {
       if(Date.now()>waitingUntil)fail('opponent_wait_ended');
@@ -163,8 +170,53 @@ export async function runCycle({api,id,provider,journalPath,tools={},onProgress=
       run=(await api.get()).runs.find(r=>r.id===id);
       for(const [task,c]of Object.entries(run.calls))if(c.quality_passed&&c.usage)reports[task]=c.report;
     }
+    if(run.brief.trading) {
+      if(!trade)fail('trade_executor_required');
+      await trade({api,run,journal,save:()=>save(journalPath,journal)});
+    }
     return(await api.post(`/strategy-runs/${id}/finish`,{})).run;
   } finally {unlinkSync(lockPath);}
+}
+export function httpTrade(sessionPath, fetcher=fetch) {
+  return async({api,run})=>{
+    const release=gameLock(sessionPath);
+    try {
+      const session=readPrivate(sessionPath), context=run.brief.trading;
+      if(context.mode!=='http'||String(session.game_id)!==context.game||session.agent_record_id!==api.record||!Number.isSafeInteger(session.next_op_id)||session.next_op_id<1)fail('trade_session_mismatch');
+      if(session.pending_act&&session.pending_act.action.strategy_run!==run.id)fail('other_trade_pending');
+      if(run.status==='completed'&&!session.pending_act)return;
+      if(!session.pending_act)await api.post(`/strategy-runs/${run.id}/prepare-trade`,{});
+      const raw=JSON.stringify({...run.calls.deliver.report,by:'llm',strategy_run:run.id});
+      const result=await gameAct(api.base,session,sessionPath,raw,fetcher);
+      if(result.ok!==true)fail('trade_not_accepted');
+    } finally {release();}
+  };
+}
+export function solanaTrade({binary,keyPath,signature}) {
+  return async({api,run,journal,save})=>{
+    if(run.status==='completed')return;
+    const context=run.brief.trading;
+    if(context.mode!=='solana')fail('trade_session_mismatch');
+    if(signature) {journal.trade={signature};save();}
+    if(!journal.trade) {
+      if(!binary||!keyPath)fail('trade_signer_required');
+      const key=readPrivate(keyPath);
+      if(!Array.isArray(key)||key.length!==64||base58(Buffer.from(key.slice(32)))!==api.wallet)fail('trade_wallet_mismatch');
+      await api.post(`/strategy-runs/${run.id}/prepare-trade`,{});
+      journal.trade={phase:'inflight'};save();
+      const result=await new Promise((yes,no)=>{
+        const child=spawn(binary,['agent','act','--game',context.game,'--key',keyPath,'--expected-round',String(context.round),'--expected-phase',context.phase,'--deadline',String(Math.min(context.phase_ends_at,run.deadline_at))],{stdio:['pipe','pipe','pipe'],timeout:90_000});
+        let text='',size=0;child.on('error',()=>no(new Error('trade_outcome_unknown')));child.stderr.resume();
+        child.stdout.on('data',b=>{size+=b.length;if(size>65536)child.kill();else text+=b;});
+        child.on('close',()=>{try{yes(JSON.parse(text));}catch{no(new Error('trade_outcome_unknown'));}});
+        child.stdin.on('error',()=>{});child.stdin.end(JSON.stringify(run.calls.deliver.report));
+      });
+      if(typeof result.receipt?.signature!=='string')fail('trade_outcome_unknown');
+      journal.trade={signature:result.receipt.signature};save();
+    }
+    if(!journal.trade.signature)fail('trade_outcome_unknown');
+    await api.post(`/strategy-runs/${run.id}/trade-receipt`,{signature:journal.trade.signature});
+  };
 }
 async function main() {
   const args = process.argv.slice(2), opts = {};
@@ -172,7 +224,9 @@ async function main() {
   if (!opts.profile || !opts.run || !opts.journal || opts['allow-provider']!=='yes') fail('required: --profile FILE --run ID --journal PRIVATE_FILE --allow-provider yes');
   const api = await ownerApi(opts.api ?? 'https://alashi.network',readPrivate(resolve(opts.profile)));
   const provider = modelProvider({url:process.env.ALASHI_MODEL_URL,key:process.env.ALASHI_MODEL_KEY,model:process.env.ALASHI_MODEL,test:opts['test-provider']==='yes'});
-  const run = await runCycle({api,id:opts.run,provider,journalPath:resolve(opts.journal),tools:opts.tools?readPrivate(resolve(opts.tools)):{},onProgress:v=>process.stdout.write(JSON.stringify(v)+'\n')});
+  if(opts['trade-session']&&(opts['trade-key']||opts['trade-signature']))fail('choose_one_trade_executor');
+  const trade=opts['trade-session']?httpTrade(resolve(opts['trade-session'])):opts['trade-key']||opts['trade-signature']?solanaTrade({binary:opts['bots-binary']?resolve(opts['bots-binary']):undefined,keyPath:opts['trade-key']?resolve(opts['trade-key']):undefined,signature:opts['trade-signature']}):undefined;
+  const run = await runCycle({api,id:opts.run,provider,journalPath:resolve(opts.journal),tools:opts.tools?readPrivate(resolve(opts.tools)):{},trade,onProgress:v=>process.stdout.write(JSON.stringify(v)+'\n')});
   process.stdout.write(JSON.stringify({run:run.id,status:run.status,known_tokens:run.known_tokens,unknown_usage:run.unknown_usage,test_provider:run.test_provider})+'\n');
 }
 if (process.argv[1] && import.meta.url===pathToFileURL(resolve(process.argv[1])).href) main().catch(e=>{console.error(/^[a-z0-9_: --]{1,200}$/i.test(e.message)?e.message:'strategy_runner_failed');process.exitCode=1;});

@@ -3,7 +3,37 @@ import assert from 'node:assert/strict';
 import { mkdtempSync, writeFileSync, readFileSync, rmSync, chmodSync, symlinkSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { parseCompletion, providerUsage, apiUrl, modelProvider, readPrivate, runCycle, executeTool, toolInfo } from './strategy-run.mjs';
+import { parseCompletion, providerUsage, apiUrl, modelProvider, readPrivate, runCycle, executeTool, toolInfo, solanaTrade, httpTrade, messagesFor } from './strategy-run.mjs';
+
+test('a missing trade executor stops before reserving or calling a model',async()=>{
+ const id='a'.repeat(64),record='b'.repeat(64),dir=mkdtempSync(join(tmpdir(),'alashi-trade-preflight-'));let calls=0;
+ const api={record,get:async()=>({runs:[{id,record,status:'running',brief:{trading:{mode:'http'}}}]}),request:async()=>{calls++;},post:async()=>{calls++;}};
+ try {await assert.rejects(runCycle({api,id,provider:{complete:async()=>{calls++;}},journalPath:join(dir,'journal')}),/trade_executor_required/);assert.equal(calls,0);}
+ finally {rmSync(dir,{recursive:true,force:true});}
+});
+test('trading tasks receive owner context and a real local state tool, without ad fields',async()=>{
+ const run={owner:'owner-a',brief:{trading:{mode:'http',game:'1',phase:'action',round:1,participants:[{wallet:'owner-a',goods:0,cash:'0'}],observation:{price_table:[12,10],tax_bps:0}}}};
+ const spec={id:'state',kind:'tool',tool:'trade_state',depends_on:[]};
+ const result=await executeTool(spec,run,{});
+ assert.equal(result.usage.total_tokens,0);assert.equal(result.report.owner.wallet,'owner-a');assert.deepEqual(result.report.allowed_actions,['produce']);
+ const messages=messagesFor(run,{content:{plan:[{id:'deliver',instruction:'Produce',depends_on:['state']}]}},'deliver',{state:result.report});
+ assert.equal(JSON.parse(messages[1].content).owner,'owner-a');assert.ok(!messages[0].content.includes('headline'));
+});
+test('an ambiguous Solana submission never starts another signer; a supplied signature only reconciles',async()=>{
+ let posts=0,saves=0;const request={api:{post:async(path,body)=>{posts++;assert.ok(path.endsWith('/trade-receipt'));assert.equal(body.signature,'known-signature');}},run:{id:'a'.repeat(64),status:'running',brief:{trading:{mode:'solana'}}},journal:{trade:{phase:'inflight'}},save:()=>saves++};
+ await assert.rejects(solanaTrade({binary:'/does-not-exist'})(request),/trade_outcome_unknown/);assert.equal(posts,0);
+ await solanaTrade({signature:'known-signature'})(request);assert.equal(posts,1);assert.equal(saves,1);
+});
+test('HTTP execution refuses another owner or another pending run before any request',async()=>{
+ const dir=mkdtempSync(join(tmpdir(),'alashi-trade-scope-')),path=join(dir,'session');
+ try{
+  writeFileSync(path,JSON.stringify({game_id:2,agent_record_id:'owner-a',next_op_id:1}),{mode:0o600});
+  const input={api:{record:'owner-a'},run:{id:'a'.repeat(64),brief:{trading:{mode:'http',game:'1'}}}};
+  await assert.rejects(httpTrade(path)(input),/trade_session_mismatch/);
+  writeFileSync(path,JSON.stringify({game_id:1,agent_record_id:'owner-a',next_op_id:1,pending_act:{action:{strategy_run:'b'.repeat(64)}}}));
+  await assert.rejects(httpTrade(path)(input),/other_trade_pending/);
+ }finally{rmSync(dir,{recursive:true,force:true});}
+});
 test('strict completion parsing preserves usage independently of JSON quality', () => {
   assert.deepEqual(parseCompletion('```json\n{"units":5}\n```'),{units:5});
   assert.deepEqual(parseCompletion('{"units":5}'),{units:5});

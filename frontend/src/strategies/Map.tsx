@@ -6,7 +6,7 @@ const asset = (file: string) => `${import.meta.env.BASE_URL}strategies/${file}`
 export type MapTeam = { id: string; stages: Stage[]; completed: boolean }
 export function StrategyMap({ runs, online }: { runs: Run[]; online: boolean }) {
   const starts = runs.flatMap(r => Object.values(r.calls).map(c => c.started_at)), origin = starts.length ? Math.min(...starts) : 0
-  return <DegenieMap teams={runs.map(r => ({ id: r.id, stages: timeline(r, origin), completed: !!r.result }))} online={online} caption={runs.length ? runs.some(r => r.status === 'running') ? 'Live team tasks · staged movement' : 'Recorded team tasks · replay' : 'Waiting for two owners'} />
+  return <DegenieMap teams={runs.map(r => ({ id: r.id, stages: timeline(r, origin), completed: !!r.result }))} trading={runs.some(r => !!r.brief.trading)} online={online} caption={runs.length ? runs.some(r => r.status === 'running') ? 'Live team tasks · staged movement' : 'Recorded team tasks and receipts · replay' : 'Waiting for two owners'} />
 }
 export function DegenieMap({ teams, online, caption, trading = false, onTime }: { teams: MapTeam[]; online: boolean; caption: string; trading?: boolean; onTime?: (time: number) => void }) {
   const canvas = useRef<HTMLCanvasElement>(null), slider = useRef<HTMLInputElement>(null), seek = useRef<number | null>(null), [paused, setPaused] = useState(false), [replay, setReplay] = useState(0), [error, setError] = useState('')
@@ -61,7 +61,7 @@ export function DegenieMap({ teams, online, caption, trading = false, onTime }: 
                 if (reduced.matches) p = s.end === null ? 1 : 0
                 const a = point(route, Math.max(0, p - .01)), b = point(route, Math.min(1, p + .01))
                 direction = ((Math.round(Math.atan2(b[0] - a[0], b[1] - a[1]) / (Math.PI / 4)) + (s.end !== null && t >= s.end - .8 ? 4 : 0)) % 8 + 8) % 8
-                label = s.end === null || t < s.end + .6 ? s.tool ? 'TOOL' : s.task.toUpperCase().slice(0, 9) : `${side ? 'B' : 'A'}${i + 1}`
+                label = s.end === null || t < s.end + .6 ? s.task.endsWith(' confirmed') ? s.task.split(' ')[0].toUpperCase() : s.tool ? 'TOOL' : s.task.toUpperCase().slice(0, 9) : `${side ? 'B' : 'A'}${i + 1}`
                 stage.strokeStyle = side ? '#efc77bab' : '#51dfffa0'; stage.lineWidth = 3; stage.beginPath(); stage.moveTo(...route[0] as [number, number]); stage.bezierCurveTo(...route.slice(1).flat() as [number, number, number, number, number, number]); stage.stroke()
               }
               const [x, y] = point(route, p); robot(x, y, direction, clip, t + i * .1, label, carrying, side ? '#f4c778' : '#63eaff')

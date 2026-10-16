@@ -4,7 +4,7 @@ use serde_json::{json, Value};
 use std::{collections::BTreeMap, io::Read};
 
 const DEVNET_GENESIS: &str = "EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG";
-const USAGE: &str = "bots agent match --name NAME --key LOCAL_KEYPAIR --agent-file PRIVATE_PROFILE | inspect --game PUBKEY [--wallet PUBKEY] | join --game PUBKEY --name NAME --key LOCAL_KEYPAIR | act --game PUBKEY --key LOCAL_KEYPAIR (one JSON action on stdin); ALASHI_RPC selects trusted devnet RPC";
+const USAGE: &str = "bots agent match --name NAME --key LOCAL_KEYPAIR --agent-file PRIVATE_PROFILE | inspect --game PUBKEY [--wallet PUBKEY] | join --game PUBKEY --name NAME --key LOCAL_KEYPAIR | act --game PUBKEY --key LOCAL_KEYPAIR [--expected-round N --expected-phase market|action --deadline UNIX_SECONDS] (one JSON action on stdin); ALASHI_RPC selects trusted devnet RPC";
 
 type ResultJson = Result<Value, Value>;
 fn error(code: &str, message: &str) -> Value {
@@ -16,7 +16,13 @@ fn options(args: &[String]) -> Result<BTreeMap<String, String>, Value> {
         "match" => &["--name", "--key", "--agent-file"][..],
         "inspect" => &["--game", "--wallet"][..],
         "join" => &["--game", "--key", "--name"][..],
-        "act" => &["--game", "--key"][..],
+        "act" => &[
+            "--game",
+            "--key",
+            "--expected-round",
+            "--expected-phase",
+            "--deadline",
+        ][..],
         _ => return Err(error("usage", USAGE)),
     };
     let mut result = BTreeMap::new();
@@ -30,6 +36,29 @@ fn options(args: &[String]) -> Result<BTreeMap<String, String>, Value> {
         }
     }
     Ok(result)
+}
+fn expected_context(
+    opts: &BTreeMap<String, String>,
+    game: &state::Game,
+    at: i64,
+) -> Result<(), Value> {
+    let fields = ["--expected-round", "--expected-phase", "--deadline"];
+    if fields.iter().all(|k| !opts.contains_key(*k)) {
+        return Ok(());
+    }
+    let round = opts.get(fields[0]).and_then(|s| s.parse::<u8>().ok());
+    let phase = opts.get(fields[1]).map(String::as_str);
+    let deadline = opts.get(fields[2]).and_then(|s| s.parse::<i64>().ok());
+    if round != Some(game.round)
+        || phase != Some(phase_name(game.phase))
+        || deadline.is_none_or(|d| d <= at || d > game.phase_ends_at)
+    {
+        return Err(error(
+            "trading_window_changed",
+            "the strategy decision does not match the current round, phase or deadline",
+        ));
+    }
+    Ok(())
 }
 fn required<'a>(opts: &'a BTreeMap<String, String>, name: &str) -> Result<&'a str, Value> {
     opts.get(name)
@@ -384,6 +413,14 @@ fn execute(args: &[String], input: Option<&str>, rpc: &RpcClient) -> ResultJson 
         }
         ix_join(name, player, game_key, faction)
     } else {
+        expected_context(
+            &opts,
+            &game,
+            SystemTime::now()
+                .duration_since(UNIX_EPOCH)
+                .unwrap_or_default()
+                .as_secs() as i64,
+        )?;
         let value: Value = serde_json::from_str(input.unwrap_or("")).map_err(|_| {
             error(
                 "invalid_action",
@@ -405,6 +442,16 @@ fn execute(args: &[String], input: Option<&str>, rpc: &RpcClient) -> ResultJson 
         }
         ix
     };
+    if command == "act" && opts.contains_key("--deadline") {
+        expected_context(
+            &opts,
+            &game_account(rpc, &game_key)?,
+            SystemTime::now()
+                .duration_since(UNIX_EPOCH)
+                .unwrap_or_default()
+                .as_secs() as i64,
+        )?;
+    }
     match send_ix_confirmed(rpc, &key, ix) {
         Ok(receipt) => Ok(
             json!({"ok":true,"command":command,"network":"devnet","program_id":id().to_string(),
@@ -575,6 +622,29 @@ mod tests {
     use super::*;
     use anchor_lang::AccountSerialize;
     use solana_rpc_client_api::request::RpcRequest;
+
+    #[test]
+    fn strategy_signer_refuses_changed_round_or_expired_deadline() {
+        let mut game = state::Game {
+            round: 2,
+            phase: state::Phase::Market,
+            phase_ends_at: 200,
+            ..Default::default()
+        };
+        let opts = BTreeMap::from([
+            ("--expected-round".into(), "2".into()),
+            ("--expected-phase".into(), "market".into()),
+            ("--deadline".into(), "180".into()),
+        ]);
+        assert!(expected_context(&opts, &game, 100).is_ok());
+        assert!(expected_context(&opts, &game, 180).is_err());
+        game.round = 3;
+        assert!(expected_context(&opts, &game, 100).is_err());
+        game.round = 2;
+        game.phase = state::Phase::Action;
+        assert!(expected_context(&opts, &game, 100).is_err());
+        assert!(expected_context(&BTreeMap::new(), &game, 100).is_ok());
+    }
 
     #[test]
     fn account_validation_rejects_wrong_owner_pda_and_foreign_faction() {

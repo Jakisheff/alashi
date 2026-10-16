@@ -18,6 +18,100 @@ use std::{
 
 const RECORD: &str = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 const OWNER_ORIGIN: &str = "https://alashi.network";
+#[test]
+fn trading_strategies_two_processes_then_third_owner_reuse() {
+    let root = std::env::temp_dir().join(format!("alashi_strategy_trading_{}", std::process::id()));
+    std::fs::create_dir_all(&root).unwrap();
+    let state = new_state_with_files(root.join("state.json"), root.join("sequence"));
+    for i in 0..4 {
+        let seed = [i as u8 + 21; 32];
+        let record = format!("{:064x}", i + 40);
+        let recovery = register_v2_fixture(&state, &record, [i as u8 + 31; 32], seed);
+        let key = SigningKey::from(seed);
+        let public: [u8; 32] = VerificationKey::from(&key).into();
+        let wallet = alashi_rules::anchor_lang::prelude::Pubkey::new_from_array(public).to_string();
+        let secret: Vec<u8> = seed.into_iter().chain(public).collect();
+        let path = root.join(format!("owner-{i}.json"));
+        std::fs::write(&path,json!({"agent_record_id":record,"wallet":wallet,"secret_key":secret,"recovery_secret":recovery}).to_string()).unwrap();
+        #[cfg(unix)]
+        {
+            use std::os::unix::fs::PermissionsExt;
+            std::fs::set_permissions(&path, std::fs::Permissions::from_mode(0o600)).unwrap();
+        }
+    }
+    save_snapshot(&state).unwrap();
+    let port = serve_on(state.clone(), "127.0.0.1:0", 60).unwrap().port();
+    let repo = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+        .parent()
+        .unwrap();
+    let log = root.join("driver.log");
+    let file = std::fs::File::create(&log).unwrap();
+    let mut child = KillChild(
+        Command::new("node")
+            .current_dir(repo)
+            .args([
+                "tools/agent-bootstrap/trading-cycle-check.mjs",
+                &format!("http://127.0.0.1:{port}"),
+                root.to_str().unwrap(),
+            ])
+            .stdout(Stdio::from(file.try_clone().unwrap()))
+            .stderr(Stdio::from(file))
+            .spawn()
+            .unwrap(),
+    );
+    let until = Instant::now() + Duration::from_secs(150);
+    loop {
+        if let Some(status) = child.0.try_wait().unwrap() {
+            assert!(
+                status.success(),
+                "{}",
+                std::fs::read_to_string(&log).unwrap()
+            );
+            break;
+        }
+        assert!(
+            Instant::now() < until,
+            "trading cycle timeout: {}",
+            std::fs::read_to_string(&log).unwrap()
+        );
+        let command = root.join("advance.json");
+        if command.exists() {
+            let v: Value = serde_json::from_slice(&std::fs::read(&command).unwrap()).unwrap();
+            let game = v["game"].as_u64().unwrap();
+            state
+                .games
+                .lock()
+                .unwrap()
+                .get_mut(&game)
+                .unwrap()
+                .sim
+                .game
+                .phase_ends_at = 0;
+            arena::api::crank_once(&state);
+            std::fs::remove_file(command).unwrap();
+        }
+        thread::sleep(Duration::from_millis(10));
+    }
+    let before = request(port, "GET", "/strategy-library", None);
+    let restarted = new_state_with_files(root.join("state.json"), root.join("sequence"));
+    let after_port = serve_on(restarted, "127.0.0.1:0", 60).unwrap().port();
+    let after = request(after_port, "GET", "/strategy-library", None);
+    assert_eq!(
+        before["runs"], after["runs"],
+        "all receipts survive server restart"
+    );
+    assert_eq!(after["runs"].as_array().unwrap().len(), 8);
+    if let Ok(out) = std::env::var("ALASHI_TRADING_CYCLE_EVIDENCE_DIR") {
+        let out = PathBuf::from(out);
+        std::fs::create_dir_all(&out).unwrap();
+        std::fs::copy(
+            root.join("cycle-public.json"),
+            out.join("cycle-public.json"),
+        )
+        .unwrap();
+        std::fs::write(out.join("runtime-path.txt"), root.display().to_string()).unwrap();
+    }
+}
 fn test_owner() -> (SigningKey, String) {
     let key = SigningKey::from([7u8; 32]);
     let vk: [u8; 32] = VerificationKey::from(&key).into();

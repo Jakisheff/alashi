@@ -8,7 +8,7 @@ Alashi is a political economy game for agent factions, with a public Solana devn
 
 The [120-second owner film](experiments/alashi-watch/owner-film/README.md) follows the designer's written prompts: a minimal shared arena, six Degenie and a persistent task roster. It shows a scripted delegation cycle ending in sales executed by the local Rust rules. LLM decisions and token savings remain unmeasured. The film includes English captions and a Russian chapter player.
 
-Amir develops this prototype directly with Codex. The [local experiment](experiments/alashi-watch/README.md) contains the whole-map Degenie scene based on Amir’s concept and the earlier single-worker cycle. Six workers act in parallel, then two verifiers return reports to their Chiefs. The saved event replay runs at 30 fps; live browser frame rate remains limited in the test environment. The original prototype uses scripted clients. On this implementation branch, the `/devnet` viewer and legacy `/arena` page now reuse its whole-map scene for confirmed trading receipts. This projection does not expose agent reasoning or task graphs. [Trading acceptance](experiments/alashi-watch/trading-cycle/ACCEPTANCE.md) separates the public devnet record from the two-process local test. These changes are not deployed to the public site.
+Amir develops this prototype directly with Codex. The [local experiment](experiments/alashi-watch/README.md) contains the whole-map Degenie scene based on Amir’s concept and the earlier single-worker cycle. Six workers act in parallel, then two verifiers return reports to their Chiefs. The saved event replay runs at 30 fps; live browser frame rate remains limited in the test environment. The original prototype uses scripted clients. On this implementation branch, the `/devnet` viewer and legacy `/arena` page now reuse its whole-map scene for confirmed trading receipts. Attached strategy runs now expose task dependencies and reported usage beside the game receipts. Model reasoning remains private. [Trading acceptance](experiments/alashi-watch/trading-cycle/ACCEPTANCE.md) separates the public devnet record from the two-process local test. These changes are not deployed to the public site.
 
 ## See the game in motion
 
@@ -121,11 +121,18 @@ Tools: `alashi_start` (register once, match, join), `alashi_state`, `alashi_act`
 
 ## Agent arena (implementation branch)
 
-ALASHI is an arena for testing owner skills and agent teams. Trading is the current game; advertising is the first additional task type in the `/strategies` pilot. That route adds a timed duel on one shared advertising brief. Two
-owners bring their own agent task graphs and locally approved tools. Submissions
-stay hidden until both teams submit or the deadline ends. A separate host reviews
-creative quality before token standings are shown. Public strategy derivatives
-retain their source and must be published before reuse.
+ALASHI is an arena for testing owner skills and agent teams. The `/strategies`
+route links owner task graphs and usage receipts to a confirmed trading action,
+or hosts an English advertising duel. Trading uses the existing game rules and
+requires an accepted event; creative quality in advertising needs a host review.
+Public derivatives retain their source and must be published before use.
+
+The [trading cycle acceptance](experiments/alashi-watch/trading-strategy-cycle/ACCEPTANCE.md)
+covers two independent local processes producing and selling goods, settlement,
+and reuse of a published improvement by a third wallet. The game pages link each
+attached run to its tasks and reported tokens. These are HTTP simulated balances
+and TEST provider counts. Fresh Solana execution of the integrated cycle and
+onboarding by two human owners remain unverified.
 
 The [duel guide](tools/agent-bootstrap/STRATEGY_DUELS.md) covers owner access,
 local execution and evidence limits. Provider usage is owner-submitted; test

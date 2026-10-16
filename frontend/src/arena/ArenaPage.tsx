@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { activeArenaGames, arenaEvents, ArenaApiError, mergeArenaEvents, type ArenaEvent, type ArenaGame, arenaState, type ArenaSnapshot } from './client'
 
+import { TradingRuns } from '../strategies/TradingRuns'
 import { DegenieMap } from '../strategies/Map'
 import { tradingTeams, receiptText, gameCash } from './trading'
 import '../strategies/style.css'
@@ -110,7 +111,7 @@ export function ArenaPage({ requestedGame }: { requestedGame?: string }) {
         <div>
           <p className="text-xs font-semibold tracking-[.24em] text-[#85dcb8] uppercase">ALASHI · Trading arena</p>
           <h1 className="mt-1 text-3xl font-semibold tracking-tight">Your agents. One shared market.</h1>
-          <p className="mt-2 max-w-2xl text-sm text-[#b4c9bf]">Two owners connect their agents to the same trading game. Degenie visualize confirmed actions from its public journal. Game money is simulated; model tokens are not measured here.</p>
+          <p className="mt-2 max-w-2xl text-sm text-[#b4c9bf]">Two owners connect their agents to the same trading game. Degenie visualize confirmed actions from its public journal. Game money is simulated. Attached strategy receipts show reported model tokens below.</p>
         </div>
         <div className="flex gap-2"><button className="rounded border border-[#4da482] px-3 py-2 text-sm hover:bg-[#163c30]" onClick={() => setRetry((value) => value + 1)}>Reconnect</button>{selected && <button className="rounded border border-[#4da482] px-3 py-2 text-sm hover:bg-[#163c30]" onClick={() => void copy()}>Copy arena link</button>}</div>
       </header>
@@ -121,13 +122,14 @@ export function ArenaPage({ requestedGame }: { requestedGame?: string }) {
         <section className="grid gap-3 rounded border border-[#2b6050] bg-[#0e211d] p-5 sm:grid-cols-4">
           <Readout label="Status" value={state} />
           <Readout label="Game" value={`#${selected}`} detail={game ? `Party ${game.partyNo}${game.label ? ` · ${game.label}` : ''}` : 'Shared public link'} />
-          <Readout label="Round" value={game ? String(game.round) : '—'} detail={game ? game.phase : finished ? 'Recorded result' : 'Awaiting public context'} />
-          <Readout label="Players" value={game ? String(game.factions) : '—'} detail={game?.names.join(' · ') || 'Public names only'} />
+          <Readout label="Round" value={snapshot ? String(snapshot.round) : game ? String(game.round) : '—'} detail={snapshot?.phase ?? (game ? game.phase : finished ? 'Recorded result' : 'Awaiting public context')} />
+          <Readout label="Players" value={snapshot ? String(snapshot.factions.length) : game ? String(game.factions) : '—'} detail={snapshot?.factions.map(f => f.name).join(' · ') || game?.names.join(' · ') || 'Public names only'} />
         </section>
         <section className="trading-stage">
           <DegenieMap key={selected} teams={teams} online={eventsReady && !eventsError && !stateError} trading onTime={onTime} caption="Confirmed trading actions · event playback" />
-          <aside className="run-selector"><h2>Latest server state</h2><p>Balances below stay current while you replay historical receipts.</p>{snapshot?.factions.slice(0, 2).map((f, side) => <div key={f.idx} className="trading-owner"><span className="eyebrow">OWNER {side ? 'B' : 'A'}</span><h3>{f.name}</h3><p>{f.wallet ? short(f.wallet) : 'Legacy HTTP identity'}<br />{gameCash(f.cash)} game cash · {f.goods} goods</p>{f.record && <a href={`/stream?agent=${f.record}`}>Agent stream</a>}</div>)}<p>Round {snapshot?.round ?? game?.round ?? '?'} · {snapshot?.phase ?? game?.phase ?? state}</p><p>{snapshot?.label.startsWith('SYNTHETIC') ? 'SYNTHETIC LOCAL TEST. Fixture wallets and deterministic model responses.' : 'Source: durable HTTP game receipts. No on-chain settlement is claimed.'}</p><p>Trade receipts do not reveal agent reasoning or model usage.</p>{(snapshot?.factions.length ?? game?.factions ?? 0) > 2 && <p>The map shows the first two factions. The journal below includes all factions.</p>}</aside>
+          <aside className="run-selector"><h2>Latest server state</h2><p>Balances below stay current while you replay historical receipts.</p>{snapshot?.factions.slice(0, 2).map((f, side) => <div key={f.idx} className="trading-owner"><span className="eyebrow">OWNER {side ? 'B' : 'A'}</span><h3>{f.name}</h3><p>{f.wallet ? short(f.wallet) : 'Legacy HTTP identity'}<br />{gameCash(f.cash)} game cash · {f.goods} goods</p>{f.record && <a href={`/stream?agent=${f.record}`}>Agent stream</a>}</div>)}<p>Round {snapshot?.round ?? game?.round ?? '?'} · {snapshot?.phase ?? game?.phase ?? state}</p><p>{snapshot?.label.startsWith('SYNTHETIC') || snapshot?.label.startsWith('TEST_') ? 'SYNTHETIC LOCAL TEST. Fixture wallets and deterministic model responses.' : 'Source: durable HTTP game receipts. No on-chain settlement is claimed.'}</p><p>Trade receipts do not reveal agent reasoning or model usage.</p>{(snapshot?.factions.length ?? game?.factions ?? 0) > 2 && <p>The map shows the first two factions. The journal below includes all factions.</p>}</aside>
         </section>
+        <TradingRuns mode="http" game={String(selected)} />
         {truncated && <p className="rounded border border-[#b98049] bg-[#382619] p-3 text-sm" role="status">Some earlier public history is no longer available.</p>}
         <section className="rounded border border-[#2b6050] bg-[#0e211d]"><div className="flex items-center justify-between border-b border-[#2b6050] px-5 py-3"><h2 className="font-medium">Public event log</h2><span className="text-xs text-[#85dcb8]">{eventsError ? 'Reconnecting' : eventsReady ? 'Connected' : 'Connecting'}</span></div><ol className="divide-y divide-[#1b4236]">
           {visible.map((event) => <li key={event.id} className="grid gap-1 px-5 py-4 sm:grid-cols-[6rem_1fr]"><time className="font-mono text-xs text-[#85dcb8]" dateTime={event.createdAt}>{clock(event.createdAt)}</time><div><p className="text-sm">{eventText(event)}</p>{event.kind === 'game_action' && <p className="text-xs text-[#9fb9ad]">{receiptText(event)} · receipt {event.id}</p>}{event.kind === 'agent_message' && event.author && <p className="mt-1 text-xs text-[#9fb9ad]">Agent {short(event.author)} · <a className="underline underline-offset-2" href={`/stream?agent=${encodeURIComponent(event.author)}`}>Watch agent</a></p>}</div></li>)}

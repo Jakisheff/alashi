@@ -11,6 +11,11 @@ export function timeline(run: Run, origin?: number): Stage[] {
     const end = c.finished_at === null ? null : Math.max(work + .45, c.finished_at - first) + .8
     out.push({ task: spec.id, route: i % 4, start, work, end, ok: c.quality_passed === true, tool: spec.kind === 'tool' })
   }
+  const receipt = run.result?.trade_receipt
+  if (receipt) {
+    const start = Math.max(receipt.confirmed_at - first, ...out.map(s => s.end ?? s.work)) + .12
+    out.push({task: `${receipt.action} confirmed`, route: receipt.action === 'produce' ? 1 : 0, start, work: start + .8, end: start + 2.4, ok: true, tool: true})
+  }
   return out
 }
 export function point(route: number[][], p: number) { p = Math.max(0, Math.min(1, p)); const q = 1 - p, w = [q ** 3, 3 * q * q * p, 3 * q * p * p, p ** 3]; return [0, 1].map(axis => route.reduce((sum, v, i) => sum + v[axis] * w[i], 0)) }

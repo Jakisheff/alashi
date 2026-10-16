@@ -9,6 +9,8 @@ mod live;
 mod owner_auth;
 #[path = "strategy_cycle.rs"]
 mod strategy_cycle;
+#[path = "strategy_trade.rs"]
+mod strategy_trade;
 #[path = "wishes.rs"]
 mod wishes;
 #[path = "chain_wishes.rs"]
@@ -2076,11 +2078,12 @@ fn op_response(mut value: serde_json::Value, op_id: Option<u64>, consumed: bool)
 }
 
 fn action_request_hash(body: &serde_json::Value) -> String {
-    let normalized = serde_json::json!({
+    let mut normalized = serde_json::json!({
         "action": body["action"].as_str().unwrap_or(""),
         "by": body["by"].as_str().unwrap_or("unknown"),
         "params": body.get("params").cloned().unwrap_or(serde_json::json!({})),
     });
+    if let Some(run) = body.get("strategy_run") { normalized["strategy_run"] = run.clone(); }
     sha256_hex(&normalized.to_string())
 }
 
@@ -2160,7 +2163,7 @@ fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json
     }
     if let Some(obj) = body.as_object() {
         for key in obj.keys() {
-            if !matches!(key.as_str(), "token" | "action" | "params" | "by" | "op_id") {
+            if !matches!(key.as_str(), "token" | "action" | "params" | "by" | "op_id" | "strategy_run") {
                 return op_response(err_json("bad_params", &format!("неизвестное поле: {key}")), op_id, false);
             }
         }
@@ -2190,11 +2193,17 @@ fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json
             }
         }
     }
+    if body.get("strategy_run").is_some() {
+        if let Err(code) = strategy_cycle::check_http_trade(state, game_id, v2_id.as_deref().unwrap_or(""), body) {
+            return op_response(err_json(code, code), op_id, false);
+        }
+    }
     let backup = {
         let games = state.games.lock().unwrap_or_else(|e| e.into_inner());
         games.get(&game_id).cloned()
     };
     let live_before = state.live.lock().unwrap_or_else(|e| e.into_inner()).clone();
+    let strategy_before = body.get("strategy_run").map(|_| state.strategy_cycle.lock().unwrap_or_else(|e|e.into_inner()).clone());
     let mut response = h_act_inner(state, game_id, body);
     if response.get("action_log").is_none() {
         return op_response(response, op_id, false);
@@ -2202,6 +2211,19 @@ fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json
     if response["action_log"]["ok"] == true {
         if let (Some(entry), Some(before)) = (state.games.lock().unwrap_or_else(|e| e.into_inner()).get(&game_id), backup.as_ref()) {
             live::append_action(state, game_id, entry, before);
+        }
+    }
+    if let Some(run) = body["strategy_run"].as_str() {
+        if response["action_log"]["ok"] == true {
+            let event = state.live.lock().unwrap_or_else(|e|e.into_inner()).events.last().cloned().unwrap_or(serde_json::Value::Null);
+            if let Err(code) = strategy_cycle::confirm_http_trade(state, run, &event) {
+                *state.live.lock().unwrap_or_else(|e|e.into_inner()) = live_before;
+                if let Some(entry) = backup { state.games.lock().unwrap_or_else(|e|e.into_inner()).insert(game_id, entry); }
+                if let Some(before) = strategy_before { *state.strategy_cycle.lock().unwrap_or_else(|e|e.into_inner()) = before; }
+                return op_response(err_json(code, code), op_id, false);
+            }
+        } else {
+            strategy_cycle::reject_http_trade(state, run);
         }
     }
     response = op_response(response, op_id, op_id.is_some());
@@ -2215,6 +2237,7 @@ fn h_act(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_json
     if let Err(e) = save_snapshot_locked(state) {
         eprintln!("[ERROR] snapshot save after act: {e}");
         *state.live.lock().unwrap_or_else(|e| e.into_inner()) = live_before;
+        if let Some(before) = strategy_before { *state.strategy_cycle.lock().unwrap_or_else(|e|e.into_inner()) = before; }
         if let Some(entry) = backup {
             state.games.lock().unwrap_or_else(|e| e.into_inner()).insert(game_id, entry);
         }
@@ -3228,6 +3251,8 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
                 "reserve" => strategy_cycle::reserve(state,id,req.origin.as_deref().unwrap_or(""),&raw,run,&body_v),
                 "review" => strategy_cycle::review(state,id,req.origin.as_deref().unwrap_or(""),&raw,run,&body_v),
                 "report" => strategy_cycle::report(state,id,req.origin.as_deref().unwrap_or(""),&raw,run,&body_v),
+                "prepare-trade" if body_v.as_object().is_some_and(|b|b.is_empty()) => strategy_cycle::prepare_trade(state,id,req.origin.as_deref().unwrap_or(""),&raw,run),
+                "trade-receipt" => strategy_cycle::confirm_chain_trade(state,id,req.origin.as_deref().unwrap_or(""),&raw,run,&body_v),
                 "finish" if body_v.as_object().is_some_and(|b|b.is_empty()) => strategy_cycle::finish(state,id,req.origin.as_deref().unwrap_or(""),&raw,run),
                 _ => err_json("bad_strategy_request","unknown operation"),
             }),

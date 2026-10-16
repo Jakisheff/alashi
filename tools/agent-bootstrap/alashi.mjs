@@ -263,6 +263,7 @@ async function joinGame(base, profile, game, name, model, strategyHash, dir, fet
   publicReceipt(profile, result.registration);
   session.token = result.token;
   session.faction_idx = result.faction_idx;
+  if (!session.pending_act && Number.isSafeInteger(result.next_op_id) && result.next_op_id > 0) session.next_op_id = result.next_op_id;
   savePrivate(path, session);
   return sanitize(result, [profile.recovery_secret, result.token]);
 }
@@ -280,10 +281,11 @@ async function matchGame(base, profile, fetcher = fetch) {
 function actionBody(raw) {
   const value = JSON.parse(raw);
   if (!value || typeof value !== 'object' || Array.isArray(value) ||
-      Object.keys(value).some(k => !['action', 'params', 'by'].includes(k)) || typeof value.action !== 'string' ||
+      Object.keys(value).some(k => !['action', 'params', 'by', 'strategy_run'].includes(k)) || typeof value.action !== 'string' ||
       (value.params !== undefined && (!value.params || typeof value.params !== 'object' || Array.isArray(value.params))) ||
-      (value.by !== undefined && !['llm', 'heuristic', 'unknown'].includes(value.by))) fail('invalid_action', 'expected action, optional params object and by');
-  return { action: value.action, by: value.by ?? 'llm', params: value.params ?? {} };
+      (value.by !== undefined && !['llm', 'heuristic', 'unknown'].includes(value.by)) ||
+      (value.strategy_run !== undefined && !hex32(value.strategy_run))) fail('invalid_action', 'expected action, optional params object and by');
+  return { action: value.action, by: value.by ?? 'llm', params: value.params ?? {}, ...(value.strategy_run === undefined ? {} : {strategy_run:value.strategy_run}) };
 }
 async function act(base, session, path, raw, fetcher = fetch) {
   if (!session.token) fail('not_joined', 'run start to join first');

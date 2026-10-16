@@ -6,7 +6,7 @@ The stage depicts recorded execution events for both sides of the same duel. It 
 The user can replay a completed run; a disconnected live view freezes.
 
 Intent: a Degenie receives a task, travels to its station, works, and returns a
-checked report. Two owner teams use their own task graphs on the same advertising brief.
+checked report. Two owner teams use their own task graphs on the same shared brief.
 The chief signals submission after brief checks. Creative acceptance requires
 the separate host review. A completed task is not evidence of ad conversions.
 Key poses: attentive idle, facing the route, arrival/work, return, accepted report.
@@ -39,3 +39,18 @@ viewer's comprehension and real phone frame rate require separate observation.
 Product framing, clarified by Amir: ALASHI tests owner skills and agent teams.
 Advertising is the first task in the pilot, not the arena category. Other task
 types need their own result contract and acceptance checks before use.
+
+## Trading result contract
+
+The trading graph uses the same poses and paths. Intent: finish the owner task
+graph, then acknowledge a confirmed game action. The receipt journey starts
+after every task has returned. Its label names PRODUCE, SELL or BUY; a tool
+completion alone cannot launch it. The final accepted pose follows that journey.
+All principles in the table apply unchanged. The carried marker remains a
+report, not a crate or payment. Commodity handling stays in the game scene.
+
+Timing expands short recorded calls so the order is readable. Playback seconds
+are not provider latency; receipts retain the original timestamps. Parallel
+independent tasks remain parallel. A receipt missing from the run creates no
+receipt journey. Desktop and phone evidence is recorded with the trading-cycle
+acceptance, including simultaneous work and the later receipt stage.

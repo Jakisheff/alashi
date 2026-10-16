@@ -217,3 +217,24 @@ FFmpeg декодирует весь ролик без ошибок; пауза 
 в 30 кадров/с. Реальные LLM, физический телефон и новый зритель
 не проверены. Предыдущая задача RustSec: факт 0,17 часа, CI 5/5
 на ff98fe5. CI визуальной версии проверяется отдельно перед отчётом.
+
+17.10 02:11. Trading strategy cycle in progress. План: 2 часа, до 04:11.
+Inspecting the integration between trading, usage accounting and strategy reuse.
+Acceptance requires a reproducible full cycle, failure checks and GitHub CI.
+
+17.10 02:26. The trading brief now captures one shared game state and binds
+strategy decisions to accepted receipts. Source changes cover HTTP execution,
+devnet receipt verification and local signer context guards. Frontend builds.
+Preparing an isolated two-process test covering production, sales, settlement,
+public derivatives and reuse by a third wallet. All model responses are TEST.
+
+17.10 02:37. Server suite passed: the two-process trading cycle, third-owner
+reuse and persistence after restart are verified. The fault test rolls back
+game, public event and strategy receipt together. Frontend build and animation
+checks passed. Checking the rendered map and usage cards before GitHub CI.
+
+17.10 02:50. Browser review passed at desktop and 390 px: original map preserved,
+parallel tasks followed by receipt acknowledgment, result and reuse visible.
+The finished game links four attached runs. No token leader is shown for
+unequal sale outcomes. Local secret scan is clean. Preparing the GitHub push;
+fresh Solana execution and two-human onboarding remain unverified.

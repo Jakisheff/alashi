@@ -2,11 +2,10 @@
 
 The `/strategies` platform route hosts a duel between two owners of AI agents.
 ALASHI is an arena for testing owner skills and agent teams across shared tasks.
-The current pilot implements one task type: an English advertisement. Other
-task types require their own artifact contract and acceptance checks.
-Both receive the same immutable advertising brief, source facts and token budget.
-The first task is an English ALASHI ad for owners of AI agents. Each owner chooses
-their own task graph, model and locally approved tools.
+The pilot supports one confirmed trading action or an English advertisement.
+Both owners receive the same immutable task and token budget. Each owner chooses
+their task graph, model and locally approved tools. A trading action is checked
+against the game journal. An advertisement needs a separate creative review.
 
 ```mermaid
 flowchart LR
@@ -23,7 +22,7 @@ flowchart LR
     P --> N[Another owner uses it in a new duel]
 ```
 
-## One round
+## Advertising round
 
 A registered wallet creates a challenge in the owner workspace. The host cannot
 compete in that challenge. Two different owners each take one seat. The second
@@ -42,6 +41,86 @@ current English format gate requires ASCII text. These checks cannot establish
 factual accuracy, persuasive quality or conversion performance. The host must
 review those first two qualities against the shared source facts. A campaign
 experiment with recorded clicks or sign-ups is needed to measure effectiveness.
+
+## Trading round
+
+Two registered owners join the existing game. In the owner workspace, select
+Trading round and set `trading` to `{ "mode": "http", "game": "GAME_ID" }` or
+`{ "mode": "solana", "game": "GAME_PDA" }`. The server captures the current
+public state. The host cannot supply balances or a fabricated game receipt.
+A trading participant may host because acceptance uses game events. No third
+human host is required. Both owners then join the challenge with their versions.
+
+The phase must be market or action, with two alive, registered, unacted owners
+and equal initial cash and goods. This is a restricted comparison, not a claim
+that every historical advantage is equal. The deadline is the earlier of the
+challenge clock and game phase end. Creating a challenge does not pause the game.
+One challenge executes one action per owner; it does not replace the six-round
+game or automatically select the next challenge.
+
+The final `deliver` task returns exactly one of:
+
+```json
+{"action":"produce","params":{}}
+{"action":"sell","params":{"units":2}}
+{"action":"buy","params":{"units":1}}
+```
+
+Use `produce` in the action phase, and `sell` or `buy` in the market phase.
+The rules still decide whether the action is legal. A valid JSON decision cannot
+complete the run: it needs a matching accepted game event after the task report.
+The result records the exact cash and goods change plus event provenance.
+
+Cash and goods are game resources. Crystals on the strategy meter represent
+model tokens. The existing game currency is not debited for a model call.
+The meter subtracts known token use from the common challenge budget and keeps
+unknown usage separate.
+
+Both outcomes are shown. Token standings require both completed owners to have
+the same action, parameters, cash change and goods change. Two market sales can
+earn different amounts because they share a price curve. Such outcomes produce
+no token leader. TEST counts never establish real savings.
+
+### Execute the decision
+
+Install the existing bootstrap dependency first:
+
+```sh
+npm ci --ignore-scripts --prefix tools/agent-bootstrap
+```
+
+For an HTTP game, add `--trade-session /path/to/private-session.json` to the
+runner command below. Use the session from the same registered agent and game.
+The existing action client preserves its operation ID before sending. An accepted
+action, its public event and strategy receipt commit together. Retrying after a
+lost response reconciles that operation without a second trade or model call.
+
+For Solana, add `--trade-key /path/to/local-keypair.json` and
+`--bots-binary /absolute/path/to/bots`. The existing local signer checks the
+wallet and expected phase before sending. The arena verifies the signature in
+the confirmed indexer journal, including the owner, game, phase and units.
+The indexer must include the new market fields and acted flags.
+
+The signer guard runs before submission; the program does not atomically enforce
+that expected phase. A phase change during submission can lead to a transaction
+that is not accepted as challenge evidence. An ambiguous signer result stops.
+Inspect the original transaction and resume with `--trade-signature SIGNATURE`
+and the same journal to reconcile it. This option does not submit another
+transaction. A successful signed submission whose indexer receipt is late can
+be retried for receipt verification without signing again.
+
+### Observed acceptance and remaining checks
+
+The [trading acceptance](../../experiments/alashi-watch/trading-strategy-cycle/ACCEPTANCE.md)
+records two separate owner processes running production and sales, normal game
+settlement, a published derivative and reuse by a third wallet. It uses the real
+HTTP rules and deterministic TEST providers, with no external model calls.
+Two test keys do not prove onboarding by two independent people.
+
+A fresh signed Solana cycle and two-person browser onboarding remain untested.
+The fixture gives a phase 300 seconds; the ordinary short production window is
+not evidence that two people can join a challenge and finish their models in time.
+No deployment is part of this change.
 
 ## Strategy reuse
 
@@ -86,7 +165,8 @@ but before saving its response leaves usage unknown and stops the run. If a cras
 leaves a `.lock` file, verify the old process has stopped before removing that
 specific lock and resuming with the original journal.
 
-Built-in tools `brief_extract` and `copy_check` run locally without a model.
+Built-in tools `brief_extract`, `copy_check` and `trade_state` run locally without a model.
+`trade_state` extracts the captured game state for the owner; it does not query a model.
 Their receipts explicitly contain zero model tokens. Tool API fees and compute
 costs are not included in that zero. A tool is not evidence of free execution.
 
@@ -148,12 +228,16 @@ verification, record-scoped cookies and the configured origin boundary:
 - `POST /strategies/:version/publish`: publish an owned version.
 - `POST /strategy-runs`: join with version, challenge_id and client_id.
 - `POST /strategy-runs/:run/reserve|report|finish`: execute and submit.
-- `POST /strategy-runs/:run/review`: host review after reveal.
+- `POST /strategy-runs/:run/review`: advertisement host review after reveal.
+- `POST /strategy-runs/:run/prepare-trade`: validate a ready trading decision.
+- `POST /strategy-runs/:run/trade-receipt`: verify a Solana signature in the indexer.
+- Existing `POST /game/:id/act`: optional `strategy_run` binds an HTTP action.
 
 The persistent arena snapshot includes `strategy_cycle`. A missing field in an
 older snapshot initializes an empty library; a malformed present field rejects
 startup. Snapshot writes and rollback use the existing arena transaction lock.
-This feature does not execute Solana transactions or send ads to external sites.
+The arena never receives a transaction signing key. The local runner can invoke
+the existing Solana signer; advertisements are not sent to external sites.
 
 Local development requires an isolated arena and an explicit proxy target:
 
@@ -165,8 +249,7 @@ The proxy allows only the duel and existing owner authentication routes. Browser
 wallet login still requires the configured HTTPS origin and Secure cookies;
 plain localhost is for public visual review and signed CLI integration tests.
 Production must proxy `/strategy-library` and the new owner routes to the updated
-arena while serving `/strategies` through the frontend router. Deploy backend and
-frontend together after staging. Back up the snapshot before changing server
+arena while serving `/strategies` through the frontend router. Deploy the arena, indexer and frontend together after staging. Back up the snapshot before changing server
 versions; an older writer does not preserve this new journal. This change is not
 a production deployment.
 
@@ -180,7 +263,7 @@ npm --prefix frontend run check:animations
 npm --prefix frontend run check:strategies
 ```
 
-The signed HTTP test runs two complete duels, including reuse by a fourth wallet,
+The advertising HTTP test runs two complete duels, including reuse by a fourth wallet,
 blind reveal and recovery without duplicate model calls. Browser acceptance must
 also inspect desktop motion and phone framing. A new viewer's understanding,
 real-phone frame rate and a live provider bill require separate checks.

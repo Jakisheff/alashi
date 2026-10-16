@@ -802,3 +802,9 @@ FFmpeg декодирует весь ролик без ошибок; пауза 
 в 30 кадров/с. Реальные LLM, физический телефон и новый зритель
 не проверены. Предыдущая задача RustSec: факт 0,17 часа, CI 5/5
 на ff98fe5. CI визуальной версии проверяется отдельно перед отчётом.
+
+17.10 02:11. Complete trading strategy cycle, requested by Amir.
+План: 2 часа, до 04:11. Target: two independent owners run the same trading
+challenge with traceable decisions and usage, then a third owner reuses a
+published improvement. Verify each boundary with reproducible tests and public
+receipts. No additional external model calls, deployment or video publication.

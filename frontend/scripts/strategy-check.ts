@@ -17,6 +17,15 @@ assert.deepEqual(point([[0, 0], [1, 0], [2, 1], [3, 1]], 1), [3, 1])
 run.calls.angle.finished_at = null
 assert.equal(timeline(run)[1].end, null, 'missing completion must not invent a returned report')
 console.log('PASS: parallel task staging, causal handoff, route endpoints and pending completion')
+run.calls.angle.finished_at = 100
+run.result = {artifact: {action: 'sell', params: {units: 2}}, checks: {passed: true}, finished_at: 101, trade_receipt: {mode: 'http', game: '1', event_id: 'live-1', action: 'sell', params: {units: 2}, cash_delta: '22000000', goods_delta: -2, confirmed_at: 101}}
+const trade = timeline(run)
+assert.equal(trade.at(-1)?.task, 'sell confirmed')
+assert.equal(trade.at(-1)?.route, 0)
+assert.ok(trade.at(-1)!.start > trade.at(-2)!.end!, 'a game receipt cannot arrive before the task report on the staged map')
+run.result = null
+assert.equal(timeline(run).length, 3, 'no game receipt means no invented trade journey')
+console.log('PASS: confirmed trade follows task delivery; pending trade stays absent')
 
 for (const [copy, original] of [['terrain.png', 'assets/alashi-terrain.png'], ['degenie.png', 'assets/degenie-atlas.png'], ['map-layout.json', 'map-layout.json']]) {
   const hash = (path: URL) => createHash('sha256').update(readFileSync(path)).digest('hex')
