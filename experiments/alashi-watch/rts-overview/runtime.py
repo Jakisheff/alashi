@@ -1,4 +1,4 @@
-"""Loopback-only experiment. Scripted tasks, no Alashi arena or model calls.
+"""Loopback-only experiment. Scripted tasks, no ALASHI arena or model calls.
 
 RemoteSession, Timeline and the reference viewer are unmodified upstream code.
 This adapter owns demonstration task state; it is not a game-rules implementation.
@@ -29,9 +29,9 @@ from agentenv_rts import live
 LAYOUT = json.loads((ROOT / 'map-layout.json').read_text())
 TIMING = LAYOUT['timing']
 COLORS = ['#b99bff', '#b4e9ef']
-ROLES = ['Рынок', 'Анализ', 'Парламент', 'Проверка']
+ROLES = ['Market', 'Analysis', 'Parliament', 'Verification']
 TARGETS = [route[-1] for route in LAYOUT['routes'][:4]]
-RESULTS = ['Продажа 4 товаров: расчёт 39', 'Сравнение вариантов готово', 'Политический риск проверен', 'Три отчёта согласованы']
+RESULTS = ['Sell 4 goods: calculated proceeds 39', 'Options compared', 'Political risk checked', 'Three reports cross-checked']
 
 def smooth(x):
     x = max(0, min(1, x))
@@ -71,12 +71,12 @@ class World:
                         home=home, target=target, route=route, x=home[0], z=home[1], phase='idle',
                         started=None, duration=TIMING['task'] + role * TIMING['roleExtra'], phase_t=0, yaw=0,
                         task_id=f'cycle-{self.cycle}-{side}-{role}', result=None))
-            self.timeline = Timeline(dict(game=f'alashi-demo-{self.cycle}', title='Alashi · demo task runtime',
-                map='Два штаба · демо', bounds=dict(min_x=0, max_x=LAYOUT['width'], min_y=-LAYOUT['height'], max_y=0),
-                players=[dict(slot=s, label=f'Chief {"АБ"[s]}', race='Degenie', controller='scripted demo', color=COLORS[s]) for s in range(2)],
-                points=[dict(kind='shop', x=route[-1][0], y=-route[-1][1], label=ROLES[i%4]+' · '+"АБ"[i//4]) for i, route in enumerate(LAYOUT['routes'])],
+            self.timeline = Timeline(dict(game=f'alashi-demo-{self.cycle}', title='ALASHI · demo task runtime',
+                map='Two headquarters · demo', bounds=dict(min_x=0, max_x=LAYOUT['width'], min_y=-LAYOUT['height'], max_y=0),
+                players=[dict(slot=s, label=f'Chief {"AB"[s]}', race='Degenie', controller='scripted demo', color=COLORS[s]) for s in range(2)],
+                points=[dict(kind='shop', x=route[-1][0], y=-route[-1][1], label=ROLES[i%4]+' · '+"AB"[i//4]) for i, route in enumerate(LAYOUT['routes'])],
                 types={'degenie':'Degenie'}, time_limit=0))
-            self.emit(None, 'cycle', 'Новое поручение: подготовить решение Chief')
+            self.emit(None, 'cycle', 'New assignment: prepare a recommendation for the Chief')
             self.record()
 
     def emit(self, side, kind, text, unit=None):
@@ -92,7 +92,7 @@ class World:
                     raise ValueError('verification_not_complete')
                 if not self.accepted[side]:
                     self.accepted[side] = True
-                    self.emit(side, 'accepted', f'Chief {"АБ"[side]} принял проверенный расчёт 39')
+                    self.emit(side, 'accepted', f'Chief {"AB"[side]} accepted the verified calculation of 39')
                     self.record()
                 return
             if op != 'assign':
@@ -107,7 +107,7 @@ class World:
                 raise ValueError('dependencies_not_complete')
             u['started'] = self.now()
             u['phase'] = 'order'
-            self.emit(side, 'assigned', f'{"АБ"[side]}{u["role"]+1}: {ROLES[u["role"]]}', uid)
+            self.emit(side, 'assigned', f'{"AB"[side]}{u["role"]+1}: {ROLES[u["role"]]}', uid)
             self.record()
 
     def tick(self):
@@ -137,7 +137,7 @@ class World:
                     u['yaw'] = 0
                 if phase != old and phase in ('work','return','done'):
                     if phase == 'return': u['result'] = RESULTS[u['role']]
-                    self.emit(u['owner'], phase, f'{"АБ"[u["owner"]]}{u["role"]+1}: '+dict(work='работает',return_='несёт отчёт',done='отчёт доставлен').get(phase, 'несёт отчёт'),u['id'])
+                    self.emit(u['owner'], phase, f'{"AB"[u["owner"]]}{u["role"]+1}: '+dict(work='working',return_='returning with report',done='report delivered').get(phase, 'returning with report'),u['id'])
             self.record()
 
     def record(self):
@@ -240,7 +240,7 @@ def make_server(world, port):
                 if p=='/demo/reset':world.reset();return self.reply({'cycle':world.cycle})
                 if p=='/demo/delay':
                     with world.lock:
-                        world.hold_until[1]=world.now()+5;world.emit(1,'latency','Chief Б думает 5 с; выданные поручения продолжаются')
+                        world.hold_until[1]=world.now()+5;world.emit(1,'latency','Chief B thinks for 5 s; assigned work continues')
                     return self.reply({'delay_seconds':5})
                 if s is None:return self.reply({'error':'unknown_player'},404)
                 if p.endswith('/observe'):return self.reply(world.observe(s))
