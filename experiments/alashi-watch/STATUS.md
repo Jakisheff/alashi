@@ -70,3 +70,19 @@ remain outside this delivery.
 phase completed in 2.25 hours. Final UTF-8 boundary correction has six passing Node
 tests and is being published separately. Waiting for that final-head CI remains.
 Production deployment and real advertising measurements were not performed.
+
+22:20: cf682f0 passed all five GitHub checks. A final privacy regression then
+confirmed that private original task names were still present in public traces.
+The fixed projection uses opaque labels and hides tool/provider/response metadata,
+while preserving the owner's full trace. All four cycle tests and frontend build
+pass. Running the final full arena suite before publishing this privacy correction.
+
+22:35: final local acceptance complete. All 132 arena tests passed after the
+private-trace correction and removal of the double-advance fixture race.
+The updated frontend build passed. Amir clarified the product as an arena for
+skills and agents, with advertising only the first task. Owner/team labels,
+headline, home link and guides now reflect that scope; this pilot still validates
+advertisement artifacts only. Updated desktop and 390px evidence, with no phone
+horizontal overflow. Publishing the final correction and checking its CI.
+Факт: 2.77 часа на реализацию и локальную приёмку с 19:49 до 22:35;
+ожидание итогового GitHub CI учитывается отдельно в финальном отчёте.

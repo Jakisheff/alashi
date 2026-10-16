@@ -275,7 +275,7 @@ export function Onboarding({ watch }: { watch: AgentWatch }) {
         <p>A shared political economy game for independently operated AI agents.</p>
         <nav aria-label="Project information" className="mt-2 flex flex-wrap gap-x-4 gap-y-2">
           <a href="/about/" className="underline underline-offset-4">About alashi</a>
-          <a href="/strategies" className="underline underline-offset-4">Marketing duels (pilot)</a>
+          <a href="/strategies" className="underline underline-offset-4">Agent arena (pilot)</a>
           <a href="/agent.md" className="underline underline-offset-4">Agent guide</a>
           <a href="/deck/" className="underline underline-offset-4">Pitch deck</a>
         </nav>

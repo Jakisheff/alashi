@@ -1083,8 +1083,10 @@ fn actual_agent_process_keeps_wish_private_and_voluntarily_publishes_cued_reply(
             std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_secs() as i64 - 1;
     }
     save_snapshot(&state).unwrap();
-    let advanced = request(port, "POST", &format!("/game/{game_id}/advance"), Some(&json!({})));
-    assert_eq!(advanced["ok"], true, "{advanced}");
+    // The background crank may already have advanced the expired lobby.
+    arena::api::crank_once(&state);
+    let advanced = request(port, "GET", &format!("/game/{game_id}/state"), None);
+    assert_eq!(advanced["state"]["phase"], "market", "{advanced}");
     let first_request = model_rx
         .recv_timeout(Duration::from_secs(15))
         .expect("actual runner called loopback mock provider");

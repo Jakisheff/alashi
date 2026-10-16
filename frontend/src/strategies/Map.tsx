@@ -69,8 +69,8 @@ export function StrategyMap({ runs, online }: { runs: Run[]; online: boolean }) 
     return () => { disposed = true; controller.abort(); cancelAnimationFrame(frame) }
   }, [runs.map(r => r.id).join(':'), replay])
   return <section className="strategy-map" aria-label="Whole map of Degenie tasks">
-    <div className="map-caption"><span>{runs.length ? runs.some(r => r.status === 'running') ? 'Live team tasks · staged movement' : 'Recorded team tasks · replay' : 'Waiting for two marketers'}</span><div><button onClick={() => { setPaused(false); seek.current = 0; setReplay(n => n + 1) }} disabled={!runs.length}>Replay events</button><button onClick={() => setPaused(p => !p)} disabled={!runs.length}>{paused ? "Play replay" : "Pause replay"}</button></div></div>
-    <canvas ref={canvas} width={1672} height={941} role="img" aria-label="Two marketer teams send their Degenie to tasks in parallel, use tools, and return reports." />
+    <div className="map-caption"><span>{runs.length ? runs.some(r => r.status === 'running') ? 'Live team tasks · staged movement' : 'Recorded team tasks · replay' : 'Waiting for two owners'}</span><div><button onClick={() => { setPaused(false); seek.current = 0; setReplay(n => n + 1) }} disabled={!runs.length}>Replay events</button><button onClick={() => setPaused(p => !p)} disabled={!runs.length}>{paused ? "Play replay" : "Pause replay"}</button></div></div>
+    <canvas ref={canvas} width={1672} height={941} role="img" aria-label="Two owner teams send their Degenie to tasks in parallel, use tools, and return reports." />
     <input ref={slider} className="replay-position" aria-label="Replay position in seconds" type="range" min="0" max="20" step="0.1" defaultValue="0" onChange={e => { seek.current = Number(e.target.value); setPaused(true) }} />
     {!online && <p role="status">Connection paused. Movement is frozen at the last confirmed data.</p>}{error && <p role="alert">{error}</p>}
   </section>

@@ -480,13 +480,59 @@ fn challenge_view(c: &Challenge, data: &StrategyState) -> Value {
     v
 }
 fn view(r: &Run, v: &Version, c: &Challenge, private: bool, reveal: bool) -> Value {
-    let mut calls = serde_json::to_value(&r.calls).unwrap();
-    if !private {
-        for call in calls.as_object_mut().unwrap().values_mut() {
-            call.as_object_mut().unwrap().remove("report");
+    let conceal = !private && !v.published;
+    let aliases: BTreeMap<_, _> = v
+        .content
+        .plan
+        .iter()
+        .enumerate()
+        .map(|(i, t)| (t.id.clone(), format!("task-{}", i + 1)))
+        .collect();
+    let task_id = |id: &str| {
+        if conceal {
+            aliases.get(id).cloned().unwrap_or_else(|| id.into())
+        } else {
+            id.into()
+        }
+    };
+    let plan: Vec<_> = v
+        .content
+        .plan
+        .iter()
+        .map(|t| {
+            json!({
+                "id":task_id(&t.id), "kind":t.kind,
+                "depends_on":t.depends_on.iter().map(|d|task_id(d)).collect::<Vec<_>>(),
+                "tool":if conceal {None} else {t.tool.clone()}
+            })
+        })
+        .collect();
+    let mut calls = serde_json::Map::new();
+    for (id, call) in &r.calls {
+        let mut out = serde_json::to_value(call).unwrap();
+        if !private {
+            out.as_object_mut().unwrap().remove("report");
+        }
+        if conceal {
+            for field in ["provider", "response_id", "report_hash"] {
+                out.as_object_mut().unwrap().remove(field);
+            }
+            out["task"] = json!(task_id(id));
+            out["model"] = json!(if call.source == "local_tool" {
+                "Private tool"
+            } else {
+                "Private agent"
+            });
+        }
+        calls.insert(task_id(id), out);
+    }
+    let mut events = r.events.clone();
+    if conceal {
+        for event in &mut events {
+            event.task = task_id(&event.task);
         }
     }
-    json!({"seat":r.seat,"id":r.id,"record":r.record,"owner":r.owner,"version":r.version,"challenge":r.challenge,"brief":c.content,"plan":v.content.plan.iter().map(|t|json!({"id":t.id,"kind":t.kind,"depends_on":t.depends_on,"tool":t.tool})).collect::<Vec<_>>(),"budget":r.budget,"known_tokens":r.known(),"reserved_tokens":r.held(),"unknown_usage":r.uncertain() || c.started_at.is_some_and(|t|now()>=t+c.content.round_seconds as i64) && r.calls.values().any(|c|c.usage.is_none()),"test_provider":r.test(),"usage_trust":"owner_submitted_provider_receipts","status":r.status,"calls":calls,"events":r.events,"result":if private || reveal {r.result.clone()} else {None},"review":if reveal {r.review.clone()} else {None},"reveal_pending":!reveal,"deadline_at":c.started_at.map(|t|t+c.content.round_seconds as i64),"created_at":r.created_at,"monetary_cost":null,"ad_performance":"not_measured"})
+    json!({"seat":r.seat,"id":r.id,"record":r.record,"owner":r.owner,"version":r.version,"challenge":r.challenge,"brief":c.content,"plan":plan,"budget":r.budget,"known_tokens":r.known(),"reserved_tokens":r.held(),"unknown_usage":r.uncertain() || c.started_at.is_some_and(|t|now()>=t+c.content.round_seconds as i64) && r.calls.values().any(|c|c.usage.is_none()),"test_provider":r.test(),"usage_trust":"owner_submitted_provider_receipts","status":r.status,"calls":calls,"events":events,"result":if private || reveal {r.result.clone()} else {None},"review":if reveal {r.review.clone()} else {None},"reveal_pending":!reveal,"deadline_at":c.started_at.map(|t|t+c.content.round_seconds as i64),"created_at":r.created_at,"monetary_cost":null,"ad_performance":"not_measured"})
 }
 pub fn public(state: &AppState) -> Value {
     let data = state
@@ -1118,12 +1164,17 @@ mod tests {
     }
     fn version(s: &AppState, i: usize, parent: Option<&str>, published: bool) -> String {
         let (a, t) = actor(i);
+        let mut work_plan = plan();
+        if !published {
+            work_plan[0]["kind"] = json!("tool");
+            work_plan[0]["tool"] = json!("confidential-tool");
+        }
         let v = create(
             s,
             &a,
             ORIGIN,
             &t,
-            &json!({"parent":parent,"title":format!("Team {i}"),"plan":plan(),"change":if parent.is_some(){"Shorten the work plan"}else{""},"published":published}),
+            &json!({"parent":parent,"title":format!("Team {i}"),"plan":work_plan,"change":if parent.is_some(){"Shorten the work plan"}else{""},"published":published}),
         );
         assert_eq!(v["ok"], true, "{v}");
         v["version"]["id"].as_str().unwrap().into()
@@ -1199,6 +1250,28 @@ mod tests {
             .unwrap();
         assert!(r["result"].is_null());
         assert!(r["calls"]["deliver"].get("report").is_none());
+        assert!(
+            !r["plan"].to_string().contains("research"),
+            "private task names leaked in the public execution trace"
+        );
+        assert!(
+            r["calls"].get("research").is_none(),
+            "private call keys must be opaque"
+        );
+        assert!(!r.to_string().contains("confidential-tool"));
+        assert!(r["calls"]["task-1"].get("provider").is_none());
+        assert!(r["calls"]["task-1"].get("response_id").is_none());
+        assert_eq!(r["calls"]["task-1"]["model"], "Private agent");
+        let (private_record, private_token) = actor(1);
+        let own = owned(&s, &private_record, &private_token);
+        let own_run = own["runs"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|r| r["id"] == first)
+            .unwrap();
+        assert!(own_run["calls"].get("research").is_some());
+        assert_eq!(own_run["plan"][0]["tool"], "confidential-tool");
         assert!(snapshot["versions"]
             .as_array()
             .unwrap()

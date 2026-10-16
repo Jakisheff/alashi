@@ -3,7 +3,10 @@
 The scope changed on 16 October 2026 after Amir clarified the product: two
 marketers use their own tools and agents on the same advertising task, with a
 GeoGuessr-style timed duel. The earlier sale-workflow implementation was removed
-before publication. The first shared task is an English ALASHI ad for agent owners.
+before publication. The first shared task is an English ALASHI ad for agent owners. Amir subsequently
+clarified that ALASHI is an arena for testing skills and agents across tasks.
+The UI uses owner teams and labels advertising as the first challenge. Only the
+advertising result contract and acceptance checks are implemented in this pilot.
 
 ## Observed
 
@@ -25,7 +28,11 @@ public runs. A participant could not review its own ad. Format checks alone did
 not produce a token leader. An interrupted report resumed from the private
 journal without repeating the model request. Unknown usage remained unknown;
 known tokens from failed answers remained charged. Snapshot failure rolled back
-writes. Original work plans could remain private; derived plans required publication.
+writes. Original instructions and tool bindings could remain private; derived
+plans required publication. A private-trace regression exposed task names before
+the fix. Public private-original traces now use opaque task labels and hide tool
+identifiers, provider/model configuration and response identifiers. Types,
+dependency shape, timing and costs stay observable; owners retain the full trace.
 
 After stopping the isolated review server, OFFLINE appeared and playback held
 1.500 seconds across two observations despite an active Play control. Restarting
@@ -61,7 +68,8 @@ Two existing test failures were reproduced during the full arena run. A mock
 socket read returned WouldBlock; the test helper now explicitly uses blocking
 reads and a two-second timeout. A five-second lobby expired before the real test
 agent joined; its fixture now starts from observed joins and explicitly advances
-the lobby. Production game timing and production chat behavior were not changed.
+the lobby. The fixture accepts a transition already performed by its background
+crank instead of issuing a second advance. Production game timing and production chat behavior were not changed.
 
 The [core implementation CI](https://github.com/Jakisheff/alashi/actions/runs/38936010694)
 passed all five jobs on ad9a1d0, including fresh SBF execution, program host

@@ -221,3 +221,19 @@ failed before the fix and passed afterward (six Node tests). Oversized report
 content is discarded while its known usage is retained. Publishing this small
 runner correction and the completed acceptance record; final-head CI follows.
 Факт: 2,25 часа на реализацию, локальную приёмку и первый полный GitHub CI.
+
+22:20: final review found a mismatch in private-original semantics. A new assertion
+failed on leaked task names; after the fix, all four cycle tests passed. Anonymous
+traces retain only opaque task identities, kinds, dependencies, timing and usage.
+Owners retain original names and tool bindings. Published versions remain reusable.
+The UI and guide now state this boundary. Full arena verification follows.
+
+22:35: final local acceptance complete. All 132 arena tests passed after the
+private-trace correction and removal of the double-advance fixture race.
+The updated frontend build passed. Amir clarified the product as an arena for
+skills and agents, with advertising only the first task. Owner/team labels,
+headline, home link and guides now reflect that scope; this pilot still validates
+advertisement artifacts only. Updated desktop and 390px evidence, with no phone
+horizontal overflow. Publishing the final correction and checking its CI.
+Факт: 2.77 часа на реализацию и локальную приёмку с 19:49 до 22:35;
+ожидание итогового GitHub CI учитывается отдельно в финальном отчёте.
