@@ -1,0 +1,1321 @@
+{
+  "schema": "alashi.work-simulation.TEST.v1",
+  "test_data": true,
+  "generated_at": "2026-10-18T16:23:11.566Z",
+  "title": "TEST: доступ к книге после отмены подписки",
+  "execution": "Actual local tool subprocesses through the existing alashi runCycle scheduler; isolated TEST API adapter.",
+  "real_people_tested": 0,
+  "external_model_calls": 0,
+  "company_data": false,
+  "human_cost": "not_measured",
+  "sources": {
+    "case.mjs": "f555412ae3498998fa342c3b4235821d1d9a8b0213108765632b2f965af48dec",
+    "worker.mjs": "93d678fc98e50485a47b1b3d9da9f9c3d5a2b4a5bf21811838997afbd894f7c1",
+    "grade.mjs": "b8ba97f1424078058c5faae6de02a9624c587aefff99ce05a6991018ac762ff4",
+    "experiment.mjs": "fe05756a41ceea8f9b23b306a9a1679349ad7a223868bbb555712074e7af4679",
+    "../agent-bootstrap/strategy-run.mjs": "114d10ea3c81437754e4415445ec28b643df28f81349e11b5c23a980645a794c"
+  },
+  "runs": [
+    {
+      "id": "A",
+      "competence": false,
+      "context": false,
+      "status": "completed",
+      "execution": "scripted_TEST_tools",
+      "plan": [
+        {
+          "id": "requirements",
+          "depends_on": [],
+          "kind": "tool",
+          "tool": "test_requirements",
+          "instruction": "Execute the labelled local TEST task."
+        },
+        {
+          "id": "implement",
+          "depends_on": [
+            "requirements"
+          ],
+          "kind": "tool",
+          "tool": "test_implement",
+          "instruction": "Execute the labelled local TEST task."
+        },
+        {
+          "id": "deliver",
+          "depends_on": [
+            "implement"
+          ],
+          "kind": "tool",
+          "tool": "test_deliver",
+          "instruction": "Execute the labelled local TEST task."
+        }
+      ],
+      "events": [
+        {
+          "task": "requirements",
+          "status": "started",
+          "at_ms": 56
+        },
+        {
+          "task": "requirements",
+          "status": "running",
+          "known_tokens": 0,
+          "at_ms": 283
+        },
+        {
+          "task": "implement",
+          "status": "started",
+          "at_ms": 329
+        },
+        {
+          "task": "implement",
+          "status": "running",
+          "known_tokens": 0,
+          "at_ms": 795
+        },
+        {
+          "task": "deliver",
+          "status": "started",
+          "at_ms": 839
+        },
+        {
+          "task": "deliver",
+          "status": "running",
+          "known_tokens": 0,
+          "at_ms": 1130
+        }
+      ],
+      "tool_calls": 3,
+      "model_calls": 0,
+      "model_tokens": 0,
+      "journal_resume_repeated_calls": 0,
+      "wall_ms": 1148,
+      "policy": {
+        "response_field": "allowed",
+        "validate_user": false,
+        "validate_state": false,
+        "retain_ownership": false,
+        "honor_grace_window": false
+      },
+      "checks": [
+        {
+          "id": "active",
+          "title": "Активная подписка",
+          "category": "feature",
+          "held_out": false,
+          "passed": true,
+          "expected": true,
+          "observed": true,
+          "response": {
+            "status": 200,
+            "allowed": true
+          }
+        },
+        {
+          "id": "cancelled",
+          "title": "Отмена без отдельной покупки",
+          "category": "feature",
+          "held_out": false,
+          "passed": true,
+          "expected": false,
+          "observed": false,
+          "response": {
+            "status": 200,
+            "allowed": false
+          }
+        },
+        {
+          "id": "expired",
+          "title": "Истечение без отдельной покупки",
+          "category": "feature",
+          "held_out": false,
+          "passed": true,
+          "expected": false,
+          "observed": false,
+          "response": {
+            "status": 200,
+            "allowed": false
+          }
+        },
+        {
+          "id": "owned",
+          "title": "Покупка сохраняется после отмены",
+          "category": "context",
+          "held_out": false,
+          "passed": false,
+          "expected": true,
+          "observed": false,
+          "response": {
+            "status": 200,
+            "allowed": false
+          }
+        },
+        {
+          "id": "delisted",
+          "title": "Купленная книга удалена из каталога",
+          "category": "context",
+          "held_out": false,
+          "passed": false,
+          "expected": true,
+          "observed": false,
+          "response": {
+            "status": 200,
+            "allowed": false
+          }
+        },
+        {
+          "id": "grace",
+          "title": "Подтверждённый льготный период",
+          "category": "context",
+          "held_out": false,
+          "passed": false,
+          "expected": true,
+          "observed": false,
+          "response": {
+            "status": 200,
+            "allowed": false
+          }
+        },
+        {
+          "id": "legacy",
+          "title": "Старый клиент читает canRead",
+          "category": "competence",
+          "held_out": false,
+          "passed": false,
+          "expected": "legacy",
+          "observed": false,
+          "response": {
+            "status": 200,
+            "allowed": true
+          }
+        },
+        {
+          "id": "missing-user",
+          "title": "Запрос без пользователя",
+          "category": "competence",
+          "held_out": false,
+          "passed": false,
+          "expected": 400,
+          "observed": 200,
+          "response": {
+            "status": 200,
+            "allowed": true
+          }
+        },
+        {
+          "id": "unknown-state",
+          "title": "Неизвестное состояние подписки",
+          "category": "competence",
+          "held_out": false,
+          "passed": false,
+          "expected": 400,
+          "observed": 200,
+          "response": {
+            "status": 200,
+            "allowed": false
+          }
+        },
+        {
+          "id": "new-reader",
+          "title": "Другой активный читатель",
+          "category": "feature",
+          "held_out": true,
+          "passed": true,
+          "expected": true,
+          "observed": true,
+          "response": {
+            "status": 200,
+            "allowed": true
+          }
+        },
+        {
+          "id": "gift",
+          "title": "Подаренная книга после отмены",
+          "category": "context",
+          "held_out": true,
+          "passed": false,
+          "expected": true,
+          "observed": false,
+          "response": {
+            "status": 200,
+            "allowed": false
+          }
+        },
+        {
+          "id": "blank-user",
+          "title": "Пустой идентификатор пользователя",
+          "category": "competence",
+          "held_out": true,
+          "passed": false,
+          "expected": 400,
+          "observed": 200,
+          "response": {
+            "status": 200,
+            "allowed": true
+          }
+        }
+      ],
+      "passed": 4,
+      "total": 12,
+      "held_out_passed": 1,
+      "held_out_total": 3,
+      "task_reports": {
+        "requirements": {
+          "material": {
+            "label": "SYNTHETIC TEST DATA. Fictional library; no company or employee data.",
+            "task": "Добавить решение о доступе к книге. Активная подписка даёт доступ; отменённая или истёкшая сама по себе доступа не даёт. Сохранить старого клиента.",
+            "business_rules": [],
+            "expert_note": null
+          }
+        },
+        "implement": {
+          "policy": {
+            "response_field": "allowed",
+            "validate_user": false,
+            "validate_state": false,
+            "retain_ownership": false,
+            "honor_grace_window": false
+          }
+        },
+        "deliver": {
+          "policy": {
+            "response_field": "allowed",
+            "validate_user": false,
+            "validate_state": false,
+            "retain_ownership": false,
+            "honor_grace_window": false
+          }
+        }
+      }
+    },
+    {
+      "id": "B",
+      "competence": false,
+      "context": true,
+      "status": "completed",
+      "execution": "scripted_TEST_tools",
+      "plan": [
+        {
+          "id": "requirements",
+          "depends_on": [],
+          "kind": "tool",
+          "tool": "test_requirements",
+          "instruction": "Execute the labelled local TEST task."
+        },
+        {
+          "id": "implement",
+          "depends_on": [
+            "requirements"
+          ],
+          "kind": "tool",
+          "tool": "test_implement",
+          "instruction": "Execute the labelled local TEST task."
+        },
+        {
+          "id": "deliver",
+          "depends_on": [
+            "implement"
+          ],
+          "kind": "tool",
+          "tool": "test_deliver",
+          "instruction": "Execute the labelled local TEST task."
+        }
+      ],
+      "events": [
+        {
+          "task": "requirements",
+          "status": "started",
+          "at_ms": 43
+        },
+        {
+          "task": "requirements",
+          "status": "running",
+          "known_tokens": 0,
+          "at_ms": 372
+        },
+        {
+          "task": "implement",
+          "status": "started",
+          "at_ms": 419
+        },
+        {
+          "task": "implement",
+          "status": "running",
+          "known_tokens": 0,
+          "at_ms": 805
+        },
+        {
+          "task": "deliver",
+          "status": "started",
+          "at_ms": 845
+        },
+        {
+          "task": "deliver",
+          "status": "running",
+          "known_tokens": 0,
+          "at_ms": 1165
+        }
+      ],
+      "tool_calls": 3,
+      "model_calls": 0,
+      "model_tokens": 0,
+      "journal_resume_repeated_calls": 0,
+      "wall_ms": 1167,
+      "policy": {
+        "response_field": "allowed",
+        "validate_user": false,
+        "validate_state": false,
+        "retain_ownership": true,
+        "honor_grace_window": true
+      },
+      "checks": [
+        {
+          "id": "active",
+          "title": "Активная подписка",
+          "category": "feature",
+          "held_out": false,
+          "passed": true,
+          "expected": true,
+          "observed": true,
+          "response": {
+            "status": 200,
+            "allowed": true
+          }
+        },
+        {
+          "id": "cancelled",
+          "title": "Отмена без отдельной покупки",
+          "category": "feature",
+          "held_out": false,
+          "passed": true,
+          "expected": false,
+          "observed": false,
+          "response": {
+            "status": 200,
+            "allowed": false
+          }
+        },
+        {
+          "id": "expired",
+          "title": "Истечение без отдельной покупки",
+          "category": "feature",
+          "held_out": false,
+          "passed": true,
+          "expected": false,
+          "observed": false,
+          "response": {
+            "status": 200,
+            "allowed": false
+          }
+        },
+        {
+          "id": "owned",
+          "title": "Покупка сохраняется после отмены",
+          "category": "context",
+          "held_out": false,
+          "passed": true,
+          "expected": true,
+          "observed": true,
+          "response": {
+            "status": 200,
+            "allowed": true
+          }
+        },
+        {
+          "id": "delisted",
+          "title": "Купленная книга удалена из каталога",
+          "category": "context",
+          "held_out": false,
+          "passed": true,
+          "expected": true,
+          "observed": true,
+          "response": {
+            "status": 200,
+            "allowed": true
+          }
+        },
+        {
+          "id": "grace",
+          "title": "Подтверждённый льготный период",
+          "category": "context",
+          "held_out": false,
+          "passed": true,
+          "expected": true,
+          "observed": true,
+          "response": {
+            "status": 200,
+            "allowed": true
+          }
+        },
+        {
+          "id": "legacy",
+          "title": "Старый клиент читает canRead",
+          "category": "competence",
+          "held_out": false,
+          "passed": false,
+          "expected": "legacy",
+          "observed": false,
+          "response": {
+            "status": 200,
+            "allowed": true
+          }
+        },
+        {
+          "id": "missing-user",
+          "title": "Запрос без пользователя",
+          "category": "competence",
+          "held_out": false,
+          "passed": false,
+          "expected": 400,
+          "observed": 200,
+          "response": {
+            "status": 200,
+            "allowed": true
+          }
+        },
+        {
+          "id": "unknown-state",
+          "title": "Неизвестное состояние подписки",
+          "category": "competence",
+          "held_out": false,
+          "passed": false,
+          "expected": 400,
+          "observed": 200,
+          "response": {
+            "status": 200,
+            "allowed": false
+          }
+        },
+        {
+          "id": "new-reader",
+          "title": "Другой активный читатель",
+          "category": "feature",
+          "held_out": true,
+          "passed": true,
+          "expected": true,
+          "observed": true,
+          "response": {
+            "status": 200,
+            "allowed": true
+          }
+        },
+        {
+          "id": "gift",
+          "title": "Подаренная книга после отмены",
+          "category": "context",
+          "held_out": true,
+          "passed": true,
+          "expected": true,
+          "observed": true,
+          "response": {
+            "status": 200,
+            "allowed": true
+          }
+        },
+        {
+          "id": "blank-user",
+          "title": "Пустой идентификатор пользователя",
+          "category": "competence",
+          "held_out": true,
+          "passed": false,
+          "expected": 400,
+          "observed": 200,
+          "response": {
+            "status": 200,
+            "allowed": true
+          }
+        }
+      ],
+      "passed": 8,
+      "total": 12,
+      "held_out_passed": 2,
+      "held_out_total": 3,
+      "task_reports": {
+        "requirements": {
+          "material": {
+            "label": "SYNTHETIC TEST DATA. Fictional library; no company or employee data.",
+            "task": "Добавить решение о доступе к книге. Активная подписка даёт доступ; отменённая или истёкшая сама по себе доступа не даёт. Сохранить старого клиента.",
+            "business_rules": [
+              "retain_ownership",
+              "honor_grace_window"
+            ],
+            "expert_note": "Отдельно купленная или подаренная книга остаётся у читателя после отмены подписки и удаления книги из каталога. Подтверждённый льготный период сохраняет доступ до своего окончания."
+          }
+        },
+        "implement": {
+          "policy": {
+            "response_field": "allowed",
+            "validate_user": false,
+            "validate_state": false,
+            "retain_ownership": true,
+            "honor_grace_window": true
+          }
+        },
+        "deliver": {
+          "policy": {
+            "response_field": "allowed",
+            "validate_user": false,
+            "validate_state": false,
+            "retain_ownership": true,
+            "honor_grace_window": true
+          }
+        }
+      }
+    },
+    {
+      "id": "C",
+      "competence": true,
+      "context": false,
+      "status": "completed",
+      "execution": "scripted_TEST_tools",
+      "plan": [
+        {
+          "id": "requirements",
+          "depends_on": [],
+          "kind": "tool",
+          "tool": "test_requirements",
+          "instruction": "Execute the labelled local TEST task."
+        },
+        {
+          "id": "client",
+          "depends_on": [],
+          "kind": "tool",
+          "tool": "test_client",
+          "instruction": "Execute the labelled local TEST task."
+        },
+        {
+          "id": "implement",
+          "depends_on": [
+            "requirements"
+          ],
+          "kind": "tool",
+          "tool": "test_implement",
+          "instruction": "Execute the labelled local TEST task."
+        },
+        {
+          "id": "review",
+          "depends_on": [
+            "client",
+            "implement"
+          ],
+          "kind": "tool",
+          "tool": "test_review",
+          "instruction": "Execute the labelled local TEST task."
+        },
+        {
+          "id": "deliver",
+          "depends_on": [
+            "review"
+          ],
+          "kind": "tool",
+          "tool": "test_deliver",
+          "instruction": "Execute the labelled local TEST task."
+        }
+      ],
+      "events": [
+        {
+          "task": "requirements",
+          "status": "started",
+          "at_ms": 90
+        },
+        {
+          "task": "client",
+          "status": "started",
+          "at_ms": 158
+        },
+        {
+          "task": "requirements",
+          "status": "running",
+          "known_tokens": 0,
+          "at_ms": 782
+        },
+        {
+          "task": "implement",
+          "status": "started",
+          "at_ms": 833
+        },
+        {
+          "task": "client",
+          "status": "running",
+          "known_tokens": 0,
+          "at_ms": 864
+        },
+        {
+          "task": "implement",
+          "status": "running",
+          "known_tokens": 0,
+          "at_ms": 1470
+        },
+        {
+          "task": "review",
+          "status": "started",
+          "at_ms": 1513
+        },
+        {
+          "task": "review",
+          "status": "running",
+          "known_tokens": 0,
+          "at_ms": 1966
+        },
+        {
+          "task": "deliver",
+          "status": "started",
+          "at_ms": 2009
+        },
+        {
+          "task": "deliver",
+          "status": "running",
+          "known_tokens": 0,
+          "at_ms": 2452
+        }
+      ],
+      "tool_calls": 5,
+      "model_calls": 0,
+      "model_tokens": 0,
+      "journal_resume_repeated_calls": 0,
+      "wall_ms": 2459,
+      "policy": {
+        "response_field": "canRead",
+        "validate_user": true,
+        "validate_state": true,
+        "retain_ownership": false,
+        "honor_grace_window": false
+      },
+      "checks": [
+        {
+          "id": "active",
+          "title": "Активная подписка",
+          "category": "feature",
+          "held_out": false,
+          "passed": true,
+          "expected": true,
+          "observed": true,
+          "response": {
+            "status": 200,
+            "canRead": true
+          }
+        },
+        {
+          "id": "cancelled",
+          "title": "Отмена без отдельной покупки",
+          "category": "feature",
+          "held_out": false,
+          "passed": true,
+          "expected": false,
+          "observed": false,
+          "response": {
+            "status": 200,
+            "canRead": false
+          }
+        },
+        {
+          "id": "expired",
+          "title": "Истечение без отдельной покупки",
+          "category": "feature",
+          "held_out": false,
+          "passed": true,
+          "expected": false,
+          "observed": false,
+          "response": {
+            "status": 200,
+            "canRead": false
+          }
+        },
+        {
+          "id": "owned",
+          "title": "Покупка сохраняется после отмены",
+          "category": "context",
+          "held_out": false,
+          "passed": false,
+          "expected": true,
+          "observed": false,
+          "response": {
+            "status": 200,
+            "canRead": false
+          }
+        },
+        {
+          "id": "delisted",
+          "title": "Купленная книга удалена из каталога",
+          "category": "context",
+          "held_out": false,
+          "passed": false,
+          "expected": true,
+          "observed": false,
+          "response": {
+            "status": 200,
+            "canRead": false
+          }
+        },
+        {
+          "id": "grace",
+          "title": "Подтверждённый льготный период",
+          "category": "context",
+          "held_out": false,
+          "passed": false,
+          "expected": true,
+          "observed": false,
+          "response": {
+            "status": 200,
+            "canRead": false
+          }
+        },
+        {
+          "id": "legacy",
+          "title": "Старый клиент читает canRead",
+          "category": "competence",
+          "held_out": false,
+          "passed": true,
+          "expected": "legacy",
+          "observed": true,
+          "response": {
+            "status": 200,
+            "canRead": true
+          }
+        },
+        {
+          "id": "missing-user",
+          "title": "Запрос без пользователя",
+          "category": "competence",
+          "held_out": false,
+          "passed": true,
+          "expected": 400,
+          "observed": 400,
+          "response": {
+            "status": 400,
+            "error": "invalid_user"
+          }
+        },
+        {
+          "id": "unknown-state",
+          "title": "Неизвестное состояние подписки",
+          "category": "competence",
+          "held_out": false,
+          "passed": true,
+          "expected": 400,
+          "observed": 400,
+          "response": {
+            "status": 400,
+            "error": "invalid_subscription"
+          }
+        },
+        {
+          "id": "new-reader",
+          "title": "Другой активный читатель",
+          "category": "feature",
+          "held_out": true,
+          "passed": true,
+          "expected": true,
+          "observed": true,
+          "response": {
+            "status": 200,
+            "canRead": true
+          }
+        },
+        {
+          "id": "gift",
+          "title": "Подаренная книга после отмены",
+          "category": "context",
+          "held_out": true,
+          "passed": false,
+          "expected": true,
+          "observed": false,
+          "response": {
+            "status": 200,
+            "canRead": false
+          }
+        },
+        {
+          "id": "blank-user",
+          "title": "Пустой идентификатор пользователя",
+          "category": "competence",
+          "held_out": true,
+          "passed": true,
+          "expected": 400,
+          "observed": 400,
+          "response": {
+            "status": 400,
+            "error": "invalid_user"
+          }
+        }
+      ],
+      "passed": 8,
+      "total": 12,
+      "held_out_passed": 2,
+      "held_out_total": 3,
+      "task_reports": {
+        "requirements": {
+          "material": {
+            "label": "SYNTHETIC TEST DATA. Fictional library; no company or employee data.",
+            "task": "Добавить решение о доступе к книге. Активная подписка даёт доступ; отменённая или истёкшая сама по себе доступа не даёт. Сохранить старого клиента.",
+            "business_rules": [],
+            "expert_note": null
+          }
+        },
+        "client": {
+          "contract": {
+            "response_field": "canRead",
+            "user": "nonempty_string",
+            "states": [
+              "active",
+              "cancelled",
+              "expired"
+            ]
+          }
+        },
+        "implement": {
+          "policy": {
+            "response_field": "allowed",
+            "validate_user": false,
+            "validate_state": false,
+            "retain_ownership": false,
+            "honor_grace_window": false
+          }
+        },
+        "review": {
+          "policy": {
+            "response_field": "canRead",
+            "validate_user": true,
+            "validate_state": true,
+            "retain_ownership": false,
+            "honor_grace_window": false
+          },
+          "detected": [
+            "legacy_response",
+            "missing_user",
+            "unknown_state"
+          ]
+        },
+        "deliver": {
+          "policy": {
+            "response_field": "canRead",
+            "validate_user": true,
+            "validate_state": true,
+            "retain_ownership": false,
+            "honor_grace_window": false
+          }
+        }
+      }
+    },
+    {
+      "id": "D",
+      "competence": true,
+      "context": true,
+      "status": "completed",
+      "execution": "scripted_TEST_tools",
+      "plan": [
+        {
+          "id": "requirements",
+          "depends_on": [],
+          "kind": "tool",
+          "tool": "test_requirements",
+          "instruction": "Execute the labelled local TEST task."
+        },
+        {
+          "id": "client",
+          "depends_on": [],
+          "kind": "tool",
+          "tool": "test_client",
+          "instruction": "Execute the labelled local TEST task."
+        },
+        {
+          "id": "implement",
+          "depends_on": [
+            "requirements"
+          ],
+          "kind": "tool",
+          "tool": "test_implement",
+          "instruction": "Execute the labelled local TEST task."
+        },
+        {
+          "id": "review",
+          "depends_on": [
+            "client",
+            "implement"
+          ],
+          "kind": "tool",
+          "tool": "test_review",
+          "instruction": "Execute the labelled local TEST task."
+        },
+        {
+          "id": "deliver",
+          "depends_on": [
+            "review"
+          ],
+          "kind": "tool",
+          "tool": "test_deliver",
+          "instruction": "Execute the labelled local TEST task."
+        }
+      ],
+      "events": [
+        {
+          "task": "requirements",
+          "status": "started",
+          "at_ms": 93
+        },
+        {
+          "task": "client",
+          "status": "started",
+          "at_ms": 124
+        },
+        {
+          "task": "requirements",
+          "status": "running",
+          "known_tokens": 0,
+          "at_ms": 582
+        },
+        {
+          "task": "implement",
+          "status": "started",
+          "at_ms": 625
+        },
+        {
+          "task": "client",
+          "status": "running",
+          "known_tokens": 0,
+          "at_ms": 649
+        },
+        {
+          "task": "implement",
+          "status": "running",
+          "known_tokens": 0,
+          "at_ms": 1164
+        },
+        {
+          "task": "review",
+          "status": "started",
+          "at_ms": 1213
+        },
+        {
+          "task": "review",
+          "status": "running",
+          "known_tokens": 0,
+          "at_ms": 1611
+        },
+        {
+          "task": "deliver",
+          "status": "started",
+          "at_ms": 1654
+        },
+        {
+          "task": "deliver",
+          "status": "running",
+          "known_tokens": 0,
+          "at_ms": 2157
+        }
+      ],
+      "tool_calls": 5,
+      "model_calls": 0,
+      "model_tokens": 0,
+      "journal_resume_repeated_calls": 0,
+      "wall_ms": 2161,
+      "policy": {
+        "response_field": "canRead",
+        "validate_user": true,
+        "validate_state": true,
+        "retain_ownership": true,
+        "honor_grace_window": true
+      },
+      "checks": [
+        {
+          "id": "active",
+          "title": "Активная подписка",
+          "category": "feature",
+          "held_out": false,
+          "passed": true,
+          "expected": true,
+          "observed": true,
+          "response": {
+            "status": 200,
+            "canRead": true
+          }
+        },
+        {
+          "id": "cancelled",
+          "title": "Отмена без отдельной покупки",
+          "category": "feature",
+          "held_out": false,
+          "passed": true,
+          "expected": false,
+          "observed": false,
+          "response": {
+            "status": 200,
+            "canRead": false
+          }
+        },
+        {
+          "id": "expired",
+          "title": "Истечение без отдельной покупки",
+          "category": "feature",
+          "held_out": false,
+          "passed": true,
+          "expected": false,
+          "observed": false,
+          "response": {
+            "status": 200,
+            "canRead": false
+          }
+        },
+        {
+          "id": "owned",
+          "title": "Покупка сохраняется после отмены",
+          "category": "context",
+          "held_out": false,
+          "passed": true,
+          "expected": true,
+          "observed": true,
+          "response": {
+            "status": 200,
+            "canRead": true
+          }
+        },
+        {
+          "id": "delisted",
+          "title": "Купленная книга удалена из каталога",
+          "category": "context",
+          "held_out": false,
+          "passed": true,
+          "expected": true,
+          "observed": true,
+          "response": {
+            "status": 200,
+            "canRead": true
+          }
+        },
+        {
+          "id": "grace",
+          "title": "Подтверждённый льготный период",
+          "category": "context",
+          "held_out": false,
+          "passed": true,
+          "expected": true,
+          "observed": true,
+          "response": {
+            "status": 200,
+            "canRead": true
+          }
+        },
+        {
+          "id": "legacy",
+          "title": "Старый клиент читает canRead",
+          "category": "competence",
+          "held_out": false,
+          "passed": true,
+          "expected": "legacy",
+          "observed": true,
+          "response": {
+            "status": 200,
+            "canRead": true
+          }
+        },
+        {
+          "id": "missing-user",
+          "title": "Запрос без пользователя",
+          "category": "competence",
+          "held_out": false,
+          "passed": true,
+          "expected": 400,
+          "observed": 400,
+          "response": {
+            "status": 400,
+            "error": "invalid_user"
+          }
+        },
+        {
+          "id": "unknown-state",
+          "title": "Неизвестное состояние подписки",
+          "category": "competence",
+          "held_out": false,
+          "passed": true,
+          "expected": 400,
+          "observed": 400,
+          "response": {
+            "status": 400,
+            "error": "invalid_subscription"
+          }
+        },
+        {
+          "id": "new-reader",
+          "title": "Другой активный читатель",
+          "category": "feature",
+          "held_out": true,
+          "passed": true,
+          "expected": true,
+          "observed": true,
+          "response": {
+            "status": 200,
+            "canRead": true
+          }
+        },
+        {
+          "id": "gift",
+          "title": "Подаренная книга после отмены",
+          "category": "context",
+          "held_out": true,
+          "passed": true,
+          "expected": true,
+          "observed": true,
+          "response": {
+            "status": 200,
+            "canRead": true
+          }
+        },
+        {
+          "id": "blank-user",
+          "title": "Пустой идентификатор пользователя",
+          "category": "competence",
+          "held_out": true,
+          "passed": true,
+          "expected": 400,
+          "observed": 400,
+          "response": {
+            "status": 400,
+            "error": "invalid_user"
+          }
+        }
+      ],
+      "passed": 12,
+      "total": 12,
+      "held_out_passed": 3,
+      "held_out_total": 3,
+      "task_reports": {
+        "requirements": {
+          "material": {
+            "label": "SYNTHETIC TEST DATA. Fictional library; no company or employee data.",
+            "task": "Добавить решение о доступе к книге. Активная подписка даёт доступ; отменённая или истёкшая сама по себе доступа не даёт. Сохранить старого клиента.",
+            "business_rules": [
+              "retain_ownership",
+              "honor_grace_window"
+            ],
+            "expert_note": "Отдельно купленная или подаренная книга остаётся у читателя после отмены подписки и удаления книги из каталога. Подтверждённый льготный период сохраняет доступ до своего окончания."
+          }
+        },
+        "client": {
+          "contract": {
+            "response_field": "canRead",
+            "user": "nonempty_string",
+            "states": [
+              "active",
+              "cancelled",
+              "expired"
+            ]
+          }
+        },
+        "implement": {
+          "policy": {
+            "response_field": "allowed",
+            "validate_user": false,
+            "validate_state": false,
+            "retain_ownership": true,
+            "honor_grace_window": true
+          }
+        },
+        "review": {
+          "policy": {
+            "response_field": "canRead",
+            "validate_user": true,
+            "validate_state": true,
+            "retain_ownership": true,
+            "honor_grace_window": true
+          },
+          "detected": [
+            "legacy_response",
+            "missing_user",
+            "unknown_state"
+          ]
+        },
+        "deliver": {
+          "policy": {
+            "response_field": "canRead",
+            "validate_user": true,
+            "validate_state": true,
+            "retain_ownership": true,
+            "honor_grace_window": true
+          }
+        }
+      }
+    }
+  ],
+  "profile": {
+    "status": "test_hypothesis",
+    "claim": "В TEST-кейсе полезна компетенция проверки API-контрактов и входных данных.",
+    "competence_gains": [
+      "legacy",
+      "missing-user",
+      "unknown-state",
+      "blank-user"
+    ],
+    "context_gains": [
+      "owned",
+      "delisted",
+      "grace",
+      "gift"
+    ],
+    "regressions": [],
+    "skills": [
+      "Проверять изменение на старом клиенте.",
+      "Проверять недопустимые входные данные.",
+      "Передавать воспроизводимые контрактные проверки следующему участнику."
+    ],
+    "context_action": "Передать правила владения книгами и льготного периода; проверить применение на новых случаях.",
+    "hiring_decision": "Не установлено, нужен ли найм: сравнить обучение действующей команды с пробной работой кандидата и учесть затраты людей.",
+    "evidence": [
+      "C против A и D против B: вклад проверки контракта.",
+      "B против A и D против C: вклад бизнес-контекста."
+    ],
+    "human_transfer": "not_validated",
+    "human_cost": "not_measured"
+  },
+  "knowledge_probe": {
+    "test_data": true,
+    "mechanism": "Deterministic mapping learned from labelled action examples; not a neural model or human experiment.",
+    "demonstrations": [
+      {
+        "id": "demo-1",
+        "signal": "confirmed_promise",
+        "decision": "allow"
+      },
+      {
+        "id": "demo-2",
+        "signal": "expired_trial",
+        "decision": "deny"
+      },
+      {
+        "id": "demo-3",
+        "signal": "confirmed_promise",
+        "decision": "allow"
+      },
+      {
+        "id": "demo-4",
+        "signal": "expired_trial",
+        "decision": "deny"
+      }
+    ],
+    "cases": [
+      {
+        "id": "new-reader-17",
+        "signal": "confirmed_promise",
+        "expected": "allow",
+        "words_only": "unknown",
+        "with_examples": "allow"
+      },
+      {
+        "id": "new-reader-28",
+        "signal": "expired_trial",
+        "expected": "deny",
+        "words_only": "unknown",
+        "with_examples": "deny"
+      },
+      {
+        "id": "new-reader-39",
+        "signal": "conflicting_promises",
+        "expected": null,
+        "words_only": "unknown",
+        "with_examples": "unknown"
+      }
+    ],
+    "human_reference": "not_collected",
+    "hypothesis_status": "not_validated",
+    "owner_hypothesis": "Неявное знание человека и команды может оказаться биологическим рвом: часть знания может не передаваться агентам ни словесно, ни через примеры.",
+    "limit": "Неполученное объяснение и остаток неизвестного не доказывают биологическую исключительность. Здесь нет данных людей, эмоционального интеллекта или коллективного бессознательного."
+  }
+}

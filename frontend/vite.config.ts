@@ -9,18 +9,28 @@ const strategyTarget = process.env.ALASHI_STRATEGY_API_TARGET
 if (strategyTarget && !/^http:\/\/(127\.0\.0\.1|localhost):[0-9]+$/.test(strategyTarget)) throw new Error('ALASHI_STRATEGY_API_TARGET must be a local SSH tunnel')
 const arenaTarget = process.env.ALASHI_ARENA_API_TARGET
 if (arenaTarget && !/^http:\/\/(127\.0\.0\.1|localhost):[0-9]+$/.test(arenaTarget)) throw new Error('ALASHI_ARENA_API_TARGET must be local')
+const workTarget = process.env.ALASHI_WORK_SIMULATION_API_TARGET
+if (workTarget && !/^http:\/\/(127\.0\.0\.1|localhost):[0-9]+$/.test(workTarget)) throw new Error('ALASHI_WORK_SIMULATION_API_TARGET must be local')
 const liveTarget = process.env.ALASHI_LIVE_API_TARGET
 if (liveTarget && !/^http:\/\/(127\.0\.0\.1|localhost):[0-9]+$/.test(liveTarget)) throw new Error('ALASHI_LIVE_API_TARGET must be a local SSH tunnel')
 
 // BASE=/releases/<sha>/ npm run build — release assets live under an immutable per-SHA prefix (NIGHT_WORK §4.7).
 // The router itself stays at "/": nginx serves the current release at the site root and falls back to index.html.
 export default defineConfig({
+  define: { 'import.meta.env.WORK_SIMULATION_LOCAL': JSON.stringify(!!workTarget) },
   base: process.env.BASE ?? '/',
   // tanstackRouter must come before react(); autoCodeSplitting lazy-loads each route's component
   plugins: [tanstackRouter({ target: 'react', autoCodeSplitting: true }), react(), tailwindcss()],
   // Dev only: read the public arena GET routes from the live site (same paths nginx exposes; POST stays closed there)
   server: {
     proxy: {
+      ...(workTarget ? { '/work-simulation-api': {
+        target: workTarget, changeOrigin: false,
+        rewrite: (path: string) => path.replace(/^\/work-simulation-api/, ''),
+        bypass(req: import('node:http').IncomingMessage, res: import('node:http').ServerResponse | undefined) {
+          if (req.method !== 'POST' || req.url !== '/work-simulation-api/run') { if (res) { res.statusCode = 403; res.end() } return false }
+        },
+      } } : {}),
       '/games': { target: arenaTarget ?? 'https://alashi.network', changeOrigin: !arenaTarget, bypass(req: import('node:http').IncomingMessage, res: import('node:http').ServerResponse | undefined) { if (req.method !== 'GET' || (req.url ?? '').split('?')[0] !== '/games') { if (res) { res.statusCode = 403; res.end() } return false } } },
       ...(strategyTarget ? { '/strategy-api': {
         target: strategyTarget, changeOrigin: false,

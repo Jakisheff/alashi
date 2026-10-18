@@ -21,6 +21,9 @@
     "companion": "cd companion && tauri dev",
     "companion:build": "cd companion && tauri build",
     "companion:build:mac": "cd companion && tauri build --target universal-apple-darwin",
+    "work:simulate": "node ../tools/work-simulation/experiment.mjs --out src/work-simulation/report.json",
+    "work:server": "node ../tools/work-simulation/server.mjs",
+    "check:work": "node --test ../tools/work-simulation/experiment.test.mjs",
     "check:strategies": "node --experimental-strip-types --no-warnings scripts/strategy-check.ts",
     "check:trading": "node --experimental-strip-types --no-warnings scripts/trading-check.ts"
   },

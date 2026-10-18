@@ -17,6 +17,7 @@ import { Route as LiveRouteImport } from './routes/live'
 import { Route as LogRouteImport } from './routes/log'
 import { Route as StrategiesRouteImport } from './routes/strategies'
 import { Route as StreamRouteImport } from './routes/stream'
+import { Route as WorkSimulationRouteImport } from './routes/work-simulation'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -58,6 +59,11 @@ const StreamRoute = StreamRouteImport.update({
   path: '/stream',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WorkSimulationRoute = WorkSimulationRouteImport.update({
+  id: '/work-simulation',
+  path: '/work-simulation',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -68,6 +74,7 @@ export interface FileRoutesByFullPath {
   '/log': typeof LogRoute
   '/strategies': typeof StrategiesRoute
   '/stream': typeof StreamRoute
+  '/work-simulation': typeof WorkSimulationRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -78,6 +85,7 @@ export interface FileRoutesByTo {
   '/log': typeof LogRoute
   '/strategies': typeof StrategiesRoute
   '/stream': typeof StreamRoute
+  '/work-simulation': typeof WorkSimulationRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -89,6 +97,7 @@ export interface FileRoutesById {
   '/log': typeof LogRoute
   '/strategies': typeof StrategiesRoute
   '/stream': typeof StreamRoute
+  '/work-simulation': typeof WorkSimulationRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -101,6 +110,7 @@ export interface FileRouteTypes {
     | '/log'
     | '/strategies'
     | '/stream'
+    | '/work-simulation'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -111,6 +121,7 @@ export interface FileRouteTypes {
     | '/log'
     | '/strategies'
     | '/stream'
+    | '/work-simulation'
   id:
     | '__root__'
     | '/'
@@ -121,6 +132,7 @@ export interface FileRouteTypes {
     | '/log'
     | '/strategies'
     | '/stream'
+    | '/work-simulation'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -132,6 +144,7 @@ export interface RootRouteChildren {
   LogRoute: typeof LogRoute
   StrategiesRoute: typeof StrategiesRoute
   StreamRoute: typeof StreamRoute
+  WorkSimulationRoute: typeof WorkSimulationRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -192,6 +205,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StreamRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/work-simulation': {
+      id: '/work-simulation'
+      path: '/work-simulation'
+      fullPath: '/work-simulation'
+      preLoaderRoute: typeof WorkSimulationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -204,6 +224,7 @@ const rootRouteChildren: RootRouteChildren = {
   LogRoute: LogRoute,
   StrategiesRoute: StrategiesRoute,
   StreamRoute: StreamRoute,
+  WorkSimulationRoute: WorkSimulationRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

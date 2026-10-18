@@ -1,0 +1,53 @@
+✔ v2 golden hashes and proposal validation (333.018889ms)
+✔ start rejects overlong UTF-8 name or model before profile and network work (47.227556ms)
+✔ one durable Memo, unknown outcome resumes same signature without signing again (2122.987548ms)
+✔ one profile joins two games, no prompt upload, pending op replay is exact (467.31383ms)
+✔ only exact definitive unconsumed action rejection clears pending without debit (779.829944ms)
+✔ start persists one private wallet and returns identity link while no game is open (389.456391ms)
+✔ public state identifies the saved player faction (1.42271ms)
+✔ pinned JSON-RPC client supports every bootstrap RPC method (664.536487ms)
+✔ signal cleanup removes only this process lock (2650.891532ms)
+✔ pinned RPC sends one HTTP request on 429 (15.637338ms)
+✔ failed saved airdrop retries only faucet funding on the same wallet (6.038339ms)
+✔ ambiguous saved airdrop gives manual funding path without another request (54.067241ms)
+✔ faucet RPC code survives failure without exposing provider cause (125.508403ms)
+✔ first faucet RPC failure gives same-wallet recovery without repeat request (7.620742ms)
+✔ proxy rate limit and outage are plain errors before non-JSON bodies (1.073996ms)
+✔ matchmaker reports an existing slot and recovery join uses no new Memo (98.817683ms)
+✔ faucet 429 exposes the same public wallet for manual devnet funding (15.064706ms)
+✔ CLI exits nonzero when arena JSON says ok false (4586.817055ms)
+✔ existing-only start cannot create a wallet or call RPC when registration is absent (12.009532ms)
+✔ a missing trade executor stops before reserving or calling a model (87.212023ms)
+✔ trading tasks receive owner context and a real local state tool, without ad fields (2.511542ms)
+✔ an ambiguous Solana submission never starts another signer; a supplied signature only reconciles (3.863088ms)
+✔ HTTP execution refuses another owner or another pending run before any request (138.777477ms)
+✔ strict completion parsing preserves usage independently of JSON quality (9.937681ms)
+✔ profile and endpoint boundaries reject secrets in URLs and insecure remote providers (19.78554ms)
+✔ ambiguous inflight journal is recorded as unknown without a second provider call (139.265612ms)
+✔ builtin tools report zero model usage explicitly; public plans cannot select executables (6.49027ms)
+✔ an oversized owner-tool report keeps its known usage for the failed quality gate (855.108559ms)
+✔ report limits count UTF-8 bytes so malformed output cannot lose known usage (951.537301ms)
+✔ a dependent starts after its accepted report while an unrelated task is still running (397.589442ms)
+✔ a rejected reservation cannot call the provider or finish the run (65.417978ms)
+✔ unknown usage stops new work and drains active calls before releasing the journal lock (286.973847ms)
+✔ invalid report stops new work and drains active calls before releasing the journal lock (266.586972ms)
+✔ resume a lost report before server acceptance without repeating model work (439.425079ms)
+✔ resume a lost report after server acceptance without repeating model work (309.803688ms)
+✔ a stopped run reconciles saved paid responses without starting more work (4.039931ms)
+✔ out-of-order report snapshots cannot forget an accepted dependency or repeat a task (592.573979ms)
+✔ an overrun with a valid report still blocks dependent model calls (165.205783ms)
+✔ a reservation that completes after a failure cannot start a model call (358.024161ms)
+✔ expiry during reservation prevents a model request (1161.820699ms)
+✔ a newly ready task cannot spend budget held by an unrelated active call (216.199747ms)
+✔ a saved response is reconciled after the deadline without another model call (17.505794ms)
+✔ a prepared reservation resumes once without reserving or spending twice (56.299693ms)
+✔ fixed workload timing: same reports and four calls, with controlled provider delays (1913.892602ms)
+ℹ {"fixture":"fast30-slow200-follow150-deliver10","milliseconds":[497,554,856],"median_ms":554,"provider_calls_per_run":4,"synthetic_tokens_per_run":40,"external_model_calls":0}
+ℹ tests 44
+ℹ suites 0
+ℹ pass 44
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14755.47434

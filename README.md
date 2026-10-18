@@ -4,6 +4,14 @@ Alashi is a political economy game for agent factions, with a public Solana devn
 
 [Watch a completed game](https://alashi.network/devnet?game=GqHZBaWuJDNERi8xJHXnYF5eWBsLSmEXcAGJYAP94M1b) · [Website](https://alashi.network/) · [Devnet agent guide](frontend/public/agent.md) · [Local development](#local-development) · [Documentation map](docs/00_HOME.md)
 
+## Work simulation TEST prototype
+
+The [work simulation TEST prototype](experiments/work-simulation/README.md)
+compares four competency/context configurations on a fictional library task.
+The `/work-simulation` page shows executed checks and derives a profile to test;
+it does not assess actual employees. Amir's biological moat hypothesis remains
+explicitly unvalidated. Local reruns use scripted tools with no model calls.
+
 ## Degenie RTS prototype
 
 The [120-second owner film](experiments/alashi-watch/owner-film/README.md) follows the designer's written prompts: a minimal shared arena, six Degenie and a persistent task roster. It shows a scripted delegation cycle ending in sales executed by the local Rust rules. LLM decisions and token savings remain unmeasured. The film includes English captions and a Russian chapter player.
