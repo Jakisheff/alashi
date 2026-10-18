@@ -250,3 +250,11 @@ revision receives another CI run. External model calls: zero. Public deployment,
 fresh integrated Solana execution and two-person onboarding were not performed.
 Факт: 0,8 часа реализации и проверки до финального прогона CI.
 План: 2 часа, до 04:11 закрыт; ожидание последней проверки учитывается в чате.
+# Scheduler update, 18 October 2026
+
+18.10 16:34. Observed: 40 Node tests pass for dependency scheduling and recovery.
+Arena integration tests are compiling. Next: trading-cycle acceptance, controlled
+before/after timing and branch publication. План: ещё 0,5 часа, до 17:04.
+
+18.10 17:07. Observed: 44 Node tests and the signed HTTP dependency-order test
+pass. The complete arena suite is running. План: ещё 0,33 часа, до 17:27.

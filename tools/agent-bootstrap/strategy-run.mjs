@@ -134,22 +134,25 @@ export async function runCycle({api,id,provider,journalPath,tools={},trade,onPro
       initial=await api.get();run=initial.runs.find(r=>r.id===id);
     }
     const reports={};
+    const passed=task=>run.calls[task]?.quality_passed&&run.calls[task]?.usage;
+    for(const [task,c]of Object.entries(run.calls))if(passed(task))reports[task]=c.report;
     const identity=spec=>spec.kind==='tool'?toolInfo(spec,tools):{source:provider.source,provider:provider.provider,model:provider.model,cap:null};
-    async function prepare(spec) {
+    async function prepare(spec,recoverOnly=false) {
       const old=run.calls[spec.id];if(old?.quality_passed&&old.usage){reports[spec.id]=old.report;return;}
-      if(run.status!=='running')fail('run_stopped');
+      if(!recoverOnly&&run.status!=='running')fail('run_stopped');
       if(!journal.calls[spec.id]){journal.calls[spec.id]={phase:old?'inflight':'prepared'};save(journalPath,journal);}
       const who=identity(spec),messages=messagesFor(run,version,spec.id,reports),cap=who.cap??(Buffer.byteLength(JSON.stringify(messages),'utf8')+2048+256);
       // Recover a paid response even after the round ends; never request another completion.
       if(!old)await api.post(`/strategy-runs/${id}/reserve`,{task:spec.id,max_total_tokens:cap,source:who.source,provider:who.provider,model:who.model});
       else if(old.source!==who.source||old.provider!==who.provider||old.model!==who.model)fail('journal_provider_mismatch');
     }
-    async function call(spec) {
+    async function call(spec,recoverOnly=false) {
       const old=run.calls[spec.id];if(old?.quality_passed&&old.usage)return;
       const entry=journal.calls[spec.id];
       if(!entry.result) {
         if(entry.phase==='inflight')entry.result={response_id:null,usage:null,report:null,request_failed:true};
         else {
+          if(recoverOnly)fail('response_not_saved');
           if(Date.now()>=run.deadline_at*1000)fail('round_ended');
           entry.phase='inflight';save(journalPath,journal);onProgress({task:spec.id,status:'started'});
           try {entry.result=spec.kind==='tool'?await executeTool(spec,run,reports,tools):await provider.complete(messagesFor(run,version,spec.id,reports));}
@@ -158,18 +161,48 @@ export async function runCycle({api,id,provider,journalPath,tools={},trade,onPro
         save(journalPath,journal);
       }
       const receipt=await api.post(`/strategy-runs/${id}/report`,{task:spec.id,...entry.result});
+      // Responses can arrive out of order. Merge only this task, never an older full snapshot.
+      run.calls[spec.id]=receipt.run.calls[spec.id];
       reports[spec.id]=receipt.run.calls[spec.id].report;onProgress({task:spec.id,status:receipt.run.status,known_tokens:receipt.run.known_tokens});
       if(!receipt.run.calls[spec.id].quality_passed||!receipt.run.calls[spec.id].usage)fail('report_or_usage_not_verified');
+      if(receipt.run.status!=='running')fail('run_stopped');
     }
-    while(version.content.plan.some(t=>!run.calls[t.id]?.quality_passed)) {
-      if(run.status!=='running')fail('run_stopped');
-      const ready=version.content.plan.filter(t=>!run.calls[t.id]?.quality_passed&&t.depends_on.every(d=>run.calls[d]?.quality_passed&&run.calls[d]?.usage));
-      if(!ready.length)fail('dependencies_not_complete');
-      const reservations=await Promise.allSettled(ready.map(prepare));if(reservations.some(r=>r.status==='rejected'))fail('stage_reservation_stopped');
-      const results=await Promise.allSettled(ready.map(call));if(results.some(r=>r.status==='rejected'))fail('stage_stopped');
-      run=(await api.get()).runs.find(r=>r.id===id);
-      for(const [task,c]of Object.entries(run.calls))if(c.quality_passed&&c.usage)reports[task]=c.report;
+    const pending=new Map();let failure;
+    function launch(spec,recoverOnly=false) {
+      const work=(async()=>{
+        try {
+          await prepare(spec,recoverOnly);
+          // Another task may fail while this reservation is awaiting its response.
+          if(failure&&!recoverOnly)return;
+          await call(spec,recoverOnly);
+        } catch(error) {failure??=error;}
+      })();
+      pending.set(spec.id,work.then(()=>spec.id));
     }
+    // Reconcile prior paid/ambiguous calls before spending again, even on a stopped run.
+    for(const spec of version.content.plan) {
+      const saved=journal.calls[spec.id];
+      if(run.calls[spec.id]&&!passed(spec.id)&&(!saved||saved.result||saved.phase==='inflight'))launch(spec,true);
+    }
+    await Promise.all(pending.values());pending.clear();
+    if(failure)throw failure;
+    try {
+      while(version.content.plan.some(t=>!passed(t.id))) {
+        if(failure)break;
+        if(run.status!=='running')fail('run_stopped');
+        for(const spec of version.content.plan) {
+          if(!passed(spec.id)&&!pending.has(spec.id)&&spec.depends_on.every(passed))launch(spec);
+        }
+        if(!pending.size)fail('dependencies_not_complete');
+        pending.delete(await Promise.race(pending.values()));
+      }
+    } finally {
+      // Keep the journal lock until every started call has saved/reported its outcome.
+      await Promise.all(pending.values());
+    }
+    if(failure)throw failure;
+    run=(await api.get()).runs.find(r=>r.id===id);
+    if(run.status!=='running')fail('run_stopped');
     if(run.brief.trading) {
       if(!trade)fail('trade_executor_required');
       await trade({api,run,journal,save:()=>save(journalPath,journal)});
