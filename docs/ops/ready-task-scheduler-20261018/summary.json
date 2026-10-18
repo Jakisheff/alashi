@@ -1,0 +1,52 @@
+{
+  "base_commit": "40268170e2f3347069cf1f59f747868adece4bc6",
+  "runner_sha256": "114d10ea3c81437754e4415445ec28b643df28f81349e11b5c23a980645a794c",
+  "before": {
+    "fixture": "fast30-slow200-follow150-deliver10",
+    "milliseconds": [
+      873,
+      748,
+      637
+    ],
+    "median_ms": 748,
+    "provider_calls_per_run": 4,
+    "synthetic_tokens_per_run": 40,
+    "external_model_calls": 0
+  },
+  "after": {
+    "fixture": "fast30-slow200-follow150-deliver10",
+    "milliseconds": [
+      580,
+      457,
+      428
+    ],
+    "median_ms": 457,
+    "provider_calls_per_run": 4,
+    "synthetic_tokens_per_run": 40,
+    "external_model_calls": 0
+  },
+  "median_reduction_percent": 38.9,
+  "baseline_regression": {
+    "tests": 11,
+    "passed": 8,
+    "failed": 3
+  },
+  "node_suite": {
+    "tests": 44,
+    "passed": 44,
+    "failed": 0
+  },
+  "limitations": [
+    "Local mocked API/provider; no external model calls.",
+    "Three samples per version; host filesystem and concurrent compilation affect timing.",
+    "Dependency order is checked separately with controlled promises.",
+    "Real arena integration results are recorded separately."
+  ],
+  "arena_suite": {
+    "passed": 137,
+    "failed": 0,
+    "ignored": 1,
+    "signed_http_dependency_order": "passed",
+    "trading_cycle_and_recovery": "passed"
+  }
+}

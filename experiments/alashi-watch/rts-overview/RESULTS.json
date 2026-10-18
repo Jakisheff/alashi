@@ -1,0 +1,27 @@
+{
+  "source_commit": "2376c509b6b5691858df2c9d4d1f79a7b1a877d1",
+  "runtime_checks_passed": 18,
+  "visual_acceptance": "prototype reviewed in motion; limitations in ACCEPTANCE.md",
+  "agents": "scripted, no LLM",
+  "source_model": "existing Alashi desk-genie.glb baked to atlas",
+  "source_concept": "../source/alashi-two-sides-concept.png",
+  "workers": 8,
+  "chiefs": 2,
+  "max_parallel": 6,
+  "task_duration_seconds_min": 4,
+  "round_trip_travel_seconds": 1.85,
+  "browser_url": "http://127.0.0.1:8767/",
+  "recording": {
+    "path": "assets/degenie-complete-cycle.mp4",
+    "method": "event-driven replay",
+    "fps": 30,
+    "frames": 347,
+    "duration_seconds": 11.566666666666666,
+    "full_decode_passed": true
+  },
+  "remaining": [
+    "stable live frame rate on test host",
+    "physical phone and new viewer validation",
+    "real task event adapter"
+  ]
+}

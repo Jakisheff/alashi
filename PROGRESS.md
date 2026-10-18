@@ -738,3 +738,111 @@ uses a direct conditional after canonical Faction verification. The suite is
 86 passed / 2 ignored, build PASS. A full post-Join Match retry with an already-used
 sponsorship and low wallet balance has NOT been executed: it remains a required
 operator acceptance gate. The local routing test is HTTP proof, not that E2E.
+
+
+16.10.2026 11:20. Публикация локальных прототипов Degenie по поручению Амира.
+План: 0,5 часа, до 11:50. Критерий: исходники и результаты проверок доступны
+в GitHub; локальный runtime проходит проверки из новой рабочей папки.
+Амир ведёт проект напрямую с Codex, без участия Ивана и Дины.
+
+16.10 11:29. Пакет подготовлен: исходники прототипов и материалы приёмки
+сохранены в experiments/alashi-watch. Из нового checkout прошли 16 проверок
+RTS, проверка синтаксиса и хешей. Все 52 локальные ссылки доступны; Gitleaks
+не нашёл секретов. Далее: push ветки и draft PR. Визуальная приёмка открыта.
+
+16.10 11:32. Прототипы опубликованы в ветке codex/alashi-rts-prototypes-20261016.
+Draft PR: https://github.com/Jakisheff/alashi/pull/57. Исходники и доказательства
+доступны в GitHub; main и действующий сайт не менялись. В AGENTS.md закреплены
+прямая работа Амира с Codex и push проектных изменений. Все 16 локальных
+проверок RTS прошли; визуальные ограничения сохранены. GitHub CI ещё не проверен.
+Факт: 0,25 часа (начало 11:17, завершение 11:32).
+
+16.10 11:41. Исправление упавшего RustSec audit в PR #57.
+План: 0,5 часа, до 12:11. Критерий: все четыре Cargo.lock проходят аудит,
+потребители обновлённой зависимости проходят проверки, новый коммит
+отправлен в GitHub и CI завершился успешно.
+
+16.10 11:45. observed: сбой воспроизведён в indexer/Cargo.lock и bots/Cargo.lock.
+Оба файла обновлены с rustls 0.23.45 до 0.23.46; изменены только версия
+и контрольная сумма пакета. Повторный cargo audit на свежей базе RustSec
+для Cargo.lock, arena/Cargo.lock, indexer/Cargo.lock и bots/Cargo.lock
+завершился с кодом 0; уязвимостей нет. Предупреждения не подавлялись.
+Локальные тесты потребителей выполняются. Результат GitHub CI проверяется
+после push; ход проверки сохраняется в PR #57.
+
+16.10.2026 12:19. Доводка общей карты Degenie по концепту Амира.
+План: 1,5 часа, до 13:49. Критерий: быстрый полный цикл двух штабов
+при неподвижной общей камере, плавное параллельное движение и запись.
+Облик сверяется с концептом; проверяются телефонный размер и канон
+Лассетера. Изменения и доказательства отправляются в PR #57.
+
+16.10 13:33. Делаю: проверяю экспорт повтора и телефонный размер.
+Сделано: карта по концепту, восемь направлений Degenie, шесть параллельных
+поручений, цикл около десяти секунд. Пройдены 16 проверок runtime и 808
+точек маршрутов. Даже пустая контрольная страница показывает около 17 кадров/с;
+живой FPS этой среды отделяется от повтора с явными метками 30 кадров/с.
+Браузерный VideoEncoder завис; выбран нативный FFmpeg и ограниченный
+экспорт кадров. План оставшейся работы: 0,75 часа, до 14:14.
+
+16.10 14:02. Делаю: публикую визуальную версию и проверяю CI.
+Сделано: финальный повтор 347 кадров, 30 кадров/с, 11,57 секунды.
+FFmpeg декодирует весь ролик без ошибок; пауза и перемотка проверены.
+На ширине 390 и 320 нет горизонтального прокручивания. Задержка Chief Б
+не остановила три работающих Degenie штаба А. Исправлен маршрут А3 около
+колонны, ролик пересобран. Живые 30 кадров/с здесь не подтверждены.
+Дальше: push в PR #57 и проверка всех GitHub jobs на новом коммите.
+
+16.10 14:08. Реализация, локальная приёмка и публикация завершены.
+Факт: 1,82 часа (12:19-14:08, без ожидания GitHub CI).
+Коммит cb12cd3 отправлен в PR #57. Сохранены исходники сцены, атлас
+оригинального Degenie и MP4 полного цикла. Все 18 runtime-проверок,
+проверки экспорта и 808 точек маршрутов прошли. Основной frontend
+собран, проверки геометрии и анимаций прошли. Gitleaks утечек не нашёл.
+Живой браузер показывает 12-18 кадров/с; видео собрано по событиям
+в 30 кадров/с. Реальные LLM, физический телефон и новый зритель
+не проверены. Предыдущая задача RustSec: факт 0,17 часа, CI 5/5
+на ff98fe5. CI визуальной версии проверяется отдельно перед отчётом.
+
+17.10 02:11. Complete trading strategy cycle, requested by Amir.
+План: 2 часа, до 04:11. Target: two independent owners run the same trading
+challenge with traceable decisions and usage, then a third owner reuses a
+published improvement. Verify each boundary with reproducible tests and public
+receipts. No additional external model calls, deployment or video publication.
+
+17.10 02:59. Trading strategy cycle implementation and review completed.
+Observed: two local owner processes, accepted production and sales, normal
+settlement, published improvement and reuse by a third fixture wallet. Recovery
+does not duplicate the accepted trade or model call. Desktop and phone-sized
+review passed; connection loss keeps receipts and freezes movement.
+CI 5/5 passed on 0ad4e8b: https://github.com/Jakisheff/alashi/actions/runs/38972315739.
+A final UI adjustment distinguishes loading from a missing usage service; its
+revision receives another CI run. External model calls: zero. Public deployment,
+fresh integrated Solana execution and two-person onboarding were not performed.
+Факт: 0,8 часа реализации и проверки до финального прогона CI.
+План: 2 часа, до 04:11 закрыт; ожидание последней проверки учитывается в чате.
+
+18.10 15:51. План: 0,6 часа, до 16:27. Исполнитель стратегий должен запускать
+задачу после принятия её зависимостей, без ожидания независимой ветки.
+Проверка: одинаковый граф до и после правки, резервирование бюджета,
+восстановление журнала без повторных вызовов. База: 4026817.
+
+18.10 16:34. Observed: 40 Node tests pass. The scheduler now follows accepted
+dependencies and drains started calls on failure. Recovery restores accepted
+dependency reports and reconciles saved responses on stopped runs.
+The arena integration suite is compiling. План: ещё 0,5 часа, до 17:04.
+The initial estimate was exceeded; integration checks and publication remain.
+
+18.10 17:07. Observed: 44 Node tests pass. The signed HTTP duel passes with
+a controlled slow branch and overlapping dependency continuation. Its previous
+fixed delay was replaced with a bounded promise to test ordering independently
+of disk latency. The full arena suite is running again.
+План: ещё 0,33 часа, до 17:27. Remaining: integration results and publication.
+
+18.10 17:11. Completed: 44 Node tests and 137 arena tests pass; one canonical
+snapshot check is explicitly ignored. The signed HTTP graph overlaps a ready
+continuation with an independent call. Trading recovery passes without a second
+model call or trade. Controlled timing medians: 748 ms before, 457 ms after;
+these local fixture timings do not establish production performance.
+Source commit 2805d8e is published on codex/ready-task-scheduler.
+Evidence: docs/ops/READY_TASK_SCHEDULER_20261018.md.
+Факт: 1,33 часа. All estimates above are closed; deployment was not performed.

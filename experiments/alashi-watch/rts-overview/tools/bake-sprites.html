@@ -1,0 +1,35 @@
+<!doctype html><html lang="ru"><meta charset="utf-8"><title>Alashi · исходный Degenie в атласе</title>
+<style>body{background:#292431;color:#eee;font:15px system-ui;padding:24px}button,a{display:inline-block;padding:14px;margin:10px;background:#a78bfa;color:#171322;border:0;border-radius:5px;cursor:pointer}canvas{background:repeating-conic-gradient(#423b49 0% 25%,#39323f 0% 50%) 50%/20px 20px;max-width:100%;height:280px}pre{white-space:pre-wrap}</style>
+<h1>Исходный Degenie → атлас движения</h1><p>Геометрия и клипы берутся из desk-genie.glb. Это инструмент сборки ресурсов общей карты.</p><button id="bake" disabled>Собрать атлас</button><a id="download" hidden download="degenie-atlas.png">Скачать атлас PNG</a><p id="status">Загрузка модели…</p><canvas id="preview"></canvas><pre id="metadata"></pre>
+<script type="importmap">{"imports":{"three":"../vendor/three/build/three.module.js","three/addons/":"../vendor/three/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from '../vendor/meshoptimizer/meshopt_decoder.mjs';
+const W=160,H=192,FRAMES=24,DIRECTIONS=8,CLIPS=['idle','act','accepted'];
+const canvas=document.getElementById('preview');
+const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true,preserveDrawingBuffer:true});
+renderer.setSize(W,H,false);renderer.setPixelRatio(1);renderer.setClearColor(0,0);renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.25;
+const scene=new THREE.Scene();scene.add(new THREE.HemisphereLight(0xfff5df,0x80638e,3));
+const light=new THREE.DirectionalLight(0xfff4dc,3.5);light.position.set(-4,8,6);scene.add(light);
+const camera=new THREE.OrthographicCamera(-1.85*W/H,1.85*W/H,1.85,-1.85,.1,30);camera.position.set(0,4.5,8);camera.lookAt(0,1.2,0);
+const gltf=await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).loadAsync('../assets/desk-genie.glb');
+const model=gltf.scene,bounds=new THREE.Box3().setFromObject(model),center=bounds.getCenter(new THREE.Vector3()),size=bounds.getSize(new THREE.Vector3());
+model.scale.setScalar(2.5/size.y);model.position.set(-center.x*model.scale.x,-bounds.min.y*model.scale.y,-center.z*model.scale.z);
+const root=new THREE.Group();root.add(model);scene.add(root);const mixer=new THREE.AnimationMixer(model);
+const clips=CLIPS.map(name=>{const clip=gltf.animations.find(c=>c.name===name);if(!clip)throw Error('Missing clip '+name);return clip;});
+const durations=clips.map(c=>c.duration);
+function pose(clip,frame,dir){mixer.stopAllAction();const action=mixer.clipAction(clips[clip]);action.reset().play();mixer.setTime(frame/FRAMES*durations[clip]);root.rotation.y=dir*Math.PI/4;renderer.render(scene,camera);}
+pose(0,0,0);document.getElementById('bake').disabled=false;document.getElementById('status').textContent='Готово к сборке: исходный Degenie загружен';
+document.getElementById('bake').onclick=async()=>{
+ const button=document.getElementById('bake');button.disabled=true;
+ const atlas=document.createElement('canvas');atlas.width=W*FRAMES;atlas.height=H*DIRECTIONS*CLIPS.length;const ctx=atlas.getContext('2d');
+ for(let c=0;c<CLIPS.length;c++)for(let dir=0;dir<DIRECTIONS;dir++){
+  for(let f=0;f<FRAMES;f++){pose(c,f,dir);ctx.drawImage(canvas,f*W,(c*DIRECTIONS+dir)*H);}
+  document.getElementById('status').textContent=`Сборка ${CLIPS[c]}: направление ${dir+1}/8`;await new Promise(requestAnimationFrame);
+ }
+ const blob=await new Promise(resolve=>atlas.toBlob(resolve,'image/png'));const link=document.getElementById('download');link.href=URL.createObjectURL(blob);link.hidden=false;
+ const metadata={tileWidth:W,tileHeight:H,frames:FRAMES,directions:DIRECTIONS,clips:CLIPS,durations,width:atlas.width,height:atlas.height,anchor:[.5,.87],source:'desk-genie.glb',bytes:blob.size};
+ document.getElementById('metadata').textContent=JSON.stringify(metadata,null,2);document.getElementById('status').textContent='Атлас готов';button.disabled=false;
+};
+</script></html>

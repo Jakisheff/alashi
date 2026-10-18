@@ -1,0 +1,229 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.01s
+     Running unittests src/lib.rs (/Users/amir/tmp/alashi-solo-target/debug/deps/arena-a70dc2351e7e7b4d)
+
+running 103 tests
+test api::audit_20260927::agent_id_encoding_is_unambiguous ... ok
+test api::audit_20260927::failed_snapshot_rolls_back_join_and_allows_retry ... ok
+test api::audit_20260927::corrupt_snapshot_aborts_load_and_original_is_preserved ... ok
+test api::audit_20260927::rejected_action_payloads_are_not_retained_and_spam_is_contained ... ok
+test api::chain_dialogue::tests::public_read_waits_for_snapshot_commit_and_never_observes_rollback ... ok
+test api::chain_dialogue::tests::retry_does_not_depend_on_current_phase ... ok
+test api::chain_dialogue::tests::snapshot_roundtrip_and_semantic_limits ... ok
+test api::chain_dialogue::tests::strict_empty_snapshot_and_text_bounds ... ok
+test api::chain_match::tests::funding_proxy_forwards_public_wallet_and_checks_the_recipient ... ok
+test api::chain_match::tests::missing_or_wrong_wallet_proof_never_reaches_host ... ok
+test api::audit_20260927::corrupt_typed_journals_keep_canonical_snapshot_and_forensic_copy ... ok
+test api::chain_wishes::tests::intent_requires_matching_confirmed_event ... ok
+test api::chain_wishes::tests::owner_text_is_140_trimmed_unicode_scalars_without_shrinking_history ... ok
+test api::chain_match::tests::proxy_forwards_only_wallet_and_preserves_assignment ... ok
+test api::owner_auth::tests::browser_cookie_is_record_scoped_and_unambiguous ... ok
+test api::owner_auth::tests::canonical_message_binds_origin ... ok
+test api::social_20260927::character_identity_survives_strategy_change ... ok
+test api::live::commit_tests::public_game_and_personal_reads_wait_for_commit_and_hide_rollback ... ok
+test api::social_20260927::recovery_addresses_character_across_models ... ok
+test api::audit_20260927::timestamp_seed_is_not_recoverable_from_public_law_cards ... ok
+test api::strategy_cycle::tests::paid_failures_unknown_usage_and_shared_budget_are_not_zeroed ... ok
+test api::strategy_cycle::tests::blind_reveal_independent_review_and_private_original_choice ... ok
+test api::strategy_cycle::tests::provenance_deadline_and_storage_boundaries ... ok
+test api::social_20260927::pair_history_counts_recorded_interactions ... ok
+test api::strategy_trade::tests::recorded_devnet_sale_requires_matching_owner_context_and_canonical_receipt ... ok
+test api::tests::accepted_action_projects_only_rule_params_into_public_history ... ok
+test api::tests::automatic_phase_and_entropy_checkpoint_survive_without_a_post ... ok
+test api::tests::canonical_startup_guard_requires_valid_snapshot_key_and_sequence ... ok
+test api::strategy_cycle::tests::trading_challenge_captures_equal_game_conditions ... ok
+test api::tests::completed_history_and_saved_hint_prevent_reused_ids ... ok
+test api::tests::concurrent_match_requests_share_one_managed_lobby ... ok
+test api::tests::confirm_retry_cannot_observe_receipt_before_snapshot_commit ... ok
+test api::tests::connection_permits_are_bounded_and_released ... ok
+test api::tests::existing_canonical_snapshot_passes_guard ... ignored, read-only check of an explicitly supplied canonical snapshot
+test api::tests::failed_snapshot_does_not_ack_terminal_advance_or_mutate_crank ... ok
+test api::tests::concurrent_public_actions_have_unique_persisted_sequences ... ok
+test api::tests::funding_proves_a_zero_balance_wallet_without_paid_registration ... ok
+test api::tests::finished_v2_action_replays_after_snapshot_reload_without_public_secrets ... ok
+test api::tests::invalid_creation_parameters_cannot_reach_the_crank ... ok
+test api::tests::legacy_recovery_needs_current_token_to_enroll_secret ... ok
+test api::tests::lifecycle_v2_action_idempotency_survives_restart_and_recovery ... ok
+test api::tests::lifecycle_v2_fail_closed_platform_and_proposal_storage ... ok
+test api::tests::lifecycle_v2_golden_fixture_and_durable_two_game_join ... ok
+test api::tests::invalid_legacy_settlement_does_not_stop_another_full_party ... ok
+test api::tests::lifecycle_v2_two_owners_same_strategy_have_separate_game_sessions ... ok
+test api::tests::managed_lobby_closes_soon_after_second_join_and_persists_that_deadline ... ok
+test api::tests::mandatory_registration_grandfathers_only_authenticated_legacy_recovery ... ok
+test api::tests::match_creates_one_waiting_lobby_and_recovers_joined_slot_after_restart ... ok
+test api::tests::match_requires_confirmed_agent_and_correct_recovery_secret ... ok
+test api::strategy_cycle::tests::signed_marketing_duel_http ... ok
+test api::tests::match_respects_arena_cap_and_snapshot_failure_rolls_back ... ok
+test api::tests::negative_ratings_sort_by_score_and_not_hashmap_order ... ok
+test api::tests::oversized_action_units_are_rejected_without_mutating_game ... ok
+test api::tests::match_reuses_available_lobby_and_waits_for_closing_managed_lobby ... ok
+test api::tests::private_wish_snapshot_cannot_reset_three_per_game_counter ... ok
+test api::tests::presidency_and_contribution_projection_follow_reachable_state ... ok
+test api::audit_20260927::active_game_creation_is_bounded ... ok
+test api::tests::public_action_legacy_migration_is_deterministic_and_rejects_invalid_sequences ... ok
+test api::tests::public_action_projection_stays_private_and_sequence_never_wraps ... ok
+test api::tests::public_action_finished_export_keeps_live_event_identity ... ok
+test api::tests::public_action_storage_failure_rolls_back_events_and_rule_changes ... ok
+test api::tests::public_signature_replay_with_different_secret_game_or_strategy_is_rejected ... ok
+test api::tests::recovery_requires_secret_and_persists_only_its_hash ... ok
+test api::tests::registration_is_persisted_public_and_recovery_and_actions_need_no_rpc ... ok
+test api::tests::recover_full_started_game_revokes_old_token_and_survives_restart ... ok
+test api::tests::registration_proposal_is_read_only_and_requires_exact_identity_fields ... ok
+test api::tests::registration_storage_failure_rolls_back_receipt_and_allows_same_signature_retry ... ok
+test api::tests::v2_concurrent_conflicting_confirms_store_only_one_identity ... ok
+test api::tests::v2_confirm_rpc_capacity_fails_fast_with_http_429_and_releases_permits ... ok
+test api::tests::v2_legacy_pending_challenge_remains_valid_after_stateless_upgrade ... ok
+test api::tests::v2_stateless_challenge_has_exact_domain_and_framing ... ok
+test api::tests::v2_stateless_confirm_rejects_wrong_signer_memo_and_secret ... ok
+test api::tests::v2_stateless_confirm_storage_failure_keeps_signature_retryable ... ok
+test api::tests::simultaneous_creators_get_distinct_party_numbers ... ok
+test api::tests::verification_failure_and_party_change_do_not_mutate_membership ... ok
+test api::wishes::tests::client_id_is_bounded ... ok
+test api::wishes::tests::historical_and_runner_text_limits_remain_separate ... ok
+test api::wishes::tests::owner_instruction_counts_trimmed_unicode_scalars ... ok
+test api::wishes::tests::retry_receipt_keeps_admission_evidence_but_reports_current_allowance ... ok
+test api::wishes::tests::status_only_decline_is_valid ... ok
+test http::tests::cookie_header_is_single_and_bounded ... ok
+test http::tests::header_limits_apply_before_unterminated_line_allocation ... ok
+test http::tests::owner_auth_headers_are_bounded_and_unambiguous ... ok
+test http::tests::rejects_ambiguous_or_incomplete_http_framing ... ok
+test api::tests::v2_stateless_proposals_do_not_allocate_under_public_flood ... ok
+test presidency::tests::reachable_from_zero_and_weight_matches_actual_tally ... ok
+test presidency::tests::runner_requests_post_vote_and_preserves_unauthorized_attempt ... ok
+test presidency::tests::veto_right_survives_vote_and_errors_do_not_mutate_state ... ok
+test rating::tests::matches_openskill_reference ... ok
+test rating::tests::winner_rises_loser_falls ... ok
+test registration::tests::confirmed_receipt_has_exact_units_and_network ... ok
+test registration::tests::lifecycle_memo_has_stable_global_scope ... ok
+test registration::tests::request_is_bounded_and_memo_scoped ... ok
+test registration::tests::signer_and_exact_top_level_memo_are_required ... ok
+test registration::tests::status_failed_missing_unconfirmed_and_slot_mismatch_fail_closed ... ok
+test runner::tests::bad_mix_rejected ... ok
+test runner::tests::game_completes_and_money_conserves ... ok
+test runner::tests::m5_90s_epoch_money_conserves_with_factory ... ok
+test runner::tests::observation_tracks_passed_subsidy_and_status_quo ... ok
+test runner::tests::series_reproducible_and_parseable ... ok
+test presidency::tests::all_benefit_signs_and_controls_are_distinguished ... ok
+test api::tests::lifecycle_v2_session_expires_and_old_op_ids_cannot_replay_after_cache_trim ... ok
+test api::tests::public_action_ids_survive_repeated_polls_trim_and_restart ... ok
+
+test result: ok. 102 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 26.79s
+
+     Running unittests src/bin/agent.rs (/Users/amir/tmp/alashi-solo-target/debug/deps/agent-95593c91fbba8e24)
+
+running 12 tests
+test curl_security_tests::bearer_header_rejects_line_injection ... ok
+test live_output_privacy_tests::private_wish_conditioned_model_text_cannot_enter_public_speech_slot ... ok
+test live_output_privacy_tests::public_speech_requires_opt_in_and_is_bounded ... ok
+test live_output_privacy_tests::v2_operation_counter_advances_only_on_explicit_consumption ... ok
+test live_output_privacy_tests::v2_identity_hash_uses_base_strategy_only ... ok
+test presidency_tests::no_review_after_veto_or_before_reveal_or_after_phase ... ok
+test curl_security_tests::bearer_config_is_private_and_removed ... ok
+test presidency_tests::voter_gets_one_veto_review_even_without_presidential_title ... ok
+test curl_security_tests::request_body_is_written_to_stdin ... ok
+test private_wish_runner_tests::production_decision_hook_keeps_wish_private_and_records_real_reply_privately ... ok
+test private_wish_runner_tests::game_reply_runs_only_for_addressed_event_with_full_action_reserve ... ok
+test private_wish_runner_tests::ambient_idle_replies_to_addressed_event_once_without_game_requests ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.01s
+
+     Running unittests src/bin/arenad.rs (/Users/amir/tmp/alashi-solo-target/debug/deps/arenad-0644aeb68f3b2bf2)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/evalgame.rs (/Users/amir/tmp/alashi-solo-target/debug/deps/evalgame-5a41771d9abfd71f)
+
+running 1 test
+test tests::malformed_and_out_of_range_actions_are_rejected ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/evoagents.rs (/Users/amir/tmp/alashi-solo-target/debug/deps/evoagents-60945bd378f45abf)
+
+running 3 tests
+test tests::genome_operators_respect_bounds ... ok
+test tests::genome_genes_change_fitness_deterministically ... ok
+test tests::evolution_is_deterministic_by_seed ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.64s
+
+     Running unittests src/bin/presidency_check.rs (/Users/amir/tmp/alashi-solo-target/debug/deps/presidency_check-e7aa769b01489f37)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/role_oracle.rs (/Users/amir/tmp/alashi-solo-target/debug/deps/role_oracle-a0ebac8caa185dbd)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/simrun.rs (/Users/amir/tmp/alashi-solo-target/debug/deps/simrun-4af16709cc2583db)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/chain_conversations_e2e.rs (/Users/amir/tmp/alashi-solo-target/debug/deps/chain_conversations_e2e-b0649071eb9a42b4)
+
+running 1 test
+test only_bound_confirmed_ordered_events_enter_the_durable_public_journal ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.15s
+
+     Running tests/chain_dialogue_e2e.rs (/Users/amir/tmp/alashi-solo-target/debug/deps/chain_dialogue_e2e-99439102129491d7)
+
+running 1 test
+test two_bound_authors_publish_durable_context_checked_dialogue ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.21s
+
+     Running tests/chain_wish_e2e.rs (/Users/amir/tmp/alashi-solo-target/debug/deps/chain_wish_e2e-3f28098182e42382)
+
+running 1 test
+test owner_chain_wishes_are_private_durable_and_need_a_later_matching_receipt ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.83s
+
+     Running tests/http_e2e.rs (/Users/amir/tmp/alashi-solo-target/debug/deps/http_e2e-97866780f187ac0f)
+
+running 8 tests
+test http_bribe_rejects_bad_target ... ok
+test http_join_rejects_duplicate_wallet ... ok
+test http_rejects_bad_json_and_unauthenticated_posts_without_snapshot_writes ... ok
+test http_vote_weight_mode_flag ... ok
+test http_grace_window_lands_late_action ... ok
+test http_wait_longpoll_wakes_on_phase_change ... ok
+test http_full_game_two_agents ... ok
+test http_epoch_90s_full_game has been running for over 60 seconds
+test http_epoch_90s_full_game ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 76.41s
+
+     Running tests/live_agent_e2e.rs (/Users/amir/tmp/alashi-solo-target/debug/deps/live_agent_e2e-365a10aa40983cb2)
+
+running 6 tests
+test ambient_messages_project_across_personal_streams_and_reply_as_recipient ... ok
+test owner_ed25519_wishes_are_private_quota_atomic_idempotent_and_durable ... ok
+test two_owner_agents_trade_with_durable_public_receipts ... ok
+test actual_agent_process_keeps_wish_private_and_voluntarily_publishes_cued_reply ... ok
+test v2_live_and_game_messages_are_scoped_idempotent_and_cursor_readable ... ok
+test trading_strategies_two_processes_then_third_owner_reuse ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 10.60s
+
+     Running tests/owner_browser_session_e2e.rs (/Users/amir/tmp/alashi-solo-target/debug/deps/owner_browser_session_e2e-361d5e5a5b05ac1a)
+
+running 2 tests
+test managed_chain_match_requires_wallet_bearer_and_forwards_only_public_wallet ... ok
+test browser_cookie_auth_is_scoped_persistent_revocable_and_csrf_checked ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.43s
+
+   Doc-tests arena
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s

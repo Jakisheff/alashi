@@ -1,0 +1,134 @@
+[
+  {
+    "run_id": "market-1-full",
+    "mode": "full",
+    "calls": 5,
+    "usage": {
+      "prompt_tokens": 1759,
+      "completion_tokens": 43,
+      "total_tokens": 1802
+    },
+    "quality_passed": false,
+    "usage_complete": false,
+    "oracle_placeholder_check": null,
+    "execution": {
+      "ok": true,
+      "amount": 0,
+      "cash_before": 100000000,
+      "cash_after": 100000000,
+      "goods_before": 4,
+      "goods_after": 4,
+      "sold_after": 0
+    }
+  },
+  {
+    "run_id": "market-1-shared",
+    "mode": "shared",
+    "calls": 6,
+    "usage": {
+      "prompt_tokens": 1253,
+      "completion_tokens": 174,
+      "total_tokens": 1427
+    },
+    "quality_passed": false,
+    "usage_complete": true,
+    "oracle_placeholder_check": null,
+    "execution": {
+      "ok": true,
+      "amount": 0,
+      "cash_before": 100000000,
+      "cash_after": 100000000,
+      "goods_before": 4,
+      "goods_after": 4,
+      "sold_after": 0
+    }
+  },
+  {
+    "run_id": "market-2-shared",
+    "mode": "shared",
+    "calls": 6,
+    "usage": {
+      "prompt_tokens": 494,
+      "completion_tokens": 55,
+      "total_tokens": 549
+    },
+    "quality_passed": false,
+    "usage_complete": false,
+    "oracle_placeholder_check": null,
+    "execution": {
+      "ok": true,
+      "amount": 0,
+      "cash_before": 100000000,
+      "cash_after": 100000000,
+      "goods_before": 3,
+      "goods_after": 3,
+      "sold_after": 3
+    }
+  },
+  {
+    "run_id": "market-2-full",
+    "mode": "full",
+    "calls": 5,
+    "usage": {
+      "prompt_tokens": 2574,
+      "completion_tokens": 63,
+      "total_tokens": 2637
+    },
+    "quality_passed": false,
+    "usage_complete": true,
+    "oracle_placeholder_check": null,
+    "execution": {
+      "ok": true,
+      "amount": 18900000,
+      "cash_before": 100000000,
+      "cash_after": 118900000,
+      "goods_before": 3,
+      "goods_after": 0,
+      "sold_after": 6
+    }
+  },
+  {
+    "run_id": "market-3-full",
+    "mode": "full",
+    "calls": 5,
+    "usage": {
+      "prompt_tokens": 2574,
+      "completion_tokens": 60,
+      "total_tokens": 2634
+    },
+    "quality_passed": false,
+    "usage_complete": true,
+    "oracle_placeholder_check": null,
+    "execution": {
+      "ok": true,
+      "amount": 13600000,
+      "cash_before": 100000000,
+      "cash_after": 113600000,
+      "goods_before": 5,
+      "goods_after": 0,
+      "sold_after": 11
+    }
+  },
+  {
+    "run_id": "market-3-shared",
+    "mode": "shared",
+    "calls": 6,
+    "usage": {
+      "prompt_tokens": 1254,
+      "completion_tokens": 175,
+      "total_tokens": 1429
+    },
+    "quality_passed": false,
+    "usage_complete": true,
+    "oracle_placeholder_check": null,
+    "execution": {
+      "ok": true,
+      "amount": 0,
+      "cash_before": 100000000,
+      "cash_after": 100000000,
+      "goods_before": 5,
+      "goods_after": 5,
+      "sold_after": 6
+    }
+  }
+]

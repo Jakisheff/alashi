@@ -1,0 +1,508 @@
+{
+  "cycle": 5,
+  "t": 13.023,
+  "units": [
+    {
+      "id": 0,
+      "owner": 0,
+      "role": 0,
+      "home": [
+        -6.0,
+        -1.3
+      ],
+      "target": [
+        -2.3,
+        -2.0999999999999996
+      ],
+      "x": -6.0,
+      "z": -1.3,
+      "phase": "done",
+      "started": 155.70141614500608,
+      "duration": 5.2,
+      "phase_t": 0,
+      "yaw": 0,
+      "task_id": "cycle-5-0-0",
+      "result": "Продажа 4 товаров: расчёт 39"
+    },
+    {
+      "id": 1,
+      "owner": 0,
+      "role": 1,
+      "home": [
+        -5.15,
+        -1.3
+      ],
+      "target": [
+        -0.9,
+        1.2
+      ],
+      "x": -5.15,
+      "z": -1.3,
+      "phase": "done",
+      "started": 155.70168739299697,
+      "duration": 5.45,
+      "phase_t": 0,
+      "yaw": 0,
+      "task_id": "cycle-5-0-1",
+      "result": "Сравнение вариантов готово"
+    },
+    {
+      "id": 2,
+      "owner": 0,
+      "role": 2,
+      "home": [
+        -6.0,
+        -0.10000000000000009
+      ],
+      "target": [
+        0.7999999999999999,
+        3.8
+      ],
+      "x": -6.0,
+      "z": -0.10000000000000009,
+      "phase": "done",
+      "started": 155.7020424509974,
+      "duration": 5.7,
+      "phase_t": 0,
+      "yaw": 0,
+      "task_id": "cycle-5-0-2",
+      "result": "Политический риск проверен"
+    },
+    {
+      "id": 3,
+      "owner": 0,
+      "role": 3,
+      "home": [
+        -5.15,
+        -0.10000000000000009
+      ],
+      "target": [
+        -0.9,
+        -3.8999999999999995
+      ],
+      "x": -5.15,
+      "z": -0.10000000000000009,
+      "phase": "done",
+      "started": 161.55074085100205,
+      "duration": 5.95,
+      "phase_t": 0,
+      "yaw": 0,
+      "task_id": "cycle-5-0-3",
+      "result": "Три отчёта согласованы"
+    },
+    {
+      "id": 4,
+      "owner": 1,
+      "role": 0,
+      "home": [
+        6.0,
+        1.1
+      ],
+      "target": [
+        -0.4999999999999999,
+        -2.0999999999999996
+      ],
+      "x": 6.0,
+      "z": 1.1,
+      "phase": "done",
+      "started": 155.97250724199694,
+      "duration": 5.2,
+      "phase_t": 0,
+      "yaw": 0,
+      "task_id": "cycle-5-1-0",
+      "result": "Продажа 4 товаров: расчёт 39"
+    },
+    {
+      "id": 5,
+      "owner": 1,
+      "role": 1,
+      "home": [
+        6.85,
+        1.1
+      ],
+      "target": [
+        0.9,
+        1.2
+      ],
+      "x": 6.85,
+      "z": 1.1,
+      "phase": "done",
+      "started": 155.97266118699918,
+      "duration": 5.45,
+      "phase_t": 0,
+      "yaw": 0,
+      "task_id": "cycle-5-1-1",
+      "result": "Сравнение вариантов готово"
+    },
+    {
+      "id": 6,
+      "owner": 1,
+      "role": 2,
+      "home": [
+        6.0,
+        2.3
+      ],
+      "target": [
+        2.6,
+        3.8
+      ],
+      "x": 6.0,
+      "z": 2.3,
+      "phase": "done",
+      "started": 155.97275848699792,
+      "duration": 5.7,
+      "phase_t": 0,
+      "yaw": 0,
+      "task_id": "cycle-5-1-2",
+      "result": "Политический риск проверен"
+    },
+    {
+      "id": 7,
+      "owner": 1,
+      "role": 3,
+      "home": [
+        6.85,
+        2.3
+      ],
+      "target": [
+        0.9,
+        -3.8999999999999995
+      ],
+      "x": 6.85,
+      "z": 2.3,
+      "phase": "done",
+      "started": 161.84221950400388,
+      "duration": 5.95,
+      "phase_t": 0,
+      "yaw": 0,
+      "task_id": "cycle-5-1-3",
+      "result": "Три отчёта согласованы"
+    }
+  ],
+  "accepted": [
+    true,
+    true
+  ],
+  "events": [
+    {
+      "event_id": "5:1",
+      "t": 0.0,
+      "side": null,
+      "kind": "cycle",
+      "text": "Новое поручение: подготовить решение Chief",
+      "unit": null,
+      "major": true
+    },
+    {
+      "event_id": "5:2",
+      "t": 0.662,
+      "side": 0,
+      "kind": "assigned",
+      "text": "А1: Рынок",
+      "unit": 0,
+      "major": true
+    },
+    {
+      "event_id": "5:3",
+      "t": 0.662,
+      "side": 0,
+      "kind": "assigned",
+      "text": "А2: Варианты",
+      "unit": 1,
+      "major": true
+    },
+    {
+      "event_id": "5:4",
+      "t": 0.662,
+      "side": 0,
+      "kind": "assigned",
+      "text": "А3: Парламент",
+      "unit": 2,
+      "major": true
+    },
+    {
+      "event_id": "5:5",
+      "t": 0.933,
+      "side": 1,
+      "kind": "assigned",
+      "text": "Б1: Рынок",
+      "unit": 4,
+      "major": true
+    },
+    {
+      "event_id": "5:6",
+      "t": 0.933,
+      "side": 1,
+      "kind": "assigned",
+      "text": "Б2: Варианты",
+      "unit": 5,
+      "major": true
+    },
+    {
+      "event_id": "5:7",
+      "t": 0.933,
+      "side": 1,
+      "kind": "assigned",
+      "text": "Б3: Парламент",
+      "unit": 6,
+      "major": true
+    },
+    {
+      "event_id": "5:8",
+      "t": 2.382,
+      "side": 0,
+      "kind": "work",
+      "text": "А1: работает",
+      "unit": 0,
+      "major": true
+    },
+    {
+      "event_id": "5:9",
+      "t": 2.382,
+      "side": 0,
+      "kind": "work",
+      "text": "А2: работает",
+      "unit": 1,
+      "major": true
+    },
+    {
+      "event_id": "5:10",
+      "t": 2.383,
+      "side": 0,
+      "kind": "work",
+      "text": "А3: работает",
+      "unit": 2,
+      "major": true
+    },
+    {
+      "event_id": "5:11",
+      "t": 2.608,
+      "side": 1,
+      "kind": "work",
+      "text": "Б1: работает",
+      "unit": 4,
+      "major": true
+    },
+    {
+      "event_id": "5:12",
+      "t": 2.608,
+      "side": 1,
+      "kind": "work",
+      "text": "Б2: работает",
+      "unit": 5,
+      "major": true
+    },
+    {
+      "event_id": "5:13",
+      "t": 2.608,
+      "side": 1,
+      "kind": "work",
+      "text": "Б3: работает",
+      "unit": 6,
+      "major": true
+    },
+    {
+      "event_id": "5:14",
+      "t": 4.189,
+      "side": 0,
+      "kind": "return",
+      "text": "А1: несёт отчёт",
+      "unit": 0,
+      "major": true
+    },
+    {
+      "event_id": "5:15",
+      "t": 4.438,
+      "side": 0,
+      "kind": "return",
+      "text": "А2: несёт отчёт",
+      "unit": 1,
+      "major": true
+    },
+    {
+      "event_id": "5:16",
+      "t": 4.438,
+      "side": 1,
+      "kind": "return",
+      "text": "Б1: несёт отчёт",
+      "unit": 4,
+      "major": true
+    },
+    {
+      "event_id": "5:17",
+      "t": 4.682,
+      "side": 0,
+      "kind": "return",
+      "text": "А3: несёт отчёт",
+      "unit": 2,
+      "major": true
+    },
+    {
+      "event_id": "5:18",
+      "t": 4.736,
+      "side": 1,
+      "kind": "return",
+      "text": "Б2: несёт отчёт",
+      "unit": 5,
+      "major": true
+    },
+    {
+      "event_id": "5:19",
+      "t": 4.975,
+      "side": 1,
+      "kind": "return",
+      "text": "Б3: несёт отчёт",
+      "unit": 6,
+      "major": true
+    },
+    {
+      "event_id": "5:20",
+      "t": 5.874,
+      "side": 0,
+      "kind": "done",
+      "text": "А1: отчёт доставлен",
+      "unit": 0,
+      "major": true
+    },
+    {
+      "event_id": "5:21",
+      "t": 6.149,
+      "side": 0,
+      "kind": "done",
+      "text": "А2: отчёт доставлен",
+      "unit": 1,
+      "major": true
+    },
+    {
+      "event_id": "5:22",
+      "t": 6.149,
+      "side": 1,
+      "kind": "done",
+      "text": "Б1: отчёт доставлен",
+      "unit": 4,
+      "major": true
+    },
+    {
+      "event_id": "5:23",
+      "t": 6.493,
+      "side": 0,
+      "kind": "done",
+      "text": "А3: отчёт доставлен",
+      "unit": 2,
+      "major": true
+    },
+    {
+      "event_id": "5:24",
+      "t": 6.493,
+      "side": 1,
+      "kind": "done",
+      "text": "Б2: отчёт доставлен",
+      "unit": 5,
+      "major": true
+    },
+    {
+      "event_id": "5:25",
+      "t": 6.511,
+      "side": 0,
+      "kind": "assigned",
+      "text": "А4: Проверка",
+      "unit": 3,
+      "major": true
+    },
+    {
+      "event_id": "5:26",
+      "t": 6.68,
+      "side": 1,
+      "kind": "done",
+      "text": "Б3: отчёт доставлен",
+      "unit": 6,
+      "major": true
+    },
+    {
+      "event_id": "5:27",
+      "t": 6.803,
+      "side": 1,
+      "kind": "assigned",
+      "text": "Б4: Проверка",
+      "unit": 7,
+      "major": true
+    },
+    {
+      "event_id": "5:28",
+      "t": 8.17,
+      "side": 0,
+      "kind": "work",
+      "text": "А4: работает",
+      "unit": 3,
+      "major": true
+    },
+    {
+      "event_id": "5:29",
+      "t": 8.53,
+      "side": 1,
+      "kind": "work",
+      "text": "Б4: работает",
+      "unit": 7,
+      "major": true
+    },
+    {
+      "event_id": "5:30",
+      "t": 10.775,
+      "side": 0,
+      "kind": "return",
+      "text": "А4: несёт отчёт",
+      "unit": 3,
+      "major": true
+    },
+    {
+      "event_id": "5:31",
+      "t": 11.063,
+      "side": 1,
+      "kind": "return",
+      "text": "Б4: несёт отчёт",
+      "unit": 7,
+      "major": true
+    },
+    {
+      "event_id": "5:32",
+      "t": 12.474,
+      "side": 0,
+      "kind": "done",
+      "text": "А4: отчёт доставлен",
+      "unit": 3,
+      "major": true
+    },
+    {
+      "event_id": "5:33",
+      "t": 12.517,
+      "side": 0,
+      "kind": "accepted",
+      "text": "Chief А принял проверенный расчёт 39",
+      "unit": null,
+      "major": true
+    },
+    {
+      "event_id": "5:34",
+      "t": 12.808,
+      "side": 1,
+      "kind": "done",
+      "text": "Б4: отчёт доставлен",
+      "unit": 7,
+      "major": true
+    },
+    {
+      "event_id": "5:35",
+      "t": 12.831,
+      "side": 1,
+      "kind": "accepted",
+      "text": "Chief Б принял проверенный расчёт 39",
+      "unit": null,
+      "major": true
+    }
+  ],
+  "holds": [
+    0,
+    0
+  ],
+  "source": "scripted-demo"
+}

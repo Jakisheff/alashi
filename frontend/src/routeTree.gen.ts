@@ -15,6 +15,7 @@ import { Route as DevnetRouteImport } from './routes/devnet'
 import { Route as GraphRouteImport } from './routes/graph'
 import { Route as LiveRouteImport } from './routes/live'
 import { Route as LogRouteImport } from './routes/log'
+import { Route as StrategiesRouteImport } from './routes/strategies'
 import { Route as StreamRouteImport } from './routes/stream'
 
 const IndexRoute = IndexRouteImport.update({
@@ -47,6 +48,11 @@ const LogRoute = LogRouteImport.update({
   path: '/log',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StrategiesRoute = StrategiesRouteImport.update({
+  id: '/strategies',
+  path: '/strategies',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const StreamRoute = StreamRouteImport.update({
   id: '/stream',
   path: '/stream',
@@ -60,6 +66,7 @@ export interface FileRoutesByFullPath {
   '/graph': typeof GraphRoute
   '/live': typeof LiveRoute
   '/log': typeof LogRoute
+  '/strategies': typeof StrategiesRoute
   '/stream': typeof StreamRoute
 }
 export interface FileRoutesByTo {
@@ -69,6 +76,7 @@ export interface FileRoutesByTo {
   '/graph': typeof GraphRoute
   '/live': typeof LiveRoute
   '/log': typeof LogRoute
+  '/strategies': typeof StrategiesRoute
   '/stream': typeof StreamRoute
 }
 export interface FileRoutesById {
@@ -79,14 +87,30 @@ export interface FileRoutesById {
   '/graph': typeof GraphRoute
   '/live': typeof LiveRoute
   '/log': typeof LogRoute
+  '/strategies': typeof StrategiesRoute
   '/stream': typeof StreamRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/arena' | '/devnet' | '/graph' | '/live' | '/log' | '/stream'
+    | '/'
+    | '/arena'
+    | '/devnet'
+    | '/graph'
+    | '/live'
+    | '/log'
+    | '/strategies'
+    | '/stream'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/arena' | '/devnet' | '/graph' | '/live' | '/log' | '/stream'
+  to:
+    | '/'
+    | '/arena'
+    | '/devnet'
+    | '/graph'
+    | '/live'
+    | '/log'
+    | '/strategies'
+    | '/stream'
   id:
     | '__root__'
     | '/'
@@ -95,6 +119,7 @@ export interface FileRouteTypes {
     | '/graph'
     | '/live'
     | '/log'
+    | '/strategies'
     | '/stream'
   fileRoutesById: FileRoutesById
 }
@@ -105,6 +130,7 @@ export interface RootRouteChildren {
   GraphRoute: typeof GraphRoute
   LiveRoute: typeof LiveRoute
   LogRoute: typeof LogRoute
+  StrategiesRoute: typeof StrategiesRoute
   StreamRoute: typeof StreamRoute
 }
 
@@ -152,6 +178,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LogRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/strategies': {
+      id: '/strategies'
+      path: '/strategies'
+      fullPath: '/strategies'
+      preLoaderRoute: typeof StrategiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/stream': {
       id: '/stream'
       path: '/stream'
@@ -169,6 +202,7 @@ const rootRouteChildren: RootRouteChildren = {
   GraphRoute: GraphRoute,
   LiveRoute: LiveRoute,
   LogRoute: LogRoute,
+  StrategiesRoute: StrategiesRoute,
   StreamRoute: StreamRoute,
 }
 export const routeTree = rootRouteImport

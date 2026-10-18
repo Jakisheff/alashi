@@ -1,0 +1,272 @@
+# Alashi: зрительский проход по ambitious-work
+
+## 16.10.2026 18:21: демо с автором в кадре
+
+План: 1 час, до 19:21.
+
+target: готовое двухминутное демо на английском из DJI_0088 и DJI_0089.
+Обязательно сохранить представление Амира как студента Tomorrow School.
+Основной экран показывает одобренную RTS-карту; автор объясняет игру в
+круглом окне. Убрать паузы и повторы, сохранить смысл речи. Все элементы
+видео и показанного интерфейса на английском. Исходные записи не менять.
+Критерии: просмотр полного MP4 со звуком, сохранённая фраза Tomorrow School,
+читаемые английские подписи, синхронизация речи и кадра, отсутствие
+неподтверждённых заявлений об экономии. Код и итог публикуются в GitHub.
+
+## 16.10.2026 17:40: расход токенов для цикла стратегии
+
+План: 0,5 часа, до 18:10.
+
+target: заменить условные 12000/8000 оценкой по конкретным запросам и,
+при разрешённом вызове провайдера, фактическим usage. Сравнить полный
+контекст каждого специалиста с общей разведкой, включая стоимость её
+подготовки и повторного чтения. Проверка качества: канонический Rust oracle.
+Видео не создаётся. GLM-4.5-Flash по текущему тарифу z.ai бесплатна;
+денежную экономию на этой модели не заявлять.
+
+16.10 18:00. Первый разрешённый замер завершён: 33 запроса,
+10478 подтверждённых токенов, два запроса без usage (лимит и таймаут).
+Ни одна пара не прошла качество. Выявлена ошибка обработчика: JSON в
+блоке кода отклонялся, зависимые вызовы получали null. Формат исправлен,
+при ошибке зависимости теперь останавливаются. Формула выручки уточнена
+одинаково для обеих версий. Новые внешние запросы ожидают разрешения.
+Проверки: 40 тестов alashi-rules прошли, регрессия воспроизведена и
+исправлена на двух реальных ответах разведчика. Далее: разрешённый
+повторный замер, независимый аудит, публикация исходников и evidence.
+
+16.10 18:03. Владелец отказался от второго замера. Новых запросов к
+моделям не было. Подтверждено: input 9908, output 570, total 10478;
+5725 cached уже входят в input. Два запроса без usage, экономия не доказана.
+Отчёт: owner-film/TOKEN_MEASUREMENT.md. Два локальных регрессионных теста
+проверили парсинг реальных ответов и остановку зависимых запросов без сети.
+Исправленный код не проходил повторного live-замера. Публикуются исходники,
+журнал и независимый аудит. Незавершённые материалы видео не включаются.
+Факт: 0,38 часа до публикации.
+
+Предыдущая работа над видео остановлена владельцем в 16:45.
+Факт: 0,27 часа до остановки. Незавершённый MP4 не считается результатом.
+
+## 16.10.2026 16:29: продолжение одобренного ролика
+
+План: 1,5 часа, до 17:59.
+
+Владелец отклонил минимальную арену owner-film и выбрал визуал 9817a50.
+Предыдущий проход закрыт: Факт: 1,28 часа. Уточнение задачи в 16:24-16:27
+заняло 0,05 часа. Новый проход сохраняет одобренную карту и персонажей.
+Сюжет берётся из исходного концепта: последний раунд, итог 159:102.
+Критерий: 120 секунд, причинные действия, проверка по каноническим правилам,
+просмотр движения и публикация исходников с проверенным GitHub CI.
+Контракт: rts-overview/film/STAGING.md.
+
+
+## 16.10.2026 15:04: двухминутное видео владельца
+
+План: 1,5 часа, до 16:34.
+
+target: полный ролик 120 секунд с общей картой, быстрыми Degenie и параллельной
+работой. Проверить один полный цикл до исполнения действия каноническими
+правилами. Сравнить общий и адресный контекст на одинаковых задачах; экономия
+публикуется только по фактическому usage. Исходники и результаты идут в GitHub.
+Визуальный контракт и канон движения зафиксированы в owner-film/STAGING.md.
+
+16.10 16:01. Письменные промпты дизайнера приняты как главный визуальный
+источник. Шесть Degenie работают на минимальной общей арене; список агентов
+и журнал синхронизированы с картой. Первый результат: продажа четырёх товаров,
+выручка 39M, касса 139M. Все шесть постановочных продаж перепроверены Rust.
+Экспортируется 120-секундный ролик. Вызовы моделей ожидают разрешения на z.ai;
+экономия токенов не заявляется. Проверка движения охватывает 3600 отсчётов.
+
+16.10 16:17. Ролик изготовлен, проверен и отправлен в GitHub (5d8c178).
+FFmpeg декодировал 3600 кадров за 120 секунд; браузер дошёл до конца.
+Проверены пауза, перемотка назад и ширина 390 CSS px. Исправлена отмена
+ожидающего play() при быстрой паузе. Копия MP4 сохранена в Downloads.
+Факт: 1,22 часа на изготовление и локальную приёмку. Итоговое время с
+ожиданием GitHub CI фиксируется в заключительном ответе владельцу.
+Экономия токенов остаётся непроверенной до разрешения на запросы к z.ai.
+
+16.10.2026, начало 00:57 (Asia/Almaty).
+План: 1 час, до 01:57.
+
+## Цель прохода
+
+Применить ambitious-work к визуальной привлекательности Alashi с опорой на концепт, отправленный Ивану 15.10.2026. Наблюдаемый результат этого прохода: проверенный разбор нынешнего пути зрителя и отдельный интерактивный режиссёрский макет одного законченного эпизода. Интерес зрителей остаётся гипотезой до просмотра людьми.
+
+Карта: вход → цель штабов → поручения → ожидание и выбор → игровое действие → последствия → развязка → разбор работы агента.
+
+## 01:08: исходные материалы проверены
+
+observed: прочитаны серверные правила и протокол. Получен документ; к нему приложены концепт и автономный HTML из /home/ubuntu/amir-alashi-swarm-20261015-01a13c93/. SHA256 трёх файлов совпадают с серверным SHA256SUMS. Прочитанный docs HEAD: ff1792d544693c8dc5fa38d3441ca2e7a8fdf065. В проверенных BOARD и handoff Ивана принятие концепта не найдено.
+
+observed: исходный макет просмотрен при ширине 1280 и 390. В нём четыре ручные фазы, первоначально открыт рынок, нет проигрывания и развязки партии. Финал старого примера: 144:80, раунд 3/6. В документе новый учебный пример: 159:102, раунд 6/6. На телефоне роли скрыты с карты, доступны в списке ниже.
+
+observed: опубликованная главная alashi.network показывает подтверждённый replay. Браузер проверки не поддержал WebGL; доступна резервная картинка и журнал. Качество текущей 3D-анимации по этому просмотру не установлено.
+
+Следующий шаг: зафиксировать постановку, собрать локальный макет на неизменённом изображении владельца, проверить полное прохождение. Отдельно проверить паузу и перемотку; осмотреть телефонный размер. В код игры и серверные документы изменений нет.
+
+## 16.10 01:30: макет и проверка
+
+observed: собран эпизод из 10 моментов длительностью 64 секунды. Полный проход дошёл до финала 159:102. Пауза останавливает сигналы и время; перемотка возвращает начальные ресурсы. Итог сохранён при отключённом движении. Просмотрены крупные планы, исправлена обрезка лица Б. Исправлена горизонтальная прокрутка на 320 пикселях; результат подтверждён повторным просмотром.
+
+observed: данные игрового расчёта сверены с PRICE_TABLE и BRIBE. Пять прочитанных файлов совпадают с проверенным remote main fc40c653c7f109147716130d0bb1217971ff16c8. В коде просмотра не найдены поля поручений субагентам.
+
+Подготовлены REVIEW.md с картой пути зрителя и следующей проверкой на обычных партиях, STAGING.md по канону Лассетера. Финальная упаковка и проверка самостоятельного файла остаются.
+
+## 16.10 01:34: завершение
+
+observed: самостоятельный alashi-watch.html открыт и проверен отдельно. Обе встроенные картинки загрузились; внешних скриптов и таблиц стилей нет. Перемотка до финала даёт 159:102. Возврат к началу убирает будущие результаты всех четырёх групп. В журнале браузера нет ошибок и предупреждений. Локальные ссылки документов проверены.
+
+Тексты прошли механическую чистку с нулём маркеров. Выполнены ручные проверки ритма и смысла; гипотезы отделены от наблюдений. Живая 3D-сцена и интерес новых зрителей остаются непроверенными.
+
+Факт: 0,62 часа.
+
+## 16.10.2026 01:44: один цикл Degenie
+
+План: 1,5 часа, до 03:14.
+
+Владелец утвердил углублённый промпт. Объём: один исполнитель получает поручение проверить рынок, работает у терминала и возвращает расчёт штабу. Основание: исходный концепт 15.10 и модель desk-genie со скелетом. Готовность проверяется по непрерывному движению и контакту с планшетом. Отдельно проверяются телефонный кадр и управление плеером. Данные постановочные; нового живого запуска агентов нет.
+
+16.10 01:56. Первая серия ключевых кадров отрендерена. Найдены дефекты копии Chief и передачи планшета. Chief переводится в запечённую позу исходной модели, руки исполнителя будут следовать траектории планшета до отпускания. Проверяется быстрый рендер для записи полного цикла. Тест понимания новыми зрителями не проводился.
+
+16.10 02:08. Проверены исходные длины костей: плечо 0.32, предплечье 0.36, отклонения в пределах ошибки float. Найдено проникновение кончиков пальцев в планшет около 0.014 единицы сцены; высота поддержки скорректирована. Приёмная панель заменена узкой опорой между кистями. Запущен рендер полного цикла, 28 секунд. Работа с событиями остаётся постановочной, баланс не изменяется.
+
+16.10 02:20. Из-за высокой нагрузки компьютера время кадра выросло. План оставшейся работы: 1,5 часа, до 03:50. Полная запись сохраняется покадрово. Ключевые кадры проверены в окончательном качестве, включая работу и передачу планшета. Дополнительно сохраняется редактируемая сцена с анимацией, чтобы не зависеть от повторной процедурной сборки.
+
+16.10 02:32. Короткое видео проверено в браузере. Воспроизведение работало, но перемотка не работала: seekable был [0,0] при полностью загруженном файле. Причина воспроизведена на обычном Python HTTP-сервере. Сервер заменён на loopback-only вариант с HTTP byte ranges. После исправления seekable=[0,7], переход на 3.4 секунды работает. Встроенная запись поддерживается браузером.
+
+16.10 02:56. Рендер прошёл начало возвращения. Сквозная проверка 420 кадров обнаружила эквивалентные углы планшета, различавшиеся на полные обороты. В MP4 позы совпадали, но интерполяция Blender могла вращать планшет между ними. Углы развёрнуты непрерывно, мировая ориентация ключевых поз сохраняется. Повторная проверка выполняется. Далее: завершить запись и проверить полный плеер.
+
+16.10 03:08. Передача планшета отрендерена, остаётся финальная реакция Chief. Проверка исправленной сцены после повторного открытия прошла. Сквозная проверка траекторий и длин рук прошла. Дальше: сборка записи и проверка полного цикла в браузере. Затем проверяются управление плеером и ширина 390 и 320 пикселей.
+
+## 16.10 03:21: цикл завершён
+
+observed: готова непрерывная запись 28 секунд и редактируемая сцена Blender. Полный проход в браузере заканчивается приёмкой расчёта 39 при балансе 100. Пауза и перемотка проверены, повтор очищает будущий результат. Режим без плавного движения сохраняет ключевые позы. Телефонный кадр проверен при ширине 390 и 320 CSS-пикселей. Ошибок браузера за период финальной проверки нет.
+
+observed: новый эпизод открыт по прежнему адресу alashi-watch.html. Предыдущий вариант сохранён как alashi-watch-dots.html. Видео и сцена находятся в degenie-cycle; доказательства лежат в evidence/; RESULTS.json и ACCEPTANCE.md в этой папке относятся к текущему циклу. Полный вывод FFmpeg подтверждает декодирование всех 420 кадров.
+
+not_validated: интерес новых зрителей и работа на физическом телефоне. Живое делегирование не подключено, эпизод использует демонстрационные события.
+
+Факт: 1,62 часа.
+
+## 16.10.2026 03:25: ритм RTS и общая карта
+
+План: 0,75 часа, до 04:10.
+
+Владелец указал на медленный темп и потерю общей картины. Цель: быстрые поручения Degenie при неподвижной общей камере, с параллельной работой двух штабов. Персонажи и концепт сохраняются. Проверка: полный проход задач, зависимости проверки, отклик команды, частота кадров и просмотр на узком экране.
+
+16.10 03:42. После примеров владельца выбран перенос готовых RemoteSession и Timeline из agentenv-wc3-plugin (Apache-2.0, commit 2376c50). Скопированы без изменений, хеши сохранены. Локальный адаптер сценарных поручений и браузерная карта с исходным desk-genie.glb подготовлены. Следующее: проверка задержек и зависимостей. Общий план проверяется в движении.
+
+16.10 04:06. Готовый RTS-клиент и Timeline использованы без изменений. Все 16 проверок прошли после исправления гонки приёмки. Исходный viewer отобразил полный цикл Alashi. Общая карта с восемью Degenie реализована; художественная приёмка остаётся открытой из-за нестабильной частоты кадров и недоступности IAB на финальном повторе. Видео-захват недостаточно плавный, его функция удалена. Подробности в rts-overview/ACCEPTANCE.md.
+
+16.10 04:07. Проверка повторного использования завершена. Финальный цикл: восемь доставленных отчётов, приёмка обоими Chief к 13,023 секунды; доказательства сохранены. Художественная готовность не объявляется, незакрытые условия перечислены в ACCEPTANCE.md. Факт: 0,70 часа.
+
+16.10 16:40. Канонический Simulator воспроизвёл исходный сюжет 159:102.
+Готовы 10 снимков непрерывного состояния; ранние переходы фаз и повторные
+действия отвергаются. Проверены зависимости поручений на 3600 отсчётах.
+Первый 24-секундный фрагмент использует исходные terrain и atlas.
+Исправлена пограничная погрешность времени при прибытии к терминалу.
+Следующий шаг: просмотр фрагмента, полный рендер и звуковые сигналы событий.
+
+18:37 update: supplied English transcript is the editorial source. Preserve the original Tomorrow School introduction. Audience clarification: Magzhan Madiyev, so use plain explanations of owner benefit and short English overlays. Local model alignment is running; no source footage is uploaded. Approved RTS assets are reused. The shown prototype interface is now English; isolated runtime checks and motion checks passed. No further z.ai calls.
+
+18:49 update: ALASHI now uses a normal A; faction badges no longer rotate their letters. Camera crop reviewed against the approved whole-map layout. Scripted cycle check covers 2,112 frames, six parallel tasks and verifier dependencies. English source speech alignment has reached the sharing section. Final composition remains pending.
+
+19:01 update: selected speech totals 119.24 seconds; export target is exactly 120 seconds. Tomorrow School intro frame and circular camera crop reviewed. Nine source clips are ready. Hardware decoding was verified and is used for the remaining clips. English UI fixes pushed as 0a5e3a2. Final export and playback review remain.
+
+19:12: final export failed with ENOSPC. The incomplete MP4 is not deliverable. Source clips, edited presenter track and rendered map remain intact. Removing reproducible package caches and reducing the final compositing graph's memory use before retrying. Revised plan: 1.25 hours, until 19:36.
+
+19:25: final English MP4 completed, 120.000 seconds, 1280×720 at 30 fps. All 3,600 frames and 5,760,000 audio samples decode correctly. Browser playback and phone-width framing reviewed; the Tomorrow School introduction is intact. The separate usage receipt totals 2,634 tokens and the failed quality gate is disclosed. The final copy is in Downloads. Факт: 1,07 часа на монтаж и локальную проверку. GitHub publication and final-head CI follow this completed media work.
+
+Owner correction: exclude the generated founder MP4 from GitHub publication. Keep local video copies, publish source and code changes, and remove the MP4 from the current branch tree. The earlier upload remains in history.
+
+16.10 19:49. Strategy sharing implementation. Plan: 3 hours, until 22:49. Implement one persistent cycle in the platform: immutable strategy/fork, bounded execution receipts, rule-checked result, publication and independent adoption. Reuse HTTP arena ownership and rules; no new provider calls or video publication. Acceptance requires independent owner replay, failure/unknown-usage accounting, restart recovery, event-driven Degenie and relevant local/CI checks.
+
+20:12: the first six backend cycle tests pass. Fixed a scaled-price mismatch by
+using canonical compute_sale and asserted 13,600,000 PESO independently. Reused
+arena action application after owner authentication; stored agent credentials
+are hashes and must never be used as raw bearer tokens. HTTP integration follows.
+
+20:20: signed HTTP acceptance passed for original, derivative and third-owner
+adoption. Local test provider: 11 requests, peak concurrency 3, usage fixtures
+600 / 360 / 360. All three isolated starting economies produced canonical
+13,600,000 PESO sales. No external provider calls. UI comparison is scoped to one
+matched case and never labels fixture counts as measured LLM savings.
+
+21:09: scope corrected from an in-game sale to a marketing duel, following Amir's
+explicit clarification. Both teams receive one immutable advertising brief and
+budget. New calls wait for both owners and stop at the common deadline. Final ads
+remain hidden until both submissions or the deadline. A separate host evaluates
+creative quality; token use cannot establish monetary cost or conversion efficacy.
+
+21:20: current implementation is an English marketing duel, not an economic sale.
+The two teams have the same immutable brief and shared deadline. The runner preserves
+paid responses before submission, and local tools explicitly report no model calls.
+Unknown usage remains unknown. Token leader requires reveal and both host decisions;
+monetary savings and conversion results remain unmeasured.
+
+21:33: browser desktop framing shows the whole approved terrain, both upright
+team labels and the common brief. Final ads and task receipts are visible after
+reveal; a rematch shows independent reuse. The old ambient mock failure was
+reproduced as WouldBlock and fixed only in the test reader. Full arena rerun and
+phone-width motion acceptance remain in progress.
+
+21:58: pushed ad9a1d0 with the marketing duel, local runner, provenance policy and
+acceptance evidence. Local results: 132 arena tests, 40 rules tests, 5 Node tests,
+frontend build, animation suite and staging/reference checks. Two pre-existing
+fixture races were reproduced and corrected in test code. GitHub CI for the new
+head is pending; the old 96d553c result is not evidence for this implementation.
+
+22:04: GitHub CI run 38936010694 passed all five jobs on ad9a1d0, including SBF,
+program host compilation, indexer and bots. A final UTF-8 receipt-size regression
+failed before the fix and passed afterward (six Node tests). Oversized report
+content is discarded while its known usage is retained. Publishing this small
+runner correction and the completed acceptance record; final-head CI follows.
+Факт: 2,25 часа на реализацию, локальную приёмку и первый полный GitHub CI.
+
+22:20: final review found a mismatch in private-original semantics. A new assertion
+failed on leaked task names; after the fix, all four cycle tests passed. Anonymous
+traces retain only opaque task identities, kinds, dependencies, timing and usage.
+Owners retain original names and tool bindings. Published versions remain reusable.
+The UI and guide now state this boundary. Full arena verification follows.
+
+22:35: final local acceptance complete. All 132 arena tests passed after the
+private-trace correction and removal of the double-advance fixture race.
+The updated frontend build passed. Amir clarified the product as an arena for
+skills and agents, with advertising only the first task. Owner/team labels,
+headline, home link and guides now reflect that scope; this pilot still validates
+advertisement artifacts only. Updated desktop and 390px evidence, with no phone
+horizontal overflow. Publishing the final correction and checking its CI.
+Факт: 2.77 часа на реализацию и локальную приёмку с 19:49 до 22:35;
+ожидание итогового GitHub CI учитывается отдельно в финальном отчёте.
+
+17.10.2026 01:02. План: 1,5 часа, до 02:32.
+Audit the two-owner trading path against the demo. Found a disconnected consumer:
+/arena reads trading events but has no Degenie map; /strategies renders only the
+advertisement workflow. Trading public events also omit historical result values.
+Acceptance: two signed fixture owners, separate actual agent processes and local
+providers produce accepted trades; the public map consumes their durable receipts.
+No paid providers, real funds or production deployment.
+
+17.10 01:15: two signed fixture owners and two independent agent processes sold
+3 and 2 goods via separate loopback providers. Historical receipts establish
+31 and 15 game cash (PESO = 1,000,000 base units). A restart test exposed a public
+event read before snapshot commit; the journal now waits on the transaction gate.
+Full arena regression is running. The primary devnet path is also in scope:
+read-only public Game D2mk returned 41 confirmed events, two factions and settled
+state. Adding its confirmed-event map consumer without sending transactions.
+
+17.10 01:34: local acceptance passed 134 arena tests. Both real agent processes
+used their model responses for sales, recovered credentials, replayed an operation
+without charging another sale, and retained receipts across restart. Solana RPC
+independently returned both public devnet sale transactions as successful, with
+matching slots and ALASHI program invocation. The browser rendered both sell
+journeys at 6.000 s, showed the whole map at 390px without overflow, and received
+two new fixture votes without reload. Offline Play held 1.100 s twice; the same
+saved fixture state was restored. Build, animation and trading guards passed.
+Remaining: fresh external two-person onboarding, actual internal-subagent traces,
+trading token accounting and trading strategy lineage. No deployment or spending.
+Preparing the source/evidence commit and final-head CI.
+
+17.10 01:37. Факт: 0,58 часа на реализацию и локальную приёмку (01:02-01:37).
+The final frontend build passed. Source and public PNG/JSON evidence are ready
+for publication; final-head GitHub CI is the remaining verification step. Total
+elapsed time including CI will be reported in the PR and completion message.

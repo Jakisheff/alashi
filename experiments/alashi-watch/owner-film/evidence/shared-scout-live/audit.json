@@ -1,0 +1,313 @@
+{
+  "status": "observed",
+  "requests": 33,
+  "known_usage": {
+    "prompt_tokens": 9908,
+    "completion_tokens": 570,
+    "total_tokens": 10478
+  },
+  "unknown_usage_requests": 2,
+  "runs": [
+    {
+      "run_id": "market-1-full",
+      "mode": "full",
+      "usage": {
+        "prompt_tokens": 1759,
+        "completion_tokens": 43,
+        "total_tokens": 1802
+      },
+      "cached_input_tokens": 16,
+      "unknown_usage_roles": [
+        "market"
+      ],
+      "failed_roles": [
+        "market",
+        "chief",
+        "verifier"
+      ],
+      "by_role": {
+        "legal": {
+          "prompt_tokens": 761,
+          "completion_tokens": 13,
+          "total_tokens": 774
+        },
+        "horizon": {
+          "prompt_tokens": 757,
+          "completion_tokens": 14,
+          "total_tokens": 771
+        },
+        "chief": {
+          "prompt_tokens": 128,
+          "completion_tokens": 10,
+          "total_tokens": 138
+        },
+        "verifier": {
+          "prompt_tokens": 113,
+          "completion_tokens": 6,
+          "total_tokens": 119
+        }
+      },
+      "eligible": false
+    },
+    {
+      "run_id": "market-1-shared",
+      "mode": "shared",
+      "usage": {
+        "prompt_tokens": 1253,
+        "completion_tokens": 174,
+        "total_tokens": 1427
+      },
+      "cached_input_tokens": 671,
+      "unknown_usage_roles": [],
+      "failed_roles": [
+        "scout",
+        "market",
+        "legal",
+        "chief"
+      ],
+      "by_role": {
+        "scout": {
+          "prompt_tokens": 759,
+          "completion_tokens": 119,
+          "total_tokens": 878
+        },
+        "market": {
+          "prompt_tokens": 91,
+          "completion_tokens": 13,
+          "total_tokens": 104
+        },
+        "legal": {
+          "prompt_tokens": 70,
+          "completion_tokens": 12,
+          "total_tokens": 82
+        },
+        "horizon": {
+          "prompt_tokens": 66,
+          "completion_tokens": 14,
+          "total_tokens": 80
+        },
+        "chief": {
+          "prompt_tokens": 141,
+          "completion_tokens": 10,
+          "total_tokens": 151
+        },
+        "verifier": {
+          "prompt_tokens": 126,
+          "completion_tokens": 6,
+          "total_tokens": 132
+        }
+      },
+      "eligible": false
+    },
+    {
+      "run_id": "market-2-full",
+      "mode": "full",
+      "usage": {
+        "prompt_tokens": 2574,
+        "completion_tokens": 63,
+        "total_tokens": 2637
+      },
+      "cached_input_tokens": 1769,
+      "unknown_usage_roles": [],
+      "failed_roles": [
+        "market"
+      ],
+      "by_role": {
+        "market": {
+          "prompt_tokens": 783,
+          "completion_tokens": 18,
+          "total_tokens": 801
+        },
+        "legal": {
+          "prompt_tokens": 762,
+          "completion_tokens": 13,
+          "total_tokens": 775
+        },
+        "horizon": {
+          "prompt_tokens": 758,
+          "completion_tokens": 16,
+          "total_tokens": 774
+        },
+        "chief": {
+          "prompt_tokens": 143,
+          "completion_tokens": 10,
+          "total_tokens": 153
+        },
+        "verifier": {
+          "prompt_tokens": 128,
+          "completion_tokens": 6,
+          "total_tokens": 134
+        }
+      },
+      "eligible": false
+    },
+    {
+      "run_id": "market-2-shared",
+      "mode": "shared",
+      "usage": {
+        "prompt_tokens": 494,
+        "completion_tokens": 55,
+        "total_tokens": 549
+      },
+      "cached_input_tokens": 414,
+      "unknown_usage_roles": [
+        "scout"
+      ],
+      "failed_roles": [
+        "scout",
+        "market",
+        "legal",
+        "chief"
+      ],
+      "by_role": {
+        "market": {
+          "prompt_tokens": 91,
+          "completion_tokens": 13,
+          "total_tokens": 104
+        },
+        "legal": {
+          "prompt_tokens": 70,
+          "completion_tokens": 12,
+          "total_tokens": 82
+        },
+        "horizon": {
+          "prompt_tokens": 66,
+          "completion_tokens": 14,
+          "total_tokens": 80
+        },
+        "chief": {
+          "prompt_tokens": 141,
+          "completion_tokens": 10,
+          "total_tokens": 151
+        },
+        "verifier": {
+          "prompt_tokens": 126,
+          "completion_tokens": 6,
+          "total_tokens": 132
+        }
+      },
+      "eligible": false
+    },
+    {
+      "run_id": "market-3-full",
+      "mode": "full",
+      "usage": {
+        "prompt_tokens": 2574,
+        "completion_tokens": 60,
+        "total_tokens": 2634
+      },
+      "cached_input_tokens": 1853,
+      "unknown_usage_roles": [],
+      "failed_roles": [
+        "market"
+      ],
+      "by_role": {
+        "market": {
+          "prompt_tokens": 783,
+          "completion_tokens": 15,
+          "total_tokens": 798
+        },
+        "legal": {
+          "prompt_tokens": 762,
+          "completion_tokens": 13,
+          "total_tokens": 775
+        },
+        "horizon": {
+          "prompt_tokens": 758,
+          "completion_tokens": 16,
+          "total_tokens": 774
+        },
+        "chief": {
+          "prompt_tokens": 143,
+          "completion_tokens": 10,
+          "total_tokens": 153
+        },
+        "verifier": {
+          "prompt_tokens": 128,
+          "completion_tokens": 6,
+          "total_tokens": 134
+        }
+      },
+      "eligible": false
+    },
+    {
+      "run_id": "market-3-shared",
+      "mode": "shared",
+      "usage": {
+        "prompt_tokens": 1254,
+        "completion_tokens": 175,
+        "total_tokens": 1429
+      },
+      "cached_input_tokens": 1002,
+      "unknown_usage_roles": [],
+      "failed_roles": [
+        "scout",
+        "market",
+        "legal",
+        "chief"
+      ],
+      "by_role": {
+        "scout": {
+          "prompt_tokens": 760,
+          "completion_tokens": 120,
+          "total_tokens": 880
+        },
+        "market": {
+          "prompt_tokens": 91,
+          "completion_tokens": 13,
+          "total_tokens": 104
+        },
+        "legal": {
+          "prompt_tokens": 70,
+          "completion_tokens": 12,
+          "total_tokens": 82
+        },
+        "horizon": {
+          "prompt_tokens": 66,
+          "completion_tokens": 14,
+          "total_tokens": 80
+        },
+        "chief": {
+          "prompt_tokens": 141,
+          "completion_tokens": 10,
+          "total_tokens": 151
+        },
+        "verifier": {
+          "prompt_tokens": 126,
+          "completion_tokens": 6,
+          "total_tokens": 132
+        }
+      },
+      "eligible": false
+    }
+  ],
+  "pairs": [
+    {
+      "case_id": "market-1",
+      "eligible": false,
+      "full_tokens": null,
+      "shared_tokens": null,
+      "saved_tokens": null,
+      "reduction_percent": null
+    },
+    {
+      "case_id": "market-2",
+      "eligible": false,
+      "full_tokens": null,
+      "shared_tokens": null,
+      "saved_tokens": null,
+      "reduction_percent": null
+    },
+    {
+      "case_id": "market-3",
+      "eligible": false,
+      "full_tokens": null,
+      "shared_tokens": null,
+      "saved_tokens": null,
+      "reduction_percent": null
+    }
+  ],
+  "comparable_pairs": 0,
+  "paired_reduction_percent": null,
+  "scope": "Only complete correct paired fixtures, not whole-game savings or latency"
+}

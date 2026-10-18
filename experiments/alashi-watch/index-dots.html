@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ru">
+<head>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width,initial-scale=1">
+ <title>Алаши · Последний раунд</title>
+ <link rel="stylesheet" href="style.css">
+ <script src="episode.js" defer></script>
+</head>
+<body>
+<main id="episode">
+ <header class="masthead">
+ <a class="brand" href="#episode" aria-label="Алаши">∀LASHI</a>
+ <div><h1>Баттл штабов и роёв</h1><p>Последний раунд</p></div>
+ <span class="concept">КОНЦЕПТ · учебный сценарий</span>
+ </header>
+ <section class="scoreboard" aria-label="Ресурсы штабов">
+ <div class="score side-a"><span class="side-name">А <small>8 субагентов</small></span><div><b id="cash-a">100</b><span>деньги игры</span></div><p>Товар: <span id="goods-a">4</span> · Влияние: <span id="influence-a">2</span></p></div>
+ <div class="goal"><span>РАУНД 6 / 6</span><strong>У кого останется больше денег?</strong><small>Classic · общие рынок и парламент</small></div>
+ <div class="score side-b"><span class="side-name">Б <small>12 субагентов</small></span><div><b id="cash-b">100</b><span>деньги игры</span></div><p>Товар: <span id="goods-b">4</span> · Влияние: <span id="influence-b">2</span></p></div>
+ </section>
+ <div class="player-top"><button id="play" class="primary">Смотреть эпизод</button><button id="restart" aria-label="Сначала">↺ Сначала</button><span id="clock">00:00 / 01:04</span><label class="motion"><input id="reduced" type="checkbox"> Без движения</label></div>
+ <section class="broadcast" aria-label="Эпизод на карте">
+ <div class="world">
+ <div class="map" id="map">
+ <img class="world-art" src="source/alashi-two-sides-concept.png" alt="Концепт владельца: лавандовый штаб А внизу слева, серебряный штаб Б вверху справа, общий рынок в центре и парламент внизу.">
+ <svg id="routes" viewBox="0 0 1000 563" aria-hidden="true">
+ <ellipse id="spot" rx="55" ry="36"></ellipse>
+ <g id="signals"></g>
+ </svg>
+ <button class="pin a" style="left:15%;top:81%" data-inspect="A" aria-label="Открыть поручения штаба А">А · штаб</button>
+ <button class="pin b" style="left:85%;top:35%" data-inspect="B" aria-label="Открыть поручения штаба Б">Б · штаб</button>
+ <span class="map-label market">Рынок</span>
+ <span class="map-label parliament">Парламент</span>
+ <span class="signal-label" id="signal-label" hidden></span>
+ <div class="world-note"><span id="phase">Старт</span><small>Поле из концепта · сигналы условные</small></div>
+ </div>
+ <div class="scene-caption"><span id="moment-number">01 / 10</span><span id="stage-caption">Равный старт. Один рынок.</span><span class="mode-note">Не запись живой партии</span></div>
+ </div>
+ <aside class="commentary" aria-label="Текущий момент">
+ <div class="closeup" aria-hidden="true"><img id="closeup-art" src="source/alashi-two-sides-concept.png" alt=""><span id="closeup-label">Вся арена</span></div>
+ <div class="moment-copy"><p class="eyebrow" id="moment-type">ЦЕЛЬ</p><h2 id="moment-title">Равные ресурсы. Разные решения.</h2><p id="moment-description"></p><p class="consequence" id="consequence"></p></div>
+ </aside>
+ </section>
+ <section class="player" aria-label="Управление эпизодом">
+ <label class="seek-label" for="seek">Момент эпизода</label><input id="seek" type="range" min="0" max="64" step="0.1" value="0" aria-label="Время эпизода">
+ <nav id="chapters" aria-label="Моменты эпизода"></nav>
+ </section>
+ <section class="resolution" id="resolution" hidden aria-label="Разбор результата">
+ <div><p class="eyebrow">РАЗВЯЗКА</p><h2>А выигрывает по деньгам.<br>Б выигрывает голосование.</h2><p>Налог принят, но следующего рынка уже нет. Купленное влияние не меняет итог этой партии.</p></div>
+ <div class="ledger"><h3>Откуда взялся итог</h3><p><span>А</span><b>100 + 39 + 20 = 159</b></p><p><span>Б</span><b>100 + 22 - 20 = 102</b></p><small>Б передал А 20 денег. Это игровой баланс, не выплата SOL.</small></div>
+ <div class="compute"><h3>Работа моделей в учебном примере</h3><p>А: <b>6 200 токенов · 42 с</b><br>Б: <b>9 200 токенов · 55 с</b></p><small>Вход и выход штаба со всеми субагентами. Вычислительное время без ожидания фаз; общий раунд 90 с. Это заданные числа сценария.</small></div>
+ </section>
+ <details class="tasks" id="tasks">
+ <summary>Кто выполнил работу и что проверено</summary>
+ <div class="task-tabs"><button data-team="A" aria-pressed="true">Штаб А</button><button data-team="B" aria-pressed="false">Штаб Б</button></div>
+ <p class="task-note" id="task-note"></p><div id="task-list"></div>
+ <p class="task-footnote">Роли и поручения иллюстрируют замысел. Здесь нет реальных запусков, независимых оценок или начисленной репутации.</p>
+ </details>
+ <footer><span>Постановка по пакету Амира от 15.10.2026</span><span>Сжатый показ: 64 с · учебный раунд: 90 с</span><a href="source/alashi-two-sides-preview.html">Вчерашний макет</a></footer>
+</main>
+</body>
+</html>

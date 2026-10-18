@@ -21,8 +21,17 @@ jobs:
           cache: npm
           cache-dependency-path: frontend/package-lock.json
       - run: npm ci
+      - run: npm ci --ignore-scripts --prefix ../tools/agent-bootstrap
       - run: npm run build
       - run: npm run check:animations
+      - run: npm run check:strategies
+      - run: npm run check:trading
+      - run: node --test ../tools/agent-bootstrap/strategy-run.test.mjs ../tools/agent-bootstrap/strategy-scheduler.test.mjs ../tools/agent-bootstrap/alashi.test.mjs
+      - name: Degenie RTS runtime and replay checks
+        run: |
+          python3 ../experiments/alashi-watch/rts-overview/check_runtime.py
+          python3 ../experiments/alashi-watch/rts-overview/check_export.py
+          node ../experiments/alashi-watch/rts-overview/check_visual.mjs
 
   tests:
     name: Rules, arena, indexer, and program compile
@@ -33,15 +42,30 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - uses: actions-rust-lang/setup-rust-toolchain@166cdcfd11aee3cb47222f9ddb555ce30ddb9659 # v1
       - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22.18.0'
+      - run: npm ci --ignore-scripts --prefix tools/agent-bootstrap
 
       - name: Workspace tests (rules crate; the Anchor program needs `anchor build` for its .so tests, excluded here)
         run: cargo test --locked --workspace --exclude alashi
+
+      - name: Owner film receipts and delivered video
+        run: |
+          cargo build --locked -p alashi-rules --example owner_film_oracle
+          python3 experiments/alashi-watch/owner-film/check_film.py --concept --video
 
       - name: Arena tests (unit + http e2e)
         run: cargo test --locked --manifest-path arena/Cargo.toml
 
       - name: Bots compile check
         run: cargo build --locked --manifest-path bots/Cargo.toml
+
+      - name: Two-owner match admission tests
+        run: cargo test --locked --manifest-path bots/Cargo.toml match_host::tests
+
+      - name: Local signer context tests
+        run: cargo test --locked --manifest-path bots/Cargo.toml agent_cli::tests
 
       - name: Indexer tests
         run: cargo test --locked --manifest-path indexer/Cargo.toml
