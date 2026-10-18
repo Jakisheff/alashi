@@ -3,7 +3,7 @@ import { spawn } from 'node:child_process';
 import { createInterface } from 'node:readline';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { decide, observationFor } from './case.mjs';
+import { decide, directRule, observationFor } from './case.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 export const gameBinary = () => process.env.ALASHI_EVALGAME_BIN || resolve(process.env.CARGO_TARGET_DIR || resolve(root, 'arena/target'), 'debug/evalgame');
@@ -24,7 +24,7 @@ export async function play(policy, scenario) {
       bytes += line.length; if (bytes > 2_000_000) throw new Error('game_output_limit');
       const message = JSON.parse(line);
       if (message.type === 'request') {
-        const action = decide(policy, message.phase, message.observation);
+        const action = (policy.direct_sale_rule ? directRule : decide)(policy, message.phase, message.observation);
         decisions.push({ phase: message.phase, observation: observationFor(policy, message.phase, message.observation), action });
         child.stdin.write(JSON.stringify(action) + '\n');
       } else if (message.type === 'decision') {
@@ -45,6 +45,8 @@ export async function play(policy, scenario) {
       bank: game.bank, rake: game.rake, payouts: game.payouts, invalid_actions: invalid.length,
       produced: own.filter(a => a.action === 'produce' && a.ok).length,
       sales: own.filter(a => a.action === 'sell' && a.ok).length,
+      participants: game.final_cash.map((cash, actor) => ({ actor, cash, goods: game.final_goods[actor], payout: game.payouts[actor],
+        actions: game.phases.flatMap(p => p.actions.filter(a => a.actor === actor).map(a => ({ round: p.round, phase: p.phase, ...a }))) })),
       decisions, actions: own,
       laws: game.phases.filter(p => p.phase === 'law').map(p => ({ round: p.round, passed: p.law_passed, vetoed: p.vetoed, yes: p.yes_influence, no: p.no_influence })) };
   } finally {

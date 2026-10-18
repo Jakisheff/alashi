@@ -6,11 +6,12 @@ import { decide, observationFor, scenarios, exampleTransfer } from './case.mjs';
 import { play } from './game.mjs';
 import { hiringProfile } from './grade.mjs';
 import { workServer } from './server.mjs';
+import { conditionsFor, validationResult } from './validation.mjs';
 
 let report;
-test('four TEST controllers execute 48 full native games with matched seeds, seats and opponents', async () => {
+test('four TEST controllers and frozen controls execute 174 native games with matched conditions', async () => {
   report = await runExperiment();
-  assert.equal(report.schema, 'alashi.work-simulation.TEST.v2');
+  assert.equal(report.schema, 'alashi.work-simulation.TEST.v3');
   assert.equal(report.external_model_calls, 0); assert.equal(report.real_people_tested, 0);
   for (const run of report.runs) {
     assert.equal(run.status, 'completed'); assert.equal(run.journal_resume_repeated_calls, 0);
@@ -18,6 +19,9 @@ test('four TEST controllers execute 48 full native games with matched seeds, sea
     assert.deepEqual(run.games.map(g => g.key), scenarios.map(s => s.key));
     assert.equal(run.invalid_actions, 0);
     for (const game of run.games) {
+      assert.equal(game.participants.length, 3);
+      assert.deepEqual(game.participants[game.seat].actions, game.actions);
+      assert.equal(game.participants[game.seat].payout, game.payout);
       assert.deepEqual(game.initial, report.runs[0].games.find(g => g.key === game.key).initial);
       assert.equal(game.produced, 5); assert.equal(game.sales, 5);
       assert.equal(game.payouts.reduce((a, b) => a + b, 0) + game.rake, game.bank);
@@ -77,12 +81,57 @@ test('missing, duplicate or mismatched game pairs cannot manufacture a profile',
   assert.equal(hiringProfile(unfair).status, 'insufficient_data');
 });
 
-test('no improvement or worse treasury prevents a positive competency claim', () => {
+test('higher treasury alone and worse payout cannot manufacture a positive competency claim', () => {
   const runs = structuredClone(report.runs);
   for (const run of runs) run.games = structuredClone(runs[0].games);
+  for (const run of runs.filter(r => r.competence)) for (const game of run.games) game.cash += 100_000_000;
   assert.deepEqual(hiringProfile(runs).skills, []);
-  for (const game of runs[3].games) game.cash -= 1;
+  for (const game of runs[3].games) game.payout -= 1;
   assert.equal(hiringProfile(runs).status, 'no_competence_advantage');
+});
+
+test('new conditions test role ablation with full traces, unchanged context and measured setup calls', () => {
+  const v = report.validation, conditions = conditionsFor(v.protocol);
+  assert.equal(conditions.length, 18); assert.equal(v.runs.length, 6); assert.equal(v.challenge.games.length, 18);
+  assert.ok(conditions.every(c => ![11, 29, 47, 83, 109, 251].includes(c.seed)));
+  assert.equal(new Set(conditions.map(c => c.family)).size, 3);
+  assert.equal(v.role_rule_pairs, 36); assert.equal(v.exact_matches, 36); assert.equal(v.status, 'rule_preserves_role');
+  assert.equal(v.cost.role_tool_calls, 5); assert.equal(v.cost.rule_tool_calls, 3); assert.equal(v.cost.saved_calls_per_policy_setup, 2);
+  for (const run of v.runs) {
+    assert.ok(run.games.every(g => g.decisions.length > 0 && g.invalid_actions === 0));
+    if (['E', 'F'].includes(run.id)) {
+      assert.equal(run.policy.inventory_review, false); assert.equal(run.policy.direct_sale_rule, true);
+      assert.ok(run.plan.every(t => !['inventory', 'review'].includes(t.id)));
+    }
+  }
+  assert.ok(v.pairs.every(p => p.same_decisions && p.same_actions && p.same_settlement));
+  assert.equal(v.mechanism.same_observation, true);
+  assert.equal(v.mechanism.before.action.units, 1); assert.equal(v.mechanism.after.action.units, 2);
+  assert.ok(v.mechanism.rule_payout > v.mechanism.baseline_payout);
+  assert.equal(v.summaries.reduce((n, s) => n + s.cases, 0), 36);
+  assert.equal(v.challenge.payout_wins + v.challenge.payout_losses + v.challenge.payout_ties, 18);
+  assert.ok(v.challenge.games.every(g => g.decisions.find(d => d.phase === 'market' && d.observation.round === 2).action.action === 'pass'));
+  assert.equal(v.human_transfer, 'not_validated'); assert.equal(v.biological_moat, 'hypothesis');
+  assert.ok(v.opponent_receipts.every(o => o.games === 6 && o.rejected_actions > 0));
+  assert.ok(v.opponent_receipts.find(o => o.family === 'market_pressure').reasons.includes('bid_license: WrongPhase'));
+});
+
+test('decision differences, illegal controls and changed pair conditions reject role equivalence', () => {
+  const v = report.validation;
+  const challenge = { policy: v.challenge.policy, games: v.challenge.games };
+  let runs = structuredClone(v.runs);
+  runs[4].games[0].decisions[0].action = { action: 'sell', units: 99 };
+  assert.equal(validationResult(runs, challenge, v.protocol).status, 'equivalence_rejected');
+  runs = structuredClone(v.runs); runs[4].games[0].invalid_actions = 1;
+  assert.equal(validationResult(runs, challenge, v.protocol).status, 'invalid_actions');
+  runs = structuredClone(v.runs); runs[4].games[0].initial.cash += 1;
+  assert.throws(() => validationResult(runs, challenge, v.protocol), /unequal_initial_resources/);
+  runs = structuredClone(v.runs); runs[4].games[0] = structuredClone(runs[4].games[1]);
+  assert.throws(() => validationResult(runs, challenge, v.protocol), /duplicate_validation_game/);
+  runs = structuredClone(v.runs); runs[4].games.pop();
+  assert.throws(() => validationResult(runs, challenge, v.protocol), /missing_validation_games/);
+  runs = structuredClone(v.runs); runs[4].games[0].decisions = [];
+  assert.throws(() => validationResult(runs, challenge, v.protocol), /missing_decision_trace/);
 });
 
 test('unspoken convention probe preserves ambiguity and is separate from match evidence', () => {

@@ -1,0 +1,24 @@
+{
+  "id": "alashi-role-rule-TEST-20261018",
+  "test_data": true,
+  "fixed_before_execution_at": "2026-10-18T22:27:00+05:00",
+  "registration": "Local protocol fixed before the first run of these conditions; not an external preregistration.",
+  "question": "Does the existing scripted planner contribute anything that the direct stock-sale rule cannot preserve?",
+  "primary_metric": "native payout to the controlled faction",
+  "diagnostic_metric": "final treasury; not interchangeable with payout",
+  "pairing": ["seed", "seat", "opponents", "epoch", "vote_weight_mode", "initial"],
+  "families": [
+    { "id": "new_random", "label": "Новые seed · RandomBot", "seeds": [307, 521], "opponents": ["random", "random"], "vote_weight_mode": 0 },
+    { "id": "market_pressure", "label": "Продажа всего запаса · GreedyBot", "seeds": [787, 1013], "opponents": ["greedy", "greedy"], "vote_weight_mode": 0 },
+    { "id": "tactical_contribution", "label": "TacticalBot и GreedyBot · contribution", "seeds": [1597, 2029], "opponents": ["tactical", "greedy"], "vote_weight_mode": 1 }
+  ],
+  "seats": [0, 1, 2],
+  "epoch": 0,
+  "controllers": "Frozen A/B/C/D policies, plus direct-rule controls E/F with the respective context. No tuning after observing outcomes.",
+  "equivalence": "All 36 planner-versus-rule pairs must have identical decisions, native action receipts and settlement, matched initial conditions and zero invalid controlled actions.",
+  "falsifier": "Any mismatched decision or settlement rejects exact equivalence and requires investigation. A payout gain alone cannot establish a human hiring need.",
+  "challenge": "For each of the 18 conditions, compare E against a fixed direct-rule variant that skips Market in round 2 and otherwise sells all. It has the same own-state information. A higher payout refutes payout optimality of immediate sale in the tested condition; a treasury gain alone is diagnostic. This variant is another rule, not evidence for an expert role.",
+  "cost": "Measure task-setup tool calls, model tokens and setup milliseconds separately from game execution. Do not infer human wages, maintenance cost or economic ROI.",
+  "stopping": "One fixed run of all 18 conditions for six controllers, plus 18 challenge games. Retain every result; do not select seeds or tune policies using this batch. Later reruns are reproducibility checks, not fresh holdouts.",
+  "limit": "Deterministic scripted game policies only. The planner sets inventory_review once before games; it does not adapt during games. Adaptive expertise and real team hiring remain not_validated."
+}

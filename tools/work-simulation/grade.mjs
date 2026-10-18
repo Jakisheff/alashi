@@ -3,11 +3,11 @@ import { play } from './game.mjs';
 import { createHash } from 'node:crypto';
 
 export const mean = values => values.reduce((a, b) => a + b, 0) / values.length;
-export async function grade(policy) {
+export async function grade(policy, conditions = scenarios, fullTraces = false) {
   const games = [];
-  for (const scenario of scenarios) {
+  for (const scenario of conditions) {
     const game = await play(policy, scenario);
-    games.push({ ...game, decision_trace_sha256: createHash('sha256').update(JSON.stringify(game.decisions)).digest('hex'), decisions: games.length === 0 ? game.decisions : [] });
+    games.push({ ...game, decision_trace_sha256: createHash('sha256').update(JSON.stringify(game.decisions)).digest('hex'), decisions: fullTraces || games.length === 0 ? game.decisions : [] });
   }
   return games;
 }
@@ -32,12 +32,12 @@ export function hiringProfile(runs) {
   }
   const legal = cells.every(r => r.games.every(g => g.invalid_actions === 0));
   const inventory = comparisons.filter(c => c.factor === 'competence');
-  const useful = legal && inventory.every(c => c.mean_cash_delta >= 0) && inventory.some(c => c.mean_cash_delta > 0);
+  const useful = legal && inventory.every(c => c.mean_payout_delta >= 0) && inventory.some(c => c.mean_payout_delta > 0);
   return { status: !legal ? 'invalid_actions' : useful ? 'game_test_hypothesis' : 'no_competence_advantage',
     claim: !legal ? 'Есть недопустимые игровые действия. Профиль требует разбора.' : useful ? 'В этой TEST-серии полезно планирование объёма продаж по доступному запасу.' : 'Эта TEST-серия не установила преимущества добавленного планирования.',
     comparisons,
     skills: useful ? ['Связывать произведённый запас с объёмом продажи в Market.', 'Проверять остатки к последнему рынку и законность действий.'] : [],
     context_action: 'Передавать публичную карту закона и право вето. Проверять эффект отдельно: выгода не гарантирована в каждой партии.',
-    hiring_decision: 'Проверить этот вклад на других соперниках, затем сравнить обучение команды с пробной работой кандидата. Необходимость найма и затраты людей не установлены.',
+    hiring_decision: 'Рост выплаты показывает полезность изменения политики. Необходимость отдельной роли проверяется ниже сравнением с прямым правилом. Затраты людей не измерены.',
     human_transfer: 'not_validated', human_cost: 'not_measured' };
 }

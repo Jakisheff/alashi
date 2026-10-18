@@ -4,7 +4,7 @@ import { decide } from './case.mjs';
 export function work({ task, brief, reports }) {
   if (task.id === 'requirements') return { material: brief.work_context };
   if (task.id === 'inventory') return { procedure: 'Check sale volume against available stock; sell the available stock in the current market.', label: 'SCRIPTED TEST COMPETENCE' };
-  if (task.id === 'implement') return { policy: { sale_units: 1, inventory_review: false, public_context: reports.requirements.material.public_context } };
+  if (task.id === 'implement') return { policy: { sale_units: 1, inventory_review: false, public_context: reports.requirements.material.public_context, direct_sale_rule: reports.requirements.material.direct_sale_rule } };
   if (task.id === 'review') {
     if (!reports.inventory.procedure) throw new Error('missing_inventory_procedure');
     const policy = { ...reports.implement.policy };

@@ -25,7 +25,7 @@ try {
   await page.getByRole('button', { name: 'Повторить TEST-прогон' }).click();
   const response = await pending; assert.equal(response.status(), 200);
   const report = await response.json();
-  assert.equal(report.schema, 'alashi.work-simulation.TEST.v2');
+  assert.equal(report.schema, 'alashi.work-simulation.TEST.v3');
   assert.deepEqual(report.runs.map(r => r.games.length), [12, 12, 12, 12]);
   for (const [path, expected] of Object.entries(report.sources)) {
     assert.equal(createHash('sha256').update(readFileSync(resolve(root, 'tools/work-simulation', path))).digest('hex'), expected);
@@ -41,6 +41,34 @@ try {
   const receipt = JSON.parse(readFileSync(receiptPath));
   assert.equal(receipt.native_binary_sha256, report.native_binary_sha256);
   assert.equal(receipt.knowledge_probe.hypothesis_status, 'not_validated');
+  assert.equal(report.validation.exact_matches, 36);
+  await page.getByRole('heading', { name: 'Нужен ли отдельный планировщик?' }).scrollIntoViewIfNeeded();
+  await page.screenshot({ path: resolve(out, 'role-rule.png') });
+  const helper = page.locator('.work-reasoning');
+  await helper.getByRole('heading', { name: 'Понять ход коллеги или соперника' }).waitFor();
+  const originalSteps = await helper.locator('.work-reasoning-path li').allTextContents();
+  await helper.getByRole('button', { name: 'От частного к общему', exact: true }).click();
+  assert.deepEqual(await helper.locator('.work-reasoning-path li').allTextContents(), [...originalSteps].reverse());
+  await helper.getByLabel('Чей ход рассматриваем').selectOption('0');
+  const participant = report.runs[0].games.find(g => g.key === '29:2').participants[0];
+  await helper.getByLabel('Предполагаемая цель').fill('Проверить удержание запаса соперником');
+  const actionIndex = participant.actions.findLastIndex(a => a.action === 'sell');
+  const receiptAction = participant.actions[actionIndex];
+  await helper.getByLabel('Эпизод · seed 29').selectOption(String(actionIndex));
+  const actionCard = helper.locator('.work-reasoning-path li').filter({ has: page.getByRole('heading', { name: 'Конкретный ход', exact: true }) });
+  assert.equal(await actionCard.locator('p').innerText(), `Раунд ${receiptAction.round}, ${receiptAction.phase}: sell · ${receiptAction.detail.units} товара. Движок принял ход.`);
+  assert.ok((await helper.innerText()).includes(`товар ${receiptAction.goods_after}. Итоговая выплата за всю партию: ${(participant.payout / 1_000_000).toLocaleString('ru-RU', { maximumFractionDigits: 2 })}`));
+  assert.ok((await helper.locator('.work-bridge').innerText()).includes('Проверить удержание запаса соперником'));
+  await helper.scrollIntoViewIfNeeded();
+  await page.screenshot({ path: resolve(out, 'reasoning.png') });
+  const rejectedGame = report.runs[0].games.find(g => g.participants.some(p => p.actor !== g.seat && p.actions.some(a => !a.ok)));
+  assert.ok(rejectedGame);
+  const rejectedActor = rejectedGame.participants.find(p => p.actor !== rejectedGame.seat && p.actions.some(a => !a.ok));
+  const rejectedIndex = rejectedActor.actions.findIndex(a => !a.ok);
+  await page.getByRole('button', { name: `${rejectedGame.seed} · ${rejectedGame.seat + 1}`, exact: true }).click();
+  await helper.getByLabel('Чей ход рассматриваем').selectOption(String(rejectedActor.actor));
+  await helper.getByLabel(`Эпизод · seed ${rejectedGame.seed}`).selectOption(String(rejectedIndex));
+  assert.ok((await helper.innerText()).includes(`Движок отклонил ход: ${rejectedActor.actions[rejectedIndex].err}.`));
   await page.locator('.work-cell').last().click();
   await page.getByRole('button', { name: '11 · 1', exact: true }).click();
   await page.evaluate(() => scrollTo(0, 0));
@@ -55,6 +83,12 @@ try {
   await page.screenshot({ path: resolve(out, 'mobile.png') });
   await page.getByRole('heading', { name: 'Профиль для проверки' }).scrollIntoViewIfNeeded();
   await page.screenshot({ path: resolve(out, 'mobile-profile.png') });
+  await helper.scrollIntoViewIfNeeded();
+  assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+  await helper.evaluate(element => element.scrollIntoView({ block: 'start' }));
+  await page.screenshot({ path: resolve(out, 'mobile-reasoning.png') });
+  await helper.locator('.work-direction').evaluate(element => element.scrollIntoView({ block: 'start' }));
+  await page.screenshot({ path: resolve(out, 'mobile-reasoning-path.png') });
   const beforeError = await page.locator('.work-cell strong').allTextContents();
   await page.route('**/work-simulation-api/run', route => route.fulfill({ status: 503, contentType: 'application/json', body: '{"error":"TEST_failure"}' }));
   await page.getByRole('button', { name: 'Повторить TEST-прогон' }).click();
@@ -64,7 +98,8 @@ try {
   writeFileSync(resolve(out, 'ui-copy.txt'), await page.locator('main').innerText());
   const summary = { browser: 'isolated headless Chrome', desktop: [1440, 1100], mobile: [390, 844],
     page_errors: errors, configuration_selection: true, game_selection: true, real_local_rerun: true,
-    native_games: 48, source_hashes_match: true, download_receipt: true, error_preserves_previous_results: true,
+    native_games: 174, role_rule_exact_pairs: 36, direction_switch_preserves_facts: true, opponent_receipt_selection: true,
+    rejected_opponent_action_reason: true, editable_goal_is_hypothesis: true, source_hashes_match: true, download_receipt: true, error_preserves_previous_results: true,
     mobile_no_horizontal_overflow: true, human_data: false };
   writeFileSync(resolve(out, 'browser-check.json'), JSON.stringify(summary, null, 2) + '\n');
   console.log(JSON.stringify(summary));

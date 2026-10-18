@@ -1,0 +1,34 @@
+✔ a missing trade executor stops before reserving or calling a model (77.459133ms)
+✔ trading tasks receive owner context and a real local state tool, without ad fields (36.281083ms)
+✔ an ambiguous Solana submission never starts another signer; a supplied signature only reconciles (3.191262ms)
+✔ HTTP execution refuses another owner or another pending run before any request (13.163082ms)
+✔ strict completion parsing preserves usage independently of JSON quality (2.907412ms)
+✔ profile and endpoint boundaries reject secrets in URLs and insecure remote providers (61.871149ms)
+✔ ambiguous inflight journal is recorded as unknown without a second provider call (135.936347ms)
+✔ builtin tools report zero model usage explicitly; public plans cannot select executables (2.322138ms)
+✔ an oversized owner-tool report keeps its known usage for the failed quality gate (538.297564ms)
+✔ report limits count UTF-8 bytes so malformed output cannot lose known usage (301.971351ms)
+✔ a dependent starts after its accepted report while an unrelated task is still running (426.21046ms)
+✔ a rejected reservation cannot call the provider or finish the run (35.295083ms)
+✔ unknown usage stops new work and drains active calls before releasing the journal lock (188.986404ms)
+✔ invalid report stops new work and drains active calls before releasing the journal lock (169.437634ms)
+✔ resume a lost report before server acceptance without repeating model work (267.852302ms)
+✔ resume a lost report after server acceptance without repeating model work (282.27931ms)
+✔ a stopped run reconciles saved paid responses without starting more work (3.484378ms)
+✔ out-of-order report snapshots cannot forget an accepted dependency or repeat a task (240.117132ms)
+✔ an overrun with a valid report still blocks dependent model calls (74.892004ms)
+✔ a reservation that completes after a failure cannot start a model call (75.810717ms)
+✔ expiry during reservation prevents a model request (1132.469933ms)
+✔ a newly ready task cannot spend budget held by an unrelated active call (166.328051ms)
+✔ a saved response is reconciled after the deadline without another model call (4.394799ms)
+✔ a prepared reservation resumes once without reserving or spending twice (45.865325ms)
+✔ fixed workload timing: same reports and four calls, with controlled provider delays (1246.578724ms)
+ℹ {"fixture":"fast30-slow200-follow150-deliver10","milliseconds":[398,420,421],"median_ms":420,"provider_calls_per_run":4,"synthetic_tokens_per_run":40,"external_model_calls":0}
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7282.991166

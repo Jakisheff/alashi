@@ -9,11 +9,12 @@ export const scenarios = [11, 29, 47, 83].flatMap(seed => [0, 1, 2].map(seat => 
   key: `${seed}:${seat}`, seed, seat, opponents: ['random', 'random'], epoch: 0, vote_weight_mode: 0,
 })));
 
-export function material(enriched) {
+export function material(enriched, directRule = false) {
   return {
     label: 'SYNTHETIC TEST. Existing alashi rules, scripted faction controllers; no people or company data.',
-    goal: 'Превращать произведённый товар в игровую казну за шесть раундов. Соблюдать фазы и проверять итоговый расчёт.',
+    goal: 'Получать выплату по итогам шести раундов. Казна объясняет промежуточный результат; соблюдать фазы и проверять итоговый расчёт.',
     public_context: enriched,
+    direct_sale_rule: directRule,
     law_guidance: enriched ? 'Использовать публичную карту закона: против налогов и эмбарго. Президент может наложить вето. Это заданная TEST-политика, не универсально лучшая стратегия.' : null,
   };
 }
@@ -34,6 +35,15 @@ export function decide(policy, phase, observation) {
   const adverse = [1, 2, 6].includes(o.law_card);
   if (o.decision_stage === 'post_vote') return { action: adverse && o.is_president && !o.veto_pending ? 'veto' : 'pass' };
   return { action: adverse ? 'vote_no' : 'vote_yes' };
+}
+
+// Independent market implementation: no inventory task, review or inventory_review flag.
+// Non-market decisions and information stay fixed, isolating the sale contribution.
+export function directRule(policy, phase, observation) {
+  if (phase !== 'market') return decide(policy, phase, observation);
+  const own = observationFor(policy, phase, observation);
+  if (!own.goods || own.round === policy.defer_market_round) return { action: 'pass' };
+  return { action: 'sell', units: own.goods };
 }
 
 export function exampleTransfer() {

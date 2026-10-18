@@ -6,9 +6,10 @@ import { join, resolve, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { performance } from 'node:perf_hooks';
 import { runCycle } from '../agent-bootstrap/strategy-run.mjs';
-import { configurations, material, caseTitle, exampleTransfer } from './case.mjs';
+import { configurations, scenarios, material, caseTitle, exampleTransfer } from './case.mjs';
 import { grade, hiringProfile, mean } from './grade.mjs';
 import { gameBinary } from './game.mjs';
+import { conditionsFor, validationResult } from './validation.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 export function planFor(competence) {
@@ -18,11 +19,11 @@ export function planFor(competence) {
 }
 
 // Isolated TEST owner API adapter, not a production arena endpoint or registration.
-async function execute(configuration, directory) {
+async function execute(configuration, directory, conditions = scenarios) {
   const plan = planFor(configuration.competence), id = createHash('sha256').update('work-test-' + configuration.id).digest('hex');
   const record = 'a'.repeat(64), version = 'b'.repeat(64), events = [];
   const run = { id, record, version, status: 'running', deadline_at: Math.floor(Date.now() / 1000) + 120,
-    calls: {}, known_tokens: 0, budget: 100, brief: { facts: ['TEST'], required_terms: ['TEST'], cta: 'TEST', work_context: material(configuration.context) } };
+    calls: {}, known_tokens: 0, budget: 100, brief: { facts: ['TEST'], required_terms: ['TEST'], cta: 'TEST', work_context: material(configuration.context, configuration.direct_rule) } };
   const snapshot = () => structuredClone({ versions: [{ id: version, content: { plan } }], runs: [run] });
   const api = { record, get: async () => snapshot(), request: async path => { assert.equal(path, '/strategy-library'); return { versions: [] }; },
     post: async (path, body) => {
@@ -50,10 +51,11 @@ async function execute(configuration, directory) {
   await runCycle(options);
   const starts = events.filter(e => e.status === 'started').length;
   await runCycle(options); assert.equal(events.filter(e => e.status === 'started').length, starts, 'completed journal must not repeat work');
-  const policy = run.calls.deliver.report.policy, games = await grade(policy);
+  const setup_ms = Math.round(performance.now() - start);
+  const policy = run.calls.deliver.report.policy, games = await grade(policy, conditions, configuration.direct_rule === true);
   return { ...configuration, status: run.status, execution: 'scripted_TEST_tools', plan, events,
     tool_calls: starts, model_calls: 0, model_tokens: run.known_tokens, journal_resume_repeated_calls: 0,
-    wall_ms: Math.round(performance.now() - start), policy, games,
+    setup_ms, wall_ms: Math.round(performance.now() - start), policy, games,
     mean_cash: mean(games.map(g => g.cash)), mean_payout: mean(games.map(g => g.payout)),
     mean_goods: mean(games.map(g => g.goods)), invalid_actions: games.reduce((n, g) => n + g.invalid_actions, 0),
     task_reports: Object.fromEntries(Object.entries(run.calls).map(([task, call]) => [task, call.report])) };
@@ -62,16 +64,30 @@ async function execute(configuration, directory) {
 export async function runExperiment() {
   const directory = mkdtempSync(join(tmpdir(), 'alashi-work-TEST-'));
   try {
-    const runs = [];
+    // Read and hash the fixed protocol before any game; never choose conditions from results.
+    const protocolBytes = readFileSync(resolve(here, '../../experiments/work-simulation/protocol.json'));
+    const protocol = JSON.parse(protocolBytes), conditions = conditionsFor(protocol), runs = [];
     for (const configuration of configurations) runs.push(await execute(configuration, directory));
-    const sources = ['case.mjs', 'worker.mjs', 'grade.mjs', 'game.mjs', 'experiment.mjs', '../agent-bootstrap/strategy-run.mjs', '../../arena/src/bin/evalgame.rs', '../../arena/src/runner.rs', '../../arena/src/strategies.rs', '../../rules/src/actions.rs', '../../rules/src/transitions.rs', '../../rules/src/logic.rs', '../../rules/src/constants.rs'];
-    return { schema: 'alashi.work-simulation.TEST.v2', test_data: true, generated_at: new Date().toISOString(), title: caseTitle,
-      execution: 'Local TEST task graphs through runCycle, then 48 full six-round games through the existing Rust evalgame and alashi-rules. No live arena.',
+    const validationRuns = [];
+    for (const run of runs) {
+      const frozen = JSON.stringify(run.policy);
+      validationRuns.push({ id: run.id, context: run.context, competence: run.competence, policy: run.policy,
+        tool_calls: run.tool_calls, setup_ms: run.setup_ms, games: await grade(run.policy, conditions, true) });
+      assert.equal(JSON.stringify(run.policy), frozen, 'policy_changed_during_validation');
+    }
+    for (const context of [false, true]) validationRuns.push(await execute({ id: context ? 'F' : 'E', competence: false, context, direct_rule: true }, directory, conditions));
+    const challengePolicy = { ...validationRuns.find(r => r.id === 'E').policy, defer_market_round: 2 };
+    const validation = validationResult(validationRuns, { policy: challengePolicy, games: await grade(challengePolicy, conditions, true) }, protocol);
+    const sources = ['case.mjs', 'worker.mjs', 'grade.mjs', 'game.mjs', 'experiment.mjs', 'validation.mjs', '../../experiments/work-simulation/protocol.json', '../agent-bootstrap/strategy-run.mjs', '../../arena/src/bin/evalgame.rs', '../../arena/src/runner.rs', '../../arena/src/strategies.rs', '../../rules/src/actions.rs', '../../rules/src/transitions.rs', '../../rules/src/logic.rs', '../../rules/src/constants.rs'];
+    return { schema: 'alashi.work-simulation.TEST.v3', test_data: true, generated_at: new Date().toISOString(), title: caseTitle,
+      execution: 'Local TEST task graphs through runCycle, then 174 full six-round games through the existing Rust evalgame and alashi-rules. No live arena.',
       native_binary_sha256: createHash('sha256').update(readFileSync(gameBinary())).digest('hex'),
       experiment: { games_per_configuration: 12, rounds: 6, factions: 3, epoch: 0, opponents: ['random', 'random'], paired_by: ['seed', 'seat', 'opponents', 'epoch', 'vote_weight_mode'], seeds_are: 'fixed_TEST_not_held_out' },
       real_people_tested: 0, external_model_calls: 0, company_data: false, human_cost: 'not_measured',
       sources: Object.fromEntries(sources.map(p => [p, createHash('sha256').update(readFileSync(resolve(here, p))).digest('hex')])),
-      runs, profile: hiringProfile(runs), knowledge_probe: exampleTransfer() };
+      runs, profile: hiringProfile(runs), knowledge_probe: exampleTransfer(),
+      validation: { ...validation, protocol, protocol_sha256: createHash('sha256').update(protocolBytes).digest('hex'),
+        policy_sha256: Object.fromEntries(validationRuns.map(r => [r.id, createHash('sha256').update(JSON.stringify(r.policy)).digest('hex')])) } };
   } finally { rmSync(directory, { recursive: true, force: true }); }
 }
 
