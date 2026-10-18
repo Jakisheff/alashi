@@ -258,3 +258,8 @@ before/after timing and branch publication. План: ещё 0,5 часа, до 
 
 18.10 17:07. Observed: 44 Node tests and the signed HTTP dependency-order test
 pass. The complete arena suite is running. План: ещё 0,33 часа, до 17:27.
+
+18.10 17:11. Scheduler change complete and published on codex/ready-task-scheduler.
+Observed: 44 Node tests and 137 arena tests pass, with one explicit ignored
+canonical-snapshot check. See docs/ops/READY_TASK_SCHEDULER_20261018.md.
+Факт: 1,33 часа. No deployment.

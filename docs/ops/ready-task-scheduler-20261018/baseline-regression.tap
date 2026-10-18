@@ -8,9 +8,9 @@ not ok 1 - a dependent starts after its accepted report while an unrelated task 
   failureType: 'testCodeFailure'
   error: |-
     follow must not wait for slow
-    
+
     false !== true
-    
+
   code: 'ERR_ASSERTION'
   name: 'AssertionError'
   expected: true
@@ -49,14 +49,14 @@ not ok 5 - resume a lost report after server acceptance without repeating model 
   error: |-
     Expected values to be strictly deep-equal:
     + actual - expected
-    
+
     + {}
     - {
     -   fast: {
     -     task: 'fast'
     -   }
     - }
-    
+
   code: 'ERR_ASSERTION'
   name: 'AssertionError'
   expected:

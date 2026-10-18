@@ -837,3 +837,12 @@ a controlled slow branch and overlapping dependency continuation. Its previous
 fixed delay was replaced with a bounded promise to test ordering independently
 of disk latency. The full arena suite is running again.
 План: ещё 0,33 часа, до 17:27. Remaining: integration results and publication.
+
+18.10 17:11. Completed: 44 Node tests and 137 arena tests pass; one canonical
+snapshot check is explicitly ignored. The signed HTTP graph overlaps a ready
+continuation with an independent call. Trading recovery passes without a second
+model call or trade. Controlled timing medians: 748 ms before, 457 ms after;
+these local fixture timings do not establish production performance.
+Source commit 2805d8e is published on codex/ready-task-scheduler.
+Evidence: docs/ops/READY_TASK_SCHEDULER_20261018.md.
+Факт: 1,33 часа. All estimates above are closed; deployment was not performed.
