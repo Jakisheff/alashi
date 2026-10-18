@@ -1,0 +1,275 @@
+TAP version 13
+# Subtest: v2 golden hashes and proposal validation
+ok 1 - v2 golden hashes and proposal validation
+  ---
+  duration_ms: 59.178541
+  type: 'test'
+  ...
+# Subtest: start rejects overlong UTF-8 name or model before profile and network work
+ok 2 - start rejects overlong UTF-8 name or model before profile and network work
+  ---
+  duration_ms: 2.809408
+  type: 'test'
+  ...
+# Subtest: one durable Memo, unknown outcome resumes same signature without signing again
+ok 3 - one durable Memo, unknown outcome resumes same signature without signing again
+  ---
+  duration_ms: 832.679621
+  type: 'test'
+  ...
+# Subtest: one profile joins two games, no prompt upload, pending op replay is exact
+ok 4 - one profile joins two games, no prompt upload, pending op replay is exact
+  ---
+  duration_ms: 398.719614
+  type: 'test'
+  ...
+# Subtest: only exact definitive unconsumed action rejection clears pending without debit
+ok 5 - only exact definitive unconsumed action rejection clears pending without debit
+  ---
+  duration_ms: 1016.301055
+  type: 'test'
+  ...
+# Subtest: start persists one private wallet and returns identity link while no game is open
+ok 6 - start persists one private wallet and returns identity link while no game is open
+  ---
+  duration_ms: 437.259365
+  type: 'test'
+  ...
+# Subtest: public state identifies the saved player faction
+ok 7 - public state identifies the saved player faction
+  ---
+  duration_ms: 3.00087
+  type: 'test'
+  ...
+# Subtest: pinned JSON-RPC client supports every bootstrap RPC method
+ok 8 - pinned JSON-RPC client supports every bootstrap RPC method
+  ---
+  duration_ms: 178.210758
+  type: 'test'
+  ...
+# Subtest: signal cleanup removes only this process lock
+ok 9 - signal cleanup removes only this process lock
+  ---
+  duration_ms: 623.955069
+  type: 'test'
+  ...
+# Subtest: pinned RPC sends one HTTP request on 429
+ok 10 - pinned RPC sends one HTTP request on 429
+  ---
+  duration_ms: 24.110789
+  type: 'test'
+  ...
+# Subtest: failed saved airdrop retries only faucet funding on the same wallet
+ok 11 - failed saved airdrop retries only faucet funding on the same wallet
+  ---
+  duration_ms: 4.149134
+  type: 'test'
+  ...
+# Subtest: ambiguous saved airdrop gives manual funding path without another request
+ok 12 - ambiguous saved airdrop gives manual funding path without another request
+  ---
+  duration_ms: 7.78294
+  type: 'test'
+  ...
+# Subtest: faucet RPC code survives failure without exposing provider cause
+ok 13 - faucet RPC code survives failure without exposing provider cause
+  ---
+  duration_ms: 96.805627
+  type: 'test'
+  ...
+# Subtest: first faucet RPC failure gives same-wallet recovery without repeat request
+ok 14 - first faucet RPC failure gives same-wallet recovery without repeat request
+  ---
+  duration_ms: 4.520866
+  type: 'test'
+  ...
+# Subtest: proxy rate limit and outage are plain errors before non-JSON bodies
+ok 15 - proxy rate limit and outage are plain errors before non-JSON bodies
+  ---
+  duration_ms: 2.018828
+  type: 'test'
+  ...
+# Subtest: matchmaker reports an existing slot and recovery join uses no new Memo
+ok 16 - matchmaker reports an existing slot and recovery join uses no new Memo
+  ---
+  duration_ms: 88.389232
+  type: 'test'
+  ...
+# Subtest: faucet 429 exposes the same public wallet for manual devnet funding
+ok 17 - faucet 429 exposes the same public wallet for manual devnet funding
+  ---
+  duration_ms: 5.476918
+  type: 'test'
+  ...
+# Subtest: CLI exits nonzero when arena JSON says ok false
+ok 18 - CLI exits nonzero when arena JSON says ok false
+  ---
+  duration_ms: 701.871303
+  type: 'test'
+  ...
+# Subtest: existing-only start cannot create a wallet or call RPC when registration is absent
+ok 19 - existing-only start cannot create a wallet or call RPC when registration is absent
+  ---
+  duration_ms: 8.238376
+  type: 'test'
+  ...
+# Subtest: a missing trade executor stops before reserving or calling a model
+ok 20 - a missing trade executor stops before reserving or calling a model
+  ---
+  duration_ms: 12.354377
+  type: 'test'
+  ...
+# Subtest: trading tasks receive owner context and a real local state tool, without ad fields
+ok 21 - trading tasks receive owner context and a real local state tool, without ad fields
+  ---
+  duration_ms: 7.360465
+  type: 'test'
+  ...
+# Subtest: an ambiguous Solana submission never starts another signer; a supplied signature only reconciles
+ok 22 - an ambiguous Solana submission never starts another signer; a supplied signature only reconciles
+  ---
+  duration_ms: 1.155954
+  type: 'test'
+  ...
+# Subtest: HTTP execution refuses another owner or another pending run before any request
+ok 23 - HTTP execution refuses another owner or another pending run before any request
+  ---
+  duration_ms: 8.056227
+  type: 'test'
+  ...
+# Subtest: strict completion parsing preserves usage independently of JSON quality
+ok 24 - strict completion parsing preserves usage independently of JSON quality
+  ---
+  duration_ms: 6.624244
+  type: 'test'
+  ...
+# Subtest: profile and endpoint boundaries reject secrets in URLs and insecure remote providers
+ok 25 - profile and endpoint boundaries reject secrets in URLs and insecure remote providers
+  ---
+  duration_ms: 8.607157
+  type: 'test'
+  ...
+# Subtest: ambiguous inflight journal is recorded as unknown without a second provider call
+ok 26 - ambiguous inflight journal is recorded as unknown without a second provider call
+  ---
+  duration_ms: 88.081522
+  type: 'test'
+  ...
+# Subtest: builtin tools report zero model usage explicitly; public plans cannot select executables
+ok 27 - builtin tools report zero model usage explicitly; public plans cannot select executables
+  ---
+  duration_ms: 3.224577
+  type: 'test'
+  ...
+# Subtest: an oversized owner-tool report keeps its known usage for the failed quality gate
+ok 28 - an oversized owner-tool report keeps its known usage for the failed quality gate
+  ---
+  duration_ms: 324.36183
+  type: 'test'
+  ...
+# Subtest: report limits count UTF-8 bytes so malformed output cannot lose known usage
+ok 29 - report limits count UTF-8 bytes so malformed output cannot lose known usage
+  ---
+  duration_ms: 282.907715
+  type: 'test'
+  ...
+# Subtest: a dependent starts after its accepted report while an unrelated task is still running
+ok 30 - a dependent starts after its accepted report while an unrelated task is still running
+  ---
+  duration_ms: 353.885012
+  type: 'test'
+  ...
+# Subtest: a rejected reservation cannot call the provider or finish the run
+ok 31 - a rejected reservation cannot call the provider or finish the run
+  ---
+  duration_ms: 27.670231
+  type: 'test'
+  ...
+# Subtest: unknown usage stops new work and drains active calls before releasing the journal lock
+ok 32 - unknown usage stops new work and drains active calls before releasing the journal lock
+  ---
+  duration_ms: 215.240218
+  type: 'test'
+  ...
+# Subtest: invalid report stops new work and drains active calls before releasing the journal lock
+ok 33 - invalid report stops new work and drains active calls before releasing the journal lock
+  ---
+  duration_ms: 216.755502
+  type: 'test'
+  ...
+# Subtest: resume a lost report before server acceptance without repeating model work
+ok 34 - resume a lost report before server acceptance without repeating model work
+  ---
+  duration_ms: 601.581564
+  type: 'test'
+  ...
+# Subtest: resume a lost report after server acceptance without repeating model work
+ok 35 - resume a lost report after server acceptance without repeating model work
+  ---
+  duration_ms: 437.566931
+  type: 'test'
+  ...
+# Subtest: a stopped run reconciles saved paid responses without starting more work
+ok 36 - a stopped run reconciles saved paid responses without starting more work
+  ---
+  duration_ms: 40.622203
+  type: 'test'
+  ...
+# Subtest: out-of-order report snapshots cannot forget an accepted dependency or repeat a task
+ok 37 - out-of-order report snapshots cannot forget an accepted dependency or repeat a task
+  ---
+  duration_ms: 749.477022
+  type: 'test'
+  ...
+# Subtest: an overrun with a valid report still blocks dependent model calls
+ok 38 - an overrun with a valid report still blocks dependent model calls
+  ---
+  duration_ms: 127.943937
+  type: 'test'
+  ...
+# Subtest: a reservation that completes after a failure cannot start a model call
+ok 39 - a reservation that completes after a failure cannot start a model call
+  ---
+  duration_ms: 65.80539
+  type: 'test'
+  ...
+# Subtest: expiry during reservation prevents a model request
+ok 40 - expiry during reservation prevents a model request
+  ---
+  duration_ms: 1126.496641
+  type: 'test'
+  ...
+# Subtest: a newly ready task cannot spend budget held by an unrelated active call
+ok 41 - a newly ready task cannot spend budget held by an unrelated active call
+  ---
+  duration_ms: 203.193728
+  type: 'test'
+  ...
+# Subtest: a saved response is reconciled after the deadline without another model call
+ok 42 - a saved response is reconciled after the deadline without another model call
+  ---
+  duration_ms: 5.893569
+  type: 'test'
+  ...
+# Subtest: a prepared reservation resumes once without reserving or spending twice
+ok 43 - a prepared reservation resumes once without reserving or spending twice
+  ---
+  duration_ms: 63.203178
+  type: 'test'
+  ...
+# Subtest: fixed workload timing: same reports and four calls, with controlled provider delays
+ok 44 - fixed workload timing: same reports and four calls, with controlled provider delays
+  ---
+  duration_ms: 1270.697581
+  type: 'test'
+  ...
+# {"fixture":"fast30-slow200-follow150-deliver10","milliseconds":[420,394,446],"median_ms":420,"provider_calls_per_run":4,"synthetic_tokens_per_run":40,"external_model_calls":0}
+1..44
+# tests 44
+# suites 0
+# pass 44
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8488.084636

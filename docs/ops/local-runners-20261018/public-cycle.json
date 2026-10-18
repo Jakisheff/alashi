@@ -1,0 +1,284 @@
+{
+  "source_commit": "523e14ac058a58ff25bc4786407fbb8bd60105fe",
+  "api": "https://alashi.network",
+  "external_provider_calls": 0,
+  "cases": [
+    {
+      "kind": "dependencies",
+      "passed": true,
+      "calls_a": {
+        "fast": 1,
+        "slow": 1,
+        "follow": 1,
+        "deliver": 1
+      },
+      "calls_b": {
+        "fast": 1,
+        "slow": 1,
+        "follow": 1,
+        "deliver": 1
+      },
+      "budget_rejected_before_continuation": false,
+      "client_sigkill": false,
+      "events": [
+        {
+          "event": "model_start",
+          "owner": "a",
+          "task": "fast",
+          "at": 37249.716396
+        },
+        {
+          "event": "model_start",
+          "owner": "a",
+          "task": "slow",
+          "at": 38035.702278
+        },
+        {
+          "event": "model_end",
+          "owner": "a",
+          "task": "fast",
+          "at": 38035.75393
+        },
+        {
+          "event": "accepted_report",
+          "task": "fast",
+          "at": 38523.996793
+        },
+        {
+          "event": "model_start",
+          "owner": "a",
+          "task": "follow",
+          "at": 39057.952444
+        },
+        {
+          "event": "model_end",
+          "owner": "a",
+          "task": "follow",
+          "at": 39057.962875
+        },
+        {
+          "event": "model_end",
+          "owner": "a",
+          "task": "slow",
+          "at": 39058.25899
+        },
+        {
+          "event": "accepted_report",
+          "task": "slow",
+          "at": 39539.737376
+        },
+        {
+          "event": "accepted_report",
+          "task": "follow",
+          "at": 40046.66409
+        },
+        {
+          "event": "model_start",
+          "owner": "a",
+          "task": "deliver",
+          "at": 40585.321447
+        },
+        {
+          "event": "model_end",
+          "owner": "a",
+          "task": "deliver",
+          "at": 40585.328884
+        },
+        {
+          "event": "accepted_report",
+          "task": "deliver",
+          "at": 41009.437463
+        },
+        {
+          "event": "model_start",
+          "owner": "b",
+          "task": "fast",
+          "at": 49006.777376
+        },
+        {
+          "event": "model_start",
+          "owner": "b",
+          "task": "slow",
+          "at": 49907.081637
+        },
+        {
+          "event": "model_end",
+          "owner": "b",
+          "task": "fast",
+          "at": 49907.120967
+        },
+        {
+          "event": "model_start",
+          "owner": "b",
+          "task": "follow",
+          "at": 50790.836937
+        },
+        {
+          "event": "model_end",
+          "owner": "b",
+          "task": "follow",
+          "at": 50790.85353
+        },
+        {
+          "event": "model_end",
+          "owner": "b",
+          "task": "slow",
+          "at": 50791.272815
+        },
+        {
+          "event": "model_start",
+          "owner": "b",
+          "task": "deliver",
+          "at": 51727.28504
+        },
+        {
+          "event": "model_end",
+          "owner": "b",
+          "task": "deliver",
+          "at": 51727.28927
+        }
+      ]
+    },
+    {
+      "kind": "budget_recovery",
+      "passed": true,
+      "calls_a": {
+        "fast": 1,
+        "slow": 1,
+        "follow": 1,
+        "deliver": 1
+      },
+      "calls_b": {
+        "fast": 1,
+        "slow": 1,
+        "follow": 1,
+        "deliver": 1
+      },
+      "budget_rejected_before_continuation": true,
+      "client_sigkill": true,
+      "events": [
+        {
+          "event": "model_start",
+          "owner": "a",
+          "task": "fast",
+          "at": 61110.912705
+        },
+        {
+          "event": "model_start",
+          "owner": "a",
+          "task": "slow",
+          "at": 63378.394767
+        },
+        {
+          "event": "model_end",
+          "owner": "a",
+          "task": "fast",
+          "at": 63769.965312
+        },
+        {
+          "event": "accepted_report",
+          "task": "fast",
+          "at": 64200.471976
+        },
+        {
+          "event": "budget_rejected",
+          "task": "follow",
+          "at": 64724.862608
+        },
+        {
+          "event": "model_end",
+          "owner": "a",
+          "task": "slow",
+          "at": 64725.149846
+        },
+        {
+          "event": "accepted_report",
+          "task": "slow",
+          "at": 65156.56889
+        },
+        {
+          "event": "model_start",
+          "owner": "b",
+          "task": "fast",
+          "at": 74937.137537
+        },
+        {
+          "event": "model_start",
+          "owner": "b",
+          "task": "slow",
+          "at": 75745.4397
+        },
+        {
+          "event": "model_end",
+          "owner": "b",
+          "task": "fast",
+          "at": 75745.483299
+        },
+        {
+          "event": "model_start",
+          "owner": "b",
+          "task": "follow",
+          "at": 76687.116906
+        },
+        {
+          "event": "model_end",
+          "owner": "b",
+          "task": "follow",
+          "at": 76687.127055
+        },
+        {
+          "event": "model_end",
+          "owner": "b",
+          "task": "slow",
+          "at": 76687.423672
+        },
+        {
+          "event": "model_start",
+          "owner": "b",
+          "task": "deliver",
+          "at": 77606.453751
+        },
+        {
+          "event": "model_end",
+          "owner": "b",
+          "task": "deliver",
+          "at": 77606.456101
+        },
+        {
+          "event": "model_start",
+          "owner": "a",
+          "task": "follow",
+          "at": 90378.892931
+        },
+        {
+          "event": "model_end",
+          "owner": "a",
+          "task": "follow",
+          "at": 90378.896159
+        },
+        {
+          "event": "accepted_report",
+          "task": "follow",
+          "at": 90808.965757
+        },
+        {
+          "event": "model_start",
+          "owner": "a",
+          "task": "deliver",
+          "at": 91768.475587
+        },
+        {
+          "event": "model_end",
+          "owner": "a",
+          "task": "deliver",
+          "at": 91768.477722
+        },
+        {
+          "event": "accepted_report",
+          "task": "deliver",
+          "at": 93279.114702
+        }
+      ]
+    }
+  ]
+}

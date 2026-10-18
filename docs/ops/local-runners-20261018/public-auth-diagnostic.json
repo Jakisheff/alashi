@@ -1,0 +1,20 @@
+{
+  "initial_attempt": {
+    "stage": "owner_authentication",
+    "strategy_runs_created": 0,
+    "provider_calls": 0,
+    "observed_error": "HTML response instead of JSON",
+    "nginx_log_utc": "2026/10/18 14:57:28",
+    "nginx_zone": "alashi_match",
+    "nginx_message": "limiting requests, excess: 4.758",
+    "nginx_rate": "12r/m",
+    "nginx_burst": 4,
+    "configured_rejection_status": 429
+  },
+  "correction": {
+    "scope": "acceptance harness only",
+    "login_spacing_ms": 11000,
+    "production_limits_changed": false,
+    "registration_repeated": false
+  }
+}
