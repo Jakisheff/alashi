@@ -7,13 +7,14 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { performance } from 'node:perf_hooks';
 import { runCycle } from '../agent-bootstrap/strategy-run.mjs';
 import { configurations, material, caseTitle, exampleTransfer } from './case.mjs';
-import { grade, hiringProfile } from './grade.mjs';
+import { grade, hiringProfile, mean } from './grade.mjs';
+import { gameBinary } from './game.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 export function planFor(competence) {
   const task = (id, depends_on) => ({ id, depends_on, kind: 'tool', tool: 'test_' + id, instruction: 'Execute the labelled local TEST task.' });
-  return [task('requirements', []), ...(competence ? [task('client', [])] : []), task('implement', ['requirements']),
-    ...(competence ? [task('review', ['client', 'implement'])] : []), task('deliver', [competence ? 'review' : 'implement'])];
+  return [task('requirements', []), ...(competence ? [task('inventory', [])] : []), task('implement', ['requirements']),
+    ...(competence ? [task('review', ['inventory', 'implement'])] : []), task('deliver', [competence ? 'review' : 'implement'])];
 }
 
 // Isolated TEST owner API adapter, not a production arena endpoint or registration.
@@ -49,12 +50,12 @@ async function execute(configuration, directory) {
   await runCycle(options);
   const starts = events.filter(e => e.status === 'started').length;
   await runCycle(options); assert.equal(events.filter(e => e.status === 'started').length, starts, 'completed journal must not repeat work');
-  const policy = run.calls.deliver.report.policy, checks = grade(policy);
+  const policy = run.calls.deliver.report.policy, games = await grade(policy);
   return { ...configuration, status: run.status, execution: 'scripted_TEST_tools', plan, events,
     tool_calls: starts, model_calls: 0, model_tokens: run.known_tokens, journal_resume_repeated_calls: 0,
-    wall_ms: Math.round(performance.now() - start), policy, checks,
-    passed: checks.filter(c => c.passed).length, total: checks.length,
-    held_out_passed: checks.filter(c => c.held_out && c.passed).length, held_out_total: checks.filter(c => c.held_out).length,
+    wall_ms: Math.round(performance.now() - start), policy, games,
+    mean_cash: mean(games.map(g => g.cash)), mean_payout: mean(games.map(g => g.payout)),
+    mean_goods: mean(games.map(g => g.goods)), invalid_actions: games.reduce((n, g) => n + g.invalid_actions, 0),
     task_reports: Object.fromEntries(Object.entries(run.calls).map(([task, call]) => [task, call.report])) };
 }
 
@@ -63,9 +64,11 @@ export async function runExperiment() {
   try {
     const runs = [];
     for (const configuration of configurations) runs.push(await execute(configuration, directory));
-    const sources = ['case.mjs', 'worker.mjs', 'grade.mjs', 'experiment.mjs', '../agent-bootstrap/strategy-run.mjs'];
-    return { schema: 'alashi.work-simulation.TEST.v1', test_data: true, generated_at: new Date().toISOString(), title: caseTitle,
-      execution: 'Actual local tool subprocesses through the existing alashi runCycle scheduler; isolated TEST API adapter.',
+    const sources = ['case.mjs', 'worker.mjs', 'grade.mjs', 'game.mjs', 'experiment.mjs', '../agent-bootstrap/strategy-run.mjs', '../../arena/src/bin/evalgame.rs', '../../arena/src/runner.rs', '../../arena/src/strategies.rs', '../../rules/src/actions.rs', '../../rules/src/transitions.rs', '../../rules/src/logic.rs', '../../rules/src/constants.rs'];
+    return { schema: 'alashi.work-simulation.TEST.v2', test_data: true, generated_at: new Date().toISOString(), title: caseTitle,
+      execution: 'Local TEST task graphs through runCycle, then 48 full six-round games through the existing Rust evalgame and alashi-rules. No live arena.',
+      native_binary_sha256: createHash('sha256').update(readFileSync(gameBinary())).digest('hex'),
+      experiment: { games_per_configuration: 12, rounds: 6, factions: 3, epoch: 0, opponents: ['random', 'random'], paired_by: ['seed', 'seat', 'opponents', 'epoch', 'vote_weight_mode'], seeds_are: 'fixed_TEST_not_held_out' },
       real_people_tested: 0, external_model_calls: 0, company_data: false, human_cost: 'not_measured',
       sources: Object.fromEntries(sources.map(p => [p, createHash('sha256').update(readFileSync(resolve(here, p))).digest('hex')])),
       runs, profile: hiringProfile(runs), knowledge_probe: exampleTransfer() };
@@ -76,5 +79,5 @@ if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1]
   const args = process.argv.slice(2); assert.ok(args.length === 0 || args.length === 2 && args[0] === '--out', 'usage: node experiment.mjs [--out FILE]');
   const report = await runExperiment();
   if (args.length) writeFileSync(resolve(args[1]), JSON.stringify(report, null, 2) + '\n');
-  console.log(JSON.stringify({ test_data: true, results: report.runs.map(r => ({ id: r.id, passed: r.passed, total: r.total, held_out: r.held_out_passed, calls: r.tool_calls })), profile: report.profile, biological_moat: report.knowledge_probe.hypothesis_status }));
+  console.log(JSON.stringify({ test_data: true, results: report.runs.map(r => ({ id: r.id, mean_cash: r.mean_cash, mean_payout: r.mean_payout, mean_goods: r.mean_goods, invalid_actions: r.invalid_actions, calls: r.tool_calls })), profile: report.profile, biological_moat: report.knowledge_probe.hypothesis_status }));
 }

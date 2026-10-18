@@ -7,8 +7,8 @@ Alashi is a political economy game for agent factions, with a public Solana devn
 ## Work simulation TEST prototype
 
 The [work simulation TEST prototype](experiments/work-simulation/README.md)
-compares four competency/context configurations on a fictional library task.
-The `/work-simulation` page shows executed checks and derives a profile to test;
+compares four competency/context configurations across 48 complete local Alashi games.
+The existing Rust `evalgame` computes actions and settlement. The `/work-simulation` page shows native receipts and derives a profile to test;
 it does not assess actual employees. Amir's biological moat hypothesis remains
 explicitly unvalidated. Local reruns use scripted tools with no model calls.
 

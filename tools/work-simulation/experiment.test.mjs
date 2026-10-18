@@ -2,74 +2,99 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { once } from 'node:events';
 import { runExperiment, planFor } from './experiment.mjs';
-import { handler, exampleTransfer } from './case.mjs';
-import { grade, hiringProfile } from './grade.mjs';
+import { decide, observationFor, scenarios, exampleTransfer } from './case.mjs';
+import { play } from './game.mjs';
+import { hiringProfile } from './grade.mjs';
 import { workServer } from './server.mjs';
 
 let report;
-test('four configurations execute the existing scheduler and independent acceptance suite', async () => {
+test('four TEST controllers execute 48 full native games with matched seeds, seats and opponents', async () => {
   report = await runExperiment();
-  assert.deepEqual(report.runs.map(r => r.passed), [4, 8, 8, 12]);
-  assert.deepEqual(report.runs.map(r => r.held_out_passed), [1, 2, 2, 3]);
+  assert.equal(report.schema, 'alashi.work-simulation.TEST.v2');
   assert.equal(report.external_model_calls, 0); assert.equal(report.real_people_tested, 0);
   for (const run of report.runs) {
     assert.equal(run.status, 'completed'); assert.equal(run.journal_resume_repeated_calls, 0);
     assert.equal(run.tool_calls, run.plan.length); assert.equal(run.model_tokens, 0);
+    assert.deepEqual(run.games.map(g => g.key), scenarios.map(s => s.key));
+    assert.equal(run.invalid_actions, 0);
+    for (const game of run.games) {
+      assert.deepEqual(game.initial, report.runs[0].games.find(g => g.key === game.key).initial);
+      assert.equal(game.produced, 5); assert.equal(game.sales, 5);
+      assert.equal(game.payouts.reduce((a, b) => a + b, 0) + game.rake, game.bank);
+      assert.equal(game.actions.at(-1).round, 6);
+    }
     for (const task of run.plan) {
-      assert.equal(run.events.filter(e => e.task === task.id && e.status === 'started').length, 1);
       const start = run.events.findIndex(e => e.task === task.id && e.status === 'started');
+      assert.ok(start >= 0);
       for (const dependency of task.depends_on) assert.ok(run.events.findIndex(e => e.task === dependency && e.status === 'running') < start);
     }
   }
+  assert.ok(report.runs.filter(r => r.competence).every(r => r.games.every(g => g.goods === 0)));
+  assert.ok(report.runs.filter(r => !r.competence).every(r => r.mean_goods > 0));
 });
 
-test('context and competence repair different checks with the other factor held fixed', () => {
-  assert.ok(report);
-  assert.deepEqual(report.profile.competence_gains, ['legacy', 'missing-user', 'unknown-state', 'blank-user']);
-  assert.deepEqual(report.profile.context_gains, ['owned', 'delisted', 'grace', 'gift']);
-  assert.equal(report.profile.human_transfer, 'not_validated');
-  assert.equal(report.profile.human_cost, 'not_measured');
-  const changedIds = report.runs.map((r, i) => ({ ...r, id: String(i + 7) }));
-  assert.deepEqual(hiringProfile(changedIds).competence_gains, report.profile.competence_gains);
+test('native receipts distinguish inventory planning from public context and payout from treasury', () => {
+  const comparisons = report.profile.comparisons;
+  assert.equal(comparisons.length, 4);
+  assert.ok(comparisons.filter(c => c.factor === 'competence').every(c => c.mean_cash_delta > 0));
+  assert.ok(comparisons.filter(c => c.factor === 'context').every(c => c.mean_payout_delta === 0));
+  const sale = report.runs[2].games[0].actions.find(a => a.action === 'sell');
+  assert.equal(sale.detail.units, 2); assert.equal(sale.detail.revenue, 26_000_000);
+  assert.equal(report.profile.human_transfer, 'not_validated'); assert.equal(report.profile.human_cost, 'not_measured');
+  assert.deepEqual(hiringProfile(report.runs.map((r, i) => ({ ...r, id: String(i + 7) }))).skills, report.profile.skills);
 });
 
-test('independent acceptance catches a broken policy; a role name cannot earn a pass', () => {
-  assert.ok(grade({}).some(c => !c.passed));
-  const policy = report.runs[3].policy;
-  assert.ok(grade({ ...policy, retain_ownership: false }).find(c => c.id === 'gift').passed === false);
-  assert.equal(handler(policy, { userId: '  ', subscription: 'active' }).status, 400);
-  assert.equal(handler(policy, { userId: 'TEST', subscription: 'cancelled', purchased: true }).canRead, true);
+test('context masking changes visible information, not the game state or faction resources', () => {
+  const o = { round: 2, my_idx: 0, n_factions: 3, cash: [50, 80, 90], goods: [4, 1, 2], decision_stage: 'primary', law_card: 2, president: 'a', my_wallet: 'a', veto_pending: false };
+  assert.equal(observationFor({}, 'law', o).law_card, undefined);
+  assert.equal(observationFor({ public_context: true }, 'law', o).law_card, 2);
+  assert.deepEqual(decide({}, 'law', o), { action: 'vote_yes' });
+  assert.deepEqual(decide({ public_context: true }, 'law', o), { action: 'vote_no' });
+  assert.deepEqual(decide({ inventory_review: true }, 'market', o), { action: 'sell', units: 4 });
+  assert.deepEqual(o.goods, [4, 1, 2]);
 });
 
-test('no improvement or missing cells cannot manufacture a hiring profile', () => {
+test('replaying a paired game reproduces native actions and settlement exactly', async () => {
+  const old = report.runs[3].games[0], next = await play(report.runs[3].policy, scenarios[0]);
+  assert.deepEqual(next.actions, old.actions); assert.deepEqual(next.payouts, old.payouts);
+  assert.equal(next.cash, old.cash); assert.deepEqual(next.decisions, old.decisions);
+});
+
+test('native rules reject an oversized sale and an illegal controller cannot earn a profile', async () => {
+  const game = await play({ sale_units: 65535 }, scenarios[0]);
+  assert.ok(game.invalid_actions > 0); assert.ok(game.actions.some(a => a.err === 'NotEnoughGoods'));
+  const runs = structuredClone(report.runs); runs[3].games[0].invalid_actions = 1;
+  assert.equal(hiringProfile(runs).status, 'invalid_actions'); assert.deepEqual(hiringProfile(runs).skills, []);
+});
+
+test('missing, duplicate or mismatched game pairs cannot manufacture a profile', () => {
+  assert.equal(hiringProfile(report.runs.slice(1)).status, 'insufficient_data');
+  const runs = structuredClone(report.runs); runs[3].games[0].seed = 999;
+  assert.equal(hiringProfile(runs).status, 'insufficient_data');
+  runs[3].games = runs[0].games.map(() => runs[0].games[0]);
+  assert.equal(hiringProfile(runs).status, 'insufficient_data');
+  const unfair = structuredClone(report.runs); unfair[3].games[0].initial.cash += 1;
+  assert.equal(hiringProfile(unfair).status, 'insufficient_data');
+});
+
+test('no improvement or worse treasury prevents a positive competency claim', () => {
   const runs = structuredClone(report.runs);
-  for (const r of runs) r.checks = structuredClone(runs[0].checks);
+  for (const run of runs) run.games = structuredClone(runs[0].games);
   assert.deepEqual(hiringProfile(runs).skills, []);
-  assert.equal(hiringProfile(runs.slice(1)).status, 'insufficient_data');
+  for (const game of runs[3].games) game.cash -= 1;
+  assert.equal(hiringProfile(runs).status, 'no_competence_advantage');
 });
 
-test('regressions stop a positive competency recommendation', () => {
-  const runs = structuredClone(report.runs);
-  runs[3].checks.find(c => c.id === 'active').passed = false;
-  const profile = hiringProfile(runs);
-  assert.equal(profile.status, 'mixed_test_evidence'); assert.deepEqual(profile.skills, []);
-});
-
-test('example transfer uses new identities and preserves ambiguity without claiming human evidence', () => {
+test('unspoken convention probe preserves ambiguity and is separate from match evidence', () => {
   const probe = exampleTransfer();
   assert.equal(probe.human_reference, 'not_collected'); assert.equal(probe.hypothesis_status, 'not_validated');
   assert.ok(probe.cases.every(c => !probe.demonstrations.some(d => d.id === c.id)));
   assert.equal(probe.cases.filter(c => c.expected !== null && c.expected === c.with_examples).length, 2);
   assert.equal(probe.cases.at(-1).with_examples, 'unknown');
+  assert.deepEqual(planFor(true).find(t => t.id === 'review').depends_on, ['inventory', 'implement']);
 });
 
-test('competency changes the executed work graph, not the acceptance rubric', () => {
-  assert.deepEqual(planFor(false).map(t => t.id), ['requirements', 'implement', 'deliver']);
-  assert.deepEqual(planFor(true).find(t => t.id === 'review').depends_on, ['client', 'implement']);
-  assert.ok(planFor(true).every(t => t.kind === 'tool'));
-});
-
-test('local rerun endpoint rejects foreign origins and arbitrary payloads; one experiment at a time', async t => {
+test('local rerun rejects foreign origins, arbitrary payloads and overlapping experiments', async t => {
   let release;
   const server = workServer(async () => { await new Promise(r => { release = r; }); return { test_data: true }; });
   server.listen(0, '127.0.0.1'); await once(server, 'listening');

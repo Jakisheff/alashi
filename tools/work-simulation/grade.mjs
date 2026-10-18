@@ -1,46 +1,43 @@
-import { handler } from './case.mjs';
+import { scenarios } from './case.mjs';
+import { play } from './game.mjs';
+import { createHash } from 'node:crypto';
 
-// Acceptance cases are separate from worker inputs and do not inspect A/B/C/D.
-const checks = [
-  ['active', 'Активная подписка', 'feature', false, { subscription: 'active' }, true],
-  ['cancelled', 'Отмена без отдельной покупки', 'feature', false, { subscription: 'cancelled' }, false],
-  ['expired', 'Истечение без отдельной покупки', 'feature', false, { subscription: 'expired' }, false],
-  ['owned', 'Покупка сохраняется после отмены', 'context', false, { subscription: 'cancelled', purchased: true }, true],
-  ['delisted', 'Купленная книга удалена из каталога', 'context', false, { subscription: 'cancelled', purchased: true, delisted: true }, true],
-  ['grace', 'Подтверждённый льготный период', 'context', false, { subscription: 'expired', graceValid: true }, true],
-  ['legacy', 'Старый клиент читает canRead', 'competence', false, { subscription: 'active' }, 'legacy'],
-  ['missing-user', 'Запрос без пользователя', 'competence', false, { subscription: 'active', userId: null }, 400],
-  ['unknown-state', 'Неизвестное состояние подписки', 'competence', false, { subscription: 'unknown' }, 400],
-  ['new-reader', 'Другой активный читатель', 'feature', true, { subscription: 'active', userId: 'TEST-new-reader' }, true],
-  ['gift', 'Подаренная книга после отмены', 'context', true, { subscription: 'cancelled', gifted: true }, true],
-  ['blank-user', 'Пустой идентификатор пользователя', 'competence', true, { subscription: 'active', userId: '   ' }, 400],
-];
-
-export function grade(policy) {
-  return checks.map(([id, title, category, held_out, fields, expected]) => {
-    const actual = handler(policy, { userId: 'TEST-reader', ...fields });
-    const observed = expected === 'legacy' ? typeof actual.canRead === 'boolean' : typeof expected === 'number' ? actual.status : actual.canRead ?? actual.allowed;
-    return { id, title, category, held_out, passed: observed === (expected === 'legacy' ? true : expected), expected, observed, response: actual };
-  });
+export const mean = values => values.reduce((a, b) => a + b, 0) / values.length;
+export async function grade(policy) {
+  const games = [];
+  for (const scenario of scenarios) {
+    const game = await play(policy, scenario);
+    games.push({ ...game, decision_trace_sha256: createHash('sha256').update(JSON.stringify(game.decisions)).digest('hex'), decisions: games.length === 0 ? game.decisions : [] });
+  }
+  return games;
 }
 
 export function hiringProfile(runs) {
   const find = (competence, context) => runs.find(r => r.competence === competence && r.context === context);
   const cells = [find(false, false), find(false, true), find(true, false), find(true, true)];
-  if (runs.length !== 4 || cells.some(r => !r || r.status !== 'completed')) return { status: 'insufficient_data', claim: 'Нужны четыре завершённые конфигурации.', competence_gains: [], context_gains: [], skills: [] };
-  const gains = (before, after, category) => before.checks.filter(c => c.category === category && !c.passed && after.checks.find(a => a.id === c.id)?.passed).map(c => c.id);
+  const empty = { status: 'insufficient_data', claim: 'Нужны четыре завершённые конфигурации с одинаковыми условиями партий.', comparisons: [], skills: [], context_action: 'Контекст пока не оценён.', hiring_decision: 'Не установлено, нужен ли найм.', human_transfer: 'not_validated', human_cost: 'not_measured' };
+  if (runs.length !== 4 || cells.some(r => !r || r.status !== 'completed' || r.games?.length !== scenarios.length)) return empty;
   const [a, b, c, d] = cells;
-  const competence_gains = gains(a, c, 'competence').filter(id => gains(b, d, 'competence').includes(id));
-  const context_gains = gains(a, b, 'context').filter(id => gains(c, d, 'context').includes(id));
-  const regressions = [[a, c], [b, d], [a, b], [c, d]].flatMap(([before, after]) => before.checks.filter(check => check.passed && after.checks.find(other => other.id === check.id)?.passed === false).map(check => `${before.id}→${after.id}: ${check.id}`));
-  return {
-    status: regressions.length ? 'mixed_test_evidence' : 'test_hypothesis',
-    claim: regressions.length ? 'Есть регрессии. Преимущество конфигурации требует разбора.' : competence_gains.length ? 'В TEST-кейсе полезна компетенция проверки API-контрактов и входных данных.' : 'TEST-сравнение не дало основания добавлять эту компетенцию.',
-    competence_gains, context_gains, regressions,
-    skills: competence_gains.length && !regressions.length ? ['Проверять изменение на старом клиенте.', 'Проверять недопустимые входные данные.', 'Передавать воспроизводимые контрактные проверки следующему участнику.'] : [],
-    context_action: context_gains.length ? 'Передать правила владения книгами и льготного периода; проверить применение на новых случаях.' : 'Преимущество дополненного контекста не установлено.',
-    hiring_decision: 'Не установлено, нужен ли найм: сравнить обучение действующей команды с пробной работой кандидата и учесть затраты людей.',
-    evidence: [`${c.id} против ${a.id} и ${d.id} против ${b.id}: вклад проверки контракта.`, `${b.id} против ${a.id} и ${d.id} против ${c.id}: вклад бизнес-контекста.`],
-    human_transfer: 'not_validated', human_cost: 'not_measured',
-  };
+  const comparisons = [];
+  for (const [before, after, factor] of [[a, c, 'competence'], [b, d, 'competence'], [a, b, 'context'], [c, d, 'context']]) {
+    const pairs = before.games.map(old => {
+      const next = after.games.find(g => g.key === old.key);
+      if (!next || JSON.stringify([old.seed, old.seat, old.opponents, old.epoch, old.vote_weight_mode, old.initial]) !== JSON.stringify([next.seed, next.seat, next.opponents, next.epoch, next.vote_weight_mode, next.initial])) return null;
+      return { key: old.key, cash_delta: next.cash - old.cash, payout_delta: next.payout - old.payout, invalid_delta: next.invalid_actions - old.invalid_actions };
+    });
+    if (pairs.some(p => !p) || new Set(pairs.map(p => p.key)).size !== scenarios.length) return empty;
+    comparisons.push({ before: before.id, after: after.id, factor, mean_cash_delta: mean(pairs.map(p => p.cash_delta)),
+      mean_payout_delta: mean(pairs.map(p => p.payout_delta)), positive: pairs.filter(p => p.cash_delta > 0).length,
+      negative: pairs.filter(p => p.cash_delta < 0).length, tied: pairs.filter(p => p.cash_delta === 0).length, pairs });
+  }
+  const legal = cells.every(r => r.games.every(g => g.invalid_actions === 0));
+  const inventory = comparisons.filter(c => c.factor === 'competence');
+  const useful = legal && inventory.every(c => c.mean_cash_delta >= 0) && inventory.some(c => c.mean_cash_delta > 0);
+  return { status: !legal ? 'invalid_actions' : useful ? 'game_test_hypothesis' : 'no_competence_advantage',
+    claim: !legal ? 'Есть недопустимые игровые действия. Профиль требует разбора.' : useful ? 'В этой TEST-серии полезно планирование объёма продаж по доступному запасу.' : 'Эта TEST-серия не установила преимущества добавленного планирования.',
+    comparisons,
+    skills: useful ? ['Связывать произведённый запас с объёмом продажи в Market.', 'Проверять остатки к последнему рынку и законность действий.'] : [],
+    context_action: 'Передавать публичную карту закона и право вето. Проверять эффект отдельно: выгода не гарантирована в каждой партии.',
+    hiring_decision: 'Проверить этот вклад на других соперниках, затем сравнить обучение команды с пробной работой кандидата. Необходимость найма и затраты людей не установлены.',
+    human_transfer: 'not_validated', human_cost: 'not_measured' };
 }
