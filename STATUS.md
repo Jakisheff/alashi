@@ -263,3 +263,8 @@ pass. The complete arena suite is running. План: ещё 0,33 часа, до 
 Observed: 44 Node tests and 137 arena tests pass, with one explicit ignored
 canonical-snapshot check. See docs/ops/READY_TASK_SCHEDULER_20261018.md.
 Факт: 1,33 часа. No deployment.
+18.10 19:28. Релиз main-523e14a-20261018 опубликован, CI 5/5 прошёл.
+Проверки после деплоя: 44 Node-теста, 5 изолированных сценариев на том же
+бинарнике, 17 публичных HTTPS-проверок. Карта загрузилась без browser errors.
+Snapshot и счётчик партий сохранены побайтно; прежний релиз доступен для отката.
+Отчёт: docs/ops/DEPLOY_MAIN_20261018.md. Факт: 0,4 часа.

@@ -1,0 +1,353 @@
+{
+  "binary_sha256": "891721b7325d5d6e181da9eef3bb060177cbcec628e45cb23556ddec10bd14d9",
+  "real_provider_calls": 0,
+  "cases": [
+    {
+      "kind": "dependencies",
+      "passed": true,
+      "counts": {
+        "fast": 1,
+        "slow": 1,
+        "follow": 1,
+        "deliver": 1
+      },
+      "events": [
+        {
+          "event": "reserve",
+          "task": "fast",
+          "at": 355.083301
+        },
+        {
+          "event": "model_start",
+          "task": "fast",
+          "at": 359.83508
+        },
+        {
+          "event": "reserve",
+          "task": "slow",
+          "at": 360.440696
+        },
+        {
+          "event": "model_start",
+          "task": "slow",
+          "at": 363.457497
+        },
+        {
+          "event": "model_end",
+          "task": "fast",
+          "at": 363.461202
+        },
+        {
+          "event": "report",
+          "task": "fast",
+          "at": 372.292408
+        },
+        {
+          "event": "reserve",
+          "task": "follow",
+          "at": 381.065342
+        },
+        {
+          "event": "model_start",
+          "task": "follow",
+          "at": 384.856074
+        },
+        {
+          "event": "model_end",
+          "task": "follow",
+          "at": 384.862482
+        },
+        {
+          "event": "model_end",
+          "task": "slow",
+          "at": 384.871641
+        },
+        {
+          "event": "report",
+          "task": "follow",
+          "at": 398.455292
+        },
+        {
+          "event": "report",
+          "task": "slow",
+          "at": 401.853619
+        },
+        {
+          "event": "reserve",
+          "task": "deliver",
+          "at": 410.124645
+        },
+        {
+          "event": "model_start",
+          "task": "deliver",
+          "at": 413.452907
+        },
+        {
+          "event": "model_end",
+          "task": "deliver",
+          "at": 413.454859
+        },
+        {
+          "event": "report",
+          "task": "deliver",
+          "at": 421.87327
+        },
+        {
+          "event": "finish",
+          "at": 427.874216
+        }
+      ],
+      "server_restart": false
+    },
+    {
+      "kind": "budget",
+      "passed": true,
+      "counts": {
+        "fast": 1,
+        "slow": 1
+      },
+      "events": [
+        {
+          "event": "reserve",
+          "task": "fast",
+          "at": 459.035981
+        },
+        {
+          "event": "model_start",
+          "task": "fast",
+          "at": 463.50432
+        },
+        {
+          "event": "reserve",
+          "task": "slow",
+          "at": 464.12203
+        },
+        {
+          "event": "model_start",
+          "task": "slow",
+          "at": 467.546194
+        },
+        {
+          "event": "model_end",
+          "task": "fast",
+          "at": 467.551271
+        },
+        {
+          "event": "report",
+          "task": "fast",
+          "at": 476.006885
+        },
+        {
+          "event": "model_end",
+          "task": "slow",
+          "at": 480.967003
+        },
+        {
+          "event": "report",
+          "task": "slow",
+          "at": 490.289873
+        }
+      ],
+      "server_restart": false
+    },
+    {
+      "kind": "recovery",
+      "passed": true,
+      "counts": {
+        "fast": 1,
+        "slow": 1,
+        "follow": 1,
+        "deliver": 1
+      },
+      "events": [
+        {
+          "event": "reserve",
+          "task": "fast",
+          "at": 523.207573
+        },
+        {
+          "event": "model_start",
+          "task": "fast",
+          "at": 527.758622
+        },
+        {
+          "event": "reserve",
+          "task": "slow",
+          "at": 528.326934
+        },
+        {
+          "event": "model_start",
+          "task": "slow",
+          "at": 531.6307
+        },
+        {
+          "event": "model_end",
+          "task": "fast",
+          "at": 531.635403
+        },
+        {
+          "event": "report",
+          "task": "fast",
+          "at": 539.52231
+        },
+        {
+          "event": "model_end",
+          "task": "slow",
+          "at": 539.570558
+        },
+        {
+          "event": "report",
+          "task": "slow",
+          "at": 550.032584
+        },
+        {
+          "event": "reserve",
+          "task": "follow",
+          "at": 622.969348
+        },
+        {
+          "event": "model_start",
+          "task": "follow",
+          "at": 626.326625
+        },
+        {
+          "event": "model_end",
+          "task": "follow",
+          "at": 626.329174
+        },
+        {
+          "event": "report",
+          "task": "follow",
+          "at": 635.12081
+        },
+        {
+          "event": "reserve",
+          "task": "deliver",
+          "at": 643.330943
+        },
+        {
+          "event": "model_start",
+          "task": "deliver",
+          "at": 646.530295
+        },
+        {
+          "event": "model_end",
+          "task": "deliver",
+          "at": 646.532765
+        },
+        {
+          "event": "report",
+          "task": "deliver",
+          "at": 654.534333
+        },
+        {
+          "event": "finish",
+          "at": 661.113213
+        }
+      ],
+      "server_restart": true
+    },
+    {
+      "kind": "unknown_usage",
+      "passed": true,
+      "counts": {
+        "fast": 1,
+        "slow": 1
+      },
+      "events": [
+        {
+          "event": "reserve",
+          "task": "fast",
+          "at": 690.630621
+        },
+        {
+          "event": "model_start",
+          "task": "fast",
+          "at": 695.515329
+        },
+        {
+          "event": "reserve",
+          "task": "slow",
+          "at": 696.055756
+        },
+        {
+          "event": "model_start",
+          "task": "slow",
+          "at": 699.169169
+        },
+        {
+          "event": "model_end",
+          "task": "fast",
+          "at": 699.180768
+        },
+        {
+          "event": "report",
+          "task": "fast",
+          "at": 707.409209
+        },
+        {
+          "event": "model_end",
+          "task": "slow",
+          "at": 707.411861
+        },
+        {
+          "event": "report",
+          "task": "slow",
+          "at": 716.354318
+        }
+      ],
+      "server_restart": false
+    },
+    {
+      "kind": "overrun",
+      "passed": true,
+      "counts": {
+        "fast": 1,
+        "slow": 1
+      },
+      "events": [
+        {
+          "event": "reserve",
+          "task": "fast",
+          "at": 749.499214
+        },
+        {
+          "event": "model_start",
+          "task": "fast",
+          "at": 752.79583
+        },
+        {
+          "event": "reserve",
+          "task": "slow",
+          "at": 753.354456
+        },
+        {
+          "event": "model_start",
+          "task": "slow",
+          "at": 756.545734
+        },
+        {
+          "event": "model_end",
+          "task": "fast",
+          "at": 756.548701
+        },
+        {
+          "event": "report",
+          "task": "fast",
+          "at": 765.674873
+        },
+        {
+          "event": "model_end",
+          "task": "slow",
+          "at": 765.677164
+        },
+        {
+          "event": "report",
+          "task": "slow",
+          "at": 773.795952
+        }
+      ],
+      "server_restart": false
+    }
+  ]
+}
