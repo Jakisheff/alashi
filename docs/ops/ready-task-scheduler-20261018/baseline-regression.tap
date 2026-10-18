@@ -1,0 +1,126 @@
+TAP version 13
+# Subtest: a dependent starts after its accepted report while an unrelated task is still running
+not ok 1 - a dependent starts after its accepted report while an unrelated task is still running
+  ---
+  duration_ms: 426.490611
+  type: 'test'
+  location: '/Users/amir/tmp/alashi-ready-scheduler-20261018/tools/agent-bootstrap/strategy-scheduler.test.mjs:69:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    follow must not wait for slow
+
+    false !== true
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/amir/tmp/alashi-ready-scheduler-20261018/tools/agent-bootstrap/strategy-scheduler.test.mjs:79:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: a rejected reservation cannot call the provider or finish the run
+ok 2 - a rejected reservation cannot call the provider or finish the run
+  ---
+  duration_ms: 36.316094
+  type: 'test'
+  ...
+# Subtest: unknown usage stops new work and drains active calls before releasing the journal lock
+ok 3 - unknown usage stops new work and drains active calls before releasing the journal lock
+  ---
+  duration_ms: 161.21253
+  type: 'test'
+  ...
+# Subtest: resume a lost report before server acceptance without repeating model work
+ok 4 - resume a lost report before server acceptance without repeating model work
+  ---
+  duration_ms: 262.437809
+  type: 'test'
+  ...
+# Subtest: resume a lost report after server acceptance without repeating model work
+not ok 5 - resume a lost report after server acceptance without repeating model work
+  ---
+  duration_ms: 237.161115
+  type: 'test'
+  location: '/Users/amir/tmp/alashi-ready-scheduler-20261018/tools/agent-bootstrap/strategy-scheduler.test.mjs:112:39'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+
+    + {}
+    - {
+    -   fast: {
+    -     task: 'fast'
+    -   }
+    - }
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    fast:
+      task: 'fast'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/amir/tmp/alashi-ready-scheduler-20261018/tools/agent-bootstrap/strategy-scheduler.test.mjs:119:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: a stopped run reconciles saved paid responses without starting more work
+not ok 6 - a stopped run reconciles saved paid responses without starting more work
+  ---
+  duration_ms: 6.370233
+  type: 'test'
+  location: '/Users/amir/tmp/alashi-ready-scheduler-20261018/tools/agent-bootstrap/strategy-scheduler.test.mjs:123:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'total_tokens')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/amir/tmp/alashi-ready-scheduler-20261018/tools/agent-bootstrap/strategy-scheduler.test.mjs:130:71)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: out-of-order report snapshots cannot forget an accepted dependency or repeat a task
+ok 7 - out-of-order report snapshots cannot forget an accepted dependency or repeat a task
+  ---
+  duration_ms: 242.877943
+  type: 'test'
+  ...
+# Subtest: an overrun with a valid report still blocks dependent model calls
+ok 8 - an overrun with a valid report still blocks dependent model calls
+  ---
+  duration_ms: 63.770067
+  type: 'test'
+  ...
+# Subtest: a reservation that completes after a failure cannot start a model call
+ok 9 - a reservation that completes after a failure cannot start a model call
+  ---
+  duration_ms: 76.929798
+  type: 'test'
+  ...
+# Subtest: expiry during reservation prevents a model request
+ok 10 - expiry during reservation prevents a model request
+  ---
+  duration_ms: 1129.261004
+  type: 'test'
+  ...
+# Subtest: fixed workload timing: same reports and four calls, with controlled provider delays
+ok 11 - fixed workload timing: same reports and four calls, with controlled provider delays
+  ---
+  duration_ms: 1954.08558
+  type: 'test'
+  ...
+# {"fixture":"fast30-slow200-follow150-deliver10","milliseconds":[637,608,697],"median_ms":637,"provider_calls_per_run":4,"synthetic_tokens_per_run":40,"external_model_calls":0}
+1..11
+# tests 11
+# suites 0
+# pass 8
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5858.966962

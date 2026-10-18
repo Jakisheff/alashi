@@ -156,7 +156,10 @@ Set `ALASHI_MODEL_URL` to an OpenAI-compatible chat completions endpoint,
 `ALASHI_MODEL` to the chosen model and `ALASHI_MODEL_KEY` to its credential.
 Inspect the provider's price before running. No model or price is chosen for you.
 The runner makes one request per model task, with no automatic retry or fallback.
-It reserves each parallel stage before issuing its model requests.
+Each task starts when its dependencies have accepted reports with known usage.
+Independent tasks keep running while a ready continuation starts. Every call
+requires its own server-approved reservation; active reservations still count
+against the shared budget.
 
 The private journal records an inflight marker before a call and its response
 before submitting the usage receipt. Restarting with the same journal resubmits a
@@ -164,6 +167,14 @@ saved response without repeating the model call. A crash after sending a request
 but before saving its response leaves usage unknown and stops the run. If a crash
 leaves a `.lock` file, verify the old process has stopped before removing that
 specific lock and resuming with the original journal.
+
+A failed reservation or report stops new calls. Calls already started save their
+responses and report usage before the runner releases its journal lock. A late
+reservation response cannot start a call after the runner observes another
+task's failure. Resume first reconciles saved or ambiguous calls, including on a stopped run; it can
+report already paid work after the deadline. New work still requires a running
+run and an unexpired deadline. Accepted dependency reports are restored from
+the server, and out-of-order responses cannot replace newer task results.
 
 Built-in tools `brief_extract`, `copy_check` and `trade_state` run locally without a model.
 `trade_state` extracts the captured game state for the owner; it does not query a model.
@@ -255,9 +266,14 @@ a production deployment.
 
 ## Checks
 
+The [scheduler acceptance](../../docs/ops/READY_TASK_SCHEDULER_20261018.md)
+records dependency ordering, budget checks and recovery results, with controlled
+timings before and after the change.
+
 ```sh
 cargo test --locked --manifest-path arena/Cargo.toml
 node --test tools/agent-bootstrap/strategy-run.test.mjs
+node --test tools/agent-bootstrap/strategy-scheduler.test.mjs
 npm --prefix frontend run build
 npm --prefix frontend run check:animations
 npm --prefix frontend run check:strategies

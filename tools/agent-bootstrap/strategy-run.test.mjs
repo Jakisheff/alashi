@@ -65,7 +65,7 @@ test('ambiguous inflight journal is recorded as unknown without a second provide
   }};
   writeFileSync(journalPath,JSON.stringify({run:id,record,calls:{'deliver':{phase:'inflight'}}}),{mode:0o600});
   try {
-    await assert.rejects(runCycle({api,id,provider:{source:'test_provider',provider:'local',model:'test',complete:async()=>{calls++;}},journalPath}),/stage_stopped/);
+    await assert.rejects(runCycle({api,id,provider:{source:'test_provider',provider:'local',model:'test',complete:async()=>{calls++;}},journalPath}),/report_or_usage_not_verified/);
     assert.equal(calls,0);assert.equal(run.status,'usage_unknown');assert.equal(run.reserved_tokens,5000);
     assert.equal(JSON.parse(readFileSync(journalPath)).calls['deliver'].result.usage,null);
   } finally {rmSync(dir,{recursive:true,force:true});}

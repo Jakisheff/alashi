@@ -820,3 +820,29 @@ revision receives another CI run. External model calls: zero. Public deployment,
 fresh integrated Solana execution and two-person onboarding were not performed.
 Факт: 0,8 часа реализации и проверки до финального прогона CI.
 План: 2 часа, до 04:11 закрыт; ожидание последней проверки учитывается в чате.
+
+18.10 15:51. План: 0,6 часа, до 16:27. Исполнитель стратегий должен запускать
+задачу после принятия её зависимостей, без ожидания независимой ветки.
+Проверка: одинаковый граф до и после правки, резервирование бюджета,
+восстановление журнала без повторных вызовов. База: 4026817.
+
+18.10 16:34. Observed: 40 Node tests pass. The scheduler now follows accepted
+dependencies and drains started calls on failure. Recovery restores accepted
+dependency reports and reconciles saved responses on stopped runs.
+The arena integration suite is compiling. План: ещё 0,5 часа, до 17:04.
+The initial estimate was exceeded; integration checks and publication remain.
+
+18.10 17:07. Observed: 44 Node tests pass. The signed HTTP duel passes with
+a controlled slow branch and overlapping dependency continuation. Its previous
+fixed delay was replaced with a bounded promise to test ordering independently
+of disk latency. The full arena suite is running again.
+План: ещё 0,33 часа, до 17:27. Remaining: integration results and publication.
+
+18.10 17:11. Completed: 44 Node tests and 137 arena tests pass; one canonical
+snapshot check is explicitly ignored. The signed HTTP graph overlaps a ready
+continuation with an independent call. Trading recovery passes without a second
+model call or trade. Controlled timing medians: 748 ms before, 457 ms after;
+these local fixture timings do not establish production performance.
+Source commit 2805d8e is published on codex/ready-task-scheduler.
+Evidence: docs/ops/READY_TASK_SCHEDULER_20261018.md.
+Факт: 1,33 часа. All estimates above are closed; deployment was not performed.
