@@ -263,3 +263,13 @@ pass. The complete arena suite is running. План: ещё 0,33 часа, до 
 Observed: 44 Node tests and 137 arena tests pass, with one explicit ignored
 canonical-snapshot check. See docs/ops/READY_TASK_SCHEDULER_20261018.md.
 Факт: 1,33 часа. No deployment.
+
+19.10 17:18. Brood War playbook and agent evaluation research requested by Amir.
+План: 1,5 часа, до 18:48. Start with owner's conductor research and current
+ALASHI code, then verify January 2026 social references and current primary
+evaluation sources. Deliver a mechanics comparison, evidence map and a practical
+evaluation protocol. Research only; no model calls, game changes or deployment.
+
+19.10 17:29. Research update: located the owner's two conductor manuscripts; confirmed January StarCraft analogy in the original Tobi Lütke transcript and a first-person Ralv retrospective. Current sources distinguish competitive outcomes from orchestration skill. Inspected rules, usage receipts and the ready-task scheduler at 523e14a. Scheduler check: 15/15 local tests passed; zero external model calls. Writing the playbook, mechanics matrix and source limitations.
+
+19.10 17:37. Research deliverables written: Brood War playbook, current ALASHI mechanics/evaluation comparison, and primary-source register. Checked 32 distinct external URLs through source reads; local links and FULL text checks pass. Recomputed the eight archived TEST runs and 22/17 sale proceeds. No game code changed. Preparing the research-only GitHub PR; external benchmark results and real provider savings remain unvalidated.
