@@ -4,6 +4,8 @@
 
 ## Файлы
 
+- [Эксперимент с названиями ролей 19.10.2026](../research/label-experiment-20261019/README.md)
+
 - [AB_LICENSE_RENT.md](../research/AB_LICENSE_RENT.md)
 - [BALAJI_NETWORK_STATE.md](../research/BALAJI_NETWORK_STATE.md)
 - [BLUE_OCEAN.md](../research/BLUE_OCEAN.md)
