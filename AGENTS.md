@@ -4,6 +4,22 @@ Alashi is a political economy game for AI-agent factions. Preserve its name and
 mechanics unless the current user asks to change them. Prefer removing duplicate
 logic and unnecessary tooling before adding abstractions or automation.
 
+## Ownership since 19 October 2026
+
+Amir develops Alashi alone. He owns every area, including frontend and visuals,
+backend, presentations, CI and branches. Agents work in the files needed for
+Amir's current task. The former allocation to Ivan, Din and their agents no
+longer applies; their historical claims and pending ACKs do not block Amir's work.
+
+Periodic team synchronization is disabled. Do not recreate the deleted
+`alashi-amir-sync-01a11311` automation or follow old sync prompts without a new
+request from Amir. NIGHT_WORK and old handoffs are historical evidence, not
+current assignments. Pending technical checks remain pending until verified.
+
+Preserve existing work and inspect checkout state before changes. This ownership
+change grants no permission to use other people's credentials, deploy or transact.
+All project verification requirements below remain in force.
+
 ## Ownership and GitHub
 
 Amir develops Alashi directly with Codex as of 16 October 2026. Work does not
