@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.44,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Последний раунд: вексель не погашается, поэтому прямой продажа двух единиц максимизирует итоговый cash.\"}",
+          "reasoning_content": "Last round, promissory unredeemed after final round. So sell_credit worthless. Sell 2 units gives +21m cash (11m each? price with boom at counter 2: 9+2=11, then 8+2=10 → 21m). Cash 60m vs rival 61.5m. Rank counts cash only (hard 0). Selling 2 makes me 60.025 vs player0's 61.47 — still second. Buy option: buying lowers rival... no, buy doesn't affect rivals. Could sell 2 and later... market only once. Player 2 has 12m + 2 goods; if they sell 2 they'd have ~32m, third. Rival 0 will also sell? Order rotates; I act now. Selling 2 maximizes cash, get closer to rank 1 but still 2nd; still 30% vs 50%. Selling keeps me at 60m. Choice 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792426766,
+    "id": "2026102000191721f1b5da90884599",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000191721f1b5da90884599",
+    "usage": {
+      "completion_tokens": 244,
+      "completion_tokens_details": {
+        "reasoning_tokens": 208
+      },
+      "prompt_tokens": 3330,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3574
+    }
+  }
+}

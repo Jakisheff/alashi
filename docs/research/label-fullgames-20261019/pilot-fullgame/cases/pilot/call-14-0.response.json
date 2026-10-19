@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.67,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель обходит грядущую девальвацию и даёт 18,75 вместо 15 alashi.\"}",
+          "reasoning_content": "Round 5 market, I have 3 goods. Prices: counter 6 → price 4? [12,10,9,8,7,6,5,4,...] index6=5? counter 6 means 6 sold, next price index 6 = 5? But sell 1 gives 5 alashi (5000000), yes price 5.\n\nNext round 6 cash devalues ×0.62. So sell now is better. Law round 4 was tax 10%? I voted no; result tax_bps=0 now, so rejected. Sell all 3 now = +15 alashi cash, avoids devaluation. sell_credit gives promissory, which bypasses devaluation (added after). sell_credit 3 → promissory 18.75 alashi, paid at end of round 6 after devaluation? Promissory added to cash at start of round 6 — round 6 is last round, then no more devaluation? Devaluation happens start of round 2+, so start of round 6 yes, then promissory added. So sell_credit 3 gives 18.75 vs sell 15 — but wait, at end promissory after last round not redeemed... promissory added to cash at start of round 6, which is fine, and counts in rank. So credit better: 18.75.\n\nBut others sell too, lowering price—but I act now. Choose choice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792426731,
+    "id": "202610200018424bc9a5b1ba1c4d67",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200018424bc9a5b1ba1c4d67",
+    "usage": {
+      "completion_tokens": 343,
+      "completion_tokens_details": {
+        "reasoning_tokens": 307
+      },
+      "prompt_tokens": 3283,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3626
+    }
+  }
+}

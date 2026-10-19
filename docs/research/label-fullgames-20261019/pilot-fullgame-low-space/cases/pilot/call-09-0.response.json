@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.032,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель не девальвируется и обгонит удержание кэша через два раунда девальвации.\"}",
+          "reasoning_content": "Round 4 market, prices high, round 6 end devalues cash by 0.62 once (start of round 5... actually cash=floor(cash/100)*62 each round start ≥2? Then round 6 too—hmm, \"round 2 and beyond\" each round devalues by 62/100). Cash held loses 38% each round start. Promissory added without devaluation... but promissory of last round isn't paid. So cash now → 0.62×0.62 = 0.3844 by end. Selling cash now is bad; sell_credit converts to promissory which skips devaluation and pays next round start. Sell all 3 on credit now: promissory 38.75M, added in round 5 without devaluation? Cash round 5: floor(30.085M/100)*62 = 18.65M + 38.75M = 57.4M, then round 6: ×0.62 = 35.6M. Selling for cash: 61.085M → round5 37.87M → round6 23.48M. Credit better. Choose 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792426570,
+    "id": "202610200016008feac5e65d13426a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200016008feac5e65d13426a",
+    "usage": {
+      "completion_tokens": 292,
+      "completion_tokens_details": {
+        "reasoning_tokens": 255
+      },
+      "prompt_tokens": 2783,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 3075
+    }
+  }
+}

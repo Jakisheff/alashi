@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.454,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель не девальвируется, поэтому продаю весь товар в кредит перед девальвацией.\"}",
+          "reasoning_content": "Round 2, cash will be devalued floor(cash/100)*62. Selling now keeps cash that will be devalued 62%. Promissory survives round start (added after devaluation). Sell credit: promissory added next round without devaluation? Rule: cash devalued, then promissory added. So sell credit is better. Sell both on credit: promissory 16.25 alashi. Choose 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792426526,
+    "id": "2026102000152044ba0c87349e4cac",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000152044ba0c87349e4cac",
+    "usage": {
+      "completion_tokens": 127,
+      "completion_tokens_details": {
+        "reasoning_tokens": 94
+      },
+      "prompt_tokens": 2162,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2289
+    }
+  }
+}

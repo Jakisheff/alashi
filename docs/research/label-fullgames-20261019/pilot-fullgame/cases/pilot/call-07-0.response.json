@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.731,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Продажа всего товара сейчас максимизирует ликвидный cash перед будущей девальвацией.\"}",
+          "reasoning_content": "Round 3 market, price 9 per unit. Selling 2 now gives 18M immediate. Later rounds: cash devalues (62%). Selling all now better; keep goods? Future prices decline. Sell 2 for cash now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792426673,
+    "id": "20261020001750510b4eb98e8f484c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020001750510b4eb98e8f484c",
+    "usage": {
+      "completion_tokens": 81,
+      "completion_tokens_details": {
+        "reasoning_tokens": 49
+      },
+      "prompt_tokens": 2474,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2555
+    }
+  }
+}

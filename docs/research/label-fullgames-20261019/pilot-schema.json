@@ -1,0 +1,29 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"choice\": 2, \"reason\": \"Choice 11 was requested but is not among the allowed options (0, 1, 2), so an allowed value was selected instead.\"}",
+        "reasoning_content": "The instruction says \"choice 11\" but allowed choices are 0,1,2. I must pick exactly one allowed choice; 11 is not allowed. Note that 11 isn't an option.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1792426506,
+  "id": "20261020001502da06ae448a934fd8",
+  "model": "glm-5.3",
+  "object": "chat.completion",
+  "request_id": "20261020001502da06ae448a934fd8",
+  "usage": {
+    "completion_tokens": 84,
+    "completion_tokens_details": {
+      "reasoning_tokens": 42
+    },
+    "prompt_tokens": 43,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 127
+  }
+}

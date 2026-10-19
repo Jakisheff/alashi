@@ -4,6 +4,8 @@
 
 ## Файлы
 
+- [Названия ролей в целых партиях 19.10.2026](../research/label-fullgames-20261019/README.md)
+
 - [Эксперимент с названиями ролей 19.10.2026](../research/label-experiment-20261019/README.md)
 
 - [AB_LICENSE_RENT.md](../research/AB_LICENSE_RENT.md)

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.399,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон о повышении цен выгоден моим продажам в финальном раунде; он всё равно пройдёт.\"}",
+          "reasoning_content": "Law 7: +2 prices next market (round 6, last). I have 2 goods to sell. Two yes votes already (0 and 2). My no won't block (2 yes vs 1 no passes). Abstain or yes — price increase helps my last sale. But wait, higher price helps everyone; still I hold license, and price +2 benefits my round 6 sales. Vote yes? Vote already passes regardless. Actually voting no keeps... just abstain/pass. I vote yes for good measure? Vote weight equal; pass is fine. Choose yes (supports higher prices).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792426753,
+    "id": "20261020001908228779e8cd2440f4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020001908228779e8cd2440f4",
+    "usage": {
+      "completion_tokens": 163,
+      "completion_tokens_details": {
+        "reasoning_tokens": 125
+      },
+      "prompt_tokens": 2975,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3138
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.081,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 10% снизит выручку моих оставшихся продаж, против.\"}",
+          "reasoning_content": "Law 1: tax 10% on future sales. I have 3 goods to sell in later markets; tax hurts me. President is player 0, holder; I'm own_idx 1. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792426719,
+    "id": "20261020001836efdf7789f58844a6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020001836efdf7789f58844a6",
+    "usage": {
+      "completion_tokens": 72,
+      "completion_tokens_details": {
+        "reasoning_tokens": 45
+      },
+      "prompt_tokens": 2762,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2834
+    }
+  }
+}

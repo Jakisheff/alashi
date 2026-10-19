@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 14.422,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":35,\"reason\":\"Лицензия приносит 20–60 alashi сверх доли банка, а девальвация всё равно съест cash — ставлю всё.\"}",
+          "reasoning_content": "Round 4 action, auction. License income ~20-60 alashi (2M-6M? no, 20-60 alashi = 20-60M units). Huge value. My bid currently 0 — wait, I already have own_bid=0? I need to bid. Cash 19.375M. License income 20-60M — worth bidding heavily. Bid most cash? But cash counts toward rank. Winning license pays 20-60M extra beyond bank share, and my bid goes to bank (which I share). So bidding all cash: lose cash rank but gain license income plus bank share of own bid. Strongly bid high. But round 5 cash devauls anyway (floor/100*62), so cash loses 38%. Bid all 19.375M likely wins. Also could still produce? Bid doesn't consume action... \"bid does not consume the main action\" — but interface offers one aggregate per turn; menu candidates list bid alone. Choosing bid then can choose another action after. So bid max now.\n\nRivals have cash 8.4M and 31.5M; tie_order favors 0 first. Rival 2 has 31.5M, could outbid. But they bid hidden after? I bid all cash = 19.375M; rival 2 could beat. Still max chance.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792426708,
+    "id": "202610200018153fa5667a5dcb424f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200018153fa5667a5dcb424f",
+    "usage": {
+      "completion_tokens": 330,
+      "completion_tokens_details": {
+        "reasoning_tokens": 288
+      },
+      "prompt_tokens": 4635,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 4965
+    }
+  }
+}

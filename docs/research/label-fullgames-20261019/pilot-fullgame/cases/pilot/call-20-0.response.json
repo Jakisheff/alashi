@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.66,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон о налоге уже не влияет — рынок раунда 6 прошёл, исход только по рангу наличных, поэтому просто пасую.\"}",
+          "reasoning_content": "I'm own_idx=1, but president is idx 0. Law 2 = 20% tax on future sales — round 6 market already done, so tax affects nothing? Actually market phase of round 6 passed, so law 2 has no effect. But wait — boom=2 next round? Law 7 passed in round 5 raises prices this round already (boom=2). Tax would apply to future sales—none left. So law harmless. But veto_pending — president may veto anyway. Voting doesn't matter; I'm not president. Vote yes/no — irrelevant. Cash rank: I'm 60.0 vs 61.5 for idx0. Nothing changes. Vote pass to save nothing (vote_weight already 3? odd, weight is influence+2 since action passed). Just abstain/pass. Choose pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792426790,
+    "id": "202610200019419d73ada4c4b24fc0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200019419d73ada4c4b24fc0",
+    "usage": {
+      "completion_tokens": 214,
+      "completion_tokens_details": {
+        "reasoning_tokens": 173
+      },
+      "prompt_tokens": 3231,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3445
+    }
+  }
+}
