@@ -4,6 +4,9 @@
 
 ## Файлы
 
+- [Brood War и оценка оркестрации: исследование 19.10.2026](../research/BROOD_WAR_AGENT_EVALS_20261019.md)
+- [Playbook Brood War для сравнения с ALASHI](../research/BROOD_WAR_PLAYBOOK.md)
+- [Источники и границы проверки исследования](../research/BROOD_WAR_AGENT_EVALS_20261019_SOURCES.md)
 - [AB_LICENSE_RENT.md](../research/AB_LICENSE_RENT.md)
 - [BALAJI_NETWORK_STATE.md](../research/BALAJI_NETWORK_STATE.md)
 - [BLUE_OCEAN.md](../research/BLUE_OCEAN.md)
