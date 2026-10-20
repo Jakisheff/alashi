@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.978,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 8 обнулит мой вексель 30 alashi; голос no блокирует его при равенстве 1:1.\"}",
+          "reasoning_content": "Law 8: обнуляет promissory — у меня promissory 30 alashi. Vote no. President is 0, my vote weight 1, no voted yes(2), 0 abstain. Yes 1 > no 0 if I abstain... wait I'm not president. If I vote no: yes=1, no=1 — not passed. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498282,
+    "id": "20261020201119c151fb74a9124a04",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201119c151fb74a9124a04",
+    "usage": {
+      "completion_tokens": 123,
+      "completion_tokens_details": {
+        "reasoning_tokens": 83
+      },
+      "prompt_tokens": 2756,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2879
+    }
+  }
+}

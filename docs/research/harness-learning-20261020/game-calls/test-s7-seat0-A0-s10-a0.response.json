@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.537,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Снижение цен вредит соперникам с товаром, а у меня товаров нет — пусть проходит.\"}",
+          "reasoning_content": "Law 6 lowers next market prices by 2. I'm the president and holder of the role. Yes=2, No=1. If the law passes, my sales next round become cheaper — I've already sold everything. No goods. It would be bad for me to lower prices... I have no goods to sell. Rivals: 1 has 5 goods, 2 has 2 goods. Lower prices hurt them — good for me! Pass the law.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499753,
+    "id": "202610202035462651f1b4f97e4b3e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202035462651f1b4f97e4b3e",
+    "usage": {
+      "completion_tokens": 128,
+      "completion_tokens_details": {
+        "reasoning_tokens": 97
+      },
+      "prompt_tokens": 2447,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2575
+    }
+  }
+}

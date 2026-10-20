@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.565,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Высокая цена с бумом 11 за единицу, продаю весь товар, cash сохранится для аукциона раунда 4.\"}",
+          "reasoning_content": "Price: counter 2 → 9 + boom 2 = 11 per unit. Round 3. Need cash ≥9 at round 4 market — cash 8.06, selling all gives 38. But round 4 cash = floor(cash/100)*62 → devmatters. Hmm, cash devalues to 62%. Sell 3 units: 33 alashi ×0.955... actually cash 38.06 → round 4: floor → 38*62... units in alashi? floor(38060000/100)*62 = 23.6 alashi. Sell all now, keep 1? Price drops later. Sell 3 now at 11. Keep goods for round 4 produce? Prices decline as counter grows; better sell now. Choice 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496957,
+    "id": "20261020194911aaaab5c8b3a0498d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194911aaaab5c8b3a0498d",
+    "usage": {
+      "completion_tokens": 211,
+      "completion_tokens_details": {
+        "reasoning_tokens": 168
+      },
+      "prompt_tokens": 3063,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3274
+    }
+  }
+}

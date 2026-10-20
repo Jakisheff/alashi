@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.687,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Последний раунд: вексель не погашается, поэтому продаю весь товар за живой кэш.\"}",
+          "reasoning_content": "Last round market. Promissory not redeemed after final round. So sell for cash is better. sold_counter=4, prices [5,4,3,3,...]. Sell 2 gives 5+4=9? But after shows sell 2 gives 13M — wait 62969830-49969830=13M (so price 7 and 6? actually 13 for 2 units — maybe price 6.5 each? whatever). Sell all for cash: choice 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497413,
+    "id": "202610201956481fa93776dc73473c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201956481fa93776dc73473c",
+    "usage": {
+      "completion_tokens": 145,
+      "completion_tokens_details": {
+        "reasoning_tokens": 110
+      },
+      "prompt_tokens": 3520,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3665
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.058,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce даёт 2 товара без пограничного риска и сохраняет cash ≥16 для аукциона в раунде 4.\"}",
+          "reasoning_content": "Round 3 action. Shuttle gives 3 goods. But shuttle grey risk? shuttle gives 3+subsidy; risk of seizure at border ~25% if grey. Candidate shows goods 3 immediately. Cash 30.4; need ≥16 by round 4 market. Produce gives 2 free of risk. Shuttle risks seizure of grey goods. Produce safer.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499391,
+    "id": "20261020202946dbf280a5c9834618",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202946dbf280a5c9834618",
+    "usage": {
+      "completion_tokens": 115,
+      "completion_tokens_details": {
+        "reasoning_tokens": 76
+      },
+      "prompt_tokens": 4044,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 4159
+    }
+  }
+}

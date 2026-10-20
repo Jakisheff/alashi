@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.52,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 4 отдаст +1 влияния сопернику (президенту) при равном cash по tie_order, поэтому отклоняю.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest by cash. All cash 0, tie_order [1,2,0] — poorest is idx1 (president). So yes gives influence to rival. Vote no. Currently yes=1, no=1, my vote decides; no wins if I vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498791,
+    "id": "20261020201946c072598bf46241c9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201946c072598bf46241c9",
+    "usage": {
+      "completion_tokens": 107,
+      "completion_tokens_details": {
+        "reasoning_tokens": 65
+      },
+      "prompt_tokens": 2026,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2133
+    }
+  }
+}

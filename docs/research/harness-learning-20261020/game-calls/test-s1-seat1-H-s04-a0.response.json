@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.717,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продаю весь товар по текущей высокой цене, чтобы иметь cash к аукциону раунда 4.\"}",
+          "reasoning_content": "Sold counter 4, price next = 5? Prices list index 4 → 7? Counter=4 means 4 sold, next price = index 4 = 7 alashi. Sell 3 units: 7+6+6=19? Candidate says sell 3 gives 18 alashi — price index 3 =8? Anyway sell all 3 now at good price, keep cash for round 4 auction. Choose sell 3 (cash 18).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499829,
+    "id": "2026102020370518ede4ebd0ef4bb7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020370518ede4ebd0ef4bb7",
+    "usage": {
+      "completion_tokens": 134,
+      "completion_tokens_details": {
+        "reasoning_tokens": 99
+      },
+      "prompt_tokens": 2797,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2931
+    }
+  }
+}

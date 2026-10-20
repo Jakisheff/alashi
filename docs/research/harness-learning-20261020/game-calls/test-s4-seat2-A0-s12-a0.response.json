@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.819,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Производство бесплатно даёт товар для продажи, а пропуск действия не нужен — приоритет президента сохраняется по tie_order.\"}",
+          "reasoning_content": "I'm president (holder=2). Vote weight matters for law. Influence 1, others also 1 — I hold tie_order priority. If I pass action, vote_weight +2 = 3. Bribing gives influence but costs cash. Remaining rounds 4-6. Bid 10 already placed; opponents have ~33/29 cash, could outbid? Bids hidden. Best action: produce (free goods) keeps cash; passing gives +2 vote weight which helps more than influence bribe? Bribe 5 gives influence 2 (vote weight 4) but costs 5 alashi. Passing gives weight 3 free. But losing presidency next round if someone gets influence? Influence determines presidency entry to law. I have tie_order priority at equal influence. Produce is safe and profitable (2 goods worth ~4-6 alashi). Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496740,
+    "id": "20261020194535c76172429d2848ba",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194535c76172429d2848ba",
+    "usage": {
+      "completion_tokens": 213,
+      "completion_tokens_details": {
+        "reasoning_tokens": 178
+      },
+      "prompt_tokens": 3875,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 4088
+    }
+  }
+}

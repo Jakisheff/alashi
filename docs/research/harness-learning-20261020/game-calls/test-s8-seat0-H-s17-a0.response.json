@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.804,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель не девальвируется в раунде 6, поэтому sell_credit всех 3 единиц по высокой цене максимизирует итоговый ранг.\"}",
+          "reasoning_content": "Round 5 market, price 12+2=14 per unit. Sell all 3 now = 42 alashi cash. But round 6 devaluation: cash→floor/100*62, so holding cash loses 38%. Sell_credit gives promissory which is added to cash after devaluation — better! Promissory: sell 3 at credit = 14*3*1.25 = 52.5 alashi promissory, added in round 6 without devaluation. So sell_credit 3 units is best (unless law 8 zeroes promissory... risk). Law 8 already appeared round 3. So sell_credit units 3, choice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497366,
+    "id": "20261020195602f76e009cdb6e45bf",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195602f76e009cdb6e45bf",
+    "usage": {
+      "completion_tokens": 188,
+      "completion_tokens_details": {
+        "reasoning_tokens": 144
+      },
+      "prompt_tokens": 3678,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3866
+    }
+  }
+}

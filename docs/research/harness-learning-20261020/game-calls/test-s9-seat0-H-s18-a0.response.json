@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.724,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Налог 10% ударит по моим продажам финального раунда — применяю вето.\"}",
+          "reasoning_content": "Закон 1: налог 10% на будущие продажи. У меня goods=0, но в раунде 6 произведу 3 и продам. Налог 10% мне повредит. Фракция 2 проголосовала No, фракция 1 неизвестна. Вето отменяет — выгодно, у меня 0 товаров сейчас, буду продавать в раунде 6. Применю veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496533,
+    "id": "202610201942109863b8e0fd094892",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201942109863b8e0fd094892",
+    "usage": {
+      "completion_tokens": 128,
+      "completion_tokens_details": {
+        "reasoning_tokens": 92
+      },
+      "prompt_tokens": 3627,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 3755
+    }
+  }
+}

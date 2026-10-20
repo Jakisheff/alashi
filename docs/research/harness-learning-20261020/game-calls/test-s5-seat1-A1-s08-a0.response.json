@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.627,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель не девальвируется в начале следующего раунда, карта 8 уже вышла, поэтому продажа всего в кредит даёт максимум 30 alashi.\"}",
+          "reasoning_content": "Prices now at counter 2: price 9. Sell all 3 → 24 cash. But round 4 devaluation cuts 38%? floor(cash/100)*62. Cash 24M → 14.88M retained. Selling fewer now? Devaluation affects cash; promissory not devalued? \"then promissory added\" — promissory isn't devalued. So sell_credit is better: 30M promissory survives devaluation fully. But risk of card 8 cancelling promissory (already used). Deck no repeats, so card 8 gone. So sell all 3 on credit: promissory 30M. Prices drop with counter anyway later. Choose 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496949,
+    "id": "20261020194904826c23867f984978",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194904826c23867f984978",
+    "usage": {
+      "completion_tokens": 198,
+      "completion_tokens_details": {
+        "reasoning_tokens": 152
+      },
+      "prompt_tokens": 2566,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2764
+    }
+  }
+}

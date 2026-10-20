@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.6,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Бесплатный shuttle даёт больше товара с умеренным риском, а вексель 26.25 покроет нужный cash к аукциону раунда 4.\"}",
+          "reasoning_content": "Round 3 action, not auction. I need cash ≥9 in round 4 market. Promissory 26.25 will be added in round 4 start (cash=floor(cash/100)*62 then +promissory). So cash will be fine regardless. Best: shuttle for 3 goods (risk 25% loss). Produce gives 2 safely. Grey goods confiscation ~25%. Expected shuttle 3*0.75=2.25 vs produce 2. Prices still ~4-5. Marginal. Shuttle expected slightly better. But I might want to keep cash — shuttle free. Choose shuttle (choice 3).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498703,
+    "id": "20261020201818998f59292808426a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201818998f59292808426a",
+    "usage": {
+      "completion_tokens": 183,
+      "completion_tokens_details": {
+        "reasoning_tokens": 134
+      },
+      "prompt_tokens": 3465,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3648
+    }
+  }
+}

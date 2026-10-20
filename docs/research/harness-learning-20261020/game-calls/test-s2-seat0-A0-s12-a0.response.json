@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.408,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Шаттл даёт больше товара с приемлемым риском для будущих продаж.\"}",
+          "reasoning_content": "Bid already placed; need main action. Produce gives 2 goods, shuttle 3 goods but 25% confiscation risk at border? Actually grey goods may be seized. Shuttle EV 3*0.75=2.25 grey... wait shuttle gives goods? \"shuttle даёт 3+subsidy_goods товара; серый товар может быть изъят\" — 3 grey, expected ~2.25, better than produce's 2. Cash low (18.2m, and bid 20m committed but returned if lost). Prices still ok at 4-3 alashi/unit. Take shuttle, choice 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498824,
+    "id": "20261020202016d902f26aac394eb9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202016d902f26aac394eb9",
+    "usage": {
+      "completion_tokens": 162,
+      "completion_tokens_details": {
+        "reasoning_tokens": 133
+      },
+      "prompt_tokens": 3457,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 3619
+    }
+  }
+}

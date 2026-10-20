@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.579,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Беру shuttle: товар сохраняется при девальвации, а влияние президента пока удерживаю через tie_order.\"}",
+          "reasoning_content": "Round 2, action phase. Not round 4. Best: shuttle (3 goods) to sell later? Prices: sold_counter=5, price ~7 (+2 boom = 9). Or bribe for influence to keep presidency — currently I hold presidency via tie_order. Influence gains presidency → 5% bank bonus. But rival фракция 0 had influence... currently all 1. Bribe 5 gives influence 2, keeps presidency for future rounds and 5% bonus. But cash spent. Presidency bonus 5% of bank (~1.5 alashi now, growing). Keep influence advantage with bribe 5 to idx 0? That gives me influence 2, cost 5. Also shuttle gains ~27 revenue potential. Devaluation: cash will be cut by 38% at round start — so holding goods is better than cash! sell later keeps goods value. So shuttle (goods survive devaluation).\n\nActually presidency matters at law each round. Rivals may bribe later. Modest: bribe 5 to keep influence 2? Goods=3 shuttle worth ~ selling at price 7+2=9 → 27 gross, but devaluation... Selling later yields cash after devaluation? Cash carried to next round gets devalued. So better to hold goods.\n\nShuttle is good (choice 3). But risk: grey goods seizure? tariff currently 0 — red tariff? roof_tariff 0 means no tariff; shuttle seizure ~25% regardless? \"При льготной границе...\" tariff conditions. Default seizure ~25%. Still shuttle EV high.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497528,
+    "id": "2026102019583618b6ed0718f940c2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019583618b6ed0718f940c2",
+    "usage": {
+      "completion_tokens": 364,
+      "completion_tokens_details": {
+        "reasoning_tokens": 330
+      },
+      "prompt_tokens": 3907,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 4271
+    }
+  }
+}

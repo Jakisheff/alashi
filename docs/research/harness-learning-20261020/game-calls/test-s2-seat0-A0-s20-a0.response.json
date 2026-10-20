@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.446,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон о субсидии уже не влияет на итог, рынок завершён; пропуск безвреден.\"}",
+          "reasoning_content": "Law 3 = subsidy_goods=1, but last round, market done. No effect. Vote yes/no doesn't matter; I have veto anyway. Just pass or vote_yes. Any vote passes only if yes>no. Law has no effect (no future market). Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498881,
+    "id": "202610202021181ca3b86f68b14669",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202021181ca3b86f68b14669",
+    "usage": {
+      "completion_tokens": 89,
+      "completion_tokens_details": {
+        "reasoning_tokens": 57
+      },
+      "prompt_tokens": 3305,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3394
+    }
+  }
+}

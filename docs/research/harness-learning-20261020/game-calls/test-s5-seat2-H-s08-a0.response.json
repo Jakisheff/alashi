@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.811,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Закон 0 без эффектов, исход не влияет на выплату.\"}",
+          "reasoning_content": "Law 0 — no effect. I'm not president; president is idx1 (abstained). Yes=1, No=0. Law 0 does nothing, so vote_no makes it tie/fail — irrelevant. Any vote fine; abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497429,
+    "id": "20261020195706c35750cee1424ea9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195706c35750cee1424ea9",
+    "usage": {
+      "completion_tokens": 78,
+      "completion_tokens_details": {
+        "reasoning_tokens": 53
+      },
+      "prompt_tokens": 2881,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2959
+    }
+  }
+}

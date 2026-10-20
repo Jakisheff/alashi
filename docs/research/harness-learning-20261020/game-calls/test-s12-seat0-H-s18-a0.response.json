@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 17.31,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Произвожу 3 товара на оставшуюся дорогую цену; влияние можно докупить взяткой в раунде 6.\"}",
+          "reasoning_content": "Round 5 action. I'm president, need influence for law and final 5% commission bonus (max influence). Influence 2 vs rival 2. Bribes give influence but cost cash. Cash 31.8M. Bribing 5M gives influence 3 → secure presidency and commission 5% (~1.95M+). Also helps law votes. Produce gives 3 goods worth maybe ~9-10 alashi each at counter 2... price [12,10,9,...] with sold_counter=2 → 9. 3 goods ~27 alashi revenue. Hmm.\n\nCash counts in rank. We lead cash 31.8 vs 24.8. Getting influence max also matters. Goods sold at 9-7 in round 6 → 3 goods ≈ 24. Versus influence +1 for 5M bribe, giving 5% commission (≈1.95M) plus better law control. Produce value ~24M > bribe benefit. But presidency next round: influence at law r5 is after this action. Bribe 5M → influence 3 > both. Vote weight matters for law r5 and r6; also final commission max influence.\n\nProduce 3 goods ≈ 27M net. Bribe 5M for influence. Could do produce now, and in round 6 bribe? Round 6 action exists. Yes—produce now, bribe later if needed. But round 6 shuttle 4 goods also. Produce now (choice 1).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497585,
+    "id": "20261020195929c51aece9514e4062",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195929c51aece9514e4062",
+    "usage": {
+      "completion_tokens": 359,
+      "completion_tokens_details": {
+        "reasoning_tokens": 320
+      },
+      "prompt_tokens": 4662,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 5021
+    }
+  }
+}

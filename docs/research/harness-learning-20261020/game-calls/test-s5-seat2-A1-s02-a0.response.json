@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.657,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 4 даст +1 влияния сопернику (idx 1), ухудшит мои позиции — голосую против.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest by cash. All cash 0, tie_order [1,2,0] — poorest is idx 1. That's the president (holder idx1). Giving rival influence is bad, but my vote matters little: I'm not president (holder idx1). Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499372,
+    "id": "20261020202929d351f27c143847a8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202929d351f27c143847a8",
+    "usage": {
+      "completion_tokens": 101,
+      "completion_tokens_details": {
+        "reasoning_tokens": 66
+      },
+      "prompt_tokens": 2026,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2127
+    }
+  }
+}

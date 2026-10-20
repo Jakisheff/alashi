@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.206,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"После ставки деньги малы, беру максимум товара — shuttle даёт 3 единицы для продажи в следующем раунде.\"}",
+          "reasoning_content": "Need main action after bid. Cash 8.83, bid 20 already counted? own_bid 20000000, cash 8830000 — bid was cash? After bid cash seems reduced already? Bid 20 but cash was 28.83 → 8.83. Yes. License income 20-60 extra. Now pick action: shuttle gives 3 goods (sell next round ~5-6 alashi each at sold_counter 4 → prices 7,6,5 minus shift). Produce gives 2 free. Shuttle is free too, 25% grey loss risk? Shuttle gives grey goods which may be seized at border... \"shuttle даёт 3 товара; серый может быть изъят\" — likely seizure risk always ~25%? Risk not disclosed. Still 3>2 expected 2.25. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499328,
+    "id": "202610202028421870561dda2142a7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202028421870561dda2142a7",
+    "usage": {
+      "completion_tokens": 215,
+      "completion_tokens_details": {
+        "reasoning_tokens": 178
+      },
+      "prompt_tokens": 3273,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 3488
+    }
+  }
+}

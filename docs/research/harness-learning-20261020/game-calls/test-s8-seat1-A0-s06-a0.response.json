@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.256,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 6 и так отклонён (0 за, 3 против), veto не нужен.\"}",
+          "reasoning_content": "Law 6 = price shift -2 next market. All voted No; yes=0, no=3 — law rejected anyway. No need for veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498557,
+    "id": "202610202015535a16a6e1bfd7420b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202015535a16a6e1bfd7420b",
+    "usage": {
+      "completion_tokens": 63,
+      "completion_tokens_details": {
+        "reasoning_tokens": 32
+      },
+      "prompt_tokens": 2174,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2237
+    }
+  }
+}

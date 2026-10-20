@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.984,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce даёт 2 товара для продажи в последнем раунде без риска изъятия.\"}",
+          "reasoning_content": "Round 5 action, last market round 6 remains. Produce 2 goods to sell next round at ~3-4 alashi each — worth it. Also could bribe to gain influence for final influence bonus 5% of bank (~2.75 alashi) — influence max: rivals have 2,2. Bribe 5 gives influence 2, tie broken by cash? Rival 0 has cash 12.7M+, rival 2 4M. My cash+promissory 46M... Influence bonus = 5% of ~55M bank = 2.75M. Bribe 5M to gain 2.75M bonus but lose 5M cash plus goods. Not worth vs produce.\n\nBut wait, promissory 27.5M counts to cash next round. Actually rank uses cash+hard; promissory not counted... it converts to cash in round 6? Round 6 start: cash devaluation then promissory added — yes, round 6 starts with promissory added, so it becomes cash before final. Good.\n\nProduce: 2 goods, sell round 6 at price ~3 each = 6M revenue. Better than shuttle? Shuttle gives 3 goods riskless (border tariff 0, so grey seizure 25% risk on grey). Actually shuttle gives 3+0 grey goods; with tariff 0 there's seizure risk? \"Серый товар может быть изъят... При льготной границе за серый ход платится min(cash,2)...\" Risk 25% loss of grey goods? \"красный несёт риск около 25% потери всего товара\". At tariff 0 presumably 25% seizure of grey. Shuttle expected 3*0.75=2.25 goods vs produce 2. Produce safer. Choose 1.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496399,
+    "id": "20261020193950132700da4af54f4c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020193950132700da4af54f4c",
+    "usage": {
+      "completion_tokens": 417,
+      "completion_tokens_details": {
+        "reasoning_tokens": 387
+      },
+      "prompt_tokens": 3734,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 4151
+    }
+  }
+}

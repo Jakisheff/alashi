@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.916,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Продаю оба товара по максимальной цене, пока рынок не насыщен.\"}",
+          "reasoning_content": "Round 2 start: cash devaluation only matters if cash>0. We have 2 goods. Sell both now at high price (12,10) → 22 alashi hard cash. Later rounds prices drop. Sell 2 for cash.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496687,
+    "id": "2026102019444465e5e18258004b5f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019444465e5e18258004b5f",
+    "usage": {
+      "completion_tokens": 81,
+      "completion_tokens_details": {
+        "reasoning_tokens": 51
+      },
+      "prompt_tokens": 2151,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2232
+    }
+  }
+}

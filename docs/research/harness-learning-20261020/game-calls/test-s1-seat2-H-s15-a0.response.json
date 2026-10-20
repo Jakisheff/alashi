@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.528,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Цена высокая (12), продаю весь товар сразу за наличные, влияющие на итоговый ранг.\"}",
+          "reasoning_content": "Round 5, high price 12. Sell all 3 (last round sell_credit not redeemed — but this is round 5, credit would be paid round 6... round 6 promissory added to cash, but not in final rank. Final rank at end of round 6 doesn't count promissory. So sell now outright.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498145,
+    "id": "2026102020090150fc7dd72bd54311",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020090150fc7dd72bd54311",
+    "usage": {
+      "completion_tokens": 105,
+      "completion_tokens_details": {
+        "reasoning_tokens": 72
+      },
+      "prompt_tokens": 3606,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3711
+    }
+  }
+}

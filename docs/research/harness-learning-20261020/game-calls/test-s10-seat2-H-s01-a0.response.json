@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.289,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Produce даёт 2 надёжных товара без риска изъятия и граничных платежей.\"}",
+          "reasoning_content": "Round 1 action, own_idx 2. Produce 2 free vs shuttle 3 grey (25% seizure risk, bribe). Shuttle gives 3 goods but grey, risk of seizure/border payments. Produce safe 2. Shuttle expected 3 goods mostly; but grey may be taxed at border. Take produce for safety? Shuttle 3 goods with ~25% loss → 2.25 expected, plus possible border payment. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499045,
+    "id": "20261020202400e340e3e9875d4ae6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202400e340e3e9875d4ae6",
+    "usage": {
+      "completion_tokens": 124,
+      "completion_tokens_details": {
+        "reasoning_tokens": 92
+      },
+      "prompt_tokens": 2389,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2513
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.54,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":12,\"reason\":\"Взятка даёт влияние 2 и сохраняет пост президента с бонусом и правом вето на оставшиеся туры.\"}",
+          "reasoning_content": "I already bid 20 alashi for license (cash left 26.5). Now choose main action. Influence matters for presidency (I'm holder via tie_order, others have 1 each). To keep presidency in later law rounds, bribe 5 to gain influence 2? Costs 5 alashi but secures presidency + 5% bank bonus (5% of ~30+20=2.5+) and veto power. Also get goods via shuttle? Can't do both. Bid 20 already spent; income 20-60 license.\n\nPresidency bonus: 5% of bank. Bank ~30M + bid 20M = 50M → 2.5M commission... wait 5% goes to max-influence holder. With equal influence 1, tie by cash+hard then tie_order — others richer in cash now. So I'd lose presidency in round 5 law unless I gain influence. Influence 2 via bribe 5M secures presidency and 2.5M+ bonus, plus veto. Worth it vs shuttle goods (3 goods × ~6-7 alashi with boom ≈ maybe 20M sales in round 5). Hmm, shuttle gives 3 goods worth maybe 5+boom2=7 each ≈ 21M revenue but 25% seizure risk.\n\nBribe to whom? Giving to 0 makes them richer (they're richest). Give to 1 (poorer). Bribe 5 → influence 2, secures presidency rounds 5-6. Value: 2.5M bonus + veto control + license. I'd choose bribe 5M to 1.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497365,
+    "id": "2026102019555502e39116bab54057",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019555502e39116bab54057",
+    "usage": {
+      "completion_tokens": 383,
+      "completion_tokens_details": {
+        "reasoning_tokens": 345
+      },
+      "prompt_tokens": 3732,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 4115
+    }
+  }
+}

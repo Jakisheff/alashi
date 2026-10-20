@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.997,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон вводит налог 10% на мои будущие продажи; мой голос No весом 2 вместе с No фракции 0 отклоняет его.\"}",
+          "reasoning_content": "Law 1: налог 10% на будущие продажи. У меня 5 товаров для продажи в раунде 6? sold_counter=3, раунд 6 рынок. Налог 10% снизит мою выручку. Голосую no и применю veto? Фракция 0 уже голосует No (weight 2), фракция 2 Abstain. My no weight 2 → no=4 > yes=0 — закон отклонён. Голосую no, veto не нужен.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496892,
+    "id": "20261020194807f29048d186994a24",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194807f29048d186994a24",
+    "usage": {
+      "completion_tokens": 155,
+      "completion_tokens_details": {
+        "reasoning_tokens": 111
+      },
+      "prompt_tokens": 3695,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 3850
+    }
+  }
+}

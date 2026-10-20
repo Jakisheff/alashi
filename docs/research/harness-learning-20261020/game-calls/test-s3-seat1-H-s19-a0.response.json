@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.09,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон уже отклонён (2 No против 1 Yes), veto не нужен.\"}",
+          "reasoning_content": "Закон 1 — налог 10% на будущие продажи. Мы владеем лицензией, но налог снизит наши продажи. Голоса: no=2, yes=1 — закон не принимается. Veto не нужен? Но подожди, наше влияние даёт вес; уже проголосовали No, yes=1 < no=2 → отклонён. Проход.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497008,
+    "id": "202610201950043e1db22df272422d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201950043e1db22df272422d",
+    "usage": {
+      "completion_tokens": 109,
+      "completion_tokens_details": {
+        "reasoning_tokens": 81
+      },
+      "prompt_tokens": 3519,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 3628
+    }
+  }
+}

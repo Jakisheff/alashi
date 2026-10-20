@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 15.552,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"У меня уже перевес голосов (вес 3), влияние покупать незачем — максимизирую товар через shuttle с лучшим ожиданием.\"}",
+          "reasoning_content": "I have 22.25 alashi, vote_weight 3 (bribed earlier? no — I have influence 1 but weight 3? seen vote_weight:3 — probably I get +2 because... no, action passed. Anyway). Currently 6 goods via shuttle. Production matters little; shuttle risk 25% grey loss — but shuttle gives grey goods? shuttle gives 3+subsidy. My previous shuttles succeeded. Goods sell ~10 alashi each later. With cash 22, bribing 5 to gain influence → presidency? President is highest influence at law; I have 1 influence but vote_weight 3 already? Odd. Holder is 0. Bribing 5 gives influence 2 > others' 1, likely presidency in future rounds, plus 5% bank bonus (~1.5 alashi). Costs 5. Presidency gives veto power and 5% commission each round end? The 5% commission goes to max influence at the end. Influence 2 for 5 alashi — worth it for control. But money is king for final rank. Hmm.\n\nAlternatively produce/shuttle for goods. Goods sell at ~10 each; shuttle gives 3 goods = ~30 alashi minus risk. That seems strong. But grey goods can be confiscated 25%. My prior shuttles yielded goods fine.\n\nCompare: bribe 5 → influence 2 → presidency + 5% bank (~1.6 alashi) + veto control. Shuttle gives ~30 alashi gross minus 25% risk ≈ 22.5. Shuttle better materially, but presidency lets me control taxes... Being president lets me veto tax laws. I already have vote_weight 3 (influence 1 + 2 because I passed action in round 1? no, that round only). Actually vote_weight 3 in state — maybe bribe earlier? History shows I was bribed (idx0 cash grew after my shuttle? unclear). Anyway with weight 3 I already outvote others (1 each) — yes 3 > 1+1? Yes if others vote no: 3 vs 2, yes wins. So I effectively control votes already this round. So skip bribe, maximize goods.\n\nChoose shuttle (3 goods) vs produce (2 goods, safe). Shuttle EV: 3*0.75=2.25 goods × ~10 = 22.5 vs produce 2×10=20. Marginal plus risk. Also grey may be tariff-related. Choose shuttle? Slight edge; also earlier rounds price declines. I'll pick shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496501,
+    "id": "2026102019412629d2e38f607249fc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019412629d2e38f607249fc",
+    "usage": {
+      "completion_tokens": 578,
+      "completion_tokens_details": {
+        "reasoning_tokens": 536
+      },
+      "prompt_tokens": 3329,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 3907
+    }
+  }
+}

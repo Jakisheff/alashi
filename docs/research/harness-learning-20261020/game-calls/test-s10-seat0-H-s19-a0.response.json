@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.383,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 5 даёт +1 влияния самому богатому (фракция 2), усиливая президента — против.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest by cash. Richest is faction 2 (27.2M). Faction 2 already has influence 2 and presidency, voted yes. Giving them +1 influence hurts me (they'd get 5% commission bonus and stronger presidency). Vote no. But faction 2 vote weight 2, my no weight 1 — need others. Faction 1 may vote. Even so, vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497479,
+    "id": "2026102019575593a80b0668e141ae",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019575593a80b0668e141ae",
+    "usage": {
+      "completion_tokens": 127,
+      "completion_tokens_details": {
+        "reasoning_tokens": 91
+      },
+      "prompt_tokens": 3613,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 3740
+    }
+  }
+}

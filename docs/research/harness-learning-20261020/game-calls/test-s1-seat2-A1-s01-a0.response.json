@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.227,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"shuttle даёт больше товара при умеренном риске изъятия\"}",
+          "reasoning_content": "Produce — safe 2 goods; shuttle gives 3 with 25% seizure risk. EV shuttle higher but risk. Prefer shuttle? Expected 2.25 vs 2. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497274,
+    "id": "20261020195432dc75074b13294479",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195432dc75074b13294479",
+    "usage": {
+      "completion_tokens": 64,
+      "completion_tokens_details": {
+        "reasoning_tokens": 40
+      },
+      "prompt_tokens": 1917,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 1981
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.782,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 0 нейтрален, ничего менять не нужно.\"}",
+          "reasoning_content": "Law 0 no effect, vote yes or pass doesn't matter. Pass keeps weight? vote_weight = influence + 2 if pass — but pass doesn't vote, so pass means no vote. Just vote_abstain or pass. Law 0 is neutral; pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498538,
+    "id": "2026102020153466f90483c8284334",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020153466f90483c8284334",
+    "usage": {
+      "completion_tokens": 80,
+      "completion_tokens_details": {
+        "reasoning_tokens": 56
+      },
+      "prompt_tokens": 2075,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2155
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.132,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\": 0, \"reason\": \"Закон и так отклоняется (No 3 против Yes 2), veto не нужен.\"}",
+          "reasoning_content": "Law 3 = subsidy_goods=1. Votes: yes=2 (faction1), no=3 (0+2). Law fails anyway without veto. Veto harmless? Veto also blocks — same result. No need. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497569,
+    "id": "2026102019592241896cdb0cbb4831",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019592241896cdb0cbb4831",
+    "usage": {
+      "completion_tokens": 82,
+      "completion_tokens_details": {
+        "reasoning_tokens": 49
+      },
+      "prompt_tokens": 3076,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3158
+    }
+  }
+}

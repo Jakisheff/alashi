@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 30.467,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce даёт 3 товара на продажу в финальном раунде без риска изъятия, влияние президента уже максимальное\"}",
+          "reasoning_content": "Round 5 action. I already hold presidency with influence 2; vote_weight 4 vs 3. Next round cash gets devalued (÷100×62), promissory adds. Bribes reduce cash and raise influence — influence 3 gives max influence 5% bonus? I already have max influence (2 vs 1). Bribing gives floor(5M/5M)=1 influence per 5 alashi — costly. Shuttle gives 4 goods to sell in round 6 (subsidy 1). Grey goods may be confiscated ~25%. Produce gives 3 safe. Round 6 I can sell ~4 units at price ~7-8 alashi? sold_counter=2, price ~8. Shuttle EV = 4×~7 = 28 × 0.75 loss? Actually 25% chance lose all goods. Produce = 3 units ≈ 24 alashi guaranteed. Shuttle EV higher if loss only grey portion — \"серый товар может быть изъят\" — probably lose grey goods. Risky. Produce safe 3 goods. Also keep presidency — influence unchanged either way. Choose produce.\n\nAlso skipping action gives +2 vote weight in law, but producing goods worth more. Choose 1.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497658,
+    "id": "20261020200029f075bfdec1044cd4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200029f075bfdec1044cd4",
+    "usage": {
+      "completion_tokens": 299,
+      "completion_tokens_details": {
+        "reasoning_tokens": 259
+      },
+      "prompt_tokens": 4472,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 4771
+    }
+  }
+}

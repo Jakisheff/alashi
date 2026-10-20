@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 18.996,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товары после рынка бесполезны, а бонус максимального влияния я получаю и так по cash при ничьей — взятка лишь уменьшит выплату.\"}",
+          "reasoning_content": "Final round action. Goods worthless after this round (no market left — round 6 market already done). So produce/shuttle/donkey useless. Influence matters: +5% bank (2.25M) to max influence, and presidency for law in round 6? Holder is me (idx1) already... actually holder_idx=1, but presidency determined at law by influence. I have 2, tied with player0 who has tie_order priority (0 beats 1). So bribing 5M gives influence 3, securing presidency and max influence bonus (5% of 45M = 2.25M) plus veto control. Bribe 5M to 0 → influence 3. Costs 5M, gains 2.25M + veto power over law. But veto only against me? I could veto bad law. Also law could give card 8 (promissory zero — I have none), tax... I sold already. Risk: law card could be 6/7 (price shift — no more markets) or taxes affect future sales — player2 still has 3 goods? No, they sold... player2 has 3 goods unsold — market over, goods worthless. Tax law irrelevant. Card 4 gives influence to poorest, card 5 to richest — could affect influence contest? Card 5 +1 to richest: player0 has 32.2M vs my 35M... if I bribe 5M, I have 30M < player0's 32.2M, player2 26.4M. Richest = player0 then. Hmm.\n\nWithout bribe: influence tie 2-2, tie_order favors 0 → player0 president. Max influence bonus: tie 2-2, tiebreak cash+hard → me (35M). So I already get 2.25M bonus without bribe. Bribe 5M loses 5M cash for veto control of last law. Laws left: cards drawn without replacement... many played. Remaining bad laws for me: card 8 promissory zero (mine 0, others 0), tax (no more sales). Card 4 gives poorest +1 influence — poorest is player2 (26.4M) → influence 2, still below... card could shift max influence bonus if player2 gets +1 → still 2 < my 2? Tie 2 with player2, tiebreak cash → me. Card 5 +1 richest. Nothing severely bad. So bribe unnecessary. Best: pass, keep cash.\n\nChoice 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497863,
+    "id": "20261020200405d743fa0b9f2540d1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200405d743fa0b9f2540d1",
+    "usage": {
+      "completion_tokens": 587,
+      "completion_tokens_details": {
+        "reasoning_tokens": 536
+      },
+      "prompt_tokens": 4431,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 5018
+    }
+  }
+}

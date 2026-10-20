@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.879,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Продаю весь товар по высокой цене и обеспечиваю cash для аукциона в раунде 4.\"}",
+          "reasoning_content": "Round 3 market. Need cash ≥9 by round 4 action. Sell 1 unit = 12 alashi cash, keep 1 good. Sell both gives 22 but no goods left; still produce later. Keeping a good for higher price later? Price falls as selling. Sell 1 keeps goods; price counter=1 next price 10. Sell 2 gives 22 now. Better to sell 2 now? Later prices decline anyway. Round 4 rule: keep cash≥9. Selling 1 gives 12 — enough. Keep 1 good to sell later possibly at 10. Actually selling later at lower price... sell 2 now at 12+10=22 is same total. Just sell 2 now (choice 3) — immediate cash 22, safe.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498204,
+    "id": "20261020200958ee89e7a3ed4b4515",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200958ee89e7a3ed4b4515",
+    "usage": {
+      "completion_tokens": 198,
+      "completion_tokens_details": {
+        "reasoning_tokens": 164
+      },
+      "prompt_tokens": 2859,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3057
+    }
+  }
+}

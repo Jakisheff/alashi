@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.376,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон даёт +1 влияния мне как самому богатому — усиливает позицию для бонуса комиссии.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest by cash — that's me (idx2, 49M). But president is idx1 with influence 2, tie_order favors 1. If I gain +1 influence → 3, I become president next round and get the 5% commission bonus? Next round is 6 (last). President in law 6. Being richest already gives me top rank; extra influence gives commission 5% and presidency.\n\nVote weights: me 2, idx1 2, idx0 1. Yes needs strictly more than no. Others unknown reactions. Vote yes supports my influence gain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498080,
+    "id": "2026102020075436d12d23cc28497f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020075436d12d23cc28497f",
+    "usage": {
+      "completion_tokens": 163,
+      "completion_tokens_details": {
+        "reasoning_tokens": 130
+      },
+      "prompt_tokens": 3049,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3212
+    }
+  }
+}

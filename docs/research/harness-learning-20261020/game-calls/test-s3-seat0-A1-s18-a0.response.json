@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.514,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 10% сократит мою выручку от продажи оставшихся товаров в финальном раунде, поэтому голосую против.\"}",
+          "reasoning_content": "Law 1 = tax 10%. I hold license and will sell in round 6? I have 3 goods. Tax hurts me. President is idx2 with veto. I vote no; president votes too (weight 2). My vote_no helps.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498512,
+    "id": "2026102020150948f9b8e1dbf74fcc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020150948f9b8e1dbf74fcc",
+    "usage": {
+      "completion_tokens": 95,
+      "completion_tokens_details": {
+        "reasoning_tokens": 53
+      },
+      "prompt_tokens": 3107,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3202
+    }
+  }
+}

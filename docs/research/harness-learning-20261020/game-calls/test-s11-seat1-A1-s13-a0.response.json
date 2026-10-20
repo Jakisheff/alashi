@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.062,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Shuttle даёт 3 товара для продажи на следующем рынке при оставшемся кэше.\"}",
+          "reasoning_content": "I already bid 40M, cash 16.8M. Need main action. Best value: shuttle gives 3 goods (~3*4=12M next market, counter at 6, price 4... units 7-9 at 4? prices list index 6+ = 4? counter 6 → next price 4). Shuttle 3 goods ≈ 4+3+3=10M or so, minus 25% seizure risk. Produce gives 2 goods. Take shuttle (choice 3).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499598,
+    "id": "20261020203314ffaa50aeeff34e06",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203314ffaa50aeeff34e06",
+    "usage": {
+      "completion_tokens": 142,
+      "completion_tokens_details": {
+        "reasoning_tokens": 111
+      },
+      "prompt_tokens": 3501,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 3643
+    }
+  }
+}

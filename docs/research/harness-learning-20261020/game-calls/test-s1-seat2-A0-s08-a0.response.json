@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.503,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Больше товара к будущим продажам при достаточном EV\"}",
+          "reasoning_content": "I'm already president with influence 3. Produce goods for future selling — cash lead already. Produce (choice 1) or shuttle (3 goods, risk ~25% loss since tariff? tariff state — no tariff active). Shuttle gives 3 goods at risk 25% loss. Produce gives 2 safe. Price declining (sold_counter 6, price 5). Rivals have 2 goods each. Produce is safe, but more goods better for future sales. Expected shuttle 2.25 goods. Produce 2. Choose shuttle slightly better EV? Risk 25% loss of all grey goods. Expected 2.25 > 2, but variance. Choose produce for safety; also auction next round needs cash, and shuttle risks losing all. I'll pick shuttle? Cash is fine either way. EV favors shuttle. Choose 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499364,
+    "id": "20261020202919fc5a75183ef74898",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202919fc5a75183ef74898",
+    "usage": {
+      "completion_tokens": 195,
+      "completion_tokens_details": {
+        "reasoning_tokens": 173
+      },
+      "prompt_tokens": 3766,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 3961
+    }
+  }
+}

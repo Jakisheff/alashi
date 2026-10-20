@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.112,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Налог 10% режет мою будущую выручку — налагаю veto.\"}",
+          "reasoning_content": "Law 1 = 10% tax on future sales. I sell a lot. Veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496696,
+    "id": "20261020194454a86bddc85fad427d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194454a86bddc85fad427d",
+    "usage": {
+      "completion_tokens": 50,
+      "completion_tokens_details": {
+        "reasoning_tokens": 20
+      },
+      "prompt_tokens": 2268,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2318
+    }
+  }
+}

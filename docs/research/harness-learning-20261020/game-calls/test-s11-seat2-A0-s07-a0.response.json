@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.418,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Забираю максимум товара для будущих продаж, риск границы приемлем при лидерстве по кэшу.\"}",
+          "reasoning_content": "Need influence to win presidency? Holder 0 has influence 1, we have 1, tie_order [0,2,1] — 0 wins ties. Player 1 has influence 2. To be president need influence 3 (bribe 10M). Being president + influence matters for max influence bonus (5% bank) and veto. But cash rank matters more: bank 30M, 5% = 1.5M. Bribing 10M loses 10M cash for rank... but influence also gives vote weight.\n\nSimpler: produce goods for future sales. I already sold, cash 62.75M leading. Produce gives 2 goods sellable ~4-6 alashi each later. Shuttle gives 3 with 25% seizure risk. Shuttle EV higher but risk. President holder 0 will remain; with our influence 3 (bribe 10M to 0) we'd become president and get max influence bonus 1.5M + veto power — but lose 10M cash in rank. Not worth.\n\nChoose shuttle (choice 3) — 3 goods, ~25% seizure risk, but shuttle goods may be grey; risk of losing everything. Actually \"серый товар может быть изъят\" — only grey at border? Tariff 0 now; shuttle risk ~25%. Expected value ~2.25 goods vs produce 2. Slight edge but variance. Take produce for safety? Goods value: prices later rounds dropping, sold_counter 5 → price 6 next. 3 goods * ~5 = 15 alashi potential. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497474,
+    "id": "20261020195745f5f49d8faad443b0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195745f5f49d8faad443b0",
+    "usage": {
+      "completion_tokens": 373,
+      "completion_tokens_details": {
+        "reasoning_tokens": 339
+      },
+      "prompt_tokens": 4221,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 4594
+    }
+  }
+}

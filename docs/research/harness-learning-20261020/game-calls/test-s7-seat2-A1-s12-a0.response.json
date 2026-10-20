@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.154,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Произвожу товар к следующему рынку, оставляя деньги для возможного выигрыша лицензии.\"}",
+          "reasoning_content": "I have a bid of 20M, cash 5.04M. Main action: bid already submitted, now choose main action. Produce gives 2 goods for sale later. Price counter at 5 → next price 6, maybe price_shift. Produce best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497669,
+    "id": "202610202001049483d8a83d424c0f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202001049483d8a83d424c0f",
+    "usage": {
+      "completion_tokens": 88,
+      "completion_tokens_details": {
+        "reasoning_tokens": 55
+      },
+      "prompt_tokens": 3199,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 3287
+    }
+  }
+}

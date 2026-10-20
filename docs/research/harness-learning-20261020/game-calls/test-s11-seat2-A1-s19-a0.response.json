@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.072,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Взятка стоит дороже возможного бонуса за влияние; пропуск сохраняет вес голоса 4.\"}",
+          "reasoning_content": "Last round action. Goods won't sell (market done). Passing doesn't matter much. Influence max gives 5% commission bonus (~5% of bank ~2 alashi... bank 40M+ bid 10M = 50M, 5% = 2.5 alashi). I'm tied influence 2-2-2, my vote_weight 4 though (I skipped action? no — I'm фракция2 with vote_weight 4, means my influence 2 + pass? Actually influence 2, weight 4 = pass bonus already? Wait round 6 action — weight 4 suggests previous... whatever).\n\nBribe to 0 costs 5M cash, gives +1 influence. If I become max influence (3 > 2), I get extra 5% of bank = 2.6M approx (bank ~50M, 5% = 2.5M). Also influence affects presidency for law — I'm not president now (holder 0 has tie_order priority; with influence 3 I'd become president in law and control vote/veto). Cost 5M cash vs gain ~2.5M bonus — but rank: cash matters for 50:30:15 split. Losing 5M cash hurts rank more. Also influence tie bonus smaller. Skip action: pass gives +2 vote weight too.\n\nAlso note bribe to 0 increases their cash — bad. Best: pass (keeps weight 4 via bonus? yes pass gives +2 weight). Or donkey useless. Choose pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498132,
+    "id": "20261020200843ef226723c4b8468a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200843ef226723c4b8468a",
+    "usage": {
+      "completion_tokens": 355,
+      "completion_tokens_details": {
+        "reasoning_tokens": 322
+      },
+      "prompt_tokens": 4301,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 4656
+    }
+  }
+}

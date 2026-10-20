@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.741,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Серый шаттл даёт больше ожидаемого товара для последнего рынка при сохранении влияния и поста президента.\"}",
+          "reasoning_content": "Round 5 action. Remaining: r5 law, r6 market. Goods to produce for last market: produce gives 2 goods to sell in round 6 at price ~ (sold_counter=2, next price index after selling? Round 6 I can sell). Shuttle gives 3 grey goods with 25% confiscation risk but also possibly grey tariff... just produce? Shuttle 3 goods vs 2, 25% loss expected 2.25. Slight better but confiscation loses all grey. Produce safer, and preserves presidency? Influence same. I hold presidency with tie_order priority anyway (all influence 1). License holder, and cash last → rank 3. Bribes give influence → max influence bonus 5% bank = 2 alashi + presidency. But losing cash 5-10 alashi, not worth.\n\nChoose shuttle for expected value ~2.25 vs 2? 25% chance lose all grey = 0.75*3=2.25 expected goods. Marginal. Price at index 2 is 9 alashi each... actually next sells go counter 2,3. Prices 9,8. Fine. I'll take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496761,
+    "id": "20261020194553fbabef88fb1740ca",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194553fbabef88fb1740ca",
+    "usage": {
+      "completion_tokens": 284,
+      "completion_tokens_details": {
+        "reasoning_tokens": 246
+      },
+      "prompt_tokens": 3695,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3979
+    }
+  }
+}

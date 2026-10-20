@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.146,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар больше нельзя продать, влияние уже максимальное — пас без потерь.\"}",
+          "reasoning_content": "Round 6 action, last round. Goods I have 0, produce gives 3 goods but no market left to sell (this is last market already done). Goods worthless. So action: either pass or bribe for influence (max influence gets 5% of bank = ~1.85 alashi). I already have influence 3, max? Player 0 has 2, player 2 has 1. I'm already max influence. So pass — cheapest, keeps cash and influence lead. Actually skipping action adds +2 vote weight, irrelevant. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496662,
+    "id": "202610201944187d006f38ba514cf6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201944187d006f38ba514cf6",
+    "usage": {
+      "completion_tokens": 145,
+      "completion_tokens_details": {
+        "reasoning_tokens": 116
+      },
+      "prompt_tokens": 5383,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 5528
+    }
+  }
+}

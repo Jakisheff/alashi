@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.582,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Вето снижает выручку соперника с 8 товарами и защищает мой ранг.\"}",
+          "reasoning_content": "Law 7 raises next market prices +2. I hold presidency? holder 1 yes, I can veto. Vote counts: yes=4+2=6, no=1, yes wins — but +2 prices helps everyone including me (I have 2 goods, license income too). Player 2 has 8 goods and would benefit most. Vetoing hurts their sales. Raising prices helps all sellers; player 2 benefits most (8 goods). Veto reduces their gain. But I also sell. Prices next market round 5: sold_counter 0, price 12+2=14 vs 12. My 2 goods +2 each = +4 alashi... actually marginal. Player 2 gains +16 alashi. Veto helps my relative rank. Bank is fixed 42M, payout depends on rank. Player 2 has 8 goods, will earn ~112, likely becoming richer. Veto to suppress them.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498988,
+    "id": "20261020202302be60a93963414fea",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202302be60a93963414fea",
+    "usage": {
+      "completion_tokens": 228,
+      "completion_tokens_details": {
+        "reasoning_tokens": 196
+      },
+      "prompt_tokens": 2770,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2998
+    }
+  }
+}

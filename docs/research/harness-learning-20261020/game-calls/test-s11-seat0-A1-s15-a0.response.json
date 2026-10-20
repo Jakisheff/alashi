@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.125,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"sell_credit избегает девальвации: вексель 27,5 млн выплачивается в раунде 6 без обрезки, тогда как обычная продажа потеряет ~38% при девальвации.\"}",
+          "reasoning_content": "Round 5 market, price 12 (counter 0? Actually law round5 effect? sold_counter 0, no shift). Sell 2 at 12 and 10 = 22 alashi. sell_credit gives 27.5M promissory, devalued at round 6 start: floor(27500000/100)*62... wait promissory isn't devalued? \"cash=floor(cash/100)*62, then promissory added\". So promissory not devalued, but last round promissory unpaid. Round 6 sales would also add. Round 5 sell_credit: promissory paid into cash at round 6 start, then round 6 sales happen after — those become promissory too (unpaid!). So round 6 sales should be plain sell. So now sell_credit 2 units = 27.5M promissory, received round 6, counts in cash for final. Better than sell now? Sell now 22M cash, devalued: floor(53.37... wait 31.37+22=53.3729M → floor to alashi 53372900/100=533729*62=33,091,980? That's cash after deval. Sell_credit: cash stays 31,372,900 → floor/100*62 = 313729*62=19,451,198, plus 27.5M promissory = 46.95M. Clearly better. Choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497233,
+    "id": "202610201953443a1f54ce42bf48e8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201953443a1f54ce42bf48e8",
+    "usage": {
+      "completion_tokens": 387,
+      "completion_tokens_details": {
+        "reasoning_tokens": 329
+      },
+      "prompt_tokens": 3062,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3449
+    }
+  }
+}

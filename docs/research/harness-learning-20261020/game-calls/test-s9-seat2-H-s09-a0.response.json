@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.155,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Бесплатный серый товар для будущих продаж; деньги сохраняю для аукциона раунда 4.\"}",
+          "reasoning_content": "Round 3 action, no auction. We have cash 62.75, influence 1 vs faction1 influence 2. President next round? Holder idx 0. Round 4 auction: need cash ≥16. Best action: shuttle for goods to sell, or bribe to gain influence for presidency (5% bonus + law control). Bribing faction 0 with 10 alashi gives influence 3 > 2, becoming president next law rounds — 5% bank bonus is ~1.5 alashi; costly. Money as cash counts directly; bribing spends cash for influence, bad exchange mostly. Just shuttle: free goods.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497086,
+    "id": "20261020195121c47f0ca941384168",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195121c47f0ca941384168",
+    "usage": {
+      "completion_tokens": 168,
+      "completion_tokens_details": {
+        "reasoning_tokens": 133
+      },
+      "prompt_tokens": 4812,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 4980
+    }
+  }
+}

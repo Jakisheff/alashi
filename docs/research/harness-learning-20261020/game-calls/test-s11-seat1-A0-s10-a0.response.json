@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 32.134,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон отдаст +1 влияния беднейшему (фракция 2), усиливая соперника — голосую против.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest by cash. Poorest is idx2 (cash 0). I'm idx1 with 30 alashi cash; idx0 has 39.64. So vote_no. But president (idx0) has veto. My vote: idx0 weight 1, me 1, idx2 1. Law gives influence to idx2, potentially threatening my standing? Influence matters for president role and 5% bonus. idx2 getting +1 influence makes them 2, more likely to become president later. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497719,
+    "id": "202610202001280db0def2ec464534",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202001280db0def2ec464534",
+    "usage": {
+      "completion_tokens": 154,
+      "completion_tokens_details": {
+        "reasoning_tokens": 116
+      },
+      "prompt_tokens": 2544,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2698
+    }
+  }
+}

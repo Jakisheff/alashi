@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.152,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Shuttle даёт больше товара при положительном ожидании даже с риском изъятия.\"}",
+          "reasoning_content": "Produce gives 2 goods for sure, shuttle gives 3 with ~25% seizure. Shuttle higher EV? Grey goods may be seized; no tariff active. Shuttle EV 2.25 vs 2. Produce is safe but shuttle slightly better EV. Goods at price ~9-10 later, seizure risk. I'd pick shuttle for EV.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496796,
+    "id": "20261020194632f1d78d7475984c1a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194632f1d78d7475984c1a",
+    "usage": {
+      "completion_tokens": 100,
+      "completion_tokens_details": {
+        "reasoning_tokens": 71
+      },
+      "prompt_tokens": 2148,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2248
+    }
+  }
+}

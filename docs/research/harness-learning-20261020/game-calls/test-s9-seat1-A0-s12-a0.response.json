@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.024,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":33,\"reason\":\"Участвую в аукционе лицензии умеренной ставкой: доход лицензии 20–60 alashi сверх доли банка оправдывает риск.\"}",
+          "reasoning_content": "License income 20-60, worth bidding. But bid forfeits if lose. Cash is near opponents. Moderate bid ~10M gives decent EV; but then action still allows produce after bid? \"После bid доступно основное действие\" — the candidate list here only shows single bids without produce, so bid replaces? It says interface offers one combined bid per turn. So bid costs the action. Goods worth selling: produce gives 3 goods, price at counter 6 → ~5 each later, maybe 15-20 alashi value. License 20-60 extra. Opponents each have ~33M and could bid. Risky auction. I'd prefer produce — no, license pays on top of bank share and doesn't affect rank. EV of winning at 15M: +5 to +45. Probability? Tie_order favors 0. Bid moderately ~15M? Hmm.\n\nActually shuttle gives 4 grey goods risk. Produce = 3 goods worth maybe 15 alashi. Bid 10M loses 10 if outbid, wins license worth avg 40 - 10 = +30. I'd estimate opponents likely bid too. Choose a mid bid ~12M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498306,
+    "id": "20261020201138f5b6e282fbee4e39",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201138f5b6e282fbee4e39",
+    "usage": {
+      "completion_tokens": 288,
+      "completion_tokens_details": {
+        "reasoning_tokens": 244
+      },
+      "prompt_tokens": 5898,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 6186
+    }
+  }
+}

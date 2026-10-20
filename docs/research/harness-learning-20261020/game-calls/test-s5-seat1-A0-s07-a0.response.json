@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.124,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон уже отклоняется (1 да против 2 нет), veto не нужен.\"}",
+          "reasoning_content": "Law 8 wipes promissory 16.25M. Yes=1, No=2 → rejected anyway. But I'm president; veto ensures rejection. No: already rejected. Pass is fine; save veto not needed since vote fails. Yes(1) vs No(2): rejected. So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498839,
+    "id": "20261020202028370cd1f2f67747a1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202028370cd1f2f67747a1",
+    "usage": {
+      "completion_tokens": 92,
+      "completion_tokens_details": {
+        "reasoning_tokens": 64
+      },
+      "prompt_tokens": 2243,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2335
+    }
+  }
+}

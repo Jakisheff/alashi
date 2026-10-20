@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.923,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\": 8, \"reason\":\"Продаю весь товар в кредит по высокой цене; вексель не пострадает от немедленной девальвации и даст максимум итогового капитала.\"}",
+          "reasoning_content": "Rivals hold ~23M cash each, I have 1.4M. Richness rank matters. If I sell all 4: cash 40M — I become richest. But after round 5-6 devaluation 62%. Selling now gets full price, then cash decays ×0.62 at rounds 5,6 (0.62²=0.384). sell_credit promissory doesn't devalue but is added to cash and then devalues too. Only hard doesn't devalue.\n\nActually cash devaluation: round 5 and 6 start. Selling 4 units at price 12,10,9,8=39 alashi → 40.4M cash, decays to ~15.5M. Credit 48.75M received as promissory, added at round 5 start then decays... promissory added to cash in round 5, then round 6 decay: 48.75×0.62=30.2M. Better than sell? Sell now: 40.4→25→15.5M. Credit: 48.75→30.2M. But cash now matters for auction bid too — but I have bid 0. Rich rank: rivals' cash also decays.\n\nActually holding goods and selling later is worse (price drops with sold counter — others will sell). Sell credit 4 units seems strong. But also law 8 (обнуляет promissory) already used. Cards remaining: risk of card 8? It was played round 2 but was it accepted? I voted no; unknown outcome. Round 3 law 1 (tax 10%) — I voted yes, unknown if passed; current tax_bps=0, so it didn't pass or veto. Cards drawn without repeats: 0-8, drawn: 7,8,1. Remaining includes 8 possibly rejected? \"Вытягиваются без повторов\" so 8 gone.\n\nChoose 8: sell_credit 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496850,
+    "id": "202610201947171ce97738c9c249fb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201947171ce97738c9c249fb",
+    "usage": {
+      "completion_tokens": 466,
+      "completion_tokens_details": {
+        "reasoning_tokens": 420
+      },
+      "prompt_tokens": 2901,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 3367
+    }
+  }
+}

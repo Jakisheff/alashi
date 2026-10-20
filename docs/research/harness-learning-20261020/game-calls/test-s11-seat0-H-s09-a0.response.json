@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.661,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Бесплатный shuttle даёт 3 товара для будущих продаж, сохраняя cash для аукциона следующего раунда.\"}",
+          "reasoning_content": "Need cash ≥9 alashi next round? Rule applies round 4. Currently round 3 action. Cash 11.78. Choose shuttle (3 goods) — free, keeps cash for round 4 auction. But round 4 market cash gets devalued: floor(11.78/100)*62... actually cash 11,780,000 → floor(11780000/100)*62? Floor(cash/100)*62: 117800*62=7,303,600 ≈7.3 alashi <9. Hmm, so next round cash ~7.3 — rule won't apply. Still best to maximize goods. Shuttle free gives 3 goods, no grey risk listed here (shuttle gives 3 goods). Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499975,
+    "id": "20261020203927430debf32a0546bc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203927430debf32a0546bc",
+    "usage": {
+      "completion_tokens": 196,
+      "completion_tokens_details": {
+        "reasoning_tokens": 159
+      },
+      "prompt_tokens": 3559,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3755
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.518,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар уже не продать, а взятка стоит дороже комиссионного бонуса 5% банка.\"}",
+          "reasoning_content": "Round 6 action, goods won't be sellable after (market already done). Goods don't count at end. So produce/shuttle useless. Focus: influence matters for 5% commission bonus. Currently influence 1, tie with others; idx 0 has president. Max influence bonus: 5% of bank 39M = 1.95M. Bribing 5M gives influence 2 → president? Bribe gives me max influence → I'd get commission 5% = 1.95M, but cost 5M. Not worth? Cash also reduced — final cash counts. Bribe 5M reduces cash 5M, gains 1.95M. Net loss. Best pass.\n\nActually I'm license holder, income already. So choice 0 pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498350,
+    "id": "20261020201224dc6ff09e64804d8d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201224dc6ff09e64804d8d",
+    "usage": {
+      "completion_tokens": 198,
+      "completion_tokens_details": {
+        "reasoning_tokens": 165
+      },
+      "prompt_tokens": 5468,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 5666
+    }
+  }
+}

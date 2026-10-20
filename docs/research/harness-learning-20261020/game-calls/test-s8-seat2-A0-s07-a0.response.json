@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.094,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Кредитная продажа двух единиц даёт 21,25 alashi векселем без девальвации по текущей высокой цене.\"}",
+          "reasoning_content": "Sold counter 2, price 9. Devaluation next rounds 62%... promissory isn't devalued. Selling on credit: 9*1.25=11.25 per unit. Selling both gives 21.25 promissory. Selling 1 unit now leaves counter at 3, price 8 for later? But round 4 next; better to sell credit both now at higher price? But keeping 1 for later sale risks price drop. Sell credit 2 units gets promissory 21.25 which is added to cash at round 4 start without devaluation. That seems strong. Also keeping goods — I'll have production. I'd sell both on credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499573,
+    "id": "2026102020324780b23c5a6ede4532",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020324780b23c5a6ede4532",
+    "usage": {
+      "completion_tokens": 184,
+      "completion_tokens_details": {
+        "reasoning_tokens": 145
+      },
+      "prompt_tokens": 2518,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2702
+    }
+  }
+}

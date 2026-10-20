@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.605,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Финальный раунд: векселя не гасятся, поэтому продаю весь товар за живые деньги.\"}",
+          "reasoning_content": "Last market round. Promissory won't be paid after last round — avoid sell_credit. Sell all 3 for cash 31M. Price at counter 0 is 12? But candidates show 12 per unit (24→32→39... 26.381+12=38.381? Actually sell 1 = +12M... yes). Sell 3: choice 5. Opponents may sell after me, but cash counts, sell now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498466,
+    "id": "202610202014228f73ffaff40d4bc9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202014228f73ffaff40d4bc9",
+    "usage": {
+      "completion_tokens": 133,
+      "completion_tokens_details": {
+        "reasoning_tokens": 98
+      },
+      "prompt_tokens": 3400,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3533
+    }
+  }
+}

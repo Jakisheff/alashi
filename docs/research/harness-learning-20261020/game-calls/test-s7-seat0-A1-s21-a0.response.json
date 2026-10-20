@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.01,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 3 уже ни на что не влияет в финале, veto бессмысленно.\"}",
+          "reasoning_content": "Закон 3 — subsidy_goods=1, полезно для тех, кто производит. У меня goods=0, последний раунд закон уже не поможет мне продать... subsidy_goods даёт +1 товар при produce/shuttle, но раунд 6 action уже прошёл. Закон бесполезен всем? Активные производители — фракция 1 (goods=4). Их действие уже сделано. Эффектов на выплату нет. Veto не имеет значения, но тогда 5% банка комиссии идут за влияние — я имею максимальное влияние, влияние не меняется от закона. Veto vs pass одинаковы. Выбираю pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499651,
+    "id": "20261020203405f670b57d9bef439c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203405f670b57d9bef439c",
+    "usage": {
+      "completion_tokens": 171,
+      "completion_tokens_details": {
+        "reasoning_tokens": 141
+      },
+      "prompt_tokens": 3182,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3353
+    }
+  }
+}

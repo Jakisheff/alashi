@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.647,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":18,\"reason\":\"Взятка даёт влияние 3 — забираю президентство и контроль законов с veto на оставшиеся раунды, что дороже 10 alashi.\"}",
+          "reasoning_content": "Need influence to take presidency (holder 2 has influence 1; I have 1, tie_order favors 2). Bribe 5 to idx1 gives influence 2 → I become president, plus control over laws. President can veto. Influence also gives 5% bank commission at end. Bribe 5 alashi to 1 (poorest? 1 has 23.82, 2 has 26.64 — bribing 1 makes them 28.82, still not richest, ok). Cost 5 vs value of presidency + veto + commission share (~1.5 alashi bank 30... bank 30, 5% = 1.5) plus law control. Choose 5M bribe to 1, influence 2.\n\nOr bribe 10 for safety? Others could also bribe later... law phase same round after action; others act after? Order rotates; this is round 3 action, all acting. If another player also bribes to exceed 2, presidency lost. 10M gives influence 3. I have 52 cash, richest. Spend 10 to be safer? Value: controlling law rounds 3-6. I'll take 10M → influence 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496935,
+    "id": "2026102019484872904ca1edf54274",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019484872904ca1edf54274",
+    "usage": {
+      "completion_tokens": 303,
+      "completion_tokens_details": {
+        "reasoning_tokens": 257
+      },
+      "prompt_tokens": 3953,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 4256
+    }
+  }
+}

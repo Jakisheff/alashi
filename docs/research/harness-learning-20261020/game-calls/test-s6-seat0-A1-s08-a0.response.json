@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.919,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Производство даёт 2 товара для будущих продаж; президентство я уже удерживаю по tie_order.\"}",
+          "reasoning_content": "Need goods for future sales. Round 3 action, produce gives 2 goods. Cash tied with others; want presidency (influence) too. Small bribe 5 alashi gives influence 2, still keeps cash, plus produce unavailable though—bribe uses action. Trade-off: 2 goods worth ~ (sold_counter=6, next prices 5,4) ~9-12 alashi credit... actually selling 2 units at price 5,4*1.25 ≈ 11.25 alashi revenue. Influence 2 helps presidency and 5% bonus. But producing twice (this and later rounds) more valuable? Each round only one action. Remaining actions: rounds 3,4,5,6 = 4 actions. Produce every round gives goods. Bribe once for influence 2 secures presidency for remaining law phases (currently influence tied 1-1-1, tie_order 0 gives me presidency anyway). Actually with influence 1 and tie_order [0,2,1], I'm president already. Influence bonus 5% of bank ~1.5 alashi. Not worth losing 5 alashi cash + production. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496708,
+    "id": "20261020194500b00d81a2cdc94542",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194500b00d81a2cdc94542",
+    "usage": {
+      "completion_tokens": 279,
+      "completion_tokens_details": {
+        "reasoning_tokens": 245
+      },
+      "prompt_tokens": 3460,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 3739
+    }
+  }
+}

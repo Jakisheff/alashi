@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.773,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар и взятки уже не окупаются в финальном раунде — просто пропускаю, сохраняя cash для ранга.\"}",
+          "reasoning_content": "Round 6 action. Goods 0, so produce/shuttle useless for further selling (no more market). Only rank matters cash. Best: pass. But could bribe to gain influence → max influence bonus 5% of bank = ~1.85M; bribe 5M gains influence 2 (total 3), exceeding holder 2 → get 5% bank ≈1.95M but costs 5M. Not worth. Also vote_weight: pass action doesn't help—vote skipped gives +2 weight but law not impactful much. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498192,
+    "id": "20261020200948c07098c727f34d36",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200948c07098c727f34d36",
+    "usage": {
+      "completion_tokens": 159,
+      "completion_tokens_details": {
+        "reasoning_tokens": 117
+      },
+      "prompt_tokens": 5716,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 5875
+    }
+  }
+}

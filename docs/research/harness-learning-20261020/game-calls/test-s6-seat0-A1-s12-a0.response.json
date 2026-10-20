@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.189,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Президентство сохраняется по tie_order при равном влиянии, поэтому брибы не нужны; бесплатно беру 2 товара под будущие продажи.\"}",
+          "reasoning_content": "Need main action after bid. I'm president with influence 1 tied; vote_weight 3. Bid 10M might lose license. Influence helps presidency for rounds 5-6 law. Bribe 5M to 1 gives influence 2, securing president role (tie_order priority anyway? tie 0 first via tie_order [0,2,1], so tie at 1 favors me anyway). So bribing for influence not needed? President is max influence; with all at 1, I hold by tie_order. So no bribe needed.\n\nBetter: produce goods (goods=2) for later sales? Round 4 action, then rounds 5-6 markets. shuttle gives 3 goods but ~25% confiscation; red tariff risk? Tariff 0 — border manual not available... shuttle risk 25% loss. produce gives 2 free. Take produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496734,
+    "id": "202610201945284344a980c0dc402a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201945284344a980c0dc402a",
+    "usage": {
+      "completion_tokens": 227,
+      "completion_tokens_details": {
+        "reasoning_tokens": 183
+      },
+      "prompt_tokens": 3904,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 4131
+    }
+  }
+}

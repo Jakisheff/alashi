@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 14.593,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Захватываю больше товара для продажи на растущем буме, риск границы умеренный.\"}",
+          "reasoning_content": "I'm cash-poor (10.54, others 29-30). Need cash for rank. Selling later: prices dropping. Produce gives 2 goods for sale next market (round 4). Bribe gives influence → presidency helps law control and 5% bank. But cash loss hurts rank.\n\nCash matters for final rank. Produce gives goods to sell for ~5-6 alashi each in round 4 (sold_counter 6 → price 6+2=8 actually). sold_counter 6, price array index 6 = 5? [12,10,9,8,7,6,5,...] index 6 = 5, +boom 2 = 7. Selling 2 units next round ~14 alashi, better than donkey. Shuttle gives 3 goods but 25% seizure risk (no tariff). Shuttle: 3 units × ~6-7 = ~20 vs produce 14. Risk 25% losing all. Expected shuttle ~15. Plus price drops. Shuttle slightly better but risky; also grey goods—wait, shuttle grey? \"shuttle даёт 3+subsidy_goods товара; серый товар может быть изъят\". Goods appear as goods=3 in candidate. Choose shuttle? Risk 25%. Expected ~15 vs 14 produce, but if seized 0 vs 14. Prefer produce for safety? Also presidency: influence matters for law control and 5% commission. Bribing 5 to idx1... idx1 already has influence 1; me getting 2 makes me president. That gives veto power and 5% bank bonus at end (~1.5 alashi) but costs 5 alashi cash. Not worth vs selling goods.\n\nChoose shuttle (choice 3) for max goods? 25% loss expectation 15 vs 14, marginal. But grey seizure risk \"всего товара\" with red tariff... no tariff active. Only grey goods seized; candidate shows goods=3 (black?). I'll take produce for safety—also final round: only 3 more markets. Actually shuttle EV slightly higher; but prices: selling 3 units drops price. Units at price 7,6,5 = 18 vs 2 units 7,6=13. Seizure risk only on grey portion. I'll pick shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498442,
+    "id": "20261020201349a202919e30294f59",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201349a202919e30294f59",
+    "usage": {
+      "completion_tokens": 514,
+      "completion_tokens_details": {
+        "reasoning_tokens": 483
+      },
+      "prompt_tokens": 3124,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 3638
+    }
+  }
+}

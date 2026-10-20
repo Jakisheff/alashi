@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.435,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Высокая цена 9 сейчас; продаю обе единицы сразу, сохраняя cash на аукцион раунда 4.\"}",
+          "reasoning_content": "Round 3 market, price now: sold_counter=2, price 9. Sell 2 → 9+9=18 now, good price. Keep cash ≥9 for round 4 auction. Sell 2 gives 27.5M, good. Choice 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498088,
+    "id": "20261020200758d8462fc9e75140f0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200758d8462fc9e75140f0",
+    "usage": {
+      "completion_tokens": 96,
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      },
+      "prompt_tokens": 2990,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3086
+    }
+  }
+}

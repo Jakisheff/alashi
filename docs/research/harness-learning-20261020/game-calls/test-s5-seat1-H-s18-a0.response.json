@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.163,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Финальный раунд: продаю весь товар по высокой цене, вексель не погасится.\"}",
+          "reasoning_content": "Sell all at 9. sell_credit won't pay out.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496672,
+    "id": "20261020194430ae006cb5b87c4fdd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194430ae006cb5b87c4fdd",
+    "usage": {
+      "completion_tokens": 46,
+      "completion_tokens_details": {
+        "reasoning_tokens": 13
+      },
+      "prompt_tokens": 3754,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3800
+    }
+  }
+}

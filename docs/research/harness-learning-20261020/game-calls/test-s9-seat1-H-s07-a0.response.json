@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.779,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продам весь товар по высокой цене, чтобы иметь cash ≥ 16 для выигрышной ставки 12 на аукционе в раунде 4.\"}",
+          "reasoning_content": "Round 3 market. Keep cash ≥9 by round 4 auction. Cash 11.78. Selling raises cash; but lowers price counter. Auction rule: keep cash≥9 at round 4 market. Sell 3 gives 35.78 — good, auction bid 12. But selling now at price 9/8/7... price counter at 2 means next price is 9? Prices list index 2 = 9 alashi. Selling 3 gets ~24. Good. But maybe keep goods for later? Selling now is fine to fund auction. Choose sell 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496831,
+    "id": "202610201947056781ced427e24ad5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201947056781ced427e24ad5",
+    "usage": {
+      "completion_tokens": 166,
+      "completion_tokens_details": {
+        "reasoning_tokens": 123
+      },
+      "prompt_tokens": 3052,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3218
+    }
+  }
+}

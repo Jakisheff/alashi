@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.319,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Продаю оба товара в кредит: цена высокая, вексель выплатят в начале раунда 6 без девальвации.\"}",
+          "reasoning_content": "Round 5 market. sell_credit in round 6 unredeemed; round 5 promissory added in round 6 start? Round 6 is last round; start of round 6 cash gets promissory added. \"Начало раунда 2 и далее: cash=floor(cash/100)*62, затем promissory прибавляется\" — so promissory from round 5 gets paid at round 6 start? It says promissory added to cash then zeroed. But \"После последнего раунда вексель не погашается\" — round 6 credit not paid. Round 5 credit pays in round 6. So sell_credit is good: 1.25x with devaluation applied... cash devalues to 62%, promissory added full. So credit is superior.\n\nPrice counter 3 → price 8. Sell both on credit: 18.75 promissory, cash stays 31.07M. Choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499334,
+    "id": "2026102020284907e86f8980044157",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020284907e86f8980044157",
+    "usage": {
+      "completion_tokens": 246,
+      "completion_tokens_details": {
+        "reasoning_tokens": 207
+      },
+      "prompt_tokens": 3631,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3877
+    }
+  }
+}

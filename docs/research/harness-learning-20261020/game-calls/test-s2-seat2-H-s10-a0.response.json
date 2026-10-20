@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.721,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон о 20% налоге невыгоден; мой голос «против» отклоняет его без необходимости вето.\"}",
+          "reasoning_content": "Law 2: 20% tax on sales. I'm president. Veto it. Currently Yes=1, No=1, my vote decides. Better veto (guaranteed) or vote_no. Vote_no rejects anyway (Yes 1 < No 2). Either works; vote_no suffices.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499395,
+    "id": "202610202029525bd89651fd294631",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202029525bd89651fd294631",
+    "usage": {
+      "completion_tokens": 101,
+      "completion_tokens_details": {
+        "reasoning_tokens": 64
+      },
+      "prompt_tokens": 3056,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3157
+    }
+  }
+}

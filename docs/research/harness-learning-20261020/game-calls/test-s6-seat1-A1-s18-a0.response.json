@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.854,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон о субсидии даёт +1 товар и мне в следующем раунде, а соперники уже за «да».\"}",
+          "reasoning_content": "Card 3: subsidy_goods=1, helps everyone produce more. Round 5 law, only round 6 remains. I have 3 goods, rivals 2 each. Subsidy helps rivals too (produce +1 next round). But I also produce/shuttle next round. Both others voted Yes. I'm president. Veto? Subsidy +1 to all, including me — helps me next round too. Vote yes, it passes anyway (others Yes). Just vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497111,
+    "id": "202610201951473143119954e04fce",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201951473143119954e04fce",
+    "usage": {
+      "completion_tokens": 140,
+      "completion_tokens_details": {
+        "reasoning_tokens": 101
+      },
+      "prompt_tokens": 3180,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3320
+    }
+  }
+}

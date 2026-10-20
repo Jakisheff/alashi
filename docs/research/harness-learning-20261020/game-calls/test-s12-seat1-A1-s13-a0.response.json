@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.917,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Субсидия увеличивает мой товар от produce/shuttle в двух оставшихся раундах.\"}",
+          "reasoning_content": "Law 3: subsidy_goods=1 — good for us, we produce. Holder is idx2 (president), we're faction 1 with weight 2. Vote yes; 0 likely yes too.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499898,
+    "id": "202610202038150e5dc68fc4894169",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202038150e5dc68fc4894169",
+    "usage": {
+      "completion_tokens": 74,
+      "completion_tokens_details": {
+        "reasoning_tokens": 43
+      },
+      "prompt_tokens": 2747,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2821
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 14.473,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Беру shuttle: 3 товара дадут ~21 alashi на финальном рынке, а риск изъятия оправдан.\"}",
+          "reasoning_content": "I'm idx 2, license holder, cash 30M, promissory 38.75M. Round 5 action. Round 6 cash dev: floor(cash/100)*62. Final: promissory not redeemed after last round — so my promissory is worthless unless... wait, promissory is added to cash at start of round 2+; after last round it's not redeemed. So round 6 start my 38.75M promissory vanishes. Actually round 6 starts: cash=floor/100*62 then promissory added. So round 6 start promissory IS added (round 6 is a round start). Only promissory created in round 6 unredeemed. So I have 30M+38.75M → dev then... wait round 5 already started. Round 6 start: cash 30M→18.6M + 38.75M = 57.35M. Then round 6 market I can sell if I have goods. So getting goods now via shuttle (3 goods, risk 25% seizure... tariff? no active tariff; shuttle grey risk 25%) or produce (2 goods). Round 6 market sells at price ~3 each (counter... sold_counter 3, prices 12,10,9,8,7,... wait counter 3 means next price 8? prices[3]=8). Actually I sold 3 in round 5, counter is 3. Round 6 first sale at price index 3 = 8. 3 goods at 8,7,6=21 alashi, *1.25 credit → 26.25, but unredeemed after round 6? Promissory created in round 6 market is unredeemed — worthless. So sell for cash. 3 goods → 21 alashi cash vs 2 goods → 15. Shuttle gives 3 goods with 25% seizure risk, free. Take shuttle.\n\nAlso influence matters for bonus 5%. President is idx1 (influence 1, tie). Could bribe for influence — 10M for +2 influence to win max-influence bonus (5% of bank = 2.625M) — not worth. Shuttle is best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499490,
+    "id": "202610202031174dec2faddd674681",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202031174dec2faddd674681",
+    "usage": {
+      "completion_tokens": 516,
+      "completion_tokens_details": {
+        "reasoning_tokens": 476
+      },
+      "prompt_tokens": 3981,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 4497
+    }
+  }
+}

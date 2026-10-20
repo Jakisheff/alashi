@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.071,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 20% навредит моим будущим продажам, а голоса соперников разделены — мой «против» отклоняет закон.\"}",
+          "reasoning_content": "Law 2: tax 20% on future sales. I plan to sell goods; tax hurts. Votes: yes=1 (p2), no=1 (p0). My vote decides. Vote no.\n\nWait, tax hurts rivals too; p2 has 3 goods and sells. Tax reduces rivals' cash. But I also sell. Currently I have 0 goods. Tax 20% would hurt p2's future sales more. But I'll produce later too. Roughly equal exposure; keeping no tax helps me overall. But tax reduces rivals' cash relative to me? Actually tax applies equally. My rank matters, and rivals sell more goods currently. Vote no is safe choice 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497086,
+    "id": "202610201951203111254d6e5b446e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201951203111254d6e5b446e",
+    "usage": {
+      "completion_tokens": 186,
+      "completion_tokens_details": {
+        "reasoning_tokens": 144
+      },
+      "prompt_tokens": 2343,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2529
+    }
+  }
+}

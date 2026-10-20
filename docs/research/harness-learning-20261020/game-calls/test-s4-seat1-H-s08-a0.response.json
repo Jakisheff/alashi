@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.947,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Продажа в кредит сохраняет выручку от девальвации (30 alashi векселем против ~14.5 наличными), карта обнуления векселей уже вышла.\"}",
+          "reasoning_content": "Round 3, sell now at 8 (counter 2, third unit price 8). Actually counter=2, next price 8. Wait candidates: sell 1 unit gives +9? cash 31.5M = +9M... that's 9 alashi? Price index 2 → 9. So sell 3 gives 24 (9+8+7). Need cash ≥9 in round 4 for auction; round 4 cash devalues floor/100*62. If sell all now: cash 46.5M → next round 28.8M, fine. Sell credit? Promissory added next round without devaluation. Sell credit 3: promissory 30, cash stays 22.5 → devalued 13.95 + 30 = ~44. Sell now: 46.5→28.8. Sell_credit better! 13.95+30=43.95 vs 28.8. But promissory risk: card 8 wipes promissory — already used. Law 8 was round 1 (rejected). So sell_credit 3, choice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498131,
+    "id": "202610202008431f68bd4bca3245cc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202008431f68bd4bca3245cc",
+    "usage": {
+      "completion_tokens": 291,
+      "completion_tokens_details": {
+        "reasoning_tokens": 240
+      },
+      "prompt_tokens": 3169,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3460
+    }
+  }
+}

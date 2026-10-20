@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.169,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Беру shuttle ради 3 товаров под будущие продажи; влияние и пост президента уже обеспечены.\"}",
+          "reasoning_content": "I'm president (idx 1), influence 2, tied with 0. I passed market so vote_weight 4. Need goods to sell later; shuttle gives 3 goods. Also law phase—I already pass vote weight 4. Produce gives 2 goods; shuttle 3 goods with 25% grey seizure risk? No—shuttle gives grey goods that may be seized, but tariff black protects. Currently no tariff. Shuttle gives 3 grey goods. If seized 25% at border... actually seizure chance happens at action? \"may be confiscated at the border with a probability of about 25%\". Risky. Produce safer: 2 goods. Prices: counter 4, next price for 5th unit ~7? sold_counter=4 means next price 7? list [12,10,9,8,7,...] index 4 → 7. 3 goods sell for 7+6+5=18, 2 goods 13. Take shuttle (choice 3).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499875,
+    "id": "20261020203749398eb15391ec4f19",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203749398eb15391ec4f19",
+    "usage": {
+      "completion_tokens": 239,
+      "completion_tokens_details": {
+        "reasoning_tokens": 209
+      },
+      "prompt_tokens": 2962,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 3201
+    }
+  }
+}

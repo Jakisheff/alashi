@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.656,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон даёт влияние беднейшему (не мне), а усиливать соперника невыгодно.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest by cash. Poorest is faction 1 (5 alashi). That boosts their influence but president is determined by max influence at law entry — holder is idx2 already. Helps faction 1 compete for presidency later. I'm richest? cash 19.25 vs 29.64 — faction 2 richest. Vote no? Law 4 gives +1 to poorest, not me. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498667,
+    "id": "202610202017411f8129ecdc9e4142",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202017411f8129ecdc9e4142",
+    "usage": {
+      "completion_tokens": 122,
+      "completion_tokens_details": {
+        "reasoning_tokens": 91
+      },
+      "prompt_tokens": 2540,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2662
+    }
+  }
+}

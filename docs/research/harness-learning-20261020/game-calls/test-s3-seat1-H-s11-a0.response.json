@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.692,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Сохраняю cash ≥16 alashi для ставки 12 в аукционе лицензии раунда 4\"}",
+          "reasoning_content": "Cash ~23.6 → after market must stay ≥9 to bid 12? 23.6 ≥16, but buy reduces to 11.6 still ≥9. But goods=2 only for others. Bid 12 needs 12 alashi? Cash 23.6M = 23.6 alashi. Rule: bid 12 at cash ≥16. Buy 1 costs 12 → cash 11.6, then bid 9. Pass keeps 23.6, bid 12. Expected rent ~40 minus ~6 = +34 vs +31. Also buying moves counter back. Pass simpler and keeps 12 bid. Choose 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496972,
+    "id": "2026102019492739a92b884ad448ee",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019492739a92b884ad448ee",
+    "usage": {
+      "completion_tokens": 173,
+      "completion_tokens_details": {
+        "reasoning_tokens": 138
+      },
+      "prompt_tokens": 3017,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3190
+    }
+  }
+}

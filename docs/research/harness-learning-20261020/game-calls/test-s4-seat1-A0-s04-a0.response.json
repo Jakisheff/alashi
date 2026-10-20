@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.457,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продаю весь товар сейчас по высокой цене, пока цена не упала дальше.\"}",
+          "reasoning_content": "Price counter 4 → price 5. Sell all 3 now at 5,4,3 = 12 alashi. Later rounds cash devalues (×0.62 each round). Selling now for cash is better. Sell 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499828,
+    "id": "20261020203703d8f94357210a4af9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203703d8f94357210a4af9",
+    "usage": {
+      "completion_tokens": 78,
+      "completion_tokens_details": {
+        "reasoning_tokens": 51
+      },
+      "prompt_tokens": 2325,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 2403
+    }
+  }
+}

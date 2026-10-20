@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.919,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 20% ударит по моим будущим продажам; мой вес 2 отклоняет закон.\"}",
+          "reasoning_content": "Закон 2: налог 20% на будущие продажи. Я держу promissory 22.5 и буду продавать в будущем — налог вреден. Голоса: yes=1 (фр0), no=1 (фр1), мой вес 2. vote_no → no=3 > yes=1, отклонён. Выбор 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497348,
+    "id": "2026102019554520362a08000840ac",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019554520362a08000840ac",
+    "usage": {
+      "completion_tokens": 113,
+      "completion_tokens_details": {
+        "reasoning_tokens": 79
+      },
+      "prompt_tokens": 2600,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2713
+    }
+  }
+}

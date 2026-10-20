@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.179,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Ожидаемая выгода shuttle выше, а риск изъятия умеренный.\"}",
+          "reasoning_content": "Shuttle gives 3 goods, ~25% seizure risk? No tariff currently (roof_tariff 0), shuttle gives grey goods seizure risk ~25% anyway. Produce gives 2 safe. Expected shuttle 2.25 > 2, and shuttle goods are grey. Take shuttle? Slight edge. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496335,
+    "id": "20261020193852cd7f5afb61a84f5d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020193852cd7f5afb61a84f5d",
+    "usage": {
+      "completion_tokens": 94,
+      "completion_tokens_details": {
+        "reasoning_tokens": 66
+      },
+      "prompt_tokens": 2162,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2256
+    }
+  }
+}

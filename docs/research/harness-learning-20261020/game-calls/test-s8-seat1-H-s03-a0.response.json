@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.48,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Карта 0 безвредна, veto не нужен.\"}",
+          "reasoning_content": "Card 0 no effects, but wait—veto on card 0 pointless. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496787,
+    "id": "202610201946256a62fc4cb36b404c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201946256a62fc4cb36b404c",
+    "usage": {
+      "completion_tokens": 42,
+      "completion_tokens_details": {
+        "reasoning_tokens": 19
+      },
+      "prompt_tokens": 2460,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2502
+    }
+  }
+}

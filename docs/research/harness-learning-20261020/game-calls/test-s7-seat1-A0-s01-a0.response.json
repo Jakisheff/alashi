@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.373,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Производство даёт 2 товара без риска изъятия.\"}",
+          "reasoning_content": "Produce is safe, shuttle has 25% seizure risk. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496317,
+    "id": "202610201938356ad08b91b3c24f6a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201938356ad08b91b3c24f6a",
+    "usage": {
+      "completion_tokens": 40,
+      "completion_tokens_details": {
+        "reasoning_tokens": 16
+      },
+      "prompt_tokens": 1917,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 1957
+    }
+  }
+}

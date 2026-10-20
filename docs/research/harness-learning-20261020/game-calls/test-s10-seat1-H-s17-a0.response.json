@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.236,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 5 даёт +1 влияния самому богатому (сопернику 0), это мне невыгодно — голосую против.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest (фракция 0, already president with 2). I'm second richest (24.2M vs 11.8M). Yes gives rival more influence. Vote no. Own vote weight 1 vs president's 2... vote_no from me: no=1, yes=2 → passes anyway. But still no.\n\nActually I can't veto (not president). Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498129,
+    "id": "202610202008455612adc2436f4a48",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202008455612adc2436f4a48",
+    "usage": {
+      "completion_tokens": 131,
+      "completion_tokens_details": {
+        "reasoning_tokens": 90
+      },
+      "prompt_tokens": 3503,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3634
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.283,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон 3 даёт субсидию товара, выгодную мне, а «за» уже обеспечивает принятие.\"}",
+          "reasoning_content": "Card 3: subsidy_goods=1. Helps me produce more goods (I produce? I use shuttle: shuttle gives 3+subsidy). Rival 1 has vote weight 3 already voted Yes. Vote yes to pass — good for me.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499093,
+    "id": "20261020202448f5c2f42d9a214422",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202448f5c2f42d9a214422",
+    "usage": {
+      "completion_tokens": 87,
+      "completion_tokens_details": {
+        "reasoning_tokens": 53
+      },
+      "prompt_tokens": 2868,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2955
+    }
+  }
+}

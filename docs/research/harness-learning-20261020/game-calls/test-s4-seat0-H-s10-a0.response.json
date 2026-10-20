@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 35.235,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Голосов «против» уже больше (2 против 1), закон о налоге 20% не проходит, veto не нужен.\"}",
+          "reasoning_content": "Закон 2: налог 20% на будущие продажи. Я уже проголосовал No (вес 2), да: 1 (участник 1). No уже больше — закон не пройдёт без veto. pass достаточно.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497719,
+    "id": "2026102020012551c634436c5a40c7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020012551c634436c5a40c7",
+    "usage": {
+      "completion_tokens": 91,
+      "completion_tokens_details": {
+        "reasoning_tokens": 52
+      },
+      "prompt_tokens": 2923,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3014
+    }
+  }
+}

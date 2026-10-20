@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.277,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Цена сейчас высокая (9 за единицу), продать оба товара до обесценивания и падения цены.\"}",
+          "reasoning_content": "Round 4 market, price at sold_counter=2 → 9 alashi/unit. Later rounds: cash halves each round start. Bank 30, license income. Sell now at 9 is good; sell both = 18 alashi. Holding to later rounds: round 6 sell at similar? Counter only 2 now, others also selling... others have 2 goods each too (fr0 has 2, fr1 has 0). Actually fr1 has 0 goods. Counter will grow. Selling now at 9 vs later price decline. Also cash devaluation makes promissory not. Sell now 2 units for 18.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498534,
+    "id": "20261020201528362db2f338f0423e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201528362db2f338f0423e",
+    "usage": {
+      "completion_tokens": 168,
+      "completion_tokens_details": {
+        "reasoning_tokens": 133
+      },
+      "prompt_tokens": 2723,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2891
+    }
+  }
+}

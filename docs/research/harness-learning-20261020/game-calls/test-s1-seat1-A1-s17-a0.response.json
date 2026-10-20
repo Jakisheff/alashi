@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.783,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Шаттл даёт больше товара для финальной продажи при лучшем ожидании, чем produce.\"}",
+          "reasoning_content": "Round 5 of 6. I have promissory 38.75M, low cash. Need goods to sell in round 6 market. shuttle gives 3 goods (risk ~25% seizure since tariff unknown—no tariff set, so seizure risk). produce gives 2 goods guaranteed. Round 6 market: prices from counter 3+? After this I sell in round 6, promissory*1.25 arrives at start of round 6. Best to maximize goods: shuttle 3 vs produce 2 — seizure risk 25% loses everything; EV shuttle = 2.25 goods > 2. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499782,
+    "id": "20261020203611fe34a0bef8b74fd2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203611fe34a0bef8b74fd2",
+    "usage": {
+      "completion_tokens": 166,
+      "completion_tokens_details": {
+        "reasoning_tokens": 133
+      },
+      "prompt_tokens": 3230,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3396
+    }
+  }
+}

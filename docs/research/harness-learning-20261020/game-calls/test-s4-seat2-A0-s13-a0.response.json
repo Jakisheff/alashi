@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.42,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Карта 0 без эффектов, исход не меняется — пропускаю.\"}",
+          "reasoning_content": "Card 0 no effects anyway. Vote yes = no effect card 0. Any is fine; but voting uses weight 1? Passing gives no benefit. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496744,
+    "id": "202610201945418bcbe6d17cb64162",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201945418bcbe6d17cb64162",
+    "usage": {
+      "completion_tokens": 63,
+      "completion_tokens_details": {
+        "reasoning_tokens": 35
+      },
+      "prompt_tokens": 2827,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2890
+    }
+  }
+}

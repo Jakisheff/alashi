@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 14.216,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Закон вводит налог 10% на мои будущие продажи, поэтому как президент применяю veto.\"}",
+          "reasoning_content": "I'm president (holder 2). Law 1 = tax 10% on future sales. I have promissory 57.5 alashi, but next rounds cash devalues: promissory adds to cash then cash=floor(cash/100)*62... wait promissory added after devfal. Round 6 start: cash = floor(cash/100)*62 + 57500000. Tax 10% on my future sales hurts me; I plan to sell goods round 6. Veto tax.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499818,
+    "id": "202610202036458d68ac6d7daa4387",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202036458d68ac6d7daa4387",
+    "usage": {
+      "completion_tokens": 142,
+      "completion_tokens_details": {
+        "reasoning_tokens": 110
+      },
+      "prompt_tokens": 3183,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3325
+    }
+  }
+}

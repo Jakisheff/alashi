@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.298,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Ожидаемая выручка шаттла выше, чем у produce.\"}",
+          "reasoning_content": "Produce gives 2 guaranteed goods, shuttle 3 with 25% seizure risk. Expected 2.25 vs 2 — shuttle slightly better, but variance. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496787,
+    "id": "202610201946232c53920e778942fd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201946232c53920e778942fd",
+    "usage": {
+      "completion_tokens": 65,
+      "completion_tokens_details": {
+        "reasoning_tokens": 37
+      },
+      "prompt_tokens": 1917,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 1982
+    }
+  }
+}

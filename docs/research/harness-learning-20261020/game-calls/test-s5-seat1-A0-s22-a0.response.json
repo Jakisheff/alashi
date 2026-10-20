@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.575,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон 5 даёт +1 влияния мне как самому богатому, укрепляя бонус президента.\"}",
+          "reasoning_content": "I'm the richest (card 5: +1 influence to richest). But influence matters for 5% bonus only; I already have 3 vs 2. Extra influence on me doesn't hurt. Vote yes: passes (1 yes, 0 no). Law 5 benefits me. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498929,
+    "id": "20261020202207db07f213f4ef49a9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202207db07f213f4ef49a9",
+    "usage": {
+      "completion_tokens": 94,
+      "completion_tokens_details": {
+        "reasoning_tokens": 63
+      },
+      "prompt_tokens": 3439,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3533
+    }
+  }
+}

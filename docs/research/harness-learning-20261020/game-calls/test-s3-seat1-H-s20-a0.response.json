@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.868,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Финальный раунд: продаю весь товар сразу, вексель в раунде 6 не погашается.\"}",
+          "reasoning_content": "Round 6 last market, promissory won't be paid. Sell all 3 at price ~? sold_counter=2, price=9. Choice 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497013,
+    "id": "20261020195010e5d36956198143e6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195010e5d36956198143e6",
+    "usage": {
+      "completion_tokens": 72,
+      "completion_tokens_details": {
+        "reasoning_tokens": 35
+      },
+      "prompt_tokens": 3983,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 4055
+    }
+  }
+}

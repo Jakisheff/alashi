@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.159,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель не девальвируется сразу и даёт выручку 1.25x, что выгоднее наличных.\"}",
+          "reasoning_content": "Sell 2 at 12+10=22 cash. But cash devalues in round 3? cash=floor(cash/100)*62 — cash loses 38%. Promissory pays full next round... promissory added at start of round and then next devaluation applies too. Actually start of round: cash devalued, then promissory added. Promissory doesn't devalue until the round after. Sell credit gives 1.25x, added to cash next round start after devaluation of old cash — so promissory effectively skips one devaluation. Sell credit is better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498015,
+    "id": "20261020200649b3304e9d214045dd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200649b3304e9d214045dd",
+    "usage": {
+      "completion_tokens": 162,
+      "completion_tokens_details": {
+        "reasoning_tokens": 125
+      },
+      "prompt_tokens": 2152,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2314
+    }
+  }
+}

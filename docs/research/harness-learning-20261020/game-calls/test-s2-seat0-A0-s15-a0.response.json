@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.513,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Максимум товара для финальной продажи на последнем рынке.\"}",
+          "reasoning_content": "Round 5 action, last market is round 6. Get goods to sell in round 6. Shuttle gives 3 goods, sell at price around sold_counter=3 → price 8. That's ~24 alashi revenue. Produce gives 2. Shuttle best but grey risk 25%? Grey goods can be confiscated; but shuttle here gives goods=3 (presumably black). Candidate shows goods=3 directly, no grey. Shuttle best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498851,
+    "id": "202610202020478c6ec4232dfb47b8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202020478c6ec4232dfb47b8",
+    "usage": {
+      "completion_tokens": 118,
+      "completion_tokens_details": {
+        "reasoning_tokens": 93
+      },
+      "prompt_tokens": 3548,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3666
+    }
+  }
+}

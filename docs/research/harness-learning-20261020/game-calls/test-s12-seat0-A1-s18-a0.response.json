@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 16.562,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Бесплатный shuttle даёт 4 товара на продажу в финальном раунде с выручкой ~26+ alashi, что ценнее взяток, и сохраняет cash от девальвации лишь частично, но доход товара доминирует.\"}",
+          "reasoning_content": "Round 5 action. Round 6 remains; cash dev devalues at round 6 start: floor(cash/100)*62 → 38% loss. Promissory paid in full. My cash 23.75M devalues. Better to spend cash now. Bribe gives influence; I'm currently not president (influence 2 vs 2 tie_order [2,0,1] favors 2). Bribing 5M to 1 or 2 gives me influence 3, tie with 2's 3 but tie_order favors 2 still. Need influence 4 (bribe 10M) to be president in round 5 law? President = highest influence entering law. With 4 I'd beat 3. But round 5 law — I might not be next president anyway; round 6 order rotates.\n\nAlternatively spend cash to avoid devaluation: bribe 10M to gain influence 4 → president, plus I dodge 10M*0.38 devaluation. Bribe to whom? To 1 strengthens 1's influence? No, bribe gives influence to sender only. Recipient gets cash.\n\nCash 23.75M → after 10M bribe: 13.75M devalues to 62% ≈ 8.5M. Losing bribe money but money given away is fully transferred (vs devaluation). Actually giving cash to rival increases their rank. But 10M devalued would be worth only 6.2M to me; giving it away costs 10M in rival's hands... rivals' cash counts in rank against me. Hmm, but influence gain → president, and bonus 5% commission for max influence.\n\nAlso shuttle gives 4 goods for selling round 6 (sell 4 units at ~7-8 alashi... sold_counter=3, price index 3 = 8). Goods worth: round 6 sell 4 units ~8,7,6,5 = 26 alashi ~ 26M minus tax. That's huge vs devaluation. shuttle free! Choose 3? But influence 2, not president, and round 6 law exists too.\n\nWait I could shuttle AND bribe? Only one action. shuttle free gives 4 goods (3+subsidy1) worth ~26M revenue in round 6 with sell_credit (×1.25). That seems best economically. But presidency: round 5 law holder is current influence leader (2). Round 6 I'm richest probably → tax law risk.\n\nCompare: bribe 10M → influence 4, president round 5 & 6 (influence persists), get 5% commission bonus (~2M), can veto bad laws. Also avoid devaluation on 10M. But lose shuttle goods worth ~20M+.\n\nActually promissory 38.75M already adds big round 6 cash. Final rank: cash+hard. I'll have lots. Adding goods sale ~26M more via credit 32M — helps rank massively.\n\nI'll pick shuttle (choice 3).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497271,
+    "id": "202610201954156fd302fc3a9f4357",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201954156fd302fc3a9f4357",
+    "usage": {
+      "completion_tokens": 707,
+      "completion_tokens_details": {
+        "reasoning_tokens": 642
+      },
+      "prompt_tokens": 4010,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 4717
+    }
+  }
+}

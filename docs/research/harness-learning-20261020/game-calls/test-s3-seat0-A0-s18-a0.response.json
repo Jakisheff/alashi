@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.031,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон о налоге 10% невыгоден моим будущим продажам, а мой вес 2 уже блокирует его вместе с голосом No игрока 2.\"}",
+          "reasoning_content": "Law 1 = 10% tax on future sales. I have 2 goods, will sell next round. Tax 10% costs ~2-3 alashi in revenue. Player 2 voted No; I have weight 2, vote 2 No vs 0 Yes → law rejected anyway? Yes=0, No=2, rejected. So I can pass or abstain. Veto also works but unnecessary. Just vote_no for safety.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496755,
+    "id": "20261020194551835f45e29eff423e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194551835f45e29eff423e",
+    "usage": {
+      "completion_tokens": 140,
+      "completion_tokens_details": {
+        "reasoning_tokens": 93
+      },
+      "prompt_tokens": 3180,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3320
+    }
+  }
+}

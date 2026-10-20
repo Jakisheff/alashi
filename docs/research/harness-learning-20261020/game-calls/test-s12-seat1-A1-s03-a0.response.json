@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.689,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Вексель обесценится девальвацией, поэтому продаю оба товара за наличные 17 alashi по повышенной цене.\"}",
+          "reasoning_content": "Price +2 shift, prices now: counter 2, price for unit3 = 8+2=10, unit4=7+2=9. Sell both = 17. Sell credit both = 21.25 promissory, paid at round 3 start after devaluation 62%: 21.25*0.62=13.175 vs 17 now. Sell cash better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499854,
+    "id": "20261020203729754c7bd075254b7b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203729754c7bd075254b7b",
+    "usage": {
+      "completion_tokens": 125,
+      "completion_tokens_details": {
+        "reasoning_tokens": 85
+      },
+      "prompt_tokens": 2153,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2278
+    }
+  }
+}

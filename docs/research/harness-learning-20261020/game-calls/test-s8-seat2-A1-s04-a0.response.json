@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.792,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель 27.5 не девальвируется в отличие от cash (62%), выгода больше.\"}",
+          "reasoning_content": "Sell 2 now at 12,10 = 22, credit 27.5 but credit loses to cash devaluation? Cash devalues 62%, credit 1.25x — credit is better than devalued cash. 27.5 promissory vs 22 cash → next round cash floor(22000000/100)*0.62=13.6. Credit better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498413,
+    "id": "20261020201321b4ad73e1f9c046d0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201321b4ad73e1f9c046d0",
+    "usage": {
+      "completion_tokens": 115,
+      "completion_tokens_details": {
+        "reasoning_tokens": 82
+      },
+      "prompt_tokens": 2211,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2326
+    }
+  }
+}

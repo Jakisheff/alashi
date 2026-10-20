@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.683,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":30,\"reason\":\"Ставлю 9 alashi в аукцион по рекомендации: перекрываю кап соперников в 8 и сохраняю cash.\"}",
+          "reasoning_content": "Cash ~34M ≥16M, но recommended_choice=30 (9M). Rule says follow recommended. But rule 2 says 12 if cash≥16. Harness priority: follow recommended choice. Use choice 30, then main action later.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498132,
+    "id": "2026102020085026b0c5c0536340ec",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020085026b0c5c0536340ec",
+    "usage": {
+      "completion_tokens": 90,
+      "completion_tokens_details": {
+        "reasoning_tokens": 51
+      },
+      "prompt_tokens": 6489,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 6579
+    }
+  }
+}

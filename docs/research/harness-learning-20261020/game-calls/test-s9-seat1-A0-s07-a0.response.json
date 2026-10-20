@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.735,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Продажа в кредит даёт выручку x1.25 и откладывает девальвацию на раунд.\"}",
+          "reasoning_content": "Cash devaults each round heavily (62%). Better spend now. Selling 2 now at price 9 each gives 18M immediate. Credit 1.25x but promissory paid next round (only next round's devaluation... actually promissory added to cash after devaluation of old cash, and then next round it devalues again). With 4 rounds left, credit is good: sell_credit 2 gives 21.25M promissory, cash low. But promissory will devalue in later rounds (added to cash then cash devalued 62%). Still 21.25*1.25... already includes 1.25. Compare sell now 18M cash, will devalue next rounds. Credit: 21.25M next round cash, one devaluation less. Credit better. Also card 8 can cancel promissory though. I'll pick choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498282,
+    "id": "20261020201115bf5e276a148a4560",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201115bf5e276a148a4560",
+    "usage": {
+      "completion_tokens": 226,
+      "completion_tokens_details": {
+        "reasoning_tokens": 190
+      },
+      "prompt_tokens": 2469,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2695
+    }
+  }
+}

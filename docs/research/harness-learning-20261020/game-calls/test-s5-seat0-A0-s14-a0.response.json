@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.411,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Беру 3 бесплатных товара на будущую продажу; взятки ухудшают мой ранг богатства.\"}",
+          "reasoning_content": "Bid 35 already placed, need main action. President is idx1 with influence 1; bribing idx1 could gain influence and presidency (tie_order 1,2,0 — with influence 2 I'd beat 1). But presidency this round only matters for law round 4. Vote weight: bribe 5M gives influence 2, becomes president? Influence 2 > 1. Then in law I'd control veto. But cost 5M vs payout... President role gives veto only; also 5% bank commission goes to max influence. Max influence influence bonus: 5% of ~30M bank ~1.5M plus potential license. Bribing to 2 influence gives me commission share potentially.\n\nBut goods: shuttle gives 3 goods, next round sell at price 2 (counter 10) ~ worth little. Cash matters more for rank. Ranks: rival1 33.5M, rival2 31.7M, me 15.7M + promissory 12.5M. Bribing cuts cash — bad for rank. But influence 2 gives 5% commission (~1.5M) and presidency veto. Bribe 5M to idx1: idx1 gets 5M cash (bad, they lead). Net: lose 5M cash, gain 1.5M commission + veto control. Not great.\n\nAlternative: produce/shuttle for goods. Price at counter 10 is 2; selling later. Round 5 market sell 3 goods at 2 = 6 alashi, *0.62 dev... shuttle free goods worth ~11 gross in promissory... modest. Shuttle free 3 goods seems best value. Also next round cash devalues 0.62 anyway.\n\nActually keeping rank: I'm last (15.7+12.5=28.2 vs 33.5, 31.7). Bribing makes it worse. Choose shuttle (choice 3).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498493,
+    "id": "2026102020144056a7295fc1db44bf",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020144056a7295fc1db44bf",
+    "usage": {
+      "completion_tokens": 444,
+      "completion_tokens_details": {
+        "reasoning_tokens": 412
+      },
+      "prompt_tokens": 3624,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 4068
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.556,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Кредитная продажа всех 3 единиц по высокой стартовой цене даёт наибольшую выручку и избегает ранней девальвации.\"}",
+          "reasoning_content": "Sell 3 now at high prices (12,10,9). Cash devaluation 62%: sell gives 31 cash now, next round floor(31/100)*62... actually cash in alashi small. 31 alashi → floor → *0.62 later rounds. Sell_credit loses 25% bonus but promissory not devalued... but last round promissory unpaid. Sell now for cash; later devaluation hurts but sell_credit 38.75 promissory paid in cash at round3, then devalued rounds 4-6 (0.62^4?). Better sell_credit 3: 38.75 vs 31 with one devaluation round3 = 19.2... actually cash 31 at start round3: floor(31/100)... units are micro-units: 31000000 → floor(31000000/100)*62 = 19220000, ~19.2. Promissory added round 3 as cash 38.75, then round4 devalued to ~24, round5 ~14.9, round6 ~9.2. Cash 31: r3 19.2, r4 11.9, r5 7.4, r6 4.6. Credit better. But tax laws may apply; sell now avoids future tax. Also price falling. Credit better expected value despite risk of tax on future? Promissory already fixed. Choose sell_credit 3 (choice 6).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496569,
+    "id": "20261020194240632ed8f42a81465d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194240632ed8f42a81465d",
+    "usage": {
+      "completion_tokens": 356,
+      "completion_tokens_details": {
+        "reasoning_tokens": 312
+      },
+      "prompt_tokens": 2320,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2676
+    }
+  }
+}

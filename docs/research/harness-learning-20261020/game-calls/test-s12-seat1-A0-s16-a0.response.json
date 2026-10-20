@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.668,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\": 6,\"reason\":\"Вексель не девальвируется и погашается в раунде 6, поэтому продажа всех 3 единиц в кредит даёт максимум итогового капитала.\"}",
+          "reasoning_content": "Round 5 market. I hold license, license income already fixed. End game is round 6; cash devalues 62% at round 6 start. So selling now is good; promissory from sell_credit survives devaluation (paid in round 6? promissory added at round start 6... actually round 6 starts: cash devalues, then promissory added. Round 6 market exists—can sell remaining goods then. Price high now (12,10,9 for first units since counter reset 0). Sell all 3 now for 44.4M cash, then round 6 devalues to 27.5M. Or sell_credit 3 → promissory 38.75M paid at round 6 start, no devaluation! Better. Also can sell remaining? No goods. Alternatively sell 2 credit now, keep 1 for round 6. Prices in round 6 will drop due to others selling. sell_credit all 3: 38.75M untouched by devaluation, cash 13.46M devalues to 8.35M. Compare sell all now: cash 44.46M devalues to 27.56M. Credit wins.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497948,
+    "id": "2026102020053556fa9ac4492349c8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020053556fa9ac4492349c8",
+    "usage": {
+      "completion_tokens": 300,
+      "completion_tokens_details": {
+        "reasoning_tokens": 253
+      },
+      "prompt_tokens": 3178,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3478
+    }
+  }
+}

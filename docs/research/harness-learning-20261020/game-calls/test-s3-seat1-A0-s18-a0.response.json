@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.08,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"shuttle даёт 3 товара для финального рынка, вексель не девальвируется\"}",
+          "reasoning_content": "Round 5 action, last market round 6. I hold license (income 20-60). Cash low 4.58, promissory 27.5 will be added then devalued at round 6 start? Round 6 start: cash=floor(cash/100)*62, then promissory added... actually \"cash=floor(cash/100)*62, then promissory is added\". Wait promissory added after devaluation — good, promissory is full? Actually promissory added after devaluation of cash. So promissory 27.5 added fully. Good.\n\nGoods: I should produce for round 6 market. Shuttle gives 3 goods, ~25% confiscation at border unless black tariff. Shuttle gives 3 goods worth maybe ~9 each = 27 alashi vs produce 2. Shuttle better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496781,
+    "id": "202610201946169a4896073aa84d48",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201946169a4896073aa84d48",
+    "usage": {
+      "completion_tokens": 212,
+      "completion_tokens_details": {
+        "reasoning_tokens": 180
+      },
+      "prompt_tokens": 3375,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3587
+    }
+  }
+}

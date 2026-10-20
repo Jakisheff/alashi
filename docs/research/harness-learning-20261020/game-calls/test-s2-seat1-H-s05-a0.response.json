@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.885,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Ожидаю больше товара с шаттлом при небольшом риске изъятия.\"}",
+          "reasoning_content": "Round 2 action, not auction. Produce 2 goods? Shuttle gives 3 grey goods with 25% risk. Produce is safe: 2 goods. Shuttle 3 with risk but also grey tariff payment maybe. Prefer produce? Grey goods at ~25% seizure; also pay 2 for grey tariff if preferential. Produce is safer but shuttle expected 2.25 goods minus costs. I'll take shuttle for more goods—wait previous round shuttle gave grey 3. Risk 25% lose all. Expected value: 3*0.75=2.25 vs 2. Plus possible border payment 2. Marginal. I'd choose produce for safety... shuttle expected higher. But border pay min(cash,2) if preferential. Choose shuttle (choice 3).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499866,
+    "id": "20261020203741041ec290e591405f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203741041ec290e591405f",
+    "usage": {
+      "completion_tokens": 193,
+      "completion_tokens_details": {
+        "reasoning_tokens": 163
+      },
+      "prompt_tokens": 3417,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 3610
+    }
+  }
+}

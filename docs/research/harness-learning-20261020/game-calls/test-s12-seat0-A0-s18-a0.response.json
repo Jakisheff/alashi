@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.338,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce даёт 3 товара без риска изъятия на границе и сохраняет cash перед девальвацией\"}",
+          "reasoning_content": "I'm president with influence 3, license holder. Round 5 action. Round 6 remains. Goods can be sold in round 6 market. Shuttle gives 4 goods (3+1 subsidy). Selling 4 at price... sold_counter=3, price 8; next round market. Cash also devalues at round 6 start: floor(cash/100)*62 — so spending cash now on goods is better than holding cash! Actually spending on shuttle is free (grey though, no risk? shuttle grey may be seized at border ~25%). Wait seizure risk depends on tariff. Tariff 0 currently... \"льготная граница\" pays min(cash,2). Risk exists anyway. Seizure loses shuttle goods.\n\nBetter: produce gives 3 goods free, no risk. Shuttle 4 goods with 25% risk. EV: produce 3 goods at ~8+ each ≈ 24+ alashi revenue vs shuttle 4 goods 75% → 3 goods EV. Shuttle also possibly pays 2 to president (me? No, holder of role X — that's me! I'm president). So tariff border payments come to me. But seizure loses grey goods.\n\nActually I'm the border-fee recipient already (president). So shuttle: 75% chance 4 goods, 25% 0. EV 3. Same as produce. Produce safe. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498987,
+    "id": "202610202022552111db6c2f8b4142",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202022552111db6c2f8b4142",
+    "usage": {
+      "completion_tokens": 327,
+      "completion_tokens_details": {
+        "reasoning_tokens": 292
+      },
+      "prompt_tokens": 3865,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 4192
+    }
+  }
+}

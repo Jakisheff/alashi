@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.989,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель не девальвируется и приносит 1.25×, что выгоднее наличных при будущей девальвации.\"}",
+          "reasoning_content": "Prices: counter 4 → next price 7? boom +2 → 9 for first unit, then 7... sell 2 gives 17. Cash devaluation round 3+ starts? Round 2 start already applied devaluation (cash=floor/100*62). Cash 21 and 26 of rivals came from previous sales presumably. Selling 2 now: 17 cash, which devalues in round 3 to 62% → 10.5. Credit: 21.25 promissory added at start of round 3 without devaluation... wait, devaluation applies to cash at round start, promissory added after. So credit preserves value! sell_credit 2 = 21.25 promissory, better than 17*0.62=10.5. Choose choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496805,
+    "id": "20261020194640a75fb9641d98440a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194640a75fb9641d98440a",
+    "usage": {
+      "completion_tokens": 211,
+      "completion_tokens_details": {
+        "reasoning_tokens": 171
+      },
+      "prompt_tokens": 2212,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2423
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.832,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Продажа в кредит двух единиц даёт максимум выручки, которая выплатится полностью после девальвации.\"}",
+          "reasoning_content": "Sell 2 at 7? sold_counter=4, so price index 4 = 7 alashi. Sell 2 → 7+6=13 alashi? Candidate 3: +7 alashi total? 56775000-43775000=13,000,000 = 13 alashi. Yes sell 2 for 7 each = 14? Actually 7+6=13, right. Sell credit gives 16.25 promissory but promissory is not counted in final rank if unpaid... round 4 start: cash devaluation happens, promissory added. Round 4 market promissory will be added to cash in round 5 start: cash=floor(cash/100)*62 then + promissory. Promissory pays fully but devalues holding cash... Actually promissory is better: 16.25 paid later vs 13 now (which would then be devalued 62%). Definitely sell_credit 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496720,
+    "id": "2026102019451499f4d359c00447f9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019451499f4d359c00447f9",
+    "usage": {
+      "completion_tokens": 241,
+      "completion_tokens_details": {
+        "reasoning_tokens": 206
+      },
+      "prompt_tokens": 2845,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 3086
+    }
+  }
+}

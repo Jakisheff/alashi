@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.177,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Любая взятка сбрасывает меня ниже соперника с 60 млн и стоит больше, чем бонус влияния; товар на финале бесполезен.\"}",
+          "reasoning_content": "Round 6, last action. Goods don't count in ranking; cash is ranking. I'm idx1 with 62.3M, rival idx0 60M. Rank 1st gives 50% of ~34M ≈ 17.9M, plus possibly 5% influence bonus (tie in influence 1, tie_order favors 0 and 2... tie_order [0,2,1], so others win influence ties). Bribe costs cash — bad. Best: keep cash, gain influence for the 5% bonus (1.7M). Bribe 5M gives influence 2, guaranteeing the max-influence 5% bonus (1.7M) while keeping rank 1st (57.3M > 60M? no, 57.27M < 60.0M!). Then I fall to rank 2: 30% (10.7M) vs 50% (17.9M) — lose ~7M, gain 1.7M. Bad. Bribe to idx2 (23.5M) keeps me rank 1: 52.3M > 60M? No! idx0 has 60M. So any bribe ≥ 5M drops me below idx0. Wait 62.27−5=57.27 < 60.0. So rank drops. Bad.\n\nSo best is pass / produce (goods worthless). But wait: does president holder matter? No more law effect for me... law still happens round 6, holder determined by influence after action. President is idx0 currently with influence 1, vote_weight 1; I'd have weight 3. If I pass, I still have weight 3 vs president. Law could tax... no more markets. Card 8 promissory — I have none. Card 5 +1 influence richest — could change influence bonus. Passing is fine. Choose pass (choice 0).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496913,
+    "id": "202610201948239ceae01ff2124c46",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201948239ceae01ff2124c46",
+    "usage": {
+      "completion_tokens": 452,
+      "completion_tokens_details": {
+        "reasoning_tokens": 408
+      },
+      "prompt_tokens": 5056,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 5508
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.992,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Ожидаемо больше товара, чем produce, риск изъятия умеренный.\"}",
+          "reasoning_content": "Produce gives 2 goods safely; shuttle gives 3 but grey risk. No tariff info; shuttle risk 25% loss of grey goods. Choose shuttle? Produce safer. Later sale prices ~5-6. Choose shuttle for 3 goods but grey may be seized. Expected shuttle 2.25 goods vs 2. Shuttle slightly better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499701,
+    "id": "20261020203454d459bef183e64e0c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203454d459bef183e64e0c",
+    "usage": {
+      "completion_tokens": 99,
+      "completion_tokens_details": {
+        "reasoning_tokens": 71
+      },
+      "prompt_tokens": 2164,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2263
+    }
+  }
+}

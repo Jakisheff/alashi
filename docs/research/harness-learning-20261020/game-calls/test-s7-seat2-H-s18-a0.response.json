@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.753,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Последний раунд: sell_credit не погашается, а полная продажа 3 единиц выводит меня на первое место по cash.\"}",
+          "reasoning_content": "sell_credit в раунде 6 не погашается и не входит в ранг. Только обычный sell. Продать 3 по 8 alashi = лидер по cash? 40.5M vs у 0 23.7M, у 1 28.1M. Продавать всё — choice 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499185,
+    "id": "202610202026223403429637d246e4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202026223403429637d246e4",
+    "usage": {
+      "completion_tokens": 110,
+      "completion_tokens_details": {
+        "reasoning_tokens": 71
+      },
+      "prompt_tokens": 3773,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3883
+    }
+  }
+}

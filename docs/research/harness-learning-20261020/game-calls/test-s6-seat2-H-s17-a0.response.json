@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.038,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Высокая цена 12, продать оба товара сейчас выгоднее, чем вексель, обесценивающийся девальвацией.\"}",
+          "reasoning_content": "Round 5, sell at price 12. sell 2 for 22 cash is good (round 6 devaluation 62%). Sell both, keep cash.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496488,
+    "id": "20261020194125d8f3a2b480db4cee",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194125d8f3a2b480db4cee",
+    "usage": {
+      "completion_tokens": 75,
+      "completion_tokens_details": {
+        "reasoning_tokens": 34
+      },
+      "prompt_tokens": 3623,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3698
+    }
+  }
+}

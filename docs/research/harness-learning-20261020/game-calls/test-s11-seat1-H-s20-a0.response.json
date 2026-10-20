@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.117,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон о субсидии не влияет на итоговую выплату в финальном раунде.\"}",
+          "reasoning_content": "Law 3: subsidy_goods=1. But this is final round, no more action phases—subsidy irrelevant. Vote doesn't affect final payout. Pass (choice 0) keeps things neutral; but maybe subsidy doesn't matter. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498781,
+    "id": "2026102020193707557bfaa41147e1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020193707557bfaa41147e1",
+    "usage": {
+      "completion_tokens": 84,
+      "completion_tokens_details": {
+        "reasoning_tokens": 52
+      },
+      "prompt_tokens": 3759,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 3843
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.379,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Субсидия на производство выгодна мне, и Yes уже проходит.\"}",
+          "reasoning_content": "Закон 3: subsidy_goods=1 — выгодно мне (произвожу товар). Голоса: 0 и 2 уже Yes, я не президент. vote_yes — да, закон выгоден.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498182,
+    "id": "202610202009401efec5c29d3f4784",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202009401efec5c29d3f4784",
+    "usage": {
+      "completion_tokens": 70,
+      "completion_tokens_details": {
+        "reasoning_tokens": 45
+      },
+      "prompt_tokens": 3514,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3584
+    }
+  }
+}

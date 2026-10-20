@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.317,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель добавится после девальвации в начале раунда 6 целиком, выгоднее кредита с высокой ценой 14.\"}",
+          "reasoning_content": "Round 5 market, prices: sold_counter=0, price 12+boom2=14 per unit. Sell 2 now gives cash 44.6M — good, hard ranking. But promissory round 6 unredeemed? Sell_credit in round 6 not redeemed; here round 5 credit gets devalued at round 6 start (62%) then added — actually round 6 start: cash=floor(cash/100)*62, then promissory added. So credit now becomes full value added at round 6 start. Devaluation 62% hurts existing cash too. Selling now for cash: round 6 start cash devalued to 62%. Selling credit: promissory added after devaluation, full 32.5M. So sell_credit is better! Both units: promissory 32.5M added full. So choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499397,
+    "id": "202610202029516c877aff60e740b8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202029516c877aff60e740b8",
+    "usage": {
+      "completion_tokens": 225,
+      "completion_tokens_details": {
+        "reasoning_tokens": 185
+      },
+      "prompt_tokens": 3556,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3781
+    }
+  }
+}

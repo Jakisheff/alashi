@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.298,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 3 (субсидия) уже не влияет на итог — производство в этом раунде закончилось; проще пропустить.\"}",
+          "reasoning_content": "Law 3 gives subsidy_goods=1, but this is the last law round — no more market? Law effects: subsidy affects produce; round 6 action already done. No benefit. But I'm president with veto. Others voted Yes (1+2=3 yes). If I abstain, law passes — irrelevant. No effect matters. Just abstain or pass. Actually subsidy irrelevant; pass is fine. Pass keeps nothing. Choice 0.\n\nWait — influence matters for final 5% commission: I have influence 2, tied with player 1 but better cash, so I get it either way. Law doesn't affect that. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497432,
+    "id": "20261020195705c1f90e0dc2b04d83",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195705c1f90e0dc2b04d83",
+    "usage": {
+      "completion_tokens": 172,
+      "completion_tokens_details": {
+        "reasoning_tokens": 133
+      },
+      "prompt_tokens": 3362,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3534
+    }
+  }
+}

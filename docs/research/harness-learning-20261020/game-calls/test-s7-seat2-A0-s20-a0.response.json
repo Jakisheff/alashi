@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.915,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 3 (субсидия) уже не влияет на финал, исход не важен.\"}",
+          "reasoning_content": "Закон 3: subsidy_goods=1 — но раунд 6 action уже прошёл, эффекта почти нет. Но колонка «Yes»: у противников 2+2=4, у меня 4. При моём yes — да/нет 8:0 принят. Это безвредно (subsidy не влияет на финал). Пропуск сохраняет 4 против 4 — всё равно принято. Не важно; abstain тоже принят. Выберу pass без разницы, но vote_no: нет 4, да 4 — не принято, тоже без разницы. Просто pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499043,
+    "id": "2026102020235822a630d66c1643bb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020235822a630d66c1643bb",
+    "usage": {
+      "completion_tokens": 163,
+      "completion_tokens_details": {
+        "reasoning_tokens": 130
+      },
+      "prompt_tokens": 3271,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3434
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.133,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар и голоса уже не приносят выплаты, а президент может ветировать; pass сохраняет весь cash.\"}",
+          "reasoning_content": "Last action round, law follows. Goods don't matter (no more market after? Round 6 market already done). So produce/shuttle useless except law vote? Vote weight = influence+2 if action passed. But I'm president with veto power anyway. Influence affects final 5% bonus — I already have max influence (3). Bribe increases influence but bribe cost transfers to rival — bad. Pass keeps cash and gives +2 vote weight, but I hold presidency (influence 3 vs 2) and can veto anyway. Pass is best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496663,
+    "id": "20261020194418a1c73bed82714d19",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194418a1c73bed82714d19",
+    "usage": {
+      "completion_tokens": 147,
+      "completion_tokens_details": {
+        "reasoning_tokens": 114
+      },
+      "prompt_tokens": 5652,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 5799
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.542,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Последний раунд: взятка даёт меньше комиссионных, чем стоит, товары уже бесполезны — пропускаю.\"}",
+          "reasoning_content": "Final round. Rank by cash. I'm richest (75.3M vs 30.5 and 28.2). License income is mine anyway. Bribe to rival just transfers cash away and gives me influence — max influence gives extra 5% of bank commission (~2.1 alashi = 2.1M). But bribing reduces my cash, hurting rank? Bank weights: 50:30:15. If I stay richest, I get 50. Bribe money goes to rival raising their cash above me? 30.5+50=80.5 > my 25.2. So big bribes bad. Small bribe 5M: rival becomes 35.5M vs my 70.3M, still richest. Influence 2 vs others 1... rival 0 has influence 2 already. Bribe 10M to idx2: influence 3, cash 65.3, still richest, rival0 stays 30.5M. Max influence gives 5% bank = 2.1M extra for 10M cost — net negative. Goods production: no market after? Round 6 law is last, no more market. So goods useless. So pass (choice 0).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498659,
+    "id": "20261020201728eb2472d9ae654ca7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201728eb2472d9ae654ca7",
+    "usage": {
+      "completion_tokens": 297,
+      "completion_tokens_details": {
+        "reasoning_tokens": 258
+      },
+      "prompt_tokens": 5510,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 5807
+    }
+  }
+}

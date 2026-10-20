@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.397,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 8 обнуляет векселя, у меня векселей нет — пусть принимается.\"}",
+          "reasoning_content": "Card 8 обнуляет promissory. У меня promissory=0, у соперников тоже 0 (seen промиссори? cash lists don't show promissory... rival promissory unknown but likely 0). Yes=2 (weights 2+3), no=0 — passes. Vetoing card 8 blocks nothing harmful; but if someone has promissory hidden... unknown. Better pass — no downside known.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496735,
+    "id": "2026102019453150bf9e96301e494d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019453150bf9e96301e494d",
+    "usage": {
+      "completion_tokens": 125,
+      "completion_tokens_details": {
+        "reasoning_tokens": 93
+      },
+      "prompt_tokens": 2795,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2920
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.771,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Вето отменяет субсидию, сокращая производство соперников и поддерживая цену для моих продаж.\"}",
+          "reasoning_content": "Law 3: subsidy_goods=1. Good for everyone; I produce via shuttle, and rivals also produce. Vote yes passed already. Should I veto? Subsidy helps rivals equally; I have 3 goods + shuttle next round gives 4. Rivals also get goods. Vetoing subsidy keeps production at base 2 — actually shuttle base 3. Subsidy adds 1 to all. Net zero relative? All get +1, so relative advantage neutral. But more goods → more sales → pushes price counter down. I plan to sell big; rivals selling more lowers prices. Veto reduces rival production, keeps prices higher for my final sales. Also veto costs nothing. So veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497014,
+    "id": "20261020195007dfb6fad08b1e45b7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195007dfb6fad08b1e45b7",
+    "usage": {
+      "completion_tokens": 175,
+      "completion_tokens_details": {
+        "reasoning_tokens": 144
+      },
+      "prompt_tokens": 2997,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3172
+    }
+  }
+}

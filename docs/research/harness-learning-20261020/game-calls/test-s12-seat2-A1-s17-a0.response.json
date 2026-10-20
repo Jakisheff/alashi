@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.099,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон снижает цены на последнем рынке — против моих продаж.\"}",
+          "reasoning_content": "Card 6: price -2 next market. I'm not president (holder 1), my vote weight 1. I have 3 goods to sell in round 6; lower prices hurt me. Vote no. My vote: yes vs no — president will likely push yes? President holder idx1... wait, card 6 hurts everyone's prices, president might veto? President cash low, has 3 goods too. Likely president votes yes or veto. My vote_no: totals yes vs no. Best to vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496407,
+    "id": "202610201940021db027f1cfc14c93",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201940021db027f1cfc14c93",
+    "usage": {
+      "completion_tokens": 132,
+      "completion_tokens_details": {
+        "reasoning_tokens": 108
+      },
+      "prompt_tokens": 3032,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3164
+    }
+  }
+}

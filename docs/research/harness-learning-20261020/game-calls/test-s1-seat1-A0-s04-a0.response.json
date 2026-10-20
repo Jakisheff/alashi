@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.3,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель не девальвируется, продажа всего в кредит даёт максимум выручки.\"}",
+          "reasoning_content": "Prices: sold_counter=4, next prices 6,5,4. Sell 3 → 6+5+4=15. Credit 18.75 promissory, paid at round start... promissory added at start of next round, no devaluation applied to promissory (cash devaлюация floor(cash/100)*62; promissory added after). So credit better. But veto of card 8? Law was voted no earlier anyway. Sell all on credit: 22.5 promissory → becomes cash fully next round. Choose 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498770,
+    "id": "202610202019234ea2ef7932ac4941",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202019234ea2ef7932ac4941",
+    "usage": {
+      "completion_tokens": 152,
+      "completion_tokens_details": {
+        "reasoning_tokens": 122
+      },
+      "prompt_tokens": 2323,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2475
+    }
+  }
+}

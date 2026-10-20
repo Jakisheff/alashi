@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.202,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон 3 (субсидия) уже не влияет на итог, голосую «за» — безвредно.\"}",
+          "reasoning_content": "Law 3: subsidy_goods=1 — affects produce next round, but this is last law (round 6). No future produce phase. So law has no effect; either way fine. Vote yes (weight 3 wins) — harmless. Or pass. Just vote_yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496559,
+    "id": "2026102019423634194bd81e45450c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019423634194bd81e45450c",
+    "usage": {
+      "completion_tokens": 94,
+      "completion_tokens_details": {
+        "reasoning_tokens": 57
+      },
+      "prompt_tokens": 3846,
+      "prompt_tokens_details": {
+        "cached_tokens": 3136
+      },
+      "total_tokens": 3940
+    }
+  }
+}

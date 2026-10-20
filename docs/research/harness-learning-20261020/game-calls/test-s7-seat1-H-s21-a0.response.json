@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.388,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон о субсидии уже не влияет на итог — игра заканчивается, голосование бессмысленно.\"}",
+          "reasoning_content": "Law 3 = subsidy_goods=1, next round produce — but round 6 is last, action done. No effect on me (goods sold). But subsidy helps rival 2? No more actions after law? Round 6 law is final phase, so no effect. Vote doesn't matter much; player 0 voted Yes (weight 2), holder is 2 (president). My vote weight 3. Subsidy irrelevant since game ends. Pass or abstain — no difference. Choose pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499361,
+    "id": "202610202029173d6db252a2df4c7c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202029173d6db252a2df4c7c",
+    "usage": {
+      "completion_tokens": 137,
+      "completion_tokens_details": {
+        "reasoning_tokens": 105
+      },
+      "prompt_tokens": 3742,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 3879
+    }
+  }
+}

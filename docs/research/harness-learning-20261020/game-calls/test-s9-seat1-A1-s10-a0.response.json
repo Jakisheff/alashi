@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.276,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон 3 даёт субсидию на товар, выгодную моим будущим produce/shuttle.\"}",
+          "reasoning_content": "Law 3: subsidy_goods=1 — good for me, I produce/shuttle. Player 0 voted yes. I vote yes. If tie 2-2... vote yes weight 2, no votes unknown. Player 2 might vote no → 2-2 not strictly more, fails. But abstain doesn't help. Vote yes anyway.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497104,
+    "id": "20261020195141a97fa049b7134fd7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195141a97fa049b7134fd7",
+    "usage": {
+      "completion_tokens": 105,
+      "completion_tokens_details": {
+        "reasoning_tokens": 73
+      },
+      "prompt_tokens": 2560,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2665
+    }
+  }
+}

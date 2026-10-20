@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.505,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 4 даёт +1 влияния самому бедному (сопернику), мне выгодно отклонить.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest by cash. Poorest is idx0 (5). I'm richest (51.5). President is idx1. I don't benefit; rival idx0 gets influence. Vote no. Current votes: idx0 No (weight1). My vote no weight1 → no=2, idx1 (president) can veto anyway... veto_pending true means president may veto. President may want law to give poorest +1? idx0 is rival to presidency of idx1... actually giving influence to idx0 threatens idx1's presidency. President will veto. My vote: vote_no aligns (yes>no needed; idx0 No, president presumably abstain/yes?). Safest: vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499203,
+    "id": "2026102020263775d53a622e964f88",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020263775d53a622e964f88",
+    "usage": {
+      "completion_tokens": 187,
+      "completion_tokens_details": {
+        "reasoning_tokens": 151
+      },
+      "prompt_tokens": 2889,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3076
+    }
+  }
+}

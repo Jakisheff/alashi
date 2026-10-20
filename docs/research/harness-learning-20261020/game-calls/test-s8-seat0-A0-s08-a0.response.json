@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.192,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"sell_credit выводит всю выручку в вексель и защищает её от девальвации 62% в начале следующего раунда.\"}",
+          "reasoning_content": "Price counter 0, prices [12,10,9,...]. Cart 6 (price shift -2) was rejected (I voted no, and it seems rejected? law_id 6, votes... unknown). Now market sold_counter=0, price_shift=0 — so rejected. Prices high now, later devaluation cuts cash by 38%. Selling now for cash loses 62% next round. Better sell_credit: promissory added next round after devaluation — avoids devaluation! sell_credit 3 units gives 38.75 promissory, added to cash at round 4 start (after deval). But after last round promissory unpaid. There are 6 rounds, this is round 3, safe.\n\nActually cash 30 alashi devalues: floor(30/100*62)=18.6? 30 alashi cash → 18.6? No: floor(30000000/100)*62 units... floor in minimal units: 30000000/100=300000, *62=18600000 → 18.6 alashi. So sell_credit protects revenue. Sell all 3 credit: promissory 38.75, plus cash 30→18.6 next round, total 57.35. Selling now: cash 61→floor→37.82. So credit better. Choice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498295,
+    "id": "20261020201128617d19f19f614069",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201128617d19f19f614069",
+    "usage": {
+      "completion_tokens": 325,
+      "completion_tokens_details": {
+        "reasoning_tokens": 283
+      },
+      "prompt_tokens": 2698,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 3023
+    }
+  }
+}

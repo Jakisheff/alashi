@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.813,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 10% снизит мою будущую выручку от продаж, поэтому голосую против.\"}",
+          "reasoning_content": "Law 1: tax 10%. I plan to sell (promissory) later. President is rival 2; my vote weight 1. Vote no — pass won't help either way, tax hurts me. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497198,
+    "id": "2026102019531529ee5359bad64735",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019531529ee5359bad64735",
+    "usage": {
+      "completion_tokens": 80,
+      "completion_tokens_details": {
+        "reasoning_tokens": 48
+      },
+      "prompt_tokens": 2282,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2362
+    }
+  }
+}

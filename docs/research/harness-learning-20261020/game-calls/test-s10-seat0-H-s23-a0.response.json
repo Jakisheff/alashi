@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.754,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог мне уже невыгоден, я всё продал — голосую против.\"}",
+          "reasoning_content": "Law card 1: tax 10% on future sales. I already sold all. Rival 1 has 13 goods... tax would hurt them. President is idx2. My vote weight 3. Vote no to tax — doesn't matter for me, but keep bank competitive? Tax hurts rival's round 6? Actually market already passed in round 6; law applies after. Future sales — none. Vote no anyway harmless, or abstain. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497504,
+    "id": "20261020195815eb0e341b31ae4146",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195815eb0e341b31ae4146",
+    "usage": {
+      "completion_tokens": 124,
+      "completion_tokens_details": {
+        "reasoning_tokens": 97
+      },
+      "prompt_tokens": 3876,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 4000
+    }
+  }
+}

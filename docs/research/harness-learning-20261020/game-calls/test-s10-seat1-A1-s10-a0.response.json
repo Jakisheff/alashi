@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.984,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон даёт влияние беднейшему (фракция 2), а не мне — голосую против.\"}",
+          "reasoning_content": "I'm faction 1, not president (holder 0). Law 4: +1 influence to poorest cash. Poorest is faction 2 (cash 0). That helps them, not me. I'm cash 5M, richest is 0 (30M). Law 4 doesn't help me. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497092,
+    "id": "2026102019512922166678f5f94055",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019512922166678f5f94055",
+    "usage": {
+      "completion_tokens": 101,
+      "completion_tokens_details": {
+        "reasoning_tokens": 68
+      },
+      "prompt_tokens": 2523,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2624
+    }
+  }
+}

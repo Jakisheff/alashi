@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.006,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"shuttle даёт 3 товара на продажу в финальном раунде по высоким ценам — максимум итоговой выплаты.\"}",
+          "reasoning_content": "Round 5 action. Round 6 is last; market round 6: cash devalued floor(cash/100)*62 then promissory added. My promissory 38.75M adds at round 6 start. Goods: shuttle gives 3 goods to sell round 6 at price ~4 (sold_counter 3? next prices [5,4,3]... sold_counter=3 means next price index 3 = 8? Actually price array index by sold_counter: 8). Wait sold_counter 3, after my sell of 3 units... apparently counter is 3 now, price next 8? Array [12,10,9,8,...], counter=3 → next price 8. So 3 goods sell at 8,7,6 = 21 alashi revenue round 6, but that's cash after devaluation... goods revenue in round 6 counts as cash directly, good. Shuttle gives goods worth ~21 alashi minus devaluation? No, revenue comes in round 6 as cash, counts in final. So shuttle (choice 3) is best — free 3 goods → ~21 alashi. Also tariff? Shuttle grey risk — shuttle goods are grey? \"shuttle даёт 3+subsidy_goods товара; серый товар может быть изъят\". 25% confiscation risk, still best expected ~15.75. Produce gives 2 goods ~14 (8+7=15). Shuttle EV 0.75*21=15.75 > produce 15. Also presidency influence doesn't matter now (round 6 law after final market barely matters). Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498876,
+    "id": "20261020202107edacbbf11a2043f7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202107edacbbf11a2043f7",
+    "usage": {
+      "completion_tokens": 380,
+      "completion_tokens_details": {
+        "reasoning_tokens": 344
+      },
+      "prompt_tokens": 3561,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3941
+    }
+  }
+}

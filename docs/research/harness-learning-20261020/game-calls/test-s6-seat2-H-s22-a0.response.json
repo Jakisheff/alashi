@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.768,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Финальный раунд: товар не влияет на итог, а любая взятка снижает cash и ранг больше, чем даёт комиссия за влияние.\"}",
+          "reasoning_content": "Round 6 action, final. Goods are worthless at end. Best: maximize influence? Influence 1 vs rival's 2 — the 5% commission goes to max influence. Bank 39M, 5% = ~1.95M. Bribe 5M costs 5M cash (rank cash counts fully) but gains +1 influence → tied at 2 with faction 1; tie broken by cash+hard better → I'd win (40.7 vs 26.7). Gain ~1.95M commission, but lose 5M cash... net negative for rank cash too. But influence also matters for president role in law — I'm not president anyway (holder 0). Rank payout: cash rank. Losing 5M cash might drop rank? I have 40.7, rival 0: 40.0, rival 1: 26.7. After bribe: 35.7 vs 40.0 vs 26.7 — I drop from rank 0 to rank 1! Payout difference 50:30 shares of ~37M ≈ 18.5M vs 11.1M. Bad. So no bribe.\n\nPass? Goods worthless. But influence for commission: currently faction 1 has 2, wins commission. Could I get influence 3 with 10M bribe? Cash drops to 30.7 → still rank 1 (below 40). Commission +1.95M, but rank loss ~7M. No.\n\nSo pass (or produce — goods worthless). Pass keeps... no benefit. Shuttle risk irrelevant, goods worthless. Pass, choice 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496533,
+    "id": "202610201942009b6393c835124ab2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201942009b6393c835124ab2",
+    "usage": {
+      "completion_tokens": 388,
+      "completion_tokens_details": {
+        "reasoning_tokens": 344
+      },
+      "prompt_tokens": 5219,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 5607
+    }
+  }
+}

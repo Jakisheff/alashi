@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.967,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 10% мне не нужен, а мой вес 5 гарантирует отклонение.\"}",
+          "reasoning_content": "Закон 1: налог 10% на будущие продажи. Фракция 0 проголосовала No; фракция 2 не голосовала, вес 1. Мой голос No весит 5 — закон отклонён. Фракция 2 имеет 14 товаров, налог ей навредит; фракция 0 продала уже. Мне налог не нужен. vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497166,
+    "id": "20261020195243e104f50a8bc445ce",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195243e104f50a8bc445ce",
+    "usage": {
+      "completion_tokens": 113,
+      "completion_tokens_details": {
+        "reasoning_tokens": 83
+      },
+      "prompt_tokens": 3355,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3468
+    }
+  }
+}

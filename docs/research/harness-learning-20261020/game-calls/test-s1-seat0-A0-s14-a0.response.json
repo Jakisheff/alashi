@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.581,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":12,\"reason\":\"Вексель погашается в начале раунда 6 без девальвации, поэтому продажа всего в кредит даёт максимум итогового cash.\"}",
+          "reasoning_content": "Round 5, cash small. Sell now gets value; but next round cash devalues to 62%. Promissory not paid after last round (round 6 last). Selling now for cash: cash floor(/100)*62 next round. 53M -> 33M. Promissory paid at start of round 6 without devaluation? Promissory added to cash after devaluation, so full value! Sell all credit: promissory 65M, gets full at round 6 start. But round 6 I can still sell goods... no, goods=0. Better: sell_credit all 6 now (65M promissory, paid start of round 6), then round 6 I can act again? Promissory paid at start of round 6, no devaluation. That beats sell (53M devalued to 33M).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496979,
+    "id": "20261020194932c4a4682bbf4442c7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194932c4a4682bbf4442c7",
+    "usage": {
+      "completion_tokens": 222,
+      "completion_tokens_details": {
+        "reasoning_tokens": 181
+      },
+      "prompt_tokens": 3356,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3578
+    }
+  }
+}

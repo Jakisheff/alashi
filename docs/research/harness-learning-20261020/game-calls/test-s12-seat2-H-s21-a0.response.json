@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 19.459,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товары уже бесполезны (рынок завершён), влияние у меня и так максимальное с преимуществом по tie_order и cash, поэтому pass.\"}",
+          "reasoning_content": "Round 6 action, last round. I'm president, influence 2 tied with idx1 but tie_order [2,0,1] → I hold presidency already. Max influence gives 5% of bank commission (~39 alashi * 5% ≈ 1.95 alashi). Increase influence via bribe to keep max influence? I'm tied at 2 with idx1; tie broken by cash+hard — I have more cash, so I'd win. But bribe costs cash and ranks by cash. 5% of bank = 1.95 alashi. Bribe 5 alashi for influence would cost cash 5 but gain 1.95 — not worth. Better: goods are worthless after round 6? Market phase of round 6 done; goods don't count in rank. So produce/shuttle useless. Pass keeps action skipped? Vote_weight +2 if pass — irrelevant, I'm president anyway.\n\nBribe transfers cash away — bad. Roof gives cash away. So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497722,
+    "id": "2026102020014466895ace13974196",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020014466895ace13974196",
+    "usage": {
+      "completion_tokens": 256,
+      "completion_tokens_details": {
+        "reasoning_tokens": 211
+      },
+      "prompt_tokens": 5656,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 5912
+    }
+  }
+}

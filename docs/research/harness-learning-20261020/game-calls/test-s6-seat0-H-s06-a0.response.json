@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.782,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 8 обнуляет векселя, но ни у кого их нет — эффект пуст, голосую нет нейтрально.\"}",
+          "reasoning_content": "Law 8 обнуляет promissory. У меня promissory 0, но после devaluation promissory добавляется to cash. Не важно. Vote yes or no? Law 8: обнуляет promissory. У кого могут быть promissory? Никто сейчас не имеет (all 0). Кто-то может sell_credit позже — карта применяется теперь, только обнуляет текущие. Все 0 → no effect. Vote yes/no безразлично. Vote abstain — сохраняет президента? President is me regardless. Just pass or abstain. Vote_no fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498580,
+    "id": "20261020201616e13f38a116ea407a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201616e13f38a116ea407a",
+    "usage": {
+      "completion_tokens": 163,
+      "completion_tokens_details": {
+        "reasoning_tokens": 124
+      },
+      "prompt_tokens": 2804,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2967
+    }
+  }
+}

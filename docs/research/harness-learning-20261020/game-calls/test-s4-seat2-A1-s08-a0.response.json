@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.888,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Я уже президент с влиянием 3; produce даёт товар для продажи без потери cash.\"}",
+          "reasoning_content": "I'm president with influence 3, richest. Round 3 action. Produce gives goods to sell later. Bribe loses cash. Produce seems best — 2 goods at price ~6-7 alashi. But wealth rank matters; spending 5M cash for influence doesn't help much (already president). Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498524,
+    "id": "20261020201519074a60ee2895436b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201519074a60ee2895436b",
+    "usage": {
+      "completion_tokens": 94,
+      "completion_tokens_details": {
+        "reasoning_tokens": 65
+      },
+      "prompt_tokens": 3766,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 3860
+    }
+  }
+}

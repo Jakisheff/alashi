@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.201,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Продам оба товара по высокой стартовой цене, деньги сейчас лучше векселя и девальвации.\"}",
+          "reasoning_content": "Rounds 5-6 remain. Selling now at price 12 is good. Sell both? Cash now helps rank. But keeping 1 for round 6? Prices stay high since sold_counter is 0... others will also sell. Round 6 cash devalues (62%), but hard goods don't count either. Selling now at 12+ tax 0 is best; sell both for immediate cash.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499908,
+    "id": "202610202038190b3bedb3fa484685",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202038190b3bedb3fa484685",
+    "usage": {
+      "completion_tokens": 116,
+      "completion_tokens_details": {
+        "reasoning_tokens": 84
+      },
+      "prompt_tokens": 2952,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3068
+    }
+  }
+}

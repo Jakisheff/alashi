@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.377,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Shuttle даёт больше товара для финальной продажи даже с риском изъятия.\"}",
+          "reasoning_content": "Round 5 action. I'm president with influence 2, rival 0 has 2 too but tie_order favors me. Goods 0, promissory 27.5M to be added next round cash. Vote weight matters for law. Round 6 market last — sell then. Best action: shuttle gives 3 goods for round 6 sale at sold_counter=2 → price 9 each (~27). Produce gives 2. But shuttle has seizure risk 25%... tariff 0, so border risk. Shuttle 3 goods expected ~20 vs produce 18 alashi. Actually price at counter 2 = 9; selling 3 units at 9,8,7=24. Produce 2 units at 9,8=17. Shuttle better expected even with risk (0.75*24=18). Also could get subsidy if law 3. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499002,
+    "id": "202610202023157f2edb86005b4157",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202023157f2edb86005b4157",
+    "usage": {
+      "completion_tokens": 215,
+      "completion_tokens_details": {
+        "reasoning_tokens": 185
+      },
+      "prompt_tokens": 3664,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3879
+    }
+  }
+}

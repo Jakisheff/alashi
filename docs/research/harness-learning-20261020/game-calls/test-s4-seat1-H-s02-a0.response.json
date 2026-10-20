@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.059,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 8 обнуляет векселя, у всех они нулевые — безопасно отклонить пустой закон.\"}",
+          "reasoning_content": "Law 8 обнуляет promissory — у всех 0, значит без эффекта. Президент — idx2, не я. vote_no — безвредно, но закон 8 ни на что не влияет сейчас (promissory=0 у всех). Пропущенное действие даёт +2 вес, но я уже действовал. Голосуй no — map 0 безвредна? map 8 сейчас ничего не меняет. Просто abstain/no; выберу vote_no, чтобы не допустить ненужное.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498106,
+    "id": "20261020200822f0ccd29607ac4f05",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200822f0ccd29607ac4f05",
+    "usage": {
+      "completion_tokens": 152,
+      "completion_tokens_details": {
+        "reasoning_tokens": 115
+      },
+      "prompt_tokens": 2498,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2650
+    }
+  }
+}

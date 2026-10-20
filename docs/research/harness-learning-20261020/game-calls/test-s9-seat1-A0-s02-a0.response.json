@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.753,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 5 даст +1 влияния самому богатому — по ничьей это индекс 0, что усилит конкурента-президента; голосую против.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest by cash. All cash 0, tie_order favors idx 0 (president). President is holder idx 0, not us (idx 1). Voting yes gives influence to rival 0. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498258,
+    "id": "20261020201055867b52e870014b79",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201055867b52e870014b79",
+    "usage": {
+      "completion_tokens": 100,
+      "completion_tokens_details": {
+        "reasoning_tokens": 53
+      },
+      "prompt_tokens": 2025,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2125
+    }
+  }
+}

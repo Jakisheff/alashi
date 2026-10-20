@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.94,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Налог 10% вредит соперникам с товаром, у меня товара нет — поддерживаю.\"}",
+          "reasoning_content": "Law 1 = tax 10%. I hold license, likely sell later? Tax hurts sellers. I have 0 goods, but rivals have goods (faction 2 has 7). I'm richest. Tax on rivals' sales helps me relatively. Vote yes? Also rivals' votes unknown; rivals likely sell goods. Tax 10% hurts them, not me (no goods). Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497774,
+    "id": "202610202002450d803a2c30ba4b92",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202002450d803a2c30ba4b92",
+    "usage": {
+      "completion_tokens": 113,
+      "completion_tokens_details": {
+        "reasoning_tokens": 81
+      },
+      "prompt_tokens": 2868,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2981
+    }
+  }
+}

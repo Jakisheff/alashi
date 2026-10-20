@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.137,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продаю весь товар по высокой цене; вексель обесценится девальвацией раунда 4.\"}",
+          "reasoning_content": "Price at sold_counter=4 is 7. Selling all 3 gives 7+6+5=18. sell_credit gives 22.5 promissory. But need cash ≥9 after market in round 4; this is round 3. Cash now 12.4; selling 3 gives 30.4 — good. Devaluation round 4 start: floor(cash/100)*62 — sell_credit deferred loses heavily. Plain sell 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499385,
+    "id": "2026102020294196b1834078b24eb2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020294196b1834078b24eb2",
+    "usage": {
+      "completion_tokens": 134,
+      "completion_tokens_details": {
+        "reasoning_tokens": 97
+      },
+      "prompt_tokens": 3111,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3245
+    }
+  }
+}

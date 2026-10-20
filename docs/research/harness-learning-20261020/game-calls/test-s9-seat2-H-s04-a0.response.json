@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.285,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Цены высокие, а кредитная выручка не девальвируется дважды, поэтому продаю всё в кредит.\"}",
+          "reasoning_content": "Round 2 market. Sell 3 at 12,11,10 = 33. But round 2 start cash devauled floor(cash/100)*62 — selling early means cash devalued each round start! So keep cash low; better sell_credit (promissory added after devaluation, not devalued... promissory added to cash then zeroed; hard not devalued). So sell_credit 3 → promissory 38.75, added to cash at round 3 start then devalued later too... Actually at start of round 3: cash = floor(cash/100)*62 then promissory added. Then round 4 start it devalues again. Hmm. Still, credit gives 1.25x, better than losing 38% twice? Selling cash now: devalued at r3 and r4 starts: 0.62²≈0.384 of value, ×1 = 0.384. Credit: promissory added at r3 start, then devalued at r4 start: 1.25×0.62=0.775. Sell_credit clearly better. Sell all 3 credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497068,
+    "id": "2026102019510210979cc4768146a6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019510210979cc4768146a6",
+    "usage": {
+      "completion_tokens": 284,
+      "completion_tokens_details": {
+        "reasoning_tokens": 248
+      },
+      "prompt_tokens": 2792,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 3076
+    }
+  }
+}

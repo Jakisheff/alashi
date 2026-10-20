@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.195,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Больше товара при нуле ресурсов оправдывает риск.\"}",
+          "reasoning_content": "Cash=0, shuttle даёт 3 grey goods, риск изъятия. Produce 2 безопасно. Серый товар может быть изъят ~25%, но товара нет вообще — риск оправдан? Shuttle даёт 3 против 2. Беру shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499068,
+    "id": "202610202024203cebb7ee0ce44391",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202024203cebb7ee0ce44391",
+    "usage": {
+      "completion_tokens": 80,
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      },
+      "prompt_tokens": 2622,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2702
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.29,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Производство даёт 3 товара для продажи в последнем раунде без риска, это больше ценности, чем влияние от взятки.\"}",
+          "reasoning_content": "I need to maximize final payout. Cash 26.78, most already. Round 5 action; round 6 next. President is idx2. Last round: cash devalues ×0.62 at start of round 6 — spending now on goods/influence is good. Influence gives 5% commission + presidency chance. Bribing to 0 loses rank; but round 6 market sales count. Best: shuttle gives 4 goods (25% seizure risk) vs produce 3 goods — no tariff set? Roof: paying 2 alashi to president (idx2) when grey... risk. Shuttle gives 4 vs produce 3 goods — sells next round at low price (~5-6 alashi each). Extra unit ~5 alashi vs seizure risk of whole. Produce 3 goods safe.\n\nInfluence: I'm at 2, tied with others; more influence → 5% commission + presidency (veto). Bribing 5 to idx0: costs 5 alashi, but cash devalues anyway (0.38 loss on 5 = 1.9). Influence 3 vs others' 2 → I hold presidency in law? President decided at law entry: highest influence, tie tie_order [2,0,1] — I lose ties. Influence 3 makes me president next law, with veto. But I'd need to actually spend 5 alashi cash, cost net ~3.1. Presidency value: control vote of unknown card + 5% commission (~2 alashi +). Worth it. Also bribe gives me influence... but cash reduced by 5 (≈3.1 post-devaluation).\n\nBut produce gives 3 goods ≈ 15-18 alashi revenue next market. Can't do both (one action). Bribes vs goods: goods worth more. Choose produce? Alternatively shuttle for 4 goods risking ~25% loss of all; EV: 0.75*4=3 vs 3 safe. Produce safer.\n\nChoose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499921,
+    "id": "2026102020382977b766f8203a4853",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020382977b766f8203a4853",
+    "usage": {
+      "completion_tokens": 456,
+      "completion_tokens_details": {
+        "reasoning_tokens": 416
+      },
+      "prompt_tokens": 3948,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 4404
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 20.659,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Продать весь товар сейчас: 17 alashi сразу, вексель обесценится девальвацией.\"}",
+          "reasoning_content": "Sell 2 now at 9+8=17, credit would devalue later (62%). Cash better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498390,
+    "id": "2026102020125099cf9fd2346749f8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020125099cf9fd2346749f8",
+    "usage": {
+      "completion_tokens": 58,
+      "completion_tokens_details": {
+        "reasoning_tokens": 23
+      },
+      "prompt_tokens": 2210,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2268
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.257,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Бесплатно беру 3 товара на последний рынок.\"}",
+          "reasoning_content": "Round 5 action. Best: produce more goods to sell round 6? Cash count toward rank — spending reduces rank. Goods sold round 6 give cash. produce gives 2 goods → sell next market at current counter 3+? Price at counter ~7? sold_counter=3, next price 7. 2 units ≈14 alashi ×0.62 devaluation... actually cash isn't devalued? cash=floor(cash/100)*62 — yes devalued. Selling round 6 keeps cash (final round, no devaluation after). Produce is free, shuttle gives 3 free. Take shuttle: 3 goods (choice 3).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498220,
+    "id": "20261020201016e0168c0fa61d40c8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201016e0168c0fa61d40c8",
+    "usage": {
+      "completion_tokens": 161,
+      "completion_tokens_details": {
+        "reasoning_tokens": 139
+      },
+      "prompt_tokens": 4112,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 4273
+    }
+  }
+}

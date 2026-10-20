@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.927,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон о налоге всё равно не проходит (уже 2 голоса против), veto не нужен.\"}",
+          "reasoning_content": "Закон 1 — налог 10%. Мой promissory 27.5 уже получен (обнулится? Нет, закон 8 был в раунде 4 — я голосовал yes и он принят? Итог: закон_id 8 был принят — обнуляет promissory. Но у меня promissory 27.5М сейчас... вероятно не принят. Неважно.\n\nНалог 10% затронет мои будущие продажи (раунд 6: 3 товара по низкой цене). Налог применится и к соперникам. Мои продажи малы. Отклонить закон? Соперник 2 уже проголосовал No. Закон требует strict yes > no. Если я проголосую yes: 2 vs 2 — нет. Абстейн/pass: no=2, yes=0 — нет. Закон всё равно не пройдёт. Pass безопасен; или veto не нужен. Выберу pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499035,
+    "id": "20261020202347765ec4242d704b07",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202347765ec4242d704b07",
+    "usage": {
+      "completion_tokens": 233,
+      "completion_tokens_details": {
+        "reasoning_tokens": 202
+      },
+      "prompt_tokens": 3694,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 3927
+    }
+  }
+}

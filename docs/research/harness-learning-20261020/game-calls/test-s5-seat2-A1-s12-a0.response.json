@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.741,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":40,\"reason\":\"Проигравшая ставка возвращается, поэтому ставка максимума даёт бесплатный шанс выиграть лицензию.\"}",
+          "reasoning_content": "Licence income 20-60 alashi, worth bidding. Bank 30 alashi plus bid. Rivals have ~31-33 alashi cash. To outbid rivals I'd need ~30+. Bidding all 22.5 alashi risks losing to their bigger stacks. But winning pays 20-60 alashi profit. If I bid 22.5, rivals can outbid with 23+. Likely they will, since licence is clearly profitable. Bidding 22.5 loses 22.5 if they bid higher, but gain if they bid lower. Also bid+action: after bid I still can act (shuttle etc.). Actually \"После bid доступно основное действие\" — interface offers one aggregate bid per turn? \"интерфейс предлагает одну совокупную ставку за ход\" — so bid replaces? It says after bid main action available, but menu shows only bid candidates without main action. Hmm, candidates are bid only, no combined. So choosing bid forgoes goods production.\n\nRivals: cash 33.1 and 31.1. They could outbid my 22.5. Risky. Value if win: ~40 alashi minus 22.5 bid plus share of bid into bank. Expected: if I bid 22.5 and win (prob rivals don't overbid), great. Rivals bid hidden; they're \"реагируют на состояние\" — likely they'll bid heavily too. If I lose, bid returned — no loss! \"Проигравшим сумма возвращается при закрытии action\". So bidding costs nothing if lost. So bid max: 22.5 alashi. Best choice 40.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499426,
+    "id": "20261020203015260ee0471dd0406f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203015260ee0471dd0406f",
+    "usage": {
+      "completion_tokens": 379,
+      "completion_tokens_details": {
+        "reasoning_tokens": 347
+      },
+      "prompt_tokens": 4937,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 5316
+    }
+  }
+}

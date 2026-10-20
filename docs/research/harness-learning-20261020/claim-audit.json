@@ -1,0 +1,1567 @@
+{
+  "training": {
+    "games": 48,
+    "distinct_seed_clusters": 8,
+    "opponent_bids": 89,
+    "maximum_opponent_bid": 8000000,
+    "opponent_bid_counts": {
+      "4000000": 48,
+      "8000000": 41
+    },
+    "minimum_license_rent": 31572087,
+    "maximum_license_rent": 59737004,
+    "subject_license_wins": 39,
+    "mean_subject_payout_if_won": 70372887.46153846,
+    "mean_subject_payout_if_not_won": 17944444.444444444,
+    "cited_cases_observed_records": {
+      "g00": {
+        "subject": 0,
+        "bids": [
+          {
+            "actor": 1,
+            "amount": 4000000
+          },
+          {
+            "actor": 2,
+            "amount": 8000000
+          },
+          {
+            "actor": 0,
+            "amount": 25000000
+          }
+        ],
+        "license": {
+          "bid": 25000000,
+          "holder_idx": 0,
+          "holder_payout": 79740630,
+          "holder_rank": 0,
+          "rent": 52240630
+        },
+        "subject_payout": 79740630
+      },
+      "g06": {
+        "subject": 0,
+        "bids": [
+          {
+            "actor": 1,
+            "amount": 4000000
+          },
+          {
+            "actor": 2,
+            "amount": 8000000
+          },
+          {
+            "actor": 0,
+            "amount": 3720000
+          }
+        ],
+        "license": {
+          "bid": 8000000,
+          "holder_idx": 2,
+          "holder_payout": 48544360,
+          "holder_rank": 2,
+          "rent": 42844360
+        },
+        "subject_payout": 20900000
+      },
+      "g08": {
+        "subject": 1,
+        "bids": [
+          {
+            "actor": 1,
+            "amount": 8000000
+          },
+          {
+            "actor": 2,
+            "amount": 4000000
+          },
+          {
+            "actor": 0,
+            "amount": 8000000
+          }
+        ],
+        "license": {
+          "bid": 8000000,
+          "holder_idx": 1,
+          "holder_payout": 63744360,
+          "holder_rank": 0,
+          "rent": 42844360
+        },
+        "subject_payout": 63744360
+      },
+      "g13": {
+        "subject": 0,
+        "bids": [
+          {
+            "actor": 1,
+            "amount": 4000000
+          },
+          {
+            "actor": 2,
+            "amount": 8000000
+          },
+          {
+            "actor": 0,
+            "amount": 30000000
+          }
+        ],
+        "license": {
+          "bid": 30000000,
+          "holder_idx": 0,
+          "holder_payout": 63096055,
+          "holder_rank": 0,
+          "rent": 33096055
+        },
+        "subject_payout": 63096055
+      },
+      "g32": {
+        "subject": 1,
+        "bids": [
+          {
+            "actor": 1,
+            "amount": 5000000
+          },
+          {
+            "actor": 2,
+            "amount": 4000000
+          },
+          {
+            "actor": 0,
+            "amount": 8000000
+          }
+        ],
+        "license": {
+          "bid": 8000000,
+          "holder_idx": 0,
+          "holder_payout": 65437004,
+          "holder_rank": 2,
+          "rent": 59737004
+        },
+        "subject_payout": 20900000
+      }
+    }
+  },
+  "heldout": {
+    "A0": {
+      "games": 36,
+      "games_with_rival_bid_above_8": 0,
+      "license_wins": 30,
+      "helper_recommendations": 0,
+      "helper_recommendations_pointing_to_nonbid": 0,
+      "per_game": [
+        {
+          "id": "test-s7-seat1-A0",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            25000000
+          ]
+        },
+        {
+          "id": "test-s9-seat0-A0",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            42000000
+          ]
+        },
+        {
+          "id": "test-s9-seat2-A0",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            10000000
+          ]
+        },
+        {
+          "id": "test-s3-seat0-A0",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            10000000
+          ]
+        },
+        {
+          "id": "test-s4-seat2-A0",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            10000000
+          ]
+        },
+        {
+          "id": "test-s3-seat1-A0",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            10000000
+          ]
+        },
+        {
+          "id": "test-s6-seat1-A0",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 4000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": false,
+          "own_bids": []
+        },
+        {
+          "id": "test-s1-seat0-A0",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": false,
+          "own_bids": [
+            2040000
+          ]
+        },
+        {
+          "id": "test-s5-seat2-A0",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": false,
+          "own_bids": [
+            2194800
+          ]
+        },
+        {
+          "id": "test-s4-seat0-A0",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            20000000
+          ]
+        },
+        {
+          "id": "test-s6-seat2-A0",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            15000000
+          ]
+        },
+        {
+          "id": "test-s10-seat1-A0",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            20000000
+          ]
+        },
+        {
+          "id": "test-s11-seat2-A0",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            15000000
+          ]
+        },
+        {
+          "id": "test-s11-seat1-A0",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            15000000
+          ]
+        },
+        {
+          "id": "test-s12-seat1-A0",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            22000000
+          ]
+        },
+        {
+          "id": "test-s3-seat2-A0",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": false,
+          "own_bids": []
+        },
+        {
+          "id": "test-s11-seat0-A0",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            16000000
+          ]
+        },
+        {
+          "id": "test-s6-seat0-A0",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": false,
+          "own_bids": [
+            4250000
+          ]
+        },
+        {
+          "id": "test-s10-seat2-A0",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": false,
+          "own_bids": []
+        },
+        {
+          "id": "test-s9-seat1-A0",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            12000000
+          ]
+        },
+        {
+          "id": "test-s8-seat0-A0",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            16000000
+          ]
+        },
+        {
+          "id": "test-s5-seat0-A0",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            35000000
+          ]
+        },
+        {
+          "id": "test-s8-seat1-A0",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            12000000
+          ]
+        },
+        {
+          "id": "test-s10-seat0-A0",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            8000000
+          ]
+        },
+        {
+          "id": "test-s2-seat2-A0",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            20000000
+          ]
+        },
+        {
+          "id": "test-s1-seat1-A0",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            10000000
+          ]
+        },
+        {
+          "id": "test-s2-seat0-A0",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            20000000
+          ]
+        },
+        {
+          "id": "test-s5-seat1-A0",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            32000000
+          ]
+        },
+        {
+          "id": "test-s12-seat0-A0",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            30000000
+          ]
+        },
+        {
+          "id": "test-s7-seat2-A0",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            11050000
+          ]
+        },
+        {
+          "id": "test-s12-seat2-A0",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            31000000
+          ]
+        },
+        {
+          "id": "test-s2-seat1-A0",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 4000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            30085000
+          ]
+        },
+        {
+          "id": "test-s1-seat2-A0",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            15000000
+          ]
+        },
+        {
+          "id": "test-s8-seat2-A0",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            30000000
+          ]
+        },
+        {
+          "id": "test-s7-seat0-A0",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            11395000
+          ]
+        },
+        {
+          "id": "test-s4-seat1-A0",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 4000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            10000000
+          ]
+        }
+      ]
+    },
+    "A1": {
+      "games": 36,
+      "games_with_rival_bid_above_8": 0,
+      "license_wins": 29,
+      "helper_recommendations": 0,
+      "helper_recommendations_pointing_to_nonbid": 0,
+      "per_game": [
+        {
+          "id": "test-s12-seat2-A1",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": false,
+          "own_bids": [
+            5000000
+          ]
+        },
+        {
+          "id": "test-s6-seat2-A1",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            13795000
+          ]
+        },
+        {
+          "id": "test-s4-seat1-A1",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            33000000
+          ]
+        },
+        {
+          "id": "test-s6-seat0-A1",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            10000000
+          ]
+        },
+        {
+          "id": "test-s7-seat1-A1",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            20000000
+          ]
+        },
+        {
+          "id": "test-s5-seat1-A1",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 4000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            18000000
+          ]
+        },
+        {
+          "id": "test-s9-seat0-A1",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            10000000
+          ]
+        },
+        {
+          "id": "test-s6-seat1-A1",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": false,
+          "own_bids": []
+        },
+        {
+          "id": "test-s10-seat1-A1",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            10000000
+          ]
+        },
+        {
+          "id": "test-s9-seat1-A1",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": false,
+          "own_bids": []
+        },
+        {
+          "id": "test-s11-seat0-A1",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            17000000
+          ]
+        },
+        {
+          "id": "test-s12-seat0-A1",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            12350400
+          ]
+        },
+        {
+          "id": "test-s1-seat2-A1",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            20000000
+          ]
+        },
+        {
+          "id": "test-s2-seat2-A1",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            25000000
+          ]
+        },
+        {
+          "id": "test-s7-seat2-A1",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            20000000
+          ]
+        },
+        {
+          "id": "test-s8-seat0-A1",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            10000000
+          ]
+        },
+        {
+          "id": "test-s2-seat1-A1",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 4000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            33000000
+          ]
+        },
+        {
+          "id": "test-s1-seat0-A1",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            16000000
+          ]
+        },
+        {
+          "id": "test-s10-seat2-A1",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": false,
+          "own_bids": [
+            4054800
+          ]
+        },
+        {
+          "id": "test-s11-seat2-A1",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            10000000
+          ]
+        },
+        {
+          "id": "test-s10-seat0-A1",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            19000000
+          ]
+        },
+        {
+          "id": "test-s4-seat0-A1",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": false,
+          "own_bids": [
+            5000000
+          ]
+        },
+        {
+          "id": "test-s3-seat0-A1",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            10000000
+          ]
+        },
+        {
+          "id": "test-s8-seat2-A1",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            12950000
+          ]
+        },
+        {
+          "id": "test-s4-seat2-A1",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            25000000
+          ]
+        },
+        {
+          "id": "test-s5-seat0-A1",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            15000000
+          ]
+        },
+        {
+          "id": "test-s8-seat1-A1",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            12000000
+          ]
+        },
+        {
+          "id": "test-s3-seat2-A1",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            20000000
+          ]
+        },
+        {
+          "id": "test-s5-seat2-A1",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            22500000
+          ]
+        },
+        {
+          "id": "test-s7-seat0-A1",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            15000000
+          ]
+        },
+        {
+          "id": "test-s3-seat1-A1",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            25000000
+          ]
+        },
+        {
+          "id": "test-s11-seat1-A1",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            40000000
+          ]
+        },
+        {
+          "id": "test-s2-seat0-A1",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            20000000
+          ]
+        },
+        {
+          "id": "test-s1-seat1-A1",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            44000000
+          ]
+        },
+        {
+          "id": "test-s9-seat2-A1",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": false,
+          "own_bids": [
+            5000000
+          ]
+        },
+        {
+          "id": "test-s12-seat1-A1",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": false,
+          "own_bids": [
+            6000000
+          ]
+        }
+      ]
+    },
+    "H": {
+      "games": 36,
+      "games_with_rival_bid_above_8": 0,
+      "license_wins": 35,
+      "helper_recommendations": 71,
+      "helper_recommendations_pointing_to_nonbid": 36,
+      "per_game": [
+        {
+          "id": "test-s1-seat0-H",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            9000000
+          ]
+        },
+        {
+          "id": "test-s6-seat2-H",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            9000000
+          ]
+        },
+        {
+          "id": "test-s9-seat0-H",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            9000000
+          ]
+        },
+        {
+          "id": "test-s2-seat0-H",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            9000000
+          ]
+        },
+        {
+          "id": "test-s12-seat1-H",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            9000000
+          ]
+        },
+        {
+          "id": "test-s5-seat1-H",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            9000000
+          ]
+        },
+        {
+          "id": "test-s8-seat1-H",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            9000000
+          ]
+        },
+        {
+          "id": "test-s9-seat1-H",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            9000000
+          ]
+        },
+        {
+          "id": "test-s3-seat1-H",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            9000000
+          ]
+        },
+        {
+          "id": "test-s9-seat2-H",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            9000000
+          ]
+        },
+        {
+          "id": "test-s8-seat0-H",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            9000000
+          ]
+        },
+        {
+          "id": "test-s5-seat2-H",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            9000000
+          ]
+        },
+        {
+          "id": "test-s10-seat0-H",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            9000000
+          ]
+        },
+        {
+          "id": "test-s12-seat0-H",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            9000000
+          ]
+        },
+        {
+          "id": "test-s12-seat2-H",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            9000000
+          ]
+        },
+        {
+          "id": "test-s4-seat0-H",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            9000000
+          ]
+        },
+        {
+          "id": "test-s10-seat1-H",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            9000000
+          ]
+        },
+        {
+          "id": "test-s1-seat2-H",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            9000000
+          ]
+        },
+        {
+          "id": "test-s4-seat1-H",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 4000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            9000000
+          ]
+        },
+        {
+          "id": "test-s7-seat0-H",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            9000000
+          ]
+        },
+        {
+          "id": "test-s6-seat1-H",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            9000000
+          ]
+        },
+        {
+          "id": "test-s3-seat2-H",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            9000000
+          ]
+        },
+        {
+          "id": "test-s6-seat0-H",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            9000000
+          ]
+        },
+        {
+          "id": "test-s4-seat2-H",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            9000000
+          ]
+        },
+        {
+          "id": "test-s11-seat1-H",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            12000000
+          ]
+        },
+        {
+          "id": "test-s3-seat0-H",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            9000000
+          ]
+        },
+        {
+          "id": "test-s10-seat2-H",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            9000000
+          ]
+        },
+        {
+          "id": "test-s5-seat0-H",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            12000000
+          ]
+        },
+        {
+          "id": "test-s7-seat2-H",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": false,
+          "own_bids": [
+            7440000
+          ]
+        },
+        {
+          "id": "test-s11-seat2-H",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            9000000
+          ]
+        },
+        {
+          "id": "test-s7-seat1-H",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            9000000
+          ]
+        },
+        {
+          "id": "test-s8-seat2-H",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            9000000
+          ]
+        },
+        {
+          "id": "test-s2-seat2-H",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            9000000
+          ]
+        },
+        {
+          "id": "test-s1-seat1-H",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            9000000
+          ]
+        },
+        {
+          "id": "test-s2-seat1-H",
+          "opponents": [
+            "greedy",
+            "tactical"
+          ],
+          "maximum_opponent_bid": 4000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            9000000
+          ]
+        },
+        {
+          "id": "test-s11-seat0-H",
+          "opponents": [
+            "random",
+            "genome"
+          ],
+          "maximum_opponent_bid": 8000000,
+          "opponent_cap_8_exceeded": false,
+          "subject_license_won": true,
+          "own_bids": [
+            9000000
+          ]
+        }
+      ]
+    }
+  }
+}

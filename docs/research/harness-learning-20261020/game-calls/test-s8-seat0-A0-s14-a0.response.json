@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.31,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce даёт товар для будущих продаж, влияние уже высокое, взятки не окупаются\"}",
+          "reasoning_content": "Need main action after bid. Produce gives 2 goods for selling later. Cash is rich; influence 3 already highest, but max influence bonus is 5% bank (1.5 alashi) — bribe 5M costs 5 alashi for +1 influence; likely not worth. Produce seems best: goods for future sale.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498338,
+    "id": "202610202012157d8c91063f0e4cf4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202012157d8c91063f0e4cf4",
+    "usage": {
+      "completion_tokens": 100,
+      "completion_tokens_details": {
+        "reasoning_tokens": 70
+      },
+      "prompt_tokens": 3735,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3835
+    }
+  }
+}

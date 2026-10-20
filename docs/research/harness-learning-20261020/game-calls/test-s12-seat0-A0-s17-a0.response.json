@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.361,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель не девальвируется при входе в раунд 6, а высокий шанс обесценения наличных делает продажу в кредит трёх единиц по высокой цене выгоднее.\"}",
+          "reasoning_content": "Rounds 5-6 remain. Price shift 0, sold_counter 0. Prices 12,10,9... but wait, prices already sold earlier? sold_counter reset to 0 apparently. So price 12 for first units. Selling all 3 now at 12,10,9 = 31 alashi cash. Then round 6 devaluation floor(cash/100)*62% — selling cash loses 38%! Better sell_credit: promissory not devalued... wait promissory added to cash at round start then devalued? Round start: cash=floor(cash/100)*62, then promissory added. So promissory survives! Sell credit all 3 → promissory 38.75 alashi, plus cash 19.84. Round 6 produce, sell more, then final promissory after last round not paid — so sell for cash in round 6.\n\nSell credit 3 now: choice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498973,
+    "id": "202610202022470c411cda17b64ba3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202022470c411cda17b64ba3",
+    "usage": {
+      "completion_tokens": 253,
+      "completion_tokens_details": {
+        "reasoning_tokens": 203
+      },
+      "prompt_tokens": 3250,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3503
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.06,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар в ранг не входит, деньги терять незачем; я и так президент и лидер по cash.\"}",
+          "reasoning_content": "Last round action. Goods from shuttle can't be sold (market already done). Shuttle useless—goods don't count. Bribes lose cash directly. But influence max gets 5% of bank (39M*5% = 1.95M) — bribing to increase influence helps secure presidency and 5% commission. Currently influence 1 each, tie_order favors me, so I'm already president and likely max influence... but rivals may act before law and could bribe. I act first (phase order rotating). Bribing 5M costs 5M cash, gains 5% commission only 1.95M — not worth. Rank by cash: I'm first by far. Best: pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496554,
+    "id": "202610201942283e5bd74611794e11",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201942283e5bd74611794e11",
+    "usage": {
+      "completion_tokens": 184,
+      "completion_tokens_details": {
+        "reasoning_tokens": 149
+      },
+      "prompt_tokens": 6130,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 6314
+    }
+  }
+}

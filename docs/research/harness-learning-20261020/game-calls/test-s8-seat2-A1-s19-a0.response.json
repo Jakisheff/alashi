@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.526,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Вето отменяет налог 10%, что выгодно для моих продаж в следующем раунде.\"}",
+          "reasoning_content": "Law 1: tax 10% on future sales. I already voted yes; now it would pass anyway (yes 4 > no 1). Tax 10% hurts me for round 6 sales... I have promissory 80 alashi which converts to cash next round. My rank: cash+hard = 80 after conversion. Others have ~26 and ~2. Tax reduces my sales revenue round 6. Better to veto? Veto cancels the law; then no tax. But wait — I voted yes, but veto overrides. Veto helps my round 6 sales. But does keeping tax hurt rivals more? They sell too; I'm top seller. Veto for my own benefit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498524,
+    "id": "2026102020151831802e45d8f74953",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020151831802e45d8f74953",
+    "usage": {
+      "completion_tokens": 178,
+      "completion_tokens_details": {
+        "reasoning_tokens": 147
+      },
+      "prompt_tokens": 3042,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3220
+    }
+  }
+}

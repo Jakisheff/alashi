@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.939,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Взятка даёт влияние 3 и пост президента с правом вето против налоговых законов, сохраняя лидерство по деньгам.\"}",
+          "reasoning_content": "Need goods for future sales; also president determined at law: currently influence: I have 1, rival 1 has 2 — president is idx0 (holder 0). I want presidency to veto bad laws. Influence 3 gets presidency. But cash matters for rank; bribe 5M to idx1 gives influence 2, still less than idx1's 2? Tie: influence 2 vs 2, tie_order 0,1,2 — idx0 still wins. Need influence 3 (10M). Getting presidency gives veto control and influence-based 5% bonus. Also need goods: shuttle after bid? Action phase only one main action... bid doesn't consume? \"After bid available basic action\" — round 4 only. Now round 3 action: choose bribe or shuttle. I'm richest; president idx0 with influence 1, me 1. Bribe 10M to idx0 gives me influence 3 > others, presidency this round. Cash drops to 28.75M, still rich. Presidency allows veto of tax laws — valuable. But then next rounds I can shuttle. Bribe 10M to 0: influence 3, president in law round 3. Choose 5 (10M to idx0) — idx0 has goods and may pass pro-laws anyway; giving idx0 cash hurts rank slightly. To idx1 instead: influence 3 for me, idx1 stays 2, idx0 1 — I'm president. Cash given to idx1 who is second richest... either way. Give to idx0 who is poorer. Choice 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496599,
+    "id": "2026102019430857c3f395b2be482c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019430857c3f395b2be482c",
+    "usage": {
+      "completion_tokens": 377,
+      "completion_tokens_details": {
+        "reasoning_tokens": 334
+      },
+      "prompt_tokens": 3761,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 4138
+    }
+  }
+}

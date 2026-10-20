@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.987,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар больше не продаётся, а взятки стоят дороже комиссии банка; ранг уже лучший.\"}",
+          "reasoning_content": "Last round action; goods worthless (no more market). Influence matters for 5% commission of bank (max influence holder). Bank 38M, 5% = 1.9M. Bribing to gain influence: 5M for +1 → to reach 3 need 10M, beating rival 1 (infl 2, but tie-break cash: 33.9M vs my 71M after bribe... bribe 10M to rival 1 makes rival richer 43.9 vs 66.1, I win tie at infl 2; but rival 1 gains influence? no, bribe gives influence to sender). 10M cost to gain 1.9M commission — bad. But payout shares: rank matters more. My cash 81M already top rank. So just pass? Actually produce gives goods worthless. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496423,
+    "id": "202610201940133645c344fbed49b9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201940133645c344fbed49b9",
+    "usage": {
+      "completion_tokens": 213,
+      "completion_tokens_details": {
+        "reasoning_tokens": 182
+      },
+      "prompt_tokens": 5560,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 5773
+    }
+  }
+}

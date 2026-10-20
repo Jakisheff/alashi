@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.183,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель не девальвируется и будет погашен в раунде 6, выручка 27,5 alashi вместо 22.\"}",
+          "reasoning_content": "Round 5 market, sell now for 12 alashi? Actually prices 12,10 first units. I have 2 goods. Selling 2 gives 12+10=22 alashi (22,000,000? cash jumps 19.4→41.4M, yes 22 alashi). sell_credit gives 27.5M promissory but devaluation each round: floor(cash/100)*62 only cash; promissory added after and not devalued? \"cash=floor(cash/100)*62, then promissory added\". So promissory is not devalued! But after last round promissory not paid and doesn't count in ranking. Round 5 market: promissory will be added to cash in round 6 start (cash devalued then promissory added) — so sell_credit yields 27.5M instead of 22M next round, fully credited. Sell credit 2.\n\nBut wait, round 6 market sell remaining? Selling credit now all 2 units is best. Choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496388,
+    "id": "20261020193942defdede8a5dc41be",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020193942defdede8a5dc41be",
+    "usage": {
+      "completion_tokens": 268,
+      "completion_tokens_details": {
+        "reasoning_tokens": 225
+      },
+      "prompt_tokens": 2999,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3267
+    }
+  }
+}

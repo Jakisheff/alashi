@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.125,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\": 6, \"reason\": \"Кредитная продажа всех 3 единиц даёт 38.75 alashi без девальвации, что лучше немедленной продажи.\"}",
+          "reasoning_content": "Round 5 market, sale now, then round 6 start cash is devalued (÷100×62), promissory added. Sale now: cash 36.5 alashi, will be devalued to ~22.6. Sell credit: promissory 38.75 added in round 6 without devaluation. So sell_credit 3 units better: 38.75 vs 22.6+5.5×0.62. Definitely sell_credit all.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499337,
+    "id": "202610202028531ed03da27ccc401f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202028531ed03da27ccc401f",
+    "usage": {
+      "completion_tokens": 145,
+      "completion_tokens_details": {
+        "reasoning_tokens": 101
+      },
+      "prompt_tokens": 3086,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3231
+    }
+  }
+}

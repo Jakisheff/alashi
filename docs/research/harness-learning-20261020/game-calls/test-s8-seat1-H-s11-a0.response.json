@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.65,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 8 отклоняется без моего голоса (yes нет), и непогашенных векселей ни у кого нет — veto не нужен.\"}",
+          "reasoning_content": "Law 8 обнуляет promissory — у меня promissory 0, ни у кого нет? Rival 0: promissory 0. Никто не имеет векселей. Но соперник 0 продал кредитом раунд 2? seen показал promissory 30 у rival? Раунд 2: my sell_credit promissory 30M у меня, потом раунд 3 cash получил. Сейчас у всех promissory 0. Закон 8 безвреден... но также он не приносит вреда. Votes: abstain 2, no 1 — нет yes, закон не принимается. Veto не нужен, но и не вредит. Проще pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496836,
+    "id": "20261020194711ebb57d333d754d50",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194711ebb57d333d754d50",
+    "usage": {
+      "completion_tokens": 196,
+      "completion_tokens_details": {
+        "reasoning_tokens": 154
+      },
+      "prompt_tokens": 2984,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3180
+    }
+  }
+}

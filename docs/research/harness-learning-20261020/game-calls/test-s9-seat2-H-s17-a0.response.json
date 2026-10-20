@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.295,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Больше товара для продаж в оставшихся раундах при отсутствии тарифных рисков.\"}",
+          "reasoning_content": "Round 5 action. Need goods to sell later. shuttle gives 4 goods (risk if tariff red? tariff 0). produce gives 3. Shuttle better, ~25% seizure only with tariff? Actually seizure risk at border applies always? \"шанс изъятия около 25%\" generally for grey goods; tariff red adds full loss risk. Take shuttle: 4 goods worth ~4-6 alashi each later.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497120,
+    "id": "202610201951569211d8e427454e81",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201951569211d8e427454e81",
+    "usage": {
+      "completion_tokens": 117,
+      "completion_tokens_details": {
+        "reasoning_tokens": 88
+      },
+      "prompt_tokens": 4808,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 4925
+    }
+  }
+}

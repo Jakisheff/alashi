@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.331,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Раунд последний, товар и влияние уже не конвертируются, взятки лишь снижают выплату.\"}",
+          "reasoning_content": "Final round action, no more markets. Cash rank: 48.2 vs 44.3 vs 19.3. Bank 40M total weights 95 + 5% to max influence. License holder is me (idx1) — income already fixed. My cash rank 2nd → 30% weight. Bribes reduce cash and give influence. Influence max: opponent0 has 2. If I bribe 5M, influence 2, tie with 0; cash 39.3 vs 48.2 → 0 wins max influence anyway. To win influence commission (5% of 38M ≈ 1.9M) I'd need influence 3+ → bribe 10M. Cost 10M cash, gain rank? Cash 34.3 vs 48.2 still 2nd, weight same 30%. So net loss. But also influence doesn't affect final rank. Best: bribe nothing? Also bribe transfers cash to rival raising their rank — bad. So pass/produce/donkey/shuttle useless (no more market, goods worthless). Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499923,
+    "id": "202610202038350ee54b8ddde64505",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202038350ee54b8ddde64505",
+    "usage": {
+      "completion_tokens": 267,
+      "completion_tokens_details": {
+        "reasoning_tokens": 234
+      },
+      "prompt_tokens": 4630,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 4897
+    }
+  }
+}

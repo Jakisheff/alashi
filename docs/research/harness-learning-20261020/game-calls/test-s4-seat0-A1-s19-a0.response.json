@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.537,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Взятка дороже, чем выгода от влияния; товар больше не продать — пропускаю.\"}",
+          "reasoning_content": "Last round, action phase. Cash 57.38M. Goods useless (no more market). Influence matters: 5% bank commission (1.9 alashi) to max influence — but bribing transfers cash away. 5M bribe → +1 influence (I already have 2, rivals 1). Max influence gives 5% of bank = 1.9 alashi, costs 5 alashi bribe. Not worth it. Also influence doesn't affect law much now (I'm president already with weight 4 vs 3,3; can veto).\n\nJust pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498471,
+    "id": "20261020201427a1c96fc456e647b7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201427a1c96fc456e647b7",
+    "usage": {
+      "completion_tokens": 158,
+      "completion_tokens_details": {
+        "reasoning_tokens": 123
+      },
+      "prompt_tokens": 4941,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 5099
+    }
+  }
+}

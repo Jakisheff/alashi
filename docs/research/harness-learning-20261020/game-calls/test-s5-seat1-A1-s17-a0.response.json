@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.684,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\": 1, \"reason\": \"Субсидия даст мне дополнительный товар для финальных продаж, а другие уже проголосовали за.\"}",
+          "reasoning_content": "Law 3: subsidy_goods=1 — good for me, I produce goods. Yes already 2 votes (0 and 2), my yes makes 3 vs 0. Vote yes. But note subsidy helps rivals too... they also produce. Still beneficial; also could abstain to keep? Subsidy applies to all. Everyone benefits; net wash? It gives me more goods for final sales too (market round 6). Yes helps everyone equally; no benefit differential. Just vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497006,
+    "id": "20261020195002d51c9d4218184c5a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195002d51c9d4218184c5a",
+    "usage": {
+      "completion_tokens": 139,
+      "completion_tokens_details": {
+        "reasoning_tokens": 102
+      },
+      "prompt_tokens": 3091,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3230
+    }
+  }
+}

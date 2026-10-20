@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.451,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":13,\"reason\":\"Взятка 10 alashi даёт влияние 3 и пост президента с контролем законов и потенциальными тарифными сборами.\"}",
+          "reasoning_content": "President is faction 1 (influence 2). I'm faction 0. To gain presidency need influence ≥2 with tie order... tie_order [1,0,2], so at influence 2 I tie with 1, president priority tie_order: 1 before 0. Need influence 3: bribe 10 alashi. That gives presidency plus president tariff fees. President value: veto + possible roof payments. Costly though. Alternatively produce/shuttle for goods.\n\nShuttle gives 3 goods free (risk 25% grey seizure — grey goods 3). Prices: counter 5, remaining sell at 6,5,4... 3 goods ~15 alashi. Bribe 10 to get presidency → gain control of law, veto taxes, plus possible roof/tariff income. President also gets 5% bank bonus if max influence.\n\nLong-term: presidency strong. Bribe 10 to idx1 → influence 3, president in law. Do it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498302,
+    "id": "202610202011360dc53631af2c4a31",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202011360dc53631af2c4a31",
+    "usage": {
+      "completion_tokens": 243,
+      "completion_tokens_details": {
+        "reasoning_tokens": 204
+      },
+      "prompt_tokens": 3514,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 3757
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.912,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Продажа в кредит даёт больше выручки, а карта 8 уже вышла из колоды, риск обнуления векселя отсутствует.\"}",
+          "reasoning_content": "Sell now at price ~7 (sold_counter=4, price index 4 = 7). Sell 2 → 14 alashi. Sell credit gives 17.5 promissory but round 6 devaluation: promissory paid after last round? Promissory adds to cash at round starts; after final round not redeemed. Round 3, ok it gets redeemed in round 4. Credit better. But law 8 could void promissory. Sell credit both units: 16.25 promissory vs 14 cash. Risk of card 8... acceptable? Cards drawn without repeats; 8 already appeared in round1 and passed? Law 8 was round 1 card, passed? It was law_id 8, holder 2, we passed — did it pass? seen equal votes... actually law passed only if yes>no; all passed → not passed. Anyway no repeats, so 8 gone. Credit safe.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496703,
+    "id": "20261020194457081cf4a615894161",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194457081cf4a615894161",
+    "usage": {
+      "completion_tokens": 239,
+      "completion_tokens_details": {
+        "reasoning_tokens": 196
+      },
+      "prompt_tokens": 2405,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2644
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.337,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Цены падают со счётчиком продаж, продаю весь товар за наличные сейчас.\"}",
+          "reasoning_content": "Price with shift +2 (law 7): base price at sold_counter=2 is 9, +2 = 11. Sell 3 gives 36 alashi? Wait candidate 5: cash 27.5→51.5, +24 for 3 units? Hmm 51.5-27.5=24, price 8? Actually tax 0... 24/3=8. Maybe sold_counter counts differently. Anyway sell 3 now gives 24. Holding later risks lower prices; cash is safe, promissory devalues 62%. Sell all 3 now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498026,
+    "id": "202610202007024a98bb25628a4c7c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202007024a98bb25628a4c7c",
+    "usage": {
+      "completion_tokens": 154,
+      "completion_tokens_details": {
+        "reasoning_tokens": 125
+      },
+      "prompt_tokens": 2573,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2727
+    }
+  }
+}

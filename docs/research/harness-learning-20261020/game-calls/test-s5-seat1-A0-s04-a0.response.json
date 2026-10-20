@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.641,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель не девальвируется, выручка выше и цена падает для соперников.\"}",
+          "reasoning_content": "Cash gets devalued 62% each round start. Sold counter 4, price 8. Selling now gives 7+8... wait sold_counter=4 means price index 4 = 7? Price array [12,10,9,8,7,6,...], index4=7. Selling 2 units: 7+6=13 matches. Promissory not devalued (added after division). So sell_credit better: 16.25 promissory preserved. Also selling now lowers price for rivals later. Sell_credit 2 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498810,
+    "id": "20261020202004ddbb71c26f68460b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202004ddbb71c26f68460b",
+    "usage": {
+      "completion_tokens": 149,
+      "completion_tokens_details": {
+        "reasoning_tokens": 118
+      },
+      "prompt_tokens": 2213,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2362
+    }
+  }
+}

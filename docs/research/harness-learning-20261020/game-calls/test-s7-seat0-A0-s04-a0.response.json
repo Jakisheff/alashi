@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.778,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель не девальвируется и даёт выручку 1.25x, продаю весь товар в кредит.\"}",
+          "reasoning_content": "Prices: counter 2, base 9+boom2=11 first unit, then 10. Sell both = 21. Cash later devalues (62%), credit gives 1.25x promissory paid later without devaluation. Sell credit both: 26.25 promissory. Promissory added at start of rounds 3-6. Risk: card 8 cancels promissory. Still credit better. Sell all on credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499693,
+    "id": "202610202034460fcc73b765df44c2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202034460fcc73b765df44c2",
+    "usage": {
+      "completion_tokens": 132,
+      "completion_tokens_details": {
+        "reasoning_tokens": 95
+      },
+      "prompt_tokens": 2211,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2343
+    }
+  }
+}

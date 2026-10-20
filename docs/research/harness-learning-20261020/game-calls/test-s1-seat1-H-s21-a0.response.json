@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.022,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон о субсидии уже не влияет на выплаты (раунд последний), исход голосования безразличен.\"}",
+          "reasoning_content": "Law 3: subsidy_goods=1 — helps rivals produce more goods, but I have no goods production value? It applies next rounds; round 6 is last, no more action phases after this law? Law at round 6 is final law; subsidy irrelevant to me (no more action). Vote no: idx0 voted yes (weight 2). I have weight 3. If I vote no, no=3 > yes=2, law fails. Subsidy doesn't matter since no further actions. Doesn't matter. Pass is fine — then idx2 votes weight 1; if idx2 votes yes, yes=3 > no=0 passes. Either way no effect on final payout. Choose pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499933,
+    "id": "2026102020384724d068c152f4487d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020384724d068c152f4487d",
+    "usage": {
+      "completion_tokens": 181,
+      "completion_tokens_details": {
+        "reasoning_tokens": 147
+      },
+      "prompt_tokens": 3777,
+      "prompt_tokens_details": {
+        "cached_tokens": 3136
+      },
+      "total_tokens": 3958
+    }
+  }
+}

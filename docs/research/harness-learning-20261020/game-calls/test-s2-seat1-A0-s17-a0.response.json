@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 35.47,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Продажа всего в кредит фиксирует выручку в векселе, который не девальвируется в начале следующего раунда.\"}",
+          "reasoning_content": "Round 5 market, sell price at counter 6 = 5? Price list index 6 = 5 alashi... candidates show sell 1 unit gives +5 (cash 43.75). Devaluation next round: cash*0.62. So selling now is better. But promissory added after devaluation — good. sell_credit 3 gives 15 promissory, which survive devaluation (added after). That's clearly best: full revenue now at price 5/unit, deferred. Next round devaluation applies to cash only; promissory paid after. So choice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499274,
+    "id": "20261020202746f3bda59bc54244b0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202746f3bda59bc54244b0",
+    "usage": {
+      "completion_tokens": 165,
+      "completion_tokens_details": {
+        "reasoning_tokens": 125
+      },
+      "prompt_tokens": 3486,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3651
+    }
+  }
+}

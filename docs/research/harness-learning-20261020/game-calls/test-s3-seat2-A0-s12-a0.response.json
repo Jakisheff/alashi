@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.559,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Беру shuttle ради 3 товаров на будущий рынок; ставка 0.27 alashi на лицензию почти безнадёжна, а roof тратит действие при крошечном cash.\"}",
+          "reasoning_content": "I'm president, influence 3, poor. Auction available: bid all cash 272800 (0.27 alashi) — trivial, unlikely to win. License income 20-60 alashi to holder. Bidding all cash is small compared to opponents' ~30-40 alashi; they could bid. But my bid only 0.27 alashi — likely outbid. Goods: shuttle gives 3 goods for round 5 market. Better get goods. Produce gives 2, shuttle 3 with ~25% risk (tariff black? roof_tariff 0 = default? default border is risky). Roof black avoids seizure. With 3 grey goods at ~25% seizure risk, expected 2.25 goods. Roof arms tariff, but black tariff costs 30% cash... wait roof transfers 30% cash to recipient, arms tariff. Cash is tiny anyway.\n\nActually roof at tariff=1 transfers 30% of cash to a recipient and sets black tariff protecting my shuttle goods next time? Tariff applies to border. But roof uses action now; shuttle in round 5 possible instead. I only get one action now.\n\nBest: shuttle now (3 goods), then sell in round 5 market. Seizure risk ~25% since no tariff. Or roof black then shuttle next round? Roof wastes an action.\n\nChoose shuttle, choice 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498003,
+    "id": "20261020200632102dd1e3da534f76",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200632102dd1e3da534f76",
+    "usage": {
+      "completion_tokens": 335,
+      "completion_tokens_details": {
+        "reasoning_tokens": 284
+      },
+      "prompt_tokens": 2943,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 3278
+    }
+  }
+}

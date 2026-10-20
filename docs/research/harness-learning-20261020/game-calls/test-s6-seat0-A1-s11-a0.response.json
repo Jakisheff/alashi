@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.089,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\": 35, \"reason\": \"Ставлю 10 alashi на лицензию с доходом 20–60 alashi — сильное ожидание прибыли.\"}",
+          "reasoning_content": "Лицензия стоит 20-60 alashi чистого дохода. Ставка ~10 alashi разумна, но и shuttle нужен для товара. Bid + действие после; выбираю bid 10 alashi. Также нужно произвести. Интерфейс предлагает одну ставку за ход, потом основное действие доступно — выбираем bid сейчас, следующим ходом будет produce? \"После bid доступно основное действие\" — но candidates предлагают либо bid либо действие. Выбор: bid 10 (choice 35). Но тогда теряем produce? Вероятно будет второй этап. Ставлю 10.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496726,
+    "id": "2026102019452105a517e40afd4c27",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019452105a517e40afd4c27",
+    "usage": {
+      "completion_tokens": 165,
+      "completion_tokens_details": {
+        "reasoning_tokens": 126
+      },
+      "prompt_tokens": 6719,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 6884
+    }
+  }
+}

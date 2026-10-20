@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.068,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Закон 1 вводит налог 10% на мои будущие продажи в последнем раунде, поэтому применяю вето.\"}",
+          "reasoning_content": "Закон 1: налог 10% на будущие продажи. У меня promissory 38.75 alashi, получу в начале раунда 6? Нет — раунд 6 начало: cash=floor(cash/100)*62, promissory добавляется. Промиссори уже учтён. Продажи раунда 6 — я продаю остатки (goods 3+... раунд 6 action потом law). Налог 10% снизит мою выручку последнего рынка. Фракция 2 уже проголосовала No. Я президент с weight 2, +1 от них? Голоса: yes=2, no=1 если я yes — принят. Налог вреден мне (мне продавать в раунде 6). Вето — надёжнее. Choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496423,
+    "id": "2026102019401825aa3c48965a4e74",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019401825aa3c48965a4e74",
+    "usage": {
+      "completion_tokens": 219,
+      "completion_tokens_details": {
+        "reasoning_tokens": 180
+      },
+      "prompt_tokens": 3101,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3320
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.736,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"sell_credit на 3 единицы даёт вексель 38.75, который целиком превратится в cash в раунде 6 без девальвации.\"}",
+          "reasoning_content": "Round 5 market, sold_counter=0, prices 12,10,9. Sell all 3: 12+10+9=31 alashi immediate cash, but cash devaluation next round (×62%). Round 6 is last; sell in round 6 instead? Cash devalues floor(cash/100)*62 → 38% loss. If sell now, cash enters round 6 devalued. If hold goods and sell in round 6, no devaluation. So don't sell now — better to sell in round 6. sell_credit: promissory added to cash in round 6? \"Start of round 2 and later: cash=..., then promissory is added to cash and reset to zero.\" So promissory converts to full cash at round 6 start without devaluation! sell_credit 3 units gives promissory 38.75, which becomes cash in round 6 — better than selling in round 6? Same amount actually (12+10+9)*1.25=38.75 vs selling in round 6 for 12+10+9=31 (counter resets each market? sold_counter shown per market... counter probably persists across markets? In round 4 I sold 3 and round 5 counter is 0, so it resets each round). So sell_credit now: 38.75 full in round 6. But wait, last round promissory not redeemed — but this is round 5, redeemed at round 6 start. So choice 6: sell_credit 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498120,
+    "id": "20261020200833962b57a785ab4dc2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200833962b57a785ab4dc2",
+    "usage": {
+      "completion_tokens": 372,
+      "completion_tokens_details": {
+        "reasoning_tokens": 325
+      },
+      "prompt_tokens": 3642,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 4014
+    }
+  }
+}

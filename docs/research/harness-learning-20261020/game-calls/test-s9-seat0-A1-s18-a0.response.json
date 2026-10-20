@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.545,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 10% мне невыгоден в последнем раунде продаж, уже есть голос No — закон провалится.\"}",
+          "reasoning_content": "Law 1 = 10% tax on future sales. I have no goods but will produce round 6? Round 6 market: I can sell after producing. Next market round 6 — I'll sell goods. Tax 10% hurts me. Player 2 already voted No. If I vote No: yes=0, no=2, law fails. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497003,
+    "id": "20261020195000de8617d5528646c4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195000de8617d5528646c4",
+    "usage": {
+      "completion_tokens": 115,
+      "completion_tokens_details": {
+        "reasoning_tokens": 78
+      },
+      "prompt_tokens": 3175,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3290
+    }
+  }
+}

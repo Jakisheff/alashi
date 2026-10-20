@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.809,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продам все 3 единицы по высоким стартовым ценам раунда 5, максимизируя cash перед финальным раундом.\"}",
+          "reasoning_content": "Round 5 market, prices start at 12. I have 3 goods. Sell all 3 now at 12+12+10... actually counter 0, so prices 12,10,9 → 31 alashi total. Selling keeps counter high, pushing prices down for others. I'm license holder. Sell 3 units cash.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496875,
+    "id": "2026102019474986a3a3ab70bc4ad7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019474986a3a3ab70bc4ad7",
+    "usage": {
+      "completion_tokens": 114,
+      "completion_tokens_details": {
+        "reasoning_tokens": 72
+      },
+      "prompt_tokens": 3726,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3840
+    }
+  }
+}

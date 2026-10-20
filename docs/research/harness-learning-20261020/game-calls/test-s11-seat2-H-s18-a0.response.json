@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.151,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Закон 3 (субсидия) уже не влияет на итог, исход голоса не меняет выплату.\"}",
+          "reasoning_content": "Law 3: subsidy_goods=1, irrelevant round 6 (no more actions/market). It's harmless. I'm president? Holder is idx1, influence 2 vs my 1. President is participant 1. I vote; current votes: No(1, weight1), Yes(weight2). My weight 3. If I abstain: no=1, yes=2 → passes. If vote_no: no=4 → rejected. President (idx1, influence 2) can veto after. President voted yes, wants it passed. Law 3 harmless to me; passing or not doesn't matter. But maybe veto pass? I could vote_no, then president vetoes anyway? Veto makes it fail regardless. Either way outcome irrelevant. Just abstain/pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499323,
+    "id": "20261020202837b5556b41b25d4c12",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202837b5556b41b25d4c12",
+    "usage": {
+      "completion_tokens": 197,
+      "completion_tokens_details": {
+        "reasoning_tokens": 162
+      },
+      "prompt_tokens": 3557,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3754
+    }
+  }
+}

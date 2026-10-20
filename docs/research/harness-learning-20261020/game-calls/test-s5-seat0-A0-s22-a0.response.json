@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.634,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар больше не продать, влияние не окупает взятку — пропускаю.\"}",
+          "reasoning_content": "Last round action phase; no more markets after this? Round 6: market done, action, then law. Goods produced now can't be sold. So produce is useless. Influence matters: max influence gets extra 5% bank (≈3.25M plus license holder is me — license income extra). Influence 1 vs others 1; bribing to 2 costs 5M for 5% commission share ≈3.25M — not worth. President role holder is idx1; bribing doesn't change presidency since law holder determined at law phase by influence — bribing now could make me president in round 6 law. President can veto. Card unknown; remaining cards? Used: 4,8,0,1,3. Remaining: 2,5,6,7. Tax 20%, +infl richest, price shift — price shifts irrelevant (no more market), so bad cards: 2 (tax 20% future sales — no future sales, harmless), 5 (+1 influence to richest — richest is me, +1 influence helps get 5% bonus, good!). So pass seems fine. Bribe to gain influence for the 5% commission: cost 5M vs gain ~3.25M+weight? Not worth. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498543,
+    "id": "202610202015342097b76bd09f480e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202015342097b76bd09f480e",
+    "usage": {
+      "completion_tokens": 296,
+      "completion_tokens_details": {
+        "reasoning_tokens": 266
+      },
+      "prompt_tokens": 5756,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 6052
+    }
+  }
+}

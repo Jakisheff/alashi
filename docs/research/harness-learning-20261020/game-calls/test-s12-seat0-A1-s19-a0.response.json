@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.254,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 6 снижает цены следующего рынка, а мне нужно продавать товары в последнем раунде.\"}",
+          "reasoning_content": "Закон 6: price shift -2 next market. Мой promissory 38.75 alashi погасится в начале раунда 6 (последний раунд, потом после последнего не погашается... раунд 6 — последний, promissory прибавляется в начале раунда 6, и после раунда 6 рынка нет? Раунд 6 рынок есть). Закон 6 снизит цену следующего рынка (раунд 6) — мне невыгодно, у меня 4 товара на продажу в раунде 6. Голосую no. Президент — соперник idx2, может veto. Но vote_no правильный ход.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497278,
+    "id": "2026102019543279525b04805b42b1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019543279525b04805b42b1",
+    "usage": {
+      "completion_tokens": 182,
+      "completion_tokens_details": {
+        "reasoning_tokens": 148
+      },
+      "prompt_tokens": 3177,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3359
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 14.453,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Производство даёт 3 гарантированных товара для дорогого рынка финала, это выгоднее взяток и рискованного шаттла.\"}",
+          "reasoning_content": "Round 5 of 6. I'm rich (cash 53M + promissory 38.75M). President is idx 0. Remaining rounds: r6 next; cash devaluation factor 0.62 at round 6 start? Round 6 is last round. Devaluation floor(cash/100)*62 applies at start of each round 2+. So holding cash loses 38%. Better to spend cash now: bribe for influence (influence counts for 5% commission bonus and presidency). Max influence gives 5% of bank (~38M*0.05≈1.9M). Influence also helps win presidency for law control in round 6.\n\nGoods: I have 0; shuttle gives 4 goods for round 6 market. Produce gives 3 (2+1 subsidy). Prices: sold_counter 3, next price ~8. Shuttle risk 25% loss of grey? \"shuttle даёт 3+subsidy_goods товара; серый товар может быть изъят\" — all shuttle goods are grey, 25% confiscation. Produce gives 3 goods, safer. But spending action on bribe sacrifices goods worth ~3*8=24M... wait price after selling: counter 3, prices [12,10,9,...], next unit ~8 alashi. Selling 4 units: 8+7+6+5=26 alashi. That's huge vs devaluation: revenue in round 6 market is earned after devaluation. So goods production matters more.\n\nBribe 5M to someone gives +1 influence. But losing 5M cash→after devaluation worth 3.1M. Compare: produce gives 3 goods → sell ~8+7+6=21 alashi income. Produce dominates.\n\nShuttle gives 4 goods but risk 25% loss of all grey goods. EV: 0.75*(4 goods ≈ 8+7+6+5=26) = 19.5 vs produce 21. Produce safer. Choose 1.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497150,
+    "id": "20261020195216feb08a7b20f74f2b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195216feb08a7b20f74f2b",
+    "usage": {
+      "completion_tokens": 472,
+      "completion_tokens_details": {
+        "reasoning_tokens": 429
+      },
+      "prompt_tokens": 4709,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 5181
+    }
+  }
+}

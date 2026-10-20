@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.068,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 8 обнуляет векселя, а у всех promissory=0 — эффект нейтрален, пропускаю.\"}",
+          "reasoning_content": "Law 8 обнуляет promissory. У меня promissory=0, у других тоже. So no effect — vote_abstain or pass. Vote weight: I'm president, holder=me. Law 8 neutral; pass is fine. Actually voting yes/no affects passing neutral law. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499332,
+    "id": "202610202028490545fe5e9a76491a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202028490545fe5e9a76491a",
+    "usage": {
+      "completion_tokens": 105,
+      "completion_tokens_details": {
+        "reasoning_tokens": 64
+      },
+      "prompt_tokens": 2884,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2989
+    }
+  }
+}

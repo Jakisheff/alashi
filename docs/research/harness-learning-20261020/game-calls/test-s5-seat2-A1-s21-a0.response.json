@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.742,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон 5 даёт +1 влияния мне как богатейшему, принося бонус 5% банка и пост президента.\"}",
+          "reasoning_content": "Card 5: +1 influence to richest by cash — that's me (74M). I'm also holder? No, holder idx1. But president influence: idx1 has 1, I have... my influence is 1, vote_weight 3 (passed action +2). President is idx1? Influence equal 1,1, tie_order [1,2,0] — idx1 wins. Law 5 gives me +1 influence → influence 2, making me max influence, earning extra 5% bank commission. Vote yes. Rival idx1 might vote no; yes>no needed. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499539,
+    "id": "202610202032120008a8e18a1b48ac",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202032120008a8e18a1b48ac",
+    "usage": {
+      "completion_tokens": 168,
+      "completion_tokens_details": {
+        "reasoning_tokens": 130
+      },
+      "prompt_tokens": 3294,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3462
+    }
+  }
+}

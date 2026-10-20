@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.691,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон 5 даёт +1 влияния мне как самому богатому, усиливая претензии на бонус 5% и пост президента.\"}",
+          "reasoning_content": "Card 5: +1 influence to richest. Richest is me (idx2, 46.75M vs 9.4M). I'm richest, +1 influence helps bonus 5% bank and presidency next round? President is highest influence at law entry; next round entry — I'd have 3 influence, tying... vote yes.\n\nBut wait, if law passes, richest gets +1 influence → I get max influence bonus 5% bank. Yes vote: yes(2) vs no(?). Others vote after? Vote order rotates; I vote first here likely. Even if one no, yes 2 > no 1, passes. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498305,
+    "id": "2026102020114017cd456291e74b14",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020114017cd456291e74b14",
+    "usage": {
+      "completion_tokens": 177,
+      "completion_tokens_details": {
+        "reasoning_tokens": 138
+      },
+      "prompt_tokens": 2953,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3130
+    }
+  }
+}

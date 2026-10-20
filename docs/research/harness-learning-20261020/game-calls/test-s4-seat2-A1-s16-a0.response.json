@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.004,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Свободный produce даёт 2 товара без риска для продажи на последнем рынке.\"}",
+          "reasoning_content": "Round 5 action. Promissory 27.5M will pay next round. Need goods for final market round 6. Shuttle gives 3 goods risk-free here (no tariff listed; shuttle grey risk ~25% though — shuttle gives grey goods with confiscation risk ~25%). Actually shuttle = grey goods with 25% seizure risk. Produce gives 2 free. I'm low on cash relative to rivals, and license income helps but doesn't count for rank. Final rank: cash only. My promissory 27.5M adds to cash round 6, then can sell goods round 6 market. Produce 2 goods safe; shuttle 3 goods risky. Prices at counter=2: next sell starts at 9? Counter 2 means price ~9-8. Two more units sell at 9,8. Produce (2 goods) → ~17 alashi. Shuttle 3 goods ~24 but 25% loss risk of all goods. Expected shuttle 0.75*24=18 > 17, but loss risk of everything. Slight edge to shuttle but variance. Also president influence matters for the 5% bonus; bribes cost too much. Choose produce (choice 1).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498576,
+    "id": "202610202016083b307a21d625498b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202016083b307a21d625498b",
+    "usage": {
+      "completion_tokens": 280,
+      "completion_tokens_details": {
+        "reasoning_tokens": 252
+      },
+      "prompt_tokens": 3621,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3901
+    }
+  }
+}

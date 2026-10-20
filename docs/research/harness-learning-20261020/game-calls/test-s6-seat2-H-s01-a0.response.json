@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.817,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Shuttle даёт 3 товара без риска границы — лучший сбор ресурсов.\"}",
+          "reasoning_content": "Round 1 action. Produce gives 2 goods, shuttle 3 grey with risk. Shuttle likely better EV? 3 goods with ~25% seizure? Actually shuttle gives grey goods that may be seized at border only with tariff; here no tariff, so safe. Take shuttle: 3 goods.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496416,
+    "id": "202610201940087d42490277654b85",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201940087d42490277654b85",
+    "usage": {
+      "completion_tokens": 86,
+      "completion_tokens_details": {
+        "reasoning_tokens": 61
+      },
+      "prompt_tokens": 2389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2475
+    }
+  }
+}

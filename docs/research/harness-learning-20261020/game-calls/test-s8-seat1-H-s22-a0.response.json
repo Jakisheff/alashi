@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.129,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар и влияние больше не конвертируются в деньги, ранг 0 обеспечен — пропускаю.\"}",
+          "reasoning_content": "Final round action. No goods sold after? Market phase already done (sold 3). Goods 0, no more markets. Goods useless now — but law phase next: I'm president, need influence? Influence 2, rank0 cash already (73.8M). Max influence currently 2 tied with idx0... bribing to influence 3 gives me the 5% commission bonus (~2M) and presidency strength. Bribe 5M to idx2 for +1 influence costs 5M, gains 5% of bank 39M ≈ 1.95M. Not worth. But rank already 0 regardless. Keep cash. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496911,
+    "id": "2026102019482664a624b49a5f491c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019482664a624b49a5f491c",
+    "usage": {
+      "completion_tokens": 172,
+      "completion_tokens_details": {
+        "reasoning_tokens": 137
+      },
+      "prompt_tokens": 5983,
+      "prompt_tokens_details": {
+        "cached_tokens": 3136
+      },
+      "total_tokens": 6155
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.594,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Цены падают, продаю весь товар сразу по максимальной цене.\"}",
+          "reasoning_content": "Sell 3 now at price ~9,8,7 (counter=2). Sell credit risky later. Prices decline; sell all 3 now = 24 alashi.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499695,
+    "id": "20261020203449d8e25fa7c539400c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203449d8e25fa7c539400c",
+    "usage": {
+      "completion_tokens": 63,
+      "completion_tokens_details": {
+        "reasoning_tokens": 36
+      },
+      "prompt_tokens": 2638,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2701
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.797,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Veto отклоняет закон 5, иначе фракция 2 получит +2 влияния и пост президента.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest (idx 2, cash 22). Currently votes Yes 2 vs No 1 — passes. If I veto, law rejected. Keeping influence balance matters for presidency. Law 5 gives idx2 influence 2, making them president later — bad for me. Veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496472,
+    "id": "202610201941074a5118b2cf474c3a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201941074a5118b2cf474c3a",
+    "usage": {
+      "completion_tokens": 101,
+      "completion_tokens_details": {
+        "reasoning_tokens": 66
+      },
+      "prompt_tokens": 2712,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2813
+    }
+  }
+}

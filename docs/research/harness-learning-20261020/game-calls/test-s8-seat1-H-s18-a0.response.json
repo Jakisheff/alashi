@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.436,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Шаттл даёт больше товара для продажи в последнем раунде при приемлемом риске.\"}",
+          "reasoning_content": "Round 5 action. Have 0 goods, promissory 46.25. Cash low. Next round cash devalues 62%. Produce gives 2 goods to sell round 6. Shuttle gives 3 but grey seizure risk. Shuttle gives 3+0 goods, ~25% seizure. Shuttle: expected 2.25. But shuttle goods grey... grey may be seized at border; round 6 no tariff black. Take shuttle? Shuttle risk losing all. Produce gives 2 guaranteed. Expected shuttle higher. But also license income added. I'll pick produce to be safe? Expected value: shuttle 3×0.75=2.25 vs 2. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496885,
+    "id": "20261020194759450d584a9f914251",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194759450d584a9f914251",
+    "usage": {
+      "completion_tokens": 175,
+      "completion_tokens_details": {
+        "reasoning_tokens": 142
+      },
+      "prompt_tokens": 4082,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 4257
+    }
+  }
+}

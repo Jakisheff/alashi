@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 15.554,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":15,\"reason\":\"Взятка даёт влияние 2, пост президента и 5% комиссию банка, контролируя два оставшихся закона.\"}",
+          "reasoning_content": "I hold license, cash 42.25. Last market sold 2 at round 5? Market next round 6. Goods sold counter 3... sell 2 already done? We have cash 42.25 already after sale. Round 5 action: I should produce goods for round 6 market. Produce gives 2 goods, sell at low prices (~counter 5? counter 3 after sales... price ~7-8). Actually shuttle gives 3 goods but ~25% seizure risk. Produce safe, 2 goods × ~7 = 14 alashi. Choose produce.\n\nBribe to president? President is idx 2, cash-rich decisions... Influence gives max influence bonus 5% bank commission. Currently all influence 1; tie_order 2,1,0 — I'd lose ties. Bribe 5 to idx2 gives me influence 2 — I get 5% bank bonus (bank 45M, bonus ~2.25M) plus more law control in remaining rounds. Cost 5M. Round 5 and 6 law remains; president influence matters. I'm last in tie_order, so influence 2 makes me sole top influence — commission 5% = 2.25 alashi gain, and president control for two laws (tax laws etc). Actually bribe gives sender influence: floor(amount/5000000)=1 for 5M. Influence 2 > others' 1, so I become president. Worth it. Choice 4 (to 1) or 15 (to 2). Bribing to 2 also enriches rival. Same influence gain; give to idx1? Either way rival gains cash. Give to idx 2 (weaker cash?) — 2 has 19.5 vs 37.5. To maximize my relative rank, give to the poorer. Choice 15.\n\nBut also could produce instead. Influence gain 1 gives ~2.25 + control of two law rounds + weight. But cost 5M cash reduces my rank. Bank 45M, payout difference: commission 5% split... Actually influence bonus: 5% of bank (~2.25M) plus law control could prevent taxes. I think bribe 5 to 2 is good.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499601,
+    "id": "20261020203307291dab1c2e734620",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203307291dab1c2e734620",
+    "usage": {
+      "completion_tokens": 507,
+      "completion_tokens_details": {
+        "reasoning_tokens": 469
+      },
+      "prompt_tokens": 4293,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 4800
+    }
+  }
+}

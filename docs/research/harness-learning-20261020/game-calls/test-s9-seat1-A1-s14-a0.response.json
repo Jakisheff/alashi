@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.153,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Карта 0 без эффектов, исход не зависит от моего голоса.\"}",
+          "reasoning_content": "Law id 0 — no effects. President is 0 anyway. Vote doesn't matter; pass loses +2 weight but no election here. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497127,
+    "id": "202610201952058bc1557899a541ca",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201952058bc1557899a541ca",
+    "usage": {
+      "completion_tokens": 58,
+      "completion_tokens_details": {
+        "reasoning_tokens": 32
+      },
+      "prompt_tokens": 2854,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2912
+    }
+  }
+}

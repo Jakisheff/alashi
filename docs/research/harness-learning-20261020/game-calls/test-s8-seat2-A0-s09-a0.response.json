@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.0,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон 8 обнуляет мой вексель 21,25 alashi, но он всё равно не пройдёт при голосе «нет» соперника; мой «да» безвреден.\"}",
+          "reasoning_content": "Card 8 cancels promissory notes — I have 21.25M promissory. Vote yes. Faction 0 voted no, 1 abstained. My yes vs no: 1:1, not passed (yes not strictly greater). President (idx1) may veto? President can veto before count — veto kills the law anyway? Veto means law not passed. Abstain president already abstained. If I abstain: no=1, yes=0 → not passed either way. Actually veto can still be applied post_vote? Holder 1 hasn't used veto; law 8 zeroes promissory — president has no promissory (cash 34.5M). Veto risk exists regardless of my vote since no already leads or ties. So pass either way.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499587,
+    "id": "202610202032593562f9b164da40c0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202032593562f9b164da40c0",
+    "usage": {
+      "completion_tokens": 219,
+      "completion_tokens_details": {
+        "reasoning_tokens": 165
+      },
+      "prompt_tokens": 2482,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2701
+    }
+  }
+}

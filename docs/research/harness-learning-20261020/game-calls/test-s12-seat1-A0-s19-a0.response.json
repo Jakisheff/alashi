@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 15.122,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":7,\"reason\":\"Финальный раунд: вексель не погашается, поэтому продаю весь товар за наличные, максимизируя cash для итогового ранга.\"}",
+          "reasoning_content": "Last round market; promissory not redeemed after last round. So sell (cash) beats sell_credit. Price counter=3, price index: sold 3 → next unit price? Prices [12,10,9,8,...], sold_counter=3 means next price 8? Sell 4 gives cash 71.86M. Marginal unit 4 price 5 alashi = 5M. But rank counts cash only; I already hold license income. Selling all maximizes cash. Choose 7.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497980,
+    "id": "20261020200606b479107b21ee40d5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200606b479107b21ee40d5",
+    "usage": {
+      "completion_tokens": 152,
+      "completion_tokens_details": {
+        "reasoning_tokens": 107
+      },
+      "prompt_tokens": 3674,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3826
+    }
+  }
+}

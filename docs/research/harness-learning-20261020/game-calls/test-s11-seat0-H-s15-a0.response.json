@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.444,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 10% невыгоден моим будущим продажам; законопроект и так проваливается при No=4, поддерживаю отказ.\"}",
+          "reasoning_content": "Закон 1: налог 10% на будущие продажи. У меня 2 товара и лицензия, буду продавать. Рival 1 vote Yes (1), rival 2 vote No (4). Yes=1, No=4 — не пройдёт. Голосую no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499999,
+    "id": "202610202039562d408b24c9114c65",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202039562d408b24c9114c65",
+    "usage": {
+      "completion_tokens": 104,
+      "completion_tokens_details": {
+        "reasoning_tokens": 62
+      },
+      "prompt_tokens": 3412,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3516
+    }
+  }
+}

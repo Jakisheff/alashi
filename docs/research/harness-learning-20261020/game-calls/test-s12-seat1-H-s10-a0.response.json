@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.713,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон всё равно не проходит (3:3, нужно строгое большинство), вето тратить не нужно.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest. Richest is idx0 (40.6M). Votes: yes=0's weight2 + 2's weight1 =3, no=3. Tie → not passed (yes not strictly greater). No veto needed.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496617,
+    "id": "20261020194332fbc266f7ae6d4e99",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194332fbc266f7ae6d4e99",
+    "usage": {
+      "completion_tokens": 89,
+      "completion_tokens_details": {
+        "reasoning_tokens": 56
+      },
+      "prompt_tokens": 2914,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3003
+    }
+  }
+}

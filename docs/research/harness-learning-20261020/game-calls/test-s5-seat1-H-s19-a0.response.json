@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.918,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар и взятки уже не влияют на итоговый ранг, я и так богатейший и имею максимальное влияние с преимуществом по кэшу.\"}",
+          "reasoning_content": "Last round action. Goods won't count in final rank — no more market. So produce/shuttle useless. Bribes lose cash and give influence; max influence gives extra 5% of bank (~2 alashi... bank 39, 5% = 1.95 alashi) — bribing 5 to gain influence? Already influence 2, rival фракция 0 also 2. Cash advantage: I'm richest (45.2 vs 28.6, 26.6). Final rank 0 likely. Max influence bonus: tie 2-2 with idx0, tie broken by cash then tie_order — I win with more cash. So I already get the 5% commission. Bribes waste money. Pass.\n\nRoof: gives cash away — bad. Pass (choice 0).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496679,
+    "id": "202610201944330d8a5558d7454402",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201944330d8a5558d7454402",
+    "usage": {
+      "completion_tokens": 218,
+      "completion_tokens_details": {
+        "reasoning_tokens": 171
+      },
+      "prompt_tokens": 5155,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 5373
+    }
+  }
+}

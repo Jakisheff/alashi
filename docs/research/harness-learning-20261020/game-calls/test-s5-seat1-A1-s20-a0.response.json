@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.661,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Финальный раунд, товары уже не продать; по влиянию я выигрываю тай-брейк по cash, взятки только уменьшат выплату.\"}",
+          "reasoning_content": "Final round, no more markets. Best to boost influence to win max influence bonus (5% of bank ≈ 2.4 alashi) — bribe costs 5 alashi for +1 influence; competitor has 2 influence, I have 2, tie broken by cash+hard — I'm already ahead in cash, so I already win influence tie. Influence max: I need >2. Currently tie at 2, but tie broken by cash — I win. So pass is best; bribe wastes money. But cash gifts also reduce my cash gap... no need. Pass.\n\nActually bribe to 0 boosts their cash but their rank irrelevant; influence bonus already mine. Choice 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497027,
+    "id": "20261020195019356159d263df4771",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195019356159d263df4771",
+    "usage": {
+      "completion_tokens": 194,
+      "completion_tokens_details": {
+        "reasoning_tokens": 145
+      },
+      "prompt_tokens": 5518,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 5712
+    }
+  }
+}

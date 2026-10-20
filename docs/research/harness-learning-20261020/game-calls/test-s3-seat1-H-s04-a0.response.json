@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.109,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Цена высокая (7), продаю весь товар сейчас за 13 alashi.\"}",
+          "reasoning_content": "Sell 2 at price 5? sold_counter=4, price[4]=7. Selling 2 units: 7+6=13. Sell all now while price high. Choice 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496937,
+    "id": "20261020194850973684cac1a2409e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194850973684cac1a2409e",
+    "usage": {
+      "completion_tokens": 69,
+      "completion_tokens_details": {
+        "reasoning_tokens": 42
+      },
+      "prompt_tokens": 2685,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 2754
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.213,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар уже не продать, взятки дороже выгоды от комиссии влияния, ранг 0 обеспечен — pass.\"}",
+          "reasoning_content": "Round 6 action, no more markets after this? Market was round 6 already done; goods won't be sold anymore. So produce useless. Influence matters: 5% commission goes to max influence holder. Currently influence: 0→2, 1→1, 2→2. President in law round 6 is whoever has max influence. If I bribe 5 to idx 0 or 2, I get influence 2 — tie; max influence tie broken by cash+hard then tie_order; tie_order [2,1,0], others have 2 too, so tie broken by cash — I have most cash, so I'd get the 5% commission. Cost 5 alashi vs gain 5% of bank (39 alashi → ~1.95) plus better payout? Wait, commission 5% of bank goes to max influence: bank 39 alashi → 1.95 alashi. Bribe costs 5 to me and gives 5 to a rival. Bad.\n\nRank: my cash 60.7, idx0 44.9, idx2 3.4. Payout: rank0 50%, rank1 30%, rank2 15% of 95% of 39M ≈ 37.05M. Rank0=18.5, rank1=11.1, rank2=5.6. I'm rank0 already. Bribes to idx2 would lower their gap... irrelevant to my rank. Just pass? Influence commission: holder of max influence gets 5% ≈ 1.95. With bribe 5 I gain 1.95, net -3. No bribe needed. Also I hold license income. Pass is best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499356,
+    "id": "20261020202908414ec3c91fa34889",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202908414ec3c91fa34889",
+    "usage": {
+      "completion_tokens": 401,
+      "completion_tokens_details": {
+        "reasoning_tokens": 364
+      },
+      "prompt_tokens": 5566,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 5967
+    }
+  }
+}

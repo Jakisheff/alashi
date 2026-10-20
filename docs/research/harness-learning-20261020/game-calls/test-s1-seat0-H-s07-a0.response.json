@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.643,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продажа всех 3 единиц по высоким ценам даёт cash ~44.8 и сохраняет запас на аукцион раунда 4.\"}",
+          "reasoning_content": "Round 3 market, prices high (sold_counter 0). Need cash ≥9 in round 4 for auction. Sell all 3 at 12,10,9 = 31 alashi → cash 44.8. Good.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496341,
+    "id": "2026102019385819a8ae4e1bb7444e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019385819a8ae4e1bb7444e",
+    "usage": {
+      "completion_tokens": 91,
+      "completion_tokens_details": {
+        "reasoning_tokens": 49
+      },
+      "prompt_tokens": 3051,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3142
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.649,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон обнуляет непогашенные векселя соперников, мне это выгодно.\"}",
+          "reasoning_content": " I have no promissory (cash 0). Card 8 wipes promissory notes — rivals: idx1 cash 17, idx2 cash 22, promissory unknown. Wiping promissory hurts whoever sold on credit. From my view, passing card 8 doesn't hurt me; it likely hurts rivals. I'm not president (holder 1). Vote yes — I sold nothing on credit. Actually wait: does card 8 wipe my future credit? No, only current ones. Yes to weaken rivals.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498802,
+    "id": "202610202019581d49a9b01a1647fc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202019581d49a9b01a1647fc",
+    "usage": {
+      "completion_tokens": 139,
+      "completion_tokens_details": {
+        "reasoning_tokens": 109
+      },
+      "prompt_tokens": 2265,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2404
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.894,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Сохраняю кассу ≥9 к аукциону раунда 4; покупка без товара по низкой цене невыгодна.\"}",
+          "reasoning_content": "Round 3 market, sold_counter=4, price 7. I have 46.25 cash, no goods. Buy makes little sense unless planning to resell later at higher? Buy moves counter backward; prices decline over rounds. Rule 1: keep cash ≥9 before round 4 market. Buying goods now to sell in round 4 with price_shift +2 (law 7 passed in round 1 applies round 2? Actually law 7 was passed round 1, applies next market = round 2 — already used). Buy 1 unit costs 7, resell later counter moves backward... Selling 1 unit at price ~7 in round 4 (after deflation 62%). Marginal. Simplest: pass, preserve cash for auction.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496448,
+    "id": "20261020194043a9e9e4ca6ce1498a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194043a9e9e4ca6ce1498a",
+    "usage": {
+      "completion_tokens": 199,
+      "completion_tokens_details": {
+        "reasoning_tokens": 158
+      },
+      "prompt_tokens": 2999,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3198
+    }
+  }
+}

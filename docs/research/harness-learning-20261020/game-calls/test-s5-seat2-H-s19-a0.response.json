@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.083,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар больше не продать, я уже лидер по cash и влиянию — дополнительные траты лишь снизят выплату.\"}",
+          "reasoning_content": "Round 6 action, last round. Goods can't be sold after this. Only shuttle gives grey goods but no more market... actually after action there's law phase, no market. So goods useless. Best: maximize influence for the 5% bonus (bank 39 alashi → 5% ≈ 1.95 alashi... small) and stay rank 0. Already rank 0 with 69 alashi vs ~36/34. Influence 3 already likely max. Bribes transfer cash to rivals — bad. So pass.\n\nNote influence already 3, rivals 1. Pass keeps rank 0 (50% of bank) and max influence bonus. Choice 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497476,
+    "id": "20261020195751a5707bd9211b4d45",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195751a5707bd9211b4d45",
+    "usage": {
+      "completion_tokens": 180,
+      "completion_tokens_details": {
+        "reasoning_tokens": 143
+      },
+      "prompt_tokens": 5642,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 5822
+    }
+  }
+}

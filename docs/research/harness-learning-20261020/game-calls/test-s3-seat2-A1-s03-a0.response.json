@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.951,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Продажа в кредит избегает девальвации и даёт максимальную выручку 27,5 alashi.\"}",
+          "reasoning_content": "Sell both now at 12 and 10 = 22. Cash will devalue 62% at next round start though. Selling later gets worse price as counter moves. Devaluation: cash floor(22/100)*62 → 13.64? Actually floor(cash/100) alashi units: 22 alashi → floor=22, *62 = 13.6 alashi... That's harsh. sell_credit avoids devaluation? Promissory added to cash after devaluation — promissory not devalued. So sell_credit 2 units: promissory 27.5 alashi, paid next round start without devaluation. That's best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499191,
+    "id": "202610202026271b1a5043f6704953",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202026271b1a5043f6704953",
+    "usage": {
+      "completion_tokens": 178,
+      "completion_tokens_details": {
+        "reasoning_tokens": 139
+      },
+      "prompt_tokens": 2152,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2330
+    }
+  }
+}

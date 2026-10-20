@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.212,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Взятка даёт влияние и пост президента, а cash всё равно девальвируется каждый раунд.\"}",
+          "reasoning_content": "Round 2 action. Shuttle gives 3 goods; president is rival idx1, bribe to become president could matter. Cash will be devalued at start of each round (floor/100*62). Cash loses 38% per round. So spending cash is good. Influence helps presidency later (law control, 5% bonus). I hold influence 1. Bribing 5 to rival 1 gives influence 2, tied... president = highest influence at law entry; I'd have 2 vs 1,1 → president me. That costs 5 but cash devalues anyway. President +5% bank (~1.5) and veto control. Also future law rounds: I could control votes? Value decent. But shuttle gives 3 goods ≈ sells at low price (counter 6 → 5/unit... actually price at counter 6 is 5 alashi). 3 goods ≈ 14 alashi revenue later. Compare: bribe 5 gives influence edge long-term across rounds 2-6 laws, plus 5% commission each round (bank ~30+grows). Bribes also give briber influence. 5 to rival: I get 2 influence; they may bribe back? Uncertain.\n\nI think bribing to gain presidency is strong (5% of bank each round? commission 5% only at end). Actually influence max gives extra 5% of final bank. Veto control useful. I'd take shuttle for goods... but cash devaluation: keeping 17 cash loses value each round anyway (62%). Spending on influence retains value.\n\nI'll do bribe 5 to 1 (choice 4), gaining influence 2 → president at law.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497313,
+    "id": "20261020195500c0fb24f4f3334194",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195500c0fb24f4f3334194",
+    "usage": {
+      "completion_tokens": 388,
+      "completion_tokens_details": {
+        "reasoning_tokens": 355
+      },
+      "prompt_tokens": 3414,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 3802
+    }
+  }
+}

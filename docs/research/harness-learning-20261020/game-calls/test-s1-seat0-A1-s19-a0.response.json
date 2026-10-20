@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.756,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Игра почти закончилась, товар и влияние уже не окупят затрат — просто сохранить максимум cash.\"}",
+          "reasoning_content": "Last round action phase, round 6 market already done (no more market after this? Law follows, then game ends). Goods useless now (no more market). Bribe raises influence, but president role already mine with influence 2 vs 1. Max influence bonus at final: 5% of bank ≈ 230k, tiny vs 5M bribe cost. Cash rank: I'm first with 72.7M anyway; bank 46M minus commission, rank shares 50%≈22M. Bribe costs 5M for no gain. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497930,
+    "id": "20261020200523e014330f20044248",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200523e014330f20044248",
+    "usage": {
+      "completion_tokens": 150,
+      "completion_tokens_details": {
+        "reasoning_tokens": 119
+      },
+      "prompt_tokens": 5296,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 5446
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.674,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 10% вредит моим будущим продажам четырёх товаров, голосую против.\"}",
+          "reasoning_content": "Закон 1: налог 10% на мои будущие продажи (у меня 4 товара). Президент — idx1. Мой голос weight 1, против weight 3+3 у других. Голос почти не решает. Налог вредит мне. Голосую no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497446,
+    "id": "202610201957228322538cfc244987",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201957228322538cfc244987",
+    "usage": {
+      "completion_tokens": 95,
+      "completion_tokens_details": {
+        "reasoning_tokens": 63
+      },
+      "prompt_tokens": 3221,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3316
+    }
+  }
+}

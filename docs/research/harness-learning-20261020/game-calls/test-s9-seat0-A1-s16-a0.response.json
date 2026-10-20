@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.227,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":8,\"reason\":\"Продажа всех 4 единиц в кредит даёт 48,75 alashi векселем, который не девальвируется в раунде 6, что лучше немедленных денег.\"}",
+          "reasoning_content": "Round 5 of 6. Devaluation next round: cash*0.62. Promissory adds to cash and is not devalued... wait, promissory added after devaluation, so selling on credit now avoids devaluation of proceeds and gets paid in round 6. sell_credit 4 gives promissory 48.75 alashi, paid round 6 without devaluation. sell now gives 67.8 but will devalue to ~42. So sell_credit is better. Sell all 4 on credit: 48.75 vs sell all now 67.8*0.62≈42. Yes, choice 8.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496994,
+    "id": "20261020194950f4bd5287fa80457d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194950f4bd5287fa80457d",
+    "usage": {
+      "completion_tokens": 187,
+      "completion_tokens_details": {
+        "reasoning_tokens": 135
+      },
+      "prompt_tokens": 3377,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3564
+    }
+  }
+}

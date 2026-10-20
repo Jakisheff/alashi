@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.73,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":40,\"reason\":\"Аукцион раунда 4: ставка 9 alashi перекрывает чужие 8 и оставляет основной доход.\"}",
+          "reasoning_content": "Recommended choice 40, bid 9M. Wait cash ≥16 → should be 12M (choice 43), but harness recommends 40 (9M). Instructions: follow recommended_choice.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499113,
+    "id": "202610202025104aff4edb1e644556",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202025104aff4edb1e644556",
+    "usage": {
+      "completion_tokens": 77,
+      "completion_tokens_details": {
+        "reasoning_tokens": 40
+      },
+      "prompt_tokens": 8319,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 8396
+    }
+  }
+}

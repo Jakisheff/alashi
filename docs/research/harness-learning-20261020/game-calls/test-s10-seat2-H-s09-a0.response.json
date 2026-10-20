@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.177,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон даёт влияние беднейшему, а не мне; голосую против.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest by cash (idx 0, cash 0). I'm richest. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499102,
+    "id": "202610202025006194930c77bc4876",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202025006194930c77bc4876",
+    "usage": {
+      "completion_tokens": 54,
+      "completion_tokens_details": {
+        "reasoning_tokens": 27
+      },
+      "prompt_tokens": 2949,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3003
+    }
+  }
+}

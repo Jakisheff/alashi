@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.575,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Последний раунд: вексель не погашается, поэтому продаю весь товар за наличные.\"}",
+          "reasoning_content": "Final market, promissory won't be redeemed. So sell for cash: sell 2 → +13M cash. Goods worthless after. Choice 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498585,
+    "id": "202610202016234445c481ccd9410c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202016234445c481ccd9410c",
+    "usage": {
+      "completion_tokens": 65,
+      "completion_tokens_details": {
+        "reasoning_tokens": 33
+      },
+      "prompt_tokens": 3458,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3523
+    }
+  }
+}

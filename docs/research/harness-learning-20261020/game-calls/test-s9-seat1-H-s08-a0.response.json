@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.642,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"shuttle даёт 3 товара бесплатно, сохраняя cash ≥9 для ставки в аукционе раунда 4.\"}",
+          "reasoning_content": "Round 3 action, need cash ≥9 by round 4 action and preserve for auction. Take shuttle (3 goods, free). Cash 35.78 — after round 4 start devaluation... but shuttle keeps cash.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496834,
+    "id": "202610201947124a7157635d7c4cec",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201947124a7157635d7c4cec",
+    "usage": {
+      "completion_tokens": 83,
+      "completion_tokens_details": {
+        "reasoning_tokens": 46
+      },
+      "prompt_tokens": 4124,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 4207
+    }
+  }
+}

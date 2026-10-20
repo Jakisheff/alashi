@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.445,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон всё равно не проходит (3 за против 3 против, нужно строго больше), вето не нужно.\"}",
+          "reasoning_content": "Law 1: 10% tax on future sales. Votes: yes 2 (weights 2+1=3), no 3. Wait participant 0 voted No with weight 3. Yes = 2+1=3, No=3. Not strictly greater — law fails anyway. So veto not needed, but veto is free and safe? Veto kills it; pass also kills it. Either fine. Choose pass (choice 0) — same result, or veto guarantees. Vote yes failed already. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497784,
+    "id": "202610202002556b3179e444734f28",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202002556b3179e444734f28",
+    "usage": {
+      "completion_tokens": 142,
+      "completion_tokens_details": {
+        "reasoning_tokens": 109
+      },
+      "prompt_tokens": 2777,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2919
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.898,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Кредитная продажа по 8,75 за единицу выгоднее немедленной по 7, вексель погасится в раунде 6.\"}",
+          "reasoning_content": "Round 5 market, price counter 4 → price 7. Sell now for cash; sell_credit gives promissory that will be paid in round 6 (added to cash at start of round 6). Promissory 8.75 per unit vs 7 cash... sell_credit yields 7*1.25=8.75, paid next round, counts toward final cash? Promissory added to cash at start of round 6, then round 7? Only 6 rounds; after round 6 no payment. Round 5 credit → paid at start of round 6, counted. Good. Sell credit both units: promissory 16.25, cash stays. Compare cash rank: cash ranking matters at end; promissory from round 6 not counted, but round 5 credit is paid. So sell_credit 2 units is best (8.75/unit vs 7).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498168,
+    "id": "2026102020092242c7f02b576a4235",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020092242c7f02b576a4235",
+    "usage": {
+      "completion_tokens": 234,
+      "completion_tokens_details": {
+        "reasoning_tokens": 189
+      },
+      "prompt_tokens": 3654,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3888
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.747,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Продаю весь товар, чтобы иметь ≥16 на аукционе лицензии в этом раунде.\"}",
+          "reasoning_content": "Need cash ≥9 for auction. Sell 1 unit → cash 18.82M ≥9. Sell 2 → 28.82. Selling at price 12 each? Price with counter 0, first unit 12, second 10 — wait sold_counter=0. sell 1 = 12M. cash 18.82 ≥16 → bid 12 later. Selling 2 gives 12+10=22 → 28.82. Better sell 2? More cash but price falls; still profitable. Keep counter low for future? Boom gone; round 6 last. Sell 2 now for auction cash. Choose 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498305,
+    "id": "20261020201140181bbd18aa184fb9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201140181bbd18aa184fb9",
+    "usage": {
+      "completion_tokens": 168,
+      "completion_tokens_details": {
+        "reasoning_tokens": 135
+      },
+      "prompt_tokens": 3189,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3357
+    }
+  }
+}

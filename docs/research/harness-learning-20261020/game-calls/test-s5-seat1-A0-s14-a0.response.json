@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.635,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Шаттл бесплатен и даёт 3 товара к следующему рынку, вексель-ставка сохраняется.\"}",
+          "reasoning_content": "После bid 32M, cash остаётся ~11.75M при проигрыше возвращается; shuttle бесплатный даёт 3 товара. Choose shuttle (choice 3).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498874,
+    "id": "20261020202112902523732c234474",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202112902523732c234474",
+    "usage": {
+      "completion_tokens": 75,
+      "completion_tokens_details": {
+        "reasoning_tokens": 38
+      },
+      "prompt_tokens": 3983,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 4058
+    }
+  }
+}

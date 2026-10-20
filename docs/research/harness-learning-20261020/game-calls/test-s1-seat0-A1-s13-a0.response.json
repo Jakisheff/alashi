@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.075,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Shuttle даёт 3 товара для продажи на следующем рынке по ещё высокой цене.\"}",
+          "reasoning_content": "I already bid 16, cash left 7.7. Produce gives 2 goods, sell at price... sold_counter=4, price 7. Shuttle gives 3 goods (risk if border confiscation? No tariff active). Shuttle better: 3 goods. Price 7 next for 3 units ~ 7+6+5=18. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497890,
+    "id": "202610202004474cf693f6bfcf49bf",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202004474cf693f6bfcf49bf",
+    "usage": {
+      "completion_tokens": 104,
+      "completion_tokens_details": {
+        "reasoning_tokens": 76
+      },
+      "prompt_tokens": 3271,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 3375
+    }
+  }
+}

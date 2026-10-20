@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.81,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Я уже лидер по богатству и держу лицензию; взятка дороже комиссии 5%, товар больше не продать.\"}",
+          "reasoning_content": "Final round action. Wealth ranking: me 84.87, opp2 16.88, opp1 2.48. I hold license. Bank 49 alashi. Payout 50% ≈ 23.2 to first. Also 5% commission to max influence (currently opp2, influence 2). If I bribe 5M to opp1, I get influence 2, tie with opp2; tie-break: better cash+hard — opp2 has 16.9 vs my 79.9, so I'd win max influence? Tie influence 2 vs 2, then cash+hard: me 79.9 > 16.9, I get the 5%. Bribe costs 5M = 5 alashi... no, 5M = 5 alashi. Commission 5% of 49 ≈ 2.45 alashi. Cost 5 > 2.45 gain. Not worth. But bribe to 1 also raises opp1's cash, no rank change. Rank: I'm already #1 by far. So pass, or produce (goods useless, no market left). Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498241,
+    "id": "20261020201034fa5e56f75afc4b3c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201034fa5e56f75afc4b3c",
+    "usage": {
+      "completion_tokens": 280,
+      "completion_tokens_details": {
+        "reasoning_tokens": 243
+      },
+      "prompt_tokens": 5743,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 6023
+    }
+  }
+}

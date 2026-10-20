@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.646,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Карта 0 без эффектов; голос против ничего не меняет, закон и так не пройдёт.\"}",
+          "reasoning_content": "Card 0 no effects. Vote no (1 no already, others abstain) → fails anyway. Pass keeps weight. Just vote_no or pass. Card 0 harmless — no matter. vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496505,
+    "id": "20261020194140dc7756e3a8434137",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194140dc7756e3a8434137",
+    "usage": {
+      "completion_tokens": 75,
+      "completion_tokens_details": {
+        "reasoning_tokens": 42
+      },
+      "prompt_tokens": 3360,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3435
+    }
+  }
+}

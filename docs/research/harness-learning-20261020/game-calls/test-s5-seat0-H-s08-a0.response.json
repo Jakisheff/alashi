@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.068,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"sell_credit 3 единицы сохраняет выручку от девальвации и обеспечивает cash ≥16 для ставки 12 в аукционе раунда 4\"}",
+          "reasoning_content": "Need cash ≥9 by round 4 market. Round 4 start: cash=floor(cash/100)*62 (девальвация!). So selling now: cash gets devalued to 62%. Sell 3 units for 31 → after devaluation 19.2 alashi, ≥16 → bid 12. Sell credit avoids devaluation? Promissory added to cash after devaluation. So sell_credit 3 units → 38.75 promissory, no devaluation, cash 38.75 in round 4, ≥16 → bid 12, keeps full value. Best: choice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499087,
+    "id": "202610202024437e4e12bdac4a446e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202024437e4e12bdac4a446e",
+    "usage": {
+      "completion_tokens": 176,
+      "completion_tokens_details": {
+        "reasoning_tokens": 131
+      },
+      "prompt_tokens": 3039,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3215
+    }
+  }
+}

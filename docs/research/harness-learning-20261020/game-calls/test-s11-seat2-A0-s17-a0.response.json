@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.281,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":16,\"reason\":\"Взятка даёт мне 2 влияния — делит максимум с фракцией 1, но по cash я выигрываю тай и получаю бонус 5% банка, при этом остаюсь самым богатым.\"}",
+          "reasoning_content": "Final round action. Goods worthless at end. Influence matters: 5% bank bonus (~2.25 alashi ≈ 2.25M) to max influence. Currently influence 1 vs фракция0 has 1, фракция1 has 2. Max influence is фракция1 (2). Tie at top: if I bribe 5M to anyone, I get influence 2, tie with idx1; tie broken by cash+hard: I have 48.1 vs idx1 15.7+5=20.7. So I win max influence. Bribing to idx1 raises their cash to 20.7, still fine. Bribe to idx0 (cash 56.2) doesn't change ranking. Bribe 5M to idx1: I get 2.25M bonus net, cash 43.1 stays richest. Also presidential vote? Law phase remains in round 6 — influence doesn't affect presidency here since holder decided on entry... holder is 1. Vote weight: influence+2 if passed. Not president anyway.\n\nSo choice 16 (5M to idx1).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497551,
+    "id": "20261020195859c531262895d24965",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195859c531262895d24965",
+    "usage": {
+      "completion_tokens": 297,
+      "completion_tokens_details": {
+        "reasoning_tokens": 239
+      },
+      "prompt_tokens": 4547,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 4844
+    }
+  }
+}

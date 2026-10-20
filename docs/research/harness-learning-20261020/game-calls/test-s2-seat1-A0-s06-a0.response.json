@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.283,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон всё равно пройдёт (2 голоса «за»), поэтому голосую «против» — не поддерживаю усиление самого богатого соперника.\"}",
+          "reasoning_content": " Law 5 gives +1 influence to richest by cash — that's player 2 (22M). Player 2 already voted yes. If I vote no: yes=2 (p0? no, p0 is president, doesn't vote normally... actually p0 and p2 voted yes). Players voted: 0 and 2 \"Yes\". I'm voter 1. Vote no → yes 2 > no 1, passes anyway. Giving player 2 influence hurts me. Vote no anyway to register opposition (still passes). Or abstain. Doesn't matter; vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499194,
+    "id": "20261020202630dfa42706b5154500",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202630dfa42706b5154500",
+    "usage": {
+      "completion_tokens": 167,
+      "completion_tokens_details": {
+        "reasoning_tokens": 121
+      },
+      "prompt_tokens": 2282,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2449
+    }
+  }
+}

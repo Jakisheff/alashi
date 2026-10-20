@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.061,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":39,\"reason\":\"Cash ≥16M, поэтому ставлю 12M — чуть выше лимита соперников, чтобы забрать доход лицензии.\"}",
+          "reasoning_content": "Cash 48.75M ≥ 16 → bid 12, choice 39. But recommended says 9M (36)? Cash ≥16M, rule says 12M. Harness recommended_choice=36 conflicts. Priority says follow recommended if valid... but rule 2 says 12 if cash≥16. Recommended seems computed with 9. Cash is 48.75 ≥ 16, bid 12. The instruction says follow recommended if допустимо; else decide. It's valid but contradicts rule 2. I'll follow the explicit rule: 12M, choice 39.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499104,
+    "id": "20261020202500fe260fb6d9c049f9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202500fe260fb6d9c049f9",
+    "usage": {
+      "completion_tokens": 158,
+      "completion_tokens_details": {
+        "reasoning_tokens": 122
+      },
+      "prompt_tokens": 7727,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 7885
+    }
+  }
+}

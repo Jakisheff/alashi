@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.274,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":8,\"reason\":\"Продаю весь товар в кредит по высокой стартовой цене, вексель не девальвируется и карта обнуления уже вышла.\"}",
+          "reasoning_content": "Sell now at 12 price. Devaluation cuts cash to 62% at round start, so credit (promissory, no devaluation) is better. Selling all 4 now at high prices: sell_credit 4 → 48.75 promissory, paid next round without devaluation. But promissory can be wiped by card 8 — already drawn in round 1, so safe. Sell credit all 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498020,
+    "id": "2026102020065448d83162f5394d47",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020065448d83162f5394d47",
+    "usage": {
+      "completion_tokens": 130,
+      "completion_tokens_details": {
+        "reasoning_tokens": 90
+      },
+      "prompt_tokens": 2912,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 3042
+    }
+  }
+}

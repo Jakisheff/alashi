@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.011,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон безобиден и всё равно не влияет на мою выплату — нет причин тратить veto.\"}",
+          "reasoning_content": "Law 3 gives subsidy_goods=1, but no more market rounds after law 6? Law in round 6, game has market-action-law; after round 6 game ends. Subsidy useless now. Yes=5 vs No=1, passes. Veto has no effect on my cash. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497271,
+    "id": "2026102019542744349d2737424f0d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019542744349d2737424f0d",
+    "usage": {
+      "completion_tokens": 98,
+      "completion_tokens_details": {
+        "reasoning_tokens": 65
+      },
+      "prompt_tokens": 3267,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3365
+    }
+  }
+}

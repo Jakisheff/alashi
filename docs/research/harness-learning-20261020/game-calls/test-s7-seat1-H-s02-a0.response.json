@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.416,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон 7 повышает цены следующего рынка — выгодно для будущих продаж.\"}",
+          "reasoning_content": "Law 7: +2 prices next market. I have goods=2 (wait, my after shows goods 0? own idx 1, participants[1] goods=0... actually own_bid 0 and goods 0). Law 7 benefits sellers; I have no goods but others do. Still good for future? Prices up next market helps me buy? I plan shuttle goods to sell. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499212,
+    "id": "20261020202648de8e2123116b4334",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202648de8e2123116b4334",
+    "usage": {
+      "completion_tokens": 113,
+      "completion_tokens_details": {
+        "reasoning_tokens": 85
+      },
+      "prompt_tokens": 2498,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2611
+    }
+  }
+}

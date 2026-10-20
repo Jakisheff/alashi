@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.051,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 5 даст +1 влияния самому богатому (фракция 2), усилив соперника-президента — голосую против.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest (cash). Richest is idx2 (28.12). President is idx2 with weight 2, influence 2; I have 2, tie_order 2,0,1 — idx2 wins ties. Law 5 gives idx2 more influence, bad for me. Vote no; but idx2 weight 2, others weight 2 each; my vote_no vs idx1? idx1 likely votes... uncertain. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497221,
+    "id": "202610201953374eb822520dfe46e5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201953374eb822520dfe46e5",
+    "usage": {
+      "completion_tokens": 142,
+      "completion_tokens_details": {
+        "reasoning_tokens": 100
+      },
+      "prompt_tokens": 2542,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2684
+    }
+  }
+}

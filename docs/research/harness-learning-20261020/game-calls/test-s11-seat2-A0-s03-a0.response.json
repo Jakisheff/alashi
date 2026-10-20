@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.644,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Продажа в кредит даёт максимальную выручку при высоких ценах и обходит девальвацию наличных.\"}",
+          "reasoning_content": "Sell now at high prices (12,10,9). Cash devaluation: cash*0.62 each round... but 6 rounds. Selling all now for 31 seems good; credit 38.75 later becomes cash and gets devalued each subsequent round. 31 now → devalue 4 times: 31*0.62^4≈4.6? That's harsh. Credit: promissory added at round start then... actually promissory added to cash after devaluation, so promissory survives one round fully. Sell credit: 38.75 added at round 3 start? Devaluation happens start of each round 2+, so cash from credit added in round 3 start, then devalued rounds 4,5,6: 38.75*0.62^3≈9.2. Immediate sell: 31 devalued rounds 3,4,5,6: 31*0.62^4≈4.58. So credit better. But selling later at lower prices vs cash loss... sell credit 3 units now, choice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497450,
+    "id": "2026102019572141b8955776f44d5f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019572141b8955776f44d5f",
+    "usage": {
+      "completion_tokens": 270,
+      "completion_tokens_details": {
+        "reasoning_tokens": 231
+      },
+      "prompt_tokens": 2263,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2533
+    }
+  }
+}

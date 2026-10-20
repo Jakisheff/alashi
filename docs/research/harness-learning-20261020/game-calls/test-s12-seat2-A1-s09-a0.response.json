@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.636,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон 5 даёт +1 влияния мне как самому богатому, повышая шансы на бонус 5%.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest. Richest cash: idx2 (32.5M) > idx0 27M. So I get +1 influence — helps influence bonus (5% commission). But president (idx1) may veto. President isn't richest, so likely veto. Vote yes anyway; even if vetoed nothing lost. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496356,
+    "id": "202610201939124df4502df56342ec",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201939124df4502df56342ec",
+    "usage": {
+      "completion_tokens": 112,
+      "completion_tokens_details": {
+        "reasoning_tokens": 76
+      },
+      "prompt_tokens": 2487,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2599
+    }
+  }
+}

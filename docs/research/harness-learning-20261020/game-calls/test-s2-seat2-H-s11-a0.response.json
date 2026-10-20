@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.544,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон о 20% налоге уже отклонён (No 3 против Yes 1), veto не нужен.\"}",
+          "reasoning_content": "Votes: idx0 Yes(1), idx1 No(1), idx2 No(2). No wins 3>1, law 2 (20% tax) rejected. Veto unnecessary.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499399,
+    "id": "202610202029570a0a7e2d70644036",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202029570a0a7e2d70644036",
+    "usage": {
+      "completion_tokens": 76,
+      "completion_tokens_details": {
+        "reasoning_tokens": 41
+      },
+      "prompt_tokens": 2966,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3042
+    }
+  }
+}

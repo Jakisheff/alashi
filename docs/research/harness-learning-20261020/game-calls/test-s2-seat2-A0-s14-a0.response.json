@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.688,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Взятка уже сделана, лицензия куплена; максимум товара для продажи в следующем раунде.\"}",
+          "reasoning_content": "Bid 20 already placed. Main action: shuttle gives 3 goods (risk only for grey? shuttle may be seized ~25% if favorable border; current tariff unknown). Price counter at 4, next price 5,6,7 for 3 units ≈ 18 alashi potential — worth it. Produce gives 2. Shuttle expected value higher; seizure risk depends on border status — currently tariff 0 (no tariff), shuttle's grey goods may be seized ~25%. Still take shuttle? 3 goods ~18 vs 2 goods ~12. Expected 13.5 vs 12. Marginal. Also cash: I have 20M bid, cash 20M; if I lose bid I get 20 back. Take shuttle for goods to sell round 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498740,
+    "id": "20261020201854eb9b5c7ac1074c24",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201854eb9b5c7ac1074c24",
+    "usage": {
+      "completion_tokens": 196,
+      "completion_tokens_details": {
+        "reasoning_tokens": 162
+      },
+      "prompt_tokens": 3732,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3928
+    }
+  }
+}

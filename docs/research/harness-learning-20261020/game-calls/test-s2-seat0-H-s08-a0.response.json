@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.15,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Продать весь товар в кредит по высокой цене 12 с бонусом 1.25, вексель придёт в cash до аукциона раунда 4.\"}",
+          "reasoning_content": "Round 3 market, price 12. Sell credit 3 units gives promissory 38.75, but devaluation 62% each round start — round 4: 38.75*0.62? Actually cash=floor(cash/100)*62 applies to cash; promissory added without devaluation? Promissory added after devaluation, so round 4 promissory 38.75 added to cash. Then round 4 auction needs cash ≥16: 30+38.75=68.75 fine. Sell all 3 credit, choice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496479,
+    "id": "202610201941136ee775f2071e45b0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201941136ee775f2071e45b0",
+    "usage": {
+      "completion_tokens": 169,
+      "completion_tokens_details": {
+        "reasoning_tokens": 123
+      },
+      "prompt_tokens": 3169,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3338
+    }
+  }
+}

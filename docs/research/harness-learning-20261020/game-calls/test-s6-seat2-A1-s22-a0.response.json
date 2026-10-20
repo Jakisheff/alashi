@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.638,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Взятки дороже комиссионных бонуса, товары в финале бесполезны — пропускаю и сохраняю cash и вес голоса.\"}",
+          "reasoning_content": "Final round, action phase. Goods useless. Influence matters: max influence gets 5% bank (~2.19 alashi) — but I'd need to top rival inf 2. My vote_weight is 3 already (skipped?). Actually vote_weight 3 = influence 1 + 2. Payoff: bank ~43.8 + my license income. Rank: I'm richest (62.86). Bribe 5 alashi to idx0 gives inf 2... but tie with idx1 (inf 2) — tie broken by cash+hard? For the 5% commission, max influence; tie by cash. I'd win with inf 2 vs rival inf 2 (cash higher). Bribe costs 5M cash. Gain: 5% of ~44M ≈ 2.19M... also license holder income separate. Bribe 5 to 0 → inf 2, win max influence → +2.19M, net -2.8M. Bad.\n\nAlso bribing transfers cash to competitor. Skip. Pass (vote weight +2 already). Choose 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496578,
+    "id": "202610201942503bd229595d694007",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201942503bd229595d694007",
+    "usage": {
+      "completion_tokens": 277,
+      "completion_tokens_details": {
+        "reasoning_tokens": 231
+      },
+      "prompt_tokens": 5243,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 5520
+    }
+  }
+}

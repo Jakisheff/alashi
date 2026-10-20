@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.092,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон уже отклоняется (3 против 1), veto не нужен.\"}",
+          "reasoning_content": "Votes: No=3 (me 2 + idx2 1), Yes=1. Law 2 (20% tax) rejected anyway. Veto unnecessary? Veto blocks the law — same outcome but veto is free. Actually rejection already; veto redundant but harmless. Pass suffices.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497220,
+    "id": "202610201953364d1b53b4016e495d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201953364d1b53b4016e495d",
+    "usage": {
+      "completion_tokens": 86,
+      "completion_tokens_details": {
+        "reasoning_tokens": 60
+      },
+      "prompt_tokens": 2467,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2553
+    }
+  }
+}

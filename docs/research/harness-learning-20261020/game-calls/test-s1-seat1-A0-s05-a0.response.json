@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.352,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Ожидаемая выгода шаттла выше, а риск изъятия частично компенсируется большим объёмом товара.\"}",
+          "reasoning_content": "Produce is safe; shuttle risks 25% seizure. But shuttle gives 3 goods expected value 2.25 vs produce 2. Only if border privileged — no info. Risky: seizure of all grey goods. Cash=0, produce=2 goods. Choose shuttle for EV? Border tariff unknown; red tariff = 25% loss of all goods. Choose produce as safe? Expected shuttle 2.25>2 but risk. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498777,
+    "id": "202610202019314bcaff8da3b144eb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202019314bcaff8da3b144eb",
+    "usage": {
+      "completion_tokens": 133,
+      "completion_tokens_details": {
+        "reasoning_tokens": 94
+      },
+      "prompt_tokens": 2165,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2298
+    }
+  }
+}

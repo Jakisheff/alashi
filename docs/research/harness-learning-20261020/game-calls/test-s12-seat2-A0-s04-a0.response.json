@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.647,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель не девальвируется, поэтому продажа в кредит всех 3 единиц максимизирует выплату.\"}",
+          "reasoning_content": "Prices with boom+2: first units 14,12,11. Selling 3 units now gives 37. But devaluation at round start: cash→62%. So selling credit better? Promissory adds to cash next round without devaluation. So sell_credit 3 units: 46.25 promissory, kept fully. Yes, choice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499019,
+    "id": "20261020202336ad4c47c2e06648af",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202336ad4c47c2e06648af",
+    "usage": {
+      "completion_tokens": 110,
+      "completion_tokens_details": {
+        "reasoning_tokens": 76
+      },
+      "prompt_tokens": 2320,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2430
+    }
+  }
+}

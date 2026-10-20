@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.435,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон 8 обнуляет непогашенные векселя, которых ни у кого нет — безвреден, голосую за.\"}",
+          "reasoning_content": "Law 8 обнуляет promissory — у меня нет promissory, никто не продавал. Закон бесполен/нейтрален. Никто не пострадает. Но если кто-то продаст в кредит позже? Нет, эффект только сейчас. Безопасно проголосовать yes (или abstain). Президент — фракция 0, у неё влияние 1, я — влияние 1, tie_order [0,2,1], президент — idx0. Мой голос: yes=1 > no=0 — закон принят (без эффекта). Президент может наложить veto. Голосую yes — закон 8 безвреден.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498007,
+    "id": "20261020200639950a968387a4457c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200639950a968387a4457c",
+    "usage": {
+      "completion_tokens": 186,
+      "completion_tokens_details": {
+        "reasoning_tokens": 146
+      },
+      "prompt_tokens": 2027,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2213
+    }
+  }
+}

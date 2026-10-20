@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.676,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон 3 даёт субсидию +1 товар, полезно моему produce в раунде 6; голосую за.\"}",
+          "reasoning_content": "Law 3 = subsidy_goods=1. Currently yes: 2 (idx0 weight2) + need count. My vote yes adds weight 2 → yes=4, no=0 → passes. Subsidy gives me +1 goods on produce in round 6. Good — vote yes. Choice 1.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496664,
+    "id": "20261020194422efb6a48281ce4080",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194422efb6a48281ce4080",
+    "usage": {
+      "completion_tokens": 105,
+      "completion_tokens_details": {
+        "reasoning_tokens": 66
+      },
+      "prompt_tokens": 3491,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3596
+    }
+  }
+}

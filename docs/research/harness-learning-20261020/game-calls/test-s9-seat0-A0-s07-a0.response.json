@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.462,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Кредитная продажа даёт больше итоговой стоимости, так как вексель погашается после девальвации раунда 4.\"}",
+          "reasoning_content": "Sell 2 now at price 12 each? Sell 2 gives +22M cash, solid. Cash counting toward rank; cash devalues 62% each round though. Selling now gives cash that devalues at rounds 4,5,6 (start of 4,5,6): three devaluations. Sell credit avoids devaluation but promissory might be voided by card 8 or not paid after last round. Selling 2 credit gives 27.5M promissory, paid into cash at start of rounds 4,5,6 — added cash then devalues too. Actually promissory added at round start after devaluation, so it survives one round then devalues next round start... Paid at start of round 4, then devalued at start of 5 and 6: 27.5*0.62². Sell now 22M devalues: 22*0.62³? No—cash devalued at start of rounds 4,5,6 (three times) → 22*0.62³=5.2. Credit: paid start of 4, devalued at 5 and 6 → 27.5*0.62²=10.6. Credit better. Also risk card 8 voids it, but only one card 8 and law deck. Sell 2 credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496354,
+    "id": "20261020193906cd602590441546e1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020193906cd602590441546e1",
+    "usage": {
+      "completion_tokens": 328,
+      "completion_tokens_details": {
+        "reasoning_tokens": 288
+      },
+      "prompt_tokens": 2467,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2795
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.305,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продаю весь товар по высокой цене, чтобы к аукциону раунда 4 иметь cash ≥16 даже после девальвации (19.2 alashi).\"}",
+          "reasoning_content": "Need cash ≥9 by round 4 market. Sell 2 units gives 22 alashi cash, enough for bid 12 and devaluation later. Selling all 3 (31) still fine. Round 3 sell: keep prices? Selling now at 12,10,9. Later sell lower. Better sell 3 now at high price, get 31 cash; round 4 need ≥9 — cash 31, devaluation happens at start of round 2+... round 4 start: floor(31/100)*62 = 0*62? 31 alashi = 31000000, floor(31/1)*62 = 31*62/100? Actually floor(cash/100)*62 with cash in min units: 31000000/1000000=31, floor(31/100)=0 → cash becomes 0? No: cash in min units, /100 then *62... cash=31,000,000; /100 = 310,000; floor; *62 = 19,220,000? That's odd but that's the rule: floor(cash/100)*62 → cash loses 38%. So 31 alashi → 19.22 alashi. Still ≥16? No, <16 → bid 9. Sell 2: 22 → 13.64, ≥9 ok. Sell 3 → 19.2 ≥16 → bid 12. Sell 3 better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497435,
+    "id": "202610201957083528d1aadb874160",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201957083528d1aadb874160",
+    "usage": {
+      "completion_tokens": 352,
+      "completion_tokens_details": {
+        "reasoning_tokens": 305
+      },
+      "prompt_tokens": 3031,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3383
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.537,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Я уже богатейший и с максимальным влиянием, любые траты лишь снижают выплату.\"}",
+          "reasoning_content": "Last round action, law follows. Cash rank: I'm 58.6M, richest. President is me (influence 3). Bribe increases influence — helps keep presidency and 5% commission. But bribing gives money to rival; giving to idx2 (23.8M) makes them less poor... Rank already mine. Influence max is mine already (3 vs 2). Max influence commission goes to me. Bribe 5M to idx1 gives me influence 4, but costs cash and gives rival cash — rank matters by cash: 50:30:15. Giving 5M to idx1 (18.7M) keeps them 3rd. Cost 5M cash but +1 influence irrelevant? Max influence already mine; tie can't happen (they'd need bribes too). Actually final payout: rank1 gets 50% of 95 + maybe license. Cash counts fully. Best: pass (choice 0), keep cash. Or shuttle goods useless (no more market). Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497904,
+    "id": "20261020200457ab6eed9e3ddb4435",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200457ab6eed9e3ddb4435",
+    "usage": {
+      "completion_tokens": 246,
+      "completion_tokens_details": {
+        "reasoning_tokens": 212
+      },
+      "prompt_tokens": 5133,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 5379
+    }
+  }
+}

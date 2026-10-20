@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.59,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продаю весь товар по высоким текущим ценам, вексель обесценится девальвацией, а cash нужен для аукциона лицензии.\"}",
+          "reasoning_content": "Round 4 of 6, price at sold_counter=4 → price 7. Promissory loses 38% at round start (cash=floor/100*62), so sell_credit now gets 1.25 now but loses 38% next round → 0.775 effective. Sell now at 7 each, price drops as selling. Selling 3: prices 7,6,5 = 18*1.0? tax 0. sell 3 = +18. Sell_credit 3 = 22.5 promissory → after devaluation round 5 start 13.95 — worse, plus after last round not paid. So plain sell.\n\nHow much to sell? Prices decline; next round I'll produce/shuttle more goods. Later rounds sell at lower prices anyway. Sell 3 now for 18 alashi is good since future prices lower (sold_counter grows). Also auction in action round 4: need cash. Sell all 3, choice 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496374,
+    "id": "202610201939279681d7e09b694d21",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201939279681d7e09b694d21",
+    "usage": {
+      "completion_tokens": 252,
+      "completion_tokens_details": {
+        "reasoning_tokens": 208
+      },
+      "prompt_tokens": 3022,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 3274
+    }
+  }
+}

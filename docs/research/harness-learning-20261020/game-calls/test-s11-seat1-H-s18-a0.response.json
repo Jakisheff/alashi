@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.881,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар в итоговом ранге не учитывается, а buy лишь поднял бы цену для соперника с 9 товарами.\"}",
+          "reasoning_content": "Final round market. I have 0 goods. Buy and sell? If I buy goods now, I can sell later this market phase? Market only one action — buy then can't sell. Buying 3 units then selling not possible this round. Cash doesn't count goods. So buy is pointless. Pass.\n\nWait, sell_price — buying shifts counter back allowing rival 2 (9 goods) to sell higher? Counter currently 2, price 9. Buying moves counter back, raising price for participant 2 who sells after me — bad for me. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498758,
+    "id": "2026102020191310ceb3fef9d44919",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020191310ceb3fef9d44919",
+    "usage": {
+      "completion_tokens": 153,
+      "completion_tokens_details": {
+        "reasoning_tokens": 115
+      },
+      "prompt_tokens": 3570,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3723
+    }
+  }
+}

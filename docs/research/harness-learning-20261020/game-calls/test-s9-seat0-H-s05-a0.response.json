@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.681,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Produce даёт 2 товара без риска изъятия, сохраняя cash для аукциона раунда 4.\"}",
+          "reasoning_content": "Round 2 action. I have 17 cash, president, influence 2. Shuttle gives 3 goods (risk? grey goods confiscated 25% at border—shuttle grey goods may be seized). Produce gives 2 safely. Sold counter 5, price next 5/unit... produce 2 goods worth ~5 each = 10. Shuttle 3 grey ~ 75% keep. Cash is fine; round 4 auction needs cash ≥9 but cash will devaluate (cash/100*62). Produce is safe value.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496455,
+    "id": "20261020194051d168aa9b7bca4ca4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194051d168aa9b7bca4ca4",
+    "usage": {
+      "completion_tokens": 146,
+      "completion_tokens_details": {
+        "reasoning_tokens": 110
+      },
+      "prompt_tokens": 3412,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 3558
+    }
+  }
+}

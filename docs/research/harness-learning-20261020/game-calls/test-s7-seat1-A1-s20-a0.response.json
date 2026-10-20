@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.36,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Финальный раунд: товары и влияние уже почти не влияют на выплату, взятки лишь перекачивают cash соперникам.\"}",
+          "reasoning_content": "Final round, action phase. Goods useless now (no more market). Bribe to gain influence: max influence gives 5% bank commission = 2.5M plus? Currently influence 1 vs rival 2,2; tie-break cash higher, so rivals win max influence. Gaining 2 influence (10M bribe) costs 10M, gains max influence → 5% of bank (50M) = 2.5M... bank is 50M? license_bid 20M added → bank 50M. 5% commission = 2.5M. Also vote_weight in law matters little (final law, card 0-ish). Not worth 10M for 2.5M. Also bribing gives cash to rival. So pass.\n\nBut wait: cash rank matters for payout 50:30:15. Bribing reduces own cash and raises rival's. Pass is best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496886,
+    "id": "20261020194755cd342e62589a48cd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194755cd342e62589a48cd",
+    "usage": {
+      "completion_tokens": 231,
+      "completion_tokens_details": {
+        "reasoning_tokens": 192
+      },
+      "prompt_tokens": 5312,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 5543
+    }
+  }
+}

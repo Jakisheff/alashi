@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.956,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Бесплатно беру 3 товара через shuttle для будущих продаж, сохраняя кэш и влияние президента.\"}",
+          "reasoning_content": "I'm president already with influence 2. Goods worth selling later: shuttle gives 3 goods, price counter 7 → price ~3? Sold_counter 7, prices [12,10,9,8,7,6,5,4,3,3,2...] — next unit price 3. 3 goods ~9 alashi gross, but I could buy back? Selling 3 gives ~8 alashi. Shuttle expected ~0.75*3 goods... worth ~6 alashi. Produce gives 2 goods ~5 alashi. Also keeping presidency gives bank control. I already lead cash. Choose shuttle (3 goods, no cash cost).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496962,
+    "id": "202610201949171e3e6104220e4e56",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201949171e3e6104220e4e56",
+    "usage": {
+      "completion_tokens": 171,
+      "completion_tokens_details": {
+        "reasoning_tokens": 137
+      },
+      "prompt_tokens": 3589,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 3760
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.419,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Налог 10% hurts мои продажи раунда 6; veto гарантированно отклоняет закон.\"}",
+          "reasoning_content": "Law 1: налог 10% на будущие продажи. У меня 2 товара и promissory 27.5, продам в раунде 6. Налог 10% снизит выручку — на 2 единицы по цене ~7 это ~1.4 alashi потерь. Также соперники продают. Голосую no или veto. Президент — я (holder 2). Мои вес 2, соперники по 1 (не пропускали? они сделали действия, вес 1). yes нужны строго больше no. Если vote_no: no=2, соперники могут yes=2 → закон принят. Veto гарантирует отклонение. Потеря ~10% продаж ~2-4 alashi. Veto безопасен, но если бы закон был полезен... налог мне вредит. Veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499486,
+    "id": "20261020203117974a8e7559f84440",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203117974a8e7559f84440",
+    "usage": {
+      "completion_tokens": 216,
+      "completion_tokens_details": {
+        "reasoning_tokens": 183
+      },
+      "prompt_tokens": 3621,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3837
+    }
+  }
+}

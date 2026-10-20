@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.602,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Shuttle даёт 3 товара вместо 2 при нуле cash, риск изъятия сейчас отсутствует.\"}",
+          "reasoning_content": "Round 1 action, no cash. shuttle gives 3 goods vs produce 2. Grey goods risk only at border with tariff; no tariff now. Shuttle better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499066,
+    "id": "2026102020242018fca7f21a89497c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020242018fca7f21a89497c",
+    "usage": {
+      "completion_tokens": 67,
+      "completion_tokens_details": {
+        "reasoning_tokens": 34
+      },
+      "prompt_tokens": 2389,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2456
+    }
+  }
+}

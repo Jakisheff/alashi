@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.72,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Шаттл даёт больше товара для финальной продажи, ожидаемая выручка выше, риск умеренный.\"}",
+          "reasoning_content": "Produce gives 2 goods; shuttle gives 3 goods but 25% seizure risk? I'm license holder. Next market round 6 last market; sell 3 goods at price ~? sold_counter=3 → prices start at 8 for unit? Actually next unit index 3: price 8. Selling 3 goods yields 8+7+6=21. Selling 2: 15. Risk 25% losing all on shuttle. Expected: shuttle 0.75*21=15.75 vs produce 15. Shuttle slightly better, but if seized, lose 2 existing goods too — after_own_action shows goods 3 (2+1?). Wait shuttle gives 3+subsidy=3, but state shows goods:3 after, meaning one of existing 2 was seized. Seizure happens at action; if seizure, lose all goods. Expected value similar; shuttle slightly higher. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499625,
+    "id": "202610202033379037723b175143a0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202033379037723b175143a0",
+    "usage": {
+      "completion_tokens": 230,
+      "completion_tokens_details": {
+        "reasoning_tokens": 193
+      },
+      "prompt_tokens": 3216,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3446
+    }
+  }
+}

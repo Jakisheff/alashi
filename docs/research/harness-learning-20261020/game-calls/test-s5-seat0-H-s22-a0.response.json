@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.696,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Финальный раунд: товар уже продан, максимальное влияние я получу и так по богатству, взятое только снижает cash — пропускаю.\"}",
+          "reasoning_content": "Round 6 action, last round. Goods 0, cash 71.4. No further market. Goods useless. Bribe gives influence → 5% commission (~2 alashi) to max influence holder. Bribing reduces my cash (rank) but gives influence. Currently influence all 1, tie broken by cash+hard, so I'd win commission anyway (71.4 max). So bribes pointless. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499149,
+    "id": "202610202025426bf44f91c8c54e46",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202025426bf44f91c8c54e46",
+    "usage": {
+      "completion_tokens": 139,
+      "completion_tokens_details": {
+        "reasoning_tokens": 90
+      },
+      "prompt_tokens": 5992,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 6131
+    }
+  }
+}

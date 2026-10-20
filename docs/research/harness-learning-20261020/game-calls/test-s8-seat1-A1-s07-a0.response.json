@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.803,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон отклоняется даже без вето (0 за, 3 против), veto не нужен.\"}",
+          "reasoning_content": "All voted No; law fails anyway. Veto unnecessary but harmless. Law 6 would lower prices next market. Votes: yes 0, no 3 — fails. So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498942,
+    "id": "202610202022192b10554df3734648",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202022192b10554df3734648",
+    "usage": {
+      "completion_tokens": 69,
+      "completion_tokens_details": {
+        "reasoning_tokens": 38
+      },
+      "prompt_tokens": 2232,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2301
+    }
+  }
+}

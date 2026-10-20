@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.113,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Это последний раунд: товары бесполезны, а взятки только уменьшат мой cash, оставляя меня лидером по богатству и влиянию.\"}",
+          "reasoning_content": "Last round action. No more market. Goods worthless. Influence already 3, president, max influence bonus likely mine. Bribe loses cash for nothing (cash transferred away hurts rank). So pass, keep cash 63.8M. Wait—cash devaluation at round start? Round 6 already applied. Final ranking: cash+hard. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498040,
+    "id": "202610202007153b5ae726ae224f06",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202007153b5ae726ae224f06",
+    "usage": {
+      "completion_tokens": 117,
+      "completion_tokens_details": {
+        "reasoning_tokens": 72
+      },
+      "prompt_tokens": 5013,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 5130
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.806,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Продажа всего в кредит по высоким ценам даёт выручку после девальвации, максимизируя итоговый капитал.\"}",
+          "reasoning_content": "Prices start at 12,10,9. Selling 3 units: 31. Cash 54.75. But round 6 also market — selling now vs later: prices decline as others sell too. Others have 3 goods each. Devaluation: cash → floor/100*62 (~38% loss for cash). Selling now loses to devaluation; sell_credit: promissory added after devaluation — better! sell_credit 3 units: promissory 38.75 added to cash next round without devaluation, but then round 6 devaluation hits it... actually round 6: cash=floor/100*62, then promissory added. Final round: promissory not redeemed. So credit sold in round 5 paid at round 6 start — that's fine, counted? No! \"После последнего раунда вексель не погашается.\" Round 6 promissory is added to cash at round start (before market), so it's paid. Wait \"Начало раунда 2 и далее: cash=..., затем promissory прибавляется\" — so at round 6 start promissory is added and becomes cash. That's fine, counted in rank. So sell_credit 3: cash stays 23.75 (devalued to ~14.7 at r6) plus promissory 38.75 → ~53.4. sell 3 now: 54.75 → devalued 33.9. Credit much better. Also opponents will sell in round 5, pushing prices down for round 6. I sell all 3 now at top prices via credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497254,
+    "id": "202610201954069a634d2f9e514560",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201954069a634d2f9e514560",
+    "usage": {
+      "completion_tokens": 382,
+      "completion_tokens_details": {
+        "reasoning_tokens": 343
+      },
+      "prompt_tokens": 3265,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3647
+    }
+  }
+}

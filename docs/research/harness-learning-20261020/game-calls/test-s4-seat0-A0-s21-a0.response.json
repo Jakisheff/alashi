@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.672,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Карта 7 повышает цены следующего рынка, которого уже нет — эффект нейтрален, можно пропустить.\"}",
+          "reasoning_content": "Card 7: +2 prices next market — but market phase is done; round 6 market already finished, so no effect. Harmless either way. Vote yes or pass. Pass simplest; also card has no negative effect. Vote_yes fine. Choose pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497300,
+    "id": "20261020195455760597781c1e49ab",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195455760597781c1e49ab",
+    "usage": {
+      "completion_tokens": 89,
+      "completion_tokens_details": {
+        "reasoning_tokens": 54
+      },
+      "prompt_tokens": 3398,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3487
+    }
+  }
+}

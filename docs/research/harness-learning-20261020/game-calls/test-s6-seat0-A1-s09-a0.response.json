@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.404,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Закон 1 вводит налог 10% на мои будущие продажи — отклоняю.\"}",
+          "reasoning_content": "Law 1: tax 10% on future sales. I plan to sell more later (I have promissory 27.5). Tax hurts me. I'm president; veto kills the tax regardless of votes. Veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496712,
+    "id": "202610201945095c68e5c938404a27",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201945095c68e5c938404a27",
+    "usage": {
+      "completion_tokens": 79,
+      "completion_tokens_details": {
+        "reasoning_tokens": 48
+      },
+      "prompt_tokens": 2556,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2635
+    }
+  }
+}

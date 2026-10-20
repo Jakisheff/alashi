@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.613,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Гарантированные 4 товара без риска изъятия лучше рискованного шаттла.\"}",
+          "reasoning_content": "I'm faction 1, cash 2.25M, far behind. Produce gives 4 goods. Shuttle gives 5 but risk only if tariff red. No tariff active; shuttle default risk? Shuttle has ~25% seizure risk generally? \"шаттл даёт 3+subsidy товара; серый товар может быть изъят с вероятностью около 25%\" — shuttle risky. Expected: produce 2 vs shuttle 3 with 25% loss all... only grey at risk. Shuttle expected ~3*0.75=2.25 plus... actually grey goods count. Shuttle slightly better EV but variance; grey goods may face border fees later. Produce safer: 4 goods guaranteed. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496832,
+    "id": "20261020194706d6693085da794772",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194706d6693085da794772",
+    "usage": {
+      "completion_tokens": 183,
+      "completion_tokens_details": {
+        "reasoning_tokens": 152
+      },
+      "prompt_tokens": 2707,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2890
+    }
+  }
+}

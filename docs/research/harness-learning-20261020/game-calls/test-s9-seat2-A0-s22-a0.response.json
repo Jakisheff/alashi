@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.331,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон даёт влияние беднейшему, а не мне; моё влияние 3 остаётся максимальным, поэтому veto не нужно.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest (фракция 0, cash 2.57M). It passed already with my yes (5 vs 3). Veto would kill it. Poorest is фракция 0 → they get influence 2, still below my 3. But influence max matters for extra 5% — I still have 3 max. So pass, let it pass. Veto unnecessary.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496673,
+    "id": "202610201944293416c64477de4b68",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201944293416c64477de4b68",
+    "usage": {
+      "completion_tokens": 131,
+      "completion_tokens_details": {
+        "reasoning_tokens": 90
+      },
+      "prompt_tokens": 3273,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3404
+    }
+  }
+}

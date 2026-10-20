@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.773,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продаю весь товар по высокой цене (9/8/7), сохраняя достаточно cash для аукциона в раунде 4.\"}",
+          "reasoning_content": "Round 3 market, price index 2 → 9 alashi. Later prices fall; keep cash ≥9 for round 4 auction. Sell now at 9. Sell 2 units: keep 1 good, cash 55.75k? Wait cash 38.75 alashi; sell 2 gives cash 55.75 alashi — plenty ≥16 for auction. Prices later drop to 8,7... Selling 3 now at 9 best? Sold counter at 2, prices 9,8,7. Sell 3 = 9+8+7=24. Later price lower. Sell all 3 now, cash 62.75. Choice 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499347,
+    "id": "20261020202902860e9deac9c647fe",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202902860e9deac9c647fe",
+    "usage": {
+      "completion_tokens": 184,
+      "completion_tokens_details": {
+        "reasoning_tokens": 144
+      },
+      "prompt_tokens": 3163,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3347
+    }
+  }
+}

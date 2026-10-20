@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.82,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар и влияние уже не конвертируются, я и так президент и лидер по cash+влиянию — пропускаю.\"}",
+          "reasoning_content": "I'm president, richest. Last round: influence matters only for max influence bonus (5% of bank ≈ 2.1 alashi) and presidency veto. I have influence 2, rival 0 has influence 2 too, tie_order [1,0,2] favors me, so I'm president anyway. Vote weight: law could give +1 influence to richest — that's me either way (cash leader). Bribing to get influence 3 secures max-influence bonus... but bribe costs cash. Max influence bonus 5% bank ≈ 2.1 alashi; influence 3 vs 2 with tie break: max influence — rival 0 also has 2, tie broken by cash+hard — I'm richer. So I already win max influence. No need to bribe.\n\nAction: produce gives goods but no market left (this was last market). Goods worthless at end. So pass. Choice 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499026,
+    "id": "20261020202341cb3817bc3f454214",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202341cb3817bc3f454214",
+    "usage": {
+      "completion_tokens": 237,
+      "completion_tokens_details": {
+        "reasoning_tokens": 197
+      },
+      "prompt_tokens": 5055,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 5292
+    }
+  }
+}

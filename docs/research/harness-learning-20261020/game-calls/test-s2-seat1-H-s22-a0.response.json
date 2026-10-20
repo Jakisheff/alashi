@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.021,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Закон 3 (субсидия) в последнем раунде уже не влияет на выплаты, нейтрально воздерживаюсь.\"}",
+          "reasoning_content": "Закон 3 — subsidy_goods=1, но раунд 6 — последний, действие action уже прошло (закон применяется в следующем раунде? subsidy для produce, больше раундов нет). Бесполезен. У меня нет товара, rivals имеют по 2 товара для продажи... продажи уже прошли. Закон не влияет на выплаты (cash уже фиксирован, кроме roof нет). Президент — я? holder_idx=0, нет. Голос: idx0 уже Yes. Нейтрально — abstain/pass. Закон 3 безвреден. Пропущенное действие дало +2 к весу — но уже поздно. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499952,
+    "id": "20261020203905241a98f50e1347c2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203905241a98f50e1347c2",
+    "usage": {
+      "completion_tokens": 186,
+      "completion_tokens_details": {
+        "reasoning_tokens": 144
+      },
+      "prompt_tokens": 3835,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 4021
+    }
+  }
+}

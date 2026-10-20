@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.967,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товары больше не продаются, влияние уже максимально — pass сохраняет cash для итогового ранга.\"}",
+          "reasoning_content": "Last round's action; no more markets after this. Goods worthless, influence matters only via max-influence 5% bonus — I already hold influence 4 vs others 2 and 1. Cash stays for rank. So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496799,
+    "id": "20261020194636a4d2277f22244bed",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194636a4d2277f22244bed",
+    "usage": {
+      "completion_tokens": 80,
+      "completion_tokens_details": {
+        "reasoning_tokens": 48
+      },
+      "prompt_tokens": 5031,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 5111
+    }
+  }
+}

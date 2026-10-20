@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.058,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель не девальвируется в раунде 6, поэтому продажа в кредит даёт больше итоговой стоимости.\"}",
+          "reasoning_content": "Round 5 market. Next round cash halves (62%). Selling now at price 12 is best; sell all 3 for cash. sell_credit gives 38.75M promissory but promissory added to cash in round 6 then not devalued? Rule: cash=floor(cash/100)*62, then promissory added and reset. So promissory isn't devalued! sell_credit 3 gives 20.57 cash + 38.75 = 59.3 vs sell 51.6. Credit better since promissory skips devaluation. But final round 6: promissory after last market won't be paid... Round 6 market we sell remaining? Sell all 3 on credit now: choice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498884,
+    "id": "20261020202120ad560b74bc8244cd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202120ad560b74bc8244cd",
+    "usage": {
+      "completion_tokens": 196,
+      "completion_tokens_details": {
+        "reasoning_tokens": 160
+      },
+      "prompt_tokens": 3200,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3396
+    }
+  }
+}

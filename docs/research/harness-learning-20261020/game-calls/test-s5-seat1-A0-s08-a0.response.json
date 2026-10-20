@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.938,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Продаю весь товар в кредит: вексель не девальвируется, а карта 8 уже вышла из колоды.\"}",
+          "reasoning_content": "Prices decline with sales; selling credit gives 1.25x, risk law 8 zeroes promissory (already happened once). Sell all 3 now at high prices. But future rounds devalue cash 62%. Sell 3 via credit: promissory 30M becomes cash at round4 start. But risk: another law 8 could wipe it; law 8 already drawn? Law 8 appeared round 2 and was voted... vote_no by us; outcome unknown — law_id null now, it failed presumably. Card 8 may be discarded. Selling credit 3 gives 30M promissory → cash next round = cash + 30M, no devaluation on promissory. That's better than selling 3 now (30M cash → 62% = ~18.6M). Credit is better if not wiped. Card 8 likely gone (no repeats). Choose 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498846,
+    "id": "20261020202040cb43da26755344f8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202040cb43da26755344f8",
+    "usage": {
+      "completion_tokens": 227,
+      "completion_tokens_details": {
+        "reasoning_tokens": 189
+      },
+      "prompt_tokens": 2644,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2871
+    }
+  }
+}

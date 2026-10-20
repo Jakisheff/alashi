@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.107,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон уже отклоняется (No весит 5 против 3), veto не нужен.\"}",
+          "reasoning_content": "Card 6: price shift -2 next market (round 5). I'm selling in round 5 likely. Veto helps me. Yes=1 (idx2 weight3), No weights 3+2=5, so law fails anyway. Veto redundant but free — pass is fine. Law already fails; veto unnecessary. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497096,
+    "id": "20261020195133fae9129035f947e3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195133fae9129035f947e3",
+    "usage": {
+      "completion_tokens": 101,
+      "completion_tokens_details": {
+        "reasoning_tokens": 71
+      },
+      "prompt_tokens": 2798,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2899
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.012,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Налог 10% ударит по моей продаже 3 товаров в финале, а rivals теряют лишь часть — veto сохраняет мою выручку.\"}",
+          "reasoning_content": "Law 1: tax 10%. I have 3 goods to sell next round. Tax 10% on revenue vs competitors: opponent 0 has 10 goods, opponent 1 has 2 goods. Tax hurts 0 more. But I sell 3 units at ~ high price (sold_counter 2, price ~12 with boom+2... price list [12,10,...] with shift 0, boom 2 → 14). 10% tax on my ~40 alashi sales ≈ 4 alashi loss. Better to veto? Veto keeps no tax. Yes vote would impose tax on everyone's future sales; opponent 0 sells 10 goods — big loss to him, my rank competitor. Cash ranking: 0: 1.9, 1: 25.7, me: 16.6+32.5 promissory next round... Round 6 promissory adds to cash before... Start of round 6: cash devalued floor/100*62, then promissory added. So my promissory 32.5 counts. I'll be rank 0 likely. Tax reduces rival 0's round-6 revenue most. But also taxes my own 3-unit sale. My sale ~3×12=36 → tax 3.6. Rival 0 sells 10 units ≈ 60 alashi → tax 6. Net gain? Both reduce; my rank already good. Actually tax hurts me 3.6, hurts 0 by 6, hurts 1 by ~1.2. Weights: I get 50% base... bank gets tax? Tax withheld from revenue — goes where? Likely bank. Tax increases bank, distributed by rank. I'm rank 0 likely → I get 50% of it back: 3.6*0.5=1.8 back of my 3.6. Overall veto (no tax) vs yes: I'd keep more of my own revenue; tax recirculates partially. Veto better for me. Choose veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499416,
+    "id": "20261020203004692e27bfa68141c3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203004692e27bfa68141c3",
+    "usage": {
+      "completion_tokens": 475,
+      "completion_tokens_details": {
+        "reasoning_tokens": 431
+      },
+      "prompt_tokens": 3637,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 4112
+    }
+  }
+}

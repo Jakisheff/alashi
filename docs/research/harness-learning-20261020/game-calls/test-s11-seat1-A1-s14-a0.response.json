@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.411,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 10% режет мою будущую выручку от продаж, поэтому против.\"}",
+          "reasoning_content": "Law 1 = tax 10% on future sales. I plan to sell next rounds. Vote no. President is idx0 with weight 3; my no weight 1 won't block but still vote no. President likely yes? Unclear, but no tax is good for me.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499604,
+    "id": "20261020203319107afb6f0ba84060",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203319107afb6f0ba84060",
+    "usage": {
+      "completion_tokens": 89,
+      "completion_tokens_details": {
+        "reasoning_tokens": 59
+      },
+      "prompt_tokens": 2797,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2886
+    }
+  }
+}

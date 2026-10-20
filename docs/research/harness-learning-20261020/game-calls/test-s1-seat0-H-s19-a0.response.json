@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.133,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Дополнительный товар уже бесполезен, влияние не окупает взятку — пропускаю и сохраняю +2 к весу голоса.\"}",
+          "reasoning_content": "Last action round 6; goods after produce useless (no more market). Bribe gives influence → 5% bank commission (1.95 alashi) but costs 5. Bribe 5M costs 5 alashi, gains influence 2, but I already have... current influence all equal 1. Commission 5% = 1.95 alashi for max influence — not worth 5. But vote weight in law this round? President is idx2. Influence affects law vote and rank tiebreaks. My cash+0 = 47.0 vs 32.2/32.4 — I'm rank 0 already. Rank 0 share 50 vs rank 1 30: gap big (15 alashi = 14.25 payout units... bank 37 after 5%). No risk of falling. So bribe not worth it. Just produce? Goods worthless after round 6 (no market). So pass — but wait, vote_weight +2 if pass, helps law vote. Could a law 8 (аннулирует promissory) matter? I have no promissory. Tax could apply but no more sales? Round 6 market already done... actually order: market, action, law — round 6 market done, so no future sales. Laws mostly irrelevant. Pass is fine; +2 vote weight too.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496399,
+    "id": "20261020193948e8ffa8d12e8c477b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020193948e8ffa8d12e8c477b",
+    "usage": {
+      "completion_tokens": 325,
+      "completion_tokens_details": {
+        "reasoning_tokens": 281
+      },
+      "prompt_tokens": 5140,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 5465
+    }
+  }
+}

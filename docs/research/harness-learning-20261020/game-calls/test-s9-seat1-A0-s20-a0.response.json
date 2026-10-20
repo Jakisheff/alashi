@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.176,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Раунд последний, товар и влияние уже не конвертируются в выплату; любые траты или переводы соперникам лишь снижают мой итог.\"}",
+          "reasoning_content": "Last round action. Goods worth nothing (no more market). Influence matters for 5% bonus and presidency, but holder is idx2 with influence 3; I have 1. Bribe 15M to idx0? That gives influence 4 > idx2's 3, making me president for final law, and possibly max influence → extra 5% (~2.1 alashi). Bribe 15M costs 15M to me directly but money goes to idx0 (rival). Rank: I'm 69.3M vs idx0 39M vs idx2 13.3M — I'm clearly richest; payout 50% of ~40M bank ≈ 19.9M. Extra 5% = ~2M. Presidency lets me veto harmful laws. Cost 15M bribe + rival gains 15M cash. Net: -15M for me, +15M to idx0, +~2M bonus... bad.\n\nAlternatively bribe 5M to idx2 (already 3 influence) — no. Bribe to idx0 15M gives me 4 influence, max influence → +5% (~2M) plus commission tie. Not worth 15M given money transfers to a rival.\n\nJust produce? Goods useless now (no market after round 6 action... market round 6 done). So pass. Roof transfers cash to rival, no. Best: pass.\n\nActually wait: max influence holder is idx2 (3). Influence bonus 5% goes to idx2, nothing I can do cheaply? Bribe 5M gives me influence 2, not enough. So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498359,
+    "id": "20261020201229123704c545644b0c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201229123704c545644b0c",
+    "usage": {
+      "completion_tokens": 385,
+      "completion_tokens_details": {
+        "reasoning_tokens": 342
+      },
+      "prompt_tokens": 5273,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 5658
+    }
+  }
+}

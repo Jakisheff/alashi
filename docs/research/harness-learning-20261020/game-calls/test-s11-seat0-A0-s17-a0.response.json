@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.89,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Налог 20% ударит по продажам соперников, у меня товара нет — голосую за.\"}",
+          "reasoning_content": "Law 2 = 20% tax on future sales. Rival 2 already voted No. Rival 1 (weight 3) unknown. Tax hurts rivals (they sell goods), not me (no goods). Vote yes risks; if law passes tax hits rivals' sales, helping my rank. Vote yes weight 4; rival 2 No weight 2; rival 1 unknown. Yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498068,
+    "id": "2026102020074539b783e6132b404c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020074539b783e6132b404c",
+    "usage": {
+      "completion_tokens": 115,
+      "completion_tokens_details": {
+        "reasoning_tokens": 83
+      },
+      "prompt_tokens": 3079,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3194
+    }
+  }
+}

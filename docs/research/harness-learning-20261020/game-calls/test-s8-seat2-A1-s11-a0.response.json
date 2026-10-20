@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 16.76,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Покупка товара сохраняет стоимость перед девальвацией и позволит продать по высокой цене в следующем раунде.\"}",
+          "reasoning_content": "I'm idx 2, фракция, cash 43.95, no goods. Bank 30. Current market round 4 of 6. Prices: sold_counter=2, price=9. Buy moves counter back. Round 5 cash devalues 62%.\n\nShould I buy goods to sell later? Buy 3 units for 31, counter back to... buying moves counter back, cheap. Then in action I can produce etc. But wait, I'm not the president role holder? I am — holder_idx 2, \"президент\". Yes.\n\nBuying 3 units costs 31, counter back to -1? At round 5 market I could sell at high price... prices: counter 2 → price 9. Buy 3 units → counter back by 3 → -1? Likely clamps to 0, price 12. Then action produce gives 2, donkey, etc. Then round 5 sell at price 12×... but round 5 devalues cash 62% — better to buy goods now (store value), sell in round 5 via sell_credit? Promissory not devalued but added after devaluation, so sell_credit in round 5 market: cash devalued first, promissory added. Round 5 sell_credit at price 12: 6 units = 72×1.25=90 promissory. That's excellent vs cash 13 devalued to 8. So buy 3 units (31 alashi) → cash 12.95, goods 3+2 produce =5, maybe donkey →6. Sell 6 credit round 5: 72×1.25=90 promissory, minus possible tax law. Round 6 cash devalues again — promissory not devalued. Round 6 sell remaining.\n\nBuy 3 seems good: choice 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498469,
+    "id": "20261020201413af500dbbc7db424c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201413af500dbbc7db424c",
+    "usage": {
+      "completion_tokens": 429,
+      "completion_tokens_details": {
+        "reasoning_tokens": 392
+      },
+      "prompt_tokens": 2683,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 3112
+    }
+  }
+}

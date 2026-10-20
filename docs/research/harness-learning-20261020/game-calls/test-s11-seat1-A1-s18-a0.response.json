@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.2,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Последний раунд: непогашенный вексель ничего не стоит, продаю весь товар за живой cash.\"}",
+          "reasoning_content": "Last round, promissory won't be paid, so sell now. Sell 2 → cash 61.4M. Price for counter 2: price list [12,10,9,...] at sold_counter=2 → 9 per unit. Sell 2 gives 18M? Wait, sell 1 gives 9M (cash 53.4), sell 2 gives 17M (61.4). Yes sell 2, cash counts.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499641,
+    "id": "202610202033576ec4870bffd04e01",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202033576ec4870bffd04e01",
+    "usage": {
+      "completion_tokens": 132,
+      "completion_tokens_details": {
+        "reasoning_tokens": 97
+      },
+      "prompt_tokens": 3377,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3509
+    }
+  }
+}

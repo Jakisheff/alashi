@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.656,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 10% навредит моим продажам в раунде 6, голосую против.\"}",
+          "reasoning_content": "Law 1 = 10% tax on future sales. I have 2 goods to sell in round 6, plus promissory 11.25. Tax hurts me. Opponent 2 voted Yes, president is idx 0 (influence 2 vs my 1... holder_idx 0). I should vote No.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499932,
+    "id": "2026102020385042163245523a454c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020385042163245523a454c",
+    "usage": {
+      "completion_tokens": 101,
+      "completion_tokens_details": {
+        "reasoning_tokens": 69
+      },
+      "prompt_tokens": 3641,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 3742
+    }
+  }
+}

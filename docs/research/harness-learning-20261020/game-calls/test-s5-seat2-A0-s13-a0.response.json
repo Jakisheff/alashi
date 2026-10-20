@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.521,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон уже отклоняется (No 5 против Yes 3), veto не нужен.\"}",
+          "reasoning_content": "Law 1 = 10% tax. Votes: Yes 3 (idx0), No 3+2=5. Law fails anyway. Veto unnecessary—free anyway but no effect. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497231,
+    "id": "20261020195348d30d525da75c40fc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195348d30d525da75c40fc",
+    "usage": {
+      "completion_tokens": 71,
+      "completion_tokens_details": {
+        "reasoning_tokens": 42
+      },
+      "prompt_tokens": 2684,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2755
+    }
+  }
+}

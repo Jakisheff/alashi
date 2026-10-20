@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.774,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Продаю весь товар в кредит: 30 alashi векселем избегают девальвации начала раунда 5.\"}",
+          "reasoning_content": "Round 4 market, next round devaluation 62%. I'm last, cash will devalue. Sell credit gives 30 alashi promissory, cash stays 13.8 (devalues to ~8.5, then +30 promissory). But law 8 (cancel promissory) already used. Sell now gives 24 cash, devalues to 14.9+... sell credit better: promissory avoids devaluation. Also later I can sell more. But cash 13.8 will devalue to floor(13.795/100... units 1000000 alashi: cash 13.795 alashi → floor(13.795? actually floor(cash/100)... units: 13795000/100=137950 → *62 = 8552900 = 8.55 alashi). Sell all 3 now, credit: promissory 30, plus round 5 sell production. Regular sell 24 cash → devalues to floor(24*0.62)=14.88... loses. Credit sell 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496521,
+    "id": "2026102019414961e577e83b534958",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019414961e577e83b534958",
+    "usage": {
+      "completion_tokens": 269,
+      "completion_tokens_details": {
+        "reasoning_tokens": 230
+      },
+      "prompt_tokens": 2918,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 3187
+    }
+  }
+}

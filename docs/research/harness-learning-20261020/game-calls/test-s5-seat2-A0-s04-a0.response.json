@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.031,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Взятка даёт влияние 2 и пост президента с правом veto, сохраняя большую часть cash.\"}",
+          "reasoning_content": "Take influence for presidency and law veto power. Bribe 5 to idx0 gives influence 2, tying... president is highest influence + tie_order; idx1 has 1. With 2 I'd become president? Influence 2 > 1, yes. That grants veto and 5% bonus. Bribe 5 to 0 (not current president) or to 1 — giving to 0 strengthens a rival; giving to 1 gives president more cash. Either way. Better to bribe idx0? They have 17. Bribe 1 gives them 22. Hmm, either. Choose choice 4 (5 to 0) — get presidency cheaply.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497170,
+    "id": "2026102019524593cc5ece006a4a97",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019524593cc5ece006a4a97",
+    "usage": {
+      "completion_tokens": 174,
+      "completion_tokens_details": {
+        "reasoning_tokens": 141
+      },
+      "prompt_tokens": 3005,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 3179
+    }
+  }
+}

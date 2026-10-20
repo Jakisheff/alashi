@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.844,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон 7 повышает цены следующего рынка, выгодно мне как продавцу с товаром.\"}",
+          "reasoning_content": "Card 7: prices +2 next market. That benefits me as seller. Faction 1 voted yes. I should vote yes too (I'm president, holder idx 2). Yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499383,
+    "id": "20261020202940bd7fc5a2360d421a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202940bd7fc5a2360d421a",
+    "usage": {
+      "completion_tokens": 70,
+      "completion_tokens_details": {
+        "reasoning_tokens": 39
+      },
+      "prompt_tokens": 3355,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3425
+    }
+  }
+}

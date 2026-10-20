@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.096,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Карта 0 без эффектов — нет смысла тратить голос или veto.\"}",
+          "reasoning_content": "Law card 0: no effects. So vote doesn't matter; but I hold promissory 65 alashi; cards 1,2 tax, 3 subsidy, 4/5 influence, 6/7 price shift, 8 wipes promissory. Card 8 already used in round 4. Remaining cards: 1,2,3,4,5? Cards drawn without repeats. Used: 7,2(vetoed? veto means not enacted—does it count as drawn? Likely deck without repeats so 2 used),6,8,0. Remaining: 1,3,4,5. Card 0 has no effects — anything fine. Just pass to keep vote_weight? Pass means action skipped... in law phase pass just skips. Card 0 is harmless, vote_yes or pass equally. Pass choice 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499011,
+    "id": "20261020202326fe7155c2773e49a9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202326fe7155c2773e49a9",
+    "usage": {
+      "completion_tokens": 205,
+      "completion_tokens_details": {
+        "reasoning_tokens": 178
+      },
+      "prompt_tokens": 3065,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3270
+    }
+  }
+}

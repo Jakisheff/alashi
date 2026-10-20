@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.523,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Высокая цена в начале кривой — продаю оба товара за 22 alashi, укрепляя ранг богатства.\"}",
+          "reasoning_content": "Prices: counter 0, price 12. Sell 2 gives 22M? Actually candidate 3 gives +22M for 2 units (12+10). Selling later with credit risk; sell both now cash 51.3M is good for rank. Also bid own_bid=0 fine. Sell 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496364,
+    "id": "2026102019392167fc2169b0c84492",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019392167fc2169b0c84492",
+    "usage": {
+      "completion_tokens": 104,
+      "completion_tokens_details": {
+        "reasoning_tokens": 67
+      },
+      "prompt_tokens": 2786,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2890
+    }
+  }
+}

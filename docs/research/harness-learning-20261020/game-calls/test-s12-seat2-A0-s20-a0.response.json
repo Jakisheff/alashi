@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.442,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Взятка даёт влияние 2, сохраняя пост президента и комиссию 5% банка, что почти покрывает затраты.\"}",
+          "reasoning_content": "I'm president (idx2, tie_order priority). Current influence 1, opponent idx1 has 2. President = highest influence entering law; with tie_order [2,0,1], if I get influence 2, tie with idx1 (2), I win tie_order → president. Also license holder gets 5% commission with max influence? Commission goes to max influence participant; need influence ≥2 to tie with idx1 (cash tie-break: I have more cash). Bribe 5M gives influence 2 → both president and commission 5% of bank (~3.05M) plus license income already. But giving 5M to idx0 boosts rival... commission 3.05M doesn't cover 5M cost directly, but presidential veto control matters. Actually as president I can veto; my vote weight 3 already (pass action +2? seen vote_weight 3 despite influence 1 — skip action gives +2). I already have weight 3, likely president? Holder_idx=2 currently. President = highest influence at law entry; idx1 has 2 influence, weight 2, I have weight 3 due to pass... influence is 1 though. Presidency needs influence; hmm current holder is 2 already.\n\nRemaining bribe 5M to idx0 (weakest) gives me influence 2, tying idx1's 2; cash tie-break for commission: I win (bigger cash). So commission +3.05M offsets most of 5M bribe, plus securing presidency/veto. Alternatively pass saves 5M but lose commission. Roughly neutral; but bribe keeps presidency (veto) — value. Also gift to idx0 hurts idx1? No, helps idx0. Risk: idx0 cash 18.1M vs my 68M—no rank threat.\n\nChoose bribe 5M to 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499140,
+    "id": "20261020202530e1f4ff13c21c455c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202530e1f4ff13c21c455c",
+    "usage": {
+      "completion_tokens": 430,
+      "completion_tokens_details": {
+        "reasoning_tokens": 390
+      },
+      "prompt_tokens": 5262,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 5692
+    }
+  }
+}

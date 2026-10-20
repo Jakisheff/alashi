@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.704,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Бесплатный shuttle даёт больше товара с умеренным риском, выгода выше produce.\"}",
+          "reasoning_content": "Produce 2 goods cheaply vs shuttle 3 with risk. I have bid 25, cash 3.675M; produce costs nothing. Shuttle gives 3 grey goods, ~25% seizure risk. Produce is safer and free; shuttle gives 3 goods but risk. Price next market ~9 alashi/unit (sold_counter=2). Take shuttle? Risk losing all grey. Expected 3*0.75=2.25 goods vs 2 safe. Slight edge to shuttle. But if seized lose all. Expected value slightly higher: choose shuttle (choice 3).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499596,
+    "id": "2026102020331118e6a921d4454151",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020331118e6a921d4454151",
+    "usage": {
+      "completion_tokens": 151,
+      "completion_tokens_details": {
+        "reasoning_tokens": 122
+      },
+      "prompt_tokens": 3002,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 3153
+    }
+  }
+}

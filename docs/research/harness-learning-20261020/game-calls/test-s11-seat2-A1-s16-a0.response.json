@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.802,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Больше товара для финальной продажи, влияние и пост президента сохраняются\"}",
+          "reasoning_content": "I'm holder (idx2) of presidency and license. Round 5 action. Cash 11.67M, promissory 27.5M paid next round (start of round 6: cash devalued then promissory added — round 6 is last round? Six rounds, round 6 start cash devalues and promissory adds; last market round 6, promissory from credit sales in round 6 unredeemed). My promissory 27.5M becomes cash at round 6 start, then sell goods.\n\nGoods=0. Need goods to sell in round 6 market. Produce gives 2 goods free. Shuttle gives 3 goods, risk of seizure ~25% unless black tariff... tariff currently? roof_tariff 0 for me; border rules: at favorable border pay grey fee. Default — shuttle risk applies. Choose shuttle: expected 2.25 goods vs produce 2. Small gain, risk. Also president: influence 2, competitor faction1 influence 2, tie_order [0,2,1] — I win ties for presidency (idx2 before 1). Law in round 5: I'm president? holder_idx 2. Action skipped (pass) gives +2 vote weight — but if I do produce, no skip bonus. President decided by influence entering law — I'm holder.\n\nBest: shuttle for 3 goods (sell at price index... sold_counter=2, price 10). Sell 3 units next round at 10-ish, price declines. Expected value 3*10=30 vs produce 2*10=20, minus 25% risk of losing all (~7.5 loss → 22.5 expected). Slightly better than produce. But border payment risk? Fine, take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498112,
+    "id": "20261020200821fc010e0034124b14",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200821fc010e0034124b14",
+    "usage": {
+      "completion_tokens": 397,
+      "completion_tokens_details": {
+        "reasoning_tokens": 371
+      },
+      "prompt_tokens": 3617,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 4014
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.988,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 4 дал бы мне +1 влияния, но фракция 1 уже проголосовала «против» с весом 3 — закон не пройдёт, голос бессмысленен.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest by cash. I'm idx2, cash 25.07 < 32.7 < 38.4 — I'm poorest. Faction 1 already voted No (weight 3). My vote weight 1. If yes: yes=1, no=3 → fails. Vote yes doesn't help. Actually I'd get +1 influence if law passes, helping max influence bonus. Vote yes still fails (1 vs 3). So abstain/pass; law fails anyway. Choose abstain? Vote_yes fails either way. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498140,
+    "id": "202610202008560345259562554c1a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202008560345259562554c1a",
+    "usage": {
+      "completion_tokens": 175,
+      "completion_tokens_details": {
+        "reasoning_tokens": 121
+      },
+      "prompt_tokens": 3350,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3525
+    }
+  }
+}

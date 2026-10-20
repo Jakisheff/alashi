@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.572,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Девальвация обесценивает кэш, покупаю максимум товара для будущих продаж.\"}",
+          "reasoning_content": "I have 3 influence, presidency, low cash vs rivals ~37-40. Bank 30 alashi. I need money at the end. Market round 4: I can sell or buy — no goods. Buy cheap? Sold counter 4, price ~8-9. Buy 1 at 7? Candidate shows buy 1 costs 7 alashi. Then produce gives 2, sell later at maybe 6-7. Marginal. Round 4 market: buying now, later rounds 5,6 markets to sell. Prices decline as others sell. Others likely sell too. Buy 3 at 15.6 total for 3 goods, then sell... only 2 more markets (rounds 5,6). Price for selling later maybe 5-6, tax? Buy at avg ~5.2 per unit? candidate buy 3 costs 15.6 alashi for 3 goods (~5.2 each). Future sale price uncertain but others sell too, dropping counter. Probably losing. Buy 2 at 15 alashi for 2 = 7.5 each — bad. Buy 1 at 7. Then produce+subsidy maybe. Risky. Also influence 5 vote weight gives presidency in law, commission 5%. Keep cash? Round start dev flip: cash floor/100*62 — wait, that means each round cash shrinks to 62%! So holding cash loses 38%! Actually cash=floor(cash/100)*62 each round start. So I should spend or convert. Buying goods is inflation hedge. Buy 3: cash 2.04, 3 goods. Then produce 2 more =5 goods, sell in rounds 5,6. Buy 3 cost 15.6, sell 5 at maybe ~4-5 each ≈ 20-25. Better than holding (26→16.1). Buy 3 best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496954,
+    "id": "202610201949049c941d931d674f0c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201949049c941d931d674f0c",
+    "usage": {
+      "completion_tokens": 430,
+      "completion_tokens_details": {
+        "reasoning_tokens": 398
+      },
+      "prompt_tokens": 2568,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2998
+    }
+  }
+}

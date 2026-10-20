@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.51,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Взятки дороже бонуса влияния, товары и крыша уже не приносят выплаты — просто сохранить cash.\"}",
+          "reasoning_content": "Last round's action phase. Cash rank: I'm 76.2M, rival 2 has 36.4M, rival 1 has 7.2M. No more markets (this is round 6 action, then law, then end). Goods worthless. Influence: max influence gets extra 5% commission = 3.6M. Bribing loses 1 alashi per +1 influence. Bribe 5M to rival 2 → influence 3, cash 71.2M. Still rank 1 (71.2 vs 36.4). Gain 3.6M influence bonus but lose 5M cash. Bank 72M, distribution 50:30:15 plus commission. Rank 1 weight 50. So cash difference matters little; extra 5% = 3.6M vs 5M cost — not worth. Influence bonus 5% of 72M = 3.6M. Bribe 5M yields +1 influence — no, +1 per 5M. Already influence 2, others 1. I already have max influence. So pass.\n\nRoof gives 30% of my cash to rival — no. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496436,
+    "id": "20261020194030d4816eede52d4a9a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194030d4816eede52d4a9a",
+    "usage": {
+      "completion_tokens": 288,
+      "completion_tokens_details": {
+        "reasoning_tokens": 253
+      },
+      "prompt_tokens": 5451,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 5739
+    }
+  }
+}

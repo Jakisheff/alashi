@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.884,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Последний раунд: вексель не погашается, продаю весь товар за наличные.\"}",
+          "reasoning_content": "Last market. promissory not paid after last round, so sell_credit worthless. Sell 2 now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496415,
+    "id": "20261020194005bac28bb4047b4ede",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194005bac28bb4047b4ede",
+    "usage": {
+      "completion_tokens": 53,
+      "completion_tokens_details": {
+        "reasoning_tokens": 22
+      },
+      "prompt_tokens": 3324,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3377
+    }
+  }
+}

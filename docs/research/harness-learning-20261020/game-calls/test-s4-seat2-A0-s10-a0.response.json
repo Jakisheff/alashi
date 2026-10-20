@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.873,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Продажа обоих товаров по высокой текущей цене максимизирует cash до девальвации.\"}",
+          "reasoning_content": "Price ~9 (sold_counter=2). Sell 2 now = 18 alashi, cash 41.7. Bank devaluation each round 62%. Selling now good.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496726,
+    "id": "20261020194523ee27915e9769482f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194523ee27915e9769482f",
+    "usage": {
+      "completion_tokens": 68,
+      "completion_tokens_details": {
+        "reasoning_tokens": 37
+      },
+      "prompt_tokens": 2738,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2806
+    }
+  }
+}

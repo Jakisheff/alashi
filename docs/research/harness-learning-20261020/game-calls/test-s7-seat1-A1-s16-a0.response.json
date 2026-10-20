@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.061,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель гасится в раунде 6 без девальвации, поэтому sell_credit 2 единиц даёт 18,75 вместо 15 и обходит 62%-ный haircut.\"}",
+          "reasoning_content": "Round 5 of 6. After round 6 market... wait, round 6 has market, action, law. Promissory from round 5 credit gets added round 6 and devalued: floor(cash/100)*62 only applies to cash, promissory added after. Actually promissory added round 6 start then used in round 6 market. Round 6 market selling price low (sold_counter 3+). Selling 2 now at 8 and 7 = 15 alashi (matches +15). Credit gives 18.75 promissory, realizable round 6 market only if... promissory isn't cash, can't spend, but counts... final rank ignores promissory! Round 6 cash devalues 62%, but promissory added after devaluation. So sell_credit now: get 18.75 promissory, added to cash in round 6, only devalued at start of round 7 (doesn't exist)... wait round 6 start: cash=floor(cash/100)*62, then promissory added. Final: promissory after last round not redeemed — this is round 5, so it IS redeemed at round 6 start and counts. So credit is strictly better: 18.75 vs 15 cash (devalued 62% → 9.3). Sell credit all 2 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496852,
+    "id": "2026102019472385c77dc77b314f16",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019472385c77dc77b314f16",
+    "usage": {
+      "completion_tokens": 345,
+      "completion_tokens_details": {
+        "reasoning_tokens": 292
+      },
+      "prompt_tokens": 3229,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3574
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.109,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель не девальвируется и не обесценится до конца, что даёт больше итогового cash, чем немедленная продажа с девальвацией 62%.\"}",
+          "reasoning_content": "Round 5, next round cash devmultiplies by 0.62 (floor cash/100*62). Promissory added and not devalued... actually promissory added to cash next round, then round 6 no dev further? Round 6 start: cash devalued again. Selling now gives 12 alashi (price 12+boom2=14? sold_counter=0, price 12, +2 boom =14). Sell 2 units now: 26 alashi cash, but round 6 devalues to 62% → ~16.1. Sell credit: promissory 32.5 alashi, added in round 6 cash, not devalued, but after final round bill not redeemed? It's added at start of round 6, so it becomes cash then devalued at... no, only round 6 start: cash=floor(cash/100)*62 then promissory added. No more rounds, so promissory full. So credit is better: 32.5 vs 26*0.62=16.1. Sell credit 2 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497870,
+    "id": "20261020200423fd34857d3dcd437f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200423fd34857d3dcd437f",
+    "usage": {
+      "completion_tokens": 285,
+      "completion_tokens_details": {
+        "reasoning_tokens": 235
+      },
+      "prompt_tokens": 3080,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3365
+    }
+  }
+}

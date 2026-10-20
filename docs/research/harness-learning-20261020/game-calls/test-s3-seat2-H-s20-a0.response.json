@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.015,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Взятки лишь уменьшают cash; влияние уже даёт мне 5% комиссии по тай-брейку, товаров для рынка больше нет\"}",
+          "reasoning_content": "Last round action, no more market. Goods don't count. Influence matters for 5% commission (max influence). I'm tied with idx1 at 2, tie_order [1,0,2] — idx1 wins tie for cash comparison? Max influence tie broken by cash+hard then tie_order: idx1 has 25.4M vs my 27M — I win cash tie-break. So I already get the 5%. Bribes would lose cash; cash counts in rank. Best: pass? Cash 27.0M vs idx0 37.8M — I'm rank 2 likely, weights 15%. Pass keeps cash. Actually bribing raises influence but 5% commission already mine via cash tie-break. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498656,
+    "id": "20261020201731adee84e9ae034099",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201731adee84e9ae034099",
+    "usage": {
+      "completion_tokens": 200,
+      "completion_tokens_details": {
+        "reasoning_tokens": 157
+      },
+      "prompt_tokens": 4727,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 4927
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.259,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Продаю весь товар в кредит: цена ещё высока, а вексель не девальвируется и превзойдёт немедленную выручку.\"}",
+          "reasoning_content": "Sell 3 now at high prices (price 7). Round 3 of 6; but money devalues 0.62 each round — cash devalues! sell_credit gives more but promissory added then devalued too... promissory added to cash at start of next round after devaluation of cash only, so promissory survives: promissory 22.5M next round becomes cash 22.5M vs sell 18M devalued to 11.16M. Credit better. Also cash now may be needed for bribe/auction. Choose sell_credit 3 (choice 6).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499391,
+    "id": "20261020202941f21c394851c24b7c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202941f21c394851c24b7c",
+    "usage": {
+      "completion_tokens": 175,
+      "completion_tokens_details": {
+        "reasoning_tokens": 130
+      },
+      "prompt_tokens": 2507,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2682
+    }
+  }
+}

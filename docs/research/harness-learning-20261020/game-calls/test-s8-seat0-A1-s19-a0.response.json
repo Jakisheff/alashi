@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.755,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 10% вредит моим продажам последнего раунда, голосую против.\"}",
+          "reasoning_content": "Закон 1 — налог 10% на будущие продажи. У меня 2 товара, вексель 32.5, который обнулится в начале раунда 6 (cash=floor/100*62 затем promissory прибавляется). Продажи в раунде 6 — налог 10% мне вредит. Участник 2 проголосовал No. Я — да, если да>нет закон принят. Я хочу отклонить налог. vote_no: no=3 (я + 2), да нет — закон отклонён. Нет, у 1 вес 2, неизвестен голос. vote_no безопасно.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497888,
+    "id": "202610202004431417de3d4f734f5f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202004431417de3d4f734f5f",
+    "usage": {
+      "completion_tokens": 170,
+      "completion_tokens_details": {
+        "reasoning_tokens": 139
+      },
+      "prompt_tokens": 3220,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3390
+    }
+  }
+}

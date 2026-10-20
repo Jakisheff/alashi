@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.62,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":47,\"reason\":\"Cash 69.7M ≥ 16M, ставлю 12M на аукционе лицензии, основное действие следующим ходом.\"}",
+          "reasoning_content": "Cash 69.7M ≥16M → bid 12M, but recommended_choice is 44 (9M) with bid_target 12M? Context says recommended_choice 44 = 9M. Priority: follow augment.auction.recommended_choice. Rules say 12 if cash≥16. Conflict; instruction says follow recommended_choice if valid. But also after bid need main action — candidates only show bid alone. Bid 9 vs 12: 12 safer. I'll follow recommended choice 44? The rule says 12 for cash≥16. Recommended is 9 — inconsistent. Hmm, \"приоритет: следуй augment...recommended_choice\". Choose 47 (12M) per the stated numeric rule? The wrapper's own rule says 12. The recommended field contradicts its own rule. I'll go with 12M (choice 47) as per cash≥16 rule — but instruction says follow recommended. Safer to follow explicit recommended_choice 44? Instructions both... I'll follow the explicit rule text \"при cash ≥ 16 ставь 12\" → choice 47.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498722,
+    "id": "20261020201836d42dd686a3cb438e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201836d42dd686a3cb438e",
+    "usage": {
+      "completion_tokens": 269,
+      "completion_tokens_details": {
+        "reasoning_tokens": 228
+      },
+      "prompt_tokens": 9537,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 9806
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 23.607,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон 5 даёт +1 влияния мне как богатейшему, что приносит бонус 5% банка.\"}",
+          "reasoning_content": "Law 5: +1 influence richest cash — I'm richest. Player 0 voted Yes already (weight 2). Player 2 weight 1. If I vote yes: yes=6 vs no=0 → passes, I get +1 influence → 3, max influence → extra 5% bank. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497051,
+    "id": "20261020195028cccd06285df94c5b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195028cccd06285df94c5b",
+    "usage": {
+      "completion_tokens": 103,
+      "completion_tokens_details": {
+        "reasoning_tokens": 68
+      },
+      "prompt_tokens": 3364,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3467
+    }
+  }
+}

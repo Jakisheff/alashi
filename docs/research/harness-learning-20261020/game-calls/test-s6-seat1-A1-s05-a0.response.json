@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.765,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Ожидаемая ценность шаттла выше, риск изъятия компенсируется большим объёмом товара.\"}",
+          "reasoning_content": "Produce 2 vs shuttle 3 with ~25% seizure risk? Shuttle gives grey goods, seizure risk at border. Expected shuttle 3*0.75=2.25 goods, slightly better. But tariff may change; also grey goods fee. Shuttle slightly better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497028,
+    "id": "202610201950223e17621fe3764e2a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201950223e17621fe3764e2a",
+    "usage": {
+      "completion_tokens": 92,
+      "completion_tokens_details": {
+        "reasoning_tokens": 56
+      },
+      "prompt_tokens": 2165,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2257
+    }
+  }
+}

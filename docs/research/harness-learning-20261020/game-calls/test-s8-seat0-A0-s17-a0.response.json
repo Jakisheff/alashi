@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.575,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель не девальвируется, а цена сейчас высокая с бумом, поэтому продаю всё в кредит.\"}",
+          "reasoning_content": "Price now: counter 0, base 12 + boom 2 = 14 per unit. Next market (round 6) cash devalues to 62%. So sell now for hard cash is better than promissory (promissory adds next round without devaluation... actually promissory is added at start of round 6 and not devalued — sell_credit avoids devaluation!). Cash 14.35M will devalue to floor(14.353/100)*62 ≈ 8.9M. Selling credit gives promissory 46.25M added after devaluation — full value. Sell credit 3 units: promissory 46.25M, plus final market? Round 6 last market: sell remaining goods... but goods=0 after. Alternative: sell now at 14+ prices, later prices drop. Selling all 3 on credit nets 46.25M post-devaluation vs sell cash 37M→ devalued to ~22.9M. So choice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498354,
+    "id": "20261020201228f65d089071234b81",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201228f65d089071234b81",
+    "usage": {
+      "completion_tokens": 249,
+      "completion_tokens_details": {
+        "reasoning_tokens": 214
+      },
+      "prompt_tokens": 3283,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3532
+    }
+  }
+}

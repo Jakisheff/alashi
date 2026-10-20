@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.179,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Взятка даёт 4 влияния: закрепляю пост президента с veto и бонус максимального влияния, при этом кэш всё равно девальвируется.\"}",
+          "reasoning_content": "Cash devalues each round (×0.62), so spending on influence is relatively cheap; presidency + veto is powerful. I'm already president with influence 2, tied with faction 0. Bribing 5 to faction 0 gives influence 3, securing presidency. But cash loss ~5 with value retained ~3.1 later... Influence 3 vs 2 secures presidency (+5% bank = 1.5) and veto. Also influence matters for max influence prize. Bribing 10 gives influence 4 — safer against future bribes. But cash devalues so keeping cash is bad too. Moderate bribe: 10 to faction 0 (choice 5) — influence 4, still strong cash. Actually cash devaluation: money kept becomes 62%, spent becomes influence which persists. Bribing is efficient. But giving cash to rival helps their rank. Faction 0 is closest rival; giving them cash raises their rank. Yet all rivals gain anyway.\n\nCompromise: bribe 10 → influence 4, secure presidency and likely max-influence 5% bonus. Choose 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496735,
+    "id": "202610201945274cc8c2c644b0409e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201945274cc8c2c644b0409e",
+    "usage": {
+      "completion_tokens": 280,
+      "completion_tokens_details": {
+        "reasoning_tokens": 232
+      },
+      "prompt_tokens": 3703,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 3983
+    }
+  }
+}

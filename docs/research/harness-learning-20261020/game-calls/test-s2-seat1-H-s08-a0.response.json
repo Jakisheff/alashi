@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.673,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продаю весь товар по высокой цене, кэш остаётся достаточным для ставки на аукционе в раунде 4.\"}",
+          "reasoning_content": "Round 3, not auction. Need cash ≥9 in round 4. Price: sold_counter=2, price=9. Sell 3 for 9+9+8=26? Candidate sell 3 gives 24 alashi gross? Actually 33920000-9920000=24 alashi. Keep some cash — sell 3 gives cash ~33.9, but devaluation round 4 start: floor/100*62. Sell all 3 → cash 33.92, after deval ~21 alashi, still ≥16 for bid 12. Sell all now at price 9,8,7 — good. Choice 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499878,
+    "id": "202610202037531298d19100334a42",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202037531298d19100334a42",
+    "usage": {
+      "completion_tokens": 181,
+      "completion_tokens_details": {
+        "reasoning_tokens": 140
+      },
+      "prompt_tokens": 3121,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3302
+    }
+  }
+}

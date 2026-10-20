@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.159,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Последний раунд: я уже богатейший и с максимальным влиянием, никакое действие не увеличивает итоговую выплату — сохраняю cash.\"}",
+          "reasoning_content": "Last round action. Ranking by cash: 82.05 vs 34.77 vs 7.57 — I'm richest, bank 60M, I hold license income. Influence already 3, max influence gives 5% bank = 3M. Bribing reduces cash and increases influence; influence already 3 vs rivals 2 and 1 — I'm already max influence. So bribery doesn't help ranking. Best: keep cash — pass. Maybe shuttle gives goods but no next market (round 6 market done; sell possible? no more market). Goods worthless. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499002,
+    "id": "20261020202316c70ea2fb4b9649ef",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202316c70ea2fb4b9649ef",
+    "usage": {
+      "completion_tokens": 167,
+      "completion_tokens_details": {
+        "reasoning_tokens": 122
+      },
+      "prompt_tokens": 5692,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 5859
+    }
+  }
+}

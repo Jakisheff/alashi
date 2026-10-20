@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.112,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Производство даёт 2 товара без риска изъятия, сохраняя выручку и президентское влияние для закона.\"}",
+          "reasoning_content": "Round 5 action, I hold license and presidency. Goods sell later. Best: shuttle (3 goods, ~25% loss risk though — red tariff? tariff 0, so risk applies ~25% loss of grey goods). Shuttle gives 3 goods with seizure risk 25%. Produce gives 2 safely. Price at sold_counter 2... next market round 6, price ~8+ per unit. 3 units*~8=24 vs 2 units=16, expected shuttle ~18 net minus 25% loss of all goods. Produce safer. Also I need influence to stay president in law (vote weight). Cash high, opponents influence 2,2,1. Shuttle gives more goods but I already have 0 goods. Pick produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496661,
+    "id": "2026102019441655270744d64c4eab",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019441655270744d64c4eab",
+    "usage": {
+      "completion_tokens": 192,
+      "completion_tokens_details": {
+        "reasoning_tokens": 156
+      },
+      "prompt_tokens": 4872,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 5064
+    }
+  }
+}

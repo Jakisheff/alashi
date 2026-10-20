@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.855,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон 5 даёт +1 влияния мне как богатейшему, что приносит бонус 5% банка.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest (me). President is idx1 (holder), I'm not president; vote doesn't matter much—others have weight 1 each, holder weight 1. President decides? My vote counts. If I vote yes, yes=1 vs no 0 → passes, I get +1 influence → influence 2, max influence → extra 5% bank = 2.25 alashi. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498898,
+    "id": "20261020202129c2bf9874c4714bd7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202129c2bf9874c4714bd7",
+    "usage": {
+      "completion_tokens": 128,
+      "completion_tokens_details": {
+        "reasoning_tokens": 93
+      },
+      "prompt_tokens": 3353,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3481
+    }
+  }
+}

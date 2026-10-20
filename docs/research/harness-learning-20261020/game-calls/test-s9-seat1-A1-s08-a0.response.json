@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.01,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Покупаю товар за 9 по текущей цене, чтобы продать дороже после сдвига счётчика назад.\"}",
+          "reasoning_content": "Price at counter 2: 9 alashi. Buying 1 costs 9 alashi, moves counter back. We have 9.92 cash, no goods. Buying 1 unit at 9 to sell later at maybe higher price (counter back to 1, price 10). Marginal. We could buy and hold to sell round 4 at 10... small profit ~1 alashi. Also produces nothing. But shuttle grey goods later. Slight gain: buy at 9, sell at 10 = +1 alashi. Do it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497094,
+    "id": "20261020195130c299bdcdb6ec476b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195130c299bdcdb6ec476b",
+    "usage": {
+      "completion_tokens": 151,
+      "completion_tokens_details": {
+        "reasoning_tokens": 116
+      },
+      "prompt_tokens": 2321,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2472
+    }
+  }
+}

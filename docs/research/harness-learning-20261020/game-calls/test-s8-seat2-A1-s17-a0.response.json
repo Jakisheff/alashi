@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.121,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\": 0, \"reason\": \"Товары, произведённые сейчас, дали бы только невыплачиваемый вексель в финальном раунде, поэтому лучше пропустить и усилить вес голоса.\"}",
+          "reasoning_content": "Promissory 80 alashi won't pay after round 6? Wait — promissory adds to cash at start of rounds 2+; last round 6 start, promissory would still add. Round 6 start: cash=floor(cash/100)*62, then promissory adds. So current promissory 80 alashi becomes cash in round 6. Goods now: selling them round 6 would give promissory that won't be redeemed. But goods produce then could be sold... market round 6 only. Actually with promissory added at round 6 start, selling in round 6 gives promissory unredeemed — worthless. So producing goods now is useless? They'd be sold in round 6 market with promissory not paid. So pass — but pass loses vote_weight bonus? Pass gives +2 vote weight in law. I'm president with influence 2. Pass is best economically and gives vote weight.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498509,
+    "id": "202610202015032b881750347b44a2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202015032b881750347b44a2",
+    "usage": {
+      "completion_tokens": 252,
+      "completion_tokens_details": {
+        "reasoning_tokens": 200
+      },
+      "prompt_tokens": 2960,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3212
+    }
+  }
+}

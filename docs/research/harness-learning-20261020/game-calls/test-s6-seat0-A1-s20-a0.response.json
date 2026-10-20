@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.585,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Деньги потраченные на влияние или крышу превысят бонус 5% банка; товар уже негде продать, а президентство я сохраняю по tie_order.\"}",
+          "reasoning_content": "Final round action; goods useless (no market left? action then law — goods no longer sellable). Cash ranking matters, plus influence bonus 5% of bank (~2 alashi). I'm already president with influence 1 tie... others also influence 1, tie_order favors me. Bribe of 5 alashi gives influence 2, cost 5M cash; prize: 5% of 40M = 2M. Not worth it. But if I pass, influence equal 1,1,1 — max influence tie, then cash+hard, I win anyway. So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496773,
+    "id": "20261020194607e0cfdcf76f89408f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194607e0cfdcf76f89408f",
+    "usage": {
+      "completion_tokens": 173,
+      "completion_tokens_details": {
+        "reasoning_tokens": 125
+      },
+      "prompt_tokens": 5020,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 5193
+    }
+  }
+}

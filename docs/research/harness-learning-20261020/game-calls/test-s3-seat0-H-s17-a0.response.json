@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.291,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"sell_credit сохраняет выручку без девальвации в начале раунда 6, тогда как обычная продажа обесценится на 38%.\"}",
+          "reasoning_content": "Round 5 market, prices start at 12. Selling 2 units now gives 24 alashi cash (before round-6 devaluation? cash devalues each round start: cash=floor(cash/100)*62 → 38% loss). Selling credit gives promissory that isn't devalued and isn't counted in rank. Round 5 sell → devalue at round 6 start → 62%. So better sell_credit? Promissory isn't devalued but at final round 6 promissory not redeemed... selling credit in round 5 → promissory added to cash at start of round 6, then round 6 sell or keep. Promissory is added to cash at round 6 start and doesn't get devalued (devaluation happens before promissory added). Then in round 6 we can sell more at lower price. Actually final round 6: no devaluation after? Only at start of round 2+; round 7 doesn't exist, so cash from round 6 sales kept fully.\n\nSell credit 2 units now: promissory 27.5M, added round 6, no devaluation. That beats sell 2 now (24M → devalued to 14.88M). So choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499021,
+    "id": "202610202023344e352c5cda224b40",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202023344e352c5cda224b40",
+    "usage": {
+      "completion_tokens": 313,
+      "completion_tokens_details": {
+        "reasoning_tokens": 269
+      },
+      "prompt_tokens": 3556,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3869
+    }
+  }
+}

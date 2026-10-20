@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.123,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Ожидаемая выгода шаттла выше, чем производства.\"}",
+          "reasoning_content": "No cash for donkey. Produce gives 2, shuttle 3 with ~25% seizure risk. Shuttle higher expected: 3*0.75=2.25 vs 2. But safe goods vs grey—grey can be seized at border later. Shuttle slightly better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496318,
+    "id": "202610201938350008230ab722448b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201938350008230ab722448b",
+    "usage": {
+      "completion_tokens": 83,
+      "completion_tokens_details": {
+        "reasoning_tokens": 57
+      },
+      "prompt_tokens": 2389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 2472
+    }
+  }
+}

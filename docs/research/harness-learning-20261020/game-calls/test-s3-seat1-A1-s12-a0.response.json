@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.448,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":44,\"reason\":\"Ставка на лицензию выгодна при доходе 20–60 alashi: при проигрыше деньги возвращаются, при выигрыше 25 alashi даёт заметную чистую прибыль.\"}",
+          "reasoning_content": "License income 20-60 alashi vs bid cost. Rivals cash ~19.5 and ~42.8. Need to beat their bids. Bid ~20 (choice 39) likely competitive? License worth ~40 alashi average, so bidding up to ~20 alashi is profitable if I win. But I can't do bid + other action? \"After bid, main action available\" — interface offers one combined bid per turn. Actually bid uses the action? \"bid with amount participates... After bid, the main action available\" — but candidates show bid alone, so choosing bid means no goods. Rivals may bid ~15-20 too. I have tie_order priority [1,0,2], so tie goes to me. Rival 2 has 42.8 alashi cash and license EV 40 — he may bid up to ~25-30. If he bids 30 and wins, pays 30 for ~40 — bad for him but profitable? Actually expected value for him. Hmm.\n\nBid ~25 (choice 44)? If win at 25, net +15 EV plus bank grows by my bid (redistributed 50%). If lose, bid returned. Losing costs nothing. So bid as high as EV allows: license ~40 expected (20-60). Winning at bid B gives net 40-B plus share of bank increase. Bid 30 (choice 35)? But also bidding uses my action — no produce this round. Rival 2 could rationally bid up to ~35. If I bid high I either win profitable or lose and get cash back. Best to bid near EV: 25.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499590,
+    "id": "20261020203259f1d813c2a2064120",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203259f1d813c2a2064120",
+    "usage": {
+      "completion_tokens": 390,
+      "completion_tokens_details": {
+        "reasoning_tokens": 339
+      },
+      "prompt_tokens": 5359,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 5749
+    }
+  }
+}

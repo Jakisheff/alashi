@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.855,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 3 всё равно проходит (6 за против 1 против) и ни на что уже не влияет, veto не нужно.\"}",
+          "reasoning_content": "Закон 3: subsidy_goods=1 — полезно. Yes уже 4+2=6 > No 1, закон пройдёт. Veto не нужен. Но соперники имеют товары (9 и 2), subsidy поможет им тоже — но помогает и... у меня товаров 0, раунд 6 последний, рынок 6 уже прошёл (это law после market). produce в action уже сделан. Так что subsidy ни на кого больше не действует? Action phase раунда 6 уже прошла. Эффект бесполезен/безвреден. Голосование уже даёт yes. pass — выбор 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792500055,
+    "id": "20261020204050b0e64d1334b84a0f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020204050b0e64d1334b84a0f",
+    "usage": {
+      "completion_tokens": 171,
+      "completion_tokens_details": {
+        "reasoning_tokens": 134
+      },
+      "prompt_tokens": 3865,
+      "prompt_tokens_details": {
+        "cached_tokens": 3328
+      },
+      "total_tokens": 4036
+    }
+  }
+}

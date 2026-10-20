@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.898,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Кредитная продажа 2 единиц даёт 27,5 alashi векселем без девальвации и списания счётчика цены до 10/8.\"}",
+          "reasoning_content": "Sell 2 now at high price 12+10=22... but later devaluation 62%. Selling now gives 22 cash, which devalues. Selling credit gives promissory paid later without devaluation (added after). Price drops though as others sell. Credit sell 2 gives 27.5 promissory, better than 22→13.64. Choose sell_credit 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498500,
+    "id": "2026102020145559d13a7fe68a448b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020145559d13a7fe68a448b",
+    "usage": {
+      "completion_tokens": 129,
+      "completion_tokens_details": {
+        "reasoning_tokens": 82
+      },
+      "prompt_tokens": 2209,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2338
+    }
+  }
+}

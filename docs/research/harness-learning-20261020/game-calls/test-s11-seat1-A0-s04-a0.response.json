@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.624,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Продаю весь товар в кредит: выручка не девальвируется сразу и приносит 30 alashi векселем.\"}",
+          "reasoning_content": "Prices low after 2 sold (counter=2, price 9 for next). Selling 3 units at 8+... actually 9,8,7=24. Cash devalues 62% each round start; better sell later rounds? Cash floor(cash/100)*62 — cash shrinks heavily. Better hold goods? Goods don't devalue. Sell in later rounds when fewer sales... but others sell too, price drops. Sell now 3 units get 24 alashi, then devalued... holding cash across rounds loses 38% per round. Promissory adds full in round start, no devaluation? \"cash=floor(cash/100)*62, then promissory added\" — promissory not devalued until next round start. So sell_credit is best: get 30 alashi promissory, added next round as cash, then devalued once per round after. So credit sale avoids... actually sell now cash 24, next round start devalued to 14.88. Credit 30 added next round, still 30. Credit better. Sell 3 credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497607,
+    "id": "202610201959586cbc01d5289948d1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201959586cbc01d5289948d1",
+    "usage": {
+      "completion_tokens": 272,
+      "completion_tokens_details": {
+        "reasoning_tokens": 234
+      },
+      "prompt_tokens": 2320,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2592
+    }
+  }
+}

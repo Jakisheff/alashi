@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.889,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Карта 0 без эффектов, veto ничего не меняет.\"}",
+          "reasoning_content": "Law 0 no effects; veto pointless but harmless. Yes(1) vs No(0) — law passes regardless. Veto changes nothing since law 0 has no effects. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498859,
+    "id": "202610202020570ddcec52338b4e5c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202020570ddcec52338b4e5c",
+    "usage": {
+      "completion_tokens": 63,
+      "completion_tokens_details": {
+        "reasoning_tokens": 39
+      },
+      "prompt_tokens": 2519,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2582
+    }
+  }
+}

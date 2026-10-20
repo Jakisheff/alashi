@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.971,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":7,\"reason\":\"Продаю весь товар по высокой цене, сохраняю cash ≥16 для ставки 12 на аукционе лицензии в раунде 4.\"}",
+          "reasoning_content": "Cash 30.7 alashi. Auction: cash≥16 → bid 12. Market first: need cash ≥9 after market. Already 30.7, so sell some goods at high price. Sell 3 units → cash 61.7, still ≥16, bid 12 in action later. Sell credit would inflate cash next round too... sell 4 (cash 69.7). Sell credit isn't counted in rank but devaluation... sell all 4 now at price 12-9. Choose choice 7.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498714,
+    "id": "202610202018309c378db5aa504553",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202018309c378db5aa504553",
+    "usage": {
+      "completion_tokens": 154,
+      "completion_tokens_details": {
+        "reasoning_tokens": 111
+      },
+      "prompt_tokens": 3536,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3690
+    }
+  }
+}

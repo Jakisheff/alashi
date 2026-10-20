@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.064,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\": 3, \"reason\": \"Карта 0 без эффектов, исход не влияет на выплату.\"}",
+          "reasoning_content": "Law card 0 has no effects; vote doesn't matter. President is player 1 (tie_order: 1,0,2; all influence 1). vote_yes passes the no-effect law — harmless either way. Abstain: yes vs no — 0 yes vs 0 no (1 abstained). I'll just abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498400,
+    "id": "20261020201311ac2fef9cfa7e4781",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201311ac2fef9cfa7e4781",
+    "usage": {
+      "completion_tokens": 100,
+      "completion_tokens_details": {
+        "reasoning_tokens": 72
+      },
+      "prompt_tokens": 2027,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2127
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.061,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 2 вводит 20% налог на мои будущие продажи, голосую против вместе с фракцией 2.\"}",
+          "reasoning_content": "Law 2 = tax 20% future sales. We plan to sell in round 6. President is faction 0 (holder 0), not us; faction 2 voted No. We have 1 vote. Law passes if yes > no. Faction 0's vote unknown; holder may vote yes. If we vote No: no=2 (us+2). Faction 0's vote — actually holder votes too. If holder votes yes: yes=1, no=2 → fails. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498752,
+    "id": "202610202019084c1aad92aa2d4888",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202019084c1aad92aa2d4888",
+    "usage": {
+      "completion_tokens": 143,
+      "completion_tokens_details": {
+        "reasoning_tokens": 106
+      },
+      "prompt_tokens": 3491,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3634
+    }
+  }
+}

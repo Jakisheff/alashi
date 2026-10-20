@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.475,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Продам весь товар по высокой цене ради твёрдого кэша.\"}",
+          "reasoning_content": "Sell now for cash 17, later devaluation 62% hurts, but cash counts. Selling credit gives more but promissory only added next round, then devalued again at round3? Promissory added to cash at start of round3, then devalued at start of each round. Sell 2 now: cash 17. Actually maybe sell 1 each round keeps price high? Selling 2: 9+8=17. Selling 1 now at 9, counter goes to 3, later sell at 8. Similar total but avoid holding goods. Cash now devalues to 62% at round3 start... hold cash anyway. Sell 2 now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496938,
+    "id": "20261020194852ee0a95a69c5b4fbe",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194852ee0a95a69c5b4fbe",
+    "usage": {
+      "completion_tokens": 169,
+      "completion_tokens_details": {
+        "reasoning_tokens": 143
+      },
+      "prompt_tokens": 2210,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2379
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.299,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Взятка 10 даёт влияние 3 и пост президента, сохраняя cash ≥16 для ставки 12 в аукционе следующего раунда.\"}",
+          "reasoning_content": "Round 3 action, no auction. Want influence to become president? Bribing 5 to idx2 gives influence 2, tie with idx0 (influence 2). President determined at law entry: highest influence, tie_order [2,0,1] — idx2 still wins. Bribing 10 gives influence 3 → president, but cash cost 10. President in law can veto/choose. Also next round need cash ≥9 for auction. Cash 27.5, bribe 10 → 17.5, still ok for bid 12. Being president gives control of law and veto; also influence bonus 5% bank (1.5 alashi). Worth it? Bribing 10 to idx0 or idx2 — money goes to rival. Influence 3 vs rivals' 2 and 1: president. Gaining influence also boosts vote weight and max-influence bonus.\n\nAlternatively bribe 15 → influence 4, but need cash 16+ for bid 12; 12.5 <16, would bid 9. 10 bribe keeps 17.5 ≥16, bid 12. Choose 5? bribe to idx0, choice 5 (10 to idx0).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496606,
+    "id": "20261020194319d1b02b7a7748411c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194319d1b02b7a7748411c",
+    "usage": {
+      "completion_tokens": 303,
+      "completion_tokens_details": {
+        "reasoning_tokens": 258
+      },
+      "prompt_tokens": 3867,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 4170
+    }
+  }
+}

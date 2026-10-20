@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.682,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 8 сейчас ничего не меняет (векселей ни у кого нет), veto не даёт выгоды.\"}",
+          "reasoning_content": "Law 8 обнуляет promissory. У меня promissory=0, никто не имеет векселей (у всех 0). Но если закон принят, будущие promissory? Нет, обнуляет непогашенные — сейчас никто не имеет. Хм, но и я — президент, могу применить veto бесплатно. Veto блокирует принятие; без вето: Yes 2 (веса 1+1=2) vs No 0 → принято. Никакого эффекта сейчас. Но карточка 8 вытянута из колоды — без повторов. Лучше, чтобы она прошла? Она无害. Дополнительных стимулов нет. Пропустить.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498100,
+    "id": "202610202008152c1720c14d3949fb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202008152c1720c14d3949fb",
+    "usage": {
+      "completion_tokens": 183,
+      "completion_tokens_details": {
+        "reasoning_tokens": 148
+      },
+      "prompt_tokens": 2458,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2641
+    }
+  }
+}

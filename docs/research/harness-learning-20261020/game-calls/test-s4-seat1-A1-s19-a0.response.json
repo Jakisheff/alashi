@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.64,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Последний раунд: вексель не погашается, продажа обеих единиц максимизирует итоговый cash.\"}",
+          "reasoning_content": "Final round; promissory won't be repaid. Sell both goods now: cash 27.4M, competitive with player 2 (12.4M+sell 2? they may sell too but after me). Rank matters. Choice 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496655,
+    "id": "20261020194412a5e53511fd8f405c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194412a5e53511fd8f405c",
+    "usage": {
+      "completion_tokens": 89,
+      "completion_tokens_details": {
+        "reasoning_tokens": 54
+      },
+      "prompt_tokens": 3284,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3373
+    }
+  }
+}

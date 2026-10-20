@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.552,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Налог 20% действует на будущие продажи, которых после финального раунда нет — закон безвреден, голосование бессмысленно.\"}",
+          "reasoning_content": "Law 2 = 20% tax on future sales. It's the last round, law phase — no more markets. Tax irrelevant. President is idx1, not me. My vote weight 3 (passed action). Fraction 0 voted Yes (weight 1). Fraction 1 hasn't voted. Tax on future sales — after this round no more sales, so law is harmless either way. Abstain or pass. My weight 3 could pass the law; harmless. Just abstain — doesn't matter. Choose pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497424,
+    "id": "20261020195659409a56bc4f4d4e1b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195659409a56bc4f4d4e1b",
+    "usage": {
+      "completion_tokens": 153,
+      "completion_tokens_details": {
+        "reasoning_tokens": 109
+      },
+      "prompt_tokens": 3432,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3585
+    }
+  }
+}

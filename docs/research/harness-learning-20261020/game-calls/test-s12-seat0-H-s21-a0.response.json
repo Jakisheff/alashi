@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.289,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар и влияние уже не улучшают выплату: бонус максимального влияния я получаю по тай-брейку cash, поэтому просто пасую.\"}",
+          "reasoning_content": "Round 6 action, last round. Goods=0, cash leads already (50.7 vs 36.4). Influence max tie 2 with player 1; I'm holder via tie_order? tie_order [2,0,1], influence 2 vs 2 — president entered law; currently I'm holder. Final payout: 5% bank to max influence; tie broken by cash+hard then tie_order. I have most cash, so bribe 5M gives influence 3, securing the 5% bonus (worth ~1.95M) plus president in final law... but cost 5M cash vs gain 1.95M — but also prevents rival from gaining? Influence also matters for rank? No, rank is cash. The 5% bonus ~1.95M < 5M bribe. But staying president matters for final law veto — I already have veto via tie? Tie influence 2: cash tie-break favors me (50.7M). So I'm already max influence for bonus and presidency. So produce goods? Goods don't count. shuttle/produce useless for payout. So pass — save nothing but no benefit. Actually influence 2 vs 2, cash tie-break: I win bonus already. Pass, choice 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497610,
+    "id": "20261020200000f9854e3d7a864016",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200000f9854e3d7a864016",
+    "usage": {
+      "completion_tokens": 309,
+      "completion_tokens_details": {
+        "reasoning_tokens": 265
+      },
+      "prompt_tokens": 5358,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 5667
+    }
+  }
+}

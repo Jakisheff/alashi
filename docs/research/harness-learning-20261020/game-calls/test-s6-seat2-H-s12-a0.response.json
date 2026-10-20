@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.119,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Продам обе единицы по высокой цене, сохраняя cash ≥9 для аукциона.\"}",
+          "reasoning_content": "Rule: keep cash ≥9, sell. Sold counter 2, price = 9. Sell 2 now at 9 each.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496466,
+    "id": "202610201941046355c83370414f1e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201941046355c83370414f1e",
+    "usage": {
+      "completion_tokens": 57,
+      "completion_tokens_details": {
+        "reasoning_tokens": 28
+      },
+      "prompt_tokens": 3366,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3423
+    }
+  }
+}

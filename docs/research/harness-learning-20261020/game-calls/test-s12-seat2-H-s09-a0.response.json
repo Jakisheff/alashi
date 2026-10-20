@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.692,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce безопасно даёт 3 товара и сохраняет cash ≥16 для ставки 12 в аукционе раунда 4\"}",
+          "reasoning_content": "Round 3 action, need cash ≥9 for round 4 auction. Best: shuttle (grey risk ~25% loss) or produce. Produce gives 2 goods safe; shuttle 3 but 25% loss risk and border payment. Currently 1 good. Produce → 3 goods, keeps cash 35.94 ≥16 for bid 12. Shuttle expected 3*0.75+? Actually shuttle gives 3+0 grey, may be confiscated ~25% (all goods? \"изъят\" of grey goods). Expected 3 vs produce 2. But if confiscated lose everything including existing 1. Expected shuttle = 0.75*4+0? ≈3 vs produce 3. Comparable; produce safer. Choose produce (choice 1).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497563,
+    "id": "20261020195912376db2dfe8724cbf",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195912376db2dfe8724cbf",
+    "usage": {
+      "completion_tokens": 199,
+      "completion_tokens_details": {
+        "reasoning_tokens": 161
+      },
+      "prompt_tokens": 4180,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 4379
+    }
+  }
+}

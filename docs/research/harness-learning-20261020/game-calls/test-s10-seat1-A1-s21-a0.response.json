@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.706,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Финальный раунд: деньги не увеличить, а взятки стоят дороже комиссии за влияние — пропускаю.\"}",
+          "reasoning_content": "Last round, action phase. Goods worth nothing at end. I hold license already (own_bid 0). Bank 40M, commission 5% = 2M goes to max influence. My influence 3, rival 0 has 2, faction 2 has 1. Max influence holder: me (3). Payout weights 50:30:15 by cash+hard rank. My cash 42.87M vs 31.2M vs 0. Ranks likely stay. Best action: gain influence or cash? Cash counts for rank; influence gets commission 2M extra. Bribing reduces cash but gives influence—commission only 2M, not worth 5M. So pass? Produce gives goods, useless (no more market after... wait round 6: market already done). Nothing gains cash. Pass is best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497161,
+    "id": "20261020195236358d62e1d23d44a4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195236358d62e1d23d44a4",
+    "usage": {
+      "completion_tokens": 213,
+      "completion_tokens_details": {
+        "reasoning_tokens": 177
+      },
+      "prompt_tokens": 4617,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 4830
+    }
+  }
+}

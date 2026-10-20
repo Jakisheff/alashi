@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.882,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Финальный раунд: вексель не погасится, поэтому продаю весь товар по максимальной цене сейчас.\"}",
+          "reasoning_content": "Last round, promissory won't be paid after final round — actually rule: after last round promissory not redeemed. So sell_credit worthless. Sell 3 units now: cash 66.28M. But rivals sell after? Order rotates; sold_counter starts at 0, price 12 first unit. Sell all 3 now for 12+10+9=31M... yes choice 5.\n\nBut rivals then sell after me, lowering price — irrelevant. Sell 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497287,
+    "id": "20261020195444644ff233f40d4660",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195444644ff233f40d4660",
+    "usage": {
+      "completion_tokens": 140,
+      "completion_tokens_details": {
+        "reasoning_tokens": 102
+      },
+      "prompt_tokens": 3501,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3641
+    }
+  }
+}

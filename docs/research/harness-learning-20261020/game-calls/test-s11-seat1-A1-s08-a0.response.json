@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.288,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продажа всех 3 единиц даёт максимум немедленного дохода; вексель обесценится девальвациями.\"}",
+          "reasoning_content": "Price with boom: base price at counter 2 = 9, +2 = 11. Sell 3 → 11+10+9=30? Candidate 5 gives 30 alashi cash 43.64M total. Credit gives 37.5M promissory but devalued each round (~62%). Round 3 of 6, two more devaluations → 37.5*0.62^2≈14.4M vs 30M now. Sell all cash.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499573,
+    "id": "20261020203249844c865138b84c2a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203249844c865138b84c2a",
+    "usage": {
+      "completion_tokens": 146,
+      "completion_tokens_details": {
+        "reasoning_tokens": 106
+      },
+      "prompt_tokens": 2637,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2783
+    }
+  }
+}

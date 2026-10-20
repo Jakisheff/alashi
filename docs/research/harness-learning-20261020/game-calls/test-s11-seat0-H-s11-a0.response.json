@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.494,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон и так отклонён (0 yes против no), veto излишен.\"}",
+          "reasoning_content": "Закон 4: +1 влияния самому бедному. Беднейший — idx1 (8.1). Все проголосовали No — закон не принимается (yes 0 > no 4? нет). Veto не нужен. pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499984,
+    "id": "202610202039408c1c9951017e47b6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202039408c1c9951017e47b6",
+    "usage": {
+      "completion_tokens": 81,
+      "completion_tokens_details": {
+        "reasoning_tokens": 53
+      },
+      "prompt_tokens": 2977,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3058
+    }
+  }
+}

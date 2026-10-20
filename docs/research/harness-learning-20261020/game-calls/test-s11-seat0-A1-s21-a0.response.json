@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.537,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон о субсидии уже ни на что не влияет в последнем раунде, голос не меняет выплату.\"}",
+          "reasoning_content": "Law 3: subsidy_goods=1 — но раунд 6, action уже пройден; subsidy влияет на future produce, но действий больше нет. Так что закон ничего не меняет. Голосуй yes — не важно. Возможен veto? Не нужно. Vote yes.\n\nНо у соперников vote_weight 1 и 2; если они проголосуют no (2) vs yes (1) — no победит. Безразлично. Выберу vote_yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497266,
+    "id": "2026102019542330103d8cd5ec42bf",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019542330103d8cd5ec42bf",
+    "usage": {
+      "completion_tokens": 137,
+      "completion_tokens_details": {
+        "reasoning_tokens": 101
+      },
+      "prompt_tokens": 3359,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3496
+    }
+  }
+}

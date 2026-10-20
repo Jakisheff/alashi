@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.911,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Закон 8 обнуляет векселя, а у всех они уже нулевые — эффекта нет, воздерживаюсь.\"}",
+          "reasoning_content": "Law 8: обнуляет promissory. У меня promissory 0, но wait — after round 4 start, promissory was converted to cash. Everyone's promissory is 0 now. So law 8 has no effect — vote doesn't matter much. President is idx1, abstained; other idx0 not voted. Law passes if yes > no. Law 8 null — safe to abstain or pass. Vote no could block, but no effect anyway. Choose abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498606,
+    "id": "202610202016418124710a97284214",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202016418124710a97284214",
+    "usage": {
+      "completion_tokens": 147,
+      "completion_tokens_details": {
+        "reasoning_tokens": 107
+      },
+      "prompt_tokens": 3249,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3396
+    }
+  }
+}

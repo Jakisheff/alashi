@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 14.932,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":25,\"reason\":\"Ставка 10M может выиграть лицензию (доход 20–60 alashi сверх доли), проигрыш возвращается.\"}",
+          "reasoning_content": "License income 20-60 alashi is big. Bank 30 alashi only + bids. Rival 2 has 34.6 alashi cash, could outbid me (16.2). So bidding risky — if lose, money returned. Value ~40 alashi extra. I could bid all 16.2 but rival 2 can beat it. Also produce gives goods to sell.\n\nRound 4 action; auction once. If I don't win, bid returned. Opponent 2 with 34M can outbid anything I bid. So bidding is wasteful unless they don't bid. Uncertain. Given EV: chance rivals bid lower. Rival 2 richest, likely bids. Bid moderate, e.g. 10M? If returned, no loss besides... returned at close of action, fine. Bid high like 15M to maximize win chance but 2 can still beat. Maybe bid 16.2 all. But then no action? No, bid then main action still available... \"После bid доступно основное действие\" — menu offers one combined bid per turn; candidates with bid show goods=0, so bid replaces main action? It says interface offers one aggregate bid per turn. Candidates bid show no goods — so bid replaces action. Hmm \"ставка за ход\" one per turn. So bid costs producing opportunity.\n\nBetter: shuttle/produce for goods to sell in rounds 5-6, plus license contested. Cash ranks matter for payout. I think bid moderate 10M (choice 25): chance to win license ~40 alashi value vs giving up 3 goods (~15 alashi at low prices... sold_counter=3, price 8). Actually shuttle goods sell ~8,7,6 = 21 alashi. License 20-60 plus not included in rank. Expected license gain if win ~40 minus 10 bid = +30. Win prob vs opponents' 34M and 5M cash... rival 2 could bid up to 34M. Probability they don't outbid maybe 30-40%. EV modest.\n\nAlternatively skip license, take shuttle. I'll bid 10M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499881,
+    "id": "202610202037473b93138f0c3a4893",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202037473b93138f0c3a4893",
+    "usage": {
+      "completion_tokens": 485,
+      "completion_tokens_details": {
+        "reasoning_tokens": 445
+      },
+      "prompt_tokens": 4514,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 4999
+    }
+  }
+}

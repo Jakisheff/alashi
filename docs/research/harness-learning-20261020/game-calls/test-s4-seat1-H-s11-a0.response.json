@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.628,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продаю весь товар по высоким ценам, сохраняя cash для аукциона в раунде 4.\"}",
+          "reasoning_content": "Sell 3 at price 12,10,9? Sold counter 0, so prices 12,10,9 = 31M... but candidate shows 31M for 3 units? sell 3 gives +31M cash. Yes choice 5. Keep cash ≥9.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498150,
+    "id": "20261020200907c28d37915b884175",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200907c28d37915b884175",
+    "usage": {
+      "completion_tokens": 93,
+      "completion_tokens_details": {
+        "reasoning_tokens": 60
+      },
+      "prompt_tokens": 3476,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3569
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.069,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Берём shuttle: товары выгоднее продать на следующем рынке, влияние через взятки дорого и не даёт президентства из-за tie_order.\"}",
+          "reasoning_content": "Round 3 action. Influence race: rival 2 has influence 2, holder 0. Currently tie for presidency at law time matters. Getting influence 2 via bribe 5 to idx 0? But bribing to 0 gives 0 cash, hurting rank. Shuttle gives goods for selling next round. Simply produce/shuttle goods for income. My influence 1 vs 2's 2 — president at law would be idx 2. Bribing 5 alashi for +1 influence ties at 2, but tie_order favors 0 over 2 over 1, so still not president. To become president need influence 3 → bribe 10 to 0 (loses 10, gives 0 cash). Not worth it. Take shuttle for goods.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499890,
+    "id": "20261020203759c04e8b9cddbb493a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203759c04e8b9cddbb493a",
+    "usage": {
+      "completion_tokens": 203,
+      "completion_tokens_details": {
+        "reasoning_tokens": 161
+      },
+      "prompt_tokens": 4067,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 4270
+    }
+  }
+}

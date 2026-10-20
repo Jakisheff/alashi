@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.953,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"sell_credit даёт 15 alashi векселем, который в раунде 6 попадёт в cash без девальвации и налога.\"}",
+          "reasoning_content": "Round 5 market, counter reset (0 sold). Sell 2 at 12 each = 12 alashi cash. sell_credit gives promissory but round 6 start cash=floor(cash/100)*62 — promissory added after devaluation... promissory counts toward cash in round 6 but final round 6 sell_credit not repaid. Round 5 sell_credit promissory gets added at round 6 start, survives (no devaluation of promissory). Better sell_credit: 12*1.25=15 alashi promissory, added to cash at round 6 start, no tax. So choice 4 best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496529,
+    "id": "202610201942010dd8851242c5443d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201942010dd8851242c5443d",
+    "usage": {
+      "completion_tokens": 179,
+      "completion_tokens_details": {
+        "reasoning_tokens": 137
+      },
+      "prompt_tokens": 3674,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3853
+    }
+  }
+}

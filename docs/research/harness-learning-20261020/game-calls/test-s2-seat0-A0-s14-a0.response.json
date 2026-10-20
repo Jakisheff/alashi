@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.538,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Продаю всё в кредит, чтобы избежать девальвации cash в начале раунда 6.\"}",
+          "reasoning_content": "Prices drop with each sale; opponents have no goods, likely won't sell. Sell 1 now keeps price high, but opponents produce later? Round 5 market now, round 6 market last. Selling 1 at 12 vs selling 3 gives 30 total for 3 units vs selling 1 now (12) and 1 next round (12) — but only 3 units total, 2 markets left. Sell 1 each round: 24 for 2 units; selling 2 now gives 22. Better to sell 1 now, keep 2 for round 6? Round 6 I can sell 2 at prices 11,10 = 21, total 33 for 3 units. Actually selling 3 now: 12+11+10=33. Same. But round 6 start cash devaluation floor(cash/100)*62 — selling later avoids holding cash? No, devaluation applies to cash at round start. Selling now means cash devalued 62% next round! So prefer sell_credit (promissory not devalued... promissory added after devaluation). So sell all 3 on credit: promissory 38.75M, added in round 6, no devaluation. Choice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498846,
+    "id": "20261020202039c0e2d7787d704dd0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202039c0e2d7787d704dd0",
+    "usage": {
+      "completion_tokens": 297,
+      "completion_tokens_details": {
+        "reasoning_tokens": 265
+      },
+      "prompt_tokens": 3003,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3300
+    }
+  }
+}

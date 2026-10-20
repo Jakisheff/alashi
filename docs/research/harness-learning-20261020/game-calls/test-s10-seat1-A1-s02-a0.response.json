@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.646,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\": 2, \"reason\": \"Закон 8 обнуляет векселя, которых ни у кого нет — он мне бесполезен, отклоняю.\"}",
+          "reasoning_content": "Law 8 обнуляет promissory — у меня нет векселей. Но соперники могут продавать в кредит позже; обнуление в раунде 1 только сейчас. Никому пока не выгодно. Можно vote_no (veto бесплатен но не нужен). Проголосую no — карта бесполезна, и её отклонение сохраняет колоду? Нет, карты вытягиваются без повторов, отклонённая карта... вероятно уходит. vote_no безопасен.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497058,
+    "id": "20261020195053398297aa84d54e69",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195053398297aa84d54e69",
+    "usage": {
+      "completion_tokens": 147,
+      "completion_tokens_details": {
+        "reasoning_tokens": 105
+      },
+      "prompt_tokens": 2075,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2222
+    }
+  }
+}

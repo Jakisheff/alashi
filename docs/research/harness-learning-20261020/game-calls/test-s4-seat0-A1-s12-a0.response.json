@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.923,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":17,\"reason\":\"Взял влияние 2, чтобы стать президентом и контролировать законы через veto, что дороже маленькой выгоды от товара по низкой цене.\"}",
+          "reasoning_content": "Currently influence 1, others 1, tie_order [2,1,0], so president is 2 unless influence changes. Max influence bonus gives 5% of bank (~1.5 alashi) — bribe to gain influence costs cash. Bribe 5M to idx2 (current president, tie favored) gives influence 2 → likely becomes president in law, giving veto and vote weight. But cash bribe reduces rank. Influence bonus: 5% of ~30M+bank... bank=30M, 5% =1.5M < 5M bribe cost. However presidency gives veto control (avoid tax laws). Round 4 law upcoming, plus rounds 5,6 presidency determined each law by current influence. Tax law 20% exists currently (tax_bps=0 actually — law 2 was rejected). Gaining presidency lets veto bad laws — valuable.\n\nCost 5M vs 1.5M direct bonus, but controlling law rounds 4-6 could save tax. Tax 20% on ~10M sales = 2M per round. Also bribe gives recipient cash (rival gets richer). Hmm.\n\nAlternative: shuttle/produce goods for sales. Price at counter 11 = 2 alashi — low. Goods worth little. So goods less valuable; influence better.\n\nI'll choose bribe 5M to idx 2 (choice 17) to become president.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498420,
+    "id": "20261020201332672784f0dce94f56",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201332672784f0dce94f56",
+    "usage": {
+      "completion_tokens": 338,
+      "completion_tokens_details": {
+        "reasoning_tokens": 296
+      },
+      "prompt_tokens": 4417,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 4755
+    }
+  }
+}

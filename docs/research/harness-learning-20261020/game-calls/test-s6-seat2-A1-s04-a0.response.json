@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.368,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель не девальвируется в начале раунда, поэтому sell_credit всех 3 единиц по высоким ценам с бумом даёт максимум выручки.\"}",
+          "reasoning_content": "Sell 2 units cash 26 (prices: 12+2=14, 10+2=12 → 26). Others will sell too, price drops later. Sell now for cash (cash is devalued at round start 62%, but credit also devalues via promissory added after dev? Promissory added after devaluation, so credit is better!). Actually cash dev floor(cash/100)*62 at round start; promissory added after and not devalued. So sell_credit better. But after last round promissory unpaid. Now round 2 of 6, safe. Choose sell_credit 3 units = 46.25 promissory.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496464,
+    "id": "202610201940593d0ab8f14ade4538",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201940593d0ab8f14ade4538",
+    "usage": {
+      "completion_tokens": 188,
+      "completion_tokens_details": {
+        "reasoning_tokens": 142
+      },
+      "prompt_tokens": 2320,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2508
+    }
+  }
+}

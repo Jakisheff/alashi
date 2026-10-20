@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.37,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Shuttle даёт 3 товара для продажи на высоких ценах следующего рынка.\"}",
+          "reasoning_content": "Round 5 action: shuttle gives 3 goods to sell in round 6 market. But cash gets devalued at round 6 start: floor(cash/100)*62. Selling in round 6 gives ~4-5 alashi... price counter 2 → next units at 2? sold_counter=2, price list [12,10,9,...] index 2 =9? Actually price decreases as sold: sold_counter 2 means next price index 2 = 9 alashi. Wait we sold 3+3+3+2 = 11? But counter is 2? Hmm, maybe counter moves back from buys. Anyway shuttle gives 3 goods, sell at high price next market. Shuttle is best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498724,
+    "id": "202610202018409ba64d99e99f4981",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202018409ba64d99e99f4981",
+    "usage": {
+      "completion_tokens": 181,
+      "completion_tokens_details": {
+        "reasoning_tokens": 153
+      },
+      "prompt_tokens": 4299,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 4480
+    }
+  }
+}

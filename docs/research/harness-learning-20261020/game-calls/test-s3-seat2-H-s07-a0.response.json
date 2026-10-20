@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.111,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Бум повышает цену до 9, продаю весь товар по максимуму, оставляя достаточно cash для аукциона в раунде 4.\"}",
+          "reasoning_content": "Price: counter 4, price 7+2=9 per unit. Selling 3 gives 27. Boom now. Next round 4 need cash ≥9 after market — selling gives plenty. Sell all 3: cash 62.75.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498571,
+    "id": "20261020201608b04489f93c354bec",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201608b04489f93c354bec",
+    "usage": {
+      "completion_tokens": 94,
+      "completion_tokens_details": {
+        "reasoning_tokens": 52
+      },
+      "prompt_tokens": 3175,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 3269
+    }
+  }
+}

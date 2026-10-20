@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.004,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Shuttle бесплатно даёт 3 товара для продажи на рынке раунда 6 по высокой цене, что выгоднее взятки.\"}",
+          "reasoning_content": "Round 5 action. Shuttle gives 3 goods for round 6 selling. Price next round sold_counter=3, price ~8. 3 goods = ~24 alashi. Cash impact: cash devalued floor/100*62. Selling more is good. Shuttle free 3 goods — pick 3.\n\nShould I bribe for presidency? Currently influence 1 each, president idx1 by tie_order. Presidency gives veto and 5% commission. Bribe 5 alashi gives influence 2 → I become president (influence max at law). Value: 5% of bank ~2 alashi commission + control of law, plus possible roof payments. But cash 5 alashi cost vs goods worth 24 (goods rank not counted, but round 6 sell gives cash). Selling 3 goods at ~8 = 24 alashi cash → strong rank gain. Bribing 5 doesn't prevent shuttle? No, bribe consumes the action. So choose shuttle vs bribe. Shuttle gives 3 goods → ~24 alashi, dominates 5 alashi bribe. Choose 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499135,
+    "id": "2026102020252750a3f5861fd0471f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020252750a3f5861fd0471f",
+    "usage": {
+      "completion_tokens": 266,
+      "completion_tokens_details": {
+        "reasoning_tokens": 229
+      },
+      "prompt_tokens": 5294,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 5560
+    }
+  }
+}

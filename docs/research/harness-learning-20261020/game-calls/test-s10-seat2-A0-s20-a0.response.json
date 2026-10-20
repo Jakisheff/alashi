@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.5,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Налог (закон 1) касается будущих продаж, которых после финального рынка нет — можно просто пропустить.\"}",
+          "reasoning_content": "Law 1 = 10% tax on future sales. Final round — market done, tax irrelevant. Vote yes/no doesn't matter; veto also irrelevant. Just pass. But wait—law affects \"future sales\" — there are none. Any choice fine; pass simplest. But president could veto to keep things stable—no effect. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498325,
+    "id": "20261020201159a46dbc268fc04d89",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201159a46dbc268fc04d89",
+    "usage": {
+      "completion_tokens": 107,
+      "completion_tokens_details": {
+        "reasoning_tokens": 70
+      },
+      "prompt_tokens": 3261,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3368
+    }
+  }
+}

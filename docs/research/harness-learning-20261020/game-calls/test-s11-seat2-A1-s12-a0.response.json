@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.29,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Производство бесплатно даёт товар на будущую продажу; президентство и максимальное влияние уже мои по тай-брейку.\"}",
+          "reasoning_content": "I already bid 10M; my cash 18.83M. If I win auction (bid 10M), I'd have 8.83M left, plus license income 20-60. Bribing influence 4-5 secures presidency and veto power. Bribing 5M to idx0 gives influence 3, matching... rivals have influence 2 each (idx1 has 2, idx0 has 1). Wait influence: idx0=1, idx1=2, me=2. Tie_order [0,2,1]. To be president in law I need influence strictly above 2, or equal 2 and tie priority. Currently influence 2, idx1 also 2; tie_order priority 0>2>1, so I'd win presidency already. Hmm holder is me already. Bribe 5M to idx1 raises idx1 influence to 3 — bad. To idx0: idx0 becomes... bribe gives me influence, receiver just money. So bribe 5M gives me influence 3, securing presidency cheaply. But cash matters for rank. I have 18.83M, if bid wins spend 10M, then bribe 5M → 3.83M cash; richest is idx0 at 18.2M. Rank drops.\n\nBetter: keep cash. I'm already president by tie_order. But bribes also affect license auction — if I spend more, opponents might outbid? Bids already placed; opponents' cash: idx0 18.2, idx1 9.07. My 10M bid beats idx1's max possible 9.07; idx0 could bid up to 18.2. Unknown. Cash spent on bribe doesn't change my already-placed bid.\n\nAction: produce gives goods to sell next round (round 5 market). Shuttle gives 3 grey goods with confiscation risk. Produce 2 safe goods. Cash valuation: I want rank. Produce costs nothing.\n\nActually bribing to influence: influence 5% commission bonus goes to max influence holder — 5% of bank. Bank currently 30M + winning bid. 5% ≈ 1.6-2M. Bribe 5M for +1 influence → also I'm already max influence? idx1 has 2 like me, tie broken by cash+hard: I have more cash. So I already get commission. Bribe unnecessary.\n\nChoose produce (choice 1).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498080,
+    "id": "20261020200747a5c133411e844c4b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200747a5c133411e844c4b",
+    "usage": {
+      "completion_tokens": 556,
+      "completion_tokens_details": {
+        "reasoning_tokens": 517
+      },
+      "prompt_tokens": 3457,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 4013
+    }
+  }
+}

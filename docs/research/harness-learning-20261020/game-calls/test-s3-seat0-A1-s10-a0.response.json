@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.603,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 20% снизит мою будущую выручку от продаж.\"}",
+          "reasoning_content": "Card 2 = 20% tax on future sales. I plan to sell next rounds — vote no. Rival 2 is president with weight 2. My no vs their likely yes = law passes anyway? Others unknown. Still vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498451,
+    "id": "202610202014035327f0db9bd1472a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202014035327f0db9bd1472a",
+    "usage": {
+      "completion_tokens": 78,
+      "completion_tokens_details": {
+        "reasoning_tokens": 51
+      },
+      "prompt_tokens": 2552,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2630
+    }
+  }
+}

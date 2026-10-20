@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.679,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Сохраняю cash ≥9 для аукциона раунда 4; покупка по 12 невыгодна.\"}",
+          "reasoning_content": "Round 3 market, price 12. Buy 1 costs 12 (counters moves back later? Actually buy costs cash 12). Cash would drop to 6.6 — need ≥9 at round 4 market. But we have goods 0; buying goods helps future sales? Buying at 12 to sell later at maybe lower price isn't profitable. Better pass and keep cash ≥9 for auction.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498589,
+    "id": "2026102020162516534daeb7ad46c2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020162516534daeb7ad46c2",
+    "usage": {
+      "completion_tokens": 121,
+      "completion_tokens_details": {
+        "reasoning_tokens": 85
+      },
+      "prompt_tokens": 2778,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2899
+    }
+  }
+}

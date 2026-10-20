@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.014,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Последний раунд: вексель не погашается, поэтому продаю весь товар за наличные и максимизирую ранг.\"}",
+          "reasoning_content": "Final round market; promissory not redeemed after last round. So sell now (cash counts), don't sell_credit. Sell 3 gives +31M cash. But buying pushes counter back — no, sell all: cash 68.785M, top rank plus license income.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499308,
+    "id": "202610202028257a5447f81fd74775",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202028257a5447f81fd74775",
+    "usage": {
+      "completion_tokens": 98,
+      "completion_tokens_details": {
+        "reasoning_tokens": 59
+      },
+      "prompt_tokens": 3588,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3686
+    }
+  }
+}

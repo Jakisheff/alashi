@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.246,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce даёт гарантированные 3 товара при той же ожидаемой ценности, что и рискованный shuttle\"}",
+          "reasoning_content": "I'm currently leading in cash, holding 31 vs 28.64. In round 3's action, I need to pick between produce (3 goods) or shuttle (4). Later there's an auction, but that's not now. Shuttle is better.\n\nWait—however, when it comes to law, the president decides based on influence. My vote_weight=3 (pass gives +2). Shuttle gives 4 goods at the risk of 25% seizure. In expectant terms, shuttle 4*0.75=3 = produce 3. But produce is guaranteed, shuttle has a 25% chance of losing everything. Plus the border tariff—if the law doesn't pass black tariff, a 25% seizure is possible. EV is the same but variance is high, plus seizure loss is worse. Choose produce? Actually shuttle subsidy_goods=1, 3+1=4. EV equal, produce is guaranteed. Pick 1.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498176,
+    "id": "202610202009292f8f6a2beeea4482",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202009292f8f6a2beeea4482",
+    "usage": {
+      "completion_tokens": 229,
+      "completion_tokens_details": {
+        "reasoning_tokens": 195
+      },
+      "prompt_tokens": 3551,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 3780
+    }
+  }
+}

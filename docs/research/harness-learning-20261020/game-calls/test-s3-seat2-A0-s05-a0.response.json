@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.148,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Повышение цен выгодит соперников с товаром, а у меня товара нет; голос против отклоняет закон.\"}",
+          "reasoning_content": "Card 7: +2 prices next market. I have no goods (sold 2 earlier? actually I sold 2 in round 2, cash 12M after bribe of 10M to me). Wait, I received bribe: my cash 12M includes 10M bribe. Card 7 benefits sellers next round; rivals have 2 goods each, I have 0. But next round I produce. Boosting price +2 helps rivals more (they'll sell 2 goods each at +2, that's +4 alashi each to them, ~+8 to rivals vs maybe +2-4 to me). I'm president; vote_no or veto. I have weight 3, vote_no passes rejection anyway (no > yes). Vote no is fine without spending veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497943,
+    "id": "202610202005342e84af7230244640",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202005342e84af7230244640",
+    "usage": {
+      "completion_tokens": 201,
+      "completion_tokens_details": {
+        "reasoning_tokens": 166
+      },
+      "prompt_tokens": 2281,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2482
+    }
+  }
+}

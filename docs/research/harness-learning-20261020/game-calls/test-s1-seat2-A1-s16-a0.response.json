@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.317,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Беру максимум товара для продажи в финальном раунде, влияние уже максимально.\"}",
+          "reasoning_content": "I'm last in cash, president with influence 2. Need goods to sell in round 6. Shuttle gives 3 goods (risky? shuttle itself can be seized ~25%? \"серый товар может быть изъят\" — grey goods risk at border with preferential border; seizure chance applies to shuttle itself ~25%). Shuttle gives 3 goods, expected 2.25, free. Better than produce (2). But bribe to increase influence helps final 5% commission? Influence 2 vs 3 matters little (already max? others have 1). Already max influence. So get goods.\n\nCash ranking: I'm last (13.3M). Rank matters 50:30:15. Getting goods to sell next market boosts cash. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497388,
+    "id": "2026102019562199fc6466b573486d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019562199fc6466b573486d",
+    "usage": {
+      "completion_tokens": 192,
+      "completion_tokens_details": {
+        "reasoning_tokens": 160
+      },
+      "prompt_tokens": 3595,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3787
+    }
+  }
+}

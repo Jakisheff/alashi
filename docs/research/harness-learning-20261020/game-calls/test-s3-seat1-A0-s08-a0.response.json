@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.959,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продаю весь товар по высокой цене с бумом, максимизируя cash для ранга и будущих продаж уже не будет выгоднее.\"}",
+          "reasoning_content": "Sell 2 units at price 10+2=12 → +21 alashi. But selling all 3: third unit at 9+2=11. Cash counts for rank. Selling 3 gives cash 38.06 alashi, top rank. But last round is 6, promissory redeemed at round start. Sell all 3 now is good (price will drop). Choose choice 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496726,
+    "id": "202610201945223b645085e8fd412b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201945223b645085e8fd412b",
+    "usage": {
+      "completion_tokens": 127,
+      "completion_tokens_details": {
+        "reasoning_tokens": 86
+      },
+      "prompt_tokens": 2591,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2718
+    }
+  }
+}

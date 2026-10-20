@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.18,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар и влияние больше не конвертируются в выплаты, а любые переводы лишь усиливают соперников — сохраняю максимальный cash для первого ранга.\"}",
+          "reasoning_content": "Last round action; no more market after round 6? Actually round 6 has market already done, action, then law. Goods produced now can't be sold (no more market). So produce is useless. Bribes: money goes to rival, influence +1 per 5 alashi. Influence matters for 5% commission bonus: max influence gets 5% of bank ~2.75 alashi. Also presidency for law 6 round: holder currently 2 (inf 2 vs my 1). Getting influence ≥2... president = highest influence entering law; I have tie_order lowest (2,1,0), so with inf 2 I'd tie with 2 but tie_order favors 2. Need inf 3 to be president: bribe 10 to rival, cost 10 alashi to gain presidency and commission 2.75 — not worth. Passing keeps cash 56.5. Bribes just transfer cash to rivals — bad. Roof transfers cash to rival. Best: pass? But pass gives +2 vote weight, irrelevant. Pass keeps max cash, rank 1 (56.5M vs 29.9M). Pass is best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496424,
+    "id": "20261020194017bbfcfbea564444eb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194017bbfcfbea564444eb",
+    "usage": {
+      "completion_tokens": 290,
+      "completion_tokens_details": {
+        "reasoning_tokens": 244
+      },
+      "prompt_tokens": 4922,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 5212
+    }
+  }
+}

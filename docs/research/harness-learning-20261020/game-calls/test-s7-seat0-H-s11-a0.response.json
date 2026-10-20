@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.994,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":26,\"reason\":\"Аукцион: ставка 9 выше капа соперников в 8, затем сделаю основное действие.\"}",
+          "reasoning_content": "Recommendation says 9M (choice 26) since cash 22.4 ≥ 16 should be 12M... harness recommends 26 (9M). Rule says cash ≥16 → 12. But harness recommended_choice 26. Instruction says follow recommended_choice. Hmm inconsistent but told to follow it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498220,
+    "id": "202610202010183c6933c8488b44d3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202010183c6933c8488b44d3",
+    "usage": {
+      "completion_tokens": 97,
+      "completion_tokens_details": {
+        "reasoning_tokens": 64
+      },
+      "prompt_tokens": 5397,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 5494
+    }
+  }
+}

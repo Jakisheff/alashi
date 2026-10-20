@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.44,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Снижение цен мне невыгодно — у меня товар на продажу, поддерживаю «нет».\"}",
+          "reasoning_content": "Law 6: price shift -2 next market. I have 2 goods to sell round 5. Prices: counter 7 → 5,4 for 2 units, -2 → 3,2. Vote yes lowers prices — bad. Vote no. Faction 1 already voted No. I'm not president (holder 0). Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496542,
+    "id": "20261020194218605b650bcff54748",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194218605b650bcff54748",
+    "usage": {
+      "completion_tokens": 106,
+      "completion_tokens_details": {
+        "reasoning_tokens": 74
+      },
+      "prompt_tokens": 2888,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2994
+    }
+  }
+}

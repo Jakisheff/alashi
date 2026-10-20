@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.522,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Продажа в кредит всей партии даёт максимум выручки, вексель погасится в раунде 3, а к аукциону 4 cash сохранится.\"}",
+          "reasoning_content": "Sell 2 units at price 7 and 6? Counter=4 → prices 7 then 6 = 13 alashi? cash 13000000 = 13. Yes sell all now. Credit gets 16.25 promissory but cash needed for auction round 4 (need ≥9 at round 4 market). Promissory adds to cash at round start, so sell_credit also fine and more value. Round 2 sell_credit: promissory 16.25 → round 3 start cash = floor(0/100)*62=0 +16.25. Same as cash but larger. Credit is better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496600,
+    "id": "202610201943160397ffac7b3a4783",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201943160397ffac7b3a4783",
+    "usage": {
+      "completion_tokens": 181,
+      "completion_tokens_details": {
+        "reasoning_tokens": 132
+      },
+      "prompt_tokens": 2685,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2866
+    }
+  }
+}

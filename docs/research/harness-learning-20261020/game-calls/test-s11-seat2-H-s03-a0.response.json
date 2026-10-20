@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.139,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Продажа обоих товаров в кредит даёт максимум выручки с мультипликатором 1.25.\"}",
+          "reasoning_content": "Sell now at high price; credit gets 1.25x but devaluation... promissory added to cash then devalued next rounds? Cash devalues each round start (62%), promissory added after. Selling now for cash that will be devalued 62% twice before end... Actually cash floor(cash/100)*62 each round start. Selling for cash now: cash 22 devalues each round. sell_credit: promissory stays until start of next round where added after devaluation. Round 2 now, then rounds 3,4,5,6 devaluations of cash. Cash: 22 →13.64→8.46→5.24→3.25 at round 6. Promissory 27.5 added at round 3 start → cash 27.5, then devalued rounds 4,5,6: →17.05→10.57→6.55. Still sell_credit 27.5 beats 22. And in round 6 we can sell more goods. Actually keep some goods for round 6 selling? Goods produce later too. Sell all 2 now credit: promissory 27.5. Or sell 1 now, keep 1 for round 6 sell (no devaluation in round 6? promissory in round 6 not repaid, bad; cash in round 6 no devaluation after). Round 6 sell at lower price counter though. Likely sell all credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499174,
+    "id": "20261020202605f93a057354ef483e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202605f93a057354ef483e",
+    "usage": {
+      "completion_tokens": 346,
+      "completion_tokens_details": {
+        "reasoning_tokens": 310
+      },
+      "prompt_tokens": 2624,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2970
+    }
+  }
+}

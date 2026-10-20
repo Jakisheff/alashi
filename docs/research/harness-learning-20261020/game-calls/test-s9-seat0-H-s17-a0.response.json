@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.14,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Shuttle бесплатно даёт 4 товара для продажи на последнем рынке.\"}",
+          "reasoning_content": "Round 5 action. I'm richest already and president. Last market is round 6 where I can sell. Produce gives 3 goods (subsidy) for sale next round at price counter 3→ price 8. Shuttle gives 4. Shuttle free, same as produce? Shuttle 3+subsidy=4, produce 2+1=3. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496528,
+    "id": "20261020194201f00dca46add640e4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194201f00dca46add640e4",
+    "usage": {
+      "completion_tokens": 105,
+      "completion_tokens_details": {
+        "reasoning_tokens": 80
+      },
+      "prompt_tokens": 5012,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 5117
+    }
+  }
+}

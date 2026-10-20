@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.766,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 10% ударит по моим будущим продажам; мой вес 2 гарантирует отклонение.\"}",
+          "reasoning_content": "Закон 1 — налог 10% на будущие продажи. У меня 2 товара, планирую продавать. Налог вреден. Фракция 0 уже No. Если я No (вес 2), No=3 vs yes max 1 — закон отклонён. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497072,
+    "id": "20261020195109ec472642947a48d9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195109ec472642947a48d9",
+    "usage": {
+      "completion_tokens": 99,
+      "completion_tokens_details": {
+        "reasoning_tokens": 64
+      },
+      "prompt_tokens": 2601,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2700
+    }
+  }
+}

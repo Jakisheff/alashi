@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.807,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Девальвация режет кэш в начале раунда 6, поэтому выручку выгоднее держать векселем со множителем 1.25.\"}",
+          "reasoning_content": "Round 5 of 6. sell_credit promissory gets added next round then devalued by 62%... wait, cash devalues, promissory added then next round start it's cash already. Selling credit: promissory added at start of round 6, and no devaluation after (round 6 start applies to cash before adding promissory). So promissory at 1.25x price is good if you keep cash low. Cash devaluation round 6 start: floor(cash/100)*62 — loses 38%. So sell all credit, keep cash low. Cash 9.75M devalues anyway. sell_credit 3 units: promissory 38.75M vs sell now 31M cash which would devalue to ~19M. Credit better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498866,
+    "id": "202610202021008104546dca824f34",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202021008104546dca824f34",
+    "usage": {
+      "completion_tokens": 216,
+      "completion_tokens_details": {
+        "reasoning_tokens": 168
+      },
+      "prompt_tokens": 3147,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3363
+    }
+  }
+}

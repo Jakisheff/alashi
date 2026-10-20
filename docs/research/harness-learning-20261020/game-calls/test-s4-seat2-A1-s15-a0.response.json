@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.915,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель погасится в раунде 6 без девальвации, давая 27,5 млн против 22 млн при прямой продаже.\"}",
+          "reasoning_content": "Round 5 market, then round 6 devalues cash ×62%... wait cash=floor(cash/100)*62 is per-100 units? Actually that's 62% devaluation. Promissory is paid in full. So sell_credit is good, but promissory after last round isn't paid — round 5 credit pays at round 6 start. Good.\n\nBut I'm behind in cash rank (10.6 vs 23.3). License income 20-60 helps. Sell 2 now at price 12? Price counter reset to 0 (sold_counter 0 — was reset?). Price for first units: 12 alashi = 1200 units per unit. Sell 1 gives 12M, sell 2 gives 22M (12+10). Credit ×1.25: 2 units → 27.5M promissory paid in full round 6. That's clearly best: 27.5M vs 22M now. Cash after devaluation: 22M now → 13.6M +... compare: credit: 10.6M→6.57M + 27.5M = 34M; sell: 32.6M→20.2M. Credit better.\n\nChoice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498567,
+    "id": "202610202015574dd58436e67f4476",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202015574dd58436e67f4476",
+    "usage": {
+      "completion_tokens": 311,
+      "completion_tokens_details": {
+        "reasoning_tokens": 268
+      },
+      "prompt_tokens": 2961,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3272
+    }
+  }
+}

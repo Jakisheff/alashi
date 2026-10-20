@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.885,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 10% навредит моим будущим продажам; голос против даёт ничью и блокирует закон.\"}",
+          "reasoning_content": "Law 1: tax 10% future sales. I plan to sell; 0 already voted yes, 1 no. My vote: no → tie 1:1, fails? yes strictly greater than no: 1 not > 1, fails. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496507,
+    "id": "202610201941425aae9b182ffe4f68",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201941425aae9b182ffe4f68",
+    "usage": {
+      "completion_tokens": 92,
+      "completion_tokens_details": {
+        "reasoning_tokens": 57
+      },
+      "prompt_tokens": 2543,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2635
+    }
+  }
+}

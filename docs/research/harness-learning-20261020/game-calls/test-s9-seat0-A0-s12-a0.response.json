@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.739,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\": 73, \"reason\": \"Ставка 38 alashi с высокой вероятностью перебивает соперников при среднем доходе лицензии ~40, а часть ставки вернётся через банк.\"}",
+          "reasoning_content": "License worth 20-60 alashi, opponent cash ~39 and 24 alashi. Bid enough to likely win. Opponents may bid; their cash ~40 and 24. Bid maybe ~30 alashi? Expected license ~40, opponents might bid up to ~30-35. Tie order favors me (0 first). Bid 35? Actually others also face hidden bids. I have most cash. Bid 35-40 alashi to secure. Choose 35 (choice 66) — still profitable if license ≥20. Also could combine with produce? Bid then main action offered—interface offers single combined bid per turn; bid consumes... \"После bid доступно основное действие\" — but candidates list bid alone, engine handles. Just pick bid 35.\n\nMaybe opponents can't afford much after their market? They have 39.5 and 24.3. Bid 35 might not win if one bids 39. Risk vs cost. Expected value: license 20-60, mean 40; paying 35 into bank (my own bank share ~50%, so net cost less). Bank redistribution means my bid returns partly. Bid high, e.g., 38 (choice 73). I'll choose 38.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496384,
+    "id": "2026102019393663325e84fbfb409f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019393663325e84fbfb409f",
+    "usage": {
+      "completion_tokens": 303,
+      "completion_tokens_details": {
+        "reasoning_tokens": 254
+      },
+      "prompt_tokens": 7926,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 8229
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.176,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар после этого раунда уже не продать, а максимальное влияние и так у меня по кэшу при равенстве — взятка лишь отдаст кэш соперникам.\"}",
+          "reasoning_content": "Round 6 action, no more markets after? Round 6: market, action, law. Goods after action can't be sold. So produce useless. But influence matters: max influence gets 5% of bank (~2 alashi) and presidency. Currently influence 2 each, tie_order 1,0,2 — holder is 1. To gain influence: bribe 5 alashi = +1 influence. Bribe to rival increases their cash too — reduces my rank. 5% bank ≈ 1.85 alashi for max influence, but need >2 influence... bribe 5 gives influence 3, costs 5 cash and gives rival 5 cash. Value: max influence bonus ~1.85 + presidency vote power (but law 6 doesn't matter much now). Cost 5 cash lost from rank payout (~47.5% weight marginal? Actually rank already fixed top). Marginal return of cash at rank 0: 50/95 per alashi... roughly 0.5 per 1 alashi → 5 alashi costs ~2.5 payout; influence bonus gives 1.85 + 5% commission already? Commission 5% goes to max influence. Without bribe, influence tie 2-2-2, tie by cash: me 83 > others, so I get the 5% anyway. So pass. Choice 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497396,
+    "id": "202610201956287a71f97c7f0d4fbf",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201956287a71f97c7f0d4fbf",
+    "usage": {
+      "completion_tokens": 343,
+      "completion_tokens_details": {
+        "reasoning_tokens": 290
+      },
+      "prompt_tokens": 6260,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 6603
+    }
+  }
+}

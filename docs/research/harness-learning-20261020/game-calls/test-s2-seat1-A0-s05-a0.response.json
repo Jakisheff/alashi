@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.992,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Товар нужен для будущих продаж, выручка важнее веса голоса.\"}",
+          "reasoning_content": "Vote_weight 3 suggests pass action was taken? No, weight = influence + 2 if action skipped. Currently vote_weight=3 means skipping this action keeps weight 3. Produce gives goods for selling later. As president is holder 0, I'm not president. Skipped action gives +2 vote weight — valuable in law. But goods=0 and no income source... promissory gives cash next round. Goods sell later. Choose produce for long-term payoff, losing vote weight? Influence matters for president bonus. I'm idx1, tie_order last. Keeping weight 3 helps law voting. But money drives payout. I think produce: goods sell for ~5-6 alashi later. Hmm, price counter at 6 already, prices low (next units ~5). Produce 2 goods ≈ 10 alashi. Vote weight 3 vs 1 matters if I want law influence; but president decided by influence, I'm tied 1-1-1 with lowest tie. Getting goods seems better than vote weight. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499189,
+    "id": "202610202026203b0bea95dbd0494c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202026203b0bea95dbd0494c",
+    "usage": {
+      "completion_tokens": 242,
+      "completion_tokens_details": {
+        "reasoning_tokens": 215
+      },
+      "prompt_tokens": 2166,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2408
+    }
+  }
+}

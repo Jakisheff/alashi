@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.593,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Небольшая взятка закрепляет влияние и пост президента с veto на два оставшихся закона при минимальных потерях cash.\"}",
+          "reasoning_content": "I'm president with influence 3, need to hold presidency for law rounds 5-6 for veto and max-influence bonus. Rival 2 has 2 influence. A 5M bribe gives influence 4 — but money to rivals weakens my rank. Still, presidency matters (veto, 5% bonus). Cheap option: bribe 5M to idx1 (weakest). Influence 4 vs 2 — safe enough. Also produce goods for sale in round 6? Goods sold round 6 matter. But bribe uses action. Round 5 law: president decides. Round 6 law also. Keeping influence 4 secures both. Bribe 5M to idx1.\n\nActually income: I'm leading cash 40M vs 17.6M. Payout difference from rank large. 5M bribe worth security. Choose 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498064,
+    "id": "20261020200739f64026bea1464c5f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200739f64026bea1464c5f",
+    "usage": {
+      "completion_tokens": 221,
+      "completion_tokens_details": {
+        "reasoning_tokens": 184
+      },
+      "prompt_tokens": 4318,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 4539
+    }
+  }
+}

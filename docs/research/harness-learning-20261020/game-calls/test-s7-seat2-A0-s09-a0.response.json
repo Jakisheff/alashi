@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.537,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон о снижении цен мне выгоден (у меня нет товара, а соперники продают), даже если он, вероятно, не пройдёт.\"}",
+          "reasoning_content": "Card 6 shifts prices -2 next market. I'm a seller with 6 goods? Actually I have 0 goods now (sold). Faction 0 has 6 goods. Law 6 hurts prices next round; I don't plan to sell much? I have no goods, will produce/shuttle. Card 6 hurts rivals' sales. Vote yes.\n\nVote yes: yes needs > no. No has weight 2 (faction1). My weight 2 yes → tie 2-2? Faction0 abstain 1. yes=2, no=2, not strictly greater — fails. So need... can't pass anyway. Abstain leaves no=2 wins → not passed. Same result as yes. Could vote yes anyway, same. Pass equivalent. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498961,
+    "id": "20261020202235adf54b4327ff4e92",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202235adf54b4327ff4e92",
+    "usage": {
+      "completion_tokens": 204,
+      "completion_tokens_details": {
+        "reasoning_tokens": 162
+      },
+      "prompt_tokens": 2552,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2756
+    }
+  }
+}

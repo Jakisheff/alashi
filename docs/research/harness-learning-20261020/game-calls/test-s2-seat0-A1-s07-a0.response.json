@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.654,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Кредитная продажа всех 3 единиц даёт наибольшую выручку (+25%) без немедленной девальвации.\"}",
+          "reasoning_content": "Sell now at price 10 for 3 units = 31 total? price counter 0: first 12, 10, 9 = 31 alashi. Sell all 3 for cash now — cash devalues 62%, but credit promissory not taxed/devalued... sell_credit gives promissory 38.75 alashi, paid next rounds. Promissory added to cash in round start... but final round promissory not paid. Now round 3 of 6, safe. But promissory doesn't devalue — better than cash. However cash now useful for bribes/auction. Mix? Candidates only pure. sell_credit 3 gives 38.75 promissory, received at start of round 4 (added after devaluation) — actually promissory is paid into cash, then future devaluations. Either way credit is 25% better. Choose 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499688,
+    "id": "202610202034378032e1c10c124dc3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202034378032e1c10c124dc3",
+    "usage": {
+      "completion_tokens": 230,
+      "completion_tokens_details": {
+        "reasoning_tokens": 190
+      },
+      "prompt_tokens": 2586,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2816
+    }
+  }
+}

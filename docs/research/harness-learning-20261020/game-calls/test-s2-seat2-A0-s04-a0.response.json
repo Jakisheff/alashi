@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.352,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Максимальная выручка: вексель не девальвируется, карта 8 уже вышла.\"}",
+          "reasoning_content": "Sell all 3 now at high prices (12,10,9). Credit gives 38.75 promissory but devaluation round 3: cash=floor(cash/100)*62 — promissory is added to cash then devalued? \"cash=floor(cash/100)*62, then promissory is added\" — promissory is not devalued. So sell_credit 3 gives 38.75 vs 31. But promissory paid only after next round's start — risk of law 8 nullifying. Law 8 already drawn in round 1, no repeats. Safe-ish. Also card 6 price shift could reduce later, irrelevant. Sell credit 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498680,
+    "id": "20261020201755bf9fd754836a4d68",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201755bf9fd754836a4d68",
+    "usage": {
+      "completion_tokens": 182,
+      "completion_tokens_details": {
+        "reasoning_tokens": 148
+      },
+      "prompt_tokens": 2322,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2504
+    }
+  }
+}

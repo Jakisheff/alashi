@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.746,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Последний раунд: вексель не погашается, поэтому продаю весь товар за наличные.\"}",
+          "reasoning_content": "Last round, promissory won't be paid after final round. So sell (choice 3) gives 22 cash now; sell_credit worthless. Sell 2 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499793,
+    "id": "20261020203628a774f1cd3d004593",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203628a774f1cd3d004593",
+    "usage": {
+      "completion_tokens": 68,
+      "completion_tokens_details": {
+        "reasoning_tokens": 36
+      },
+      "prompt_tokens": 3355,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3423
+    }
+  }
+}

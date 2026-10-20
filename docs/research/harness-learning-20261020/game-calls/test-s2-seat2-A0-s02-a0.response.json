@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.372,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\": 3, \"reason\": \"Закон 8 сейчас ничего не меняет (векселей ни у кого нет), отказываюсь от голосования.\"}",
+          "reasoning_content": "Law 8 обнуляет promissory. У меня promissory=0, но я продаю в кредит позже — sell_credit может быть выгоден. Закон 8 плох для будущих promissory? Нет, он обнуляет текущие непогашенные. У всех 0. Но он также обнуляет promissory, созданные до закона — сейчас нет. Бесполезен/нейтрален. Президент — участник 0, я не президент. Голосую no (без разницы). Нейтрально — abstain/pass. Проголосую no, чтобы закон не принял 0 голосов да (никто не да). Pass экономит ничего. Просто abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498674,
+    "id": "202610202017476ade5adc1bd449dc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202017476ade5adc1bd449dc",
+    "usage": {
+      "completion_tokens": 191,
+      "completion_tokens_details": {
+        "reasoning_tokens": 153
+      },
+      "prompt_tokens": 2028,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2219
+    }
+  }
+}

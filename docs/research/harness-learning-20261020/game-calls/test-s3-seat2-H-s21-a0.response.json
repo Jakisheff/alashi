@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.871,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 3 (субсидия) уже не влияет на итог, рынок раунда 6 завершён — пропускаю.\"}",
+          "reasoning_content": "Law 3: subsidy_goods=1 — helps whoever produces later; no rounds left after this law (round 6 last). Subsidy affects nothing now. Votes: yes=2, no=0 already; my vote no would make 2 vs 1, still passes. Pass keeps vote_weight? Vote weight only matters for count. Doesn't matter for payout. Just pass (choice 0) — no effect either way. Actually law passing doesn't change my cash. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498661,
+    "id": "202610202017378c95a90da8f3433b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202017378c95a90da8f3433b",
+    "usage": {
+      "completion_tokens": 140,
+      "completion_tokens_details": {
+        "reasoning_tokens": 100
+      },
+      "prompt_tokens": 3801,
+      "prompt_tokens_details": {
+        "cached_tokens": 3136
+      },
+      "total_tokens": 3941
+    }
+  }
+}

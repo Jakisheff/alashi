@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.087,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":12,\"reason\":\"Цены максимальны при счётчике 0, sell_credit сохраняет полную стоимость векселя без девальвации в раунде 6.\"}",
+          "reasoning_content": "Round 5 market, sold_counter reset to 0. Prices 12,10,9,... Selling 6 units: 12+10+9+8+7+6=52. But sell vs sell_credit: cash is counted in rank at end; promissory added at start of round rounds. Round 6 market: cash = floor(cash/100)*62 then promissory added. So selling all now for 62.5M vs credit 65M paid in round 6 (added after devaluation, full value). Credit gives 65M counted fully instead of cash devalued 62%. Cash 62.5M sell now → devalued to ~38.75M next round, then round 6 sales added... Actually selling now gets cash that gets devalued at round 6 start. sell_credit: promissory 65M added intact at round 6 start, and no further devaluation after round 6 (last round). So credit better. But wait—also round 6 law card 8 could zero promissory. Risk exists. 5 cards left? Cards 0,8,3,4 used... used: 8,3,4,0. Remaining: 1,2,5,6,7. Card 8 already used (no repeats). Safe.\n\nAlso rival idx2 has 30M cash and may sell in round 6, driving prices down. Better sell now at high counter. Sell all 6 credit: choice 12.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497468,
+    "id": "20261020195740a3a7c39c24544624",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195740a3a7c39c24544624",
+    "usage": {
+      "completion_tokens": 361,
+      "completion_tokens_details": {
+        "reasoning_tokens": 316
+      },
+      "prompt_tokens": 3985,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 4346
+    }
+  }
+}

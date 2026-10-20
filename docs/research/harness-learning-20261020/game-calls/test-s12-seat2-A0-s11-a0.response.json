@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.26,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Нет товара для продажи, покупка лишь снижает cash и ранг; сохраняю деньги для аукциона лицензии.\"}",
+          "reasoning_content": "We hold presidency? holder_idx=2, yes. Bank 30 alashi. License not sold yet; own_bid=0? Bid happens in action phase.\n\nMarket round 4: price at counter 2: price list index 2 = 9. Buy? We have 0 goods. Faction 0 has 2 goods. Buying back counter to raise price? We lack goods anyway. Money: 39.8. Main income: bank share via rank and license. Better to keep cash for rank and license bid.\n\nBuy 1 unit at 9 moves counter back — pointless for us since we produce via shuttle. Just pass, keep cash.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499060,
+    "id": "202610202024134b13509e84ca42d3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202024134b13509e84ca42d3",
+    "usage": {
+      "completion_tokens": 170,
+      "completion_tokens_details": {
+        "reasoning_tokens": 134
+      },
+      "prompt_tokens": 2615,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2785
+    }
+  }
+}

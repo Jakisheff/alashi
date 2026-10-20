@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.14,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Ожидаемая выгода серой доставки выше, чем от produce.\"}",
+          "reasoning_content": "Produce vs shuttle: shuttle risk of seizure ~25%. Shuttle gives 3 vs produce 2. Expected shuttle 2.25 > 2. But tariff situation unknown; no info. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498214,
+    "id": "20261020201011153620d4b8d04239",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201011153620d4b8d04239",
+    "usage": {
+      "completion_tokens": 68,
+      "completion_tokens_details": {
+        "reasoning_tokens": 42
+      },
+      "prompt_tokens": 2638,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2706
+    }
+  }
+}

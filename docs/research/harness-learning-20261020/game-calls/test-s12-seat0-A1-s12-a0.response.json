@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.088,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Продажа в кредит избегает девальвации и сохраняет cash для аукциона лицензии в этом раунде.\"}",
+          "reasoning_content": "Sell now at price 10 (counter 1). Cash devaluation each round start kills cash though. But cash ranking matters. Round 4 of 6; cash floor(/100)*62 each round start. Selling now gives cash that will be devalued twice more; promissory added after devaluation. Sell credit avoids devaluation! sell_credit both units: promissory 23.75M, paid at round 5 start after devaluation, then devalued at round 6 start... actually promissory added to cash then reset; then round 6 cash devalued again. Better to sell hard now? 31.35M cash devalued twice: ~31.35*0.62*0.62≈12M. Credit: 23.75M added round 5, then devalued once: ~23.75*0.62≈14.7M. Credit better. Or sell now and spend? No spending available besides bribes/bids. License auction this round — cash helps bid. Hmm, bid comes from cash. Sell credit keeps cash 12.35M for bid, plus promissory income. Choose choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497228,
+    "id": "202610201953428e8e890b56ab4b74",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201953428e8e890b56ab4b74",
+    "usage": {
+      "completion_tokens": 284,
+      "completion_tokens_details": {
+        "reasoning_tokens": 246
+      },
+      "prompt_tokens": 2803,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 3087
+    }
+  }
+}

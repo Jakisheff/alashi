@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.395,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"20% налог помешает моим будущим продажам, поэтому отклоняю.\"}",
+          "reasoning_content": "Law 2 = 20% tax on sales. I'm the president. Votes: 0 Yes, 1 No. My vote: yes → 2>1 passes; no → 1 vs 2 fails. I plan to sell goods; I don't need the tax. I'll vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498706,
+    "id": "20261020201824a58dd990d15b4f0c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201824a58dd990d15b4f0c",
+    "usage": {
+      "completion_tokens": 93,
+      "completion_tokens_details": {
+        "reasoning_tokens": 64
+      },
+      "prompt_tokens": 2629,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2722
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.788,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\": 6, \"reason\": \"Вексель не девальвируется, а наличные сгорают на 38%, поэтому продать весь товар в кредит выгоднее.\"}",
+          "reasoning_content": "Prices: sold_counter=2, price at index2=9. Sell 3 units at 9,8,7 = 24. Deflation later: cash*0.62. Selling credit gives promissory paid at next round start then... actually promissory added to cash at start of next round after deflation, so credit is worth full value while cash deflates 62%. So sell_credit is better! Sell 3 credit: promissory 30 alashi, cash stays 16.25 (deflates to ~10). Cash 16.25 deflates regardless. Sell credit 3 units → prom 30. Yes, choice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496570,
+    "id": "2026102019424516a977d06b4e4005",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019424516a977d06b4e4005",
+    "usage": {
+      "completion_tokens": 180,
+      "completion_tokens_details": {
+        "reasoning_tokens": 138
+      },
+      "prompt_tokens": 2644,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2824
+    }
+  }
+}

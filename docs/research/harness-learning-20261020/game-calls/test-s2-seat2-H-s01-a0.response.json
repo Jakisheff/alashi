@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.474,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Гарантированные 2 товара без риска изъятия.\"}",
+          "reasoning_content": "R1 action, produce=2, shuttle=3 grey (risk). Produce safe.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499364,
+    "id": "2026102020292307d68b36034644a0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020292307d68b36034644a0",
+    "usage": {
+      "completion_tokens": 41,
+      "completion_tokens_details": {
+        "reasoning_tokens": 18
+      },
+      "prompt_tokens": 2389,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2430
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.218,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон всё равно отклоняется (No 6:0), veto не нужен.\"}",
+          "reasoning_content": "Law 2 = tax 20% on future sales. Votes: I'm No (3), p1 No (1), p2 No (2) → No=6 > Yes=0, law fails anyway. Veto unnecessary — pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497249,
+    "id": "2026102019540702113089f0b54760",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019540702113089f0b54760",
+    "usage": {
+      "completion_tokens": 79,
+      "completion_tokens_details": {
+        "reasoning_tokens": 51
+      },
+      "prompt_tokens": 3001,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3080
+    }
+  }
+}

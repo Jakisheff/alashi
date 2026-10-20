@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.561,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Финальный раунд: товар больше не продать, взятки снижают cash, влияние уже максимально — pass оптимален.\"}",
+          "reasoning_content": "Final round. Cash counts for ranking; only cash+hard at end matters, no more market after action/law. Goods useless (no market after action). Bribe reduces cash — bad. License income is separate, no need influence (already max influence 3 vs 1). Just pass. Actually influence max already. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499671,
+    "id": "20261020203428fad196d39fa74fc4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203428fad196d39fa74fc4",
+    "usage": {
+      "completion_tokens": 107,
+      "completion_tokens_details": {
+        "reasoning_tokens": 67
+      },
+      "prompt_tokens": 4715,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 4822
+    }
+  }
+}

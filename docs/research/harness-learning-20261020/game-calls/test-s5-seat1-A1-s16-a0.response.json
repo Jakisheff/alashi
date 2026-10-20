@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.169,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Граница льготная, плачу самому себе, получаю максимум товара для продажи в раунде 6.\"}",
+          "reasoning_content": "Round 5 action. I'm president, top cash. Round 6 remains: cash devalued 62%. Promissory 22.5M will add to cash and be wiped by devaluation? No: at start of round 6, cash=floor(cash/100)*62, then promissory added. Promissory carries into round 6 cash. Good.\n\nProduce gives 2 goods for round 6 market sell. Shuttle 3 goods but ~25% seizure risk (tariff?). Current tariff 0. Shuttle gives 3 goods. Sell price at counter 7: price list index 7 → 4 alashi? Actually after selling 3, counter=7. Round 5 I sold 3 (round 5 market sold counter now 7). Next round 6 market: I can sell again; others may sell first. Price low (~3-4). Selling 2-3 units at ~3 each = ~9 alashi, worth more than nothing.\n\nShuttle 3 goods vs produce 2. Risk 25% loss all grey goods? \"серый товар может быть изъят с вероятностью около 25%\" - shuttle goods are grey. Tariff 0 = border preferential? \"При льготной границе за серый ход платится min(cash,2 alashi)\" — current holder of X is me, so I'd pay myself. No tariff set → льготная? Black tariff protects from seizure. Current roof_tariff 0 means no tariff → grey shuttle risks 25% loss? Red tariff also 25% loss of everything. Seems tariff 0 = preferential: pay 2 alashi to me, no seizure. So shuttle free of risk? With preferential border, seizure... likely no seizure, just payment to me (self). So shuttle gives 3 goods.\n\nShuttle: choice 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497001,
+    "id": "202610201949512d0b72ed18604024",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201949512d0b72ed18604024",
+    "usage": {
+      "completion_tokens": 430,
+      "completion_tokens_details": {
+        "reasoning_tokens": 395
+      },
+      "prompt_tokens": 4509,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 4939
+    }
+  }
+}

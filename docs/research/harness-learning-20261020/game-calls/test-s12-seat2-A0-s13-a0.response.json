@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.671,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Shuttle даёт 3 товара для продажи в оставшихся раундах; риск умеренный.\"}",
+          "reasoning_content": "Bid 31 already placed; cash small. Main action: produce gives 2 goods (black? shuttle gives 3 grey goods risk). Shuttle 3 goods, ~25% confiscation risk, tariff? Round 5,6 markets remain. Price counter 3 → prices 8,7... Sell 3 gives ~24 alashi worth. Choose shuttle for 3 goods vs produce 2, but risk 25% loss and possibly tariff payments. Shuttle EV higher. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499087,
+    "id": "202610202024413880c1eb37b148ba",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202024413880c1eb37b148ba",
+    "usage": {
+      "completion_tokens": 131,
+      "completion_tokens_details": {
+        "reasoning_tokens": 100
+      },
+      "prompt_tokens": 3257,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 3388
+    }
+  }
+}

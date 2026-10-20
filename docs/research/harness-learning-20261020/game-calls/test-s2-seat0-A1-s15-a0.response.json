@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.537,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Безопасный produce даёт 2 товара под финальную продажу без риска изъятия всей партии на границе.\"}",
+          "reasoning_content": "Round 5 action. Next round 6 market final — sell for cash. Need goods for round 6. Shuttle gives 3 goods (25% seizure risk at border? tariff state: roof_tariff 0 — current tariff default? Border risk ~25% for grey... shuttle gives grey goods? Earlier shuttles went through. Actually shuttle gives grey goods subject to seizure unless black tariff. Risky. produce gives 2 goods safely. Also influence matters for final 5% bank bonus. I already hold presidency with influence 2 vs 1. Bribing 5 gives influence 3 but costs 5 alashi — influence bonus is 5% of ~70+ alashi bank ≈ 3.6... bank 50M+20M bid=70M, 5%=3.5M. Not worth 5M bribe. Better get goods safely: produce (2 goods, safe) vs shuttle (3 goods, 25% loss expected 2.25). Prices next market low (sold_counter 3, prices ~8,7,6). 2 goods vs 2.25 expected — but seizure loses all goods (whole cargo). Expected value shuttle slightly better but variance. Also law round 5 could add subsidy. Produce safe, also selling 3 in round 6 at prices ~8,7,6: extra 0.25 good ×6 = 1.5 alashi expected gain, but 25% chance lose ~21 alashi. Risk-averse: produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499781,
+    "id": "20261020203609520b8a34dae24f05",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203609520b8a34dae24f05",
+    "usage": {
+      "completion_tokens": 352,
+      "completion_tokens_details": {
+        "reasoning_tokens": 315
+      },
+      "prompt_tokens": 3984,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 4336
+    }
+  }
+}

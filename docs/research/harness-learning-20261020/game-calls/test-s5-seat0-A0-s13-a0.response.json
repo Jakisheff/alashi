@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.008,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":64,\"reason\":\"Ставка 35 alashi на лицензию с ожидаемым доходом 20–60 alashi и частичным возвратом через банк.\"}",
+          "reasoning_content": "License pays 20-60 alashi (~20-60M units) beyond bank share. Cash-rich; winning bid worth it. Bank 30M + bid. Bid moderate, say 25M (choice 54). Rivals have ~30-33M cash; need to outbid them. Bid 30M (choice 59) likely safe? They could bid all. License income expectation ~40M, so bid up to ~35M still profitable. Choose 32M (choice 61) — tie_order puts me last (1,2,0), so equal bids lose. Go 35M? That leaves 15.7M cash, but ranking counts cash, not license... ranking by cash; winner's bid goes to bank and redistributed 50:30:15, so part comes back. If I win with 35M, I get back ~50% of 65M bank. Fine, choose 35M (choice 64).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498479,
+    "id": "20261020201433a769448adb2b404f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201433a769448adb2b404f",
+    "usage": {
+      "completion_tokens": 241,
+      "completion_tokens_details": {
+        "reasoning_tokens": 200
+      },
+      "prompt_tokens": 7534,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 7775
+    }
+  }
+}

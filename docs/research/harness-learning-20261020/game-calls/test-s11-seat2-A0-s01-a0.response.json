@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.567,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Ожидаемая выгода шаттла выше при отсутствии пограничного риска.\"}",
+          "reasoning_content": "Produce is safe (2 goods) vs shuttle 3 with 25% risk. Expected: shuttle 2.25, slightly better but risk. Take produce? Shuttle EV higher. Grey goods can be confiscated at border... tariff not black yet. EV 3*0.75=2.25 vs 2. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497435,
+    "id": "20261020195713903756bdb6b54938",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195713903756bdb6b54938",
+    "usage": {
+      "completion_tokens": 99,
+      "completion_tokens_details": {
+        "reasoning_tokens": 69
+      },
+      "prompt_tokens": 1917,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2016
+    }
+  }
+}

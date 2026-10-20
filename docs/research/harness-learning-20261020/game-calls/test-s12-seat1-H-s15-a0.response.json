@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.031,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 3 даёт subsidy_goods=1 и выгоден мне; veto не нужен.\"}",
+          "reasoning_content": "Закон 3 — subsidy_goods=1, полезен мне. Проголосовал yes, закон пройдёт (yes 7 > no 0). Veto не нужен.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496633,
+    "id": "202610201943496ca7dec9f09145cc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201943496ca7dec9f09145cc",
+    "usage": {
+      "completion_tokens": 67,
+      "completion_tokens_details": {
+        "reasoning_tokens": 38
+      },
+      "prompt_tokens": 3251,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3318
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.099,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":67,\"reason\":\"Ставка 34 alashi перекрывает максимум соперников (32M), при этом половина ставки вернётся через долю банка, а лицензия даёт 20–60 alashi сверх.\"}",
+          "reasoning_content": "License income 20-60 alashi is huge compared to bank ~30 alashi. Winning bid is added to bank though — so bidding 25 just moves money to bank and back. Rivals: idx0 17M, idx2 32M. They may bid their full cash. License holder gets income beyond shares; but winning bid goes to bank, increasing pool redistributed by rank. I'm already richest, rank 1 → 50% weight. So bank money returns ~50% to me. If I bid B and win, cost ≈ B - 0.5B = 0.5B, plus license income 20-60. Also +5% commission goes to max influence — I'm tied 2,2 with tie_order priority me.\n\nRivals can also bid. Their max cash 32M. So bid ~33M should win. Bid 34M (choice 67): cost ~17M effective, license EV 40M. Good.\n\nAlso I can then still do produce? \"After bid, the main action is available\" — but interface offers one cumulative move per turn. So bid is the whole action.\n\nBid 34M (choice 67).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498870,
+    "id": "202610202021059c4c72e1573a49cf",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202021059c4c72e1573a49cf",
+    "usage": {
+      "completion_tokens": 300,
+      "completion_tokens_details": {
+        "reasoning_tokens": 247
+      },
+      "prompt_tokens": 8652,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 8952
+    }
+  }
+}

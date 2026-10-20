@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.482,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Кредитная продажа фиксирует выручку до девальвации следующего раунда.\"}",
+          "reasoning_content": "Sell now at 12; credit gives 1.25x but promissory devalues at round start (cash/100*62) — promissory is added after devaluation, so sell_credit locks value. Remaining rounds 3-6 markets. Selling 2 now cash 48.25, but devaluation at r4: 48.25→29.9. Credit: promissory 27.5 added next round undevalued. Better sell_credit 2: cash 26.25+27.5=53.75 at r4, goods 0. Sell cash 2: cash at r4 = 29.9, goods 0. Credit better despite veto risk (card 8 already drawn). Sell_credit 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496699,
+    "id": "2026102019445556d031ecb29c4fb7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019445556d031ecb29c4fb7",
+    "usage": {
+      "completion_tokens": 188,
+      "completion_tokens_details": {
+        "reasoning_tokens": 158
+      },
+      "prompt_tokens": 2525,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2713
+    }
+  }
+}

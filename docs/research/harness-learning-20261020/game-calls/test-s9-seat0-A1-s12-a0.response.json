@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.754,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель не девальвируется, а наличные обесценятся дважды до конца игры.\"}",
+          "reasoning_content": "Sell all 3 at 7 each = 21 alashi now. Later rounds cash devalues to 62% — better to hold cash? Devaluation applies to cash but promissory is not devalued. sell_credit gives 22.5 promissory, not devalued and added next round. That's better than cash 21 devalued twice (rounds 5,6 starts: floor/100*62 twice → ~8). So sell_credit all 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496974,
+    "id": "202610201949310eb73bdb29624f0f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201949310eb73bdb29624f0f",
+    "usage": {
+      "completion_tokens": 135,
+      "completion_tokens_details": {
+        "reasoning_tokens": 102
+      },
+      "prompt_tokens": 2972,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 3107
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.27,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Налог на будущие продажи уже не имеет значения в последнем раунде.\"}",
+          "reasoning_content": "Law 2: 20% tax on future sales — final round, no future sales. Irrelevant. Just pass. But veto doesn't matter; pass cheaper.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498541,
+    "id": "20261020201539bde5597a90d34d05",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201539bde5597a90d34d05",
+    "usage": {
+      "completion_tokens": 61,
+      "completion_tokens_details": {
+        "reasoning_tokens": 34
+      },
+      "prompt_tokens": 3299,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3360
+    }
+  }
+}

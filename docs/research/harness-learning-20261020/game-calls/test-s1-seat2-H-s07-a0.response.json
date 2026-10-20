@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.438,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продам все 3 единицы по высокой цене, чтобы иметь cash ≥ 16 для ставки 12 в аукционе раунда 4.\"}",
+          "reasoning_content": "Round 3 market, need cash≥9 in r4. Price at sold_counter=4 is 7. Sell 3 → cash 37.2. That's good, keeps ≥16 for bid 12. Sell now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498115,
+    "id": "2026102020083216e8e02a3bd145f9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020083216e8e02a3bd145f9",
+    "usage": {
+      "completion_tokens": 90,
+      "completion_tokens_details": {
+        "reasoning_tokens": 48
+      },
+      "prompt_tokens": 3105,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3195
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.822,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Производство даёт гарантированные 2 товара без риска изъятия на границе.\"}",
+          "reasoning_content": "Round 2 action, I have 3 goods. Shuttle gives +3 goods (grey risk ~25%?). Actually shuttle gives 3 goods possibly grey. Cash 0 anyway. Produce gives 2 free. Shuttle expected value higher if not seized — but grey risk 25%. Goods worth selling later; produce is safe 2 units. Shuttle expected 3*0.75=2.25 if seizure applies. Grey seizure ~25% chance all grey lost? Choose produce safely.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498352,
+    "id": "20261020201227a2299ddbc95d4bca",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201227a2299ddbc95d4bca",
+    "usage": {
+      "completion_tokens": 130,
+      "completion_tokens_details": {
+        "reasoning_tokens": 99
+      },
+      "prompt_tokens": 2150,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2280
+    }
+  }
+}

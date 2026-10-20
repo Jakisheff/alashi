@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.354,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Взятки ради 2 млн бонуса влияния стоят дороже, товары больше не продать — пас.\"}",
+          "reasoning_content": "Final round action, no more sales. Goods worthless, influence matters only for max-influence bonus (5% of bank = ~2 alashi after commission? commission 5% goes to max influence). Bank 40M, 5% = 2M bonus. Rival 2 has influence 2, I have 1. Bribing 5M to gain influence 2 ties... at tie, better cash+hard wins: rival has 18M vs my 83M, so I'd win tie with influence 2. That gains 2M bonus but costs 5M — net loss. Also roof costs cash. So pass (choice 0). Wait, president role: rival 2 holds president with influence 2; passing action gives +2 vote weight only.\n\nBribe to reach influence 3 (10M) beats rival — costs 10M for 2M gain. Bad. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498525,
+    "id": "20261020201519240b0665f41546c1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201519240b0665f41546c1",
+    "usage": {
+      "completion_tokens": 226,
+      "completion_tokens_details": {
+        "reasoning_tokens": 192
+      },
+      "prompt_tokens": 5640,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 5866
+    }
+  }
+}

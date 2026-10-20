@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.334,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Держу товар: продажа сейчас обесценится девальвациями, продам ближе к финалу.\"}",
+          "reasoning_content": "Devaluation: cash*0.62 each round start. Prices fall as more sold. Better to sell now? Selling now gives cash which devalues 62% next rounds... but promissory also gets added then devalued later? Promissory added to cash at round start, then next round devalues again. Actually cash devalues at start of each round. Selling later keeps price low since counter already 2. Better to hold goods and sell later? Price will drop as others sell. Only 5 units total in game; counter=2. Selling 3 now gets 9+8+7=24 alashi, then devalue ~62% twice before end (rounds 3-6 starts). 24*0.62^4≈3.5... too much devaluation. Sell all now and take devaluation, or sell credit? Promissory 30 alashi gets paid at round 3 start, then devalues 0.62^3 ≈ 7.1... similar. Actually holding cash through 4 devaluations: 24*0.62^4=3.54 alashi. Sell credit: 30 paid round 3, devalued rounds 4,5,6 = 30*0.62^3=7.1. Credit better. Selling fewer now, more later: fewer devaluations but lower prices (counter rises). With only 3 goods and counter maybe rises little if others hold too. Best: sell later. But future price depends on others. Prices [12,10,9,8,7,6...] — selling in last round avoids devaluation entirely. Risk: counter rises. With few units, selling 3 in round 6 at prices from counter position. Hard to predict. Compromise: sell_credit now for 30 alashi, but devaluation still hits. Or hold and sell in round 6: 3 units × ~6-8 = ~20, no devaluation. That's better. So pass now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498346,
+    "id": "20261020201215adb2f752833f458d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201215adb2f752833f458d",
+    "usage": {
+      "completion_tokens": 454,
+      "completion_tokens_details": {
+        "reasoning_tokens": 419
+      },
+      "prompt_tokens": 2320,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2774
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.186,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Взятка 5 alashi даёт влияние 2 и пост президента при минимальных затратах, сохраняя кассу для будущих продаж.\"}",
+          "reasoning_content": "Bribe 5M to idx1 gives influence 2; president is highest influence. Currently holder is 2 with influence 1, tie order 2,0,1. If I get influence 2 I become president in law this round. President can veto/decide votes. Small bribe 5M for influence 2 seems good — presidential control + 5% bonus later. But cash loss affects rank. Still, influence persists and presidential role matters. Choose 11 (bribe 2, who has 26M cash, keeps them rich). Actually to idx1 vs idx2: idx2 already rich with 26M; giving them 5M makes richest richer (card 5 risk). Give to idx1 instead. Choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497200,
+    "id": "202610201953150c8b127aab344513",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201953150c8b127aab344513",
+    "usage": {
+      "completion_tokens": 203,
+      "completion_tokens_details": {
+        "reasoning_tokens": 159
+      },
+      "prompt_tokens": 3062,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 3265
+    }
+  }
+}

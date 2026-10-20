@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.477,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар не влияет на итог, а покупка только тратит cash — пропуск.\"}",
+          "reasoning_content": "Final market: goods don't count. Selling goods gives cash, but last round promissory not redeemed. No goods anyway — selling impossible, only buy/pass. Buy loses cash. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498527,
+    "id": "20261020201525fe9a3ed62fb940a2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201525fe9a3ed62fb940a2",
+    "usage": {
+      "completion_tokens": 67,
+      "completion_tokens_details": {
+        "reasoning_tokens": 39
+      },
+      "prompt_tokens": 3652,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3719
+    }
+  }
+}

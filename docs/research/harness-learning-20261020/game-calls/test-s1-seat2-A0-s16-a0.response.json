@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.146,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Беру shuttle — 3 товара на финальный рынок, серого риска для licenzii нет, cash всё равно девальвируется.\"}",
+          "reasoning_content": "Round 5 action. I have promissory 38.75M paid at round 6 start, cash devalues floor(cash/100)*62. Best action: shuttle (3 goods, sell next round). Cash keeps anyway devaluing. Shuttle gives 3 goods for final market sale (round 6 market). Prices: counter 3, selling 3 gives ~8,7,6. Take shuttle (choice 3).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499426,
+    "id": "20261020203018e3ab5017a15c4ba0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203018e3ab5017a15c4ba0",
+    "usage": {
+      "completion_tokens": 132,
+      "completion_tokens_details": {
+        "reasoning_tokens": 91
+      },
+      "prompt_tokens": 3488,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3620
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.264,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Покупка по 12 за единицу убыточна; лицензия уже даёт дополнительный доход, лучше сохранить кэш.\"}",
+          "reasoning_content": "I have cash 16.85M, no goods, license holder (income 20-60 extra). Market round 5: buy 1 unit costs 12M gives 1 goods? That seems bad — buy at 12 to sell later at lower prices... Actually buy moves counter back, price would rise. Selling prices: 12,10,9... only 2 more markets (round 5 and 6). If I buy 1 unit, counter goes to -1? Buying means I get 1 goods at 12M. Later sell at price ~? Not profitable. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496632,
+    "id": "20261020194347da120238211c4a39",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194347da120238211c4a39",
+    "usage": {
+      "completion_tokens": 164,
+      "completion_tokens_details": {
+        "reasoning_tokens": 124
+      },
+      "prompt_tokens": 2797,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2961
+    }
+  }
+}

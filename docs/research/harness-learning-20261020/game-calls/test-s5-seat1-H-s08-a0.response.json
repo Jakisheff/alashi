@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.309,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Произвожу товар для будущих продаж; моё преимущество по tie_order сохраняет пост президента.\"}",
+          "reasoning_content": "Round 3 action. I have cash 40.25, no goods. Need goods for future markets. Cash: round 4 devaluation keeps 62%. Bribing keeps influence for presidency. Next law round 3, I'm likely president (influence tie 2 vs 2, tie_order [1,2,0] favors me). Actually vote_weight shown 4 for me — presidency is mine (holder 1). Should I bribe to increase influence? Influence 2 vs 2 of idx0; tie_order favors me but future bribes by others could steal. Bribing 5 gives influence 3, cost 5 alashi — cash returns ~47.5% at best... but presidency gives 5% commission and veto power. I already have tie advantage. Risk: idx0 could bribe in their action before law? Order rotates; round 3 order unknown. If idx0 bribes 5, they'd reach 3 and steal presidency (tie_order: [1,2,0] — I win ties). So they need strictly more, i.e., bribe 10 to reach 4. Moderate risk.\n\nAlso shuttle gives 3 goods with risk. Shuttle is better than produce (3 vs 2), but 25% seizure... price high early. Grey goods seizure — with tariff unknown. Choose produce for safety? Expected value: shuttle 3*0.75=2.25 goods vs produce 2. Marginal. I'd bribe 5 to secure presidency and produce? Bribe consumes action. Pick one.\n\nI think produce (goods for next market) is safest; my presidency tie advantage is strong.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496634,
+    "id": "2026102019434296d228ce0ed448e3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019434296d228ce0ed448e3",
+    "usage": {
+      "completion_tokens": 378,
+      "completion_tokens_details": {
+        "reasoning_tokens": 344
+      },
+      "prompt_tokens": 4247,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 4625
+    }
+  }
+}

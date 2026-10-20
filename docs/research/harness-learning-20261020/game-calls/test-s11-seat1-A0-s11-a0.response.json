@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.719,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Продать сейчас по максимальной цене выгоднее — будущая девальвация 62% снижает ценность отложенной выручки.\"}",
+          "reasoning_content": "Round 4 of 6, market phase. Sold counter 0 (others hold goods, they'll sell too maybe). Price first unit 12 alashi = 12,000,000. Selling 2 units gives 22 alashi (12+10) immediate. Later rounds cash devalues ×0.62 per round, so selling now is best. sell 2 units now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497727,
+    "id": "20261020200201bfef21ebe0a04713",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200201bfef21ebe0a04713",
+    "usage": {
+      "completion_tokens": 122,
+      "completion_tokens_details": {
+        "reasoning_tokens": 80
+      },
+      "prompt_tokens": 2887,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 3009
+    }
+  }
+}

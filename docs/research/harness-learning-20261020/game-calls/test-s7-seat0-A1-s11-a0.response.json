@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.894,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":34,\"reason\":\"Ставка на лицензию с доходом 20–60 alashi оправдана, при проигрыше деньги вернутся.\"}",
+          "reasoning_content": "Bid seems valuable: license income 20-60 alashi. But rivals may outbid. Tie order I'm last (2,1,0). Rival cash 46M and 23.5M. Bid moderate, e.g. 12-15 alashi. Note losing bid returned, so bid aggressively but if win, bid goes to bank and I lose cash but gain license income. License income doesn't affect rank. Expect opponents bid too. I'll bid ~20M (choice 39). Also after bid can still act? \"После bid доступно основное действие\" — one combined per turn, so bidding consumes action. Losing returns money. Income 20-60 vs losing 20-27 cash — risky if opponents bid low. I'm currently richest (27.5 vs 23.5, 46? Rival 1 has 46M richest). Actually rank matters: prize weights. Bid 15M (choice 34) as compromise.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499566,
+    "id": "202610202032366770d1f171ad498e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202032366770d1f171ad498e",
+    "usage": {
+      "completion_tokens": 239,
+      "completion_tokens_details": {
+        "reasoning_tokens": 201
+      },
+      "prompt_tokens": 5295,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 5534
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.521,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель не девальвируется, поэтому продажа в кредит двух единиц даёт 27.5 alashi будущим cash — больше, чем немедленная продажа.\"}",
+          "reasoning_content": "Продажа 2 единиц по 12 и 10, cash 22. Но cash в начале следующего раунда девальвируется до floor(22/100*62)=13 alashi; промissory не девальвируется полностью... промissory тоже прибавляется к cash и обнуляется до девальвации? \"cash=floor(cash/100)*62, затем promissory прибавляется\" — promissory прибавляется после, не девальвируется. Итого sell_credit лучше: 27.5 сразу в cash следующего раунда. Но промissory после последнего раунда не погашается — сейчас раунд 2 из 6, ок. Выбор 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499343,
+    "id": "202610202028589c3d143728874d3e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202028589c3d143728874d3e",
+    "usage": {
+      "completion_tokens": 203,
+      "completion_tokens_details": {
+        "reasoning_tokens": 157
+      },
+      "prompt_tokens": 2209,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2412
+    }
+  }
+}

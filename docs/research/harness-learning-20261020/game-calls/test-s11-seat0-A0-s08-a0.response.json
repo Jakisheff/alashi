@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.133,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Продаю весь товар в кредит по высоким ценам с бумом; вексель полностью зачислится в следующем раунде до девальвации.\"}",
+          "reasoning_content": "Prices 14,13,12 with boom. Selling all 3 now at high prices good; credit gives 46.25 promissory which devalues each round (62%). Round 3 start cash floor... promissory added then resets. Credit now pays out at round 4 start: 46.25 *? Actually promissory added to cash at round 4 start after devaluation? \"cash=floor(cash/100)*62, then promissory added\". So promissory full value! Sell credit all 3: promissory 46.25 pays fully next round. Best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498011,
+    "id": "20261020200645e6e80e347e684506",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200645e6e80e347e684506",
+    "usage": {
+      "completion_tokens": 172,
+      "completion_tokens_details": {
+        "reasoning_tokens": 127
+      },
+      "prompt_tokens": 2689,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2861
+    }
+  }
+}

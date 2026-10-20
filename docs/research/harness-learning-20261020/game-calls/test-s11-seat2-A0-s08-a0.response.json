@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.198,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон отдаёт влияние беднейшему (фракция 0), усиливая соперника; голосую против.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest by cash. Poorest is idx0 (5 alashi). idx0 already voted No with weight 1. If passed, idx0 gets influence 2 → ties president. I'm not president (idx1 is). Law passing hurts nothing of mine directly but empowers idx0. I'm richest; vote_no helps. Currently yes=0, no=1, idx1 vote weight 2 pending. Voting no keeps pressure. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497479,
+    "id": "202610201957556b69b126167c4402",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201957556b69b126167c4402",
+    "usage": {
+      "completion_tokens": 135,
+      "completion_tokens_details": {
+        "reasoning_tokens": 100
+      },
+      "prompt_tokens": 2419,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2554
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "utc": "2026-10-20T11:43:50.529815+00:00",
+  "performed_after_final_submission": true,
+  "fed_to_learner": false,
+  "training_rival_bids": {
+    "count": 89,
+    "count_4_alashi": 48,
+    "count_8_alashi": 41,
+    "count_1_alashi": 0,
+    "maximum": 8000000
+  },
+  "model_statement_one_rival_bid_of_1_is_supported": false,
+  "source": {
+    "path": "snapshot/arena/src/strategies.rs",
+    "sha256": "53ac1fabab0e289236693c9ff54b052b09413c7a965d92a2d44edbc3a33c4e55",
+    "greedy_bid": {
+      "line": 163,
+      "amount": 4000000
+    },
+    "tactical_bid": {
+      "line": 255,
+      "amount": 8000000
+    },
+    "random_bot_no_bid_branch": {
+      "start_line": 109,
+      "end_line": 143
+    },
+    "default_genome_license_bid": {
+      "line": 333,
+      "amount": 8000000
+    },
+    "genome_factory_default": {
+      "line": 451
+    }
+  },
+  "heldout_opponent_shift_limitation": "The random/genome pair changes behavior but keeps the maximum programmed auction bid at 8 alashi. This does not test transfer against a stronger auction bidder. The original heldout schedule is preserved."
+}

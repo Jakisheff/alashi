@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.854,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продать весь товар по высоким ценам и накопить cash ≥9 для аукциона лицензии в раунде 4.\"}",
+          "reasoning_content": "Round 3 market, keep cash ≥9 for round 4 auction. Sell 3 now gives 62.75k cash — good, price at counter 2 is 9. Sell all 3 (prices 9,8,7=24... wait 3 units: 9+8+7=24? 62.75-38.75=24 alashi yes). Keep cash high for auction. But future produce gives goods later. Sell now at good prices.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497080,
+    "id": "20261020195116bc603d14b83f4273",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195116bc603d14b83f4273",
+    "usage": {
+      "completion_tokens": 136,
+      "completion_tokens_details": {
+        "reasoning_tokens": 100
+      },
+      "prompt_tokens": 3223,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3359
+    }
+  }
+}

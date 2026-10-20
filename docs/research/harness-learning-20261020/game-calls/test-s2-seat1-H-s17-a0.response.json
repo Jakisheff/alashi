@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.208,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Кредитная продажа по 11.25 выгоднее наличных 9, которые девальвируются до ~5.6.\"}",
+          "reasoning_content": "Round 5 market. Sold counter 6 → price 6? Prices index 6 = 5 alashi. Selling 2 units gives +9 alashi. sell_credit gives promissory 11.25 (paid at start of round 6 then counted? Round 6 start: cash devalues 62%, promissory added at full... actually promissory added to cash after devaluation — full value added, then round 6 sales, final no redemption. Promissory from round 5 gets paid round 6 at face 11.25 — good. sell_credit 2 units: promissory 11.25M, better than 9M now? Selling now: 9M, then devalued ×0.62 = 5.58. Credit: 11.25M face → worth full 11.25. So sell_credit better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499918,
+    "id": "2026102020383124e72cc2313d4b0c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020383124e72cc2313d4b0c",
+    "usage": {
+      "completion_tokens": 220,
+      "completion_tokens_details": {
+        "reasoning_tokens": 183
+      },
+      "prompt_tokens": 3727,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3947
+    }
+  }
+}

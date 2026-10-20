@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.599,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар больше не продаётся, а пасс сохраняет весь cash и даёт вес голоса 5 как президенту в последнем законе.\"}",
+          "reasoning_content": "Last round action; no more markets. So goods useless; roof just gives cash away. Influence matters for 5% commission bonus and presidency next law (round 6 law). I'm already president (influence 3 highest). Bribing raises influence but costs cash — bad tradeoff? Max influence bonus is 5% bank ≈ 3.15M; but cash counts in rank. Also opponent could become president in law? Influence determined at entry to law — my action is before. Currently I hold. A bribe of 5M loses 5M cash for... nothing much. Best: pass, keeping vote weight 5? No, pass means action not skipped so no +2 vote weight. Wait: skipping action (pass) gives +2 vote weight in law! \"влияние плюс 2, если основное действие action было пропущено.\" My current vote_weight=5 (influence 3 +2 presumably? no, state shows vote_weight 5 while influence 3 — yes, because pass... actually own action hasn't happened yet; but earlier bribe was action. Anyway vote_weight shown 5). Pass gives vote weight 5 and keeps cash. Choose 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497953,
+    "id": "202610202005417d8d2cead8644493",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202005417d8d2cead8644493",
+    "usage": {
+      "completion_tokens": 290,
+      "completion_tokens_details": {
+        "reasoning_tokens": 249
+      },
+      "prompt_tokens": 4524,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 4814
+    }
+  }
+}

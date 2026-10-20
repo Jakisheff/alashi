@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.908,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Гарантированные 2 товара без риска изъятия на границе.\"}",
+          "reasoning_content": "R1 action, no cash for donkey. produce is safe 2 goods; shuttle 3 goods but ~25% seizure risk (no tariff now? tariff is 0 — default?). Shuttle gives 3 with risk. Expected 2.25 vs 2. Choose produce... but goods in hand early are good for selling later. Slight edge: produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496677,
+    "id": "2026102019443425b54760e5e84bdb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019443425b54760e5e84bdb",
+    "usage": {
+      "completion_tokens": 102,
+      "completion_tokens_details": {
+        "reasoning_tokens": 75
+      },
+      "prompt_tokens": 1917,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2019
+    }
+  }
+}

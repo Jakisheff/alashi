@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.877,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Закон всё равно проваливается (2 голоса против), veto не нужен; воздерживаюсь.\"}",
+          "reasoning_content": "Card 4: +1 influence to richest by cash — that's me (60.5M). Others voted No (2 votes). If I vote yes: 2 no vs 1 yes, fails. Vote no passes? no=3, fails anyway. Veto unnecessary. But card fails regardless, so +1 influence not gained. Wait — I'm richest, so card 4 benefits me. Yes=1, No=2+mine. If I vote yes: yes 1, no 2 → fails. Can't pass. So just abstain/no. Veto same effect (fails anyway). Vote yes wastes nothing but fails anyway. Abstain fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499840,
+    "id": "20261020203715638651a82add499d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203715638651a82add499d",
+    "usage": {
+      "completion_tokens": 172,
+      "completion_tokens_details": {
+        "reasoning_tokens": 139
+      },
+      "prompt_tokens": 3370,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3542
+    }
+  }
+}

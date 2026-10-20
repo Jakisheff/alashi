@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 25.661,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Шаттл даёт 3 товара для продажи в финальном раунде, риск изъятия отсутствует при текущей льготной границе.\"}",
+          "reasoning_content": "Round 5 action. Holder of license is us (idx2), income 20-60 extra. Round 6: cash devaluation 62%, promissory 32.5M added, then sell goods at final round. Need goods to sell in round 6. I have 0 goods, 32.5M promissory. Best: produce gives 2 goods, shuttle gives 3 goods (risk? tariff 0 now, grey seizure ~25%). Shuttle grey risk at tariff 0: seizure ~25% of shuttle goods. Expected value: shuttle gives 3+subsidy... risk of losing grey. Prices round 6: sold_counter=2? Wait after our sell_credit 2 units, sold_counter=2... opponents may sell too. Price maybe ~9-10 + boom 2? Round 6 market price around 9ish per unit minus any shift. 3 units worth ~30 alashi vs 2 units ~20. Shuttle expected 2.25 units vs produce 2. Slight edge; but seizure could lose all. Also law could subsidy. Shuttle slightly better EV.\n\nAlso bribing to gain presidency? Holder is idx1. Vote weights: influence+2. To become president need influence >1 or tie order. tie_order [1,0,2] — idx1 wins ties. Need influence 2 to be president in law rounds 5. Bribe 5M gives influence 2, presidency → veto power, and +5% bank commission (~3 alashi) at end for max influence. But cost 5M cash which devalues anyway? Cash doesn't devalue... actually all cash devalues 62% except hard. Bribe 5M now → influence 2, presidency in law 5 and 6? Influence persists. President lets me veto tax laws and control laws. Also end-game 5% of bank to max influence holder. That's valuable.\n\nBut losing 5M cash (worth 3.1M after deval, ~3 alashi) vs gaining commission ~3 alashi + control of laws (veto 10%/20% tax, price shifts). Strongly worth it. But then no goods production this round — lose produce/shuttle. Trade-off: control vs 2-3 goods.\n\nGoods value: 2 goods at ~9-11 each ≈ 20 alashi, worth way more than 5 alashi bribe? Yes, goods sell for huge amounts. But wait, could do bid+action? No, bid only round 4. Action consumes one action. So can't both bribe and produce.\n\nCompare: produce → +2 goods (~20 alashi, roughly split shares... final payout 50/30/15 of bank ~60M+30M bid = bank now 60M? bank includes 30M bid → ~95%*90M ≈ 85.5M, weights 50:30:15. Extra 20 alashi personal cash adds fully to my rank. Rank matters: I'm currently poor (19.2M cash + 32.5M promissory that will be paid... promissory added to cash in round 6, then round 6 deval happens at start of round 6 only; promissory added after deval, so 32.5M full cash in round 6. But final round promissory from round 6 sales not redeemed! Wait: sell_credit round 5's promissory 32.5M — added to cash at start of round 6 (not devalued). Good.\n\nSo round 6: I'd have ~51.7M cash. Selling in round 6 with sell_credit worthless (not redeemed); must sell (regular). Selling reduces? Sell gives cash directly, no deval issue in round 6. So goods → cash directly. 2 goods at ~11 (price 9 at counter 2? prices [12,10,9,...], counter=2 → 9, plus boom2=11) ≈ 22 alashi. That's huge relative to bank 90M shares (50%=47.5, 30%=28.5, 15%=14.25). 22 alashi could jump me from rank3 to rank1!\n\nSo production is critical. Shuttle: 3 goods, 25% seizure of grey... shuttle gives 3+subsidy_goods \"grey\"? \"shuttle даёт 3+subsidy_goods товара; серый товар может быть изъят\". Tariff currently 0 — is there seizure at tariff 0? \"При льготной границе за серый ход платится min(cash,2)\" — льготная = tariff 0? That's a payment, not seizure. Seizure ~25% at красный тариф (tariff 2). So with tariff 0: pay min(cash,2) to holder of X (idx1), no seizure. So shuttle: 3 goods, pay 2 alashi to idx1 (have 19.25 cash). Net: 3 goods worth ~33 alashi minus 2 payment. Better than produce!\n\nWait tariff current roof_tariff=0 — is that \"льготная\"? Yes, likely. So shuttle choice 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499658,
+    "id": "20261020203354e2a88a1c1b5c4367",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203354e2a88a1c1b5c4367",
+    "usage": {
+      "completion_tokens": 1152,
+      "completion_tokens_details": {
+        "reasoning_tokens": 1106
+      },
+      "prompt_tokens": 3774,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 4926
+    }
+  }
+}
