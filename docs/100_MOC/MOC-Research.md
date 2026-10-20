@@ -44,3 +44,5 @@
 
 - [MOC-AJTBD](MOC-AJTBD.md)
 - [MOC-Product](MOC-Product.md)
+
+- [Самостоятельное изменение обвязки по старым партиям](../research/harness-learning-20261020/README.md)
