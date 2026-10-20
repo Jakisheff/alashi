@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 14.988,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Взятки снижают ранг богатства дороже, чем дают выгод от влияния, а товар после последнего рынка бесполезен.\"}",
+          "reasoning_content": "Last round action, no future sales. Goods worthless. Influence matters: 5% of bank commission ≈ 5% of 38M = 1.9M to max influence holder. Also bribing reduces my cash → rank. Currently idx2 has influence 2. To beat, I need influence ≥3 with tie_order priority: tie at 3, tie_order [0,1,2], tie uses... \"при равенстве лучше больше cash+hard, затем tie_order\" — I'm first in tie_order and richer. So bribe 10M to anyone gives influence 3 > 2. Cost 10M cash but gain 1.9M commission + rank: rank by cash+hard. Currently I'm 41.4 vs 34.5 vs 15.2 — rank1. Bribe 10M → 31.4 vs 34.5, drop to rank 2: 30% vs 50% of 36.1M ≈ lose 7.2M. Not worth. Skip bribe? Influence commission 1.9M not worth. Just pass or produce (worthless). Pass keeps vote_weight? No law effect matters after... this round's law affects nothing? Law is last, tax affects future sales only — none. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491093,
+    "id": "20261020181119ab58d9f5302243d7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181119ab58d9f5302243d7",
+    "usage": {
+      "completion_tokens": 313,
+      "completion_tokens_details": {
+        "reasoning_tokens": 272
+      },
+      "prompt_tokens": 4472,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 4785
+    }
+  }
+}

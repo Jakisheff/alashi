@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.991,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Субсидия выгодна мне, исход уже решён чужими голосами.\"}",
+          "reasoning_content": "Law 3 = subsidy_goods=1, good for me (produce gives 3 goods). Others vote Yes with weight 7; my vote won't change outcome. Vote yes anyway (free). Choice 1.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491060,
+    "id": "202610201810582708d4604b6744bd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201810582708d4604b6744bd",
+    "usage": {
+      "completion_tokens": 71,
+      "completion_tokens_details": {
+        "reasoning_tokens": 44
+      },
+      "prompt_tokens": 2682,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2753
+    }
+  }
+}

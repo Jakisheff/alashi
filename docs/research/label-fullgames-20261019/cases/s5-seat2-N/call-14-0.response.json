@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.381,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce даёт 2 товара без риска изъятия серого груза на границе.\"}",
+          "reasoning_content": "I bid 15M already; rival 0 has 41.5M cash, could outbid. My remaining budget: if I bid more I can't (already bid, menu offers single bid per turn—already done). Now choose action. Cash matters for outbid? Actually bids are set per turn; I already bid. Choose produce (goods 2 free) vs shuttle (3 goods, grey risk). Shuttle gives 3 but grey risk 25%. Tariff unknown—no tariff active currently. Grey seizure ~25% chance lose everything at border. Produce gives 2 safe. Shuttle 3 expected ~2.25 but all-or-nothing. Choose produce.\n\nActually shuttle grey goods risk applies at border—could lose all goods. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490384,
+    "id": "2026102017593658ebbb50772d45f5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102017593658ebbb50772d45f5",
+    "usage": {
+      "completion_tokens": 185,
+      "completion_tokens_details": {
+        "reasoning_tokens": 155
+      },
+      "prompt_tokens": 4225,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 4410
+    }
+  }
+}

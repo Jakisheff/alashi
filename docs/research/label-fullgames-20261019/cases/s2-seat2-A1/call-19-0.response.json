@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.473,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Финальный раунд: товар и взятки не влияют на итоговый ранг, влияние уже максимально — сохраняю cash.\"}",
+          "reasoning_content": "Last round, action phase. Goods won't count for final ranking. Bribes give influence but cost cash; influence matters only for the 5% commission bonus. Current influence 3 already high; rivals have 1. Cash counts. Best to just produce? Goods useless. So pass keeps cash. Bribes reduce cash (ranking) — bad. Only influence might win 5% of bank (~2.3 alashi) but cost of bribe exceeds. Actually influence 5% commission: I already have max influence 3 vs 1. So pass.\n\nChoice 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490026,
+    "id": "202610201753410058ba0dc2b9473f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201753410058ba0dc2b9473f",
+    "usage": {
+      "completion_tokens": 163,
+      "completion_tokens_details": {
+        "reasoning_tokens": 121
+      },
+      "prompt_tokens": 4785,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 4948
+    }
+  }
+}

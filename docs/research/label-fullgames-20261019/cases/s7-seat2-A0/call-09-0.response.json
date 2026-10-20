@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.905,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Производство даёт товар бесплатно, сохраняя cash и моё преимущество во влиянии/голосе.\"}",
+          "reasoning_content": "I'm the richest, cash 44.5. Goal: influence matters for president role and 5% bonus, and law card 5 gives +1 influence to richest. Bribing 10 to reach influence 3 helps take presidency (currently opponent 0 has influence 1, vote_weight... I have vote_weight 3? Actually seen own influence 1 but vote_weight 3 — maybe weight includes +2 from passing? No, that was round 1 pass. Odd. Regardless, influence 3 via 10 bribe gives presidency next law and future control, keeping cash 34.5 still decent. But dev... cash devalues 62%. Trade-off: bribe cost now vs devaluation — spending 10 now reduces pre-deval cash. Produce gives goods to sell. Round 3 action: I already sold. Next market round 4 with devalued cash. License auction is round 4.\n\nI'd pick produce (goods 2, free) for future sales, plus cash preserved. But influence? President currently holder 0. Vote_weight 3 suggests I already have +2 somehow — maybe passing in law gives weight. Actually in round 1 law I abstained... vote_weight 3 shown now, maybe +2 persists? Unclear. With weight 3 I likely control law anyway. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427383,
+    "id": "20261020002932c9fabbc8e45a4bd5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020002932c9fabbc8e45a4bd5",
+    "usage": {
+      "completion_tokens": 310,
+      "completion_tokens_details": {
+        "reasoning_tokens": 275
+      },
+      "prompt_tokens": 3843,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 4153
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.099,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Товар для будущих продаж даёт наибольшую выгоду, а влияние 1 с приоритетом tie_order сохраняет президентство.\"}",
+          "reasoning_content": "I'm president (influence 1, tie_order gives priority). But bribing raises influence—vote weight. Bribing gives influence; 5 alashi → +1 influence. Being president is valuable (veto, 5% bank). Cash 31M is highest. Bribe 5M keeps me president (influence 2). But bribes give cash to rivals hurting rank. Influence gives presidency and 5% bank share. Also passing gives +2 vote weight only if action passed? \"влияние плюс 2, если основное действие action было пропущено\"—pass boosts vote weight.\n\nProduce gives goods to sell next market (cash). I need income. But losing presidency? Influence stays 1, rivals also 1, tie_order [2,1,0] keeps me president. So produce is safe and profitable. Rivals act after; they could bribe to take presidency. Moderate: bribe 5M gives influence 2, safe presidency, minor cash loss. Goods worth ~10+ alashi. I think produce (3 goods) is strong.\n\nChoose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490976,
+    "id": "20261020180928f7df8e02da164639",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180928f7df8e02da164639",
+    "usage": {
+      "completion_tokens": 270,
+      "completion_tokens_details": {
+        "reasoning_tokens": 229
+      },
+      "prompt_tokens": 3320,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 3590
+    }
+  }
+}

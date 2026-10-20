@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.991,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":8,\"reason\":\"Вексель не девальвируется в раунде 6, поэтому продаю весь товар в кредит.\"}",
+          "reasoning_content": "Round 5 market, sell prices at counter 6: prices [5,4,3,3,2...]. Selling 4 gives 5+4+3+3=15 alashi, cash 72.5. Keep 4 units to sell next round? Round 6 devalues cash by /100*62 — cash will be devalued! So selling now means cash devalued at round 6 start. Promissory added after devaluation, not devalued. So sell_credit preserves value! Sell credit 4: promissory 18.75, plus cash 57.5 stays. That's better than sell (72.5 devalued to ~44.9). Also goods kept for round 6 could sell then... but no, sell all 4 via credit now — promissory pays after round 6 devaluation, and last round? Promissory not paid after last round — round 6 market sell_credit gives promissory that never pays. This is round 5, promissory pays at round 6 start (after devaluation). So sell_credit 4 now → 18.75 promissory, cash 57.5. Total after round 6 deval: 35.65+18.75=54.4 vs sell now: 72.5→44.95. Credit wins.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427283,
+    "id": "202610200027546db95d6dd0cb469f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200027546db95d6dd0cb469f",
+    "usage": {
+      "completion_tokens": 318,
+      "completion_tokens_details": {
+        "reasoning_tokens": 285
+      },
+      "prompt_tokens": 3573,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3891
+    }
+  }
+}

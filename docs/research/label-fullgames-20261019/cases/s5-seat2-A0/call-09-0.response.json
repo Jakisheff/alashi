@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.029,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Произвожу товар для продажи на следующем рынке, сохраняя cash для ранга богатства.\"}",
+          "reasoning_content": "I have 29 cash, no goods. Bid=0 currently, no bid candidate shown? own_bid 0 means no bid option listed? License auction in round 4, not now. I should produce goods to sell later. Shuttle gives 3 goods but 25% confiscation risk... shuttle gives 3 grey goods. Black tariff absent. Risk of loss ~25%. Produce gives 2 safe goods. Price at counter 7: 4,3,3 alashi; boom +2 → 6,5,5. Selling 3 goods ~16 alashi gross. Shuttle expected 2.25 goods, produce 2. Shuttle slightly better but risk. Also influence matters: I'm 2nd in rank? Rank by cash: 39.64, 29, 26.54 — I'm 2nd. Bribe to gain influence for 5% commission bonus and president. Bribe 5 to idx0 gives influence 2 — could tie idx1 (influence 2); president decided at law entry by influence then tie_order — I'd be behind. Bribe 10 gives influence 3, becomes president — but president holder 0 currently. Cost 10 alashi for influence 3 + presidency. Value: 5% of bank ~1.5 alashi commission + law control. Also vote_weight.\n\nBut cash is rank metric. Paying 10 drops me to 19, close to idx1's 26.5. Hmm, rank final determines 50/30/15 shares of bank. Bank=30M, payout ~28.5M: 14.25/8.55/4.275. Difference rank1 vs rank2 = 5.7 alashi. Bribe 10 would drop rank — bad unless gained later.\n\nProduce: goods 2, sell next market at ~5-6 each → +11 alashi, securing rank. That seems best. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427251,
+    "id": "2026102000271942ef890f7b9f4472",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000271942ef890f7b9f4472",
+    "usage": {
+      "completion_tokens": 436,
+      "completion_tokens_details": {
+        "reasoning_tokens": 404
+      },
+      "prompt_tokens": 3444,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 3880
+    }
+  }
+}

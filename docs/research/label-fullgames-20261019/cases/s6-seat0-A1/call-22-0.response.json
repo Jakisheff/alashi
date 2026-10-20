@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.363,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 3 (субсидия) уже не имеет эффекта, так как раунд последний; голосую против на всякий случай.\"}",
+          "reasoning_content": "Закон 3: subsidy_goods=1 — не влияет на наш финал (у нас нет товара и действий больше нет). Но соперники имеют по 2 товара, что им даёт +1 товар... действий больше нет? Это последний раунд, action уже прошёл. Субсидия влияет на produce в будущем — будущего нет. Так что закон 3 бесполезен. Президент — rival (idx 1). Проголосовать yes/no — без разницы? Закон принимается если yes>no. Он безвреден. Голосовать no — избежать что-либо? Лучше no (или abstain) — минимально, но эффект нулевой. Выберу vote_no, консервативно.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428180,
+    "id": "20261020004255898179442bfd4a14",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020004255898179442bfd4a14",
+    "usage": {
+      "completion_tokens": 197,
+      "completion_tokens_details": {
+        "reasoning_tokens": 157
+      },
+      "prompt_tokens": 3381,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3578
+    }
+  }
+}

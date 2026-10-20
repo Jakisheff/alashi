@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.592,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель не девальвируется, поэтому продажа в кредит выгоднее наличных при падающих ценах.\"}",
+          "reasoning_content": "Round 2 of 6, selling now at price 12/10. Cash gets devalued ×0.62 each round start, so holding cash is bad; promissory gets added and reset (but devaluation applies to cash before promissory added—promissory not devalued). Actually sell_credit gives promissory which is added next round without devaluation—better than cash! sell_credit 2 units gives promissory 27.5 alashi, paid next round in full. Sell now for cash: 22 alashi ×0.62 = 13.64 remaining next round. So credit is better. Price declines with sales anyway. Sell 2 credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491216,
+    "id": "20261020181331af0caa909ec0474a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181331af0caa909ec0474a",
+    "usage": {
+      "completion_tokens": 176,
+      "completion_tokens_details": {
+        "reasoning_tokens": 143
+      },
+      "prompt_tokens": 2217,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2393
+    }
+  }
+}

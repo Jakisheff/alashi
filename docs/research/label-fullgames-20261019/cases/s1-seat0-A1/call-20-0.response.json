@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.48,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Я уже гарантирую ранг 1 по богатству, а взяточное влияние ради 5% комиссии не окупается.\"}",
+          "reasoning_content": "Last round action phase. Goods worthless now. I'm leader in cash by far (75.86M vs 31.3M vs 19.8M). Bank 50.46M, plus my earlier bid won license (already added? bank 50460000 = 30M initial + 20.46M bid). Rank 1 is mine with pass. Influence: idx2 has 3, max influence gives extra 5% commission. Bribing to idx1 or idx2 gives me influence. To beat idx2's 3 I need influence 4 → bribe 15M to idx1 (choice 6) gives influence 4, cash 60.86M — still richest. Gain: 5% of bank ≈ 2.52M, cost 15M to opponent... but influence 4 > 3 gives me the commission 2.52M, net -12.5M cash. But payout weights: rank distribution 50:30:15. Cash changes: bribe raises opponent's cash. Not worth. Just pass — but wait, the 5% commission goes to max influence holder idx2 anyway. Bribe 15M to idx1: I get 2.52M commission but lose 15M cash which is more than the marginal difference? Rank 1 rank already secured (60.86 vs 31.3). Extra 2.52M - net cash loss 15M, but bank share difference: payout based on rank not cash magnitude. So gaining 2.52M commission at cost 15M cash → net -12.5M. Bad. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427958,
+    "id": "20261020003908d38d784ff9b14710",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003908d38d784ff9b14710",
+    "usage": {
+      "completion_tokens": 380,
+      "completion_tokens_details": {
+        "reasoning_tokens": 342
+      },
+      "prompt_tokens": 5473,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 5853
+    }
+  }
+}

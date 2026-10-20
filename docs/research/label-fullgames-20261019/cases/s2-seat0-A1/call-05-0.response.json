@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.509,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Ожидаемая ценность шаттла (около 2,25 товара) выше, чем у produce.\"}",
+          "reasoning_content": "Produce gives 2 goods guaranteed; shuttle gives 3 but risk of seizure at border (~25%) and tariff unknown. Shuttle expected value higher but no tariff set yet (roof_tariff 0, so likely grey seizure risk applies?). With no tariff... risk applies. Expected goods: shuttle 3*0.75=2.25 vs 2. Choose shuttle? Seizure is about 25% of all goods. Slightly better EV; take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490598,
+    "id": "2026102018031361906b8acb454060",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102018031361906b8acb454060",
+    "usage": {
+      "completion_tokens": 132,
+      "completion_tokens_details": {
+        "reasoning_tokens": 96
+      },
+      "prompt_tokens": 2170,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2302
+    }
+  }
+}

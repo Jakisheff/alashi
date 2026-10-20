@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.979,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Я самый богатый, закон 5 даст мне +1 влияния — усиливает мою позицию против президента.\"}",
+          "reasoning_content": "Card 5: +1 influence to richest by cash. Richest is me (28M). I already sold; law helps me vs rival 2's influence. President is 2 with veto pending; they may veto. But vote_yes is fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427942,
+    "id": "20261020003859784755c4157e48cb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003859784755c4157e48cb",
+    "usage": {
+      "completion_tokens": 86,
+      "completion_tokens_details": {
+        "reasoning_tokens": 52
+      },
+      "prompt_tokens": 3100,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3186
+    }
+  }
+}

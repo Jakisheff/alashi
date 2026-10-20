@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.786,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Продать весь товар в кредит: выручка +25% и вексель добавляется к cash после девальвации.\"}",
+          "reasoning_content": "Prices decline as selling continues; counter=0, price 12 first. Sell 2 now at 12 and 10 = 22 immediate vs 27.5 promissory (but round 4 promissory paid in round 5 cash then devalued 62%). Actually promissory added to cash in round 5, then round 5 cash=floor(cash/100)*62 applies? \"Начало раунда 2 и далее: cash=floor(cash/100)*62, затем promissory прибавляется\" — promissory added after devaluation, so sell_credit is strong. 27.5 credit vs 22 cash — 25% more, no devaluation. Sell all 2 credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490296,
+    "id": "202610201758061ca2ef52b6f34972",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201758061ca2ef52b6f34972",
+    "usage": {
+      "completion_tokens": 191,
+      "completion_tokens_details": {
+        "reasoning_tokens": 154
+      },
+      "prompt_tokens": 2852,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 3043
+    }
+  }
+}

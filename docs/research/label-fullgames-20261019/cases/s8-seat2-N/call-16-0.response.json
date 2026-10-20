@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.877,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Продажа 2 единиц максимизирует итоговый cash с учётом девальвации: 76 млн сейчас против 44,2 млн при продаже в кредит.\"}",
+          "reasoning_content": "Round 5 of 6. Need cash for final rank; promissory only pays next round round 6 market start (promissory added at round start). Sell credit 2 gives 27.5 promissory, redeemed at round 6 start? Yes, round 6 start promissory added to cash. So sell_credit 2 is strictly better than sell 2 (49010000 cash + 27.5M promissory vs 49M). Wait sell 2 gives 49M cash now; sell_credit gives 27.5M promissory. Cash ranks: current cash 27M. Sell credit: cash 27M + 27.5M next round = 54.5M total, beats 49M. But cash devalues at round 6 start: floor(cash/100)*62. Sell now: 27+49=76M → devalued floor to 76M → 47.12M. Sell credit: cash 27M → 16.74M + 27.5 = 44.24M. Hmm devaluation matters!\n\nCash 27,001,000 → floor(27001000/100)=270010*62=16,740,620 + 27,500,000 = 44,240,620.\nSell 2: 76,001,000 → 760010*62=47,120,620.\nSell credit 1: 27M cash + promissory 15M: 16,740,620+15M=31.74M, cash 27M + goods 1... worse.\nSell 1: 39,001,000 → 390010*62=24,180,620. Worse than sell 2.\n\nSo choice 3 (sell 2).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491296,
+    "id": "20261020181445710f84a91af84cad",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181445710f84a91af84cad",
+    "usage": {
+      "completion_tokens": 433,
+      "completion_tokens_details": {
+        "reasoning_tokens": 387
+      },
+      "prompt_tokens": 3148,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3581
+    }
+  }
+}

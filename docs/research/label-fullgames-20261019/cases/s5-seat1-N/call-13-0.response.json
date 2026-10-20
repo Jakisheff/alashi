@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.225,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":56,\"reason\":\"Лицензия приносит 20–60 alashi; перекрываю максимум соперника и получаю её почти наверняка.\"}",
+          "reasoning_content": "I have 37.5M cash, promissory 38.75M, 0 goods. Bid already 0. Rivals have ~1.65M and 32.75M cash. License income 20-60 alashi (2M-6M min units? No, alashi: 20-60 alashi = 20-60M). Actually bank is 30M = 30 alashi. License 20-60 alashi is huge. Should bid aggressively. Rival 2 has 32.75M cash; could bid up to ~32. Bid 30M to beat them (tie_order 1 loses ties to 0 but beats 2? tie order [0,1,2], 2 loses to me). But cash spent goes to bank and increases bank, distributed 50:30:15 anyway. Winning bid cost partially returns via share. Bid 30M (choice 53)? But shuttle for goods next market also matters. Rival 2 could bid all 32.75M. Bid 32M (choice 55)? Actually I could bid 33M. But if I bid too much and win, I keep cash low; round 5 cash devalues floor(cash/100)*62 anyway. Spending to bank now is fine. Bid 32M... rival might bid full 32.75M. Bid 33M (choice 56) leaves 4.5M cash. Then next round need goods? Devaluation hits anyway. License expected ~40 alashi >> cost ~33 alashi minus bank share return ~50%... actually bank grows, and I get 50%? I'm likely richest. Bid 33M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490687,
+    "id": "20261020180437b0d863d7ddb04ac2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180437b0d863d7ddb04ac2",
+    "usage": {
+      "completion_tokens": 392,
+      "completion_tokens_details": {
+        "reasoning_tokens": 355
+      },
+      "prompt_tokens": 6376,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 6768
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.154,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель погашается в раунде 6 без девальвации, продажа всех 3 единиц в кредит максимизирует итоговый cash.\"}",
+          "reasoning_content": "Round 5 market, price counter reset to 0, first unit 12 alashi. Devaluation at round 6 start: cash → floor(cash/100)*62 (×0.62). Promissory added without devaluation. So sell now → cash×0.62. Sell_credit → promissory paid full in round 6 cash! So credit selling is strong. But promissory after final round unredeemed — round 6 market still exists (6 rounds), so promissory created now is redeemed at round 6 start. Yes, paid fully.\n\nSell all 3 on credit: 12+10+9=31 alashi ×1.25 = 38.75 promissory, added round 6 without devaluation. Best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428008,
+    "id": "2026102000395923ce21352b04469d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000395923ce21352b04469d",
+    "usage": {
+      "completion_tokens": 203,
+      "completion_tokens_details": {
+        "reasoning_tokens": 160
+      },
+      "prompt_tokens": 3219,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3422
+    }
+  }
+}

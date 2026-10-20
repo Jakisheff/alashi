@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 18.244,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Беру максимум товара по лучшей цене с умеренным риском изъятия; кэш и президентство уже обеспечены.\"}",
+          "reasoning_content": "I'm president, highest cash. Remaining: round 5 action+law, round 6 market+law(?) — 6 rounds each with market, action, law. Round 6 I still have action. Goods sell at low prices now (sold_counter=3, price 8?). Prices: index 3 → 8 alashi. Shuttle gives 3 goods, ~24 alashi minus seizure risk ~25% (tariff? red risk). Still profitable vs produce 2 goods. Cash is huge anyway; better to boost influence? Final: max influence gets 5% bank commission (~2 alashi + bid). I have influence 2, rivals 1. Influence also gives presidency → veto.\n\nBut cash rank: I'm 67M vs 22.8M rivals. Bribe gives influence but transfers cash to rival — bad for rank. Small bribe 5M for +1 influence keeps me rich and secure presidency. But rivals could bribe later in round 6 action to overtake influence? They'd need to bribe more. Influence cap 15, floor(amount/5M) points per bribe action. Rival could bribe 10M → +2 influence, reaching 3. Then in round 6 law, presidency could shift (order rotates; whoever is president determined at law entry). Round 6 law is last; president with veto/power. Commission 5% of bank (~2+10 alashi bank... bank=40M? bank shows 40,000,000 = 40 alashi; plus my bid 10). Commission ~2.5 alashi to max influence. Also license income 20-60.\n\nKey: get goods to sell in round 6 market? Order rotates — round 6 I might market first. Produce gives 2 goods. Shuttle 3 grey goods risk 25% loss (tariff currently 0? roof_tariff mine would be set). Currently no tariff active? Tariff state — only if law sets it; none. Shuttle risk ~25%.\n\nShuttle EV: 3 goods × ~8 = 24 alashi ×0.75 ≈ 18 vs produce 16. Also grey goods can be seized. Round 6 market: if I sell first, price at counter 3 is 8. Small difference. But I could also bribe for influence. Influence matters for commission (~2.5 alashi + possibly last law control). Bribing 5M (5 alashi) for +1 influence vs goods worth ~16-24 alashi. Goods better for payout; influence 5% commission is ~2.5 alashi to me vs a bribe 5 alashi cost plus rival gains.\n\nChoose shuttle (choice 3).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491046,
+    "id": "20261020181029bbf3b8a099a7452d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181029bbf3b8a099a7452d",
+    "usage": {
+      "completion_tokens": 603,
+      "completion_tokens_details": {
+        "reasoning_tokens": 566
+      },
+      "prompt_tokens": 5009,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 5612
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.26,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Девальвация обесценивает кэш, а дешёвая покупка товара сохраняет ценность для будущих продаж.\"}",
+          "reasoning_content": "I have 16.25M cash, no goods. Buying 1 unit costs 9M (sold_counter=2, price 9... after own credit sale of 2, counter=2). Buy gives goods=1, cash 7.25M. Then produce later gives 3 goods. Round 3 market: buying cheap for future selling? Price falls with selling; buying moves counter back. Later rounds selling 4-5 goods... Price at counter 2 is 9, so buying at 9 makes sense if later prices higher? Later selling lowers price again. Bank will grow. Cash devalues 62% each round start, so spending cash on goods is good. Buy 1.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427229,
+    "id": "20261020002703636696ba4ed64148",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020002703636696ba4ed64148",
+    "usage": {
+      "completion_tokens": 186,
+      "completion_tokens_details": {
+        "reasoning_tokens": 146
+      },
+      "prompt_tokens": 2315,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2501
+    }
+  }
+}

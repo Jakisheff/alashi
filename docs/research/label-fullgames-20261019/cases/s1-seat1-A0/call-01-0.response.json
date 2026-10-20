@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.783,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Больше товара без затрат — shuttle даёт 3 единицы для продажи по высокой стартовой цене.\"}",
+          "reasoning_content": "Round 1 action, cash 0. Produce gives 2 goods, shuttle 3 (no cash anyway, tariff none, risk only if border? risk applies with tariff). Shuttle better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428184,
+    "id": "20261020004301e9492393e67d423f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020004301e9492393e67d423f",
+    "usage": {
+      "completion_tokens": 70,
+      "completion_tokens_details": {
+        "reasoning_tokens": 39
+      },
+      "prompt_tokens": 1924,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 1994
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.111,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"shuttle даёт больше товара в среднем, риск умеренный, а платить нечем\"}",
+          "reasoning_content": "Produce (safe) vs shuttle 3 goods with 25% seizure risk. Produce gives 2. Expectation: shuttle 2.25 goods, but seizure loses all grey? Likely worth it slightly. But border fee 2 if favorable tariff. Cash 0 anyway. Shuttle slightly better EV.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427478,
+    "id": "20261020003107e6196c6d94e04362",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003107e6196c6d94e04362",
+    "usage": {
+      "completion_tokens": 89,
+      "completion_tokens_details": {
+        "reasoning_tokens": 62
+      },
+      "prompt_tokens": 1924,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2013
+    }
+  }
+}

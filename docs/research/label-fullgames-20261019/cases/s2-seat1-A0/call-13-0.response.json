@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.18,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Shuttle даёт больше товара в ожидании, а риск изъятия умеренный.\"}",
+          "reasoning_content": "Shuttle gives 3 goods, ~25% seizure risk but no tariff active; risk of losing goods. Produce gives 2 goods safely. Value per good ~9 alashi later; shuttle EV = 3*0.75=2.25 goods vs 2. Marginal. Also border payment to president—wait, I am president (holder 1). Preferential border pays min(cash,2) to role X holder — me. So shuttle costs nothing (I receive payments?). Actually tariff=0 default... \"При льготной границе\" only when preferential tariff. Default likely grey risk 25%. EV slightly higher with shuttle but variance; produce safer. Choose shuttle actually: 2.25>2 expected. I'll pick shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491112,
+    "id": "202610201811447132e084c5eb4744",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201811447132e084c5eb4744",
+    "usage": {
+      "completion_tokens": 185,
+      "completion_tokens_details": {
+        "reasoning_tokens": 157
+      },
+      "prompt_tokens": 3012,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 3197
+    }
+  }
+}

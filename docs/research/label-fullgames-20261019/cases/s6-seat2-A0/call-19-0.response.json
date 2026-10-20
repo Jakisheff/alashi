@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.286,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Финальный раунд: вексель не погасится, поэтому продаю весь товар за наличные, максимизируя ранг.\"}",
+          "reasoning_content": "Final round, promissory won't be repaid. Sell 3 for cash: price counter 4 → prices 5,4,3 = 12? Actually 3 units at 7,6,5... sold_counter=4 → next prices [5,4,3] = 12 alashi = cash +18. Yes choice 5 gives cash 38.66M. Sell now to maximize cash rank.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491387,
+    "id": "20261020181624a9cfc50ae26a486b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181624a9cfc50ae26a486b",
+    "usage": {
+      "completion_tokens": 130,
+      "completion_tokens_details": {
+        "reasoning_tokens": 89
+      },
+      "prompt_tokens": 3475,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3605
+    }
+  }
+}

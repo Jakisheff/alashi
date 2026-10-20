@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.229,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 8 обнуляет векселя, а сейчас они у всех нулевые — пусть пройдёт без эффекта, колода потеряет вредную карту.\"}",
+          "reasoning_content": "Law 8 nullifies promissory. I'm holder. My promissory=0; but I may want to sell on credit later — vetoing law 8 keeps future promissory safe? Law 8 voids unpaid promissory now (all zero). Veto has no cost. Actually veto keeps deck without 8? Cards drawn without replacement — 8 already drawn. Veto now: no effect except no law. Better to pass? If law 8 passes, promissory gets zeroed each time... only when card appears. Current promissory all 0, so pass law 8 harmless and removes card 8 from deck. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427517,
+    "id": "202610200031498690d2a36ff24e45",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200031498690d2a36ff24e45",
+    "usage": {
+      "completion_tokens": 184,
+      "completion_tokens_details": {
+        "reasoning_tokens": 138
+      },
+      "prompt_tokens": 1993,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2177
+    }
+  }
+}

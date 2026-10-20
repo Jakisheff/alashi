@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.52,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель не девальвируется, поэтому продажа всего в кредит максимизирует выручку.\"}",
+          "reasoning_content": "Round 5 market, cash devalse: cash=floor(cash/100)*62 at round 6 start — 31 alashi -> 19.22. Promissory 38.75 added without devaluation. Round 6 also sells? I'd sell now some, keep some for round 6? Prices drop as sold_counter increases globally. Selling 3 now gives 31 alashi at counter 0-2 (12+10+9). Selling credit gives 38.75 not devalued. Best: sell_credit 3 → 38.75 promissory paid at round 6 start cash, plus round 6 produce 4 goods and sell them at low prices. Alternative sell cash 31 devalued to 19.2. Credit better.\n\nChoice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490920,
+    "id": "20261020180832fdf8214b41b846ad",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180832fdf8214b41b846ad",
+    "usage": {
+      "completion_tokens": 196,
+      "completion_tokens_details": {
+        "reasoning_tokens": 165
+      },
+      "prompt_tokens": 3066,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3262
+    }
+  }
+}

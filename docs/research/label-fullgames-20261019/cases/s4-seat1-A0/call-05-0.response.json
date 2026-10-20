@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.27,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Ожидаемая выгода серой партии выше: 3 единицы с риском изъятия лучше 2 гарантированных.\"}",
+          "reasoning_content": "No cash, so produce is free goods. Shuttle risks seizure ~25%, but more goods. Expected shuttle slightly better if border risky? Shuttle gives 3 grey vs produce 2 certain. Expected 3*0.75=2.25 > 2. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428058,
+    "id": "20261020004054f74ce869296a482f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020004054f74ce869296a482f",
+    "usage": {
+      "completion_tokens": 95,
+      "completion_tokens_details": {
+        "reasoning_tokens": 56
+      },
+      "prompt_tokens": 2171,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2266
+    }
+  }
+}

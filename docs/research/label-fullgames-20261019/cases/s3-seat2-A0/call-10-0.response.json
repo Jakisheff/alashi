@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.853,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вето отменяет снижение цен, что выгодно для моих продаж товара в следующем раунде.\"}",
+          "reasoning_content": "Law 6: -2 price next market. I have 6 goods, will sell next round. I should veto? Currently votes: 0 Yes, 1 No — no would win, but I can veto free anyway? Veto kills law — good, keeps prices high.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427543,
+    "id": "2026102000321964c2972a54764d04",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000321964c2972a54764d04",
+    "usage": {
+      "completion_tokens": 89,
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      },
+      "prompt_tokens": 2607,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2696
+    }
+  }
+}

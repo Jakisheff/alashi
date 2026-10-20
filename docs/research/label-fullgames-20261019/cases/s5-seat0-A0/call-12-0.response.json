@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.187,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"sell_credit сохраняет выручку в векселе, который девальвируется лишь один раз вместо двух, да ещё с множителем 1.25.\"}",
+          "reasoning_content": "Round 4 market, price at counter 2 is 9 alashi. Selling 2 gives 9+8=17 alashi. Boom? price_shift 0. Selling 2 credit gives 21.25 promissory but rounds 5,6 devolution: 62% each round start — promissory added after devolution in round 5, so loses 62% in round 6. Actually promissory added to cash at start of round 5 (no devolution), then round 6 start cash=floor/100*62. So ~21.25 → 13.2 by end. Sell now keeps cash which devolves too in rounds 5 and 6: 48.7*0.62*0.62 ≈ 18.7. Selling plain: cash 65.7 → 25.3 at end. Selling credit: 48.7*0.3848=18.7 + 21.25*0.62=13.2 = 31.9. Wait devolution applies to cash only, promissory added after, so promissory only loses one round. So sell_credit 2 is better. Also remaining rounds 5-6 market could sell more goods. Credit multiplier 1.25 dominates. Choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427114,
+    "id": "2026102000250518d283f90556454e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000250518d283f90556454e",
+    "usage": {
+      "completion_tokens": 317,
+      "completion_tokens_details": {
+        "reasoning_tokens": 273
+      },
+      "prompt_tokens": 2973,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 3290
+    }
+  }
+}

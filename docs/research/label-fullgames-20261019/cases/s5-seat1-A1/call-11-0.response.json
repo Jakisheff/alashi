@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.344,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Продажа в кредит даёт больше выручки, а вексель не обесценивается и карта 8 уже вышла из колоды.\"}",
+          "reasoning_content": "Sell 3 now (last rounds matter; cash counts in rank, promissory paid at round start 5... actually promissory added to cash at start of next round, so sell_credit also fine but risk law 8 and devaluation floor(cash/100)*62? Devaluation applies to cash, promissory added after. Selling credit gives 38.75 vs 31; cash then devalued by 62%... if promissory added at round 5 start, it survives into round 5 and again devalued at round 6 start. Direct cash gets devalued twice. So sell_credit is better unless law 8 (already used, no repeats). Remaining law deck: used 8,7,0; remaining 1-6. Card 8 gone. So sell_credit 3 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490160,
+    "id": "2026102017555479964e9ebdb9445b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102017555479964e9ebdb9445b",
+    "usage": {
+      "completion_tokens": 215,
+      "completion_tokens_details": {
+        "reasoning_tokens": 173
+      },
+      "prompt_tokens": 2970,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 3185
+    }
+  }
+}

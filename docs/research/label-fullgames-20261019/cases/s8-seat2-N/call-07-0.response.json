@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 14.243,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель не девальвируется и даёт 1.25x, поэтому продажа всего в кредит максимизирует будущую выплату.\"}",
+          "reasoning_content": "Prices: counter=4, price 7. Sell 3 now gives 18 alashi. Sell credit 3 gives 22.5 promissory, added next round. Bank 30M small vs cash. Cash now matters for final rank (cash+hard). Debt round: cash = floor(cash/100)*62 devalues cash; promissory added. So converting cash to promissory is good! Wait devaluation applies to cash at start of each round ≥2 already happened. Round 3→4 will devalue again. So holding cash is bad; sell_credit better. Sell credit 3: promissory 22.5M added to cash after devaluation. Straight sell 3: 45.5M cash, next round becomes ~28.2M... actually floor(45.5M/100)*62 = 28.2M. Credit: cash 27.5M→17.05M +22.5M = 39.55M. Credit better. Sell credit 3, choice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491238,
+    "id": "202610201813451e3802fe90de4f00",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201813451e3802fe90de4f00",
+    "usage": {
+      "completion_tokens": 259,
+      "completion_tokens_details": {
+        "reasoning_tokens": 219
+      },
+      "prompt_tokens": 2700,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2959
+    }
+  }
+}

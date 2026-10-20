@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.389,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Produce даёт 2 товара без риска изъятия при нуле наличных.\"}",
+          "reasoning_content": "Cash 0, produce gives 2 goods risk-free.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490712,
+    "id": "202610201805115f45a9a8cd854152",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201805115f45a9a8cd854152",
+    "usage": {
+      "completion_tokens": 40,
+      "completion_tokens_details": {
+        "reasoning_tokens": 12
+      },
+      "prompt_tokens": 2155,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2195
+    }
+  }
+}

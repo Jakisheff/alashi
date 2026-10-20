@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.218,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"sell_credit 3 units: promissory 22.5M не девальвирует, в отличие от cash, и цена сейчас высокая.\"}",
+          "reasoning_content": "I'm far behind. Sell all 3 now? Market round 4; rounds 5-6 markets remain. But promissory devalues (x0.62) at round start... actually cash devalues, promissory added at face after. So sell_credit protects from devaluation! Sell credit 3 units: promissory 22.5M added to cash later without devaluation. Cash 5.7M will devalue twice more (round 5,6: x62% x62% ≈ 2.2M). Promissory better. Choose 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427260,
+    "id": "202610200027355b132345dbd0492c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200027355b132345dbd0492c",
+    "usage": {
+      "completion_tokens": 164,
+      "completion_tokens_details": {
+        "reasoning_tokens": 124
+      },
+      "prompt_tokens": 2738,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2902
+    }
+  }
+}

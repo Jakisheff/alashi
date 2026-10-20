@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 26.207,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Вето бесплатно отменяет 10% налог на мои будущие продажи 7 товаров.\"}",
+          "reasoning_content": "I hold 7 goods, law 1 sets 10% tax. Yes:2+3=5, No:1. Law passes unless veto. Tax 10% on 7 goods sold in future rounds ~ 7 goods × ~7 alashi ≈ 50 alashi revenue, 10% = 5 alashi. Veto free, saves money. Veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427711,
+    "id": "20261020003446332bb5b90d724170",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003446332bb5b90d724170",
+    "usage": {
+      "completion_tokens": 108,
+      "completion_tokens_details": {
+        "reasoning_tokens": 80
+      },
+      "prompt_tokens": 2753,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2861
+    }
+  }
+}

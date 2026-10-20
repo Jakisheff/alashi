@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 15.611,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":24,\"reason\":\"Ставка возвращается при проигрыше, поэтому максимум — бесплатный шанс получить лицензию с доходом 20–60 alashi.\"}",
+          "reasoning_content": "Bid doesn't consume main action? \"bid не расходует основное действие\" — but interface offers combined bid for the turn; the candidate only includes bid. I'll bid moderate and still have influence. License income 20-60 alashi is huge. Rivals have ~30 alashi cash each. Need to outbid them. They may bid most of cash. My cash ~10.7. Likely lose vs 30 alashi bids. But license adds to bank and benefits. Still try? Bid 10 alashi might lose anyway. Alternative: shuttle for goods (sell later). Since bid likely loses to richer rivals, better produce/shuttle goods. Actually rivals may not bid full. Expected value: bid 10.68, if win +20-60 minus losing cash 10.68 to bank... if lose, cash returned. No cost to bid! Losing bid returned. So bid max! But wait, bid doesn't consume action — but here candidates only offer bid alone. Still, max bid free option: bid all cash (returned if lose), if win get license 20-60 alashi which is huge. Bid max.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490919,
+    "id": "202610201808252c4a485ebe6b4b79",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201808252c4a485ebe6b4b79",
+    "usage": {
+      "completion_tokens": 273,
+      "completion_tokens_details": {
+        "reasoning_tokens": 234
+      },
+      "prompt_tokens": 4071,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 4344
+    }
+  }
+}

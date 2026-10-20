@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.736,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"shuttle даёт больше товара для продажи при ожидаемой ценности выше produce\"}",
+          "reasoning_content": "Shuttle gives 3 goods vs produce 2; no cash for donkey. Risk: border seizure? Shuttle grey goods may be seized ~25% if red tariff; tariff unknown. But goods are needed for future sales. Expected value 3*0.75=2.25 > 2. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792489984,
+    "id": "20261020175259d58c300d46464d32",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175259d58c300d46464d32",
+    "usage": {
+      "completion_tokens": 91,
+      "completion_tokens_details": {
+        "reasoning_tokens": 65
+      },
+      "prompt_tokens": 2710,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2801
+    }
+  }
+}

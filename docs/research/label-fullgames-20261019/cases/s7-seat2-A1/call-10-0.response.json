@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.176,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон о налоге 20% вредит моим будущим продажам — голосую против.\"}",
+          "reasoning_content": "Law 2 = 20% tax on future sales. I'm not president (holder idx1). I plan to sell; vote no. Faction 0 already voted yes (weight 1). President weight 2. My vote no: 2 no vs 1 yes if president abstains/no → rejected. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490743,
+    "id": "20261020180538a3a7d4d322c540f4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180538a3a7d4d322c540f4",
+    "usage": {
+      "completion_tokens": 98,
+      "completion_tokens_details": {
+        "reasoning_tokens": 67
+      },
+      "prompt_tokens": 2543,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2641
+    }
+  }
+}

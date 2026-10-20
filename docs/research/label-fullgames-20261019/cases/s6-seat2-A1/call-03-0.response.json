@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.599,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Цены сейчас максимальные, продаю оба товара; кредит невыгоден из-за девальвации.\"}",
+          "reasoning_content": "Sell 2 now at 12,10 — high price. Sell (not credit, since later rounds devalue cash 62%).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491055,
+    "id": "2026102018105251beff461f8b41d7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102018105251beff461f8b41d7",
+    "usage": {
+      "completion_tokens": 62,
+      "completion_tokens_details": {
+        "reasoning_tokens": 27
+      },
+      "prompt_tokens": 2159,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2221
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.087,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель погасится в начале раунда 6 без девальвации, sell_credit даёт максимум выручки.\"}",
+          "reasoning_content": "Round 5 market. Cash counts at end; promissory in round 6 start: added then devalued? Rule: round start cash=floor(cash/100)*62, promissory added after. But promissory after last round not redeemed. So selling credit now in round 5 market: revenue becomes promissory, added at start of round 6... wait round 6 start: promissory added to cash and reset. So credit sell now is fine—redeemed at round 6 start? Round 5 market proceeds → promissory, then round 5 action, law, then round 6 market starts: cash devalued, promissory added. So sell_credit now is good: 1.25x and redeemed in round 6.\n\nBut I also hold license (holder idx2, license_sold, my bid 0? own_bid 0, holder 2 — I won with... someone bid? Anyway license income at end).\n\nChoose sell_credit 2: 27.5M promissory, no tax. That beats sell 2 (22M cash, which then devalued to ~13.6M). Credit clearly better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491122,
+    "id": "202610201811541d2a41a9ff3d4943",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201811541d2a41a9ff3d4943",
+    "usage": {
+      "completion_tokens": 285,
+      "completion_tokens_details": {
+        "reasoning_tokens": 247
+      },
+      "prompt_tokens": 2969,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 3254
+    }
+  }
+}

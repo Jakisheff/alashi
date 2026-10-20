@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.988,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 2 вводит налог 20%, который снизит мою выручку последнего раунда.\"}",
+          "reasoning_content": "Закон 2: налог 20% на будущие продажи. У меня promissory 16.25M и license income; налог снизит мои продажи раунда 6. Президент — фракция 0 (influence 3), может veto. Мой голос no с весом 1 против веса 3 президента... президент ещё не голосовал. Если президент голосует yes, закон пройдёт. Голосую no — плохо для меня налог. choice 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427455,
+    "id": "202610200030515bfbf57749614c06",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200030515bfbf57749614c06",
+    "usage": {
+      "completion_tokens": 138,
+      "completion_tokens_details": {
+        "reasoning_tokens": 104
+      },
+      "prompt_tokens": 3105,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3243
+    }
+  }
+}

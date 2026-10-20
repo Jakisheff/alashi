@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.017,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Налог 10% снизит мою будущую выручку от продаж — наложу вето.\"}",
+          "reasoning_content": "Tax law 1 = 10% tax. Yes=1, No=1 currently. I plan to sell goods; tax hurts me. Veto blocks it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490993,
+    "id": "202610201809497117b9ea145446d7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201809497117b9ea145446d7",
+    "usage": {
+      "completion_tokens": 67,
+      "completion_tokens_details": {
+        "reasoning_tokens": 34
+      },
+      "prompt_tokens": 2539,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2606
+    }
+  }
+}

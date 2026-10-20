@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.112,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон даёт +1 влияния самому богатому сопернику, что угрожает моему посту президента; налагаю вето.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest (idx0, cash 32.54M). Votes: Yes 3 (2+1), No 2. Passes unless veto. Veto denies richest +1 influence — idx0 already 2 influence; keeping influence max matters for presidency and 5% bonus. Veto helps me.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491093,
+    "id": "20261020181127653edfaeec6c4b82",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181127653edfaeec6c4b82",
+    "usage": {
+      "completion_tokens": 111,
+      "completion_tokens_details": {
+        "reasoning_tokens": 71
+      },
+      "prompt_tokens": 2456,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2567
+    }
+  }
+}

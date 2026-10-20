@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.673,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Шаттл даёт максимум товара бесплатно с умеренным риском на границе — лучший ожидаемый доход к финальному рынку.\"}",
+          "reasoning_content": "I'm the license holder (idx1). Cash 8M, low. Round 5 action. Shuttle gives 3 goods — good for future sales. Bribing for influence: max influence gets 5% bank commission (3.15M... 5% of 63M = 3.15M). Currently influence all equal 1, tie broken by cash+hard then tie_order — I'm not top. Bribe 5M to opponent gives them cash and only gives me influence 2 — then I'd hold max influence → 3.15M, but I paid 5M and gave opponent cash. Net negative? Influence 2 also helps law presidency next round (round 6 law). President in round 6 could veto bad law. But I'd pay 5M for 3.15M gain, net -1.85M plus giving rival 5M cash. Bad.\n\nBest: shuttle (goods 9) or produce (8). Shuttle free, risk? Tariff — border grey goods confiscation ~25%. shuttle gives grey goods likely; risk of losing at border. Red tariff? Current roof_tariff 0. Actually shuttle gives grey goods, may be confiscated 25%. Expected 3 goods*0.75 vs produce 2. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490207,
+    "id": "202610201756384f9a8920cf124ab3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201756384f9a8920cf124ab3",
+    "usage": {
+      "completion_tokens": 309,
+      "completion_tokens_details": {
+        "reasoning_tokens": 268
+      },
+      "prompt_tokens": 3474,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3783
+    }
+  }
+}

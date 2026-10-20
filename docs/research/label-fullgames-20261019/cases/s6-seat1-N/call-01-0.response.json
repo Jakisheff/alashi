@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.581,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Ожидаемая выгода шаттла (3 товара при ~25% риска) выше, чем у produce.\"}",
+          "reasoning_content": "Produce is safe, 2 goods; shuttle 3 grey with 25% risk. Expected value of shuttle higher (3 vs 2, risk 25% → 2.25). But grey goods may still be sellable? Grey may be confiscated at border only with tariff favorability; grey goods sale unclear. Shuttle slightly better in expectation.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427822,
+    "id": "20261020003658c8b22bd5d28940b0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003658c8b22bd5d28940b0",
+    "usage": {
+      "completion_tokens": 108,
+      "completion_tokens_details": {
+        "reasoning_tokens": 72
+      },
+      "prompt_tokens": 1925,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2033
+    }
+  }
+}

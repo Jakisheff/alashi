@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.352,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":21,\"reason\":\"Ставка в аукционе ценнее мелкого производства: лицензия даёт 20–60 alashi, проигрыш возвращается.\"}",
+          "reasoning_content": "I need an action plus possibly a bid. Shuttle gives 3 goods, sellable later. Bid also needed — but only one action per turn. Bid doesn't consume the action, but interface offers one combined move. Shuttle + bid? Interface only allows one candidate. License income 20-60 alashi, worth more than 3 goods (~9-12 alashi). I'm poorest (15.2M vs ~37-41M), rivals likely bid big. Moderate bid ~5-6M, but tie_order favors me (own_idx 1? tie_order [0,1,2], I'm after 0). Rivals rich, may bid high. Bidding 5M probably loses. Chance to win with small bid is low but cheap. Best expected value: maybe bid small 2M plus risk; or shuttle for goods. License pays 20-60 to winner—huge. Try bid 6M? Rivals with 37M might bid 10-15M. Hard to know. I'll go moderate: bid 5M? If lost, refund—cost zero except losing the chance to shuttle. Actually bid doesn't consume main action, but interface forces one pick. So bidding loses the shuttle. Expected license ~40 alashi * P(win). With 6M bid maybe P~30% → 12 alashi expected, still better than shuttle's ~9-12 gross. Bid 6M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490346,
+    "id": "20261020175858469ed8b096694665",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175858469ed8b096694665",
+    "usage": {
+      "completion_tokens": 338,
+      "completion_tokens_details": {
+        "reasoning_tokens": 297
+      },
+      "prompt_tokens": 4347,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 4685
+    }
+  }
+}

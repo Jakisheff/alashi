@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.608,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Продаю весь товар сразу за наличные, векселя рискуют девальвацией.\"}",
+          "reasoning_content": "Price counter 4 → 5 alashi per unit? sold_counter=4, price list index 4 = 7 alashi. Selling 2 gives 13 → 6.5+... wait 7+6=13. Yes. Sell all for cash now; credit promissory risky (devaluation 62% between rounds). Sell 2 for 13 cash.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490716,
+    "id": "202610201805128f92c35432f94cc1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201805128f92c35432f94cc1",
+    "usage": {
+      "completion_tokens": 110,
+      "completion_tokens_details": {
+        "reasoning_tokens": 79
+      },
+      "prompt_tokens": 2220,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2330
+    }
+  }
+}

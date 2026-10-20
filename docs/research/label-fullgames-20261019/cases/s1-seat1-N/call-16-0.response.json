@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.867,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Уже есть лицензия; добавляю 2 товара к 5 для продажи в финальном рынке, сохраняя влияние для закона.\"}",
+          "reasoning_content": "We're holder X (influence 2 tie with p0, but holder_idx=1). We bid 10 alashi earlier? own_bid=0 — wait, in round 4 we bid 10000000, but later we bribed... after_own shows own_bid 0. Actually license_holder_idx=1 — we hold license! License income 20-60 alashi extra. Good.\n\nNow round 5 action: produce more goods to sell in round 6. shuttle gives 3 goods but border risk ~25% loss — but tariff? Current tariff 0. Shuttle risk unclear. produce gives 2 goods. We already have 5 goods. Round 6 market sell prices: counter 2, selling 7 units at prices... with 7 sold we go deep. Best: produce +2 = 7 goods, sell all in round 6.\n\nAlso keep influence? We're holder, want to keep for law phase. Produce doesn't lose influence. Choose produce (choice 1).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427734,
+    "id": "202610200035267a48d85c104d4081",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200035267a48d85c104d4081",
+    "usage": {
+      "completion_tokens": 247,
+      "completion_tokens_details": {
+        "reasoning_tokens": 208
+      },
+      "prompt_tokens": 3708,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3955
+    }
+  }
+}

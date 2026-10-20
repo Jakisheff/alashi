@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.829,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон всё равно не проходит (1 да против 1 нет), veto не нужен.\"}",
+          "reasoning_content": "I'm holder. Votes: Yes=1, No=1 (me), Abstain=1. Yes not strictly greater than no → not passed anyway. Veto unnecessary. Vote No already counts as my weight 1. 1 yes vs 1 no → fails. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491210,
+    "id": "20261020181327747f356392294fcb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181327747f356392294fcb",
+    "usage": {
+      "completion_tokens": 87,
+      "completion_tokens_details": {
+        "reasoning_tokens": 59
+      },
+      "prompt_tokens": 1993,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2080
+    }
+  }
+}

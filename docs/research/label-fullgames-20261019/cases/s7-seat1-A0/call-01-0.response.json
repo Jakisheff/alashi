@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.964,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Ожидаемая выгода шаттла выше, чем производства, при нулевом риске денег.\"}",
+          "reasoning_content": "Round 1 action, cash 0, produce gives 2 goods. Shuttle gives 3 grey goods with seizure risk 25%. Better shuttle? 25% chance lose all. Expected 3*0.75=2.25 > 2. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490393,
+    "id": "2026102017594836cbd6ad3b784ff6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102017594836cbd6ad3b784ff6",
+    "usage": {
+      "completion_tokens": 90,
+      "completion_tokens_details": {
+        "reasoning_tokens": 55
+      },
+      "prompt_tokens": 1924,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2014
+    }
+  }
+}

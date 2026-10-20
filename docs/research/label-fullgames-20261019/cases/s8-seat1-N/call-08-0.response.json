@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.113,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Продаю обе единицы в кредит: выручка 21,25 не попадает под девальвацию раунда 4\"}",
+          "reasoning_content": "Prices: sold_counter=2, next price 9? Counter 2 means next price index 2 = 9. Selling 1 unit gives 9 alashi=9M, credit 11.25M. Sell 2 = 9+8=17M? But candidate says 39.5M-22.5M=17M yes.\n\nBest long-run: prices decline; hold goods? Only 6 rounds. Selling now at 9,8 vs later lower. Better sell 2 now (choice 3) — solid cash, no devaluation? Cash devaluation round start: floor(cash/100)*62, big devaluation. Promissory survives devaluation. So sell_credit 2 → 21.25M promissory, avoiding devaluation! Choice 4 gives promissory 21.25M paid after devaluation, worth more. Choose 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490705,
+    "id": "2026102018045889b2fbd8cb334b98",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102018045889b2fbd8cb334b98",
+    "usage": {
+      "completion_tokens": 226,
+      "completion_tokens_details": {
+        "reasoning_tokens": 187
+      },
+      "prompt_tokens": 2594,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2820
+    }
+  }
+}

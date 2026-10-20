@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.851,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон всё равно проваливается (нет 3 против 6), вето не нужно.\"}",
+          "reasoning_content": "Law 1 = 10% tax on future sales. Votes: No=4 (idx0 weight 4), No(me 2), Yes 3. Yes=3, No=6, law fails anyway. No veto needed.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491121,
+    "id": "202610201811584b85693d8ebb4731",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201811584b85693d8ebb4731",
+    "usage": {
+      "completion_tokens": 79,
+      "completion_tokens_details": {
+        "reasoning_tokens": 49
+      },
+      "prompt_tokens": 2790,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2869
+    }
+  }
+}

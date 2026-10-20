@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.178,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон о налоге 10% мне невыгоден; моего голоса «против» с голосом элемента 1 достаточно для отклонения, veto не нужен.\"}",
+          "reasoning_content": "Law 1 = tax 10%. I hold X, have veto. I plan to sell 3+2=5 goods next market? Round 4 market: I have 3 goods. Tax 10% hurts me. Others: p0 yes, p1 no. If I vote no: 2 no vs 1 yes — law fails anyway. So veto unnecessary. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491250,
+    "id": "2026102018140699e5f71d64c9434a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102018140699e5f71d64c9434a",
+    "usage": {
+      "completion_tokens": 128,
+      "completion_tokens_details": {
+        "reasoning_tokens": 81
+      },
+      "prompt_tokens": 2556,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2684
+    }
+  }
+}

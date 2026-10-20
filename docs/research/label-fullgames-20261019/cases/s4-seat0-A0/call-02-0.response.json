@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.11,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Карта 8 обнуляет векселя, которых ни у кого нет — закон нейтрален, воздерживаюсь.\"}",
+          "reasoning_content": "Law 8: обнуляет promissory. У всех 0 promissory — не важно. President is idx1 who voted Yes. If I vote No: 1 no vs 1 yes (president weight 1? vote_weight 1). Actually counts: yes=1, no=1 → not adopted. Card 8 neutral. Vote doesn't matter much. Abstain/pass gives +2 weight? The weight bonus only if action was skipped — action was produce, so no. Just abstain; card is harmless.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490368,
+    "id": "20261020175923268a55c5096b4849",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175923268a55c5096b4849",
+    "usage": {
+      "completion_tokens": 151,
+      "completion_tokens_details": {
+        "reasoning_tokens": 112
+      },
+      "prompt_tokens": 2034,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2185
+    }
+  }
+}

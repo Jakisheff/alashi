@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.783,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Карта 6 (−2 цены) уже не влияет: рынок финального раунда прошёл, поэтому воздерживаюсь.\"}",
+          "reasoning_content": "Law 6: prices -2 next market — but round 6 market is already done (last round). So no effect; vote yes harmless. President is idx0 with veto anyway. Just abstain/pass. I'm idx1, not president. Law 6 has no effect post-final market, so pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428100,
+    "id": "20261020004136358a2a7a453f4c4b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020004136358a2a7a453f4c4b",
+    "usage": {
+      "completion_tokens": 105,
+      "completion_tokens_details": {
+        "reasoning_tokens": 64
+      },
+      "prompt_tokens": 3276,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3381
+    }
+  }
+}

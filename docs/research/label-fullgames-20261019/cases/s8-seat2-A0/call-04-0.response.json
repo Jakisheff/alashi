@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.565,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель даёт выручку x1,25 и не девальвируется при входе в раунд, поэтому продаю всё в кредит.\"}",
+          "reasoning_content": "Round 2 of 6: cash devalues 62% at round start. Selling early cash risks devaluation multiple times. Selling credit gives 1.25x promissory, added to cash at round start and not devalued again (promissory added after devaluation). So sell_credit is good: 27.5 promissory becomes cash next round fully. Sell all 2 units credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427068,
+    "id": "20261020002424b9f1bf1c4aaa4517",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020002424b9f1bf1c4aaa4517",
+    "usage": {
+      "completion_tokens": 127,
+      "completion_tokens_details": {
+        "reasoning_tokens": 85
+      },
+      "prompt_tokens": 2218,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2345
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.872,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":12,\"reason\":\"Небольшая ставка почти бесплатна, если перебьют; после неё можно ещё произвести товар.\"}",
+          "reasoning_content": "I'm poor (5.27), rivals have ~31-32 each. Bid 1 already at 0? own_bid=0, license not sold. Bid returns if lost. I can bid low, e.g. 1, and produce. But bid is separate from action — but here each candidate only does one thing? Menu says bid doesn't consume action... yet candidates combine only bid. Candidates list bid alone. After choosing bid, presumably I get another candidate menu. Choose bid 1 then produce? Or shuttle for goods with risk. Choose bid small.\n\nLicense income 20-60 alashi, rivals richer could outbid; but their bids hidden. They may bid big. With 5.27 I can't win if they bid. Best: bid 0? Already 0. Then just produce/shuttle. But choosing bid 1 costs nothing if lost. Take choice 12 (bid 1), then later action.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427750,
+    "id": "202610200035419f73f3226ea64433",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200035419f73f3226ea64433",
+    "usage": {
+      "completion_tokens": 225,
+      "completion_tokens_details": {
+        "reasoning_tokens": 193
+      },
+      "prompt_tokens": 3635,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 3860
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.59,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Финальный раунд: вексель уже не погасится, поэтому продаю весь товар за немедленный cash.\"}",
+          "reasoning_content": "Last market round. Promissory unredeemed after last round, so sell_credit worthless extras? Promissory adds to cash at start of round... but no more rounds, so not paid. So sell (immediate cash) is better. Sell 3: +8M cash (3+3+2). Sell now.\n\nChoice 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490163,
+    "id": "202610201755588e5888f412ec4cf8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201755588e5888f412ec4cf8",
+    "usage": {
+      "completion_tokens": 109,
+      "completion_tokens_details": {
+        "reasoning_tokens": 72
+      },
+      "prompt_tokens": 3943,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 4052
+    }
+  }
+}

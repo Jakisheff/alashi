@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.434,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":10,\"reason\":\"Вексель не девальвируется и даёт 1.25x, поэтому продаю весь товар в кредит сейчас по высоким ценам.\"}",
+          "reasoning_content": "Round 5 market. After this, round 6 market remains. Cash devaluation: cash = floor(cash/100)*62% each round start. Selling now yields cash that gets devalued before round 6... actually devaluation at start of round 6 and before final ranking? Ranking at end uses cash; devaluation applies start of rounds 2+. Round 6 start devalues cash. So cash earned now devalues 62% by end. Promissory is not devalued but only paid at start of next round (round 6), then added to cash and not further devalued. So sell_credit is better: promissory *1.25 and no devaluation. Sell credit all 5 units: promissory 57.5 alashi added round 6. Compare sell now 50.5 alashi cash → devalued to ~31.3. Definitely credit.\n\nBut prices: more sales now lower price for round 6? Sold counter resets? Market sold_counter currently 0. If I sell 5, next round prices start lower? sold_counter persists across rounds likely. Round 6 is last market — I could sell remaining then. Selling all 5 now at prices 12,10,9,8,7 = 46*1.25=57.5 promissory. If sell 3 now (31*1.25=38.75) and 2 next round at 6,5=11... total 49.75. Better sell all now as credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490146,
+    "id": "202610201755365e311f66aeba42dd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201755365e311f66aeba42dd",
+    "usage": {
+      "completion_tokens": 358,
+      "completion_tokens_details": {
+        "reasoning_tokens": 319
+      },
+      "prompt_tokens": 3432,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3790
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.581,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Produce дает 2 товара без риска, shuttle рискует 25% потерей всех серых товаров.\"}",
+          "reasoning_content": "No cash for donkey. Shuttle gives 3 grey goods, risk 25% confiscation at border. Cash=0 so tariff favorable? No tariff active. Shuttle risk ~25% loss of all goods. Expected 2.25 goods vs produce 2. Produce is safer.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427477,
+    "id": "2026102000311279340cb33d0e4be0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000311279340cb33d0e4be0",
+    "usage": {
+      "completion_tokens": 91,
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      },
+      "prompt_tokens": 2171,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2262
+    }
+  }
+}

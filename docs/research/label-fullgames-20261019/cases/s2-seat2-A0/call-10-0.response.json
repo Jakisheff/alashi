@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.358,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон даёт +1 влияния богатейшему (фракция 0), что мне невыгодно; голос «против» хотя бы не поддерживает его.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest (idx 0, cash 31.3M). That helps idx0. Both rivals voted yes. I can veto? No, I'm not president (holder 1). Vote no won't change (2 yes vs 1 no → passes). Abstain similar. Just vote yes/no doesn't matter; pick abstain or no. Doesn't matter for payout—choose vote_no (0).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490056,
+    "id": "202610201754131ece72ca3d8b41c7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201754131ece72ca3d8b41c7",
+    "usage": {
+      "completion_tokens": 138,
+      "completion_tokens_details": {
+        "reasoning_tokens": 92
+      },
+      "prompt_tokens": 2559,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2697
+    }
+  }
+}

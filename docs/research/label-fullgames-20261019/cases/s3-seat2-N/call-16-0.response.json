@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.476,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Произвожу товар без пограничного риска для продажи в последнем раунде; влияние держателя уже обеспечено.\"}",
+          "reasoning_content": "Round 5 action. I'm holder with influence 3, largest cash. Remaining rounds 5-6. Producing goods lets me sell in round 6 market. shuttle gives 3 goods; grey goods could be seized at border (~25%) — tariff currently 0? market tariff not stated; risk exists. produce gives 2 goods safely, price round 6 at sold_counter=3 → price 8. Selling 2 goods = ~17 alashi revenue... actually prices 8+7=15 alashi = 15M. shuttle 3 goods ~21M but risk. Choose produce for safety? Difference 1 extra good ~6M vs 25% risk of losing all 3. EV shuttle ~15.75M vs produce 15M — similar. But influence bribe? Max influence gives 5% bank commission (1.9M) — small. Already holder at 3 vs others' 1, safe. Produce.\n\nChoice 1.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491242,
+    "id": "20261020181354789c13d8b20e4fb2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181354789c13d8b20e4fb2",
+    "usage": {
+      "completion_tokens": 240,
+      "completion_tokens_details": {
+        "reasoning_tokens": 202
+      },
+      "prompt_tokens": 4292,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 4532
+    }
+  }
+}

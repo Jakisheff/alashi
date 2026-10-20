@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.25,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Продать весь товар за наличные выгоднее, чем вексель, который девальвирует.\"}",
+          "reasoning_content": "Price at counter 4 is 7? sold_counter=4, price index 4 = 7? List index: [12,10,9,8,7,...] counter 4 → 7. Sell 2 units: 7+6=13 matches candidate 3. Promissory devalues by 62% each round — bad. Sell 2 for cash now: 13 alashi.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427523,
+    "id": "202610200031586c3b399409754c97",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200031586c3b399409754c97",
+    "usage": {
+      "completion_tokens": 117,
+      "completion_tokens_details": {
+        "reasoning_tokens": 86
+      },
+      "prompt_tokens": 2221,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2338
+    }
+  }
+}

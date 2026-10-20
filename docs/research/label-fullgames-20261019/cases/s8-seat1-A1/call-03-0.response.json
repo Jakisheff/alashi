@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.089,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель не девальвируется, поэтому продажа в кредит двух единиц даёт наибольшую ценность.\"}",
+          "reasoning_content": "Price counter 4 → price 5 alashi each? sold_counter=4, price index 4 = 5? Actually list [12,10,9,8,7,...] index 4 = 7. Hmm candidate sell 2 units gives 13 alashi → 7+6. Prices declining; cash devalues 0.62. Better sell now for cash than credit (promissory not devalued, ×1.25). Actually promissory survives devaluation! sell_credit 2 gives promissory 16.25 which is added to cash next round — no devaluation. That's better than cash 13 which devalues to floor(13/100)*62... wait cash=floor(cash/100)*62 means 13 alashi → floor deval? floor(13000000/100)=130000 → *62? That seems wrong—cash 13M→8.06M. Yes, cash devalues by 0.62. So credit is better: 16.25 vs 13*0.62=8.06. But promissory is paid next round start, then devalues in later rounds. Still 16.25>8.06. Sell credit 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427659,
+    "id": "202610200034100afa6188722b49dd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200034100afa6188722b49dd",
+    "usage": {
+      "completion_tokens": 293,
+      "completion_tokens_details": {
+        "reasoning_tokens": 258
+      },
+      "prompt_tokens": 2162,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2455
+    }
+  }
+}

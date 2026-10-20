@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 30.462,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Наличные обесценятся, а влияние 3 даёт пост президента, вето и бонус комиссии.\"}",
+          "reasoning_content": "I'm poor, far behind. License income 20-60, opponents have more cash. Bidding all cash still loses likely. Better: goods for future selling? Market price at counter 7 is ~1-2 alashi, low. Goods not counted in ranking anyway; sell next round for cash. Shuttle gives 3 goods worth ~1 each... weak. Influence could win presidency and 5% bonus (bank 30 → 1.5 alashi). Bribe 5 to rival raises their cash too.\n\nBribe 5M gives influence 2 — not enough to beat rival 2 (tie broken by tie_order: [1,0,2], rival 2 has infl 2 and tie_order puts 2 last... president at law entry is highest influence; ties by tie_order: idx1 first. infl 2 vs my 2 → rival 1 wins? tie_order [1,0,2] means 1 wins ties. So need influence 3: bribe 10M. That gives presidency rounds 4-6 law and 5% commission (1.5 alashi) plus veto power. Cash ranking: I'm poor anyway, last place likely regardless. Presidency gives ~1.5 alashi + control. 10M bribe = 10 alashi cost... too much? But cash otherwise converts at 62% deval? No, cash devalues floor(cash/100)*62 each round start! Cash loses ~38%. So spending cash now is good. Bribe 10M to idx1: I keep 1.935M, gain influence 3, presidency. Veto can block taxes. That seems better than hoarding devaluing cash. But license income matters — can't win bid.\n\nChoose bribe 10M to idx1 (choice 5).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490461,
+    "id": "202610201800327f56ab27e6704e6e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201800327f56ab27e6704e6e",
+    "usage": {
+      "completion_tokens": 413,
+      "completion_tokens_details": {
+        "reasoning_tokens": 380
+      },
+      "prompt_tokens": 4045,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 4458
+    }
+  }
+}

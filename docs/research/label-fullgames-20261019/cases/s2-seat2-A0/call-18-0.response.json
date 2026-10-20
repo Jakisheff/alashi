@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.2,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Граница чистая, шаттл даёт 3 товара для продажи на последнем рынке.\"}",
+          "reasoning_content": "Round 5 action, last market round 6. Shuttle gives 3 goods (tariff? no tariff active now). Best to gain goods to sell round 6. Shuttle risk only with red tariff; no tariff set. Choose shuttle.\n\nCould also bribe for influence to become president, but goods worth ~3*price(2 units sold, price ~8-9 next round? sold_counter=2, price index ~9-10... prices [12,10,9,8,...] at counter 2 → 9). 3 goods ≈ 24 alashi. Strong.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490095,
+    "id": "202610201754492a207f8a918c4869",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201754492a207f8a918c4869",
+    "usage": {
+      "completion_tokens": 154,
+      "completion_tokens_details": {
+        "reasoning_tokens": 122
+      },
+      "prompt_tokens": 3893,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 4047
+    }
+  }
+}

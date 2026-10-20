@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.075,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Продажа сейчас обесценится на старте раунда 6, выгоднее придержать товар и продать его на последнем рынке.\"}",
+          "reasoning_content": "Round 5 market; after round 6 devaluation. sell now gives cash that will be devalued at round 6 start (62%). promissory added after deval and not devalued—wait, round 6 is last round; no round 7 start, so promissory never paid? \"После последнего раунда вексель не погашается\" — sell_credit worthless. Sell now: cash devalued? Devaluation happens at start of round 6, but round 6 market—sell in round 6 avoids devaluation. Actually final ranking: cash+hard. Cash from selling now gets devalued 62%. Better to hold goods and sell in round 6? Prices: counter 7, next price 4? Price list index 7 = 4. Both rounds same-ish; selling later avoids devaluation. So pass now, sell in round 6. Choice 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428057,
+    "id": "2026102000405107f9133337684b24",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000405107f9133337684b24",
+    "usage": {
+      "completion_tokens": 234,
+      "completion_tokens_details": {
+        "reasoning_tokens": 193
+      },
+      "prompt_tokens": 2960,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3194
+    }
+  }
+}

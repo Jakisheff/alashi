@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.779,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":27,\"reason\":\"Высокая ставка на лицензию даёт большой ожидаемый доход, при проигрыше ставка возвращается, а часть cash сохраняется.\"}",
+          "reasoning_content": "I'm the president (idx 2), lowest cash. License income 20-60 alashi is huge — bid high. But bid consumes cash and if I lose it's returned. Opponents have 37 and 33 alashi cash. Tie order [1,2,0] — I beat idx0 but not idx1. License profit is large even at high bid. Bid all 15.7? If idx1 bids more, I lose and get money back. If I bid 15, idx1 might bid 20+. Expected value: profit at least 5 even at full bid. Bid all cash (choice 31)? That leaves me cash 0 for round 5 dev... but dev hit is proportional anyway; goods can rebuild. But rank depends on cash; losing 15.7 hurts if I win at high price — still license pays 20-60. Win at 15.7 → gain ≥4.2. Reasonable. But maybe opponents bid higher and I lose anyway — no loss. Risky if license income ~20. Still positive. Bid 31... but maybe bid slightly less to retain cash, e.g. 12 (choice 27). If I win at 12, profit ~8-48. Opponents may outbid. I'll bid 12.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491353,
+    "id": "202610201815452371e49077284d5a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201815452371e49077284d5a",
+    "usage": {
+      "completion_tokens": 308,
+      "completion_tokens_details": {
+        "reasoning_tokens": 270
+      },
+      "prompt_tokens": 4362,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 4670
+    }
+  }
+}

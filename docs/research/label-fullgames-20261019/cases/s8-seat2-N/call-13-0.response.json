@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.876,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Производство даёт 2 товара надёжно для будущих рынков, тогда как shuttle рискует изъятием на границе.\"}",
+          "reasoning_content": "Round 4 action: need goods for future markets. Best is produce (2 goods, no risk) or shuttle (3 grey goods, 25% seizure risk, plus tariff pay). Red border? tariff unknown; black protects seizure. Shuttle gives 3 but risk. Also influence matters for law holder — I'm holder via tie_order but influence 1 each; bribing gives influence but costs cash. Bid 20M already for license. Remaining rounds 5,6 markets. Produce = 2 goods safely. Shuttle EV 2.25 goods but risk. I'd pick produce for safety.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491277,
+    "id": "20261020181432e721bb586258409f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181432e721bb586258409f",
+    "usage": {
+      "completion_tokens": 164,
+      "completion_tokens_details": {
+        "reasoning_tokens": 122
+      },
+      "prompt_tokens": 4188,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 4352
+    }
+  }
+}

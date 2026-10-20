@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.519,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Продаю обе единицы по высокой цене сейчас, так как промессории обесценятся девальвацией.\"}",
+          "reasoning_content": "I'm holder, cash 22.5, opponent 0 has 32.5. Prices decline; later rounds devalue cash heavily (62% rounding). Selling now at price 9 is good. Sell 2 for +17 now, keeps influence 1, holder role may shift later. Selling credit gives promissory paid next round then devalued — worse. Sell 2 (choice 3).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490613,
+    "id": "20261020180329dbd3854330ad4115",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180329dbd3854330ad4115",
+    "usage": {
+      "completion_tokens": 121,
+      "completion_tokens_details": {
+        "reasoning_tokens": 85
+      },
+      "prompt_tokens": 2532,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2653
+    }
+  }
+}

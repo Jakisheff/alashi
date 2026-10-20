@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.819,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Продажа в кредит даёт больше с учётом девальвации: вексель погасится в раунде 6 без обесценения.\"}",
+          "reasoning_content": "Round 5 market, prices fresh at 12? sold_counter=0? It says 0, so prices high. Sell 2 now for 22 total immediate cash (52M). But promissory not paid after round 6? After final round promissory not honored. So sell_credit bad in round 5? Promissory added at start of round 6, so round 5 sell_credit pays in round 6 — actually promissory added at start of round 6 market, then can sell more. Wait round 6 is last; sell_credit in round 6 worthless. Round 5 sell_credit gives 27.5M promissory paid at round 6 start, plus cash in round 6 devalued? Cash at start of round 6: floor(cash/100)*62. If cash 30M stays, sells credit: promissory 27.5M, cash stays 30M. Round 6 start: cash 30M*0.62=18.6M + 27.5M promissory = 46.1M. Versus sell now: 52M cash now, round 6 start becomes 52*0.62=32.24M. So sell_credit better? 46.1 > 32.2. Also keep goods 0.\n\nAlso boom? Round 2 law 7 price +2 next market (round3). Now no shift. Prices 12,10 fresh. Sell 2 credit: 22*1.25=27.5M. Choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427927,
+    "id": "2026102000383718e12298e2124b04",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000383718e12298e2124b04",
+    "usage": {
+      "completion_tokens": 373,
+      "completion_tokens_details": {
+        "reasoning_tokens": 329
+      },
+      "prompt_tokens": 3122,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3495
+    }
+  }
+}

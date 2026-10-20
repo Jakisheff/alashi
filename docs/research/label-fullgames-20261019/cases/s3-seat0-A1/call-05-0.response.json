@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.054,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Ожидаемая выгода шаттла выше, а потери при изъятии невелики.\"}",
+          "reasoning_content": "Produce is safe, shuttle has 25% seizure risk but gives 3. With cash 0, prefer safe produce? Shuttle gives 3 vs 2, risk 25% loss of all grey. Expected 2.25 vs 2. Choose shuttle slightly.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490938,
+    "id": "20261020180855a35eb3ad088c47df",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180855a35eb3ad088c47df",
+    "usage": {
+      "completion_tokens": 89,
+      "completion_tokens_details": {
+        "reasoning_tokens": 56
+      },
+      "prompt_tokens": 2171,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2260
+    }
+  }
+}

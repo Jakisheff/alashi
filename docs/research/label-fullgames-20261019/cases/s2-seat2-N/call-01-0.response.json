@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.765,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Produce даёт 2 товара без риска, что надёжнее шаттла.\"}",
+          "reasoning_content": "Produce (2 goods safe) vs shuttle (3 with 25% seizure risk). Shuttle EV higher: 3*0.75=2.25. Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427641,
+    "id": "20261020003358c3aca3d6dbe04941",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003358c3aca3d6dbe04941",
+    "usage": {
+      "completion_tokens": 64,
+      "completion_tokens_details": {
+        "reasoning_tokens": 35
+      },
+      "prompt_tokens": 1925,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 1989
+    }
+  }
+}

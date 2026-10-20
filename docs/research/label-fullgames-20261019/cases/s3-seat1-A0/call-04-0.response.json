@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.068,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Цены падают, sell_credit даёт 16.25 alashi против 7 наличными, что выгоднее даже с учётом девальвации.\"}",
+          "reasoning_content": "Price already at 4 (sold_counter=4), selling 2 gets 4+3=7... wait candidate says 7? sell 2 gives 7M? Actually 4+3=7, yes. Selling now is good; cash is devalued 62% at round start though. Cash helps bribes/roof/rich rank. Devaluation 62% per round hurts cash holding. Promissory added to cash then also devalued next round? promissory adds to cash at start, then next round that cash devalues too. Selling credit gives 8.75 per unit vs 3.5 immediate, but immediate cash also devalues to 62% next round: 3.5→2.17. So credit much better if promissory stays nominal 8.75 then also devalues after being cash... promissory added to cash then future devaluation. Net: credit 8.75 now → becomes cash at r3 start, devalues later rounds. Sell 2 credit = 16.25 promissory. At round 3 start: 16.25 cash. Better than 7 cash → 4.34 at r3. So credit. But keep 1 unit for later? Prices decline anyway; counter only moves forward, prices fall. Sell all now at high price, credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427207,
+    "id": "202610200026379b03ef189a484a7d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200026379b03ef189a484a7d",
+    "usage": {
+      "completion_tokens": 323,
+      "completion_tokens_details": {
+        "reasoning_tokens": 280
+      },
+      "prompt_tokens": 2220,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2543
+    }
+  }
+}

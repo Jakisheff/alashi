@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 24.007,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Ожидаю больше товара, чем produce, риск изъятия умеренный.\"}",
+          "reasoning_content": "I'm idx 2, influence 1 with vote_weight 3 (previous pass bonus?). Actually vote_weight=3 already — seems leftover. Round 3 action. I have cash 27.5M, promissory 21.25M (devalues 62% each round start... promissory added once). Others have more cash and goods. Round 4 auction: license income 20-60 alashi; bid matters. I need cash. Produce gives 2 goods; shuttle 3 grey goods but 25% seizure risk. Cash devaluation at round start: floor(cash/100)*62 — so holding cash is bad. Better to convert to goods or influence? Bribing gives influence which matters for law and 5% commission bonus.\n\nShuttle: 3 goods, ~25% seizure under red tariff? Tariff currently... roof_tariff 0. Border: grey goods risk 25% seizure unless black tariff. Currently no tariff — risk applies. Expected 2.25 goods vs produce 2. Shuttle slightly better expected.\n\nActually best: shuttle for goods, sell later. I'll pick shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490090,
+    "id": "2026102017542784ee5e2092824b8e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102017542784ee5e2092824b8e",
+    "usage": {
+      "completion_tokens": 261,
+      "completion_tokens_details": {
+        "reasoning_tokens": 234
+      },
+      "prompt_tokens": 3505,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 3766
+    }
+  }
+}

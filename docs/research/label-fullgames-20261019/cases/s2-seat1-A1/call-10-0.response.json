@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.171,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 5 даст +1 влияния самому богатому (фракция 0), усилив лидера; голосую против.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest. Richest: idx0 29.54M vs me 28.06M vs idx2 26.64M. idx0 already president with 2 influence. Giving idx0 +1 influence strengthens them (commission 5% goes to max influence). I'm not president; holder is idx0 who voted yes. Vote no—but idx0 vote weight 2, others 1 each; my vote matters: yes=2(idx0)+? I vote no gives no=1(me)+idx2? idx2 unknown. If I vote no, yes=2, no=1 → passes unless idx2 votes no (no=2, yes=2 → not strict → fails). Vote no is best chance to block.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427392,
+    "id": "202610200029441d98932cb9fe4da2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200029441d98932cb9fe4da2",
+    "usage": {
+      "completion_tokens": 197,
+      "completion_tokens_details": {
+        "reasoning_tokens": 159
+      },
+      "prompt_tokens": 2547,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2744
+    }
+  }
+}

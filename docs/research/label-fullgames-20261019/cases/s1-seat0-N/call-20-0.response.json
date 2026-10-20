@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.495,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Взятка ради бонуса влияния (2,2 млн) стоит дороже herself; cash уже максимальный, поэтому pass.\"}",
+          "reasoning_content": "Final round, action. I'm richest (67M vs 33M vs 19M). Bribes give influence but max influence bonus is 5% of bank (44M → 2.2M). Holder is idx2 with influence 3; to overtake need influence 4+ (tie_order: [0,2,1], tie → 0 wins? tie_order priority: index 0 first, so tie favors me). Influence 3 via bribe 10M to either. Gain: 5% bank = 2.2M, cost 10M. Bad. Better: gain influence cheaply? floor(amount/5000000) per 5M. 5M → 2 influence, tie with holder 2 but tie_order favors 0 → I become holder. Cost 5M, gain 2.2M bonus + holder can veto law this round (map 8 cancels promissory — but promissory=0 for me; map 6 price shift -2 irrelevant, no market left... round 6 market done, so price shifts irrelevant. Map 5 +1 influence richest... Holder matters for veto; but final law effects: tax irrelevant (no more market), card 8 promissory all zero now. So holder matters only for the 5% commission bonus = 2.2M. Bribe 5M to get it loses money. Alternatively pass: keep cash. But bribing to idx1 also gives them cash affecting rank — I'm far ahead anyway.\n\nBest: pass. Also holder's max-influence bonus: idx2 has 3, mine 1; 2.2M goes to idx2, doesn't affect my payout rank. Pass is optimal.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428095,
+    "id": "202610200041246ed377f6c969453a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200041246ed377f6c969453a",
+    "usage": {
+      "completion_tokens": 402,
+      "completion_tokens_details": {
+        "reasoning_tokens": 362
+      },
+      "prompt_tokens": 5267,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 5669
+    }
+  }
+}

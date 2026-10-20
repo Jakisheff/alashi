@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.199,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Produce даёт 2 товара для будущих продаж, сохраняя cash для аукциона и влияния.\"}",
+          "reasoning_content": "Produce gives goods for selling. Bid already 0? own_bid=0 — wait, bid not an option here, but own_bid:0 present. Action: produce seems best for future revenue.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792489890,
+    "id": "20261020175126ec290be879ce4b00",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175126ec290be879ce4b00",
+    "usage": {
+      "completion_tokens": 74,
+      "completion_tokens_details": {
+        "reasoning_tokens": 41
+      },
+      "prompt_tokens": 3329,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 3403
+    }
+  }
+}

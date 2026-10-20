@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.851,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":13,\"reason\":\"Вексель после последнего раунда не погашается, поэтому продаю весь товар за наличные и максимизирую cash.\"}",
+          "reasoning_content": "Final round market. Credit doesn't pay out (last round, promissory not redeemed). So plain sell. Sell all 7 = 68160062 cash, rank first (opponent 0 has 35.3M). But round 6 law still follows—but market last. Selling all maximizes cash rank. Sell 7, choice 13.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427745,
+    "id": "202610200035410ba7430992d84828",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200035410ba7430992d84828",
+    "usage": {
+      "completion_tokens": 114,
+      "completion_tokens_details": {
+        "reasoning_tokens": 75
+      },
+      "prompt_tokens": 3814,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3928
+    }
+  }
+}

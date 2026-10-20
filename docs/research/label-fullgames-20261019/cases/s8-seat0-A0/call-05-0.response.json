@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.616,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Небольшая взятка даёт влияние 2 и пост президента с комиссией, сохраняя cash для ранга богатства.\"}",
+          "reasoning_content": "Cash dev贬值严重 (round start 62%), so spending cash on goods/influence is good. Bribe gives influence—presidency gives 5% bank commission. Bribe 10 to idx2 gets influence 3 vs others 1 — max influence, but tie broken by cash. Influence 3 makes me top influencer → 5% bank (~1.6) plus presidency in law rounds? President is highest influence entering law. Influence 3 > 1 wins. That's valuable, but loses 10 cash. Cash 14 vs 22/11 — rank may fall. Bank 30, 5% = ~1.58 alashi for commission; presidency also law control.\n\nBribe 5 gives influence 2, enough to beat 1. Cheaper. Cash 19, influence 2. President role + commission. Bribe to 2 (who currently holds presidency? holder 2 with influence 1, weight 1). I'll pick choice 4 (5 to 1) or 11 (5 to 2). Recipient matters little; idx2 has goods already. Give to 1 to balance. Choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427353,
+    "id": "20261020002904618f74f1f09a4cac",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020002904618f74f1f09a4cac",
+    "usage": {
+      "completion_tokens": 278,
+      "completion_tokens_details": {
+        "reasoning_tokens": 241
+      },
+      "prompt_tokens": 3072,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 3350
+    }
+  }
+}

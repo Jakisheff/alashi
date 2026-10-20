@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 31.943,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Продажа в кредит обоих товаров даёт максимум выручки (+25%), а погашение произойдёт до последнего раунда.\"}",
+          "reasoning_content": "Prices: counter at 2, next unit price 9, then 8. Sell 2 gives 17? They say 33250000-16250000=17 alashi — wait, 9+8=17. Yes. Sell credit 2: 17*1.25=21.25. Promissory gets paid next round... but devaluation floor(cash/100)*62 applies to cash only. Credit is good unless round 6. Round 3, so round 4 market it pays. Tax risk? Law could impose tax on future sales but credit locks current. Credit gives 25% more, safe now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427713,
+    "id": "20261020003442fd6623b041b44c12",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003442fd6623b041b44c12",
+    "usage": {
+      "completion_tokens": 176,
+      "completion_tokens_details": {
+        "reasoning_tokens": 135
+      },
+      "prompt_tokens": 2480,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2656
+    }
+  }
+}

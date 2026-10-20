@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.919,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Ожидаемая выручка shuttle выше produce при текущей цене 7 за единицу.\"}",
+          "reasoning_content": "Shuttle gives 3 goods, price at counter 4: next sell price ~7 alashi... counter=4 means price index 4 = 7 alashi. 3 goods × 7 = 21 alashi. Produce gives 2. Shuttle best, but grey goods seizure risk 25%? Tariff not active now. Risk ~25% loss. Expected 15.75 vs produce 14. Shuttle slightly better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490320,
+    "id": "20261020175834dfcec2acc39c497b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175834dfcec2acc39c497b",
+    "usage": {
+      "completion_tokens": 122,
+      "completion_tokens_details": {
+        "reasoning_tokens": 90
+      },
+      "prompt_tokens": 3024,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 3146
+    }
+  }
+}

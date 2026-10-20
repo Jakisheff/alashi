@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.885,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":26,\"reason\":\"Высокая ставка на лицензию почти наверняка даёт доход 20–60 alashi, превышающий цену, а проигрыш возвращается.\"}",
+          "reasoning_content": "I hold presidency (influence 2 vs rival 2, tie_order favors me). License income 20-60 alashi — big. I already bid 0. Should bid moderately high; rivals cash ~20 and ~41. Tie order [1,0,2] favors me at ties. Rival 2 has 41 cash, could outbid me. Bid ~10 alashi is decent; if lose, money returns. License income outweighs. But cash spent to bank raises my contribution... bid goes to bank, shared anyway. I'd bid high, e.g., 14 (choice 27)? Expected value: license income ~40 average; paying 14 still +26. Rival may bid more though. I can also do bid + action? \"bid не расходует основное действие\" — but menu offers combined single action. Bid plus produce would be nice but only one candidate. Choose bid high: 12-14. Choice 27 (14 alashi) leaves me 359200 cash, weak but license likely won. I'll take 13 (choice 26) to keep some cash.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490614,
+    "id": "202610201803230c0f4674c0094c83",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201803230c0f4674c0094c83",
+    "usage": {
+      "completion_tokens": 273,
+      "completion_tokens_details": {
+        "reasoning_tokens": 232
+      },
+      "prompt_tokens": 4134,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 4407
+    }
+  }
+}

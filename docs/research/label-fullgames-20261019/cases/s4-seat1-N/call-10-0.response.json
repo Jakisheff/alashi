@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.378,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель не девальвируется, поэтому продажа всего товара в кредит сохраняет больше ценности, чем наличные.\"}",
+          "reasoning_content": "Prices decline as more sold. Round 4 market, then round 5 market, round 6 final. Cash devalues 62% each round start. Selling now better than promissory? Promissory not devalued and paid next round — sell_credit is effectively better than cash! Cash floors to 62%, promissory paid in full. So sell_credit 3: promissory 38.75M added next round plus 62% of 23.25M = ~14.4M → 53.15M cash. Sell 3 now: 54.25M → next round floor 62% = 33.6M. Sell_credit clearly better. Sell all 3 credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490633,
+    "id": "20261020180349a891a7820b6c4235",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180349a891a7820b6c4235",
+    "usage": {
+      "completion_tokens": 184,
+      "completion_tokens_details": {
+        "reasoning_tokens": 149
+      },
+      "prompt_tokens": 2793,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2977
+    }
+  }
+}

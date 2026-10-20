@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.351,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 6 снижает цены следующего рынка, но раунд 6 — последний, рынок уже прошёл, эффект пуст; пасс безопасен.\"}",
+          "reasoning_content": "Law 6: -2 prices next market — but this is round 6, last market already done. So card has no effect. Vote yes doesn't matter. Pass keeps vote_weight irrelevant (already voted?). Vote weight 4 due to pass action. Passing preserves nothing needed. Law 6 harm is nil since round 6 market is done. Just vote_abstain or pass. I hold license? No, license holder idx1. I'm richest, cash 88M. Law 6 no effect post-game. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490110,
+    "id": "202610201755034136e8309aaf46b9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201755034136e8309aaf46b9",
+    "usage": {
+      "completion_tokens": 151,
+      "completion_tokens_details": {
+        "reasoning_tokens": 109
+      },
+      "prompt_tokens": 3316,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3467
+    }
+  }
+}

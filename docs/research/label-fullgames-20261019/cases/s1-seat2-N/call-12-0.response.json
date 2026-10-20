@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.734,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":10,\"reason\":\"Вексель добавляется к cash без девальвации в следующем раунде и даёт 43.75 alashi, что выгоднее прямой продажи.\"}",
+          "reasoning_content": "Round 4 of 6, promissory paid at start of rounds 5 and 6 with devaluation 62%... Actually promissory adds fully to cash each round start? \"promissory прибавляется к cash и обнуляется\" — promissory added at start of next round, then devaluation applies to cash (floor(cash/100)*62) — cash from promissory added after devaluation? \"cash=floor(cash/100)*62, затем promissory прибавляется\" — so promissory doesn't devalue next round, but round 6 start devalues again. Last round's market sales: promissory never redeemed after round 6.\n\nSelling now for cash: sell all 5 = +35 alashi cash, devalued twice: 35.425*0.62^2 ≈ 13.6 effective.\nsell_credit 5: 43.75 promissory → added at round 5 start fully, then devalued at round 6: 43.75*0.62 ≈ 27.1. Better.\nSell partial then more later? Prices decline with sold_counter. Current counter=2, prices [12,10,9,...] with counter 2 means next price 9? Selling 5 gives 35. Mixed: sell_credit now, but could sell remaining later at lower prices anyway. So sell all on credit now: choice 10.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427108,
+    "id": "20261020002459795594b72b5c40c7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020002459795594b72b5c40c7",
+    "usage": {
+      "completion_tokens": 348,
+      "completion_tokens_details": {
+        "reasoning_tokens": 304
+      },
+      "prompt_tokens": 3097,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 3445
+    }
+  }
+}

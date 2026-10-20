@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.594,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товара нет, покупка по высокой стартовой цене невыгодна — пропускаю.\"}",
+          "reasoning_content": "We have no goods; cash 26.2. Sell nothing. Buy? Prices high at start (12). Buying at 12 to sell later at lower? Selling later prices drop as counter increases... buying moves counter backward. Not profitable. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490839,
+    "id": "2026102018071281f914d6dfb943f2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102018071281f914d6dfb943f2",
+    "usage": {
+      "completion_tokens": 82,
+      "completion_tokens_details": {
+        "reasoning_tokens": 51
+      },
+      "prompt_tokens": 2587,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2669
+    }
+  }
+}

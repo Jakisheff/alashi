@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 53.555,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Взятки стоят дороже комиссии, товары больше не продаются — оставляю cash для ранга.\"}",
+          "reasoning_content": "Final round action, no more markets. Goods worthless. Influence matters: 5% bank commission (~3.3M) goes to max influence; ties broken by cash+hard. Currently I (idx1) have vote_weight 3 = influence 1 + 2 (action passed? actually skipped — \"vote_weight: influence plus 2 if action passed\"). All three have weight 3, influence 1. If I pass now, influence stays 1, tied with others; tie broken by cash: idx0 richest would get commission. If I bribe 5M to someone, my influence 2, but lose 5M cash — bad trade for 3.3M commission and losing rank. Bribe reduces my cash and increases opponent's cash—double loss. Best: produce? Goods worthless. Actually pass keeps cash; but influence matters for commission. Bribe 5M gives influence 2 → commission 3.3M, cost 5M plus opponent gains 5M. Worse. Pass.\n\nWait, my vote_weight 3 already includes +2 from passing? Vote weight shown 3 for idx1 and idx2. So pass keeps. Choose 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490794,
+    "id": "202610201805423291096ee6e74bbb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201805423291096ee6e74bbb",
+    "usage": {
+      "completion_tokens": 276,
+      "completion_tokens_details": {
+        "reasoning_tokens": 244
+      },
+      "prompt_tokens": 4867,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 5143
+    }
+  }
+}

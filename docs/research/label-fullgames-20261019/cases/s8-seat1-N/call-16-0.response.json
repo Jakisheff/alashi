@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.359,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Бесплатные товары на финальный рынок выгоднее, чем дорогие взятки ради 3M приза влияния.\"}",
+          "reasoning_content": "Round 5 action. I'm idx1, license holder. Cash 41.9M, promissory 22.5M. Remaining rounds 5-6. Holder X is idx0. Bribe to gain influence? Max influence prize: 5% bank = 3M. Bribe 5M gives 1 influence — costly. Influence 1 vs holder 2. To get influence prize need to be max influence; idx0 has 2. Need 3+ influence → 10M bribe, too expensive for 3M prize. Skip.\n\nBest action: produce goods to sell in round 6? Prices low (sold_counter 7, price ~4). Shuttle gives 3 goods with ~25% seizure risk; produce gives 2 free. Goods sold at price ~3-4, 3 goods ~12 alashi minus future price drop. Produce is safe choice.\n\nActually cash counting: after round 5 market, cash devalues next round start: floor/100*62. Promissory 22.5M added. More cash just devalues; goods sold in round 6 give cash that doesn't devalue (final round). Produce free goods → choice 1.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490845,
+    "id": "202610201807159d2d54d0538d4e73",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201807159d2d54d0538d4e73",
+    "usage": {
+      "completion_tokens": 288,
+      "completion_tokens_details": {
+        "reasoning_tokens": 251
+      },
+      "prompt_tokens": 4409,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 4697
+    }
+  }
+}

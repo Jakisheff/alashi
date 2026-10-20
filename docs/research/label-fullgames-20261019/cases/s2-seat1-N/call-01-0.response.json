@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.085,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Производство даёт 2 товара бесплатно без риска изъятия на границе.\"}",
+          "reasoning_content": "Round 1, no cash, produce gives 2 goods free; shuttle gives 3 grey goods with seizure risk but no tariff set? Tariff likely default? Risk ~25%. Expected shuttle 2.25 vs produce 2. Choose shuttle? Grey goods seizure only if unfavorable border. Default border? Unclear; safer produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490057,
+    "id": "20261020175414d78b18e2e2144bb7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175414d78b18e2e2144bb7",
+    "usage": {
+      "completion_tokens": 97,
+      "completion_tokens_details": {
+        "reasoning_tokens": 68
+      },
+      "prompt_tokens": 1925,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 2022
+    }
+  }
+}

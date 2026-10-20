@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.481,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Произвожу 2 товара без риска и сохраняю cash для аукциона в раунде 4.\"}",
+          "reasoning_content": "Round 3 action. Next round 4 is auction. I have promissory 26.25M, cash 16.25M. Need goods to sell in later markets, and cash for the auction bid. Shuttle gives 3 goods for free (25% seizure risk — but tariff state? roof_tariff 0, so risk applies? \"При льготной границе... изъятие нет у чёрного тарифа\" — default risk applies ~25%). Shuttle 3 goods expected 2.25. Produce gives 2 goods safely. But auction in round 4 needs cash; I have 16.25M which is small vs opponents 36M and 30M. Income license 20-60. Bidding all cash unlikely to win. Better to build goods and influence? Influence helps presidency and the 5% commission. President currently holder 0 with influence 1; my vote weight is 3 (action passed earlier? no — I already have a pending action... own_bid 0 and vote_weight 3 suggests skipped action? Actually I did sell_credit in market; vote_weight 3 = influence 1 + 2 skipped action. Hmm, that's a prior state.\n\nChoose produce (2 goods, safe) vs shuttle (3, risk). Take shuttle for more goods? Expected value: produce 2 guaranteed. I'll take produce for safety, keeping cash for auction.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490282,
+    "id": "20261020175755b50f833b5d0b4988",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175755b50f833b5d0b4988",
+    "usage": {
+      "completion_tokens": 327,
+      "completion_tokens_details": {
+        "reasoning_tokens": 291
+      },
+      "prompt_tokens": 3260,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 3587
+    }
+  }
+}

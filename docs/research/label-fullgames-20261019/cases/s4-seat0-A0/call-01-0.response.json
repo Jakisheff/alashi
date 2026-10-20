@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.754,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce даёт гарантированные 2 товара без риска изъятия.\"}",
+          "reasoning_content": "Produce gives 2 safe goods. Shuttle 3 with risk. Cash 0, no loss risk this round (risk of confiscation ~25%). Shuttle expected 3*0.75=2.25 grey? Actually shuttle gives grey goods, confiscation ~25% of all grey. Choose produce for safety.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490363,
+    "id": "20261020175919d6da2317516e4777",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175919d6da2317516e4777",
+    "usage": {
+      "completion_tokens": 90,
+      "completion_tokens_details": {
+        "reasoning_tokens": 65
+      },
+      "prompt_tokens": 1924,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2014
+    }
+  }
+}

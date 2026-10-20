@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.969,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон всё равно отклоняется (No 5 против Yes 3), тратить veto незачем.\"}",
+          "reasoning_content": "I'm holder. Current votes: yes=3 (elem0), no=3+2=5? elem1 weight 3 no, me 2 no → no=5 > yes=3, law fails anyway. So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427128,
+    "id": "202610200025238dc8d971689b426d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200025238dc8d971689b426d",
+    "usage": {
+      "completion_tokens": 82,
+      "completion_tokens_details": {
+        "reasoning_tokens": 49
+      },
+      "prompt_tokens": 2807,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2889
+    }
+  }
+}

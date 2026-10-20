@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 21.43,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Взятка даёт влияние 2 и по tie_order пост президента с комиссией и veto, стоимостью меньше выгоды.\"}",
+          "reasoning_content": "Remaining rounds 4-6. Influence matters: bribe gives influence, also presidential role gives 5% bank commission. Need to compete with idx2 (influence 2). Bidding 20M already; cash 28.775M. Better keep cash for rank, but influence 2 or 3 helps presidency later and commission. Bribe 5M to 2 → influence 2, still less than idx2's 2? Equal, tie_order favor... president chosen at law entry by highest influence, tie by tie_order [0,1,2] — so idx0 wins tie. But idx2 may act after? Actually this is action phase, law later; influence fixed unless bribe. Bribe 5M to 2: influence 2, cost 5M but gains presidency this round (commission 5% bank ~1.5M+license bid 20M → bank 50M, 5%=2.5M) plus veto power. Also influence counts future presidencies. Produce gives goods to sell. But shuttle 3 goods better for selling later. Goods sell ~8-9 alashi each... actually price counter at 2, prices ~10/9. Selling 3 goods ≈ 27 alashi. But round 5 market comes first: could sell then. Produce now (2 goods) + shuttle next? Grey risk 25%. Black tariff unknown. Keep simple: bribe 5M to 2 for presidency (veto card 2 tax 20%? law already applied). Actually tax_bps=0 currently; law 2 rejected. Presidency gives commission 5% and veto — worth ~2.5M+ vs 5M cost, plus future influence standing. Then produce next rounds. Hmm, but losing 5M cash affects rank. Rank weight 50 vs 30: cash differences matter. Bribing 5M gives me influence tie with idx2 (2 vs 2, tie_order favors me) → presidency in law this round and future rounds (influence persists). Commission 5% of bank (30+20=50M → 2.5M). And veto control. Marginal. Also bribing idx2 raises their cash? No, bribe transfers cash to recipient! That's bad — gives them 5M. Bribe to 1 instead: same influence gain, recipient idx1 who has 36M... still helps rival.\n\nAlternative: produce (choice 1) — 2 goods worth ~20 alashi next market. That's clearly strong. But presidency lost to idx2. Actually idx2 currently president already; they keep it. Their veto may harm.\n\nI think influence gain is worth it long-run: presidency rounds 4,5,6, plus 5% commission each time... commission 5% bank goes to max influence; with influence 2 tie-order gives me. Bank ~50M round4, plus bids later. Roughly 2.5M+ per round. Choose bribe 5M to 1 (choice 4)? To 2 would give cash to my influence rival who is also richest-ish in influence. To idx1 better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427585,
+    "id": "202610200032459acf103c43d143ce",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200032459acf103c43d143ce",
+    "usage": {
+      "completion_tokens": 697,
+      "completion_tokens_details": {
+        "reasoning_tokens": 659
+      },
+      "prompt_tokens": 3783,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 4480
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.367,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Последний рынок: продаю весь товар за наличные, вексель всё равно не погасится.\"}",
+          "reasoning_content": "Last round market: promissory not paid after last round? \"После последнего раунда вексель не погашается\" — sell_credit useless. Sell 3 units at price 9 each → 27M cash (matches choice 5: +24M? Actually 38162474-14162474=24M... hmm price counter 2, prices [12,10,9...], 3 units = 10+9+8=27? But candidate shows +24M. Wait maybe tax? Shows 24M. Anyway sell 3 maximizes cash.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490658,
+    "id": "2026102018041342c70c094d8141ce",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102018041342c70c094d8141ce",
+    "usage": {
+      "completion_tokens": 157,
+      "completion_tokens_details": {
+        "reasoning_tokens": 125
+      },
+      "prompt_tokens": 3411,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3568
+    }
+  }
+}

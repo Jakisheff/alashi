@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.193,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 6 влияет на следующий рынок, которого уже нет; итог не зависит от моего голоса, президент с veto всё решит сам.\"}",
+          "reasoning_content": "Law 6: prices next market -2. This is the last round, no next market matters? Round 6 market already happened... actually law affects next market which doesn't exist. So irrelevant. Rival 0 (43M, license) is richest; I'm 21M. Final rank: winner 0, second 2 (28.7M), third me. My payout fixed regardless. But vote matters for... nothing. President is 0 with veto pending anyway. Just pass or abstain. Card 6 irrelevant — vote doesn't matter. Abstain.\n\nWait—wait, but card 4 was adopted in round 5? It gave +1 influence to poorest... my influence 1, vote_weight 3 (influence 1 + 2 for passing action). Fine.\n\nVote doesn't change payout. Choose pass (choice 0).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490508,
+    "id": "20261020180136440ae70b877a4f3e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180136440ae70b877a4f3e",
+    "usage": {
+      "completion_tokens": 218,
+      "completion_tokens_details": {
+        "reasoning_tokens": 179
+      },
+      "prompt_tokens": 3170,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3388
+    }
+  }
+}

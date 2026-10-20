@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
-import contextlib,io,json,tempfile,threading,time
+import contextlib,io,json,tempfile,threading,time,zipfile
 from pathlib import Path
 from unittest.mock import patch
 import run_experiment as c
 from resume_campaign import Resume
 import replay
 p=json.loads((c.ROOT/'protocol.json').read_text())
-checks=[replay.replay(c.ROOT/'cases'/j['id']) for j in p['jobs'] if (c.ROOT/'cases'/j['id']/'result.json').exists() and json.loads((c.ROOT/'cases'/j['id']/'result.json').read_text()).get('status')=='completed']
+with zipfile.ZipFile(c.ROOT/'interruptions/20261020-recovery/original-interrupted-state.zip') as z:
+ original_complete={json.loads(z.read(n))['id'] for n in z.namelist() if n.endswith('/result.json') and json.loads(z.read(n)).get('status')=='completed'}
+checks=[replay.replay(c.ROOT/'cases'/j['id']) for j in p['jobs'] if j['id'] in original_complete]
 c.write_json(c.ROOT/'interruption-completed-replay.json',{'games_verified':len(checks),'checks':checks,'network_calls':0})
 raw={'model':'glm-5.3','choices':[{'finish_reason':'stop','message':{'content':'{"choice":0,"reason":"test"}'}}]}
 with tempfile.TemporaryDirectory() as name:

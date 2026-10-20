@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.061,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Продаю весь товар в кредит: выручка попадает в promissory и не девальвируется в начале раунда 6, тогда как наличный cash обрежется до 62%.\"}",
+          "reasoning_content": "Round 5 market, sold_counter=4, price 7. I have 3 goods, license holder. Round 6 is last market; promissory not redeemed after last round. sell_credit risky — sell now at 7. Also dev: round 6 start cash=floor(cash/100)*62 — selling now gives cash that gets devalued in round 6! Actually round 6 start: cash devalued. So promissory is better? Round 6 start promissory added after devaluation. sell_credit avoids devaluation of proceeds! Selling now for cash → round 6 start cash*0.62. Promissory 22.5M added after. Sell 3 credit: promissory 22.5M vs sell 18M cash → devalued 11.16M. Then round 6 sell nothing (0 goods). Credit better. But wait, round 6 I can still sell goods? No, selling now uses goods. Also could save goods for round 6 market—but round 6 prices after further sales lower. Best: sell_credit 3 now (promissory not devalued). Choice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490663,
+    "id": "20261020180415c82a743e40604611",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180415c82a743e40604611",
+    "usage": {
+      "completion_tokens": 298,
+      "completion_tokens_details": {
+        "reasoning_tokens": 244
+      },
+      "prompt_tokens": 3241,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3539
+    }
+  }
+}

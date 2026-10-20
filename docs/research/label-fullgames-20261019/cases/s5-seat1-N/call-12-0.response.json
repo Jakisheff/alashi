@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.006,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель не девальвируется сразу и даёт выручку x1.25, поэтому продаю весь товар в кредит по высоким текущим ценам.\"}",
+          "reasoning_content": "Round 4 market, then rounds 5-6 markets remain. Cash devaluation floor(cash/100)*62 applies rounds 5,6. Promissory added after devaluation — good.\n\nSell now converts to cash that gets devalued twice. Sell credit: promissory added next round start (before devaluation? Start of round: cash devalued, then promissory added). Promissory from round 4 added at start of round 5 without devaluation, then becomes cash and devalued at start of round 6. So selling credit is better than cash sell.\n\nPrices now: counter 0, price 12 (boom +2 from law 7? law 7 applied to round 3 market already: round3 sold_counter reset? Market shows sold_counter 0, price shift 0, so price 12 first unit). Sell 3 at credit: 12+10+9=31*1.25=38.75 promissory. Cash sell 3 gives 31 immediate, devalued to 19.2 next round. Credit better. Also future rounds: shuttle gives more goods later. Keep selling credit each round. Choose 6 (sell_credit 3).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490676,
+    "id": "202610201804289576e379f9ae42ab",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201804289576e379f9ae42ab",
+    "usage": {
+      "completion_tokens": 296,
+      "completion_tokens_details": {
+        "reasoning_tokens": 253
+      },
+      "prompt_tokens": 3020,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 3316
+    }
+  }
+}

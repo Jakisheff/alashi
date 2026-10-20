@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.276,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Кредитная продажа всех трёх единиц даёт 22,5 alashi векселем, избегая девальвации cash на 62% и с премией 1,25x.\"}",
+          "reasoning_content": "Sell all now at prices 5,4,3 (sold_counter=4). Cash helps rank. Devaluation 62% next round hits cash; but promissory isn't devalued... actually promissory paid later fully, plus 1.25x. sell_credit avoids devaluation: 22.5 alashi promissory vs 18 cash→ devalued to 11.16. Credit much better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428201,
+    "id": "20261020004316946225ca976341bf",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020004316946225ca976341bf",
+    "usage": {
+      "completion_tokens": 142,
+      "completion_tokens_details": {
+        "reasoning_tokens": 89
+      },
+      "prompt_tokens": 2272,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2414
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.841,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce даёт 2 товара без риска изъятия на границе\"}",
+          "reasoning_content": "Bid already placed; main action: shuttle gives 3 goods (grey may be seized). Produce gives 2 safe. Cash 0, border risk ~25% lose all. Choose produce for safety.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427272,
+    "id": "202610200027498e6840708e5848df",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200027498e6840708e5848df",
+    "usage": {
+      "completion_tokens": 66,
+      "completion_tokens_details": {
+        "reasoning_tokens": 41
+      },
+      "prompt_tokens": 2794,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2860
+    }
+  }
+}

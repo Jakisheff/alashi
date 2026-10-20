@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 14.536,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Продаю весь товар сейчас по высокой цене — в раунде 6 рынок пройдёт до produce, а cash обесценится лишь на 62%.\"}",
+          "reasoning_content": "Round 5 market, license holder (me) got income? Not yet paid out maybe at end. Sell all 2 units now at price 12 = 12 alashi... sell 2 gives 22 alashi cash immediately (39.03 - 17.03 = 22). Next round 6 cash devalues 62%, so selling now is better. Also license income paid at end. Sell 2, keep 0 goods? Round 6 action produce gives 2 goods, but round 6 market? Only 6 rounds; round 6 order: market, action, law — market in round 6 happens before produce, so goods produced in round 6 can't be sold. So sell all now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490252,
+    "id": "202610201757197f7f94ca67fc4980",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201757197f7f94ca67fc4980",
+    "usage": {
+      "completion_tokens": 195,
+      "completion_tokens_details": {
+        "reasoning_tokens": 150
+      },
+      "prompt_tokens": 2903,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 3098
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.696,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар и взятки уже не влияют на итоговый ранг, а бонус влияния меньше стоимости взятки — просто пропускаю.\"}",
+          "reasoning_content": "Last round, action. I have cash 46M, plus license income already earned (license_holder=1). Cash counts for ranking. Goods won't be sold (no more market). So goods useless. Bribes give influence: max influence gets 5% of bank = 2.75M (bank 55M, commission 2.75M). Bribing costs more than that unless it flips wealth ranking? Cash ranking: 0 has 49.5M, me 46.1M, diff ~3.4M. Giving money to 0 increases their lead; to 2 irrelevant. Bribing reduces my cash — bad for rank. Gaining influence to 3 vs opponent 2 would give me the 2.75M bonus, costing 5M bribe. Net negative. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427912,
+    "id": "2026102000382565381269091a4588",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000382565381269091a4588",
+    "usage": {
+      "completion_tokens": 213,
+      "completion_tokens_details": {
+        "reasoning_tokens": 173
+      },
+      "prompt_tokens": 4535,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 4748
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.57,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Продажа в кредит всех 3 единиц выводит 30 alashi из-под грядущей девальвации.\"}",
+          "reasoning_content": "Devaluation at round 5 start: cash*0.62. Selling credit avoids devaluation (promissory not devalued, but if last round after 6, not paid). Round 4 market now; sell credit gives 30 alashi promissory — paid at round 5 start. Best: sell all 3 via credit (choice 6): promissory 30 alashi, avoids devaluation. Opponents cash 20.17 and 37.5 will devalue. Yes, choice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427111,
+    "id": "202610200025059df5ca8e71af4877",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200025059df5ca8e71af4877",
+    "usage": {
+      "completion_tokens": 147,
+      "completion_tokens_details": {
+        "reasoning_tokens": 110
+      },
+      "prompt_tokens": 2911,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 3058
+    }
+  }
+}

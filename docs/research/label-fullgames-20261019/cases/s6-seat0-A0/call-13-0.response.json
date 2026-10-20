@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.691,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":41,\"reason\":\"Ставка 20 alashi даёт хороший шанс выиграть лицензию (доход ~20-60) с умеренной потерей кэша.\"}",
+          "reasoning_content": "License worth 20-60 alashi, plus bank share effects. Bid high but need cash for rank too. Bid ~15 alashi seems reasonable; rivals have ~35 alashi each and could outbid. Tie order [1,2,0] — I lose ties. Expected license ~40. Bid 20 alashi: cost 20, EV gain 40 → +20 if win. But winning bid goes to bank, boosting bank distributed 50/30/15 anyway. Rivals likely bid too. Maybe bid 20.\n\nBid 20 (choice 41). Note cash retained ~13.8 for final rank; but bank redistribution... License paid to me super extra. I'll bid 20.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427975,
+    "id": "20261020003930d9e6cffb3d3b4ab4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003930d9e6cffb3d3b4ab4",
+    "usage": {
+      "completion_tokens": 189,
+      "completion_tokens_details": {
+        "reasoning_tokens": 147
+      },
+      "prompt_tokens": 5876,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 6065
+    }
+  }
+}

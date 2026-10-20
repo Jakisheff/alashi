@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.587,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Взятка возвращает мне президентство (2=2, тай-порядок за мной), сохраняя вето и контроль над законом за умеренную цену.\"}",
+          "reasoning_content": "I'm president, need influence to keep role for law control. Bribing rival 0 (influence 2) increases my influence to 2 — tie at 2, tie_order [1,2,0] favors me. But bribe costs cash. Bribing 5 to idx0 gives me influence 2, keeping presidency and vote weight. But money matters for rank. Cash currently 21.25 vs 27.5 and 30.6. I need income: produce gives goods. Tradeoff: presidency gives veto control and possible 5% bank bonus (~1.5 alashi).\n\nShuttle gives 3 goods worth ~6-9 alashi later. Bribing 5 loses 5 cash for influence. As president with veto, law control is valuable. But influence 1 vs rival 2; law 4/5 could shift. Vote weight 3 each now.\n\nI think produce (free goods) is decent, but losing presidency risks taxes. Bribe 5 to idx0: influence 2, tie favors me → president. Cost 5 alashi. Presidency gives veto over tax laws and 5% bonus (~1.5) plus control. Rival might gain influence later. I'll bribe 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491079,
+    "id": "202610201811109f059f7e0c594364",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201811109f059f7e0c594364",
+    "usage": {
+      "completion_tokens": 306,
+      "completion_tokens_details": {
+        "reasoning_tokens": 261
+      },
+      "prompt_tokens": 3273,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 3579
+    }
+  }
+}

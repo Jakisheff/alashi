@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.62,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Цены падают с каждой продажей, распродаю весь товар сейчас, пока не введён новый налог.\"}",
+          "reasoning_content": "Sell all 3 now (prices decline, tax may come). Choice 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792489918,
+    "id": "202610201751511d0a993a36d04ecc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201751511d0a993a36d04ecc",
+    "usage": {
+      "completion_tokens": 50,
+      "completion_tokens_details": {
+        "reasoning_tokens": 17
+      },
+      "prompt_tokens": 2963,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 3013
+    }
+  }
+}

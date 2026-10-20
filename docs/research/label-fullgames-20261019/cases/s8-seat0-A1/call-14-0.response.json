@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.521,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель обходит девальвацию в начале раунда 6, поэтому продажа всего в кредит выгоднее.\"}",
+          "reasoning_content": "Round 5 market, selling now at prices 12,10,9 with tax? tax_bps=0 currently... wait tax law 1 passed? Round 3 we voted no; unknown outcome. tax_bps shown 0 now. Prices high at start? sold_counter=0. Sell 3 now for 35.8M. Promissory would be lost after round 6? Promissory added at start of round 6 (cash += promissory). Round 6's devaluation: cash=floor(cash/100)*62 before promissory added. sell_credit avoids devaluation. But if I sell now for cash, round 6 devalues cash by 38%. Sell credit gives 38.75M promissory, added after devaluation in round 6 → full value. That's clearly better: 38.75M vs 35.8M*0.62≈22M. Choose choice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792489942,
+    "id": "202610201752166b8c21a1d94b4b43",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201752166b8c21a1d94b4b43",
+    "usage": {
+      "completion_tokens": 233,
+      "completion_tokens_details": {
+        "reasoning_tokens": 198
+      },
+      "prompt_tokens": 3019,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3252
+    }
+  }
+}

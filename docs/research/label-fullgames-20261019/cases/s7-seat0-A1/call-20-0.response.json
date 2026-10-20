@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.654,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товары уже бесполезны, влияние у меня максимальное с превосходством по деньгам — pass сохраняет cash.\"}",
+          "reasoning_content": "Last round action. Goods don't matter (no more markets? Wait round 6 market already done; after action there's law, then end). Produce gives goods that can't be sold — worthless. So best: maximize influence for commission 5%? Max influence gets 5% of bank = ~2.5M. I already have influence 2, tied with player 2 who has influence 2 but less cash — I win tie on cash. Bribing gives influence but costs cash. Cost 5M for +1 influence; only useful if I'd lose max influence. I already hold max (tie 2 with idx2, cash higher). So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427634,
+    "id": "2026102000334765780dd079714b94",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000334765780dd079714b94",
+    "usage": {
+      "completion_tokens": 178,
+      "completion_tokens_details": {
+        "reasoning_tokens": 139
+      },
+      "prompt_tokens": 4613,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 4791
+    }
+  }
+}

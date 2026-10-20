@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.274,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Карта 0 без эффектов, исход голосования не влияет на выплату.\"}",
+          "reasoning_content": "Law 0 = no effect. Vote doesn't matter. Pass gives no weight bonus here (weight only matters this vote). I'm not president. Just pass... actually pass keeps vote_weight? Weight bonus is +2 if action was skipped—we did produce, so no bonus. Vote yes/no irrelevant. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427316,
+    "id": "202610200028335fe1af311b4a431a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200028335fe1af311b4a431a",
+    "usage": {
+      "completion_tokens": 90,
+      "completion_tokens_details": {
+        "reasoning_tokens": 63
+      },
+      "prompt_tokens": 3047,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3137
+    }
+  }
+}

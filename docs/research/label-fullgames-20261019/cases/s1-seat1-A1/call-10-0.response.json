@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.869,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон даёт +1 влияния мне как беднейшему, приближая к посту президента.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest. Poorest is me (idx1, 14.25M). President is idx0 with 1 influence; if I gain +1, tie in influence, tie_order favors 0. So president stays 0. Voting yes doesn't help me presidency but gives me influence — useful later (bribe-based? more influence later could shift presidency). Also influence max gives 5% bank bonus. Yes, vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428017,
+    "id": "202610200040125625a20a122243c2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200040125625a20a122243c2",
+    "usage": {
+      "completion_tokens": 128,
+      "completion_tokens_details": {
+        "reasoning_tokens": 97
+      },
+      "prompt_tokens": 2542,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2670
+    }
+  }
+}

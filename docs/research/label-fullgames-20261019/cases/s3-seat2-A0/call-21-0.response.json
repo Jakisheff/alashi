@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.946,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товары после рынка бесполезны, влияние уже максимально — сохраняю cash для итогового ранга.\"}",
+          "reasoning_content": "Last round action. Cash already dominant. Influence 3 max, gives 5% bank commission bonus (~2.5 alashi). Goods worthless after last market? Market phase passed—goods don't count. So pass, keep cash. Bribe loses cash for influence—already max influence 3 vs 2,1; ok. Pass.\n\nWait, influence affects commission bonus: max influence holder gets 5% bank = 2.5 alashi. Already max. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427633,
+    "id": "202610200033474bdcd7dc30384f6a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200033474bdcd7dc30384f6a",
+    "usage": {
+      "completion_tokens": 135,
+      "completion_tokens_details": {
+        "reasoning_tokens": 98
+      },
+      "prompt_tokens": 5431,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 5566
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.924,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Налог на продажи уже не имеет эффекта в финальном раунде, все распродали товар.\"}",
+          "reasoning_content": "Law 2: 20% tax on future sales. Last round, everyone already sold. No effect. President is idx2; I'm not president. Vote doesn't matter. Pass or abstain — same. vote_weight irrelevant. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491273,
+    "id": "20261020181430f05799a92d2748c2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181430f05799a92d2748c2",
+    "usage": {
+      "completion_tokens": 85,
+      "completion_tokens_details": {
+        "reasoning_tokens": 51
+      },
+      "prompt_tokens": 3174,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3259
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.934,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Цены сейчас максимальны, а в раунде 6 cash девальвируется, поэтому продаю весь товар немедленно.\"}",
+          "reasoning_content": "Sell 3 now: price high (12,10,9 = 31). But next round cash devalues 62%. So selling now is good. Sell all 3, cash 61M. Rival 1 has 24.7M — we'd be richest. Sell 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490194,
+    "id": "20261020175631de9d558bb3f0438c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175631de9d558bb3f0438c",
+    "usage": {
+      "completion_tokens": 102,
+      "completion_tokens_details": {
+        "reasoning_tokens": 62
+      },
+      "prompt_tokens": 3311,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3413
+    }
+  }
+}

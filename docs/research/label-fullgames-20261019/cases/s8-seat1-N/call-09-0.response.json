@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.008,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Шаттл даёт больше товара, ожидаемая ценность выше риска изъятия.\"}",
+          "reasoning_content": "We're round 3 action, no bid candidates shown but own_bid=0? There's auction round 4, not now. Choose produce or shuttle. Shuttle gives 3 goods but grey goods risk? Shuttle gives 3+subsidy goods, grey goods may be confiscated ~25% at border. Tariff currently none. Shuttle EV: 2.25 goods vs produce 2. Small gain, and shuttle goods may be grey. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490711,
+    "id": "2026102018050666aee228d6db4c72",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102018050666aee228d6db4c72",
+    "usage": {
+      "completion_tokens": 124,
+      "completion_tokens_details": {
+        "reasoning_tokens": 94
+      },
+      "prompt_tokens": 3511,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 3635
+    }
+  }
+}

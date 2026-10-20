@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.294,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"shuttle даёт 3 товара, ожидаемая ценность выше despite риска изъятия.\"}",
+          "reasoning_content": "Produce gives 2 goods safely; shuttle 3 grey goods risk 25% seizure. EV shuttle = 3*0.75=2.25 > 2, but grey goods still risky later at border? Seizure happens at border each time? Risk applied once. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427049,
+    "id": "20261020002405ac31c1256b534606",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020002405ac31c1256b534606",
+    "usage": {
+      "completion_tokens": 91,
+      "completion_tokens_details": {
+        "reasoning_tokens": 61
+      },
+      "prompt_tokens": 1925,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 2016
+    }
+  }
+}

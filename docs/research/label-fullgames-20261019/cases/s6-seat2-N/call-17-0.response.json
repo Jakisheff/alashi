@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.589,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Финальный раунд: товар и действия больше не конвертируются в деньги, cash максимален при pass, влияние уже наивысшее.\"}",
+          "reasoning_content": "Last round action, no more markets. Goods worthless. Only rank by cash matters. So pass or something increasing influence for the 5% commission bonus. Currently influence 3, likely max. Bribing costs cash. Pass is best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490274,
+    "id": "202610201757518b971e9ef2e343a3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201757518b971e9ef2e343a3",
+    "usage": {
+      "completion_tokens": 91,
+      "completion_tokens_details": {
+        "reasoning_tokens": 49
+      },
+      "prompt_tokens": 4315,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 4406
+    }
+  }
+}

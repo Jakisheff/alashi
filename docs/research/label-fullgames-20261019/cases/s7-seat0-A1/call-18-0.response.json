@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.414,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Закон даёт +1 влияния самому богатому (фракция 1), что лишит меня бонуса за максимальное влияние — применяю veto.\"}",
+          "reasoning_content": "Law 4: +1 influence to richest by cash — that's faction 1 (27.9M). That threatens my influence-max bonus. I'm president. Faction 2 voted No. If law passes, faction 1 gets influence 2, tie with me and faction 2; tie_order favors me for presidency but final influence-max bonus tie broken by cash — faction 1 wins. Veto to prevent.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427616,
+    "id": "20261020003332e9c0be25e2d344ed",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003332e9c0be25e2d344ed",
+    "usage": {
+      "completion_tokens": 132,
+      "completion_tokens_details": {
+        "reasoning_tokens": 86
+      },
+      "prompt_tokens": 3154,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3286
+    }
+  }
+}

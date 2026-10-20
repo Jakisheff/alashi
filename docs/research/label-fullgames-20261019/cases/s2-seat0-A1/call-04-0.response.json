@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.634,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель не девальвируется, поэтому продажа в кредит всех 3 единиц даёт 30 alashi против 24 с немедленной девальвацией.\"}",
+          "reasoning_content": "Sell all 3 now: cash 24, avoids devaluation (cash devalues 62% each round anyway!). Actually devaluation hits cash at round start, promissory is not devalued. So sell_credit better: 30 in promissory, added to cash at round start without devaluation. But last round promissory unpaid; we're in round 2, fine. Promissory gets added to cash at round 3 start, then devalued at round 4 start (62%). Sell now: 24 cash → round 3: floor(24/1)*0.62 = 14.88... wait floor(cash/100)*62: 24→14.88 alashi. Sell_credit 30 → round3 cash 30, round4 → 18.6. Better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490593,
+    "id": "20261020180300fd57f046411d41a9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180300fd57f046411d41a9",
+    "usage": {
+      "completion_tokens": 218,
+      "completion_tokens_details": {
+        "reasoning_tokens": 171
+      },
+      "prompt_tokens": 2327,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2545
+    }
+  }
+}

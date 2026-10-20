@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.6,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Последний раунд: товар и влияние уже не окупают взятки, лучший итог — сохранить cash.\"}",
+          "reasoning_content": "Final round action. No more market after this? Round 6 action then law. Goods useless. Bribe to gain influence: influence 1 now, others vote weights: I have vote_weight 3 (already? vote_weight 3 shown despite influence 1 — bonus? Actually weight = influence + 2 if action passed; shown 3 pre-action). Max influence gets extra 5% bank (1.8 alashi). Currently influence: idx0=2, me=1, idx2=1. Tie cash: idx0 has 49.6M, me 69.3M — I'm richest in cash. For influence bonus tie: max influence, tie broken by cash+hard then tie_order. If I bribe 5M to either, I get influence 2, tied with idx0, but my cash higher → I get the 5% commission (~1.8 alashi) for cost 5M. Not worth it. Bribing 10M → influence 3, alone max, cost 10M for 1.8M + ... no.\n\nCould also bribe to change president? No matter. Best: pass, keep cash. Also license income ~20-60 already mine. So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428178,
+    "id": "20261020004248e4c2c82a05744f17",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020004248e4c2c82a05744f17",
+    "usage": {
+      "completion_tokens": 289,
+      "completion_tokens_details": {
+        "reasoning_tokens": 257
+      },
+      "prompt_tokens": 5108,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 5397
+    }
+  }
+}

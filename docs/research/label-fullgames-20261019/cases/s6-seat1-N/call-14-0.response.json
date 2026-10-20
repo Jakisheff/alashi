@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.332,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Shuttle даёт максимум товара для финального рынка, не тратя обесценивающийся cash.\"}",
+          "reasoning_content": "I have 11.4M cash, license income pending. Cash will devalue 62% next round, so spend/goods matter. Shuttle gives 3 goods — but border tariff? Tariff not active (roof_tariff 0), so shuttle grey goods risk 25% loss? \"shuttle даёт 3+subsidy_goods товара; серый товар может быть изъят\" — yes risk 25% at border unless black tariff. Actually shuttle here gives goods directly. Produce gives 2 safely. Last round 6 market — selling 3 goods at price ~[3,3,2,2...] yields ~8 alashi vs produce ~5. Also cash devalued, so turning cash into goods... but shuttle gives goods without spending cash. Choose shuttle (3 goods).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427894,
+    "id": "20261020003808fcab72c7bf444335",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003808fcab72c7bf444335",
+    "usage": {
+      "completion_tokens": 200,
+      "completion_tokens_details": {
+        "reasoning_tokens": 166
+      },
+      "prompt_tokens": 3462,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3662
+    }
+  }
+}

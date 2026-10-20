@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.123,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 5 даёт влияние самому богатому (не мне), голосую против.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest by cash. Richest is idx2 (22 alashi). Idx2 already voted Yes. I'm poorest; passing gives vote_weight 2 if action was pass... vote_weight: influence +2 if action was pass — my action was shuttle, so weight 1. Idx1 not voted yet, holder idx1. Yes vs no: idx2 yes. If I vote no, it's 1-1 unless idx1 votes. Law 5 helps idx2, not me. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427238,
+    "id": "20261020002714ccd44efae56a4be9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020002714ccd44efae56a4be9",
+    "usage": {
+      "completion_tokens": 141,
+      "completion_tokens_details": {
+        "reasoning_tokens": 113
+      },
+      "prompt_tokens": 2229,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2370
+    }
+  }
+}

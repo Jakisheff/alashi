@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.448,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Ожидаемая выгода шаттла (2.25 ед.) выше, чем у produce, риск изъятия приемлем.\"}",
+          "reasoning_content": "Produce is safe (no border risk). Shuttle gives 3 but 25% seizure risk. Expected shuttle 2.25 > 2, but goods with no cash to pay tariff? Border grey seizure ~25%. Choose shuttle for higher expected value.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427233,
+    "id": "2026102000270879e9ac3066f845a7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000270879e9ac3066f845a7",
+    "usage": {
+      "completion_tokens": 92,
+      "completion_tokens_details": {
+        "reasoning_tokens": 52
+      },
+      "prompt_tokens": 2112,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2204
+    }
+  }
+}

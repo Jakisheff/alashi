@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.209,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Произвожу максимум товара на финальный рынок, рискованный shuttle даёт наибольший ожидаемый доход.\"}",
+          "reasoning_content": "Round 5 action. I hold license. I sold credit already. I have cash ~19.1M, promissory 15M added at start of round 6... wait, promissory added at start of each round, but after last round not repaid — round 6 exists, so it converts to cash at start of round 6, and only sales in round 6's market can add new promissory (not repaid). So my 15M will arrive.\n\nBest action: produce goods to sell in round 6 market. Shuttle gives 3 goods but border risk ~25%? Tariff 0 currently... shuttle risk always applies (~25%). Shuttle expected 2.25 goods free. I have 19M cash. Element 0 has 54M, element 2 22.9M. Sold counter 9, price ~2-3 alashi. Selling 3 goods next round yields ~6-8 alashi.\n\nShuttle expected value ~2.25*3alashi ≈ 6.75 vs produce 2*3=6. Slight edge to shuttle.\n\nAlso influence: final 5% bonus to max influence. Element 0 has 3 influence. Bribing 15M to reach 4 influence gains 5% of bank = 2.25M — not worth 15M. No.\n\nChoose shuttle (choice 3).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427603,
+    "id": "20261020003314bdb94079799b4848",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003314bdb94079799b4848",
+    "usage": {
+      "completion_tokens": 330,
+      "completion_tokens_details": {
+        "reasoning_tokens": 292
+      },
+      "prompt_tokens": 3802,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 4132
+    }
+  }
+}

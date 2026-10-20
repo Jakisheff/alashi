@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.173,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Беру 3 товара через shuttle для продажи на последнем рынке — это примерно 18-24 alashi выгоды, что ценнее влияния.\"}",
+          "reasoning_content": "I'm idx 2, holding license, cash 52.5M, promissory 38.75M paid in round 6 cash. Round 5 action: choose shuttle for 3 goods to sell round 6? Round 6 market still exists (six rounds). Yes, shuttle gives 3 goods, sell in round 6. Alternatively bribe for influence — president role matters for law. Round 5 law, then round 6. Influence helps win presidency and final 5% bonus. But cash rank: my promissory 38.75M + cash. Bribing loses cash directly, gains influence. President gains veto — could be worth blocking tax laws. But my cash is high; opponents ~17-18M. Losing 5M cash for +1 influence... final bonus 5% of bank (38M) = 1.9M for max influence. Currently influence 2 vs 2 (opponent 0). Bribe 5M to idx0? That gives them cash and me influence 3.\n\nShuttle gives 3 goods, worth ~ selling at price: sold_counter 3, price index 3 → 8 alashi... round 6 market with 3 more sold units: prices [12,10,9,8,...] next unit ~8. 3 goods ≈ 24 alashi gross (sell_credit ×1.25 but promissory unredeemed after last round — worthless). So sell direct ~24M cash. That's big. But 25% seizure risk on shuttle grey. Expected ~18M. Still good.\n\nCould do both? Action is one. Shuttle better than bribe.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490085,
+    "id": "202610201754353e38d8febe064aec",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201754353e38d8febe064aec",
+    "usage": {
+      "completion_tokens": 388,
+      "completion_tokens_details": {
+        "reasoning_tokens": 347
+      },
+      "prompt_tokens": 4675,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 5063
+    }
+  }
+}

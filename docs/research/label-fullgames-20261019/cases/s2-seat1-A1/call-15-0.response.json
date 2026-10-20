@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.476,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 10% сократит мою выручку от будущих продаж, поэтому против.\"}",
+          "reasoning_content": "Law 1: налог 10% на будущие продажи. У меня 2 товара и лицензия, буду продавать в раундах 5-6. Налог 10% уменьшит мою выручку. Но у соперников тоже товары. Президент — фракция 0, влияние 3, голосует с весом 3. Мой вес 1 или 3? vote_weight 1 (не pass). Президент решает. Фракция 0 имеет 4 товара, фракция 2 — 0. Налог вредит и мне. Голосую no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427424,
+    "id": "20261020003016ccd18c1527764d44",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003016ccd18c1527764d44",
+    "usage": {
+      "completion_tokens": 167,
+      "completion_tokens_details": {
+        "reasoning_tokens": 136
+      },
+      "prompt_tokens": 2889,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3056
+    }
+  }
+}

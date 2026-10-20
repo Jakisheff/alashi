@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.889,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Шаттл даёт 3 товара для продажи на рынке раунда 6 с высокой ожидаемой выручкой.\"}",
+          "reasoning_content": "Round 5 action. I need influence for final 5% bank bonus and possibly law veto. Current influence 1; holder is 2 (influence 2). To become holder at law entry need influence ≥3? Holder = most influence at law entry. Element 2 has 2, tie_order [1,0,2]. With influence 2, tie with elem2: tie_order favors 1,0,2 — I'm 0, so I'd win tie vs 2. But bribe 5M gives influence 2, cash drops to ~19.8M, elem1 gains 5M. Vote weight for law too.\n\nBut money: cash rank matters. Cash+hard: I'm 24.8M vs 25.2M vs 18.6M. Bribe to elem2 gives them cash — bad for rank. Bribe to elem1 also gives them cash (they're already richest). Hmm bribes hurt ranking directly.\n\nGoods: shuttle gives 3 goods to sell at round 6 market at price ~[4..]. sold_counter=3 after selling? Actually after my sell of 3 units counter=3, price index 3 → price 8? List [12,10,9,8,...] index 3 = 8. Round 6 market I can sell goods. Shuttle gives 3 units (maybe seized ~25% at border? tariff state unknown, currently roof_tariff 0... border default risk ~25% for shuttle grey). Expected value: 3 units × ~7-8 alashi = ~20+ alashi revenue — huge compared to cash. Choose shuttle.\n\nBut seizure risk 25% of all goods. Still high EV. Choose shuttle (choice 3).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427291,
+    "id": "20261020002800820e808be2714724",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020002800820e808be2714724",
+    "usage": {
+      "completion_tokens": 401,
+      "completion_tokens_details": {
+        "reasoning_tokens": 364
+      },
+      "prompt_tokens": 3762,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 4163
+    }
+  }
+}

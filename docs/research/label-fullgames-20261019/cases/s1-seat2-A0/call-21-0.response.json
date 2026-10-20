@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.639,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товары и влияние после раунда не дают выплаты, поэтому сохраняю максимальный cash — pass.\"}",
+          "reasoning_content": "Last round action. Goods don't count for rank; cash matters. Best is pass (keep cash). Influence bonus: already 2, max influence likely—5% of bank ~1.9 alashi goes to max influence holder; bribes reduce cash but raise influence—I'm already at 2, others at 1, they can't act before? Round 6 action: order rotates; I'm acting, others may act after? Order rotates by round; remaining actions could raise their influence via bribe. But losing 5 alashi cash for +1 influence risks ~1.9 alashi bonus—not worth. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427800,
+    "id": "20261020003634b1a0d3cf4bc24915",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003634b1a0d3cf4bc24915",
+    "usage": {
+      "completion_tokens": 164,
+      "completion_tokens_details": {
+        "reasoning_tokens": 129
+      },
+      "prompt_tokens": 4435,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 4599
+    }
+  }
+}

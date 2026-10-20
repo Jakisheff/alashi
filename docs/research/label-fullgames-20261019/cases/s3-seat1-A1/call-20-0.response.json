@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.171,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Налог 20% уже не влияет — рынок завершён, veto не нужен.\"}",
+          "reasoning_content": "Law 2 = 20% tax — but market is over (last market done). No future sales. So tax irrelevant. Pass or vote yes — veto unnecessary. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490948,
+    "id": "20261020180906cddb141955b742d2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180906cddb141955b742d2",
+    "usage": {
+      "completion_tokens": 64,
+      "completion_tokens_details": {
+        "reasoning_tokens": 37
+      },
+      "prompt_tokens": 3291,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3355
+    }
+  }
+}

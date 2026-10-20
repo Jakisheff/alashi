@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.791,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товары и влияние уже не конвертируются в выплату, а взятки лишь уменьшают мой лидирующий cash — лучший ход пассив.\"}",
+          "reasoning_content": "Last round, action phase. Goods useless now (no market after). Money: my cash 47.1M vs opponents 40.2 and 26.4. Final rank by cash. Bank 50M + license income. Rank 1 gets 50% etc; also 5% commission to max influence.\n\nI'm cash leader. Influence 1, others have 2 each. Bribes cost me cash (rank counts only own cash) and boost influence — commission 5% of bank (~50M+ = 2.5M+) goes to max influence holder. 5M bribe gives me influence 2, tied with others; tie broken by cash+hard... but they have influence 2 too. Need influence 3 to win commission: 10M bribe, losing 10M cash to gain ~2.5M — bad.\n\nBetter: produce gives nothing useful (no more market). Pass, keep cash. Choice 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491322,
+    "id": "20261020181515dfb06014dc534462",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181515dfb06014dc534462",
+    "usage": {
+      "completion_tokens": 245,
+      "completion_tokens_details": {
+        "reasoning_tokens": 200
+      },
+      "prompt_tokens": 4762,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 5007
+    }
+  }
+}

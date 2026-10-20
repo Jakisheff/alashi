@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.866,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Продаю оба товара по высоким ценам за наличные, укрепляя ранг богатства.\"}",
+          "reasoning_content": "Prices after 2 sold: next price 9, then 8. Sell 2 now gives 9+8=17 alashi... candidate 3 gives +17 alashi cash. Selling all now is strong; credit at 1.25× only counted as promissory (not rank) and round 2 devaluation applies. Actually promissory paid next round then devalued floor(cash/100)*62 — wait devaluation applies to cash first, then promissory added, so promissory retains full. Sell credit 2 gives 21.25 promissory next round cash. But last round credit unpaid. Still, cash now could be spent on bribes/roof. Take plain sell 2 (choice 3) for safety and rank.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490085,
+    "id": "202610201754403db384dcd1cf4109",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201754403db384dcd1cf4109",
+    "usage": {
+      "completion_tokens": 189,
+      "completion_tokens_details": {
+        "reasoning_tokens": 160
+      },
+      "prompt_tokens": 2429,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2618
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.734,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Раунд последний, товары бесполезны, а взятка снизит cash и ранг — пропускаю.\"}",
+          "reasoning_content": "Final round action. Goods won't matter after market phase... actually round 6 market already happened (sold 3). Remaining: action, law, then game ends. No more market. So goods useless. Bribe cash away is bad for rank. But max influence gets 5% bank bonus (2.1 alashi). I already have influence 2 tied with player 1. I'm president. Best: pass, keep cash for rank (2nd place: 41.3 vs 38.7 vs 27.9). Bribe to 0 of 5M increases influence to 3, secures max influence bonus ~5%*39.9=2 alashi minus 5 alashi bribe — net loss. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491394,
+    "id": "2026102018162816bbf32e30914060",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102018162816bbf32e30914060",
+    "usage": {
+      "completion_tokens": 191,
+      "completion_tokens_details": {
+        "reasoning_tokens": 155
+      },
+      "prompt_tokens": 4509,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 4700
+    }
+  }
+}

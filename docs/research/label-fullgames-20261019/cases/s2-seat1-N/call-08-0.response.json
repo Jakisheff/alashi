@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.079,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Беру shuttle: 3 товара бесплатно при отсутствии тарифа — максимум товара под будущий рынок.\"}",
+          "reasoning_content": "Round 3 action. I'm holder X (influence 1 with tie_order priority). No bid placed for auction (round 4 is auction, not round 3? \"В action раунда 4 есть аукцион\" — auction in round 4). own_bid=0 though, odd. Anyway round 3: choose action. Shuttle gives 3 goods free (risk of grey seizure ~25% at border? shuttle: \"серый товар может быть изъят на границе с вероятностью около 25%\" — tariff unknown now). Produce gives 2 goods. Shuttle is better expected value unless tariff red. No tariff active (roof_tariff 0). Take shuttle (3 goods).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490091,
+    "id": "20261020175447dbc1213feabf4b53",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175447dbc1213feabf4b53",
+    "usage": {
+      "completion_tokens": 179,
+      "completion_tokens_details": {
+        "reasoning_tokens": 149
+      },
+      "prompt_tokens": 3526,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 3705
+    }
+  }
+}

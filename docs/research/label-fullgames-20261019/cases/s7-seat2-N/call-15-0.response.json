@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.401,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Субсидия увеличит мой будущий produce, а закон, вероятно, пройдёт и так.\"}",
+          "reasoning_content": "Law 3: subsidy_goods=1. I produce next rounds — subsidy helps me (produce gives +1). Vote yes. Player 1 already voted yes; holder 0 has weight 3. If holder votes no → 3 no vs 1+2... my yes weight 1, plus 1's yes weight 3 = 4 vs 3 → passes anyway. Vote yes anyway.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490135,
+    "id": "20261020175531baf33b8399804f13",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175531baf33b8399804f13",
+    "usage": {
+      "completion_tokens": 115,
+      "completion_tokens_details": {
+        "reasoning_tokens": 83
+      },
+      "prompt_tokens": 2889,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3004
+    }
+  }
+}

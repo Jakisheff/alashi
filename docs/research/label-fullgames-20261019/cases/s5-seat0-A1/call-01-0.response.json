@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.055,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Ожидаемая выручка шаттла выше, риск изъятия компенсируется дополнительной единицей товара.\"}",
+          "reasoning_content": "Produce gives 2 goods, shuttle 3 with risk. As first player, want goods to sell. Shuttle expected 2.25 goods, risk 25% lose all grey. Take shuttle? All goods are grey presumably; 75% of 3 = 2.25 expected vs 2 safe. Border tariff unknown; seizure chance only affects all goods. Choose shuttle slightly better but risk. Pick produce for safety? Expected value favors shuttle. I'll pick shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491175,
+    "id": "202610201812478b3cd2c0f9d046b3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201812478b3cd2c0f9d046b3",
+    "usage": {
+      "completion_tokens": 134,
+      "completion_tokens_details": {
+        "reasoning_tokens": 97
+      },
+      "prompt_tokens": 1924,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2058
+    }
+  }
+}

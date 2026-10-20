@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.093,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 5 даёт влияние самой богатой фракции 0 — против меня, голосую против.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest (cash). Richest is faction 0 (15). That helps them, not me. President is faction 1 (holder). My vote weight 1. Others likely vote... unknown. Vote no to block richest gaining influence? Rich already leads. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490019,
+    "id": "202610201753361a183c58c23340f3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201753361a183c58c23340f3",
+    "usage": {
+      "completion_tokens": 96,
+      "completion_tokens_details": {
+        "reasoning_tokens": 63
+      },
+      "prompt_tokens": 2233,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2329
+    }
+  }
+}

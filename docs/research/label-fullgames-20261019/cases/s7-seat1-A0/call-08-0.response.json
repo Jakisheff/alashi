@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 23.166,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Shuttle даёт больше товара в ожидании, а выручка векселя уже обеспечена.\"}",
+          "reasoning_content": "Cash 0, promissory 26.25m (rounded at round 4: cash will be... promissory added to cash). Shuttle gives 3 goods with 25% seizure risk (tariff currently 0? tariff red default—risk). Shuttle 3 vs produce 2, shuttle better expected even with risk (0.75*3=2.25). Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490453,
+    "id": "202610201800309747c09e81224b76",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201800309747c09e81224b76",
+    "usage": {
+      "completion_tokens": 113,
+      "completion_tokens_details": {
+        "reasoning_tokens": 82
+      },
+      "prompt_tokens": 2360,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2473
+    }
+  }
+}

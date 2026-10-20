@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.205,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 8 ни на кого не влияет (векселей нет) и всё равно не проходит при равенстве голосов.\"}",
+          "reasoning_content": "Law 8 обнуляет promissory — у меня нет векселей, у других тоже нет. Actually no promissories exist, so law is harmless — veto unnecessary. But vote: Yes 1, No 1 — yes not > no, law fails anyway? Wait \"принимается если yes строго больше no\" — 1 vs 1, fails. Veto unnecessary. Choose pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490197,
+    "id": "202610201756339542deefd89e4eca",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201756339542deefd89e4eca",
+    "usage": {
+      "completion_tokens": 121,
+      "completion_tokens_details": {
+        "reasoning_tokens": 84
+      },
+      "prompt_tokens": 1992,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2113
+    }
+  }
+}

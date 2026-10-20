@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.889,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель не девальвируется: 37.5 alashi лучше, чем 30 с последующей девальвацией до ~18.6.\"}",
+          "reasoning_content": "Round 3 market, price with boom: base price at sold_counter 2 is 9, +2 = 11,12,10 next. Selling 3 gives 33 (30 shown). Credit gives 37.5 promissory but round 4 start: cash = floor(cash/100)*62 — promissory added after devaluation? \"cash=floor(cash/100)*62, then promissory added\". Credit cash 0 → 0, +37.5 promissory = 37.5. Immediate sale 30 → next round devalued: 30*0.62=18.6. Credit is better: 37.5 vs 18.6. Sell all 3 on credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490656,
+    "id": "2026102018040947bd70ca4de241a7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102018040947bd70ca4de241a7",
+    "usage": {
+      "completion_tokens": 199,
+      "completion_tokens_details": {
+        "reasoning_tokens": 155
+      },
+      "prompt_tokens": 2575,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2774
+    }
+  }
+}

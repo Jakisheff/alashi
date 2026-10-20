@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.857,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":8,\"reason\":\"Продажа всего в кредит даёт 32,5 alashi векселем без девальвации — лучший вариант.\"}",
+          "reasoning_content": "Round 4 market, price now at counter 3 with subsidy... prices [12,10,9,8,...], counter=3 so next price 8. Cash 15.81M vs rival 47.7M. Devaluation each round 62% — sell now is better (sell later loses via devaluation of cash... actually cash devaluates). Sell all now at 8 alashi each: +26M. Promissory added at round start then devaluated? promissory added after devaluation, then next round devaluation applies to cash... promissory itself isn't devalued? \"cash=floor(cash/100)*62, then promissory added\" — promissory not devalued, credited full. So sell_credit gives 1.25x full value. Sell credit 4 units: promissory 32.5M credited at start of round 5 fully. That's better than sell (26M now, devalued to ~16M). But last round promissory not paid — round 4 credit paid in round 5, fine. Choose 8.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427110,
+    "id": "20261020002503264da61000aa4552",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020002503264da61000aa4552",
+    "usage": {
+      "completion_tokens": 272,
+      "completion_tokens_details": {
+        "reasoning_tokens": 236
+      },
+      "prompt_tokens": 2958,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 3230
+    }
+  }
+}

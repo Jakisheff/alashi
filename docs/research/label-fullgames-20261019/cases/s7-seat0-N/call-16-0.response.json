@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.253,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":8,\"reason\":\"Девальвация сделает текущий кэш почти бесполезным, поэтому продаю весь товар в кредит ради выручки ×1.25, погашаемой в раунде 6.\"}",
+          "reasoning_content": "Round 5 market, I have 4 goods. Next round cash devalues (floor/100*62), so keeping cash is bad; promissory better? But after last round promissory unpaid — round 6 market still exists, promissory from round 5 is paid at start of round 6. So sell_credit is great: 1.25x revenue, paid next round.\n\nSell all 4 credit: promissory 48.75M. Sold counter resets to 0 now? Others sold earlier... currently sold_counter=0, price 12. Selling 4: prices 12,10,9,8. Others may sell after, lowering price. Sell all credit.\n\nChoice 8.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427460,
+    "id": "20261020003053588e0974180a44d0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003053588e0974180a44d0",
+    "usage": {
+      "completion_tokens": 205,
+      "completion_tokens_details": {
+        "reasoning_tokens": 150
+      },
+      "prompt_tokens": 3261,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3466
+    }
+  }
+}

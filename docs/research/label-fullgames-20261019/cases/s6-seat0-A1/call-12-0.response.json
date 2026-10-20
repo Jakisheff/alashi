@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.214,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":41,\"reason\":\"Ставка 20 alashi на лицензию с ожидаемым доходом 20–60 alashi выгодна, а ставка возвращается в банк и частично компенсируется.\"}",
+          "reasoning_content": "Round 4 action with auction. License income 20-60 alashi, worth bidding. Bank 30 alashi. Cash similar among players. Bid ~15-20? Tie order favors 1 then 2; I'm last. Bid maybe 20 alashi to likely win, but spending 20 for expected ~40 gain plus share of bank (bid added to bank). Actually winning bid goes into bank, distributed 50/30/15 — so net cost lower. Bid 20 alashi. Choice 41. But also bid doesn't consume action; but only one candidate can be chosen... the menu combines; choosing bid means it's the composite? \"Интерфейс предлагает одну совокупную ставку за ход\" — so choosing bid replaces main action? Seems choosing bid only. Bid 20 alashi, expected profit ~20+ plus bank share. Do it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428106,
+    "id": "202610200041399b73a9a908c54f50",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200041399b73a9a908c54f50",
+    "usage": {
+      "completion_tokens": 229,
+      "completion_tokens_details": {
+        "reasoning_tokens": 181
+      },
+      "prompt_tokens": 5713,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 5942
+    }
+  }
+}

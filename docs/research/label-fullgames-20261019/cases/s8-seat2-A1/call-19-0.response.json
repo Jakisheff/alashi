@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.066,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар и влияние не нужны в финале; pass сохраняет cash, я уже президент и лидер по богатству.\"}",
+          "reasoning_content": "Last round action. Goods don't count. Cash counts. Best to keep cash. I'm already richest, influence 2 vs faction 1's 2 — tie broken by tie_order [2,1,0], so I'm president for max influence bonus? Bonus goes to max influence; tie at 2, better cash+hard → me. Small bribe not needed. Pass — no cash loss. But pass action skipped gives +2 vote weight in law, irrelevant. Also gray tariff fine. Choose pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491062,
+    "id": "202610201810582c44e64e48394ea2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201810582c44e64e48394ea2",
+    "usage": {
+      "completion_tokens": 142,
+      "completion_tokens_details": {
+        "reasoning_tokens": 106
+      },
+      "prompt_tokens": 4963,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 5105
+    }
+  }
+}

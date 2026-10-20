@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.607,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce даёт 2 надёжных товара без пограничного риска и штрафа\"}",
+          "reasoning_content": "Cash 0, no bid yet? own_bid:0 — actually bid of 0 recorded? Round 2, no auction (round 4). Choose produce or shuttle? Cash 0, sell next round with devaluation floor(cash/100)*62 — promissory 22.5M added to cash at round 3 start, then devalued. Shuttle gives 3 grey goods risk 25% seizure; tariff unknown. Produce gives 2. Take shuttle for 3 goods, moderate risk. Actually tariff could be red risk of losing all goods at border. Unknown. Produce safer: 2 goods vs 3 with ~25% loss risk → EV 2.25 goods. Also grey fine 2 alashi to holder if preferential. Choose shuttle slightly better EV? Risk of losing all goods if red tariff (~25% loss of all goods) applies to grey. Prefer produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490694,
+    "id": "2026102018044821ed6f70dcbc4d86",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102018044821ed6f70dcbc4d86",
+    "usage": {
+      "completion_tokens": 215,
+      "completion_tokens_details": {
+        "reasoning_tokens": 186
+      },
+      "prompt_tokens": 2175,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2390
+    }
+  }
+}

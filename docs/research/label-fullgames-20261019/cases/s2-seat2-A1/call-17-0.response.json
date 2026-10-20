@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.017,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 20% ударит по моей продаже в финальном раунде — против.\"}",
+          "reasoning_content": "Law 2 = 20% tax. I plan to sell in round 6 (last market; promissory not paid after last round anyway — but sell_credit after last round doesn't pay, so I'd sell for cash). Tax 20% hurts me. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490016,
+    "id": "20261020175334cb27c1ee09ad4da7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175334cb27c1ee09ad4da7",
+    "usage": {
+      "completion_tokens": 89,
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      },
+      "prompt_tokens": 3041,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3130
+    }
+  }
+}

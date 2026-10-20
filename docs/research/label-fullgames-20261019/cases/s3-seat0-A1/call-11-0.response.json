@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.472,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продаю весь товар по ещё высоким ценам, пока цена не упала.\"}",
+          "reasoning_content": "Sell all 3 now at 8,7,6? sold_counter=3, price next = 8. Sell 3 gives 8+7+6=21 → 37.3M cash. Devaluation next rounds cuts cash anyway (cash→62%). Selling all now for cash that then devalues... but promissory also adds then devalues? Promissory added after devaluation, then later rounds devalue it too. Selling now at higher prices better than later lower prices. Sell 3 cash.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490960,
+    "id": "202610201809168ab2e3fc43784ecc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201809168ab2e3fc43784ecc",
+    "usage": {
+      "completion_tokens": 134,
+      "completion_tokens_details": {
+        "reasoning_tokens": 108
+      },
+      "prompt_tokens": 2843,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2977
+    }
+  }
+}

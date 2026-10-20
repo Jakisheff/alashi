@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.12,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":7,\"reason\":\"Last round: the promissory note will not be redeemed, so I sell all the goods for cash.\" }",
+          "reasoning_content": "Round 6, last market. Promissory won't be paid after last round — sell_credit worthless (promissory not redeemed? \"After the last round the bill is not redeemed\" — actually promissory added at start of round 2+; last round means never redeemed). So sell for cash. Sell all 4: cash ~40.7M. Opponents will also sell. Sell 4 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427626,
+    "id": "20261020003337cc811f1d8c3449c1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003337cc811f1d8c3449c1",
+    "usage": {
+      "completion_tokens": 119,
+      "completion_tokens_details": {
+        "reasoning_tokens": 87
+      },
+      "prompt_tokens": 3464,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3583
+    }
+  }
+}

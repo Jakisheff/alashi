@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.835,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Покупка по высокой цене 12 невыгодна, лучше сохранить cash.\"}",
+          "reasoning_content": "I have 21.25 cash, no goods. Market round 3. Buy 1 unit for 12? buy costs 12 alashi (21.25→9.25, meaning cost 12). Price high now; later I can sell after boom? Not really beneficial; counter moves backward so others sell lower. Buying at 12 to sell later at declining price is bad. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490396,
+    "id": "2026102017595026910484228a4162",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102017595026910484228a4162",
+    "usage": {
+      "completion_tokens": 108,
+      "completion_tokens_details": {
+        "reasoning_tokens": 82
+      },
+      "prompt_tokens": 2315,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2423
+    }
+  }
+}

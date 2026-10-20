@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.087,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Финальный раунд: товар больше не продаётся, я и так богатейший и держатель лицензии; взятки снижают cash без выгоды.\"}",
+          "reasoning_content": "Final round, action phase, last action. I'm richest by far (71.5M vs 29M). Rank determined by cash+hard. I hold license (extra income). Bribing gives influence — max influence gets 5% of bank commission (~2.7M) — not worth much. President is idx2 with influence tie at 1 all. Bribing 5M gives influence 2 → I'd be max influence (tie with... others at 1), gaining commission 2.7M — costs 5M. Not worth.\n\nPass saves cash. Goods useless (no more market). Best: pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792489970,
+    "id": "202610201752454361af12a0c5462c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201752454361af12a0c5462c",
+    "usage": {
+      "completion_tokens": 176,
+      "completion_tokens_details": {
+        "reasoning_tokens": 132
+      },
+      "prompt_tokens": 5262,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 5438
+    }
+  }
+}

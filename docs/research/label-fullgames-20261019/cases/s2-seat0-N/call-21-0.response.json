@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.212,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Покупка бессмысленна — после рынка товары не продаются и в ранг не идут; сохраняю лидерство по cash.\"}",
+          "reasoning_content": "Last round market. I'm leader with 37.8M. Buying goods doesn't help—no more sales after? Round 6 market is last market; can sell, not buy. Buying gives goods that can't be sold (rank ignores goods). So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490222,
+    "id": "20261020175657e247cc073d944b66",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175657e247cc073d944b66",
+    "usage": {
+      "completion_tokens": 95,
+      "completion_tokens_details": {
+        "reasoning_tokens": 55
+      },
+      "prompt_tokens": 3299,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3394
+    }
+  }
+}

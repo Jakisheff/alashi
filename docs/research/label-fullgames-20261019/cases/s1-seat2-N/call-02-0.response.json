@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.356,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 8 обнуляет векселя, у всех их ноль, но голос против безопасен и сохраняет статус-кво.\"}",
+          "reasoning_content": "Law 8 обнуляет promissory — у всех 0, значит нет эффекта. Безопасно vote_no или abstain. Карта 0 лучше, но мы не выбираем карту. Проголосовать no (или abstain). Изменений нет — можно abstain, вес 1; но держатель — idx 0 с влиянием 1, tie order 0,2,1 — я не держатель. Vote_no безвреден.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427055,
+    "id": "20261020002410515b6b17e7b5446c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020002410515b6b17e7b5446c",
+    "usage": {
+      "completion_tokens": 139,
+      "completion_tokens_details": {
+        "reasoning_tokens": 99
+      },
+      "prompt_tokens": 2036,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 2175
+    }
+  }
+}

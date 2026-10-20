@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.288,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Налог 10% ударит по продажам соперника с 7 товарами и не вредит мне — поддерживаю.\"}",
+          "reasoning_content": "Law 1: 10% tax on future sales. I'm holder X. I have 7 goods (idx 0 has 7 goods actually—no, that's opponent; I have 0 goods, promissory 38.75). Tax would hurt rivals' future sales; I sell little. But promissory is already fixed. Tax hurts player 0 who has 7 goods and player 2? Player 2 has 0 goods. Player 0 has 7 goods and will sell—tax hurts them, good for me. Vote yes? I'm holder, yes with weight 2, no votes unknown. Vote yes benefits me.\n\nActually player 0 with 7 goods is the richest threat; tax reduces their income. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427685,
+    "id": "202610200034349323deffb8214ee5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200034349323deffb8214ee5",
+    "usage": {
+      "completion_tokens": 195,
+      "completion_tokens_details": {
+        "reasoning_tokens": 157
+      },
+      "prompt_tokens": 2849,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 3044
+    }
+  }
+}

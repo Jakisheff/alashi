@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.02,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Последний рынок: вексель не погашается, продаю весь товар сразу за наличные.\"}",
+          "reasoning_content": "Final market; promissory doesn't pay out after last round. So sell all 3 now: choice 5. Also opponents sell after, lowering price—but my sales now at price counter 2 (9,8,7). Sell 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427902,
+    "id": "20261020003819f3ca820f0ac749c0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003819f3ca820f0ac749c0",
+    "usage": {
+      "completion_tokens": 83,
+      "completion_tokens_details": {
+        "reasoning_tokens": 52
+      },
+      "prompt_tokens": 3251,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3334
+    }
+  }
+}

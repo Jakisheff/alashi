@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.805,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Я планирую продавать товары, налог 10% мне невыгоден.\"}",
+          "reasoning_content": "I'm the richest (38.3M), holder is idx2 (president). Law 1 = 10% tax on future sales. I plan to sell goods; tax hurts me. Vote no. President (idx2) has veto anyway; voting no is fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792489910,
+    "id": "20261020175147aa31a42d3734422f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175147aa31a42d3734422f",
+    "usage": {
+      "completion_tokens": 83,
+      "completion_tokens_details": {
+        "reasoning_tokens": 57
+      },
+      "prompt_tokens": 2485,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2568
+    }
+  }
+}

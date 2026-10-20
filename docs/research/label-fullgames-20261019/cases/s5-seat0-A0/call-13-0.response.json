@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.756,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":47,\"reason\":\"Ставка 20 alashi на лицензию с доходом 20–60 почти гарантирует победу и огромную выплату, основное действие останется на produce.\"}",
+          "reasoning_content": "Round 4 action: bid + produce. Bid doesn't consume main action. So pick a bid amount, then separately choose produce? Interface offers one composite action? \"bid не расходует основное действие: после ставки можно выбрать ещё одно действие. Интерфейс предлагает одну совокупную ставку за ход.\" So candidates only include bid alone; presumably next turn I get to produce. But risk: after this choice we might not get another? The engine will offer. Choose bid.\n\nLicense income 20-60 alashi, huge vs bank 30. Worth bidding high. Rival cash: 36 and 7.9. Bid ~20-25 to beat likely rival bids. Bid 20 alashi (choice 47). Then next turn produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427124,
+    "id": "2026102000251639c1be27711d4939",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000251639c1be27711d4939",
+    "usage": {
+      "completion_tokens": 200,
+      "completion_tokens_details": {
+        "reasoning_tokens": 155
+      },
+      "prompt_tokens": 7292,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 7492
+    }
+  }
+}

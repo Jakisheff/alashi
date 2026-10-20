@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.59,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель не девальвируется в раунде 5, поэтому продажа всех трёх товаров в кредит максимизирует выплату.\"}",
+          "reasoning_content": "Round 4 market. My cash low, 3 goods. Bid already 0. After round 6? Promissory is paid at start of round 5/6 rounds (rounds 5,6 devaluation happens). Actually promissory paid in round 5 start, then no more market after round 6? Rounds: 6 rounds, market each round. Devaluation at start of round 5 and 6; promissory added. Last round sell_credit worthless. So sell_credit now paid in round 5. 1.25x multiplier worth it, cash devalues floor(cash/100)*62 ≈62%, so holding cash loses. Better to sell for credit (promissory not devalued) — sell all 3 on credit gives 38.75M promissory, added to cash in round 5, then round 6 devalued 62%... Selling cash now means devaluation in round 5 (62%) and round 6. Promissory avoids round-5 devaluation. Sell_credit 3 units best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428092,
+    "id": "202610200041249a5a71681a334512",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200041249a5a71681a334512",
+    "usage": {
+      "completion_tokens": 263,
+      "completion_tokens_details": {
+        "reasoning_tokens": 224
+      },
+      "prompt_tokens": 2739,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 3002
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.21,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Цена сейчас высокая (9), а после моих продаж она упадёт — выгоднее зафиксировать выручку сразу.\"}",
+          "reasoning_content": "Sell all now at price 9 (sold_counter=2). Round 6 prices likely lower. Sell 2 now for 17 alashi cash.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491217,
+    "id": "202610201813340e47cca718514a9e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201813340e47cca718514a9e",
+    "usage": {
+      "completion_tokens": 67,
+      "completion_tokens_details": {
+        "reasoning_tokens": 31
+      },
+      "prompt_tokens": 2776,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2843
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.148,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Последний раунд: вексель не погашается, поэтому продаю весь товар за наличные и максимизирую итоговый cash.\"}",
+          "reasoning_content": "Round 6 final market, promissory not paid after last round. So sell for cash. Sell 3 units: +18M cash → 59.7M, beats rivals (38, 24.6). License income extra. Sell all.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490423,
+    "id": "20261020180018ee83a27354c74987",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180018ee83a27354c74987",
+    "usage": {
+      "completion_tokens": 93,
+      "completion_tokens_details": {
+        "reasoning_tokens": 53
+      },
+      "prompt_tokens": 3579,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3672
+    }
+  }
+}

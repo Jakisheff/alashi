@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.95,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce даёт 2 товара без риска изъятия на границе.\"}",
+          "reasoning_content": "Vote_weight 3 means pass was counted? Actually own action pass gives +2. I passed in market? vote_weight 3 for idx0 and idx2 — irrelevant. I'm idx2, round1 action: produce gives 2 goods safely. Shuttle gives 3 grey goods with seizure risk. Produce safer; but shuttle more goods. With no tariff set, border seizure 25% risk. Expected shuttle 2.25 goods vs 2. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490163,
+    "id": "20261020175559d20bf0cb31334b93",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175559d20bf0cb31334b93",
+    "usage": {
+      "completion_tokens": 121,
+      "completion_tokens_details": {
+        "reasoning_tokens": 95
+      },
+      "prompt_tokens": 1925,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2046
+    }
+  }
+}

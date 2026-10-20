@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.48,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Карта 6 (сдвиг цен) уже не влияет — рынок кончился, безопасно поддержать любой исход.\"}",
+          "reasoning_content": "Law 6: price shift -2 next market — but round 6 is last, no future market. So it's harmless. Vote yes doesn't matter? No sales left. Vote yes is fine; also no effect. But I'm richest — law 5 effects? Card 6 irrelevant. Just pass or abstain. Vote yes trivially.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490671,
+    "id": "20261020180427e3dd10eca9d14ac4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180427e3dd10eca9d14ac4",
+    "usage": {
+      "completion_tokens": 108,
+      "completion_tokens_details": {
+        "reasoning_tokens": 72
+      },
+      "prompt_tokens": 3368,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3476
+    }
+  }
+}

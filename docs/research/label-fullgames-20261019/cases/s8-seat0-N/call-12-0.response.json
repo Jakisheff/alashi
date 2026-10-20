@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.936,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Взятка даёт влияние 2, отбирает роль держателя X (вето и право на 5% комиссии), сохранив ставку на лицензию.\"}",
+          "reasoning_content": "I'm idx 0, influence 1, holder is 2 (influence tie? holder determined by influence; all 1 but tie_order favors 2). Bid 25M placed. Remaining cash ~26.9M. I likely need influence to become holder or secure rank. Bidding 25M likely wins license (income 20-60) but reduces rank? Bid goes to bank, not my cash. Bank 30M+25M=55M.\n\nRemaining action: bribe for influence? Holder tie: influence all 1, tie_order [2,1,0]. If I get influence 2, I'd be holder in law this round, gaining veto power. Law map unknown. Bribe 5M to anyone gives influence 2, becoming holder. That costs 5M but gains holder status (veto + possible 5% commission at end). I already bid; main action still available. Choice: bribe 5M to 1 (choice 4). Also produce/shuttle adds goods for market round 5. Prices: sold_counter 9, price 3... shuttle 3 goods worth maybe ~3 each = 9 alashi minus tax. Bribe influence 2 gives holder + veto now; but commission 5% at end needs max influence — holder 2 currently influence 1 too, so I'd get max influence with 2. Bribing 5M for influence 2 gains 5% of bank (~2.75 alashi at current) plus veto control. Reasonable. Choose 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490986,
+    "id": "202610201809362a1fb7acc9a74552",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201809362a1fb7acc9a74552",
+    "usage": {
+      "completion_tokens": 372,
+      "completion_tokens_details": {
+        "reasoning_tokens": 324
+      },
+      "prompt_tokens": 3798,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 4170
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.517,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Это последний закон, 20% налог на будущие продажи уже не влияет на мою выплату.\"}",
+          "reasoning_content": "Final round, law 2 = 20% tax on future sales — no more sales matter (final market done). No effect on me. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427330,
+    "id": "20261020002843981d5d3f61a04df3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020002843981d5d3f61a04df3",
+    "usage": {
+      "completion_tokens": 63,
+      "completion_tokens_details": {
+        "reasoning_tokens": 32
+      },
+      "prompt_tokens": 3233,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3296
+    }
+  }
+}

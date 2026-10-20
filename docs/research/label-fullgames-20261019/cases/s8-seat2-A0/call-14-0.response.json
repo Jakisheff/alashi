@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.128,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон даёт +1 влияния самому бедному — мне, поэтому голосую за.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest. I'm poorest (5.11M). Faction 1 voted No. I want yes — vote yes. With weight 1 vs No 3, I lose; veto as president? I can veto after. But yes would benefit me — no point vetoing if yes fails... Vote yes; it fails 3>1. Should I veto? No, it already fails. Choice 1.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427134,
+    "id": "20261020002530ffe3d099313545e0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020002530ffe3d099313545e0",
+    "usage": {
+      "completion_tokens": 120,
+      "completion_tokens_details": {
+        "reasoning_tokens": 91
+      },
+      "prompt_tokens": 2901,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3021
+    }
+  }
+}

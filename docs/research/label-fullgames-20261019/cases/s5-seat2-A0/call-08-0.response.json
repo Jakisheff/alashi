@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.209,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продать все 3 единицы сейчас: наличные дают ранг богатства и не девальвируются, бум на ценах.\"}",
+          "reasoning_content": "Boom +2, price at counter 4 is 5+2=7... sell 3 units gives prices 7,8,9? Sold counter 4 means next price index 4: [12,10,9,8]... actually first four sold. Price list index 4 = 5, +2 boom = 7. Units 3: 7,6,5 = 18? But candidate says 24 for 3 units — 9+8+7=24, so counter starts... anyway. Sell all for cash now (choice 5) — cash counts for rank; promissory devalues at round start. Cash: 24M. Better than credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427238,
+    "id": "20261020002713ba6c71ee83f84073",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020002713ba6c71ee83f84073",
+    "usage": {
+      "completion_tokens": 185,
+      "completion_tokens_details": {
+        "reasoning_tokens": 146
+      },
+      "prompt_tokens": 2571,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2756
+    }
+  }
+}

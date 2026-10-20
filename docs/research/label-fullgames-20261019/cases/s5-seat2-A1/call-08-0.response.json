@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.935,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Ожидаемая ценность шаттла (3 товара с ~75% сохранностью) выше, чем 2 от produce, а cash сохраняется для аукциона.\"}",
+          "reasoning_content": "I'm idx2, cash 29, no goods. Produce gives 2 goods, sell later. Boom +2 next market. Shuttle 3 goods. Influence currently 3 (vote_weight 3?) state shows influence 1 but vote_weight 3 — wait, influence 1, vote_weight 3? odd; maybe passed actions. Anyway best action: shuttle gives 3 goods for selling next round. No 25% seizure risk? Grey goods risk on border. Shuttle: \"3+subsidy_goods товара; серый товар может быть изъят\". Risk exists. Tariff? law_id 7 raised prices. Tariff not set (roof_tariff 0, tariff?), black tariff protection not active. Risk ~25% seizure. Produce gives 2 guaranteed. Expected: shuttle 3*0.75=2.25 vs 2. Marginal, but cash is already high; goods worth ~4-6 alashi each. Take shuttle slightly better, also bidding auction coming next round—want cash. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491103,
+    "id": "20261020181137ebfc72090e3c48ff",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181137ebfc72090e3c48ff",
+    "usage": {
+      "completion_tokens": 263,
+      "completion_tokens_details": {
+        "reasoning_tokens": 215
+      },
+      "prompt_tokens": 3384,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 3647
+    }
+  }
+}

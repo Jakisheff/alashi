@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.683,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон даёт +1 влияния лидирующему элементу 0, что усилит его контроль над law; голосую против.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest by cash. Richest is idx0 (29.54M), who already has influence 2 and voted Yes. Passing gives holder more influence — bad for me. Vote No: my weight 1, plus idx2's likely vote? Unknown. idx0 weight 2 yes already. Even if idx2 votes no, 2 vs 2, yes not strictly greater → fails. My no gives 1 vs 2 — passes anyway. Veto belongs to idx0 (holder). Vote no anyway as best effort.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490096,
+    "id": "20261020175452ca1e4ac8508947d4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175452ca1e4ac8508947d4",
+    "usage": {
+      "completion_tokens": 155,
+      "completion_tokens_details": {
+        "reasoning_tokens": 116
+      },
+      "prompt_tokens": 2492,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2647
+    }
+  }
+}

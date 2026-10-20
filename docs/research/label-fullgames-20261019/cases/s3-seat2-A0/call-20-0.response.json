@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 16.21,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Последний раунд: продаю весь товар за наличные, вексель не погасится.\"}",
+          "reasoning_content": "Last round: promissory never repaid — sell_credit useless. Sell 3 for 7 each? sold_counter=4, price list index 4 = 7. Sell 3 gives 70 cash... candidate 5 shows 72M gain, yes. Sell all 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427626,
+    "id": "20261020003331de41bcaaf60e4ac9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003331de41bcaaf60e4ac9",
+    "usage": {
+      "completion_tokens": 91,
+      "completion_tokens_details": {
+        "reasoning_tokens": 60
+      },
+      "prompt_tokens": 3710,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3801
+    }
+  }
+}

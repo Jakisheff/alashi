@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 15.266,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель обходит девальвацию, поэтому продажа в кредит всех 2 единиц по высокой цене выгоднее наличных.\"}",
+          "reasoning_content": "Sell 2 at 12+10=22 each. Others likely sell too, prices drop. Sell now, cash later. Choose choice 3 (sell 2 for 22). Credit gives 27.5 promissory, paid next round and devalued — cash rounding at start of round 3: cash floor/100*62 only applies to cash, promissory added after. Actually promissory added after devaluation, so credit full value. 27.5 credit vs 22 cash now; cash devalued to floor(22M/100)*62? No — devaluation applies at round start, so cash from round 2 market gets devalued in round 3. 22M → 13.64M. Credit 27.5M added after, no devaluation. So sell_credit 2 better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427358,
+    "id": "2026102000290330c1c4cd7e4c4981",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000290330c1c4cd7e4c4981",
+    "usage": {
+      "completion_tokens": 213,
+      "completion_tokens_details": {
+        "reasoning_tokens": 176
+      },
+      "prompt_tokens": 2218,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2431
+    }
+  }
+}

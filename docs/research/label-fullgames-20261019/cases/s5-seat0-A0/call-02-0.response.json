@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.63,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 8 мешает будущим кредитным продажам, поэтому отказываю.\"}",
+          "reasoning_content": "Law 8 обнуляет promissory — у всех 0, но в будущем sell_credit полезен. Пропуск закона 8 оставляет возможность векселей. Голосую нет? П1 yes, П2 abstain. Если проголосую yes — закон обнуляет векселя (сейчас нулевые, но мешает будущим кредитным продажам). Голосую no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427055,
+    "id": "202610200024072dc570eb8b3f4605",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200024072dc570eb8b3f4605",
+    "usage": {
+      "completion_tokens": 113,
+      "completion_tokens_details": {
+        "reasoning_tokens": 85
+      },
+      "prompt_tokens": 2083,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2196
+    }
+  }
+}

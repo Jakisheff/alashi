@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.054,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Бум на ценах: беру максимум товара, shuttle даёт 3 единицы бесплатно при ожидаемой ценности выше produce.\"}",
+          "reasoning_content": "Shuttle gives 3 goods (risky border, but no tariff currently? tariff=0 means no льготная граница... shuttle risk 25% unless black tariff protects). Shuttle gives 3 goods, produce 2. Boom +2 prices, next market price high (sold_counter 4, price 7+2=9... actually 4 sold → price index 4 = 7? list [12,10,9,8,...], counter 4 → 7+2=9). Goods are valuable. Take shuttle: 3 goods, risk 25% seizure. Expected 2.25 goods vs produce 2. Choose shuttle (free).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491041,
+    "id": "2026102018103783ab40332b2a4d80",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102018103783ab40332b2a4d80",
+    "usage": {
+      "completion_tokens": 177,
+      "completion_tokens_details": {
+        "reasoning_tokens": 139
+      },
+      "prompt_tokens": 3025,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 3202
+    }
+  }
+}

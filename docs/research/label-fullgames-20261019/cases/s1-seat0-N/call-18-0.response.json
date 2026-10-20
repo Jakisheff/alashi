@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.29,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Я самый богатый, закон даёт мне +1 влияния, что улучшает позиции при тай-брейках.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest. Richest cash: me 28.28 vs 26.26 vs 9.86 — me. But influence contest for max influence bonus (5% bank) currently idx2 with 3. If I gain +1 → 2, still less than 3. So voting yes gives me +1 influence (doesn't help much), helps future holder? Holder is idx2 who has 3 already; if idx2 richest they'd gain — but I'm richest. Wait tie/rank by cash: me 28.28 richest. Yes gives me +1 influence → 2, still below 2's 3. Also holder is 2 with veto; they may veto if it benefits me? Probably fine either way. Vote yes slightly helps tie-breaks. Choose vote_yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428078,
+    "id": "20261020004112d55501e8fdff44c7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020004112d55501e8fdff44c7",
+    "usage": {
+      "completion_tokens": 207,
+      "completion_tokens_details": {
+        "reasoning_tokens": 172
+      },
+      "prompt_tokens": 3130,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3337
+    }
+  }
+}

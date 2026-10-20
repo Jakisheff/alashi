@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.918,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Продать весь товар сейчас по высокой цене — наличные лучше векселя из-за девальвации.\"}",
+          "reasoning_content": "Sell all now at 12/10? Price drops. Hard cash beats promissory (devaluation 62%). Sell 2 units now: 22M cash. Sell credit gives 27.5M promissory but only cash at round3. Better sell now for cash before counter drops by others selling first? Order rotates; I'm idx2 in round2. Others also act this round. Cash 22M at start of round 3 becomes 13.6M + produce... but selling later at lower price worse. Sell 2 now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792489937,
+    "id": "20261020175210f334f5533aa4411c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175210f334f5533aa4411c",
+    "usage": {
+      "completion_tokens": 148,
+      "completion_tokens_details": {
+        "reasoning_tokens": 115
+      },
+      "prompt_tokens": 2218,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2366
+    }
+  }
+}

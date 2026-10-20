@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.27,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продаю весь товар по высоким текущим ценам, закрепляя первое место по cash.\"}",
+          "reasoning_content": "I'm the holder X, leading cash already. Sell 3 now (price 9 at counter 2? prices [12,10,9,8,7,6,5,4,3,3...], counter 2 → 9). Sell 3 gives 9+8+7=24... candidate says 24M cash gain? 63.55-39.55=24, yes. Credit would give 30 but promissory risks and devd. Cash now ranks me first. Sell all 3 for cash is safe.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491258,
+    "id": "20261020181414b62f115124b341ac",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181414b62f115124b341ac",
+    "usage": {
+      "completion_tokens": 144,
+      "completion_tokens_details": {
+        "reasoning_tokens": 116
+      },
+      "prompt_tokens": 2973,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 3117
+    }
+  }
+}

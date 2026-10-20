@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.469,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товары и взятки уже бесполезны, я и так впереди по cash и влиянию; pass сохраняет максимальную выплату.\"}",
+          "reasoning_content": "Last action round, no more market selling possible? Round 6 market already done. Goods useless. Influence matters: max influence gives 5% bank bonus (~2.5 alashi) and presidency weight. I already have influence 2 tied with idx1; tie_order favors me (2 before 1), so I'm already max influence. Bribing gives influence to me? bribe to others gives ME influence (sender gets floor(amount/5M) influence). I already hold max influence at 2 (tied, tie_order favors). So no need. Pass is best — cash stays 66M, rank first. Choice 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427180,
+    "id": "2026102000261441cdc5e095854343",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000261441cdc5e095854343",
+    "usage": {
+      "completion_tokens": 176,
+      "completion_tokens_details": {
+        "reasoning_tokens": 133
+      },
+      "prompt_tokens": 5351,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 5527
+    }
+  }
+}

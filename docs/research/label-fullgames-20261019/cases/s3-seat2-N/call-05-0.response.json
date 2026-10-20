@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.148,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":13,\"reason\":\"Дешёвая взятка даёт влияние 2, забирает роль держателя X (вето + комиссия 5% банка), сохраняя лидерство по cash.\"}",
+          "reasoning_content": "I'm the richest. Goods production matters—prices drop (sold 7, price ~2-3). Still, shuttle free goods worth ~6-9 alashi. Bribing to gain influence could get holder role and 5% bank commission. Currently holder is idx1. Influence from bribe: 5M → +1. But holder determined at law entry. Giving money to a rival weakens them; bribe to 0 or 1? Tie_order [1,2,0]; my vote weight 3, opponents 3 each. If I get influence 2, at law I have highest influence → I become holder, gain veto and 5% commission chance.\n\nCheapest: bribe 5M to idx1 (choice 13) gives influence 2, keeps 26M. That likely makes me holder (others influence 1). Holder benefits: 5% of bank (~30M bank → later bigger), veto power. Also law card 5 gives influence to richest — me anyway.\n\nShuttle gives 3 goods at low price (~3 alashi each? price at counter 7 → prices[7]=4? list [12,10,9,8,7,6,5,4,...], counter 7 means next price 4). 3 goods*4=12 alashi potential. Bribe costs 5M=5 alashi. Hmm, holder 5% of final bank (~30+ alashi) ≈1.5+ alashi plus veto control. Shuttle 12 alashi... but selling pushes price down. Actually shuttle grey goods risk 25% seizure? Shuttle gives grey goods? \"shuttle gives 3+subsidy_goods goods; grey goods may be seized\" — shuttle goods are grey, risk ~25% loss.\n\nCompare long-run: influence persists; being holder multiple rounds is valuable (commission at end + veto). Bribe 5M for influence 2 seems best. To whom? Bribing idx0 (richest rival, 15M) vs idx1 (holder, 11M). Bribing idx1 increases rival's cash — but that's their cash, hurting my rank. Bribe idx0 (15M) → idx0 gets 20M, worse. Bribe idx1: 11→16M, still below my 26M. Choice 13.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491135,
+    "id": "20261020181203301bd1be864544e2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181203301bd1be864544e2",
+    "usage": {
+      "completion_tokens": 540,
+      "completion_tokens_details": {
+        "reasoning_tokens": 492
+      },
+      "prompt_tokens": 3321,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 3861
+    }
+  }
+}

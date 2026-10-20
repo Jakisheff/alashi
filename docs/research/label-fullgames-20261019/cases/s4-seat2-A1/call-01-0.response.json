@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.991,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Shuttle даёт 3 товара, ожидаемая ценность выше despite риска изъятия.\"}",
+          "reasoning_content": "Produce is safe; shuttle risks seizure, but tariff is 0? Border default risky ~25%. Produce gives 2 vs shuttle 3 with 25% risk → EV 2.25. Slight edge to shuttle but variance; produce safe. Choose shuttle? EV slightly higher, cash=0 anyway. I'll pick shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792489985,
+    "id": "2026102017525980cc7222089c4184",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102017525980cc7222089c4184",
+    "usage": {
+      "completion_tokens": 99,
+      "completion_tokens_details": {
+        "reasoning_tokens": 69
+      },
+      "prompt_tokens": 1924,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2023
+    }
+  }
+}

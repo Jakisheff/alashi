@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.28,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Shuttle даёт больше товара при хорошем ожидании с учётом будущих рынков.\"}",
+          "reasoning_content": "I bid 15M but only have 1.74M cash — bid in escrow? own_bid=15000000 but cash 1740000... engine allows, apparently cash unchanged? Odd. Anyway choose action: shuttle gives 3 goods (risk 25% seizure if red border). Cash low. produce gives 2 goods safely. Shuttle earlier rounds worked. I have promissory 38.75M becoming cash next round start. Goods matter for sale rounds 5-6? Only rounds 5,6 markets left. Choose produce (safe) or shuttle (3 goods, ~25% seizure). Shuttle EV higher: 3*0.75=2.25 > 2. But border tariff status unknown; no black tariff protection. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491144,
+    "id": "202610201812125a4ab6c2397642ae",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201812125a4ab6c2397642ae",
+    "usage": {
+      "completion_tokens": 187,
+      "completion_tokens_details": {
+        "reasoning_tokens": 159
+      },
+      "prompt_tokens": 2960,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 3147
+    }
+  }
+}

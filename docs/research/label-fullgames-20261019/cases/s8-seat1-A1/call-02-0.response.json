@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.571,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Карта 8 обнуляет векселя, а ни у кого их нет — эффект пуст, можно пропустить.\"}",
+          "reasoning_content": "Law 8 zeroes promissory notes — everyone has 0, harmless. But wait, selling later with sell_credit... Law 8 zeroes promissory, currently nobody has any. Pass is fine. Actually if I plan to use sell_credit later, current promissory=0, no effect. vote_no/yes irrelevant. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427649,
+    "id": "2026102000340673dc47d9781f4f15",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000340673dc47d9781f4f15",
+    "usage": {
+      "completion_tokens": 105,
+      "completion_tokens_details": {
+        "reasoning_tokens": 70
+      },
+      "prompt_tokens": 2032,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2137
+    }
+  }
+}

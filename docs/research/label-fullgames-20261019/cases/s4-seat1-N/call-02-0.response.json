@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 14.311,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Карта 8 сейчас ничего не меняет — нет непогашенных векселей, поэтому воздерживаюсь.\"}",
+          "reasoning_content": "Law 8 = обнуляет promissory. У меня promissory=0, у других тоже. Но продавать с sell_credit в будущем — закон 8 обнуляет promissory — плохо в целом. Всё равно сейчас ни у кого promissory нет. Но в будущем план: продавать в кредит полезен? Обнуление промиссорий — риск. Лучше veto, чтобы карта не применялась? Veto отклоняет карту 8 — нет эффекта. Но карта 8 может быть полезна против чужих кредитов. У меня нет promissory, у других тоже. Продажи в кредит позже — карта уже разыграна. Veto сохраняет возможность будущих promissory нет... карта одна. Veto лишает меня использовать закон 8 против других? Никто не имеет promissory сейчас, карта не имеет эффекта сейчас. Пропустить/abstain — то же. Голосовать yes — карта применится без эффекта. Не важно. Выберу abstain (choice 3).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490583,
+    "id": "20261020180250ecfc5f3215c34f78",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180250ecfc5f3215c34f78",
+    "usage": {
+      "completion_tokens": 255,
+      "completion_tokens_details": {
+        "reasoning_tokens": 219
+      },
+      "prompt_tokens": 2083,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2338
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.78,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель не девальвируется, карта 8 уже вышла, а цены сейчас максимальны.\"}",
+          "reasoning_content": "I'm faction 2. Round 4 market. Prices high (counter 0, 12 alashi/unit). Keep goods? Later rounds price drops as counter increases. Sell now at 12? sell 3 gives cash 47.74M, top rank. Devaluation 62% at round 5 start reduces cash. Selling all now and then devalued 62%... still more than credit? promissory not devalued, but law 8 could zero it (already used). Round 6's last market promissory unpaid. Credit gives 38.75M promissory, full value at round 5. But risk: card 8 already drawn, so safe? Cards drawn: 8,7,0 used, no repeats, so 8 won't recur. So sell_credit 3 gives 38.75M at round 5. Sell 3 now gives 47.74M cash, devalued to ~29.6M at round 5. Credit better. Also roof 30% at tariff... credit keeps cash low avoiding roof/rank? Rank based on cash, promissory doesn't count—worse rank? Final rank counts cash+hard only, promissory not counted. So credit pays at round 5 cash injection, then devalued at round 6 to 62%. Still 38.75M fresh at round 5, ~24M after round-6 devaluation plus sales.\n\nChoose choice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491118,
+    "id": "20261020181149ca4957d9fd324514",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181149ca4957d9fd324514",
+    "usage": {
+      "completion_tokens": 343,
+      "completion_tokens_details": {
+        "reasoning_tokens": 309
+      },
+      "prompt_tokens": 2776,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 3119
+    }
+  }
+}

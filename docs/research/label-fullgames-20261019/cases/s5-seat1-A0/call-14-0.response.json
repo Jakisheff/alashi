@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.195,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 6 снижает цены следующего рынка, что вредит моим продажам товара и лицензии.\"}",
+          "reasoning_content": "Law 6: price -2 next market (round 5). I hold license (license_holder_idx=1), I plan to sell 2 goods round 5. Price drop hurts me. Vote no. Others weight 3 each; president is 0. Vote no regardless.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490312,
+    "id": "2026102017582950c58bfae387479a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102017582950c58bfae387479a",
+    "usage": {
+      "completion_tokens": 91,
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      },
+      "prompt_tokens": 2854,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2945
+    }
+  }
+}

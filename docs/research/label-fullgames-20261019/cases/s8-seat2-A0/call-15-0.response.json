@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.344,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 4 даёт +1 влияния мне как беднейшему, он принимается — veto не нужен.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest (me, 5.1M). Yes 4 vs No 3 → passes. Veto would kill it. But maybe I want veto? I'm poorest, law benefits me. Keep it, pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427141,
+    "id": "202610200025370f8e6f040d7e415c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200025370f8e6f040d7e415c",
+    "usage": {
+      "completion_tokens": 87,
+      "completion_tokens_details": {
+        "reasoning_tokens": 53
+      },
+      "prompt_tokens": 2808,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2895
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.123,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Ожидаю более высокую стоимость от 3 серых товаров против 2 безопасных, риск изъятия компенсируется.\"}",
+          "reasoning_content": "Round 5 action. I have cash 32, promissory 27.5 (worthless unless card 8; card 8 already used). Final round 6: cash halves twice roughly (62%). Actually only one more round start (round 6): cash=floor(cash/100)*62 → ~62% retained. Best: get goods to sell in round 6 market at sold_counter=2 (price 9). Produce gives 2 goods → sell ~9 each = 18 alashi. But bribe for influence: influence matters for 5% commission bonus and presidency. I'm richest; law in round 5 I'm likely president? Influence all 1, tie_order [1,2,0] → holder 1. Bribe to gain influence helps become president in round 6 law and 5% bonus.\n\nProduce: 2 goods × ~9 = 18 alashi gross, but tax? tax 0 currently; law could set tax. Net gain substantial. Bribe 5M gives influence 2 → presidency this law? Order of play: round 5 action, president determined at law entry. With influence 2 I'd become president, and max influence at end for 5% commission (~2.5 alashi). Also vote weight 3.\n\nProduce gives ~18 alashi × 0.62 ≈ 11 final, more than bribe benefits (~2.5 + veto control). But veto control in round 6 law could block tax law. Trade-offs; produce seems best for goods to sell round 6. Shuttle gives 3 goods (risk 25% seizure at border unless black tariff... shuttle grey goods risk). Grey goods can be seized ~25%. Expected 3 goods. Produce 2 safe. 3×9×0.75=20.25 vs 18. Shuttle slightly better EV; but seizure loses everything of shuttle. EV higher with shuttle. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491134,
+    "id": "20261020181203dae9286334a24a4f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181203dae9286334a24a4f",
+    "usage": {
+      "completion_tokens": 442,
+      "completion_tokens_details": {
+        "reasoning_tokens": 404
+      },
+      "prompt_tokens": 4054,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 4496
+    }
+  }
+}

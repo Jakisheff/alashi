@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.872,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 10% навредит моим будущим продажам; мой голос «против» делает 4:4 и блокирует закон.\"}",
+          "reasoning_content": "Закон 1 — налог 10% на мои будущие продажи. У меня только 2 товара и мало cash; налог вредит и соперникам при продажах. Фракция 1 голосует Yes (вес 4), фракция 2 No (вес 4). Мой вес 2. Yes выиграет 6:4 при моём Yes или 4:4 нет... при abstain 4:4 не принято. При No: 4:6 отклонено. Я продаю в будущем, налог вреден → vote_no, при 4:4 закон не принят. Выбор 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427279,
+    "id": "202610200027533723aa71f4094bc2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200027533723aa71f4094bc2",
+    "usage": {
+      "completion_tokens": 174,
+      "completion_tokens_details": {
+        "reasoning_tokens": 134
+      },
+      "prompt_tokens": 2917,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3091
+    }
+  }
+}

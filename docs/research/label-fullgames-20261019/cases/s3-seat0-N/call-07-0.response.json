@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.209,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель 27.5 не девальвируется и будет погашён в начале раунда 4, что выгоднее немедленных 22.\"}",
+          "reasoning_content": "Sell all now at 12? Price counter reset to 0, sell 2 = 12+11? Actually prices [12,10,9,...], selling 2 units gives 12+10=22 → cash +22. Sell credit 2 = 27.5 promissory but devalued 62% at rounds start: 27.5*0.62=17.05 < 22? Actually promissory added then devalued? Round start cash=floor(cash/100)*62 then promissory added — so promissory NOT devalued. So credit 27.5 > 22, but last round credit unpaid. Round 3 of 6, promissory will be paid next round start. So sell_credit 2 best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427944,
+    "id": "20261020003857f8471a4b00f545fc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003857f8471a4b00f545fc",
+    "usage": {
+      "completion_tokens": 208,
+      "completion_tokens_details": {
+        "reasoning_tokens": 164
+      },
+      "prompt_tokens": 2423,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2631
+    }
+  }
+}

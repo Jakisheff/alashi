@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.769,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Кредитная продажа обоих товаров даёт максимум выручки при отсутствии налога, деньги вернутся в следующем раунде.\"}",
+          "reasoning_content": "Price counter 4 → 5 alashi per unit. Selling 2 gives 13. Credit gives 16.25 promissory but last round far (round 2 of 6), credit redeemed in round 3 cash floor... promissory added at start of round 3. Cash dev floor(cash/100)*62 only applies to cash, promissory added after. Credit better value (1.25x). Sell both on credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490258,
+    "id": "20261020175733a9628be4dab149c0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175733a9628be4dab149c0",
+    "usage": {
+      "completion_tokens": 133,
+      "completion_tokens_details": {
+        "reasoning_tokens": 94
+      },
+      "prompt_tokens": 2222,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2355
+    }
+  }
+}

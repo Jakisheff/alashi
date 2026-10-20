@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.412,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Продажа в кредит сохраняет выручку от девальвации в раунде 6 и даёт премию 25%.\"}",
+          "reasoning_content": "Round 5 market, prices start at 12. I have 3 goods. Selling now at 12,10,9 = 31 immediate, or sell_credit = 38.75 promissory, but round 6 devaluation: cash floor/100*62 — promissory added after devaluation and reset at start of round 6? Promissory is added to cash at start of round and reset; after last round not redeemed. Round 6 is last; start of round 6 promissory is added to cash — so sell_credit is fine. sell 3 credit gives 38.75 alashi paid in round 6 without devaluation. sell cash 31 alashi gets devalued in round 6: 31→ floor→62%: 31,000,000... wait 31 alashi cash 76,969,600 total; devaluation applies to all cash. Better keep value in promissory.\n\nActually holding cash devalues. Sell credit 3 units = 38.75M promissory, cash stays 45.97M which devalues to ~28.5M. Total round 6: 28.5+38.75=67.25M vs sell now: 76.97M → floor*0.62 ≈ 47.7M. Credit better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490654,
+    "id": "202610201804074e4a2ab2e53e4c27",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201804074e4a2ab2e53e4c27",
+    "usage": {
+      "completion_tokens": 320,
+      "completion_tokens_details": {
+        "reasoning_tokens": 280
+      },
+      "prompt_tokens": 3326,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3646
+    }
+  }
+}

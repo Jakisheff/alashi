@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.48,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":47,\"reason\":\"Лицензия приносит 20–60 alashi сверх доли банка — ставлю весь cash, иначе rival 1 с 35 alashi перебьёт.\"}",
+          "reasoning_content": "Round 4 action with auction. License worth 20-60 alashi, huge compared to bank 30. Cash 27.5; rival 1 has 35, rival 2 has 25.5. Tie order [1,2,0] — I lose ties. Bid should beat rival 1's possible max ~35. Bid all cash 27.5? If rival 1 bids 30+, I lose anyway. Bid 27.5 covers rival2's 25.5 but not rival1. Maybe bid ~26-27.5. But winning bid goes to bank (communal) and license income 20-60 extra is big. Bid full 27.5? If I win, I get 20-60 alashi extra — definitely worth it. But if rival1 also bids high... my max is 27.5. So bid all: choice 47. But then cash 0 — rank drops. Still license income 20-60 makes it worth. Actually keep small cash? Rank determined by cash at end; spending bid hurts rank but license income (20-60) exceeds 27.5? Income 20-60, expected ~40, superadditive. Bid 27.5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491212,
+    "id": "20261020181324147679c969684d6a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181324147679c969684d6a",
+    "usage": {
+      "completion_tokens": 304,
+      "completion_tokens_details": {
+        "reasoning_tokens": 258
+      },
+      "prompt_tokens": 5377,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 5681
+    }
+  }
+}

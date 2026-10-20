@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.592,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Продажа в кредит по 1.25x защищает выручку от девальвации в начале раунда 6.\"}",
+          "reasoning_content": "Round 5 market, last market is round 6. Devaluation at round 6 start: cash → floor(cash/100)*62. Promissory paid without devaluation. So selling credit converts cash into promissory at 1.25x — protects from devaluation! sell_credit 2: promissory 16.25M, cash stays 38.75M. That's clearly good: at round 6 promissory adds 16.25M; if cash, 16.25M*... actually selling for cash: +13M cash, then devalued ~62%. Credit yields 13M*1.25=16.25M undevalued. Best: sell both on credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427430,
+    "id": "2026102000302530e7c9d49a894c65",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000302530e7c9d49a894c65",
+    "usage": {
+      "completion_tokens": 191,
+      "completion_tokens_details": {
+        "reasoning_tokens": 152
+      },
+      "prompt_tokens": 3244,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3435
+    }
+  }
+}

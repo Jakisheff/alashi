@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.431,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Ожидаемая выгода шаттла (2,25 товара) выше, чем у produce.\"}",
+          "reasoning_content": "Produce gives 2 goods safe; shuttle gives 3 grey goods risk 25% seizure. Expected shuttle 2.25 goods but risk of losing all. Prices decline; next rounds I'll sell. Shuttle expected value slightly better but variance. Choose produce? Prices low already (sold 6). Goods worth ~8-10 each. Shuttle EV 2.25 goods vs 2. Choose shuttle? Seizure risk ~25% lose everything grey. EV higher with shuttle. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490935,
+    "id": "202610201808462a171ddf24a642bd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201808462a171ddf24a642bd",
+    "usage": {
+      "completion_tokens": 135,
+      "completion_tokens_details": {
+        "reasoning_tokens": 102
+      },
+      "prompt_tokens": 2170,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2305
+    }
+  }
+}

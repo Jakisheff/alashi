@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.146,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Взятка даёт влияние 2 и пост президента с вето, сохраняя лидерство по cash.\"}",
+          "reasoning_content": "I have 31 cash, richest. President is idx1. Influence matters for presidency (vote weight, veto, 5% commission). Bribe 5 to idx0 gives influence 2 — not enough to beat president? President determined by max influence at law entry. Currently all have 1. If I take influence 2, I become president, gaining veto and +5% bank. Bribe 5M to idx0, still 26 cash richest, influence 2 → president this round. Good value.\n\nChoice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427509,
+    "id": "2026102000314252f1837f56b4464a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000314252f1837f56b4464a",
+    "usage": {
+      "completion_tokens": 144,
+      "completion_tokens_details": {
+        "reasoning_tokens": 110
+      },
+      "prompt_tokens": 3320,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 3464
+    }
+  }
+}

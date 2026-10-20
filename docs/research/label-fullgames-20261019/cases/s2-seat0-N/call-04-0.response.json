@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.804,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продаю весь товар по высоким текущим ценам, выручка 24 alashi сразу.\"}",
+          "reasoning_content": "Sell all 3: price counter at 2, prices [9,8,7]? Counter 2 means next price index 2 = 9. Sell 3 gives 9+8+7=24. Yes choice 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490130,
+    "id": "20261020175526331c203c415f4e31",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175526331c203c415f4e31",
+    "usage": {
+      "completion_tokens": 80,
+      "completion_tokens_details": {
+        "reasoning_tokens": 50
+      },
+      "prompt_tokens": 2330,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2410
+    }
+  }
+}

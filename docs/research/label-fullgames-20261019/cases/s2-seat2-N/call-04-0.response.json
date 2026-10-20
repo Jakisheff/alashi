@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.248,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"shuttle даёт 3 товара против 2 у produce, ожидаемая ценность выше даже с риском изъятия\"}",
+          "reasoning_content": "Shuttle gives 3 goods risk-free (no tariff yet known; risk applies at border? shuttle grey goods may be seized 25%). Produce gives 2. Cash 0, can't donkey. Shuttle gives more goods; grey seizure risk exists only under favorable border? Rules: shuttle gives 3+subsidy grey goods; may be seized ~25%. Favourable border pays fee. Tariff currently 0 — unknown. Take shuttle? Expected 3*0.75=2.25 > 2. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427662,
+    "id": "2026102000341560fa3d8d27f34894",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000341560fa3d8d27f34894",
+    "usage": {
+      "completion_tokens": 147,
+      "completion_tokens_details": {
+        "reasoning_tokens": 111
+      },
+      "prompt_tokens": 2114,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2261
+    }
+  }
+}

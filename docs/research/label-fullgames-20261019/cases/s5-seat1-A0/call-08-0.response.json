@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.577,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель с бонусом 25% обгоняет немедленную продажу даже после девальваций.\"}",
+          "reasoning_content": "Prices with boom: base at sold_counter=2, next unit price 9+2=11. Selling 2 gives 21M (candidate confirms). Credit gives 1.25x=26.25M promissory — but promissory counted at start of next round; only 6 rounds total, promissory from round 3 paid round 4, still one more devaluation? Promissory added to cash then devalued at round 5 start? Actually round 3 promissory → round 4 cash=floor(cash/100)*62 + promissory. Cash 16.25M stays; selling 2 credit now gives cash 16.25+26.25=42.5M at round 4, then round 5 devaluation floor(42.5M...)= 26.35M; then round 6: 16.34M. Versus sell now: cash 37.25M, round4: floor→23.1M, round5: 14.32M, round6: 8.88M. Credit better: 42.5→26.35→16.34→10.13. Sell 2 credit best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490274,
+    "id": "20261020175746178694f039bb4d20",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175746178694f039bb4d20",
+    "usage": {
+      "completion_tokens": 289,
+      "completion_tokens_details": {
+        "reasoning_tokens": 254
+      },
+      "prompt_tokens": 2540,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2829
+    }
+  }
+}

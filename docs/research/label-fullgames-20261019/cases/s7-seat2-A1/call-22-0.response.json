@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.099,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\": 3, \"reason\": \"Закон 6 снижает цены следующего рынка, которого больше нет, поэтому результат безразличен — воздерживаюсь.\"}",
+          "reasoning_content": "Law 6: shift next market prices -2. But next market is round 7? Game is 6 rounds, no more markets. Actually no effect. Vote anything. I'm not president (holder idx 1). My vote weight 3. Law 6 affects next market, which doesn't exist (round 6 market already happened). So irrelevant; abstain or yes—prefer no effect. Vote yes/no doesn't matter. Choose abstain? If passed, subsidy resets? Card 6 only shifts prices, no tax change. Irrelevant. Pass preserves nothing extra. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490919,
+    "id": "20261020180831ddd8496626884097",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180831ddd8496626884097",
+    "usage": {
+      "completion_tokens": 164,
+      "completion_tokens_details": {
+        "reasoning_tokens": 123
+      },
+      "prompt_tokens": 3352,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3516
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.461,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Взивка даёт влияние 2 и пост президента с правом veto, оставляя cash у более слабого соперника.\"}",
+          "reasoning_content": "I'm poor (6 alashi), rivals have ~29-30. To win need influence for presidency (influence 1 each; holder is idx1 by tie_order). Getting influence 2 via bribe makes me president for law. Bribe 5 to idx1 gives them cash too — but presidency gives veto. But bribing idx1 makes richest richer. Bribe to idx2 keeps money with idx2 instead; either way I gain influence 2 > all others 1, so I become president regardless of recipient. Give bribe to idx1 (current holder) or idx2 — bribe idx2 to balance? Bribe idx1 makes them richer, worse for my rank; bribe idx2 (30.64M) makes them even richer. Both rich. Give to idx1 (28.82M, poorer) to balance. Choice 4.\n\nBut presidency value: veto control + possible commission 5%. Influence 2 also could win max influence commission later. Costs 5 alashi but I only have 6; that leaves 1 cash. Money devalues anyway (×0.62). Presidential control over laws could yield subsidy etc. I think bribe choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427243,
+    "id": "202610200027153619788e39c04a68",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200027153619788e39c04a68",
+    "usage": {
+      "completion_tokens": 283,
+      "completion_tokens_details": {
+        "reasoning_tokens": 247
+      },
+      "prompt_tokens": 2962,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 3245
+    }
+  }
+}

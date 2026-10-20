@@ -1,0 +1,1345 @@
+{
+  "planned_games": 72,
+  "completed_games": 72,
+  "failed_games": 0,
+  "groups": {
+    "A0": {
+      "n": 24,
+      "mean_payout": 57229867.333333336,
+      "mean_net_profit": 47229867.333333336,
+      "mean_wealth_rank": 1.2083333333333333,
+      "wealth_first_count": 19,
+      "highest_payout_count": 18,
+      "license_wins": 18,
+      "mean_bribe_spend": 2291666.6666666665,
+      "mean_bid_committed": 15721875,
+      "mean_role_rounds": 2.1666666666666665,
+      "mean_vetoes": 0.7083333333333334
+    },
+    "A1": {
+      "n": 24,
+      "mean_payout": 63855241.458333336,
+      "mean_net_profit": 53855241.458333336,
+      "mean_wealth_rank": 1.2916666666666667,
+      "wealth_first_count": 18,
+      "highest_payout_count": 21,
+      "license_wins": 21,
+      "mean_bribe_spend": 1666666.6666666667,
+      "mean_bid_committed": 18985108.333333332,
+      "mean_role_rounds": 1.875,
+      "mean_vetoes": 0.5416666666666666
+    },
+    "N": {
+      "n": 24,
+      "mean_payout": 56352987.125,
+      "mean_net_profit": 46352987.125,
+      "mean_wealth_rank": 1.2083333333333333,
+      "wealth_first_count": 20,
+      "highest_payout_count": 17,
+      "license_wins": 17,
+      "mean_bribe_spend": 625000,
+      "mean_bid_committed": 15144608.333333334,
+      "mean_role_rounds": 1.4166666666666667,
+      "mean_vetoes": 0.3333333333333333
+    }
+  },
+  "seed_clusters": [
+    {
+      "seed_index": 0,
+      "seed": 4219882590459898965,
+      "complete": true,
+      "arm_mean_payouts": {
+        "A0": 53927086.666666664,
+        "A1": 72096210,
+        "N": 55793753.333333336
+      },
+      "difference": -7217894.999999993
+    },
+    {
+      "seed_index": 1,
+      "seed": 9056560286649277022,
+      "complete": true,
+      "arm_mean_payouts": {
+        "A0": 50829573.333333336,
+        "A1": 51957186.666666664,
+        "N": 63993626.666666664
+      },
+      "difference": 12600246.666666664
+    },
+    {
+      "seed_index": 2,
+      "seed": 7451376543782917356,
+      "complete": true,
+      "arm_mean_payouts": {
+        "A0": 43623203.333333336,
+        "A1": 61806541.666666664,
+        "N": 45080703.333333336
+      },
+      "difference": -7634169.166666664
+    },
+    {
+      "seed_index": 3,
+      "seed": 3352959410008123855,
+      "complete": true,
+      "arm_mean_payouts": {
+        "A0": 54718410,
+        "A1": 54218410,
+        "N": 36734205
+      },
+      "difference": -17734205.0
+    },
+    {
+      "seed_index": 4,
+      "seed": 4198685333274047402,
+      "complete": true,
+      "arm_mean_payouts": {
+        "A0": 71767865.66666667,
+        "A1": 68651199,
+        "N": 69317865.66666667
+      },
+      "difference": -891666.6666666716
+    },
+    {
+      "seed_index": 5,
+      "seed": 2608880792136471977,
+      "complete": true,
+      "arm_mean_payouts": {
+        "A0": 60858002.666666664,
+        "A1": 85403670.66666667,
+        "N": 84945337.33333333
+      },
+      "difference": 11814500.666666657
+    },
+    {
+      "seed_index": 6,
+      "seed": 1476019414254659041,
+      "complete": true,
+      "arm_mean_payouts": {
+        "A0": 45106391.333333336,
+        "A1": 37549724.666666664,
+        "N": 15200000
+      },
+      "difference": -26128058.0
+    },
+    {
+      "seed_index": 7,
+      "seed": 7038607920892268610,
+      "complete": true,
+      "arm_mean_payouts": {
+        "A0": 77008405.66666667,
+        "A1": 79158989,
+        "N": 79758405.66666667
+      },
+      "difference": 1674708.3333333284
+    }
+  ],
+  "blocks": [
+    {
+      "seed_index": 0,
+      "seat": 0,
+      "complete": true,
+      "ids": {
+        "A0": "s1-seat0-A0",
+        "A1": "s1-seat0-A1",
+        "N": "s1-seat0-N"
+      },
+      "payouts": {
+        "A0": 79740630,
+        "A1": 77470630,
+        "N": 74240630
+      },
+      "repeat_pay_gap": 2270000,
+      "label_pay_gap": 4365000.0,
+      "repeat_strategy_distance": 0.16666666666666666,
+      "label_strategy_distance": 0.3055555555555556,
+      "first_label_difference": {
+        "round": 1,
+        "phase": "action",
+        "stage": "primary",
+        "left_action": {
+          "action": "produce"
+        },
+        "right_action": {
+          "action": "shuttle"
+        },
+        "identical_public_state": true,
+        "left_reason": "Произвести товар для будущих продаж — выгоднее, чем пасс.",
+        "right_reason": "Shuttle даёт больше товара при положительном матожидании."
+      },
+      "first_repeat_difference": {
+        "round": 1,
+        "phase": "action",
+        "stage": "primary",
+        "left_action": {
+          "action": "produce"
+        },
+        "right_action": {
+          "action": "shuttle"
+        },
+        "identical_public_state": true,
+        "left_reason": "Произвести товар для будущих продаж — выгоднее, чем пасс.",
+        "right_reason": "Больше товара при умеренном риске изъятия даёт лучшую ожидаемую выручку."
+      }
+    },
+    {
+      "seed_index": 0,
+      "seat": 1,
+      "complete": true,
+      "ids": {
+        "A0": "s1-seat1-A0",
+        "A1": "s1-seat1-A1",
+        "N": "s1-seat1-N"
+      },
+      "payouts": {
+        "A0": 68740630,
+        "A1": 72340630,
+        "N": 72240630
+      },
+      "repeat_pay_gap": 3600000,
+      "label_pay_gap": 1800000.0,
+      "repeat_strategy_distance": 0.3333333333333333,
+      "label_strategy_distance": 0.3055555555555556,
+      "first_label_difference": {
+        "round": 1,
+        "phase": "action",
+        "stage": "primary",
+        "left_action": {
+          "action": "shuttle"
+        },
+        "right_action": {
+          "action": "produce"
+        },
+        "identical_public_state": true,
+        "left_reason": "Больше товара без затрат — shuttle даёт 3 единицы для продажи по высокой стартовой цене.",
+        "right_reason": "Надёжное производство товара без риска изъятия."
+      },
+      "first_repeat_difference": {
+        "round": 1,
+        "phase": "action",
+        "stage": "primary",
+        "left_action": {
+          "action": "shuttle"
+        },
+        "right_action": {
+          "action": "produce"
+        },
+        "identical_public_state": true,
+        "left_reason": "Больше товара без затрат — shuttle даёт 3 единицы для продажи по высокой стартовой цене.",
+        "right_reason": "produce даёт 2 товара без риска изъятия"
+      }
+    },
+    {
+      "seed_index": 0,
+      "seat": 2,
+      "complete": true,
+      "ids": {
+        "A0": "s1-seat2-A0",
+        "A1": "s1-seat2-A1",
+        "N": "s1-seat2-N"
+      },
+      "payouts": {
+        "A0": 13300000,
+        "A1": 66477370,
+        "N": 20900000
+      },
+      "repeat_pay_gap": 53177370,
+      "label_pay_gap": 26588685.0,
+      "repeat_strategy_distance": 0.27777777777777773,
+      "label_strategy_distance": 0.16666666666666666,
+      "first_label_difference": {
+        "round": 1,
+        "phase": "action",
+        "stage": "primary",
+        "left_action": {
+          "action": "produce"
+        },
+        "right_action": {
+          "action": "shuttle"
+        },
+        "identical_public_state": true,
+        "left_reason": "Производство даёт товар без риска изъятия и строит ресурс на будущую продажу.",
+        "right_reason": "shuttle даёт 3 товара, ожидаемая ценность выше despite риска изъятия."
+      },
+      "first_repeat_difference": {
+        "round": 1,
+        "phase": "action",
+        "stage": "primary",
+        "left_action": {
+          "action": "produce"
+        },
+        "right_action": {
+          "action": "shuttle"
+        },
+        "identical_public_state": true,
+        "left_reason": "Производство даёт товар без риска изъятия и строит ресурс на будущую продажу.",
+        "right_reason": "shuttle даёт больше товара при умеренном риске изъятия"
+      }
+    },
+    {
+      "seed_index": 1,
+      "seat": 0,
+      "complete": true,
+      "ids": {
+        "A0": "s2-seat0-A0",
+        "A1": "s2-seat0-A1",
+        "N": "s2-seat0-N"
+      },
+      "payouts": {
+        "A0": 20900000,
+        "A1": 20900000,
+        "N": 63387160
+      },
+      "repeat_pay_gap": 0,
+      "label_pay_gap": 42487160.0,
+      "repeat_strategy_distance": 0.2222222222222222,
+      "label_strategy_distance": 0.3333333333333333,
+      "first_label_difference": {
+        "round": 2,
+        "phase": "market",
+        "stage": "primary",
+        "left_action": {
+          "action": "sell_credit",
+          "units": 3
+        },
+        "right_action": {
+          "action": "sell",
+          "units": 3
+        },
+        "identical_public_state": true,
+        "left_reason": "Продажа всей партии в кредит даёт максимальную выручку 30 с бонусом 1.25, что лучше немедленной продажи.",
+        "right_reason": "Продаю весь товар по высоким текущим ценам, выручка 24 alashi сразу."
+      },
+      "first_repeat_difference": {
+        "round": 1,
+        "phase": "law",
+        "stage": "primary",
+        "left_action": {
+          "action": "vote_abstain"
+        },
+        "right_action": {
+          "action": "vote_yes"
+        },
+        "identical_public_state": true,
+        "left_reason": "Закон 0 нейтрален, голосование не влияет на выплату.",
+        "right_reason": "Карта 0 без эффектов, голос ни на что не влияет."
+      }
+    },
+    {
+      "seed_index": 1,
+      "seat": 1,
+      "complete": true,
+      "ids": {
+        "A0": "s2-seat1-A0",
+        "A1": "s2-seat1-A1",
+        "N": "s2-seat1-N"
+      },
+      "payouts": {
+        "A0": 63744360,
+        "A1": 66542960,
+        "N": 62844360
+      },
+      "repeat_pay_gap": 2798600,
+      "label_pay_gap": 2299300.0,
+      "repeat_strategy_distance": 0.5,
+      "label_strategy_distance": 0.3333333333333333,
+      "first_label_difference": {
+        "round": 2,
+        "phase": "market",
+        "stage": "primary",
+        "left_action": {
+          "action": "sell_credit",
+          "units": 2
+        },
+        "right_action": {
+          "action": "sell",
+          "units": 2
+        },
+        "identical_public_state": true,
+        "left_reason": "Продажа в кредит избегает девальвации и даёт больше к погашению.",
+        "right_reason": "Продаю оба товара за реальные деньги, которые учитываются в ранге богатства."
+      },
+      "first_repeat_difference": {
+        "round": 1,
+        "phase": "law",
+        "stage": "primary",
+        "left_action": {
+          "action": "pass"
+        },
+        "right_action": {
+          "action": "vote_yes"
+        },
+        "identical_public_state": true,
+        "left_reason": "Карта 0 без эффектов, нет смысла голосовать.",
+        "right_reason": "Карта 0 без эффектов — исход безразличен, поддерживаю без риска."
+      }
+    },
+    {
+      "seed_index": 1,
+      "seat": 2,
+      "complete": true,
+      "ids": {
+        "A0": "s2-seat2-A0",
+        "A1": "s2-seat2-A1",
+        "N": "s2-seat2-N"
+      },
+      "payouts": {
+        "A0": 67844360,
+        "A1": 68428600,
+        "N": 65749360
+      },
+      "repeat_pay_gap": 584240,
+      "label_pay_gap": 2387120.0,
+      "repeat_strategy_distance": 0.11111111111111112,
+      "label_strategy_distance": 0.2222222222222222,
+      "first_label_difference": {
+        "round": 1,
+        "phase": "action",
+        "stage": "primary",
+        "left_action": {
+          "action": "shuttle"
+        },
+        "right_action": {
+          "action": "produce"
+        },
+        "identical_public_state": true,
+        "left_reason": "shuttle даёт больше товара при небольшом риске",
+        "right_reason": "Produce даёт 2 товара без риска, что надёжнее шаттла."
+      },
+      "first_repeat_difference": {
+        "round": 1,
+        "phase": "action",
+        "stage": "primary",
+        "left_action": {
+          "action": "shuttle"
+        },
+        "right_action": {
+          "action": "produce"
+        },
+        "identical_public_state": true,
+        "left_reason": "shuttle даёт больше товара при небольшом риске",
+        "right_reason": "Безопасный produce даёт 2 товара без риска изъятия."
+      }
+    },
+    {
+      "seed_index": 2,
+      "seat": 0,
+      "complete": true,
+      "ids": {
+        "A0": "s3-seat0-A0",
+        "A1": "s3-seat0-A1",
+        "N": "s3-seat0-N"
+      },
+      "payouts": {
+        "A0": 19000000,
+        "A1": 63096055,
+        "N": 67746055
+      },
+      "repeat_pay_gap": 44096055,
+      "label_pay_gap": 26698027.5,
+      "repeat_strategy_distance": 0.3333333333333333,
+      "label_strategy_distance": 0.3888888888888889,
+      "first_label_difference": {
+        "round": 1,
+        "phase": "action",
+        "stage": "primary",
+        "left_action": {
+          "action": "shuttle"
+        },
+        "right_action": {
+          "action": "produce"
+        },
+        "identical_public_state": true,
+        "left_reason": "Ожидаемая выгода shuttle выше, риск изъятия компенсируется объёмом.",
+        "right_reason": "produce даёт 2 товара без риска изъятия."
+      },
+      "first_repeat_difference": {
+        "round": 1,
+        "phase": "action",
+        "stage": "primary",
+        "left_action": {
+          "action": "shuttle"
+        },
+        "right_action": {
+          "action": "produce"
+        },
+        "identical_public_state": true,
+        "left_reason": "Ожидаемая выгода shuttle выше, риск изъятия компенсируется объёмом.",
+        "right_reason": "Производство даёт гарантированные 2 товара без риска изъятия на границе."
+      }
+    },
+    {
+      "seed_index": 2,
+      "seat": 1,
+      "complete": true,
+      "ids": {
+        "A0": "s3-seat1-A0",
+        "A1": "s3-seat1-A1",
+        "N": "s3-seat1-N"
+      },
+      "payouts": {
+        "A0": 51273555,
+        "A1": 64032015,
+        "N": 46596055
+      },
+      "repeat_pay_gap": 12758460,
+      "label_pay_gap": 11056730.0,
+      "repeat_strategy_distance": 0.3888888888888889,
+      "label_strategy_distance": 0.38888888888888884,
+      "first_label_difference": {
+        "round": 2,
+        "phase": "market",
+        "stage": "primary",
+        "left_action": {
+          "action": "sell_credit",
+          "units": 2
+        },
+        "right_action": {
+          "action": "sell",
+          "units": 2
+        },
+        "identical_public_state": true,
+        "left_reason": "Цены падают, sell_credit даёт 16.25 alashi против 7 наличными, что выгоднее даже с учётом девальвации.",
+        "right_reason": "Продать весь товар за наличные выгоднее, чем вексель, который девальвирует."
+      },
+      "first_repeat_difference": {
+        "round": 2,
+        "phase": "market",
+        "stage": "primary",
+        "left_action": {
+          "action": "sell_credit",
+          "units": 2
+        },
+        "right_action": {
+          "action": "sell",
+          "units": 2
+        },
+        "identical_public_state": true,
+        "left_reason": "Цены падают, sell_credit даёт 16.25 alashi против 7 наличными, что выгоднее даже с учётом девальвации.",
+        "right_reason": "Продаю весь товар сразу за наличные, векселя рискуют девальвацией."
+      }
+    },
+    {
+      "seed_index": 2,
+      "seat": 2,
+      "complete": true,
+      "ids": {
+        "A0": "s3-seat2-A0",
+        "A1": "s3-seat2-A1",
+        "N": "s3-seat2-N"
+      },
+      "payouts": {
+        "A0": 60596055,
+        "A1": 58291555,
+        "N": 20900000
+      },
+      "repeat_pay_gap": 2304500,
+      "label_pay_gap": 38543805.0,
+      "repeat_strategy_distance": 0.4444444444444444,
+      "label_strategy_distance": 0.3611111111111111,
+      "first_label_difference": {
+        "round": 1,
+        "phase": "law",
+        "stage": "primary",
+        "left_action": {
+          "action": "vote_yes"
+        },
+        "right_action": {
+          "action": "vote_no"
+        },
+        "identical_public_state": true,
+        "left_reason": "Закон 8 обнуляет векселя, которых ни у кого нет — безвреден, голосую за.",
+        "right_reason": "Закон 8 обнуляет векселя — я планирую использовать sell_credit, поэтому голосую против."
+      },
+      "first_repeat_difference": {
+        "round": 1,
+        "phase": "action",
+        "stage": "primary",
+        "left_action": {
+          "action": "shuttle"
+        },
+        "right_action": {
+          "action": "produce"
+        },
+        "identical_public_state": true,
+        "left_reason": "shuttle даёт больше товара в среднем, риск умеренный, а платить нечем",
+        "right_reason": "Гарантированные 2 товара без риска изъятия на границе."
+      }
+    },
+    {
+      "seed_index": 3,
+      "seat": 0,
+      "complete": true,
+      "ids": {
+        "A0": "s4-seat0-A0",
+        "A1": "s4-seat0-A1",
+        "N": "s4-seat0-N"
+      },
+      "payouts": {
+        "A0": 20900000,
+        "A1": 72802615,
+        "N": 19000000
+      },
+      "repeat_pay_gap": 51902615,
+      "label_pay_gap": 27851307.5,
+      "repeat_strategy_distance": 0.3333333333333333,
+      "label_strategy_distance": 0.3333333333333333,
+      "first_label_difference": {
+        "round": 1,
+        "phase": "law",
+        "stage": "primary",
+        "left_action": {
+          "action": "vote_abstain"
+        },
+        "right_action": {
+          "action": "pass"
+        },
+        "identical_public_state": true,
+        "left_reason": "Карта 8 обнуляет векселя, которых ни у кого нет — закон нейтрален, воздерживаюсь.",
+        "right_reason": "Закон 8 обнуляет векселя, которых ни у кого нет — эффект нейтрален, можно пропустить."
+      },
+      "first_repeat_difference": {
+        "round": 2,
+        "phase": "market",
+        "stage": "primary",
+        "left_action": {
+          "action": "sell_credit",
+          "units": 2
+        },
+        "right_action": {
+          "action": "sell",
+          "units": 2
+        },
+        "identical_public_state": true,
+        "left_reason": "Вексель не девальвируется и даёт 25% бонус, а ранняя наличка обесценится.",
+        "right_reason": "Продаю оба товара за реальные деньги сейчас; вексель рискует обнулением (карта 8 уже вышла, но кэш надёжнее)"
+      }
+    },
+    {
+      "seed_index": 3,
+      "seat": 1,
+      "complete": true,
+      "ids": {
+        "A0": "s4-seat1-A0",
+        "A1": "s4-seat1-A1",
+        "N": "s4-seat1-N"
+      },
+      "payouts": {
+        "A0": 63302615,
+        "A1": 68952615,
+        "N": 70302615
+      },
+      "repeat_pay_gap": 5650000,
+      "label_pay_gap": 4175000.0,
+      "repeat_strategy_distance": 0.3888888888888889,
+      "label_strategy_distance": 0.3333333333333333,
+      "first_label_difference": {
+        "round": 1,
+        "phase": "action",
+        "stage": "primary",
+        "left_action": {
+          "action": "produce"
+        },
+        "right_action": {
+          "action": "shuttle"
+        },
+        "identical_public_state": true,
+        "left_reason": "produce даёт 2 товара без риска изъятия.",
+        "right_reason": "Shuttle gives more goods, expected value higher despite seizure risk."
+      },
+      "first_repeat_difference": {
+        "round": 1,
+        "phase": "action",
+        "stage": "primary",
+        "left_action": {
+          "action": "produce"
+        },
+        "right_action": {
+          "action": "shuttle"
+        },
+        "identical_public_state": true,
+        "left_reason": "produce даёт 2 товара без риска изъятия.",
+        "right_reason": "Ожидаемая ценность серого шаттла выше (3 товара при ~75% успеха против 2 гарантированных), cash для взяток всё равно нет."
+      }
+    },
+    {
+      "seed_index": 3,
+      "seat": 2,
+      "complete": true,
+      "ids": {
+        "A0": "s4-seat2-A0",
+        "A1": "s4-seat2-A1",
+        "N": "s4-seat2-N"
+      },
+      "payouts": {
+        "A0": 79952615,
+        "A1": 20900000,
+        "N": 20900000
+      },
+      "repeat_pay_gap": 59052615,
+      "label_pay_gap": 29526307.5,
+      "repeat_strategy_distance": 0.27777777777777773,
+      "label_strategy_distance": 0.2222222222222222,
+      "first_label_difference": {
+        "round": 1,
+        "phase": "action",
+        "stage": "primary",
+        "left_action": {
+          "action": "produce"
+        },
+        "right_action": {
+          "action": "shuttle"
+        },
+        "identical_public_state": true,
+        "left_reason": "produce даёт 2 товара без риска изъятия границы",
+        "right_reason": "shuttle даёт 3 товара против 2 у produce; риск изъятия пока минимален"
+      },
+      "first_repeat_difference": {
+        "round": 1,
+        "phase": "action",
+        "stage": "primary",
+        "left_action": {
+          "action": "produce"
+        },
+        "right_action": {
+          "action": "shuttle"
+        },
+        "identical_public_state": true,
+        "left_reason": "produce даёт 2 товара без риска изъятия границы",
+        "right_reason": "Shuttle даёт 3 товара, ожидаемая ценность выше despite риска изъятия."
+      }
+    },
+    {
+      "seed_index": 4,
+      "seat": 0,
+      "complete": true,
+      "ids": {
+        "A0": "s5-seat0-A0",
+        "A1": "s5-seat0-A1",
+        "N": "s5-seat0-N"
+      },
+      "payouts": {
+        "A0": 73851199,
+        "A1": 80851199,
+        "N": 73851199
+      },
+      "repeat_pay_gap": 7000000,
+      "label_pay_gap": 3500000.0,
+      "repeat_strategy_distance": 0.3333333333333333,
+      "label_strategy_distance": 0.4722222222222222,
+      "first_label_difference": {
+        "round": 1,
+        "phase": "action",
+        "stage": "primary",
+        "left_action": {
+          "action": "produce"
+        },
+        "right_action": {
+          "action": "shuttle"
+        },
+        "identical_public_state": true,
+        "left_reason": "produce даёт товар без риска и без затрат",
+        "right_reason": "Ожидаемо shuttle даёт больше товара (0.75×3 > 2), риск изъятия умеренный."
+      },
+      "first_repeat_difference": {
+        "round": 1,
+        "phase": "action",
+        "stage": "primary",
+        "left_action": {
+          "action": "produce"
+        },
+        "right_action": {
+          "action": "shuttle"
+        },
+        "identical_public_state": true,
+        "left_reason": "produce даёт товар без риска и без затрат",
+        "right_reason": "Ожидаемая выручка шаттла выше, риск изъятия компенсируется дополнительной единицей товара."
+      }
+    },
+    {
+      "seed_index": 4,
+      "seat": 1,
+      "complete": true,
+      "ids": {
+        "A0": "s5-seat1-A0",
+        "A1": "s5-seat1-A1",
+        "N": "s5-seat1-N"
+      },
+      "payouts": {
+        "A0": 81001199,
+        "A1": 65251199,
+        "N": 65251199
+      },
+      "repeat_pay_gap": 15750000,
+      "label_pay_gap": 7875000.0,
+      "repeat_strategy_distance": 0.3333333333333333,
+      "label_strategy_distance": 0.2222222222222222,
+      "first_label_difference": {
+        "round": 1,
+        "phase": "action",
+        "stage": "primary",
+        "left_action": {
+          "action": "produce"
+        },
+        "right_action": {
+          "action": "shuttle"
+        },
+        "identical_public_state": true,
+        "left_reason": "Производство даёт 2 товара без риска изъятия на границе.",
+        "right_reason": "Shuttle даёт больше товара, ожидаемая ценность выше даже с риском изъятия."
+      },
+      "first_repeat_difference": {
+        "round": 1,
+        "phase": "law",
+        "stage": "primary",
+        "left_action": {
+          "action": "vote_abstain"
+        },
+        "right_action": {
+          "action": "vote_yes"
+        },
+        "identical_public_state": true,
+        "left_reason": "Закон 8 сейчас ничего не меняет (векселей нет), воздерживаюсь.",
+        "right_reason": "Закон 8 обнуляет векселя, которых ни у кого нет, — вреда нет, поэтому поддерживаю."
+      }
+    },
+    {
+      "seed_index": 4,
+      "seat": 2,
+      "complete": true,
+      "ids": {
+        "A0": "s5-seat2-A0",
+        "A1": "s5-seat2-A1",
+        "N": "s5-seat2-N"
+      },
+      "payouts": {
+        "A0": 60451199,
+        "A1": 59851199,
+        "N": 68851199
+      },
+      "repeat_pay_gap": 600000,
+      "label_pay_gap": 8700000.0,
+      "repeat_strategy_distance": 0.05555555555555556,
+      "label_strategy_distance": 0.24999999999999997,
+      "first_label_difference": {
+        "round": 3,
+        "phase": "market",
+        "stage": "primary",
+        "left_action": {
+          "action": "sell",
+          "units": 3
+        },
+        "right_action": {
+          "action": "sell_credit",
+          "units": 3
+        },
+        "identical_public_state": true,
+        "left_reason": "Продать все 3 единицы сейчас: наличные дают ранг богатства и не девальвируются, бум на ценах.",
+        "right_reason": "Продаю весь товар в кредит ради выручки х1,25, вексель погасится в начале следующего раунда."
+      },
+      "first_repeat_difference": {
+        "round": 1,
+        "phase": "law",
+        "stage": "primary",
+        "left_action": {
+          "action": "vote_abstain"
+        },
+        "right_action": {
+          "action": "pass"
+        },
+        "identical_public_state": true,
+        "left_reason": "Закон 8 обнуляет векселя, которых ни у кого нет; моя позиция не меняется, поэтому воздерживаюсь.",
+        "right_reason": "Карта 8 обнуляет векселя — у всех их нет, эффект нейтрален, пропускаю."
+      }
+    },
+    {
+      "seed_index": 5,
+      "seat": 0,
+      "complete": true,
+      "ids": {
+        "A0": "s6-seat0-A0",
+        "A1": "s6-seat0-A1",
+        "N": "s6-seat0-N"
+      },
+      "payouts": {
+        "A0": 87237004,
+        "A1": 87237004,
+        "N": 91362004
+      },
+      "repeat_pay_gap": 0,
+      "label_pay_gap": 4125000.0,
+      "repeat_strategy_distance": 0.3888888888888889,
+      "label_strategy_distance": 0.2777777777777778,
+      "first_label_difference": {
+        "round": 1,
+        "phase": "action",
+        "stage": "primary",
+        "left_action": {
+          "action": "produce"
+        },
+        "right_action": {
+          "action": "shuttle"
+        },
+        "identical_public_state": true,
+        "left_reason": "produce даёт 2 чёрных товара без риска изъятия.",
+        "right_reason": "Ожидаемая выгода шаттла выше (3 товара с риском 25% против 2)."
+      },
+      "first_repeat_difference": {
+        "round": 2,
+        "phase": "market",
+        "stage": "primary",
+        "left_action": {
+          "action": "sell_credit",
+          "units": 2
+        },
+        "right_action": {
+          "action": "sell",
+          "units": 2
+        },
+        "identical_public_state": true,
+        "left_reason": "Продажа в кредит сохраняет выручку от девальвации (21,25 alashi против ~10,5 у наличных), цены всё равно падают.",
+        "right_reason": "Продаю весь товар по высокой цене, чтобы получить cash и укрепить ранг богатства."
+      }
+    },
+    {
+      "seed_index": 5,
+      "seat": 1,
+      "complete": true,
+      "ids": {
+        "A0": "s6-seat1-A0",
+        "A1": "s6-seat1-A1",
+        "N": "s6-seat1-N"
+      },
+      "payouts": {
+        "A0": 20900000,
+        "A1": 81737004,
+        "N": 76237004
+      },
+      "repeat_pay_gap": 60837004,
+      "label_pay_gap": 30418502.0,
+      "repeat_strategy_distance": 0.11111111111111112,
+      "label_strategy_distance": 0.3888888888888889,
+      "first_label_difference": {
+        "round": 1,
+        "phase": "action",
+        "stage": "primary",
+        "left_action": {
+          "action": "produce"
+        },
+        "right_action": {
+          "action": "shuttle"
+        },
+        "identical_public_state": true,
+        "left_reason": "produce даёт 2 товара без риска изъятия, лучше по ожиданию, чем shuttle.",
+        "right_reason": "Ожидаемая выгода шаттла (3 товара при ~25% риска) выше, чем у produce."
+      },
+      "first_repeat_difference": {
+        "round": 2,
+        "phase": "law",
+        "stage": "post_vote",
+        "left_action": {
+          "action": "veto"
+        },
+        "right_action": {
+          "action": "pass"
+        },
+        "identical_public_state": true,
+        "left_reason": "Закон 8 обнулил бы мой вексель; вето гарантирует отклонение.",
+        "right_reason": "Закон 8 (обнуление векселей) не проходит при ничьей 1:1, мой вексель 16,25 alashi сохранён, veto не нужен."
+      }
+    },
+    {
+      "seed_index": 5,
+      "seat": 2,
+      "complete": true,
+      "ids": {
+        "A0": "s6-seat2-A0",
+        "A1": "s6-seat2-A1",
+        "N": "s6-seat2-N"
+      },
+      "payouts": {
+        "A0": 74437004,
+        "A1": 87237004,
+        "N": 87237004
+      },
+      "repeat_pay_gap": 12800000,
+      "label_pay_gap": 6400000.0,
+      "repeat_strategy_distance": 0.3888888888888889,
+      "label_strategy_distance": 0.25,
+      "first_label_difference": {
+        "round": 2,
+        "phase": "action",
+        "stage": "primary",
+        "left_action": {
+          "action": "shuttle"
+        },
+        "right_action": {
+          "action": "produce"
+        },
+        "identical_public_state": true,
+        "left_reason": "Шаттл бесплатно даёт до 3 товаров — лучший прирост богатства при текущем тарифе 0.",
+        "right_reason": "Бесплатные 2 товара дают выручку на будущем рынке без затрат."
+      },
+      "first_repeat_difference": {
+        "round": 2,
+        "phase": "action",
+        "stage": "primary",
+        "left_action": {
+          "action": "shuttle"
+        },
+        "right_action": {
+          "action": "produce"
+        },
+        "identical_public_state": true,
+        "left_reason": "Шаттл бесплатно даёт до 3 товаров — лучший прирост богатства при текущем тарифе 0.",
+        "right_reason": "Производство бесплатно даёт 2 товара для будущих продаж без риска и потери средств перед аукционом."
+      }
+    },
+    {
+      "seed_index": 6,
+      "seat": 0,
+      "complete": true,
+      "ids": {
+        "A0": "s7-seat0-A0",
+        "A1": "s7-seat0-A1",
+        "N": "s7-seat0-N"
+      },
+      "payouts": {
+        "A0": 19000000,
+        "A1": 59072087,
+        "N": 19000000
+      },
+      "repeat_pay_gap": 40072087,
+      "label_pay_gap": 20036043.5,
+      "repeat_strategy_distance": 0.4444444444444444,
+      "label_strategy_distance": 0.2777777777777778,
+      "first_label_difference": {
+        "round": 1,
+        "phase": "law",
+        "stage": "primary",
+        "left_action": {
+          "action": "pass"
+        },
+        "right_action": {
+          "action": "vote_no"
+        },
+        "identical_public_state": true,
+        "left_reason": "Закон 8 обнуляет векселя, которых ни у кого нет; исход безразличен, пропускаю.",
+        "right_reason": "Закон 8 сейчас нейтрален (векселей ни у кого нет), но сохраняю контроль, голосуя против."
+      },
+      "first_repeat_difference": {
+        "round": 1,
+        "phase": "law",
+        "stage": "primary",
+        "left_action": {
+          "action": "pass"
+        },
+        "right_action": {
+          "action": "vote_yes"
+        },
+        "identical_public_state": true,
+        "left_reason": "Закон 8 обнуляет векселя, которых ни у кого нет; исход безразличен, пропускаю.",
+        "right_reason": "Карта 8 обнуляет векселя — у всех их нет, закон безвреден."
+      }
+    },
+    {
+      "seed_index": 6,
+      "seat": 1,
+      "complete": true,
+      "ids": {
+        "A0": "s7-seat1-A0",
+        "A1": "s7-seat1-A1",
+        "N": "s7-seat1-N"
+      },
+      "payouts": {
+        "A0": 48447087,
+        "A1": 5700000,
+        "N": 5700000
+      },
+      "repeat_pay_gap": 42747087,
+      "label_pay_gap": 21373543.5,
+      "repeat_strategy_distance": 0.16666666666666666,
+      "label_strategy_distance": 0.3333333333333333,
+      "first_label_difference": {
+        "round": 1,
+        "phase": "action",
+        "stage": "primary",
+        "left_action": {
+          "action": "shuttle"
+        },
+        "right_action": {
+          "action": "produce"
+        },
+        "identical_public_state": true,
+        "left_reason": "Ожидаемая выгода шаттла выше, чем производства, при нулевом риске денег.",
+        "right_reason": "Произвожу 2 товара без риска изъятия и тарифов."
+      },
+      "first_repeat_difference": {
+        "round": 1,
+        "phase": "law",
+        "stage": "primary",
+        "left_action": {
+          "action": "pass"
+        },
+        "right_action": {
+          "action": "vote_no"
+        },
+        "identical_public_state": true,
+        "left_reason": "Карта 8 обнуляет векселя, которых ни у кого нет — закон нейтрален, пропускаю.",
+        "right_reason": "Закон 8 обнуляет вексели, что подрывает будущие продажи в кредит; голосую против."
+      }
+    },
+    {
+      "seed_index": 6,
+      "seat": 2,
+      "complete": true,
+      "ids": {
+        "A0": "s7-seat2-A0",
+        "A1": "s7-seat2-A1",
+        "N": "s7-seat2-N"
+      },
+      "payouts": {
+        "A0": 67872087,
+        "A1": 47877087,
+        "N": 20900000
+      },
+      "repeat_pay_gap": 19995000,
+      "label_pay_gap": 36974587.0,
+      "repeat_strategy_distance": 0.2777777777777778,
+      "label_strategy_distance": 0.2222222222222222,
+      "first_label_difference": {
+        "round": 1,
+        "phase": "law",
+        "stage": "primary",
+        "left_action": {
+          "action": "vote_abstain"
+        },
+        "right_action": {
+          "action": "vote_no"
+        },
+        "identical_public_state": true,
+        "left_reason": "Закон 8 сейчас нейтрален (никто не имеет векселей), нет смысла тратить голос или повышать риск.",
+        "right_reason": "Закон 8 обнуляет promissory, но ни у кого их нет — отклоняю нейтрально."
+      },
+      "first_repeat_difference": {
+        "round": 1,
+        "phase": "action",
+        "stage": "primary",
+        "left_action": {
+          "action": "produce"
+        },
+        "right_action": {
+          "action": "shuttle"
+        },
+        "identical_public_state": true,
+        "left_reason": "produce даёт 2 товара без риска и затрат.",
+        "right_reason": "Ожидаемая выгода шаттла выше, чем у produce."
+      }
+    },
+    {
+      "seed_index": 7,
+      "seat": 0,
+      "complete": true,
+      "ids": {
+        "A0": "s8-seat0-A0",
+        "A1": "s8-seat0-A1",
+        "N": "s8-seat0-N"
+      },
+      "payouts": {
+        "A0": 77841739,
+        "A1": 80041739,
+        "N": 80591739
+      },
+      "repeat_pay_gap": 2200000,
+      "label_pay_gap": 1650000.0,
+      "repeat_strategy_distance": 0.2222222222222222,
+      "label_strategy_distance": 0.33333333333333337,
+      "first_label_difference": {
+        "round": 1,
+        "phase": "action",
+        "stage": "primary",
+        "left_action": {
+          "action": "shuttle"
+        },
+        "right_action": {
+          "action": "produce"
+        },
+        "identical_public_state": true,
+        "left_reason": "Больше товара при хорошем ожидании, продам первым по высокой цене.",
+        "right_reason": "Бесплатное производство 2 товаров без риска изъятия."
+      },
+      "first_repeat_difference": {
+        "round": 1,
+        "phase": "action",
+        "stage": "primary",
+        "left_action": {
+          "action": "shuttle"
+        },
+        "right_action": {
+          "action": "produce"
+        },
+        "identical_public_state": true,
+        "left_reason": "Больше товара при хорошем ожидании, продам первым по высокой цене.",
+        "right_reason": "produce даёт 2 товара без риска изъятия границы"
+      }
+    },
+    {
+      "seed_index": 7,
+      "seat": 1,
+      "complete": true,
+      "ids": {
+        "A0": "s8-seat1-A0",
+        "A1": "s8-seat1-A1",
+        "N": "s8-seat1-N"
+      },
+      "payouts": {
+        "A0": 75341739,
+        "A1": 85093489,
+        "N": 83341739
+      },
+      "repeat_pay_gap": 9751750,
+      "label_pay_gap": 4875875.0,
+      "repeat_strategy_distance": 0.05555555555555556,
+      "label_strategy_distance": 0.1388888888888889,
+      "first_label_difference": {
+        "round": 1,
+        "phase": "law",
+        "stage": "primary",
+        "left_action": {
+          "action": "pass"
+        },
+        "right_action": {
+          "action": "vote_abstain"
+        },
+        "identical_public_state": true,
+        "left_reason": "Карта 8 обнуляет векселя, а их ни у кого нет — эффект пуст, пропуск хода безвреден.",
+        "right_reason": "Закон обнуляет векселя, которых ни у кого нет — эффект нейтрален, нет смысла тратить голос."
+      },
+      "first_repeat_difference": {
+        "round": 1,
+        "phase": "action",
+        "stage": "primary",
+        "left_action": {
+          "action": "shuttle"
+        },
+        "right_action": {
+          "action": "produce"
+        },
+        "identical_public_state": true,
+        "left_reason": "Больше товара при умеренном риске, у соперников пока нет причин для тарифа.",
+        "right_reason": "produce даёт товар без риска изъятия и строит запас к продаже."
+      }
+    },
+    {
+      "seed_index": 7,
+      "seat": 2,
+      "complete": true,
+      "ids": {
+        "A0": "s8-seat2-A0",
+        "A1": "s8-seat2-A1",
+        "N": "s8-seat2-N"
+      },
+      "payouts": {
+        "A0": 77841739,
+        "A1": 72341739,
+        "N": 75341739
+      },
+      "repeat_pay_gap": 5500000,
+      "label_pay_gap": 2750000.0,
+      "repeat_strategy_distance": 0.3333333333333333,
+      "label_strategy_distance": 0.19444444444444445,
+      "first_label_difference": {
+        "round": 1,
+        "phase": "law",
+        "stage": "primary",
+        "left_action": {
+          "action": "vote_abstain"
+        },
+        "right_action": {
+          "action": "vote_no"
+        },
+        "identical_public_state": true,
+        "left_reason": "Закон 8 обнуляет векселя, которых ни у кого нет, поэтому нет смысла тратить голос.",
+        "right_reason": "Закон 8 обнуляет promissory, что позже может лишить меня выгоды от продажи в кредит; голосую против."
+      },
+      "first_repeat_difference": {
+        "round": 1,
+        "phase": "action",
+        "stage": "primary",
+        "left_action": {
+          "action": "produce"
+        },
+        "right_action": {
+          "action": "shuttle"
+        },
+        "identical_public_state": true,
+        "left_reason": "produce даёт 2 товара без риска изъятия на границе.",
+        "right_reason": "Shuttle даёт больше товара с приемлемым риском на старте."
+      }
+    }
+  ],
+  "preregistration": {
+    "preregistration_commit": "b98948d10994cd55784bcafc8e580a16ad404f45",
+    "ref": "origin/main",
+    "push_confirmed_before_main": true,
+    "recorded_utc": "2026-10-19T16:24:01.007534+00:00"
+  },
+  "protocol_sha256": "2033067ac63685370c74001847a589c1af8c2996a0d4bb369686f1d74615ee15",
+  "primary": {
+    "difference": -4189567.270833335,
+    "p_two_sided": 0.3388203017832647,
+    "assignments": 6561,
+    "complete_seed_clusters": 8,
+    "ci95": [
+      -12930783.726041667,
+      4174514.666666665
+    ],
+    "conclusion_eligible": true,
+    "sample_scope": "Eight fixed seeds with all-seat paired games; inferential unit is seed, not individual moves."
+  },
+  "secondary": {
+    "repeat_pay_gap": 18976974.291666668,
+    "label_pay_gap": 15269041.395833334,
+    "repeat_strategy_distance": 0.28703703703703703,
+    "label_strategy_distance": 0.29398148148148145
+  },
+  "heldout_tactic": {
+    "action_metric": "law/vote_yes",
+    "discovery_difference_per_game": -0.5277777777777778,
+    "heldout_difference_per_game": -0.08333333333333315,
+    "heldout_seed_count": 2,
+    "same_nonzero_direction": true,
+    "interpretation": "Descriptive check of a discovery-selected action count; no significance claim from two heldout seeds."
+  },
+  "audit": {
+    "saved_requests": 1344,
+    "saved_responses": 1338,
+    "format_validation_errors": 0,
+    "network_errors": 4,
+    "duplicate_provider_response_ids": 0,
+    "main_model_aliases": [
+      "glm-5.3"
+    ]
+  },
+  "collection": {
+    "finished_utc": "2026-10-20T10:16:50.775803+00:00",
+    "updated_utc": "2026-10-20T10:16:50.775855+00:00",
+    "calls": 1344,
+    "provider_responses": 1338,
+    "request_errors": 4,
+    "prompt_tokens": 4060880,
+    "completion_tokens": 212225,
+    "completed_games": 72,
+    "failed_games": 0,
+    "elapsed_s": 2820.4,
+    "stopped": false,
+    "recovery_registration": {
+      "commit": "1b6ffc3ea96461d64a6feb7c627b0615a9331a51",
+      "push_confirmed_before_new_calls": true
+    },
+    "technical_pause": true,
+    "statuses": {
+      "completed": 72,
+      "failed": 0
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.006,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Кредитная продажа обоих товаров даёт 16.25 alashi без девальвации векселя, больше, чем обычная продажа.\"}",
+          "reasoning_content": "Prices at sold_counter=4: next price 7 then 6. Sell 2 gives 13. But credit gives 16.25 promissory, which becomes cash next round (added after devaluation). Selling credit locks value; devaluation only applies to cash carryover. Cash 16.25 vs 13. But promissory won't be devalued — good. Also card 8 can zero promissory. Risk exists, but I hold presidency veto. Sell both on credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427781,
+    "id": "20261020003617613eae1fe5d949e3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003617613eae1fe5d949e3",
+    "usage": {
+      "completion_tokens": 145,
+      "completion_tokens_details": {
+        "reasoning_tokens": 104
+      },
+      "prompt_tokens": 2163,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2308
+    }
+  }
+}

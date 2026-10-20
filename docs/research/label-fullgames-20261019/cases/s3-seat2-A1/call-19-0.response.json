@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.187,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товары после финального рынка ничего не стоят, а комиссию за максимальное влияние я и так получаю по cash и tie_order — переводить деньги во взятки невыгодно.\"}",
+          "reasoning_content": "Final round action, no more markets. Cash counts, goods don't. Bribing gives influence — 5% of bank commission goes to max influence holder. Bank 45.81M, 5% ≈ 2.29M. Bribing 5M costs more than commission gain... but influence also decides ties in commission (no, only max influence gets 2.29M). Currently all influence 1, tie broken by cash+hard then tie_order: I have most cash (80.9M), so I win the commission anyway. So bribe is pure loss. Best: pass (produce/donkey give goods worth nothing). Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427175,
+    "id": "202610200026089f21fd90aaee46f8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200026089f21fd90aaee46f8",
+    "usage": {
+      "completion_tokens": 191,
+      "completion_tokens_details": {
+        "reasoning_tokens": 138
+      },
+      "prompt_tokens": 5536,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 5727
+    }
+  }
+}

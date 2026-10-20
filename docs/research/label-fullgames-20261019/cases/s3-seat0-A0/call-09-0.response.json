@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 21.95,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Произвожу товар без пограничного риска — гарантированные 3 единицы к будущей продаже.\"}",
+          "reasoning_content": "I'm poor (6 alashi cash). Best to produce goods for later sale. Round 3 of 6, so maximize goods. Produce gives 3 goods (2+subsidy1), shuttle gives 4 with 25% border risk and possible tariff. President is faction 1; tariff currently 0 (no tariff set? roof_tariff 0). Border benefit: shuttle grey goods may be confiscated at 25%. Shuttle expected 3 goods vs produce 3 — equal but risk. Choose produce (safe).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428159,
+    "id": "202610200042204603dc2684e447f0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200042204603dc2684e447f0",
+    "usage": {
+      "completion_tokens": 143,
+      "completion_tokens_details": {
+        "reasoning_tokens": 108
+      },
+      "prompt_tokens": 2962,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 3105
+    }
+  }
+}

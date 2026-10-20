@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.147,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель 21,25 обходит девальвацию и даёт больше итоговой ценности, карта 8 уже вышла.\"}",
+          "reasoning_content": "Sell both now for 17 cash; devaluation at round start cuts cash — but credit gives promissory that also gets paid... promissory added after devaluation. Credit avoids devaluation but risks law 8 zeroing promissory. Only one 8 card, already drawn. Credit 21.25 > 17*0.62=10.54? Cash 17 would be devalued at round 3 to 10.54. Credit: promissory 21.25 paid into cash, then later devalued... At round 3 start, cash=floor(cash/100)*62 + promissory. So credit better long-term. Choose sell_credit 2 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427070,
+    "id": "202610200024245cc3218f1ced4f12",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200024245cc3218f1ced4f12",
+    "usage": {
+      "completion_tokens": 185,
+      "completion_tokens_details": {
+        "reasoning_tokens": 146
+      },
+      "prompt_tokens": 2217,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2402
+    }
+  }
+}

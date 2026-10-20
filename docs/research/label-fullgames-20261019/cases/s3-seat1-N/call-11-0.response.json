@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.679,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":7,\"reason\":\"Цена сейчас максимальна (12), закон раунда 3 уже сбил рынок — продаю весь товар сразу за cash.\"}",
+          "reasoning_content": "Round 4 market, bid 0 already. Sell all 4 now at price 12 (counter 0). Cash matters for auction already placed (bid 0), fine. Sell now at high price before law may add tax.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427556,
+    "id": "2026102000323312d9cc4285b24998",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000323312d9cc4285b24998",
+    "usage": {
+      "completion_tokens": 87,
+      "completion_tokens_details": {
+        "reasoning_tokens": 48
+      },
+      "prompt_tokens": 2912,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2999
+    }
+  }
+}

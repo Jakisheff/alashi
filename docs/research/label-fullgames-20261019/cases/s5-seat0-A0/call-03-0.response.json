@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.143,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 8 обнуляет векселя, а их ни у кого нет, и он всё равно не проходит (1 yes против 1 no); veto не нужен.\"}",
+          "reasoning_content": "Card 8 erases promissory notes — everyone has 0 promissory, so it's harmless. Vote: 1 yes, 1 no, 1 abstain → yes not strictly greater → fails anyway. Veto unnecessary. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427059,
+    "id": "202610200024168f29632270364dc0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200024168f29632270364dc0",
+    "usage": {
+      "completion_tokens": 98,
+      "completion_tokens_details": {
+        "reasoning_tokens": 52
+      },
+      "prompt_tokens": 1992,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2090
+    }
+  }
+}

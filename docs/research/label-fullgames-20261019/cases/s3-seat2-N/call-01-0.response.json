@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.522,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Shuttle даёт 3 товара против 2 у produce, риск изъятия умеренный.\"}",
+          "reasoning_content": "Round 1 action, cash=0. Produce gives 2 goods, shuttle gives 3 grey goods with 25% seizure risk. Shuttle risky but goods better; grey goods also risk at tariff later? Tariff currently 0. Shuttle 3 goods ~ better expected value. Take shuttle? 25% seizure at border — shuttle risk \"около 25%\" applies grey goods. Expected 2.25 goods vs 2 safe. Also future border. Choose produce for safety? Slight edge to shuttle. I'll take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491102,
+    "id": "20261020181138f2fd903be12d4bc4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181138f2fd903be12d4bc4",
+    "usage": {
+      "completion_tokens": 140,
+      "completion_tokens_details": {
+        "reasoning_tokens": 110
+      },
+      "prompt_tokens": 1925,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2065
+    }
+  }
+}

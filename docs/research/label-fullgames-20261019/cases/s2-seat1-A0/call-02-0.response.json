@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.158,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Карта 0 без эффектов, нет смысла голосовать.\"}",
+          "reasoning_content": "Law 0 no effects, pass to keep vote_weight? Weight only matters for own vote; passing in law doesn't grant bonus. Just abstain or pass. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491040,
+    "id": "202610201810381844ab0dcb1b42fe",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201810381844ab0dcb1b42fe",
+    "usage": {
+      "completion_tokens": 59,
+      "completion_tokens_details": {
+        "reasoning_tokens": 35
+      },
+      "prompt_tokens": 2081,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2140
+    }
+  }
+}

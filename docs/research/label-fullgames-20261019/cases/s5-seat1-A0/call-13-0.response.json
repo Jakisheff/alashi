@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.118,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce даёт 2 товара бесплатно, сохраняя скудный cash при уже крупной ставке на лицензию.\"}",
+          "reasoning_content": "We bid 33M, cash 3.325M. If we lose, bid returns; if win, we get license income 20-60 but lose 33M — bank includes bids, distributed. Actually winning bid added to bank which is redistributed — so bidding high is nearly neutral-ish. Now choose main action. Cash is low anyway; produce gives 2 goods free. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490308,
+    "id": "20261020175824cf7a8ef3ea01412a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175824cf7a8ef3ea01412a",
+    "usage": {
+      "completion_tokens": 117,
+      "completion_tokens_details": {
+        "reasoning_tokens": 82
+      },
+      "prompt_tokens": 3047,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 3164
+    }
+  }
+}

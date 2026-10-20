@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.463,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Шаттл даёт больше товара для финальной распродажи, риск изъятия компенсируется объёмом.\"}",
+          "reasoning_content": "Shuttle gives 3 goods with ~25% seizure risk (no tariff protection). Goods sell ~3-4 alashi each at counter 7 (price 4 next). Shuttle gives 3 goods → ~12 alashi revenue in round 6, but cash will be devalued 62/100... Actually cash devalues each round start: floor(cash/100)*62. So holding cash is bad. Selling happens round 6 market. Wait round 5 market passed, round 6 is last market. Round 6 start cash devalues again: 1.75M → ~1.09M. Selling in round 6: proceeds then final? Round 6 start devaluation happens after round 5 end; revenue in round 6 market doesn't devalue further. Goods sell at price 4 (counter 7). Shuttle: 3 goods → 12 alashi ×0.75 survival ≈ 9. Produce gives 2 goods → 8. Shuttle better despite risk. Choose shuttle (choice 3).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428070,
+    "id": "20261020004058976e490e5c524488",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020004058976e490e5c524488",
+    "usage": {
+      "completion_tokens": 254,
+      "completion_tokens_details": {
+        "reasoning_tokens": 215
+      },
+      "prompt_tokens": 3191,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3445
+    }
+  }
+}

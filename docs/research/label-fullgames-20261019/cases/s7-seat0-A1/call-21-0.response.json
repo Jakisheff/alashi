@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.051,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 6 снижает цены следующего рынка, которого больше нет — эффект пуст, тратить veto незачем.\"}",
+          "reasoning_content": "Round 6, law 6 = -2 prices next market, but no next market (round 6 market already done). So law has no effect — but I already sold. Veto not needed. Vote yes or abstain doesn't matter. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427640,
+    "id": "20261020003355a2e990e333284fbb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003355a2e990e333284fbb",
+    "usage": {
+      "completion_tokens": 88,
+      "completion_tokens_details": {
+        "reasoning_tokens": 53
+      },
+      "prompt_tokens": 3357,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3445
+    }
+  }
+}

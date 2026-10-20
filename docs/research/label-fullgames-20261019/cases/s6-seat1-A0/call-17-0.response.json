@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.852,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Последний раунд: вексель не погашается, поэтому продаю весь товар за наличные.\"}",
+          "reasoning_content": "Last round: promissory won't be paid after final round. So sell for cash, not credit. Sell 2 at 9+... price list index sold_counter=2 → price 9? sold_counter 2 → next price 9. sell 2 gives +17? Candidate 3 gives +17M (8.5 avg). Promissory worthless; sell all for cash. Choose 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427878,
+    "id": "2026102000375493bd6111f4804abe",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000375493bd6111f4804abe",
+    "usage": {
+      "completion_tokens": 118,
+      "completion_tokens_details": {
+        "reasoning_tokens": 86
+      },
+      "prompt_tokens": 3356,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3474
+    }
+  }
+}

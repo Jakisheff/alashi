@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.909,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Shuttle даёт больше товара для финальной продажи, ожидаемая ценность выше риска изъятия.\"}",
+          "reasoning_content": "I have license income 20-60, cash small, low rank. Produce adds 2 goods → sell next market (round 6, only one market left). Shuttle gives 3+ goods, ~25% seizure? Border: shuttle grey goods may be seized 25%. Shuttle gives 3 grey? \"shuttle даёт 3+subsidy_goods товара; серый товар может быть изъят\" — shuttle likely gives grey goods. Expected 3*0.75=2.25 vs produce 2 guaranteed. Also sell count: price at counter 0? Sold counter 0? market shows sold_counter 0 after... actually we bought 2 units, counter back. Prices 12,10,... Selling 4-5 units in last market at high prices ~9-10 each. Shuttle slightly better EV.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427302,
+    "id": "202610200028168a2a523599b84cde",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200028168a2a523599b84cde",
+    "usage": {
+      "completion_tokens": 206,
+      "completion_tokens_details": {
+        "reasoning_tokens": 172
+      },
+      "prompt_tokens": 3201,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3407
+    }
+  }
+}

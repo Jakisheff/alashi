@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.933,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Налог бьёт по конкуренту с 7 товарами, а не по моим будущим продажам.\"}",
+          "reasoning_content": "Law 1 = 10% tax on future sales. I hold license, will sell goods. Tax hurts me. But participant 2 (rival) has 0 goods... actually nobody else holds goods except p0 with 7 goods. Tax hurts p0 most. P0 is president (holder idx 0). President can veto. I'm idx1, vote_weight 1 (bid didn't skip action? I did produce). P2 has weight 3. P2 has no goods, so tax doesn't hurt them; maybe they vote yes to harm p0. President p0 likely vetoes. My vote barely matters. Vote no to oppose tax? Or yes to tax p0's sales. Tax on p0's 7 units is good for me relatively. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428050,
+    "id": "20261020004043fd61dde4cb8140f5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020004043fd61dde4cb8140f5",
+    "usage": {
+      "completion_tokens": 198,
+      "completion_tokens_details": {
+        "reasoning_tokens": 163
+      },
+      "prompt_tokens": 2822,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3020
+    }
+  }
+}

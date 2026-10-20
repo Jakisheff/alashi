@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.044,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Деньги обесценятся на 62% в следующем раунде, а товар сохранит стоимость — покупаю.\"}",
+          "reasoning_content": "Buy at 12? Later price may drop; but goods sell later with deflation. Buying at 12 now to sell later—rounds 2 start cash=floor/100*62, so cash loses 38%. Goods preserve value. Buy 1 unit at 12, likely sell at 12+ later or higher. Yes, buy.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427246,
+    "id": "202610200027202bc6fa11d25e426f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200027202bc6fa11d25e426f",
+    "usage": {
+      "completion_tokens": 109,
+      "completion_tokens_details": {
+        "reasoning_tokens": 72
+      },
+      "prompt_tokens": 2256,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2365
+    }
+  }
+}

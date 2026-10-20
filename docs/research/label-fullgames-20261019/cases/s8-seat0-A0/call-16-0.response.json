@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.3,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce даёт 2 товара для продажи на последнем рынке по высокой цене, это максимум выплаты.\"}",
+          "reasoning_content": "Round 5 action. I have 26.6 cash, license holder (extra income 20-60). Next round 6 devaluation 62%. Final rank by cash. Bribe gives influence; influence max gets 5% bank (~2.5 alashi). Not worth much vs cash loss via devaluation — actually bribe money stays with recipient, my cash drops. But influence 5% bonus ~2.4 alashi. Bribe 5M to 2 gives influence 3, ties... currently holder is 2 with influence 2. If I get 3, I'd be president? Round 6 law: president at law entry. Being president lets veto. But final round cash matters most. Goods: produce gives 2 goods worth selling next market at price... sold_counter=2, prices: 3 units sold? Counter=2, so next price 9? Price list index: counter 2 → 9 alashi. Selling 2 goods next round ~18-20 alashi. Produce gives 2 goods ≈ +18 alashi — best option.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427415,
+    "id": "20261020003006c02092ccf8be448f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003006c02092ccf8be448f",
+    "usage": {
+      "completion_tokens": 256,
+      "completion_tokens_details": {
+        "reasoning_tokens": 226
+      },
+      "prompt_tokens": 3965,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 4221
+    }
+  }
+}

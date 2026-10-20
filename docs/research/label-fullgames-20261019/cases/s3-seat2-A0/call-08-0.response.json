@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.844,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Деньги обесценятся, а товар нет; покупка 2 единиц по сниженному счётчику позволит продать их дорого позже.\"}",
+          "reasoning_content": "I'm president (idx 2), influence 2. Market round 3. Cash 16.12, no goods. Buy price 7? sold_counter=4, price next sell would be 6, buying moves counter back, cost 7? Buy 1 unit costs 7 alashi (cash drop 7). Goods can be sold next round after devaluation cash->62%. Selling at price ~7 vs cost 7 — not profitable, plus devaluation makes holding cash bad. Actually cash devalues to 62% each round start; goods don't. Buy 2 units: cost 15, sell later at 7 and 6? counter moves back to 2, then selling 2 units gives 10+9=19. That's good! Buy 2: cash drops to 1.12 but goods=2. Next round cash becomes 1.12 (62% floor of 1120000=0.69? floor(1120000/100)*62=694400). Then sell 2 units at prices... counter back to 2, sell at 10,9 = 19 gross. vs keeping cash 16.12→~10 devalued. Buy 2 clearly better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427528,
+    "id": "20261020003158c42db9dce4954bcd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003158c42db9dce4954bcd",
+    "usage": {
+      "completion_tokens": 299,
+      "completion_tokens_details": {
+        "reasoning_tokens": 257
+      },
+      "prompt_tokens": 2377,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2676
+    }
+  }
+}

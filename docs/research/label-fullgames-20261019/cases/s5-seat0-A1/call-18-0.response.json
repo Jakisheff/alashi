@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.138,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Взятка дороже 5% комиссии банка, товары уже не продать — экономлю cash для ранга.\"}",
+          "reasoning_content": "Last round action. Cash counts for rank; bribes give influence. Max influence gets 5% of bank (~3.45M). Rank: I have 54.7M, richest, and license. Influence: 2 has 2. Law: holder is 2, I'm not president. Influence gives vote weight only. Bribe 5M to gain influence — need to beat influence 2? I have 1, rival 2. To win 5% commission I need max influence (currently 2's). Bribe 10M to gain 3 influence → costs 10M, gains influence 3 vs 2, and commission 5% of ~69M = 3.45M. Not worth 10M. But influence also matters only for commission. Bribe 5M gives 2, tie with idx2, then cash decides → I get commission 3.45M < 5M cost. So pass? Pass gives nothing extra. Actually weight +2 if action skipped — irrelevant, I'm not holder. Choice 0: pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491269,
+    "id": "20261020181420f0d4a8b50bf343a9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181420f0d4a8b50bf343a9",
+    "usage": {
+      "completion_tokens": 260,
+      "completion_tokens_details": {
+        "reasoning_tokens": 225
+      },
+      "prompt_tokens": 4748,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 5008
+    }
+  }
+}

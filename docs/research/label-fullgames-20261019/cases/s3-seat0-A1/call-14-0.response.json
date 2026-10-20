@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.605,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Я самый бедный, закон даёт мне +1 влияния — голосую за.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest. I'm poorest (7.27M). Faction 1 voted Yes (weight 3), holder is faction 2 with weight 4 and veto pending. Faction 2 is richest? Richest is faction 1 (49.6M). Law 4 helps me; vote yes. Faction 2 may veto. Vote yes anyway.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490991,
+    "id": "20261020180938aaf369c5cbf04a5f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180938aaf369c5cbf04a5f",
+    "usage": {
+      "completion_tokens": 107,
+      "completion_tokens_details": {
+        "reasoning_tokens": 79
+      },
+      "prompt_tokens": 2820,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2927
+    }
+  }
+}

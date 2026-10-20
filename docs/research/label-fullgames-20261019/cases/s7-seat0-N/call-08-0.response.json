@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.081,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель не девальвируется, выручка 32,5 alashi сейчас выгоднее продажи за кэш.\"}",
+          "reasoning_content": "Prices high now (12+2=14 first unit). Boom active. Sell all 2 for cash now — but cash devalues at round start (62%). Still 47.25M*0.62 ≈ 29M vs sell_credit promissory 32.5M fully counted? Promissory added to cash at round 4 start without devaluation... \"cash=floor(cash/100)*62, then promissory added\" — promissory not devalued. So sell_credit 2 gives 32.5M > 29.3M. But promissory after last round (6) worthless — round 4 fine. Also selling moves counter up, lowering prices later. Sell credit all.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427398,
+    "id": "2026102000295162aab8a2bdeb45ea",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000295162aab8a2bdeb45ea",
+    "usage": {
+      "completion_tokens": 189,
+      "completion_tokens_details": {
+        "reasoning_tokens": 152
+      },
+      "prompt_tokens": 2538,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2727
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.464,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Продаю всё в кредит: вексель не девальвируется и даёт больше, чем обесцененный cash.\"}",
+          "reasoning_content": "Prices now 8,7,6 (counter 4). Sell all 3 gives 21 alashi cash — better keep goods? Devaluation 62% hurts cash; promissory is added at round start without devaluation. sell_credit gives 22.5 promissory, better than 18 cash (which gets devalued). Sell all 3 credit: choice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490687,
+    "id": "202610201804445e13affe62bb42a0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201804445e13affe62bb42a0",
+    "usage": {
+      "completion_tokens": 118,
+      "completion_tokens_details": {
+        "reasoning_tokens": 81
+      },
+      "prompt_tokens": 2333,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2451
+    }
+  }
+}

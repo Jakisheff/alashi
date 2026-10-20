@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.028,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Налог на продажи уже не влияет на мой итог, исход голосования к выплате не приведёт.\"}",
+          "reasoning_content": "Last round, law 2 = tax 20% on sales. Market phase done for me. Tax doesn't affect my final cash. Vote doesn't matter much; president (idx2) decides anyway? President is idx2; I'm faction 0. Vote yes/no — no effect on my payout. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792489919,
+    "id": "2026102017515116f2d31151114059",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102017515116f2d31151114059",
+    "usage": {
+      "completion_tokens": 98,
+      "completion_tokens_details": {
+        "reasoning_tokens": 67
+      },
+      "prompt_tokens": 3260,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3358
+    }
+  }
+}

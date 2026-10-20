@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 17.146,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":38,\"reason\":\"Ставка на аукционе лицензии даёт доход 20–60 alashi сверх доли банка, а проигрыш возвращается, поэтому идую ва-банк.\"}",
+          "reasoning_content": "Bid is free action plus a main action. Candidates here only show one action? The interface allows bid + another action, but candidates list single combined. Best: bid something and hope license income 20-60 alashi. Rival 2 has 11.6 cash, rival 1 has 38 cash. Rival 1 could outbid easily. Bidding big is risky... but losing bids returned. Win pays bid into bank (shared) but license income 20-60 extra. Rival 1 has 38 cash and may bid high. My bid of 20 alashi could still be outbid by 38. But I also have promissory 30 that becomes cash next round (devaluation: cash floor/100*62... promissory added fully). Actually cash 20.46 → round 5 cash = floor(20460000/100)*62? No, that's dev on cash only? \"cash=floor(cash/100)*62\" - wait that seems 62% retention? That's harsh... whatever.\n\nBid plus main action: candidates seem to combine only bid alone? Choice 38 is bid all with goods 0 — no additional action included. Hmm, but bid doesn't consume action; still candidates show only bid. So choose bid amount. If I bid all 20.46 and lose, returned — but during escrow rivals might bid 25+. Rival 1 has 38.3, can outbid. Risky to bid high and lose nothing though (returned). Cost of winning: my cash goes to bank (I get ~half back via shares). If I win with 20, bank = 50, license income 20-60 extra to me. Expected: pay 20 to bank, get back share. Net cost maybe 20*0.55... plus license income. Worth bidding high. But rival 1 with 38 could take it. If outbid, no loss. Bid all-in (choice 38)? But then no cash for roof payments etc. If I win, cash 0, but get 30 promissory next round. Choose 38? Tie order favors 0 first, so equal bids I win vs... rival 1 bids after? Order rotates. Risky but bid cost when winning: money to bank — net loss roughly 45% of bid but license income 20-60 covers. Bid 20 alashi all.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427903,
+    "id": "202610200038070ad385dc0f624b9a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200038070ad385dc0f624b9a",
+    "usage": {
+      "completion_tokens": 551,
+      "completion_tokens_details": {
+        "reasoning_tokens": 502
+      },
+      "prompt_tokens": 4900,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 5451
+    }
+  }
+}

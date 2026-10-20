@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.837,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 8 сейчас нейтрален (векселей ни у кого нет), но сохраняю контроль, голосуя против.\"}",
+          "reasoning_content": "Law 8 обнуляет promissory. У меня promissory=0, у других тоже 0. Нет эффекта. Vote yes? Пропуск даст vote_weight +2 позже... пропуск действия в law даёт вес? «влияние плюс 2, если основное действие action было пропущено». Я производил, не пропускал. Vote_no: у всех вес 1, yes=1 от элемента1, no=мой 1 → нет большинства, не принят. Закон 8 безвреден, но ничего не меняет. Abstain даст yes=1>no=0 → принят. Не важно. Голосую no — отклонить всё безопаснее, или yes без разницы. Пропущу — тогда yes=1, no=0, принят. Всё равно нейтрален. Выберу abstain для нейтральности... фактически либо. Голосую no, чтобы сохранить контроль.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427352,
+    "id": "202610200029063069e9c20410423e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200029063069e9c20410423e",
+    "usage": {
+      "completion_tokens": 239,
+      "completion_tokens_details": {
+        "reasoning_tokens": 201
+      },
+      "prompt_tokens": 2084,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2323
+    }
+  }
+}

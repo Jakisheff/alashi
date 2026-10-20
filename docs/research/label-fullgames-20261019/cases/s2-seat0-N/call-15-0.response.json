@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.268,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Мой голос «против» при ничьей 4:4 отклоняет налог 10%, что выгодно для моих будущих продаж.\"}",
+          "reasoning_content": "Law 1: tax 10% on future sales. I hold 3 goods, plan to sell later. Holder is 1 (influence 2). Votes: 1 Yes (weight 4), 2 No (weight 4). My vote weight 1. Tie currently 4:4; my No makes no>yes → law fails. That helps me (avoid tax). Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490190,
+    "id": "20261020175626719589b8e6ba4847",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175626719589b8e6ba4847",
+    "usage": {
+      "completion_tokens": 125,
+      "completion_tokens_details": {
+        "reasoning_tokens": 84
+      },
+      "prompt_tokens": 2891,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3016
+    }
+  }
+}

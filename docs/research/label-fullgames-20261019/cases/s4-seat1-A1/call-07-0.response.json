@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.561,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Цены сейчас самые высокие, а кэш всё равно обесценится девальвацией — продаю оба товара.\"}",
+          "reasoning_content": "Prices: sold_counter=2, so price 9. Wait, sell 1 gives +9 → cash 20.16? Actually 11.16+9=20.16 yes.\n\nWe have 2 goods, cash 11.16. Keep one for later? Prices decline; sell now. Sell 2 gives 9+8=17. Later rounds produce more. Selling now at higher price better. Also inflation at round start cuts cash to 62% — keeping cash bad too. Sell 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490563,
+    "id": "20261020180237ee95f2dd01004da5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180237ee95f2dd01004da5",
+    "usage": {
+      "completion_tokens": 144,
+      "completion_tokens_details": {
+        "reasoning_tokens": 107
+      },
+      "prompt_tokens": 2473,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2617
+    }
+  }
+}

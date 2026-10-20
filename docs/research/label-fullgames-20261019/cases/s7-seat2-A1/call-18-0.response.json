@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.681,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон даёт +1 влияния беднейшему (сопернику), усиливая его президента — голосую против.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest by cash. I'm idx2, cash 27.5M, poorest is idx1 (10.2M). That strengthens rival's influence; president is idx1 with weight 2 vs my 1. Vote yes needs > no. President hasn't voted yet (weight 2). If I vote no, president could veto? President votes; law 4 helps idx1. My no won't stop if president yes. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490898,
+    "id": "20261020180813ae5d8b5063e0446c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180813ae5d8b5063e0446c",
+    "usage": {
+      "completion_tokens": 136,
+      "completion_tokens_details": {
+        "reasoning_tokens": 100
+      },
+      "prompt_tokens": 3086,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3222
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.196,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Закон вводит 10% налог на мои будущие продажи, применяю бесплатное вето как президент.\"}",
+          "reasoning_content": "Law 1: налог 10%. I have 3 goods to sell next round. Veto it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491383,
+    "id": "202610201816200ce7c37685c249fb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201816200ce7c37685c249fb",
+    "usage": {
+      "completion_tokens": 56,
+      "completion_tokens_details": {
+        "reasoning_tokens": 22
+      },
+      "prompt_tokens": 3164,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3220
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 16.729,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 3 даёт субсидию, которая в последнем раунде уже бесполезна, а результат голосования всё равно ничего не меняет.\"}",
+          "reasoning_content": "Law 3: subsidy_goods=1, but it's last round — no more produce actions. Irrelevant. Yes=Yes>No? Currently 1+2=3 yes, 0 no. Pass is fine. Pass preserves nothing—actually veto as president? I'm idx2, holder is 1? role holder_idx=1 but influence tie... whatever, law 3 harmless. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491410,
+    "id": "202610201816356c73eb2feaeb446d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201816356c73eb2feaeb446d",
+    "usage": {
+      "completion_tokens": 126,
+      "completion_tokens_details": {
+        "reasoning_tokens": 82
+      },
+      "prompt_tokens": 3321,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3447
+    }
+  }
+}

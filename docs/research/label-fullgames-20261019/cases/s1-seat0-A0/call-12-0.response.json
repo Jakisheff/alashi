@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.856,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":48,\"reason\":\"Ставка 25 alashi даёт сильные шансы на лицензию (доход 20–60 alashi), сохраняя запас наличных и приоритет по tie_order.\"}",
+          "reasoning_content": "Bid + action. I need goods and presidency. President is 2 with influence 2. If I bid, I should still take an action. But candidates here: choose one — this appears to be the bid-only menu plus regular actions. Bid doesn't consume action, so presumably I can pick bid then another action later? \"bid не расходует основное действие: после ставки можно выбрать ещё одно действие. Интерфейс предлагает одну совокупную ставку за ход.\" So this turn I only pick the combined move — but candidates show single actions. Choose bid size. Rival 2 has 11.6 cash, rival 1 has 39.1. License income 20-60 alashi? That's 20-60 million. Worth bidding strongly. Rival 1 with 39.1m could outbid. Bid ~20m and keep produce? But single choice... Choose bid 20m (choice 43)? Tie order: [0,2,1], I win ties. Rival 1 may bid all 39. If I bid too much, lose rank. License ~40m expected value. Rival 1 likely bids large. I'll bid 25m (choice 48).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490279,
+    "id": "20261020175748f95b530c4a7d4625",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175748f95b530c4a7d4625",
+    "usage": {
+      "completion_tokens": 300,
+      "completion_tokens_details": {
+        "reasoning_tokens": 252
+      },
+      "prompt_tokens": 6234,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 6534
+    }
+  }
+}

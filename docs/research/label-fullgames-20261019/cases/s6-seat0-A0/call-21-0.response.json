@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.875,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Финальный раунд: товар уже не продать, влияние достаточно для бонуса при тайбрейке по cash, взятки лишь уменьшат выплату.\"}",
+          "reasoning_content": "Last round, no more sales. Cash rank already dominant. Influence matters for 5% commission bonus (max influence). I have influence 2, others 1. A small bribe gives +1 influence but costs 5 alashi — commission 5% of bank = 2.5 alashi; securing it worth it if it prevents tie. Others could tie with influence 2 via card 4/5? Card 5 gives +1 to richest (that's me). Card 4 to poorest. To be safe, bribe 5M to 1 gives influence 3 for certain max influence bonus. Cost 5, gain guaranteed 2.5 + avoiding tie-loss (tie broken by cash, I win anyway). So net loss. Actually if tie at 2 vs someone with 2, tie broken by cash+hard, I win. So no need. Goods worthless. Best: pass (choice 0). Wait, veto pending? No. pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428027,
+    "id": "202610200040214b8b5a4e8110467a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200040214b8b5a4e8110467a",
+    "usage": {
+      "completion_tokens": 248,
+      "completion_tokens_details": {
+        "reasoning_tokens": 201
+      },
+      "prompt_tokens": 6208,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 6456
+    }
+  }
+}

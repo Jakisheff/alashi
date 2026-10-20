@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.538,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce бесплатно даёт 4 надёжных товара для продажи на последнем рынке; shuttle рискует серым грузом.\"}",
+          "reasoning_content": "I have license income coming plus goods. Round 5 action, I hold presidency (influence 2). Best: produce (free 2 goods) or shuttle (3 goods, risk 25% seizure — but wait, shuttle grey goods? shuttle gives grey goods that can be seized at border; tariff currently 0? \"Изъятия нет у чёрного тарифа\" — tariff 0 means risk exists. License gave me 30 alashi... wait cash 6M, license income comes at end? Anyway.\n\nBetter to gain influence for final max-influence bonus? Bribe 5M gives +1 influence (3 total), keeps presidency, and cash gifts... but 5 alashi cost for 1 influence. Final bonus is 5% of bank (~2M). Influence also secures presidency for law rounds 5-6. But losing 5M cash hurts rank. Rank: I'm far behind (6M vs 21/24M). License income 20-60 alashi extra paid at end, not in rank. So my rank likely last regardless? With license income excluded from rank, my cash 6M+goods... I can't catch up. So maximize influence bonus (5% bank ≈ 2M) — I already have max influence 2 vs 1. Goods sold next rounds: cash counts. Round 5 market already passed? This is round 5 action, then round 6 market last. Sell goods then.\n\nProduce free 2 goods → 4 goods, sell 4 at round 6 market: but wait cash gets devalued at start of round 6: floor(cash/100)*62. Selling in round 6: proceeds added then? Devaluation happens at round start, then market. So goods sold fine. Produce gives 4 goods → sell at prices ~12,10,9,8 = 39 alashi. Shuttle gives 5 goods but 25% seizure risk of grey — shuttle goods may be grey. Expected: 3 grey goods, 25% lose all grey? \"может быть изъят\" — likely all grey seized. Expected value produce: 4 goods safe vs shuttle: 75%*(2+3)=3.75. Produce slightly better and safe. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490962,
+    "id": "202610201809107a165f79370a4ed6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201809107a165f79370a4ed6",
+    "usage": {
+      "completion_tokens": 510,
+      "completion_tokens_details": {
+        "reasoning_tokens": 474
+      },
+      "prompt_tokens": 3564,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 4074
+    }
+  }
+}

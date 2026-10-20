@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.239,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Цены падают, продаю оба товара сейчас по высокой цене; вексель обесценится девальвацией.\"}",
+          "reasoning_content": "Round 3 of 6, price now: sold_counter=4, price index 4 = 7. Sell both for 7+6=13. Credit gives 1.25 but promissory devalues at round start (62%), so no. Sell 2 now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792489949,
+    "id": "20261020175226efdf0b36812b4384",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175226efdf0b36812b4384",
+    "usage": {
+      "completion_tokens": 96,
+      "completion_tokens_details": {
+        "reasoning_tokens": 59
+      },
+      "prompt_tokens": 2537,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2633
+    }
+  }
+}

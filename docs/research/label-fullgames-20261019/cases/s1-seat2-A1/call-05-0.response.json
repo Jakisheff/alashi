@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.993,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Больше товара для будущих продаж перевешивает умеренный пограничный риск.\"}",
+          "reasoning_content": "I'm president? No, holder_idx=0, I'm idx 2. Need goods to sell. Shuttle gives 3 goods but border risk ~25% (no tariff set currently, tariff=0? roof_tariff 0 means grey border risk). Actually shuttle grey goods risk applies. Produce gives 2 goods safely. Price at sold_counter 7 → price 3. Buying influence: bribing 5M for 1 influence is poor value mid-game? Influence matters for presidency and 5% bank share. 5M for 1 influence... President gets veto power and 5% of bank bonus. Bank ~30M, 5% = 1.5M. Not huge. Better: get goods. Shuttle 3 goods ~9 alashi at price 3, but 25% loss. Produce 2 goods safe ~6. Take shuttle—expected higher, only grey risk. Border tariff 0 means risk applies. Expected ~6.75 vs 6. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490837,
+    "id": "202610201807104285ecf8186e40bb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201807104285ecf8186e40bb",
+    "usage": {
+      "completion_tokens": 235,
+      "completion_tokens_details": {
+        "reasoning_tokens": 207
+      },
+      "prompt_tokens": 3320,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 3555
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.086,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Продажа обоих товаров в кредит даёт максимум выручки без девальвации.\"}",
+          "reasoning_content": "Round 2 market, cash=0. Selling now vs later — devaluation 62% next round, prices fall with sales. Selling 2 units now at 12+10 gives 22. Credit gives 27.5 but devalued? promissory not devalued (promissory добавляется к cash после девальвации). But only redeemed if it survives law 8... Credit gives 25% more and no devaluation. But risk of law 8 wiping promissory. Two opponents could pass card 8 later? Cards drawn without repeats; 8 exists. Risk moderate but 25% bonus + avoiding devaluation is strong. Sell both on credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427653,
+    "id": "20261020003406b15afdcdf8e8470f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003406b15afdcdf8e8470f",
+    "usage": {
+      "completion_tokens": 172,
+      "completion_tokens_details": {
+        "reasoning_tokens": 142
+      },
+      "prompt_tokens": 2159,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2331
+    }
+  }
+}

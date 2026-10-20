@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 15.867,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Беру максимум товара для продаж в оставшихся раундах, риск изъятия компенсируется объёмом.\"}",
+          "reasoning_content": "Round 5 action, I'm idx1. Need goods for future markets (round 5 and 6 markets). Best: shuttle gives 3 goods (25% seizure risk? tariff black? tariff=0, no protection... risk). Actually shuttle risk applies to grey goods; here shuttle gives 3 goods directly, with possible seizure ~25%. Expected 2.25 goods free vs produce 2 goods. Shuttle better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427792,
+    "id": "20261020003617bc9f53aa486d4c34",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003617bc9f53aa486d4c34",
+    "usage": {
+      "completion_tokens": 122,
+      "completion_tokens_details": {
+        "reasoning_tokens": 87
+      },
+      "prompt_tokens": 4196,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 4318
+    }
+  }
+}

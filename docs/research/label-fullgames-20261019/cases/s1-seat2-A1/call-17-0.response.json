@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.156,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Покупка 2 единиц дёшево сейчас окупается продажей на последнем рынке до девальвации.\"}",
+          "reasoning_content": "We're in round 5 market, own_idx 2, cash 30M, no goods. Buy 2 costs 24M at price 12? Buying moves counter backwards. Then rounds 5 action produce/shuttle, sell round 6 at price maybe low due to devaluation (cash floor/100*62 each round start). Actually round 6 start cash=floor(cash/100)*62 — big devaluation! So holding cash is bad; better convert to goods? But final rank counts cash+hard only, not goods. Hmm, round 6 is last round: sell goods in market round 6. Buying 2 goods at 12 each = 24M, sell round 6: prices rise as buy moved counter back? sold_counter=0, so buying at counter 0... price 12. Sell 2 at price ~12+producible. Then devaluation 62% hits cash anyway. Buy 2: cash 6M+sell ~24M in round 6? Actually sell revenue in round 6 not devaluated (devaluation at start). Buy 2 gives goods to sell at 12 and 10 = 22M revenue round 6 plus keep 6M. vs pass keep 30M devaluated to ~18.6M. Buy 2 better: 6M→3.7M +22M ≈ 25.7M. Also produce in round 5 action gives more goods. Choose 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490949,
+    "id": "202610201809006a9703b1496e4cfd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201809006a9703b1496e4cfd",
+    "usage": {
+      "completion_tokens": 346,
+      "completion_tokens_details": {
+        "reasoning_tokens": 309
+      },
+      "prompt_tokens": 2970,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3316
+    }
+  }
+}

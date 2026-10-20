@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.542,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 5 даст +1 влияния самой богатой фракции 1, что снизит мои шансы на бонус за максимальное влияние — голосую против.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest cash. Richest is faction 1 (33.8). Not me. President is idx2, not me. My vote weight 2. Vote no — faction 1 gains influence, threatening my max-influence bonus. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427248,
+    "id": "20261020002724aa0ed2c2afbb4c11",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020002724aa0ed2c2afbb4c11",
+    "usage": {
+      "completion_tokens": 105,
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      },
+      "prompt_tokens": 2558,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2663
+    }
+  }
+}

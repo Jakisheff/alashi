@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.154,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Субсидия уже ни на что не влияет после завершения фазы действий раунда 6, закон безвреден.\"}",
+          "reasoning_content": "Law 3 = subsidy_goods=1. Round 6, no more production? Action phase already passed; subsidy irrelevant now? Market of round 6 already done. So it's harmless. Player 0 voted Yes, wants subsidy (useless). Actually subsidy affects future produce, but no more actions? Round 6 action already done, so no effect. Accept or veto — no difference. But influence max bonus: my influence 2 tied with 0 (2). Veto no benefit. Just pass or vote_no. Pass is fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427895,
+    "id": "20261020003809a9acf5ede2d7410c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003809a9acf5ede2d7410c",
+    "usage": {
+      "completion_tokens": 149,
+      "completion_tokens_details": {
+        "reasoning_tokens": 111
+      },
+      "prompt_tokens": 3257,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3406
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.234,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вето блокирует налог 20%, который ударит по моим будущим продажам.\"}",
+          "reasoning_content": "Law 2 = 20% tax on future sales. I'm president, my vote weight 1 (did produce). Others may vote. I plan to sell more goods later; tax hurts me. Veto now is safe — prevents tax regardless.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427081,
+    "id": "20261020002437d12c06128be9460c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020002437d12c06128be9460c",
+    "usage": {
+      "completion_tokens": 80,
+      "completion_tokens_details": {
+        "reasoning_tokens": 51
+      },
+      "prompt_tokens": 2343,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2423
+    }
+  }
+}

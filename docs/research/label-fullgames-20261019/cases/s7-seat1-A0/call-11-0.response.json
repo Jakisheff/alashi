@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 23.328,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":46,\"reason\":\"Максимальная ставка почти гарантированно даёт лицензию с доходом 20–60 alashi, а ставка вернётся через долю банка.\"}",
+          "reasoning_content": "License worth 20-60 alashi; opponents have ~40 alashi cash each. Current bid 0. Bidding moderate? Winning bid goes to bank (redistributed back mostly). If I bid e.g. 15, opponents may outbid. License income 20-60 plus bank share... bidding high guarantees license but cash goes to bank which I get share of anyway. Bid most cash: cost partially returns via bank share (I'm poorest, get 30 or 15?). Rank: currently I'm poorest → 15% weight. License income 20-60 is large; bid 25 to leave rivals unlikely to overbid? Risk: if someone bids more, my bid returns. Bidding all 26.25 risks winning at too high price—but bank redistribution returns ~15-50%. If I win at 26, net cost maybe ~13-22, gain 20-60. Worth it. Also still need main action? Bid doesn't consume action—but this is single combined move. Choose bid 26250000? If I win, I get 20-60 alashi income. Yes, aggressive: choice 46.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490500,
+    "id": "202610201801187574ffadabfe44cb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201801187574ffadabfe44cb",
+    "usage": {
+      "completion_tokens": 280,
+      "completion_tokens_details": {
+        "reasoning_tokens": 237
+      },
+      "prompt_tokens": 5166,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 5446
+    }
+  }
+}

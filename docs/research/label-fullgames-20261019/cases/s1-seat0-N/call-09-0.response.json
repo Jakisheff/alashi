@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.438,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Бесплатные 2 товара без риска изъятия, сохраняю cash для аукциона в раунде 4.\"}",
+          "reasoning_content": "Prices are low now (sold 6, ~4-3 alashi), keep goods? We have 0 goods. Best action: shuttle gives 3 goods (grey risk 25%). Produce gives 2 goods free. Price low round 3; boom +2 next market? Card 7 was passed (price +2 next market = round 3 market already had boom=2? state shows boom=2, price_shift=0 — yes applied to round 3). Round 4 market prices unknown.\n\nShuttle risk 25% seizure of grey goods. But goods sell at round 4 market with possible higher prices. Produce gives 2 safe goods. I'm holder X via influence 1 and tie_order. Round 4 auction needs cash.\n\nProduce: +2 goods for free — good value. Shuttle: 3 goods at 25% risk. EV shuttle slightly higher but risk. Also influence matters for law veto; bribes give influence but cost a lot. Cash is bank contributions — bank is 30M, shared back. Actually bribes give money to rivals. Keep cash for auction bid in round 4 (income 20-60). I'll choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428021,
+    "id": "202610200040125234d59ca2024f80",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200040125234d59ca2024f80",
+    "usage": {
+      "completion_tokens": 281,
+      "completion_tokens_details": {
+        "reasoning_tokens": 244
+      },
+      "prompt_tokens": 3844,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 4125
+    }
+  }
+}

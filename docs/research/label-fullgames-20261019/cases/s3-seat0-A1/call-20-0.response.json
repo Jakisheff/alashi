@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.306,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Я уже первый по деньгам, товары и влияние больше не конвертируются в выплату — лучше сохранить cash.\"}",
+          "reasoning_content": "Last round action, then law where president (idx2, influence 2, weight 4). I lead cash 72.5M. Max influence bonus 5% bank = 3M to idx2. I could bribe to gain influence for the 3M bonus and rank. Bribe 5M to 2 gives me influence 2, tie with idx2; tie broken by cash — I'd win the 5% commission (3M). Cost 5M, gain 3M — negative net... but bribe to idx1 doesn't help; to idx2 also boosts their cash? Bribe transfers to recipient but from my cash; recipient cash counts in rank. Bribe to idx2: they gain cash. Bad.\n\nBribe 10M → influence 3, get 3M bonus and control veto? President is decided at law entry — holder is idx2 already (influence at entry). Influence changes during action? Holder determined at law entry; bribe now may change influence before law? Holder shown as 2 already. Influence affects final 5% bonus. Bribe 5M: net -2M. Not worth.\n\nJust pass; rank by cash: I'm first anyway (72.5 vs 40.1 vs 18.1), bank 60M + license income. Pass is fine. Produce gives goods worthless after last market? Round 6 market already done, goods unsellable. So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491027,
+    "id": "202610201810164ec55ecbeb4d499e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201810164ec55ecbeb4d499e",
+    "usage": {
+      "completion_tokens": 338,
+      "completion_tokens_details": {
+        "reasoning_tokens": 303
+      },
+      "prompt_tokens": 5394,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 5732
+    }
+  }
+}

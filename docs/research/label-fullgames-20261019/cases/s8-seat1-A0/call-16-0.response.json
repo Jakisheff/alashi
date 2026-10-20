@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.4,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Беру серый товар под продажу в финальном раунде, это даёт больше итогового cash, чем потеря на взятках.\"}",
+          "reasoning_content": "Round 5 action. I'm idx1, cash 49M, influence 1. President is 0 (influence 3). Two rounds left. Shuttle gives 3 goods for selling round 6 (~4-5 alashi each → ~15M). Bribing gives influence — max influence bonus gives extra 5% bank (2.5M) and possibly presidency weight. Bribing 15M to reach influence 4 > 3 → presidency in round 6 law; but costs cash. Also influence matters for final 5% commission.\n\nBest value: shuttle gives ~12-15M final cash gain via sales. Bribe 15M to idx2 gives influence 4, presidency round 6 (weight 5-6, veto), plus max influence bonus 2.5M. But costs 15M cash, net negative unless veto prevents tax... too speculative. Shuttle better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427931,
+    "id": "202610200038444a5d4672e79a4d9b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200038444a5d4672e79a4d9b",
+    "usage": {
+      "completion_tokens": 230,
+      "completion_tokens_details": {
+        "reasoning_tokens": 189
+      },
+      "prompt_tokens": 4550,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 4780
+    }
+  }
+}

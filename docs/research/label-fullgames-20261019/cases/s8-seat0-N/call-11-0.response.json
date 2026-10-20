@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.755,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":54,\"reason\":\"Ставка 25 alashi с высокой вероятностью выигрывает лицензию с ожидаемым доходом ~40 alashi, при этом ставка вернётся через банк.\"}",
+          "reasoning_content": "Round 4 action, auction. License income 20-60 alashi, expected ~40, worth bidding. Bid doesn't consume action? \"bid не расходует основное действие\" but interface offers single bid per turn... \"Интерфейс предлагает одну совокупную ставку за ход\" — so choosing bid now uses this turn? Probably candidates with bid are the action. License EV ~40 alashi vs bank ~30. Bid moderately, e.g., 20-25 alashi to win. But winning bid goes into bank, shared back. Bid 20 alashi: cost of winning bid mostly returns via bank share. So bid high enough to win. Rivals have ~32 each. Bid 25 alashi? EV license 40, net gain even at bid 25. I'll pick 24 alashi (choice 53)? Higher certainty better; bid 25 (choice 54).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490975,
+    "id": "20261020180928c6d0c47d5d404845",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180928c6d0c47d5d404845",
+    "usage": {
+      "completion_tokens": 234,
+      "completion_tokens_details": {
+        "reasoning_tokens": 186
+      },
+      "prompt_tokens": 7566,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 7800
+    }
+  }
+}

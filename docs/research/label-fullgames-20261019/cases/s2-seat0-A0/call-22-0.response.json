@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.444,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Последний раунд: товар и влияние уже не конвертируются, максимальное влияние сохраняется, поэтому сохраняю cash.\"}",
+          "reasoning_content": "Final round action. Cash counts for rank; bribes lose cash, gain influence (only commission bonus). Max influence already 3 vs 2. Best: keep cash. pass vs produce (goods worthless now). Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427323,
+    "id": "20261020002840445d82bb3e954a48",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020002840445d82bb3e954a48",
+    "usage": {
+      "completion_tokens": 84,
+      "completion_tokens_details": {
+        "reasoning_tokens": 45
+      },
+      "prompt_tokens": 4660,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 4744
+    }
+  }
+}

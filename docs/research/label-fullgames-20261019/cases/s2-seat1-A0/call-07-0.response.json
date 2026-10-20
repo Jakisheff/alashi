@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.346,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Покупка по 9 без выгоды к перепродаже; лучше сохранить деньги к аукциону в раунде 4.\"}",
+          "reasoning_content": "I have 0 goods, 16.25 cash. Buying 1 unit for 9 alashi to resell later? Price counter=2, next sell price 9. Buy moves counter back. Round 3 market: sell later maybe at 9? Buying now for 9 to sell at 9 later — no gain unless boom. Pass seems better; hold cash for auction round 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491069,
+    "id": "2026102018110548eb0a88009b412f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102018110548eb0a88009b412f",
+    "usage": {
+      "completion_tokens": 123,
+      "completion_tokens_details": {
+        "reasoning_tokens": 83
+      },
+      "prompt_tokens": 2257,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2380
+    }
+  }
+}

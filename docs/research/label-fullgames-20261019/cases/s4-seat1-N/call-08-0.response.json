@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.383,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Shuttle бесплатно даёт 3 товара, тарифов/риска сейчас нет.\"}",
+          "reasoning_content": "Round 3 action, auction is round 4. Holder idx 1 (me) with influence 1, but others have influence 2 (idx0) and 1 (idx2)? Wait influence seen: idx0 influence 2, me 1, idx2 1. But holder is me via tie_order? vote_weight shows me 3? Actually vote_weight 3 for me — influence 1 + 2 for passing? No, that's only in law. Hmm vote_weight 3 shown for me and idx2... odd. Anyway.\n\nBest action: shuttle gives 3 goods (risk only if red tariff; currently tariff 0). Produce gives 2 free. Shuttle dominates produce. Choose shuttle (choice 3).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490621,
+    "id": "20261020180334c8ca14f49aec48f6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180334c8ca14f49aec48f6",
+    "usage": {
+      "completion_tokens": 179,
+      "completion_tokens_details": {
+        "reasoning_tokens": 152
+      },
+      "prompt_tokens": 3662,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 3841
+    }
+  }
+}

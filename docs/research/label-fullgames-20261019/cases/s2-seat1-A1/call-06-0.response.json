@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.12,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон 8 обнуляет векселя, а у всех promissory=0, эффект нейтрален.\"}",
+          "reasoning_content": "Law 8: обнуляет promissory. У меня promissory=0. Другие? Не видно promissory у других... они продали за cash (sell), не sell_credit. Неизвестно, но вероятно у соперников может быть promissory? Видно поле promissory=0 у всех. Тогда карта 8 без эффекта. Но vote_yes безопасен? Если у кого-то promissory — обнулили бы. Все по 0. Голосую yes (нейтрально) — или лучше pass чтобы не рисковать? Закон без эффекта, yes ок.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427361,
+    "id": "202610200029130353e6314964455a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200029130353e6314964455a",
+    "usage": {
+      "completion_tokens": 166,
+      "completion_tokens_details": {
+        "reasoning_tokens": 130
+      },
+      "prompt_tokens": 2339,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2505
+    }
+  }
+}

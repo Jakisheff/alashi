@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 19.084,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Покупка по 12 не даёт прибыли и снижает cash, важный для ранга; удерживаю позицию лидера.\"}",
+          "reasoning_content": "Round 5 market: cash 27.4, license income will come. I hold license (income 20-60). Should I buy goods to sell later? Prices: sold_counter=0, price 12 alashi. Buying 1 unit costs 12 alashi (counter moves back). Buy 2 costs 24, then sell later at... After buying, counter back to 2? Buy moves counter backward. Currently counter 0, so buying moves back? Probably can't move below 0? Buy 1: cash 15.4M... wait after shows cash 15.4M for 1 unit, meaning 12 alashi cost. Buy 2 costs 24, cash 3.4M.\n\nSelling later: round 6 market, if others sell too. Buying now at 12 to sell at 12 later is neutral-ish, but price could drop if others sell. Actually buy 1: cost 12, sell at 12 next round = break even, but price might be lower. Not worth it. Also keeping cash for final rank (cash counts, goods don't). Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490591,
+    "id": "20261020180253e749034a8cd1410f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180253e749034a8cd1410f",
+    "usage": {
+      "completion_tokens": 272,
+      "completion_tokens_details": {
+        "reasoning_tokens": 233
+      },
+      "prompt_tokens": 2843,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3115
+    }
+  }
+}

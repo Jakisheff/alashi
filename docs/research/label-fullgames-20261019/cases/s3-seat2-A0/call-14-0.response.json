@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.512,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон 4 даёт +1 влияния самому бедному — это я, поэтому поддерживаю.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest by cash. I'm poorest (13.69M). Vote yes. Faction 1 voted No. I have weight 2+? my influence 2, weight 2 (shown). If yes=2 vs no=3? Weight shown: idx1 weight 3, mine 2. If I pass action... I already acted (shuttle). Yes 2 vs No 3 — fails. But I'm president, can veto too... veto would kill the law that benefits me. So just vote_yes; even if fails, veto isn't needed. Actually law 4 benefits me, so vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427581,
+    "id": "202610200032560ed37bfcc7b04815",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200032560ed37bfcc7b04815",
+    "usage": {
+      "completion_tokens": 167,
+      "completion_tokens_details": {
+        "reasoning_tokens": 135
+      },
+      "prompt_tokens": 2887,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3054
+    }
+  }
+}

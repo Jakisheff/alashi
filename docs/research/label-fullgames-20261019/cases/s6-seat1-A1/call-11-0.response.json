@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 20.936,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":31,\"reason\":\"Ставка 10 alashi даёт хороший шанс выиграть лицензию (доход 20–60) с приоритетом по tie_order, не обнуляя cash.\"}",
+          "reasoning_content": "License income 20-60 alashi, bid wins go to bank. My cash 31.3, opponent 2 has 41.6. License ~20-60 alashi pays directly to holder beyond bank share — worth winning but bid goes to bank (distributed back by shares). Rival 2 can outbid. Reasonable: bid ~10-15 to secure, since profit positive as long as bid < income roughly. But tie_order priority: [1,2,0], I beat 2 at ties. Bid ~10M.\n\nActually cash also matters for rank; bank share returns much. Bid 10 alashi.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490012,
+    "id": "20261020175312acaf9130ab8448ce",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175312acaf9130ab8448ce",
+    "usage": {
+      "completion_tokens": 178,
+      "completion_tokens_details": {
+        "reasoning_tokens": 131
+      },
+      "prompt_tokens": 5621,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 5799
+    }
+  }
+}

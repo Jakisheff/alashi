@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.255,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель с премией 25% даёт больше итоговой выплаты даже с учётом девальвации, а цены сейчас высокие.\"}",
+          "reasoning_content": "Price counter is 0, price ~12+... round 4 market. Cash 40.2M is lowest of the three? Actually richest is me (40.2). Future devaluation 62%. Sell now at high price. But cash devalues at round 5/6 starts. Selling credit gives 1.25x but promissory not paid back after final round? Rounds 4,5,6 remain; promissory added to cash at start of next round (then devalued? no, promissory added after devaluation). Then that cash devalues next round. Selling credit units=2: 27.5M promissory → round5 cash, then round6 floor/100*62 → ~17M. Selling now keeps cash but devalues too. Sell cash: 62.2M → round5 devalued to ~38.6M, round6 to ~23.9M. Sell credit: 40.2 → 24.9M + 27.5M = 52.4M → round6 ~32.5M. Credit better despite devaluation. Sell 2 credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792489901,
+    "id": "20261020175133cab11187ae4147ed",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175133cab11187ae4147ed",
+    "usage": {
+      "completion_tokens": 279,
+      "completion_tokens_details": {
+        "reasoning_tokens": 240
+      },
+      "prompt_tokens": 2794,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 3073
+    }
+  }
+}

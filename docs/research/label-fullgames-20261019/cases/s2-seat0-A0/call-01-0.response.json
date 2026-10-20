@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.098,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Шаттл даёт больше товара в ожидании, изъятие маловероятно.\"}",
+          "reasoning_content": "Produce gives 2 goods guaranteed, shuttle gives 3 but risk 25% seizure (no tariff yet). Shuttle expected higher but risk. I have cash 0, tariff unknown. Shuttle EV 3*0.75=2.25 goods, better. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427197,
+    "id": "20261020002633a68471153cd8406f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020002633a68471153cd8406f",
+    "usage": {
+      "completion_tokens": 88,
+      "completion_tokens_details": {
+        "reasoning_tokens": 57
+      },
+      "prompt_tokens": 1924,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2012
+    }
+  }
+}

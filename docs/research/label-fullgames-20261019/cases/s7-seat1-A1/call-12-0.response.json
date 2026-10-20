@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.486,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Ожидаемая выгода шаттла выше: 3 товара с риском изъятия против 2 гарантированных.\"}",
+          "reasoning_content": "I'm faction 1 with cash=0, no bid. Others hold presidency. My strategy: shuttle gives 3 goods but 25% seizure risk; produce gives 2 free. My history shows shuttling. But cash=0 — produce is safe. Shuttle expected 3*0.75=2.25 goods vs 2. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490420,
+    "id": "20261020180014b8d8dfa40cff40a3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180014b8d8dfa40cff40a3",
+    "usage": {
+      "completion_tokens": 113,
+      "completion_tokens_details": {
+        "reasoning_tokens": 74
+      },
+      "prompt_tokens": 2593,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2706
+    }
+  }
+}

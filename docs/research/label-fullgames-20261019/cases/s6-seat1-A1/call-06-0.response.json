@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.233,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 8 (обнуление векселей) не проходит при ничьей 1:1, мой вексель 16,25 alashi сохранён, veto не нужен.\"}",
+          "reasoning_content": "Law 8 wipes promissory; I have 16.25 promissory. Vote 1 yes vs 1 no — tied, not passed (yes not strictly greater). So no need to veto. But wait — could round 2 devaluation... promissory is paid before devaluation? Promissory added to cash at start of round 2+... it's already paid into round 3? No, promissory accrues, added at start of next round. If law 8 passes, promissory zeroed. Vote already No, tied 1-1, fails. Pass suffices.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792489962,
+    "id": "202610201752386987211bbcbf4975",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201752386987211bbcbf4975",
+    "usage": {
+      "completion_tokens": 178,
+      "completion_tokens_details": {
+        "reasoning_tokens": 128
+      },
+      "prompt_tokens": 2192,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2370
+    }
+  }
+}

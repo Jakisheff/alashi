@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.106,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Финальный раунд: товар уже бесполезен, взятка 5M стоит дороже бонуса влияния ~1.9M — просто пропускаю.\"}",
+          "reasoning_content": "Last round action; no more market. Cash 88.06M. Goods worthless after final market? Market already done. Only cash matters for ranking + influence for 5% bonus (1.9M). Bribes give influence but reduce cash — net loss mostly. Cash ranking: I'm first already (88M vs 33.7/28M). Max influence: I have 2, rival 0 has 2. 5% of bank = ~1.9M to max influence, tie-break by cash. Bribe 5M to either rival: gives me influence 3, cost 5M cash, but recipient gains 5M cash. Max influence bonus only 1.9M — not worth 5M. So pass (choice 0). Goods no value. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490102,
+    "id": "20261020175456e02a349fe7df4f82",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175456e02a349fe7df4f82",
+    "usage": {
+      "completion_tokens": 216,
+      "completion_tokens_details": {
+        "reasoning_tokens": 168
+      },
+      "prompt_tokens": 5735,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 5951
+    }
+  }
+}

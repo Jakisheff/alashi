@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.403,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\": 64, \"reason\":\"Ставка 33 alashi перекрывает максимум соперников и обеспечивает лицензию с ожидаемой прибылью, сохраняя запас cash.\"}",
+          "reasoning_content": "I'm idx 2, rich (56 alashi), round 4 action. License auction: income 20-60 alashi, worth bidding. Rivals have ~32.4 and ~29.5. Bid moderately high, e.g., 30 alashi, to win likely, and keep cash. Also we may act after bid (bid doesn't consume action). But candidates here: pick bid 30M then later choose produce/shuttle. License profit ~20-60, bid 30 is fine. Also president role contested later—maybe bribe for influence. But single choice: bid 30 (choice 61). Tie order favors [1,0,2] — if tie, I lose. Opponents might bid all cash ~32.4. Bid 33M? Choice 64 (33M) beats opponent 0's full cash. Opponent 0 has 32.4148, so 33M wins unless they... they can bid up to cash. Bid 33M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427537,
+    "id": "2026102000321098bbb234294d4661",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000321098bbb234294d4661",
+    "usage": {
+      "completion_tokens": 251,
+      "completion_tokens_details": {
+        "reasoning_tokens": 210
+      },
+      "prompt_tokens": 7828,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 8079
+    }
+  }
+}

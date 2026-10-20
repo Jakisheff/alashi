@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.955,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Финальный раунд: товар и влияние уже не конвертируются в выплаты, любые траты лишь снижают cash — лучший ход pass.\"}",
+          "reasoning_content": "Last round action. Final rank by cash. Goods worthless. Shuttle gives goods but goods not counted... sell already done. So goods useless. Only thing that matters: cash and final influence (5% commission bonus to max influence — currently faction 1 has 2). Bribe reduces my cash without gaining payout. Roof reduces cash. So best: pass? But passing gives vote_weight +1 in law; I'm not president (holder 1). Passing costs nothing. Choice 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491192,
+    "id": "202610201813078f0af278678f4d3c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201813078f0af278678f4d3c",
+    "usage": {
+      "completion_tokens": 141,
+      "completion_tokens_details": {
+        "reasoning_tokens": 99
+      },
+      "prompt_tokens": 4105,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 4246
+    }
+  }
+}

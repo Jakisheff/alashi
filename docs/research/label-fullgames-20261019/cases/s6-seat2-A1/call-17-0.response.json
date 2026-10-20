@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.146,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товары в финале не учитываются, влияние уже максимально — pass сохраняет cash.\"}",
+          "reasoning_content": "Last round, action phase. Goods don't count in ranking; promissory already cash. Influence 3 already max (tied? rivals 1). Bribing reduces cash, bad. Influence gives extra 5% bank bonus for max influence — already have 3, rivals can't get influence. So best: pass? Shuttle gives goods, useless. Pass keeps cash.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491150,
+    "id": "202610201812240d0ca641d2b44142",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201812240d0ca641d2b44142",
+    "usage": {
+      "completion_tokens": 111,
+      "completion_tokens_details": {
+        "reasoning_tokens": 78
+      },
+      "prompt_tokens": 4973,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 5084
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.476,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Деньги сильно девальвируются, перевод кэша в товар выгоднее, а потом продам с повышенной ценой.\"}",
+          "reasoning_content": "I have no goods, cash 16.12. Sell not available. Buy at price? sold_counter=4 → price 7. Buying moves counter back. Buy 1 costs 7M, gives 1 good, future sell at higher price? Buying moves sales counter backward, so future prices rise. Buy 2 costs 15M leaving 1.12. Then next round produce/shuttle and sell at higher prices. Buying 2: price path 7,8 → total 15M for 2 goods; next market can sell at price 8,7... roughly break-even but sell_credit 1.25x helps. Better buy 1 to keep cash. Buy 2 leaves almost no cash, risky with devaluation round 4 (floor/100*62). Actually buying 1, cash 9.12, round 4 start floor(9.12/1)*0.62... wait floor(cash/100)*62? Units: minimal units. 9120000/100=91200*62=5,654,400 — big devaluation! So spending cash on goods is good (goods not devalued). So buy 2 better: convert cash to goods. Cash 1.12 devalues to ~0.69. Then sell later. Buy 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491149,
+    "id": "202610201812226e3d2814527b4ef9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201812226e3d2814527b4ef9",
+    "usage": {
+      "completion_tokens": 312,
+      "completion_tokens_details": {
+        "reasoning_tokens": 274
+      },
+      "prompt_tokens": 2315,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2627
+    }
+  }
+}

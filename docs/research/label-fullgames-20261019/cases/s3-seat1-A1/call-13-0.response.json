@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.438,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce даёт 3 гарантированных товара; ожидаемая ценность shuttle ниже из-за 25% риска изъятия.\"}",
+          "reasoning_content": "We already bid all cash, now pick main action. shuttle gives 4 grey goods, 25% seizure risk, but no cash anyway. produce gives 3 safe. Cash is 0, cash+hard only matters; grey goods can sell next round. Shuttle gives 4 goods worth selling at price ~2-3... prices at sold_counter=3, price index 4 =5? Price array [12,10,9,8,7,6,5,4,3,...], counter 3 means next sells at index 3=8. 4 goods sell for ~8+7+6+5=26 vs 3 goods 8+7+6=21. 25% seizure risk of all grey. Risk of losing all. Expected: 0.75*26=19.5 <21. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490901,
+    "id": "202610201808155702c58d28664cb4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201808155702c58d28664cb4",
+    "usage": {
+      "completion_tokens": 214,
+      "completion_tokens_details": {
+        "reasoning_tokens": 176
+      },
+      "prompt_tokens": 2722,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2936
+    }
+  }
+}

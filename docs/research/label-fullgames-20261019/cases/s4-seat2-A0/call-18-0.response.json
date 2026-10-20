@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.049,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Шаттл даёт максимум товара для финального рынка, ожидаемая выгода выше риска изъятия.\"}",
+          "reasoning_content": "Round 5 action, last market is round 6. Need goods for round 6. Shuttle gives 3 goods, ~25% seizure. Produce gives 2. Tax 0. Round 6 price at sold_counter=2: price list starts... index by sold_counter: after 2 units sold, price index 2 = 9 alashi? Selling 2 at ~9-10. Shuttle risk: no tariff info; roof black would protect but costs 30% cash to opponent 0 (already rich). Shuttle gives 3 goods worth ~24 alashi gross, produce 2 (~17). Take shuttle, risk 25% loss. EV shuttle higher. But tariff unknown border — could lose all grey with red 25%. Still EV positive. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427561,
+    "id": "202610200032345f20ea42b36c43d0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200032345f20ea42b36c43d0",
+    "usage": {
+      "completion_tokens": 196,
+      "completion_tokens_details": {
+        "reasoning_tokens": 160
+      },
+      "prompt_tokens": 3751,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3947
+    }
+  }
+}

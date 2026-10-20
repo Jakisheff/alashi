@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 65.527,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":53,\"reason\":\"Лицензия даёт ~20..60 alashi сверх доли; ставка 30 alashi почти наверняка побеждает, проигрыш возвращается.\"}",
+          "reasoning_content": "Own bid 0 already; others may outbid. License income 20-60 alashi, worth a solid bid. Opponents have ~31.5M and ~5.3M cash (but that state is before their actions). A bid of ~15-20M likely wins. Note bid doesn't consume action — but the candidate list here is for this turn only? \"bid не расходует основное действие: после ставки можно выбрать ещё одно действие\" — but the interface offers only combined bid for this move. So choose bid.\n\nLicense value ~40 alashi expected, huge. Bid 20M? Winning bid adds to bank (which is shared back, but I'd get 50% anyway). Rivals: elem2 has 31.5M cash, elem0 5.3M. Bid ~25M to beat likely elem2. Expected value: license ~40 alashi vs cost 25 alashi paid into bank, but bank returns weighted — I get ~50% of bank so effective cost ~12.5. Profit. But bid more than needed is wasted. elem2 might bid all cash 31.5M? Their actions unknown. I'll bid 30M.\n\nWait, but if I lose, bid returns. Risk-free except escalation. Bid 30M (choice 53). Keep 7M cash.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490794,
+    "id": "202610201805309127ef8818bd41fb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201805309127ef8818bd41fb",
+    "usage": {
+      "completion_tokens": 322,
+      "completion_tokens_details": {
+        "reasoning_tokens": 278
+      },
+      "prompt_tokens": 6311,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 6633
+    }
+  }
+}

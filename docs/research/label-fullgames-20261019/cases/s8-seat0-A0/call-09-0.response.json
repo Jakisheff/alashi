@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.482,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Шаттл рискует конфискацией, а produce даёт гарантированные 2 товара для будущей продажи, сохраняя влияние и пост президента.\"}",
+          "reasoning_content": "I'm president with influence 2, others 1. I already hold presidency; bribes raise influence but cost cash. Better: shuttle for goods (3 goods, sell later ~6-8 alashi each). Devaluation: cash=floor(cash/100)*62, so holding cash is bad. Convert to goods. Shuttle gives 3 goods risk-free (black tariff? tariff unknown; grey may be seized 25%). Shuttle = 3 goods vs produce 2. Risk of seizure ~25%... but border preference unknown. Produce is safe 2 goods. Expected shuttle 2.25 goods. Price next market ~6-7. Difference small. Choose produce (safe) — cash 11.78M will devalue anyway.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427371,
+    "id": "20261020002923599c056a10a9463e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020002923599c056a10a9463e",
+    "usage": {
+      "completion_tokens": 197,
+      "completion_tokens_details": {
+        "reasoning_tokens": 153
+      },
+      "prompt_tokens": 3094,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 3291
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.152,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"shuttle даёт 3 товара с умеренным риском — лучший прирост к продаже в следующем рынке.\"}",
+          "reasoning_content": "I'm behind on cash (13.6M vs 25M, 32.5M), but have promissory 16.25M. Best: shuttle (3 goods, ~25% risk, no tariff risk since tariff=0? tariff 0 = free border? Roof tariff 0 means... risk applies only when tariff=2? Actually \"изъятия нет у чёрного тарифа\" — tariff rules only matter for grey goods; shuttle gives grey goods risk ~25% anyway? Grey goods can be seized ~25% unless black tariff. So shuttle 3 goods risk losing all grey goods with 25%. Expected value still fine: 3 goods worth ~3-4 alashi each at price ~5. Produce gives 2 goods safe. Shuttle expected 2.25 goods vs 2 safe. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491080,
+    "id": "2026102018111435f0fb812b58440d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102018111435f0fb812b58440d",
+    "usage": {
+      "completion_tokens": 207,
+      "completion_tokens_details": {
+        "reasoning_tokens": 174
+      },
+      "prompt_tokens": 2995,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 3202
+    }
+  }
+}

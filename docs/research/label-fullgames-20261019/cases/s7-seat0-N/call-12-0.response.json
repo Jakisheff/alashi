@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.961,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":17,\"reason\":\"Ставка на лицензию при проигрыше возвращается, а выигрыш даёт 20–60 alashi дохода сверх моей доли — бью максимумом.\"}",
+          "reasoning_content": "I'm far behind in cash (5.7M vs 36M). License revenue 20-60 alashi (2M-6M?). Wait, 20..60 alashi = 20-60M units — huge. Bank is 30M. License gives ~20-60M extra. Bid is separate from action, so bid max and shuttle.\n\nShuttle gives 3 goods (25% seizure risk on grey, but shuttle gives grey goods). Bid full cash 5.775M — rival 1 has 36M and can outbid. But interface offers one cumulative bid; can only pick one bid candidate, then action is separate? \"bid не расходует основное действие\" — but candidates are single actions... The candidate list includes bid only; choosing bid then another action would be a separate turn. So choose bid full first? Risky: if outbid, money returned anyway. So bid max costs nothing if lose. But if won, payment goes to bank (which I share only 15% weight... last place). Winning license: pay bid to bank, gain 20-60M income directly. EV positive if bid < ~license value. Bid full 5.775M for potential 20-60M gain. Yes, choose 17.\n\nIf lose, cash returned. Then next turn choose shuttle/produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427438,
+    "id": "2026102000302908079618eb0e4636",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000302908079618eb0e4636",
+    "usage": {
+      "completion_tokens": 326,
+      "completion_tokens_details": {
+        "reasoning_tokens": 280
+      },
+      "prompt_tokens": 3522,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 3848
+    }
+  }
+}

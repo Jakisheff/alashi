@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.427,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Вето уже применено держателем, налог не пройдёт — воздерживаюсь\"}",
+          "reasoning_content": "Law 1 = 10% tax on future sales. I plan to sell goods later; tax hurts me. Holder is 0 with veto_pending (they already vetoed? veto_pending true means veto will apply). Wait holder_idx=0, veto_pending true — someone vetoed already? Only holder can veto... maybe holder 0 already vetoed this law. Then my vote irrelevant. Choose abstain (pass equivalent). Pick vote_abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490627,
+    "id": "20261020180342ea8eb6f654cc4d9d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180342ea8eb6f654cc4d9d",
+    "usage": {
+      "completion_tokens": 121,
+      "completion_tokens_details": {
+        "reasoning_tokens": 92
+      },
+      "prompt_tokens": 2495,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2616
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.998,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель выплачивается после девальвации, поэтому продажа в кредит двух единиц выгоднее наличных.\"}",
+          "reasoning_content": "Sell now at high price (12). Cash gets devalued at round 5 start (×0.62) but promissory is added after. Sell for cash 12, then devaluation hurts; sell_credit gives 15 promissory paid after devaluation — better! Sell credit 2 units: 27.5M promissory vs 22M cash→devalued to 13.64M. Credit clearly better. But last round credit not paid — round 6 law card 8 exists? Already used law 8 in round 1. Sell credit 2 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427262,
+    "id": "202610200027363be58a1e59ea49a9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200027363be58a1e59ea49a9",
+    "usage": {
+      "completion_tokens": 158,
+      "completion_tokens_details": {
+        "reasoning_tokens": 124
+      },
+      "prompt_tokens": 2722,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2880
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.074,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":9,\"reason\":\"Финальный раунд: вексель не погасится, поэтому продаю весь товар сразу за наличные.\"}",
+          "reasoning_content": "Last market round: promissory worthless after round 6. Sell all 5 now: cash ~27.4M + license income.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491186,
+    "id": "2026102018125608c5ab8bfef8467c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102018125608c5ab8bfef8467c",
+    "usage": {
+      "completion_tokens": 64,
+      "completion_tokens_details": {
+        "reasoning_tokens": 29
+      },
+      "prompt_tokens": 3448,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3512
+    }
+  }
+}

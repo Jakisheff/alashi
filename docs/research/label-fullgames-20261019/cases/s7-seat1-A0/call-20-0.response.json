@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.477,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 6 влияет на следующий рынок, которого уже не будет — эффектов нет, можно пропустить.\"}",
+          "reasoning_content": "Law 6: price -2 next market, but round 6 market already happened; next market is after last round? Law affects next market — round 6 market is done, so no effect? Actually it's law in round 6, next market would be round 7, doesn't exist. So irrelevant. President is idx 0, my vote weight 3. Law has no real effect; vote_yes harmless or pass. Pass keeps weight? Weight already includes +2 since action was pass. Any law passes affects nothing. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490559,
+    "id": "202610201802335fd3e4f46a0c4038",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201802335fd3e4f46a0c4038",
+    "usage": {
+      "completion_tokens": 143,
+      "completion_tokens_details": {
+        "reasoning_tokens": 111
+      },
+      "prompt_tokens": 3199,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3342
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.728,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Налог 10% ударит по моим продажам сильнее всех — применяю veto гарантированно.\"}",
+          "reasoning_content": "Law 1 = tax 10% on future sales. Player 2 already voted No. If I vote yes, 1 yes vs 1 no (p2 no, p1 unknown) — depends on p1. If I vote no, no fails likely. I'm richest, tax hurts my sales most — I have 3 goods. Vote no (or veto). Vote no: yes vs no at most 2-1... p1 unknown. Safer: vote_no, and if it passes, veto as post_vote. Actually I can veto now (choice 4) which applies before counting. Veto guarantees no tax. But maybe letting no tax via votes is enough and veto could be saved? Veto is per-law; only current. Veto now kills tax for sure. That's best for me (top seller). Choose veto or vote_no? Vote_no: p1 yes + p2 no = 1-1, law rejected (yes must strictly exceed no). If p1 no or abstain, rejected. Veto only needed if p1 votes yes... but p1 also sells goods, tax hurts them too. But p1 has less goods. Veto is safe and costs nothing. Use veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490606,
+    "id": "20261020180316f4a781ca342944e1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180316f4a781ca342944e1",
+    "usage": {
+      "completion_tokens": 287,
+      "completion_tokens_details": {
+        "reasoning_tokens": 253
+      },
+      "prompt_tokens": 3077,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3364
+    }
+  }
+}

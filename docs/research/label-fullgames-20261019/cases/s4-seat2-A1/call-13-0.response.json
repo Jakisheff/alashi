@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.992,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон даёт +1 влияния самому бедному — это я, поддерживаю.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest (me, cash 0). President is idx0 (influence 2). Votes: idx1 voted No (weight 3). President will vote; idx1's No weight 3. If I vote yes (weight 1), president likely votes no → no majority anyway. Law 4 helps me — vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490069,
+    "id": "2026102017542448ad4b0ea20742ec",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102017542448ad4b0ea20742ec",
+    "usage": {
+      "completion_tokens": 105,
+      "completion_tokens_details": {
+        "reasoning_tokens": 76
+      },
+      "prompt_tokens": 2769,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2874
+    }
+  }
+}

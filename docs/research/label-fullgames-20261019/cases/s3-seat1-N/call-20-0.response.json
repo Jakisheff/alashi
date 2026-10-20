@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.593,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Финальный раунд: вексель не погашается, продаю весь товар за немедленный кэш.\"}",
+          "reasoning_content": "Last round market. Promissory pays at round start... no, after last round promissory not redeemed. So sell_credit worthless. Sell 3 units gives +24M cash, goods left worthless. Choice 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427611,
+    "id": "202610200033271f145dd446954532",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200033271f145dd446954532",
+    "usage": {
+      "completion_tokens": 83,
+      "completion_tokens_details": {
+        "reasoning_tokens": 46
+      },
+      "prompt_tokens": 3521,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3604
+    }
+  }
+}

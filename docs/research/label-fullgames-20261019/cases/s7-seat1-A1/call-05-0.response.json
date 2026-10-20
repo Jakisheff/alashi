@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.674,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"shuttle даёт больше товара при ожидаемой ценности выше, чем produce, несмотря на риск изъятия\"}",
+          "reasoning_content": "I'm the faction with vote_weight 3, cash 0, goods 0. Action: shuttle gives 3 goods free (25% seizure risk). Produce gives 2 guaranteed. I don't sell (cash 0, can't sell anyway since I have no goods after either). Shuttle: risk of seizure — 3 goods at 75%. Expected 2.25 vs 2. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490387,
+    "id": "20261020175941a53cdc6ab0f74d7a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175941a53cdc6ab0f74d7a",
+    "usage": {
+      "completion_tokens": 117,
+      "completion_tokens_details": {
+        "reasoning_tokens": 84
+      },
+      "prompt_tokens": 2159,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2276
+    }
+  }
+}

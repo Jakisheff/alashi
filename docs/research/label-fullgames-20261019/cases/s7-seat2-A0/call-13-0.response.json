@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.993,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":61,\"reason\":\"Ставка 36 млн перебивает максимум соперников и даёт лицензию с доходом 20–60 alashi при частичном возврате ставки через банк.\"}",
+          "reasoning_content": "Round 4 action: auction for license worth ~20-60 alashi, plus I get presidency if influence highest? Currently all influence 1, tie_order [0,1,2], president is 0. License income 20-60 alashi is huge (cash ~44 alashi). Bidding high is worth it. Opponents have ~35 and ~32 alashi. Bid ~34-35 alashi to beat their max. They each can bid up to ~35.6 and ~32. My bid 34,000,000 (choice 59) leaves them unable to beat (фракция0 max 35.6M could beat). Bid 35,000,000 (choice 60) exceeds faction0's cash 35.65M? They could bid 35.65M > 35M. Bid 35.5M? Choices are 1M steps; 35M then. Bid 35,000,000: faction0 could outbid with 35.6M but unlikely to go all-in. Safer: 36M? Then I have 8.59M cash left. License EV 40 alashi minus bank contribution... but bid goes into bank, which gets redistributed by rank — winning bid loses only portion. Actually bid added to bank, redistributed 50:30:15. So cost of winning bid is partially recovered. Strong incentive to win. Bid 36M beats all.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427404,
+    "id": "20261020002955f4670aae34034b5d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020002955f4670aae34034b5d",
+    "usage": {
+      "completion_tokens": 346,
+      "completion_tokens_details": {
+        "reasoning_tokens": 299
+      },
+      "prompt_tokens": 6748,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 7094
+    }
+  }
+}

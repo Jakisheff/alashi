@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.702,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Последний раунд: вексель не погашается, продаю обе единицы за наличные, чтобы максимизировать итоговый cash.\"}",
+          "reasoning_content": "Last round: promissory unpaid. Sell 2 units now: cash 57.275M vs 48.2M+... sell outright better than credit (credit promissory worthless). So sell 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427460,
+    "id": "20261020003056926ee14b1ab34d0b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003056926ee14b1ab34d0b",
+    "usage": {
+      "completion_tokens": 86,
+      "completion_tokens_details": {
+        "reasoning_tokens": 46
+      },
+      "prompt_tokens": 3395,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3481
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.259,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Взятки снижат cash и ранг без выгоды, лучший итог — сохранить лидерство по богатству.\"}",
+          "reasoning_content": "Last round, action. Goods worthless after? No more market. So just maximize final standing. Bribes cost cash, give influence — influence only matters for 5% bank commission to max influence. Currently influence 1 vs 2 and 2. To beat 2 need 3+... bribe 5 gives influence 3? Wait choice 4: 5M to 1 gives me influence 2. Need influence ≥3 to be max? Others have 2, tie broken by cash+hard then tie_order [0,2,1] — I'd win tie at 2? Influence tie at 2: better cash+hard — I have most cash. So bribe 5M to anyone → influence 2, tied with both, my cash highest, tie_order favors me (0 first). Commission 5% of 55M ≈ 2.75M. But bribe costs 5M cash... net negative? Wait bribe gives cash to recipient, competitor. 5M cost for 2.75M gain — bad. Also recipient gains cash threatening rank? Rank: 50:30:15 of ~52M ≈ 27.5/16.5/8.2M. Rank based on cash+hard; I'm currently richest (35.2 vs 31.6 vs 19.8). Giving 5M to 1 → 31.6→36.6, drops me to 2nd place, losing ~11M. Terrible. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490319,
+    "id": "202610201758280529d10d5afe4cb0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201758280529d10d5afe4cb0",
+    "usage": {
+      "completion_tokens": 354,
+      "completion_tokens_details": {
+        "reasoning_tokens": 319
+      },
+      "prompt_tokens": 4452,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 4806
+    }
+  }
+}

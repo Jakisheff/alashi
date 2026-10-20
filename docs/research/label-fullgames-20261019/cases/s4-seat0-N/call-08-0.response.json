@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.798,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce даёт 3 товара без риска изъятия, тогда как shuttle несёт ~25% риск потери всего товара при отсутствии защитного тарифа\"}",
+          "reasoning_content": "Produce gives 2 goods; shuttle gives 3 goods but grey risk 25% loss of all goods. No tariff active (roof_tariff 0) so shuttle risky — grey goods can be seized. Shuttle gives 4 goods total with ~25% risk of losing all goods. Expected: 0.75*4=3 vs produce 3. Slightly worse due to risk. Produce safer.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427251,
+    "id": "202610200027278eee0ed2d29748c2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200027278eee0ed2d29748c2",
+    "usage": {
+      "completion_tokens": 124,
+      "completion_tokens_details": {
+        "reasoning_tokens": 84
+      },
+      "prompt_tokens": 2912,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 3036
+    }
+  }
+}

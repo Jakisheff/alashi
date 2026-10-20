@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.079,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар уже не конвертируется, а взятки для влияния стоят дороже бонуса 5% банка; сохраняю cash для ранга.\"}",
+          "reasoning_content": "Last round action, goods don't count. Cash counts. But influence matters: max influence gets 5% bank (~2.7 alashi) plus license income already mine. My cash 29.05, rival1 27.3, rival0 46.9. Rank: rival0 first. I'm second/third. Bribe to 1 (president) doesn't help me; bribe gives me influence: currently I have 1, rival1 has 3. To get max influence need >3 → bribe 15 alashi gives influence 4? Cost: 15 alashi cash reduces my rank. Max influence bonus 5% of bank ≈ 2.7 alashi — not worth 15. Best: pass, keep cash. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490911,
+    "id": "202610201808232c4463ebd9b64259",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201808232c4463ebd9b64259",
+    "usage": {
+      "completion_tokens": 205,
+      "completion_tokens_details": {
+        "reasoning_tokens": 162
+      },
+      "prompt_tokens": 4265,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 4470
+    }
+  }
+}

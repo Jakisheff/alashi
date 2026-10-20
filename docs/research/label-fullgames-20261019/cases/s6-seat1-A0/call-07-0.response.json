@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.055,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель не девальвируется и выплачивается полностью, поэтому продажа в кредит двух единиц по высокой цене максимизирует выплату.\"}",
+          "reasoning_content": "Price now: sold_counter=2, price 9? List [12,10,9,...] index2=9. Sell 2 → 9+8=17 alashi. Promissory: 17*1.25=21.25. But promissory devalues by /100*62 each round start? Actually cash devalues, promissory added then zeroed — wait, round start cash devalued, promissory paid in full. So promissory is good! Sell credit keeps value better than cash (which devalues 62%). So sell_credit 2 units maximizes promissory 21.25 alashi, immune to devaluation until paid. Choose 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427803,
+    "id": "202610200036372c00b0c834684a26",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200036372c00b0c834684a26",
+    "usage": {
+      "completion_tokens": 188,
+      "completion_tokens_details": {
+        "reasoning_tokens": 148
+      },
+      "prompt_tokens": 2482,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2670
+    }
+  }
+}

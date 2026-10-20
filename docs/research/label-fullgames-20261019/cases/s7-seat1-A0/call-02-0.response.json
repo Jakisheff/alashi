@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 19.003,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Карта 8 обнуляет векселя, которых ни у кого нет — закон нейтрален, пропускаю.\"}",
+          "reasoning_content": "Law 8 обнуляет promissory — у всех 0, нейтрально. Президент — faction 0 (holder_idx 0), не мы. Мы просто голосуем. Карта 8 безвредна. Проголосовать yes или abstain? Без разницы — pass. Но president holder 0 голосует тоже? Мы idx1. Голосуй pass (карта нейтральна).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490412,
+    "id": "202610201759541428e7f4c8a04fb6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201759541428e7f4c8a04fb6",
+    "usage": {
+      "completion_tokens": 129,
+      "completion_tokens_details": {
+        "reasoning_tokens": 91
+      },
+      "prompt_tokens": 2033,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2162
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.056,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон даёт +1 влияния самому богатому (элементу 0), что мне невыгодно.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest. Richest is element 0 (15 alashi). That boosts their influence; I'm not richest. Vote no. Holder is idx1 with weight... holder can veto. Element 1 may want yes/no. Voting no weakly helps? Actually law 5 benefits idx0, competitor. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428165,
+    "id": "20261020004239a9d47e4695fc4774",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020004239a9d47e4695fc4774",
+    "usage": {
+      "completion_tokens": 106,
+      "completion_tokens_details": {
+        "reasoning_tokens": 72
+      },
+      "prompt_tokens": 2234,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2340
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.572,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Шаттл даёт лучшую ожидаемую выручку (~13.5 alashi с учётом риска изъятия против 13 у produce).\"}",
+          "reasoning_content": "Shuttle gives 3 goods, 25% seizure risk at current border (tariff 0? Roof not armed, so border risk applies to grey goods). Shuttle gives 3+subsidy goods... shuttle likely produces grey goods. Price next market: counter 6, prices [5,4,3,...] plus boom 2? Boom +2 currently. Market values selling at ~7,6,5 alashi next round. 3 goods * ~5-7 = ~15-20 alashi expected minus 25% risk. Produce gives 2 goods safe. Shuttle expected: 3*0.75=2.25 goods. Better expected value? Prices declining. But round 4 market sells at counter 6: 5+2=7,4+2=6,3+2=5 → 7+6+5=18 alashi for 3 units vs 13 for 2 units. Expected shuttle = 0.75*18=13.5. Slightly better than produce. Also border tariff... risk only if grey. Choose shuttle, choice 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427636,
+    "id": "20261020003348c04522b68ee54bb8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003348c04522b68ee54bb8",
+    "usage": {
+      "completion_tokens": 273,
+      "completion_tokens_details": {
+        "reasoning_tokens": 230
+      },
+      "prompt_tokens": 3654,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 3927
+    }
+  }
+}

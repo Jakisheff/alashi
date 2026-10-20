@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.01,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Закон 0 без эффектов, воздержание безопасно\"}",
+          "reasoning_content": "Law 0 has no effects. Vote doesn't matter. Pass gives vote_weight bonus? Passing the action does; here action phase already passed (shuttle). In law, pass just skips. Vote yes/no equal; abstain is safe. I'm not holder. Vote no effect — abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490125,
+    "id": "202610201755151401d2fe481b482b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201755151401d2fe481b482b",
+    "usage": {
+      "completion_tokens": 85,
+      "completion_tokens_details": {
+        "reasoning_tokens": 62
+      },
+      "prompt_tokens": 2036,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2121
+    }
+  }
+}

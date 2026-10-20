@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.992,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Продажа в кредит даёт 1.25× выручку, а д девальвация в начале раунда 4 всё равно уравнивает cash, поэтому кредит выгоднее.\"}",
+          "reasoning_content": "Sold counter 4, price next = 5? Prices [12,10,9,8,...] counter 4 means next unit sells at 5. Selling 2 units gives 7 alashi total? Candidate shows +13 for selling 2 (7+6). Cash devolves at round start (÷100*62), promissory added full. I'm last in tie order, poorest. Sell 2 now for 13, or credit 16.25 promissory — but promissory isn't counted in ranking and only converts to cash. Credit gives 1.25x but adds next round as cash. Cash held devalues though — selling now means cash sits and devalues next round start anyway. Cash: currently 13.64; selling 2 → 26.64, round 4 start → floor 26*0.62≈16.4. Credit: 13.64+16.25=29.89 → 18.5. Credit better. Choose 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491073,
+    "id": "20261020181106c9ec8e4621e34626",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181106c9ec8e4621e34626",
+    "usage": {
+      "completion_tokens": 264,
+      "completion_tokens_details": {
+        "reasoning_tokens": 211
+      },
+      "prompt_tokens": 2412,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2676
+    }
+  }
+}

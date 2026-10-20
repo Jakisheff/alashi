@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.787,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Ожидаемая выгода shuttle выше, риск изъятия компенсируется объёмом.\"}",
+          "reasoning_content": "Produce vs shuttle (3 goods, 25% seizure risk). Shuttle expected goods 2.25, but grey risk. Safe produce 2. Choose produce... shuttle gives 3 grey with ~25% confiscation. EV 2.25 > 2. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428105,
+    "id": "2026102000414260fa8740e198492d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000414260fa8740e198492d",
+    "usage": {
+      "completion_tokens": 89,
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      },
+      "prompt_tokens": 1924,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2013
+    }
+  }
+}

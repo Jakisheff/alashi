@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.345,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Ставка на лицензию уже сделана; shuttle даёт максимум товара при ожидаемой ценности выше produce.\"}",
+          "reasoning_content": "I already bid 20M, cash 13.8M. I'm president with influence 2. Additional bid? No, bid already done. Best action: shuttle gives 3 goods (risk none yet — tariff not set... shuttle grey goods, 25% seizure; but no tariff, so risk applies? Grey goods can be seized ~25% regardless unless black tariff). Shuttle expected +2.25 goods vs produce +2. shuttle slightly better expected value, and license income pays off. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427983,
+    "id": "20261020003937da280ea363024541",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003937da280ea363024541",
+    "usage": {
+      "completion_tokens": 139,
+      "completion_tokens_details": {
+        "reasoning_tokens": 105
+      },
+      "prompt_tokens": 3481,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3620
+    }
+  }
+}

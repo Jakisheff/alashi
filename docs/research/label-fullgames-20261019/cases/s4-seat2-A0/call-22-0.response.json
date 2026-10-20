@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.994,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Финальный раунд: товары и влияние уже не конвертируются, я лидер по cash — просто сохраняю позицию.\"}",
+          "reasoning_content": "Last round, action. I'm idx2, cash 53.1M, richest. Law phase after: president is holder 0. Bribes give influence but cash loss doesn't help rank (cash+hard). Influence matters for 5% commission bonus. Currently all influence 2; tie: better cash — me. Bribe 5M gives influence 3, costs 5M cash but secures 5% of bank ≈ 3.15M... bank 63M, 5% = 3.15M. Losing 5M cash for 3.15M bonus — net negative, also affects rank weights. Rank: cash 53.1 vs 40.7 vs 26.4; I'm first. Weights 50:30:15 differences big. Better to just pass or produce (goods worthless now, no more market). Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427581,
+    "id": "202610200032542756667d69ea4d8b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200032542756667d69ea4d8b",
+    "usage": {
+      "completion_tokens": 225,
+      "completion_tokens_details": {
+        "reasoning_tokens": 185
+      },
+      "prompt_tokens": 5017,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 5242
+    }
+  }
+}

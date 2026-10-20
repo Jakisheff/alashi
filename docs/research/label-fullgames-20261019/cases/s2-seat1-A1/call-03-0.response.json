@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.164,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Карта 0 без эффектов — применять veto бессмысленно.\"}",
+          "reasoning_content": "Law 0 has no effect; vetoing changes nothing but nullifies the card? Veto rejects the law; card 0 does nothing. No point. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427342,
+    "id": "2026102000285983602fcdfd814324",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000285983602fcdfd814324",
+    "usage": {
+      "completion_tokens": 58,
+      "completion_tokens_details": {
+        "reasoning_tokens": 34
+      },
+      "prompt_tokens": 1992,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2050
+    }
+  }
+}

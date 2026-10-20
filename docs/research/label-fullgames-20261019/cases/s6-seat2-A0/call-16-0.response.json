@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.881,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продаю весь товар сейчас за живые деньги: вексель в раунде 6 не погасится, а кэш всё равно обесценится одинаково.\"}",
+          "reasoning_content": "Round 5 market, 3 goods, prices 12,10,9. Sell all = 31 alashi cash now; cash devalues at round 6 start (62%). Last round round 6 promissory is unpaid. So selling now for cash means cash floor devalued to 62% at round 6 start; credit gives 1.25x but promissory added after devaluation? At round 6 start cash=floor(cash/100)*62, then promissory added and reset — so promissory survives into round 6 but after round 6 not repaid. So sell_credit now → promissory never paid. So sell all now for cash: 33.3 alashi, becomes ~20.7 after devaluation — better than nothing. Sell 3 units now (choice 5).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491372,
+    "id": "202610201816077015e3fa19314cee",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201816077015e3fa19314cee",
+    "usage": {
+      "completion_tokens": 223,
+      "completion_tokens_details": {
+        "reasoning_tokens": 175
+      },
+      "prompt_tokens": 3161,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3384
+    }
+  }
+}

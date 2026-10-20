@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.426,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce даёт 2 товара без риска изъятия; EV выше, чем у shuttle с 25% потерей\"}",
+          "reasoning_content": "Shuttle gives 3 goods, ~25% seizure risk but goods sell well (counter 7, price 4-5). Produce gives 2 free of risk. Difference: 1 extra good ~4 alashi minus risk of losing ~12. Expected: shuttle = 0.75*3*4=9 vs produce 8. Similar but seizure loses all. Price at counter 7: [.., index 7 = 4]. Selling 3 gives 4+3+3=10, 4 after. Shuttle slightly better EV but also grey tariff? tariff currently 0, roof armed only by choice. Shuttle goods are grey, seizure ~25% unless black tariff. EV shuttle 7.5, produce 8. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490230,
+    "id": "202610201757015ed68bc0f4ab45ab",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201757015ed68bc0f4ab45ab",
+    "usage": {
+      "completion_tokens": 191,
+      "completion_tokens_details": {
+        "reasoning_tokens": 157
+      },
+      "prompt_tokens": 3684,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 3875
+    }
+  }
+}

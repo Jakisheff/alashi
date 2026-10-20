@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.583,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"shuttle даёт максимум товара для продажи на последнем рынке, конвертируя его в учитываемый cash.\"}",
+          "reasoning_content": "I hold license; round 5 action, then market round 6 to sell goods. Get goods to sell next market: shuttle gives 3 goods (25% seizure risk at border? tariff status — no tariff active). Next market sell 3 units at price 10 (counter=2, price list [12,10,9,...]) → 27 alashi credit*1.25. That's big. Shuttle (3 goods) vs produce (2 goods). Risk ~25% seizure. Expected shuttle 2.25 goods vs produce 2. shuttle better expected. Also could bribe for presidency? Influence 1 vs rival 3; bribing 10 to reach 3 ties, president tie by tie_order [0,2,1] → I'd be president at law 5? President determined at law entry by influence; tie_order priority: 0 before 2, so 10 bribe gives presidency. Law 5 map unknown; presidency lets veto. But losing 10 alashi cash vs goods. Goods next market worth 10 each ~12.5 credit. 3 goods = ~30. Bribe 10 costs 10 for presidency—veto power only in last law round, map unknown. Money in final: only cash counts. Promissory 27.5 not paid after round 6? Promissory added at start of round 2+, so round 6 start adds it already? At round 5 start cash=floor/100*62 then promissory added and reset. Yes promissory is now in cash (30 = 27.5? hmm cash 30 includes it... anyway). Selling credit in round 6 market: \"after last round promissory not paid\" — round 6 sell_credit revenue won't be paid. So round 6 selling should be plain sell, cash counted. Still goods→cash good. Take shuttle for 3 goods, ~27+ cash. Better than bribe.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427938,
+    "id": "2026102000384824e20d9ebf814b3c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000384824e20d9ebf814b3c",
+    "usage": {
+      "completion_tokens": 441,
+      "completion_tokens_details": {
+        "reasoning_tokens": 406
+      },
+      "prompt_tokens": 4052,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 4493
+    }
+  }
+}

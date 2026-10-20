@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.742,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Беру максимум товара: 3 единицы с учётом риска дают больше, чем produce, при высокой ликвидности.\"}",
+          "reasoning_content": "I'm element 0, cash 24, leader in cash. Round 2 action. Best: produce goods for future sales. Sold_counter=7, prices already low (price index 7 → 5). Prices low, better shuttle? shuttle gives 3 goods at 25% seizure risk. produce gives 2. Cash-rich, goods matter. Take shuttle for more goods; 25% loss expectation still better (3*0.75=2.25>2). Choose shuttle (choice 3).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490135,
+    "id": "2026102017553153b2e1c7ede643ad",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102017553153b2e1c7ede643ad",
+    "usage": {
+      "completion_tokens": 141,
+      "completion_tokens_details": {
+        "reasoning_tokens": 106
+      },
+      "prompt_tokens": 3075,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 3216
+    }
+  }
+}

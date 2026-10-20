@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.136,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Налог 10% ударит по моей продаже товара в следующем раунде; вето бесплатно как президент.\"}",
+          "reasoning_content": "Law 1: 10% tax on future sales. I have 3 goods to sell next round; tax hurts me. Opponent 2 voted No already. I'm president, veto is free. Veto it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428015,
+    "id": "20261020004012aa86cfa153bf48f1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020004012aa86cfa153bf48f1",
+    "usage": {
+      "completion_tokens": 80,
+      "completion_tokens_details": {
+        "reasoning_tokens": 46
+      },
+      "prompt_tokens": 3255,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3335
+    }
+  }
+}

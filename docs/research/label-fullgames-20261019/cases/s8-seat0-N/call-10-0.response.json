@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.229,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель даёт 8,75 млн против 7 млн наличными и будет погашен в раунде 5 без потерь.\"}",
+          "reasoning_content": "Round 4 market, I have 2 goods, price at sold=7 → 3 alashi each (index 7 → 3). Sell both = 7 alashi immediate (58.9M). Sell credit gives 8.75M promissory, paid round 5 but then devalued floor(cash/100)*62 — promissory added after devaluation so full value, but round 5 market I can sell more. Also last round promissory worthless; now round 4 of 6, fine.\n\nSelling now drops price for others. Sell 2 now (choice 3) — solid. Credit gives 8.75M vs 7M, promissory paid round 5, no further loss. Credit slightly better. But cash ranks for law effects... credit keeps cash lower (risk of card 5 giving richest influence). I'll take sell_credit units 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490967,
+    "id": "20261020180921196b245c1fd14093",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180921196b245c1fd14093",
+    "usage": {
+      "completion_tokens": 231,
+      "completion_tokens_details": {
+        "reasoning_tokens": 190
+      },
+      "prompt_tokens": 3013,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 3244
+    }
+  }
+}

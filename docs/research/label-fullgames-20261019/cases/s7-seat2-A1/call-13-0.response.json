@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.239,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Шаттл даёт 3 товара против 2, риск изъятия умеренный, а cash всё равно в эскроу.\"}",
+          "reasoning_content": "My cash is 0 (bid escrow took all). Bid already placed; now choose action. Shuttle gives 3 goods but risk of seizure ~25% (tariff status? tariff 0 presumably free border, no fee). Produce gives 2 safe. With cash 0, shuttle 3 goods worth more; no border tariff active. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490819,
+    "id": "202610201806557cc46fbc1673417c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201806557cc46fbc1673417c",
+    "usage": {
+      "completion_tokens": 113,
+      "completion_tokens_details": {
+        "reasoning_tokens": 73
+      },
+      "prompt_tokens": 2709,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2822
+    }
+  }
+}

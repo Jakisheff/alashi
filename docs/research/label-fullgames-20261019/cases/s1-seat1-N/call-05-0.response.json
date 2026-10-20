@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.319,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce даёт 2 товара без риска изъятия, надёжнее shuttle при близком ожидании\"}",
+          "reasoning_content": "Produce is safe. Shuttle gives 3 goods but 25% seizure risk (tariff 0, not black). Expected shuttle 2.25 vs produce 2 — but produce gives subsidy? No. Shuttle slightly better EV but variance; also round 4 auction matters — goods for selling. Choose shuttle? Seizure loses all goods? \"риск около 25% потери всего товара\" for red border. Tariff=0 — default border? Shuttle \"может быть изъят с вероятностью около 25%\". I'll pick produce for safety, but EV favors shuttle slightly. Risk-averse: produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427611,
+    "id": "20261020003325ff6670ebb45b4ca7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003325ff6670ebb45b4ca7",
+    "usage": {
+      "completion_tokens": 162,
+      "completion_tokens_details": {
+        "reasoning_tokens": 131
+      },
+      "prompt_tokens": 2174,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2336
+    }
+  }
+}

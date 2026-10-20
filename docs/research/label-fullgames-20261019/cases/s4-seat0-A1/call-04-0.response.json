@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.779,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Продаю оба товара за реальные деньги сейчас; вексель рискует обнулением (карта 8 уже вышла, но кэш надёжнее)\"}",
+          "reasoning_content": "Sell 2 units at price 9+10... sold_counter=2, prices: unit3=9? Actually counter 2, first sold at 10? Prices: sell 2 units at 9 and 8 = 17. Take cash now (choice 3) — hard cash counts in ranking, promissory risks card 8 wiping.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490259,
+    "id": "20261020175735b67eae54a6a640f1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175735b67eae54a6a640f1",
+    "usage": {
+      "completion_tokens": 120,
+      "completion_tokens_details": {
+        "reasoning_tokens": 74
+      },
+      "prompt_tokens": 2219,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2339
+    }
+  }
+}

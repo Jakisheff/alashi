@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.305,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Голосую против 20% налога, чтобы закон не прошёл и мои будущие продажи не облагались.\"}",
+          "reasoning_content": "Law 2 = tax 20% on future sales. I have 3 goods to sell in rounds 5-6, promissory 22.5. Tax hurts me. Currently yes:3, no:3, tie → not passed if tie (strictly greater needed). My vote weight 1. If I vote no → 3 vs 4, law fails. Good.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491221,
+    "id": "20261020181337dfd91d85857448a1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181337dfd91d85857448a1",
+    "usage": {
+      "completion_tokens": 116,
+      "completion_tokens_details": {
+        "reasoning_tokens": 81
+      },
+      "prompt_tokens": 2812,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2928
+    }
+  }
+}

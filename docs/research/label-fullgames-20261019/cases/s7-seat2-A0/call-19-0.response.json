@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.508,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон даёт +1 влияния мне как беднейшему, а влияние приносит 5% комиссии банка.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest by cash. I'm poorest (5.3M). President is idx 0. My vote weight 1, president weight 1 (or 3 if abstained action? No, I produced). Others haven't voted. Yes=1, could be outvoted by others. If passed, I gain influence → helps 5% commission tie? Max influence currently tied. Vote yes to gain +1 influence.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427433,
+    "id": "202610200030289e5c0a4bbf0d4e03",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200030289e5c0a4bbf0d4e03",
+    "usage": {
+      "completion_tokens": 129,
+      "completion_tokens_details": {
+        "reasoning_tokens": 95
+      },
+      "prompt_tokens": 3180,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3309
+    }
+  }
+}

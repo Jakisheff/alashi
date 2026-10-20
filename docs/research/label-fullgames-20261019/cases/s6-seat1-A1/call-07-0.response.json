@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.953,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Продаю обе единицы в кредит: карта 8 больше не появится, а вексель не девальвируется.\"}",
+          "reasoning_content": "Round 3 market, price at index 2 is 9. Sell 2 now for 17 vs credit 21.25 promissory but devaluation round start: floor(cash/100)*62 — promissory added after devaluation, so promissory holds value if law 8 doesn't wipe. Last round promissory unpaid. We're mid-game; credit worth 1.25x. Risk: law 8 repeats? Cards no repeats, so card 8 was already drawn (vetoed? we voted no... law 8 in round 2 was vetoed? We voted no; outcome unknown—veto didn't apply). Cards drawn without repeats, so 8 won't reappear. Sell credit 2 units is good.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792489968,
+    "id": "2026102017524395250def40554f77",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102017524395250def40554f77",
+    "usage": {
+      "completion_tokens": 194,
+      "completion_tokens_details": {
+        "reasoning_tokens": 158
+      },
+      "prompt_tokens": 2481,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2675
+    }
+  }
+}

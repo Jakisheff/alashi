@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 15.139,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 10% навредит моим продажам в раунде 6, голосую против.\"}",
+          "reasoning_content": "I'm faction 0, not president (holder 1). Law 1: 10% tax on future sales. I sell goods later (round 6 market). Tax 10% hurts me — opponents already: idx2 voted No. President holder 1 votes; if president yes, 1 vs 1 → fails (yes must be strictly greater). So vote_no to be safe.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428158,
+    "id": "2026102000422495e618254e994ba5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000422495e618254e994ba5",
+    "usage": {
+      "completion_tokens": 113,
+      "completion_tokens_details": {
+        "reasoning_tokens": 81
+      },
+      "prompt_tokens": 3120,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3233
+    }
+  }
+}

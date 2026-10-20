@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 14.391,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Перед девальвацией раунда 6 выручку выгоднее держать в векселях: sell_credit всех 3 единиц даёт 22,5 alashi без обесценения.\"}",
+          "reasoning_content": "Round 5 market, then round 6 cash gets devalued (cash=floor(cash/100)*62). So cash converts to 62%! Promissory is added after devaluation at full value. So sell_credit is hugely better — sell now for promissory. Prices: counter=4, price 7 for first units, 6, 5...\n\nCash now 41.9M will devalue to ~26M. So better to sell via credit: units 3 → promissory 22.5M which survives. Actually sell units 3 gives cash +18M which will devalue. Sell_credit gives 22.5M promissory full value. Definitely sell_credit 3 (choice 6). Cash devaluation: selling for cash still gets 62%... promissory 22.5 > 18*0.62≈11. Choose 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490834,
+    "id": "20261020180700fef1cede597e48bb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180700fef1cede597e48bb",
+    "usage": {
+      "completion_tokens": 241,
+      "completion_tokens_details": {
+        "reasoning_tokens": 187
+      },
+      "prompt_tokens": 3315,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3556
+    }
+  }
+}

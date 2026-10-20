@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.066,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Ожидаемо больше товара (3 с риском ~25%), денег всё равно нет.\"}",
+          "reasoning_content": "I have cash 0, goods 0. Bid already 0? own_bid=0 shown. I'm element 1. Produce gives 2 goods free. Shuttle gives 3 grey goods, risk 25% seizure. Cash 0, no bribe options. Produce is safe; shuttle expected 2.25 goods. Take shuttle? Grey goods can be seized at border ~25%, tariff unknown. Red tariff risk; black protects. Risk of losing all. Expected goods higher with shuttle but variance. Also donkey not offered (cash 0). I'll take shuttle for expected value.\n\nActually seizure means entire grey goods lost? \"товар может быть изъят\" — risk ~25% loss of all goods. Expected 2.25 vs 2. Slight edge, plus auction already 0 bid. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490642,
+    "id": "202610201803554aa4bcb2b88340af",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201803554aa4bcb2b88340af",
+    "usage": {
+      "completion_tokens": 202,
+      "completion_tokens_details": {
+        "reasoning_tokens": 172
+      },
+      "prompt_tokens": 2160,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2362
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.49,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель выплачивается после девальвации, sell_credit даёт больше при том же риске\"}",
+          "reasoning_content": "Sell 2 at 12+10=22 total. But credit gives 27.5 promissory paid in round 2 start... wait promissory is added at start of round; it's round 2 already, so promissory would be added at round 3 start — but cash devolution applies to cash only. Promissory from round 2 gets paid at round 3 start without devaluation? Promissory added after devaluation — so sell_credit is strictly better. Choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427663,
+    "id": "202610200034159b88570d4f254650",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200034159b88570d4f254650",
+    "usage": {
+      "completion_tokens": 138,
+      "completion_tokens_details": {
+        "reasoning_tokens": 106
+      },
+      "prompt_tokens": 2218,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2356
+    }
+  }
+}

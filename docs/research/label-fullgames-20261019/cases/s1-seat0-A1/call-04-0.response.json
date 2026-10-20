@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.185,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель не девальвируется и даёт 30 против 24, которые обесценятся до ~14.9.\"}",
+          "reasoning_content": "Prices at sold_counter=2: next prices 9,8,7. Selling 3 gives 9+8+7=24. Credit gives 30 but devaluation round 3: floor(30/100)... 30 alashi -> floor(3000/100)*62? Actually cash devaluation formula applies to cash; promissory added after. Round 3 start cash=floor(cash/100)*62 — that's on cash only. Promissory 30 added full. So credit better? Credit gives 30 vs 24 now; 24 cash would be devalued: floor(2400/100)*62 = 24*0.62=14.88. Credit 30 added after devaluation = 30. Definitely credit. Sell all 3 credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427840,
+    "id": "202610200037143b28fd8ebe524a9b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200037143b28fd8ebe524a9b",
+    "usage": {
+      "completion_tokens": 203,
+      "completion_tokens_details": {
+        "reasoning_tokens": 165
+      },
+      "prompt_tokens": 2328,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2531
+    }
+  }
+}
