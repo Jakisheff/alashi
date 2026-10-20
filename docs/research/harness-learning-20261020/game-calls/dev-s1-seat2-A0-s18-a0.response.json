@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.512,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 7 влияет только на следующий рынок, которого больше нет, исход не меняется.\"}",
+          "reasoning_content": "Law 7: prices +2 next market — but round 6 market already done. No effect on final. President is idx1, not me. I'm idx2, vote weight 3. Votes: two Yes weight 1 each; law passes if yes>no. Law 7 harmless now. Doesn't matter; abstain to avoid affecting? Yes passes already even with my no (2 yes vs 3 no — no! weight 3 > 2, so vote_no blocks). But law has no effect on final anyway. Pass or abstain. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495632,
+    "id": "20261020192708631b64764a2c4fca",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192708631b64764a2c4fca",
+    "usage": {
+      "completion_tokens": 147,
+      "completion_tokens_details": {
+        "reasoning_tokens": 118
+      },
+      "prompt_tokens": 3121,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3268
+    }
+  }
+}

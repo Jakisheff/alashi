@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.569,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Я уже лидирую по влиянию (бонус 5% банка и президентство), товары в финальном раунде бесполезны — pass сохраняет +2 к весу голоса.\"}",
+          "reasoning_content": "Round 6 action, then market 7? No, round 6 is last; goods useless for cash unless... produce gives goods but no market left. But bribery raises influence → max influence bonus 5% of bank = 2.1 alashi plus tie-break benefits. Also bribe sends money to rival — but influence gain gives 5% commission share (5% of 42M = 2.1M) and better tie ranks. I'm holder (idx1, influence 3 vs others 2 and 1). Already max influence. No need for bribe. Pass to save vote_weight +2. But goods worthless anyway; produce also fine. Best: pass (keeps influence lead and +2 vote weight for final law veto). Choose 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495265,
+    "id": "20261020192059d1a74b8ddaf242f4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192059d1a74b8ddaf242f4",
+    "usage": {
+      "completion_tokens": 214,
+      "completion_tokens_details": {
+        "reasoning_tokens": 160
+      },
+      "prompt_tokens": 4752,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 4966
+    }
+  }
+}

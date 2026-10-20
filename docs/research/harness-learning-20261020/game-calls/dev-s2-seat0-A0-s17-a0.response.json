@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.441,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Карта 5 даёт +1 влияния богатейшему (фракция 1), что снизит мою долю комиссии — налагаю veto.\"}",
+          "reasoning_content": "Card 5 gives +1 influence to richest by cash. Richest cash: фракция 1 (30.2M). I'm second (17.5M). Giving them +1 influence hurts my influence-max bonus (my 5% commission). I'm president with influence 2. If they gain +1, they reach 2, tie broken by cash+hard — they'd win. Veto blocks.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495375,
+    "id": "20261020192252b53ecfb99acc446f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192252b53ecfb99acc446f",
+    "usage": {
+      "completion_tokens": 131,
+      "completion_tokens_details": {
+        "reasoning_tokens": 87
+      },
+      "prompt_tokens": 3106,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3237
+    }
+  }
+}

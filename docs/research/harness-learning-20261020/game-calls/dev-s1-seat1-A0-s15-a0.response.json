@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.347,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Беру shuttle ради 3 товаров на финальную продажу за наличные.\"}",
+          "reasoning_content": "I'm president with influence 2, vote_weight 4. Next round 6: cash dev aluates floor(cash/100)*62. I have promissory 31M which gets added next round start — wait, promissory added at start of round 6 then last round market? Round 6 market happens, and promissory won't be repaid after last round. Actually round 6 is last; promissory added to cash at start of round 6 counts as cash! So I have ~31.8M cash in round 6 market.\n\nNow action: I have no goods. Best to get goods to sell in round 6? Wait, selling gives promissory which is worthless after round 6. So selling in round 6 market yields promissory that won't be paid! Actually sell gives cash; sell_credit gives promissory. In round 6 I should sell normally for cash. Getting goods now: produce gives 2 goods, shuttle 3 (risk 25% seizure, tariff?). Seizure risk exists unless black tariff. shuttle free gives 3 goods; sell in round 6: price counter 3 → price 8. 3 units: 8+7+6=21 minus 20% tax ≈ 16.8 alashi cash. produce gives 2: 8+7=15-20% = 12. Shuttle better even with 25% risk (~0.75*16.8=12.6, similar to produce 12). Shuttle risk-free-ish, choose shuttle (choice 2).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495153,
+    "id": "202610201919054083fef4025b41a2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201919054083fef4025b41a2",
+    "usage": {
+      "completion_tokens": 357,
+      "completion_tokens_details": {
+        "reasoning_tokens": 330
+      },
+      "prompt_tokens": 3084,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3441
+    }
+  }
+}

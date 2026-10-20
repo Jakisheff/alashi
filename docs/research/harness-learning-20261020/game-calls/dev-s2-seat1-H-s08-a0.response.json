@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.87,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товара нет, покупка по 9 невыгодна при будущих низких ценах — сохраняю cash для ранга и аукциона.\"}",
+          "reasoning_content": "Round 3 market, own_idx 1. Sell? I have 0 goods. Buy? Price at counter 2 = 9 alashi. Buying 2 units at 9 each? Candidate buy 1 costs 9 alashi (cash 22.5→13.5). Later prices fall... In round 6 I can sell. Buying at 9 and selling later at maybe lower price — risky. But goods are 0, future income low. Buying 1 unit at 9 and selling in round 6 likely at low price (counter will rise). Probably pass. But keeping cash matters for rank. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495202,
+    "id": "20261020191958b513e98b96c946a1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020191958b513e98b96c946a1",
+    "usage": {
+      "completion_tokens": 173,
+      "completion_tokens_details": {
+        "reasoning_tokens": 130
+      },
+      "prompt_tokens": 2767,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2940
+    }
+  }
+}

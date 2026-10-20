@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.684,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":7,\"reason\":\"Продать весь товар по максимальной цене, чтобы иметь кэш для аукциона лицензии в этом раунде.\"}",
+          "reasoning_content": "Licence auction is next action phase. Cash 5.27M is low; selling goods gives cash to bid. Prices fall with more sales; others will sell too. Sell 4 units for 39M cash? sell 4 gives cash 44.27M, cash useful for auction bid (whole cash). License income 20-60 alashi, worth a lot. Bid high. But bank bonus... Keep some cash for rank. I think sell 4 units (choice 7) to maximize cash for the auction. Prices high now (start 12).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495238,
+    "id": "20261020192027339b38aa653f43df",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192027339b38aa653f43df",
+    "usage": {
+      "completion_tokens": 155,
+      "completion_tokens_details": {
+        "reasoning_tokens": 117
+      },
+      "prompt_tokens": 2907,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 3062
+    }
+  }
+}

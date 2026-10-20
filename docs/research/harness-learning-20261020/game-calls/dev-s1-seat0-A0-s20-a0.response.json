@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.494,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Карта 7 повышает цены следующего рынка, которого больше нет — эффект пуст, исход игры не меняется.\"}",
+          "reasoning_content": "Law 7: +2 prices next market — but this is the last round (round 6), no next market. No effect. Vote doesn't matter. License holder is me; income paid regardless. Vote yes/no irrelevant. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495655,
+    "id": "202610201927322a9338ee042842e0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201927322a9338ee042842e0",
+    "usage": {
+      "completion_tokens": 84,
+      "completion_tokens_details": {
+        "reasoning_tokens": 50
+      },
+      "prompt_tokens": 3230,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3314
+    }
+  }
+}

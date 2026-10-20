@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.076,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель выплачивается после девальвации, закон 8 уже вышел из колоды — продаю всё в кредит.\"}",
+          "reasoning_content": "Sell all 3 now at price 7 (counter=4 → next price 6,7,8? counter=4 means next price index 4 = 7). Sell 3 gives 7+6+5=18? Candidate says +18 (45.5-27.5). Later prices fall; sell now cash. But inflation round4 start cash/100*62. Immediate cash best: sell 3 → 45.5M, devalued to 28.2M + keep. sell_credit 22.5M promissory — but law 8 already used; promissory pays round 4 start (added after devaluation). Actually sell_credit promissory is added after devaluation — good! 22.5M paid in full without devaluation vs cash 18M devalued to 11.16M. sell_credit much better. But risk of law 8 (обнуление promissory) — already drawn round 1. So safe. Sell credit 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495079,
+    "id": "202610201917523ac9bc1ef7e945ce",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201917523ac9bc1ef7e945ce",
+    "usage": {
+      "completion_tokens": 250,
+      "completion_tokens_details": {
+        "reasoning_tokens": 213
+      },
+      "prompt_tokens": 3161,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 3411
+    }
+  }
+}

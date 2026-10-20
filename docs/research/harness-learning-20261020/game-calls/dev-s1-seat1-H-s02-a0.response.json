@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.962,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 8 обнуляет векселя — может помешать будущим sell_credit, отклоняю как президент.\"}",
+          "reasoning_content": "Card 8 nullifies promissory — everyone has 0, harmless. But I'm president; vote_yes lets card pass (no effect now). Fine, pass? Vote with weight; pass wastes. Choose vote_no? Others may vote yes; card 8 harmless now, but bad later if I plan sell_credit. Vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495404,
+    "id": "20261020192320be40bdde1195472e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192320be40bdde1195472e",
+    "usage": {
+      "completion_tokens": 106,
+      "completion_tokens_details": {
+        "reasoning_tokens": 69
+      },
+      "prompt_tokens": 2479,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2585
+    }
+  }
+}

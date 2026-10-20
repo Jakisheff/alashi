@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.617,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Бесплатные 3 товара дадут ~21 alashi на следующем рынке, лучше сохранения инфлирующего cash.\"}",
+          "reasoning_content": "I hold license, promissory 38.75M, cash 12.6M. Round 5 action. In round 6 cash inflates: floor(cash/100)*62 — losing ~38% of cash. Better convert cash into goods? Goods can be sold round 6 but proceeds also... Actually selling in round 6 gives cash that counts. Shuttle gives 3 goods, sell next round ~ price at counter 3? sold_counter=3, price list next unit index 3 → 8,7,6 for 3 units ≈ 21 alashi × maybe. Wait prices [12,10,9,8...] counter=3 means next price 8. Selling 3 goods next round gives 8+7+6=21 alashi. But my promissory won't be repaid after round 6... promissory added to cash at round 6 start (cash=floor/100*62 then promissory added). Yes promissory adds at start of round 6, so 38.75M becomes cash — good, no inflation on promissory.\n\nCash 12.6M inflates to ~7.8M. Spending 1M on donkey vs shuttle free 3 goods worth ~21 alashi = 21M. Shuttle is best. Choice 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495500,
+    "id": "202610201924504c6a187cd87b43dc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201924504c6a187cd87b43dc",
+    "usage": {
+      "completion_tokens": 315,
+      "completion_tokens_details": {
+        "reasoning_tokens": 278
+      },
+      "prompt_tokens": 3999,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 4314
+    }
+  }
+}

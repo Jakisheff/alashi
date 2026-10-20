@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.346,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Последний раунд: вексель не погашается, продаю весь товар за наличные.\"}",
+          "reasoning_content": "Last round, promissory won't be paid. Sell all 3 for cash now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495160,
+    "id": "20261020191916bb33ad5f952d46ad",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020191916bb33ad5f952d46ad",
+    "usage": {
+      "completion_tokens": 50,
+      "completion_tokens_details": {
+        "reasoning_tokens": 19
+      },
+      "prompt_tokens": 3733,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3783
+    }
+  }
+}

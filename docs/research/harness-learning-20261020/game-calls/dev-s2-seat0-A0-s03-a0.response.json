@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.888,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Кредитная продажа двух единиц даёт 1.25× выручку и избегает части девальваций.\"}",
+          "reasoning_content": "Prices falling (sold_counter=2 already, others sold?). Sell 2 units now at 9+8=17. Cash later devalued 62% though. sell_credit avoids devaluation but promissory redeemed... promissory adds to cash next round, then devalued next-next. Devaluation floor(cash/100)*62 — promissory paid at round 3 start then round 4 devalued. Actually selling cash now → devalued 62% at round 3. Credit: 21.25 paid in round 3, devalued round 4. Roughly similar; credit better (1.25x, only one devaluation either way... cash: devalued rounds 3,4,5,6? Cash from now survives 4 devaluations). Credit better. But promissory after last round not paid. Not near last. Choose sell_credit 2 units: choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495292,
+    "id": "202610201921260e36d4d6755a453b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201921260e36d4d6755a453b",
+    "usage": {
+      "completion_tokens": 234,
+      "completion_tokens_details": {
+        "reasoning_tokens": 196
+      },
+      "prompt_tokens": 2153,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2387
+    }
+  }
+}

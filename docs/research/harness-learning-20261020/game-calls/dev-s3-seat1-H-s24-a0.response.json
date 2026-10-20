@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.13,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 6 всё равно не проходит (No 2 > Yes 1) и следующий рынок отсутствует; veto не нужен.\"}",
+          "reasoning_content": "Law 6 lowers prices next market — but round 6 was last market. So it has no effect? Actually market round 6 already done; next market doesn't exist. Vote: No=2, Yes=1, Abstain=4 → yes not > no, law fails anyway. Veto unnecessary; law fails either way. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495296,
+    "id": "20261020192133e888e99b5e8e4c8d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192133e888e99b5e8e4c8d",
+    "usage": {
+      "completion_tokens": 109,
+      "completion_tokens_details": {
+        "reasoning_tokens": 72
+      },
+      "prompt_tokens": 3817,
+      "prompt_tokens_details": {
+        "cached_tokens": 3264
+      },
+      "total_tokens": 3926
+    }
+  }
+}

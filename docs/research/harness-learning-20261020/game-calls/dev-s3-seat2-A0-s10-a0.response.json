@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.515,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон о налоге 20% невыгоден моим будущим продажам, мой голос решает — против.\"}",
+          "reasoning_content": "Law 2: tax 20% on future sales. I plan to sell later. Votes: Yes=1, No=1. My vote decides. Tax 20% hurts my sales; vote no — then yes=1, no=2, rejected.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495451,
+    "id": "20261020192406099877fbe43a4aba",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192406099877fbe43a4aba",
+    "usage": {
+      "completion_tokens": 89,
+      "completion_tokens_details": {
+        "reasoning_tokens": 54
+      },
+      "prompt_tokens": 2610,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2699
+    }
+  }
+}

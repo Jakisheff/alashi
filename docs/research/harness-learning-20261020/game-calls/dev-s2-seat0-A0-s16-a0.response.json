@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.008,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Взятка 5 alashi даёт влияние 2 и пост президента с veto, защищая вексель 38.75 alashi от закона 8 и комиссию 5% банка.\"}",
+          "reasoning_content": "I hold the license (already paid bid?). My cash 22.5M, promissory 38.75M. Round 5 action, one more round. Getting presidency via influence would give the 5% bank commission (~2.1M) — needs influence ≥2? President is idx 2 with influence 1, tie_order [2,1,0]; I'd need influence 2. Bribe 5M gives influence 2, presidency in law, plus veto power. But paying 5M to a rival costs cash (rank), gain: presidency control in law rounds 5 and 6, plus max-influence commission 5% (~2.1M) at end — need influence ≥ others (all 1). So bribe 5M to idx 2 (already president, richer? no — to 2 pays current president). Bribe to 1: then law round 5 I'm president.\n\nCost 5M vs gains: commission ~2.1M + veto control. Veto control could block bad law (e.g. card 8 wipes promissory 38.75M — huge). Bribe 5M protects my promissory. Choose bribe 5M. To 1 or 2? To 2 gives cash to current president; better to bribe the poorer rival... idx 1 has 25.2M, idx 2 has 23.1M. Give to idx 1 (further from me in rank? I have promissory not counted). Give to the richer one: idx 1. Choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495371,
+    "id": "20261020192243d4eec2dde91c48e9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192243d4eec2dde91c48e9",
+    "usage": {
+      "completion_tokens": 387,
+      "completion_tokens_details": {
+        "reasoning_tokens": 335
+      },
+      "prompt_tokens": 3864,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 4251
+    }
+  }
+}

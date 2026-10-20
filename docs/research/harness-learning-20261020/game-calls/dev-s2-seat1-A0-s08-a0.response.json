@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.753,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Покупаю дешёвый товар и откатываю счётчик цен для будущих продаж.\"}",
+          "reasoning_content": "I have no goods, cash 22.5. Market price now with counter 2: price ~9? Buying moves counter back. Buying 2 at 9+? Actually buy moves counter back — cheaper later sells. Price counter=2, price 9 alashi? Buying 2 costs 9 alashi? Candidate: units=2 costs 18 alashi. Then later sell at higher price. But competitors may sell. Buying 2 gives future profit if I can produce/sell later. Later rounds I'll have shuttle goods. Buying now moves counter back, raising price for my future sales. Buy 2 seems good.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495215,
+    "id": "202610201920093ee7dff408de43a1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201920093ee7dff408de43a1",
+    "usage": {
+      "completion_tokens": 162,
+      "completion_tokens_details": {
+        "reasoning_tokens": 130
+      },
+      "prompt_tokens": 2362,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2524
+    }
+  }
+}

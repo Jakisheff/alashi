@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.748,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Цены сейчас максимальны, а в раунде 6 cash девальвирует — продаю весь товар немедленно.\"}",
+          "reasoning_content": "Sell now at 12 price (counter reset, shift 0? Law 6 was -2 but voted no... it passed? Actually I voted no; result unknown. market shows price_shift 0, so fine). Sell 3 for cash now — prices likely lower next round due to devaluation 62%. Sell all 3 now: cash 43.5M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495614,
+    "id": "202610201926503a34549431944ff2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201926503a34549431944ff2",
+    "usage": {
+      "completion_tokens": 116,
+      "completion_tokens_details": {
+        "reasoning_tokens": 77
+      },
+      "prompt_tokens": 3048,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3164
+    }
+  }
+}

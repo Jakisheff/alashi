@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.71,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Ставка уже сделана; беру максимум товара через shuttle для будущих продаж.\"}",
+          "reasoning_content": "Recommended choice 5 is bribe 10M to 0 — but that's an auction bid already made (own_bid=12M). Wait, recommended_choice 5 is bribe, not the bid. The bid already happened. Main action: produce or shuttle. Shuttle gives 3 goods (risk? no tariff active). Shuttle better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495474,
+    "id": "20261020192425df55b30b0e984ab9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192425df55b30b0e984ab9",
+    "usage": {
+      "completion_tokens": 98,
+      "completion_tokens_details": {
+        "reasoning_tokens": 70
+      },
+      "prompt_tokens": 4188,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 4286
+    }
+  }
+}

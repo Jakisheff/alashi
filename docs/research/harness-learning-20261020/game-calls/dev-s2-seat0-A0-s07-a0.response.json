@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.891,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Покупка по 12 не даёт прибыли, а свободный cash важен для ранга и будущих рынков.\"}",
+          "reasoning_content": "Buying 1 unit at 12 alashi? cost 12M, cash left 9.25M. I have no goods. Price starts at 12 (sold_counter 0). Buy 1 now, could sell later higher? Prices decline with sales; buying moves counter back — later selling resets price to 12. Round 3 of 6, more market chances. Buy cheap now, sell at 12 later — but others sell too. Actually current price 12 is highest; buying now at 12 then selling later at 12 after others sold... risky. Cash 21.25M is decent rank (2nd). Keep cash for rank, maybe buy to resell profitably? Net zero at best. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495309,
+    "id": "20261020192141dbaaf2435efc466b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192141dbaaf2435efc466b",
+    "usage": {
+      "completion_tokens": 187,
+      "completion_tokens_details": {
+        "reasoning_tokens": 151
+      },
+      "prompt_tokens": 2249,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2436
+    }
+  }
+}

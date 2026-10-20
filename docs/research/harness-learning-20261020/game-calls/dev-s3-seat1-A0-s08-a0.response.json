@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.519,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продаю весь товар сейчас по высокой цене, вексель обесценится девальвацией.\"}",
+          "reasoning_content": "Sell 3 credit: promissory 26.25M but cash devalues each round start (62%). Selling now for cash is better; price will drop later. Sell 3 now (cash 37.25M) but devaluation hits. Still, prices decline—sell all now. Choice 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495339,
+    "id": "20261020192211d3a0c7777b9b486e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192211d3a0c7777b9b486e",
+    "usage": {
+      "completion_tokens": 98,
+      "completion_tokens_details": {
+        "reasoning_tokens": 65
+      },
+      "prompt_tokens": 2644,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2742
+    }
+  }
+}

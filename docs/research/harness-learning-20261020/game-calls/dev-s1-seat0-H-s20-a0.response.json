@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.436,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товары и законы уже бесполезны, взятки лишь усилят соперников — сохраняю лидерство по cash.\"}",
+          "reasoning_content": "Round 6 action, last round. Goods=0, so produce/shuttle useless (no market after? There's a market in round 6 already passed — actually order: market, action, law; round 6 market already done). So goods useless. Bribes reduce cash. Bribe 5 to idx2 gives influence 2, tie with idx2 (2), but tie_order [1,0,2], president... but law only matters for tax laws; final law irrelevant mostly. Cash ranking: I'm top by far (76 vs 30/26). Influence max is idx2 (2). The 5% commission bonus goes to max influence — could I take it? Bribe 10 to idx2 → influence 3, cash 66.35 still top. Commission 5% of 42M = 2.1M for cost 10M bribe — not worth. But bribe gives cash to opponent, raising their rank — bad. Best: pass.\n\nActually influence bonus: max influence gets 5% of bank = 2.1M. Bribe 5M costs 5M cash for 2.1M gain — net negative. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495516,
+    "id": "202610201925086f3e4b9039f44a51",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201925086f3e4b9039f44a51",
+    "usage": {
+      "completion_tokens": 288,
+      "completion_tokens_details": {
+        "reasoning_tokens": 248
+      },
+      "prompt_tokens": 5907,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 6195
+    }
+  }
+}

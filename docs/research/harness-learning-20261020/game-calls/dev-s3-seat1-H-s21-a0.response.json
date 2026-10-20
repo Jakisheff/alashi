@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.287,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Финальный раунд: векселя не погашаются, продажа всех 3 товаров максимизирует cash и ранг.\"}",
+          "reasoning_content": "Round 6 last market, promissory won't be paid. Sell all 3: cash 49.3M, beat rival 0's 30.7M... but rival may also sell after? Order rotates; I sell now, rivals sell after. Rival 0 has 0 goods, rival 2 has 2 goods. Selling all 3 gives me top rank likely (49.3 vs 20.4+~17=37). Also rank matters for payout. Sell 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495275,
+    "id": "202610201921102ae74d31d9904fc6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201921102ae74d31d9904fc6",
+    "usage": {
+      "completion_tokens": 144,
+      "completion_tokens_details": {
+        "reasoning_tokens": 106
+      },
+      "prompt_tokens": 4009,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 4153
+    }
+  }
+}

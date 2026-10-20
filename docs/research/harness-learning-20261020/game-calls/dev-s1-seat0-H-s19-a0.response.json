@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.637,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Последний раунд: вексель не погасится, продаю весь товар сразу за наличные.\"}",
+          "reasoning_content": "Round 6, last market. Promissory not paid after round 6? Actually promissory adds to cash at start of rounds 2+; after last round it's not repaid. So sell_credit useless. Sell all 3 now: cash 76M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495507,
+    "id": "2026102019250435b35df9dfc54413",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019250435b35df9dfc54413",
+    "usage": {
+      "completion_tokens": 89,
+      "completion_tokens_details": {
+        "reasoning_tokens": 57
+      },
+      "prompt_tokens": 3917,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 4006
+    }
+  }
+}

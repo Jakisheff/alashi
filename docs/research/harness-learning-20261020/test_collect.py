@@ -2,6 +2,7 @@ import json,shutil,tempfile,threading,unittest
 from pathlib import Path
 from unittest.mock import patch
 import collect,common as c
+import validate_games
 class FakeAPI:
  def __init__(self,root,limits):
   self.root=Path(root);self.root.mkdir(exist_ok=True);self.calls=len(list(self.root.glob('*.request.json')));self.stop=threading.Event();self.new=0
@@ -21,7 +22,9 @@ class CollectorTests(unittest.TestCase):
    job={'id':'dev-mock-seat0-A0','seed_index':0,'seed':987321,'seat':0,'arm':'A0','opponents':['greedy','tactical'],'partition':'dev'};protocol={'dev_jobs':[job],'collection_limits':{},'executor_settings':c.SETTINGS}
    with patch.object(collect,'ROOT',root),patch.object(collect,'API',FakeAPI):
     first=collect.Collector('dev',protocol);result=first.game(job);self.assertEqual(result['status'],'completed',result)
-    folder=root/'runs/dev'/job['id'];game=json.loads((folder/'game.json').read_text());rows=(folder/'trace.jsonl').read_text().splitlines(keepends=True);prefix=''.join(rows[:5]);(folder/'trace.jsonl').write_text(prefix);(folder/'result.json').unlink();(folder/'game.json').unlink()
+    folder=root/'runs/dev'/job['id'];game=json.loads((folder/'game.json').read_text())
+    with patch.object(validate_games,'ROOT',root):self.assertTrue(validate_games.validate_job(job,'dev')['exact_replay'])
+    rows=(folder/'trace.jsonl').read_text().splitlines(keepends=True);prefix=''.join(rows[:5]);(folder/'trace.jsonl').write_text(prefix);(folder/'result.json').unlink();(folder/'game.json').unlink()
     resumed=collect.Collector('dev',protocol);again=resumed.game(job);self.assertEqual(again['status'],'completed',again);self.assertEqual(json.loads((folder/'game.json').read_text()),game);self.assertEqual(resumed.api.new,0);self.assertTrue((folder/'trace.jsonl').read_text().startswith(prefix));self.assertEqual(len(list((root/'game-calls').glob('*.validation-error.json'))),1)
  def test_baseline_context_is_pure(self):
   old=collect.ROOT.parent/'alashi-label-fullgames-20261019';state=json.loads((old/'cases/s1-seat0-A0/trace.jsonl').read_text().splitlines()[0])['state'];before=json.dumps(state,sort_keys=True);messages,features=collect.render(state,[],collect.ROOT/'baseline');self.assertEqual(features,{});self.assertEqual(json.dumps(state,sort_keys=True),before);self.assertNotIn('эскроу',messages[0]['content'].lower())

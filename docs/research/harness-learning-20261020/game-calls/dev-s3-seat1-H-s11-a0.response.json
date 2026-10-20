@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.717,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон о 20% налоге уже отклонён (4 против 1), veto не нужен.\"}",
+          "reasoning_content": "Law 2 is 20% tax on future sales. Votes: No=2 (weights 2+2=4), Yes=1. Law fails anyway. Veto unnecessary but harmless? Veto is free, law already rejected. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495228,
+    "id": "2026102019202475152d8d191e4d26",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019202475152d8d191e4d26",
+    "usage": {
+      "completion_tokens": 84,
+      "completion_tokens_details": {
+        "reasoning_tokens": 52
+      },
+      "prompt_tokens": 2920,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3004
+    }
+  }
+}

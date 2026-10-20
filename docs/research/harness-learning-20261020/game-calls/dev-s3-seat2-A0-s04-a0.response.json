@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.018,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель 27,5 alashi лучше, чем 22 с последующей девальвацией до ~13,7.\"}",
+          "reasoning_content": "Sell credit 2 units: 27.5 promissory, next round cash=floor(0/100)*62=0 then +27.5 → 27.5. But 62% devaluation only if cash>0. Sell 2 for 22 cash now, next round floor(22/100)*62... 22 alashi = 22000000 min units; floor(22000000/100)=220000, *62=13720000 → 13.72. So credit better: 27.5 vs 13.72. Sell credit 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495424,
+    "id": "202610201923402b290a94cf1c460b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201923402b290a94cf1c460b",
+    "usage": {
+      "completion_tokens": 161,
+      "completion_tokens_details": {
+        "reasoning_tokens": 123
+      },
+      "prompt_tokens": 2209,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2370
+    }
+  }
+}

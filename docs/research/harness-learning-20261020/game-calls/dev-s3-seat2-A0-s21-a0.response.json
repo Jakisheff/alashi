@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.47,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Закон 6 влияет лишь на следующий рынок, которого больше нет — исход голосования на выплату не влияет.\"}",
+          "reasoning_content": "Law 6: цены следующего рынка -2, но рынок уже прошёл (последний раунд). Нет эффекта. But holder 1 (rival) has veto. Vote doesn't matter — no future sales. Actually I already sold everything, goods=0. Law 6 affects next market, which doesn't exist. So any vote fine. But 5% bank commission goes to max influence — rival has 2. Just abstain/pass. I have vote_weight 3; my yes/no would decide if no veto, but effect null. Vote no? Doesn't matter. Choose abstain (3) or pass. I'll abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495549,
+    "id": "20261020192544130abb5a743743cc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192544130abb5a743743cc",
+    "usage": {
+      "completion_tokens": 169,
+      "completion_tokens_details": {
+        "reasoning_tokens": 136
+      },
+      "prompt_tokens": 3305,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3474
+    }
+  }
+}

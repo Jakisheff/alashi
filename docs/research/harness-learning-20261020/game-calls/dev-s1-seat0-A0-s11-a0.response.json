@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.778,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":33,\"reason\":\"Лицензия приносит 20–60 alashi сверх доли банка — стоит поставить весь cash, чтобы обогнать соперников.\"}",
+          "reasoning_content": "License income 20-60 alashi — huge. Bank ~30+ bid; rivals have ~34 and ~33 cash. They'll bid big. Winning license worth it if bid < ~20 alashi expected value. Expected income ~40. If I bid 17.98, I pay nearly all cash but gain 20-60. Rivals likely bid similarly large. Bid all cash 17980000 (choice 33) to maximize win chance (tie_order [1,0,2] — I'm second in tie, so must exceed). License income far exceeds losing 18 alashi, since it's paid on top of bank share.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495601,
+    "id": "20261020192636df7bfbe7d93a4973",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192636df7bfbe7d93a4973",
+    "usage": {
+      "completion_tokens": 172,
+      "completion_tokens_details": {
+        "reasoning_tokens": 134
+      },
+      "prompt_tokens": 4457,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 4629
+    }
+  }
+}

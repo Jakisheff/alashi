@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.131,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Карта 0 без эффектов, а закон всё равно не проходит — veto не нужен.\"}",
+          "reasoning_content": "Law 0, no effects; yes=2, no=3 anyway... yes=2? Votes: idx0 Yes (2), idx2 No (3), idx1 abstain. No wins already. Pass or veto doesn't matter; pass is safe.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495160,
+    "id": "2026102019191425e6bf9c87404673",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019191425e6bf9c87404673",
+    "usage": {
+      "completion_tokens": 83,
+      "completion_tokens_details": {
+        "reasoning_tokens": 54
+      },
+      "prompt_tokens": 3543,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 3626
+    }
+  }
+}

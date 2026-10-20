@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.121,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"После ставки 12 следую recommended_choice: взятка 10 за влияние для борьбы за президентство.\"}",
+          "reasoning_content": "Recommended bid 12 but already bid 12. Recommended_choice 5 = bribe 10M to 0? Hmm, harness says recommended_choice 5 (bribe 10000000 to 0). But bid already 12M placed. Rule says after bidding still take main action. Choice 5 gives influence 2 for 10M — questionable. Better main action: shuttle (choice 3) gives 3 goods. Goods can be sold later. Influence bribe: 10M for +1 influence; president tie... I'm influence 1, rival 0 has 2. Following priority rule: follow recommended_choice 5. But that seems wasteful; bribe gives influence which affects presidency and 5% commission. Yet rule says follow recommendation. But mechanism only for auction bids; recommended_choice here is 5 though. Instructions: \"Приоритет: следуй recommended_choice из augment, если оно есть и допустимо\". Follow it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495225,
+    "id": "2026102019201961e6533db3cf45bd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019201961e6533db3cf45bd",
+    "usage": {
+      "completion_tokens": 229,
+      "completion_tokens_details": {
+        "reasoning_tokens": 198
+      },
+      "prompt_tokens": 4460,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 4689
+    }
+  }
+}

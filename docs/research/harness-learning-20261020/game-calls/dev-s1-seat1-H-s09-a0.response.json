@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.874,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 20% сильно ударит по моим будущим продажам 3 товаров — голосую против.\"}",
+          "reasoning_content": "Law card 2: tax 20% on future sales. I have 3 goods to sell; 20% tax hurts. Vote no. President has veto pending... veto_pending true means president can veto. Holder is idx 0 with influence 2, vote weight 2, likely votes yes? Unknown. My vote no is safest.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495453,
+    "id": "2026102019240451cef39e28c74b3f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019240451cef39e28c74b3f",
+    "usage": {
+      "completion_tokens": 103,
+      "completion_tokens_details": {
+        "reasoning_tokens": 70
+      },
+      "prompt_tokens": 2895,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2998
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.34,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"shuttle даёт больше товара при положительном ожидании даже с риском изъятия\"}",
+          "reasoning_content": "Round 1 action, no cash. produce gives 2 goods free; shuttle 3 goods grey risk ~25% loss. Shuttle higher EV but grey may be seized; still EV ~2.25 vs 2. Choose shuttle? Border tariff unknown; black protects. But seizure only at tariff red... risk exists. Produce is safe 2 goods. Shuttle slightly better EV; choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495185,
+    "id": "20261020191942e142e4124c164e5c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020191942e142e4124c164e5c",
+    "usage": {
+      "completion_tokens": 108,
+      "completion_tokens_details": {
+        "reasoning_tokens": 80
+      },
+      "prompt_tokens": 1917,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2025
+    }
+  }
+}

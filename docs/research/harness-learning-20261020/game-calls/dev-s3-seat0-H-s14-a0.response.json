@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.566,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 0 без эффектов, можно просто пропустить голосование.\"}",
+          "reasoning_content": "Law 0 no effects. Pass (keep vote_weight irrelevant, law harmless). President, currently yes=1 (f1), no=0, abstain=1. Law 0 does nothing — no harm either way. Pass fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495380,
+    "id": "202610201922535d024564ee3d471d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201922535d024564ee3d471d",
+    "usage": {
+      "completion_tokens": 74,
+      "completion_tokens_details": {
+        "reasoning_tokens": 49
+      },
+      "prompt_tokens": 3299,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3373
+    }
+  }
+}

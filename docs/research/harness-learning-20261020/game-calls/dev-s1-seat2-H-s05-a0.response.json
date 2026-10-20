@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.929,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Ожидаемо shuttle даёт больше товара (3 с риском), а цена ещё высока.\"}",
+          "reasoning_content": "Round 2 action, cash 0. Shuttle gives 3 grey goods, 25% seizure risk possible. Produce gives 2 safe. Price counter at 6, price next 5. Shuttle better expected: 3 vs 2 goods, ~25% loss risk of grey goods... actually all shuttle goods are grey; expected 2.25. Slight edge for shuttle plus volume. Risk red tariff? Current tariff unknown, law says black protects. I'd pick shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495066,
+    "id": "20261020191742d3e1442bc6124370",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020191742d3e1442bc6124370",
+    "usage": {
+      "completion_tokens": 131,
+      "completion_tokens_details": {
+        "reasoning_tokens": 99
+      },
+      "prompt_tokens": 2569,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2700
+    }
+  }
+}

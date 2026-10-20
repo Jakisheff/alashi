@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.398,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продаю весь товар сейчас по высокой цене, чтобы максимизировать cash перед девальвацией.\"}",
+          "reasoning_content": "Sell 3 units now at 8/7/6? Price list with counter 3: next prices 8,7,6 = 21 alashi total. Promissory in round 6 won't be repaid... but promissory is added at start of round 3 already? Actually promissory was repaid at round 3 start (cash 22.5M = 30M*0.62+... wait 41.5? no, own cash 22.5M includes promissory 22.5M? 22.5*0.62=13.95, +promissory... own promissory was 22.5M from round 2 sell_credit... hmm state shows promissory=0, cash=22.5M. Whatever. Selling now cash 43.5M, best rank. Devaluation 62% next round still good. Sell all 3 (choice 5).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495203,
+    "id": "20261020191958a184ce5d98dc4e02",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020191958a184ce5d98dc4e02",
+    "usage": {
+      "completion_tokens": 232,
+      "completion_tokens_details": {
+        "reasoning_tokens": 200
+      },
+      "prompt_tokens": 3102,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 3334
+    }
+  }
+}

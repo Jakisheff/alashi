@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.748,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Налог 20% вредит соперникам с товаром больше, чем мне; закон всё равно принимается, вето не нужно.\"}",
+          "reasoning_content": "Law 2: 20% tax on future sales. I have promissory 21.25M paid next round... actually promissory adds to cash at round start. Tax affects sales, I plan to sell. But I have no goods now; rivals have goods (2 goods) — tax hurts rivals more. Yes votes: 2 yes (me weight2 + idx2 weight1 =3), no 2. Passes 3>2 anyway. Veto unnecessary? Tax hurting rivals is good for me. So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495093,
+    "id": "2026102019180966c7f4be98634ecf",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019180966c7f4be98634ecf",
+    "usage": {
+      "completion_tokens": 149,
+      "completion_tokens_details": {
+        "reasoning_tokens": 111
+      },
+      "prompt_tokens": 2385,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2534
+    }
+  }
+}

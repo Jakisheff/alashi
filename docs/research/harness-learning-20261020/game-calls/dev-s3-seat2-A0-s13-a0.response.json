@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.79,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":46,\"reason\":\"Высокая ставка на лицензию с преимуществом в tie_order даёт ожидаемый доход заметно выше ставки.\"}",
+          "reasoning_content": "R4 action: license auction. Income ~20-60 alashi, bank 30 alashi + my contribution. Opponents may bid. Bid moderate, e.g. 10 alashi, then main action produce? Bid uses cash but then after bid still main action? \"После bid доступно основное действие\" — but candidates are combined; choosing bid may consume the action? The interface offers one combined bid per move; after bid the main action follows. I'll pick bid 10.\n\nLicense income expected ~40 alashi vs bid 10 alashi — worth competing strongly. Opponents have ~37-41 cash. Bid high, say 25 alashi. Tie order: I'm first (tie_order 2 first), wins ties. Bid 25 (choice 46)? Risk overpaying if opponents bid low. Income up to 60. Choose 25.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495476,
+    "id": "20261020192427fefce5da4f644f93",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192427fefce5da4f644f93",
+    "usage": {
+      "completion_tokens": 213,
+      "completion_tokens_details": {
+        "reasoning_tokens": 180
+      },
+      "prompt_tokens": 5935,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 6148
+    }
+  }
+}

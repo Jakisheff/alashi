@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.002,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 10% уменьшит мою последнюю продажу, поэтому голосую против.\"}",
+          "reasoning_content": "Law 1 = 10% tax on future sales. I have promissory 15, goods 3 to sell in round 6 market. Tax hurts me. P2 voted Yes. President (0) with veto can veto anyway. I should vote no. President likely vetoes since he also sells. Vote no (choice 2).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495407,
+    "id": "20261020192324a434fbbc30b94d6b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192324a434fbbc30b94d6b",
+    "usage": {
+      "completion_tokens": 102,
+      "completion_tokens_details": {
+        "reasoning_tokens": 71
+      },
+      "prompt_tokens": 3047,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3149
+    }
+  }
+}

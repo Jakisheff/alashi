@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.405,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Продажа в кредит даёт 27,5 против 22, а вексель не девальвируется сразу как cash.\"}",
+          "reasoning_content": "Sell 2 at price 12/10 = 22 cash now; credit gives 27.5 promissory paid next round start, then devalued? Promissory added after devaluation of round 3... Actually paid at start of round 3 then devalued in round 4. 27.5 vs 22, credit better and cash devaluation: 22 now gets devalued to floor(22/100)*62=13.64? Wait cash=floor(cash/100)*62 means 62% retained. 22→13.64. 27.5 promissory added after devaluation: cash becomes 0+27.5=27.5, then round 3 start devalue 27.5→17.05. So credit much better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495061,
+    "id": "2026102019173562d4ea2bcb50425d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019173562d4ea2bcb50425d",
+    "usage": {
+      "completion_tokens": 205,
+      "completion_tokens_details": {
+        "reasoning_tokens": 167
+      },
+      "prompt_tokens": 2614,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2819
+    }
+  }
+}

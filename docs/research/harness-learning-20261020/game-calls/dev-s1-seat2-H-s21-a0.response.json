@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.23,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Финальный раунд: векселя не погашаются, продаю весь товар за реальный кэш.\"}",
+          "reasoning_content": "Round 6, last round. sell_credit не погашается — useless. Just sell all 3 now: cash 33.5. But buying? No more markets after this; goods worthless after. Sell 3 units at price... sold_counter 4, price table index 4 =7. 3 units: 7+6+5=18? Cash rises 18. Yes sell 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495165,
+    "id": "20261020191922e725f3be386f4422",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020191922e725f3be386f4422",
+    "usage": {
+      "completion_tokens": 121,
+      "completion_tokens_details": {
+        "reasoning_tokens": 85
+      },
+      "prompt_tokens": 4007,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 4128
+    }
+  }
+}

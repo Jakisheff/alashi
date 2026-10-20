@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.859,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 6 бессмыслен после последнего рынка, голосую «нет» для надежности.\"}",
+          "reasoning_content": "Law 6: price shift -2 next market — but round 6 market already done, no next market. So card 6 has no effect anyway. Vote no; already idx0 voted No. My vote weight 5, No wins. But actually card 6 is harmless; still vote no is fine. Veto unnecessary.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495270,
+    "id": "2026102019210786c42b2dee874975",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019210786c42b2dee874975",
+    "usage": {
+      "completion_tokens": 99,
+      "completion_tokens_details": {
+        "reasoning_tokens": 68
+      },
+      "prompt_tokens": 3750,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 3849
+    }
+  }
+}

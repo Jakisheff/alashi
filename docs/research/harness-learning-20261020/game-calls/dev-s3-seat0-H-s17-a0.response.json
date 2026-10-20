@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.13,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Закон вводит 10% налог, а я планирую продавать в раунде 6 — налагаю veto.\"}",
+          "reasoning_content": "Law 1 = 10% tax on future sales. I plan to sell in round 6. Tax reduces my revenue; rivals also have goods. Veto kills tax. Yes: 3 vs no 2 — passes. Veto to avoid 10% tax.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495398,
+    "id": "202610201923158c57c01a465c4394",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201923158c57c01a465c4394",
+    "usage": {
+      "completion_tokens": 93,
+      "completion_tokens_details": {
+        "reasoning_tokens": 56
+      },
+      "prompt_tokens": 3514,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3607
+    }
+  }
+}

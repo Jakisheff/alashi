@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.604,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон 3 даёт субсидию товара — выгодно мне, поддерживаю.\"}",
+          "reasoning_content": "Card 3 subsidy_goods=1 — good for me (produce more). Vote yes. But president is idx 2; law passes if yes>no. I'm faction 0, vote weight 1. Both others voted yes. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495307,
+    "id": "20261020192141e98b05a3fa884c4b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192141e98b05a3fa884c4b",
+    "usage": {
+      "completion_tokens": 80,
+      "completion_tokens_details": {
+        "reasoning_tokens": 51
+      },
+      "prompt_tokens": 2431,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2511
+    }
+  }
+}

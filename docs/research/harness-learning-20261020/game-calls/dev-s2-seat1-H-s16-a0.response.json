@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.913,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товара нет, покупка по 9 с риском более низкой цены перепродажи невыгодна — пропускаю.\"}",
+          "reasoning_content": "Round 5 market, I have 15.38 cash, no goods. Buying 1 unit at 9 alashi to sell later? Prices: counter 2, next prices: index 2 → price 9? counter=2 means next sell price index 2 = 9. Buy costs 9, but shifts counter back. Buy is usually bad unless can sell higher later. Counter will only rise as others sell, price falls. Buying at 9 hoping to sell later at lower price? Bad. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495237,
+    "id": "2026102019203322e50f52d9c142f4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019203322e50f52d9c142f4",
+    "usage": {
+      "completion_tokens": 146,
+      "completion_tokens_details": {
+        "reasoning_tokens": 107
+      },
+      "prompt_tokens": 3259,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3405
+    }
+  }
+}

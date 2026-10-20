@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.554,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Карта 6 действует на следующий рынок, которого уже нет; закон безвреден — пропускаю.\"}",
+          "reasoning_content": "Law 6: price shift -2 next market. Round 6 — no next market (this is last law; already past market 6? Law 6 affects next market — round 6 market already done). So law is harmless. Vote yes/no irrelevant; vote yes passes, no effect. I'm president; simplest pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495556,
+    "id": "20261020192552336b35c20a824a11",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192552336b35c20a824a11",
+    "usage": {
+      "completion_tokens": 102,
+      "completion_tokens_details": {
+        "reasoning_tokens": 68
+      },
+      "prompt_tokens": 3639,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 3741
+    }
+  }
+}

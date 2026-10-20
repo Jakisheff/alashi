@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.257,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":8,\"reason\":\"Promissory не девальвируется, выручка 1.25х — продаю весь товар в кредит.\"}",
+          "reasoning_content": "Cash devalues heavily each round (×0.62). Sell credit gives 1.25x revenue, but round 6 is the last market? Round 6 exists, and the bill is not repaid after the last round. Market rounds are 1-6? Six rounds, each with a market. Selling on credit in round 6 market is not repaid. Round 4: promissory will be added in rounds 5,6 (after devaluation of cash). Promissory is not devalued. It is better to keep the goods for now? Prices: sold_counter=2, prices [12,10,9,8,...] the next unit costs 10? Actually the counter=2, the price of the next is 9. Selling 4 units at prices 9,8,7,6 = 30. On credit ×1.25 = 37.5 in promissory, not devalued, paid in rounds 5 and 6. cash 30 million → after 2 rounds ~11.5 million. Promissory 37.5 fully. Selling on credit 4 is clearly better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495236,
+    "id": "202610201920299d84b0be370c497d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201920299d84b0be370c497d",
+    "usage": {
+      "completion_tokens": 275,
+      "completion_tokens_details": {
+        "reasoning_tokens": 240
+      },
+      "prompt_tokens": 2853,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 3128
+    }
+  }
+}

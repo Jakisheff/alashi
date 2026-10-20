@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.902,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Ставка сделана; рекомендация — взятка 10M даёт влияние 3 и пост президента.\"}",
+          "reasoning_content": "Bid already made (12M). Recommended_choice 5 is bribe 10M? Odd — the bid already happened. The recommendation says recommended_choice 5 (bribe 10M to 0 giving influence 3). But rule says after bid take main action produce/shuttle. Harness says follow recommended_choice. Recommended is bribe 10M to idx0 → influence 3, tying presidency... President currently idx0 with influence 2; influence 3 makes me president. That has value. Follow recommendation.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495125,
+    "id": "202610201918362a2b5c18ff04409a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201918362a2b5c18ff04409a",
+    "usage": {
+      "completion_tokens": 139,
+      "completion_tokens_details": {
+        "reasoning_tokens": 106
+      },
+      "prompt_tokens": 5048,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 5187
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.31,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар не влияет на итог, влияние уже максимально, взятки лишь уменьшат cash — pass оптимален.\"}",
+          "reasoning_content": "Last round action; goods don't count. I'm president already with max influence 3; extra influence gives 5% bank (~2.1 alashi) only if already max — I am max. Bribe transfers cash away; but 5% commission bonus for max influence: I already have it. So no point bribing. Produce pointless (goods don't count). Best: pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495551,
+    "id": "20261020192547a85ef271b8b14652",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192547a85ef271b8b14652",
+    "usage": {
+      "completion_tokens": 119,
+      "completion_tokens_details": {
+        "reasoning_tokens": 81
+      },
+      "prompt_tokens": 4647,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 4766
+    }
+  }
+}

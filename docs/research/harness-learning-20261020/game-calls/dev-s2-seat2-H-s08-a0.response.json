@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.84,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Нет товара, покупка по 7 не даёт маржи; сохраняю cash для ранга и аукциона.\"}",
+          "reasoning_content": "I'm president, I have no goods, market phase round 3. Buying: price at sold_counter=4 is 7. Buying moves counter back. I have 19.22 cash, but rank matters for payout. Buying 1 unit at 7 loses margin? Later I can produce goods via actions. Cash counts for ranking; buying at 7 to sell at ~7 later is neutral. Better to pass and keep cash for rank, get goods from produce/shuttle. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495081,
+    "id": "2026102019175691299478a8b3475a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019175691299478a8b3475a",
+    "usage": {
+      "completion_tokens": 136,
+      "completion_tokens_details": {
+        "reasoning_tokens": 100
+      },
+      "prompt_tokens": 2764,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2900
+    }
+  }
+}

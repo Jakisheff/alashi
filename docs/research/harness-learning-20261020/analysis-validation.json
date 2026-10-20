@@ -1,0 +1,67 @@
+{
+  "six_permutations_per_seed_comparison": [
+    {
+      "groups": [
+        [
+          1,
+          2,
+          5
+        ],
+        [
+          2,
+          8,
+          4
+        ]
+      ],
+      "independent_assignments": 36,
+      "result": {
+        "difference": 1.25,
+        "p_two_sided": 0.7777777777777778,
+        "assignments": 9
+      },
+      "passed": true
+    },
+    {
+      "groups": [
+        [
+          3,
+          3,
+          3
+        ],
+        [
+          1,
+          7,
+          4
+        ],
+        [
+          8,
+          2,
+          5
+        ]
+      ],
+      "independent_assignments": 216,
+      "result": {
+        "difference": 0.0,
+        "p_two_sided": 1.0,
+        "assignments": 27
+      },
+      "passed": true
+    },
+    {
+      "groups": [
+        [
+          0,
+          0,
+          10
+        ]
+      ],
+      "independent_assignments": 6,
+      "result": {
+        "difference": 10.0,
+        "p_two_sided": 0.3333333333333333,
+        "assignments": 3
+      },
+      "passed": true
+    }
+  ]
+}

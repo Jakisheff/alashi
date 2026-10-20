@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.527,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Шаттл даёт больше товара для продажи в оставшихся раундах; ставка 0.69 alashi проиграет аукцион, а влияние уже удерживает президентство.\"}",
+          "reasoning_content": "I'm the president with the most influence. License bid: my max bid 0.69 alashi — rivals have ~30 alashi each and could outbid easily; they'll see my bid? Bids are hidden. They likely bid more. Bid all cash ~0.69, unlikely to win but free if lose. Best action: shuttle (3 goods) or bid+produce? Interface: after bid you get main action? \"After bid, the main action is available; the interface offers one aggregate bid per turn\" — but candidates are single actions; bid candidate shows goods 0, meaning it replaces? Actually bid uses the turn? It says after bid main action available, but menu offers one aggregate per turn — so bid replaces action. Chance of winning with 0.69 vs rivals with 30 cash is ~0. So produce/shuttle better. Shuttle 3 goods vs produce 2 — but shuttle grey risk? Tariff is 0, grey may be seized 25%. Shuttle candidate shows goods:3 total already. Expected: shuttle gives 3 with 25% risk of seizing grey? \"Grey goods may be seized at the border with a probability of about 25%\" — expected 2.25+. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495245,
+    "id": "2026102019203771e3216879294034",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019203771e3216879294034",
+    "usage": {
+      "completion_tokens": 305,
+      "completion_tokens_details": {
+        "reasoning_tokens": 255
+      },
+      "prompt_tokens": 2895,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 3200
+    }
+  }
+}

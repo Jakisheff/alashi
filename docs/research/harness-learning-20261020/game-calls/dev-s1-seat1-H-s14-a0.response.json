@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.055,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"sell_credit максимален: вексель добавляется после девальвации в раунде 6, выручка 1.25x сохраняется полностью.\"}",
+          "reasoning_content": "Round 5 market. I'm license holder. Cash devaluation next round: floor(cash/100)*62. So selling now keeps 62%... actually cash in bank becomes 62% at round 6 start. Promissory added at round6 start then round 7? Only 6 rounds, so round 6 market is last; after round 6, promissory not redeemed. So sell_credit now: promissory added to cash at round 6 start, then... devaluation happens at start of round 6 before promissory added: \"cash=floor(cash/100)*62, then promissory added\". Promissory added after devaluation — good! So sell_credit now gives full 7 alashi next round, while sell gives cash that devalues 62%. So sell_credit all 3: promissory 22.5M added after devaluation. Price counter 4, price 5? [12,10,9,8,7,6,5...] counter=4 → price 6 for unit 5? Selling 3: prices 6,5,5? Actually counter 4 means next price index 4 = 7? Either way, sell credit gives 1.25×.\n\nAlso final promissory in round 6 unredeemed — sell now so it's redeemed at round 6 start. Good. Choice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495488,
+    "id": "20261020192438c8150310160240cd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192438c8150310160240cd",
+    "usage": {
+      "completion_tokens": 336,
+      "completion_tokens_details": {
+        "reasoning_tokens": 292
+      },
+      "prompt_tokens": 3703,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 4039
+    }
+  }
+}

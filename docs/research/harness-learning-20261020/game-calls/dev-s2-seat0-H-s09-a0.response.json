@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.572,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон даёт влияние беднейшему сопернику, мне пользы нет — отклоняю.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest cash. Poorest is idx1 (23.8M). I'm richest. President is rival idx2. Give more influence to rival? idx1 gets +1, becomes influence 2, president still holder 2 with influence 1? Influence 2 for idx1 → president next round could be idx1, either way rival. Doesn't matter much. Vote no to deny.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495477,
+    "id": "20261020192433a8ec7fa363804779",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192433a8ec7fa363804779",
+    "usage": {
+      "completion_tokens": 120,
+      "completion_tokens_details": {
+        "reasoning_tokens": 88
+      },
+      "prompt_tokens": 2886,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3006
+    }
+  }
+}

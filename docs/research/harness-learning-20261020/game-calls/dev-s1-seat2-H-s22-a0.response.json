@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.922,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Финальный раунд: товар уже не продать, влияние и так максимальное, взятки только уменьшают cash — сохраняю всё.\"}",
+          "reasoning_content": "Final round, action phase. Goods can't be sold anymore (market already done). President is me (holder 2), influence 3 already highest; commission 5% of bank goes to max influence — I already have it. Bribes cost cash which counts in ranking. Best: pass (keep cash). Shuttle risk. Choose pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495169,
+    "id": "20261020191926c6a20737ad234038",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020191926c6a20737ad234038",
+    "usage": {
+      "completion_tokens": 116,
+      "completion_tokens_details": {
+        "reasoning_tokens": 70
+      },
+      "prompt_tokens": 5044,
+      "prompt_tokens_details": {
+        "cached_tokens": 3136
+      },
+      "total_tokens": 5160
+    }
+  }
+}

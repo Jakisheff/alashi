@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.306,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Карта 5 отдаёт +1 влияния самому богатому (фракция 2), что лишит меня президентства — применяю veto.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest (idx 2, cash 22M). Two already voted Yes. If I vote yes it passes; richest is idx2. I have promissory 16.25M, cash 0. Card 5 gives influence to richest — I'm not richest. Veto would kill the law, keeping my presidency (influence stays tied 1-1-2? currently all 1, tie_order gives me presidency). If law passes, idx2 gets influence 2, becomes president in later laws — bad for me. Veto it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495429,
+    "id": "20261020192343226e60fe6c2e4d7d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192343226e60fe6c2e4d7d",
+    "usage": {
+      "completion_tokens": 165,
+      "completion_tokens_details": {
+        "reasoning_tokens": 122
+      },
+      "prompt_tokens": 2736,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2901
+    }
+  }
+}

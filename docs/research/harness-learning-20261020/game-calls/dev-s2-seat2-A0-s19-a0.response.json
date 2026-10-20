@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.446,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Последний раунд: товар уже не продать, влияние и пост президента у меня уже максимальны — сохраняю cash.\"}",
+          "reasoning_content": "Last round action. Goods useless now (no more markets after round 6? market phase comes before action, so goods won't sell). Law remains but I'm president anyway. Influence: 5% of bank = 1.9 alashi for max influence; already 4, no one exceeds. Vote weight irrelevant. So just pass, keep cash.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495296,
+    "id": "20261020192131e3fd3034ce694c38",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192131e3fd3034ce694c38",
+    "usage": {
+      "completion_tokens": 111,
+      "completion_tokens_details": {
+        "reasoning_tokens": 73
+      },
+      "prompt_tokens": 5341,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 5452
+    }
+  }
+}

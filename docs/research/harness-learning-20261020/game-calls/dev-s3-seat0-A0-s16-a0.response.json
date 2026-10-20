@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 17.431,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":30,\"reason\":\"Вексель не девальвируется и погасится в начале раунда 6, поэтому продаю весь товар в кредит по текущим высоким ценам.\"}",
+          "reasoning_content": "Prices start at 12,10,9... Round 5, one more market (round 6) after. Cash dev devalues: cash*0.62 at round starts. Promissory gets added at round 6 start then... round 6 start: cash=floor(cash/100)*62 then promissory added. After round 6 no devaluation, promissory unredeemed after last round — but promissory added at start of round 6 counts (it's a round start). So sell_credit now is fine, promissory is added in round 6 as cash.\n\nSelling 15 now vs partial. Remaining rounds: this market and round 6 market. If I sell all 15 now at high prices (12 down to 3), and in round 6 I can shuttle/produce goods and sell at low prices. Selling credit at 1.25x boosts. Marginal price for units ~13-15 is 3,3,2 — low. Better sell fewer now and rest in round 6? Round 6 price = 12... minus units sold carried? sold_counter resets? Counter persists across rounds (sold_counter in market state). It's 0 now after buy earlier? It says sold_counter:0. Interesting — buy moved it back. So round 5 sell now at 12,10,9... If I sell all 15 now, round 6 starts counter=15, prices 2,1,... producing 2-3 goods and selling at 2 each ≈ small.\n\nIf I sell fewer now, e.g. 9 (down to price 4), then in round 6 counter 9, sell remaining at 4,3,3 plus new. Same total really—selling order doesn't matter; total revenue same if total sold same, unless devaluation. Cash held gets devalued 38% at round 6 start. So better to hold goods now? No—goods don't devalue, cash does. So sell less now, more in round 6! But sell_credit: promissory added to cash at round 6 start without devaluation. So sell_credit now avoids devaluation too! So sell all 15 as credit now: promissory 93.75M added at round 6 start, no devaluation. That dominates.\n\nThen round 6 action produce/shuttle, sell at low price. Choice 30.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495145,
+    "id": "20261020191849d4a6ac2004b4455c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020191849d4a6ac2004b4455c",
+    "usage": {
+      "completion_tokens": 547,
+      "completion_tokens_details": {
+        "reasoning_tokens": 504
+      },
+      "prompt_tokens": 4487,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 5034
+    }
+  }
+}

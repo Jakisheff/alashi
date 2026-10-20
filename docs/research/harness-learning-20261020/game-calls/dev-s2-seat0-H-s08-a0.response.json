@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.242,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Произвожу товар для будущих продаж, сохраняя кэш перед аукционом 4 раунда.\"}",
+          "reasoning_content": "Round 3, action. Rich (52). President is 2. Bribing for influence could gain presidency for law votes; but cash ranking matters. Bribe 10 to idx1 (poorest?) — influence 3, cash 42. Costs 10 alashi; influence max bonus is 5% bank (~1.5). Better maybe produce to get goods for sale at price 3 (sold counter 6, price 3). Shuttle gives 3 goods, 25% loss risk? Grey goods risk at border; tariff=0 no black. Shuttle: 3 goods at price 3 = 9 alashi. Produce gives 2. Bribing for influence: becoming president gives veto control. Currently holder 2. Influence 3 vs rival 1 each, cost 10. Gain? President matters for law; also 5% bank to max influence (~1.5 alashi). Worth maybe not 10.\n\nProduce 2 goods → sell ~6 alashi at price 3 next rounds. Take shuttle choice 3: 3 goods, value 9, but risk of seizure ~25%... shuttle risk only when grey? \"shuttle даёт 3 товара; серый товар может быть изъят\". Tariff 0 no favorable border. Take produce safer? Expectation shuttle 9*0.75=6.75 vs produce 6. Close. Also round 4 auction needs cash ≥16 — plenty. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495472,
+    "id": "20261020192424419d9063cfec4e08",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192424419d9063cfec4e08",
+    "usage": {
+      "completion_tokens": 343,
+      "completion_tokens_details": {
+        "reasoning_tokens": 306
+      },
+      "prompt_tokens": 4422,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 4765
+    }
+  }
+}

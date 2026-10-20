@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.766,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Shuttle даёт максимум товара бесплатно, максимизируя будущие продажи.\"}",
+          "reasoning_content": "Round 3 action, not auction. Best: shuttle (3 goods, free) vs produce (2). Shuttle best; grey goods risk at market? Selling grey may be confiscated — but we sell as goods. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495458,
+    "id": "2026102019241636f05dd7be1b4fc9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019241636f05dd7be1b4fc9",
+    "usage": {
+      "completion_tokens": 72,
+      "completion_tokens_details": {
+        "reasoning_tokens": 46
+      },
+      "prompt_tokens": 3717,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3789
+    }
+  }
+}

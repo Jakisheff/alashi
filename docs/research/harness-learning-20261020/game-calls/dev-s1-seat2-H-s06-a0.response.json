@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.783,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 5 даёт влияние самой богатой фракции 0, мне невыгоден — голосую против.\"}",
+          "reasoning_content": "Card 5: +1 influence to richest. Richest is faction 0 (17 alashi). I'm cash 0, not president. President is idx1, influence 1, vote weight 1; my weight 1. Others likely vote—card 5 helps richest player 0. If I vote no, votes: unknown others. With weight 1 each, 1 no vs unknown. Card 5 gives player 0 +1 influence—not me. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495070,
+    "id": "20261020191747fdadc41f3a0d47e6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020191747fdadc41f3a0d47e6",
+    "usage": {
+      "completion_tokens": 135,
+      "completion_tokens_details": {
+        "reasoning_tokens": 100
+      },
+      "prompt_tokens": 2688,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2823
+    }
+  }
+}

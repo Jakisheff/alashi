@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.335,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\": 3, \"reason\": \"Бесплатный shuttle даёт максимум товара для последней дешёвой продажи, cash всё равно почти обесценится.\"}",
+          "reasoning_content": "Shuttle gives 3 goods for free (grey risk ~25%? shuttle risk ~25% loss of all goods). Produce gives 2 safe. Price at round 6: counter 15, price 1. Selling 3 goods at price 1 vs 2 goods — negligible. Better keep cash low? Cash is devalued at round start: cash=floor(cash/100)*62 — massive devaluation! Cash 3053500 will shrink anyway. So spend: donkey costs 1 alashi? Cash is tiny anyway (30 alashi = 3,050,000 units). Actually shuttle free gives 3 goods, sell at price 1 each next round... but promissory not paid after last round — round 6 is last market? Six rounds, round 6 has market, so selling works. Price at 15 is 1 per unit, 3 alashi for 3 goods, trivial. Produce or shuttle — either fine. Choose shuttle for more goods.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495153,
+    "id": "202610201919060e738731db87459f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201919060e738731db87459f",
+    "usage": {
+      "completion_tokens": 246,
+      "completion_tokens_details": {
+        "reasoning_tokens": 207
+      },
+      "prompt_tokens": 3278,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3524
+    }
+  }
+}

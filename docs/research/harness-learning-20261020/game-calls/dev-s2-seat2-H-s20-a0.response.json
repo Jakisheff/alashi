@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.489,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон даёт +1 влияния богатейшему (сопернику), но не угрожает моему президентству и выплате — veto не нужен.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest by cash — that's me (16.3M... no, 26.3M is idx0). Richest is idx0 (26.29M). That gives idx0 +1 influence, not me. Doesn't change presidency now (I have 4). Veto or not: does passing law 5 hurt me? Influence commission: 5% bank goes to max influence — I have 4, safe. Passing gives rival +1 influence, harmless now but... game ends round 6. Law passing doesn't hurt my payout. Veto unnecessary. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495157,
+    "id": "202610201919124cebe891589e4f06",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201919124cebe891589e4f06",
+    "usage": {
+      "completion_tokens": 172,
+      "completion_tokens_details": {
+        "reasoning_tokens": 128
+      },
+      "prompt_tokens": 3538,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 3710
+    }
+  }
+}

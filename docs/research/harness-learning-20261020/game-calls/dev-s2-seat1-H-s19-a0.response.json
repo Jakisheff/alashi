@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.43,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Последний раунд: продаю весь товар за наличные, вексель всё равно не погасится.\"}",
+          "reasoning_content": "Round 6 market — promissory not repaid after last round. So sell now for cash, not credit. Price at counter 3: 8 alashi? sold_counter=3 → price index 3 = 8. Sell 3 gives +21 alashi → cash ~30.5. choice 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495258,
+    "id": "20261020192055a6b2b29ed2df4f76",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192055a6b2b29ed2df4f76",
+    "usage": {
+      "completion_tokens": 100,
+      "completion_tokens_details": {
+        "reasoning_tokens": 67
+      },
+      "prompt_tokens": 3803,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3903
+    }
+  }
+}

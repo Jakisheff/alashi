@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.294,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 10% ударит по моей продаже трёх товаров в финале; голос No уже отклоняет закон без траты veto.\"}",
+          "reasoning_content": "Law 1: tax 10%. I have 3 goods to sell in round 6. Tax hurts me. Others have 2 and 2 goods. I'm richest. Tax 10% on ~2-3 sales each — I lose more. Veto it. Votes: idx0 No, idx2 Yes. If I vote no → no wins → law rejected anyway. Veto also works but veto saves nothing extra vs voting no. Vote no suffices.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495264,
+    "id": "20261020192101a67406da48c74830",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192101a67406da48c74830",
+    "usage": {
+      "completion_tokens": 138,
+      "completion_tokens_details": {
+        "reasoning_tokens": 97
+      },
+      "prompt_tokens": 3633,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 3771
+    }
+  }
+}

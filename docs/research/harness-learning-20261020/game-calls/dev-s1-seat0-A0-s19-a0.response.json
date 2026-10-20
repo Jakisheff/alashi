@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.755,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товары и влияние уже почти не влияют на выплату, а взятка дороже комиссии; пропускаю.\"}",
+          "reasoning_content": "Final round action; goods useless, no more markets. Influence matters for the 5% commission bonus (max influence). I have 1, faction2 has 2 and presidency. Bribe to raise influence to 2 — tie at 2, but tie-break for commission: influence equal → better cash+hard → faction 2 wins. Need influence 3: bribe 10 to faction 1 → influence 3, cost 10, cash 46.7. Commission 5% of bank ≈ 2.4 alashi... bank 47.98M → 5% ≈ 2.4M = 2.4 alashi. Cost 10 alashi for 2.4 gain — bad. Actually bank includes only 47.98M? Bank 47.98M, commission ~2.4M minimal units. Bribe costs millions of same units. Not worth. Just pass.\n\nBut presidency vote weight doesn't matter after? Law still happens round 6. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495651,
+    "id": "202610201927252eaaa2db531c464a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201927252eaaa2db531c464a",
+    "usage": {
+      "completion_tokens": 246,
+      "completion_tokens_details": {
+        "reasoning_tokens": 210
+      },
+      "prompt_tokens": 4902,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 5148
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.778,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Взятка стоит дороже комиссии от банка, а товар после последнего рынка бесполезен.\"}",
+          "reasoning_content": "Last round action, no next market (market 6 already done? Wait round 6 market done, action, then law). Goods useless after market 6 — no more market. So don't produce. Bribe for influence: max influence gets 5% of bank ≈ 2.75M — but bribing 5M costs more than that. But influence also affects presidency? President is idx1 already. Influence tie: to get max influence need >2, bribe 5M to 0 gives me 2 — tie with idx1, tiebreak cash — I win (cash 69.7M vs ~15.7M). That gains commission 5% of ~52M bank ≈ 2.6M but costs 5M. Lose. Rank: I'm already first by far (74.7M). So bribe doesn't help net. Best: pass.\n\nActually 5% commission pool: bank 55M? bank 55M minus... anyway 5% ≈ 2.7M < 5M bribe. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495543,
+    "id": "202610201925327a84e820af6c4923",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201925327a84e820af6c4923",
+    "usage": {
+      "completion_tokens": 257,
+      "completion_tokens_details": {
+        "reasoning_tokens": 225
+      },
+      "prompt_tokens": 5367,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 5624
+    }
+  }
+}

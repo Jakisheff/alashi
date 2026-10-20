@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.103,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Shuttle даёт больше товара к будущим продажам, ожидаемая выгода выше produce, влияние сохраняю для президентства.\"}",
+          "reasoning_content": "Round 3 action. I hold presidency (influence 1 + tie_order 1). Rival 0 has influence 2. Round 4 auction — need cash ≥16 for bid 12. Cash 21.25. Shuttle gives 3 goods, ~25% seizure risk — but shuttle gives more goods. Produce gives 2 free. Shuttle 3 goods expected 2.25. Prices falling (sold_counter 6 → price 5). Goods value ~5 alashi each. Shuttle EV +2.25 goods vs produce 2. Shuttle better EV. But risk of losing all... EV still favors shuttle. But next round cash: 21.25*0.62 floor... cash=floor(21.25M/100)*62 = 212500*62 = 13,175,000 → 13.175. Hmm devaluation kills cash. So cash at round 4 ~13 alashi → bid 9 only. Goods survive.\n\nActually better to sell nothing? We already sold. Keep goods. Shuttle for max goods: choice 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495443,
+    "id": "20261020192356fc6d7fc6104a454d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192356fc6d7fc6104a454d",
+    "usage": {
+      "completion_tokens": 260,
+      "completion_tokens_details": {
+        "reasoning_tokens": 222
+      },
+      "prompt_tokens": 3709,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3969
+    }
+  }
+}

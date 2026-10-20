@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.775,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Карта 6 снижает цены следующего рынка, а мне нужно продавать 3 товара — применяю бесплатное вето.\"}",
+          "reasoning_content": "Card 6: price shift -2 on next market. I have 3 goods to sell next round. Lower price is bad for me. Veto is free (I'm president). Veto it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495129,
+    "id": "202610201918450c191a5daa7d44bd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201918450c191a5daa7d44bd",
+    "usage": {
+      "completion_tokens": 80,
+      "completion_tokens_details": {
+        "reasoning_tokens": 42
+      },
+      "prompt_tokens": 2803,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2883
+    }
+  }
+}

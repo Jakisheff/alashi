@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.892,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Карта 6 влияет на следующий рынок, которого уже нет; закон безразличен, поэтому просто пропускаю.\"}",
+          "reasoning_content": "Law 6: price shift -2 next market — but round 6 market already passed (this is round 6 law, \"next market\" would be... round 7 doesn't exist?). Actually effects 6/7 relate to next market; there's no next market. Irrelevant. Vote doesn't matter. Pass to keep weight? No, action already passed, weight 4 regardless. Vote yes/no doesn't matter; card 6 no effect anyway. Pass is fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495396,
+    "id": "2026102019231243000ffb6f24441a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019231243000ffb6f24441a",
+    "usage": {
+      "completion_tokens": 135,
+      "completion_tokens_details": {
+        "reasoning_tokens": 99
+      },
+      "prompt_tokens": 3237,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3372
+    }
+  }
+}

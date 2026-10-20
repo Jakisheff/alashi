@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.523,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Продажа всех 3 единиц в кредит сохраняет выручку от двойной девальвации (вексель погашается полностью).\"}",
+          "reasoning_content": "I'm idx2, president, round 4 market. Two more markets after this (rounds 5,6). Price at sold_counter=3: prices [12,10,9,8,...], next units 8,7,6. Selling 3 now gives 8+7+6=21 alashi. Better sell now at higher prices; but round 5 cash resets: cash devalues 62%, promissory full. So sell_credit is better — promissory survives devaluation. sell_credit 3 gives 26.25 promissory, paid in round 5... wait promissory added to cash at start of round 5, then... actually \"Начало раунда 2 и далее: cash=floor(cash/100)*62, затем promissory прибавляется\". So promissory from round 4 market is added at round 5 start, then in round 5 it's cash which gets devalued at round 6. Selling credit now: 26.25 at round5, devalued to ~16.3 at round 6. Selling cash: 21 now, devalued 62% twice? Round 5 start: 21*0.62=13.02, round 6: 8.07. Credit much better. Sell all 3 credit — but tax? tax 0? Law 3 passed (subsidy), law 2 (20% tax) rejected. tax_bps=0. Yes.\n\nAlso round 6 sales won't happen anyway (selling in round 5 with goods). Credit 3 units: choice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495466,
+    "id": "202610201924164c9d4d72e0414559",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201924164c9d4d72e0414559",
+    "usage": {
+      "completion_tokens": 383,
+      "completion_tokens_details": {
+        "reasoning_tokens": 342
+      },
+      "prompt_tokens": 3021,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 3404
+    }
+  }
+}

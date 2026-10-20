@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.634,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Shuttle даёт лучший ожидаемый доход (0.75×18 против 13 у produce).\"}",
+          "reasoning_content": "Not round 4, no auction. I need goods for selling later. Shuttle gives 3 goods (25% seizure risk). Produce gives 2 safe. With subsidy? No subsidy. Prices: sold_counter=4, price 7. Later selling 3 units at ~7,6,5 = 18. Shuttle risk. Take shuttle? Seizure loses all grey. Produce 2 safe ~7,6=13. EV shuttle: 0.75*18=13.5 vs 13. Slightly better shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495207,
+    "id": "20261020192003cf5f8f034ad945ee",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192003cf5f8f034ad945ee",
+    "usage": {
+      "completion_tokens": 141,
+      "completion_tokens_details": {
+        "reasoning_tokens": 111
+      },
+      "prompt_tokens": 3859,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 4000
+    }
+  }
+}

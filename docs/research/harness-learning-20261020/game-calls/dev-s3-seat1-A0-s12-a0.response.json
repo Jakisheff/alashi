@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.471,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":33,\"reason\":\"Ставлю на лицензию: доход 20–60 alashi оправдывает крупную ставку при ожидаемой прибыли.\"}",
+          "reasoning_content": "Лицензия стоит ~20-60 alashi дохода — стоит bidding. У меня cash 21.85, но моя выручка обесценится? Нет, promissory 48.75 добавится к cash в начале раунда 5 без девальвации. Ставка ~15-17 alashi разумна. Соперники имеют cash ~9/37, могут перебить. Доход 20-60, ожидание 40. Ставлю 15 alashi (choice 32) — рискуя что перебьют 37 у фракции 2. Может 20? При выигрыше с 20 ожидаемая прибыль 20. При 15 выше шанс выигрыша. Ставлю 17? Фракция 2 имеет 37, может легко перебить любую мою ставку. Всё равно попытка: 16 alashi, choice 33.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495368,
+    "id": "202610201922420fba023a60ff4d9e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201922420fba023a60ff4d9e",
+    "usage": {
+      "completion_tokens": 229,
+      "completion_tokens_details": {
+        "reasoning_tokens": 192
+      },
+      "prompt_tokens": 4932,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 5161
+    }
+  }
+}

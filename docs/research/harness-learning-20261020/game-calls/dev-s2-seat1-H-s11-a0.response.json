@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.567,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продам весь товар по высокой цене, чтобы иметь кэш на аукцион лицензии в этом раунде.\"}",
+          "reasoning_content": "Market round 4. Sell 3 now: price 12,10,9 = 31? But candidates say sell 3 = 46.81-15.81 = 31 alashi. Yes. Cash matters for auction bid (cash>=16 recommended 12). Selling gives cash for bid. sell 3 → 46.8M cash, good for auction.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495215,
+    "id": "20261020192011c795425f376e489f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192011c795425f376e489f",
+    "usage": {
+      "completion_tokens": 113,
+      "completion_tokens_details": {
+        "reasoning_tokens": 78
+      },
+      "prompt_tokens": 3244,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3357
+    }
+  }
+}

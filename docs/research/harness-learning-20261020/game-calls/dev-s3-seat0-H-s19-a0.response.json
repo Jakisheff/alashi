@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.701,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Финальный раунд: товар не влияет на итог, влияние уже максимальное — любые траты лишь снижят cash и ранг.\"}",
+          "reasoning_content": "Last round action; goods useless after? No more market after round 6? Round 6: market, action, law. Goods don't count in ranking. So best: maximize influence for the 5% commission bonus — I already have max influence (3). Bribe gives influence but costs cash, which counts in rank. I'm currently cash 40.5M vs 36.4M and 21.3M — rank 1. Bribe reduces cash and rank; influence already max so no gain. Roof transfers cash away — bad. So pass (choice 0). Actually influence max already gives me the 5% commission. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495407,
+    "id": "20261020192322d024d962a8ea44ac",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192322d024d962a8ea44ac",
+    "usage": {
+      "completion_tokens": 177,
+      "completion_tokens_details": {
+        "reasoning_tokens": 135
+      },
+      "prompt_tokens": 4972,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 5149
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.295,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Shuttle даёт больше товара при умеренном риске изъятия\"}",
+          "reasoning_content": "Rival passed market, price still high. Produce gives 2; shuttle 3 with seizure risk ~25% (but tariff? none). Shuttle risk: red tariff none; default shuttle risk 25%? Seizure probability ~25%. Shuttle EV 2.25 goods vs 2 — slight edge. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495431,
+    "id": "202610201923478b41d97b55694348",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201923478b41d97b55694348",
+    "usage": {
+      "completion_tokens": 91,
+      "completion_tokens_details": {
+        "reasoning_tokens": 67
+      },
+      "prompt_tokens": 2322,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2413
+    }
+  }
+}

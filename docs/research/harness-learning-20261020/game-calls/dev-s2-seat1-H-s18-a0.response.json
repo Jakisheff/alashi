@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.039,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Закон 5 дал бы +1 влияния самому богатому сопернику; применяю veto для гарантии.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest by cash — that's me? Cash: 0 has 31.5M, I 15.4M, 2 has 21.1M. Richest is idx 0, my rival. Veto it: yes=2 (weight 2+1=3), no=me 3. Tie → fails (yes strictly greater needed). Yes=3, No=3 → not passed anyway. But veto safe? Veto kills it regardless. Yes count: idx0 weight2, idx2 weight1 = 3 yes. My no =3. Not strictly greater → fails. Veto is free insurance, but veto pending could matter? Use veto to be safe.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495254,
+    "id": "20261020192049e204a6aa80c947cb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192049e204a6aa80c947cb",
+    "usage": {
+      "completion_tokens": 186,
+      "completion_tokens_details": {
+        "reasoning_tokens": 152
+      },
+      "prompt_tokens": 3546,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3732
+    }
+  }
+}
