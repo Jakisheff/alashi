@@ -6,7 +6,7 @@ export function useChainSnapshot(pda: string) {
   const [error, setError] = useState('')
   const [waiting, setWaiting] = useState(true)
   const [revision, setRevision] = useState(0)
-  const retryAt = useRef(0), requestInFlight = useRef(false)
+  const retryAt = useRef(0), rateLimitUntil = useRef(0), requestInFlight = useRef(false)
   useEffect(() => {
     let stopped = false, timer = 0, failures = 0, final = false
     const controller = new AbortController()
@@ -28,13 +28,18 @@ export function useChainSnapshot(pda: string) {
       } catch (problem) {
         if (stopped) return
         setError(chainFailure(problem)); setWaiting(false); failures++
-        retryAt.current = Date.now() + Math.max(12_000 * 2 ** Math.min(failures - 1, 4), problem instanceof ChainApiError ? problem.retryMs : 0) + Math.floor(Math.random() * 1000)
+        if (problem instanceof ChainApiError && problem.code === 'rate_limit') rateLimitUntil.current = Date.now() + problem.retryMs
+        retryAt.current = Math.max(rateLimitUntil.current, Date.now() + 12_000 * 2 ** Math.min(failures - 1, 4) + Math.floor(Math.random() * 1000))
       } finally { requestInFlight.current = false; schedule() }
     }
-    const visible = () => { if (document.hidden) window.clearTimeout(timer); else schedule() }
-    document.addEventListener('visibilitychange', visible); window.addEventListener('pageshow', visible)
+    const recover = () => {
+      retryAt.current = Math.max(Date.now(), rateLimitUntil.current)
+      schedule()
+    }
+    const visible = () => { if (document.hidden) window.clearTimeout(timer); else recover() }
+    document.addEventListener('visibilitychange', visible); window.addEventListener('pageshow', visible); window.addEventListener('online', recover)
     void poll()
-    return () => { stopped = true; controller.abort(); window.clearTimeout(timer); document.removeEventListener('visibilitychange', visible); window.removeEventListener('pageshow', visible) }
+    return () => { stopped = true; controller.abort(); window.clearTimeout(timer); document.removeEventListener('visibilitychange', visible); window.removeEventListener('pageshow', visible); window.removeEventListener('online', recover) }
   }, [pda, revision])
-  return { snapshot, error, waiting, retry: () => setRevision((n) => n + 1) }
+  return { snapshot, error, waiting, retry: () => { retryAt.current = Math.max(Date.now(), rateLimitUntil.current); setRevision((n) => n + 1) } }
 }

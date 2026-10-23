@@ -230,9 +230,9 @@ function GameViewer({ pda, initialPlayer, ownerRecord, setup, detailsTab, onTabC
       </div>
       {donkeyInput && <DonkeyRiskPanel input={donkeyInput} />}
       {snapshot && faction && faction.alive && !snapshot.settled && !['Finished', 'Aborted'].includes(snapshot.phase) && (faction.pda === initialPlayer && ownerRecord ? <OwnerEntry key={faction.pda} gamePda={pda} faction={faction} autoRecord={ownerRecord} /> : <details key={faction.pda} className="devnet-owner-access"><summary>Own this player?</summary><OwnerEntry gamePda={pda} faction={faction} autoRecord="" /></details>)}
-      {error && <div className="devnet-error"><p role="alert">{error}</p><button onClick={retry}>Retry connection</button><p>No demo actions are substituted for missing chain data.</p></div>}
 
         </div>
+      {error && <div className="devnet-error"><p role="alert">{error}</p><button onClick={retry}>Retry connection</button><p>No demo actions are substituted for missing chain data.</p></div>}
         {detailsTab === 'game' && <>
           <details className="devnet-note"><summary>Replay details</summary><p>{snapshot?.complete ? 'Confirmed action history loaded.' : 'Partial history · more confirmed events may arrive.'} Playback uses shortened pauses. Balances stay at their latest confirmed state.</p></details>
           <details className="devnet-action-history"><summary>Recent confirmed actions</summary><div className="devnet-action-list" tabIndex={0}>
