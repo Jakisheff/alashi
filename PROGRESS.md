@@ -913,3 +913,15 @@ Published draft PR https://github.com/Jakisheff/alashi/pull/60 on codex/human-hy
 ### RustSec repair verification, 25 October 2026 02:24 Almaty
 
 All four lockfile audits now report zero blocking vulnerabilities. Precise ctutils and TLS updates fixed root/indexer/bots advisories. A root-only Solana recovery adapter upgrades host RustCrypto while preserving the original syscall block and high-S rejection. The same four fixed-vector tests pass against both upstream 3.3.0 and the adapter. Root normal program dependency tree does not contain crypto-bigint. The adapter is a workspace member, so CI runs its tests; optional frozen-ABI lock resolutions add informational warnings, recorded explicitly. No advisory ignores or CI audit relaxation were introduced. Publishing the fix for full CI validation.
+
+
+### RustSec repair CI update, 25 October 2026 02:26 Almaty
+
+GitHub CI run40134150599 on commit7a7ca22: RustSec audit job120991979631 passed on all four lockfiles; secret scan passed. Frontend, full Rust tests and fresh SBF/program jobs are still running. Four compatibility tests passed on both original SDK and adapter. Waiting for the full compatibility result before closing the task.
+
+
+### RustSec repair completed, 25 October 2026 02:32 Almaty
+
+Fix commit7a7ca22 passed all five jobs in CI run40134150599: all-lockfile RustSec audit, frontend, full Rust tests, fresh SBF/program tests and secret scan. Updated PR #60 description and acceptance reports. The local audit also reports zero blocking vulnerabilities in every scanned lockfile; informational warnings remain recorded. Source behavior is covered by four fixed-vector checks passing on both the original SDK and the adapter. No deployment, transactions or paid model calls occurred.
+
+План: 1 час суммарно, до 02:47. Факт: 0,75 часа (01:47-02:32, Алматы).

@@ -47,5 +47,21 @@
         "unsound": 3
       }
     }
+  },
+  "compatibility_tests": {
+    "upstream_sdk_3_3_0_k256_0_13_4": {
+      "passed": 4
+    },
+    "adapter_k256_0_14_0": {
+      "passed": 4
+    }
+  },
+  "ci": {
+    "commit": "7a7ca22f6bc68897806d69078073ccc72ef7918f",
+    "run": 40134150599,
+    "rustsec_job": 120991979631,
+    "rustsec_conclusion": "success",
+    "conclusion": "success",
+    "all_five_jobs_passed": true
   }
 }

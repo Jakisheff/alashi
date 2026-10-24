@@ -65,3 +65,11 @@ owner-submitted, and temperature zero does not guarantee deterministic outputs.
 The server checks format and usage consistency; it does not attest the external
 model or measure creative quality. Monetary cost is unknown. The owner decision
 is a recorded judgment, not statistical evidence of stable improvement.
+
+
+## CI follow-up on 25 October 2026
+
+CI run 40134150599 on security-fix commit 7a7ca22 passed the fresh SBF build
+and program tests. All five CI jobs passed, including RustSec on all four
+lockfiles, the frontend checks and the full Rust integration job. The local SBF limitation above describes the original laptop run.
+The dependency repair and compatibility evidence are in RUSTSEC_20261025.md.
