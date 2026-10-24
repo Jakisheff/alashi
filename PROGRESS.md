@@ -891,3 +891,10 @@ Indexer: PASS, 16 tests. Program host check: PASS. Final focused comparison chec
 ### 25 October 2026, human hypothesis comparison: verification complete (01:34 Almaty)
 
 Final arena suite: PASS, 144 tests with one pre-existing ignored canonical-snapshot check. Rules: 40 passed; indexer: 16 passed; Node bootstrap: 56 passed. Frontend production build and comparison/strategy/proxy checks passed. Program host check and bots build passed. SBF build and program SBF tests remain unexecuted after the incomplete v1.54 toolchain failed to reinstall for lack of disk space. Private comparisons, replay-safe recovery and owner decisions are implemented for static English advertising briefs. General scenario packages and external human validation remain future work. Preparing branch publication; no site deployment, provider spending or transactions occurred.
+
+
+### 25 October 2026, human hypothesis comparison: completed (01:36 Almaty)
+
+Published draft PR https://github.com/Jakisheff/alashi/pull/60 on codex/human-hypothesis-comparison-20261025. Local acceptance is recorded in docs/ops/HUMAN_COMPARISON_20261025.md. The first static advertising comparison workflow is implemented; no deployment was made. SBF validation remains outstanding for the documented toolchain/storage reason. Temporary build targets created for this task were removed after checks, leaving 1.8 GiB available. Source, screenshots and check logs are retained.
+
+План: 1 час, до 01:51. Факт: 0,75 часа (00:51-01:36, Алматы).
