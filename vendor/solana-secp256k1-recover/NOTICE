@@ -1,0 +1,7 @@
+Source: solana-secp256k1-recover 3.3.0, Anza Maintainers.
+Apache-2.0. Upstream repository https://github.com/anza-xyz/solana-sdk
+Upstream commit c893e7933a39336bb59f1a7ebb08f111fed725b0, secp256k1-recover.
+ALASHI adaptation: host k256 0.14, SEC1 accessor, explicit prehash verification.
+The Solana syscall block is unchanged. Example-only dev dependencies and doctests
+are excluded; compatibility is checked by fixed recovery vectors in tests/.
+Recovery vectors originate from RustCrypto k256 0.13.4 (Apache-2.0 OR MIT).

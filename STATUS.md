@@ -315,3 +315,18 @@ Final arena suite: PASS, 144 tests with one pre-existing ignored canonical-snaps
 Published draft PR https://github.com/Jakisheff/alashi/pull/60 on codex/human-hypothesis-comparison-20261025. Local acceptance is recorded in docs/ops/HUMAN_COMPARISON_20261025.md. The first static advertising comparison workflow is implemented; no deployment was made. SBF validation remains outstanding for the documented toolchain/storage reason. Temporary build targets created for this task were removed after checks, leaving 1.8 GiB available. Source, screenshots and check logs are retained.
 
 План: 1 час, до 01:51. Факт: 0,75 часа (00:51-01:36, Алматы).
+
+
+### 25 October 2026, RustSec CI repair (01:47 Almaty)
+
+План: 0,5 часа, до 02:17. Reproduce the failed RustSec job on PR #60, fix its verified cause and verify the audit on the updated commit. Existing feature checks, fresh SBF build/program tests and secret scan passed in CI run40130577454; only the audit failed. No dependency changes made yet.
+
+
+### RustSec repair update, 25 October 2026 02:16 Almaty
+
+План: 1 час суммарно, до 02:47. Arena audit is clear. Indexer and bots audits now report zero vulnerabilities after precise ctutils/TLS patch updates. Root still needs crypto-bigint remediation: its only path is the host-side LiteSVM dev dependency via Solana secp256k1 recovery. A compatible adapter to patched RustCrypto is being prepared; independent review identified a high-S verification behavior change that must be guarded. No advisory ignores or weakened audit policy have been added.
+
+
+### RustSec repair verification, 25 October 2026 02:24 Almaty
+
+All four lockfile audits now report zero blocking vulnerabilities. Precise ctutils and TLS updates fixed root/indexer/bots advisories. A root-only Solana recovery adapter upgrades host RustCrypto while preserving the original syscall block and high-S rejection. The same four fixed-vector tests pass against both upstream 3.3.0 and the adapter. Root normal program dependency tree does not contain crypto-bigint. The adapter is a workspace member, so CI runs its tests; optional frozen-ABI lock resolutions add informational warnings, recorded explicitly. No advisory ignores or CI audit relaxation were introduced. Publishing the fix for full CI validation.
