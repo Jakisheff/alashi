@@ -4,6 +4,7 @@ import { createPrivateKey, createPublicKey, sign, randomUUID } from 'node:crypto
 import { readFileSync, writeFileSync, renameSync, lstatSync, openSync, closeSync, fsyncSync, unlinkSync, existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { isDeepStrictEqual } from 'node:util';
 import { spawn } from 'node:child_process';
 import { act as gameAct, lock as gameLock } from './alashi.mjs';
 
@@ -69,7 +70,7 @@ export function providerUsage(raw) {
 export function modelProvider({url, key, model, test = false}) {
   const u = new URL(url), local = ['localhost','127.0.0.1','[::1]'].includes(u.hostname);
   if (u.username || u.password || u.hash || u.search || !(u.protocol === 'https:' || u.protocol === 'http:' && local) || test && !local || !model || model.length > 128) fail('invalid_provider_config');
-  return {source:test?'test_provider':'provider_reported',provider:u.origin,model,async complete(messages) {
+  return {source:test?'test_provider':'provider_reported',provider:u.origin,model,temperature:0,max_tokens:256,async complete(messages) {
     // No retry, fallback model, or tools. Keep provider credentials out of arena receipts.
     const response = await fetch(url,{method:'POST',redirect:'error',signal:AbortSignal.timeout(60_000),headers:{'Content-Type':'application/json',...(key?{Authorization:'Bearer '+key}:{})},body:JSON.stringify({model,messages,max_tokens:256,temperature:0})});
     if (Number(response.headers.get('content-length'))>1_000_000) fail('provider_response_too_large');
@@ -210,6 +211,68 @@ export async function runCycle({api,id,provider,journalPath,tools={},trade,onPro
     return(await api.post(`/strategy-runs/${id}/finish`,{})).run;
   } finally {unlinkSync(lockPath);}
 }
+export async function runComparison({api,id,clientId,provider,journalPrefix,onProgress=()=>{}}) {
+  if (!/^[0-9a-f]{64}$/.test(id)) fail('invalid_comparison');
+  if (typeof clientId!=='string' || !/^[a-zA-Z0-9_-]{8,80}$/.test(clientId)) fail('bad_client_id');
+  if(typeof journalPrefix!=='string'||!journalPrefix)fail('invalid_comparison_journal');
+  const lockPath=journalPrefix+'.comparison.lock',fd=openSync(lockPath,'wx',0o600);closeSync(fd);
+  try {
+    const comparisonPath=`/agents/${api.record}/owner/comparisons`;
+    const [owned,listed]=await Promise.all([api.get(),api.request(comparisonPath)]);
+    const comparison=listed.comparisons.find(c=>c.id===id);
+    if(!comparison || comparison.content?.owner!==api.wallet || comparison.content.record!==api.record)fail('comparison_not_owned');
+    const checkProfile=current=>{
+      const expected=current.content.profile;
+      if(!expected || expected.temperature!==0 || expected.max_tokens!==256 ||
+          !['source','provider','model','temperature','max_tokens'].every(k=>provider[k]===expected[k]))fail('comparison_provider_mismatch');
+    };
+    checkProfile(comparison);
+    const versions=[comparison.content.baseline_version,comparison.content.candidate_version].map(version=>owned.versions.find(v=>v.id===version));
+    for(const version of versions) {
+      if(!version || version.content.owner!==api.wallet)fail('comparison_strategy_not_owned');
+      if(!Array.isArray(version.content.plan) || version.content.plan.some(t=>!['model','tool'].includes(t.kind)||t.kind==='tool'&&!['brief_extract','copy_check'].includes(t.tool)))fail('comparison_tool_not_allowed');
+    }
+    const created=await api.post(`/comparisons/${id}/attempts`,{client_id:clientId}),attemptId=created.attempt?.id;
+    if(typeof attemptId!=='string'||!/^[0-9a-f]{64}$/.test(attemptId))fail('comparison_attempt_unavailable');
+    const labels=['baseline','candidate'];
+    function checkAttempt(attempt) {
+      if(!attempt || attempt.id!==attemptId)fail('comparison_attempt_unavailable');
+      const runs=labels.map((label,i)=>{
+        const run=attempt[label];
+        if(!run || !/^[0-9a-f]{64}$/.test(run.id) || run.record!==api.record || run.owner!==api.wallet || run.version!==versions[i].id || run.challenge!==comparison.content.challenge_id)fail('comparison_run_mismatch');
+        return run;
+      });
+      if(runs[0].id===runs[1].id || runs.some(r=>!r.brief || r.brief.trading || !Number.isSafeInteger(r.deadline_at) || r.deadline_at<1) ||
+          !isDeepStrictEqual(runs[0].brief,runs[1].brief) || runs[0].challenge!==runs[1].challenge ||
+          runs[0].budget!==runs[1].budget || runs[0].deadline_at!==runs[1].deadline_at)fail('comparison_conditions_mismatch');
+      return runs;
+    }
+    const runs=checkAttempt(created.attempt),journalPaths=labels.map(label=>`${journalPrefix}.${label}.json`);
+    for(let i=0;i<runs.length;i++) {
+      if(existsSync(journalPaths[i]+'.lock'))fail('comparison_journal_busy');
+      if(existsSync(journalPaths[i])) {
+        const saved=readPrivate(journalPaths[i]);
+        if(saved.run!==runs[i].id || saved.record!==api.record)fail('journal_scope_mismatch');
+      }
+    }
+    const results=await Promise.allSettled(runs.map((run,i)=>runCycle({
+      api:{record:api.record,request:api.request,get:async()=>{
+        const latest=(await api.request(comparisonPath)).comparisons.find(c=>c.id===id);
+        if(!latest || latest.content?.owner!==api.wallet || latest.content.record!==api.record)fail('comparison_not_owned');
+        checkProfile(latest);
+        return {versions,runs:checkAttempt(latest.attempts.find(a=>a.id===attemptId))};
+      },post:(path,body)=>{
+        const prefix=`/strategy-runs/${run.id}/`,action=path.slice(prefix.length);
+        if(!path.startsWith(prefix)||!['reserve','report','finish'].includes(action))fail('invalid_comparison_action');
+        return api.post(`/comparisons/${id}/attempts/${attemptId}/${labels[i]}/${action}`,body);
+      }},id:run.id,provider,journalPath:journalPaths[i],
+      onProgress:value=>onProgress({comparison:id,attempt:attemptId,label:labels[i],...value}),
+    })));
+    // Drain both journals before releasing the pair lock, including a failed half.
+    const failed=results.find(r=>r.status==='rejected');if(failed)throw failed.reason;
+    return {comparison:id,attempt:attemptId,baseline:results[0].value,candidate:results[1].value};
+  } finally {unlinkSync(lockPath);}
+}
 export function httpTrade(sessionPath, fetcher=fetch) {
   return async({api,run})=>{
     const release=gameLock(sessionPath);
@@ -254,9 +317,17 @@ export function solanaTrade({binary,keyPath,signature}) {
 async function main() {
   const args = process.argv.slice(2), opts = {};
   for (let i=0;i<args.length;i+=2) { if (!/^--[a-z-]+$/.test(args[i]) || !args[i+1] || args[i+1].startsWith('--')) fail('expected_flag_value_pairs'); opts[args[i].slice(2)] = args[i+1]; }
-  if (!opts.profile || !opts.run || !opts.journal || opts['allow-provider']!=='yes') fail('required: --profile FILE --run ID --journal PRIVATE_FILE --allow-provider yes');
+  if(opts.comparison) {
+    if(!opts.profile || !opts['attempt-client'] || !opts['journal-prefix'] || opts['allow-provider']!=='yes')fail('required: --profile FILE --comparison ID --attempt-client ID --journal-prefix PREFIX --allow-provider yes');
+    if(opts.run||opts.journal||opts.tools||opts['trade-session']||opts['trade-key']||opts['trade-signature']||opts['bots-binary'])fail('comparison_options_conflict');
+  } else if (!opts.profile || !opts.run || !opts.journal || opts['allow-provider']!=='yes') fail('required: --profile FILE --run ID --journal PRIVATE_FILE --allow-provider yes');
   const api = await ownerApi(opts.api ?? 'https://alashi.network',readPrivate(resolve(opts.profile)));
   const provider = modelProvider({url:process.env.ALASHI_MODEL_URL,key:process.env.ALASHI_MODEL_KEY,model:process.env.ALASHI_MODEL,test:opts['test-provider']==='yes'});
+  if(opts.comparison) {
+    const result=await runComparison({api,id:opts.comparison,clientId:opts['attempt-client'],provider,journalPrefix:resolve(opts['journal-prefix']),onProgress:v=>process.stdout.write(JSON.stringify(v)+'\n')});
+    process.stdout.write(JSON.stringify({comparison:result.comparison,attempt:result.attempt,baseline:{run:result.baseline.id,status:result.baseline.status,known_tokens:result.baseline.known_tokens},candidate:{run:result.candidate.id,status:result.candidate.status,known_tokens:result.candidate.known_tokens}})+'\n');
+    return;
+  }
   if(opts['trade-session']&&(opts['trade-key']||opts['trade-signature']))fail('choose_one_trade_executor');
   const trade=opts['trade-session']?httpTrade(resolve(opts['trade-session'])):opts['trade-key']||opts['trade-signature']?solanaTrade({binary:opts['bots-binary']?resolve(opts['bots-binary']):undefined,keyPath:opts['trade-key']?resolve(opts['trade-key']):undefined,signature:opts['trade-signature']}):undefined;
   const run = await runCycle({api,id:opts.run,provider,journalPath:resolve(opts.journal),tools:opts.tools?readPrivate(resolve(opts.tools)):{},trade,onProgress:v=>process.stdout.write(JSON.stringify(v)+'\n')});

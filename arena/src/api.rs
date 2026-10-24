@@ -3071,9 +3071,9 @@ fn live_result(value: serde_json::Value) -> (&'static str, String) {
         Some("message_conflict" | "cursor_expired" | "stale_context") => "409 Conflict",
         Some("rate_limited" | "budget_exhausted") => "429 Too Many Requests",
         Some("storage_failed" | "owner_handoff_busy" | "pairing_busy" | "journal_full") => "503 Service Unavailable",
-        Some("owner_origin_forbidden" | "wish_forbidden" | "pairing_identity_mismatch") => "403 Forbidden",
+        Some("owner_origin_forbidden" | "wish_forbidden" | "pairing_identity_mismatch" | "comparison_forbidden" | "comparison_attempt_forbidden" | "comparison_strategy_not_owned") => "403 Forbidden",
         Some("owner_session_invalid" | "owner_session_expired" | "owner_cookie_invalid" | "game_token_invalid" | "owner_signature_invalid" | "owner_handoff_invalid" | "pairing_cookie_invalid" | "pairing_invalid") => "401 Unauthorized",
-        Some("idempotency_conflict" | "wish_status_conflict" | "no_active_game" | "no_active_chain_game" | "receipt_pending" | "binding_conflict") => "409 Conflict",
+        Some("idempotency_conflict" | "wish_status_conflict" | "no_active_game" | "no_active_chain_game" | "receipt_pending" | "binding_conflict" | "comparison_pair_incomplete" | "comparison_decision_frozen") => "409 Conflict",
         Some("wish_quota_exhausted" | "owner_challenge_rate_limited" | "dialogue_quota_exhausted" | "dialogue_rate_limited") => "429 Too Many Requests",
         Some("runner_token_invalid" | "binding_forbidden") => "403 Forbidden",
         Some("chain_api_unavailable" | "match_host_unavailable" | "match_capacity" | "host_funds_low" | "funding_rpc_unavailable" | "funding_capacity" | "funding_failed") => "503 Service Unavailable",
@@ -3227,6 +3227,26 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
         ("GET", ["strategy-library"]) => live_result(strategy_cycle::public(state)),
         ("GET", ["agents", id, "owner", "strategies"]) => match owner_credential(req) {
             Ok(raw) => live_result(strategy_cycle::owned(state,id,&raw)),
+            Err(code) => live_result(err_json(code,code)),
+        },
+        ("GET", ["agents", id, "owner", "comparisons"]) => match owner_credential(req) {
+            Ok(raw) => live_result(strategy_cycle::comparison::owned(state,id,&raw)),
+            Err(code) => live_result(err_json(code,code)),
+        },
+        ("POST", ["agents", id, "owner", "comparisons"]) => match owner_credential(req) {
+            Ok(raw) => live_result(strategy_cycle::comparison::create(state,id,req.origin.as_deref().unwrap_or(""),&raw,&body_v)),
+            Err(code) => live_result(err_json(code,code)),
+        },
+        ("POST", ["agents", id, "owner", "comparisons", comparison, "attempts"]) => match owner_credential(req) {
+            Ok(raw) => live_result(strategy_cycle::comparison::start(state,id,req.origin.as_deref().unwrap_or(""),&raw,comparison,&body_v)),
+            Err(code) => live_result(err_json(code,code)),
+        },
+        ("POST", ["agents", id, "owner", "comparisons", comparison, "attempts", attempt, "decision"]) => match owner_credential(req) {
+            Ok(raw) => live_result(strategy_cycle::comparison::decision(state,id,req.origin.as_deref().unwrap_or(""),&raw,comparison,attempt,&body_v)),
+            Err(code) => live_result(err_json(code,code)),
+        },
+        ("POST", ["agents", id, "owner", "comparisons", comparison, "attempts", attempt, label, action]) => match owner_credential(req) {
+            Ok(raw) => live_result(strategy_cycle::comparison::action(state,id,req.origin.as_deref().unwrap_or(""),&raw,comparison,attempt,label,action,&body_v)),
             Err(code) => live_result(err_json(code,code)),
         },
         ("POST", ["agents", id, "owner", "strategy-challenges"]) => match owner_credential(req) {

@@ -286,3 +286,25 @@ observed. Независимый расчёт из исходных выплат
 observed. Контрпример к объяснению агента: в старом replay ставка 25→26 при тех же собственных остальных действиях и местах повысила выплату на 0,5 alashi. Агент не получал эту проверку. Новая пара random/genome также сохраняет потолок ставки 8; перенос против более высоких ставок не установлен.
 source_defined. Изменён только исследовательский архив. Продуктивные правила и код арены сохраняются; полный CI/SBF продукта не запускался. Материалы: docs/research/harness-learning-20261020/README.md, results.json, report.html; исходные ответы и партии сохранены рядом. Ключ авторизации в публикацию не включается.
 Факт: 2.02 часа до готовности проверенного архива. Все оценки этой задачи закрыты этим фактом; публикация и сверка копии следуют ниже.
+
+25.10.2026 00:51. Проверка человеческой гипотезы через сравнение собственных версий. План: 1 час, до 01:51. Исходный main 02e27cc; отдельная ветка codex/human-hypothesis-comparison-20261025. Критерий: один владелец фиксирует вопрос и ожидаемый результат до двух независимых запусков на одном статичном рекламном брифе. Фактическая правка видна; оценка ограничена соответствием брифу. Приватные данные не попадают в публичные дуэли. Проверки: API/reload/runner recovery, frontend и обязательные проверки проекта. Живые партии и платные модельные вызовы не выполняются.
+
+
+### 25 October 2026, human hypothesis comparison: progress (25.10 01:11 Almaty)
+
+Implementation is assembled in the isolated worktree: private comparison API, paired runner and owner form. Bootstrap suite passes 56 tests. Frontend comparison checks and production build passed. Integration and browser acceptance are running. Concurrent cold Rust builds exhausted disk space; only this task's generated target directories were removed. Checks now share a compact target and run sequentially. The existing SBF v1.54 installation is incomplete; its official reinstall also ran out of disk space. No real provider calls or transactions have been made.
+
+
+### 25 October 2026, human hypothesis comparison: progress (01:20 Almaty)
+
+Full arena suite passed, including signed comparison HTTP acceptance and existing duel/game regressions. Local fixture acceptance made exactly two model requests, recovered a lost report without another call, and kept private versions and runs out of the public library. Browser form creation, normalized provider origin, paired preparation and saved owner decision were checked against synthetic local data; no console errors were observed. Frontend production build, comparison/strategy checks and real Vite proxy allowlist checks passed. A final multiline input change is queued for focused comparison recheck. Indexer tests are compiling with the shared compact target. README now describes human idea testing as the product direction and separates this local scenario from existing Solana execution.
+
+
+### 25 October 2026, human hypothesis comparison: progress (01:30 Almaty)
+
+Indexer: PASS, 16 tests. Program host check: PASS. Final focused comparison checks: PASS, 7 tests, including multiline input, private-parent publication rules and signed HTTP recovery. A private child cannot be published until its parent is public; publication never happens automatically. Bots build and a full arena regression after this last guard are running sequentially. Browser QA is complete, screenshots saved, and the temporary preview was stopped. The task-local frontend dependencies were removed after the successful final build to preserve free space; source and built preview files remain. SBF validation is still blocked by the incomplete toolchain and storage limit.
+
+
+### 25 October 2026, human hypothesis comparison: verification complete (01:34 Almaty)
+
+Final arena suite: PASS, 144 tests with one pre-existing ignored canonical-snapshot check. Rules: 40 passed; indexer: 16 passed; Node bootstrap: 56 passed. Frontend production build and comparison/strategy/proxy checks passed. Program host check and bots build passed. SBF build and program SBF tests remain unexecuted after the incomplete v1.54 toolchain failed to reinstall for lack of disk space. Private comparisons, replay-safe recovery and owner decisions are implemented for static English advertising briefs. General scenario packages and external human validation remain future work. Preparing branch publication; no site deployment, provider spending or transactions occurred.

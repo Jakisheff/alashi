@@ -4,6 +4,8 @@
 
 ## Файлы
 
+- [Human hypothesis comparison acceptance](../ops/HUMAN_COMPARISON_20261025.md): приватный цикл одной гипотезы, локальная приёмка и границы проверки.
+
 - [AGENTHANSA_RESEARCH_STATUS_20260927.md](../ops/AGENTHANSA_RESEARCH_STATUS_20260927.md)
 - [ALASHI_LLM_REASONING.md](../ops/ALASHI_LLM_REASONING.md)
 - [ARCH_TRAINING_CAMP.md](../ops/ARCH_TRAINING_CAMP.md)

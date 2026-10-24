@@ -1,6 +1,14 @@
-# Alashi: Twitch for agents
+# Alashi: test your ideas with your agents
 
-Alashi is a political economy game for agent factions, with a public Solana devnet spectator. Factions trade, produce goods and vote on laws over six rounds. Owners can follow a participant and inspect confirmed game actions.
+ALASHI is being developed as a place where people test ideas through their agents.
+This branch adds a [private comparison](tools/agent-bootstrap/COMPARISONS.md) on a
+static advertising brief: record a hypothesis, change one instruction, inspect
+both outputs and record a decision. This feature is not deployed to the public site.
+
+The existing political economy game has a public Solana devnet spectator.
+Factions trade, produce goods and vote on laws over six rounds. Owners can follow
+a participant and inspect confirmed game actions. Static advertising comparisons
+require no blockchain transaction; the game retains its separate Solana execution path.
 
 [Watch a completed game](https://alashi.network/devnet?game=GqHZBaWuJDNERi8xJHXnYF5eWBsLSmEXcAGJYAP94M1b) · [Website](https://alashi.network/) · [Devnet agent guide](frontend/public/agent.md) · [Local development](#local-development) · [Documentation map](docs/00_HOME.md)
 
@@ -44,6 +52,7 @@ Degenie, the Alashi mascot (avatar concept).
 
 | Path | Available behavior | Acceptance boundary |
 |---|---|---|
+| Private idea comparison (this branch) | One owner compares two private versions on the same advertising brief with one changed model instruction | Local deterministic acceptance only; no measured advertising lift or monetary savings |
 | Public devnet spectator | Game state, confirmed action history and completed replays | The linked historical Game is reported as Finished and settled by the public data endpoint |
 | Sponsored devnet Match | One local visitor wallet receives bounded team funding and joins a managed Game with a labelled heuristic opponent | One public zero-balance-to-settlement trial passed; browser-only clients and blocked-network sandboxes remain unsupported |
 | Self-hosted devnet demonstration | Local runner creates and completes a Game with deterministic decisions and funded test wallets | Operator manages funding, participants and lifecycle |
@@ -70,13 +79,24 @@ The public dialogue journal labels speech as `runner_reported`. Confirmed game a
 
 ## Next test
 
-One gaming community, five external agent owners. We count how many return for a second match and how many agree to pay for competition access. If fewer than two return, we change the format before expanding.
+An external owner brings an actual advertising question and records a decision
+rule before running the comparison. We observe whether the outputs support a
+decision and whether the owner returns with another question. This human trial
+has not been conducted; local fixtures establish software behavior only.
 
 ## Who it is for
 
-The product direction is Twitch for agents: people watch agents compete and care about a participant of their own. The first intended audience is strategy-game players who already use a coding agent and want to enter it into a shared contest.
+The initial comparison user owns an agent workflow and wants to test an idea
+about its output. For example, a marketer changes one audience instruction and
+compares the resulting drafts against a written decision rule. The current
+scenario supports English advertisements and format checks. It cannot simulate
+customer behavior or determine which campaign will grow a company.
 
-Our hypothesis is that some players will choose to direct an agent and follow its match instead of selecting every move themselves. StarCraft bot leagues are a format reference for following a bot and its author; Twitch is a reference for following a participant. Enjoyment, voluntary return and payment remain unvalidated with external human owners. Team test agents do not establish human demand.
+The Public Goods hypothesis is that shared scenarios and reusable published
+work plans reduce repeated setup for other owners. Published strategy reuse
+already exists. A general scenario package and independent reuse of the new
+comparison workflow remain unvalidated. Owner demand and willingness to pay also
+require external trials.
 
 ## How the devnet path works
 
@@ -121,11 +141,18 @@ Tools: `alashi_start` (register once, match, join), `alashi_state`, `alashi_act`
 
 ## Agent arena (implementation branch)
 
-ALASHI is an arena for testing owner skills and agent teams. The `/strategies`
-route links owner task graphs and usage receipts to a confirmed trading action,
-or hosts an English advertising duel. Trading uses the existing game rules and
-requires an accepted event; creative quality in advertising needs a host review.
-Public derivatives retain their source and must be published before use.
+The `/strategies` route lets an owner test an idea with their agents. In a
+[private comparison](tools/agent-bootstrap/COMPARISONS.md), the owner records a
+hypothesis and decision rule, then compares two versions on one advertisement
+brief. The server allows one changed model instruction and records the actual
+diff. Results and the owner's decision stay private. Format checks and reported
+token use do not establish advertising effectiveness.
+
+The same route retains two-owner English advertising duels and trading rounds.
+Trading uses the existing game rules and requires an accepted event; creative
+quality in an advertising duel needs a host review. Derivatives entered in duels
+must be published with their source. Private comparisons allow an owner's own
+private derivative without publishing it.
 
 The [trading cycle acceptance](experiments/alashi-watch/trading-strategy-cycle/ACCEPTANCE.md)
 covers two independent local processes producing and selling goods, settlement,

@@ -9,6 +9,8 @@ type Result<T> = std::result::Result<T, &'static str>;
 const MAX_BUDGET: u64 = 1_000_000;
 // shortcut: bounded pilot journal; add receipt-preserving archival before raising this cap.
 const MAX_ITEMS: usize = 500;
+#[path = "strategy_comparison.rs"]
+pub mod comparison;
 #[derive(Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(deny_unknown_fields)]
 pub struct TaskSpec {
@@ -185,6 +187,8 @@ pub struct StrategyState {
     pub versions: BTreeMap<String, Version>,
     pub challenges: BTreeMap<String, Challenge>,
     pub runs: BTreeMap<String, Run>,
+    #[serde(default)]
+    pub comparisons: BTreeMap<String, comparison::Comparison>,
 }
 fn digest(v: &impl Serialize) -> String {
     sha256_hex(&serde_json::to_string(v).expect("serializable content"))
@@ -304,9 +308,10 @@ pub fn validate(s: &StrategyState) -> bool {
             || *id != digest(&v.content)
             || !valid_content(&v.content)
             || v.content.parent.as_ref().is_some_and(|p| {
-                !s.versions
-                    .get(p)
-                    .is_some_and(|parent| parent.published && parent.created_at <= v.created_at)
+                !s.versions.get(p).is_some_and(|parent| {
+                    (parent.published || !v.published && parent.content.owner == v.content.owner)
+                        && parent.created_at <= v.created_at
+                })
             })
         {
             return false;
@@ -344,105 +349,10 @@ pub fn validate(s: &StrategyState) -> bool {
             || !hex32(&r.record)
             || r.budget != c.content.budget
             || r.owner == c.content.owner && c.content.trading.is_none()
-            || r.calls.len() > v.content.plan.len()
-            || r.events.len() > 40
             || (v.content.parent.is_some() && !v.published)
             || (r.owner != v.content.owner && !v.published)
-            || !matches!(
-                r.status.as_str(),
-                "running" | "completed" | "quality_failed" | "usage_unknown" | "budget_overrun"
-            )
-            || r.events
-                .iter()
-                .enumerate()
-                .any(|(i, e)| e.seq != i as u64 + 1)
+            || !valid_run(r, v, c, &mut ids)
         {
-            return false;
-        }
-        for (task, call) in &r.calls {
-            let Some(spec) = v.content.plan.iter().find(|t| &t.id == task) else {
-                return false;
-            };
-            if &call.task != task
-                || !valid_call(
-                    spec,
-                    call.reserved,
-                    &call.source,
-                    &call.provider,
-                    &call.model,
-                )
-                || call.usage.as_ref().is_some_and(|u| {
-                    !u.valid() || call.source == "local_tool" && u.total_tokens != 0
-                })
-            {
-                return false;
-            }
-            if call.status == "reserved" {
-                if call.usage.is_some()
-                    || call.report.is_some()
-                    || call.finished_at.is_some()
-                    || call.quality_passed.is_some()
-                    || call.report_hash.is_some()
-                    || call.response_id.is_some()
-                {
-                    return false;
-                }
-            } else if !matches!(call.status.as_str(), "reported" | "failed")
-                || call.finished_at.is_none()
-                || call.quality_passed.is_none()
-                || !call.report_hash.as_deref().is_some_and(hex32)
-            {
-                return false;
-            }
-            if call.quality_passed == Some(true)
-                && (call
-                    .report
-                    .as_ref()
-                    .is_none_or(|p| !p.is_object() || p.to_string().len() > 8192)
-                    || call.report_hash.as_deref() != call.report.as_ref().map(digest).as_deref())
-            {
-                return false;
-            }
-            if call.quality_passed == Some(false) && call.report.is_some() {
-                return false;
-            }
-            if let Some(response) = &call.response_id {
-                if response.is_empty()
-                    || response.len() > 200
-                    || !ids.insert((&call.source, &call.provider, &call.model, response))
-                {
-                    return false;
-                }
-            }
-        }
-        if r.status == "completed" {
-            let Some(result) = &r.result else {
-                return false;
-            };
-            if !v.content.plan.iter().all(|t| r.passed(&t.id))
-                || checks(&c.content, &result["artifact"])["passed"] != true
-                || r.known() > r.budget
-                || r.calls.values().any(|call| {
-                    call.usage
-                        .as_ref()
-                        .is_some_and(|u| u.total_tokens > call.reserved)
-                })
-            {
-                return false;
-            }
-            if let Some(context) = &c.content.trading {
-                if !strategy_trade::valid_receipt(
-                    context,
-                    &r.owner,
-                    &result["artifact"],
-                    &result["trade_receipt"],
-                ) {
-                    return false;
-                }
-            } else if result.get("trade_receipt").is_some() {
-                return false;
-            }
-        } else if r.result.is_some() || r.review.is_some() {
             return false;
         }
         if r.review.as_ref().is_some_and(|review| {
@@ -454,7 +364,147 @@ pub fn validate(s: &StrategyState) -> bool {
             return false;
         }
     }
+    comparison::validate(s, &mut ids)
+}
+fn valid_run(
+    r: &Run,
+    v: &Version,
+    c: &Challenge,
+    ids: &mut BTreeSet<(String, String, String, String)>,
+) -> bool {
+    if r.calls.len() > v.content.plan.len()
+        || r.events.len() > 40
+        || !matches!(
+            r.status.as_str(),
+            "running" | "completed" | "quality_failed" | "usage_unknown" | "budget_overrun"
+        )
+        || r.events
+            .iter()
+            .enumerate()
+            .any(|(i, e)| e.seq != i as u64 + 1)
+    {
+        return false;
+    }
+    for (task, call) in &r.calls {
+        let Some(spec) = v.content.plan.iter().find(|t| &t.id == task) else {
+            return false;
+        };
+        if &call.task != task
+            || !valid_call(
+                spec,
+                call.reserved,
+                &call.source,
+                &call.provider,
+                &call.model,
+            )
+            || call
+                .usage
+                .as_ref()
+                .is_some_and(|u| !u.valid() || call.source == "local_tool" && u.total_tokens != 0)
+        {
+            return false;
+        }
+        if call.status == "reserved" {
+            if call.usage.is_some()
+                || call.report.is_some()
+                || call.finished_at.is_some()
+                || call.quality_passed.is_some()
+                || call.report_hash.is_some()
+                || call.response_id.is_some()
+            {
+                return false;
+            }
+        } else if !matches!(call.status.as_str(), "reported" | "failed")
+            || call.finished_at.is_none()
+            || call.quality_passed.is_none()
+            || !call.report_hash.as_deref().is_some_and(hex32)
+        {
+            return false;
+        }
+        if call.quality_passed == Some(true)
+            && (call
+                .report
+                .as_ref()
+                .is_none_or(|p| !p.is_object() || p.to_string().len() > 8192)
+                || call.report_hash.as_deref() != call.report.as_ref().map(digest).as_deref())
+        {
+            return false;
+        }
+        if call.quality_passed == Some(false) && call.report.is_some() {
+            return false;
+        }
+        if let Some(response) = &call.response_id {
+            if response.is_empty()
+                || response.len() > 200
+                || !ids.insert((
+                    call.source.clone(),
+                    call.provider.clone(),
+                    call.model.clone(),
+                    response.clone(),
+                ))
+            {
+                return false;
+            }
+        }
+    }
+    if r.status == "completed" {
+        let Some(result) = &r.result else {
+            return false;
+        };
+        if !v.content.plan.iter().all(|t| r.passed(&t.id))
+            || checks(&c.content, &result["artifact"])["passed"] != true
+            || r.known() > r.budget
+            || r.calls.values().any(|call| {
+                call.usage
+                    .as_ref()
+                    .is_some_and(|u| u.total_tokens > call.reserved)
+            })
+        {
+            return false;
+        }
+        if let Some(context) = &c.content.trading {
+            if !strategy_trade::valid_receipt(
+                context,
+                &r.owner,
+                &result["artifact"],
+                &result["trade_receipt"],
+            ) {
+                return false;
+            }
+        } else if result.get("trade_receipt").is_some() {
+            return false;
+        }
+    } else if r.result.is_some() || r.review.is_some() {
+        return false;
+    }
     true
+}
+fn all_runs(s: &StrategyState) -> impl Iterator<Item = &Run> {
+    s.runs.values().chain(
+        s.comparisons
+            .values()
+            .flat_map(|c| c.attempts.iter().flat_map(|a| [&a.baseline, &a.candidate])),
+    )
+}
+fn duplicate_receipt(data: &StrategyState, id: &str, body: &Value) -> bool {
+    let task = body["task"].as_str().unwrap_or("");
+    let Some(reservation) = all_runs(data)
+        .find(|r| r.id == id)
+        .and_then(|r| r.calls.get(task))
+    else {
+        return false;
+    };
+    body["response_id"].as_str().is_some_and(|response| {
+        all_runs(data).any(|r| {
+            r.calls.iter().any(|(other_task, c)| {
+                (r.id != id || other_task != task)
+                    && c.source == reservation.source
+                    && c.provider == reservation.provider
+                    && c.model == reservation.model
+                    && c.response_id.as_deref() == Some(response)
+            })
+        })
+    })
 }
 fn err(code: &str) -> Value {
     json!({"ok":false,"error":code})
@@ -725,11 +775,11 @@ pub fn create(state: &AppState, record: &str, origin: &str, bearer: &str, body: 
         return err("bad_strategy");
     }
     mutate(state, |data| {
-        if content
-            .parent
-            .as_ref()
-            .is_some_and(|p| !data.versions.get(p).is_some_and(|v| v.published))
-        {
+        if content.parent.as_ref().is_some_and(|p| {
+            !data.versions.get(p).is_some_and(|v| {
+                v.published || body["published"] != true && v.content.owner == content.owner
+            })
+        }) {
             return Err("public_parent_required");
         }
         let id = digest(&content);
@@ -757,9 +807,17 @@ pub fn publish(state: &AppState, record: &str, origin: &str, bearer: &str, id: &
     mutate(state, |data| {
         let v = data
             .versions
-            .get_mut(id)
+            .get(id)
             .filter(|v| v.content.owner == owner)
             .ok_or("strategy_forbidden")?;
+        if v.content
+            .parent
+            .as_ref()
+            .is_some_and(|parent| !data.versions.get(parent).is_some_and(|v| v.published))
+        {
+            return Err("public_parent_required");
+        }
+        let v = data.versions.get_mut(id).unwrap();
         v.published = true;
         Ok(json!({"ok":true,"version":v}))
     })
@@ -870,20 +928,6 @@ pub fn reserve(
         Ok(o) => o,
         Err(c) => return err(c),
     };
-    if let Err(c) = fields(
-        body,
-        &["task", "max_total_tokens", "source", "provider", "model"],
-    ) {
-        return err(c);
-    }
-    let task = body["task"].as_str().unwrap_or("");
-    let cap = match body["max_total_tokens"].as_u64() {
-        Some(v) => v,
-        None => return err("bad_reservation"),
-    };
-    let source = body["source"].as_str().unwrap_or("");
-    let provider = body["provider"].as_str().unwrap_or("");
-    let model = body["model"].as_str().unwrap_or("");
     mutate(state, |data| {
         let r = data
             .runs
@@ -892,56 +936,71 @@ pub fn reserve(
             .ok_or("run_forbidden")?;
         let v = &data.versions[&r.version];
         let brief = &data.challenges[&r.challenge];
-        let spec = v
-            .content
-            .plan
-            .iter()
-            .find(|t| t.id == task)
-            .ok_or("bad_task")?;
-        let deadline = brief.deadline().ok_or("waiting_for_opponent")?;
-        if now() >= deadline {
-            return Err("round_ended");
-        }
-        if !valid_call(spec, cap, source, provider, model) {
-            return Err("bad_provider");
-        }
-        if let Some(c) = r.calls.get(task) {
-            if c.reserved != cap || c.source != source || c.provider != provider || c.model != model
-            {
-                return Err("idempotency_conflict");
-            }
-            return Ok(json!({"ok":true,"run":view(r,v,brief,true,false)}));
-        }
-        if r.status != "running" || r.uncertain() {
-            return Err("run_stopped");
-        }
-        if !spec.depends_on.iter().all(|d| r.passed(d)) {
-            return Err("dependencies_not_complete");
-        }
-        if r.known().saturating_add(r.held()).saturating_add(cap) > r.budget {
-            return Err("budget_exhausted");
-        }
-        r.calls.insert(
-            task.into(),
-            Call {
-                task: task.into(),
-                reserved: cap,
-                status: "reserved".into(),
-                source: source.into(),
-                provider: provider.into(),
-                model: model.into(),
-                response_id: None,
-                usage: None,
-                report: None,
-                report_hash: None,
-                quality_passed: None,
-                started_at: now(),
-                finished_at: None,
-            },
-        );
-        r.event(task, "task_started");
+        reserve_run(r, v, brief, body)?;
         Ok(json!({"ok":true,"run":view(r,v,brief,true,false)}))
     })
+}
+fn reserve_run(r: &mut Run, v: &Version, brief: &Challenge, body: &Value) -> Result<()> {
+    fields(
+        body,
+        &["task", "max_total_tokens", "source", "provider", "model"],
+    )?;
+    let task = body["task"].as_str().unwrap_or("");
+    let cap = match body["max_total_tokens"].as_u64() {
+        Some(v) => v,
+        None => return Err("bad_reservation"),
+    };
+    let source = body["source"].as_str().unwrap_or("");
+    let provider = body["provider"].as_str().unwrap_or("");
+    let model = body["model"].as_str().unwrap_or("");
+    let spec = v
+        .content
+        .plan
+        .iter()
+        .find(|t| t.id == task)
+        .ok_or("bad_task")?;
+    let deadline = brief.deadline().ok_or("waiting_for_opponent")?;
+    if now() >= deadline {
+        return Err("round_ended");
+    }
+    if !valid_call(spec, cap, source, provider, model) {
+        return Err("bad_provider");
+    }
+    if let Some(c) = r.calls.get(task) {
+        if c.reserved != cap || c.source != source || c.provider != provider || c.model != model {
+            return Err("idempotency_conflict");
+        }
+        return Ok(());
+    }
+    if r.status != "running" || r.uncertain() {
+        return Err("run_stopped");
+    }
+    if !spec.depends_on.iter().all(|d| r.passed(d)) {
+        return Err("dependencies_not_complete");
+    }
+    if r.known().saturating_add(r.held()).saturating_add(cap) > r.budget {
+        return Err("budget_exhausted");
+    }
+    r.calls.insert(
+        task.into(),
+        Call {
+            task: task.into(),
+            reserved: cap,
+            status: "reserved".into(),
+            source: source.into(),
+            provider: provider.into(),
+            model: model.into(),
+            response_id: None,
+            usage: None,
+            report: None,
+            report_hash: None,
+            quality_passed: None,
+            started_at: now(),
+            finished_at: None,
+        },
+    );
+    r.event(task, "task_started");
+    Ok(())
 }
 pub fn report(
     state: &AppState,
@@ -955,109 +1014,100 @@ pub fn report(
         Ok(o) => o,
         Err(c) => return err(c),
     };
-    if let Err(c) = fields(
-        body,
-        &["task", "response_id", "usage", "report", "request_failed"],
-    ) {
-        return err(c);
-    }
-    let task = body["task"].as_str().unwrap_or("");
-    let response = match body.get("response_id") {
-        None | Some(Value::Null) => None,
-        Some(Value::String(s)) if !s.is_empty() && s.len() <= 200 => Some(s.clone()),
-        _ => return err("bad_response_id"),
-    };
-    let usage = match body.get("usage") {
-        None | Some(Value::Null) => None,
-        Some(u) => match serde_json::from_value::<Usage>(u.clone()) {
-            Ok(u) if u.valid() => Some(u),
-            _ => return err("bad_usage"),
-        },
-    };
-    let supplied = body.get("report").cloned().unwrap_or(Value::Null);
-    if supplied.to_string().len() > 8192 || !body["request_failed"].is_boolean() {
-        return err("bad_report");
-    }
-    let hash = digest(&supplied);
     mutate(state, |data| {
-        let own_run = data
+        let r = data
             .runs
             .get(id)
             .filter(|r| r.owner == owner && r.record == record)
             .ok_or("run_forbidden")?;
-        let reservation = own_run.calls.get(task).ok_or("reservation_required")?;
-        if reservation.source == "local_tool" && usage.as_ref().is_some_and(|u| u.total_tokens != 0)
-        {
-            return Err("bad_usage");
-        }
-        if response.as_ref().is_some_and(|response| {
-            data.runs.iter().any(|(other_id, r)| {
-                r.calls.iter().any(|(other_task, c)| {
-                    (other_id != id || other_task != task)
-                        && c.source == reservation.source
-                        && c.provider == reservation.provider
-                        && c.model == reservation.model
-                        && c.response_id.as_ref() == Some(response)
-                })
-            })
-        }) {
+        if duplicate_receipt(data, &r.id, body) {
             return Err("duplicate_provider_receipt");
         }
         let r = data.runs.get_mut(id).unwrap();
         let v = &data.versions[&r.version];
         let brief = &data.challenges[&r.challenge];
-        let quality = body["request_failed"] == false
-            && supplied.as_object().is_some_and(|o| !o.is_empty())
-            && (task != "deliver" || checks(&brief.content, &supplied)["passed"] == true);
-        let c = r.calls.get_mut(task).unwrap();
-        if c.status != "reserved" {
-            return if c.response_id == response
-                && c.usage == usage
-                && c.report_hash.as_ref() == Some(&hash)
-                && c.quality_passed == Some(quality)
-            {
-                Ok(json!({"ok":true,"run":view(r,v,brief,true,false)}))
-            } else {
-                Err("idempotency_conflict")
-            };
-        }
-        c.status = if body["request_failed"] == true {
-            "failed"
-        } else {
-            "reported"
-        }
-        .into();
-        c.response_id = response;
-        c.usage = usage;
-        c.report_hash = Some(hash);
-        c.quality_passed = Some(quality);
-        c.finished_at = Some(now());
-        c.report = if quality { Some(supplied) } else { None };
-        r.event(
-            task,
-            if quality {
-                "report_checked"
-            } else {
-                "quality_failed"
-            },
-        );
-        r.status = if r.known() > r.budget
-            || r.calls.values().any(|c| {
-                c.usage
-                    .as_ref()
-                    .is_some_and(|u| u.total_tokens > c.reserved)
-            }) {
-            "budget_overrun"
-        } else if r.uncertain() {
-            "usage_unknown"
-        } else if r.calls.values().any(|c| c.quality_passed == Some(false)) {
-            "quality_failed"
-        } else {
-            "running"
-        }
-        .into();
+        report_run(r, brief, body)?;
         Ok(json!({"ok":true,"run":view(r,v,brief,true,false)}))
     })
+}
+fn report_run(r: &mut Run, brief: &Challenge, body: &Value) -> Result<()> {
+    fields(
+        body,
+        &["task", "response_id", "usage", "report", "request_failed"],
+    )?;
+    let task = body["task"].as_str().unwrap_or("");
+    let response = match body.get("response_id") {
+        None | Some(Value::Null) => None,
+        Some(Value::String(s)) if !s.is_empty() && s.len() <= 200 => Some(s.clone()),
+        _ => return Err("bad_response_id"),
+    };
+    let usage = match body.get("usage") {
+        None | Some(Value::Null) => None,
+        Some(u) => match serde_json::from_value::<Usage>(u.clone()) {
+            Ok(u) if u.valid() => Some(u),
+            _ => return Err("bad_usage"),
+        },
+    };
+    let supplied = body.get("report").cloned().unwrap_or(Value::Null);
+    if supplied.to_string().len() > 8192 || !body["request_failed"].is_boolean() {
+        return Err("bad_report");
+    }
+    let hash = digest(&supplied);
+    let reservation = r.calls.get(task).ok_or("reservation_required")?;
+    if reservation.source == "local_tool" && usage.as_ref().is_some_and(|u| u.total_tokens != 0) {
+        return Err("bad_usage");
+    }
+    let quality = body["request_failed"] == false
+        && supplied.as_object().is_some_and(|o| !o.is_empty())
+        && (task != "deliver" || checks(&brief.content, &supplied)["passed"] == true);
+    let c = r.calls.get_mut(task).unwrap();
+    if c.status != "reserved" {
+        return if c.response_id == response
+            && c.usage == usage
+            && c.report_hash.as_ref() == Some(&hash)
+            && c.quality_passed == Some(quality)
+        {
+            Ok(())
+        } else {
+            Err("idempotency_conflict")
+        };
+    }
+    c.status = if body["request_failed"] == true {
+        "failed"
+    } else {
+        "reported"
+    }
+    .into();
+    c.response_id = response;
+    c.usage = usage;
+    c.report_hash = Some(hash);
+    c.quality_passed = Some(quality);
+    c.finished_at = Some(now());
+    c.report = if quality { Some(supplied) } else { None };
+    r.event(
+        task,
+        if quality {
+            "report_checked"
+        } else {
+            "quality_failed"
+        },
+    );
+    r.status = if r.known() > r.budget
+        || r.calls.values().any(|c| {
+            c.usage
+                .as_ref()
+                .is_some_and(|u| u.total_tokens > c.reserved)
+        }) {
+        "budget_overrun"
+    } else if r.uncertain() {
+        "usage_unknown"
+    } else if r.calls.values().any(|c| c.quality_passed == Some(false)) {
+        "quality_failed"
+    } else {
+        "running"
+    }
+    .into();
+    Ok(())
 }
 pub fn finish(state: &AppState, record: &str, origin: &str, bearer: &str, id: &str) -> Value {
     let owner = match own(state, record, origin, bearer) {
@@ -1072,23 +1122,27 @@ pub fn finish(state: &AppState, record: &str, origin: &str, bearer: &str, id: &s
             .ok_or("run_forbidden")?;
         let v = &data.versions[&r.version];
         let brief = &data.challenges[&r.challenge];
-        if r.status == "completed" {
-            return Ok(json!({"ok":true,"run":view(r,v,brief,true,false)}));
-        }
-        if r.status != "running" || !v.content.plan.iter().all(|t| r.passed(&t.id)) {
-            return Err("verification_required");
-        }
-        let artifact = r.calls["deliver"].report.clone().unwrap();
-        if brief.content.trading.is_some() {
-            return Err("trade_receipt_required");
-        }
-        r.result = Some(
-            json!({"checks":checks(&brief.content,&artifact),"artifact":artifact,"finished_at":now()}),
-        );
-        r.status = "completed".into();
-        r.event("chief", "brief_checks_passed");
+        finish_run(r, v, brief)?;
         Ok(json!({"ok":true,"run":view(r,v,brief,true,false)}))
     })
+}
+fn finish_run(r: &mut Run, v: &Version, brief: &Challenge) -> Result<()> {
+    if r.status == "completed" {
+        return Ok(());
+    }
+    if r.status != "running" || !v.content.plan.iter().all(|t| r.passed(&t.id)) {
+        return Err("verification_required");
+    }
+    let artifact = r.calls["deliver"].report.clone().unwrap();
+    if brief.content.trading.is_some() {
+        return Err("trade_receipt_required");
+    }
+    r.result = Some(
+        json!({"checks":checks(&brief.content,&artifact),"artifact":artifact,"finished_at":now()}),
+    );
+    r.status = "completed".into();
+    r.event("chief", "brief_checks_passed");
+    Ok(())
 }
 pub fn review(
     state: &AppState,
@@ -1399,13 +1453,13 @@ mod tests {
         Arc,
     };
     const ORIGIN: &str = "https://alashi.network";
-    fn actor(i: usize) -> (String, String) {
+    pub(super) fn actor(i: usize) -> (String, String) {
         (
             ["a", "b", "e", "f"][i].repeat(64),
             ["c", "d", "f", "1"][i].repeat(64),
         )
     }
-    fn fixture() -> Arc<AppState> {
+    pub(super) fn fixture() -> Arc<AppState> {
         static N: AtomicU64 = AtomicU64::new(1);
         let root = std::env::temp_dir().join(format!(
             "alashi_duel_{}_{}",
@@ -1454,7 +1508,7 @@ mod tests {
         save_snapshot(&state).unwrap();
         state
     }
-    fn plan() -> Value {
+    pub(super) fn plan() -> Value {
         json!([{"id":"research","kind":"model","depends_on":[],"instruction":"Review the brief facts.","tool":null},{"id":"deliver","kind":"model","depends_on":["research"],"instruction":"Write the ad.","tool":null}])
     }
     #[test]
@@ -1606,7 +1660,7 @@ mod tests {
             "verification_required"
         );
     }
-    fn brief(s: &AppState, key: &str, budget: u64) -> String {
+    pub(super) fn brief(s: &AppState, key: &str, budget: u64) -> String {
         let (a, t) = actor(0);
         let v = create_challenge(
             s,
@@ -1893,5 +1947,34 @@ mod tests {
             String::from_utf8_lossy(&output.stderr)
         );
         assert!(validate(&s.strategy_cycle.lock().unwrap()));
+    }
+    #[test]
+    fn signed_human_comparison_http() {
+        let s = fixture();
+        let addr = crate::api::serve_on(s.clone(), "127.0.0.1:0", 60_000).unwrap();
+        let script = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("../tools/agent-bootstrap/comparison-http-check.mjs");
+        let output = std::process::Command::new("node")
+            .arg(script)
+            .arg(format!("http://{addr}"))
+            .arg(s.snapshot_path.parent().unwrap())
+            .output()
+            .unwrap();
+        assert!(
+            output.status.success(),
+            "{}\n{}",
+            String::from_utf8_lossy(&output.stdout),
+            String::from_utf8_lossy(&output.stderr)
+        );
+        assert!(validate(&s.strategy_cycle.lock().unwrap()));
+        let restored = new_state_with_files(s.snapshot_path.clone(), s.sequence_path.clone());
+        load_snapshot(&restored).unwrap();
+        assert!(validate(&restored.strategy_cycle.lock().unwrap()));
+        assert!(!restored
+            .strategy_cycle
+            .lock()
+            .unwrap()
+            .comparisons
+            .is_empty());
     }
 }
