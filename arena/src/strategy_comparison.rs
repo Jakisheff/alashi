@@ -439,6 +439,9 @@ pub fn start(
                 json!({"ok":true,"comparison":comparison_view(data,c),"attempt":attempt_view(data,&c.content,a)}),
             );
         }
+        if research::blocks_start(data, id) {
+            return Err("forecast_round_open");
+        }
         if c.attempts.len() >= c.content.attempt_limit as usize {
             return Err("comparison_attempt_limit");
         }

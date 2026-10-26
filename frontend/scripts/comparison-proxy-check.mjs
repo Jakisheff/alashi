@@ -13,13 +13,13 @@ try {
   process.env.ALASHI_STRATEGY_API_TARGET=target;process.env.ALASHI_ARENA_API_TARGET=target;process.env.ALASHI_LIVE_API_TARGET=target;
   vite=await createViteServer({root:resolve(import.meta.dirname,'..'),configFile:resolve(import.meta.dirname,'../vite.config.ts'),server:{host:'127.0.0.1',port:0,strictPort:false},optimizeDeps:{noDiscovery:true,include:[]},logLevel:'error'});
   await vite.listen();const base=`http://127.0.0.1:${vite.httpServer.address().port}`, owner=`/agents/${'a'.repeat(64)}/owner`, comparison=`${owner}/comparisons`, attempt=`${comparison}/${'b'.repeat(64)}/attempts`, decision=`${attempt}/${'c'.repeat(64)}/decision`;
-  for(const[method,path]of[['GET',comparison],['POST',comparison],['POST',attempt],['POST',decision],['POST',`${attempt}/${'c'.repeat(64)}/baseline/report`]]){
+  for(const[method,path]of[['GET','/research-library'],['GET',owner+'/research'],...['backlog-upsert','round-open','forecast','round-close','digest-ack','apply','publish','publish-local','library-reuse'].map(action=>['POST',owner+'/research/'+action]),['GET',comparison],['POST',comparison],['POST',attempt],['POST',decision],['POST',`${attempt}/${'c'.repeat(64)}/baseline/report`]]){
     const response=await fetch(base+'/strategy-api'+path,{method,headers:{'Content-Type':'application/json'},...(method==='POST'?{body:'{}'}:{})});
     assert.equal(response.status,200,`${method} ${path} must reach the local mock`);
     const result=await response.json();assert.equal(result.path,path,'only the proxy prefix is removed');assert.equal(result.method,method);
   }
   const allowedHits=hits;
-  for(const[method,path]of[['DELETE',comparison],['PUT',comparison],['GET',attempt],['GET',decision],['POST',comparison+'/extra'],['POST',decision+'/extra'],['POST',comparison.replace('a'.repeat(64),'short')],['POST',attempt+'/'+ 'c'.repeat(64)+'/candidate/unknown']]){
+  for(const[method,path]of[['GET',owner+'/research?token=blocked'],['GET','/research-library?debug=1'],['GET',owner+'/research/forecast'],['POST',owner+'/research/unknown'],['POST','/research-library'],['POST',owner+'/research/forecast/extra'],['DELETE',comparison],['PUT',comparison],['GET',attempt],['GET',decision],['POST',comparison+'/extra'],['POST',decision+'/extra'],['POST',comparison.replace('a'.repeat(64),'short')],['POST',attempt+'/'+ 'c'.repeat(64)+'/candidate/unknown']]){
     const response=await fetch(base+'/strategy-api'+path,{method});await response.text();assert.equal(response.status,403,`${method} ${path} must be blocked`);
   }
   assert.equal(hits,allowedHits,'blocked requests never reach the upstream');

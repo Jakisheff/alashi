@@ -4,13 +4,18 @@ import { readFile } from 'node:fs/promises';
 import { resolve, extname, sep } from 'node:path';
 import { randomBytes } from 'node:crypto';
 import { comparisonFixture } from './comparison-fixture.mjs';
+import { researchPreview } from './research-preview-fixture.mjs';
 const fixture=comparisonFixture(), items=[fixture.comparison], versions=fixture.versions, root=resolve(import.meta.dirname,'../dist'), port=Number(process.env.ALASHI_PREVIEW_PORT??4178);
+const research=researchPreview(fixture,items);
 const json=(res,value,status=200)=>{res.writeHead(status,{'Content-Type':'application/json','Cache-Control':'no-store'});res.end(JSON.stringify(value))};
 const hash=()=>randomBytes(32).toString('hex');
 const server=createServer(async(req,res)=>{
   const path=new URL(req.url,'http://127.0.0.1').pathname, prefix=`/agents/${fixture.record}/owner`;
   let body;try{if(req.method==='POST'){let raw='';for await(const chunk of req){raw+=chunk;if(raw.length>50000)throw new Error('large')}body=JSON.parse(raw)}}catch{return json(res,{ok:false,error:'bad_comparison'},400)}
   if(path===prefix+'/browser/session')return json(res,{ok:true,wallet:fixture.owner,expires_at:Math.floor(Date.now()/1000)+3600});
+  if(path==='/research-library')return json(res,research.public());
+  if(path===prefix+'/research')return json(res,research.owned());
+  if(path.startsWith(prefix+'/research/')&&req.method==='POST')return json(res,research.act(path.slice((prefix+'/research/').length),body));
   if(path==='/strategy-library')return json(res,{ok:true,versions:[],runs:[],challenges:[fixture.challenge],standings:[],server_now:Math.floor(Date.now()/1000)});
   if(path===prefix+'/strategies'&&req.method==='GET')return json(res,{ok:true,versions,runs:[],challenges:[fixture.challenge],standings:[],server_now:Math.floor(Date.now()/1000)});
   if(path===prefix+'/strategies'&&req.method==='POST'){const v={id:hash(),published:!!body.published,reuse_owners:0,content:{...body,owner:fixture.owner}};delete v.content.published;versions.push(v);return json(res,{ok:true,version:v})}

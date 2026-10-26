@@ -11,6 +11,8 @@ const MAX_BUDGET: u64 = 1_000_000;
 const MAX_ITEMS: usize = 500;
 #[path = "strategy_comparison.rs"]
 pub mod comparison;
+#[path = "strategy_research.rs"]
+pub mod research;
 #[derive(Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(deny_unknown_fields)]
 pub struct TaskSpec {
@@ -192,6 +194,8 @@ pub struct StrategyState {
     pub runs: BTreeMap<String, Run>,
     #[serde(default)]
     pub comparisons: BTreeMap<String, comparison::Comparison>,
+    #[serde(default)]
+    pub research: research::ResearchState,
 }
 fn digest(v: &impl Serialize) -> String {
     sha256_hex(&serde_json::to_string(v).expect("serializable content"))
@@ -367,7 +371,7 @@ pub fn validate(s: &StrategyState) -> bool {
             return false;
         }
     }
-    comparison::validate(s, &mut ids)
+    comparison::validate(s, &mut ids) && research::validate(s)
 }
 fn valid_run(
     r: &Run,
@@ -850,13 +854,20 @@ pub fn start(state: &AppState, record: &str, origin: &str, bearer: &str, body: &
     mutate(state, |data| {
         let id = sha256_hex(&format!("strategy-run-v2:{owner}:{client}"));
         if let Some(r) = data.runs.get(&id) {
-            if r.record != record || r.version != version || r.challenge != challenge {
+            if r.record != record || (version != "selected" && r.version != version) || r.challenge != challenge {
                 return Err("idempotency_conflict");
             }
             return Ok(
-                json!({"ok":true,"run":view(r,&data.versions[version],&data.challenges[challenge],true,false)}),
+                json!({"ok":true,"run":view(r,&data.versions[&r.version],&data.challenges[challenge],true,false)}),
             );
         }
+        // Resolve the owner's selection once when creating a new run. A retry
+        // keeps the version already recorded above, even after a later selection.
+        let version = if version == "selected" {
+            research::selected_version(data, record, &owner).ok_or("selected_strategy_missing")?
+        } else {
+            version
+        };
         let v = data.versions.get(version).ok_or("unknown_strategy")?;
         let c = data.challenges.get(challenge).ok_or("unknown_challenge")?;
         if let Some(trading) = &c.content.trading {

@@ -24,7 +24,8 @@
     "check:strategies": "node --experimental-strip-types --no-warnings scripts/strategy-check.ts",
     "check:trading": "node --experimental-strip-types --no-warnings scripts/trading-check.ts",
     "check:comparisons": "node --experimental-strip-types --no-warnings scripts/comparison-check.ts",
-    "check:comparison-proxy": "node scripts/comparison-proxy-check.mjs"
+    "check:comparison-proxy": "node scripts/comparison-proxy-check.mjs",
+    "check:research": "node --experimental-strip-types --no-warnings scripts/research-check.ts"
   },
   "dependencies": {
     "@react-three/drei": "10.7.9",

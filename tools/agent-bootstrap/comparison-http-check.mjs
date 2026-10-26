@@ -7,9 +7,12 @@ import { writeFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { base58, ownerApi, modelProvider, runComparison } from './strategy-run.mjs';
+import { exerciseResearch } from './research-http-check.mjs';
 
 const [base, directory] = process.argv.slice(2);
 let requests = 0, active = 0, peak = 0;
+let releaseFirstPair, firstPairTimeout;
+const firstPairReady = new Promise(resolve => { releaseFirstPair = resolve; });
 const inputs = [];
 const ad = {
   headline: 'Compare your approach with ALASHI',
@@ -22,7 +25,12 @@ const model = createServer(async (req, res) => {
   const body = JSON.parse(raw);
   inputs.push(body);
   requests++; active++; peak = Math.max(peak, active);
-  await new Promise(resolve => setTimeout(resolve, 100));
+  // Prove overlap by holding the first response until its peer arrives.
+  // A fixed delay alone flakes when another test delays the second reservation.
+  if (requests === 1) firstPairTimeout = setTimeout(releaseFirstPair, 10_000);
+  if (requests === 2) { clearTimeout(firstPairTimeout); releaseFirstPair(); }
+  if (requests <= 2) await firstPairReady;
+  else await new Promise(resolve => setTimeout(resolve, 100));
   active--;
   res.writeHead(200, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify({
@@ -178,6 +186,7 @@ try {
     business_effect_measured: false, monetary_cost_measured: false,
   };
   writeFileSync(join(directory, 'comparison-http-result.json'), JSON.stringify(summary, null, 2));
+  summary.research = await exerciseResearch({ owner, other, content, provider, directory, base });
   console.log(JSON.stringify(summary));
 } finally {
   await new Promise(resolve => model.close(resolve));

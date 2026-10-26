@@ -27,9 +27,9 @@ export default defineConfig({
         rewrite: (path: string) => path.replace(/^\/strategy-api/, ''),
         bypass(req: import('node:http').IncomingMessage, res: import('node:http').ServerResponse | undefined) {
           const path = (req.url ?? '').split('?')[0]
-          const read = req.method === 'GET' && (/^\/strategy-api\/strategy-library$/.test(path) || /^\/strategy-api\/agents\/[0-9a-f]{64}\/owner\/(strategies|comparisons|browser\/session)$/.test(path))
-          const write = req.method === 'POST' && /^\/strategy-api\/agents\/[0-9a-f]{64}\/owner\/(challenge|session|browser\/(session|logout)|strategy-challenges|strategies(\/[0-9a-f]{64}\/publish)?|strategy-runs(\/[0-9a-f]{64}\/(reserve|report|finish|review))?|comparisons(\/[0-9a-f]{64}\/attempts(\/[0-9a-f]{64}\/(decision|(baseline|candidate)\/(reserve|report|finish)))?)?)$/.test(path)
-          if (!read && !write) { if (res) { res.statusCode = 403; res.end() } return false }
+          const read = req.method === 'GET' && (/^\/strategy-api\/(strategy-library|research-library)$/.test(path) || /^\/strategy-api\/agents\/[0-9a-f]{64}\/owner\/(strategies|comparisons|research|browser\/session)$/.test(path))
+          const write = req.method === 'POST' && /^\/strategy-api\/agents\/[0-9a-f]{64}\/owner\/(research\/(backlog-upsert|round-open|forecast|round-close|digest-ack|apply|publish|publish-local|library-reuse)|challenge|session|browser\/(session|logout)|strategy-challenges|strategies(\/[0-9a-f]{64}\/publish)?|strategy-runs(\/[0-9a-f]{64}\/(reserve|report|finish|review))?|comparisons(\/[0-9a-f]{64}\/attempts(\/[0-9a-f]{64}\/(decision|(baseline|candidate)\/(reserve|report|finish)))?)?)$/.test(path)
+          if ((req.url ?? '').includes('?') || (!read && !write)) { if (res) { res.statusCode = 403; res.end() } return false }
         },
       } } : {}),
       ...(liveTarget ? { '/live-api': {

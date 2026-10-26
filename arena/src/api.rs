@@ -3071,9 +3071,9 @@ fn live_result(value: serde_json::Value) -> (&'static str, String) {
         Some("message_conflict" | "cursor_expired" | "stale_context") => "409 Conflict",
         Some("rate_limited" | "budget_exhausted") => "429 Too Many Requests",
         Some("storage_failed" | "owner_handoff_busy" | "pairing_busy" | "journal_full") => "503 Service Unavailable",
-        Some("owner_origin_forbidden" | "wish_forbidden" | "pairing_identity_mismatch" | "comparison_forbidden" | "comparison_attempt_forbidden" | "comparison_strategy_not_owned") => "403 Forbidden",
+        Some("owner_origin_forbidden" | "wish_forbidden" | "pairing_identity_mismatch" | "comparison_forbidden" | "comparison_attempt_forbidden" | "comparison_strategy_not_owned" | "research_forbidden" | "forecast_forbidden") => "403 Forbidden",
         Some("owner_session_invalid" | "owner_session_expired" | "owner_cookie_invalid" | "game_token_invalid" | "owner_signature_invalid" | "owner_handoff_invalid" | "pairing_cookie_invalid" | "pairing_invalid") => "401 Unauthorized",
-        Some("idempotency_conflict" | "wish_status_conflict" | "no_active_game" | "no_active_chain_game" | "receipt_pending" | "binding_conflict" | "comparison_pair_incomplete" | "comparison_decision_frozen") => "409 Conflict",
+        Some("idempotency_conflict" | "wish_status_conflict" | "no_active_game" | "no_active_chain_game" | "receipt_pending" | "binding_conflict" | "comparison_pair_incomplete" | "comparison_decision_frozen" | "forecast_round_open" | "forecast_round_closed" | "forecast_round_started" | "forecast_round_frozen" | "forecast_frozen" | "forecast_requires_unstarted_comparison" | "comparison_decision_required" | "comparison_decision_inconclusive" | "digest_changed" | "digest_day_changed" | "publication_frozen" | "selected_strategy_missing") => "409 Conflict",
         Some("wish_quota_exhausted" | "owner_challenge_rate_limited" | "dialogue_quota_exhausted" | "dialogue_rate_limited") => "429 Too Many Requests",
         Some("runner_token_invalid" | "binding_forbidden") => "403 Forbidden",
         Some("chain_api_unavailable" | "match_host_unavailable" | "match_capacity" | "host_funds_low" | "funding_rpc_unavailable" | "funding_capacity" | "funding_failed") => "503 Service Unavailable",
@@ -3089,7 +3089,7 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
         .split('/')
         .filter(|s| !s.is_empty())
         .collect();
-    if req.method == "OPTIONS" || (req.method == "POST" && req.path.contains('?')
+    if req.method == "OPTIONS" || (req.path.contains('?') && (path == "/research-library" || path.ends_with("/owner/research"))) || (req.method == "POST" && req.path.contains('?')
         && (path.contains("/owner/") || path.contains("/live/") || path.contains("/chain/"))) {
         respond(stream, "403 Forbidden", &err_json("method_or_query_forbidden", "owner/live requests use allowed methods and no URL credentials").to_string());
         return;
@@ -3225,6 +3225,15 @@ pub fn handle(state: &AppState, req: &Request, stream: &mut TcpStream) {
     // Strategy writes share the existing wallet-proved owner session and origin boundary.
     let (status, body) = match (req.method.as_str(), segs.as_slice()) {
         ("GET", ["strategy-library"]) => live_result(strategy_cycle::public(state)),
+        ("GET", ["research-library"]) => live_result(strategy_cycle::research::public(state)),
+        ("GET", ["agents", id, "owner", "research"]) => match owner_credential(req) {
+            Ok(raw) => live_result(strategy_cycle::research::owned(state,id,&raw)),
+            Err(code) => live_result(err_json(code,code)),
+        },
+        ("POST", ["agents", id, "owner", "research", action]) => match owner_credential(req) {
+            Ok(raw) => live_result(strategy_cycle::research::action(state,id,req.origin.as_deref().unwrap_or(""),&raw,action,&body_v)),
+            Err(code) => live_result(err_json(code,code)),
+        },
         ("GET", ["agents", id, "owner", "strategies"]) => match owner_credential(req) {
             Ok(raw) => live_result(strategy_cycle::owned(state,id,&raw)),
             Err(code) => live_result(err_json(code,code)),
