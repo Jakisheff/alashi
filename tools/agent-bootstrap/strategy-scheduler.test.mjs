@@ -24,18 +24,28 @@ function fixture(t, plan = fork(), hooks = {}) {
   const api = { record, get: async () => snapshot(), request: async () => snapshot(), post: async (path, body) => {
     if (path.endsWith('/reserve')) {
       await hooks.reserve?.(body, run);
+      const existing=run.calls[body.task];
+      if(existing) {
+        if(!body.execution_id||body.execution_id!==existing.execution_id)throw new Error('execution_conflict');
+        assert.equal(body.max_total_tokens,existing.reserved);
+        return {run:structuredClone(run)};
+      }
+      assert.match(body.execution_id,/^[0-9a-f]{64}$/);
       if (run.status !== 'running') throw new Error('run_stopped');
       const spec = plan.find(s => s.id === body.task);
       assert.ok(spec.depends_on.every(d => run.calls[d]?.quality_passed && run.calls[d]?.usage));
       if (run.known_tokens + held() + body.max_total_tokens > run.budget) throw new Error('budget_exhausted');
       assert.ok(!run.calls[body.task], 'reserve each task once');
       run.calls[body.task] = { reserved: body.max_total_tokens, status: 'reserved', usage: null,
-        quality_passed: null, source: body.source, provider: body.provider, model: body.model };
+        quality_passed: null, source: body.source, provider: body.provider, model: body.model,
+        execution_id:body.execution_id,execution_claimed:true };
       events.push(body.task + ':reserved');
+      await hooks.afterReserve?.(body,run);
     } else if (path.endsWith('/report')) {
       await hooks.beforeReport?.(body, run);
       const call = run.calls[body.task];
       assert.ok(call, 'report requires reservation');
+      assert.equal(body.execution_id,call.execution_id,'only the reserving executor can report');
       Object.assign(call, { usage: body.usage, report: body.report, status: 'reported', quality_passed: !body.request_failed && !!body.report });
       run.known_tokens = Object.values(run.calls).reduce((n, c) => n + (c.usage?.total_tokens ?? 0), 0);
       run.status = Object.values(run.calls).some(c => c.usage?.total_tokens > c.reserved) ? 'budget_overrun'
@@ -159,6 +169,41 @@ test('a reservation that completes after a failure cannot start a model call', a
     if (body.task === 'late') { await failed.promise; await wait(20); }
   } });
   await assert.rejects(f.start()); assert.deepEqual(f.counts, {});
+  assert.equal(f.run.calls.late.status,'reported');assert.equal(f.run.calls.late.usage.total_tokens,0);
+});
+
+for(const lost of ['none','before report','after report'])test(`a late accepted reservation is drained without spend (${lost})`,async t=>{
+  const lateReserved=gate(),badReported=gate();let dropped=false;
+  const drop=async body=>{if(body.task==='late'&&!dropped){dropped=true;throw new Error('lost_cancellation');}};
+  const f=fixture(t,[task('bad'),task('late'),task('deliver',['bad','late'])],{
+    afterReserve:async body=>{if(body.task==='late'){lateReserved.resolve();await badReported.promise;await wait(20);}},
+    complete:async id=>{assert.equal(id,'bad');await lateReserved.promise;return {...result(id),report:null};},
+    beforeReport:lost==='before report'?drop:undefined,
+    afterReport:async body=>{if(body.task==='bad')badReported.resolve();if(lost==='after report')await drop(body);},
+  });
+  await assert.rejects(f.start(),/report_or_usage_not_verified/);
+  await assert.rejects(f.start(),/report_or_usage_not_verified/);
+  assert.deepEqual(f.counts,{bad:1});
+  assert.ok(Object.values(f.run.calls).every(call=>call.status!=='reserved'),'no reservation can strand the owner decision');
+  assert.equal(f.run.calls.late.usage.total_tokens,0);assert.equal(f.run.known_tokens,10);
+  assert.equal(f.run.calls.late.quality_passed,false);assert.equal(f.run.status,'quality_failed');
+});
+
+for(const accepted of [false,true])test(`a lost reserve ${accepted?'after':'before'} acceptance resumes with one external call`,async t=>{
+  let lost=false;
+  const drop=async()=>{if(!lost){lost=true;throw new Error('lost_reserve');}};
+  const f=fixture(t,[task('deliver')],accepted?{afterReserve:drop}:{reserve:drop});
+  await assert.rejects(f.start(),/lost_reserve/);assert.deepEqual(f.counts,{});
+  const saved=JSON.parse(readFileSync(f.journalPath)).calls.deliver;
+  assert.match(saved.execution_id,/^[0-9a-f]{64}$/);
+  await f.start();assert.deepEqual(f.counts,{deliver:1});
+  assert.equal(f.run.calls.deliver.execution_id,saved.execution_id);
+  assert.equal(f.events.filter(event=>event==='deliver:reserved').length,1);
+});
+
+test('an arena without executor claims cannot trigger an external call',async t=>{
+  const f=fixture(t,[task('deliver')],{afterReserve:async(_body,run)=>{delete run.calls.deliver.execution_claimed;}});
+  await assert.rejects(f.start(),/execution_claim_not_confirmed/);assert.deepEqual(f.counts,{});
 });
 
 test('expiry during reservation prevents a model request', async t => {
@@ -195,13 +240,31 @@ test('a saved response is reconciled after the deadline without another model ca
   await f.start(); assert.deepEqual(f.counts, {}); assert.equal(f.run.known_tokens, 10);
 });
 
-test('a prepared reservation resumes once without reserving or spending twice', async t => {
+test('a claimed prepared reservation resumes once with the same executor', async t => {
   const f = fixture(t, [task('deliver')]);
   f.run.calls.deliver = { reserved: 5000, status: 'reserved', usage: null, quality_passed: null,
-    source: 'test_provider', provider: 'local', model: 'test' };
-  f.seedJournal({ deliver: { phase: 'prepared' } });
+    source: 'test_provider', provider: 'local', model: 'test',execution_id:'d'.repeat(64),execution_claimed:true };
+  f.seedJournal({ deliver: { phase: 'prepared',execution_id:'d'.repeat(64) } });
   await f.start(); assert.deepEqual(f.counts, { deliver: 1 });
   assert.ok(!f.events.includes('deliver:reserved')); assert.equal(f.run.known_tokens, 10);
+});
+
+test('a legacy prepared reservation is ambiguous and never starts another provider call', async t => {
+  const f=fixture(t,[task('deliver')]);
+  f.run.calls.deliver={reserved:5000,status:'reserved',usage:null,quality_passed:null,source:'test_provider',provider:'local',model:'test'};
+  f.seedJournal({deliver:{phase:'prepared'}});
+  await assert.rejects(f.start(),/report_or_usage_not_verified/);
+  assert.deepEqual(f.counts,{});assert.equal(f.run.calls.deliver.usage,null);
+  assert.equal(f.run.status,'usage_unknown');
+});
+
+test('a terminal reservation retry overrides a stale running snapshot before provider work',async t=>{
+  const f=fixture(t,[task('deliver')],{reserve:async(_body,run)=>{run.status='quality_failed';}});
+  f.run.calls.deliver={reserved:5000,status:'reserved',usage:null,quality_passed:null,source:'test_provider',provider:'local',model:'test',execution_id:'d'.repeat(64),execution_claimed:true};
+  f.seedJournal({deliver:{phase:'prepared',execution_id:'d'.repeat(64)}});
+  await assert.rejects(f.start(),/report_or_usage_not_verified/);
+  assert.deepEqual(f.counts,{});assert.equal(f.run.calls.deliver.usage.total_tokens,0);
+  assert.notEqual(f.run.calls.deliver.status,'reserved');
 });
 
 test('fixed workload timing: same reports and four calls, with controlled provider delays', async t => {

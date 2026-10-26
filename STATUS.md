@@ -348,3 +348,9 @@ Fix commit7a7ca22 passed all five jobs in CI run40134150599: all-lockfile RustSe
 Added the development rule based on the owner's requested Family & Friends Store analysis. AGENTS.md and MOC-Ops route agents to the project note. Current comparison behavior is distinguished from proposed general scenarios. Product code and game rules are unchanged.
 
 13:28 Almaty. Documentation checks passed and e2a7f662cee070dec67a4bededb6bcb3cdf15cd3 was pushed to the working branch. General skill validation includes a separate agent applying it to three requests; no application tests or new client experiment ran. Факт: 0,27 часа. План до 13:36 закрыт.
+
+
+26.10.2026 13:54 Almaty. Comparison repairs started. План: 0,8 часа, до 14:42. Audit reproduction scripts establish the three original failures. Changes are split between private serialization, runner recovery, and persisted server execution claims. A reusable Rust build cache is being checked because local disk space is limited.
+
+
+26.10.2026 14:10 Almaty. All three repairs are implemented. Fresh bootstrap suite passed 64 tests. Frontend comparison, strategy and trading checks passed. Actual HTTP responses pass the frontend parser, and the competing-journal HTTP case grants two calls for two variants. Full arena suite passed 148 tests with one pre-existing ignored snapshot check. Rules validation is running; remaining cold-build checks will use fresh CI because local disk is constrained. No deployment or paid provider calls.

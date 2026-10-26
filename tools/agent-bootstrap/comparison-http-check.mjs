@@ -4,6 +4,8 @@ import { createPrivateKey, createPublicKey, randomUUID } from 'node:crypto';
 import { createServer } from 'node:http';
 import { join } from 'node:path';
 import { writeFileSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 import { base58, ownerApi, modelProvider, runComparison } from './strategy-run.mjs';
 
 const [base, directory] = process.argv.slice(2);
@@ -58,7 +60,8 @@ try {
     changed_task: 'deliver', attempt_limit: 2,
     profile: { source: provider.source, provider: provider.provider, model: provider.model, temperature: 0, max_tokens: 256 },
   };
-  const comparison = (await owner.post('/comparisons', content)).comparison;
+  const preparedResponse = await owner.post('/comparisons', content);
+  const comparison = preparedResponse.comparison;
   assert.deepEqual(comparison.actual_diff, { task: 'deliver', field: 'instruction', before: beforeInstruction, after: afterInstruction });
   const list = api => api.request(`/agents/${api.record}/owner/comparisons`);
   assert.deepEqual((await list(other)).comparisons, [], 'another owner cannot read private comparisons');
@@ -66,6 +69,7 @@ try {
   const options = { api: owner, id: comparison.id, clientId: 'http-pair-01', provider, journalPrefix: join(directory, 'comparison-pair') };
   await assert.rejects(runComparison({ ...options, provider: { ...provider, model: 'different-model' } }), /comparison_provider_mismatch/);
   assert.equal((await list(owner)).comparisons[0].attempts.length, 0, 'profile rejection must precede attempt creation');
+  const startedResponse = await owner.post(`/comparisons/${comparison.id}/attempts`, { client_id: options.clientId });
   let interrupted = false;
   const flaky = { ...owner, post: async (path, body) => {
     if (path.endsWith('/baseline/report') && !interrupted) {
@@ -78,7 +82,8 @@ try {
   assert.equal(requests, 2, 'both variants must finish their local provider call');
   await runComparison(options);
   assert.equal(requests, 2, 'resume must submit the saved answer without paying again');
-  let saved = (await list(owner)).comparisons.find(value => value.id === comparison.id);
+  const completedResponse = await list(owner);
+  let saved = completedResponse.comparisons.find(value => value.id === comparison.id);
   assert.equal(saved.attempts.length, 1, 'same client ID must reuse the same pair');
   const attempt = saved.attempts[0];
   for (const run of [attempt.baseline, attempt.candidate]) {
@@ -94,16 +99,82 @@ try {
   const pub = await owner.request('/strategy-library');
   assert.ok(pub.runs.every(run => ![attempt.baseline.id, attempt.candidate.id].includes(run.id)), 'private runs must not enter the public duel collection');
   assert.ok(pub.versions.every(version => ![baseline.id, candidate.id].includes(version.id)), 'private instructions must not enter the public library');
-  await owner.post(`/comparisons/${comparison.id}/attempts/${attempt.id}/decision`, {
+  const decidedResponse = await owner.post(`/comparisons/${comparison.id}/attempts/${attempt.id}/decision`, {
     outcome: 'inconclusive', reason: 'Both deterministic fixtures meet the brief. This does not establish a benefit from the added instruction.',
   });
   saved = (await list(owner)).comparisons.find(value => value.id === comparison.id);
   assert.equal(saved.attempts[0].decision.outcome, 'inconclusive');
+  const contract = execFileSync(process.execPath, [
+    '--experimental-strip-types', '--no-warnings',
+    fileURLToPath(new URL('../../frontend/scripts/comparison-contract-check.ts', import.meta.url)),
+  ], {
+    input: JSON.stringify({ owner: owner.wallet, record: owner.record, states: [
+      { stage: 'prepared', response: preparedResponse },
+      { stage: 'started', response: startedResponse },
+      { stage: 'completed', response: completedResponse },
+      { stage: 'decided', response: decidedResponse },
+    ] }), encoding: 'utf8', timeout: 30_000,
+  });
+  assert.match(contract, /PASS: actual server responses parse/);
+
+  // Force both executors to reach each reservation from the same initial state.
+  // Different journal prefixes must not grant two external calls per task.
+  let reserveRequests = 0, acceptedReservations = 0, rejectedReservations = 0;
+  let releaseReservations, rejectReservations;
+  const reservationsReady = new Promise((resolve, reject) => {
+    releaseReservations = resolve; rejectReservations = reject;
+  });
+  const barrierTimeout = setTimeout(() => rejectReservations(new Error('concurrent_reservations_not_reached')), 10_000);
+  const racingApi = { ...owner, post: async (path, body) => {
+    if (!path.endsWith('/reserve')) return owner.post(path, body);
+    reserveRequests++;
+    if (reserveRequests === 4) { clearTimeout(barrierTimeout); releaseReservations(); }
+    await reservationsReady;
+    try {
+      const response = await owner.post(path, body);
+      assert.equal(response.run.calls[body.task].execution_claimed, true);
+      assert.equal(response.run.calls[body.task].execution_id, undefined, 'executor identities stay private');
+      acceptedReservations++;
+      return response;
+    } catch (error) {
+      assert.match(error.message, /^execution_conflict$/);
+      rejectedReservations++;
+      throw error;
+    }
+  } };
+  const callsBeforeRace = requests;
+  let concurrentResults;
+  try {
+    concurrentResults = await Promise.allSettled(['first', 'second'].map(label => runComparison({
+      ...options, api: racingApi, clientId: 'http-race-02', journalPrefix: join(directory, `comparison-race-${label}`),
+    })));
+  } finally { clearTimeout(barrierTimeout); }
+  assert.equal(reserveRequests, 4);
+  assert.equal(acceptedReservations, 2);
+  assert.equal(rejectedReservations, 2);
+  assert.equal(requests - callsBeforeRace, 2, 'two concurrent journals still make exactly one provider call per variant');
+  for (const result of concurrentResults) {
+    if (result.status === 'rejected') assert.match(result.reason.message, /^execution_conflict$/);
+  }
+  saved = (await list(owner)).comparisons.find(value => value.id === comparison.id);
+  assert.equal(saved.attempts.length, 2, 'concurrent clients share one additional attempt');
+  const concurrentAttempt = saved.attempts[1];
+  for (const run of [concurrentAttempt.baseline, concurrentAttempt.candidate]) {
+    assert.equal(run.status, 'completed');
+    assert.equal(run.known_tokens, 80);
+    assert.equal(Object.keys(run.calls).length, 1);
+  }
+  const privateIds = saved.attempts.flatMap(pair => [pair.baseline.id, pair.candidate.id]);
+  assert.ok((await owner.request('/strategy-library')).runs.every(run => !privateIds.includes(run.id)));
   const summary = {
     source: 'local_deterministic_fixture', real_provider_calls: 0, requests, peak,
     one_owner_two_private_versions: true, actual_instruction_diff: true,
     fixed_generation_settings: true, resumed_without_extra_calls: true,
     private_runs_absent_from_library: true, owner_decision: 'inconclusive',
+    actual_http_responses_parse_in_frontend: true,
+    concurrent_journals: { reservation_requests: reserveRequests, accepted_reservations: acceptedReservations,
+      rejected_reservations: rejectedReservations, provider_calls: requests - callsBeforeRace,
+      completed_variants: 2, recorded_tokens: concurrentAttempt.baseline.known_tokens + concurrentAttempt.candidate.known_tokens },
     business_effect_measured: false, monetary_cost_measured: false,
   };
   writeFileSync(join(directory, 'comparison-http-result.json'), JSON.stringify(summary, null, 2));

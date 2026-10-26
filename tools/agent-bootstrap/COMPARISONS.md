@@ -88,6 +88,10 @@ The runner creates or recovers the attempt with that client ID. It checks both
 runs before starting them concurrently. Each model call still requires its own
 server reservation. The owner authorizes provider requests for both sides with
 `--allow-provider yes`; provider charges are external to the arena token budget.
+Each reservation belongs to the random `execution_id` saved in that task's
+private journal. A competing journal cannot reserve or report that task with
+another ID. The runner checks the server's `execution_claimed` response before
+calling a provider. Use an arena and runner that both support this protocol.
 Do not combine comparison flags with `--run`, `--journal`, `--tools` or trade
 executor flags.
 
@@ -103,8 +107,9 @@ For the prefix above, the runner creates these mode-600 journals:
 /absolute/private/comparisons/experiment-01.candidate.json
 ```
 
-They contain task responses and usage receipts. Keep them private. Comparison
-questions, reports and decisions are available through the authenticated owner
+They contain execution IDs, task responses and usage receipts. Keep them private.
+Do not run concurrent copies of the same journal on different machines: its
+execution IDs identify the same executor, and file locks protect only one path. Comparison questions, reports and decisions are available through the authenticated owner
 API. Existing challenge briefs remain in the public challenge list, and a
 version explicitly published by its owner remains public.
 
@@ -116,6 +121,19 @@ A saved response is resubmitted without another provider request, including
 after the deadline. If a request may have reached the provider but its response
 was not saved, the runner records unknown usage and stops instead of reissuing
 it. Unknown usage is not zero cost.
+
+If a reservation response arrives after another task fails, the runner closes
+the still-prepared task with a failed receipt and zero usage. Its provider call
+has not started. The same recovery applies to a prepared claimed task on a
+stopped or expired run, including when the first cancellation report is lost.
+These are owner-submitted records; the arena does not independently verify
+provider usage. Calls already marked inflight retain unknown usage when no
+response was saved.
+
+For journals created before execution claims, saved responses can still be
+reported. An unresolved reservation without an execution ID cannot be reclaimed
+for a new provider call. Even a legacy prepared entry is treated as unknown
+because the old protocol did not establish exclusive execution ownership.
 
 Do not delete a journal or use a new client ID to recover a failed request.
 A new client ID creates another attempt and consumes the frozen attempt limit.

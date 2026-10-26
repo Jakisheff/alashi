@@ -32,7 +32,7 @@ try {
  await assert.rejects(b.post('/strategy-runs',{version:draft.id,challenge_id:duel.id,client_id:'b-private-01'}),/publish_derivative_first/);
  await b.post(`/strategies/${draft.id}/publish`,{});
  const ra=(await a.post('/strategy-runs',{version:root.id,challenge_id:duel.id,client_id:'a-first-duel'})).run;
- await assert.rejects(a.post(`/strategy-runs/${ra.id}/reserve`,{task:'audience',max_total_tokens:5000,source:'test_provider',provider:provider.provider,model:provider.model}),/waiting_for_opponent/);
+ await assert.rejects(a.post(`/strategy-runs/${ra.id}/reserve`,{task:'audience',max_total_tokens:5000,source:'test_provider',provider:provider.provider,model:provider.model,execution_id:'a'.repeat(64)}),/waiting_for_opponent/);
  const rb=(await b.post('/strategy-runs',{version:draft.id,challenge_id:duel.id,client_id:'b-first-duel'})).run;
  assert.equal(ra.seat,0);assert.equal(rb.seat,1);
  let lost=false;const interrupted={...a,post:async(path,body)=>{if(path.endsWith('/report')&&body.task==='critic'&&!lost){lost=true;throw new Error('simulated_connection_loss');}return a.post(path,body);}};

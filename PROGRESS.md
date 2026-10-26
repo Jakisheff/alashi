@@ -935,3 +935,11 @@ Fix commit7a7ca22 passed all five jobs in CI run40134150599: all-lockfile RustSe
 13:28 Almaty. Documentation validation passed: local links, skill metadata, source hashes and git diff --check. New text passed FULL checks with meaning review; existing NMT boilerplate was preserved. Change e2a7f662cee070dec67a4bededb6bcb3cdf15cd3 is pushed to codex/human-hypothesis-comparison-20261025. Runtime code, Anchor instructions and game rules are unchanged; application suites were not repeated for this documentation change. Automatic skill selection in a new app session remains untested.
 
 Факт: 0,27 часа (13:12-13:28, Алматы). План до 13:36 закрыт.
+
+
+### 26 October 2026, comparison execution repairs
+
+13:54 Almaty. План: 0,8 часа, до 14:42. Fix the three defects reproduced in the targeted audit: private response/parser mismatch, stranded prepared reservation after a parallel failure, and duplicate model execution from separate journals. Acceptance: actual server serialization accepted by the frontend, interrupted attempts can reach an owner decision, and competing executors cannot both start the same call. Preserve saved receipts and uncertain usage. No provider spending or deployment.
+
+
+26.10.2026 14:10 Almaty. All three repairs are implemented. Fresh bootstrap suite passed 64 tests. Frontend comparison, strategy and trading checks passed. Actual HTTP responses pass the frontend parser, and the competing-journal HTTP case grants two calls for two variants. Full arena suite passed 148 tests with one pre-existing ignored snapshot check. Rules validation is running; remaining cold-build checks will use fresh CI because local disk is constrained. No deployment or paid provider calls.

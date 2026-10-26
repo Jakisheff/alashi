@@ -174,6 +174,9 @@ fn run_view(data: &StrategyState, c: &Content, a: &Attempt, label: &str) -> Valu
         true,
         true,
     );
+    // This view is returned only after owner/record authorization. The owner
+    // needs both frozen instructions to verify the single change in the UI.
+    out["plan"] = json!(data.versions[&r.version].content.plan);
     out["label"] = json!(label);
     out["attempt"] = json!(a.number);
     out
@@ -665,7 +668,7 @@ mod tests {
             a,
             label,
             "reserve",
-            json!({"task":task,"max_total_tokens":100,"source":"test_provider","provider":"local-fixture","model":"deterministic-test"}),
+            json!({"task":task,"execution_id":"a".repeat(64),"max_total_tokens":100,"source":"test_provider","provider":"local-fixture","model":"deterministic-test"}),
         )
     }
     fn report(
@@ -688,7 +691,7 @@ mod tests {
             a,
             label,
             "report",
-            json!({"task":task,"response_id":format!("{a}-{label}-{task}"),"usage":usage,"report":if failed{Value::Null}else{artifact},"request_failed":failed}),
+            json!({"task":task,"execution_id":"a".repeat(64),"response_id":format!("{a}-{label}-{task}"),"usage":usage,"report":if failed{Value::Null}else{artifact},"request_failed":failed}),
         )
     }
     fn usage() -> Value {
@@ -716,6 +719,81 @@ mod tests {
         )
     }
     #[test]
+    fn private_comparison_serialization_matches_frontend_through_owner_decision() {
+        use std::io::Write;
+        use std::process::{Command, Stdio};
+
+        let s = fixture();
+        let (c, body) = setup(&s);
+        let (record, bearer) = actor(0);
+        let prepared = create(&s, &record, ORIGIN, &bearer, &body);
+        let started = start(
+            &s,
+            &record,
+            ORIGIN,
+            &bearer,
+            &c,
+            &json!({"client_id":"frontend-contract-01"}),
+        );
+        assert_eq!(started["ok"], true, "{started}");
+        let aid = started["attempt"]["id"].as_str().unwrap();
+        complete(&s, &c, aid, "baseline");
+        complete(&s, &c, aid, "candidate");
+        let completed = owned(&s, &record, &bearer);
+        let decided = decide(&s, &c, aid, "inconclusive");
+
+        let public = super::super::public(&s);
+        assert_eq!(public["runs"], json!([]));
+        assert_eq!(public["versions"], json!([]));
+        for field in ["before", "after"] {
+            let instruction = prepared["comparison"]["actual_diff"][field]
+                .as_str()
+                .unwrap();
+            assert!(
+                !public.to_string().contains(instruction),
+                "private instruction leaked into the public library"
+            );
+        }
+        let (other_record, other_bearer) = actor(1);
+        assert_eq!(
+            owned(&s, &other_record, &other_bearer)["comparisons"],
+            json!([])
+        );
+        let payload = json!({
+            "owner": prepared["comparison"]["content"]["owner"],
+            "record": record,
+            "states": [
+                {"stage":"prepared","response":prepared},
+                {"stage":"started","response":started},
+                {"stage":"completed","response":completed},
+                {"stage":"decided","response":decided}
+            ]
+        });
+        let script = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("../frontend/scripts/comparison-contract-check.ts");
+        let mut child = Command::new("node")
+            .args(["--experimental-strip-types", "--no-warnings"])
+            .arg(script)
+            .stdin(Stdio::piped())
+            .stdout(Stdio::piped())
+            .stderr(Stdio::piped())
+            .spawn()
+            .unwrap();
+        child
+            .stdin
+            .take()
+            .unwrap()
+            .write_all(payload.to_string().as_bytes())
+            .unwrap();
+        let output = child.wait_with_output().unwrap();
+        assert!(
+            output.status.success(),
+            "{}\n{}",
+            String::from_utf8_lossy(&output.stdout),
+            String::from_utf8_lossy(&output.stderr)
+        );
+    }
+    #[test]
     fn private_comparison_pair_is_frozen_atomic_idempotent_and_not_a_duel() {
         let s = fixture();
         let (c, body) = setup(&s);
@@ -741,7 +819,7 @@ mod tests {
             aid,
             "baseline",
             "reserve",
-            json!({"task":"research","max_total_tokens":100,"source":"test_provider","provider":"different","model":"deterministic-test"}),
+            json!({"task":"research","execution_id":"a".repeat(64),"max_total_tokens":100,"source":"test_provider","provider":"different","model":"deterministic-test"}),
         );
         assert_eq!(mismatch["error"], "comparison_provider_mismatch");
         let (other, token) = actor(1);
@@ -802,7 +880,7 @@ mod tests {
             aid,
             "candidate",
             "report",
-            json!({"task":"research","response_id":format!("{aid}-baseline-research"),"usage":usage(),"report":{"facts":"fixed"},"request_failed":false}),
+            json!({"task":"research","execution_id":"a".repeat(64),"response_id":format!("{aid}-baseline-research"),"usage":usage(),"report":{"facts":"fixed"},"request_failed":false}),
         );
         assert_eq!(duplicate["error"], "duplicate_provider_receipt");
         complete(&s, &c, aid, "candidate");
@@ -998,6 +1076,105 @@ mod tests {
             assert!(super::super::validate(&s.strategy_cycle.lock().unwrap()));
             let restored = new_state_with_files(s.snapshot_path.clone(), s.sequence_path.clone());
             load_snapshot(&restored).unwrap();
+            assert!(super::super::validate(
+                &restored.strategy_cycle.lock().unwrap()
+            ));
+        }
+    }
+    #[test]
+    fn stopped_comparison_releases_unstarted_reservation_before_owner_decides() {
+        for unknown in [false, true] {
+            let s = fixture();
+            let (_, mut body) = setup(&s);
+            let mut parallel = plan();
+            parallel[1]["depends_on"] = json!(["research", "late"]);
+            parallel.as_array_mut().unwrap().insert(
+                1,
+                json!({"id":"late","kind":"model","depends_on":[],"instruction":"Check the supplied facts independently.","tool":null}),
+            );
+            let baseline = version(&s, 0, None, parallel.clone());
+            parallel[0]["instruction"] = json!("Check the facts for independent agent owners.");
+            body["baseline_version"] = json!(baseline);
+            body["candidate_version"] = json!(version(&s, 0, Some(&baseline), parallel));
+            let (record, bearer) = actor(0);
+            let created = create(&s, &record, ORIGIN, &bearer, &body);
+            assert_eq!(created["ok"], true, "{created}");
+            let c = created["comparison"]["id"].as_str().unwrap();
+            let a = attempt(&s, c, "late-reservation-01");
+            let aid = a["id"].as_str().unwrap();
+            for task in ["research", "late"] {
+                assert_eq!(reserve(&s, c, aid, "baseline", task)["ok"], true);
+            }
+            let failed = report(
+                &s,
+                c,
+                aid,
+                "baseline",
+                "research",
+                if unknown { Value::Null } else { usage() },
+                true,
+            );
+            assert_eq!(failed["ok"], true, "{failed}");
+            for task in ["research", "late", "deliver"] {
+                assert_eq!(reserve(&s, c, aid, "candidate", task)["ok"], true);
+                assert_eq!(
+                    report(&s, c, aid, "candidate", task, usage(), false)["ok"],
+                    true
+                );
+            }
+            assert_eq!(
+                action_for(&s, c, aid, "candidate", "finish", json!({}))["ok"],
+                true
+            );
+            assert_eq!(
+                decide(&s, c, aid, "inconclusive")["error"],
+                "comparison_pair_incomplete",
+                "a reservation must remain blocking until its executor reports the outcome"
+            );
+            // The runner persisted `prepared` for late, so it can prove the provider
+            // was not invoked and release this reservation with known zero usage.
+            let cancel = json!({"task":"late","execution_id":"a".repeat(64),"response_id":null,"usage":{"prompt_tokens":0,"completion_tokens":0,"total_tokens":0,"cached_tokens":0},"report":null,"request_failed":true});
+            let released = action_for(&s, c, aid, "baseline", "report", cancel.clone());
+            assert_eq!(released["ok"], true, "{released}");
+            assert_eq!(
+                released["run"]["reserved_tokens"],
+                if unknown { 100 } else { 0 },
+                "the unstarted call is released; an ambiguous earlier call keeps its budget held"
+            );
+            assert!(released["run"]["calls"]
+                .as_object()
+                .unwrap()
+                .values()
+                .all(|call| call["status"] != "reserved"));
+            assert_eq!(released["run"]["calls"]["late"]["status"], "failed");
+            assert_eq!(released["run"]["calls"]["late"]["usage"]["total_tokens"], 0);
+            assert_eq!(released["run"]["unknown_usage"], unknown);
+            assert_eq!(
+                action_for(&s, c, aid, "baseline", "report", cancel)["ok"],
+                true,
+                "recovery of a lost cancellation response is idempotent"
+            );
+            if unknown {
+                for outcome in ["adopt_candidate", "keep_baseline"] {
+                    assert_eq!(
+                        decide(&s, c, aid, outcome)["error"],
+                        "comparison_pair_incomplete"
+                    );
+                }
+            }
+            assert_eq!(decide(&s, c, aid, "inconclusive")["ok"], true);
+            assert!(super::super::validate(&s.strategy_cycle.lock().unwrap()));
+            let restored = new_state_with_files(s.snapshot_path.clone(), s.sequence_path.clone());
+            load_snapshot(&restored).unwrap();
+            assert_eq!(
+                owned(&restored, &record, &bearer)["comparisons"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|item| item["id"] == c)
+                    .unwrap()["attempts"][0]["decision"]["outcome"],
+                "inconclusive"
+            );
             assert!(super::super::validate(
                 &restored.strategy_cycle.lock().unwrap()
             ));

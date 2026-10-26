@@ -44,14 +44,22 @@ function fixture(t, hooks = {}) {
     assert.ok(match, 'only nested comparison actions are allowed');
     const [, label, action] = match, run = attempt[label], plan = versions[label === 'baseline' ? 0 : 1].content.plan;
     if(action === 'reserve') {
+      const existing=run.calls[body.task];
+      if(existing) {
+        if(!body.execution_id||body.execution_id!==existing.execution_id)throw new Error('execution_conflict');
+        assert.equal(body.max_total_tokens,existing.reserved);
+        return {ok:true,run:structuredClone(run)};
+      }
+      assert.match(body.execution_id,/^[0-9a-f]{64}$/);
       const spec = plan.find(task => task.id === body.task);
       assert.ok(spec.depends_on.every(task => run.calls[task]?.quality_passed));
       assert.ok(!run.calls[body.task], 'no duplicate reservation');
-      run.calls[body.task] = { ...body, reserved: body.max_total_tokens, usage: null, quality_passed: null, status: 'reserved' };
+      run.calls[body.task] = { ...body, reserved: body.max_total_tokens, usage: null, quality_passed: null, status: 'reserved',execution_claimed:true };
       events.push(`${label}:${body.task}:reserved`);
     } else if(action === 'report') {
       await hooks.beforeReport?.(label, body, run);
       assert.ok(run.calls[body.task], 'reports require reservations');
+      assert.equal(body.execution_id,run.calls[body.task].execution_id);
       Object.assign(run.calls[body.task], body, { quality_passed: !body.request_failed && !!body.report, status: 'reported' });
       run.known_tokens = Object.values(run.calls).reduce((sum, call) => sum + (call.usage?.total_tokens ?? 0), 0);
       if(!body.usage || body.request_failed || !body.report) run.status = 'quality_failed';
@@ -160,4 +168,49 @@ test('the real provider adapter sends the fixed comparison generation profile to
   assert.equal(body.temperature, provider.temperature); assert.equal(body.temperature, 0);
   assert.equal(body.max_tokens, provider.max_tokens); assert.equal(body.max_tokens, 256);
   assert.equal(body.model, provider.model);
+});
+
+test('concurrent journals for one attempt cannot duplicate provider work or alter the winning receipts', {timeout:5000},async t=>{
+  const dir=mkdtempSync(join(tmpdir(),'alashi-comparison-claim-'));t.after(()=>rmSync(dir,{recursive:true,force:true}));
+  const id='1'.repeat(64),aid='2'.repeat(64),record='3'.repeat(64),wallet='owner';
+  const labels=['baseline','candidate'],profile={source:'test_provider',provider:'local',model:'mock',temperature:0,max_tokens:256};
+  const brief={facts:[],required_terms:[],cta:'Inspect',budget:50000};
+  const versions=labels.map((label,i)=>({id:String(i+4).repeat(64),content:{owner:wallet,plan:[{id:'deliver',kind:'model',tool:null,depends_on:[],instruction:label}]}}));
+  const attempt={id:aid,client_id:'attempt-01'};
+  for(let i=0;i<2;i++)attempt[labels[i]]={id:String(i+6).repeat(64),record,owner:wallet,version:versions[i].id,challenge:'8'.repeat(64),brief,status:'running',deadline_at:Math.floor(Date.now()/1000)+180,budget:50000,calls:{},known_tokens:0};
+  const comparison={id,content:{owner:wallet,record,profile,baseline_version:versions[0].id,candidate_version:versions[1].id,challenge_id:attempt.baseline.challenge},attempts:[attempt]};
+  const allSnapshots=gate();let lists=0,starts=0,calls=0,conflicts=0;
+  const claims=new Map();
+  const api={record,wallet,get:async()=>structuredClone({versions}),request:async path=>{
+    if(path==='/strategy-library')return {versions:[]};
+    const value=structuredClone({comparisons:[comparison]}),n=++lists;
+    // Both processes see the same unreserved baseline and candidate before racing.
+    if(n>=3&&n<=6){if(n===6)allSnapshots.resolve();await allSnapshots.promise;}
+    return value;
+  },post:async(path,body)=>{
+    if(path===`/comparisons/${id}/attempts`){starts++;return structuredClone({attempt});}
+    const match=path.match(/\/(baseline|candidate)\/(reserve|report|finish)$/);assert.ok(match);
+    const [,label,action]=match,run=attempt[label],key=label+':'+body.task;
+    if(action==='reserve'){
+      assert.match(body.execution_id,/^[0-9a-f]{64}$/);
+      if(claims.has(key)&&claims.get(key)!==body.execution_id){conflicts++;throw new Error('execution_conflict');}
+      if(!claims.has(key)){
+        claims.set(key,body.execution_id);
+        run.calls[body.task]={reserved:body.max_total_tokens,source:body.source,provider:body.provider,model:body.model,status:'reserved',usage:null,quality_passed:null,execution_claimed:true};
+      }
+    }else if(action==='report'){
+      assert.equal(body.execution_id,claims.get(key));
+      const old=run.calls[body.task];
+      if(old.status!=='reserved')assert.equal(old.response_id,body.response_id);
+      else {Object.assign(old,{usage:body.usage,report:body.report,response_id:body.response_id,quality_passed:true,status:'reported'});run.known_tokens=body.usage.total_tokens;}
+    }else{assert.equal(run.calls.deliver.quality_passed,true);run.status='completed';}
+    return structuredClone({run});
+  }};
+  const provider={...profile,complete:async()=>({report:{answer:'bounded'},usage,response_id:'response-'+(++calls),request_failed:false})};
+  const outcomes=await Promise.allSettled(['first','second'].map(name=>runComparison({api,id,clientId:'attempt-01',provider,journalPrefix:join(dir,name)})));
+  assert.equal(starts,2);assert.equal(claims.size,2);assert.equal(calls,2);assert.equal(conflicts,2);
+  assert.equal(outcomes.filter(value=>value.status==='fulfilled').length,1);
+  assert.equal(outcomes.find(value=>value.status==='rejected').reason.message,'execution_conflict');
+  assert.equal(attempt.baseline.known_tokens+attempt.candidate.known_tokens,20);
+  assert.ok(labels.every(label=>attempt[label].status==='completed'));
 });

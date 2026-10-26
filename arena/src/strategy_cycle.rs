@@ -94,6 +94,9 @@ impl Usage {
 #[serde(deny_unknown_fields)]
 pub struct Call {
     pub task: String,
+    // Persist the executor claim, but never expose it in a run view.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub execution_id: Option<String>,
     pub reserved: u64,
     pub status: String,
     pub source: String,
@@ -390,6 +393,7 @@ fn valid_run(
             return false;
         };
         if &call.task != task
+            || call.execution_id.as_deref().is_some_and(|id| !hex32(id))
             || !valid_call(
                 spec,
                 call.reserved,
@@ -594,6 +598,8 @@ fn view(r: &Run, v: &Version, c: &Challenge, private: bool, reveal: bool) -> Val
     let mut calls = serde_json::Map::new();
     for (id, call) in &r.calls {
         let mut out = serde_json::to_value(call).unwrap();
+        out.as_object_mut().unwrap().remove("execution_id");
+        out["execution_claimed"] = json!(call.execution_id.is_some());
         if !private {
             out.as_object_mut().unwrap().remove("report");
         }
@@ -943,7 +949,14 @@ pub fn reserve(
 fn reserve_run(r: &mut Run, v: &Version, brief: &Challenge, body: &Value) -> Result<()> {
     fields(
         body,
-        &["task", "max_total_tokens", "source", "provider", "model"],
+        &[
+            "task",
+            "max_total_tokens",
+            "source",
+            "provider",
+            "model",
+            "execution_id",
+        ],
     )?;
     let task = body["task"].as_str().unwrap_or("");
     let cap = match body["max_total_tokens"].as_u64() {
@@ -959,18 +972,25 @@ fn reserve_run(r: &mut Run, v: &Version, brief: &Challenge, body: &Value) -> Res
         .iter()
         .find(|t| t.id == task)
         .ok_or("bad_task")?;
-    let deadline = brief.deadline().ok_or("waiting_for_opponent")?;
-    if now() >= deadline {
-        return Err("round_ended");
-    }
     if !valid_call(spec, cap, source, provider, model) {
         return Err("bad_provider");
     }
+    let execution_id = body["execution_id"]
+        .as_str()
+        .filter(|s| hex32(s))
+        .ok_or("execution_id_required")?;
     if let Some(c) = r.calls.get(task) {
+        if c.execution_id.as_deref() != Some(execution_id) {
+            return Err("execution_conflict");
+        }
         if c.reserved != cap || c.source != source || c.provider != provider || c.model != model {
             return Err("idempotency_conflict");
         }
         return Ok(());
+    }
+    let deadline = brief.deadline().ok_or("waiting_for_opponent")?;
+    if now() >= deadline {
+        return Err("round_ended");
     }
     if r.status != "running" || r.uncertain() {
         return Err("run_stopped");
@@ -985,6 +1005,7 @@ fn reserve_run(r: &mut Run, v: &Version, brief: &Challenge, body: &Value) -> Res
         task.into(),
         Call {
             task: task.into(),
+            execution_id: Some(execution_id.into()),
             reserved: cap,
             status: "reserved".into(),
             source: source.into(),
@@ -1033,9 +1054,23 @@ pub fn report(
 fn report_run(r: &mut Run, brief: &Challenge, body: &Value) -> Result<()> {
     fields(
         body,
-        &["task", "response_id", "usage", "report", "request_failed"],
+        &[
+            "task",
+            "response_id",
+            "usage",
+            "report",
+            "request_failed",
+            "execution_id",
+        ],
     )?;
     let task = body["task"].as_str().unwrap_or("");
+    let reservation = r.calls.get(task).ok_or("reservation_required")?;
+    // Old snapshots can recover saved receipts, but cannot grant a new execution claim.
+    match (&reservation.execution_id, body.get("execution_id")) {
+        (Some(expected), Some(Value::String(actual))) if expected == actual => {}
+        (None, None) => {}
+        _ => return Err("execution_conflict"),
+    }
     let response = match body.get("response_id") {
         None | Some(Value::Null) => None,
         Some(Value::String(s)) if !s.is_empty() && s.len() <= 200 => Some(s.clone()),
@@ -1590,7 +1625,7 @@ mod tests {
                 ORIGIN,
                 &bearer,
                 r,
-                &json!({"task":"deliver","response_id":format!("trade-{i}"),"usage":if i==1{usage()}else{Value::Null},"report":{"action":"produce","params":{}},"request_failed":false}),
+                &json!({"task":"deliver","execution_id":"a".repeat(64),"response_id":format!("trade-{i}"),"usage":if i==1{usage()}else{Value::Null},"report":{"action":"produce","params":{}},"request_failed":false}),
             );
             assert_eq!(v["ok"], true, "{v}");
         }
@@ -1709,7 +1744,7 @@ mod tests {
             ORIGIN,
             &t,
             id,
-            &json!({"task":task,"max_total_tokens":cap,"source":"test_provider","provider":"local-fixture","model":"deterministic-test"}),
+            &json!({"task":task,"execution_id":"a".repeat(64),"max_total_tokens":cap,"source":"test_provider","provider":"local-fixture","model":"deterministic-test"}),
         )
     }
     fn ad() -> Value {
@@ -1723,7 +1758,7 @@ mod tests {
             ORIGIN,
             &t,
             id,
-            &json!({"task":task,"response_id":format!("{id}-{task}"),"usage":u,"report":if good {if task=="deliver" {ad()}else{json!({"facts":"from shared brief"})}} else {json!({})},"request_failed":false}),
+            &json!({"task":task,"execution_id":"a".repeat(64),"response_id":format!("{id}-{task}"),"usage":u,"report":if good {if task=="deliver" {ad()}else{json!({"facts":"from shared brief"})}} else {json!({})},"request_failed":false}),
         )
     }
     fn usage() -> Value {
@@ -1839,6 +1874,128 @@ mod tests {
         assert!(validate(&s.strategy_cycle.lock().unwrap()));
         let restored = new_state_with_files(s.snapshot_path.clone(), s.sequence_path.clone());
         load_snapshot(&restored).unwrap();
+    }
+    #[test]
+    fn executor_claim_is_exclusive_persisted_and_hidden() {
+        let s = fixture();
+        let c = brief(&s, "claim-duel", 1000);
+        let v = version(&s, 1, None, true);
+        let w = version(&s, 2, None, true);
+        let run = start_run(&s, 1, &v, &c, "claim-owner-01");
+        start_run(&s, 2, &w, &c, "claim-owner-02");
+        let (record, bearer) = actor(1);
+        let body = json!({"task":"research","max_total_tokens":100,"source":"test_provider","provider":"local-fixture","model":"deterministic-test"});
+        assert_eq!(
+            reserve(&s, &record, ORIGIN, &bearer, &run, &body)["error"],
+            "execution_id_required"
+        );
+        let barrier = Arc::new(std::sync::Barrier::new(2));
+        let workers: Vec<_> = ["a", "b"]
+            .into_iter()
+            .map(|key| {
+                let (s, barrier, mut body, run) =
+                    (s.clone(), barrier.clone(), body.clone(), run.clone());
+                std::thread::spawn(move || {
+                    let (record, bearer) = actor(1);
+                    body["execution_id"] = json!(key.repeat(64));
+                    barrier.wait();
+                    (
+                        body.clone(),
+                        reserve(&s, &record, ORIGIN, &bearer, &run, &body),
+                    )
+                })
+            })
+            .collect();
+        let results: Vec<_> = workers.into_iter().map(|w| w.join().unwrap()).collect();
+        assert_eq!(results.iter().filter(|(_, r)| r["ok"] == true).count(), 1);
+        assert_eq!(
+            results
+                .iter()
+                .filter(|(_, r)| r["error"] == "execution_conflict")
+                .count(),
+            1
+        );
+        let (winner, response) = results.iter().find(|(_, r)| r["ok"] == true).unwrap();
+        assert_eq!(
+            response["run"]["calls"]["research"]["execution_claimed"],
+            true
+        );
+        for output in [response.clone(), public(&s), owned(&s, &record, &bearer)] {
+            assert!(!output.to_string().contains("execution_id"));
+        }
+        let restored = new_state_with_files(s.snapshot_path.clone(), s.sequence_path.clone());
+        load_snapshot(&restored).unwrap();
+        assert!(validate(&restored.strategy_cycle.lock().unwrap()));
+        {
+            let mut data = restored.strategy_cycle.lock().unwrap();
+            data.challenges.get_mut(&c).unwrap().started_at = Some(now() - 1000);
+        }
+        assert_eq!(
+            reserve(&restored, &record, ORIGIN, &bearer, &run, winner)["ok"],
+            true,
+            "retry of owned reservation does not start new work after expiry"
+        );
+        let mut receipt = json!({"task":"research","response_id":null,"usage":{"prompt_tokens":0,"completion_tokens":0,"total_tokens":0,"cached_tokens":0},"report":null,"request_failed":true});
+        assert_eq!(
+            report(&restored, &record, ORIGIN, &bearer, &run, &receipt)["error"],
+            "execution_conflict"
+        );
+        receipt["execution_id"] = results
+            .iter()
+            .find(|(_, r)| r["error"] == "execution_conflict")
+            .unwrap()
+            .0["execution_id"]
+            .clone();
+        assert_eq!(
+            report(&restored, &record, ORIGIN, &bearer, &run, &receipt)["error"],
+            "execution_conflict"
+        );
+        receipt["execution_id"] = winner["execution_id"].clone();
+        let done = report(&restored, &record, ORIGIN, &bearer, &run, &receipt);
+        assert_eq!(done["ok"], true, "{done}");
+        assert_eq!(done["run"]["reserved_tokens"], 0);
+        assert_eq!(done["run"]["unknown_usage"], false);
+        assert_eq!(done["run"]["status"], "quality_failed");
+        assert_eq!(
+            report(&restored, &record, ORIGIN, &bearer, &run, &receipt),
+            done
+        );
+    }
+    #[test]
+    fn legacy_reservation_can_report_but_cannot_grant_new_execution() {
+        let s = fixture();
+        let c = brief(&s, "legacy-claim", 1000);
+        let v = version(&s, 1, None, true);
+        let w = version(&s, 2, None, true);
+        let run = start_run(&s, 1, &v, &c, "legacy-owner-01");
+        start_run(&s, 2, &w, &c, "legacy-owner-02");
+        assert_eq!(reserve_call(&s, 1, &run, "research", 100)["ok"], true);
+        let mut snapshot = serde_json::to_value(&*s.strategy_cycle.lock().unwrap()).unwrap();
+        snapshot["runs"][&run]["calls"]["research"]
+            .as_object_mut()
+            .unwrap()
+            .remove("execution_id");
+        *s.strategy_cycle.lock().unwrap() = serde_json::from_value(snapshot).unwrap();
+        assert!(validate(&s.strategy_cycle.lock().unwrap()));
+        assert_eq!(
+            reserve_call(&s, 1, &run, "research", 100)["error"],
+            "execution_conflict"
+        );
+        let (record, bearer) = actor(1);
+        let receipt = json!({"task":"research","response_id":"legacy-saved-response","usage":usage(),"report":{"facts":"saved before upgrade"},"request_failed":false});
+        assert_eq!(
+            report(&s, &record, ORIGIN, &bearer, &run, &receipt)["ok"],
+            true
+        );
+        let mut data = s.strategy_cycle.lock().unwrap();
+        data.runs
+            .get_mut(&run)
+            .unwrap()
+            .calls
+            .get_mut("research")
+            .unwrap()
+            .execution_id = Some("bad".into());
+        assert!(!validate(&data));
     }
     #[test]
     fn paid_failures_unknown_usage_and_shared_budget_are_not_zeroed() {

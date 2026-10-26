@@ -73,3 +73,8 @@ CI run 40134150599 on security-fix commit 7a7ca22 passed the fresh SBF build
 and program tests. All five CI jobs passed, including RustSec on all four
 lockfiles, the frontend checks and the full Rust integration job. The local SBF limitation above describes the original laptop run.
 The dependency repair and compatibility evidence are in RUSTSEC_20261025.md.
+
+
+## Follow-up, 26 October 2026
+
+A later targeted audit found gaps in the private response contract and execution recovery that the original tests did not cover. See [the repair and new acceptance](HUMAN_COMPARISON_20261026_REPAIR.md) before using this historical acceptance as evidence of current behavior.

@@ -1,0 +1,82 @@
+{
+  "observed_at_almaty": "26.10.2026 14:11",
+  "baseline_commit": "e413a0809cc625c172d393d313fddf48fd997a32",
+  "scope": "Repair F1 private comparison serialization, F2 stranded reservations, F3 independent executor duplication",
+  "checks": [
+    {
+      "command": "cargo test --locked --offline --manifest-path arena/Cargo.toml",
+      "environment": {
+        "CARGO_INCREMENTAL": "0",
+        "CARGO_BUILD_JOBS": "1",
+        "CARGO_TARGET_DIR": "existing compatible arena cache"
+      },
+      "passed": 148,
+      "failed": 0,
+      "ignored": 1,
+      "ignored_test": "existing_canonical_snapshot_passes_guard"
+    },
+    {
+      "command": "node --test strategy-comparison.test.mjs strategy-run.test.mjs strategy-scheduler.test.mjs alashi.test.mjs",
+      "cwd": "tools/agent-bootstrap",
+      "passed": 64,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "cwd": "frontend",
+      "commands": [
+        "node --experimental-strip-types --no-warnings scripts/comparison-check.ts",
+        "node --experimental-strip-types --no-warnings scripts/strategy-check.ts",
+        "node --experimental-strip-types --no-warnings scripts/trading-check.ts"
+      ],
+      "result": "PASS"
+    },
+    {
+      "command": "cargo test --locked --offline -p alashi-rules",
+      "passed": 40,
+      "failed": 0
+    }
+  ],
+  "actual_http_result": {
+    "source": "local_deterministic_fixture",
+    "real_provider_calls": 0,
+    "requests": 4,
+    "peak": 2,
+    "one_owner_two_private_versions": true,
+    "actual_instruction_diff": true,
+    "fixed_generation_settings": true,
+    "resumed_without_extra_calls": true,
+    "private_runs_absent_from_library": true,
+    "owner_decision": "inconclusive",
+    "actual_http_responses_parse_in_frontend": true,
+    "concurrent_journals": {
+      "reservation_requests": 4,
+      "accepted_reservations": 2,
+      "rejected_reservations": 2,
+      "provider_calls": 2,
+      "completed_variants": 2,
+      "recorded_tokens": 160
+    },
+    "business_effect_measured": false,
+    "monetary_cost_measured": false
+  },
+  "source_sha256": {
+    "arena/src/strategy_cycle.rs": "52e77b25585175531cb7749d2563d87a7f098b0bebe0e67c04e15349005860ee",
+    "arena/src/strategy_comparison.rs": "823f9e9c9cd32e9797c0e31fd72fcac1d9fa29761246905b8e67b62a8f3a9ad7",
+    "tools/agent-bootstrap/strategy-run.mjs": "278fca7f03a156bb174f90990192347b74c0278be683b75e47d42df3c2459a8e",
+    "tools/agent-bootstrap/strategy-scheduler.test.mjs": "b29b57c0b750cfe7a2d3cbbcb6ae0fbdab0733f4691cf21d75be051029ee92ce",
+    "tools/agent-bootstrap/strategy-comparison.test.mjs": "ab38bc15028226ed3e5bf0a803d24d5c2ea2acd95d060d1a77bea9738bebd4ef",
+    "tools/agent-bootstrap/comparison-http-check.mjs": "d1c0a2e73eddebc4f5cbda47fd4a889d28e56215c5bc8870b09ff604002b8a74",
+    "frontend/scripts/comparison-contract-check.ts": "da549aef5e7ccda7284e501ce9baaacbef927c9046bfd32d0f7b5f9324aa8df9",
+    "frontend/scripts/comparison-check.ts": "dd607e747b1f7709596eb2e6c1a2c0f53f5c7119d21e974a5bbd778092018c01"
+  },
+  "remaining_at_record_creation": [
+    "indexer, bots, host program check, SBF/program tests and frontend production build delegated to fresh commit CI"
+  ],
+  "boundaries": [
+    "No real provider calls, deployment or blockchain transactions",
+    "Independently created journals receive distinct execution claims; simultaneous copies of the same journal are unsupported",
+    "Legacy saved receipts can recover; unresolved legacy calls are unknown and cannot authorize new provider execution",
+    "Usage including prepared cancellation is owner submitted, not independently provider attested"
+  ]
+}

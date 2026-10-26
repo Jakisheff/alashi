@@ -23,6 +23,11 @@ const comparison = projectComparison(raw,fixture.owner)
 assert.equal(comparisons({ok:true,comparisons:[raw]},fixture.owner).length,1)
 assert.throws(()=>projectComparison(raw,fixture.owner,'9'.repeat(64)),LiveApiError,'the owner response must belong to the current agent record')
 assert.equal(comparison.attempts[0].candidate.result?.checks.passed,true)
+const redacted = copy()
+for (const run of [redacted.attempts[0].baseline, redacted.attempts[0].candidate]) {
+  run.plan = run.plan.map(({ instruction: _instruction, ...task }) => task)
+}
+assert.throws(()=>projectComparison(redacted,fixture.owner),LiveApiError,'private comparisons require the frozen instructions, not the public run projection')
 for (const mutate of [
   (v: typeof raw) => {v.content.owner='OtherOwner'},
   (v: typeof raw) => {v.content.profile.temperature=1},

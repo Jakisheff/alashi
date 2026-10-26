@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /** Local owner runner. No provider call occurs until a server reservation exists. */
-import { createPrivateKey, createPublicKey, sign, randomUUID } from 'node:crypto';
+import { createPrivateKey, createPublicKey, sign, randomUUID, randomBytes } from 'node:crypto';
 import { readFileSync, writeFileSync, renameSync, lstatSync, openSync, closeSync, fsyncSync, unlinkSync, existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -142,10 +142,25 @@ export async function runCycle({api,id,provider,journalPath,tools={},trade,onPro
       const old=run.calls[spec.id];if(old?.quality_passed&&old.usage){reports[spec.id]=old.report;return;}
       if(!recoverOnly&&run.status!=='running')fail('run_stopped');
       if(!journal.calls[spec.id]){journal.calls[spec.id]={phase:old?'inflight':'prepared'};save(journalPath,journal);}
+      const entry=journal.calls[spec.id];
       const who=identity(spec),messages=messagesFor(run,version,spec.id,reports),cap=who.cap??(Buffer.byteLength(JSON.stringify(messages),'utf8')+2048+256);
-      // Recover a paid response even after the round ends; never request another completion.
-      if(!old)await api.post(`/strategy-runs/${id}/reserve`,{task:spec.id,max_total_tokens:cap,source:who.source,provider:who.provider,model:who.model});
-      else if(old.source!==who.source||old.provider!==who.provider||old.model!==who.model)fail('journal_provider_mismatch');
+      if(old&&(old.source!==who.source||old.provider!==who.provider||old.model!==who.model))fail('journal_provider_mismatch');
+      if(!old&&!entry.execution_id){entry.execution_id=randomBytes(32).toString('hex');save(journalPath,journal);}
+      if(entry.execution_id) {
+        if(!/^[0-9a-f]{64}$/.test(entry.execution_id))fail('invalid_execution_id');
+        // A journal is the executor identity. Recheck it before any external effect,
+        // including when another process reserved after this run's initial snapshot.
+        const reserved=await api.post(`/strategy-runs/${id}/reserve`,{task:spec.id,max_total_tokens:old?.reserved??cap,source:who.source,provider:who.provider,model:who.model,execution_id:entry.execution_id});
+        const accepted=reserved.run?.calls?.[spec.id];
+        if(accepted?.execution_claimed!==true)fail('execution_claim_not_confirmed');
+        run.calls[spec.id]=accepted;
+        if(reserved.run.status!=='running')run.status=reserved.run.status;
+      } else {
+        if(old?.execution_claimed)fail('execution_conflict');
+        // Pre-claim journals cannot establish exclusive ownership of a reservation.
+        // Keep saved receipts, but treat even a legacy prepared call as ambiguous.
+        if(!entry.result){entry.phase='inflight';save(journalPath,journal);}
+      }
     }
     async function call(spec,recoverOnly=false) {
       const old=run.calls[spec.id];if(old?.quality_passed&&old.usage)return;
@@ -153,15 +168,18 @@ export async function runCycle({api,id,provider,journalPath,tools={},trade,onPro
       if(!entry.result) {
         if(entry.phase==='inflight')entry.result={response_id:null,usage:null,report:null,request_failed:true};
         else {
-          if(recoverOnly)fail('response_not_saved');
-          if(Date.now()>=run.deadline_at*1000)fail('round_ended');
-          entry.phase='inflight';save(journalPath,journal);onProgress({task:spec.id,status:'started'});
-          try {entry.result=spec.kind==='tool'?await executeTool(spec,run,reports,tools):await provider.complete(messagesFor(run,version,spec.id,reports));}
-          catch {entry.result={response_id:null,usage:null,report:null,request_failed:true};}
+          if(recoverOnly||Date.now()>=run.deadline_at*1000) {
+            // This executor still has a prepared journal: no provider was invoked.
+            entry.result={response_id:null,usage:{...zeroUsage},report:null,request_failed:true};
+          } else {
+            entry.phase='inflight';save(journalPath,journal);onProgress({task:spec.id,status:'started'});
+            try {entry.result=spec.kind==='tool'?await executeTool(spec,run,reports,tools):await provider.complete(messagesFor(run,version,spec.id,reports));}
+            catch {entry.result={response_id:null,usage:null,report:null,request_failed:true};}
+          }
         }
         save(journalPath,journal);
       }
-      const receipt=await api.post(`/strategy-runs/${id}/report`,{task:spec.id,...entry.result});
+      const receipt=await api.post(`/strategy-runs/${id}/report`,{task:spec.id,...entry.result,...(entry.execution_id?{execution_id:entry.execution_id}:{})});
       // Responses can arrive out of order. Merge only this task, never an older full snapshot.
       run.calls[spec.id]=receipt.run.calls[spec.id];
       reports[spec.id]=receipt.run.calls[spec.id].report;onProgress({task:spec.id,status:receipt.run.status,known_tokens:receipt.run.known_tokens});
@@ -174,8 +192,7 @@ export async function runCycle({api,id,provider,journalPath,tools={},trade,onPro
         try {
           await prepare(spec,recoverOnly);
           // Another task may fail while this reservation is awaiting its response.
-          if(failure&&!recoverOnly)return;
-          await call(spec,recoverOnly);
+          await call(spec,recoverOnly||!!failure||run.status!=='running');
         } catch(error) {failure??=error;}
       })();
       pending.set(spec.id,work.then(()=>spec.id));
@@ -183,7 +200,7 @@ export async function runCycle({api,id,provider,journalPath,tools={},trade,onPro
     // Reconcile prior paid/ambiguous calls before spending again, even on a stopped run.
     for(const spec of version.content.plan) {
       const saved=journal.calls[spec.id];
-      if(run.calls[spec.id]&&!passed(spec.id)&&(!saved||saved.result||saved.phase==='inflight'))launch(spec,true);
+      if(run.calls[spec.id]&&!passed(spec.id)&&(!saved||saved.result||saved.phase==='inflight'||!saved.execution_id||run.status!=='running'||Date.now()>=run.deadline_at*1000))launch(spec,true);
     }
     await Promise.all(pending.values());pending.clear();
     if(failure)throw failure;
