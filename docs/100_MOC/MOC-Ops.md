@@ -4,6 +4,8 @@
 
 ## Файлы
 
+- [Работа клиента задаёт границы изменения](../200_ZETTEL/20261026-client-scenario-implementation.md): правило для разработки и делегирования на основе разбора Family & Friends Store.
+
 - [RustSec repair for PR 60](../ops/RUSTSEC_20261025.md): исправленные зависимости, адаптер тестовой среды Solana и проверка совместимости.
 
 - [Human hypothesis comparison acceptance](../ops/HUMAN_COMPARISON_20261025.md): приватный цикл одной гипотезы, локальная приёмка и границы проверки.

@@ -925,3 +925,9 @@ GitHub CI run40134150599 on commit7a7ca22: RustSec audit job120991979631 passed 
 Fix commit7a7ca22 passed all five jobs in CI run40134150599: all-lockfile RustSec audit, frontend, full Rust tests, fresh SBF/program tests and secret scan. Updated PR #60 description and acceptance reports. The local audit also reports zero blocking vulnerabilities in every scanned lockfile; informational warnings remain recorded. Source behavior is covered by four fixed-vector checks passing on both the original SDK and the adapter. No deployment, transactions or paid model calls occurred.
 
 План: 1 час суммарно, до 02:47. Факт: 0,75 часа (01:47-02:32, Алматы).
+
+### 26 October 2026, client-scenario working rule
+
+13:12 Almaty. План: 0,4 часа, до 13:36. Amir requested adopting the working logic observed in Family & Friends Store for his agents and ALASHI. Scope: persistent instructions and the project application, with source evidence and an independent scenario review. No product execution change is intended.
+
+13:23 Almaty. Added the client-scenario rule and linked it from AGENTS.md and MOC-Ops. The rule keeps the human hypothesis distinct from its executor and connects acceptance to the owner's decision. Existing private comparison capabilities and future scenario-library work remain separate. An independent agent applied the general skill to missing queue data, a partially completed CLI operation and a typo; its review refined proportionality and recovery instructions. This was a review of agent decisions, not an application test run.

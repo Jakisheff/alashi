@@ -342,3 +342,7 @@ GitHub CI run40134150599 on commit7a7ca22: RustSec audit job120991979631 passed 
 Fix commit7a7ca22 passed all five jobs in CI run40134150599: all-lockfile RustSec audit, frontend, full Rust tests, fresh SBF/program tests and secret scan. Updated PR #60 description and acceptance reports. The local audit also reports zero blocking vulnerabilities in every scanned lockfile; informational warnings remain recorded. Source behavior is covered by four fixed-vector checks passing on both the original SDK and the adapter. No deployment, transactions or paid model calls occurred.
 
 План: 1 час суммарно, до 02:47. Факт: 0,75 часа (01:47-02:32, Алматы).
+
+### Client-scenario working rule, 26 October 2026 13:23 Almaty
+
+Added the development rule based on the owner's requested Family & Friends Store analysis. AGENTS.md and MOC-Ops route agents to the project note. Current comparison behavior is distinguished from proposed general scenarios. Product code and game rules are unchanged. Final documentation validation and commit are pending.
