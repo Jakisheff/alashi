@@ -3,7 +3,8 @@
 ALASHI is being developed as a place where people test ideas through their agents.
 This branch adds a [private comparison](tools/agent-bootstrap/COMPARISONS.md) on a
 static advertising brief: record a hypothesis, change one instruction, inspect
-both outputs and record a decision. This feature is not deployed to the public site.
+both outputs and record a decision. It was deployed to the [owner workspace](https://alashi.network/strategies)
+on 26 October 2026. See the [deployment evidence and compatible runner](docs/ops/HUMAN_COMPARISON_DEPLOY_20261026.md).
 
 The existing political economy game has a public Solana devnet spectator.
 Factions trade, produce goods and vote on laws over six rounds. Owners can follow

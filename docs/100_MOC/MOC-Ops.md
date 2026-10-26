@@ -8,6 +8,7 @@
 
 - [RustSec repair for PR 60](../ops/RUSTSEC_20261025.md): исправленные зависимости, адаптер тестовой среды Solana и проверка совместимости.
 
+- [Private comparison deployment, 26 October](../ops/HUMAN_COMPARISON_DEPLOY_20261026.md): проверки опубликованного релиза и порядок восстановления.
 - [Human hypothesis comparison acceptance](../ops/HUMAN_COMPARISON_20261025.md): приватный цикл одной гипотезы, локальная приёмка и границы проверки.
 
 - [AGENTHANSA_RESEARCH_STATUS_20260927.md](../ops/AGENTHANSA_RESEARCH_STATUS_20260927.md)

@@ -1,0 +1,421 @@
+{
+  "activation": {
+    "release": "comparison-678861a-20261026",
+    "source_commit": "678861a7cd2f1a64b93871480d3cf8aa31152812",
+    "runtime_commit": "e9b181c390269a73c54694587ca22b72a9e1702b",
+    "backup": "/var/backups/alashi/comparison-678861a-20261026",
+    "backend_sha256": "8c69fb6ca23ba33b91c9d1d441c3ccb734e0001f0bf0869d39e64ace9efa6d9f",
+    "pre_upgrade_snapshot_sha256": "c6ff9ce23426377ce59922335f2eaae7ecb629f99f15194140bf2dd085ca2733",
+    "pre_upgrade_sequence_sha256": "f5ca38f748a1d6eaf726b8a42fb575c3c71f1864a8143301782de13da2d9202b",
+    "nginx_sha256": "bc2196846f9226ba1ffc8b6d4d023166c1499c858673e6c3c7ce0551be5c117b",
+    "current": "/var/www/alashi/releases/comparison-678861a-20261026",
+    "previous": "/var/www/alashi/releases/main-523e14a-20261018",
+    "chain_api_changed": false,
+    "solana_program_changed": false,
+    "initial_nginx_path_was_inactive": true,
+    "initial_public_post_hold_effective": false,
+    "active_nginx_path": "/etc/nginx/sites-enabled/alashi.network",
+    "active_nginx_sha256": "5ef122608b3478b4676de45d7a3bda0478ddf5f20b9e509a4cf683f6b5871cfc",
+    "active_nginx_backup": "/var/backups/alashi/comparison-678861a-20261026/nginx.enabled.conf",
+    "active_routes_corrected_and_reloaded": true
+  },
+  "snapshot_compatibility": {
+    "full_snapshot_load": "PASS",
+    "crank_started": false,
+    "snapshot_unchanged": true,
+    "state_sha256": "c6ff9ce23426377ce59922335f2eaae7ecb629f99f15194140bf2dd085ca2733",
+    "sequence_sha256": "f5ca38f748a1d6eaf726b8a42fb575c3c71f1864a8143301782de13da2d9202b"
+  },
+  "static_candidate": {
+    "candidate": "/var/www/alashi/releases/comparison-678861a-20261026",
+    "old_release": "main-523e14a-20261018",
+    "deck_files_preserved": 60,
+    "runner_sha256": "347e7941379d92388253699f2d700215c5aab9845d13d4811dbe171f43efc3b2"
+  },
+  "public_https": {
+    "status": "PASS",
+    "checks": 48,
+    "release": "comparison-678861a-20261026",
+    "backend_sha256": "8c69fb6ca23ba33b91c9d1d441c3ccb734e0001f0bf0869d39e64ace9efa6d9f",
+    "checks_detail": [
+      {
+        "path": "/version.json",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/strategies",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/strategies/",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/strategies?agent=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/devnet",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/stream",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/comparison-678861a-20261026/assets/index-DExQFACF.js",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/comparison-678861a-20261026/assets/jsx-runtime-D3jfb0Ew.js",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/comparison-678861a-20261026/assets/useQuery-Dq6JkTCJ.js",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/comparison-678861a-20261026/assets/with-selector-DIGp_BLX.js",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/comparison-678861a-20261026/assets/link-DZEcagUg.js",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/comparison-678861a-20261026/assets/useNavigate-CI43M4Gq.js",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/comparison-678861a-20261026/assets/lazyRouteComponent-h8aHmDr_.js",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/comparison-678861a-20261026/assets/geometry-CO2SLUj0.js",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/comparison-678861a-20261026/assets/BrandMark-C2dJYKIR.js",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/comparison-678861a-20261026/assets/react-Bvhwkc4m.js",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/comparison-678861a-20261026/assets/store-gVdKy_pU.js",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/comparison-678861a-20261026/assets/feed-HPQcqDep.js",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/comparison-678861a-20261026/assets/pose-y3Glonsv.js",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/comparison-678861a-20261026/assets/preload-helper-BaqHxM-w.js",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/comparison-678861a-20261026/assets/agent-CDrSGVSK.js",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/comparison-678861a-20261026/assets/client-DhN5rwEW.js",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/comparison-678861a-20261026/assets/client-Dylr3WZu.js",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/comparison-678861a-20261026/assets/BrandMark-GEjOgecT.css",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/comparison-678861a-20261026/assets/index-DBGc3Gr9.css",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/comparison-678861a-20261026/assets/live-BH2cVwpx.css",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/comparison-678861a-20261026/downloads/alashi-comparison-runner-678861a.tar.gz",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/comparison-678861a-20261026/models/desk-genie.glb",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/deck/downloads/alashi-deck-r10.pdf",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/deck/downloads/alashi-deck-20261011-r3.pptx",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/games",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/strategy-library",
+        "method": "GET",
+        "status": 200,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/strategies",
+        "method": "GET",
+        "status": 401,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/strategies",
+        "method": "POST",
+        "status": 401,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/strategies",
+        "method": "POST",
+        "status": 415,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/strategies?x=1",
+        "method": "GET",
+        "status": 400,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/strategies",
+        "method": "DELETE",
+        "status": 405,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/comparisons",
+        "method": "GET",
+        "status": 401,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/comparisons",
+        "method": "POST",
+        "status": 401,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/comparisons",
+        "method": "POST",
+        "status": 415,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/comparisons?x=1",
+        "method": "GET",
+        "status": 400,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/comparisons",
+        "method": "DELETE",
+        "status": 405,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/comparisons/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/attempts/cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc/baseline/reserve",
+        "method": "POST",
+        "status": 401,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/comparisons/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/attempts/cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc/other/reserve",
+        "method": "POST",
+        "status": 404,
+        "private_headers": false
+      },
+      {
+        "path": "/strategy-library",
+        "method": "POST",
+        "status": 405,
+        "private_headers": true
+      },
+      {
+        "path": "/strategy-library?x=1",
+        "method": "GET",
+        "status": 400,
+        "private_headers": true
+      },
+      {
+        "path": "/unpublished-internal-route",
+        "method": "GET",
+        "status": 404,
+        "private_headers": false
+      }
+    ],
+    "boundary": "Public anonymous/authorization rejection checks; no paid model call or live owner comparison."
+  },
+  "version": {
+    "release": "comparison-678861a-20261026",
+    "frontend_commit": "678861a7cd2f1a64b93871480d3cf8aa31152812",
+    "frontend_source_commit": "678861a7cd2f1a64b93871480d3cf8aa31152812",
+    "backend_commit": "678861a7cd2f1a64b93871480d3cf8aa31152812",
+    "chain_api_commit": "523e14ac058a58ff25bc4786407fbb8bd60105fe",
+    "bootstrap_commit": "678861a7cd2f1a64b93871480d3cf8aa31152812",
+    "backend_binary_sha256": "8c69fb6ca23ba33b91c9d1d441c3ccb734e0001f0bf0869d39e64ace9efa6d9f",
+    "chain_api_binary_sha256": "d44d158759ccc89b2e01a95e57e44c93c6b791d78691cc6a8bab21b699cb4fc7",
+    "scheduler_sha256": "278fca7f03a156bb174f90990192347b74c0278be683b75e47d42df3c2459a8e",
+    "deck": "20261011-r3",
+    "deck_publication": {
+      "source_date": "2026-10-11",
+      "version": "20261011-r3",
+      "slide_count": 12,
+      "pdf_sha256": "a4ed376213e43858abdb8b34f25315fcd34650ded94f47ca69a04f576561dc8e",
+      "pptx_sha256": "d84671a6255d604db3a359d2734811d441eb292a8d49f0a67243a244901b8d8c",
+      "published_at_utc": "2026-10-12T19:15:39.290315+00:00",
+      "base_release": "fcc7a93bdea9e7932ad96df5ee3f84ce22a24009",
+      "source": "alashi-jensen-huang-2026-10-11-r3",
+      "earlier_appendix_preserved": true
+    },
+    "source_mode": "reviewed_branch",
+    "previous_release": "main-523e14a-20261018",
+    "build_node": "v22.22.1",
+    "live_api": {
+      "enabled_at_build": true,
+      "owner_origin": "https://alashi.network",
+      "path_prefix": ""
+    },
+    "strategy_cycle": {
+      "route": "/strategies",
+      "public_api": "/strategy-library",
+      "runner": "owner_local",
+      "provider_calls": "owner_authorized",
+      "reservation": "known_usage_plus_active_and_unknown_reservations",
+      "verification": "isolated_test_results_recorded_separately"
+    },
+    "ci": "https://github.com/Jakisheff/alashi/actions/runs/40297668440",
+    "comparison": {
+      "runtime_commit": "e9b181c390269a73c54694587ca22b72a9e1702b",
+      "execution_claims": true,
+      "route": "/strategies",
+      "runner_url": "/releases/comparison-678861a-20261026/downloads/alashi-comparison-runner-678861a.tar.gz",
+      "runner_sha256": "347e7941379d92388253699f2d700215c5aab9845d13d4811dbe171f43efc3b2",
+      "runner_source_commit": "678861a7cd2f1a64b93871480d3cf8aa31152812",
+      "independent_journals_exclusive": true,
+      "concurrent_copies_of_same_journal_supported": false,
+      "paid_provider_acceptance": "not_run"
+    }
+  },
+  "validation": {
+    "arena_passed": 148,
+    "arena_ignored": 1,
+    "runner_passed": 64,
+    "frontend_build": true,
+    "frontend_checks": [
+      "comparisons",
+      "strategies",
+      "trading",
+      "comparison-proxy"
+    ],
+    "browser_public_receipts_loaded": true,
+    "browser_console_errors": 0,
+    "paid_model_calls": 0,
+    "live_owner_comparison_performed": false
+  },
+  "state_continuity": {
+    "registrations": 13,
+    "active_http_games": 0,
+    "sections_equal": [
+      "proposal_key",
+      "registrations",
+      "completed",
+      "completed_replay",
+      "chain_conversations",
+      "chain_dialogue",
+      "chain_wishes",
+      "wishes"
+    ]
+  },
+  "dependency_audit": {
+    "full_high": 1,
+    "production_vulnerabilities": 0,
+    "package": "zod",
+    "version": "4.6.5",
+    "scope": "pre-existing build-only dependency",
+    "advisory": "GHSA-mrhx-c7xc-m3w5"
+  }
+}

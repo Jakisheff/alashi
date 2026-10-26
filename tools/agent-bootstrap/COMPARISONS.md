@@ -9,7 +9,8 @@ not enter duel standings.
 Use an existing registered owner profile. The [duel guide](STRATEGY_DUELS.md#api-and-deployment)
 describes wallet challenge authentication and owner sessions. Its
 [local execution instructions](STRATEGY_DUELS.md#local-execution) cover provider
-credentials and the private profile. This change does not deploy the feature.
+credentials and the private profile. The [26 October deployment](../../docs/ops/HUMAN_COMPARISON_DEPLOY_20261026.md)
+provides the public workspace and a compatible versioned runner archive.
 
 ## Freeze the question before execution
 
@@ -72,7 +73,7 @@ a regular file with mode 600. Run from the repository root:
 
 ```sh
 node tools/agent-bootstrap/strategy-run.mjs \
-  --api http://127.0.0.1:8790 \
+  --api https://alashi.network \
   --profile /absolute/private/profile.json \
   --comparison COMPARISON_ID \
   --attempt-client hypothesis-attempt-01 \
@@ -80,8 +81,8 @@ node tools/agent-bootstrap/strategy-run.mjs \
   --allow-provider yes
 ```
 
-Use your configured arena address. The example selects a local arena rather
-than assuming that the feature has been deployed publicly. `--attempt-client`
+The example selects the deployed public arena. Use an isolated loopback arena
+for test providers and development. `--attempt-client`
 must contain 8 through 80 ASCII letters, digits, hyphens or underscores.
 
 The runner creates or recovers the attempt with that client ID. It checks both
