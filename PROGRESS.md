@@ -931,3 +931,7 @@ Fix commit7a7ca22 passed all five jobs in CI run40134150599: all-lockfile RustSe
 13:12 Almaty. План: 0,4 часа, до 13:36. Amir requested adopting the working logic observed in Family & Friends Store for his agents and ALASHI. Scope: persistent instructions and the project application, with source evidence and an independent scenario review. No product execution change is intended.
 
 13:23 Almaty. Added the client-scenario rule and linked it from AGENTS.md and MOC-Ops. The rule keeps the human hypothesis distinct from its executor and connects acceptance to the owner's decision. Existing private comparison capabilities and future scenario-library work remain separate. An independent agent applied the general skill to missing queue data, a partially completed CLI operation and a typo; its review refined proportionality and recovery instructions. This was a review of agent decisions, not an application test run.
+
+13:28 Almaty. Documentation validation passed: local links, skill metadata, source hashes and git diff --check. New text passed FULL checks with meaning review; existing NMT boilerplate was preserved. Change e2a7f662cee070dec67a4bededb6bcb3cdf15cd3 is pushed to codex/human-hypothesis-comparison-20261025. Runtime code, Anchor instructions and game rules are unchanged; application suites were not repeated for this documentation change. Automatic skill selection in a new app session remains untested.
+
+Факт: 0,27 часа (13:12-13:28, Алматы). План до 13:36 закрыт.

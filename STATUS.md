@@ -345,4 +345,6 @@ Fix commit7a7ca22 passed all five jobs in CI run40134150599: all-lockfile RustSe
 
 ### Client-scenario working rule, 26 October 2026 13:23 Almaty
 
-Added the development rule based on the owner's requested Family & Friends Store analysis. AGENTS.md and MOC-Ops route agents to the project note. Current comparison behavior is distinguished from proposed general scenarios. Product code and game rules are unchanged. Final documentation validation and commit are pending.
+Added the development rule based on the owner's requested Family & Friends Store analysis. AGENTS.md and MOC-Ops route agents to the project note. Current comparison behavior is distinguished from proposed general scenarios. Product code and game rules are unchanged.
+
+13:28 Almaty. Documentation checks passed and e2a7f662cee070dec67a4bededb6bcb3cdf15cd3 was pushed to the working branch. General skill validation includes a separate agent applying it to three requests; no application tests or new client experiment ran. Факт: 0,27 часа. План до 13:36 закрыт.
