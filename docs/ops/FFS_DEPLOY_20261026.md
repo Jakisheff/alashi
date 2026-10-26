@@ -24,6 +24,8 @@ The first attempt stopped before binary installation because an immediate probe 
 
 The first public smoke run then exposed HTTP 403 for public assets: copied files had mode 0640 and nginx could not read them. Only the new public release was normalized to readable files (0644) and traversable directories (0755). All 359 file hashes remained unchanged. The map loaded after this correction. The publisher now rejects unreadable public files and unsearchable release directories before changing release pointers; regression tests cover rejection without changing pointers or the publication journal.
 
+[The publisher guard and evidence commit](https://github.com/Jakisheff/alashi/actions/runs/40317578757) passed all five CI jobs. Its seven publisher tests also passed locally. Read-only validation of both current and previous production releases passed with the new guard. This tooling change does not replace the deployed application revision.
+
 ## Boundaries and recovery
 
 The production backup is `/var/backups/alashi/research-39bda66-20261026`. It holds the prior binary, stable snapshot and sequence, nginx configuration and release pointers. Older binaries reject the newly serialized research field. Do not start an old binary against the new snapshot or discard new decisions by restoring an old snapshot without reconciliation. Snapshot coordination remains within one arena process; model calls are outside that transaction.
