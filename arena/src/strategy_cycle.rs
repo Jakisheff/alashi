@@ -9,6 +9,10 @@ type Result<T> = std::result::Result<T, &'static str>;
 const MAX_BUDGET: u64 = 1_000_000;
 // shortcut: bounded pilot journal; add receipt-preserving archival before raising this cap.
 const MAX_ITEMS: usize = 500;
+#[path = "strategy_comparison.rs"]
+pub mod comparison;
+#[path = "strategy_research.rs"]
+pub mod research;
 #[derive(Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(deny_unknown_fields)]
 pub struct TaskSpec {
@@ -92,6 +96,9 @@ impl Usage {
 #[serde(deny_unknown_fields)]
 pub struct Call {
     pub task: String,
+    // Persist the executor claim, but never expose it in a run view.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub execution_id: Option<String>,
     pub reserved: u64,
     pub status: String,
     pub source: String,
@@ -185,6 +192,10 @@ pub struct StrategyState {
     pub versions: BTreeMap<String, Version>,
     pub challenges: BTreeMap<String, Challenge>,
     pub runs: BTreeMap<String, Run>,
+    #[serde(default)]
+    pub comparisons: BTreeMap<String, comparison::Comparison>,
+    #[serde(default)]
+    pub research: research::ResearchState,
 }
 fn digest(v: &impl Serialize) -> String {
     sha256_hex(&serde_json::to_string(v).expect("serializable content"))
@@ -304,9 +315,10 @@ pub fn validate(s: &StrategyState) -> bool {
             || *id != digest(&v.content)
             || !valid_content(&v.content)
             || v.content.parent.as_ref().is_some_and(|p| {
-                !s.versions
-                    .get(p)
-                    .is_some_and(|parent| parent.published && parent.created_at <= v.created_at)
+                !s.versions.get(p).is_some_and(|parent| {
+                    (parent.published || !v.published && parent.content.owner == v.content.owner)
+                        && parent.created_at <= v.created_at
+                })
             })
         {
             return false;
@@ -344,105 +356,10 @@ pub fn validate(s: &StrategyState) -> bool {
             || !hex32(&r.record)
             || r.budget != c.content.budget
             || r.owner == c.content.owner && c.content.trading.is_none()
-            || r.calls.len() > v.content.plan.len()
-            || r.events.len() > 40
             || (v.content.parent.is_some() && !v.published)
             || (r.owner != v.content.owner && !v.published)
-            || !matches!(
-                r.status.as_str(),
-                "running" | "completed" | "quality_failed" | "usage_unknown" | "budget_overrun"
-            )
-            || r.events
-                .iter()
-                .enumerate()
-                .any(|(i, e)| e.seq != i as u64 + 1)
+            || !valid_run(r, v, c, &mut ids)
         {
-            return false;
-        }
-        for (task, call) in &r.calls {
-            let Some(spec) = v.content.plan.iter().find(|t| &t.id == task) else {
-                return false;
-            };
-            if &call.task != task
-                || !valid_call(
-                    spec,
-                    call.reserved,
-                    &call.source,
-                    &call.provider,
-                    &call.model,
-                )
-                || call.usage.as_ref().is_some_and(|u| {
-                    !u.valid() || call.source == "local_tool" && u.total_tokens != 0
-                })
-            {
-                return false;
-            }
-            if call.status == "reserved" {
-                if call.usage.is_some()
-                    || call.report.is_some()
-                    || call.finished_at.is_some()
-                    || call.quality_passed.is_some()
-                    || call.report_hash.is_some()
-                    || call.response_id.is_some()
-                {
-                    return false;
-                }
-            } else if !matches!(call.status.as_str(), "reported" | "failed")
-                || call.finished_at.is_none()
-                || call.quality_passed.is_none()
-                || !call.report_hash.as_deref().is_some_and(hex32)
-            {
-                return false;
-            }
-            if call.quality_passed == Some(true)
-                && (call
-                    .report
-                    .as_ref()
-                    .is_none_or(|p| !p.is_object() || p.to_string().len() > 8192)
-                    || call.report_hash.as_deref() != call.report.as_ref().map(digest).as_deref())
-            {
-                return false;
-            }
-            if call.quality_passed == Some(false) && call.report.is_some() {
-                return false;
-            }
-            if let Some(response) = &call.response_id {
-                if response.is_empty()
-                    || response.len() > 200
-                    || !ids.insert((&call.source, &call.provider, &call.model, response))
-                {
-                    return false;
-                }
-            }
-        }
-        if r.status == "completed" {
-            let Some(result) = &r.result else {
-                return false;
-            };
-            if !v.content.plan.iter().all(|t| r.passed(&t.id))
-                || checks(&c.content, &result["artifact"])["passed"] != true
-                || r.known() > r.budget
-                || r.calls.values().any(|call| {
-                    call.usage
-                        .as_ref()
-                        .is_some_and(|u| u.total_tokens > call.reserved)
-                })
-            {
-                return false;
-            }
-            if let Some(context) = &c.content.trading {
-                if !strategy_trade::valid_receipt(
-                    context,
-                    &r.owner,
-                    &result["artifact"],
-                    &result["trade_receipt"],
-                ) {
-                    return false;
-                }
-            } else if result.get("trade_receipt").is_some() {
-                return false;
-            }
-        } else if r.result.is_some() || r.review.is_some() {
             return false;
         }
         if r.review.as_ref().is_some_and(|review| {
@@ -454,7 +371,148 @@ pub fn validate(s: &StrategyState) -> bool {
             return false;
         }
     }
+    comparison::validate(s, &mut ids) && research::validate(s)
+}
+fn valid_run(
+    r: &Run,
+    v: &Version,
+    c: &Challenge,
+    ids: &mut BTreeSet<(String, String, String, String)>,
+) -> bool {
+    if r.calls.len() > v.content.plan.len()
+        || r.events.len() > 40
+        || !matches!(
+            r.status.as_str(),
+            "running" | "completed" | "quality_failed" | "usage_unknown" | "budget_overrun"
+        )
+        || r.events
+            .iter()
+            .enumerate()
+            .any(|(i, e)| e.seq != i as u64 + 1)
+    {
+        return false;
+    }
+    for (task, call) in &r.calls {
+        let Some(spec) = v.content.plan.iter().find(|t| &t.id == task) else {
+            return false;
+        };
+        if &call.task != task
+            || call.execution_id.as_deref().is_some_and(|id| !hex32(id))
+            || !valid_call(
+                spec,
+                call.reserved,
+                &call.source,
+                &call.provider,
+                &call.model,
+            )
+            || call
+                .usage
+                .as_ref()
+                .is_some_and(|u| !u.valid() || call.source == "local_tool" && u.total_tokens != 0)
+        {
+            return false;
+        }
+        if call.status == "reserved" {
+            if call.usage.is_some()
+                || call.report.is_some()
+                || call.finished_at.is_some()
+                || call.quality_passed.is_some()
+                || call.report_hash.is_some()
+                || call.response_id.is_some()
+            {
+                return false;
+            }
+        } else if !matches!(call.status.as_str(), "reported" | "failed")
+            || call.finished_at.is_none()
+            || call.quality_passed.is_none()
+            || !call.report_hash.as_deref().is_some_and(hex32)
+        {
+            return false;
+        }
+        if call.quality_passed == Some(true)
+            && (call
+                .report
+                .as_ref()
+                .is_none_or(|p| !p.is_object() || p.to_string().len() > 8192)
+                || call.report_hash.as_deref() != call.report.as_ref().map(digest).as_deref())
+        {
+            return false;
+        }
+        if call.quality_passed == Some(false) && call.report.is_some() {
+            return false;
+        }
+        if let Some(response) = &call.response_id {
+            if response.is_empty()
+                || response.len() > 200
+                || !ids.insert((
+                    call.source.clone(),
+                    call.provider.clone(),
+                    call.model.clone(),
+                    response.clone(),
+                ))
+            {
+                return false;
+            }
+        }
+    }
+    if r.status == "completed" {
+        let Some(result) = &r.result else {
+            return false;
+        };
+        if !v.content.plan.iter().all(|t| r.passed(&t.id))
+            || checks(&c.content, &result["artifact"])["passed"] != true
+            || r.known() > r.budget
+            || r.calls.values().any(|call| {
+                call.usage
+                    .as_ref()
+                    .is_some_and(|u| u.total_tokens > call.reserved)
+            })
+        {
+            return false;
+        }
+        if let Some(context) = &c.content.trading {
+            if !strategy_trade::valid_receipt(
+                context,
+                &r.owner,
+                &result["artifact"],
+                &result["trade_receipt"],
+            ) {
+                return false;
+            }
+        } else if result.get("trade_receipt").is_some() {
+            return false;
+        }
+    } else if r.result.is_some() || r.review.is_some() {
+        return false;
+    }
     true
+}
+fn all_runs(s: &StrategyState) -> impl Iterator<Item = &Run> {
+    s.runs.values().chain(
+        s.comparisons
+            .values()
+            .flat_map(|c| c.attempts.iter().flat_map(|a| [&a.baseline, &a.candidate])),
+    )
+}
+fn duplicate_receipt(data: &StrategyState, id: &str, body: &Value) -> bool {
+    let task = body["task"].as_str().unwrap_or("");
+    let Some(reservation) = all_runs(data)
+        .find(|r| r.id == id)
+        .and_then(|r| r.calls.get(task))
+    else {
+        return false;
+    };
+    body["response_id"].as_str().is_some_and(|response| {
+        all_runs(data).any(|r| {
+            r.calls.iter().any(|(other_task, c)| {
+                (r.id != id || other_task != task)
+                    && c.source == reservation.source
+                    && c.provider == reservation.provider
+                    && c.model == reservation.model
+                    && c.response_id.as_deref() == Some(response)
+            })
+        })
+    })
 }
 fn err(code: &str) -> Value {
     json!({"ok":false,"error":code})
@@ -544,6 +602,8 @@ fn view(r: &Run, v: &Version, c: &Challenge, private: bool, reveal: bool) -> Val
     let mut calls = serde_json::Map::new();
     for (id, call) in &r.calls {
         let mut out = serde_json::to_value(call).unwrap();
+        out.as_object_mut().unwrap().remove("execution_id");
+        out["execution_claimed"] = json!(call.execution_id.is_some());
         if !private {
             out.as_object_mut().unwrap().remove("report");
         }
@@ -725,11 +785,11 @@ pub fn create(state: &AppState, record: &str, origin: &str, bearer: &str, body: 
         return err("bad_strategy");
     }
     mutate(state, |data| {
-        if content
-            .parent
-            .as_ref()
-            .is_some_and(|p| !data.versions.get(p).is_some_and(|v| v.published))
-        {
+        if content.parent.as_ref().is_some_and(|p| {
+            !data.versions.get(p).is_some_and(|v| {
+                v.published || body["published"] != true && v.content.owner == content.owner
+            })
+        }) {
             return Err("public_parent_required");
         }
         let id = digest(&content);
@@ -757,9 +817,17 @@ pub fn publish(state: &AppState, record: &str, origin: &str, bearer: &str, id: &
     mutate(state, |data| {
         let v = data
             .versions
-            .get_mut(id)
+            .get(id)
             .filter(|v| v.content.owner == owner)
             .ok_or("strategy_forbidden")?;
+        if v.content
+            .parent
+            .as_ref()
+            .is_some_and(|parent| !data.versions.get(parent).is_some_and(|v| v.published))
+        {
+            return Err("public_parent_required");
+        }
+        let v = data.versions.get_mut(id).unwrap();
         v.published = true;
         Ok(json!({"ok":true,"version":v}))
     })
@@ -786,13 +854,20 @@ pub fn start(state: &AppState, record: &str, origin: &str, bearer: &str, body: &
     mutate(state, |data| {
         let id = sha256_hex(&format!("strategy-run-v2:{owner}:{client}"));
         if let Some(r) = data.runs.get(&id) {
-            if r.record != record || r.version != version || r.challenge != challenge {
+            if r.record != record || (version != "selected" && r.version != version) || r.challenge != challenge {
                 return Err("idempotency_conflict");
             }
             return Ok(
-                json!({"ok":true,"run":view(r,&data.versions[version],&data.challenges[challenge],true,false)}),
+                json!({"ok":true,"run":view(r,&data.versions[&r.version],&data.challenges[challenge],true,false)}),
             );
         }
+        // Resolve the owner's selection once when creating a new run. A retry
+        // keeps the version already recorded above, even after a later selection.
+        let version = if version == "selected" {
+            research::selected_version(data, record, &owner).ok_or("selected_strategy_missing")?
+        } else {
+            version
+        };
         let v = data.versions.get(version).ok_or("unknown_strategy")?;
         let c = data.challenges.get(challenge).ok_or("unknown_challenge")?;
         if let Some(trading) = &c.content.trading {
@@ -870,20 +945,6 @@ pub fn reserve(
         Ok(o) => o,
         Err(c) => return err(c),
     };
-    if let Err(c) = fields(
-        body,
-        &["task", "max_total_tokens", "source", "provider", "model"],
-    ) {
-        return err(c);
-    }
-    let task = body["task"].as_str().unwrap_or("");
-    let cap = match body["max_total_tokens"].as_u64() {
-        Some(v) => v,
-        None => return err("bad_reservation"),
-    };
-    let source = body["source"].as_str().unwrap_or("");
-    let provider = body["provider"].as_str().unwrap_or("");
-    let model = body["model"].as_str().unwrap_or("");
     mutate(state, |data| {
         let r = data
             .runs
@@ -892,56 +953,86 @@ pub fn reserve(
             .ok_or("run_forbidden")?;
         let v = &data.versions[&r.version];
         let brief = &data.challenges[&r.challenge];
-        let spec = v
-            .content
-            .plan
-            .iter()
-            .find(|t| t.id == task)
-            .ok_or("bad_task")?;
-        let deadline = brief.deadline().ok_or("waiting_for_opponent")?;
-        if now() >= deadline {
-            return Err("round_ended");
-        }
-        if !valid_call(spec, cap, source, provider, model) {
-            return Err("bad_provider");
-        }
-        if let Some(c) = r.calls.get(task) {
-            if c.reserved != cap || c.source != source || c.provider != provider || c.model != model
-            {
-                return Err("idempotency_conflict");
-            }
-            return Ok(json!({"ok":true,"run":view(r,v,brief,true,false)}));
-        }
-        if r.status != "running" || r.uncertain() {
-            return Err("run_stopped");
-        }
-        if !spec.depends_on.iter().all(|d| r.passed(d)) {
-            return Err("dependencies_not_complete");
-        }
-        if r.known().saturating_add(r.held()).saturating_add(cap) > r.budget {
-            return Err("budget_exhausted");
-        }
-        r.calls.insert(
-            task.into(),
-            Call {
-                task: task.into(),
-                reserved: cap,
-                status: "reserved".into(),
-                source: source.into(),
-                provider: provider.into(),
-                model: model.into(),
-                response_id: None,
-                usage: None,
-                report: None,
-                report_hash: None,
-                quality_passed: None,
-                started_at: now(),
-                finished_at: None,
-            },
-        );
-        r.event(task, "task_started");
+        reserve_run(r, v, brief, body)?;
         Ok(json!({"ok":true,"run":view(r,v,brief,true,false)}))
     })
+}
+fn reserve_run(r: &mut Run, v: &Version, brief: &Challenge, body: &Value) -> Result<()> {
+    fields(
+        body,
+        &[
+            "task",
+            "max_total_tokens",
+            "source",
+            "provider",
+            "model",
+            "execution_id",
+        ],
+    )?;
+    let task = body["task"].as_str().unwrap_or("");
+    let cap = match body["max_total_tokens"].as_u64() {
+        Some(v) => v,
+        None => return Err("bad_reservation"),
+    };
+    let source = body["source"].as_str().unwrap_or("");
+    let provider = body["provider"].as_str().unwrap_or("");
+    let model = body["model"].as_str().unwrap_or("");
+    let spec = v
+        .content
+        .plan
+        .iter()
+        .find(|t| t.id == task)
+        .ok_or("bad_task")?;
+    if !valid_call(spec, cap, source, provider, model) {
+        return Err("bad_provider");
+    }
+    let execution_id = body["execution_id"]
+        .as_str()
+        .filter(|s| hex32(s))
+        .ok_or("execution_id_required")?;
+    if let Some(c) = r.calls.get(task) {
+        if c.execution_id.as_deref() != Some(execution_id) {
+            return Err("execution_conflict");
+        }
+        if c.reserved != cap || c.source != source || c.provider != provider || c.model != model {
+            return Err("idempotency_conflict");
+        }
+        return Ok(());
+    }
+    let deadline = brief.deadline().ok_or("waiting_for_opponent")?;
+    if now() >= deadline {
+        return Err("round_ended");
+    }
+    if r.status != "running" || r.uncertain() {
+        return Err("run_stopped");
+    }
+    if !spec.depends_on.iter().all(|d| r.passed(d)) {
+        return Err("dependencies_not_complete");
+    }
+    if r.known().saturating_add(r.held()).saturating_add(cap) > r.budget {
+        return Err("budget_exhausted");
+    }
+    r.calls.insert(
+        task.into(),
+        Call {
+            task: task.into(),
+            execution_id: Some(execution_id.into()),
+            reserved: cap,
+            status: "reserved".into(),
+            source: source.into(),
+            provider: provider.into(),
+            model: model.into(),
+            response_id: None,
+            usage: None,
+            report: None,
+            report_hash: None,
+            quality_passed: None,
+            started_at: now(),
+            finished_at: None,
+        },
+    );
+    r.event(task, "task_started");
+    Ok(())
 }
 pub fn report(
     state: &AppState,
@@ -955,109 +1046,114 @@ pub fn report(
         Ok(o) => o,
         Err(c) => return err(c),
     };
-    if let Err(c) = fields(
-        body,
-        &["task", "response_id", "usage", "report", "request_failed"],
-    ) {
-        return err(c);
-    }
-    let task = body["task"].as_str().unwrap_or("");
-    let response = match body.get("response_id") {
-        None | Some(Value::Null) => None,
-        Some(Value::String(s)) if !s.is_empty() && s.len() <= 200 => Some(s.clone()),
-        _ => return err("bad_response_id"),
-    };
-    let usage = match body.get("usage") {
-        None | Some(Value::Null) => None,
-        Some(u) => match serde_json::from_value::<Usage>(u.clone()) {
-            Ok(u) if u.valid() => Some(u),
-            _ => return err("bad_usage"),
-        },
-    };
-    let supplied = body.get("report").cloned().unwrap_or(Value::Null);
-    if supplied.to_string().len() > 8192 || !body["request_failed"].is_boolean() {
-        return err("bad_report");
-    }
-    let hash = digest(&supplied);
     mutate(state, |data| {
-        let own_run = data
+        let r = data
             .runs
             .get(id)
             .filter(|r| r.owner == owner && r.record == record)
             .ok_or("run_forbidden")?;
-        let reservation = own_run.calls.get(task).ok_or("reservation_required")?;
-        if reservation.source == "local_tool" && usage.as_ref().is_some_and(|u| u.total_tokens != 0)
-        {
-            return Err("bad_usage");
-        }
-        if response.as_ref().is_some_and(|response| {
-            data.runs.iter().any(|(other_id, r)| {
-                r.calls.iter().any(|(other_task, c)| {
-                    (other_id != id || other_task != task)
-                        && c.source == reservation.source
-                        && c.provider == reservation.provider
-                        && c.model == reservation.model
-                        && c.response_id.as_ref() == Some(response)
-                })
-            })
-        }) {
+        if duplicate_receipt(data, &r.id, body) {
             return Err("duplicate_provider_receipt");
         }
         let r = data.runs.get_mut(id).unwrap();
         let v = &data.versions[&r.version];
         let brief = &data.challenges[&r.challenge];
-        let quality = body["request_failed"] == false
-            && supplied.as_object().is_some_and(|o| !o.is_empty())
-            && (task != "deliver" || checks(&brief.content, &supplied)["passed"] == true);
-        let c = r.calls.get_mut(task).unwrap();
-        if c.status != "reserved" {
-            return if c.response_id == response
-                && c.usage == usage
-                && c.report_hash.as_ref() == Some(&hash)
-                && c.quality_passed == Some(quality)
-            {
-                Ok(json!({"ok":true,"run":view(r,v,brief,true,false)}))
-            } else {
-                Err("idempotency_conflict")
-            };
-        }
-        c.status = if body["request_failed"] == true {
-            "failed"
-        } else {
-            "reported"
-        }
-        .into();
-        c.response_id = response;
-        c.usage = usage;
-        c.report_hash = Some(hash);
-        c.quality_passed = Some(quality);
-        c.finished_at = Some(now());
-        c.report = if quality { Some(supplied) } else { None };
-        r.event(
-            task,
-            if quality {
-                "report_checked"
-            } else {
-                "quality_failed"
-            },
-        );
-        r.status = if r.known() > r.budget
-            || r.calls.values().any(|c| {
-                c.usage
-                    .as_ref()
-                    .is_some_and(|u| u.total_tokens > c.reserved)
-            }) {
-            "budget_overrun"
-        } else if r.uncertain() {
-            "usage_unknown"
-        } else if r.calls.values().any(|c| c.quality_passed == Some(false)) {
-            "quality_failed"
-        } else {
-            "running"
-        }
-        .into();
+        report_run(r, brief, body)?;
         Ok(json!({"ok":true,"run":view(r,v,brief,true,false)}))
     })
+}
+fn report_run(r: &mut Run, brief: &Challenge, body: &Value) -> Result<()> {
+    fields(
+        body,
+        &[
+            "task",
+            "response_id",
+            "usage",
+            "report",
+            "request_failed",
+            "execution_id",
+        ],
+    )?;
+    let task = body["task"].as_str().unwrap_or("");
+    let reservation = r.calls.get(task).ok_or("reservation_required")?;
+    // Old snapshots can recover saved receipts, but cannot grant a new execution claim.
+    match (&reservation.execution_id, body.get("execution_id")) {
+        (Some(expected), Some(Value::String(actual))) if expected == actual => {}
+        (None, None) => {}
+        _ => return Err("execution_conflict"),
+    }
+    let response = match body.get("response_id") {
+        None | Some(Value::Null) => None,
+        Some(Value::String(s)) if !s.is_empty() && s.len() <= 200 => Some(s.clone()),
+        _ => return Err("bad_response_id"),
+    };
+    let usage = match body.get("usage") {
+        None | Some(Value::Null) => None,
+        Some(u) => match serde_json::from_value::<Usage>(u.clone()) {
+            Ok(u) if u.valid() => Some(u),
+            _ => return Err("bad_usage"),
+        },
+    };
+    let supplied = body.get("report").cloned().unwrap_or(Value::Null);
+    if supplied.to_string().len() > 8192 || !body["request_failed"].is_boolean() {
+        return Err("bad_report");
+    }
+    let hash = digest(&supplied);
+    let reservation = r.calls.get(task).ok_or("reservation_required")?;
+    if reservation.source == "local_tool" && usage.as_ref().is_some_and(|u| u.total_tokens != 0) {
+        return Err("bad_usage");
+    }
+    let quality = body["request_failed"] == false
+        && supplied.as_object().is_some_and(|o| !o.is_empty())
+        && (task != "deliver" || checks(&brief.content, &supplied)["passed"] == true);
+    let c = r.calls.get_mut(task).unwrap();
+    if c.status != "reserved" {
+        return if c.response_id == response
+            && c.usage == usage
+            && c.report_hash.as_ref() == Some(&hash)
+            && c.quality_passed == Some(quality)
+        {
+            Ok(())
+        } else {
+            Err("idempotency_conflict")
+        };
+    }
+    c.status = if body["request_failed"] == true {
+        "failed"
+    } else {
+        "reported"
+    }
+    .into();
+    c.response_id = response;
+    c.usage = usage;
+    c.report_hash = Some(hash);
+    c.quality_passed = Some(quality);
+    c.finished_at = Some(now());
+    c.report = if quality { Some(supplied) } else { None };
+    r.event(
+        task,
+        if quality {
+            "report_checked"
+        } else {
+            "quality_failed"
+        },
+    );
+    r.status = if r.known() > r.budget
+        || r.calls.values().any(|c| {
+            c.usage
+                .as_ref()
+                .is_some_and(|u| u.total_tokens > c.reserved)
+        }) {
+        "budget_overrun"
+    } else if r.uncertain() {
+        "usage_unknown"
+    } else if r.calls.values().any(|c| c.quality_passed == Some(false)) {
+        "quality_failed"
+    } else {
+        "running"
+    }
+    .into();
+    Ok(())
 }
 pub fn finish(state: &AppState, record: &str, origin: &str, bearer: &str, id: &str) -> Value {
     let owner = match own(state, record, origin, bearer) {
@@ -1072,23 +1168,27 @@ pub fn finish(state: &AppState, record: &str, origin: &str, bearer: &str, id: &s
             .ok_or("run_forbidden")?;
         let v = &data.versions[&r.version];
         let brief = &data.challenges[&r.challenge];
-        if r.status == "completed" {
-            return Ok(json!({"ok":true,"run":view(r,v,brief,true,false)}));
-        }
-        if r.status != "running" || !v.content.plan.iter().all(|t| r.passed(&t.id)) {
-            return Err("verification_required");
-        }
-        let artifact = r.calls["deliver"].report.clone().unwrap();
-        if brief.content.trading.is_some() {
-            return Err("trade_receipt_required");
-        }
-        r.result = Some(
-            json!({"checks":checks(&brief.content,&artifact),"artifact":artifact,"finished_at":now()}),
-        );
-        r.status = "completed".into();
-        r.event("chief", "brief_checks_passed");
+        finish_run(r, v, brief)?;
         Ok(json!({"ok":true,"run":view(r,v,brief,true,false)}))
     })
+}
+fn finish_run(r: &mut Run, v: &Version, brief: &Challenge) -> Result<()> {
+    if r.status == "completed" {
+        return Ok(());
+    }
+    if r.status != "running" || !v.content.plan.iter().all(|t| r.passed(&t.id)) {
+        return Err("verification_required");
+    }
+    let artifact = r.calls["deliver"].report.clone().unwrap();
+    if brief.content.trading.is_some() {
+        return Err("trade_receipt_required");
+    }
+    r.result = Some(
+        json!({"checks":checks(&brief.content,&artifact),"artifact":artifact,"finished_at":now()}),
+    );
+    r.status = "completed".into();
+    r.event("chief", "brief_checks_passed");
+    Ok(())
 }
 pub fn review(
     state: &AppState,
@@ -1399,13 +1499,13 @@ mod tests {
         Arc,
     };
     const ORIGIN: &str = "https://alashi.network";
-    fn actor(i: usize) -> (String, String) {
+    pub(super) fn actor(i: usize) -> (String, String) {
         (
             ["a", "b", "e", "f"][i].repeat(64),
             ["c", "d", "f", "1"][i].repeat(64),
         )
     }
-    fn fixture() -> Arc<AppState> {
+    pub(super) fn fixture() -> Arc<AppState> {
         static N: AtomicU64 = AtomicU64::new(1);
         let root = std::env::temp_dir().join(format!(
             "alashi_duel_{}_{}",
@@ -1454,7 +1554,7 @@ mod tests {
         save_snapshot(&state).unwrap();
         state
     }
-    fn plan() -> Value {
+    pub(super) fn plan() -> Value {
         json!([{"id":"research","kind":"model","depends_on":[],"instruction":"Review the brief facts.","tool":null},{"id":"deliver","kind":"model","depends_on":["research"],"instruction":"Write the ad.","tool":null}])
     }
     #[test]
@@ -1536,7 +1636,7 @@ mod tests {
                 ORIGIN,
                 &bearer,
                 r,
-                &json!({"task":"deliver","response_id":format!("trade-{i}"),"usage":if i==1{usage()}else{Value::Null},"report":{"action":"produce","params":{}},"request_failed":false}),
+                &json!({"task":"deliver","execution_id":"a".repeat(64),"response_id":format!("trade-{i}"),"usage":if i==1{usage()}else{Value::Null},"report":{"action":"produce","params":{}},"request_failed":false}),
             );
             assert_eq!(v["ok"], true, "{v}");
         }
@@ -1606,7 +1706,7 @@ mod tests {
             "verification_required"
         );
     }
-    fn brief(s: &AppState, key: &str, budget: u64) -> String {
+    pub(super) fn brief(s: &AppState, key: &str, budget: u64) -> String {
         let (a, t) = actor(0);
         let v = create_challenge(
             s,
@@ -1655,7 +1755,7 @@ mod tests {
             ORIGIN,
             &t,
             id,
-            &json!({"task":task,"max_total_tokens":cap,"source":"test_provider","provider":"local-fixture","model":"deterministic-test"}),
+            &json!({"task":task,"execution_id":"a".repeat(64),"max_total_tokens":cap,"source":"test_provider","provider":"local-fixture","model":"deterministic-test"}),
         )
     }
     fn ad() -> Value {
@@ -1669,7 +1769,7 @@ mod tests {
             ORIGIN,
             &t,
             id,
-            &json!({"task":task,"response_id":format!("{id}-{task}"),"usage":u,"report":if good {if task=="deliver" {ad()}else{json!({"facts":"from shared brief"})}} else {json!({})},"request_failed":false}),
+            &json!({"task":task,"execution_id":"a".repeat(64),"response_id":format!("{id}-{task}"),"usage":u,"report":if good {if task=="deliver" {ad()}else{json!({"facts":"from shared brief"})}} else {json!({})},"request_failed":false}),
         )
     }
     fn usage() -> Value {
@@ -1787,6 +1887,128 @@ mod tests {
         load_snapshot(&restored).unwrap();
     }
     #[test]
+    fn executor_claim_is_exclusive_persisted_and_hidden() {
+        let s = fixture();
+        let c = brief(&s, "claim-duel", 1000);
+        let v = version(&s, 1, None, true);
+        let w = version(&s, 2, None, true);
+        let run = start_run(&s, 1, &v, &c, "claim-owner-01");
+        start_run(&s, 2, &w, &c, "claim-owner-02");
+        let (record, bearer) = actor(1);
+        let body = json!({"task":"research","max_total_tokens":100,"source":"test_provider","provider":"local-fixture","model":"deterministic-test"});
+        assert_eq!(
+            reserve(&s, &record, ORIGIN, &bearer, &run, &body)["error"],
+            "execution_id_required"
+        );
+        let barrier = Arc::new(std::sync::Barrier::new(2));
+        let workers: Vec<_> = ["a", "b"]
+            .into_iter()
+            .map(|key| {
+                let (s, barrier, mut body, run) =
+                    (s.clone(), barrier.clone(), body.clone(), run.clone());
+                std::thread::spawn(move || {
+                    let (record, bearer) = actor(1);
+                    body["execution_id"] = json!(key.repeat(64));
+                    barrier.wait();
+                    (
+                        body.clone(),
+                        reserve(&s, &record, ORIGIN, &bearer, &run, &body),
+                    )
+                })
+            })
+            .collect();
+        let results: Vec<_> = workers.into_iter().map(|w| w.join().unwrap()).collect();
+        assert_eq!(results.iter().filter(|(_, r)| r["ok"] == true).count(), 1);
+        assert_eq!(
+            results
+                .iter()
+                .filter(|(_, r)| r["error"] == "execution_conflict")
+                .count(),
+            1
+        );
+        let (winner, response) = results.iter().find(|(_, r)| r["ok"] == true).unwrap();
+        assert_eq!(
+            response["run"]["calls"]["research"]["execution_claimed"],
+            true
+        );
+        for output in [response.clone(), public(&s), owned(&s, &record, &bearer)] {
+            assert!(!output.to_string().contains("execution_id"));
+        }
+        let restored = new_state_with_files(s.snapshot_path.clone(), s.sequence_path.clone());
+        load_snapshot(&restored).unwrap();
+        assert!(validate(&restored.strategy_cycle.lock().unwrap()));
+        {
+            let mut data = restored.strategy_cycle.lock().unwrap();
+            data.challenges.get_mut(&c).unwrap().started_at = Some(now() - 1000);
+        }
+        assert_eq!(
+            reserve(&restored, &record, ORIGIN, &bearer, &run, winner)["ok"],
+            true,
+            "retry of owned reservation does not start new work after expiry"
+        );
+        let mut receipt = json!({"task":"research","response_id":null,"usage":{"prompt_tokens":0,"completion_tokens":0,"total_tokens":0,"cached_tokens":0},"report":null,"request_failed":true});
+        assert_eq!(
+            report(&restored, &record, ORIGIN, &bearer, &run, &receipt)["error"],
+            "execution_conflict"
+        );
+        receipt["execution_id"] = results
+            .iter()
+            .find(|(_, r)| r["error"] == "execution_conflict")
+            .unwrap()
+            .0["execution_id"]
+            .clone();
+        assert_eq!(
+            report(&restored, &record, ORIGIN, &bearer, &run, &receipt)["error"],
+            "execution_conflict"
+        );
+        receipt["execution_id"] = winner["execution_id"].clone();
+        let done = report(&restored, &record, ORIGIN, &bearer, &run, &receipt);
+        assert_eq!(done["ok"], true, "{done}");
+        assert_eq!(done["run"]["reserved_tokens"], 0);
+        assert_eq!(done["run"]["unknown_usage"], false);
+        assert_eq!(done["run"]["status"], "quality_failed");
+        assert_eq!(
+            report(&restored, &record, ORIGIN, &bearer, &run, &receipt),
+            done
+        );
+    }
+    #[test]
+    fn legacy_reservation_can_report_but_cannot_grant_new_execution() {
+        let s = fixture();
+        let c = brief(&s, "legacy-claim", 1000);
+        let v = version(&s, 1, None, true);
+        let w = version(&s, 2, None, true);
+        let run = start_run(&s, 1, &v, &c, "legacy-owner-01");
+        start_run(&s, 2, &w, &c, "legacy-owner-02");
+        assert_eq!(reserve_call(&s, 1, &run, "research", 100)["ok"], true);
+        let mut snapshot = serde_json::to_value(&*s.strategy_cycle.lock().unwrap()).unwrap();
+        snapshot["runs"][&run]["calls"]["research"]
+            .as_object_mut()
+            .unwrap()
+            .remove("execution_id");
+        *s.strategy_cycle.lock().unwrap() = serde_json::from_value(snapshot).unwrap();
+        assert!(validate(&s.strategy_cycle.lock().unwrap()));
+        assert_eq!(
+            reserve_call(&s, 1, &run, "research", 100)["error"],
+            "execution_conflict"
+        );
+        let (record, bearer) = actor(1);
+        let receipt = json!({"task":"research","response_id":"legacy-saved-response","usage":usage(),"report":{"facts":"saved before upgrade"},"request_failed":false});
+        assert_eq!(
+            report(&s, &record, ORIGIN, &bearer, &run, &receipt)["ok"],
+            true
+        );
+        let mut data = s.strategy_cycle.lock().unwrap();
+        data.runs
+            .get_mut(&run)
+            .unwrap()
+            .calls
+            .get_mut("research")
+            .unwrap()
+            .execution_id = Some("bad".into());
+        assert!(!validate(&data));
+    }
+    #[test]
     fn paid_failures_unknown_usage_and_shared_budget_are_not_zeroed() {
         let s = fixture();
         let c = brief(&s, "unknown-duel", 1000);
@@ -1893,5 +2115,34 @@ mod tests {
             String::from_utf8_lossy(&output.stderr)
         );
         assert!(validate(&s.strategy_cycle.lock().unwrap()));
+    }
+    #[test]
+    fn signed_human_comparison_http() {
+        let s = fixture();
+        let addr = crate::api::serve_on(s.clone(), "127.0.0.1:0", 60_000).unwrap();
+        let script = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("../tools/agent-bootstrap/comparison-http-check.mjs");
+        let output = std::process::Command::new("node")
+            .arg(script)
+            .arg(format!("http://{addr}"))
+            .arg(s.snapshot_path.parent().unwrap())
+            .output()
+            .unwrap();
+        assert!(
+            output.status.success(),
+            "{}\n{}",
+            String::from_utf8_lossy(&output.stdout),
+            String::from_utf8_lossy(&output.stderr)
+        );
+        assert!(validate(&s.strategy_cycle.lock().unwrap()));
+        let restored = new_state_with_files(s.snapshot_path.clone(), s.sequence_path.clone());
+        load_snapshot(&restored).unwrap();
+        assert!(validate(&restored.strategy_cycle.lock().unwrap()));
+        assert!(!restored
+            .strategy_cycle
+            .lock()
+            .unwrap()
+            .comparisons
+            .is_empty());
     }
 }

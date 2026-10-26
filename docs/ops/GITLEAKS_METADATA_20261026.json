@@ -1,0 +1,65 @@
+{
+  "scanner_version": "8.24.3",
+  "scanner_distribution": {
+    "archive": "gitleaks_8.24.3_darwin_x64.tar.gz",
+    "sha256": "41c44ae8ad1d6eef57d4526ad0fd67d8129eee9a856f55c2b3b9395fd3d9ec0f",
+    "release_checksum_match": true,
+    "platform": "Darwin x86_64"
+  },
+  "failing_ci": "https://github.com/Jakisheff/alashi/actions/runs/40303742720",
+  "fix_commit": "21421de7fbe23c6b713605be644cf528fc55b581",
+  "verification_ci": "https://github.com/Jakisheff/alashi/actions/runs/40305655295",
+  "gitleaks_job": {
+    "id": 121513990164,
+    "conclusion": "success"
+  },
+  "scanned_range": "--no-merges --first-parent f1979c9679e0543c43af416c08aea8d987e08171^..2cb38ff3f9df3b3ec6b7439b6ed591b7d0fe3d88",
+  "before": {
+    "exit_code": 1,
+    "findings": 2
+  },
+  "after": {
+    "exit_code": 0,
+    "findings": 0
+  },
+  "new_commit_control": {
+    "path": "docs/ops/HUMAN_COMPARISON_DEPLOY_20261026.json",
+    "line": 337,
+    "exit_code": 1,
+    "findings": 1,
+    "rule": "generic-api-key",
+    "credential": "inert synthetic value; no account or provider"
+  },
+  "default_rule_enabled": true,
+  "file_wide_exclusions": false,
+  "history_rewritten": false,
+  "runtime_changed": false,
+  "notes": "Before/after used an isolated shared clone: this scanner loads the source-root ignore file in addition to an explicit ignore path.",
+  "verification_jobs": [
+    {
+      "id": 121513989864,
+      "name": "Fresh SBF build and program tests",
+      "conclusion": "success"
+    },
+    {
+      "id": 121513990073,
+      "name": "Animation geometry and frontend build",
+      "conclusion": "success"
+    },
+    {
+      "id": 121513990143,
+      "name": "RustSec audit of all lockfiles",
+      "conclusion": "success"
+    },
+    {
+      "id": 121513990164,
+      "name": "Gitleaks secret scan",
+      "conclusion": "success"
+    },
+    {
+      "id": 121513990183,
+      "name": "Rules, arena, indexer, and program compile",
+      "conclusion": "success"
+    }
+  ]
+}

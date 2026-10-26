@@ -85,6 +85,16 @@ For frontend animation changes, run `npm run build` and `npm run check:animation
 from `frontend/`, then review the changed scenes in the browser. Geometry checks
 do not replace visual review or a new viewer's comprehension test.
 
+## Client result and implementation logic
+
+For substantial product or implementation changes, read
+[the client-scenario working rule](docs/200_ZETTEL/20261026-client-scenario-implementation.md).
+Start from the person's intended result, then identify the use case and its
+rules before choosing implementation boundaries. Keep the human hypothesis
+distinct from the agent that may execute it. Delegate with the same outcome,
+scope and acceptance evidence. A small fix needs no separate strategy document.
+This rule preserves the checks below and does not authorize a product rewrite.
+
 ## Game implementation
 
 `rules/` owns game actions and transitions. The HTTP arena and Anchor instruction

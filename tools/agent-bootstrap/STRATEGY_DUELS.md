@@ -159,7 +159,8 @@ The runner makes one request per model task, with no automatic retry or fallback
 Each task starts when its dependencies have accepted reports with known usage.
 Independent tasks keep running while a ready continuation starts. Every call
 requires its own server-approved reservation; active reservations still count
-against the shared budget.
+against the shared budget. The runner saves a random `execution_id` per task
+before reserving it. A different journal cannot take over that reservation.
 
 The private journal records an inflight marker before a call and its response
 before submitting the usage receipt. Restarting with the same journal resubmits a
@@ -171,7 +172,10 @@ specific lock and resuming with the original journal.
 A failed reservation or report stops new calls. Calls already started save their
 responses and report usage before the runner releases its journal lock. A late
 reservation response cannot start a call after the runner observes another
-task's failure. Resume first reconciles saved or ambiguous calls, including on a stopped run; it can
+task's failure. If that executor's journal is still prepared, the runner submits
+a failed receipt with zero usage, releasing the unused reservation. An inflight
+entry without a saved response remains unknown. Resume first reconciles saved
+or ambiguous calls, including on a stopped run; it can
 report already paid work after the deadline. New work still requires a running
 run and an unexpired deadline. Accepted dependency reports are restored from
 the server, and out-of-order responses cannot replace newer task results.
@@ -243,6 +247,25 @@ verification, record-scoped cookies and the configured origin boundary:
 - `POST /strategy-runs/:run/prepare-trade`: validate a ready trading decision.
 - `POST /strategy-runs/:run/trade-receipt`: verify a Solana signature in the indexer.
 - Existing `POST /game/:id/act`: optional `strategy_run` binds an HTTP action.
+
+New `reserve` requests require `execution_id`, 64 lowercase hexadecimal
+characters generated randomly and persisted before the request. The other
+fields remain `task`, `max_total_tokens`, `source`, `provider` and `model`.
+An exact retry with the same execution ID and fields returns the existing
+reservation, including after the deadline or a stopped run. A different or
+missing ID cannot claim an existing reservation. Retrying is a recovery step;
+it does not authorize a new provider request after the deadline.
+
+Reports for claimed tasks require that same `execution_id` alongside `task`,
+`response_id`, `usage`, `report` and `request_failed`. The server returns the
+boolean `execution_claimed` in call views, never the execution ID. The runner
+requires confirmation of the claim before it invokes a provider. A saved
+receipt for a legacy reservation without a claim can still be submitted without
+the ID. A legacy unresolved call cannot be claimed for fresh execution.
+
+The arena and runner must both support execution claims. Keep journals private
+and resume with the original path. Concurrent copies of a journal share the
+same execution IDs and bypass its local file lock; do not run such copies.
 
 The persistent arena snapshot includes `strategy_cycle`. A missing field in an
 older snapshot initializes an empty library; a malformed present field rejects

@@ -869,3 +869,111 @@ observed. Независимый расчёт из исходных выплат
 observed. Контрпример к объяснению агента: в старом replay ставка 25→26 при тех же собственных остальных действиях и местах повысила выплату на 0,5 alashi. Агент не получал эту проверку. Новая пара random/genome также сохраняет потолок ставки 8; перенос против более высоких ставок не установлен.
 source_defined. Изменён только исследовательский архив. Продуктивные правила и код арены сохраняются; полный CI/SBF продукта не запускался. Материалы: docs/research/harness-learning-20261020/README.md, results.json, report.html; исходные ответы и партии сохранены рядом. Ключ авторизации в публикацию не включается.
 Факт: 2.02 часа до готовности проверенного архива. Все оценки этой задачи закрыты этим фактом; публикация и сверка копии следуют ниже.
+
+25.10.2026 00:51. Проверка человеческой гипотезы через сравнение собственных версий. План: 1 час, до 01:51. Исходный main 02e27cc; отдельная ветка codex/human-hypothesis-comparison-20261025. Критерий: один владелец фиксирует вопрос и ожидаемый результат до двух независимых запусков на одном статичном рекламном брифе. Фактическая правка видна; оценка ограничена соответствием брифу. Приватные данные не попадают в публичные дуэли. Проверки: API/reload/runner recovery, frontend и обязательные проверки проекта. Живые партии и платные модельные вызовы не выполняются.
+
+
+### 25 October 2026, human hypothesis comparison: progress (25.10 01:11 Almaty)
+
+Implementation is assembled in the isolated worktree: private comparison API, paired runner and owner form. Bootstrap suite passes 56 tests. Frontend comparison checks and production build passed. Integration and browser acceptance are running. Concurrent cold Rust builds exhausted disk space; only this task's generated target directories were removed. Checks now share a compact target and run sequentially. The existing SBF v1.54 installation is incomplete; its official reinstall also ran out of disk space. No real provider calls or transactions have been made.
+
+
+### 25 October 2026, human hypothesis comparison: progress (01:20 Almaty)
+
+Full arena suite passed, including signed comparison HTTP acceptance and existing duel/game regressions. Local fixture acceptance made exactly two model requests, recovered a lost report without another call, and kept private versions and runs out of the public library. Browser form creation, normalized provider origin, paired preparation and saved owner decision were checked against synthetic local data; no console errors were observed. Frontend production build, comparison/strategy checks and real Vite proxy allowlist checks passed. A final multiline input change is queued for focused comparison recheck. Indexer tests are compiling with the shared compact target. README now describes human idea testing as the product direction and separates this local scenario from existing Solana execution.
+
+
+### 25 October 2026, human hypothesis comparison: progress (01:30 Almaty)
+
+Indexer: PASS, 16 tests. Program host check: PASS. Final focused comparison checks: PASS, 7 tests, including multiline input, private-parent publication rules and signed HTTP recovery. A private child cannot be published until its parent is public; publication never happens automatically. Bots build and a full arena regression after this last guard are running sequentially. Browser QA is complete, screenshots saved, and the temporary preview was stopped. The task-local frontend dependencies were removed after the successful final build to preserve free space; source and built preview files remain. SBF validation is still blocked by the incomplete toolchain and storage limit.
+
+
+### 25 October 2026, human hypothesis comparison: verification complete (01:34 Almaty)
+
+Final arena suite: PASS, 144 tests with one pre-existing ignored canonical-snapshot check. Rules: 40 passed; indexer: 16 passed; Node bootstrap: 56 passed. Frontend production build and comparison/strategy/proxy checks passed. Program host check and bots build passed. SBF build and program SBF tests remain unexecuted after the incomplete v1.54 toolchain failed to reinstall for lack of disk space. Private comparisons, replay-safe recovery and owner decisions are implemented for static English advertising briefs. General scenario packages and external human validation remain future work. Preparing branch publication; no site deployment, provider spending or transactions occurred.
+
+
+### 25 October 2026, human hypothesis comparison: completed (01:36 Almaty)
+
+Published draft PR https://github.com/Jakisheff/alashi/pull/60 on codex/human-hypothesis-comparison-20261025. Local acceptance is recorded in docs/ops/HUMAN_COMPARISON_20261025.md. The first static advertising comparison workflow is implemented; no deployment was made. SBF validation remains outstanding for the documented toolchain/storage reason. Temporary build targets created for this task were removed after checks, leaving 1.8 GiB available. Source, screenshots and check logs are retained.
+
+План: 1 час, до 01:51. Факт: 0,75 часа (00:51-01:36, Алматы).
+
+
+### 25 October 2026, RustSec CI repair (01:47 Almaty)
+
+План: 0,5 часа, до 02:17. Reproduce the failed RustSec job on PR #60, fix its verified cause and verify the audit on the updated commit. Existing feature checks, fresh SBF build/program tests and secret scan passed in CI run40130577454; only the audit failed. No dependency changes made yet.
+
+
+### RustSec repair update, 25 October 2026 02:16 Almaty
+
+План: 1 час суммарно, до 02:47. Arena audit is clear. Indexer and bots audits now report zero vulnerabilities after precise ctutils/TLS patch updates. Root still needs crypto-bigint remediation: its only path is the host-side LiteSVM dev dependency via Solana secp256k1 recovery. A compatible adapter to patched RustCrypto is being prepared; independent review identified a high-S verification behavior change that must be guarded. No advisory ignores or weakened audit policy have been added.
+
+
+### RustSec repair verification, 25 October 2026 02:24 Almaty
+
+All four lockfile audits now report zero blocking vulnerabilities. Precise ctutils and TLS updates fixed root/indexer/bots advisories. A root-only Solana recovery adapter upgrades host RustCrypto while preserving the original syscall block and high-S rejection. The same four fixed-vector tests pass against both upstream 3.3.0 and the adapter. Root normal program dependency tree does not contain crypto-bigint. The adapter is a workspace member, so CI runs its tests; optional frozen-ABI lock resolutions add informational warnings, recorded explicitly. No advisory ignores or CI audit relaxation were introduced. Publishing the fix for full CI validation.
+
+
+### RustSec repair CI update, 25 October 2026 02:26 Almaty
+
+GitHub CI run40134150599 on commit7a7ca22: RustSec audit job120991979631 passed on all four lockfiles; secret scan passed. Frontend, full Rust tests and fresh SBF/program jobs are still running. Four compatibility tests passed on both original SDK and adapter. Waiting for the full compatibility result before closing the task.
+
+
+### RustSec repair completed, 25 October 2026 02:32 Almaty
+
+Fix commit7a7ca22 passed all five jobs in CI run40134150599: all-lockfile RustSec audit, frontend, full Rust tests, fresh SBF/program tests and secret scan. Updated PR #60 description and acceptance reports. The local audit also reports zero blocking vulnerabilities in every scanned lockfile; informational warnings remain recorded. Source behavior is covered by four fixed-vector checks passing on both the original SDK and the adapter. No deployment, transactions or paid model calls occurred.
+
+План: 1 час суммарно, до 02:47. Факт: 0,75 часа (01:47-02:32, Алматы).
+
+### 26 October 2026, client-scenario working rule
+
+13:12 Almaty. План: 0,4 часа, до 13:36. Amir requested adopting the working logic observed in Family & Friends Store for his agents and ALASHI. Scope: persistent instructions and the project application, with source evidence and an independent scenario review. No product execution change is intended.
+
+13:23 Almaty. Added the client-scenario rule and linked it from AGENTS.md and MOC-Ops. The rule keeps the human hypothesis distinct from its executor and connects acceptance to the owner's decision. Existing private comparison capabilities and future scenario-library work remain separate. An independent agent applied the general skill to missing queue data, a partially completed CLI operation and a typo; its review refined proportionality and recovery instructions. This was a review of agent decisions, not an application test run.
+
+13:28 Almaty. Documentation validation passed: local links, skill metadata, source hashes and git diff --check. New text passed FULL checks with meaning review; existing NMT boilerplate was preserved. Change e2a7f662cee070dec67a4bededb6bcb3cdf15cd3 is pushed to codex/human-hypothesis-comparison-20261025. Runtime code, Anchor instructions and game rules are unchanged; application suites were not repeated for this documentation change. Automatic skill selection in a new app session remains untested.
+
+Факт: 0,27 часа (13:12-13:28, Алматы). План до 13:36 закрыт.
+
+
+### 26 October 2026, comparison execution repairs
+
+13:54 Almaty. План: 0,8 часа, до 14:42. Fix the three defects reproduced in the targeted audit: private response/parser mismatch, stranded prepared reservation after a parallel failure, and duplicate model execution from separate journals. Acceptance: actual server serialization accepted by the frontend, interrupted attempts can reach an owner decision, and competing executors cannot both start the same call. Preserve saved receipts and uncertain usage. No provider spending or deployment.
+
+
+26.10.2026 14:10 Almaty. All three repairs are implemented. Fresh bootstrap suite passed 64 tests. Frontend comparison, strategy and trading checks passed. Actual HTTP responses pass the frontend parser, and the competing-journal HTTP case grants two calls for two variants. Full arena suite passed 148 tests with one pre-existing ignored snapshot check. Rules validation is running; remaining cold-build checks will use fresh CI because local disk is constrained. No deployment or paid provider calls.
+
+
+26.10.2026 14:19 Almaty. Comparison repairs completed. Commit e9b181c390269a73c54694587ca22b72a9e1702b is pushed to PR #60. CI run40297668440 passed all five jobs, including fresh SBF/program tests and all-lockfile RustSec audit. Local checks passed 148 arena tests (one pre-existing ignored), 40 rules tests and 64 bootstrap tests. Actual HTTP responses pass the frontend parser; competing independent journals cannot both claim a task. [Acceptance](docs/ops/HUMAN_COMPARISON_20261026_REPAIR.md) records migration and copied-journal limits. No deployment or real provider calls.
+
+План: 0,8 часа, до 14:42. Факт: 0,42 часа (13:54-14:19, Алматы).
+
+
+26.10.2026 14:26 Almaty. User explicitly requested deployment of the comparison repairs. План: 0,75 часа, до 15:11. Verify the current public deployment, prepare a separate build and staging check, preserve state and rollback artifacts, then publish the matched arena/frontend/runner version and verify public behavior. No new blockchain deployment or paid model test is required for these fixes.
+
+26.10.2026 14:40 Almaty. Deployment preparation: current public release is main-523e14a-20261018; no active HTTP games. Candidate arenad built from 678861a (runtime e9b181c), SHA256 8c69fb6ca23ba33b91c9d1d441c3ccb734e0001f0bf0869d39e64ace9efa6d9f. Linux runner/arena checks and frontend build are running. New comparison routes prepared as an exact nginx allowlist. Old binary cannot read new strategy snapshot even with empty comparisons; rollback requires preserving both old binary and pre-upgrade snapshot/sequence. Production remains unchanged.
+
+26.10.2026 14:57 Almaty. Deployment completed: comparison-678861a-20261026 at https://alashi.network/strategies. Arena source678861a contains runtime fixes e9b181c; matching runner archive is published. Fresh Linux checks passed 148 arena tests (one intentionally ignored), 64 runner tests and frontend build/checks. Public HTTPS:48 checks passed. Browser loaded saved TEST receipts without console errors. Thirteen registrations and retained game/dialogue/wish sections match the backup. Active nginx sites-enabled was an independent regular file; corrected its routes after public verification exposed the inactive-file update. Initial POST hold was ineffective; no active HTTP games or lost data were observed. Chain API and Solana program unchanged. No paid model calls. Evidence: docs/ops/HUMAN_COMPARISON_DEPLOY_20261026.md and .json. Факт: 0,52 часа.
+
+26.10.2026 15:07 Almaty. План: 0,3 часа, до 15:25. Diagnose CI run40303742720 after the deployment documentation commit. Four jobs passed; Gitleaks reported two generic-api-key matches on public chain API build identifiers in the deployment JSON. Acceptance: reproduce with CI scanner version, exclude only the two verified historical fingerprints, and prove a new synthetic credential at the same file/line remains detectable. No runtime or production changes.
+
+26.10.2026 15:11 Almaty. Reproduced both findings locally; exact historical fingerprints now suppress them without changing rules. Gitleaks8.24.3 (official archive checksum verified) still detects an inert synthetic key at the same report path/line in a new commit. Preparing CI verification of the fix; no application or production files changed.
+
+26.10.2026 15:18 Almaty. Fix commit 21421de passed all five jobs in [CI run 40305655295](https://github.com/Jakisheff/alashi/actions/runs/40305655295). Both public metadata findings are excluded by exact historical fingerprints; default rules and scanning of the report remain enabled. Pinned scanner evidence and the synthetic-key control are recorded in [Gitleaks verification](docs/ops/GITLEAKS_METADATA_20261026.json). Temporary control repositories were removed after preserving logs. Application and production remain unchanged. Факт: 0,2 часа (15:06-15:18, Алматы). План до 15:25 закрыт.
+
+26.10.2026 15:25 Almaty. План: 1,5 часа, до 16:55. Amir requested implementing the remaining FFS mechanisms. Acceptance: independent sealed forecasts before a comparison, now/later backlog, daily in-app decision digest, explicit selection for subsequent runs, reviewed reusable public cards, and a local-data experiment mode that sends no raw material to ALASHI. Existing private comparisons and recovery remain compatible. Verify authorization, visibility, interruption and persistence through real HTTP and local deterministic providers; no paid model calls.
+
+26.10.2026 15:38 Almaty. Backend workflow and local experiment runner are implemented. First backend build passed seven initial research tests; the expanded suite and HTTP integration remain pending. Local runner passed 16 tests with an isolated HTTP provider and no ALASHI requests. Frontend integration and dependency setup are in progress. Public exports require separate reviewed text; cloud comparison data still remains server-side.
+
+26.10.2026 15:58 Almaty. All 84 bootstrap tests passed with a loopback provider. Full arena run exposed a timing-dependent concurrency assertion (100 ms overlap window); replaced it with a bounded two-request barrier, preserving the requirement of actual overlap. Independent audit found and fixed snapshot validation after clock rollback; runtime still blocks execution before the saved closure time. Full arena rerun is in progress. Frontend build, typecheck, research/comparison/strategy/trading and proxy checks passed; browser acceptance uses synthetic fixtures.
+
+26.10.2026 16:05 Almaty. Final local acceptance passed: arena 157 tests, zero failures, one pre-existing ignored snapshot test; bootstrap 84 tests, including 19 local experiment cases. Browser actions passed for saving an idea, owner decision, applying a version, invalidating stale publication consent and publishing only reviewed synthetic fields. Measured widths 390/424/1280 had no horizontal overflow. Frontend build and all affected contract/proxy checks passed. Evidence: docs/ops/FFS_WORKFLOW_20261026.json. GitHub CI and rollout remain pending.
+
+26.10.2026 16:13 Almaty. Runtime commit 39bda66 passed all five jobs in CI run 40312557998, including fresh SBF execution and all-lockfile RustSec. Isolated deployment-host build is running after Git blob verification. Corrected the preceding local-acceptance timestamp from the typed 16:06 to the actual date output 16:05; test results are unchanged.
+
+26.10.2026 16:32 Almaty. Release research-39bda66-20261026 activated from runtime 39bda66. Full snapshot load passed before and during activation; 13 registrations and four saved runs retained, no active HTTP games. POST hold was confirmed through public DNS and localhost TLS, old workers drained, stable state/sequence backed up, backend and immutable static resources switched, authenticated boundaries probed anonymously, hold removed. First attempt stopped before installing the binary because the nginx reload probe ran before convergence; the previous service/config were restored without replacing data, bounded status convergence was added, then activation succeeded. Public smoke and final browser checks are in progress.
+
+26.10.2026 16:42 Almaty. Public HTTPS acceptance passed 85 checks, including every map input, the GLB and runner digest, private authorization/method gates and public library. A public-file permission defect (0640 after copy) was repaired only within the new release; all 359 content hashes remained unchanged. The live browser now loads the map, retained TEST receipts and workspace without console errors. Seven publisher tests pass, including four regressions that reject unreadable files/directories without changing pointers. Runtime 39bda66 remains deployed; release evidence and the publisher guard are being committed.
+
+26.10.2026 16:53 Almaty. FFS workflow implementation and deployment complete. Runtime 39bda66 is live at https://alashi.network/strategies; tooling/evidence commit 1b80b63 passed all five jobs in CI run40317578757, including the new publisher permission regressions. Public HTTPS passed 85 checks; saved data continuity and the browser view are recorded in docs/ops/FFS_DEPLOY_20261026.md/.json. Public current/previous directories both pass the new guard without pointer changes. No paid model call or Solana transaction. PR #60 updated. Факт: 1,47 часа (15:25-16:53, Алматы). План: 1,5 часа, до 16:55 закрыт.
