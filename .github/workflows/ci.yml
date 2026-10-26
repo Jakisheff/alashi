@@ -78,6 +78,7 @@ jobs:
 
       - name: Local tooling checks
         run: |
+          python3 tools/static_release_test.py
           python3 tools/board_agents_test.py
           python3 tools/anchor_dataset_test.py
           node --test tools/hotseat_engine_test.cjs tools/board_view_test.cjs tools/city_rules_test.cjs

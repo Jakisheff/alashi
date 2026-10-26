@@ -1,0 +1,606 @@
+{
+  "date": "2026-10-26",
+  "status": "deployed_verified",
+  "release": "research-39bda66-20261026",
+  "runtime_source": "39bda6678ec787eaa47e8c7c2768646e6b2f9fa3",
+  "backend_binary_digest_sha256": "b7682bb8757b6b7ed9e00ad9da515322889f2b00dfb25c4682cd97b5ae0d8edb",
+  "runner": {
+    "url": "https://alashi.network/releases/research-39bda66-20261026/downloads/alashi-research-runner-39bda66.tar.gz",
+    "digest_sha256": "735aee1904a8149dac5d65fa88cc6cb4e31b90249acdbc8770013540c377f2e1"
+  },
+  "source_verification": {
+    "git_blob_verified_deployment_files": 381,
+    "scope": "Deployment build inputs, not the entire repository."
+  },
+  "runtime_ci": {
+    "url": "https://github.com/Jakisheff/alashi/actions/runs/40312557998",
+    "jobs_passed": 5
+  },
+  "host_tests": {
+    "arena_passed": 157,
+    "arena_failed": 0,
+    "arena_preexisting_ignored": 1,
+    "bootstrap_passed": 84,
+    "local_experiment_included": 19,
+    "frontend_build_and_affected_checks": "PASS"
+  },
+  "public_https": {
+    "status": "PASS",
+    "checks": 85,
+    "release": "research-39bda66-20261026",
+    "backend_sha256": "b7682bb8757b6b7ed9e00ad9da515322889f2b00dfb25c4682cd97b5ae0d8edb",
+    "checks_detail": [
+      {
+        "path": "/version.json",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/strategies",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/strategies/",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/strategies?agent=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/devnet",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/stream",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/research-39bda66-20261026/assets/index-xiTmYgzg.js",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/research-39bda66-20261026/assets/jsx-runtime-D3jfb0Ew.js",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/research-39bda66-20261026/assets/useQuery-Dq6JkTCJ.js",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/research-39bda66-20261026/assets/with-selector-DIGp_BLX.js",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/research-39bda66-20261026/assets/link-DZEcagUg.js",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/research-39bda66-20261026/assets/useNavigate-CI43M4Gq.js",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/research-39bda66-20261026/assets/lazyRouteComponent-h8aHmDr_.js",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/research-39bda66-20261026/assets/geometry-CO2SLUj0.js",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/research-39bda66-20261026/assets/BrandMark-C2dJYKIR.js",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/research-39bda66-20261026/assets/react-Bvhwkc4m.js",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/research-39bda66-20261026/assets/store-gVdKy_pU.js",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/research-39bda66-20261026/assets/feed-HPQcqDep.js",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/research-39bda66-20261026/assets/pose-y3Glonsv.js",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/research-39bda66-20261026/assets/preload-helper-BkzsbuAn.js",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/research-39bda66-20261026/assets/agent-CDrSGVSK.js",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/research-39bda66-20261026/assets/client-DUZUWr2w.js",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/research-39bda66-20261026/assets/client-Dylr3WZu.js",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/research-39bda66-20261026/assets/BrandMark-GEjOgecT.css",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/research-39bda66-20261026/assets/index-DBGc3Gr9.css",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/research-39bda66-20261026/assets/live-BH2cVwpx.css",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/research-39bda66-20261026/downloads/alashi-research-runner-39bda66.tar.gz",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/research-39bda66-20261026/models/desk-genie.glb",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/research-39bda66-20261026/strategies/map-layout.json",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/research-39bda66-20261026/strategies/terrain.png",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/releases/research-39bda66-20261026/strategies/degenie.png",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/deck/downloads/alashi-deck-r10.pdf",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/deck/downloads/alashi-deck-20261011-r3.pptx",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/games",
+        "method": "GET",
+        "status": 200,
+        "private_headers": false
+      },
+      {
+        "path": "/strategy-library",
+        "method": "GET",
+        "status": 200,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/strategies",
+        "method": "GET",
+        "status": 401,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/strategies",
+        "method": "POST",
+        "status": 401,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/strategies",
+        "method": "POST",
+        "status": 415,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/strategies?x=1",
+        "method": "GET",
+        "status": 400,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/strategies",
+        "method": "DELETE",
+        "status": 405,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/comparisons",
+        "method": "GET",
+        "status": 401,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/comparisons",
+        "method": "POST",
+        "status": 401,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/comparisons",
+        "method": "POST",
+        "status": 415,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/comparisons?x=1",
+        "method": "GET",
+        "status": 400,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/comparisons",
+        "method": "DELETE",
+        "status": 405,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/comparisons/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/attempts/cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc/baseline/reserve",
+        "method": "POST",
+        "status": 401,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/comparisons/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/attempts/cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc/other/reserve",
+        "method": "POST",
+        "status": 404,
+        "private_headers": false
+      },
+      {
+        "path": "/strategy-library",
+        "method": "POST",
+        "status": 405,
+        "private_headers": true
+      },
+      {
+        "path": "/strategy-library?x=1",
+        "method": "GET",
+        "status": 400,
+        "private_headers": true
+      },
+      {
+        "path": "/unpublished-internal-route",
+        "method": "GET",
+        "status": 404,
+        "private_headers": false
+      },
+      {
+        "path": "/research-library",
+        "method": "GET",
+        "status": 200,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/research",
+        "method": "GET",
+        "status": 401,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/research?x=1",
+        "method": "GET",
+        "status": 400,
+        "private_headers": true
+      },
+      {
+        "path": "/research-library?x=1",
+        "method": "GET",
+        "status": 400,
+        "private_headers": true
+      },
+      {
+        "path": "/research-library",
+        "method": "POST",
+        "status": 405,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/research/backlog-upsert",
+        "method": "POST",
+        "status": 401,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/research/backlog-upsert",
+        "method": "GET",
+        "status": 405,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/research/backlog-upsert",
+        "method": "POST",
+        "status": 415,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/research/round-open",
+        "method": "POST",
+        "status": 401,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/research/round-open",
+        "method": "GET",
+        "status": 405,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/research/round-open",
+        "method": "POST",
+        "status": 415,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/research/forecast",
+        "method": "POST",
+        "status": 401,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/research/forecast",
+        "method": "GET",
+        "status": 405,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/research/forecast",
+        "method": "POST",
+        "status": 415,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/research/round-close",
+        "method": "POST",
+        "status": 401,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/research/round-close",
+        "method": "GET",
+        "status": 405,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/research/round-close",
+        "method": "POST",
+        "status": 415,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/research/digest-ack",
+        "method": "POST",
+        "status": 401,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/research/digest-ack",
+        "method": "GET",
+        "status": 405,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/research/digest-ack",
+        "method": "POST",
+        "status": 415,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/research/apply",
+        "method": "POST",
+        "status": 401,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/research/apply",
+        "method": "GET",
+        "status": 405,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/research/apply",
+        "method": "POST",
+        "status": 415,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/research/publish",
+        "method": "POST",
+        "status": 401,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/research/publish",
+        "method": "GET",
+        "status": 405,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/research/publish",
+        "method": "POST",
+        "status": 415,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/research/publish-local",
+        "method": "POST",
+        "status": 401,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/research/publish-local",
+        "method": "GET",
+        "status": 405,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/research/publish-local",
+        "method": "POST",
+        "status": 415,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/research/library-reuse",
+        "method": "POST",
+        "status": 401,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/research/library-reuse",
+        "method": "GET",
+        "status": 405,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/research/library-reuse",
+        "method": "POST",
+        "status": 415,
+        "private_headers": true
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/research/not-an-action",
+        "method": "POST",
+        "status": 404,
+        "private_headers": false
+      },
+      {
+        "path": "/agents/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/owner/research/apply?x=1",
+        "method": "POST",
+        "status": 400,
+        "private_headers": true
+      }
+    ],
+    "boundary": "Public anonymous/authorization rejection checks; no paid model call or live owner comparison."
+  },
+  "continuity": {
+    "retained_sections_equal": {
+      "registrations": true,
+      "proposal_key": true,
+      "completed": true,
+      "completed_replay": true,
+      "wishes": true,
+      "live": true,
+      "chain_wishes": true,
+      "chain_conversations": true,
+      "chain_dialogue": true,
+      "prior_strategy_data": true
+    },
+    "registrations": 13,
+    "saved_runs": 4,
+    "active_games": 0,
+    "arena_passed": 157,
+    "arena_failed": 0,
+    "arena_ignored": 1
+  },
+  "preserved_deck_files": 60,
+  "static_permission_repair": {
+    "files_unchanged": 359,
+    "entries_modes_corrected": 135,
+    "public_files_mode": "0644",
+    "public_directories_mode": "0755",
+    "scope": "New public release only"
+  },
+  "activation": {
+    "write_hold_confirmed_public_and_local": true,
+    "old_workers_drained": true,
+    "first_attempt": "Aborted before candidate installation on immediate nginx convergence probe. Previous service/config restored without replacing data.",
+    "second_attempt": "PASS after bounded status convergence",
+    "stable_backup": "/var/backups/alashi/research-39bda66-20261026",
+    "snapshot_full_typed_load": "PASS",
+    "old_binary_rejects_new_research_field": true
+  },
+  "browser": {
+    "public_map_and_workspace_loaded": true,
+    "console_errors": 0,
+    "public_cards": 0,
+    "production_owner_mutation_tested": false,
+    "screenshot": "ffs-20261026/production-workspace.jpg"
+  },
+  "paid_provider_calls": 0,
+  "solana_transactions": 0,
+  "solana_program_changed": false,
+  "limitations": [
+    "Private cloud comparisons are server-stored. Local execution sends configured providers its inputs.",
+    "Current comparison scenario is a static English advertisement, not customer behavior.",
+    "Public cards are reviewed owner claims. Local results are owner_reported_local.",
+    "Snapshot coordination is limited to one process; copied journals must not run concurrently across machines.",
+    "No external customer benefit or demand validation was performed."
+  ],
+  "publisher_guard": {
+    "tests_passed": 7,
+    "new_permission_regressions": 4,
+    "ci_step": "Local tooling checks",
+    "runtime_application_unchanged": true
+  }
+}

@@ -56,8 +56,11 @@ def validate_release(root, name):
     safe_name(name)
     releases = root / "releases"
     path = releases / name
-    if not stat.S_ISDIR(path.lstat().st_mode):
+    mode = path.lstat().st_mode
+    if not stat.S_ISDIR(mode):
         fail("release is not a real directory: " + name)
+    if not mode & stat.S_IXOTH:
+        fail("public directory lacks others execute: " + name)
     has_asset = False
     for base, dirs, files in os.walk(path, followlinks=False):
         for item in dirs + files:
@@ -71,6 +74,10 @@ def validate_release(root, name):
             mode = p.lstat().st_mode
             if not (stat.S_ISDIR(mode) or stat.S_ISREG(mode)):
                 fail("symlink or special file in release: " + str(p.relative_to(path)))
+            if stat.S_ISDIR(mode) and not mode & stat.S_IXOTH:
+                fail("public directory lacks others execute: " + str(p.relative_to(path)))
+            if stat.S_ISREG(mode) and not mode & stat.S_IROTH:
+                fail("public file lacks others read: " + str(p.relative_to(path)))
             if p.parent == path / "assets" and stat.S_ISREG(mode) and p.stat().st_size:
                 has_asset = True
     for filename in ("index.html", "version.json"):

@@ -2,6 +2,8 @@
 
 Implementation date: 26 October 2026. This extends the existing private comparison; it does not copy Family & Friends Store source code. The transferred patterns are server-enforced visibility, quiet collection, a decision inbox and a recorded owner choice.
 
+[Production deployment and recovery evidence](FFS_DEPLOY_20261026.md) records the published version, HTTPS checks and retained data. The acceptance record below describes the separate local test session.
+
 ```text
 Private idea (now/later) → frozen question and one instruction change
 → optional independent forecasts → close collection → run the pair
