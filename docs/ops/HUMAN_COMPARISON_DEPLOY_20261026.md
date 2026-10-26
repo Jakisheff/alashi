@@ -34,3 +34,9 @@ The previous static release is `main-523e14a-20261018`. The existing static rele
 The old arena cannot read a newly serialized strategy snapshot, even with empty comparisons. Do not start the old binary against new state. Before rollback, hold mutations in the active nginx configuration, stop the arena and retain the latest state separately. Any post-deployment records must be reconciled before restoring the pre-upgrade snapshot/sequence pair. Restore their `alashi-arena` ownership and permissions, then restore the binary and static/configuration versions together and repeat health checks. No rollback was needed here.
 
 Independent journals cannot claim the same execution. Concurrent copies of one journal remain unsupported. See [repair acceptance](HUMAN_COMPARISON_20261026_REPAIR.md) for the protocol boundary.
+
+## Secret scan of deployment evidence
+
+The documentation CI run `40303742720` passed its build, RustSec and runtime test jobs but reported two `generic-api-key` findings in the recorded build metadata. The values are the public chain API source commit and binary SHA256, verified against Git and the public version manifest. The root `.gitleaksignore` identifies only those two findings by full historical commit, path, rule and line. The default detection rule and all file scanning remain enabled. Changing only the current document would not remove findings from the scanned Git history.
+
+The pinned Gitleaks 8.24.3 scanner was also checked with a new temporary commit containing an inert synthetic key at the same report path and line 337. It still reported the new occurrence with the historical exclusions present. The control did not use a live credential.
