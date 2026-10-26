@@ -70,13 +70,43 @@
     "frontend/scripts/comparison-contract-check.ts": "da549aef5e7ccda7284e501ce9baaacbef927c9046bfd32d0f7b5f9324aa8df9",
     "frontend/scripts/comparison-check.ts": "dd607e747b1f7709596eb2e6c1a2c0f53f5c7119d21e974a5bbd778092018c01"
   },
-  "remaining_at_record_creation": [
-    "indexer, bots, host program check, SBF/program tests and frontend production build delegated to fresh commit CI"
-  ],
+  "remaining_at_record_creation": [],
   "boundaries": [
     "No real provider calls, deployment or blockchain transactions",
     "Independently created journals receive distinct execution claims; simultaneous copies of the same journal are unsupported",
     "Legacy saved receipts can recover; unresolved legacy calls are unknown and cannot authorize new provider execution",
     "Usage including prepared cancellation is owner submitted, not independently provider attested"
-  ]
+  ],
+  "ci": {
+    "commit": "e9b181c390269a73c54694587ca22b72a9e1702b",
+    "run_id": 40297668440,
+    "conclusion": "success",
+    "jobs": [
+      {
+        "id": 121487578270,
+        "name": "Gitleaks secret scan",
+        "conclusion": "success"
+      },
+      {
+        "id": 121487578631,
+        "name": "RustSec audit of all lockfiles",
+        "conclusion": "success"
+      },
+      {
+        "id": 121487578750,
+        "name": "Fresh SBF build and program tests",
+        "conclusion": "success"
+      },
+      {
+        "id": 121487578753,
+        "name": "Rules, arena, indexer, and program compile",
+        "conclusion": "success"
+      },
+      {
+        "id": 121487578996,
+        "name": "Animation geometry and frontend build",
+        "conclusion": "success"
+      }
+    ]
+  }
 }

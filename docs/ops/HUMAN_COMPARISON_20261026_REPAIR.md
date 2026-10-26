@@ -34,7 +34,7 @@ Fresh local outcomes and source hashes are recorded in [the acceptance record](H
 
 Local socket tests initially failed at the sandbox bind restriction, before exercising the HTTP path. The same tests were rerun with permission to bind isolated localhost servers. Existing compiled dependencies were reused because local disk space was limited. No unrelated cache or user data was removed.
 
-Remaining mandatory project checks are run in CI for the pushed commit. Previous CI results are not evidence for this change. SBF execution, frontend production build and any remaining Rust checks must be read from that commit's check results.
+CI run 40297668440 passed all five jobs on repair commit `e9b181c390269a73c54694587ca22b72a9e1702b`: frontend production build and checks, Rust integration and compile checks, fresh SBF/program tests, all-lockfile RustSec audit, and secret scan. This closes the mandatory checks unavailable locally. The JSON record contains the exact job IDs. The acceptance-only follow-up changes no executable source.
 
 No live model service was called. Local provider responses are deterministic fixtures. This work does not establish advertising effectiveness, verify USD costs or implement a general hypothesis simulator. No deployment or blockchain transaction was performed.
 

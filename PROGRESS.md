@@ -943,3 +943,8 @@ Fix commit7a7ca22 passed all five jobs in CI run40134150599: all-lockfile RustSe
 
 
 26.10.2026 14:10 Almaty. All three repairs are implemented. Fresh bootstrap suite passed 64 tests. Frontend comparison, strategy and trading checks passed. Actual HTTP responses pass the frontend parser, and the competing-journal HTTP case grants two calls for two variants. Full arena suite passed 148 tests with one pre-existing ignored snapshot check. Rules validation is running; remaining cold-build checks will use fresh CI because local disk is constrained. No deployment or paid provider calls.
+
+
+26.10.2026 14:19 Almaty. Comparison repairs completed. Commit e9b181c390269a73c54694587ca22b72a9e1702b is pushed to PR #60. CI run40297668440 passed all five jobs, including fresh SBF/program tests and all-lockfile RustSec audit. Local checks passed 148 arena tests (one pre-existing ignored), 40 rules tests and 64 bootstrap tests. Actual HTTP responses pass the frontend parser; competing independent journals cannot both claim a task. [Acceptance](docs/ops/HUMAN_COMPARISON_20261026_REPAIR.md) records migration and copied-journal limits. No deployment or real provider calls.
+
+План: 0,8 часа, до 14:42. Факт: 0,42 часа (13:54-14:19, Алматы).
