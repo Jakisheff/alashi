@@ -40,3 +40,7 @@ Independent journals cannot claim the same execution. Concurrent copies of one j
 The documentation CI run `40303742720` passed its build, RustSec and runtime test jobs but reported two `generic-api-key` findings in the recorded build metadata. The values are the public chain API source commit and binary SHA256, verified against Git and the public version manifest. The root `.gitleaksignore` identifies only those two findings by full historical commit, path, rule and line. The default detection rule and all file scanning remain enabled. Changing only the current document would not remove findings from the scanned Git history.
 
 The pinned Gitleaks 8.24.3 scanner was also checked with a new temporary commit containing an inert synthetic key at the same report path and line 337. It still reported the new occurrence with the historical exclusions present. The control did not use a live credential.
+
+[Scanner verification evidence](GITLEAKS_METADATA_20261026.json) records the pinned version, before/after outcomes and the control that retains detection for a new commit.
+
+Fix commit `21421de` passed [all five CI jobs](https://github.com/Jakisheff/alashi/actions/runs/40305655295), including the secret scan and all-lockfile RustSec audit. The deployed application was unchanged by this CI repair.
