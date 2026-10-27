@@ -63,8 +63,8 @@ export function donkeySnapshotInput(snapshot: PublicDonkeySnapshot, factionPda: 
     phase: replay ? lastPhase ?? null : snapshot.phase,
     cashUnits: replay ? null : faction.cash, goods: replay ? null : faction.goods,
     alive: replay ? null : faction.alive,
-    // This public DTO has no action stamp, oracle readiness or current Market quote.
-    actionUsed: null, oracleReady: null, marketPriceUnits: null,
+    // Replay cannot use current account state; oracle readiness and quote remain unknown.
+    actionUsed: replay ? null : faction.acted ?? null, oracleReady: null, marketPriceUnits: null,
     journalComplete: snapshot.complete, journalThroughSlot: snapshot.journalThroughSlot,
     events: snapshot.donkeyReceipts.filter((receipt) => ids.has(receipt.id)),
   }
