@@ -996,3 +996,15 @@ Fix commit7a7ca22 passed all five jobs in CI run40134150599: all-lockfile RustSe
 28.10.2026 22:04 Almaty. PR #63 merged as 707c668 after all five checks passed on 125393d: RustSec, secret scanning, frontend, fresh SBF/program tests, and the complete host suite. The API and downloadable owner runner are live in release audit-125393d-20261028. Independent public verification confirmed the manifest, runner digest, /strategies HTTP 200 and the unchanged archived game with 72 events. Previous API and frontend versions are retained for rollback. Temporary build caches were removed after verification. No paid provider call or Solana transaction was made.
 
 Факт: 0,78 часа (21:17-22:04, Алматы). План: 2 часа, до 23:17 закрыт.
+
+### 2026-10-28: update local owner runner
+
+28.10.2026 22:13 Almaty. План: 0,5 часа, до 22:43. Locate the owner's local installation, update from the verified deployed runner, preserve settings and private state, and run installed-copy acceptance with isolated test providers. No paid calls or Solana transactions are needed.
+
+28.10.2026 22:23 Almaty. The installed wrapper points to 523e14a; the version acceptance check fails before the update as expected. Downloaded and hash-verified the published 125393d package, then compared all 21 files with the deployed Git source. The staged copy passed 92 tests on the launcher's Node 22.17 using isolated homes and loopback mocks. All 45 private configuration/state entries retain their content and modes. A fresh native companion build is running before activation; the old release is retained.
+
+28.10.2026 22:33 Almaty. Native build passed with warnings denied; 8 signer tests and 9 admission tests passed. One dedicated-validator match test is intentionally ignored. The real launcher acceptance caught the package's entrypoint guard rejecting symlink spelling: version worked but an empty CLI invocation returned zero without running main. Automatic rollback restored both old pointers. Reproduced symlink versus physical-path behavior, then adjusted the launcher to resolve the release physically before Node execution. Package source remains identical to the deployed archive.
+
+28.10.2026 22:37 Almaty. Observed: the installed alashi-strategy command and rebuilt macOS native client now use 125393d. The package passed 92 Node tests; the native client passed 17 tests, with one dedicated-validator match test ignored. The actual launcher completed a loopback TEST-provider run and resumed it without another provider call. Installed MCP returned the unchanged public archive with 72 events. All 45 private configuration/state entries retain their contents and permissions. The old release and wrapper backup remain available for rollback; temporary build output was removed. Evidence is stored locally under the runner updates/20261028-2213 directory. No paid provider request or Solana transaction was made.
+
+Факт: 0,4 часа (22:13-22:37, Алматы). План: 0,5 часа, до 22:43 закрыт.

@@ -410,3 +410,13 @@ CI подтвердил безопасность зависимостей, сб�
 28.10.2026 22:04 Almaty. PR #63 merged as 707c668 after all five checks passed on 125393d: RustSec, secret scanning, frontend, fresh SBF/program tests, and the complete host suite. The API and downloadable owner runner are live in release audit-125393d-20261028. Independent public verification confirmed the manifest, runner digest, /strategies HTTP 200 and the unchanged archived game with 72 events. Previous API and frontend versions are retained for rollback. Temporary build caches were removed after verification. No paid provider call or Solana transaction was made.
 
 Факт: 0,78 часа (21:17-22:04, Алматы). План: 2 часа, до 23:17 закрыт.
+
+## 28.10.2026 22:23, обновление локального агента
+Найдена установленная команда alashi-strategy с версией 523e14a. Новый пакет 125393d проверен по опубликованному хешу и исходникам; 92 теста прошли на Node.js 22.17, который использует локальная команда. Все 45 элементов настроек и состояния сохранили содержимое и права. Нативный клиент собирается отдельно со строгими предупреждениями. Текущий указатель пока не изменён.
+
+## 28.10.2026 22:33, обновление локального агента
+Нативная сборка прошла; 17 проверок подписи и допуска участников прошли, один тест требует отдельного валидатора и пропущен. Пробное переключение обнаружило несовпадение пути CLI при запуске через символьную ссылку; launcher и указатель автоматически возвращены на прежний выпуск. Ошибка воспроизведена: запуск через ссылку молча выходит с кодом 0, по физическому пути корректно проверяет аргументы. Launcher теперь разрешает физический путь перед запуском; повторная приёмка в работе.
+
+28.10.2026 22:37 Almaty. Observed: the installed alashi-strategy command and rebuilt macOS native client now use 125393d. The package passed 92 Node tests; the native client passed 17 tests, with one dedicated-validator match test ignored. The actual launcher completed a loopback TEST-provider run and resumed it without another provider call. Installed MCP returned the unchanged public archive with 72 events. All 45 private configuration/state entries retain their contents and permissions. The old release and wrapper backup remain available for rollback; temporary build output was removed. Evidence is stored locally under the runner updates/20261028-2213 directory. No paid provider request or Solana transaction was made.
+
+Факт: 0,4 часа (22:13-22:37, Алматы). План: 0,5 часа, до 22:43 закрыт.
