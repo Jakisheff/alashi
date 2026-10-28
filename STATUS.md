@@ -406,3 +406,7 @@ Added the development rule based on the owner's requested Family & Friends Store
 
 ## 28.10.2026 21:51, подготовка объединения и выпуска
 CI подтвердил безопасность зависимостей, сборку фронтенда и свежую SBF. Общий тест остановился на предупреждении сторонней локальной зависимости, которое CI считает ошибкой. Проверяется версия Solana Account без устаревшего вызова; тест сжатого аккаунта дополнен сравнением всех полей. Серверная сборка и пакет агента подготовлены во временном каталоге, production не изменён.
+
+28.10.2026 22:04 Almaty. PR #63 merged as 707c668 after all five checks passed on 125393d: RustSec, secret scanning, frontend, fresh SBF/program tests, and the complete host suite. The API and downloadable owner runner are live in release audit-125393d-20261028. Independent public verification confirmed the manifest, runner digest, /strategies HTTP 200 and the unchanged archived game with 72 events. Previous API and frontend versions are retained for rollback. Temporary build caches were removed after verification. No paid provider call or Solana transaction was made.
+
+Факт: 0,78 часа (21:17-22:04, Алматы). План: 2 часа, до 23:17 закрыт.
