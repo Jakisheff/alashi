@@ -115,6 +115,18 @@ export function toolInfo(spec, registry = {}) {
   if (!Number.isSafeInteger(config.max_total_tokens) || config.max_total_tokens<1 || !config.provider || !config.model) fail('tool_usage_budget_required');
   return {source:'provider_reported',provider:config.provider,model:config.model,cap:config.max_total_tokens};
 }
+function runOwnerTool(config, spec, run, reports) {
+  return new Promise((yes,no)=>{
+    const child=spawn(config.argv[0],config.argv.slice(1),{stdio:['pipe','pipe','pipe'],detached:process.platform!=='win32'});
+    let text='',size=0,stopped=false;
+    const stop=()=>{stopped=true;try{if(process.platform!=='win32' && child.pid)process.kill(-child.pid,'SIGKILL');else child.kill('SIGKILL');}catch{child.kill('SIGKILL');}};
+    const timer=setTimeout(stop,60_000);
+    child.on('error',()=>{clearTimeout(timer);no(new Error('owner_tool_failed'));});
+    child.stdout.on('data',b=>{size+=b.length;if(size>65536){if(!stopped)stop();}else text+=b;});child.stderr.resume();
+    child.on('close',code=>{clearTimeout(timer);if(code!==0 || stopped)no(new Error('owner_tool_failed'));else {try{yes(JSON.parse(text));}catch{no(new Error('invalid_tool_response'));}}});
+    child.stdin.on('error',()=>{});child.stdin.end(JSON.stringify({task:spec,brief:run.brief,reports:Object.fromEntries(spec.depends_on.map(id=>[id,reports[id]]))}));
+  });
+}
 export async function executeTool(spec, run, reports, registry = {}) {
   if (spec.tool === 'trade_state') {
     const c=run.brief.trading;if(!c)fail('trading_challenge_required');
@@ -128,16 +140,7 @@ export async function executeTool(spec, run, reports, registry = {}) {
   }
   const config=registry[spec.tool]; toolInfo(spec,registry);
   // A public strategy selects only a name. The owner supplies the executable locally.
-  const raw=await new Promise((yes,no)=>{
-    const child=spawn(config.argv[0],config.argv.slice(1),{stdio:['pipe','pipe','pipe'],detached:process.platform!=='win32'});
-    let text='',size=0,stopped=false;
-    const stop=()=>{stopped=true;try{if(process.platform!=='win32' && child.pid)process.kill(-child.pid,'SIGKILL');else child.kill('SIGKILL');}catch{child.kill('SIGKILL');}};
-    const timer=setTimeout(stop,60_000);
-    child.on('error',()=>{clearTimeout(timer);no(new Error('owner_tool_failed'));});
-    child.stdout.on('data',b=>{size+=b.length;if(size>65536){if(!stopped)stop();}else text+=b;});child.stderr.resume();
-    child.on('close',code=>{clearTimeout(timer);if(code!==0 || stopped)no(new Error('owner_tool_failed'));else {try{yes(JSON.parse(text));}catch{no(new Error('invalid_tool_response'));}}});
-    child.stdin.on('error',()=>{});child.stdin.end(JSON.stringify({task:spec,brief:run.brief,reports:Object.fromEntries(spec.depends_on.map(id=>[id,reports[id]]))}));
-  });
+  const raw=await runOwnerTool(config,spec,run,reports);
   return {report:safeReport(raw.report),usage:config.no_model_calls?zeroUsage:providerUsage(raw.usage),response_id:receiptId(raw.response_id),request_failed:raw.request_failed===true};
 }
 export async function runCycle({api,id,provider,journalPath,tools={},trade,onProgress=()=>{}}) {
