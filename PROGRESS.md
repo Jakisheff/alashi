@@ -982,3 +982,7 @@ Fix commit7a7ca22 passed all five jobs in CI run40134150599: all-lockfile RustSe
 
 План: 2 часа, до 21:04. Restore independent public reads under slow RPC, enforce model response limits while streaming, and bound child-tool termination. Preserve RPC rate limiting, owner journals and isolated tests; reproduce each failure before fixing.
 Факт: 0,35 часа (19:04-19:25, Алматы). Добавлены ограниченная параллельность chain API с общим RPC-лимитом и отдельной блокировкой игры, потоковый предел ответа модели и принудительное завершение группы внешнего инструмента. Проверки: rules 40, arena 157 (1 ignored), indexer 20, agent-bootstrap 89; cargo check программы и сборка ботов прошли. Три выбранные мутации лимита соединений обнаружены отдельным стендом с поддельным RPC. Начальная мутационная проверка была прервана после конфликта общего Cargo-кеша; кеш пакетов очищен, indexer проверен повторно. SBF и зависимые тесты не выполнены: отсутствует platform-tools v1.54. Деплой и реальные транзакции не проводились.
+
+### 2026-10-28: integrate and prepare audit repairs
+
+План: 2 часа, до 23:17. Verify current main and the repair branch, run required CI including fresh SBF, and prepare a safe release of the changed public API. Record deployment scope and evidence before activation.
