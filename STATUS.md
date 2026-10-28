@@ -388,3 +388,21 @@ Added the development rule based on the owner's requested Family & Friends Store
 26.10.2026 16:42 Almaty. Public HTTPS acceptance passed 85 checks, including every map input, the GLB and runner digest, private authorization/method gates and public library. A public-file permission defect (0640 after copy) was repaired only within the new release; all 359 content hashes remained unchanged. The live browser now loads the map, retained TEST receipts and workspace without console errors. Seven publisher tests pass, including four regressions that reject unreadable files/directories without changing pointers. Runtime 39bda66 remains deployed; release evidence and the publisher guard are being committed.
 
 26.10.2026 16:53 Almaty. FFS workflow implementation and deployment complete. Runtime 39bda66 is live at https://alashi.network/strategies; tooling/evidence commit 1b80b63 passed all five jobs in CI run40317578757, including the new publisher permission regressions. Public HTTPS passed 85 checks; saved data continuity and the browser view are recorded in docs/ops/FFS_DEPLOY_20261026.md/.json. Public current/previous directories both pass the new guard without pointer changes. No paid model call or Solana transaction. PR #60 updated. Факт: 1,47 часа (15:25-16:53, Алматы). План: 1,5 часа, до 16:55 закрыт.
+
+## 28.10.2026 19:14, исправление трёх дефектов
+В отдельной ветке исправлены параллельная обработка запросов, лимит потока модели и принудительная остановка инструмента. Первичные регрессионные тесты прошли; Node: 88/88, тест одновременного обновления одной игры прошёл. Повторяется набор индексатора после уточнения проверки HTTP 503; выполняются обязательные проверки арены и сборок. SBF v1.54 отсутствует.
+
+## 28.10.2026 19:24, исправление трёх дефектов
+После устранения конфликта временного Cargo-кеша все 20 тестов индексатора прошли повторно. Правила: 40 тестов; арена: 157 тестов и 1 намеренно пропущенный; агент: 89 тестов. Проверка компиляции программы и сборка ботов прошли. Изолированный стенд с поддельным RPC обнаружил все три выбранные мутации лимита соединений. SBF не проверен: отсутствует platform-tools v1.54. Следующий шаг: зафиксировать и отправить ветку.
+
+## 28.10.2026 19:25, исправление завершено
+Изменения отправлены в ветку `codex/alashi-audit-fixes-20261028`. Продуктовые проверки и ограничения указаны в PROGRESS.md. Факт: 0,35 часа.
+
+## 28.10.2026 21:27, подготовка объединения и выпуска
+Пользователь подтвердил объединение и развёртывание. PR #63 открыт. На исходном коммите CI: SBF, frontend и проверка секретов прошли; RustSec нашёл уязвимости в существующих зависимостях Solana/zstd. Linux-тест выявил некорректный 503 при перегрузке; исправление проходит локальную проверку, требуется повтор CI. Сборка кандидата API идёт в отдельном каталоге сервера. Текущая служба и сайт не изменены.
+
+## 28.10.2026 21:39, подготовка объединения и выпуска
+Исправление HTTP 503 прошло тесты на Linux и macOS. Проверка Node прошла с измерением покрытия. RustSec обходит обновление сжатия в экспериментальной копии, но сборка ботов выявила несовместимость связанных возможностей зависимостей; устраняю причину и проверяю обе сборки до включения изменений в ветку. Production не изменён.
+
+## 28.10.2026 21:51, подготовка объединения и выпуска
+CI подтвердил безопасность зависимостей, сборку фронтенда и свежую SBF. Общий тест остановился на предупреждении сторонней локальной зависимости, которое CI считает ошибкой. Проверяется версия Solana Account без устаревшего вызова; тест сжатого аккаунта дополнен сравнением всех полей. Серверная сборка и пакет агента подготовлены во временном каталоге, production не изменён.

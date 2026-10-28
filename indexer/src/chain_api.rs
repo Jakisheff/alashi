@@ -8,7 +8,7 @@ use serde_json::{json, Value};
 use std::collections::{HashMap, HashSet};
 use std::path::PathBuf;
 use std::str::FromStr;
-use std::sync::Mutex;
+use std::sync::{Arc, Mutex, Weak};
 use std::time::{Duration, Instant};
 
 const RPC: &str = "https://api.devnet.solana.com";
@@ -55,9 +55,10 @@ struct Cached {
 pub struct ChainApi {
     http: reqwest::blocking::Client,
     rpc_url: String,
-    // The single gate coalesces same-PDA work and bounds aggregate public RPC.
+    // Limit aggregate RPC starts regardless of the number of HTTP workers.
     gate: Mutex<Instant>,
     cache: Mutex<HashMap<String, Cached>>,
+    fetch_gates: Mutex<HashMap<String, Weak<Mutex<()>>>>,
     genesis_ok: Mutex<bool>,
     archive_dir: Option<PathBuf>,
 }
@@ -72,6 +73,7 @@ impl ChainApi {
             rpc_url: RPC.to_owned(),
             gate: Mutex::new(Instant::now() - Duration::from_secs(1)),
             cache: Mutex::new(HashMap::new()),
+            fetch_gates: Mutex::new(HashMap::new()),
             genesis_ok: Mutex::new(false),
             archive_dir: std::env::var_os("ALASHI_CHAIN_ARCHIVE_DIR").map(PathBuf::from),
         }
@@ -116,44 +118,33 @@ impl ChainApi {
         }
         Ok(())
     }
-    pub fn get(&self, pda: &str) -> Result<Value, Error> {
-        let key = Pubkey::from_str(pda).map_err(|_| Error::BadGame)?;
-        if key.to_string() != pda {
-            return Err(Error::BadGame);
-        }
-        let previous = self
-            .cache
+    fn cached(&self, pda: &str) -> Option<Cached> {
+        self.cache
             .lock()
             .unwrap_or_else(|e| e.into_inner())
             .get(pda)
-            .cloned();
-        if let Some(c) = &previous {
-            if c.terminal || c.at.elapsed() < Duration::from_secs(8) {
-                return Ok(c.value.clone());
-            }
+            .cloned()
+    }
+    fn ready_value(&self, pda: &str, cached: Option<&Cached>) -> Option<Value> {
+        cached
+            .filter(|c| c.terminal || c.at.elapsed() < Duration::from_secs(8))
+            .map(|c| c.value.clone())
+            .or_else(|| self.load_archive(pda))
+    }
+    fn game_gate(&self, pda: &str) -> Arc<Mutex<()>> {
+        let mut gates = self.fetch_gates.lock().unwrap_or_else(|e| e.into_inner());
+        gates.retain(|_, gate| gate.strong_count() > 0);
+        if let Some(gate) = gates.get(pda).and_then(Weak::upgrade) {
+            gate
+        } else {
+            let gate = Arc::new(Mutex::new(()));
+            gates.insert(pda.to_owned(), Arc::downgrade(&gate));
+            gate
         }
-        if let Some(value) = self.load_archive(pda) {
-            return Ok(value);
-        }
-        // One publisher at a time. A bounded negative cache is deliberately
-        // omitted: unknown PDAs cost a single account read, not a scan.
-        let (mut value, seen_signatures) = self.fetch(&key, previous.as_ref())?;
-        let terminal = value["game"]["settled"] == true && value["history_complete"] == true;
-        if terminal {
-            self.archive(pda, &mut value);
-        }
-        self.cache.lock().unwrap_or_else(|e| e.into_inner()).insert(
-            pda.to_owned(),
-            Cached {
-                value: value.clone(),
-                at: Instant::now(),
-                terminal,
-                seen_signatures,
-            },
-        );
-        // A single-thread server caps aggregate work; this cap bounds positive
-        // memory even if many different valid games are requested.
+    }
+    fn remember(&self, pda: &str, entry: Cached) {
         let mut cache = self.cache.lock().unwrap_or_else(|e| e.into_inner());
+        cache.insert(pda.to_owned(), entry);
         if cache.len() > 32 {
             if let Some(old) = cache
                 .iter()
@@ -164,6 +155,41 @@ impl ChainApi {
                 cache.remove(&old);
             }
         }
+    }
+    pub fn get(&self, pda: &str) -> Result<Value, Error> {
+        let key = Pubkey::from_str(pda).map_err(|_| Error::BadGame)?;
+        if key.to_string() != pda {
+            return Err(Error::BadGame);
+        }
+        let previous = self.cached(pda);
+        if let Some(value) = self.ready_value(pda, previous.as_ref()) {
+            return Ok(value);
+        }
+        // Only one worker may refresh or archive a particular game at a time.
+        // Weak entries do not retain one lock per game after requests finish.
+        let game_gate = self.game_gate(pda);
+        let _game_guard = game_gate.lock().unwrap_or_else(|e| e.into_inner());
+        let previous = self.cached(pda);
+        if let Some(value) = self.ready_value(pda, previous.as_ref()) {
+            return Ok(value);
+        }
+        // A negative cache is deliberately omitted: unknown PDAs cost a single
+        // account read, not a scan.
+        let (mut value, seen_signatures) = self.fetch(&key, previous.as_ref())?;
+        let terminal = value["game"]["settled"] == true && value["history_complete"] == true;
+        if terminal {
+            self.archive(pda, &mut value);
+        }
+        // Bound cached games even when many different addresses are requested.
+        self.remember(
+            pda,
+            Cached {
+                value: value.clone(),
+                at: Instant::now(),
+                terminal,
+                seen_signatures,
+            },
+        );
         Ok(value)
     }
     fn load_archive(&self, pda: &str) -> Option<Value> {
@@ -706,6 +732,147 @@ mod tests {
     use super::*;
     use std::io::{Read, Write};
     use std::net::TcpListener;
+    #[test]
+    fn cached_game_is_available_while_another_game_waits_for_rpc() {
+        use std::sync::mpsc;
+        let listener = TcpListener::bind("127.0.0.1:0").unwrap();
+        let url = format!("http://{}", listener.local_addr().unwrap());
+        let (started_tx, started_rx) = mpsc::channel();
+        let (release_tx, release_rx) = mpsc::channel();
+        let server = std::thread::spawn(move || {
+            let (mut stream, _) = listener.accept().unwrap();
+            started_tx.send(()).unwrap();
+            let _ = release_rx.recv_timeout(Duration::from_secs(5));
+            let body = r#"{"jsonrpc":"2.0","id":1,"result":{"value":null}}"#;
+            let _ = write!(
+                stream,
+                "HTTP/1.1 200 OK\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{}",
+                body.len(),
+                body
+            );
+        });
+        let mut api = ChainApi::new();
+        api.rpc_url = url;
+        api.archive_dir = None;
+        *api.genesis_ok.lock().unwrap() = true;
+        let cached_pda = Pubkey::new_unique().to_string();
+        api.cache.lock().unwrap().insert(
+            cached_pda.clone(),
+            Cached {
+                value: json!({"ok":true,"game_pda":cached_pda}),
+                at: Instant::now(),
+                terminal: false,
+                seen_signatures: HashSet::new(),
+            },
+        );
+        let api = Arc::new(api);
+        let first_api = Arc::clone(&api);
+        let slow = std::thread::spawn(move || first_api.get(&Pubkey::new_unique().to_string()));
+        started_rx.recv_timeout(Duration::from_secs(5)).unwrap();
+        let (response_tx, response_rx) = mpsc::channel();
+        let fast = std::thread::spawn(move || {
+            let _ = response_tx.send(api.get(&cached_pda));
+        });
+        let response = response_rx.recv_timeout(Duration::from_secs(1));
+        release_tx.send(()).unwrap();
+        fast.join().unwrap();
+        let _ = slow.join().unwrap();
+        server.join().unwrap();
+        assert_eq!(response.unwrap().unwrap()["ok"], true);
+    }
+
+    #[test]
+    fn simultaneous_refreshes_of_the_same_game_share_one_result() {
+        use anchor_lang::AccountSerialize;
+        use std::sync::Barrier;
+        let game = Game {
+            game_id: 7741,
+            ..Game::default()
+        };
+        let pda = crate::game_key(&game).to_string();
+        let mut data = Vec::new();
+        game.try_serialize(&mut data).unwrap();
+        let account = json!({"owner":alashi::id().to_string(),
+            "data":[base64::engine::general_purpose::STANDARD.encode(data),"base64"]});
+        let listener = TcpListener::bind("127.0.0.1:0").unwrap();
+        let url = format!("http://{}", listener.local_addr().unwrap());
+        let server = std::thread::spawn(move || {
+            let mut methods = Vec::new();
+            for incoming in listener.incoming().take(5) {
+                let mut stream = incoming.unwrap();
+                let mut header = Vec::new();
+                let mut byte = [0];
+                while !header.ends_with(b"\r\n\r\n") {
+                    stream.read_exact(&mut byte).unwrap();
+                    header.push(byte[0]);
+                }
+                let head = String::from_utf8(header).unwrap();
+                let size: usize = head
+                    .lines()
+                    .find_map(|line| {
+                        line.to_ascii_lowercase()
+                            .strip_prefix("content-length: ")
+                            .and_then(|n| n.parse().ok())
+                    })
+                    .unwrap();
+                let mut data = vec![0; size];
+                stream.read_exact(&mut data).unwrap();
+                let req: Value = serde_json::from_slice(&data).unwrap();
+                let method = req["method"].as_str().unwrap();
+                let result = match method {
+                    "getAccountInfo" => json!({"context":{"slot":1},"value":account}),
+                    "getProgramAccounts" => json!({"context":{"slot":1},"value":[]}),
+                    "getSignaturesForAddress" => json!([]),
+                    "getMultipleAccounts" => json!({"context":{"slot":1},"value":[account]}),
+                    _ => panic!("unexpected RPC method: {method}"),
+                };
+                methods.push(method.to_owned());
+                let body = json!({"jsonrpc":"2.0","id":1,"result":result}).to_string();
+                write!(
+                    stream,
+                    "HTTP/1.1 200 OK\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{}",
+                    body.len(),
+                    body
+                )
+                .unwrap();
+            }
+            methods
+        });
+        let mut api = ChainApi::new();
+        api.rpc_url = url;
+        api.archive_dir = None;
+        *api.genesis_ok.lock().unwrap() = true;
+        let api = Arc::new(api);
+        let barrier = Arc::new(Barrier::new(3));
+        let workers: Vec<_> = (0..2)
+            .map(|_| {
+                let api = Arc::clone(&api);
+                let barrier = Arc::clone(&barrier);
+                let pda = pda.clone();
+                std::thread::spawn(move || {
+                    barrier.wait();
+                    api.get(&pda).unwrap()
+                })
+            })
+            .collect();
+        barrier.wait();
+        let results: Vec<_> = workers
+            .into_iter()
+            .map(|worker| worker.join().unwrap())
+            .collect();
+        assert_eq!(results[0], results[1]);
+        assert_eq!(
+            server.join().unwrap(),
+            [
+                "getAccountInfo",
+                "getProgramAccounts",
+                "getSignaturesForAddress",
+                "getMultipleAccounts",
+                "getSignaturesForAddress"
+            ]
+        );
+    }
+
     #[test]
     fn archived_is_set_only_when_the_archive_file_is_written() {
         let pda = Pubkey::new_unique().to_string();
