@@ -1,0 +1,240 @@
+{
+  "release": "main-542a77a-20261029",
+  "commit": "542a77ac30ffc85210410e8160c3ccf3da11a856",
+  "pull_request": "https://github.com/Jakisheff/alashi/pull/64",
+  "ci": {
+    "commit": "542a77ac30ffc85210410e8160c3ccf3da11a856",
+    "run": "https://github.com/Jakisheff/alashi/actions/runs/40779232749",
+    "jobs": [
+      {
+        "name": "Rules, arena, indexer, and program compile",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "Gitleaks secret scan",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "Fresh SBF build and program tests",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "Animation geometry and frontend build",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "RustSec audit of all lockfiles",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "public": {
+    "ok": true,
+    "at_utc": "2026-10-28T22:28:56.509881+00:00",
+    "origin": "https://alashi.network",
+    "release": "main-542a77a-20261029",
+    "commit": "542a77ac30ffc85210410e8160c3ccf3da11a856",
+    "checks": {
+      "immutable_assets": {
+        "total": 120,
+        "passed": 120
+      },
+      "root_index": {
+        "status": 200,
+        "sha256": "ffe60736c68e3138fbb959afa6a54acd45a0f372f3aef279e6bb41f9a8abc26b",
+        "bytes": 6510
+      },
+      "manifest": {
+        "release": "main-542a77a-20261029",
+        "frontend_commit": "542a77ac30ffc85210410e8160c3ccf3da11a856"
+      },
+      "route:/strategies": {
+        "status": 200,
+        "json": false
+      },
+      "route:/devnet": {
+        "status": 200,
+        "json": false
+      },
+      "route:/stream": {
+        "status": 200,
+        "json": false
+      },
+      "route:/games": {
+        "status": 200,
+        "json": true
+      },
+      "route:/strategy-library": {
+        "status": 200,
+        "json": true
+      },
+      "route:/research-library": {
+        "status": 200,
+        "json": true
+      },
+      "archived_game": {
+        "unchanged": true,
+        "events": 72,
+        "history_complete": true,
+        "archived": true
+      },
+      "runner": {
+        "url": "https://alashi.network/releases/main-542a77a-20261029/downloads/alashi-research-runner-542a77a.tar.gz",
+        "sha256": "d764f60377352e7ec72e4d41f95cb5aabb6b70f490d9d587d4a8d4a5b8adb16b",
+        "source_commit": "542a77ac30ffc85210410e8160c3ccf3da11a856",
+        "tar_commit": "542a77ac30ffc85210410e8160c3ccf3da11a856"
+      },
+      "anonymous:strategies": {
+        "status": 401,
+        "no_store": true
+      },
+      "anonymous:comparisons": {
+        "status": 401,
+        "no_store": true
+      },
+      "anonymous:research": {
+        "status": 401,
+        "no_store": true
+      },
+      "deck": {
+        "verified": [
+          {
+            "kind": "pdf",
+            "urls": [
+              "https://alashi.network/deck/downloads/alashi-deck-20261011-r3.pdf"
+            ],
+            "sha256": "a4ed376213e43858abdb8b34f25315fcd34650ded94f47ca69a04f576561dc8e"
+          },
+          {
+            "kind": "pptx",
+            "urls": [
+              "https://alashi.network/deck/downloads/alashi-deck-20261011-r3.pptx"
+            ],
+            "sha256": "d84671a6255d604db3a359d2734811d441eb292a8d49f0a67243a244901b8d8c"
+          }
+        ],
+        "manual_checks": [],
+        "discovery": [
+          {
+            "path": "/deck/",
+            "status": 200
+          },
+          {
+            "path": "/deck/downloads/",
+            "status": 403
+          }
+        ]
+      }
+    },
+    "failures": []
+  },
+  "browser": {
+    "release": "main-542a77a-20261029",
+    "devnetDesktop": {
+      "scrollWidth": 1280,
+      "width": 1280
+    },
+    "devnetMobile": {
+      "width": 390,
+      "scrollWidth": 390
+    },
+    "strategiesDesktop": {
+      "scripts": [
+        "https://alashi.network/releases/main-542a77a-20261029/assets/index-Cx85Oe5u.js"
+      ],
+      "scrollWidth": 1280,
+      "width": 1280
+    },
+    "strategiesMobile": {
+      "scrollWidth": 390,
+      "width": 390
+    },
+    "consoleErrors": [],
+    "warnings": [
+      {
+        "level": "warn",
+        "message": "THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.",
+        "timestamp": "2026-10-28T22:17:25.222Z",
+        "url": "https://alashi.network/releases/acted-30f44fd-20261027/assets/smoke-W6jqsC1s.js"
+      },
+      {
+        "level": "warn",
+        "message": "THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.",
+        "timestamp": "2026-10-28T22:26:38.505Z",
+        "url": "https://alashi.network/releases/main-542a77a-20261029/assets/smoke-D6uXUopX.js"
+      }
+    ],
+    "webgl3d": "unavailable in this browser before and after deployment; fallback displayed",
+    "ownerWrites": false
+  },
+  "runtime": {
+    "at_utc": "2026-10-28T22:27:07.797991+00:00",
+    "current": "/var/www/alashi/releases/main-542a77a-20261029",
+    "previous": "/var/www/alashi/releases/audit-125393d-20261028",
+    "services": {
+      "alashi-arena": {
+        "ActiveState": "active",
+        "MainPID": "1863379"
+      },
+      "alashi-chain-api": {
+        "ActiveState": "active",
+        "MainPID": "2400970"
+      },
+      "alashi-live-staging": {
+        "ActiveState": "active",
+        "MainPID": "567708"
+      },
+      "alashi-match-host": {
+        "ActiveState": "active",
+        "MainPID": "1166134"
+      }
+    },
+    "service_pids_unchanged": true,
+    "runtime_hashes_match": true
+  },
+  "source_equivalence": {
+    "39bda6678ec787eaa47e8c7c2768646e6b2f9fa3": {
+      "arena": "ec6cd3fc8495d15f197b13fbc098491d65b5420e",
+      "rules": "d43c17d4bb47268cdc8ee73cbf90ce6137a58509",
+      "Cargo.toml": "375a1b7cdc8cc4fe6a2394632eac77fd97a67d73",
+      "Cargo.lock": "2d98ff45ae500d5ccff3070aaf964ba679a334bd"
+    },
+    "125393d934000f0218863d2ef881d932e3d81c08": {
+      "indexer": "d629ef3044a03898f65cb772e44185d8b83b6d91",
+      "bots": "7530cd5517402fcfefa6be59c2bb1cfd28633231",
+      "rules": "d43c17d4bb47268cdc8ee73cbf90ce6137a58509",
+      "programs": "52715be5ce39ffefe3e9f6d57c084b6deb2fbd5f",
+      "vendor": "4c0cf2b589dd6b666f22816181926d9f73d94c5f",
+      "Cargo.toml": "375a1b7cdc8cc4fe6a2394632eac77fd97a67d73",
+      "Cargo.lock": "2d98ff45ae500d5ccff3070aaf964ba679a334bd",
+      "rust-toolchain.toml": "cb684c012375408adedaca62213299cfe861f723",
+      "tools/agent-bootstrap": "ef3e152814d5c0a9f39c3fbed4d6500f3c7b2015"
+    }
+  },
+  "quality": {
+    "adapter_checks": 88,
+    "publisher_tests": 7,
+    "mutants": {
+      "selected": 2,
+      "killed": 2,
+      "survived": 0
+    },
+    "dryer_candidates_at_082": 0,
+    "crapper": "Complexity only; CRAP and coverage were not measured. Existing decodeSnapshot CC43 and donkeySnapshotInput CC17 were not refactored for this deployment."
+  },
+  "limits": [
+    "Paid provider acceptance and public-cluster transactions were not run.",
+    "WebGL 3D rendering was unavailable in the test browser before and after deployment; fallback and 2D replay were checked."
+  ],
+  "screenshots": [
+    "devnet-mobile.jpg",
+    "devnet-desktop.jpg",
+    "strategies-mobile.jpg",
+    "strategies-desktop.jpg"
+  ]
+}

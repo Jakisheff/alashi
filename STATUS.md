@@ -430,3 +430,14 @@ CI подтвердил безопасность зависимостей, сб�
 
 ## 29.10.2026 03:12, подготовка выпуска main
 29.10.2026 03:12 Almaty. The live frontend contains commit 30f44fd, which main did not include. A deployment of main without that fix would lose the confirmed acted field. Restored its two source files, regression checks and CI step. The regression failed on main before the fix and all 88 adapter checks passed after it. Seven static publisher tests passed. The frontend scene, assets and event choreography match the live version; this change preserves account-state gating. The arena, chain API and runner sources match their deployed build inputs, so the release can retain those artifacts with their original provenance and avoid service restarts. Full CI and release verification remain pending.
+
+## 29.10.2026 03:16, подготовка выпуска main
+PR #64 contains the existing live acted fix and its CI check. The adapter passed 88 checks after a reproduced failure; both selected mutants were killed. The frontend tree now matches live commit 30f44fd. Local build and seven publisher checks passed. RustSec and secret scanning passed in CI; the remaining jobs are running. Production pointers and all four services remain unchanged.
+
+## 29.10.2026 03:26, выпуск main опубликован
+Main commit 542a77a passed all five CI jobs. Release main-542a77a-20261029 is now current; audit-125393d-20261028 remains the rollback pointer. The candidate passed hash and publisher validation. Runtime binaries and all service PIDs were preserved. Public byte checks and browser acceptance are running.
+
+## 29.10.2026 03:32, выпуск main проверен
+Release main-542a77a-20261029 is live. All five CI jobs passed on its main commit. Public verification passed all 120 asset hashes and the API, archived game, runner and deck checks. Desktop/mobile checks passed; WebGL 3D remains unverified in this browser. Service PIDs and binary hashes are unchanged. [Deployment evidence](docs/ops/DEPLOY_MAIN_20261029.json) records the checks and limits.
+
+Факт: 0,48 часа (03:03-03:32, Алматы). План: 1 час, до 04:03 закрыт.
