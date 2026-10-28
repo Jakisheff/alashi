@@ -67,14 +67,35 @@ export function providerUsage(raw) {
   if (!Number.isSafeInteger(cached) || cached < 0 || cached > raw.prompt_tokens) return null;
   return {prompt_tokens:raw.prompt_tokens,completion_tokens:raw.completion_tokens,total_tokens:raw.total_tokens,cached_tokens:cached};
 }
+async function providerText(response) {
+  const limit = 1_000_000;
+  if (Number(response.headers.get('content-length')) > limit) {
+    if (response.body) void response.body.cancel().catch(() => {});
+    fail('provider_response_too_large');
+  }
+  if (!response.body) return '';
+  const reader = response.body.getReader(), chunks = [];
+  let size = 0;
+  try {
+    for (;;) {
+      const {done, value} = await reader.read();
+      if (done) return Buffer.concat(chunks, size).toString('utf8');
+      size += value.byteLength;
+      if (size > limit) {
+        void reader.cancel().catch(() => {});
+        fail('provider_response_too_large');
+      }
+      chunks.push(value);
+    }
+  } finally { reader.releaseLock(); }
+}
 export function modelProvider({url, key, model, test = false}) {
   const u = new URL(url), local = ['localhost','127.0.0.1','[::1]'].includes(u.hostname);
   if (u.username || u.password || u.hash || u.search || !(u.protocol === 'https:' || u.protocol === 'http:' && local) || test && !local || !model || model.length > 128) fail('invalid_provider_config');
   return {source:test?'test_provider':'provider_reported',provider:u.origin,model,temperature:0,max_tokens:256,async complete(messages) {
     // No retry, fallback model, or tools. Keep provider credentials out of arena receipts.
     const response = await fetch(url,{method:'POST',redirect:'error',signal:AbortSignal.timeout(60_000),headers:{'Content-Type':'application/json',...(key?{Authorization:'Bearer '+key}:{})},body:JSON.stringify({model,messages,max_tokens:256,temperature:0})});
-    if (Number(response.headers.get('content-length'))>1_000_000) fail('provider_response_too_large');
-    const text = await response.text(); if (text.length>1_000_000) fail('provider_response_too_large');
+    const text = await providerText(response);
     let raw; try { raw = JSON.parse(text); } catch { raw = {}; }
     return {response_id:receiptId(raw.id),usage:providerUsage(raw.usage),report:parseCompletion(raw.choices?.[0]?.message?.content),request_failed:!response.ok};
   }};
@@ -108,10 +129,13 @@ export async function executeTool(spec, run, reports, registry = {}) {
   const config=registry[spec.tool]; toolInfo(spec,registry);
   // A public strategy selects only a name. The owner supplies the executable locally.
   const raw=await new Promise((yes,no)=>{
-    const child=spawn(config.argv[0],config.argv.slice(1),{stdio:['pipe','pipe','pipe'],timeout:60_000});
-    let text='',size=0;child.on('error',()=>no(new Error('owner_tool_failed')));
-    child.stdout.on('data',b=>{size+=b.length;if(size>65536)child.kill();else text+=b;});child.stderr.resume();
-    child.on('close',code=>{if(code!==0 || size>65536)no(new Error('owner_tool_failed'));else {try{yes(JSON.parse(text));}catch{no(new Error('invalid_tool_response'));}}});
+    const child=spawn(config.argv[0],config.argv.slice(1),{stdio:['pipe','pipe','pipe'],detached:process.platform!=='win32'});
+    let text='',size=0,stopped=false;
+    const stop=()=>{stopped=true;try{if(process.platform!=='win32' && child.pid)process.kill(-child.pid,'SIGKILL');else child.kill('SIGKILL');}catch{child.kill('SIGKILL');}};
+    const timer=setTimeout(stop,60_000);
+    child.on('error',()=>{clearTimeout(timer);no(new Error('owner_tool_failed'));});
+    child.stdout.on('data',b=>{size+=b.length;if(size>65536){if(!stopped)stop();}else text+=b;});child.stderr.resume();
+    child.on('close',code=>{clearTimeout(timer);if(code!==0 || stopped)no(new Error('owner_tool_failed'));else {try{yes(JSON.parse(text));}catch{no(new Error('invalid_tool_response'));}}});
     child.stdin.on('error',()=>{});child.stdin.end(JSON.stringify({task:spec,brief:run.brief,reports:Object.fromEntries(spec.depends_on.map(id=>[id,reports[id]]))}));
   });
   return {report:safeReport(raw.report),usage:config.no_model_calls?zeroUsage:providerUsage(raw.usage),response_id:receiptId(raw.response_id),request_failed:raw.request_failed===true};

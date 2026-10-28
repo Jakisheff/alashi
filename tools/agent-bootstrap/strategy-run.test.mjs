@@ -91,3 +91,75 @@ test('report limits count UTF-8 bytes so malformed output cannot lose known usag
  const result=await executeTool({tool:'owned',depends_on:[]},{brief:{}},{},registry);
  assert.equal(result.report,null);assert.equal(result.response_id,null);assert.equal(result.usage.total_tokens,15);
 });
+
+test('oversized chunked provider response is cancelled before the entire body is read', async t => {
+  let received = 0, cancelled = false;
+  t.mock.method(globalThis, 'fetch', async () => new Response(new ReadableStream({
+    pull(controller) {
+      if (received === 4 * 1024 * 1024) return controller.close();
+      const chunk = new Uint8Array(65536).fill(65);
+      received += chunk.byteLength;
+      controller.enqueue(chunk);
+    },
+    cancel() { cancelled = true; },
+  }), { headers: { 'content-length': '1' } }));
+  const provider = modelProvider({url:'http://127.0.0.1:8799/completions', model:'test', test:true});
+  await assert.rejects(provider.complete([]), /provider_response_too_large/);
+  assert.equal(cancelled, true);
+  assert.ok(received < 2_000_000, `read ${received} bytes before rejecting`);
+});
+
+test('provider limit counts bytes and rejects an oversized declared body', async t => {
+  let cancelled = false;
+  t.mock.method(globalThis, 'fetch', async () => new Response(new ReadableStream({
+    cancel() { cancelled = true; },
+  }), { headers: { 'content-length': '1000001' } }));
+  const provider = modelProvider({url:'http://127.0.0.1:8799/completions', model:'test', test:true});
+  await assert.rejects(provider.complete([]), /provider_response_too_large/);
+  assert.equal(cancelled, true);
+  globalThis.fetch = async () => new Response('é'.repeat(500001));
+  await assert.rejects(provider.complete([]), /provider_response_too_large/);
+});
+
+test('an oversized owner tool that ignores SIGTERM is terminated', async () => {
+  if (process.platform === 'win32') return;
+  const dir = mkdtempSync(join(tmpdir(), 'alashi-hung-tool-')), pidPath = join(dir, 'pid');
+  const code = `require('fs').writeFileSync(${JSON.stringify(pidPath)}, String(process.pid)); process.on('SIGTERM', () => {}); process.stdout.write(Buffer.alloc(100000)); setInterval(() => {}, 1000)`;
+  const registry = {owned:{argv:[process.execPath,'-e',code],no_model_calls:true}};
+  const work = executeTool({tool:'owned',depends_on:[]},{brief:{}},{},registry).then(() => 'accepted', error => error.message);
+  let timer;
+  try {
+    const outcome = await Promise.race([work, new Promise(resolve => {timer = setTimeout(() => resolve('timed out'), 2500);})]);
+    assert.equal(outcome, 'owner_tool_failed');
+  } finally {
+    clearTimeout(timer);
+    try { process.kill(Number(readFileSync(pidPath, 'utf8')), 'SIGKILL'); } catch {}
+    await work;
+    rmSync(dir,{recursive:true,force:true});
+  }
+});
+
+test('an owner tool ignoring SIGTERM is stopped at the deadline', async t => {
+  if (process.platform === 'win32') return;
+  const dir = mkdtempSync(join(tmpdir(), 'alashi-tool-timeout-')), pidPath = join(dir, 'pid');
+  const code = `require('fs').writeFileSync(${JSON.stringify(pidPath)}, String(process.pid)); process.on('SIGTERM', () => {}); setInterval(() => {}, 1000)`;
+  const registry = {owned:{argv:[process.execPath,'-e',code],no_model_calls:true}};
+  const realSetTimeout = setTimeout, realClearTimeout = clearTimeout;
+  t.mock.timers.enable({apis:['setTimeout']});
+  const work = executeTool({tool:'owned',depends_on:[]},{brief:{}},{},registry).then(() => 'accepted', error => error.message);
+  try {
+    for (let i = 0; i < 100; i++) {
+      try { readFileSync(pidPath); break; } catch { await new Promise(resolve => realSetTimeout(resolve, 20)); }
+    }
+    assert.ok(readFileSync(pidPath, 'utf8'));
+    t.mock.timers.tick(60_000);
+    let timer;
+    try {
+      assert.equal(await Promise.race([work, new Promise(resolve => {timer = realSetTimeout(() => resolve('timed out'), 2500);})]), 'owner_tool_failed');
+    } finally { realClearTimeout(timer); }
+  } finally {
+    try { process.kill(Number(readFileSync(pidPath, 'utf8')), 'SIGKILL'); } catch {}
+    await work;
+    rmSync(dir,{recursive:true,force:true});
+  }
+});
