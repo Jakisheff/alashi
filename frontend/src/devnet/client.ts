@@ -1,7 +1,7 @@
 export const CHAIN_PROGRAM = '3jwunaFDRrSWFfeJ5hFZu3DmxPNTmkdoCweHDvqcXTqC'
 export const PHASES = ['Lobby', 'Market', 'Action', 'Law', 'Finished', 'Aborted'] as const
 export type Phase = typeof PHASES[number]
-export type ChainFaction = { pda: string; wallet: string; name: string; cash: string; hard: string; alive: boolean; goods: number; influence: number; vote: 'Yes' | 'No' | 'Abstain' }
+export type ChainFaction = { pda: string; wallet: string; name: string; cash: string; hard: string; alive: boolean; acted?: boolean; goods: number; influence: number; vote: 'Yes' | 'No' | 'Abstain' }
 export type ChainEvent = { id: string; signature: string; slot: number; index: number; logIndex: number; time: number | null; type: string; faction?: string; from?: string; wallet?: string; rank?: number; round?: number; phase?: Phase; phaseDuration?: number; card?: number; yes?: number; no?: number; passed?: boolean; goods?: number; revenue?: string; cost?: string; price?: string; units?: number; amount?: string; choice?: number; fee?: string; success?: boolean; reason?: 0 | 1 }
 export type ChainSnapshot = { pda: string; gameId: string; phase: Phase; round: number; endsAt: number; settled: boolean; epoch: number; snapshotSlot: number; journalThroughSlot: number; factions: ChainFaction[]; events: ChainEvent[]; complete: boolean; fetchedAt: string }
 const alphabet = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
@@ -32,7 +32,7 @@ export function decodeSnapshot(value: unknown, pda: string): ChainSnapshot {
   if (v.ok !== true || v.cluster !== 'devnet' || v.program_id !== CHAIN_PROGRAM || v.game_pda !== pda || !validBase58(pda)) throw new ChainApiError('invalid')
   const factions = array(v.factions, 64).map((raw): ChainFaction => {
     const f = object(raw); if (!['Yes', 'No', 'Abstain'].includes(String(f.vote))) throw new ChainApiError('invalid')
-    return { pda: address(f.pda), wallet: address(f.wallet), name: text(f.name, 64), cash: money(f.cash), hard: money(f.hard), alive: boolean(f.alive), goods: integer(f.goods), influence: integer(f.influence), vote: f.vote as ChainFaction['vote'] }
+    return { pda: address(f.pda), wallet: address(f.wallet), name: text(f.name, 64), cash: money(f.cash), hard: money(f.hard), alive: boolean(f.alive), ...(f.acted === undefined ? {} : { acted: boolean(f.acted) }), goods: integer(f.goods), influence: integer(f.influence), vote: f.vote as ChainFaction['vote'] }
   })
   if (new Set(factions.map((f) => f.pda)).size !== factions.length || new Set(factions.map((f) => f.wallet)).size !== factions.length) throw new ChainApiError('invalid')
   const actors = new Set(factions.map((f) => f.pda)), wallets = new Set(factions.map((f) => f.wallet))

@@ -29,6 +29,7 @@ jobs:
       - run: npm run check:research
       - run: npm run check:comparison-proxy
       - run: npm run check:trading
+      - run: node --experimental-strip-types --no-warnings scripts/donkey-risk-adapter-check.ts
       - run: node --test ../tools/agent-bootstrap/strategy-run.test.mjs ../tools/agent-bootstrap/strategy-scheduler.test.mjs ../tools/agent-bootstrap/strategy-comparison.test.mjs ../tools/agent-bootstrap/local-experiment.test.mjs ../tools/agent-bootstrap/alashi.test.mjs
       - name: Degenie RTS runtime and replay checks
         run: |
