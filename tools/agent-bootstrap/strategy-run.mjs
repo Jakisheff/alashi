@@ -89,9 +89,15 @@ async function providerText(response) {
     }
   } finally { reader.releaseLock(); }
 }
-export function modelProvider({url, key, model, test = false}) {
+function hasDisallowedUrlParts(u) { return !!(u.username || u.password || u.hash || u.search); }
+function providerEndpoint(url, test) {
   const u = new URL(url), local = ['localhost','127.0.0.1','[::1]'].includes(u.hostname);
-  if (u.username || u.password || u.hash || u.search || !(u.protocol === 'https:' || u.protocol === 'http:' && local) || test && !local || !model || model.length > 128) fail('invalid_provider_config');
+  if (hasDisallowedUrlParts(u) || !(u.protocol === 'https:' || u.protocol === 'http:' && local) || test && !local) fail('invalid_provider_config');
+  return u;
+}
+export function modelProvider({url, key, model, test = false}) {
+  const u = providerEndpoint(url, test);
+  if (!model || model.length > 128) fail('invalid_provider_config');
   return {source:test?'test_provider':'provider_reported',provider:u.origin,model,temperature:0,max_tokens:256,async complete(messages) {
     // No retry, fallback model, or tools. Keep provider credentials out of arena receipts.
     const response = await fetch(url,{method:'POST',redirect:'error',signal:AbortSignal.timeout(60_000),headers:{'Content-Type':'application/json',...(key?{Authorization:'Bearer '+key}:{})},body:JSON.stringify({model,messages,max_tokens:256,temperature:0})});
@@ -127,17 +133,19 @@ function runOwnerTool(config, spec, run, reports) {
     child.stdin.on('error',()=>{});child.stdin.end(JSON.stringify({task:spec,brief:run.brief,reports:Object.fromEntries(spec.depends_on.map(id=>[id,reports[id]]))}));
   });
 }
+function tradeState(run) {
+  const c=run.brief.trading;if(!c)fail('trading_challenge_required');
+  return {report:{phase:c.phase,round:c.round,owner:c.participants.find(p=>p.wallet===run.owner),market:c.observation.market??Object.fromEntries(['sold_counter','price_table','price_now','tax_bps','price_shift','boom'].map(k=>[k,c.observation[k]])),allowed_actions:c.phase==='market'?['sell','buy']:['produce']},usage:zeroUsage,response_id:null,request_failed:false};
+}
+function copyCheck(spec, run, reports) {
+  const draft = spec.depends_on.map(id=>reports[id]).find(r=>r && typeof r.headline==='string' && typeof r.body==='string');
+  const text = draft ? [draft.headline,draft.body,draft.cta].join(' ') : '';
+  return {report:{draft:draft??null,words:text.trim().split(/\s+/).filter(Boolean).length,required_terms:run.brief.required_terms.every(t=>text.toLowerCase().includes(t.toLowerCase())),cta_matches:draft?.cta===run.brief.cta},usage:zeroUsage,response_id:null,request_failed:false};
+}
 export async function executeTool(spec, run, reports, registry = {}) {
-  if (spec.tool === 'trade_state') {
-    const c=run.brief.trading;if(!c)fail('trading_challenge_required');
-    return {report:{phase:c.phase,round:c.round,owner:c.participants.find(p=>p.wallet===run.owner),market:c.observation.market??Object.fromEntries(['sold_counter','price_table','price_now','tax_bps','price_shift','boom'].map(k=>[k,c.observation[k]])),allowed_actions:c.phase==='market'?['sell','buy']:['produce']},usage:zeroUsage,response_id:null,request_failed:false};
-  }
+  if (spec.tool === 'trade_state') return tradeState(run);
   if (spec.tool === 'brief_extract') return {report:{facts:run.brief.facts,audience:run.brief.audience,required_terms:run.brief.required_terms,cta:run.brief.cta},usage:zeroUsage,response_id:null,request_failed:false};
-  if (spec.tool === 'copy_check') {
-    const draft = spec.depends_on.map(id=>reports[id]).find(r=>r && typeof r.headline==='string' && typeof r.body==='string');
-    const text = draft ? [draft.headline,draft.body,draft.cta].join(' ') : '';
-    return {report:{draft:draft??null,words:text.trim().split(/\s+/).filter(Boolean).length,required_terms:run.brief.required_terms.every(t=>text.toLowerCase().includes(t.toLowerCase())),cta_matches:draft?.cta===run.brief.cta},usage:zeroUsage,response_id:null,request_failed:false};
-  }
+  if (spec.tool === 'copy_check') return copyCheck(spec,run,reports);
   const config=registry[spec.tool]; toolInfo(spec,registry);
   // A public strategy selects only a name. The owner supplies the executable locally.
   const raw=await runOwnerTool(config,spec,run,reports);

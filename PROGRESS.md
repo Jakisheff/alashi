@@ -986,3 +986,5 @@ Fix commit7a7ca22 passed all five jobs in CI run40134150599: all-lockfile RustSe
 ### 2026-10-28: integrate and prepare audit repairs
 
 План: 2 часа, до 23:17. Verify current main and the repair branch, run required CI including fresh SBF, and prepare a safe release of the changed public API. Record deployment scope and evidence before activation.
+
+28.10.2026 21:39 Almaty. PR #63 CI exposed an HTTP 503 reset on Linux; the overload handler now reads a bounded request header before replying and caps rejection workers. The indexer suite passed on Linux and macOS. The agent suite passed 92 tests with measured coverage; scoped CRAP checks cover the changed functions. RustSec identified four advisories in existing Solana zstd dependencies. A temporary dependency update clears the audit; compatibility and bot builds are under investigation. Production is unchanged.

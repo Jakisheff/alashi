@@ -6,15 +6,56 @@ use std::sync::{
     atomic::{AtomicUsize, Ordering},
     Arc,
 };
-use std::time::Duration;
+use std::time::{Duration, Instant};
 
 const MAX_CONNECTIONS: usize = 8;
+const MAX_REJECTIONS: usize = 2;
 
 struct ConnectionPermit(Arc<AtomicUsize>);
 impl Drop for ConnectionPermit {
     fn drop(&mut self) {
         self.0.fetch_sub(1, Ordering::Relaxed);
     }
+}
+fn acquire(active: &Arc<AtomicUsize>, limit: usize) -> Option<ConnectionPermit> {
+    active
+        .fetch_update(Ordering::Relaxed, Ordering::Relaxed, |n| {
+            (n < limit).then_some(n + 1)
+        })
+        .ok()?;
+    Some(ConnectionPermit(Arc::clone(active)))
+}
+
+fn complete_header(request: &[u8]) -> bool {
+    request.windows(4).any(|part| part == b"\r\n\r\n")
+        || request.windows(2).any(|part| part == b"\n\n")
+}
+
+fn reject_overload(mut stream: TcpStream) -> std::io::Result<()> {
+    // Read a bounded complete header before responding, otherwise HTTP clients
+    // can observe a reset while they are still sending their request.
+    let deadline = Instant::now() + Duration::from_millis(250);
+    let mut request = [0; 4096];
+    let mut used = 0;
+    loop {
+        let remaining = deadline.saturating_duration_since(Instant::now());
+        if remaining.is_zero() || used == request.len() {
+            return Ok(());
+        }
+        stream.set_read_timeout(Some(remaining))?;
+        let n = stream.read(&mut request[used..])?;
+        if n == 0 {
+            return Ok(());
+        }
+        used += n;
+        if complete_header(&request[..used]) {
+            break;
+        }
+    }
+    stream.set_write_timeout(Some(Duration::from_secs(1)))?;
+    stream.write_all(
+        b"HTTP/1.1 503 Service Unavailable\r\nContent-Length: 0\r\nConnection: close\r\n\r\n",
+    )
 }
 
 fn response(first: &str, api: &ChainApi) -> (&'static str, Value) {
@@ -68,19 +109,20 @@ fn main() -> std::io::Result<()> {
     let listener = TcpListener::bind(("127.0.0.1", port))?;
     let api = Arc::new(ChainApi::new());
     let active = Arc::new(AtomicUsize::new(0));
+    let rejecting = Arc::new(AtomicUsize::new(0));
     for incoming in listener.incoming() {
-        let Ok(mut stream) = incoming else { continue };
-        if active
-            .fetch_update(Ordering::Relaxed, Ordering::Relaxed, |n| {
-                (n < MAX_CONNECTIONS).then_some(n + 1)
-            })
-            .is_err()
-        {
-            let _ = stream.set_write_timeout(Some(Duration::from_secs(1)));
-            let _ = stream.write_all(b"HTTP/1.1 503 Service Unavailable\r\nContent-Length: 0\r\nConnection: close\r\n\r\n");
+        let Ok(stream) = incoming else { continue };
+        let Some(permit) = acquire(&active, MAX_CONNECTIONS) else {
+            if let Some(permit) = acquire(&rejecting, MAX_REJECTIONS) {
+                let _ = std::thread::Builder::new()
+                    .name("chain-reject".into())
+                    .spawn(move || {
+                        let _permit = permit;
+                        let _ = reject_overload(stream);
+                    });
+            }
             continue;
-        }
-        let permit = ConnectionPermit(Arc::clone(&active));
+        };
         let api = Arc::clone(&api);
         let _ = std::thread::Builder::new()
             .name("chain-api".into())

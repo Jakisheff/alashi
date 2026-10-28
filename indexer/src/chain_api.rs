@@ -142,6 +142,20 @@ impl ChainApi {
             gate
         }
     }
+    fn remember(&self, pda: &str, entry: Cached) {
+        let mut cache = self.cache.lock().unwrap_or_else(|e| e.into_inner());
+        cache.insert(pda.to_owned(), entry);
+        if cache.len() > 32 {
+            if let Some(old) = cache
+                .iter()
+                .filter(|(k, _)| k.as_str() != pda)
+                .min_by_key(|(_, v)| v.at)
+                .map(|(k, _)| k.clone())
+            {
+                cache.remove(&old);
+            }
+        }
+    }
     pub fn get(&self, pda: &str) -> Result<Value, Error> {
         let key = Pubkey::from_str(pda).map_err(|_| Error::BadGame)?;
         if key.to_string() != pda {
@@ -166,9 +180,9 @@ impl ChainApi {
         if terminal {
             self.archive(pda, &mut value);
         }
-        let mut cache = self.cache.lock().unwrap_or_else(|e| e.into_inner());
-        cache.insert(
-            pda.to_owned(),
+        // Bound cached games even when many different addresses are requested.
+        self.remember(
+            pda,
             Cached {
                 value: value.clone(),
                 at: Instant::now(),
@@ -176,17 +190,6 @@ impl ChainApi {
                 seen_signatures,
             },
         );
-        // The cap bounds positive memory even if many games are requested.
-        if cache.len() > 32 {
-            if let Some(old) = cache
-                .iter()
-                .filter(|(k, _)| k.as_str() != pda)
-                .min_by_key(|(_, v)| v.at)
-                .map(|(k, _)| k.clone())
-            {
-                cache.remove(&old);
-            }
-        }
         Ok(value)
     }
     fn load_archive(&self, pda: &str) -> Option<Value> {
