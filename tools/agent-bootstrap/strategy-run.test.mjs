@@ -163,3 +163,23 @@ test('an owner tool ignoring SIGTERM is stopped at the deadline', async t => {
     rmSync(dir,{recursive:true,force:true});
   }
 });
+
+test('oversized owner tool also stops a descendant holding its output pipe', async () => {
+  if (process.platform === 'win32') return;
+  const dir = mkdtempSync(join(tmpdir(), 'alashi-tool-group-'));
+  const parentPath = join(dir, 'parent'), childPath = join(dir, 'child');
+  const descendant = `require('fs').writeFileSync(${JSON.stringify(childPath)}, String(process.pid)); setInterval(() => {}, 1000)`;
+  const code = `const fs=require('fs'); fs.writeFileSync(${JSON.stringify(parentPath)},String(process.pid)); require('child_process').spawn(process.execPath,['-e',${JSON.stringify(descendant)}],{stdio:['ignore','inherit','ignore']}); const timer=setInterval(()=>{if(fs.existsSync(${JSON.stringify(childPath)})){clearInterval(timer);process.stdout.write(Buffer.alloc(100000));}},10); setInterval(()=>{},1000)`;
+  const registry = {owned:{argv:[process.execPath,'-e',code],no_model_calls:true}};
+  const work = executeTool({tool:'owned',depends_on:[]},{brief:{}},{},registry).then(() => 'accepted', error => error.message);
+  let timer;
+  try {
+    const outcome = await Promise.race([work, new Promise(resolve => {timer = setTimeout(() => resolve('timed out'), 4000);})]);
+    assert.equal(outcome, 'owner_tool_failed');
+  } finally {
+    clearTimeout(timer);
+    for (const path of [parentPath, childPath]) { try { process.kill(Number(readFileSync(path, 'utf8')), 'SIGKILL'); } catch {} }
+    await work;
+    rmSync(dir,{recursive:true,force:true});
+  }
+});
