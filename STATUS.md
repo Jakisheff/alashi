@@ -472,3 +472,8 @@ Clock correction: two fresh TZ=Asia/Almaty date calls returned 29.10 16:15 after
 
 29.10.2026 16:18 Almaty. Public browser QA passed for main-a4e85f3-20261029. The loaded script uses that release prefix. Legacy act keeps the full hand in desktop and mobile frames. Thinking at paused 0.6 seconds shows unchanged text in the 15:04:16 and 16:15:18 captures; the clock jump prevents interpreting their difference as continuous observation time. Public map desktop/mobile positions at 9.7 seconds match the local fixed scene; replay start and pause were observed, with no JavaScript errors. GET and runtime verification passed. Physical-phone performance, browser reduced motion and new-viewer comprehension remain untested. Final documentation commit CI is pending.
 План уточнён ведущим агентом в 16:15: ещё 0,25 часа, до 16:30. Факт: 3,7 часа по часам ноутбука, 12:34→16:18, включая подтверждённый скачок примерно на 71 минуту. Активная длительность работы надёжно не измерена. Исправления и публикация завершены, план закрыт. Новая реальная игра не запускалась.
+
+
+### 29.10 16:25 · Завершение CI отчёта анимаций
+
+План: ещё 0,25 часа, до 16:40. Gitleaks принял публичный SHA-256 chain_api за ключ доступа в JSON-поле с путём API. Значение сверено с опубликованным version.json и серверным файлом. Отчёт использует отдельные поля path/sha256; в .gitleaksignore добавлен только точный fingerprint исторической строки. Проверки staged diff и этого коммита проходят. Приложение и опубликованный релиз не меняются. Итог GitHub CI фиксируется в локальном evidence/latest-documentation-ci.json и сообщении владельцу.
