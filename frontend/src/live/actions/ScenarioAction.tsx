@@ -10,6 +10,8 @@ import { applyScenario, displayTime } from './motion.ts'
 import { createScenarioProps } from './props.ts'
 import { MuleReference } from './MuleReference'
 import { createRig } from './rig.ts'
+import { playbackFrame } from '../playbackFrame.ts'
+import { visualStage } from '../visualTime.ts'
 
 const HERO = `${import.meta.env.BASE_URL}models/desk-genie.glb?v=20261008-articulated`
 
@@ -25,9 +27,10 @@ function useReducedMotion() {
 }
 
 /** Pure visual preview. Parent owns action confirmation, English copy and controls. */
-export function ScenarioAction({ preview, onTime, onFinished, syncSpeech = true }: {
+export function ScenarioAction({ preview, onTime, onVisualTime, onFinished, syncSpeech = true }: {
   preview: ScenarioPreview
   onTime: (time: number) => void
+  onVisualTime?: (time: number) => void
   onFinished: () => void
   syncSpeech?: boolean
 }) {
@@ -40,7 +43,8 @@ export function ScenarioAction({ preview, onTime, onFinished, syncSpeech = true 
   const anchor = useMemo(() => hero.getObjectByName('text-anchor'), [hero])
   const reduced = useReducedMotion()
   const time = useRef(0), lastReport = useRef(-1), finished = useRef(false)
-  const firstFrame = useRef(true)
+  const firstFrame = useRef(true), shownTime = useRef<number | null>(null), visualReported = useRef<string | number | null>(null)
+  const visualListener = useRef<typeof onVisualTime>(undefined)
 
   useEffect(() => {
     smokeRef.current = smoke
@@ -53,7 +57,7 @@ export function ScenarioAction({ preview, onTime, onFinished, syncSpeech = true 
     return () => { smoke.material.dispose(); props.dispose() }
   }, [hero, smoke, props])
   useEffect(() => {
-    time.current = 0; lastReport.current = -1; finished.current = false; firstFrame.current = true
+    time.current = 0; lastReport.current = -1; finished.current = false; firstFrame.current = true; shownTime.current = null; visualReported.current = null
   }, [preview.take, preview.action])
   useEffect(() => {
     if (preview.seek !== null) {
@@ -68,7 +72,13 @@ export function ScenarioAction({ preview, onTime, onFinished, syncSpeech = true 
     firstFrame.current = false
     if (preview.playing && !finished.current && !started) time.current = Math.min(ACTION_SECONDS, time.current + elapsed * speed)
     const actual = time.current
-    const shown = displayTime(preview.action, actual, reduced, preview.playing)
+    const selectedTime = displayTime(preview.action, actual, reduced, preview.playing)
+    const shown = playbackFrame(actual, selectedTime, shownTime.current, preview.playing, started && preview.seek !== null)
+    shownTime.current = shown
+    if (onVisualTime) {
+      const stage = visualStage(preview.action, shown)
+      if (visualListener.current !== onVisualTime || visualReported.current !== stage || (started && preview.seek !== null)) { visualListener.current = onVisualTime; visualReported.current = stage; onVisualTime(shown) }
+    } else visualListener.current = undefined
     applyScenario(rig, props, preview, shown, reduced)
     smokeRef.current.uniforms.uTime.value = reduced ? 0 : shown
     if (Math.abs(actual - lastReport.current) >= .09) { lastReport.current = actual; onTime(actual) }
@@ -83,6 +93,6 @@ export function ScenarioAction({ preview, onTime, onFinished, syncSpeech = true 
     <primitive object={hero} />
     <primitive object={props.root} />
     {preview.action === 'mule' && <Suspense fallback={null}><MuleReference props={props} /></Suspense>}
-    {anchor && createPortal(<ScreenText clock={syncSpeech ? () => time.current - actionStageAt(preview.action, time.current).at : undefined} reducedMotion={reduced} />, anchor)}
+    {anchor && createPortal(<ScreenText clock={syncSpeech ? () => { const shown = shownTime.current ?? time.current; return shown - actionStageAt(preview.action, shown).at } : undefined} reducedMotion={reduced} />, anchor)}
   </group>
 }

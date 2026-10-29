@@ -5,6 +5,7 @@ import { Link, useNavigate } from '@tanstack/react-router'
 import { Component, lazy, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { MarketTrade, type TradePreview } from '../live/market/MarketTrade'
 import { PurchaseReceipt } from '../live/market/PurchaseReceipt'
+import { useVisualTime } from '../live/visualTime'
 import { ScenarioAction, type ScenarioPreview } from '../live/actions'
 import { LivingGenie, type ReactionPreview } from '../live/reactions'
 import { validRecord } from '../live/api/client'
@@ -62,13 +63,16 @@ function DetailsTabs({ value, onChange, ready = true }: { value: DetailsTab; onC
     {tabs.map((tab) => <button key={tab} type="button" id={`devnet-tab-${tab}`} role="tab" disabled={!ready && tab !== 'setup'} aria-selected={value === tab} aria-controls="devnet-details" tabIndex={value === tab ? 0 : -1} onClick={() => onChange(tab)}>{tab === 'setup' ? 'Setup' : tab === 'player' ? 'This player' : tab === 'all' ? 'All players' : 'Game'}</button>)}
   </div>
 }
+function playerPlaybackState(mode: 'live' | 'replay', playing: boolean, current: boolean, position: number, total: number) {
+  const action = total ? Math.min(total, mode === 'replay' ? Math.max(1, position + 1) : total) : 0
+  const playLabel = mode === 'replay' && playing ? 'Pause' : mode === 'replay' && current ? 'Resume' : 'Play'
+  return { action, playLabel, transitioning: mode === 'replay' && !current && position < total }
+}
 function PlayerPlayback({ mode, playing, current, position, total, available, onToggle, onReplay, onSeek, onLatest }: {
   mode: 'live' | 'replay'; playing: boolean; current: boolean; position: number; total: number; available: boolean
   onToggle: () => void; onReplay: () => void; onSeek: (position: number) => void; onLatest: () => void
 }) {
-  const action = total ? Math.min(total, mode === 'replay' ? Math.max(1, position + 1) : total) : 0
-  const playLabel = mode === 'replay' && playing ? 'Pause' : mode === 'replay' && current ? 'Resume' : 'Play'
-  const transitioning = mode === 'replay' && !current && position < total
+  const { action, playLabel, transitioning } = playerPlaybackState(mode, playing, current, position, total)
   return <section className="devnet-player-controls" aria-label="Player replay controls">
     <label className="devnet-player-seek"><span>Player replay · {mode === 'replay' ? `Action ${action} / ${total}` : `${total} actions available`}</span>
       <input aria-label="Replay action" aria-valuetext={`Action ${action} of ${total}`} type="range" min={0} max={Math.max(0, total - 1)} step={1} value={Math.max(0, Math.min(mode === 'replay' ? position : total - 1, total - 1))} disabled={!available} onChange={(event) => onSeek(Number(event.target.value))} />
@@ -176,6 +180,7 @@ function GameViewer({ pda, initialPlayer, ownerRecord, setup, detailsTab, onTabC
   } : null
   const scenario: ScenarioPreview | null = action === 'mule' || action === 'bribe' || action === 'vote' ? { ...preview, action } : null
   const reaction: ReactionPreview | null = action === 'victory' ? { ...preview, kind: 'victory' } : null
+  const [visualTime, reportVisualTime] = useVisualTime(trade ? JSON.stringify([pda, faction?.pda, current?.id, take, trade.action]) : null, preview.seek, tradeTime)
   const connection = error ? (snapshot ? 'Reconnecting' : 'Unavailable') : !snapshot ? 'Connecting' : mode === 'replay' ? 'Replay' : snapshot.settled ? 'Finished' : 'On-chain'
   const remaining = snapshot ? Math.max(0, Math.ceil(snapshot.endsAt - now / 1000)) : 0
   const phaseDuration = snapshot?.events.find((event) => event.type === 'game_initialized')?.phaseDuration
@@ -210,7 +215,7 @@ function GameViewer({ pda, initialPlayer, ownerRecord, setup, detailsTab, onTabC
             <i style={{ transform: `scaleX(${mode === 'replay' ? replayFraction : error ? 0 : phaseFraction})` }} />
           </div>}
         </div>
-        <div ref={heroElement} className="live-hero" data-action={action ?? 'idle'}><div className="live-scene"><HeroBoundary><Suspense fallback={<p className="live-hero-fallback">Loading Degenie…</p>}><StudioStage><Scene frozen={null} background={null} studio interactive={false}>{trade ? <MarketTrade preview={trade} onTime={reportTradeTime} onFinished={finish} /> : scenario ? <ScenarioAction preview={scenario} onTime={ignoreTime} onFinished={finish} /> : <LivingGenie reaction={reaction} onFinished={finish} />}</Scene></StudioStage></Suspense></HeroBoundary></div>{trade?.action === 'buy' && <PurchaseReceipt result={trade.purchase} time={tradeTime} />}</div>
+        <div ref={heroElement} className="live-hero" data-action={action ?? 'idle'}><div className="live-scene"><HeroBoundary><Suspense fallback={<p className="live-hero-fallback">Loading Degenie…</p>}><StudioStage><Scene frozen={null} background={null} studio interactive={false}>{trade ? <MarketTrade preview={trade} onTime={reportTradeTime} onVisualTime={reportVisualTime} onFinished={finish} /> : scenario ? <ScenarioAction preview={scenario} onTime={ignoreTime} onFinished={finish} /> : <LivingGenie reaction={reaction} idlePlaying={running} onFinished={finish} />}</Scene></StudioStage></Suspense></HeroBoundary></div>{trade?.action === 'buy' && <PurchaseReceipt result={trade.purchase} time={visualTime} />}</div>
         <p className="devnet-action-caption" role="status">{displayEvent && faction ? eventLabel(displayEvent, faction) : waiting ? 'Loading actions…' : 'No confirmed actions yet.'}</p>
         {snapshot && <ChainConversationStream variant="stage" confirmedActions={feedEvents.map((e) => { const actor = snapshot.factions.find((f) => f.pda === e.faction || f.pda === e.from || f.wallet === e.wallet) ?? faction; return { id: e.id, label: actor ? eventLabel(e, actor) : e.type, signature: e.signature, selected: selectedEventIds.has(e.id) } })} gamePda={pda} mode={mode === 'replay' ? 'replay' : ['Finished', 'Aborted'].includes(snapshot.phase) ? 'finished' : 'live'} selectedPlayer={faction ? { pda: faction.pda, name: faction.name } : null} entries={conversations.rows} connection={journal.connection} historyComplete={journal.historyComplete && !conversations.unmatched} onRetry={journal.retry} />}
         <footer className="live-frame-footer"><span>{mode === 'replay' ? 'Replay · shortened pauses' : error ? 'Last received snapshot' : 'Confirmed actions'}</span><span>{short(pda)}</span></footer>

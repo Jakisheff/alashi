@@ -1,6 +1,7 @@
 import { Component, lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { MarketTrade, type TradePreview } from '../live/market/MarketTrade'
 import { PurchaseReceipt } from '../live/market/PurchaseReceipt'
+import { useVisualTime } from '../live/visualTime'
 import { ScenarioAction, type ScenarioPreview } from '../live/actions'
 import { LivingGenie, type ReactionPreview } from '../live/reactions'
 import { StudioStage } from '../studio/StudioStage'
@@ -72,15 +73,16 @@ function Replay({ events, faction, available }: { events: ChainEvent[]; faction:
   } : null
   const scenario: ScenarioPreview | null = action === 'mule' || action === 'bribe' || action === 'vote' ? { ...preview, action } : null
   const reaction: ReactionPreview | null = action === 'victory' ? { ...preview, kind: 'victory' } : null
+  const [visualTime, reportVisualTime] = useVisualTime(trade ? JSON.stringify([current?.id, clock.take, trade.action]) : null, clock.seek, receiptClock.take === clock.take ? receiptClock.time : 0)
   const displayed = current ?? history.at(-1)
   return <>
     <div ref={stage} className="home-replay-stage" data-action={action ?? 'idle'} data-event-id={current?.id ?? ''} data-take={clock.take} data-time={receiptClock.take === clock.take ? receiptClock.time : 0}>
       <PreviewBoundary><Suspense fallback={<p className="home-replay-fallback">Loading Degenie…</p>}><StudioStage>
         <Scene frozen={null} background={null} studio interactive={false}>
-          {trade ? <MarketTrade preview={trade} onTime={reportTime} onFinished={finish} /> : scenario ? <ScenarioAction preview={scenario} onTime={reportTime} onFinished={finish} /> : <LivingGenie reaction={reaction} onTime={reportTime} onFinished={finish} />}
+          {trade ? <MarketTrade preview={trade} onTime={reportTime} onVisualTime={reportVisualTime} onFinished={finish} /> : scenario ? <ScenarioAction preview={scenario} onTime={reportTime} onFinished={finish} /> : <LivingGenie reaction={reaction} onTime={reportTime} onFinished={finish} />}
         </Scene>
       </StudioStage></Suspense></PreviewBoundary>
-      {trade?.action === 'buy' && <PurchaseReceipt result={trade.purchase} time={receiptClock.take === clock.take ? receiptClock.time : 0} />}
+      {trade?.action === 'buy' && <PurchaseReceipt result={trade.purchase} time={visualTime} />}
     </div>
     <div className="home-replay-footer">
       <p role="status" className="home-replay-caption">{displayed ? eventLabel(displayed, faction) : 'No confirmed events for this player.'}</p>
