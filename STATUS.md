@@ -445,3 +445,15 @@ Release main-542a77a-20261029 is live. All five CI jobs passed on its main commi
 ## 29.10.2026 11:16, WebGL assessment corrected
 
 29.10.2026 11:16 Almaty. Corrected the deployment report's WebGL claim. The prior conclusion came from reading the canvas fallback text in an accessibility snapshot. Fiber 9.8.1 always puts that text inside canvas; it is not a renderer-failure signal. Direct visual inspection in the same in-app browser confirmed the 3D character rendering in the deployed main-542a77a-20261029 release. The console reported no errors. A screenshot is retained as webgl-confirmed-desktop.jpg. This verifies rendering in the observed replay; exhaustive visual acceptance of every animation was not performed. Product code and the deployment are unchanged.
+
+### 2026-10-29: audit all character animations
+
+29.10.2026 12:34 Almaty. План: 1,5 часа, до 14:04. Inspect every character animation on alashi.network at desktop and phone sizes. Verify intention, contact, consequence and replay controls against the existing Lasseter concepts. Reproduce defects, repair them and verify the published result.
+
+29.10.2026 13:25 Almaty. A fresh clock read confirmed the current time after context recovery. The inventory contains 18 character modes plus the map sprite playback. Baseline build and animation checks passed, including 8,654 sampled frames. Code inspection identified separate text timing and map clip timing for reproduction. Existing purchase and five-action concept images define the visual target; they remain concepts rather than claims about rendered detail.
+
+Viewer acceptance: the same confirmed event drives the motion and receipt. Pause and reverse seek preserve the whole pose, including screen text. Hands maintain contact and the face remains readable at 390 and 320 pixels. The audit must distinguish browser viewport checks from physical-phone and new-viewer acceptance.
+
+29.10.2026 13:38 Almaty. План уточнён: ещё 1 час, до 14:38. All five action contacts and seven reaction key poses were inspected at 390px, with tight compositions also checked at 320px. A separate 8,792-pose projection check found no head cropping. Confirmed defects concern paused screen text, map gesture timing, preview labelling and missing thought clearance in the real stream. Fixes and regression checks are being integrated. The in-app browser connection failed during desktop inspection; Chrome is now connected. Use the production build preview because the local Vite dependency optimizer loaded duplicate React/Fiber modules. Final browser acceptance and publication remain pending.
+
+29.10.2026 13:59 Almaty. Fixed text pause was inspected in Chrome: the face text remained visible at the paused pose. Regression checks now distinguish synchronous preview speech from asynchronous messages in /stream. The browser accepted the local stream fixture; its test-only CSP needed to allow the existing Troika worker compiler. Legacy visual review then exposed clipped fingertips in the home act pose and insufficient top clearance in accepted. A non-studio camera correction and full legacy frustum regression are being prepared.
