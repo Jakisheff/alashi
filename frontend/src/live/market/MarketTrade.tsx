@@ -10,6 +10,8 @@ import { createSmokeMaterial } from '../../genie/smoke'
 import { PURCHASE_CONTACT, purchaseMotionAt, type PurchaseResult } from './purchase'
 import { saleMotionAt } from './sale'
 import { BUY_COUNTER, poseTradeHands, purchaseCrateOpacity, purchaseCratePosition } from './hands'
+import { playbackFrame } from '../playbackFrame.ts'
+import { visualStage } from '../visualTime.ts'
 
 export const TRADE_SECONDS = 6.4
 export type TradeEntry = 'bottom' | 'side'
@@ -26,7 +28,7 @@ function fade(materials: Material[], amount: number) {
   for (const m of materials) { m.opacity = amount; m.depthWrite = amount > .98 }
 }
 
-export function MarketTrade({ preview, onTime, onFinished, syncSpeech = true }: { preview: TradePreview; onTime: (t: number) => void; onFinished: () => void; syncSpeech?: boolean }) {
+export function MarketTrade({ preview, onTime, onVisualTime, onFinished, syncSpeech = true }: { preview: TradePreview; onTime: (t: number) => void; onVisualTime?: (t: number) => void; onFinished: () => void; syncSpeech?: boolean }) {
   const [reduced, setReduced] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches)
   useEffect(() => {
     const media = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -82,7 +84,8 @@ export function MarketTrade({ preview, onTime, onFinished, syncSpeech = true }: 
   const smokeRef = useRef(smoke)
   useEffect(() => { owned.current = props; smokeRef.current = smoke }, [props, smoke])
   const time = useRef(0), reported = useRef(-1), finished = useRef(false)
-  const firstFrame = useRef(true)
+  const firstFrame = useRef(true), shownTime = useRef<number | null>(null), visualReported = useRef<string | number | null>(null)
+  const visualListener = useRef<typeof onVisualTime>(undefined)
   const palmUp = useMemo(() => new Quaternion().setFromAxisAngle(new Vector3(1, 0, 0), -Math.PI / 2), [])
 
   useEffect(() => {
@@ -92,7 +95,7 @@ export function MarketTrade({ preview, onTime, onFinished, syncSpeech = true }: 
     })
   }, [hero, smoke])
   useEffect(() => () => { smoke.material.dispose(); props.disposeProps() }, [smoke, props])
-  useEffect(() => { time.current = 0; reported.current = -1; finished.current = false; firstFrame.current = true }, [preview.take, preview.action])
+  useEffect(() => { time.current = 0; reported.current = -1; finished.current = false; firstFrame.current = true; shownTime.current = null; visualReported.current = null }, [preview.take, preview.action])
   useEffect(() => { if (preview.seek !== null) { time.current = Number.isFinite(preview.seek) ? Math.max(0, Math.min(TRADE_SECONDS, preview.seek)) : 0; reported.current = -1; finished.current = false; firstFrame.current = true } }, [preview.seek, preview.take, preview.action])
 
   useFrame((_state, delta) => {
@@ -106,7 +109,13 @@ export function MarketTrade({ preview, onTime, onFinished, syncSpeech = true }: 
     firstFrame.current = false
     if (preview.playing && !finished.current && !started) time.current = Math.min(TRADE_SECONDS, time.current + elapsed * speed)
     const actual = time.current
-    const t = reduced && preview.playing ? (actual < 5.4 ? 4.25 : 6.4) : actual
+    const selectedTime = reduced && preview.playing ? (actual < 5.4 ? 4.25 : 6.4) : actual
+    const t = playbackFrame(actual, selectedTime, shownTime.current, preview.playing, started && preview.seek !== null)
+    shownTime.current = t
+    if (onVisualTime) {
+      const stage = visualStage(preview.action, t)
+      if (visualListener.current !== onVisualTime || visualReported.current !== stage || (started && preview.seek !== null)) { visualListener.current = onVisualTime; visualReported.current = stage; onVisualTime(t) }
+    } else visualListener.current = undefined
     const opacity = ramp(t, 0, .6) * (1 - ramp(t, 5.5, 6.4))
     // The cached hero's clips and geometry are untouched. This clone starts from a stable idle pose each frame.
     // Restore constant tracks and untracked bones too, including the new body,
@@ -240,7 +249,7 @@ export function MarketTrade({ preview, onTime, onFinished, syncSpeech = true }: 
       </mesh>)}
     </group>
     {anchor && createPortal(<ScreenText clock={syncSpeech ? () => {
-      const t = time.current
+      const t = shownTime.current ?? time.current
       const stageStart = preview.action === 'buy' ? t >= PURCHASE_CONTACT ? PURCHASE_CONTACT : t >= 2.7 ? 2.7 : 0 : 0
       return t - stageStart
     } : undefined} reducedMotion={reduced} />, anchor)}

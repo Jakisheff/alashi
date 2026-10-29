@@ -6,6 +6,7 @@ import { useScene } from '../store'
 import { demoState, formatDuration, SCENARIOS, type Scenario } from './demo'
 import { MarketTrade, TRADE_SECONDS, type TradeAction, type TradeEntry, type TradePreview } from './market/MarketTrade'
 import { PurchaseReceipt } from './market/PurchaseReceipt'
+import { useVisualTime } from './visualTime'
 import { DEMO_PURCHASE } from './market/purchase'
 import { ScenarioAction, ACTION_SECONDS, ACTION_META, actionStageAt, type ScenarioActionName } from './actions'
 import { LivingGenie, REACTION_SECONDS, REACTION_KEYFRAMES, REACTION_LABELS, REACTION_THOUGHTS, type ReactionKind, type ReactionPreview } from './reactions'
@@ -44,6 +45,7 @@ export default function LivePage() {
     useScene.getState().say(''); useScene.getState().play('idle')
   }, [])
   const [tradeTime, setTradeTime] = useState(0)
+  const [visualTime, reportVisualTime] = useVisualTime(trade ? JSON.stringify([session, trade.take, trade.action]) : null, trade?.seek ?? null, tradeTime)
   const [tradeEntry, setTradeEntry] = useState<TradeEntry>('bottom')
   const tradeTake = useRef(0)
   const finishTrade = useCallback(() => {
@@ -138,10 +140,10 @@ export default function LivePage() {
     useScene.getState().say(kind === 'thinking' ? 'Let me think…' : REACTION_THOUGHTS[kind])
   }
   const duration = trade && isScenario(trade.action) ? ACTION_SECONDS : TRADE_SECONDS
-  const scenarioStage = trade && isScenario(trade.action) ? actionStageAt(trade.action, tradeTime) : null
-  const tradeStage = !trade ? '' : scenarioStage ? (tradeTime < 6.5 ? scenarioStage.label : '') : tradeTime >= 5.5 ? '' : trade.action === 'buy'
-    ? tradeTime < 2.7 ? 'Paying' : tradeTime < 3.65 ? 'Receiving' : 'Purchased'
-    : tradeTime < 2.8 ? 'Offering' : tradeTime < 3.65 ? 'Payment' : 'Sold'
+  const scenarioStage = trade && isScenario(trade.action) ? actionStageAt(trade.action, visualTime) : null
+  const tradeStage = !trade ? '' : scenarioStage ? (visualTime < 6.5 ? scenarioStage.label : '') : visualTime >= 5.5 ? '' : trade.action === 'buy'
+    ? visualTime < 2.7 ? 'Paying' : visualTime < 3.65 ? 'Receiving' : 'Purchased'
+    : visualTime < 2.8 ? 'Offering' : visualTime < 3.65 ? 'Payment' : 'Sold'
   useEffect(() => {
     if (scenarioStage) { useScene.getState().say(scenarioStage.text); return }
     if (tradeStage === 'Paying') useScene.getState().say('Deal. Take my coin.')
@@ -174,11 +176,11 @@ export default function LivePage() {
 
           <div ref={hero} className="live-hero" data-action={trade?.action ?? 'idle'} data-reaction={reaction?.kind ?? 'idle'}>
             <div className="live-scene"><HeroBoundary><Suspense fallback={<p className="live-hero-fallback">Loading Degenie…</p>}><StudioStage><Scene frozen={null} background={null} studio interactive={false}>
-              {trade ? isScenario(trade.action) ? <ScenarioAction preview={{ ...trade, action: trade.action }} onTime={setTradeTime} onFinished={finishTrade} /> : <MarketTrade preview={{ ...trade, action: trade.action }} onTime={setTradeTime} onFinished={finishTrade} /> : <LivingGenie reaction={reaction} onTime={setReactionTime} onFinished={finishReaction} />}
+              {trade ? isScenario(trade.action) ? <ScenarioAction preview={{ ...trade, action: trade.action }} onTime={setTradeTime} onVisualTime={reportVisualTime} onFinished={finishTrade} /> : <MarketTrade preview={{ ...trade, action: trade.action }} onTime={setTradeTime} onVisualTime={reportVisualTime} onFinished={finishTrade} /> : <LivingGenie reaction={reaction} onTime={setReactionTime} onFinished={finishReaction} />}
             </Scene></StudioStage></Suspense></HeroBoundary></div>
             {reaction?.kind === 'thinking' && reactionTime >= .6 && reactionTime < 4.5 && <ThoughtBubble key={reaction.take} text={thinkingText} preview />}
-            {trade?.action === 'buy' && <PurchaseReceipt result={trade.purchase} time={tradeTime} />}
-            {tradeStage && !(trade?.action === 'buy' && tradeTime >= 3.65) && <div className="live-trade-stage" aria-live="polite"><span>{trade?.action.toUpperCase()}</span>{tradeStage}</div>}
+            {trade?.action === 'buy' && <PurchaseReceipt result={trade.purchase} time={visualTime} />}
+            {tradeStage && !(trade?.action === 'buy' && visualTime >= 3.65) && <div className="live-trade-stage" aria-live="polite"><span>{trade?.action.toUpperCase()}</span>{tradeStage}</div>}
           </div>
 
           <div className="live-transcript">

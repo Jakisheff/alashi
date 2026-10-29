@@ -10,9 +10,10 @@ import ts from 'typescript'
 const source = new URL('../src/devnet/DevnetPage.tsx', import.meta.url)
 const require = createRequire(source)
 const ast = ts.createSourceFile(source.pathname, readFileSync(source, 'utf8'), ts.ScriptTarget.ES2023, true, ts.ScriptKind.TSX)
-let controls, replay, finish, reset, player
+let controls, playbackState, replay, finish, reset, player
 function visit(node) {
   if (ts.isFunctionDeclaration(node) && node.name?.text === 'PlayerPlayback') controls = node
+  if (ts.isFunctionDeclaration(node) && node.name?.text === 'playerPlaybackState') playbackState = node
   if (ts.isVariableDeclaration(node) && node.name.getText(ast) === 'replay' && node.initializer && ts.isArrowFunction(node.initializer)) replay = node
   if (ts.isVariableDeclaration(node) && node.name.getText(ast) === 'finish' && node.initializer && ts.isCallExpression(node.initializer)) finish = node.initializer.arguments[0]
   if (ts.isVariableDeclaration(node) && node.name.getText(ast) === 'reset' && node.initializer && ts.isCallExpression(node.initializer)) reset = node.initializer.arguments[0]
@@ -21,6 +22,7 @@ function visit(node) {
 }
 visit(ast)
 assert.ok(controls, 'Player replay needs a visible, accessible control panel')
+assert.ok(playbackState, 'Player replay needs its playback state labels')
 assert.ok(replay, 'Player replay needs its existing event seek callback')
 assert.ok(finish && ts.isArrowFunction(finish), 'Player replay needs its event completion callback')
 assert.ok(reset && ts.isArrowFunction(reset), 'Player replay needs its existing reset callback')
@@ -28,7 +30,7 @@ assert.ok(player, 'Player controls must be connected to the actual game viewer')
 const compile = text => ts.transpileModule(text, { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, target: ts.ScriptTarget.ES2023 } }).outputText
 function component(props) {
   const module = { exports: {} }
-  runInNewContext(compile(`${controls.getText(ast)}\nmodule.exports = PlayerPlayback`), { require, module, exports: module.exports })
+  runInNewContext(compile(`${playbackState.getText(ast)}\n${controls.getText(ast)}\nmodule.exports = PlayerPlayback`), { require, module, exports: module.exports })
   return module.exports(props)
 }
 function descendants(element) {
@@ -58,6 +60,10 @@ const playing = descendants(component({ ...base, playing: true }))
 assert.ok(playing.some(e => e.type === 'button' && e.props['aria-label'] === 'Pause'), 'Playing shows an accessible pause')
 const liveHtml = renderToStaticMarkup(component({ ...base, mode: 'live', playing: false, current: false }))
 assert.match(liveHtml, /3 actions available/, 'Live mode offers the recorded actions without pretending the live game is paused')
+const transitioning = descendants(component({ ...base, current: false }))
+assert.equal(transitioning.find(e => e.type === 'button' && e.props['aria-label'] === 'Play')?.props.disabled, true, 'Play waits while the selected event is loading')
+const ended = descendants(component({ ...base, current: false, position: 3 }))
+assert.equal(ended.find(e => e.type === 'button' && e.props['aria-label'] === 'Play')?.props.disabled, false, 'Play is available after the final event')
 
 function wiredActions(mode, position) {
   const calls = [], module = { exports: {} }, replayEvents = ['a', 'b', 'c'], activeEvents = ['a', 'b', 'c']
