@@ -1,0 +1,262 @@
+{
+  "release": "main-a4e85f3-20261029",
+  "commit": "a4e85f379e9cdb295dad0dccea178949c14df13f",
+  "pull_request": "https://github.com/Jakisheff/alashi/pull/65",
+  "recorded_at_local": "29.10.2026 16:15 Asia/Almaty",
+  "status": "published_verified",
+  "ci": {
+    "commit": "a4e85f379e9cdb295dad0dccea178949c14df13f",
+    "run": "https://github.com/Jakisheff/alashi/actions/runs/40852936635",
+    "status": "completed",
+    "conclusion": "success",
+    "passed_jobs": 5,
+    "pr_run": {
+      "id": "40851777684",
+      "commit": "b40ba6a",
+      "conclusion": "success",
+      "passed_jobs": 5
+    }
+  },
+  "public": {
+    "ok": true,
+    "at_utc": "2026-10-29T10:04:13.751437+00:00",
+    "origin": "https://alashi.network",
+    "release": "main-a4e85f3-20261029",
+    "commit": "a4e85f379e9cdb295dad0dccea178949c14df13f",
+    "checks": {
+      "immutable_assets": {
+        "total": 120,
+        "passed": 120
+      },
+      "root_index": {
+        "status": 200,
+        "sha256": "218c03adfdc3a8a6b59d4fb0579688f0adcf8458a7d9679a402e5057b2c96205",
+        "bytes": 6510
+      },
+      "manifest": {
+        "release": "main-a4e85f3-20261029",
+        "frontend_commit": "a4e85f379e9cdb295dad0dccea178949c14df13f"
+      },
+      "route:/strategies": {
+        "status": 200,
+        "json": false
+      },
+      "route:/devnet": {
+        "status": 200,
+        "json": false
+      },
+      "route:/stream": {
+        "status": 200,
+        "json": false
+      },
+      "route:/games": {
+        "status": 200,
+        "json": true
+      },
+      "route:/strategy-library": {
+        "status": 200,
+        "json": true
+      },
+      "route:/research-library": {
+        "status": 200,
+        "json": true
+      },
+      "archived_game": {
+        "unchanged": true,
+        "events": 72,
+        "history_complete": true,
+        "archived": true
+      },
+      "runner": {
+        "url": "https://alashi.network/releases/main-542a77a-20261029/downloads/alashi-research-runner-542a77a.tar.gz",
+        "sha256": "d764f60377352e7ec72e4d41f95cb5aabb6b70f490d9d587d4a8d4a5b8adb16b",
+        "source_commit": "542a77ac30ffc85210410e8160c3ccf3da11a856",
+        "tar_commit": "542a77ac30ffc85210410e8160c3ccf3da11a856"
+      },
+      "anonymous:strategies": {
+        "status": 401,
+        "no_store": true
+      },
+      "anonymous:comparisons": {
+        "status": 401,
+        "no_store": true
+      },
+      "anonymous:research": {
+        "status": 401,
+        "no_store": true
+      },
+      "deck": {
+        "verified": [
+          {
+            "kind": "pdf",
+            "urls": [
+              "https://alashi.network/deck/downloads/alashi-deck-20261011-r3.pdf"
+            ],
+            "sha256": "a4ed376213e43858abdb8b34f25315fcd34650ded94f47ca69a04f576561dc8e"
+          },
+          {
+            "kind": "pptx",
+            "urls": [
+              "https://alashi.network/deck/downloads/alashi-deck-20261011-r3.pptx"
+            ],
+            "sha256": "d84671a6255d604db3a359d2734811d441eb292a8d49f0a67243a244901b8d8c"
+          }
+        ],
+        "manual_checks": [],
+        "discovery": [
+          {
+            "path": "/deck/",
+            "status": 200
+          },
+          {
+            "path": "/deck/downloads/",
+            "status": 403
+          }
+        ]
+      }
+    },
+    "failures": []
+  },
+  "browser": {
+    "release": "main-a4e85f3-20261029",
+    "status": "passed",
+    "observed_by": "root agent in Chrome",
+    "script_release_prefix": "/releases/main-a4e85f3-20261029/",
+    "legacy_act": {
+      "desktop": "full hand in frame",
+      "mobile": "full hand in frame"
+    },
+    "thinking_mobile": {
+      "paused_seconds": 0.6,
+      "text_unchanged_between_captures": true,
+      "capture_times_local": [
+        "15:04:16",
+        "16:15:18"
+      ],
+      "clock_jump_limits_elapsed_time_claim": true
+    },
+    "map": {
+      "desktop": "paused at 9.7 seconds through native slider; positions match local fixed scene",
+      "mobile": "paused at 9.7 seconds through native slider; positions match local fixed scene",
+      "replay_start_and_pause": "observed"
+    },
+    "consoleErrors": [],
+    "ownerWrites": false
+  },
+  "runtime": {
+    "ok": true,
+    "at_utc": "2026-10-29T10:02:30.787276+00:00",
+    "checks": {
+      "current": true,
+      "previous": true,
+      "services_and_pids_unchanged": true,
+      "binary_sha256_unchanged": true,
+      "manifest_exact": true
+    },
+    "current": "/var/www/alashi/releases/main-a4e85f3-20261029",
+    "previous": "/var/www/alashi/releases/main-542a77a-20261029",
+    "services": {
+      "alashi-arena": {
+        "ActiveState": "active",
+        "MainPID": "1863379"
+      },
+      "alashi-chain-api": {
+        "ActiveState": "active",
+        "MainPID": "2400970"
+      },
+      "alashi-live-staging": {
+        "ActiveState": "active",
+        "MainPID": "567708"
+      },
+      "alashi-match-host": {
+        "ActiveState": "active",
+        "MainPID": "1166134"
+      }
+    },
+    "binaries": {
+      "/opt/alashi-arena/arenad": "b7682bb8757b6b7ed9e00ad9da515322889f2b00dfb25c4682cd97b5ae0d8edb",
+      "/opt/alashi-chain-api/chain_api": "ff1c1c08f1369ff0268c18811a52728eaaf19985e8b200e026b7123b1aeeaf1e"
+    },
+    "failures": []
+  },
+  "preservation": {
+    "candidate_guard": "passed",
+    "preserved_file_counts": {
+      "deck": 60,
+      "downloads": 4
+    },
+    "runner": {
+      "filename": "alashi-research-runner-542a77a.tar.gz",
+      "runtime_commit": "39bda6678ec787eaa47e8c7c2768646e6b2f9fa3",
+      "execution_claims": true,
+      "route": "/strategies",
+      "runner_url": "/releases/main-542a77a-20261029/downloads/alashi-research-runner-542a77a.tar.gz",
+      "runner_sha256": "d764f60377352e7ec72e4d41f95cb5aabb6b70f490d9d587d4a8d4a5b8adb16b",
+      "runner_source_commit": "542a77ac30ffc85210410e8160c3ccf3da11a856",
+      "independent_journals_exclusive": true,
+      "concurrent_copies_of_same_journal_supported": false,
+      "paid_provider_acceptance": "not_run"
+    },
+    "api_arena_runner_input_trees_unchanged": true
+  },
+  "local_visual": {
+    "observer": "root agent in Chrome",
+    "stream_desktop": {
+      "short_bubble_lines": 2,
+      "face_message_readable": true,
+      "data": "LOCAL QA fixture"
+    },
+    "legacy_rejected_mobile": {
+      "width": 390,
+      "time": 0.95,
+      "expression_settled": true,
+      "hands_in_frame": true
+    },
+    "legacy_idle_desktop": "viewed",
+    "legacy_fuckoff_mobile": "played from native demo keyboard shortcut; winding pose captured",
+    "map": {
+      "data": "localhost archive fixture for finished devnet game",
+      "events": 72,
+      "verified_fixture_responses": 4,
+      "desktop": {
+        "width": 1280,
+        "rewind_seconds": [
+          9.7,
+          0
+        ]
+      },
+      "mobile_end": {
+        "width": 390,
+        "scrollWidth": 390,
+        "time": 33.5
+      },
+      "mobile_replay_motion": "observed"
+    }
+  },
+  "limits": [
+    "Phone-size checks used desktop browser viewports; no physical-phone performance measurements.",
+    "Browser system reduced motion was not toggled.",
+    "Gesture comprehension by a new viewer was not tested.",
+    "No new real match or paid provider call was launched for the visual audit."
+  ],
+  "screenshots": [
+    "fixed-map-desktop.jpg",
+    "fixed-map-rewind-desktop.jpg",
+    "fixed-map-mobile-end.jpg",
+    "fixed-map-mobile-motion.jpg",
+    "fixed-legacy-rejected-mobile.jpg",
+    "fixed-legacy-fuckoff-mobile-motion.jpg",
+    "fixed-stream-thinking-desktop.jpg",
+    "fixed-legacy-idle-desktop.jpg",
+    "public-map-mobile.jpg",
+    "public-fixed-legacy-act-desktop.jpg"
+  ],
+  "verified_at_local": "29.10.2026 16:18 Asia/Almaty",
+  "timing": {
+    "started_local": "29.10.2026 12:34 Asia/Almaty",
+    "implementation_and_publication_verified_local": "29.10.2026 16:18 Asia/Almaty",
+    "notebook_clock_hours_rounded": 3.7,
+    "clock_jump_minutes_approx": 71,
+    "active_work_duration_reliable": false
+  }
+}
