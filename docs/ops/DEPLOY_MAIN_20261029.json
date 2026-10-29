@@ -169,8 +169,16 @@
         "url": "https://alashi.network/releases/main-542a77a-20261029/assets/smoke-D6uXUopX.js"
       }
     ],
-    "webgl3d": "unavailable in this browser before and after deployment; fallback displayed",
-    "ownerWrites": false
+    "webgl3d": "Visually confirmed working in the same in-app browser on the deployed release.",
+    "ownerWrites": false,
+    "webgl_correction": {
+      "at_local": "29.10.2026 11:16 Asia/Almaty",
+      "previous_inference": "unavailable in this browser before and after deployment; fallback displayed",
+      "cause": "The accessibility snapshot exposed fallback text that Fiber always places inside canvas. That text is not a WebGL capability or renderer-failure signal.",
+      "evidence": "webgl-confirmed-desktop.jpg",
+      "deployed_script": "/releases/main-542a77a-20261029/assets/index-Cx85Oe5u.js",
+      "console_errors": []
+    }
   },
   "runtime": {
     "at_utc": "2026-10-28T22:27:07.797991+00:00",
@@ -229,12 +237,13 @@
   },
   "limits": [
     "Paid provider acceptance and public-cluster transactions were not run.",
-    "WebGL 3D rendering was unavailable in the test browser before and after deployment; fallback and 2D replay were checked."
+    "The observed 3D replay rendered correctly; exhaustive visual acceptance of every animation was not performed."
   ],
   "screenshots": [
     "devnet-mobile.jpg",
     "devnet-desktop.jpg",
     "strategies-mobile.jpg",
-    "strategies-desktop.jpg"
+    "strategies-desktop.jpg",
+    "webgl-confirmed-desktop.jpg"
   ]
 }

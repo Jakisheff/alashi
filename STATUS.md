@@ -441,3 +441,7 @@ Main commit 542a77a passed all five CI jobs. Release main-542a77a-20261029 is no
 Release main-542a77a-20261029 is live. All five CI jobs passed on its main commit. Public verification passed all 120 asset hashes and the API, archived game, runner and deck checks. Desktop/mobile checks passed; WebGL 3D remains unverified in this browser. Service PIDs and binary hashes are unchanged. [Deployment evidence](docs/ops/DEPLOY_MAIN_20261029.json) records the checks and limits.
 
 Факт: 0,48 часа (03:03-03:32, Алматы). План: 1 час, до 04:03 закрыт.
+
+## 29.10.2026 11:16, WebGL assessment corrected
+
+29.10.2026 11:16 Almaty. Corrected the deployment report's WebGL claim. The prior conclusion came from reading the canvas fallback text in an accessibility snapshot. Fiber 9.8.1 always puts that text inside canvas; it is not a renderer-failure signal. Direct visual inspection in the same in-app browser confirmed the 3D character rendering in the deployed main-542a77a-20261029 release. The console reported no errors. A screenshot is retained as webgl-confirmed-desktop.jpg. This verifies rendering in the observed replay; exhaustive visual acceptance of every animation was not performed. Product code and the deployment are unchanged.
