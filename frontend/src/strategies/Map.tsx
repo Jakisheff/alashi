@@ -155,9 +155,26 @@ function MapPlaybackControls({ playerControls, slider, timeLabel, playing, disab
     </div>
   </div> : <input ref={slider} className="replay-position" aria-label="Replay position in seconds" type="range" min="0" max="20" step="0.1" defaultValue="0" disabled={disabled || assetsFailed} onChange={e => onSeek(e.target.value)} />
 }
+function useMapPlayback(slider: RefObject<HTMLInputElement | null>, playerControls: boolean) {
+  const seek = useRef<number | null>(null), ended = useRef(false)
+  const [paused, setPaused] = useState(false), [replay, setReplay] = useState(0)
+  const restart = () => { ended.current = false; seek.current = 0; setPaused(false); setReplay(n => n + 1) }
+  const togglePlayback = () => {
+    if (paused && ended.current) restart()
+    else setPaused(p => !p)
+  }
+  const seekTo = (value: string) => {
+    const position = Number(value)
+    seek.current = position
+    if (playerControls && position < Number(slider.current?.max ?? Infinity)) ended.current = false
+    setPaused(true)
+  }
+  return { seek, ended, paused, setPaused, replay, restart, togglePlayback, seekTo }
+}
 export function DegenieMap({ teams, online, caption, trading = false, onTime, playerControls = false }: { teams: MapTeam[]; online: boolean; caption: string; trading?: boolean; onTime?: (time: number) => void; playerControls?: boolean }) {
-  const canvas = useRef<HTMLCanvasElement>(null), slider = useRef<HTMLInputElement>(null), seek = useRef<number | null>(null), [paused, setPaused] = useState(false), [replay, setReplay] = useState(0), [error, setError] = useState('')
-  const timeLabel = useRef<HTMLOutputElement>(null), ended = useRef(false), [canvasUnavailable, setCanvasUnavailable] = useState(false)
+  const canvas = useRef<HTMLCanvasElement>(null), slider = useRef<HTMLInputElement>(null), timeLabel = useRef<HTMLOutputElement>(null)
+  const { seek, ended, paused, setPaused, replay, restart, togglePlayback, seekTo } = useMapPlayback(slider, playerControls)
+  const [error, setError] = useState(''), [canvasUnavailable, setCanvasUnavailable] = useState(false)
   const current = useRef({ teams, online, paused, onTime }); current.current = { teams, online, paused, onTime }
   useEffect(() => {
     const ctx = canvas.current?.getContext('2d'); if (!ctx) { setCanvasUnavailable(true); return }
@@ -179,17 +196,6 @@ export function DegenieMap({ teams, online, caption, trading = false, onTime, pl
   }, [teams.map(r => r.id).join(':'), replay, trading, playerControls])
   const hasStages = teams.some(t => t.stages.length)
   const playing = hasStages && online && !paused && !canvasUnavailable && !error
-  const restart = () => { ended.current = false; seek.current = 0; setPaused(false); setReplay(n => n + 1) }
-  const togglePlayback = () => {
-    if (paused && ended.current) restart()
-    else setPaused(p => !p)
-  }
-  const seekTo = (value: string) => {
-    const position = Number(value)
-    seek.current = position
-    if (playerControls && position < Number(slider.current?.max ?? Infinity)) ended.current = false
-    setPaused(true)
-  }
   return <section className="strategy-map" aria-label="Whole map of Degenie tasks">
     <MapCaption caption={caption} playerControls={playerControls} paused={paused} disabled={!hasStages || canvasUnavailable} assetsFailed={Boolean(error)} onReplay={restart} onToggle={togglePlayback} />
     <canvas ref={canvas} width={1672} height={941} role="img" aria-label={trading ? "Two owner teams of Degenie visualize confirmed trading receipts on the whole map." : "Two owner teams send their Degenie to tasks in parallel, use tools, and return reports."} />
