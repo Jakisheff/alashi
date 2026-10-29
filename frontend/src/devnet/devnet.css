@@ -81,12 +81,14 @@
 .devnet-leaderboard-cash { grid-column: 3; text-align: right; }
 .devnet-context { pointer-events: auto; }
 .devnet-context > strong { font-size: clamp(13px, 4cqw, 18px); }
-.devnet-stage-playback { display: flex; align-items: center; gap: 6px; margin-top: 6px; }
-.devnet-stage-playback button { flex-shrink: 0; min-height: 32px; border: 1px solid #d9d9e233; border-radius: 5px; padding: 4px 7px; background: #11101855; color: #F4F2F8; font-size: 10px; }
-.devnet-stage-playback input { flex: 1; min-width: 0; width: 100%; height: 32px; accent-color: #a78bfa; }
-.devnet-replay-progress { position: relative; overflow: visible; }
-.devnet-replay-seek { position: absolute; inset: -10px 0; width: 100%; height: 22px; margin: 0; opacity: 0; cursor: pointer; }
-.devnet-replay-progress:focus-within { outline: 2px solid #c4b5fd; outline-offset: 5px; }
+.devnet-frame-player { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+.devnet-player-controls { display: grid; gap: 4px; justify-self: center; width: min(100%, 478.125px, calc((100dvh - 120px) * 9 / 16)); min-width: 0; padding: 12px 16px; border: 1px solid #344452; border-radius: 0 0 12px 12px; background: #101820; color: #f4f2f8; }
+.devnet-player-seek { display: grid; gap: 2px; min-width: 0; font-size: 12px; color: #e6e1ee; }
+.devnet-player-seek input { display: block; width: 100%; min-width: 0; min-height: 44px; margin: 0; accent-color: #a78bfa; cursor: pointer; }
+.devnet-player-buttons { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.devnet-player-buttons button { min-height: 44px; padding: 8px 12px; border: 1px solid #6c6478; border-radius: 6px; background: #24333f; color: #f4f2f8; font: inherit; font-size: 13px; cursor: pointer; }
+.devnet-player-buttons > button:first-child { min-width: 92px; border-color: #f4f2f8; background: #f4f2f8; color: #101820; }
+.devnet-player-controls :is(button, input):focus-visible { outline: 3px solid #c4b5fd; outline-offset: 3px; }
 .devnet-context .live-deadline b { font-size: clamp(16px, 5cqw, 24px); }
 .devnet-context > span, .devnet-context > strong { padding-right: 100px; }
 .devnet-action-caption { position: absolute; bottom: 27%; left: 6%; right: 6%; z-index: 2; margin: 0; text-align: center; font-size: clamp(10px, 2.8cqw, 13px); color: #d9d9e2; pointer-events: none; text-shadow: 0 1px 6px #111018; }
@@ -127,6 +129,7 @@
   .devnet-layout { grid-template-columns: minmax(0, 1fr); gap: 24px; }
   .devnet-sidebar { width: min(100%, 440px); justify-self: center; padding-top: 0; }
   .devnet-stage-title h1 { font-size: 25px; }
+  .devnet-player-controls { width: min(100%, 440px, calc((100svh - 88px) * 9 / 16)); }
 }
 @media (prefers-reduced-motion: reduce) {
   .devnet-page *, .devnet-page *::before, .devnet-page *::after { scroll-behavior: auto; }
