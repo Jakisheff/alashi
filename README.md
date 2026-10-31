@@ -1,35 +1,139 @@
-# Alashi: test your ideas with your agents
+# ALASHI: teams test their hypotheses
 
-ALASHI is being developed as a place where people test ideas through their agents.
-This branch adds a [private comparison](tools/agent-bootstrap/COMPARISONS.md) on a
-static advertising brief: record a hypothesis, change one instruction, inspect
-both outputs and record a decision. It was deployed to the [owner workspace](https://alashi.network/strategies)
-on 26 October 2026. See the [deployment evidence and compatible runner](docs/ops/HUMAN_COMPARISON_DEPLOY_20261026.md).
+ALASHI is being developed as a shared place where teams test their own hypotheses
+and adapt approaches from other fields to a decision they need to make.
+A team brings the question and decides what the evidence means. Agents can
+execute the alternatives; the experiment must state what its model can establish.
 
-The existing political economy game has a public Solana devnet spectator.
-Factions trade, produce goods and vote on laws over six rounds. Owners can follow
-a participant and inspect confirmed game actions. Static advertising comparisons
-require no blockchain transaction; the game retains its separate Solana execution path.
+The intended outcome is a reasoned next action for the team. Reusable scenarios
+should help the next team avoid preparing the same experiment from scratch.
+This is the product direction (`target`); its value to external teams remains
+`not_validated`.
 
-[Watch a completed game](https://alashi.network/devnet?game=GqHZBaWuJDNERi8xJHXnYF5eWBsLSmEXcAGJYAP94M1b) · [Website](https://alashi.network/) · [Devnet agent guide](frontend/public/agent.md) · [Local development](#local-development) · [Documentation map](docs/00_HOME.md)
+```text
+Team's task → approach from another field → hypothesis and decision rule
+→ comparison under stated conditions → evidence → team's decision
+                                                → reviewed, reusable experience
+```
+
+[Current capabilities](#current-capabilities) · [Try a comparison](#try-a-comparison) · [Plans](#plans-and-unvalidated-hypotheses) · [Game environment](#game-environment) · [Local development](#local-development) · [Documentation map](docs/00_HOME.md)
+
+## How teams would use ALASHI
+
+The proposed workflow starts with a decision, such as whether to change how a
+team handles incoming requests. A mechanism from queueing theory might suggest
+an alternative staffing schedule. The team would test that change against its
+current schedule using suitable data and explicit assumptions, then decide
+whether a limited trial in its work is justified.
+
+This example is a proposed cross-domain scenario (`target`), not an implemented
+marketing simulator. Results inside a model would still need checking in the
+team's work. A team can also bring a hypothesis it already has; finding an
+approach from another field is an optional route to that hypothesis.
+
+## Current capabilities
+
+The table describes this source snapshot and its dated acceptance records
+(`source_defined`). Deployment records establish what was released on their
+stated dates; they do not establish current service availability or customer demand.
+
+| Capability | Implemented scope | Evidence and limits |
+|---|---|---|
+| Private hypothesis comparison | An owner freezes a question and decision rule, changes one model-task instruction and compares two versions on the same static English advertising brief | [Comparison guide](tools/agent-bootstrap/COMPARISONS.md). Deployment recorded on 26 October; full owner actions tested locally with deterministic providers. No measured advertising lift |
+| Research workspace | Save ideas for now or later; collect independent forecasts from invited registered wallets; record a decision and select the next baseline | [Workflow contract](docs/ops/FFS_WORKFLOW_20261026.md) and [26 October release evidence](docs/ops/FFS_DEPLOY_20261026.md). Forecast summaries are descriptive, not calibrated predictions |
+| Mechanism cards | Review and explicitly publish a separate card with its conditions and limitations under CC0; another owner can save it as the source of a private idea | Implemented and tested as part of the research workflow. The public library was empty at release acceptance; independent adoption by external teams remains unvalidated |
+| Local experiments | Keep the manifest, reports and decision in a local directory without sending experiment material to ALASHI | [Local experiment guide](tools/agent-bootstrap/LOCAL_EXPERIMENTS.md). An explicitly configured remote model provider still receives its inputs; file permissions are not encryption |
+| Solana devnet game | Run factions that produce and trade goods, pay for influence and vote on laws; inspect recorded actions and settlement | [Recorded execution evidence](#execution-evidence). This is an existing political economy environment with a public spectator, separate from the static advertising comparison |
+| Bounded sponsored devnet entry | A local visitor wallet can receive team test funding and join a managed game | [Funding guide](docs/ops/AGENT_FUNDING_20261013.md). One zero-balance-to-settlement trial was recorded; admission depends on reserve and operator availability |
+| Independent dialogue runner | Two registered participants supply separate decisions and exchange recorded messages | [Operator guide](bots/DIALOGUE.md). Speech is labelled `runner_reported`; confirmed game actions have separate Solana receipts |
+| Strategy duels and trading cycle | Compare published strategies and reuse derivatives within the supported arena scenarios | [Duel guide](tools/agent-bootstrap/STRATEGY_DUELS.md). The integrated trading cycle has local HTTP acceptance using simulated balances and TEST provider counts; fresh integrated Solana execution and two-human-owner onboarding remain unverified |
+| Degenie RTS prototype | Visualize a scripted delegation cycle and recorded trading events | [Prototype evidence](#degenie-rts-prototype). Scripted behavior does not establish autonomous LLM decisions or model usage savings |
+
+## Try a comparison
+
+The current first scenario is for an owner of an agent workflow who wants to
+check an instruction change. For example, a marketer can compare two drafts
+against a written brief and decide which instruction to keep.
+
+1. Read the [comparison guide](tools/agent-bootstrap/COMPARISONS.md) and prepare
+   a registered owner profile and a compatible local runner.
+2. Open the [owner workspace](https://alashi.network/strategies). Record your
+   hypothesis and decision rule before preparing the paired attempt. Configure
+   the runner and provider first: preparing an attempt starts its deadline.
+3. Run both versions with the same brief and provider profile. Inspect the
+   outputs and receipts, then record `keep_baseline`, `adopt_candidate` or
+   `inconclusive` with a reason.
+
+Provider requests require the owner's authorization and may incur provider
+charges. Cloud comparisons store private instructions and reports on the ALASHI
+server; private means hidden from other users. For material that must stay off
+that server, use the separate local experiment path described above.
+
+Format checks cover output structure and required terms. They cannot simulate buyers
+or show which campaign will increase sales. Model usage is owner-submitted and
+is not independently attested by ALASHI. This comparison requires no blockchain
+transaction.
+
+## Plans and unvalidated hypotheses
+
+| Direction | Status | What needs to be established |
+|---|---|---|
+| Executable scenarios for tasks beyond the advertising brief and existing game | `target` | A suitable model and acceptance criteria for each supported class of tasks |
+| Cross-domain search and a knowledge graph connecting mechanisms to tasks | `target` | A mechanism can be adapted to the team's conditions and tested meaningfully; the existing card library is not this general system |
+| Less repeated experiment preparation through shared scenarios | `hypothesis` | An independent team can reuse a scenario with lower total preparation and adaptation costs than its current alternative |
+| Private trials and adaptation funded by teams or program organizers | `hypothesis` | A buyer, willingness to pay and viable delivery costs; no paid demand is established here |
+
+Public Goods is the hypothesis that a reviewed experience can help another
+team. The current publication boundary is explicit: owners write and review a
+separate mechanism card before publication. Private experiment material is not
+automatically copied into it. Permission to publish a card does not authorize
+publication of the team's underlying data.
+
+## Next test
+
+The next proposed human trial (`target`) uses the supported advertising
+comparison. An external owner brings a real question and records the decision
+rule before running it. Observe whether the comparison provides a usable basis
+for a decision and whether the owner voluntarily returns with another question.
+This trial remains `not_validated` in the available acceptance records.
+
+Testing the broader cross-domain proposal then requires one prepared mechanism
+for a defined class of tasks and reuse by an independent team. Record the
+current alternative and full preparation costs before judging savings. A saved
+report, a completed model run or interest in the game does not establish that
+benefit. Willingness to pay needs a separate test.
+
+## Game environment
+
+The political economy game is an existing environment for testing strategies
+under shared rules. Its outcomes describe that environment. Teams testing a
+hypothesis about another task need a model suited to that task.
+
+To inspect a completed game, open the [devnet replay](https://alashi.network/devnet?game=GqHZBaWuJDNERi8xJHXnYF5eWBsLSmEXcAGJYAP94M1b).
+Viewing requires no wallet or registration. The replay is a historical record,
+not a claim that a match is running now. To enter a game, follow the
+[devnet agent guide](frontend/public/agent.md) and [funding guide](docs/ops/AGENT_FUNDING_20261013.md).
+Local signing and an available operator are required; browser-only entry is not
+supported by the documented path. Video broadcasting and audience chat are outside
+the current implementation.
 
 ## Degenie RTS prototype
 
 The [120-second owner film](experiments/alashi-watch/owner-film/README.md) follows the designer's written prompts: a minimal shared arena, six Degenie and a persistent task roster. It shows a scripted delegation cycle ending in sales executed by the local Rust rules. LLM decisions and token savings remain unmeasured. The film includes English captions and a Russian chapter player.
 
-Amir develops this prototype directly with Codex. The [local experiment](experiments/alashi-watch/README.md) contains the whole-map Degenie scene based on Amir’s concept and the earlier single-worker cycle. Six workers act in parallel, then two verifiers return reports to their Chiefs. The saved event replay runs at 30 fps; live browser frame rate remains limited in the test environment. The original prototype uses scripted clients. On this implementation branch, the `/devnet` viewer and legacy `/arena` page now reuse its whole-map scene for confirmed trading receipts. Attached strategy runs now expose task dependencies and reported usage beside the game receipts. Model reasoning remains private. [Trading acceptance](experiments/alashi-watch/trading-cycle/ACCEPTANCE.md) separates the public devnet record from the two-process local test. These changes are not deployed to the public site.
+Amir develops this prototype directly with Codex. The [local experiment](experiments/alashi-watch/README.md) contains the whole-map Degenie scene based on Amir’s concept and the earlier single-worker cycle. Six workers act in parallel, then two verifiers return reports to their Chiefs. The saved event replay runs at 30 fps; live browser frame rate remains limited in the test environment. The original prototype uses scripted clients. In this source snapshot, the `/devnet` viewer and legacy `/arena` page now reuse its whole-map scene for confirmed trading receipts. Attached strategy runs now expose task dependencies and reported usage beside the game receipts. Model reasoning remains private. [Trading acceptance](experiments/alashi-watch/trading-cycle/ACCEPTANCE.md) separates the public devnet record from the two-process local test. The integrated scene changes are not recorded as deployed in this snapshot.
 
 ## See the game in motion
 
-**Spend cash to gain influence.** Aibot pays a rival 5 alashi. Influence gives a faction more weight when laws are voted on.
+Spend cash to gain influence. Aibot pays a rival 5 alashi. Influence gives a faction more weight when laws are voted on.
 
 [![Recorded devnet replay: Aibot pays a rival 5 alashi](assets/gameplay/alashi-devnet-bribe.gif)](https://alashi.network/devnet?game=GqHZBaWuJDNERi8xJHXnYF5eWBsLSmEXcAGJYAP94M1b)
 
-**Vote on the rules of the economy.** Aibot votes Yes; the law passes with Yes 2 / No 1.
+Vote on the rules of the economy. Aibot votes Yes; the law passes with Yes 2 / No 1.
 
 [![Recorded devnet replay: Aibot votes Yes and the law passes](assets/gameplay/alashi-devnet-vote-law.gif)](https://alashi.network/devnet?game=GqHZBaWuJDNERi8xJHXnYF5eWBsLSmEXcAGJYAP94M1b)
 
-**Agents talk before they act.** In a separate devnet session, one agent explains why it sells two goods for 22 alashi, the other answers that it sells one for 9 and keeps the second as a reserve. Messages are recorded by the runners; trades and funds move only through confirmed actions.
+Agents talk before they act. In a separate devnet session, one agent explains why it sells two goods for 22 alashi, the other answers that it sells one for 9 and keeps the second as a reserve. Messages are recorded by the runners; trades and funds move only through confirmed actions.
 
 ![Separate devnet session: two agents exchange messages and sell different amounts](assets/gameplay/alashi-devnet-agent-dialogue.gif)
 
@@ -40,64 +144,6 @@ The bribe and vote clips show confirmed actions from a completed devnet game. Cl
 </p>
 
 Degenie, the Alashi mascot (avatar concept).
-
-## Start here
-
-**Watch:** open the completed game above. Viewing does not require registration or a wallet. It is a recorded game, so its availability does not imply that a match is running now.
-
-**Run locally:** build the Rust runner using the command below. The [funding and entry guide](docs/ops/AGENT_FUNDING_20261013.md) covers one local wallet, automatic team sponsorship, registration and managed Match. The [operator guide](bots/DIALOGUE.md) covers the separate two-participant dialogue runner. Building the runner or copying a website prompt does not register a participant or join a Game.
-
-**Sponsored devnet entry is enabled for a bounded trial.** Verified 13 October 2026 at 01:24 Asia/Almaty: a new zero-balance wallet received 0.1 testSOL from the team reserve, registered, joined, produced and sold goods, and completed six rounds with confirmed settlement. [Watch that match](https://alashi.network/devnet?game=8AKzMbyHjhrBkYfUEj9sPf8g3XW5XN6LsBsqZMXUGFQ1). Retrying Match after Join returned the same participation without a second payment. After the hackathon the sponsorship target was lowered to 0.02 testSOL and the managed Game entry to 0.005 testSOL, so the same reserve covers more matches. Funding is limited to one eligible top-up per wallet and available reserve. Keep one private local key/profile; a local terminal and outbound access to Alashi and devnet RPC are still required. The operator currently runs on a trusted team computer; admission depends on its availability.
-
-## Current status
-
-| Path | Available behavior | Acceptance boundary |
-|---|---|---|
-| Private idea comparison (this branch) | One owner compares two private versions on the same advertising brief with one changed model instruction | Local deterministic acceptance only; no measured advertising lift or monetary savings |
-| Public devnet spectator | Game state, confirmed action history and completed replays | The linked historical Game is reported as Finished and settled by the public data endpoint |
-| Sponsored devnet Match | One local visitor wallet receives bounded team funding and joins a managed Game with a labelled heuristic opponent | One public zero-balance-to-settlement trial passed; browser-only clients and blocked-network sandboxes remain unsupported |
-| Self-hosted devnet demonstration | Local runner creates and completes a Game with deterministic decisions and funded test wallets | Operator manages funding, participants and lifecycle |
-| Independent dialogue runner | Two registered participants use separate decision contexts, public conversation history and bounded calls | Ten public messages and four finalized Produce/Sell actions observed; the bounded runner hit its deadline, then the operator completed settlement |
-| Legacy HTTP arena | Server-run games with simulated balances and HTTP actions | Separate execution mode; its outcomes are not devnet settlement receipts |
-
-The [dialogue runner guide](bots/DIALOGUE.md) covers the independent two-participant path and operator lifecycle commands. It supports explicit HTTPS providers with approved usage limits, or independent local participant contexts using the documented public-observation mailbox. Each participant supplies its own decisions; the operator manages the Game lifecycle.
-
-The public dialogue journal labels speech as `runner_reported`. Confirmed game actions have separate chain receipts. [The recorded two-participant session](https://alashi.network/devnet?game=D2mkZ4e5zssteJs7Eih8ehtJkFap8SvFp7tY4yorpsX5) contains the observed dialogue and actions; its six-round settlement is finalized. Video broadcasting and audience chat are outside the current implementation.
-
-## Try it in three steps
-
-1. Watch a finished devnet match without a wallet: [alashi.network/devnet](https://alashi.network/devnet?game=GqHZBaWuJDNERi8xJHXnYF5eWBsLSmEXcAGJYAP94M1b).
-2. Give your coding agent the prompt from [alashi.network](https://alashi.network) or [agent.md](https://alashi.network/agent.md); it needs a local terminal.
-3. Or connect a local coding agent through MCP (see [Coding agents over MCP](#coding-agents-over-mcp)).
-
-## How it differs
-
-| you already can | Alashi adds |
-|---|---|
-| play a strategy game yourself, turn by turn | your own agent plays; you set the strategy and follow the match |
-| watch someone else's stream or bot league | the player on screen is yours, and rivals change the rules by vote |
-| run agents in a sandbox with private scores | entry, moves and settlement are confirmed on Solana devnet and open to inspection |
-
-## Next test
-
-An external owner brings an actual advertising question and records a decision
-rule before running the comparison. We observe whether the outputs support a
-decision and whether the owner returns with another question. This human trial
-has not been conducted; local fixtures establish software behavior only.
-
-## Who it is for
-
-The initial comparison user owns an agent workflow and wants to test an idea
-about its output. For example, a marketer changes one audience instruction and
-compares the resulting drafts against a written decision rule. The current
-scenario supports English advertisements and format checks. It cannot simulate
-customer behavior or determine which campaign will grow a company.
-
-The Public Goods hypothesis is that shared scenarios and reusable published
-work plans reduce repeated setup for other owners. Published strategy reuse
-already exists. A general scenario package and independent reuse of the new
-comparison workflow remain unvalidated. Owner demand and willingness to pay also
-require external trials.
 
 ## How the devnet path works
 
@@ -140,7 +186,7 @@ claude mcp add alashi -- node "$PWD/mcp.mjs"
 
 Tools: `alashi_start` (register once, match, join), `alashi_state`, `alashi_act`, `alashi_retry`, and the read-only `alashi_watch_devnet_game` (public snapshot and recorded agent dialogue for a game account). The server still needs a local shell and private files; an agent limited to a browser or a cloud sandbox cannot sign moves yet.
 
-## Agent arena (implementation branch)
+## Agent arena
 
 The `/strategies` route lets an owner test an idea with their agents. In a
 [private comparison](tools/agent-bootstrap/COMPARISONS.md), the owner records a
@@ -165,7 +211,9 @@ onboarding by two human owners remain unverified.
 The [duel guide](tools/agent-bootstrap/STRATEGY_DUELS.md) covers owner access,
 local execution and evidence limits. Provider usage is owner-submitted; test
 receipts are labelled separately. Monetary savings and conversion effectiveness
-are unmeasured. This branch does not deploy the feature to the public site.
+are unmeasured. The research workspace release is recorded separately in the
+[26 October deployment](docs/ops/FFS_DEPLOY_20261026.md); local trading-cycle
+acceptance does not establish its release to the public site.
 
 ## Legacy HTTP arena
 
@@ -248,7 +296,7 @@ Anchor execution tests need the SBF build first: [build script](tools/build_sbf.
 
 ## What was built during Colosseum World's Fair
 
-The hackathon window ran 14 September – 12 October 2026 (PT). Tag [`pre-hackathon`](https://github.com/Jakisheff/alashi/tree/pre-hackathon) (`85b184d`, 8 September) marks the work that existed before it: 472 commits with the shared Rust rules, the HTTP arena, the first Anchor program and archived bot matches.
+The hackathon window ran 14 September to 12 October 2026 (PT). Tag [`pre-hackathon`](https://github.com/Jakisheff/alashi/tree/pre-hackathon) (`85b184d`, 8 September) marks the work that existed before it: 472 commits with the shared Rust rules, the HTTP arena, the first Anchor program and archived bot matches.
 
 After the tag, `main` has 235 commits (195 non-merge), all from 16 September on:
 
@@ -262,9 +310,15 @@ Git history before the tag was rewritten twice: a branch squash and a key-file r
 
 ## Team
 
-Amir leads product and content. Ivan owns the backend and infrastructure. Din owns the website and visual experience. [Repository owner](https://github.com/Jakisheff).
+Since 19 October 2026, Amir develops ALASHI alone and owns all areas, including
+backend and frontend. Codex assists with implementation and documentation.
+Earlier references to Ivan and Din describe historical responsibilities.
+[Repository owner](https://github.com/Jakisheff).
 
-The next product checkpoint is independently verified public onboarding, followed by a shared contest for external human owners. Spectator interest and voluntary return remain unvalidated. Payment is a separate hypothesis.
+The [next test](#next-test) concerns an external owner's decision, followed by
+independent reuse of a prepared scenario. Public game onboarding has its own
+technical acceptance boundary; it is not evidence of demand for the broader
+hypothesis-testing platform.
 
 ## License
 
