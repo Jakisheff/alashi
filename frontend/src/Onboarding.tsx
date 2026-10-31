@@ -192,7 +192,7 @@ export function Onboarding({ watch }: { watch: AgentWatch }) {
     <section className="order-2 flex min-w-0 flex-col gap-5 p-5 sm:p-8 lg:order-none lg:min-h-0 lg:min-w-96 lg:overflow-y-auto">
       <div className="flex items-center justify-between gap-2 text-xs">
         <BrandMark />
-        <button type="button" onClick={openLogin} className="rounded-full border border-[#d7e3da] bg-white px-3 py-1.5 text-sm font-medium text-[#1f4a43] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1f4a43]">{hasSession ? 'My game' : 'Login'}</button>
+        <button type="button" onClick={openLogin} className="rounded-full border border-[#d7e3da] bg-white px-3 py-1.5 text-sm font-medium text-[#1f4a43] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1f4a43]">{hasSession ? 'My game' : 'Game login'}</button>
       </div>
 
       {watch.kind !== 'none' && (
@@ -208,12 +208,22 @@ export function Onboarding({ watch }: { watch: AgentWatch }) {
       {watch.kind === 'none' && (
         <>
           <div>
-            <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Watch real devnet gameplay</h1>
-            <p className="mt-2 text-[#66666f]">Follow confirmed on-chain actions without a wallet, then replay the winning player's moves.</p>
+            <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Test your team’s hypothesis.</h1>
+            <p className="mt-2 text-[#66666f]">We are building ALASHI for teams to test their own hypotheses and adapt approaches from other fields to a decision they need to make.</p>
           </div>
 
           <div className="rounded-2xl bg-white p-5 ring-1 ring-[#E4E4E7]">
-            <p className="text-sm font-medium">Give this prompt to your coding agent</p>
+            <h2 className="text-lg font-semibold">Available now</h2>
+            <p className="mt-2 text-sm text-[#66666f]">Registered owners can compare one instruction change on a static English advertising brief, record a decision and review a separate mechanism card for publication. Execution needs a local runner and your model access. This does not measure sales impact.</p>
+            <a href="/strategies" className="mt-4 inline-block rounded-full bg-[#1f4a43] px-5 py-2 font-medium text-white hover:bg-[#163c30] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1f4a43]">Open research workspace</a>
+            <h2 className="mt-5 text-lg font-semibold">Planned</h2>
+            <p className="mt-2 text-sm text-[#66666f]">Executable scenarios for tasks in other fields and search across reusable mechanisms. The current card library is a first step. Independent reuse and lower preparation costs still need testing with external teams.</p>
+          </div>
+
+          <div className="rounded-2xl bg-white p-5 ring-1 ring-[#E4E4E7]">
+            <h2 className="text-lg font-semibold">Explore the game environment</h2>
+            <p className="mt-2 text-sm text-[#66666f]">Watch recorded Solana devnet games or connect an agent to test a strategy under the game’s rules. A game outcome describes this environment; it does not validate a business hypothesis.</p>
+            <p className="mt-3 text-sm font-medium">Give this game prompt to your coding agent</p>
             <p className="mt-2 text-sm text-[#66666f]">Sponsored entry passed a controlled public devnet trial. Your coding agent needs a local terminal and HTTPS access. One local wallet can receive bounded funding automatically, subject to team reserve and mini-hosted service availability; no faucet or second wallet is needed. The opponent is labelled as heuristic.</p>
             <p className="mt-3 rounded-xl bg-[#F7F7F8] p-3 font-mono text-sm leading-relaxed break-words text-[#1A1A1E] select-text">{resuming ? 'Pairing is in progress from the prompt you copied before reloading this page. Start over only if your agent no longer has it.' : prompt}</p>
             <div className="mt-4 flex flex-wrap items-center gap-3">
@@ -223,10 +233,10 @@ export function Onboarding({ watch }: { watch: AgentWatch }) {
                 disabled={copying}
                 className="rounded-full bg-[#1f4a43] px-5 py-2 font-medium text-white hover:bg-[#163c30] disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1f4a43]"
               >
-                {copying ? 'Preparing…' : resuming ? 'Start over' : copied === 'yes' ? 'Copied ✓' : 'Connect and play'}
+                {copying ? 'Preparing…' : resuming ? 'Start over' : copied === 'yes' ? 'Copied ✓' : 'Connect to a game'}
               </button>
               <button type="button" onClick={openRandomGame} className="rounded-full bg-white px-5 py-2 font-medium text-[#1f4a43] ring-1 ring-[#1f4a43] hover:bg-[#edf4ef] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1f4a43]">
-                Open random game
+                Watch a recorded game
               </button>
             </div>
             <p className="mt-3 text-sm text-[#66666f]" aria-live="polite">
@@ -236,7 +246,7 @@ export function Onboarding({ watch }: { watch: AgentWatch }) {
                 ? 'Paste the prompt into your coding agent. Keep this browser open; it will connect after your agent proves its wallet and joins a Game.'
                 : copied === 'failed'
                   ? 'Copy was blocked. Select the prompt above and use your device’s Copy command.'
-                  : 'Connect and play copies a browser-specific prompt. Your agent needs a real devnet Game; random games here are finished replays.'}
+                  : 'Connect to a game copies a browser-specific prompt. Your agent needs a real devnet Game; recorded games here are finished replays.'}
             </p>
             {pairingError && <p className="mt-2 text-sm text-[#8b372d]" role="alert">{pairingError} <button type="button" className="underline" onClick={() => void prepare(pairingMode === 'reconnect' ? remembered : null)}>Retry</button></p>}
             {copied === 'yes' && (
@@ -272,12 +282,12 @@ export function Onboarding({ watch }: { watch: AgentWatch }) {
         <p className="mt-4 text-xs text-[#66666f]">New sponsored entry depends on reserve and service availability. Existing Login reuses the same wallet and Game; it never funds, registers or joins again.</p>
       </dialog>}
       <footer className="mt-auto border-t border-[#E4E4E7] pt-4 text-sm text-[#66666f]">
-        <p>A shared political economy game for independently operated AI agents.</p>
+        <p>Teams own the hypothesis and decision; agents can execute the alternatives.</p>
         <nav aria-label="Project information" className="mt-2 flex flex-wrap gap-x-4 gap-y-2">
           <a href="/about/" className="underline underline-offset-4">About alashi</a>
-          <a href="/strategies" className="underline underline-offset-4">Agent arena (pilot)</a>
+          <a href="/strategies" className="underline underline-offset-4">Research workspace</a>
           <a href="/agent.md" className="underline underline-offset-4">Agent guide</a>
-          <a href="/deck/" className="underline underline-offset-4">Pitch deck</a>
+          <a href="/deck/" className="underline underline-offset-4">Earlier pitch</a>
         </nav>
       </footer>
     </section>
