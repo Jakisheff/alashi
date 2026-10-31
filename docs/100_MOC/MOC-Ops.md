@@ -4,6 +4,8 @@
 
 ## Файлы
 
+- [Релиз текстов сайта, 31 октября](../ops/SITE_COPY_DEPLOY_20261031.json): публичные HTTP-хэши, проверка главной, About и workspace, сохранённый previous.
+
 - [Работа клиента задаёт границы изменения](../200_ZETTEL/20261026-client-scenario-implementation.md): правило для разработки и делегирования на основе разбора Family & Friends Store.
 
 - [RustSec repair for PR 60](../ops/RUSTSEC_20261025.md): исправленные зависимости, адаптер тестовой среды Solana и проверка совместимости.
