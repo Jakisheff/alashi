@@ -65,7 +65,7 @@ confirmed inactive. Amir's agent acknowledged this in `MIGRATION-20261102-09`.
 | Public ports | TCP 80 and 443, IPv4 and IPv6 rules; no IPv6 address assigned |
 | Runtime controls | IMDSv2 required, termination protection, Standard CPU credits, basic monitoring |
 | Swap | 1 GiB; observed available memory 581 MiB, no OOM events |
-| Budget | `alashi-monthly-12-usd`, $12 monthly, email thresholds 80% and 100% |
+| Budget | `alashi-monthly-12-usd`, $15 monthly since 3 November (Astana), email thresholds 80% and 100% |
 | Preparation snapshot | `snap-0ef21e7200146454f`, encrypted, completed |
 
 The dedicated EC2 key pair is `alashi-aws-20261102`. Its private key remains on
@@ -99,6 +99,13 @@ The base plus one full-size snapshot is below $16/month. Traffic and additional
 snapshots consume the remaining margin. The budget counts usage before credits
 and refunds; it sends alerts rather than enforcing a spending limit. Review the
 plan by 2 April 2027, one month before expiry.
+
+On 3 November (Astana), Amir requested raising the initial $12 budget to $15.
+`update-budget` and the subsequent read confirmed the new monthly amount;
+notification thresholds and email subscribers were preserved. The existing
+budget name still contains `12`. Actual-cost warnings now trigger above $12
+and $15. The $12 warning can still arrive during a normal month with the
+verified $14.246 base cost. This change does not alter the FREE plan.
 
 Pricing references: [EC2](https://aws.amazon.com/ec2/pricing/on-demand/),
 [EBS](https://aws.amazon.com/ebs/pricing/),
@@ -234,6 +241,23 @@ rehearsal has not been performed. It predates the required final data sync.
 Amir's authenticated demo remains pending. No application source was changed;
 Rust/SBF suites passed in CI rather than being rebuilt locally for the copy.
 Domain transfer and program upgrade-authority transfer remain Ivan's tasks.
+
+On 3 November (Astana), a separate upgrade-authority key was generated on
+Amir's Mac. Its public address is
+`8YvNucj8cWM1VNu6kCgRT3Fe8Esh4mAFMJzpYihF4i2U`. Only this address was
+sent through BOARD as `MIGRATION-20261102-AUTH` at `2026-11-02T19:17:09Z`.
+The default Solana wallet was unchanged. The backup key returned the same
+public address, and BIP39 seed derivation matched the generated private key.
+An encrypted macOS login-keychain recovery record was saved and read back;
+both key and seed matched exactly. Apple Passwords import stalled and the
+macOS UI connection stopped responding. Amir chose to keep the verified
+login-keychain backup. Temporary plaintext seed, CSV and duplicate key files
+were removed after a second exact comparison with the encrypted record.
+The working key remains in the owner-requested location. An independent
+copy outside this Mac has not been verified. No secrets or private recovery
+files are in this repository. A read-only devnet query still
+reported Ivan's authority `64WA7wFVJK3GkfSAkfiAWR37bgjCw1RYcj17qEDj4AVJ`;
+Amir's agent submitted no authority-transfer transaction.
 
 ## Off-server release builds
 
