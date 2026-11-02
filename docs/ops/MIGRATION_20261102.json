@@ -1,0 +1,271 @@
+{
+  "date": "2026-11-02",
+  "status": "ready_for_coordinated_cutover_dns_unchanged",
+  "task": "https://gist.github.com/konon4/b44f5c6d25e808520b830e88437aa7f3",
+  "source": {
+    "ip": "15.134.10.182",
+    "servicesPreserved": true,
+    "servicePids": {
+      "alashi-arena": 1863379,
+      "alashi-chain-api": 2400970,
+      "alashi-match-host": 1166134
+    }
+  },
+  "target": {
+    "region": "ap-southeast-2",
+    "regionSelectedByOwner": true,
+    "plan": "FREE",
+    "planExpiryDate": "2027-05-02",
+    "instanceId": "i-0d41d049ae2181ffc",
+    "instanceType": "t3.micro",
+    "amiId": "ami-010aeaecac4ab773a",
+    "elasticIp": "32.236.8.133",
+    "volumeId": "vol-04b7db42ec03a5064",
+    "volumeGiB": 10,
+    "volumeEncrypted": true,
+    "metadataTokens": "required",
+    "cpuCredits": "standard",
+    "sshSource": "owner current IPv4 /32",
+    "snapshot": {
+      "id": "snap-0ef21e7200146454f",
+      "state": "completed",
+      "progress": "100%",
+      "encrypted": true,
+      "size": 10
+    }
+  },
+  "prices": {
+    "verifiedOn": "2026-11-02",
+    "currency": "USD",
+    "monthlyHours": 730,
+    "t3NanoHourly": 0.0066,
+    "t3MicroHourly": 0.0132,
+    "publicIpv4Hourly": 0.005,
+    "gp3GbMonth": 0.096,
+    "snapshotGbMonth": 0.055,
+    "baseMonthly": 14.246,
+    "oneSnapshotMaximumMonthly": 0.55,
+    "exclusions": [
+      "data transfer",
+      "additional snapshots",
+      "applicable taxes"
+    ]
+  },
+  "budget": {
+    "name": "alashi-monthly-12-usd",
+    "monthlyUsd": 12,
+    "actualPercentageThresholds": [
+      80,
+      100
+    ],
+    "emailSubscriberConfigured": true,
+    "includeCredits": false,
+    "includeRefunds": false
+  },
+  "runtime": {
+    "permissions": {
+      "/etc/alashi-host/host.env": "0600",
+      "/var/lib/alashi-host/hot-key.json": "0600"
+    },
+    "services": {
+      "alashi-match-host.service": "inactive",
+      "alashi-close-settled.timer": "inactive",
+      "alashi-close-settled.service": "inactive",
+      "alashi-arena.service": "active",
+      "alashi-chain-api.service": "active",
+      "nginx.service": "active"
+    },
+    "oomEvents": 0,
+    "memoryAvailableMiB": 581,
+    "swapMiB": 1023,
+    "registrations": 13,
+    "activeHttpGames": 0,
+    "certificate": [
+      "notBefore=Oct  6 19:04:25 2026 GMT",
+      "notAfter=Jan  4 19:04:24 2027 GMT"
+    ]
+  },
+  "privateCopy": {
+    "verified": true,
+    "fileCount": 26,
+    "privateDigestsRetained": false
+  },
+  "binaries": [
+    {
+      "path": "/opt/alashi-arena/arenad",
+      "sha256": "b7682bb8757b6b7ed9e00ad9da515322889f2b00dfb25c4682cd97b5ae0d8edb",
+      "sourceRunningEqualsSourceFileEqualsDestination": true
+    },
+    {
+      "path": "/opt/alashi-chain-api/chain_api",
+      "sha256": "ff1c1c08f1369ff0268c18811a52728eaaf19985e8b200e026b7123b1aeeaf1e",
+      "sourceRunningEqualsSourceFileEqualsDestination": true
+    },
+    {
+      "path": "/opt/alashi-host/bots",
+      "sha256": "77b96bf091f637b4aece565c3c618f76e1cb1188c8d9ffbc77c2f2e843845646",
+      "sourceRunningEqualsSourceFileEqualsDestination": true
+    }
+  ],
+  "releases": {
+    "current": {
+      "release": "about-ef6552d-20261031",
+      "count": 358,
+      "totalBytes": 74709227,
+      "manifestSha256": "fd1ce085f5a20e804eb5cead9bffcf14affa65c7c8b7be63aa76cd36ab8c7a74"
+    },
+    "previous": {
+      "release": "site-copy-60b03e9-20261031",
+      "count": 358,
+      "totalBytes": 74709240,
+      "manifestSha256": "4d5d77110e25bdf1b6594d179136afa7ab47e01590d8a11473e2db63720e5be7"
+    }
+  },
+  "https": {
+    "ip": "32.236.8.133",
+    "checks": [
+      {
+        "path": "/",
+        "method": "GET",
+        "status": 200,
+        "tlsVerified": true,
+        "bytes": 6638,
+        "sha256": "c3ad4f569c012d0988bd597da7e00256d4081c774523df07517a484b25403224"
+      },
+      {
+        "path": "/devnet",
+        "method": "GET",
+        "status": 200,
+        "tlsVerified": true,
+        "bytes": 6638,
+        "sha256": "c3ad4f569c012d0988bd597da7e00256d4081c774523df07517a484b25403224"
+      },
+      {
+        "path": "/strategies",
+        "method": "GET",
+        "status": 200,
+        "tlsVerified": true,
+        "bytes": 6638,
+        "sha256": "c3ad4f569c012d0988bd597da7e00256d4081c774523df07517a484b25403224"
+      },
+      {
+        "path": "/about/",
+        "method": "GET",
+        "status": 200,
+        "tlsVerified": true,
+        "bytes": 8102,
+        "sha256": "c65e65cd5658b09ed1aff84b1b674fb10ebe74cad7224c075673518649a359b4"
+      },
+      {
+        "path": "/version.json",
+        "method": "GET",
+        "status": 200,
+        "tlsVerified": true,
+        "bytes": 4829,
+        "sha256": "5b5a1607ffedf9922ae05a9d832048dd9ed63bcd93d88eb35cda003b6f6f9f31"
+      },
+      {
+        "path": "/games",
+        "method": "GET",
+        "status": 200,
+        "tlsVerified": true,
+        "bytes": 22,
+        "sha256": "a6093d8e43a12da4e25e5cbbb42e33612acf09ca35aaf88dd24239a6fecef3f9"
+      },
+      {
+        "path": "/agents/capabilities",
+        "method": "GET",
+        "status": 200,
+        "tlsVerified": true,
+        "bytes": 645,
+        "sha256": "eb02697dcdd5bba90767ff5113568b97d15712588cfbc595347ba270d813a76d"
+      },
+      {
+        "path": "/research-library",
+        "method": "GET",
+        "status": 200,
+        "tlsVerified": true,
+        "bytes": 22,
+        "sha256": "3fe8b6e0b75a549741dd9d8e0cef0dc64530701ece212c55b5693b30f0f18276"
+      },
+      {
+        "path": "/strategy-library",
+        "method": "GET",
+        "status": 200,
+        "tlsVerified": true,
+        "bytes": 17953,
+        "sha256": "221e5b442effccc8136e08692623e2c203eee46631c6f24ce1843f83ae99451b"
+      },
+      {
+        "path": "/chain/devnet/games/2gcsxYV6jA9o3mD667mdjYmgMvBmVbVgTaXmbKKcUaZW",
+        "method": "GET",
+        "status": 200,
+        "tlsVerified": true,
+        "bytes": 7523,
+        "sha256": "94dd8f7e30ab2ae53a1f0b9e6e2fc35a4fb6784172c65d75fad08e33d90c7e5d"
+      },
+      {
+        "path": "/agents/0000000000000000000000000000000000000000000000000000000000000000/owner/research",
+        "method": "GET",
+        "status": 401,
+        "tlsVerified": true,
+        "bytes": 78,
+        "sha256": "5de89fff634a9d661fade3ec77d7b33899bcdb1d6c3801158e301a217faec907"
+      },
+      {
+        "path": "/agents/match",
+        "method": "POST",
+        "status": 503,
+        "tlsVerified": true,
+        "bytes": 190,
+        "sha256": "b429e25e7813a9e2b90dcec11d9cb5287751246128dd6c76a7349774829c5554"
+      },
+      {
+        "path": "/.env",
+        "method": "GET",
+        "status": 404,
+        "tlsVerified": true,
+        "bytes": 146,
+        "sha256": "55f7d9e99b8e2d4e0e193b2f0275501e6d9c1ebd29cadbea6a0da48a8587e3e0"
+      },
+      {
+        "path": "/api/",
+        "method": "GET",
+        "status": 404,
+        "tlsVerified": true,
+        "bytes": 146,
+        "sha256": "55f7d9e99b8e2d4e0e193b2f0275501e6d9c1ebd29cadbea6a0da48a8587e3e0"
+      },
+      {
+        "path": "/releases/site-copy-60b03e9-20261031/assets/index-D9RXuQri.js",
+        "method": "GET",
+        "status": 200,
+        "tlsVerified": true,
+        "bytes": 291235,
+        "sha256": "5b329548f08bbd0cd13b298cc131b07933dc0d33243d675dbb592a0e4d49c772"
+      }
+    ],
+    "passed": true
+  },
+  "excluded": [
+    "staging",
+    "historical releases",
+    "source clones",
+    "old binaries",
+    "logs",
+    "old arena snapshots",
+    "historical host wallets"
+  ],
+  "noNewHostStarted": true,
+  "noMigrationSolanaTransactions": true,
+  "dnsChanged": false,
+  "remaining": [
+    "coordinated write hold and drain",
+    "final state synchronization",
+    "activate new host and timer after stopping old ones",
+    "Ivan DNS A record change",
+    "post-DNS demo and certbot renew dry-run",
+    "post-migration server build workflow",
+    "snapshot restore rehearsal"
+  ]
+}
