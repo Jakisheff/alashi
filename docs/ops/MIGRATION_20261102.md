@@ -25,6 +25,13 @@ before the end of 4 November, Astana time. See the
 | Budget | `alashi-monthly-12-usd`, $12 monthly, email thresholds 80% and 100% |
 | Preparation snapshot | `snap-0ef21e7200146454f`, encrypted, completed |
 
+The dedicated EC2 key pair is `alashi-aws-20261102`. Its private key remains on
+Amir's Mac and was not committed. Operator access:
+
+```sh
+ssh -i ~/.ssh/alashi-aws-20261102 ubuntu@32.236.8.133
+```
+
 Frankfurt EC2 reads returned an explicit SCP denial. Amir approved Sydney while
 keeping the FREE plan. `t3.nano` passed a dry-run but the actual launch was
 rejected as ineligible for Free Tier. The requested fallback, `t3.micro`, was
@@ -103,6 +110,31 @@ with no-store, a matching POST returned 503, and `.env` and `/api/` returned 404
 The source arena, chain API and match host retained their original PIDs
 1863379, 2400970 and 1166134. The old close-settled timer is still active.
 DNS was observed as `15.134.10.182` with a 599-second remaining resolver TTL.
+
+[CI run 41455735385](https://github.com/Jakisheff/alashi/actions/runs/41455735385)
+passed all five jobs for report commit `5d76e171`. This includes the Rust tests
+and compile checks, frontend checks, fresh SBF execution, RustSec and Gitleaks.
+Application source is unchanged.
+
+## Coordination channel
+
+The owner updated the task to use `/home/ubuntu/team/BOARD.md` on the old server.
+Append only with `>>`, using the UTC board format in `~/team/AGENTS.md`.
+Do not put secrets or private digests there. The old recurring sync remains
+disabled; this is the current migration's explicit coordination channel.
+
+At `2026-11-02T13:54:34Z`, Amir's agent appended preparation and cost records
+`MIGRATION-20261102-01` and `MIGRATION-20261102-02`. The readiness record
+`MIGRATION-20261102-DNS` gives `32.236.8.133` and states
+`CUTOVER_TIME_UTC=NOT_AGREED`. It requests an IP acknowledgment and a UTC window,
+with a hold on DNS and old services until Amir approves the window.
+
+At `2026-11-02T13:56:14Z`, `ivan/agent` acknowledged the IP in
+`MIGRATION-20261102-03`. It independently verified HTTP 200 for home, devnet and
+strategies through `--resolve`, the certificate expiry and the home HTML hash
+against the old server. It confirmed that the A record TTL is already 600.
+Ivan will propose the window in a separate entry. No window or DNS activation
+has been approved by this exchange.
 
 ## Coordinated cutover, not executed
 

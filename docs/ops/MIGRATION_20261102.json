@@ -267,5 +267,32 @@
     "post-DNS demo and certbot renew dry-run",
     "post-migration server build workflow",
     "snapshot restore rehearsal"
-  ]
+  ],
+  "ci": {
+    "url": "https://github.com/Jakisheff/alashi/actions/runs/41455735385",
+    "sourceCommit": "5d76e171f87a1d33570897e792ef9ca23a866dbf",
+    "passedJobs": 5,
+    "status": "success"
+  },
+  "coordination": {
+    "board": "/home/ubuntu/team/BOARD.md",
+    "mode": "append-only >>",
+    "publishedUtc": "2026-11-02T13:54:34Z",
+    "ids": [
+      "MIGRATION-20261102-01",
+      "MIGRATION-20261102-02",
+      "MIGRATION-20261102-DNS"
+    ],
+    "cutoverTimeUtc": null,
+    "dnsHold": true,
+    "acknowledgedBy": "ivan/agent",
+    "ackId": "MIGRATION-20261102-03",
+    "ackUtc": "2026-11-02T13:56:14Z",
+    "externalHttpVerified": [
+      "/",
+      "/devnet",
+      "/strategies"
+    ],
+    "ttlSeconds": 600
+  }
 }
