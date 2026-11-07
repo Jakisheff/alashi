@@ -1,0 +1,27 @@
+Command: node scripts/state-repros/run.mjs 6
+Local fixture server ready; launching isolated headless Chrome.
+Runtime: Node v24.22.1; Chrome 156.0.8078.81.
+Fixture isolation: actual React production modules; mocked renderer/network boundaries; controlled browser clock; no backend or external API.
+Mode: verify current buggy behavior (success means reproduced, not fixed).
+CONTROL PASS finding 6: actual stream scheduler processes two actions and returns idle when renderer completes.
+11:37:07 AM [vite] (client) [console.error] Error: Injected renderer failure during active action
+    at MarketTrade (http://127.0.0.1:53740/scripts/state-repros/render-boundaries.tsx:61:20)
+    at Object.react_stack_bottom_frame (http://127.0.0.1:53740/node_modules/.vite/deps/react-dom_client.js?v=4895e10d:14142:12)
+    at renderWithHooks (http://127.0.0.1:53740/node_modules/.vite/deps/react-dom_client.js?v=4895e10d:4400:19)
+    at updateFunctionComponent (http://127.0.0.1:53740/node_modules/.vite/deps/react-dom_client.js?v=4895e10d:5775:16)
+    at beginWork (http://127.0.0.1:53740/node_modules/.vite/deps/react-dom_client.js?v=4895e10d:6391:20)
+    at runWithFiberInDEV (http://127.0.0.1:53740/node_modules/.vite/deps/react-dom_client.js?v=4895e10d:944:66)
+    at performUnitOfWork (http://127.0.0.1:53740/node_modules/.vite/deps/react-dom_client.js?v=4895e10d:9148:92)
+    at workLoopSync (http://127.0.0.1:53740/node_modules/.vite/deps/react-dom_client.js?v=4895e10d:9044:37)
+    at renderRootSync (http://127.0.0.1:53740/node_modules/.vite/deps/react-dom_client.js?v=4895e10d:9028:6)
+    at performWorkOnRoot (http://127.0.0.1:53740/node_modules/.vite/deps/react-dom_client.js?v=4895e10d:8715:27)
+
+The above error occurred in the <MarketTrade> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, StreamHeroBoundary.
+
+OBSERVED finding 6: {"action":"buy","animationLog":[{"event":"started","action":"buy","take":1}],"receipts":["action-1","action-2"]}
+REPRODUCED finding 6: renderer failure leaves stream action occupied
+RESULT 0 failed reproduction checks. Production implementation was not changed.
+
+Process exit status: 0

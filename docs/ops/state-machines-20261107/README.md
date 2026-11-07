@@ -26,6 +26,19 @@ Use the repository's pinned Rust 1.89.0. Host runs share `target/host`, with `CA
 
 Regression results and remaining mandatory checks are pending. No finding is marked fixed by this environment entry.
 
+## Findings 6 and 7: reproduced, not fixed
+
+The [browser harness](../../../frontend/scripts/state-repros/README.md) runs actual production React modules with isolated API data and an injected renderer error. Its healthy controls pass. Default commands verify that the bugs occur; `--assert-fixed` checks the requested recovery invariant and must currently fail. The probes are separate from normal CI.
+
+| Finding | Observed behavior | Reproduction | Missing recovery invariant |
+|---|---|---|---|
+| 6 | The real stream error boundary catches the child failure during buy. Sell reaches the feed, but buy still occupies the scheduler after 20 simulated seconds. | [Control and bug observation, exit 0](finding-6-reproduced.log) | [One assertion fails, exit 1](finding-6-assert-fixed.log) |
+| 7 | Old A reactions continue after A-to-B and live-to-off. Both queued actions and an already scheduled result callback survive the switch. | [Control and four bug observations, exit 0](finding-7-reproduced.log) | [Four assertions fail, exit 1](finding-7-assert-fixed.log) |
+
+Runtime: Node v24.22.1, Playwright 1.62.1, Chrome 156.0.8078.81. [Harness syntax, scoped lint and text checks](frontend-harness-checks.log) pass. No production frontend file, package manifest or lockfile changed. The renderer error is injected; this is not evidence of a particular GPU failure or visual animation acceptance.
+
+After all browser processes exited, this task's freshly installed `frontend/node_modules` was removed to recover 384 MB for Rust/SBF checks. Reinstall the frontend lockfile before repeating the browser commands. Agent-bootstrap dependencies remain installed.
+
 ## Product decisions
 
 Findings 3, 5 and 8 are unchanged. [Options and costs](product-choices.md) distinguish documenting current behavior, adding guards, and introducing cancellation or expiry. These require an owner's decision before implementation.

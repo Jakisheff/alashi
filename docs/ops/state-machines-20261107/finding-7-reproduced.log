@@ -1,0 +1,17 @@
+Command: node scripts/state-repros/run.mjs 7
+Local fixture server ready; launching isolated headless Chrome.
+Runtime: Node v24.22.1; Chrome 156.0.8078.81.
+Fixture isolation: actual React production modules; mocked renderer/network boundaries; controlled browser clock; no backend or external API.
+Mode: verify current buggy behavior (success means reproduced, not fixed).
+CONTROL PASS finding 7: actual useArenaFeed emits queued A speech and its accepted reaction without switching.
+OBSERVED finding 7 A->B (two queued): {"mode":"live","game":"2","speechLog":[{"speech":"🛒 Game A actor bought goods","clip":"idle","take":0,"speechId":1},{"speech":"🛒 Game A actor bought goods","clip":"act","take":1,"speechId":1},{"speech":"🛒 Game A actor bought goods","clip":"accepted","take":2,"speechId":1},{"speech":"📦 Game A actor sold goods","clip":"accepted","take":2,"speechId":2},{"speech":"📦 Game A actor sold goods","clip":"act","take":3,"speechId":2},{"speech":"📦 Game A actor sold goods","clip":"accepted","take":4,"speechId":2}],"delayedResult":[]}
+REPRODUCED finding 7: A->B queue ownership
+OBSERVED finding 7 A->off (two queued): {"mode":"off","game":"off","speechLog":[{"speech":"🛒 Game A actor bought goods","clip":"idle","take":0,"speechId":1},{"speech":"🛒 Game A actor bought goods","clip":"act","take":1,"speechId":1},{"speech":"🛒 Game A actor bought goods","clip":"accepted","take":2,"speechId":1},{"speech":"📦 Game A actor sold goods","clip":"accepted","take":2,"speechId":2},{"speech":"📦 Game A actor sold goods","clip":"act","take":3,"speechId":2},{"speech":"📦 Game A actor sold goods","clip":"accepted","take":4,"speechId":2}],"delayedResult":[]}
+REPRODUCED finding 7: live->off queue ownership
+OBSERVED finding 7 A->B (result pending + one queued): {"mode":"live","game":"2","speechLog":[{"speech":"🛒 Game A actor bought goods","clip":"accepted","take":2,"speechId":1},{"speech":"📦 Game A actor sold goods","clip":"accepted","take":2,"speechId":2},{"speech":"📦 Game A actor sold goods","clip":"act","take":3,"speechId":2},{"speech":"📦 Game A actor sold goods","clip":"accepted","take":4,"speechId":2}],"delayedResult":[{"speech":"🛒 Game A actor bought goods","clip":"accepted","take":2,"speechId":1}]}
+REPRODUCED finding 7: A->B pending result + queue ownership
+OBSERVED finding 7 A->off (result pending + one queued): {"mode":"off","game":"off","speechLog":[{"speech":"🛒 Game A actor bought goods","clip":"accepted","take":2,"speechId":1},{"speech":"📦 Game A actor sold goods","clip":"accepted","take":2,"speechId":2},{"speech":"📦 Game A actor sold goods","clip":"act","take":3,"speechId":2},{"speech":"📦 Game A actor sold goods","clip":"accepted","take":4,"speechId":2}],"delayedResult":[{"speech":"🛒 Game A actor bought goods","clip":"accepted","take":2,"speechId":1}]}
+REPRODUCED finding 7: live->off pending result + queue ownership
+RESULT 0 failed reproduction checks. Production implementation was not changed.
+
+Process exit status: 0
