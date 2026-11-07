@@ -1,10 +1,12 @@
 # State-machine regression evidence
 
+This report preserves the first task's results through `da57582b`. A later owner instruction authorized fixing 6 and 7; those fixes and their checks are recorded in the [viewer repair report](fixes-6-7/README.md). The reproduced-only rows below describe the first task, before those fixes.
+
 Work started on 7 November 2026 at 11:20, Asia/Almaty, from `7113b9af330a9bce90b35919fdb37a4d3d20f230`. Branch: `codex/implicit-state-fixes-20261107`. This directory accompanies the [original audit](../IMPLICIT_STATE_MACHINES_20261107.md).
 
 Scope: fix findings 1 and 2 after reproducing them; reproduce findings 6 and 7 without fixing them; leave the rules involved in findings 3, 5 and 8 unchanged. Tests use isolated files and loopback services. No live game, funds or deployment is involved.
 
-| Finding | Result in this branch | Evidence |
+| Finding | Result in the first task | Evidence |
 |---|---|---|
 | 1. Rejected session action stays pending | Fixed after RED; 19 session tests pass | [RED](finding-1-red.log), [GREEN](finding-1-green.log) |
 | 2. Terminal cache prevents archive retry | Fixed after RED; 22 indexer tests pass | [RED](finding-2-red.log), [GREEN](finding-2-green.log), [suite](indexer.log) |

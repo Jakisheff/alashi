@@ -4,6 +4,8 @@ Audit date: 7 November 2026. `source_defined` inventory, with static failure pat
 
 Follow-up work started in the Git checkout on branch `codex/implicit-state-fixes-20261107`, based on `7113b9af`. The inventory below preserves the original audit. Current reproduction and repair results are recorded in the [follow-up evidence](state-machines-20261107/README.md).
 
+After the owner authorized fixes for 6 and 7, both viewer boundaries received tested repairs. Their [separate repair report](state-machines-20261107/fixes-6-7/README.md) records RED/GREEN, real-renderer browser evidence and mandatory Rust/SBF checks. Findings 3, 5 and 8 remain unchanged.
+
 ALASHI has an explicit game phase enum, but most surrounding lifecycles are encoded by combinations of optional records, flags, timestamps, request IDs, maps and file existence. This inventory contains 126 entries across the codebase: 46 frontend/companion families, 38 arena families, 18 rules/onchain families and 24 runner/service families. The 18 core entries include the already explicit Phase skeleton and its implicit deadline state. The count is an inventory of implementation-level lifecycles, not 126 independent business processes: browser/server peers and nested machines intentionally appear separately.
 
 ```mermaid
