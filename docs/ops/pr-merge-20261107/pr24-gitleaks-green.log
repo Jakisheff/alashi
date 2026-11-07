@@ -1,0 +1,114 @@
+Local Gitleaks 8.30.1; GitHub Actions failure used 8.24.3.
+Command: ['gitleaks', 'detect', '--redact', '-v', '--exit-code=2', '--report-format=sarif', '--report-path=/tmp/alashi-pr24-green.sarif', '--log-level=debug', '--log-opts=--no-merges --first-parent 0814927a469a6716a33a037e53e56c07994ae900^..b38053c8ecec5d057337c1d2bf29fb002ceda000']
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+5:03PM DBG using stdlib regex engine
+5:03PM DBG no gitleaks config found in path .gitleaks.toml, using default gitleaks config
+5:03PM DBG found .gitleaksignore file path=.gitleaksignore
+5:03PM DBG found .gitleaksignore file path=.gitleaksignore
+5:03PM DBG executing: /usr/local/bin/git -C . log -p -U0 --no-merges --first-parent 0814927a469a6716a33a037e53e56c07994ae900^..b38053c8ecec5d057337c1d2bf29fb002ceda000
+5:03PM DBG SCM platform parsed from host host=github.com platform=github
+5:03PM DBG skipping finding: fingerprint finding=REDACTED fingerprint=4d6d4e56589255fb931dcef50d3c90775b69a991:docs/ops/DEPLOY_ANIMATION_AUDIT_20261029.json:generic-api-key:178
+5:04PM DBG Taking longer than 5s to inspect fragment commit=02e27cc path=docs/research/harness-learning-20261020/artifact-manifest.json
+5:04PM DBG skipping finding: fingerprint finding=REDACTED fingerprint=02e27cc883a26fa83353cc5f35836ee5cd6a7524:docs/research/harness-learning-20261020/artifact-manifest.json:generic-api-key:4991
+5:04PM DBG skipping finding: fingerprint finding=REDACTED fingerprint=02e27cc883a26fa83353cc5f35836ee5cd6a7524:docs/research/harness-learning-20261020/artifact-manifest.json:generic-api-key:5657
+5:04PM DBG skipping finding: fingerprint finding=REDACTED fingerprint=02e27cc883a26fa83353cc5f35836ee5cd6a7524:docs/research/harness-learning-20261020/results.json:generic-api-key:518
+5:04PM DBG skipping finding: fingerprint finding=REDACTED fingerprint=02e27cc883a26fa83353cc5f35836ee5cd6a7524:docs/research/harness-learning-20261020/results.json:generic-api-key:530
+5:04PM DBG Taking longer than 5s to inspect fragment commit=02e27cc path=docs/research/harness-learning-20261020/report.generated.html
+5:04PM DBG Taking longer than 5s to inspect fragment commit=02e27cc path=docs/research/harness-learning-20261020/report.html
+5:04PM DBG segment found: original=[29244,29250] pos=[29244,29250]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[35177,35183] pos=[35177,35183]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[41355,41361] pos=[41355,41361]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[47417,47423] pos=[47417,47423]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[70484,70490] pos=[70484,70490]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[76502,76508] pos=[76502,76508]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[106022,106028] pos=[106022,106028]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[122467,122473] pos=[122467,122473]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[140180,140186] pos=[140180,140186]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[163690,163696] pos=[163690,163696]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[197450,197456] pos=[197450,197456]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[202322,202328] pos=[202322,202328]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[219232,219238] pos=[219232,219238]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[225271,225277] pos=[225271,225277]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[242365,242371] pos=[242365,242371]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[248645,248651] pos=[248645,248651]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[265931,265937] pos=[265931,265937]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[315000,315006] pos=[315000,315006]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[321120,321126] pos=[321120,321126]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[327023,327029] pos=[327023,327029]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[343030,343036] pos=[343030,343036]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[359889,359895] pos=[359889,359895]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[403959,403965] pos=[403959,403965]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[410319,410325] pos=[410319,410325]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[421465,421471] pos=[421465,421471]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[432964,432970] pos=[432964,432970]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[477852,477858] pos=[477852,477858]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[489397,489403] pos=[489397,489403]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[495458,495464] pos=[495458,495464]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[501795,501801] pos=[501795,501801]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[507349,507355] pos=[507349,507355]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[524192,524198] pos=[524192,524198]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[530301,530307] pos=[530301,530307]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[542310,542316] pos=[542310,542316]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[601125,601131] pos=[601125,601131]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[612554,612560] pos=[612554,612560]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[619044,619050] pos=[619044,619050]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[27269,27275] pos=[27269,27275]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[33202,33208] pos=[33202,33208]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[39380,39386] pos=[39380,39386]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[45442,45448] pos=[45442,45448]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[68509,68515] pos=[68509,68515]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[74527,74533] pos=[74527,74533]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[104047,104053] pos=[104047,104053]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[120492,120498] pos=[120492,120498]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[138205,138211] pos=[138205,138211]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[161715,161721] pos=[161715,161721]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[195475,195481] pos=[195475,195481]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[200347,200353] pos=[200347,200353]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[217257,217263] pos=[217257,217263]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[223296,223302] pos=[223296,223302]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[240390,240396] pos=[240390,240396]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[246670,246676] pos=[246670,246676]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[263956,263962] pos=[263956,263962]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[313025,313031] pos=[313025,313031]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[319145,319151] pos=[319145,319151]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[325048,325054] pos=[325048,325054]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[341055,341061] pos=[341055,341061]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[357914,357920] pos=[357914,357920]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[401984,401990] pos=[401984,401990]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[408344,408350] pos=[408344,408350]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[419490,419496] pos=[419490,419496]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[430989,430995] pos=[430989,430995]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[475877,475883] pos=[475877,475883]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[487422,487428] pos=[487422,487428]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[493483,493489] pos=[493483,493489]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[499820,499826] pos=[499820,499826]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[505374,505380] pos=[505374,505380]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[522217,522223] pos=[522217,522223]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[528326,528332] pos=[528326,528332]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[540335,540341] pos=[540335,540341]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[599150,599156] pos=[599150,599156]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[610579,610585] pos=[610579,610585]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[617069,617075] pos=[617069,617075]: "\\u003c" -> "<" decoder=unicode
+5:04PM DBG segment found: original=[13397,13404] pos=[13397,13404]: "\\\\u003c" -> "<" decoder=unicode
+5:04PM DBG Taking longer than 5s to inspect fragment commit=02e27cc path=docs/research/harness-learning-20261020/runs/test/test-s9-seat1-H/trace.jsonl
+5:04PM DBG Taking longer than 5s to inspect fragment commit=02e27cc path=docs/research/harness-learning-20261020/runs/test/test-s9-seat2-A0/trace.jsonl
+5:04PM DBG Taking longer than 5s to inspect fragment commit=02e27cc path=docs/research/harness-learning-20261020/runs/test/test-s9-seat2-H/trace.jsonl
+5:04PM DBG Taking longer than 5s to inspect fragment commit=1fa4442 path=docs/research/harness-learning-20261020/dev-feedback.json
+5:04PM DBG Taking longer than 5s to inspect fragment commit=1fa4442 path=docs/research/harness-learning-20261020/discovery/final/calls/t00-a0.request.json
+5:04PM DBG skipping finding: fingerprint finding=REDACTED fingerprint=1fa44420bcfbaa9f88b89f565e9b9130220a0ee2:docs/research/harness-learning-20261020/harness-freeze.json:generic-api-key:17
+5:04PM DBG skipping finding: fingerprint finding=REDACTED fingerprint=1fa44420bcfbaa9f88b89f565e9b9130220a0ee2:docs/research/harness-learning-20261020/harness-freeze.json:generic-api-key:29
+5:04PM DBG skipping finding: fingerprint finding=REDACTED fingerprint=7b9c5bd94ff05bfac8eb543e426bbac32fb3f3e1:docs/research/harness-learning-20261020/protocol.json:generic-api-key:1601
+5:04PM DBG segment found: original=[18463,18470] pos=[18463,18470]: "\\\\u003c" -> "<" decoder=unicode
+5:04PM DBG skipping finding: fingerprint finding=REDACTED fingerprint=225f9910db295eae72449188579733e48acfd4fd:docs/research/label-fullgames-20261019/artifact-manifest.json:generic-api-key:3116
+5:05PM INF 34 commits scanned.
+5:05PM DBG Note: this number might be smaller than expected due to commits with no additions
+5:05PM INF scanned ~87536937 bytes (87.54 MB) in 1m7.9s
+5:05PM INF no leaks found
+
+Exit code: 0
