@@ -24,7 +24,17 @@ Use the repository's pinned Rust 1.89.0. Host runs share `target/host`, with `CA
 
 `cargo test --offline --locked -p alashi-rules`: 40 tests pass. [Log](rules.log).
 
-Regression results and remaining mandatory checks are pending. No finding is marked fixed by this environment entry.
+`cargo test --offline --locked --manifest-path indexer/Cargo.toml`: 22 tests pass. [Log](indexer.log). Other mandatory checks remain pending.
+
+## Finding 2: terminal archive retry fixed
+
+Before the fix, a failed archive rename left the terminal game cached without `archived: true`. Removing the filesystem obstruction did not trigger another write. The regression failed for both fresh and stale cache entries: [fresh-cache RED](finding-2-red.log), [stale-cache RED](finding-2-red-stale.log). The earlier [environment failure](finding-2-environment.log) was a denied loopback listener and does not count as a reproduction.
+
+The cache fast path now requires a successfully archived terminal snapshot when archival is configured. A request for an unarchived terminal snapshot takes the existing per-game lock, retries the write from that same cached value, and updates the cache. It does not fetch the game again.
+
+The [passing regression](finding-2-green.log) checks recovery for both cache ages, concurrent retry requests, archive loading by a new API instance, and zero RPC connections. Controls preserve the fresh live-game fast path and prevent rearchiving an already archived cache entry. The full indexer suite also passes.
+
+[Crapper](finding-2-complexity.log) reports complexity only: `get` is 9 and `ready_value` is 4. Coverage and CRAP were not measured. [Dryer](finding-2-duplication.log) reports no duplicate candidates. The [initial mutation run](finding-2-mutation.log) reports five killed mutations in the cache guard. That tool discards each test subprocess's output and counts any nonzero exit or timeout as killed, so this result alone does not establish five assertion failures. Detailed mutation evidence remains pending.
 
 ## Findings 6 and 7: reproduced, not fixed
 

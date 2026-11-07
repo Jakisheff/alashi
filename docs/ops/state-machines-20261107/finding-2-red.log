@@ -1,0 +1,24 @@
+   Compiling indexer v0.1.0 (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/indexer)
+    Finished `test` profile [unoptimized] target(s) in 2m 08s
+     Running unittests src/lib.rs (target/host/debug/deps/indexer-34ebb04d69690bb7)
+
+running 1 test
+test chain_api::tests::cached_terminal_game_retries_archive_after_storage_recovers_without_rpc ... FAILED
+
+failures:
+
+---- chain_api::tests::cached_terminal_game_retries_archive_after_storage_recovers_without_rpc stdout ----
+
+thread 'chain_api::tests::cached_terminal_game_retries_archive_after_storage_recovers_without_rpc' panicked at src/chain_api.rs:948:13:
+assertion `left == right` failed: cached terminal game must retry its failed archive
+  left: Null
+ right: true
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    chain_api::tests::cached_terminal_game_retries_archive_after_storage_recovers_without_rpc
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.05s
+
+error: test failed, to rerun pass `--lib`
