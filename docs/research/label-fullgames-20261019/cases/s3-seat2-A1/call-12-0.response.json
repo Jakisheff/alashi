@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.53,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":31,\"reason\":\"Лицензия приносит 20–60 alashi сверх доли — выставляю максимальную ставку, проигрыш не страшен, ставка вернётся.\"}",
+          "reasoning_content": "We're idx2, cash 15.81, promissory 32.5 (paid round 5). Round 4 action with license auction. License income 20-60 alashi — huge. Bidding all cash ~15.8; rival with ~39 could outbid. Tie order [1,2,0], so tie with 1 loses. Rival 1 has 39.7 cash; if they bid, they can win. Hidden bids. Aggressive bid all 15.8 risky if they bid ~20; but value 20-60 justifies. However if I lose, bid returned. If I win, +20-60 income, money added to bank... Actually bid goes into bank which gets redistributed. Winning adds ~20-60 directly to me, worth it. Bid everything: choice 31. But then cash=0 and can still choose another action (bid doesn't consume action)—but menu offers one aggregate. Choose 31.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427124,
+    "id": "202610200025128a4ac6c88b25485b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200025128a4ac6c88b25485b",
+    "usage": {
+      "completion_tokens": 249,
+      "completion_tokens_details": {
+        "reasoning_tokens": 202
+      },
+      "prompt_tokens": 4441,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 4690
+    }
+  }
+}

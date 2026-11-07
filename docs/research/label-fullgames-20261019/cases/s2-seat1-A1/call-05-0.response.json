@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.549,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Сохраняю cash и получаю 2 товара для будущих продаж, влияние уже достаточно для президентства.\"}",
+          "reasoning_content": "Already president (influence 1, tie_order 1 gives priority? vote_weight 3 means passed action? Actually own_bid 0... vote_weight 3 = influence1+2 because action was pass? No, I haven't acted yet — I already bid 0? Bid doesn't consume action. vote_weight 3 suggests pass... anyway). Best: produce to get goods. Choose 1.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427351,
+    "id": "20261020002907f3fb08005d9b469f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020002907f3fb08005d9b469f",
+    "usage": {
+      "completion_tokens": 116,
+      "completion_tokens_details": {
+        "reasoning_tokens": 83
+      },
+      "prompt_tokens": 2827,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2943
+    }
+  }
+}

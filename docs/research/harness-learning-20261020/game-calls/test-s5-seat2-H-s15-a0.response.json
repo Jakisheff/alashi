@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.978,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Бесплатно беру 3 товара на продажу в раунде 6 до девальвации.\"}",
+          "reasoning_content": "Round 5 action. I'm poorest, cash 6.15, promissory 48.75. Next round cash devalues: floor(6150400/100)*62 ≈ 3.81 alashi. Better spend on goods? Goods sell next market at price ~5 (counter 4). Produce gives 2 goods free — best. Shuttle gives 3 goods. Choose shuttle (choice 3), free.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497460,
+    "id": "20261020195736031e39574f654ebf",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195736031e39574f654ebf",
+    "usage": {
+      "completion_tokens": 123,
+      "completion_tokens_details": {
+        "reasoning_tokens": 91
+      },
+      "prompt_tokens": 3891,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 4014
+    }
+  }
+}

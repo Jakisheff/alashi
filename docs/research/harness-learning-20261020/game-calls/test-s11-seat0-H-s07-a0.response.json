@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.45,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Вето отменяет +2 к ценам, что выгоднее соперникам с 6 товарами, у меня товара нет.\"}",
+          "reasoning_content": "Card 7 = +2 prices next market. I sold already, rivals sell. Veto keeps +2? No—veto cancels the law. Vote yes already; pass lets it pass. +2 prices helps whoever sells next market (round 3), likely rivals too, but also me. I have no goods though. Veto prevents rivals from benefiting; but I'll produce goods. Others voted yes. With veto, no price boost for rivals. I'm the president; my weight 2, others 2 total yes — it passes 3:0? Actually votes: yes 2+1+1=4, no=0, passes. Veto prevents +2 for everyone. Rivals have 6 goods; I have 0. Veto is better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499965,
+    "id": "202610202039207a43ed625ec641d1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202039207a43ed625ec641d1",
+    "usage": {
+      "completion_tokens": 197,
+      "completion_tokens_details": {
+        "reasoning_tokens": 161
+      },
+      "prompt_tokens": 2722,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2919
+    }
+  }
+}

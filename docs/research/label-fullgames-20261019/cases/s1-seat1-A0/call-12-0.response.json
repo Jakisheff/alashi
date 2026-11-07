@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.519,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Шаттл даёт больше товара для продаж в оставшихся раундах при умеренном риске.\"}",
+          "reasoning_content": "I'm faction 1 (not president). Round 4 action after bidding 25. Remaining rounds 4 market already done, rounds 5-6. Goods to sell in rounds 5-6. Shuttle gives 3 goods, ~25% seizure risk. Produce gives 2 safely. Cash low (15.2). Best action: produce or shuttle? Expected shuttle 2.25 goods; produce 2. Shuttle with red tariff risk? Tariff unclear. Also could bribe for influence to gain presidency → veto/5% bonus. Influence 1 vs others' 1; bribe 5 gives influence 2, becoming president in law — president gets veto and 5% commission tie-break at end (max influence). Influence 4 (choice 5) costs 10 but strong. But cash matters for rank.\n\nEnd-game: influence max gets 5% of bank (~1.5). Bribing 10 to get influence 3 could win presidency and max influence bonus. But losing 10 cash hurts rank. Current cash 15.2+promissory 27.5 (paid this round). Actually promissory added to cash after market r5.\n\nValue of goods: sell r5-6. Produce 2 goods ~ each unit sells ~5-6 alashi later. Shuttle expected ~2.25 goods, risk of losing all.\n\nInfluence: end bonus 5% bank (~1.5 alashi) for max influence. Also presidency veto protects from tax laws. Bribe 5 to idx0 (current president, richest) — gives them cash, hurts my rank relatively.\n\nSimpler: take shuttle for more goods (choice 3), moderate risk. Or produce (choice 1) safe. Given cash competition tight (15.2 vs 35+), extra goods value high. Shuttle expected value higher than produce. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792489923,
+    "id": "20261020175150869a44a19f8848c7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175150869a44a19f8848c7",
+    "usage": {
+      "completion_tokens": 421,
+      "completion_tokens_details": {
+        "reasoning_tokens": 388
+      },
+      "prompt_tokens": 3513,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 3934
+    }
+  }
+}

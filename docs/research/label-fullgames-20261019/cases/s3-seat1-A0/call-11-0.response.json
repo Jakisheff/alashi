@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.209,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":10,\"reason\":\"Вексель не девальвируется в раунде 5, поэтому продаю весь товар в кредит по высоким ценам.\"}",
+          "reasoning_content": "Law 6 was defeated (I voted no; holder 0). Market round 4: prices reset? sold_counter=0, prices [12,10,9,8,7]. Subsidy=1, no tax. Round 6 is last; round 5 cash devaultuates by factor 0.62 unless held... sell now converts goods to cash that will devaluate next round (round 5 start: floor(cash/100)*62, ~62%). sell_credit: promissory added at round 5 start without devaluation? \"Начало раунда 2 и далее: cash=floor(cash/100)*62, затем promissory прибавляется\". So promissory survives devaluation. So sell_credit strongly dominates.\n\nI already bid 0? own_bid=0 — I already made a bid of 0? own_bid:0 means bid of 0 alashi. OK.\n\nSell all 5 on credit: promissory 57.5 alashi added to cash at round 5 start. But promissory unpaid after round 6 doesn't count; this is round 4, redeemed round 5. Good. Choose 10.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427255,
+    "id": "202610200027272d43889d82714161",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200027272d43889d82714161",
+    "usage": {
+      "completion_tokens": 283,
+      "completion_tokens_details": {
+        "reasoning_tokens": 247
+      },
+      "prompt_tokens": 3027,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 3310
+    }
+  }
+}

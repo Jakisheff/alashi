@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.263,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce даёт гарантированные 2 товара для финальной продажи без погашения векселя.\"}",
+          "reasoning_content": "I'm president, cash-poor, cash 4.5 alashi. Produce gives 2 goods for next market. Shuttle gives 3 goods (25% seizure risk at border? no tariff active, so shuttle has risk? shuttle risk exists regardless — \"может быть изъят с вероятностью около 25%\"). Actually grey seizure only with tariffs/border rules; shuttle itself has ~25% risk. Produce safest: 2 goods. Goods sell next market at low price counter 4+ → price 8? sold_counter=4 means next price 8? Actually after selling 4, price list index 4 = 7? But devauled cash in round 6? No — round 6 start applies floor(cash/100)*62 to cash, promissory added. Round 6 market final: sell proceeds... promissory from round 6 market not redeemed (\"после последнего раунда вексель не погашается\"). So round 6 selling must be cash sell, not credit. Goods obtained now sold in round 6 for hard cash. Produce gives 2 goods.\n\nShuttle 3 goods at risk 25%. Expected goods 2.25, higher but risk. Produce is safe, pick produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427865,
+    "id": "202610200037363b383d76b84749d5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200037363b383d76b84749d5",
+    "usage": {
+      "completion_tokens": 293,
+      "completion_tokens_details": {
+        "reasoning_tokens": 260
+      },
+      "prompt_tokens": 3187,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3480
+    }
+  }
+}

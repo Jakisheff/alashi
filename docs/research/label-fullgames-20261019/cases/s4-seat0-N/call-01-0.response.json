@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.338,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce даёт 2 товара без риска изъятия серого товара.\"}",
+          "reasoning_content": "Produce gives 2 goods safe; shuttle 3 grey goods risky (~25% seizure). Expected shuttle ~2.25 but grey goods may face border tariff later. Produce is safe.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427207,
+    "id": "20261020002644d0e18addbe9a4ed8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020002644d0e18addbe9a4ed8",
+    "usage": {
+      "completion_tokens": 63,
+      "completion_tokens_details": {
+        "reasoning_tokens": 38
+      },
+      "prompt_tokens": 1925,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1988
+    }
+  }
+}

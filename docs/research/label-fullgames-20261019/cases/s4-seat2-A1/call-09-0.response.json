@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.832,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 10% навредит моим будущим продажам 7 товаров; голос «против» даёт ничью и отклоняет закон.\"}",
+          "reasoning_content": "Law 1: tax 10%. I plan to sell 7 goods next rounds; tax hurts me. Currently yes 2 (weight 2), no 1. My vote no makes 2-2? Yes weight 2 vs no: 1(me)+1=2, tie — not passed (yes strictly greater). Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490043,
+    "id": "20261020175355c9beaff1f2db4c96",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175355c9beaff1f2db4c96",
+    "usage": {
+      "completion_tokens": 113,
+      "completion_tokens_details": {
+        "reasoning_tokens": 71
+      },
+      "prompt_tokens": 2497,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2610
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.466,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Карта даёт +1 влияния самому богатому (фракция 2), что угрожает моему посту президента и комиссионным 5%; налагаю veto.\"}",
+          "reasoning_content": "Card 4: +1 influence to richest by cash — that's player 2 (47.5M). I'm president; player 2 gaining influence threatens my presidency and the 5% commission. Veto (vote weight 2 vs 2's weight 3... vote counts). Simplest: veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490911,
+    "id": "202610201808211c64fefa9fb54166",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201808211c64fefa9fb54166",
+    "usage": {
+      "completion_tokens": 114,
+      "completion_tokens_details": {
+        "reasoning_tokens": 65
+      },
+      "prompt_tokens": 2871,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2985
+    }
+  }
+}

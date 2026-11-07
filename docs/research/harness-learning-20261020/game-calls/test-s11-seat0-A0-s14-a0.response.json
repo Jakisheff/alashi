@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.396,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Налог 10% ударит по моим будущим продажам, а вето доступно бесплатно.\"}",
+          "reasoning_content": "Law 1 = tax 10%. My vote weight 3. Votes: Yes 1, No 4. Already No wins regardless. I'm not selling much more? I sold already; future rounds 5-6 I might sell. Tax 10% hurts me. But my vote irrelevant — Yes 1 vs No 4+3. Vote no anyway; or veto? Veto would keep tax 0, good for me since I plan to sell. Wait — veto kills the law; law 1 is tax 10% which would hurt my future sales. I hold presidency (influence 3 vs 2). Veto benefits me. Choose veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498050,
+    "id": "20261020200726b374d9c90f5a49e7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200726b374d9c90f5a49e7",
+    "usage": {
+      "completion_tokens": 170,
+      "completion_tokens_details": {
+        "reasoning_tokens": 138
+      },
+      "prompt_tokens": 2871,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3041
+    }
+  }
+}

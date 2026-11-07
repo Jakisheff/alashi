@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.675,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":30,\"reason\":\"Сильная ставка на лицензию с ожидаемым доходом 20–60 alashi; при проигрыше ставка возвращается, а при победе выплата превышает взнос в банк.\"}",
+          "reasoning_content": "I'm idx 2, cash 16.74, promissory 38.75 (devalues ~62%). License income 20-60; bid likely worth it. Competitors have 39.5 and 9.7 cash, could outbid. Bidding all cash risks losing to 0's 39.5. Bid moderate + do action? But bid doesn't consume action; but menu offers single combined per turn. Choose bid amount that keeps some action? Actually after bid, one more action allowed — but candidates here are combined single. Bid e.g. 10M leaves 6.74 for donkey? Not shown. Best: bid reasonable, say 5M? But rival 0 with 39.5 could bid high. License ~20-60 income expected ~40. If I bid all 16.74, 0 may outbid with ~17M, winning but paying. Expected value: win prob high with big bid. Bid 16.74 all cash; risk losing and losing cash? No — losing bid returned. Risk only opportunity: cash spent doesn't count in rank but enters bank if win (bank grown, shared). If win: pay 16.74 into bank, get ~40 license. Bank 30+16.74=46.7, split 50/30/15. Net gain positive. Bid high to deter: choice 32? But if lose, cash returned, no harm except no license. If I bid all and 0 outbids 17, they get license. To maximize win chance, bid max. But maybe 0 values cash for rank... They'd likely bid too. Just bid full cash 32 — wait, if I win with lower bid I keep difference. 0 might bid some amount; unknown. Reasonable: bid ~12M, then remaining 4.74... hmm if lose bid returned anyway. Only concern is overpaying vs rivals' bids. Choose a strong but not max bid, e.g. 12M (choice 27). If rival bids 16, they win. Expected: rival max 39.5 might bid high. I'd go 15M? Choose 30 (15M), keeping 1.74.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491131,
+    "id": "2026102018115976b01ea772e042c8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102018115976b01ea772e042c8",
+    "usage": {
+      "completion_tokens": 517,
+      "completion_tokens_details": {
+        "reasoning_tokens": 465
+      },
+      "prompt_tokens": 4431,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 4948
+    }
+  }
+}

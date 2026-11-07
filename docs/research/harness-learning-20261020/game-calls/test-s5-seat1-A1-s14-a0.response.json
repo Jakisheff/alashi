@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.506,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Налог 10% сильно режет мою будущую выручку, применяю veto.\"}",
+          "reasoning_content": "Law 1: tax 10% on future sales. I plan to sell remaining goods later; tax hurts me. But rivals also sell. Player 2 has big cash. Tax affects me with 7 goods remaining and promissory already. 10% tax on my future sales is bad; veto it. Yes votes: I vote no/veto. Rival votes unknown; safest: veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496984,
+    "id": "202610201949406f5c858e5d4041aa",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201949406f5c858e5d4041aa",
+    "usage": {
+      "completion_tokens": 113,
+      "completion_tokens_details": {
+        "reasoning_tokens": 82
+      },
+      "prompt_tokens": 2882,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2995
+    }
+  }
+}

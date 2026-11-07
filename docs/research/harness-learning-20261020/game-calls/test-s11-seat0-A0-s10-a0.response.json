@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.453,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон отдаёт +1 влияния беднейшему сопернику, что мне невыгодно — голосую против.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest cash. Poorest is faction 1 (5). I'm president? No, holder is 2. Faction 1 gets +1 influence → influence 2, tie with 2... holder at law is 2 already. Voting: does it help me? I have influence 1, others 1 and 2. Poorest gets +1 → faction 1 influence 2. President next law: highest influence among 1(2),2(2),0(1) — tie broken by tie_order [0,2,1] → faction 2 stays president. Doesn't help me. Vote no — my vote weight 1, others weight 1 and 2. Yes needs strictly more than no. Faction 2 (president) likely votes... unknown. Law 4 is neutral-ish to me, but it helps rival influence. Vote no (weight 1) vs possible yes 2 — passes anyway. Either way, choose no to oppose.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498022,
+    "id": "20261020200657989ecd6dd78f4be8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200657989ecd6dd78f4be8",
+    "usage": {
+      "completion_tokens": 244,
+      "completion_tokens_details": {
+        "reasoning_tokens": 209
+      },
+      "prompt_tokens": 2546,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2790
+    }
+  }
+}

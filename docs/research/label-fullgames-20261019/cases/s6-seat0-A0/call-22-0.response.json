@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.924,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 3 даёт субсидию на производство, но раунд последний и эффектов больше нет — голосование бессмысленно.\"}",
+          "reasoning_content": "Law 3: subsidy_goods=1 — helps everyone's production, but no more actions this round (round 6 action already passed). So irrelevant. Vote yes or no doesn't matter; just abstain/pass. Any effect on final? Subsidy affects future produce only—none. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428034,
+    "id": "20261020004028f5d9437989a34e2a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020004028f5d9437989a34e2a",
+    "usage": {
+      "completion_tokens": 100,
+      "completion_tokens_details": {
+        "reasoning_tokens": 62
+      },
+      "prompt_tokens": 3447,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3547
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.76,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"shuttle даёт больше товара при хорошем ожидании, продукцию можно продать на следующем рынке.\"}",
+          "reasoning_content": "Need goods to sell later. Shuttle gives 3 goods, 25% loss risk. Produce 2 safe. Prices dropping (sold_counter 6, price ~5). Cash also gets devalued each round (62%). Influence matters — I'm far behind idx2 (influence 2, weight 4). Presidency is held by idx0. Bribing to 2 gains influence but costs; hard to overtake.\n\nShuttle: 3 goods vs 2 — risky. With tariff issues unknown. Take shuttle? Expected value higher. But 25% loss. Produce safe 2 goods worth ~10 alashi sale. Shuttle gives 3 goods ~25% chance lose all. EV shuttle = 2.25 goods. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499207,
+    "id": "20261020202641efc90dd4683b4af1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202641efc90dd4683b4af1",
+    "usage": {
+      "completion_tokens": 184,
+      "completion_tokens_details": {
+        "reasoning_tokens": 154
+      },
+      "prompt_tokens": 3239,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 3423
+    }
+  }
+}

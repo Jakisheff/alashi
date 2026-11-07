@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.855,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Я самый бедный, карта 4 даёт мне +1 влияния — голосую за.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest by cash — that's me (694400). Vote yes. Vote weight 2; player 1 voted No (weight 3). I'm poorest, so yes benefits me. Yes=2 vs No=3 → fails. Vote yes anyway; veto would kill it, bad.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491197,
+    "id": "2026102018131295e3fbf1db3448f5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102018131295e3fbf1db3448f5",
+    "usage": {
+      "completion_tokens": 98,
+      "completion_tokens_details": {
+        "reasoning_tokens": 68
+      },
+      "prompt_tokens": 2833,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2931
+    }
+  }
+}

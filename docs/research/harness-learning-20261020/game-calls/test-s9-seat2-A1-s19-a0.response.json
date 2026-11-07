@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.041,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Я уже лидер по рангу, покупка товара в последнем раунде лишь уменьшит cash без выгоды.\"}",
+          "reasoning_content": "Last round. I'm richest (60.5M), license held by rival. Buy goods — waste? Cash counts for ranking; goods don't. Rank 1 gets 50% of ~36.1M bank. I'm safely first (34.2M rival). Buying reduces my payout-share? Payout is by rank, not cash amount. So buying goods pointless — pass. But license income to idx1 extra 20-60M could push them over? License income doesn't count into rank. So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499825,
+    "id": "2026102020365904452083ac8243cc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020365904452083ac8243cc",
+    "usage": {
+      "completion_tokens": 146,
+      "completion_tokens_details": {
+        "reasoning_tokens": 108
+      },
+      "prompt_tokens": 3301,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3447
+    }
+  }
+}

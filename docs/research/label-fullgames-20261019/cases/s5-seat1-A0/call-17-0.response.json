@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.692,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 10% снизит мою выручку от продаж в последнем раунде, поэтому голосую против.\"}",
+          "reasoning_content": "Law 1: tax 10% on future sales. We plan to sell next round. Vote no. Faction 2 voted yes. If president is holder 0 with veto_pending — they may veto anyway. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490341,
+    "id": "20261020175855b64abf6e071c4a69",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175855b64abf6e071c4a69",
+    "usage": {
+      "completion_tokens": 82,
+      "completion_tokens_details": {
+        "reasoning_tokens": 46
+      },
+      "prompt_tokens": 3071,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3153
+    }
+  }
+}

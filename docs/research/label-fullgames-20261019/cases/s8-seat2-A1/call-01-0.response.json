@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.766,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Shuttle даёт больше товара с приемлемым риском на старте.\"}",
+          "reasoning_content": "Shuttle gives 3 goods with 25% risk (no tariff law yet? default border). Risk losing all goods. Produce gives 2 safely. Take shuttle for higher expected? 3 vs 2, 25% loss → expected 2.25. Slight edge.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490952,
+    "id": "202610201809095feeab5d605e4333",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201809095feeab5d605e4333",
+    "usage": {
+      "completion_tokens": 84,
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      },
+      "prompt_tokens": 1924,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2008
+    }
+  }
+}

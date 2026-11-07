@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.589,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Продажа в кредит сохраняет выручку от девальвации (21,25 alashi против ~10,5 у наличных), цены всё равно падают.\"}",
+          "reasoning_content": "Sell 2 units at 9+8=17 alashi. Prices will drop further; sell now. Credit gives 21.25 but promissory only counts after devaluation round start — promissory added at round 3 start fully. Actually cash devalues 38% each round; promissory survives. Cash 17 would devalue. So sell_credit is better long-term? Cash 17 → round3: floor(17000000/100)*62... wait cash is 0 now; at round 3 start cash=floor(17M/100)*62 ≈ 10.54M. Promissory 21.25M added intact. Credit clearly better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427909,
+    "id": "202610200038242504252dba994909",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200038242504252dba994909",
+    "usage": {
+      "completion_tokens": 189,
+      "completion_tokens_details": {
+        "reasoning_tokens": 143
+      },
+      "prompt_tokens": 2217,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2406
+    }
+  }
+}

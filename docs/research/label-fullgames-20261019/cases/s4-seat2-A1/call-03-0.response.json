@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 20.058,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель не девальвируется и даёт 25% бонус, поэтому продать весь товар в кредит выгоднее.\"}",
+          "reasoning_content": "Cash devalues 62% each round start. Selling now at 12/unit, 3 units = 31 alashi. Credit 38.75 but 62% haircut... actually promissory added at round start, no haircut? Round start: cash=floor/100*62 then promissory added. So credit better? Credit 38.75 next round vs cash 31*0.62=19.2. But credit after last round unpaid. Round 2 of 6, fine. But inflation: cash devalues each round. Cash 31 → next rounds 62% repeatedly. Credit 38.75 stays nominal. Sell all credit: choice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490011,
+    "id": "20261020175312080b0ae85bd54d76",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175312080b0ae85bd54d76",
+    "usage": {
+      "completion_tokens": 177,
+      "completion_tokens_details": {
+        "reasoning_tokens": 141
+      },
+      "prompt_tokens": 2269,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2446
+    }
+  }
+}

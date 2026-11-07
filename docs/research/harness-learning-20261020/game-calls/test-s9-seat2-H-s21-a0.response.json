@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.583,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 4 даёт влияние беднейшему и не влияет на мою выплату, трачу ход нейтрально.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest by cash. Poorest is idx0 (191640). I'm richest (61685226). Law 4 gives nothing to me. President is idx1 with veto_pending — they may veto anyway. Vote yes or no? Law doesn't affect me negatively. Poorest gains influence — idx0 currently vote No. Giving influence to idx0 doesn't affect me directly; influence matters for the 5% commission bonus — I have influence 1, president idx1 has 2. If idx0 gets +1 → 2, still not me. Irrelevant. Vote no to deny? Doesn't matter. Just abstain/pass. Choose no to avoid passing — actually whether it passes doesn't affect my payout. Vote yes... pass simplest. Choice 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497144,
+    "id": "202610201952184ffacb33e3e14f0e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201952184ffacb33e3e14f0e",
+    "usage": {
+      "completion_tokens": 205,
+      "completion_tokens_details": {
+        "reasoning_tokens": 168
+      },
+      "prompt_tokens": 3755,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 3960
+    }
+  }
+}

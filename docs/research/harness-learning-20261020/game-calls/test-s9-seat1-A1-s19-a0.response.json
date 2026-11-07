@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.818,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Взятка стоит дороже, чем прибавка 5% банка за влияние; товары после финального рынка бесполезны.\"}",
+          "reasoning_content": "I'm idx1, cash 92.8, richest. Last round action; goods useless after final round (no more market). Law phase: I'm likely president? Influence: all 2, tie_order 0 first, so idx0 president. Bribe gives influence → max influence gets extra 5% of bank (~1.9). Also vote weight for final law. Bribe 5 alashi to idx2 or idx0 gives me +1 influence → max influence, plus cash transferred to rival hurts rank. Bribe to idx2 (poorest) costs 5 but rival gets 5. 5% bank = 1.9 alashi gain, and vote weight. Worth it? Net: -5 cash, +1.9 bonus, rival +5. Actually rank: I'm 92.8 vs 36 vs 6.3 — top rank secured regardless. So bribe only for 5% commission share (1.9 alashi) costing 5 — negative. But influence also determines law vote; card 8 zeroes promissory — my promissory is 0, idx0 has 0 promissory? Current state: promissory all 0. Laws don't matter much. So pass.\n\nActually wait: 5% of bank = 38 alashi *5% = 1.9 alashi... bank=38 alashi, 5% = 1.9 alashi = 1,900,000. Bribe 5 alashi = 5,000,000 loss for 1.9 alashi gain. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497168,
+    "id": "20261020195240c8e2f3d186844c0b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195240c8e2f3d186844c0b",
+    "usage": {
+      "completion_tokens": 372,
+      "completion_tokens_details": {
+        "reasoning_tokens": 331
+      },
+      "prompt_tokens": 5851,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 6223
+    }
+  }
+}

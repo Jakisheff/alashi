@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.02,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Производство даёт гарантированные 3 товара; шаттл с риском изъятия ~25% хуже по ожиданию.\"}",
+          "reasoning_content": "Promissory 57.5 alashi will be paid anyway. Last round is 6; I should get goods to sell. Shuttle gives 4 goods free (25% risk? \"shuttle daet 3+subsidy grey goods, may be seized\" — but here shows goods 4 no grey shown, after state only immediate). Shuttle free gives 4 goods vs produce 3. Risk of seizure ~25%. Expected shuttle 3, produce 3, equal; but seizure could lose all. Price at round 6: sold_counter 5 → price 5? list index: [12,10,9,8,7,6,5...] counter 5 → price 6. Selling 3-4 units fine. Produce is safe, 3 goods = 18 alashi. Shuttle 4 goods worth 22, 25% risk of 0. EV 16.5 < 18. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496400,
+    "id": "202610201939545c7e4662484a4bb5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201939545c7e4662484a4bb5",
+    "usage": {
+      "completion_tokens": 236,
+      "completion_tokens_details": {
+        "reasoning_tokens": 196
+      },
+      "prompt_tokens": 3217,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3453
+    }
+  }
+}

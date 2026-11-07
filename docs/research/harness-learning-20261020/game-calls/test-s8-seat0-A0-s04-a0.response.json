@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.961,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"sell_credit даёт 30 против 24 alashi, а девальвация не трогает вексель.\"}",
+          "reasoning_content": "Sell now at price 9,8,7 → sell all 3 for 24. Credit gives 30 promissory but devaluation 0.62 each round... 30 now, after round 3 start: floor? promissory added after devaluation of cash (cash=0), so promissory stays 30 until spent? Actually promissory converts to cash at next round start, no devaluation of promissory? \"cash=floor(cash/100)*62, then promissory added to cash\". So credit is better: 30 alashi vs 24. But promissory can be zeroed by law 8. Risk exists. 30 vs 24, credit worth it. Sell all 3 credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498279,
+    "id": "20261020201115bef2db5e0db942ff",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201115bef2db5e0db942ff",
+    "usage": {
+      "completion_tokens": 191,
+      "completion_tokens_details": {
+        "reasoning_tokens": 156
+      },
+      "prompt_tokens": 2322,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2513
+    }
+  }
+}

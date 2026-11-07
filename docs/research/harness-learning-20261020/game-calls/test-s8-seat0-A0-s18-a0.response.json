@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.846,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Ожидаемая выгода шаттла (3 товара с риском изъятия) выше, чем у produce, а товар пойдёт на продажу в финальном рынке.\"}",
+          "reasoning_content": "I'm the president with influence 3, vote weight 5. Next round is 6, the last. Goods now sellable next market. Best action: produce gives 2 goods to sell next round. Or shuttle gives 3 goods (risk of seizure ~25% if red? tariff none... shuttle grey, seizure 25%). Expected shuttle = 3*0.75=2.25 goods > 2, and border tariff 0. Shuttle slightly better. But last round sell prices: sold_counter 7 after round5 sell 3 units? Round 6 market I sell. Choose shuttle.\n\nWait — seizure risks. Tariff 0, so 25% seizure. Expected 2.25 vs produce 2. Shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498362,
+    "id": "20261020201235668ed02ab9e1421f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201235668ed02ab9e1421f",
+    "usage": {
+      "completion_tokens": 204,
+      "completion_tokens_details": {
+        "reasoning_tokens": 153
+      },
+      "prompt_tokens": 3767,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3971
+    }
+  }
+}

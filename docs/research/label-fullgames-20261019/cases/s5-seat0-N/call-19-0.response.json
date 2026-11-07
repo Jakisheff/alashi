@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.283,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар и взятки уже не влияют на итог, а выплату за максимальное влияние я выигрываю по кэшу при равенстве — pass оптимален.\"}",
+          "reasoning_content": "Last round action phase. Goods don't count in ranking. Only cash matters + influence bonus for 5% commission. I'm holder with influence 1 tied with others. Bribing increases influence → max influence gets 5% of bank = 2.5 alashi. Bribe 5 alashi to gain 2.5 alashi commission... but bribe money goes to rival, increasing their cash. Bad. But influence max: currently all tied 1, tie broken by cash+hard → I have most cash, so I'd win influence tie anyway? Tie: influence equal, then cash+hard, then tie_order — I win. So no bribe needed. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490619,
+    "id": "20261020180333e86b467c23a74e72",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180333e86b467c23a74e72",
+    "usage": {
+      "completion_tokens": 191,
+      "completion_tokens_details": {
+        "reasoning_tokens": 143
+      },
+      "prompt_tokens": 4659,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 4850
+    }
+  }
+}

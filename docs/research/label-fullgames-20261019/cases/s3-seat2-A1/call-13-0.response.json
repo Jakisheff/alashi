@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.298,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"shuttle даёт больше товара при пустом cash; риск изъятия оправдан\"}",
+          "reasoning_content": "Bid already placed; need main action. Cash 0. Shuttle gives 4 goods (3+1 subsidy) vs produce 3, ~25% seizure risk. Next market prices: sold_counter=10, prices low (2,2,2,1...). Shuttle better expected value despite risk.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427128,
+    "id": "20261020002525f97543962fda41d2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020002525f97543962fda41d2",
+    "usage": {
+      "completion_tokens": 90,
+      "completion_tokens_details": {
+        "reasoning_tokens": 62
+      },
+      "prompt_tokens": 2711,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2801
+    }
+  }
+}

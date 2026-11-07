@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.319,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":32,\"reason\":\"Ставлю максимум на лицензию: доход 20–60 alashi перекрывает потерю ставки, при проигрыше ставка вернётся.\"}",
+          "reasoning_content": "I'm the poorest (16.5M cash). License income 20-60 alashi, worth bidding. Bid big but keep some cash? Opponents have 33M and 29M. Bid all 16.5M might still lose. Bid is added to bank and redistributed — winning isn't a loss if income high. But ranking counts cash; winner loses cash to bank. Expected value: license income ~40 alashi = 40M, my share redistribution... Bank 30M + bid. If I bid 16.5M, bank 46.5M; payout shares: I'm poorest rank 3 gets 15% ≈ 7M + license income ~40M. Actually worthwhile if I win. If lose, money returned. Tie-break tie_order [1,2,0] — I'm second. Opponent 1 has 29.5M, opponent 0 33M. Bid max 16.5M likely losing? Unknown. Bid 16.5M: if someone bids more, returned. If I win, license income dwarfs loss. Risk: rank drops. I'd bid full 16.5M (choice 32)? Bid winner's money goes to bank, redistributed — but I gain license 20-60M, so net positive even paying 16.5M. Yes bid max.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792489978,
+    "id": "20261020175249a27e5f937caf4ea8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175249a27e5f937caf4ea8",
+    "usage": {
+      "completion_tokens": 323,
+      "completion_tokens_details": {
+        "reasoning_tokens": 282
+      },
+      "prompt_tokens": 4486,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 4809
+    }
+  }
+}

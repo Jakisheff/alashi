@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.735,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Цена сейчас 7 и упадёт после продаж соперников — продаю оба товара немедленно.\"}",
+          "reasoning_content": "Price now at sold_counter=4 → 7 alashi. Others will sell too; selling now at 7 better than later. Sell both now: cash 13, keep goods=0 but can produce more. Choose 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427347,
+    "id": "202610200029033ce641a1908e4825",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200029033ce641a1908e4825",
+    "usage": {
+      "completion_tokens": 80,
+      "completion_tokens_details": {
+        "reasoning_tokens": 48
+      },
+      "prompt_tokens": 2220,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2300
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.894,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Продам одну единицу, чтобы поднять cash выше 16 к аукциону раунда 4.\"}",
+          "reasoning_content": "Cash 9.92 ≥ 9. Sell 1 unit to get ~18.9 cash for a 12 bid.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497432,
+    "id": "202610201957103fb9ddd5cba5474c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201957103fb9ddd5cba5474c",
+    "usage": {
+      "completion_tokens": 61,
+      "completion_tokens_details": {
+        "reasoning_tokens": 26
+      },
+      "prompt_tokens": 3290,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3351
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.468,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Продажа всего в кредит даёт 16.25 alashi векселем, который не девальвируется в начале раунда, — строго лучше наличных.\"}",
+          "reasoning_content": "Sell 2 units at price 7? sold_counter=4, price index 4 = 7. Sell all now — sell_credit gives 16.25 promissory, but promissory paid later; hard cash better for rank? Cash devalues 62% each round. Promissory paid in full at round start. Actually promissory added to cash and reset, then next round cash floored again... Promissory better than cash here (cash would devalue anyway next round? no — devaluation applies at round start to cash, promissory added after). Wait: cash=floor(cash/100)*62, then promissory added. So promissory survives devaluation fully. sell_credit is strictly better. Choose 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427487,
+    "id": "20261020003122d5fff231457f4501",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003122d5fff231457f4501",
+    "usage": {
+      "completion_tokens": 203,
+      "completion_tokens_details": {
+        "reasoning_tokens": 157
+      },
+      "prompt_tokens": 2649,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2852
+    }
+  }
+}

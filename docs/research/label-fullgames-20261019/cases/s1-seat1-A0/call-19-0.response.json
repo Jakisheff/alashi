@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.64,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Финальный раунд: деньги не изменятся, а взятка за комиссию банка невыгодна.\"}",
+          "reasoning_content": "Final round action. Cash counts for rank; influence only matters for 5% commission of bank (~2.75 alashi... bank 55 alashi, 5% = 2.75 alashi). Bribing gives influence but reduces cash. Currently influence: I have 1, p2 has 2. Max influence bonus goes to p2 unless I bribe 5+ to p0/p2 (I'd get 2, tie with p2, then better cash+hard wins—my cash 30.57 vs p2 20.8, so I'd win tie). Bribe 5 costs 5 alashi for 2.75 alashi gain — bad. But also influence affects presidency? Presidency already determined; law round 6 law is irrelevant? Law round 6 still happens—could affect nothing (final). Tax could affect... no more markets. So best: produce (goods useless too). Pass to keep cash. Actually all actions except bribe/roof don't change cash. Pass is fine; goods worthless. Choose 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792489973,
+    "id": "2026102017524673d2b3944eb84148",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102017524673d2b3944eb84148",
+    "usage": {
+      "completion_tokens": 254,
+      "completion_tokens_details": {
+        "reasoning_tokens": 221
+      },
+      "prompt_tokens": 4434,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 4688
+    }
+  }
+}

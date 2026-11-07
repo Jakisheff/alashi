@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.974,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Продажа в кредит двух единиц избегает немедленной сильной девальвации и даёт премию 1.25x.\"}",
+          "reasoning_content": "Prices with sold_counter=4: selling 2 units at 7 and 6 → 13. Devaluation: cash=floor(cash/100)*62 — 62% retained. Selling credit gives 1.25x promissory, added round 3 without devaluation. Round 2 sell → cash devalued twice (rounds 3 and later...). cash formula applies each round start. Selling now: 13 → after deval r3: 8.06, r4: 5, r5: 3.1, r6: 1.92, plus final? Devaluation at start of rounds 2..6 — cash obtained now devalues 4 more times: 13*0.62^4 ≈ 1.92. Credit: 16.25 promissory added at r3 start, becomes cash then devalues r4-r6: 16.25*0.62^3 ≈ 3.87. But later sales get lower prices anyway. Better keep goods? Goods worth selling later at lower price but avoid devaluation more. Actually holding cash loses 38% per round — huge. Better sell via credit (adds later, fewer devaluations). sell 2 credit vs waiting: prices fall as counter grows anyway (others sell). Sell credit 2 now: choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495418,
+    "id": "2026102019232959d149c0fd624363",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019232959d149c0fd624363",
+    "usage": {
+      "completion_tokens": 323,
+      "completion_tokens_details": {
+        "reasoning_tokens": 282
+      },
+      "prompt_tokens": 2618,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2941
+    }
+  }
+}

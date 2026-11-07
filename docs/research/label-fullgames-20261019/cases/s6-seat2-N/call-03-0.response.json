@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.57,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Продаю оба товара по высокой начальной цене, получая 22 alashi сразу, пока цена не упала.\"}",
+          "reasoning_content": "Prices fall fast; selling 2 now at 12+10=22 is good. Selling 2 for cash keeps ranking; credit gives 27.5 but promissory added later—cash devaluation cuts by ~62%, but promissory counts... Sell 2 for cash seems strong: 22 alashi.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490171,
+    "id": "202610201756080592043c61934e1c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201756080592043c61934e1c",
+    "usage": {
+      "completion_tokens": 101,
+      "completion_tokens_details": {
+        "reasoning_tokens": 66
+      },
+      "prompt_tokens": 2160,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2261
+    }
+  }
+}

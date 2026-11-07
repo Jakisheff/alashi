@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 51.953,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель не девальвируется и даёт +25% выручки; карта 8 уже вышла из колоды.\"}",
+          "reasoning_content": "Round 4 market, no tax now, price 12 first unit. I have 24.35M cash. Later cash is devalued (÷100×62), so spend cash now? Sell 2 now at 12+10=22? Wait sold_counter=0, price 12 per unit. Sell 2 gives 22M cash but round 5 devalues to ~62%. Sell_credit gives promissory added to cash after devaluation in round 5, no devaluation — promissory 27.5M full value at round 5. Better: sell_credit 2 units → promissory 27.5M counted next round fully. But final round 6: cash at round 6 start also devalued. Promissory paid at round 5 start, then devalued at round 6. Either way, sell_credit converts 22M revenue to 27.5M, 25% gain. But unredeemed promissory at end worthless — round 5 promissory is paid at round 6 start, fine. Wait law card 8 zeroes promissory — risk but law known drawn already (round 1 law 8 was... veto? It passed? Round 1 vote_yes on 8 — card 8 zeroes promissory, drawn without repeats, so safe now). Choose sell_credit 2 units, choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490795,
+    "id": "202610201805443981957c66c046e6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201805443981957c66c046e6",
+    "usage": {
+      "completion_tokens": 330,
+      "completion_tokens_details": {
+        "reasoning_tokens": 291
+      },
+      "prompt_tokens": 2781,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 3111
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.304,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Взять влияние 2, стать президентом и получить veto плюс шанс на бонус максимального влияния.\"}",
+          "reasoning_content": "Need goods to sell. Produce gives 2 goods free. Shuttle gives 3 but grey seizure risk ~25%. vote_weight 3 already (influence 1 + 2? no, pass gives +2... wait weight 3 already, but I haven't passed—own_bid 0? vote_weight 3 because... anyway). Produce is safe free goods; shuttle gives 3 goods with 25% loss chance—expected 2.25 goods. I'm not president (holder 2). Influence matters for presidency. Bribes cost too much. Choose produce? Or bribe 5 to get influence 2, tie with others at 1... currently holder 2 with influence 1; tie_order [2,0,1], so 2 keeps presidency. Getting influence 2 makes me president next law—president has veto power, plus 5% commission for max influence. That's valuable: bribe 5 alashi to 0 (who has cash 22, richest—could also bribe later). Cost 5, gain presidency rights and possibly 5% of bank commission (bank 30+... 5% of ~30 = 1.5). Veto power helps prevent tax laws. But rivals may counter-bribe. Round 2 of 6, presidency each round valuable. I'd pick choice 4 (bribe 5 to 0).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499864,
+    "id": "20261020203735b9feace571fe4d6a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203735b9feace571fe4d6a",
+    "usage": {
+      "completion_tokens": 324,
+      "completion_tokens_details": {
+        "reasoning_tokens": 290
+      },
+      "prompt_tokens": 2881,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 3205
+    }
+  }
+}

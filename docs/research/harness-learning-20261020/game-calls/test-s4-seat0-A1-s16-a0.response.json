@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.392,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон 3 даёт субсидию товара, выгодна мне; голос «за» обеспечивает принятие.\"}",
+          "reasoning_content": "Law 3 = subsidy_goods=1, good for me next rounds. Faction 2 already voted Yes; faction 1 unknown, weight 1. If I vote yes: yes=1(me)+1(2)=2+1 possible =3 vs no at most 1 → passes. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498453,
+    "id": "2026102020140790b7f92a864a4178",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020140790b7f92a864a4178",
+    "usage": {
+      "completion_tokens": 96,
+      "completion_tokens_details": {
+        "reasoning_tokens": 63
+      },
+      "prompt_tokens": 3018,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3114
+    }
+  }
+}

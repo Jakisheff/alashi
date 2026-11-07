@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.337,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон 6 сдвигает цены следующего рынка, которого уже нет, поэтому он безвреден — можно голосовать за.\"}",
+          "reasoning_content": "Law 6: price shift -2 next market — but next market is... round 6 market already passed; this is the last law, no more markets. Actually effects apply to next market — none. So law is harmless. I hold license; I'm idx1, vote_weight 3. President is idx0 with influence 3, weight 3. If I vote yes: yes=3, president could veto. President likely votes no or veto? Unknown. Law harmless anyway — vote yes (irrelevant). Also 5% commission to max influence — I'm not max influence. Vote yes, weight 3 vs president weight 3 no → tie not strictly greater, fails unless veto. Whatever; harmless either way. Choose vote_no to kill it? It's harmless, so no benefit either. Vote yes harmless.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427486,
+    "id": "20261020003116598101e44f704f3a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003116598101e44f704f3a",
+    "usage": {
+      "completion_tokens": 207,
+      "completion_tokens_details": {
+        "reasoning_tokens": 169
+      },
+      "prompt_tokens": 3299,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3506
+    }
+  }
+}

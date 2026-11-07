@@ -15,6 +15,7 @@ export type LivingGenieProps = {
   reaction?: ReactionPreview | null
   onTime?: (seconds: number) => void
   onFinished?: () => void
+  syncSpeech?: boolean
 }
 
 const HERO = `${import.meta.env.BASE_URL}models/desk-genie.glb?v=20261008-articulated`
@@ -35,7 +36,7 @@ function useReducedMotion() {
  * silence and ordinary idle never infer an error, facepalm, or thumbs-up.
  * A new take (or kind) resets the timeline; seek is edge-triggered, like MarketTrade.
  */
-export function LivingGenie({ reaction = null, onTime, onFinished }: LivingGenieProps) {
+export function LivingGenie({ reaction = null, onTime, onFinished, syncSpeech = true }: LivingGenieProps) {
   const glb = useGLTF(HERO)
   const hero = useMemo(() => clone(glb.scene), [glb.scene])
   const rig = useMemo(() => createLivingRig(hero, glb.animations), [hero, glb.animations])
@@ -105,10 +106,10 @@ export function LivingGenie({ reaction = null, onTime, onFinished }: LivingGenie
       if (p.reported !== REACTION_SECONDS) { p.reported = REACTION_SECONDS; onTime?.(REACTION_SECONDS) }
       onFinished?.()
     }
-  })
+  }, -2)
 
   return <><group position={[0, .15, 0]} rotation-y={.35} dispose={null}>
     <primitive object={hero} />
-    {anchor && createPortal(<ScreenText />, anchor)}
+    {anchor && createPortal(<ScreenText clock={syncSpeech && reaction ? () => playback.current.time : undefined} reducedMotion={reduced} />, anchor)}
   </group><primitive object={fireworks.group} /></>
 }

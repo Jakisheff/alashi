@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.815,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Бесплатно получаю 4 товара для будущих продаж, сохраняя cash для аукциона раунда 4.\"}",
+          "reasoning_content": "Round 3 action. Need cash ≥9 by round 4 action — cash 44.5 already. Focus: goods for later selling? Prices fall: sold_counter=4. Round 3 market already sold 2. Need goods to sell in later rounds at falling prices... selling later at lower price. Produce gives 4 goods (2+1 subsidy). Shuttle gives 5 goods. Shuttle risks 25% seizure? Shuttle grey goods seizure ~25%. But currently tariff none... \"При льготной границе за серый ход платится...\" Seizure only for red tariff. No tariff now. Shuttle gives 3+1=4? Candidate shows goods 5 (1+4). Shuttle gives 4 goods free, no seizure risk without tariff. Choose shuttle (choice 3).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499099,
+    "id": "20261020202451ec1ac2a2ca86473a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202451ec1ac2a2ca86473a",
+    "usage": {
+      "completion_tokens": 201,
+      "completion_tokens_details": {
+        "reasoning_tokens": 165
+      },
+      "prompt_tokens": 4241,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 4442
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.981,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Девальвация обесценивает наличные, а покупка товара по низкой цене сохраняет стоимость для будущих продаж.\"}",
+          "reasoning_content": "Я фракция 1, товаров нет. Купить товар за 9 alashi, потом продать позже? Цена при sold_counter=2 — 9 alashi. Покупка 2 единиц двигает счётчик назад, продавая потом 2 получишь 12+10... но rivals продают тоже. Cash 30 → покупка оставит мало. Выгодно ли? Купить 2 за 18, потом продать 2 по цене счётчик пойдёт назад на 2 до 0, значит цена 12 и 10 = 22 alashi. Плюс shuttle даёт товары. Покупка 2 единиц — прибыль ~4 alashi, но рискует: rival продаёт раньше. Также devaluation: cash=floor(cash/100)*62 — holding cash теряет 38%. Значит конвертировать cash в товар выгодно! После раунда 3 рынок: раунд 4, 5, 6 — ещё продажи возможны. Покупка 2 единиц сохраняет стоимость. Выбор 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497060,
+    "id": "2026102019505250cdce6e690248e7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019505250cdce6e690248e7",
+    "usage": {
+      "completion_tokens": 264,
+      "completion_tokens_details": {
+        "reasoning_tokens": 227
+      },
+      "prompt_tokens": 2361,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2625
+    }
+  }
+}

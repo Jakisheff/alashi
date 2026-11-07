@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.245,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 6 снижает цены моего следующего рынка, а президент и так может наложить вето\"}",
+          "reasoning_content": "Law 6: prices shift -2 next market (round 5). I hold license. Bad for me — vote no. Faction 1 voted yes; faction 2 (president) not yet voted, may veto anyway. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495609,
+    "id": "20261020192646f700f1f34e78430f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192646f700f1f34e78430f",
+    "usage": {
+      "completion_tokens": 81,
+      "completion_tokens_details": {
+        "reasoning_tokens": 50
+      },
+      "prompt_tokens": 2746,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2827
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.517,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон 6 снижает цены следующего рынка, которого уже не будет, поэтому он безвреден; я сохраняю максимальное влияние и бонус комиссии.\"}",
+          "reasoning_content": "Law 6: -2 prices next market — but this is round 6, last market already done? Market phase of round 6 already happened, so law 6 affects \"next market\" which doesn't exist. Irrelevant. President is holder idx1, not me (own_idx 2). My vote: yes/no won't matter much; law has no effect (round 6 last). Also veto pending by president. Law has no effect anyway — vote yes or abstain. Influence: I have 2, tie with idx1 at 2, but president is holder. The 5% commission bonus goes to max influence — tie at 2 between me and idx1; cash+hard better: I have 47.8M vs 31.4M, so I win the bonus. Vote doesn't change influence. Just vote yes (no effect anyway).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427466,
+    "id": "202610200030590e784151068e487b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200030590e784151068e487b",
+    "usage": {
+      "completion_tokens": 226,
+      "completion_tokens_details": {
+        "reasoning_tokens": 180
+      },
+      "prompt_tokens": 3447,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3673
+    }
+  }
+}

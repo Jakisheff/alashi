@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.477,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 20% навредит моим будущим продажам, вместе с фракцией 0 блокирую закон.\"}",
+          "reasoning_content": "Law 2: tax 20% on future sales. I plan to sell via sell_credit in future rounds; tax hurts me. Others also sell. President is idx2 (influence 2), not me. My vote weight 1, idx0 voted No. If I vote no, no=2, yes=0, law fails. Good.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497862,
+    "id": "202610202004201f765a7eab0f400f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202004201f765a7eab0f400f",
+    "usage": {
+      "completion_tokens": 109,
+      "completion_tokens_details": {
+        "reasoning_tokens": 73
+      },
+      "prompt_tokens": 2497,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2606
+    }
+  }
+}

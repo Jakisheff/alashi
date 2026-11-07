@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.089,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 10% навредит моим продажам в финальном раунде; голосую против вместе с фракцией 2.\"}",
+          "reasoning_content": "Law 1: tax 10% on future sales. I plan to sell last round. Player 2 voted No. President is 0 with influence 2, tie_order priority 0 beats my 2. I have vote weight 2. Currently No=2 (player2). I'm not president. Vote no to block tax. Choice 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497155,
+    "id": "202610201952310b436e23855b4adb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201952310b436e23855b4adb",
+    "usage": {
+      "completion_tokens": 115,
+      "completion_tokens_details": {
+        "reasoning_tokens": 74
+      },
+      "prompt_tokens": 3066,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3181
+    }
+  }
+}

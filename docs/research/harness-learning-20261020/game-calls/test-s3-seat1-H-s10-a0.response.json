@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.743,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Закон о налоге 20% невыгоден мне как продавцу; участник 0 уже против, но veto гарантирует отклонение.\"}",
+          "reasoning_content": "Law 2: tax 20% on future sales. I plan to sell in later rounds — bad for me. Player 0 voted No already (weight 2). Player 2 weight 1 unknown. If I vote yes: yes=2 vs no=2 → rejected anyway. Actually yes strictly greater — 2 vs 2, not greater, rejected. So my vote doesn't matter much; veto is safer to block tax. But vote counts: player 0 voted No. If I abstain: yes 0 vs no 2 → rejected. So pass/abstain suffices; veto also free. Simplest: abstain (choice 3) — law rejected regardless. Veto also works. Choose veto for certainty? Veto is free and guarantees no tax. Choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496966,
+    "id": "20261020194921e988a83befb74c4f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194921e988a83befb74c4f",
+    "usage": {
+      "completion_tokens": 207,
+      "completion_tokens_details": {
+        "reasoning_tokens": 166
+      },
+      "prompt_tokens": 3061,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3268
+    }
+  }
+}

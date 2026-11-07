@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.286,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Кредитная продажа всего товара даёт 1.25× выручку без девальвации и по максимальной цене.\"}",
+          "reasoning_content": "sell all 3 now: 31.7M gain, sell counter 0 (others hold goods 2). Prices high early. Devaluation 62% next round start (cash→floor/100*62). Selling now loses only ~no tax, but cash devalues at round 5 start... cash devalues anyway. Better sell now at high price vs later lower. But promissory avoids devaluation — sell_credit gets 1.25x, added next round without devaluation. sell_credit 3 → 38.75M promissory vs sell 3 → 31.7M cash which then devalues to ~19.7M at round 5. Credit clearly better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496968,
+    "id": "20261020194923d020745bc76e488d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194923d020745bc76e488d",
+    "usage": {
+      "completion_tokens": 184,
+      "completion_tokens_details": {
+        "reasoning_tokens": 145
+      },
+      "prompt_tokens": 2895,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 3079
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.994,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Взятка даёт влияние 2 и пост президента с правом veto за умеренную цену, сохраняя лидерство по cash.\"}",
+          "reasoning_content": "President is held by idx2. I need influence ≥ max. Bribing 5 to idx1 gives influence 2, cash 32.5 vs their 20 — still richest? Influence 2 beats 1s. Cost 5 alashi for presidency + influence for 5% bonus and law control. Reasonable but costly. Alternatively produce for goods. Value of presidency: veto/control of law; final 5% bonus ≈1.5 alashi. But controlling laws could yield subsidy or prevent taxes. In round 3, next rounds 4-6 laws. I have promissory 38.75; card 8 would zero it — dangerous. With presidency I can veto that.\n\nBribe 5 to idx1 seems good middle ground: influence 2, still cash 32.5 richest. Choose 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498921,
+    "id": "20261020202155e342973b18ad4498",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202155e342973b18ad4498",
+    "usage": {
+      "completion_tokens": 214,
+      "completion_tokens_details": {
+        "reasoning_tokens": 175
+      },
+      "prompt_tokens": 3780,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 3994
+    }
+  }
+}

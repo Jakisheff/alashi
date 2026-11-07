@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.986,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 6 влияет лишь на цены следующего рынка, которого уже не будет — исход безразличен.\"}",
+          "reasoning_content": "Law 6: prices next market -2. Next round is 7 — no more markets. Irrelevant. But wait, final market is round 6 already done. So law 6 no effect on me... only affects future markets; none. Vote yes or veto — no matter. Pass is fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490367,
+    "id": "2026102017592413dc744dbce64f15",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102017592413dc744dbce64f15",
+    "usage": {
+      "completion_tokens": 96,
+      "completion_tokens_details": {
+        "reasoning_tokens": 63
+      },
+      "prompt_tokens": 3384,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3480
+    }
+  }
+}

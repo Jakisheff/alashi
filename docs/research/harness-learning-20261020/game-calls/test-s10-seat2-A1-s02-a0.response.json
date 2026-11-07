@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.316,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Карта 8 сейчас нейтральна (векселей ни у кого нет), воздержусь.\"}",
+          "reasoning_content": "Law 8 обнуляет promissory — у нас нет promissory. Плохая карта для будущих sell_credit? Никто не имеет promissory сейчас. Она обнуляет непогашенные — сейчас никто не воспользовался. Пропуск закона мало влияет; я не президент (idx1). vote_no — закон вреден потенциально (обнуляет promissory, но у всех 0). Голосуй no — чтобы сохранить возможность sell_credit. Хм, но закон может быть нейтрален/полезен другим. Мне выгодно, чтобы у соперников не было выгоды — карта 8 в целом нейтральна сейчас. Проголосую abstain... Лучше no, чтобы не допустить случайный сдвиг? Нейтрально. Abstain сохраняет нейтралитет; vote_no может разозлить. Проголосую abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497955,
+    "id": "20261020200545376c2bc48e704863",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200545376c2bc48e704863",
+    "usage": {
+      "completion_tokens": 221,
+      "completion_tokens_details": {
+        "reasoning_tokens": 188
+      },
+      "prompt_tokens": 2027,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2248
+    }
+  }
+}

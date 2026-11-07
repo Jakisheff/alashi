@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.895,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Ожидаемая выгода шаттла (3 товара при ~75% успеха) выше, чем у produce, а риска деньгами нет.\"}",
+          "reasoning_content": "Shuttle gives 3 goods (25% seizure risk). Cash 0, so can't pay tariff fee anyway — no cash to lose. Produce gives 2 goods safely. Shuttle gives 3, risk of losing all grey at border... with red tariff risk. But tariff currently 0? Roof tariffs not active. Seizure ~25% chance all goods lost. Expected 2.25 vs 2. Slight edge but downside large; also cash 0 means border fee min(cash,2)=0. Take shuttle? I'm cash 0, no way to gain money except goods. Expected value favors shuttle slightly. But risk of total loss. Choose produce for safety? Cash 0 and promissory 38.75—need goods to sell. I'll take shuttle for expected value... actually produce 2 guaranteed vs 3*0.75=2.25. Marginal. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427070,
+    "id": "202610200024225f8d237a8f44416a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200024225f8d237a8f44416a",
+    "usage": {
+      "completion_tokens": 231,
+      "completion_tokens_details": {
+        "reasoning_tokens": 189
+      },
+      "prompt_tokens": 2173,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2404
+    }
+  }
+}

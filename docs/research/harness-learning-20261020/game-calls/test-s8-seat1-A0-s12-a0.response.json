@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.228,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":27,\"reason\":\"Ставка 12M даёт хорошие шансы выиграть лицензию (доход 20–60 alashi) при умеренных затратах.\"}",
+          "reasoning_content": "License income 20-60 alashi, worth bidding. Rival 0 has 19M cash, could bid. My promissory 27.5M gives future cash but final round doesn't redeem... round 6 last market sells before? Promissory added to cash at round start 5 and 6 (round 7 doesn't exist; last round = 6, at start of round 6 cash floor rule applies and promissory added — yes). So cash fine.\n\nLicense worth ~40 alashi = 40M units. Bid moderately high, e.g. 10M? But bidding reduces rank cash. Rank counts cash+hard, license income paid extra. Bid 10M to bank increases bank (shared 95%) — costs partially. Expected value: license income ~40M, bid cost 10M going to bank where I get maybe 30% → net strongly positive if I win. Rival 0 may bid up to ~19M. Tie order: [1,0,2], I win ties. Bid 10M reasonable but might lose. Maybe bid 15M? Still cheaper than 40M expected income. If rival bids up to 19M they'd win. I'll bid 12M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498608,
+    "id": "2026102020163831d22b6594024a7e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020163831d22b6594024a7e",
+    "usage": {
+      "completion_tokens": 302,
+      "completion_tokens_details": {
+        "reasoning_tokens": 260
+      },
+      "prompt_tokens": 4720,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 5022
+    }
+  }
+}

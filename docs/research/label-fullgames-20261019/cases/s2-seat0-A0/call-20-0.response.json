@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.023,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон о 20% налоге уже отклоняется (2 да против 5 нет), но бесплатное veto гарантирует отклонение.\"}",
+          "reasoning_content": "Law 2 sets 20% tax. Votes: yes=2, no=3+2=5 — law fails anyway? Yes 2 vs No 5, rejected. Veto unnecessary but free safety. Choice 1 is safe.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427314,
+    "id": "202610200028305d2f8ddc944d4010",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200028305d2f8ddc944d4010",
+    "usage": {
+      "completion_tokens": 90,
+      "completion_tokens_details": {
+        "reasoning_tokens": 50
+      },
+      "prompt_tokens": 3176,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3266
+    }
+  }
+}

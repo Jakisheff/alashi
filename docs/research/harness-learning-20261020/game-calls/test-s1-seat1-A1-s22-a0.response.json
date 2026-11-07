@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.482,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон о субсидии уже не влияет на итог, любые последствия раунда исчерпаны.\"}",
+          "reasoning_content": "Law 3: subsidy_goods=1, irrelevant last round. Yes from 0 already. My vote weight 3. Either way outcome irrelevant. Pass keeps options? Voting no could fail law (yes=2, no=3+?). No effect anyway. Choose pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499811,
+    "id": "202610202036478ad18338dbc3432a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202036478ad18338dbc3432a",
+    "usage": {
+      "completion_tokens": 88,
+      "completion_tokens_details": {
+        "reasoning_tokens": 56
+      },
+      "prompt_tokens": 3370,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3458
+    }
+  }
+}

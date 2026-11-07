@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 14.044,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Взятка даёт влияние 2 и пост президента с veto, сохраняя большую часть cash.\"}",
+          "reasoning_content": "Bribing president (idx1) gains influence — but I want presidency. Influence 2 gives me presidency (1>1? no, tie: current holder 1 has influence 1; if I get 2, I win). Bribe 5 to idx1 gives me influence 2 and money to the president — bad? Actually bribing the president means giving money to rival idx1. Better bribe idx0 (poorer, cash 0). Bribe 5 alashi to idx0 gives me influence 2 → presidency this round law. Cost 5 alashi, presidency gives veto and 5% bank bonus at end (if max influence). Choose 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497977,
+    "id": "202610202006044bc0d89954134de2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202006044bc0d89954134de2",
+    "usage": {
+      "completion_tokens": 172,
+      "completion_tokens_details": {
+        "reasoning_tokens": 141
+      },
+      "prompt_tokens": 3062,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 3234
+    }
+  }
+}

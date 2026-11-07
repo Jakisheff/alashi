@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.875,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон даёт +1 влияния самому богатому — сопернику, поэтому голосую против, даже если он пройдёт.\"}",
+          "reasoning_content": "Card 5: +1 influence to richest by cash. Richest is idx2 (27.2M vs 24.4M). Rival gets influence. Vote no. Idx2 already voted Yes, weight 2. My weight 1. If I vote no: yes=2, no=1, passes. Unless... I can't outvote. So card passes anyway; veto only available to president (idx2), not me. Voting no is symbolic but maybe veto_pending... no. Just vote no (harmless) or abstain. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498227,
+    "id": "2026102020102245890b8c0ffd487f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020102245890b8c0ffd487f",
+    "usage": {
+      "completion_tokens": 156,
+      "completion_tokens_details": {
+        "reasoning_tokens": 119
+      },
+      "prompt_tokens": 3139,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3295
+    }
+  }
+}

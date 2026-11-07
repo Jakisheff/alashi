@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.23,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Субсидия увеличит мой доход от produce в следующих раундах, а мой вес 2 делает принятие вероятным.\"}",
+          "reasoning_content": "Card 3 = subsidy_goods=1, benefits everyone but me with goods too. My weight 2 vs 1+1; vote_yes passes only if opponents vote no both (2 vs 2 tie fails). Subsidy helps me produce 3 goods instead of 2 each round. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496363,
+    "id": "20261020193919d0fc5ed62f964524",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020193919d0fc5ed62f964524",
+    "usage": {
+      "completion_tokens": 103,
+      "completion_tokens_details": {
+        "reasoning_tokens": 63
+      },
+      "prompt_tokens": 2548,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2651
+    }
+  }
+}

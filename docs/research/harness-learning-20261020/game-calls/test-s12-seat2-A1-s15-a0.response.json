@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.846,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":10,\"reason\":\"Вексель не девальвируется, поэтому продажа всего товара в кредит даст 57.5 alashi против ~31 после девальвации раунда 6.\"}",
+          "reasoning_content": "Round 5 market, price 12 each. sell_credit gives 1.25x, but round 6 devaluation cash floor/100*62. Promissory is added after devaluation (promissory added after cash transform). So selling credit now is great: promissory pays full after round 6 devaluation? Round 6 start: cash devalued, promissory added and cleared. Then round 6 market last. So promissory gets full value. Sell all 5 credit: 57.5 alashi promissory. Compare: sell cash now 50 alashi → round 6 devalued to ~31, then can still sell nothing left. Credit better: 57.5 vs 50*0.62=31. Sell all on credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496393,
+    "id": "20261020193948cf590a95a77946cb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020193948cf590a95a77946cb",
+    "usage": {
+      "completion_tokens": 211,
+      "completion_tokens_details": {
+        "reasoning_tokens": 165
+      },
+      "prompt_tokens": 3289,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3500
+    }
+  }
+}

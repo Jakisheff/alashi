@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.111,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Максимальная выручка сейчас по ещё высокой цене с бумом, дальше цены только падают.\"}",
+          "reasoning_content": "Price now: counter 4 → 7, boom +2 → 9. Sell 2: 9+? wait sold_counter 4 means next price index 4 =7, +2 =9. Sell 2 gives 9+8=17? Candidate sell 2 gives +17 alashi cash... yes 9+8=17. Later rounds prices only drop (counter →6 → prices 5,4...). Sell now, hard cash. Choose sell 2 (choice 3).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427371,
+    "id": "202610200029265c1614ada8de477c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200029265c1614ada8de477c",
+    "usage": {
+      "completion_tokens": 139,
+      "completion_tokens_details": {
+        "reasoning_tokens": 106
+      },
+      "prompt_tokens": 2594,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2733
+    }
+  }
+}

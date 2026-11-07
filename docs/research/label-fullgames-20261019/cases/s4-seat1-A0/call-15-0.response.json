@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.957,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Нужно больше товара для финального рынка; шаттл даёт максимум единиц при приемлемом риске.\"}",
+          "reasoning_content": "Round 5 action. Need goods for selling round 6. Shuttle gives 3 goods (grey may be seized). Produce gives 2 guaranteed. My cash already high; ranking matters. President is idx0. Next round (6) law president: highest influence entering law — I can bribe to gain influence but bribe doesn't help cash. Focus on goods for last market: shuttle 3 goods (25% seizure risk) vs produce 2. Last market sells at counter ~7 → price 5..3. Shuttle better EV (3 goods × ~4 vs 2). Choose shuttle (choice 3).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428136,
+    "id": "202610200042068609bfc6c3da4433",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200042068609bfc6c3da4433",
+    "usage": {
+      "completion_tokens": 164,
+      "completion_tokens_details": {
+        "reasoning_tokens": 127
+      },
+      "prompt_tokens": 4193,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 4357
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.16,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Продажа в кредит двух единиц даёт премию 25%, а вексель погашается в раунде 5 до следующей девальвации.\"}",
+          "reasoning_content": "Round 4 of 6, prices fall with sales. Sell now at 10/unit. Better to sell now while price high; credit gives 1.25x, paid at round 5 start but devalued 62%... sell_credit round 4 promissory added at round 5 start after devaluation? \"Start of round: cash devalued, then promissory added\" — so promissory safe from that devaluation. Round 4 credit paid round 5 fully, then round 6 devaluation 62% applies. Selling cash now at round 4, cash survives round 5 devaluation (62%) and round 6. Credit: 1.25x received round 5, devalued once (62%). So credit better than cash sell now (1.25 vs 1.0). So sell_credit 2 units, choice 4. But wait last round credit unpaid — round 4 credit is paid. Yes choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497197,
+    "id": "202610201953114594c346f4eb4413",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201953114594c346f4eb4413",
+    "usage": {
+      "completion_tokens": 250,
+      "completion_tokens_details": {
+        "reasoning_tokens": 204
+      },
+      "prompt_tokens": 2780,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 3030
+    }
+  }
+}

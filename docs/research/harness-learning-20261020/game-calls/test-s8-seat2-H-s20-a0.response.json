@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.252,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар после последнего рынка бесполезен, а взяточно-потолочные варианты только снижают мой cash; я остаюсь президентом с максимальным влиянием.\"}",
+          "reasoning_content": "Round 6 last, action. I have 48.8 cash, rank 0 (62.19? no I'm idx2 with 48.8, idx0 has 62.2 — rank 1). Law phase remains: I'm president (influence 2). Bribes reduce cash — bad. Goods useless after last market? No more market. Goods not counted. So goods irrelevant. Best: pass? But law comes — I'm president with veto. Influence max gives 5% commission bonus — already influence 2, others 1. Cash rank: idx0=62.2, me=48.8, idx1=21.9. Bribe to idx1 reduces my cash, hurts. Roof reduces cash. So pass keeps cash. Goods worthless. Choose 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499433,
+    "id": "20261020203024a54109623cd142a7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203024a54109623cd142a7",
+    "usage": {
+      "completion_tokens": 218,
+      "completion_tokens_details": {
+        "reasoning_tokens": 167
+      },
+      "prompt_tokens": 5224,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 5442
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "date": "2026-10-26",
+  "status": "local_acceptance",
+  "scenario": "A human tests one instruction change, records a decision and chooses what can be reused.",
+  "http_contract": {
+    "independent_forecasts_sealed": true,
+    "owner_cannot_peek": true,
+    "cutoff_before_execution": true,
+    "disagreement_summary": true,
+    "daily_digest_ack": true,
+    "selected_version_used_by_next_run": true,
+    "idempotent_run_keeps_original_version": true,
+    "public_cards_allowlisted": true,
+    "local_claim_distinguished": true,
+    "public_card_reused_in_private_backlog": true,
+    "actual_http_responses_parse_in_frontend": true,
+    "provider": "local_deterministic_fixture",
+    "business_effect_measured": false
+  },
+  "bootstrap_tests": {
+    "passed": 84,
+    "failed": 0,
+    "local_experiment_tests_included": 19
+  },
+  "frontend": {
+    "build": "passed",
+    "typecheck": "passed",
+    "research": "passed",
+    "comparisons": "passed",
+    "strategies": "passed",
+    "trading": "passed",
+    "proxy": "passed"
+  },
+  "browser": {
+    "source": "loopback synthetic preview",
+    "widths_observed": [
+      390,
+      424,
+      1280
+    ],
+    "horizontal_overflow_at_tested_widths": false,
+    "actions": [
+      "save idea",
+      "record owner decision",
+      "apply chosen version",
+      "preview reviewed public card",
+      "invalidate consent after text edit",
+      "publish reviewed synthetic card"
+    ],
+    "production_data_changed": false,
+    "external_model_calls": 0
+  },
+  "limitations": [
+    "One-process snapshot transaction; copied journal directories are not mutually locked.",
+    "Cloud comparisons remain server-stored. A configured remote model provider receives local experiment inputs.",
+    "Current execution scenario is a static English advertisement, not customer behavior.",
+    "Public card prose is owner-authored; neither local evidence nor real-world effects are attested.",
+    "Fresh remote CI and production rollout are tracked separately."
+  ],
+  "arena_tests": {
+    "passed": 157,
+    "failed": 0,
+    "ignored_preexisting_canonical_snapshot": 1
+  }
+}

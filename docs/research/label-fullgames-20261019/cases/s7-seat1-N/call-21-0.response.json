@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.641,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Карта 6 влияет только на будущий рынок, которого больше нет — исход закона безразличен, воздерживаюсь.\"}",
+          "reasoning_content": "Law 6: price -2 next market — but round 6 was last market already. No effect? No future market, so it's irrelevant. Vote doesn't matter for payout; abstain is safe. Choose pass or abstain — indifferent. Pick 3.\n\nActually wait, no more markets, so law 6 harmless either way. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490387,
+    "id": "20261020175941036499d64ead4cfd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175941036499d64ead4cfd",
+    "usage": {
+      "completion_tokens": 112,
+      "completion_tokens_details": {
+        "reasoning_tokens": 74
+      },
+      "prompt_tokens": 3306,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3418
+    }
+  }
+}

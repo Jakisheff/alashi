@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.534,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон 8 обнуляет векселя, которых ни у кого нет, поэтому он безвреден; голосую yes.\"}",
+          "reasoning_content": "Law 8 обнуляет promissory — у всех 0, безопасно. Проголосовать yes — закон безвреден, или veto тоже без разницы. Голос yes с весом 1, no уже 1 — да не пройдет (yes1=no1 не строго больше). Все равно безвредно. vote_yes — choice 1.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497150,
+    "id": "2026102019522652cf3136434c4706",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019522652cf3136434c4706",
+    "usage": {
+      "completion_tokens": 115,
+      "completion_tokens_details": {
+        "reasoning_tokens": 77
+      },
+      "prompt_tokens": 2076,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2191
+    }
+  }
+}

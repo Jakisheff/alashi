@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.532,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Деньги нельзя конвертировать дальше, взятки дороже возможной комиссии — просто пропустить.\"}",
+          "reasoning_content": "Final round action. No market left after this? Round 6 market done; goods can't be sold anyway. Rank by cash+hard; I'm way ahead. Influence max gives 5% commission — I already have 2 vs rivals 1. Bribe reduces cash and gives influence but rank matters most; rivals' influence could rise though they can't bribe now... they act after? Order rotates; my action is first this round? I'm idx0 and phase action round 6. Rivals may act later — one could bribe to get influence 4-5 and grab 5% commission (5% of bank 50 alashi = 2.5 alashi) plus license already mine. I could bribe 5 to idx? Bribe to myself not allowed. Bribe gives me influence +1 per 5 alashi. 5% bank ~ 2.6 alashi. Small. But bribe 5 gives influence 3, still rivals could outbid. Bribe 10 gives influence 4, likely enough (rivals would need 15 alashi bribe... they have ~30). Cost 10 alashi vs gain ~2.6 — bad. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499802,
+    "id": "20261020203634e956092e31894862",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203634e956092e31894862",
+    "usage": {
+      "completion_tokens": 282,
+      "completion_tokens_details": {
+        "reasoning_tokens": 251
+      },
+      "prompt_tokens": 5414,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 5696
+    }
+  }
+}

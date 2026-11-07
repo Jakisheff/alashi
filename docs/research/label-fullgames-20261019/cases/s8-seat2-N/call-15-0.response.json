@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.07,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Голоса 3:3, закон и так не проходит, вето не нужно.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest by cash. I'm richest (43.55M). Poorest is element 0 (31.17M). Yes=3, No=3, without veto law passes (yes strictly greater? yes=3, no=3, not strictly greater, so fails anyway). Wait yes needs strictly > no. 3 vs 3 → fails. So veto unnecessary. But veto also safe. Either way fails. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491284,
+    "id": "2026102018144168363ec66e694b74",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102018144168363ec66e694b74",
+    "usage": {
+      "completion_tokens": 125,
+      "completion_tokens_details": {
+        "reasoning_tokens": 96
+      },
+      "prompt_tokens": 2803,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2928
+    }
+  }
+}

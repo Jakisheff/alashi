@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 14.083,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":8,\"reason\":\"Вексель обесценивается лишь раз, а наличные дважды, поэтому продажа в кредит всех 4 единиц даёт максимальную итоговую выплату.\"}",
+          "reasoning_content": "Sell credit gets 1.25x but promissory devalues (62% at rounds 5,6 start... promissory added at round start after devaluation; round 4 promissory: added at start of round 5 (×0.62? no—cash devalues, promissory added after devaluation each round start). Promissory paid at start of round 5 fully, then that cash devalues at round 6 start. So credit 1.25 × 0.62? Actually promissory added round 5 start, survives round 6 devaluation at 62%. So credit yields 48.75 × 0.62 ≈ 30.2 vs sell 39 now (also devalued round 6: 39×0.62=24.2... wait 39 now, at round 5 start → 24.18, at round 6 → 15. Hmm, but selling now gives cash that devalues twice; credit gives 48.75 at round 5, devalues once at round 6 = 30.2. But wait credit is added AFTER devaluation round 5, so round 6 cash = floor(30.2M/100)*62≈18.7? No—credit gives 48.75 at round 5 start; end value 48.75×0.62=30.2 vs sell 39×0.62×0.62=15. Credit better! But also taxes... no tax. Also prices drop with sales. Also could sell some now, some later? Only one market action per round. Remaining rounds 4,5,6 markets: I can produce more. Credit at round 6 is worthless (no redemption). Round 4 credit best. Choose sell_credit 4 units (choice 8).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498266,
+    "id": "202610202010525e43fab3831c420e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202010525e43fab3831c420e",
+    "usage": {
+      "completion_tokens": 429,
+      "completion_tokens_details": {
+        "reasoning_tokens": 382
+      },
+      "prompt_tokens": 2882,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 3311
+    }
+  }
+}

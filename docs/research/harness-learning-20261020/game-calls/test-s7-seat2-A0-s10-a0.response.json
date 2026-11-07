@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.798,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Голоса 2:2 — закон уже не проходит, veto излишен.\"}",
+          "reasoning_content": "Law 6 = price shift -2 next market. I voted yes. Yes=2 (my weight 2), No=2 (faction1). Yes not strictly greater — law fails anyway? Yes 2, No 2, not strictly greater, law rejected. So veto unnecessary — but wait, law failing means no -2 shift, good for me as seller. Veto also kills it. Both same outcome. Pass keeps ambiguity? Actually if law rejected, no shift — good. Veto ensures rejection. Either works. Pass is fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498966,
+    "id": "20261020202242dc85de26b0d24524",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202242dc85de26b0d24524",
+    "usage": {
+      "completion_tokens": 140,
+      "completion_tokens_details": {
+        "reasoning_tokens": 112
+      },
+      "prompt_tokens": 2455,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2595
+    }
+  }
+}

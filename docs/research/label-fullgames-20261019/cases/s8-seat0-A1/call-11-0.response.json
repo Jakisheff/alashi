@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.468,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":45,\"reason\":\"Ставлю высоко на лицензию с положительным ожиданием дохода, сохраняя часть cash для ранга богатства.\"}",
+          "reasoning_content": "Round 4 action: license auction. License income ~20-60 alashi; bank 30 alashi. Worth bidding high. But I'm tied in cash; opponents may bid. License doesn't count toward wealth rank but pays directly. Bid ~20 alashi (choice 41), keeping cash for rank. Rivals cash ~32-33, might outbid. Tie order: I'm last (2,1,0), so need strictly higher. Bid 25? Risky overpay. Expected value ~40 alashi income for cost 25 — positive but reduces bank share? Bid added to bank increases everyone's share. Net: pay 25, get back 25*(share ~0.3-0.5)+income. Still positive. I'll bid 30 alashi (choice 51)? That leaves 13.7 cash, harming rank. Compromise: 24 alashi (choice 45).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792489925,
+    "id": "2026102017515923447aa650664382",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102017515923447aa650664382",
+    "usage": {
+      "completion_tokens": 227,
+      "completion_tokens_details": {
+        "reasoning_tokens": 191
+      },
+      "prompt_tokens": 5768,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 5995
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 14.708,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce даёт 2 товара под текущую высокую цену (~3 за единицу), выгоднее малой взятки за влияние.\"}",
+          "reasoning_content": "I'm faction 2, rich (53.66), bid 15 on license. Remaining rounds 5-6. President is faction 1 (influence 2). I want presidency for law influence — bribing to raise influence helps become president in future law rounds. Bribe 5M to gain influence 2, tying faction 1's influence 2, but tie_order [0,2,1] favors me at ties. So 5M bribe to either gives me presidency next law. But president determined at law of round 4? Holder is 1 already this round (influence determined after action phase). Bribe now affects future rounds' law. Giving to faction 0 also boosts rival's cash but they get 11+5=16, still less than mine. Bribe 5M to 0 (choice 4) — cheapest way to gain presidency. Cash spent 5, gain 5% bank commission later (~2.5M+ bank grows). Also goods? Produce gives 2 goods, sellable at price ~3 each (sold_counter=4 → price 3). 2 goods ~6 alashi revenue. Hmm, produce gives 6 alashi value — bigger than bribe benefit? Bank is 30, 5% = 1.5 alashi commission, plus veto power over tax laws. Influence also matters in future laws. Actually bribe 5M cost vs commission 1.5M gain — negative directly, but president control of veto/tax worth it. But produce gives ~6M revenue now, and more goods next round. Price at counter 4 = 3; selling 3 next round drives price down to 2/1. Produce 2 goods worth ~6M. Compare: bribe 5M for influence 2 — gives presidency rounds 5-6 (worth ~commission ~2M if bank stays, plus control). Roughly break-even. I'd take produce: more cash ranking benefit, and I'm already richest. Actually influence also helps final commission split. Bank 30M, 5% = 1.5M to max influence. Currently faction 1 has 2. With 5M bribe I get 2 and win tie → +1.5M, cost 5M. Not worth. Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497505,
+    "id": "20261020195812edd4ba88169f4fa5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195812edd4ba88169f4fa5",
+    "usage": {
+      "completion_tokens": 519,
+      "completion_tokens_details": {
+        "reasoning_tokens": 481
+      },
+      "prompt_tokens": 4301,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 4820
+    }
+  }
+}

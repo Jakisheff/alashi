@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.946,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Взятка 5 даёт влияние 2 и президентство по tie_order, сохраняя капитал для продаж.\"}",
+          "reasoning_content": "My cash is low (21.25M + promissory 21.25M). Rival 0 has 30.64M cash. Round 3 action. Need to be president: influence 1 vs rival's 2. Bribe 5M gives influence 2 — but rival 0 has 2 with tie_order priority? Tie_order [1,0,2], I'm first, so influence 2 gives me presidency. Bribe 5M to 0 (richest, benefits them little) gains presidency + keeps promissory for future sale? Actually promissory counts to cash next round. Presidency lets me veto/choose laws, plus 5% bonus. But losing 5M cash. Alternative: shuttle for goods. Prices still high (sold_counter 4 → price ~7?). Actually next sales lower price.\n\nBeing president is valuable: influence-based 5% commission and law control. Bribe 5M to idx 0: influence 2, tie over idx0 (2) — tie_order favors me (1 before 0). Good.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498957,
+    "id": "202610202022317ad3a216c971401e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202022317ad3a216c971401e",
+    "usage": {
+      "completion_tokens": 260,
+      "completion_tokens_details": {
+        "reasoning_tokens": 225
+      },
+      "prompt_tokens": 3355,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 3615
+    }
+  }
+}

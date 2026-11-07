@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.046,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":9,\"reason\":\"Взятка 5 alashi даёт влияние 2 и пост президента с правом veto, а наличные всё равно девальвируются.\"}",
+          "reasoning_content": "Influence matters for presidency; currently holder 0. Bribing 10 to idx0 gives influence 3, tied with others but tie_order puts me last? Tie order [0,2,1], so at 3 influence I'd still lose presidency. Bribe 5 gives 2, also below 0's 3? Wait holder 0 has influence... participants show 0:1, 2:1. Actually 0 lost influence? vote_weight 1 for 0, 3 for me and 2. Influence 1 for all. So bribing 5 to 0 gives me 2 — I'd become president (tie_order 0 first but 0 has 1). Bribe 5 → influence 2 > all. Cost 5 alashi, but presidency gives veto, and 5% commission bonus potentially. Also money devalues 62% anyway (cash floor/100*62). Cash loses value; influence better long-term. Choose 4 (bribe 5 to 0? or to 2). Bribing to 0 also strengthens 0's cash. Either way I get influence 2. Give to 2 (poorer than 0, richer than me). Choose 9.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497068,
+    "id": "20261020195101a8a101450adb4098",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195101a8a101450adb4098",
+    "usage": {
+      "completion_tokens": 301,
+      "completion_tokens_details": {
+        "reasoning_tokens": 260
+      },
+      "prompt_tokens": 3080,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 3381
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.155,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар и векселя после последнего рынка бесполезны, влияние уже максимально — взносы и взятки лишь снизят cash.\"}",
+          "reasoning_content": "Last round action. Goods worthless after final market (no more market). Influence matters for final payout bonus 5% of bank (~2.5 alashi to max influence holder). I already have influence 3, others have 2. Bribe 5M to idx0 gives influence 4 — cost 5M cash, but rank matters: I'm richest anyway. Bonus 5% of bank: bank 50M, 5% = 2.5M — less than bribe cost. But bribe also gives money to rival which reduces my rank? No, bribe to 0 raises their cash but I'm still ahead by large margin. So pass is best (choice 0).\n\nWait — bribe increases influence, influence max gets 2.5M commission. I already have max influence (3 vs 2). So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498787,
+    "id": "20261020201940ea75c5048ff34474",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201940ea75c5048ff34474",
+    "usage": {
+      "completion_tokens": 219,
+      "completion_tokens_details": {
+        "reasoning_tokens": 176
+      },
+      "prompt_tokens": 5156,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 5375
+    }
+  }
+}

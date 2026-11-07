@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.694,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Взятка даёт влияние 2 и роль держателя X с правом veto и бонусом 5% банка.\"}",
+          "reasoning_content": "Bribe to 0 gives influence to me (sender), not recipient. Holder is 0 with vote_weight 3. To become holder I need influence > others. Currently all influence 1, tie_order [0,2,1] favors 0. Bribe 5M gives me influence 2 → I become holder in law (holder determined at entry to law, after action). Holder can veto, and max influence gives 5% bank bonus. Bribe 5M to 0 (any recipient) — influence 2, I hold X. Cost 5M but 5% bank = 1.5M, plus veto power. But cash devalues 62%. Also shuttle gives goods for round 5 market.\n\nChoose bribe 5M (choice 4). Holder role valuable. But 10M → influence 3 also; rivals could bribe later. 5M enough now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427673,
+    "id": "202610200034236f473f3989f84d2d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200034236f473f3989f84d2d",
+    "usage": {
+      "completion_tokens": 226,
+      "completion_tokens_details": {
+        "reasoning_tokens": 190
+      },
+      "prompt_tokens": 3376,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 3602
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.042,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон о росте цен уже не влияет — рынков больше нет, исход ранга не меняется.\"}",
+          "reasoning_content": "Law 7: +2 prices next market — but market is done (round 6 was last market). Wait, market phase already happened in round 6. So law 7 has no effect... veto or pass irrelevant? Yes/no count: 2 yes, 0 no → passes. But card 7 affects next market which doesn't exist. So no effect. However rank: I'm 38.5 vs 38.3 cash — veto doesn't change anything. Just pass... veto also free. No difference. Pass.\n\nActually wait — veto could matter if license income counts? No, license paid separately. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495178,
+    "id": "202610201919353291cb36bd0f4128",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201919353291cb36bd0f4128",
+    "usage": {
+      "completion_tokens": 161,
+      "completion_tokens_details": {
+        "reasoning_tokens": 129
+      },
+      "prompt_tokens": 3819,
+      "prompt_tokens_details": {
+        "cached_tokens": 3264
+      },
+      "total_tokens": 3980
+    }
+  }
+}

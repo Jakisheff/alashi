@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.646,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":36,\"reason\":\"Аукцион раунда 4: следую рекомендованной ставке 9 alashi, она выше капа соперников в 8.\"}",
+          "reasoning_content": "Cash 46M ≥16M → bid 12M (choice 39). Recommended says 9M (choice 36)… rules say 12M if cash>=16M; harness recommends 9M contradicting. Instruction: follow recommended_choice if valid. Cash ≥16 → per text rule bid 12, but augment says follow recommended_choice. Harness says bid_target 12M yet recommended 9M. Follow recommended_choice=36? The written rule says 12. But explicit \"follow augment.auction.recommended_choice\". Hmm. Cash 46M≥16M so rule says 12M. The harness seems inconsistent; safer to follow explicit recommended_choice 36? The instruction \"Приоритет: следуй augment.auction.recommended_choice, если оно допустимо\". It's valid. Choose 36.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497594,
+    "id": "2026102019594762b8ec4bca76429f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019594762b8ec4bca76429f",
+    "usage": {
+      "completion_tokens": 210,
+      "completion_tokens_details": {
+        "reasoning_tokens": 169
+      },
+      "prompt_tokens": 7660,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 7870
+    }
+  }
+}

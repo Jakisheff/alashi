@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.855,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель погашается после девальвации раунда 6, поэтому продажа в кредит двух единиц по высокой цене максимизирует итог.\"}",
+          "reasoning_content": "Round 5 market, price counter reset 0? sold_counter=0, boom=2, so price = 12+2=14 first unit. sell 2 gives 14+12=26 = candidate 4 credit gives 32.5 promissory. Round 6: cash=floor/100*62 — devaluation 62%. Round 6 market: sold_counter now 2? Others also sell. Selling credit: promissory added after devaluation, so full value in round 6. Sell credit units 2: promissory 32.5M, paid after round 6 devaluation — but paid in round 6 start as cash, counts in final rank. Yes promissory added at round 6 start, not devalued. So sell_credit is better than sell (32.5 vs 26). Candidate 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499632,
+    "id": "20261020203348ba7f565e0f654f40",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203348ba7f565e0f654f40",
+    "usage": {
+      "completion_tokens": 222,
+      "completion_tokens_details": {
+        "reasoning_tokens": 180
+      },
+      "prompt_tokens": 3047,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3269
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.691,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон отклоняется без вето (2 «против»), а влияние бедного всё равно не догонит моё.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest by cash. Poorest is idx0 (2.6M). Idx0 already voted No with weight 1, idx1 No weight 2. No=3, Yes=0 → law rejected. Veto unnecessary. But influence matters for the 5% bonus — I have max influence 3, idx0 would go to 2, still below 3. So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499844,
+    "id": "2026102020372168ee87aa27b544fc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020372168ee87aa27b544fc",
+    "usage": {
+      "completion_tokens": 127,
+      "completion_tokens_details": {
+        "reasoning_tokens": 89
+      },
+      "prompt_tokens": 3282,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3409
+    }
+  }
+}

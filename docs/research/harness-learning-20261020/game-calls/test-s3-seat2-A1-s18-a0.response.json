@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.386,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Финальный раунд: вексель не погасится, поэтому продаю весь товар за cash и остаюсь первым по богатству.\"}",
+          "reasoning_content": "Last market round. Sell 3 gives 60.1M cash, promissory not paid after last round — sell_credit worthless. Rival cash: 38.4 and 32.4. Selling 3 keeps me top. Choose 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499352,
+    "id": "202610202029090628eea4de624ade",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202029090628eea4de624ade",
+    "usage": {
+      "completion_tokens": 94,
+      "completion_tokens_details": {
+        "reasoning_tokens": 53
+      },
+      "prompt_tokens": 3524,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3618
+    }
+  }
+}

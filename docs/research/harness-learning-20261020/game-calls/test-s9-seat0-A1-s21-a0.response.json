@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.924,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар и влияние больше не конвертируются в cash, а pass даёт +2 к весу голоса президента в финальном законе.\"}",
+          "reasoning_content": "Last round action. Goods don't count for final rank; no more market. So goods useless. Influence matters: max influence gives extra 5% of bank (~2 alashi = 2M). Bribes cost 5M per influence. Bad. But president role: law in round 6 — could law affect final? Cards 8 (zero promissory) etc. My influence 2 vs rivals 1,1; holder of president is by influence — I have 2, highest, so I'm president either way. Vote weight +2 if pass. Passing keeps +2 weight. Best: pass (choice 0). Influence max already at 2, others 1. Bribing gives max influence extra 5% ≈2M but costs ≥5M. Not worth it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497019,
+    "id": "20261020195012d4878752a6604ad0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195012d4878752a6604ad0",
+    "usage": {
+      "completion_tokens": 210,
+      "completion_tokens_details": {
+        "reasoning_tokens": 167
+      },
+      "prompt_tokens": 5295,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 5505
+    }
+  }
+}

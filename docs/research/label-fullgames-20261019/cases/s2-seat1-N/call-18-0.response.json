@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.111,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Последний раунд: продать обе единицы, обгоняя элемента 0 по итоговому cash; вексель после финала не погашается.\"}",
+          "reasoning_content": "Last round market. Sell 2 now gets cash 53.5M, closer to rank... final ranking counts cash only (hard 0). Player 0 has 49M. Selling 2 gives 53.5M → rank 1. sell_credit promissory won't be paid after last round — useless. So choice 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490140,
+    "id": "2026102017553565ff571998994db4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102017553565ff571998994db4",
+    "usage": {
+      "completion_tokens": 118,
+      "completion_tokens_details": {
+        "reasoning_tokens": 72
+      },
+      "prompt_tokens": 3345,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3463
+    }
+  }
+}

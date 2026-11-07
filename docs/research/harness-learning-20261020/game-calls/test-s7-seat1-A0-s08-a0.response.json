@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.825,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель не девальвируется и даёт 1.25x, продаю весь товар в кредит\"}",
+          "reasoning_content": "Prices: sold_counter=2, so units sell at 9 then 8 alashi. 1 unit = 9 alashi = 9,000,000. Wait cash values: sell 1 gives +9,000,000 → 22,020,000. Yes.\n\nFuture: cash devalues at 62% each round. Promissory is paid at face? Promissory adds to cash next round. But promissory isn't ranked... only 6 rounds. Selling credit at 1.25x and cash devalues 62%, promissory paid next round as cash — promissory 1.25x paid full next round beats cash 62%? Cash 9M becomes 5.58M next round; promissory 11.25M paid next round. Definitely sell credit is better.\n\nSell 2 credit: 17*1.25=21.25M promissory. But I can produce 2 goods later, so selling everything now is fine — goods don't count at end. Sell all 2 units now as credit, then produce more later.\n\nchoice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496347,
+    "id": "202610201939000513c1b9b495424f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201939000513c1b9b495424f",
+    "usage": {
+      "completion_tokens": 269,
+      "completion_tokens_details": {
+        "reasoning_tokens": 236
+      },
+      "prompt_tokens": 2518,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2787
+    }
+  }
+}

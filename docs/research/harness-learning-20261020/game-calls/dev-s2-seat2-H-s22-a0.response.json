@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.022,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар больше не продаётся, взятки лишь ослабляют мой cash при уже максимальном влиянии.\"}",
+          "reasoning_content": "Round 6 action. I'm idx2, license holder, president, influence 4. Goods sold already (4 units, last market done? No—round 6 market already happened, sell 4 done). Next is law (last law), then end. No more selling. So goods useless except donkey/produce pointless. Bribe gives influence? Influence matters for max influence bonus (5% of bank) — I already have 4 vs others 2. Bribing gives cash to rival, reduces my cash rank. I'm 3rd in cash (30.1M vs 47.3M and 30.13M). Rank barely below idx1. Bribes hurt. Best: pass, keep cash. But influence bonus already mine. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495170,
+    "id": "2026102019192586ae9e734ed347a3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019192586ae9e734ed347a3",
+    "usage": {
+      "completion_tokens": 195,
+      "completion_tokens_details": {
+        "reasoning_tokens": 160
+      },
+      "prompt_tokens": 4896,
+      "prompt_tokens_details": {
+        "cached_tokens": 3136
+      },
+      "total_tokens": 5091
+    }
+  }
+}

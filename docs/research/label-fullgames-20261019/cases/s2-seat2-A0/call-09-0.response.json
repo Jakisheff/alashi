@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 25.744,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"У меня уже максимальное влияние и пост президента к law; shuttle даёт больше товара при неплохом ожидании.\"}",
+          "reasoning_content": "President is faction 1. I'm faction 2 with influence 3 but presidency decided at law entry. Best to take presidency: bribe 5 to 1 gives influence 2, tie? Holder has 1. At law entry, president = max influence; tie uses tie_order. I'd need strictly more influence than 1? Max influence with tie_order priority — holder has 1, tie_order [1,2,0], so with influence 2 I'd win presidency. That gives veto + 5% bank bonus maybe. But costs 5 alashi... bank is 30, 5% = 1.5 alashi, plus veto power. Also produces goods? Produce gives 2 goods worth ~4-5 alashi each at current price (sold counter 6, price 5). Goods valuable. Influence matters for final commission. I already have influence 3, max influence likely mine already (5% commission). Presidency in law round 3: I have 3 influence vs holder 1 — I'd already be president at law! So bribes not needed. Best: produce or shuttle. Shuttle gives 3 goods, risk 25% confiscation at border unless black tariff; produce gives 2. Take shuttle (choice 3) — expected 2.25 goods vs 2. Prices low though (price 5 at counter 6, falling). Still sell later. Shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490052,
+    "id": "20261020175347553fb91e78384f28",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175347553fb91e78384f28",
+    "usage": {
+      "completion_tokens": 328,
+      "completion_tokens_details": {
+        "reasoning_tokens": 293
+      },
+      "prompt_tokens": 3249,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 3577
+    }
+  }
+}

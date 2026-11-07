@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 16.439,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Цены максимальны сейчас, распродаю весь товар до их падения.\"}",
+          "reasoning_content": "Prices decline; selling later rounds similar. Cash devalues (floor/100*62 keeps most). Sell 2 now, keep 1 for later? Prices only fall with sales; sell all 3 now at 12+10+9=31. Future production gives more goods later. Sell 3 now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491122,
+    "id": "20261020181147af38fde43b504ad0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181147af38fde43b504ad0",
+    "usage": {
+      "completion_tokens": 92,
+      "completion_tokens_details": {
+        "reasoning_tokens": 64
+      },
+      "prompt_tokens": 2328,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2420
+    }
+  }
+}

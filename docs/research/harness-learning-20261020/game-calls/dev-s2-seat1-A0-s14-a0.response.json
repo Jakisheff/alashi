@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.245,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон 3 даёт субсидию товара, полезную мне в будущих раундах.\"}",
+          "reasoning_content": "Card 3 = subsidy_goods=1, benefits me (I use produce/shuttle). Vote yes. President is 0, may veto. Vote yes anyway.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495258,
+    "id": "20261020192056b5c549b4a0a64604",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192056b5c549b4a0a64604",
+    "usage": {
+      "completion_tokens": 65,
+      "completion_tokens_details": {
+        "reasoning_tokens": 33
+      },
+      "prompt_tokens": 2817,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2882
+    }
+  }
+}

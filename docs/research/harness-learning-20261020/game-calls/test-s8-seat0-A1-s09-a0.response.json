@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.058,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Взятка 10 alashi даёт влияние 3 и пост президента с veto до конца партии.\"}",
+          "reasoning_content": "Президент — участник 1 (влияние 2). Мне нужно влияние. Взятка 5 alashi участнику 1 даст мне влияние 2, президентом буду я (tie_order: 1,0,2 — при равенстве влияние 2 vs 2 приоритет у 1). Нужно 10 alashi, чтобы стать президентом. Но это стоит 10 alashi — стоит ли? Президент может vetо и 5% комиссии банка. Банк 30 alashi, 5% = 1.5. Также контроль закона. Взятка 10 to 1: choice 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497828,
+    "id": "2026102020034434a1d443967b4542",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020034434a1d443967b4542",
+    "usage": {
+      "completion_tokens": 169,
+      "completion_tokens_details": {
+        "reasoning_tokens": 137
+      },
+      "prompt_tokens": 3841,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 4010
+    }
+  }
+}

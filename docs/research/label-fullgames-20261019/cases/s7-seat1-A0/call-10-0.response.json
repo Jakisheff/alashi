@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 16.596,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар покупать невыгодно (цена уже высокая, продажи соперников её снизят), cash лучше сохранить для аукциона лицензии.\"}",
+          "reasoning_content": "I have 26.25 alashi cash, no goods. Round 4 market. Only pass/buy offered (no goods to sell). Buying goods to sell later? Price counter is 0 (sold_counter 0?), so price 12. Buy 1 costs 12 alashi, sell later at maybe lower price after others sell... Round 6 is last; promissory from round 6 sales isn't paid. Selling in round 5 with credit gives promissory paid at round 6 start. Buy at 12, sell at ≤12 — likely loss since counter will advance. Better to keep cash for auction bid. own_bid already 0? bid 0 shown. Keep cash for the auction this round. Choose pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490476,
+    "id": "20261020180101a5914507124c4db9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180101a5914507124c4db9",
+    "usage": {
+      "completion_tokens": 192,
+      "completion_tokens_details": {
+        "reasoning_tokens": 153
+      },
+      "prompt_tokens": 2496,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2688
+    }
+  }
+}

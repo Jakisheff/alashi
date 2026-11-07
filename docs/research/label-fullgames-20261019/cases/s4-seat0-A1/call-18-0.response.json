@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.414,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вето блокирует 20% налог перед моими продажами в финальном раунде.\"}",
+          "reasoning_content": "Law 2 = 20% tax on future sales. I plan to sell in round 6 market. Rival 2 voted No. I should veto — pass otherwise yes vs no? My vote yes would make tax pass. Veto blocks. Best: veto (or vote_no). Veto is free and safe.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490347,
+    "id": "2026102017590452c62ed8ef144a46",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102017590452c62ed8ef144a46",
+    "usage": {
+      "completion_tokens": 98,
+      "completion_tokens_details": {
+        "reasoning_tokens": 66
+      },
+      "prompt_tokens": 3185,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3283
+    }
+  }
+}

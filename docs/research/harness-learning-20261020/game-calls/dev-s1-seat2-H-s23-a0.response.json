@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.503,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Карта 7 повышает цены следующего рынка, которого больше нет; закон бессмыслен — воздерживаюсь.\"}",
+          "reasoning_content": "Закон 7: +2 к ценам следующего рынка — но раунд 6 рынок уже прошёл, следующего нет. Значит закон без эффекта. Голоса: два Yes уже. Закон бесполезен (следующего рынка нет). Vote_no? Yes=2, no=1 → всё равно принят. Pass/abstain без разницы. Выбираю abstain (choice 3) — нет эффекта.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495173,
+    "id": "20261020191930f647779e9ef24ded",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020191930f647779e9ef24ded",
+    "usage": {
+      "completion_tokens": 127,
+      "completion_tokens_details": {
+        "reasoning_tokens": 91
+      },
+      "prompt_tokens": 3907,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 4034
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.386,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Налог 10% режет мою будущую выручку от продаж — налагаю вето как президент.\"}",
+          "reasoning_content": "Закон 1 — налог 10% на будущие продажи. Я планирую продавать в раунде 6 (у меня 3 товара, promissory не погасится... подожди, раунд 6 начало: cash обесценится 62%, promissory добавится. В раунде 6 маркет: продажа 3 товаров. Налог 10% снизит выручку — veto.\n\nНо veto убивает закон, значит налога нет — лучше veto. Opponents: 12 товаров у фракции 0 — они тоже продают. Veto в моих интересах (я продаю 3 единицы в раунде 6). Да, veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496652,
+    "id": "20261020194408d3728f7a7b474ceb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194408d3728f7a7b474ceb",
+    "usage": {
+      "completion_tokens": 182,
+      "completion_tokens_details": {
+        "reasoning_tokens": 147
+      },
+      "prompt_tokens": 3170,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3352
+    }
+  }
+}

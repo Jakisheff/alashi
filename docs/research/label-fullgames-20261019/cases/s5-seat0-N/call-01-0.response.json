@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.453,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Ожидаемо shuttle даёт больше товара (0.75×3 > 2), риск изъятия умеренный.\"}",
+          "reasoning_content": "Produce is safe, shuttle risks 25% seizure. 2 vs 3 goods. Grey goods risk. Take shuttle? Expected value of 3 vs 2 — seizure loses all? \"серый товар может быть изъят\" — likely grey goods confiscated. 75%*3=2.25 > 2. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490459,
+    "id": "202610201800551df9a6b1a2bb4c76",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201800551df9a6b1a2bb4c76",
+    "usage": {
+      "completion_tokens": 108,
+      "completion_tokens_details": {
+        "reasoning_tokens": 71
+      },
+      "prompt_tokens": 1925,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2033
+    }
+  }
+}

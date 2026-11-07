@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.747,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Покупка товара защищает наличные от девальвации и даёт выручку от продаж в финальном раунде.\"}",
+          "reasoning_content": "No goods, cash low. Buy 1 unit at high price ~12 alashi? cash after buy 2.74 alashi, goods 1. License income 20-60 already. Holding goods only useful if can produce and sell later. Round 5 market: buy 1 unit for 12 alashi, then rounds 5 action produce 3, round 6 sell ~4 units at declining prices. Marginal. Alternatively keep cash for rank. Bank rank by cash+hard; cash matters. Buying reduces cash now but selling round 6 recovers. Selling 4 units next round: prices 12,10,9,8 = 39 alashi vs 12 spent, but cash devaluation round 6 start: cash*0.62. Spending 12 now saves from devaluation, sell revenue fresh. Likely profitable. But opponents also sell. Buy seems better than pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427604,
+    "id": "20261020003317603daa7f233b45c3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003317603daa7f233b45c3",
+    "usage": {
+      "completion_tokens": 225,
+      "completion_tokens_details": {
+        "reasoning_tokens": 185
+      },
+      "prompt_tokens": 2859,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3084
+    }
+  }
+}

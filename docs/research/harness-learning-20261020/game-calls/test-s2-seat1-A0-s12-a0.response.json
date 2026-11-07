@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.094,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель обесценивается лишь раз, а наличные дважды, поэтому кредитная продажа всех 3 единиц выгоднее и сохраняет наличные для аукциона.\"}",
+          "reasoning_content": "Prices now: 3 units sold by others? sold_counter 0. Selling 3 units: 12+10+9=31 alashi immediate cash. Bank 30M; ranks by cash. Selling all 3 gives 61.08M cash, rank 1 likely. Also auction in action next — need cash for bid. Sell 3 for hard cash (better than promissory? promissory counted in later cash with 62% devaluation... actually cash gets floored*0.62 each round start; promissory added after. sell_credit gives 1.25x but promissory→cash then next round cash (incl. it) devalued. Round 4: two more markets (4,5). Promissory from round 4 paid at round 5 start after devaluation of old cash only? \"cash=floor(cash/100)*62, then promissory added\" — so promissory added after devaluation, then survives into round 6 where whole cash devalues 62%. Hard cash now: devalues twice (round 5, 6): ×0.62²≈0.3844. Promissory 1.25x added at round 5 start, devalues once: 1.25×0.62=0.775. So credit much better! Sell 3 credit: 38.75M promissory, still 30M cash for auction.\n\nBut last round promissory not paid. Round 5 sells credit would be worthless. This round credit is good. Choose 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499221,
+    "id": "20261020202652be106f422670487f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202652be106f422670487f",
+    "usage": {
+      "completion_tokens": 380,
+      "completion_tokens_details": {
+        "reasoning_tokens": 332
+      },
+      "prompt_tokens": 2969,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 3349
+    }
+  }
+}

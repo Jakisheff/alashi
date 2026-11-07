@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.413,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":27,\"reason\":\"Ставка на лицензию (доход 20-60 alashi) не расходует действие, после неё ещё возьму товар.\"}",
+          "reasoning_content": "Round 4 action, we have big promissory 38.75M, cash 21.85M. Bid doesn't consume action — wait, bid is allowed and then one more action. But candidates include bid only; can we do bid then action? The interface offers one aggregate action per turn. Bid doesn't consume action; after bid we can choose another action — but candidates here list single actions. Bid choices don't include goods. Best: take shuttle for goods (3 units, sell next round ~7-8 alashi each ≈ 20 alashi). Also bid for license: license income 20-60 alashi, worth bidding. But bid and shuttle can't combine in one candidate... Actually rules say bid doesn't consume main action, \"after the bid you can choose one more action\", but interface offers one aggregate bid per turn — meaning after bidding, another menu appears? The candidates include bid-only options. If I pick bid, I presumably then get to choose action. Risky? Likely engine will present another menu. Choose moderate bid + then shuttle. But safest value: bid 10M (choice 27) then shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427662,
+    "id": "20261020003414f5d015b9a6a04d63",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003414f5d015b9a6a04d63",
+    "usage": {
+      "completion_tokens": 276,
+      "completion_tokens_details": {
+        "reasoning_tokens": 237
+      },
+      "prompt_tokens": 4877,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 5153
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.343,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Налог 20% вредит соперникам с товаром, мой голос «за» ничего не стоит мне.\"}",
+          "reasoning_content": "Law 2 = tax 20%. I have no goods left; taxes hurt rivals' sales... but final round 6: rivals sell goods and pay 20% tax to... tax reduces revenue, doesn't go to me. Actually tax harms rivals, not me. So vote yes? But law passes if yes>no. Vote no already from faction 2 (has goods to sell, doesn't want tax). Faction 1 has 2 goods, likely votes no. My yes: 3 vs no 2+? vote_weight: mine 3, theirs 2 each. If I vote yes: 3 vs (2+2)=4 no → fails. If I abstain: yes 0, no fails anyway. Tax on rivals' round 6 sales reduces their cash — good for my rank. So vote yes, but it fails. Alternatively veto not needed. Vote yes is harmless.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490678,
+    "id": "20261020180430901e1d7390a441e9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180430901e1d7390a441e9",
+    "usage": {
+      "completion_tokens": 219,
+      "completion_tokens_details": {
+        "reasoning_tokens": 186
+      },
+      "prompt_tokens": 3198,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3417
+    }
+  }
+}

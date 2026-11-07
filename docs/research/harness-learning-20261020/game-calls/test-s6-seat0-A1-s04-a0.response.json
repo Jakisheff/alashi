@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.795,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель не девальвируется, выручка 26.25 alashi больше, чем sell с учётом 62% конвертации.\"}",
+          "reasoning_content": "Prices: first unit 11 (12-? sold_counter 2? sold_counter=2 means two sold already... price base at index 2 = 9, +boom 2 = 11). Sell 2: 11+10=21. Devaluation next round: cash→floor/100*62 = 62%. So cash 21→13.02, credit 26.25 paid at face later but promissory isn't devalued... credit 26.25 paid fully later. Sell credit 2 best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496687,
+    "id": "2026102019444246f15ef1e2054a81",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019444246f15ef1e2054a81",
+    "usage": {
+      "completion_tokens": 155,
+      "completion_tokens_details": {
+        "reasoning_tokens": 112
+      },
+      "prompt_tokens": 2211,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2366
+    }
+  }
+}

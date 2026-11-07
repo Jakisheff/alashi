@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.0,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":10,\"reason\":\"Продажа всего в кредит даёт максимум выручки (43,75 alashi векселем, который обналичится в раунде 5).\"}",
+          "reasoning_content": "Cash low (5.58), but round 4 out of 6; promissory pays in round 5, devalues at round start (cash floor/100*62). Promissory 43.75M added next round; round 6 would devalue. Selling credit now gives 43.75M promissory paid at start of round 5 market — usable. Sell credit 5 units maximizes value. Yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490631,
+    "id": "202610201803479f73682b5ae347a7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201803479f73682b5ae347a7",
+    "usage": {
+      "completion_tokens": 135,
+      "completion_tokens_details": {
+        "reasoning_tokens": 91
+      },
+      "prompt_tokens": 3089,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 3224
+    }
+  }
+}

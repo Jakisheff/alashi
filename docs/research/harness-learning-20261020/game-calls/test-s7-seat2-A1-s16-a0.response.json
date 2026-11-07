@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 26.938,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"shuttle даёт 3 товара для продажи в следующем раунде, ожидаемая выручка выше produce при текущей высокой цене.\"}",
+          "reasoning_content": "I'm the license holder (idx 2), last round is 5... rounds: 6 total. Round 5 action, then round 6 remains. Promissory 27.5 alashi paid in round 6 start cash. Cash is low. Shuttle gives 3 goods to sell in round 6 at price ~5-6 (sold counter 3... after my 2 sold, counter 3? price index 3 → 8 alashi? counter=3 means next price 8). Sell 3 goods ~24 alashi. Shuttle free, no seizure risk for... shuttle gives grey goods that can be seized 25%. Tariff unknown; black tariff protects. Currently no tariff. Risk 25% lose all. Produce gives 2 goods ~16 alashi safe. Shuttle EV = 0.75*24=18 > 16. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497750,
+    "id": "202610202002041d054af371a5438e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202002041d054af371a5438e",
+    "usage": {
+      "completion_tokens": 222,
+      "completion_tokens_details": {
+        "reasoning_tokens": 182
+      },
+      "prompt_tokens": 3226,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3448
+    }
+  }
+}

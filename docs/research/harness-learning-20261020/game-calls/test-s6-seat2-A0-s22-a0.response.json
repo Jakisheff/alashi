@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.591,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Финальный раунд: взятки лишь снижают cash и повышают чужой ранг, а бонус влияния меньше стоимости подкупа; товары после рынка бесполезны.\"}",
+          "reasoning_content": "Last round. Cash counts for rank; goods worthless. Influence max gives 5% bonus. Bribe reduces cash but increases influence. P1 has influence 2 and 27M cash; P2 49.7M cash, influence 1. Bonus 5% of bank after 5% commission: bank 45M, commission 2.25M. To get influence 3 need 10M bribe. Bonus 2.25M < 10M bribe cost... also bribing P0 increases their cash hurting rank. Better: keep cash, rank first. Just pass or produce (goods worthless). Pass.\n\nActually vote_weight: influence+2 if action passed — I'm not president anyway (holder is idx0? president is holder_idx 0). Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497418,
+    "id": "20261020195652c121bb18dc994436",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195652c121bb18dc994436",
+    "usage": {
+      "completion_tokens": 211,
+      "completion_tokens_details": {
+        "reasoning_tokens": 162
+      },
+      "prompt_tokens": 4880,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 5091
+    }
+  }
+}

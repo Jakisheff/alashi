@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.964,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 20% навредит и моим будущим продажам; голосую против, чтобы закон не прошёл.\"}",
+          "reasoning_content": "Law 2: tax 20% on future sales. I sold already; rival 2 has 3 goods to sell. Tax hurts rivals more; I have no goods. But as president I can keep influence? Law doesn't affect influence. Let it pass — vote_yes keeps tax hurting rivals. Actually pass means vote yes? Vote yes: yes(2) > no(2)? Not strictly greater — tie means not passed. Rival 0 voted No with weight 2. My yes weight 2 → 2:2, not passed. Rival 2 votes last with weight 1. If rival 2 votes yes → 3:2 passes. Rival 2 has goods, tax hurts him... likely he votes no → 2:3 fails. Either way, vote_no ensures failure. Tax 20% also could hit my future sales? I have no goods and produce next rounds — I'd sell later too. Tax hurts me too. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495223,
+    "id": "20261020192017c87199b8163b434d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192017c87199b8163b434d",
+    "usage": {
+      "completion_tokens": 236,
+      "completion_tokens_details": {
+        "reasoning_tokens": 201
+      },
+      "prompt_tokens": 3012,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3248
+    }
+  }
+}

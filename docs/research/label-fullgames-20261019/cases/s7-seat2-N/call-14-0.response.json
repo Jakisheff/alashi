@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.607,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Произведу 2 товара без риска изъятия серого на границе, шаттл рискует всеми серыми товарами.\"}",
+          "reasoning_content": "Bid already placed; shuttle risk at border ~25% loss. But tariff unknown. I have 0 cash so bid 7.3M in escrow already full cash. Choose produce (safe +2) vs shuttle (+3 but grey risk? shuttle gives grey goods which may be seized). Choose shuttle? Risk 25% losing all grey. Expected 3*0.75=2.25 < 2. Produce safer.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490130,
+    "id": "20261020175520a571f9aaf282495d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175520a571f9aaf282495d",
+    "usage": {
+      "completion_tokens": 132,
+      "completion_tokens_details": {
+        "reasoning_tokens": 89
+      },
+      "prompt_tokens": 2772,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2904
+    }
+  }
+}

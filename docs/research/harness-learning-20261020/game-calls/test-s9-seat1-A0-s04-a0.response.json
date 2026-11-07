@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.972,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель не девальвируется и приносит 1.25× выручку — продаю весь товар в кредит.\"}",
+          "reasoning_content": "Prices: sold_counter 3, prices [12,10,9,8,...], unit price = 4th? sold 3 units means next price index 3 = 8. Sell 2 gives 15? Candidate says sell 2 → 15 (8+7). Sell credit 2 → 18.75.\n\nDevaluation: cash→floor(cash/100)*62 = 38% haircut per round. Selling for cash now: 15 loses 62%? No — devaluation applied at start of round 2 already? Cash 0 anyway. Selling now cash 15, next round start devalues to 9.3. Promissory: added to cash next round without devaluation? \"cash=floor(cash/100)*62, затем promissory прибавляется к cash и обнуляется\" — promissory not devalued! So sell_credit strictly better. 18.75 vs 15 (cash devalued later to 9.3 anyway if held). Credit clearly best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498266,
+    "id": "202610202010592c53f79aa04c4fbe",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202010592c53f79aa04c4fbe",
+    "usage": {
+      "completion_tokens": 252,
+      "completion_tokens_details": {
+        "reasoning_tokens": 215
+      },
+      "prompt_tokens": 2212,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2464
+    }
+  }
+}

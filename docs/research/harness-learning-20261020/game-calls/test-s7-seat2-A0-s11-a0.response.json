@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.624,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Девальвация обесценит cash, покупка товара по 12 сохраняет стоимость\"}",
+          "reasoning_content": "Own promissory 30 alashi was canceled? Wait, round 3 I sold 3 units credit but state shows promissory=0, cash 47.05. Round 4 market: sold_counter reset? sold_counter=0, price 12 (no shift). Buy 1 unit costs 12 alashi. I have no goods; buying goods to sell later? Price next rounds: cash devalues 62%, goods keep value 12 alashi each. Devaluation makes holding goods good. Buying 3 units costs 36, keeps 12+36=48 alashi equivalent... but next round cash floored 62%: 47.05→29.2→18.1... Hard currency not available. Buying goods preserves value at 12/unit. Buy max: 3 units, cash 11.05.\n\nBut wait—goods were confiscated earlier? shuttle grey confiscated 30 alashi earlier... whatever. Buy 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498973,
+    "id": "2026102020224743e761e9b57c4e5f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020224743e761e9b57c4e5f",
+    "usage": {
+      "completion_tokens": 227,
+      "completion_tokens_details": {
+        "reasoning_tokens": 197
+      },
+      "prompt_tokens": 2623,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2850
+    }
+  }
+}

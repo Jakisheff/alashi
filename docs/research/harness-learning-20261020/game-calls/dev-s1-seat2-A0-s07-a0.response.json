@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.065,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Беру максимум товара для будущих продаж, риск изъятия приемлем при падающих ценах.\"}",
+          "reasoning_content": "I'm idx2, cash 30.4M, influence 1 (had 3? no, it's 1). President is idx1. Round 3 action. Need goods to sell. Shuttle gives 3 goods (25% seizure risk). Produce gives 2 safely. Prices falling (counter 7, price ~5). Round 4 auction — should keep cash for bid. Influence helps presidency; bribe 5M for +1 influence. Next rounds: round 4 market then action (auction + action). Being president gives veto power — valuable.\n\nShuttle 3 goods vs produce 2, seizure risk 25%. Expected 2.25 vs 2. Prefer produce? Price at counter 7 = 5/unit, next rounds lower. 1 extra unit ~4 alashi, 25% risk of losing 3 units ~15 alashi. EV shuttle = 0.75*15=11.25 vs produce 10. Roughly equal; but risk averse and cash devalues anyway (devaluation 62%). Actually sell via sell_credit boosts. Slight edge to shuttle EV. Also influence matters: bribe 5M → influence 2, may not become president (idx1 has influence 1, tie_order gives idx1 priority; need strictly more). Bribe 5M to either rival. Being president in law lets veto. Cash also devalues 62% per round, so 5M now → ~1.9M at final. Influence gives veto control and 5% commission potentially. But ranking by cash matters more.\n\nSimplest: shuttle for goods. I'll pick shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495566,
+    "id": "20261020192556ad9b88f01a2c45a6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192556ad9b88f01a2c45a6",
+    "usage": {
+      "completion_tokens": 370,
+      "completion_tokens_details": {
+        "reasoning_tokens": 339
+      },
+      "prompt_tokens": 3453,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 3823
+    }
+  }
+}

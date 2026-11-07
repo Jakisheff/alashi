@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.067,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Покупка по 9 алши откатывает счетчик продаж и повышает будущую цену выхода, выгоднее пассива.\"}",
+          "reasoning_content": "Price for 3rd unit (sold_counter=2): 9 alashi; buy moves counter back, cost ~9 alashi = 9,000,000? After: cash 16.25→7.25, so cost 9. Buy gives goods 1, next sell at higher price. Buy profitable: buy at 9, later sell at 9-10 with price resets... Buying moves counter back so selling later recovers higher price. Likely buy.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428075,
+    "id": "20261020004105634923224bf8451a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020004105634923224bf8451a",
+    "usage": {
+      "completion_tokens": 137,
+      "completion_tokens_details": {
+        "reasoning_tokens": 98
+      },
+      "prompt_tokens": 2252,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2389
+    }
+  }
+}

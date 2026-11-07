@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.117,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Сохраняю деньги для аукциона лицензии в этом раунде; покупка товара по 8 невыгодна.\"}",
+          "reasoning_content": "I'm president, influence 3. Round 4 market. Buy 5 at 8 each = 40 spent (11 left), can later shuttle and produce to get more, and license auction in action — need cash for bid. Buying 5 units then auction may leave little cash for license. License income 20-60, bank only 30. Rival 2 has 35.8 cash and could bid. Buying goods at price 8 to sell later at ~7-8 with price declining... selling 5 later at price 7-6 gross less. Actually buying back reduces sold_counter, raising price. Selling 5 in round 6: prices at counter 3: [8,7,6,5,4] ≈30 alashi gross for 5 units → 40 spent, no profit, plus tax. Not good.\n\nBetter keep cash for license auction. License income 20-60 alashi vs bank 30. Bid maybe ~20. I have 62. Rival 2 has 35.8. Skip buying, bid in auction.\n\nChoice 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498941,
+    "id": "20261020202214791988b4a408495f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202214791988b4a408495f",
+    "usage": {
+      "completion_tokens": 265,
+      "completion_tokens_details": {
+        "reasoning_tokens": 228
+      },
+      "prompt_tokens": 2803,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 3068
+    }
+  }
+}

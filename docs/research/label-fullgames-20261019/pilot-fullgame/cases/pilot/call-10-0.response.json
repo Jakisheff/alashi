@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.66,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель добавляется кэшем после девальвации в раунде 5, поэтому кредитная продажа всех 3 единиц максимизирует итоговое богатство.\"}",
+          "reasoning_content": "Round 4 market, price now 10 (sold counter 0? prices start 12... but sell gives 12 for 1 unit — 12 alashi per unit). Promissory after round 6 not paid... last round is 6; promissory from round 4 market is paid at start of round 5? Rule: start of round 2+, promissory added then zeroed. Round 6 start promissory still paid. But sell in round 6 market → not paid. So sell_credit now is paid (at round 5 start). Sell credit gives 1.25x. But devaluation: cash=floor(cash/100)*62 applies to cash, promissory added after — so promissory survives devaluation fully! Big advantage. Sell credit 3 units → 37.5 promissory vs 30 cash that gets devalued (30→18.6). Definitely sell_credit all.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792426694,
+    "id": "202610200018062e45a6fa932444f7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200018062e45a6fa932444f7",
+    "usage": {
+      "completion_tokens": 245,
+      "completion_tokens_details": {
+        "reasoning_tokens": 198
+      },
+      "prompt_tokens": 2791,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 3036
+    }
+  }
+}

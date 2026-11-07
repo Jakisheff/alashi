@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.487,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель не девальвируется в раунде 6, поэтому продажа в кредит всех товаров сохраняет полную выручку.\"}",
+          "reasoning_content": "Round 5 market, devaluation at round 6 start: cash=floor/100*62. Selling now gives cash that gets devalued 62%, but credit promissory is added after devaluation — full value! sell_credit 2 gives promissory 27.5, added to cash in round 6 fully. Best: sell_credit units 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427423,
+    "id": "20261020003015a8d54fe411704105",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003015a8d54fe411704105",
+    "usage": {
+      "completion_tokens": 115,
+      "completion_tokens_details": {
+        "reasoning_tokens": 77
+      },
+      "prompt_tokens": 3092,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3207
+    }
+  }
+}

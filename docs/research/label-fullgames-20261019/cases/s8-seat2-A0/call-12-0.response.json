@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.842,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":39,\"reason\":\"Ставка 20 alashi почти гарантирует лицензию с доходом 20–60 alashi, а взнос частично вернётся через банк.\"}",
+          "reasoning_content": "License income ~20-60 alashi but bid goes to bank which is shared. Bid ~10-15 worth it; rivals have ~30 cash, may bid. But I also need cash rank. Bid adds to bank (shared by payout weights, so partially returns). Winning license gives 20-60 directly plus bank share. Bid moderately, e.g. 12 alashi. Also then choose another action? The menu only gives one composite move; bid doesn't consume action but this turn's candidate includes only bid. Choose bid 12 alashi (choice 31)? Rivals with 31/29 cash may outbid. Risky. I'll bid 20 alashi (choice 39) — guaranteed win likely, income 20-60 direct plus bank share ~. Expected ~40 vs cost 20 shared back ~16. Worth it. But then can't produce? The bid alone... \"bid не расходует основное действие: после ставки можно выбрать ещё одно действие\" but menu offers single cumulative bid. Likely next prompt for main action. Choose 20 alashi bid.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427123,
+    "id": "202610200025140adb2c4424d441dc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200025140adb2c4424d441dc",
+    "usage": {
+      "completion_tokens": 266,
+      "completion_tokens_details": {
+        "reasoning_tokens": 223
+      },
+      "prompt_tokens": 5284,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 5550
+    }
+  }
+}

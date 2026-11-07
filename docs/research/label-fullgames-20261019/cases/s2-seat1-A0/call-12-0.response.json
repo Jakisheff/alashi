@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.434,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":21,\"reason\":\"Ставлю 8M на лицензию (выручка 20–60 alashi оправдывает риск, проигрыш вернёт эскроу), действие выберу следующим ходом.\"}",
+          "reasoning_content": "I'm president, round 4 action, bid 0 already (own_bid=0). Need to choose action + can bid again (bid doesn't consume action... actually \"bid не расходует основное действие: после ставки можно выбрать ещё одно действие\"). Interface offers one combined bid per turn. So candidates include bid amounts and action. Choose action: produce gives 2 goods for selling round 5. Also maybe bid on license (income 20-60 alashi, worth bidding). Combine: I can only pick one candidate. Best: bid high + also produce? Can't pick two. Bid 5-7 alashi likely wins license, but rivals cash 20M and 41M can outbid. Bid doesn't consume action? \"bid помещает amount cash в эскроу... после ставки можно выбрать ещё одно действие\" — but menu offers one per turn? \"Интерфейс предлагает одну совокупную ставку за ход.\" So picking a bid means it's the turn's choice... unclear. Hmm, likely after choosing bid, engine offers action again. Given own_bid=0 currently, choosing a bid probably leads to another action selection. So bid then produce.\n\nLicense income 20-60 alashi, big. Rival 2 has 41M cash and could bid up to 41M. My max bid ~10M may lose. Still, bidding ~7M gives chance; if lost, money returned. Bid 8M? Cash stays 2M for donkey? After bid returned if lost. Let's bid 8M (choice 21). If won, 8M into bank (shared back, but weighted) plus license income 20-60. Worth it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491103,
+    "id": "20261020181134d6ae4ae24ecd4434",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181134d6ae4ae24ecd4434",
+    "usage": {
+      "completion_tokens": 404,
+      "completion_tokens_details": {
+        "reasoning_tokens": 352
+      },
+      "prompt_tokens": 3938,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 4342
+    }
+  }
+}

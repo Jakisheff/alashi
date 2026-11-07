@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 16.775,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар уже не продать, взятки и roof лишь снижают cash при решающем преимуществе по рангу богатства.\"}",
+          "reasoning_content": "Last action round. Goods can't be sold (market passed, round 6 market done). Produce/shuttle useless except... no more market. So only cash matters. Influence: max influence gets 5% of bank = ~3.15M (bank 63M, minus commission... 5% of bank = 3.15M). But influence changes cash via bribe. Bribing costs cash 1:1 for influence. Bribe to 1 of 5M gives influence 2 — rivals both have 1, tie broken by tie_order [1,2,0], so holder is 1. With influence 2 I'd be max → +3.15M bonus, but cost 5M. Net loss. So keep cash.\n\nRoof: pays 30% to holder 1 — bad. Pass: cash stays 79.4M, rank 1, get 50% share. Choose pass (0) or produce (same). Pass keeps vote_weight... actually law round: passing action gives +2 vote weight, useful? Law card unknown; I'm not holder (1 is). Cash richest = me; card 4 gives influence to poorest, 5 to richest (me +1 influence → max influence → 3.15M bonus). Uncertain. Pass doesn't lose anything.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428040,
+    "id": "2026102000402623f490231865450e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000402623f490231865450e",
+    "usage": {
+      "completion_tokens": 312,
+      "completion_tokens_details": {
+        "reasoning_tokens": 275
+      },
+      "prompt_tokens": 5539,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 5851
+    }
+  }
+}

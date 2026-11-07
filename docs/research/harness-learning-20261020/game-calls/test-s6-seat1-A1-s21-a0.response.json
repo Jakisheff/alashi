@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.658,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Взятки и товары уже не окупаются, а сохранение веса голоса президента выгоднее для финального закона.\"}",
+          "reasoning_content": "Last round action, then law. Goods worthless after. Bribe for influence? Max influence gives 5% bank commission — 5% of 38M = 1.9M. Bribe costs cash directly (rank), influence capped at 15. I already hold influence 2 tied with 0, tie broken by cash? For commission: max influence, I'm tied with idx0 at 2. One bribe 5M gives me influence 3, costs 5M cash but gains 1.9M commission — net loss. Rank: I'm first by cash anyway (70M vs 33M). But bribe reduces my cash by 5M and gives opponent 5M — worse. Also passing preserves vote_weight for law... but I'm president? holder_idx=1, yes. Pass keeps +2 vote weight. Choose pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497131,
+    "id": "20261020195206d2f6a0abaa504067",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195206d2f6a0abaa504067",
+    "usage": {
+      "completion_tokens": 217,
+      "completion_tokens_details": {
+        "reasoning_tokens": 179
+      },
+      "prompt_tokens": 5345,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 5562
+    }
+  }
+}

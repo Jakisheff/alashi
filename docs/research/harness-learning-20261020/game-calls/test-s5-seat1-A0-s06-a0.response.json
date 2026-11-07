@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.637,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 8 обнуляет мой вексель, голосую против — при весе 2 он отклоняется.\"}",
+          "reasoning_content": "Law 8 обнуляет promissory — мой 16.25 будет потерян. Голоса: 0 Abstain, 2 Yes. Если я vote_no: no=2, yes=1 → отклонено. Vote_no choice 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498827,
+    "id": "202610202020197928636565b740fd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202020197928636565b740fd",
+    "usage": {
+      "completion_tokens": 91,
+      "completion_tokens_details": {
+        "reasoning_tokens": 55
+      },
+      "prompt_tokens": 2334,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2425
+    }
+  }
+}

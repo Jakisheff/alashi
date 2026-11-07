@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.992,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель добавляется после девальвации, поэтому sell_credit всех 3 единиц выгоднее.\"}",
+          "reasoning_content": "Sell all 3 now at price 4? sold_counter=7, prices index: after 7 sold, next price 3. But candidates show sell 3 gives +10 → 3+... cash 47.98→57.98 = +10 alashi, price ~3.33? Anyway sell 3 = choice 5. But inflation round 5 halves cash; better sell now. Promissory*1.25 gets devalued? promissory added after devaluation — actually sell_credit is better? Cash devalues *0.62, promissory added after. Cash 47.98→29.75; sell now cash 57.98→35.96. sell_credit: cash 47.98→29.75+12.5=42.25. Credit better. choice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499714,
+    "id": "202610202035048f74373b2c4846a3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202035048f74373b2c4846a3",
+    "usage": {
+      "completion_tokens": 206,
+      "completion_tokens_details": {
+        "reasoning_tokens": 174
+      },
+      "prompt_tokens": 3083,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 3289
+    }
+  }
+}

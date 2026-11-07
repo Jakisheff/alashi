@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.801,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Ожидаю больше товара от shuttle при отсутствии наличных для других действий\"}",
+          "reasoning_content": "Round 3, cash 0, shuttle gives 3 grey goods with 25% seizure risk... no cash benefit. Produce gives 2 guaranteed. Shuttle: 3 goods but grey can be seized. With tariff? Currently no tariff info. Produce safer? Shuttle gives more goods expected 2.25 vs 2. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499091,
+    "id": "202610202024481a7fd3d3e2a44955",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202024481a7fd3d3e2a44955",
+    "usage": {
+      "completion_tokens": 94,
+      "completion_tokens_details": {
+        "reasoning_tokens": 69
+      },
+      "prompt_tokens": 2885,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 2979
+    }
+  }
+}

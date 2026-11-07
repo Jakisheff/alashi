@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.86,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":38,\"reason\":\"Ставка 9 млн превышает кап соперников в 8 млн и выигрывает лицензию с минимальной переплатой.\"}",
+          "reasoning_content": "Cash 53.9M ≥16 → bid 12M, but recommended_choice is 38 (9M)? Harness says recommended 9M... Priority says follow recommended_choice. Cash ≥16 so rule says 12 (choice 41). But harness recommended 38. Instruction: \"приоритет: следуй augment.auction.recommended_choice\". Conflict — recommended is 38. Hmm, they state follow recommended if valid. I'll follow rule of 12? The harness context explicitly gives recommended_choice 38. Follow harness.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499211,
+    "id": "20261020202648146f4959757f434e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202648146f4959757f434e",
+    "usage": {
+      "completion_tokens": 148,
+      "completion_tokens_details": {
+        "reasoning_tokens": 109
+      },
+      "prompt_tokens": 7969,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 8117
+    }
+  }
+}

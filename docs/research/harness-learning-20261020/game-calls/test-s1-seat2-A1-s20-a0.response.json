@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.801,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 3 (субсидия) уже не влияет на итог, рынок завершён — пропускаю.\"}",
+          "reasoning_content": "Law 3 = subsidy_goods=1, no effect now (no more produce rounds). Yes votes: 1+2=3 weight, I hold weight 4. Passing doesn't change cash. My vote yes passes (4+3 >0). Law 3 has no effect on final payout. So any choice same; veto blocks nothing—but veto could... no effect either way. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497408,
+    "id": "202610201956446713c964d5954609",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201956446713c964d5954609",
+    "usage": {
+      "completion_tokens": 117,
+      "completion_tokens_details": {
+        "reasoning_tokens": 82
+      },
+      "prompt_tokens": 3315,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3432
+    }
+  }
+}

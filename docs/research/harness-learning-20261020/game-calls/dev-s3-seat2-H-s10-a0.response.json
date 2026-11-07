@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.007,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон о налоге 20% мне невыгоден, мой голос No отклоняет его.\"}",
+          "reasoning_content": "Law 2: налог 20% на продажи. У меня товара 3, буду продавать. Против — vote_no. 0:Yes,1:No, я No с весом 3 (президент? влияние 1, все по 1, я holder с tie_order). No=2 > Yes=1 → закон отклонён. Хорошо.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495357,
+    "id": "202610201922340f57b87ccb1a4f44",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201922340f57b87ccb1a4f44",
+    "usage": {
+      "completion_tokens": 110,
+      "completion_tokens_details": {
+        "reasoning_tokens": 79
+      },
+      "prompt_tokens": 2992,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3102
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.26,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 6 снизит цены следующего рынка, что вредит моим продажам; голос No при текущих голосах блокирует его.\"}",
+          "reasoning_content": "Law 6: price shift -2 next market. I have license and I sell. Votes: yes weight 3, no weight 4. My vote weight 2. If I vote yes: yes 5 vs no 4 → passes, prices drop -2, bad for me as seller. Vote no: no 6 vs 3 → rejected. So vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427139,
+    "id": "202610200025359b2db2432d564c8a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200025359b2db2432d564c8a",
+    "usage": {
+      "completion_tokens": 118,
+      "completion_tokens_details": {
+        "reasoning_tokens": 78
+      },
+      "prompt_tokens": 2971,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3089
+    }
+  }
+}

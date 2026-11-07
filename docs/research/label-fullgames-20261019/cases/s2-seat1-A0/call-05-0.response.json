@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.043,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 8 обнулил бы мой вексель 16.25M, поэтому голосую против: 1 yes против 1 no отклоняет его.\"}",
+          "reasoning_content": "Law 8 обнуляет promissory — у меня 16.25M promissory. Фракция 2 voted yes, фракция 0 abstain. Мне нужно, чтобы закон не прошёл: vote_no (я президент с veto тоже). Yes=1, no=1 → не принято (нужно строго больше). Vote_no достаточно, но безопаснее veto? Vote_no: yes 1, no 1 → нет. Достаточно vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491059,
+    "id": "20261020181055f2a33accbf4845ab",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181055f2a33accbf4845ab",
+    "usage": {
+      "completion_tokens": 144,
+      "completion_tokens_details": {
+        "reasoning_tokens": 99
+      },
+      "prompt_tokens": 2283,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2427
+    }
+  }
+}

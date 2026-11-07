@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.339,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":12,\"reason\":\"Вексель раунда 5 будет погашен в раунде 6 без девальвации, поэтому продаю весь товар в кредит с премией 25%.\"}",
+          "reasoning_content": "Round 5 market, boom +2, price high early. After round 6 dev floor(cash/100)*62. Promissory from round 5 gets added round 6 then devalued? Promissory added to cash in round 6 start... no, round 6 start dev applies to cash, promissory added after. So promissory from round 5 market is added in round 6 and NOT devalued (only round 6 sell_credit unpaid). Actually sell_credit round 5 → promissory added to cash in round 6, then no more devaluation. So credit safe and 1.25x. Sell all 6 credit: 80 alashi promissory.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498502,
+    "id": "202610202014576654288c38da4eb5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202014576654288c38da4eb5",
+    "usage": {
+      "completion_tokens": 197,
+      "completion_tokens_details": {
+        "reasoning_tokens": 149
+      },
+      "prompt_tokens": 3448,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3645
+    }
+  }
+}

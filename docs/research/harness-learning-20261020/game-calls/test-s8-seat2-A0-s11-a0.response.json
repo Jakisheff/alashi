@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.279,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продаю весь товар по высоким ценам сейчас: вексель обесценится девальвацией, а позже цены упадут.\"}",
+          "reasoning_content": "Раунд 4 из 6, рынок. Продажи по 10/9 alashi сейчас (sold_counter=2, цены [12,10,9,...] wait counter 2 → цена 9? counter=2 значит уже 2 продано, следующая цена index 2 = 9). Кандидаты показывают sell 1 unit = 9 alashi net (46060000-37060000=9). Later rounds prices drop only slightly after selling. Selling now with credit gives 11.25 per unit but promissory added in round 5 only; round 5 devaluation floor(cash/100)*62. Promissory pays at start of round 5 and 6, so round-4 credit is fine (paid round 5). Actually cash=37 alashi currently; promissory of 30 alashi added next round on top of devalued cash. Devaluation: 37.06→22.98. Selling credit now: promissory 30 added in round 5, then survives? It pays into cash in round 5, then devaluation at start of round 6 hits it. Selling now gives 9/unit, credit 11.25/unit but suffers devaluation ~62% in round 6 → 6.97 effective. So sell now is better than credit.\n\nAlso note: opponent 0 has 6 goods and may sell, driving price down. Sold counter may increase before my turn? I act now. Round 4 order: I'm idx2... After selling 3 units counter=5, next prices 6,5,4... In round 5-6, selling later drops to low prices anyway. Sell all 3 now at 9+8+7=24 (matches 61060000-37060000=24). Best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499598,
+    "id": "202610202033085ccc18f1badf44d8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202033085ccc18f1badf44d8",
+    "usage": {
+      "completion_tokens": 424,
+      "completion_tokens_details": {
+        "reasoning_tokens": 384
+      },
+      "prompt_tokens": 2942,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 3366
+    }
+  }
+}

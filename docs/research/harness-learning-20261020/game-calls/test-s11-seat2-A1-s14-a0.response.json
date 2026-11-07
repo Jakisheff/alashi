@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.753,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон и так отклоняется (1 за против 4 против), вето ничего не меняет.\"}",
+          "reasoning_content": "Law 1: 10% tax on future sales. Votes: Yes=1 (idx0), No=4 (idx1), Abstain=2. No wins anyway (4>1). Veto unnecessary? Veto blocks the law... but the law is already rejected (yes 1 < no 4). Veto changes nothing. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498092,
+    "id": "20261020200807aa8aae5d3ea44466",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200807aa8aae5d3ea44466",
+    "usage": {
+      "completion_tokens": 106,
+      "completion_tokens_details": {
+        "reasoning_tokens": 74
+      },
+      "prompt_tokens": 2718,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2824
+    }
+  }
+}

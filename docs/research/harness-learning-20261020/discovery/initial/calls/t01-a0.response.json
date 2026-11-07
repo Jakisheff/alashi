@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.817,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"tool\":\"calculate\",\"code\":\"g = games[0]\\nprint('KEYS', list(g.keys()))\\nprint('OUTCOME', dumps(g.get('outcome'))[:1500])\\nprint('PHASE_ACTIONS sample', dumps(g.get('phase_actions'))[:800])\\nprint('N OBS', len(g['observations']))\"}",
+          "reasoning_content": "Let me explore the corpus more systematically. I want to understand the structure: observations (subject's states and actions), phase_actions (all participants' actions), outcome (final results). Let me print a game fully but grouped, and outcomes across all games.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792494473,
+    "id": "202610201907513820ec09126a4745",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201907513820ec09126a4745",
+    "usage": {
+      "completion_tokens": 125,
+      "completion_tokens_details": {
+        "reasoning_tokens": 51
+      },
+      "prompt_tokens": 3709,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3834
+    }
+  }
+}

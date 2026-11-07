@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.792,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Сохраняю деньги для аукциона лицензии; покупка товара почти без маржи\"}",
+          "reasoning_content": "I'm idx2, president, cash 28.83, no goods. Market R4: buy cheap? Prices counter=2 → price 9. Buy 1 unit at 9? \"buy moves counter back\". Candidates: buy 1 costs 9M for 1 goods; buy 2 costs 19M for 2 goods. Later sell? Prices at counter back to 1 → 10. Round 5/6 markets: price counter will advance... Actually buying back counter to 0 lets me sell at 12 later. But tax possible; also I have no goods. R5/6 sell price at counter 2 =9. Buy 2 at avg 9, sell later at 10? Marginal. License auction this action phase — save cash for bid. I'll pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499233,
+    "id": "20261020202707ed0f3863d1324ae7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202707ed0f3863d1324ae7",
+    "usage": {
+      "completion_tokens": 197,
+      "completion_tokens_details": {
+        "reasoning_tokens": 168
+      },
+      "prompt_tokens": 2579,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2776
+    }
+  }
+}

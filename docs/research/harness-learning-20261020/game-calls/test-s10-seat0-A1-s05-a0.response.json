@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.612,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Серый шаттл даёт ожидаемо 2,25 товара против 2 у produce.\"}",
+          "reasoning_content": "Produce gives 2 goods safely; shuttle gives 3 grey with ~25% loss. Expectation 2.25 vs 2, but produce is safe. Choose shuttle for EV.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498161,
+    "id": "20261020200917a263c70cc9ed4b62",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200917a263c70cc9ed4b62",
+    "usage": {
+      "completion_tokens": 72,
+      "completion_tokens_details": {
+        "reasoning_tokens": 39
+      },
+      "prompt_tokens": 2150,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2222
+    }
+  }
+}

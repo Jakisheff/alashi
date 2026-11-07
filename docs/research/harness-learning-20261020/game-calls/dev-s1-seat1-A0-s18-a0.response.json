@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.213,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Раунд последний: взятка ради влияния стоит дороже комиссии 5%, а ранг богатства я сохраняю при любом варианте.\"}",
+          "reasoning_content": "Last round. I'm richest (50.7M vs 25.4 and 21.9). Influence matters for 5% commission bonus: currently tied with idx0 at 2, tie_break better for me. Bribe 5M to 0 costs 5M cash but secures max influence — but bribe gives cash to rival, raising their rank slightly (still below me). Cash difference: bribe 5M to 0: I lose 5M, they gain 5M → gap shrinks by 10M: 45.7 vs 30.4 vs 21.9. Still rank 1, and influence 3 secures commission 5% (~2.6 alashi ≈ 2.6M units? bank 50M, 5% = 2.5M). Rank1 share 50% vs 30%: difference 20% of 47.5M = 9.5M, no rank change anyway. So bribe 5M for influence 3 worth 2.5M bonus minus 5M cost... net loss unless rank matters. Rank unchanged either way. Influence bonus: bribe = get 2.5M, pay 5M. Skip. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495170,
+    "id": "20261020191923cf3c7fa690b54534",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020191923cf3c7fa690b54534",
+    "usage": {
+      "completion_tokens": 305,
+      "completion_tokens_details": {
+        "reasoning_tokens": 264
+      },
+      "prompt_tokens": 4729,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 5034
+    }
+  }
+}

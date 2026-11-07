@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.373,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Девальвация обесценивает кэш, а покупка товара сохраняет и поднимает цену для будущих продаж.\"}",
+          "reasoning_content": "Prices high (sold_counter=2, price 10 for next? sell price at counter 2 is 10). Buying moves counter back at 9/unit cost. I have no goods; buying to sell later? Buying 2 units costs 19 alashi, cash down to 4.25. Later rounds sell at maybe higher price... counter back to 0 gives price 12. Two more markets (rounds 5,6). Selling 2 at 12+... could be profitable vs keeping cash. Devaluation cuts cash 62% each round start! Cash 23.25 → floor 23*0.62=14.26. So holding cash loses 38%. Buying goods preserves value. Buy 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498200,
+    "id": "20261020200955b74c0364796f4abb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200955b74c0364796f4abb",
+    "usage": {
+      "completion_tokens": 190,
+      "completion_tokens_details": {
+        "reasoning_tokens": 151
+      },
+      "prompt_tokens": 2498,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2688
+    }
+  }
+}

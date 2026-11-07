@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 15.151,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Взятки дороже возможного бонуса влияния, а финальный закон уже не влияет на мою выплату.\"}",
+          "reasoning_content": "Final action round. Cash 75.4M, rank 1 already (idx0 65.6M, idx2 25.5M). But I'm license holder — extra income separate. Bribe gives influence; max influence holder gets extra 5% of bank (~1.8M). Currently idx0 has influence 2, I have 1. To beat: bribe 10M to get influence 3? Bribe 5M gives influence 2, tie; then more cash wins tie — I have more cash+hard? Extra 5% goes to max influence, tie broken by cash. Bribe 5M to idx2: I get influence 2, tie with idx0 (influence 2), tie-break cash: I have 70.4M vs 65.7M — I win. Cost 5M, gain ~1.8M — net loss. Law phase round 6: president is idx0 (influence 2). Vote weight matters? Law cards remaining could hurt. But bribe also increases vote weight. Bad law risks: tax 20%? Next market already passed—no more market... round 6 law affects nothing (no more sales). Card 8 promissory — I have none. So law irrelevant. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427336,
+    "id": "20261020002842cb521620a12a49ea",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020002842cb521620a12a49ea",
+    "usage": {
+      "completion_tokens": 309,
+      "completion_tokens_details": {
+        "reasoning_tokens": 271
+      },
+      "prompt_tokens": 5408,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 5717
+    }
+  }
+}

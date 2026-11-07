@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.129,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Карта 8 нейтральна (никто не имеет векселей), голосую против из осторожности.\"}",
+          "reasoning_content": "Card 8 обнуляет promissory. У меня нет promissory. Others? Faction 1,2 promissory 0. No effect—vote no is fine, but card 8 harmless. Vote no passes? Abstains others, so yes/no decides. No effect anyway; vote_no keeps neutral. Actually card 8 zero effect, either way. Choose no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498228,
+    "id": "20261020201024e26b58e89a414759",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201024e26b58e89a414759",
+    "usage": {
+      "completion_tokens": 114,
+      "completion_tokens_details": {
+        "reasoning_tokens": 80
+      },
+      "prompt_tokens": 3201,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3315
+    }
+  }
+}

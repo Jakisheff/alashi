@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.366,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Закон о субсидии уже не влияет на выплаты в финальном раунде, поэтому нет смысла тратить голос против.\"}",
+          "reasoning_content": "Law 3: subsidy_goods=1 — only affects future produce actions, no more rounds after this law (round 6 last). So effect irrelevant. President is player 0, not me. Player 0 voted yes, weights: yes=1. My vote weight 3. Abstain/pass → yes wins 1>0. No effect anyway. Any choice fine; vote_no kills it, also no effect. Just abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499657,
+    "id": "202610202034105c5f66c69f804868",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202034105c5f66c69f804868",
+    "usage": {
+      "completion_tokens": 130,
+      "completion_tokens_details": {
+        "reasoning_tokens": 91
+      },
+      "prompt_tokens": 3224,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3354
+    }
+  }
+}

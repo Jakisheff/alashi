@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.245,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон о субсидии симметрично полезен и мне в будущих раундах, а решение уже принято моим голосом.\"}",
+          "reasoning_content": "Law 3 gives subsidy_goods=1 to everyone, benefits rivals with production; I have no goods production strategy now... Actually subsidy helps produce/shuttle for all equally. I'm president with influence 3. Vote already yes (weight 3) vs no (1): passes anyway. Veto? Subsidy helps rivals too; I have 0 goods. But future rounds I might produce too. Neutral-ish; card 3 subsidy=1 helps all. Vetoing removes benefit. Since it passes anyway, veto only matters if I dislike it. It's symmetric — but I could benefit in later rounds (rounds 4-6). Let it pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499745,
+    "id": "202610202035362043cccf809c4d9f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202035362043cccf809c4d9f",
+    "usage": {
+      "completion_tokens": 177,
+      "completion_tokens_details": {
+        "reasoning_tokens": 136
+      },
+      "prompt_tokens": 2511,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2688
+    }
+  }
+}

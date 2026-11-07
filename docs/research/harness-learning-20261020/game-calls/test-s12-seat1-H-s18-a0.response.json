@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.167,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 6 снижает цену финального рынка, где мне нужно дорого продать 4 товара — голосую против.\"}",
+          "reasoning_content": "Закон 6: сдвиг цен следующего рынка (раунд 6, последний) на -2. Мне это невыгодно — у меня 4 товара, хочу продать дорого в раунде 6. Голосую no; если yes>no... голоса: No=2 (вес 2), Abstain вес1. Мой no добавит вес 3 → no=5, yes=0. Закон отклонён. choice 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496650,
+    "id": "20261020194406c5988d8d24ee4d78",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194406c5988d8d24ee4d78",
+    "usage": {
+      "completion_tokens": 137,
+      "completion_tokens_details": {
+        "reasoning_tokens": 100
+      },
+      "prompt_tokens": 3627,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3764
+    }
+  }
+}

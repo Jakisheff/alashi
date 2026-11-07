@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.151,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон отдаст +1 влияния сопернику-президенту; голос «против» отклоняет его.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest by cash. All cash=0, tie_order [1,0,2] → poorest is idx1. Not me. I'm not president (holder 1). Voting: yes gives +1 influence to idx1, who is already president. That strengthens rival. Vote no — currently 1 yes, 1 no; my no makes 2 no > 1 yes, law fails. Good.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498369,
+    "id": "2026102020124311d9d63a45ae4551",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020124311d9d63a45ae4551",
+    "usage": {
+      "completion_tokens": 128,
+      "completion_tokens_details": {
+        "reasoning_tokens": 92
+      },
+      "prompt_tokens": 2025,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2153
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.791,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Shuttle даёт лучший ожидаемый объём товара (2.25 против 2) для продажи на высоких ценах, cash сохраняется для аукциона.\"}",
+          "reasoning_content": "Round 3 action. Need cash ≥9 next round for auction. Shuttle gives 3 goods to sell later. Cash 11.78 — after shuttle cash stays. Shuttle risk: tariff? No tariff active. Shuttle 25% seizure risk vs produce 2 goods. Produce safer. But boom +2, prices next market (round 4) with sold_counter=4... prices high-ish. Shuttle 3 goods could seize all ~25%. EV: produce 2 goods vs shuttle 3*0.75=2.25. Shuttle better EV. Choose 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498981,
+    "id": "202610202022542d7e983261534687",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202022542d7e983261534687",
+    "usage": {
+      "completion_tokens": 162,
+      "completion_tokens_details": {
+        "reasoning_tokens": 118
+      },
+      "prompt_tokens": 3560,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3722
+    }
+  }
+}

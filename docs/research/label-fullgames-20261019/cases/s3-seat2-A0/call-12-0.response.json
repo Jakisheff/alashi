@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 18.822,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":41,\"reason\":\"Ставка 20M на лицензию с доходом ~20–60 alashi выгодна, а ставка не расходует основное действие.\"}",
+          "reasoning_content": "License income 20-60 alashi, worth bidding. Bank 30M plus bid. I'm richest-ish (33.7 vs 37.8, 28.3). Bidding ~20M might win; opponents have ~28-38M. tie_order [1,2,0] — I'm second in tie. Rival 1 has 37.7M. Bid maybe 25M? But money goes to bank and comes back partially weighted. Actually winning bid returns via bank share (I'd be rank by cash+hard... cash drops though, license income not counted in rank). Expected license income ~40 alashi = 40M units; bid 25M is +EV if I win. But others also bid hidden. Reasonable: bid 20M then produce? Wait bid doesn't consume action, so I can bid and choose produce too. Best: bid moderate (20M) + produce (goods for later selling). Choice for produce is 1; bid candidates don't include extra action. The engine: after bid, can choose another action. So pick bid first? We only pick one candidate now. Pick bid 20M, then next prompt will allow another action.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427569,
+    "id": "20261020003232ca7d2dcd3e3d44b5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003232ca7d2dcd3e3d44b5",
+    "usage": {
+      "completion_tokens": 290,
+      "completion_tokens_details": {
+        "reasoning_tokens": 250
+      },
+      "prompt_tokens": 5848,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 6138
+    }
+  }
+}

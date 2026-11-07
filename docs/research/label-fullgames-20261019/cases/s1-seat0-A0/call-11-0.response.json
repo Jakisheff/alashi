@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.556,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продаю весь товар по текущим высоким ценам, максимизируя cash для ранга богатства.\"}",
+          "reasoning_content": "Prices: sold_counter=2, price next = 9? Counter 2 means 2 units sold, next price index 2 = 9. Wait round 2 sold 2 units, counter=2. So next price 9. Sell 1 gives 9M — but candidate gives 9M? choice1: +9M yes. Prices fall after. Round 5 market remains. Selling now at 9 declining: sell 3 → 9+8+7=24. But keeping goods for later? Only round 5 and 6 markets left; counter resets? No, counter persists. Prices likely higher now than later (others also sell). Sell all 3 for 24M now. But cash counts in rank; sell_credit risky (promissory added round start, could be wiped by law 8, and after last round not paid). Sell 3 = 39M cash, top rank maybe. Do choice 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490267,
+    "id": "20261020175739cb9973c6d0574f46",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175739cb9973c6d0574f46",
+    "usage": {
+      "completion_tokens": 230,
+      "completion_tokens_details": {
+        "reasoning_tokens": 198
+      },
+      "prompt_tokens": 2839,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 3069
+    }
+  }
+}

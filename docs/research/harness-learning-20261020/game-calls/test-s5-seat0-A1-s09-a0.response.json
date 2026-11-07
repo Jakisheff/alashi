@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.791,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"shuttle даёт 3 товара на продажу в следующем рынке, что ценнее 5-миллионной взятки.\"}",
+          "reasoning_content": "Round 3 action. Need goods for later selling. Bribe to 1 for presidency next law? Holder 1 already president; bribing 1 gives influence to them — bribe gives sender influence, not receiver. Bribe 5M gives me +1 influence (influence counts toward presidency next law). Tie_order [1,2,0]; holder 1 with influence 1; if I get influence 2, I become president. Value: presidency gives veto/5% bonus. But 5M cost. Also cash rank matters (devaluation 62%).\n\nGet goods: shuttle gives 3 goods, sellable round 4 for ~7-8 alashi each. That's ~20M value. Bribe 5M gives +1 influence — president control matters for law each round. I think shuttle best economically; influence via bribe 5M also strong (president + 5% bonus ~ 1.5M + veto control). Cash rank: I have 31M, bribing drops to 26M, still close to 25.5M of p1.\n\nShuttle: +3 goods → sell 3 next market at ~7 = 21M. That's better than 5M influence gain. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498820,
+    "id": "20261020202010eb85b001efcb4d34",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202010eb85b001efcb4d34",
+    "usage": {
+      "completion_tokens": 298,
+      "completion_tokens_details": {
+        "reasoning_tokens": 261
+      },
+      "prompt_tokens": 3559,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 3857
+    }
+  }
+}

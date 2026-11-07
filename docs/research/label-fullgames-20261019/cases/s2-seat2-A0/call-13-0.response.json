@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.487,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":49,\"reason\":\"Ставка 20 alashi даёт хороший шанс выиграть лицензию (доход 20-60), сохраняя лидерство по кэшу.\"}",
+          "reasoning_content": "I already bid 0? own_bid=0 for all, so I haven't bid yet—own_bid:0 shown but likely placeholder. Round 4 action: auction. License income ~20-60 alashi, worth bidding high. Rivals cash ~30 each. Bid ~20 and keep production? Bid doesn't consume action; only one candidate per turn though. Choose bid ~20 alashi (choice 49) to likely win auction with reasonable margin; opponents may bid up to ~30. Bid 25 (choice 54)? License expected value ~40 alashi. Bidding 25 vs opponents ~30 cash max... they each have ~30. To win likely need ~30. But cash counts for rank too; license paid to bank. My 50 cash leads rank; paying 30 leaves 20, rivals 30 — losing rank 1. Bank also grows though (distributed back 50/30/15). Rank matters more. Safer: bid ~20, still keep 30 cash. Hmm.\n\nI'm cash-richest; keep rank while grabbing license cheap. Bid 20 alashi (choice 49).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490068,
+    "id": "20261020175421ed4ae4b96daf4a8a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175421ed4ae4b96daf4a8a",
+    "usage": {
+      "completion_tokens": 278,
+      "completion_tokens_details": {
+        "reasoning_tokens": 235
+      },
+      "prompt_tokens": 7391,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 7669
+    }
+  }
+}

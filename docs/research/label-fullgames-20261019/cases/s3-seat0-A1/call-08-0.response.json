@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.611,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Покупка по 12 невыгодна при будущих продажах по более низкой цене; сохраняю кэш.\"}",
+          "reasoning_content": "I have cash 21.25M, no goods. Market round 3, price 12. Buy 1 unit for 12M? Buy is 12 alashi for 1 unit — then sell later at lower price... Only 6 rounds. Prices start at 12. If I buy now at 12, selling later moves counter up, price drops. Buying at 12 to sell at ≤12 is not profitable. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490947,
+    "id": "20261020180903d7b0a35077e24861",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180903d7b0a35077e24861",
+    "usage": {
+      "completion_tokens": 127,
+      "completion_tokens_details": {
+        "reasoning_tokens": 91
+      },
+      "prompt_tokens": 2315,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2442
+    }
+  }
+}

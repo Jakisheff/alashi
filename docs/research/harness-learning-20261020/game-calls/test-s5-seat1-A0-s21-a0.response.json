@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.473,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Финальный ранг считает только cash, товары уже бесполезны, влияние и так максимальное — pass.\"}",
+          "reasoning_content": "Last round action. Goods won't matter (no market after round 6? Actually market happens each round; round 6 market already passed). Final rank by cash only. So keep cash: pass. Influence max bonus: I have 3 already highest. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498926,
+    "id": "20261020202202d9a504e25f884ab4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202202d9a504e25f884ab4",
+    "usage": {
+      "completion_tokens": 91,
+      "completion_tokens_details": {
+        "reasoning_tokens": 54
+      },
+      "prompt_tokens": 4829,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 4920
+    }
+  }
+}

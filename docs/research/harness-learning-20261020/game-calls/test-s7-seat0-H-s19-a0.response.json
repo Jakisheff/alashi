@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.139,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Последний раунд: sell_credit не погашается, поэтому продаю весь товар за наличные, максимизируя ранг и выплату.\"}",
+          "reasoning_content": "Final round, sell_credit won't be paid. Sell 3 at price 12 → cash ~48.5. Others sell after, but rank counts cash now. Sell all 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498254,
+    "id": "202610202010495d00714b35594d82",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202010495d00714b35594d82",
+    "usage": {
+      "completion_tokens": 80,
+      "completion_tokens_details": {
+        "reasoning_tokens": 39
+      },
+      "prompt_tokens": 3844,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3924
+    }
+  }
+}

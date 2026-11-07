@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.29,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Налог 10% навредит моим будущим продажам — применяю veto как президент.\"}",
+          "reasoning_content": "Law 1: tax 10% on future sales. I'm president with 3 goods, will sell more. Veto (or vote_no; veto is guaranteed to block). Veto is safest.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498683,
+    "id": "202610202018009e1a63347f4f48d2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202018009e1a63347f4f48d2",
+    "usage": {
+      "completion_tokens": 73,
+      "completion_tokens_details": {
+        "reasoning_tokens": 42
+      },
+      "prompt_tokens": 2801,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2874
+    }
+  }
+}

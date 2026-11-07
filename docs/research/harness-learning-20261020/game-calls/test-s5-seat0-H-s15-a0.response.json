@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.492,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 10% снизит мою выручку от будущих продаж; мой голос «против» делает no>yes и отклоняет закон.\"}",
+          "reasoning_content": "Law 1: 10% tax on future sales. I have 2 goods to sell in round 5/6. Vote no. Current: Yes=3 (weight 3), No=3. My vote weight 1. Vote no makes no=4 > yes=3 → law fails. Choice 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499113,
+    "id": "202610202025094ea996fdc53b4f78",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202025094ea996fdc53b4f78",
+    "usage": {
+      "completion_tokens": 110,
+      "completion_tokens_details": {
+        "reasoning_tokens": 67
+      },
+      "prompt_tokens": 3351,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3461
+    }
+  }
+}

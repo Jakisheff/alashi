@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.19,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 3 даёт только субсидию товара, рынок финальный — эффект не имеет значения.\"}",
+          "reasoning_content": "Law 3 = subsidy_goods=1, no effect now (no more produce). Vote yes or no—no difference; rivals may vote yes. Pass keeps weight 4? Pass skips, doesn't add +2 (that's for skipped action... \"влияние плюс 2, если основное действие action было пропущено\" — that's action phase). Law doesn't matter; but votes: if yes>no passes — irrelevant. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499811,
+    "id": "20261020203643b2db36489b8d4152",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203643b2db36489b8d4152",
+    "usage": {
+      "completion_tokens": 127,
+      "completion_tokens_details": {
+        "reasoning_tokens": 94
+      },
+      "prompt_tokens": 3253,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3380
+    }
+  }
+}

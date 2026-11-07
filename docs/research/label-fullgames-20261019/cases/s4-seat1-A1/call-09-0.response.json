@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.345,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Налог 10% на будущие продажи мне невыгоден, вето бесплатное и сохраняет преимущество.\"}",
+          "reasoning_content": "Law 1: 10% tax on future sales. Player 0 voted No. I have 0 goods, likely won't sell much? I'm faction 1, sold already 5 units, counter=6, remaining prices low. Tax hurts sellers; I have no goods now but may produce. Veto is free and avoids tax. I hold presidency, veto available. Veto seems good.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490591,
+    "id": "2026102018030130b3d5f79f624dfd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102018030130b3d5f79f624dfd",
+    "usage": {
+      "completion_tokens": 118,
+      "completion_tokens_details": {
+        "reasoning_tokens": 83
+      },
+      "prompt_tokens": 2553,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2671
+    }
+  }
+}

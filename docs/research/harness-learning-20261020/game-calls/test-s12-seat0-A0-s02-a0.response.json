@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.319,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон +2 к цене следующего рынка выгоден мне с 3 товарами; голос «за» обеспечивает его принятие.\"}",
+          "reasoning_content": "Law 7: +2 prices next market. I have 3 goods. I'm president? Holder is idx 2. My vote weight 1, others voted No(1) and Yes(1). President is idx2, voted yes. If I abstain: yes=2 (1+1), no=1, passes — good for me (+2 price). vote_yes also passes. Choose yes (choice 1).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498891,
+    "id": "20261020202127c465813ae6ac4b8e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202127c465813ae6ac4b8e",
+    "usage": {
+      "completion_tokens": 127,
+      "completion_tokens_details": {
+        "reasoning_tokens": 89
+      },
+      "prompt_tokens": 2026,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2153
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.054,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"shuttle даёт 3 товара, ожидаемая ценность выше produce даже с риском изъятия.\"}",
+          "reasoning_content": "I have cash 0, bid 19.375M. If I lose bid, cash returned at close. Main action: produce gives 2, shuttle 3 grey with ~25% seizure risk (no tariff yet). Shuttle better expected? 3*0.75=2.25 expected but risk of losing all. If seized, 0. Grey goods may also face tariff issues. Market next round: price at sold_counter=3 → 8 alashi. Goods valuable. Expected value shuttle 2.25 vs produce 2. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792426715,
+    "id": "20261020001830e6996986ea6a40a4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020001830e6996986ea6a40a4",
+    "usage": {
+      "completion_tokens": 149,
+      "completion_tokens_details": {
+        "reasoning_tokens": 116
+      },
+      "prompt_tokens": 2653,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2802
+    }
+  }
+}

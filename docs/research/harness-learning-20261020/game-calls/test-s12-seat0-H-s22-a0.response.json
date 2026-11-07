@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.227,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 0 без эффектов, менять нечего\"}",
+          "reasoning_content": "Law 0 — no effects. Pass keeps vote_weight? Wait, vote_weight already includes +2? My weight 4 = influence 2 + 2 (I passed action this round? Actually I passed in action). Law 0: no effect. President is idx2, tie_order favors 2. I'm richest; my no vote weight 4 vs others 2 each — no matter. Law 0 harmless; pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497615,
+    "id": "202610202000115d2ca6bc52c64316",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202000115d2ca6bc52c64316",
+    "usage": {
+      "completion_tokens": 110,
+      "completion_tokens_details": {
+        "reasoning_tokens": 89
+      },
+      "prompt_tokens": 3808,
+      "prompt_tokens_details": {
+        "cached_tokens": 3136
+      },
+      "total_tokens": 3918
+    }
+  }
+}

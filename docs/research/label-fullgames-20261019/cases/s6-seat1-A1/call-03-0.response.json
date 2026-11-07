@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.932,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Кредитная продажа обоих товаров по 16.25 векселем обходит будущую девальвацию cash.\"}",
+          "reasoning_content": "Prices: sold_counter=4, so price for 5th unit is 5? Wait array [12,10,9,8,7,6,5,...] index 4 = 7. Selling 1 unit gives 7, selling 2 gives 13. I need cash. Devaluation round 3 will cut cash to 62%. Better sell now for 7+6=13 and hold cash? Cash devalues 62% each round start. Promissory pays full at round start without devaluation? Promissory added to cash after devaluation — so promissory keeps value better. sell_credit 2 units = 16.25 promissory. That's better: gets added at round 3 start after devaluation, then that cash also devalues at round 4 start... Cash I get now also devalues each round. Promissory paid at start of next round, so credit avoids one devaluation. Choose choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792489939,
+    "id": "2026102017521099931294905a49c1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102017521099931294905a49c1",
+    "usage": {
+      "completion_tokens": 236,
+      "completion_tokens_details": {
+        "reasoning_tokens": 201
+      },
+      "prompt_tokens": 2163,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2399
+    }
+  }
+}

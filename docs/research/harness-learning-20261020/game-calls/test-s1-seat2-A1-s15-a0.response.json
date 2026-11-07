@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.951,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Нет товара; покупка по 12 без выгоды, а cash лучше сохранить от девальвации.\"}",
+          "reasoning_content": "I have no goods, cash 13.3. Buy 1 unit for 12 alashi to sell later? Price drops later... Buying at 12 to sell at 12 later? Sold counter resets (0). Buy moves counter back, price now 12. Selling later first unit at 12 — no gain, plus risk of devaluation (cash floor/100*62). Keep cash. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497380,
+    "id": "20261020195615e30d3ed18e734d6a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195615e30d3ed18e734d6a",
+    "usage": {
+      "completion_tokens": 116,
+      "completion_tokens_details": {
+        "reasoning_tokens": 84
+      },
+      "prompt_tokens": 2816,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2932
+    }
+  }
+}

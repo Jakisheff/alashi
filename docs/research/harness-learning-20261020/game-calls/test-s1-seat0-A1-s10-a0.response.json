@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.806,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Ничья 2:2 означает отклонение закона, veto не нужен.\"}",
+          "reasoning_content": "Law 7: +2 prices next market. I'm president, voted no; yes 2 vs no 1... my vote weight 2. Yes: 1+1=2, No: 2. Tie → not strictly greater → not passed. Wait yes=2, no=2, not strictly greater, so law fails. No need to veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497874,
+    "id": "20261020200431dd134ca22e154cac",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200431dd134ca22e154cac",
+    "usage": {
+      "completion_tokens": 103,
+      "completion_tokens_details": {
+        "reasoning_tokens": 76
+      },
+      "prompt_tokens": 2450,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2553
+    }
+  }
+}

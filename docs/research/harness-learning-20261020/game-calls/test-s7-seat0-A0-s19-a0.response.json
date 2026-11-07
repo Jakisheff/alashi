@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.985,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Я лидирую по cash и влиянию; сберегаю деньги и сохраняю +2 к весу голоса, взяточные расходы не окупаются.\"}",
+          "reasoning_content": "Final round, cash counts. Vote weight: passing action gives +2 weight, plus max influence gets 5% bank commission. Cash rank: I'm far ahead (88.5M vs 28M, 11.6M). Ranking weight 50%. Bribe loses cash but gains influence — only matters for commission 5% (~2M) and presidency. I already have influence 2 vs others 1; a bribe of 5M to 1 gives influence 3, costs 5M cash — bad, cash directly counts. Passing keeps +2 vote weight and cash. Choose pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499832,
+    "id": "20261020203705115127b291054622",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203705115127b291054622",
+    "usage": {
+      "completion_tokens": 172,
+      "completion_tokens_details": {
+        "reasoning_tokens": 126
+      },
+      "prompt_tokens": 5642,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 5814
+    }
+  }
+}

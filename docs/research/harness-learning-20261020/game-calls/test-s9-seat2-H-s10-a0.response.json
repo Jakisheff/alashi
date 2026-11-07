@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.576,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Субсидия даст мне больше товара в будущих produce/shuttle; мой yes обеспечивает принятие.\"}",
+          "reasoning_content": "Law 3: subsidy_goods=1. Good for me (shuttle gives more). President is rival 1 (influence 2), voted yes. I'm not president. My vote: yes (1) vs no (2). Currently No=1(0), Yes=2(1 weight 2). Vote no → 2 vs 2, tie → not accepted (yes must be strictly greater). Vote yes → accepted, subsidy=1 helps my produce/shuttle. Vote no blocks subsidy — but subsidy helps me. I'll vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497091,
+    "id": "20261020195127881146c73a5d459a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195127881146c73a5d459a",
+    "usage": {
+      "completion_tokens": 145,
+      "completion_tokens_details": {
+        "reasoning_tokens": 114
+      },
+      "prompt_tokens": 3010,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3155
+    }
+  }
+}

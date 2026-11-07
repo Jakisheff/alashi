@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.408,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Понижение цен мне невыгодно, у меня товар на продажу.\"}",
+          "reasoning_content": "Law 6: price shift -2 next market. I have goods 2, want to sell. Vote no. Faction 0 hasn't voted yet, weight 3; my weight 1+0=1... my action was bid+produce, so no +2? Weight shown 1. Vote no is symbolic; faction 1 voted no. Choice 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497387,
+    "id": "2026102019562207fe399594354e76",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019562207fe399594354e76",
+    "usage": {
+      "completion_tokens": 102,
+      "completion_tokens_details": {
+        "reasoning_tokens": 77
+      },
+      "prompt_tokens": 2873,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2975
+    }
+  }
+}

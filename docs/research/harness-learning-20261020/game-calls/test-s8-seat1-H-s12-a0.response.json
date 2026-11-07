@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.372,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Покупка 1 единицы оставляет 18.4 alashi — достаточно для ставки 12 на аукционе, плюс товар для будущих продаж.\"}",
+          "reasoning_content": "Need cash ≥9 at action; buy 1 leaves 18.38 alashi — fine, but prefer sell? No goods to sell. Buy 1 unit costs 12, keeps 18.38 — ok, gains goods for later. Choice 1.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496842,
+    "id": "202610201947178d70fa35531243d0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201947178d70fa35531243d0",
+    "usage": {
+      "completion_tokens": 98,
+      "completion_tokens_details": {
+        "reasoning_tokens": 54
+      },
+      "prompt_tokens": 3138,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3236
+    }
+  }
+}

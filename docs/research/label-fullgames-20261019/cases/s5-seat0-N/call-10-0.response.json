@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.338,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продам весь товар сейчас по высокой цене, чтобы избежать девальвации cash в следующем раунде.\"}",
+          "reasoning_content": "Round 4 market, cash devalues at round 5 (62%). Sell all 3 now at good price (7 alashi each? counter=4, price 7... after sells counter moves). Sell 3 gives +18M now, avoiding devaluation.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490541,
+    "id": "202610201802149e6f129cbc5d4cb9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201802149e6f129cbc5d4cb9",
+    "usage": {
+      "completion_tokens": 88,
+      "completion_tokens_details": {
+        "reasoning_tokens": 55
+      },
+      "prompt_tokens": 3002,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 3090
+    }
+  }
+}

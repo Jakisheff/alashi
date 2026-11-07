@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.289,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce безопасно даёт 3 товара без риска изъятия, сохраняя cash для аукциона.\"}",
+          "reasoning_content": "Round 3 action. I have cash 12.25, goods 1. Need to consider auction in round 4; keep cash. Produce gives 3 goods (subsidy 0 → 2+0). Shuttle gives 4 but risk of confiscation ~25%? tariff currently 0? Border rules: red tariff... currently no tariff mentioned; default? Shuttle grey goods may be confiscated 25%. Produce is safer: choice 1.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428080,
+    "id": "202610200041166d346c5e759d4fa4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200041166d346c5e759d4fa4",
+    "usage": {
+      "completion_tokens": 126,
+      "completion_tokens_details": {
+        "reasoning_tokens": 94
+      },
+      "prompt_tokens": 3025,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 3151
+    }
+  }
+}

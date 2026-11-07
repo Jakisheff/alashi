@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.202,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Голосование уже отклоняет налог: «нет» 6 против 1, veto не нужен.\"}",
+          "reasoning_content": "Votes: No=2+4=6, Yes=1, No wins anyway. Law 1 is 10% tax — already rejected by vote. Veto unnecessary but harmless; pass suffices. Actually with No>Yes law fails. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792500004,
+    "id": "20261020204000ffcd0e424ffb481f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020204000ffcd0e424ffb481f",
+    "usage": {
+      "completion_tokens": 84,
+      "completion_tokens_details": {
+        "reasoning_tokens": 52
+      },
+      "prompt_tokens": 3318,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3402
+    }
+  }
+}

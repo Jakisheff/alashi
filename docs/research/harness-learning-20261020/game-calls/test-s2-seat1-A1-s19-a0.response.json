@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.261,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар в финальном раунде продать нельзя, покупка бессмысленна.\"}",
+          "reasoning_content": "I have no goods, last market. Buying makes no sense (can't sell same round? buy then sell... market only one action). Buying goods now worthless. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497940,
+    "id": "202610202005348c102ed11787438f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202005348c102ed11787438f",
+    "usage": {
+      "completion_tokens": 66,
+      "completion_tokens_details": {
+        "reasoning_tokens": 35
+      },
+      "prompt_tokens": 3156,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3222
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.048,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Карта 8 обнуляет векселя, которых ни у кого нет; сохраняю вес голоса, воздерживаясь.\"}",
+          "reasoning_content": "Law 8 обнуляет promissory — у всех 0, так что бесполезен. Я не президент (idx 0). Голосую no, чтобы карта не тратилась? Карта 8 безвредна. Лучше yes — она обнуляет promissory, у меня 0. Пропустить голос слабее (vote_weight). vote_no — не важно. Выберу abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499549,
+    "id": "202610202032239e93f7ce796342a9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202032239e93f7ce796342a9",
+    "usage": {
+      "completion_tokens": 129,
+      "completion_tokens_details": {
+        "reasoning_tokens": 90
+      },
+      "prompt_tokens": 2026,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2155
+    }
+  }
+}

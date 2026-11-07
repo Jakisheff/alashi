@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.947,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 6 влияет только на следующий рынок, которого больше нет — veto ничего не даёт.\"}",
+          "reasoning_content": "Закон 6: цены следующего рынка -2, но это последний раунд — рынок уже прошёл. Значит эффект не важен. Veto бессмыслен? Но я президент, закон всё равно не влияет. pass. Хотя... возможно, veto предотвращает -2 к цене, но рынка больше нет. Также карта 6 влияет на «следующий рынок», а рынков больше нет. Проходит бесполезно. Но ранг богатства: у меня меньше всех cash? 30.1 vs 30.13 и 47.3. Law 6 не влияет. pass (choice 0). Хотя veto мог бы ничего не менять — банк фикс. Проигнорирую.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495181,
+    "id": "20261020191936cac41f91d6a74b50",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020191936cac41f91d6a74b50",
+    "usage": {
+      "completion_tokens": 175,
+      "completion_tokens_details": {
+        "reasoning_tokens": 145
+      },
+      "prompt_tokens": 3809,
+      "prompt_tokens_details": {
+        "cached_tokens": 3264
+      },
+      "total_tokens": 3984
+    }
+  }
+}

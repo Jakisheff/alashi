@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.565,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон даёт +1 влияния самому богатому (элемент 0), моему главному конкуренту; голосую против, хотя он, вероятно, пройдёт.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest (idx0, cash 56.9M). Holder is 0. If passes, idx0 gets influence 3, more influence bonus and future holder. I'm competing with idx0. Vote no. Currently yes:2 (idx0 weight2, idx2 weight1) =3 yes. My no weight 2 → 2 no vs 3 yes → passes. Abstain same. No doesn't block. Nothing I can do; but voting no is still better than yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427740,
+    "id": "20261020003535f001e3b8be844ba3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003535f001e3b8be844ba3",
+    "usage": {
+      "completion_tokens": 158,
+      "completion_tokens_details": {
+        "reasoning_tokens": 111
+      },
+      "prompt_tokens": 3048,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3206
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.999,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Карта 7 повышает цены следующего рынка, что выгодно мне — закон всё равно проходит, veto не нужен.\"}",
+          "reasoning_content": "Card 7 raises prices +2 next market. It benefits everyone, but I sell 3 goods... +2 price good for me. Yes votes already 5 weight vs 0 no — passes anyway. Veto would hurt me. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498347,
+    "id": "20261020201223c381011933ae48e1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201223c381011933ae48e1",
+    "usage": {
+      "completion_tokens": 85,
+      "completion_tokens_details": {
+        "reasoning_tokens": 50
+      },
+      "prompt_tokens": 2875,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 2960
+    }
+  }
+}

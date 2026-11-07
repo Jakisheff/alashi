@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.14,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон снижает цены следующего рынка, что вредит моим продажам товара.\"}",
+          "reasoning_content": "Law 6: price -2 next market. I have 2 goods to sell. Vote no. President (idx0) holds veto anyway. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496359,
+    "id": "20261020193917be4da70bae9245b5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020193917be4da70bae9245b5",
+    "usage": {
+      "completion_tokens": 61,
+      "completion_tokens_details": {
+        "reasoning_tokens": 33
+      },
+      "prompt_tokens": 2539,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2600
+    }
+  }
+}

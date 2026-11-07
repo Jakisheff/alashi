@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.003,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce даёт 2 товара безопасно, сохраняя cash ≥9 для аукциона лицензии в раунде 4\"}",
+          "reasoning_content": "Round 3 action, need cash ≥9 next round for auction. I have 37.22 cash, goods 0. Shuttle gives 3 grey goods (25% confiscation risk if border hostile). Best: produce (2 goods safe). Also want influence? I'm president with influence 3 already, veto held. Produce is safe and keeps cash.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498119,
+    "id": "20261020200836a578169533de4744",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200836a578169533de4744",
+    "usage": {
+      "completion_tokens": 109,
+      "completion_tokens_details": {
+        "reasoning_tokens": 73
+      },
+      "prompt_tokens": 4122,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 4231
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.473,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Карта 0 не имеет эффектов, голосование бессмысленно.\"}",
+          "reasoning_content": "Law 0 — no effect, and I'm not president. But wait — vote matters for tie_break: yes > no passes. Card 0 has no effects anyway. But there's a chance it becomes \"no effect\". Vote yes/no — indifferent. Pass? President is player 0 with weight 2. Card 0 harmless. Just abstain or pass. I'll pass... actually voting no prevents any hidden effect? Card is known 0, no effect. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495382,
+    "id": "20261020192256df34deb9d4254922",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192256df34deb9d4254922",
+    "usage": {
+      "completion_tokens": 124,
+      "completion_tokens_details": {
+        "reasoning_tokens": 99
+      },
+      "prompt_tokens": 2839,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2963
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.838,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Кредитная продажа трёх единиц сохраняет выручку от двойной девальвации и даёт больше итогового cash.\"}",
+          "reasoning_content": "Prices at counter 3: next unit 8. Selling now good since later prices fall? Boom/shift 0. Round 4 market, after this round 2 more markets. Better to sell now at higher price, but promissory devaluation 62% per round — sell_credit gives 1.25x, then *0.62 = 0.775 if held to round5 cash, but round6 devalues again. Actually promissory converts to cash at round start (added after devaluation of cash). Sell credit 3 units: 26.25 promissory → round5 start: cash devalued, promissory added full, then round6: that cash devalued 0.62. Direct sell now: cash devalued twice → *0.3846. Credit: promissory survives round5 addition, devalued once at round6 → 0.62. Credit better! Sell credit all 3.\n\nChoice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498190,
+    "id": "20261020200944941c10b23c3d494b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200944941c10b23c3d494b",
+    "usage": {
+      "completion_tokens": 244,
+      "completion_tokens_details": {
+        "reasoning_tokens": 206
+      },
+      "prompt_tokens": 2928,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 3172
+    }
+  }
+}

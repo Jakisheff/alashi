@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.959,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Взятка сбросит cash и первое место в ранге, что дороже бонуса влияния; товар больше не продаётся.\"}",
+          "reasoning_content": "Last round, no more market. Goods worthless. Rank by cash. Currently 37.6M vs 37.16M vs 21.86M. Bribing gives influence which gives 5% of bank commission bonus (5% of 36M ≈ 1.8M). Bribe 5M to 0: cash 32.6M → drops to 2nd place behind 37.15M? 32.6 < 37.15, yes loses rank. Rank pays 50:30:15 of 36M: ~18.9 vs 11.34 vs 5.67 difference 7.56M. Losing 1st place costs more than influence bonus 1.8M. So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499941,
+    "id": "2026102020385689f5d0f605934a69",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020385689f5d0f605934a69",
+    "usage": {
+      "completion_tokens": 197,
+      "completion_tokens_details": {
+        "reasoning_tokens": 158
+      },
+      "prompt_tokens": 4480,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 4677
+    }
+  }
+}

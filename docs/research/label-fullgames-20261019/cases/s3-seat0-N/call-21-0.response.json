@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.864,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон о налоге уже не влияет: рынок этого раунда закрыт, товара у меня нет.\"}",
+          "reasoning_content": "Final round, law 2 = tax 20% on future sales. No more sales for me (no goods, market done). But rivals have goods... market phase ended already (round 6 market done, action done). No future sales. So irrelevant. Vote yes or no doesn't matter. Holder is idx1, tie_order [1,2,0]; I'm richest. Law 4? It's law 2. No effect. Just pass or vote_yes—no effect. Choose pass.\n\nActually holder idx1 could veto anyway. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428046,
+    "id": "20261020004041fd1deb920a58468c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020004041fd1deb920a58468c",
+    "usage": {
+      "completion_tokens": 146,
+      "completion_tokens_details": {
+        "reasoning_tokens": 114
+      },
+      "prompt_tokens": 3323,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3469
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.31,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 0 без эффектов, а исход голоса решает президент — пропускаю.\"}",
+          "reasoning_content": "Law 0 no effect; president is faction 2, not me. My vote weight 1, president weight 2. Just pass/vote doesn't matter. Choose pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491213,
+    "id": "202610201813308899b41e55044b4a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201813308899b41e55044b4a",
+    "usage": {
+      "completion_tokens": 68,
+      "completion_tokens_details": {
+        "reasoning_tokens": 37
+      },
+      "prompt_tokens": 2486,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2554
+    }
+  }
+}

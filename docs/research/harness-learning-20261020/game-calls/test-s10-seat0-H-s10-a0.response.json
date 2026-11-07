@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.111,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон даёт +1 влияния самой бедной фракции 1 — усиливает соперника-президента, поэтому голосую против.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest (фракция 1, cash 2M). That boosts rival influence; president already фракция 1. If passed, фракция 1 gets influence 2, becomes president and gains 5% commission. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497445,
+    "id": "20261020195721e2ea7f2170cf42a0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195721e2ea7f2170cf42a0",
+    "usage": {
+      "completion_tokens": 100,
+      "completion_tokens_details": {
+        "reasoning_tokens": 59
+      },
+      "prompt_tokens": 2988,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3088
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.586,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Карта 0 без эффектов, исход голосования ничего не меняет.\"}",
+          "reasoning_content": "Law 0, no effect. Vote doesn't matter; pass saves nothing (vote weight bonus only if action was pass, but shuttle was used). Pass is fine, but vote weight same either way. President is idx2, holder 2. Law 0 no effects—pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497888,
+    "id": "20261020200446a3a963c7ce274850",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200446a3a963c7ce274850",
+    "usage": {
+      "completion_tokens": 84,
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      },
+      "prompt_tokens": 2852,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2936
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 14.457,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Продаю 2 единицы по высокой цене, чтобы иметь cash для ставки 12 на аукционе лицензии в этом раунде.\"}",
+          "reasoning_content": "Cash 11.9 alashi. But this is market phase of round 4, not auction yet. Market decision: sold_counter=2, price 9 next. Sell 1 for 9? Own cash lowest, want cash for auction (need ≥9 for bid, ≥16 for 12). Sell 2 → 28.9 cash allows bid 12. Selling pushes counter to 4 (price 7 after). Still can shuttle later. Sell 2 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495110,
+    "id": "202610201918173437f09345284ed4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201918173437f09345284ed4",
+    "usage": {
+      "completion_tokens": 140,
+      "completion_tokens_details": {
+        "reasoning_tokens": 99
+      },
+      "prompt_tokens": 3307,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3447
+    }
+  }
+}

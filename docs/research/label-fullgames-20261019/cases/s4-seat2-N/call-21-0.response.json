@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.362,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Закон 6 (сдвиг цен следующего рынка) уже не имеет эффекта после последнего рынка, можно воздержаться.\"}",
+          "reasoning_content": "Law 6: price shift -2 next market — but no next market (round 6 law after market). So it's useless. My vote weight 4. Currently Yes=2 (idx0), No=1. Card 6 irrelevant → any result fine. Abstain keeps yes>no (2>1) passes harmless law. Vote no makes 2 vs... my no: no=1+4=5 > yes 2, fails. Either fine. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792489920,
+    "id": "202610201751550df1d68f201b4d44",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201751550df1d68f201b4d44",
+    "usage": {
+      "completion_tokens": 140,
+      "completion_tokens_details": {
+        "reasoning_tokens": 102
+      },
+      "prompt_tokens": 3324,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3464
+    }
+  }
+}

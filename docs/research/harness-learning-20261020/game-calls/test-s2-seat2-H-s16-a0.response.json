@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 27.137,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"sell_credit 2 сохраняет выручку от девальвации: вексель выплачивается в раунде 6 полностью, тогда как cash обесценится до 62%\"}",
+          "reasoning_content": "Sold counter 0, price 12. Sell 2 now. But round 6 also has market — sell now at 12, keep goods? I have 2 goods. Selling now at 12 each is best; next round devaluation of cash: floor(cash/100)*62. Selling now means cash 38.6M becomes ~23.9M after devaluation (62%). Sell_credit: promissory added to cash next round without devaluation! sell_credit 2 gives promissory 27.5M paid next round undevalued. Better than sell now. Yes choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499461,
+    "id": "202610202030350624af7669074106",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202030350624af7669074106",
+    "usage": {
+      "completion_tokens": 177,
+      "completion_tokens_details": {
+        "reasoning_tokens": 127
+      },
+      "prompt_tokens": 3542,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3719
+    }
+  }
+}

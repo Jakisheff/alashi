@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.627,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Финальный раунд: я уже первый по богатству и влиянию, любые траты только уменьшают выплату.\"}",
+          "reasoning_content": "Last round action. My rank: cash 91.7 vs 27.8 vs 1.2 — I'm clearly first. Influence max (3 vs 2) gives commission bonus already. Best action: keep cash. But wait: influence affects max influence bonus only — already 3. Bribe reduces cash, adds influence to recipient; no need. Produce goods worthless now (no market left). So pass — but pass gives +2 vote weight (irrelevant). Choice 0.\n\nActually, could bribe to raise influence? I'm already max. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498318,
+    "id": "202610202011528700ab4cb88d42fa",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202011528700ab4cb88d42fa",
+    "usage": {
+      "completion_tokens": 157,
+      "completion_tokens_details": {
+        "reasoning_tokens": 117
+      },
+      "prompt_tokens": 5765,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 5922
+    }
+  }
+}

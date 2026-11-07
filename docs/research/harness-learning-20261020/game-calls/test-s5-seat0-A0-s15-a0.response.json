@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.914,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Голос «против» отклоняет 10% налог, который снизил бы мою выручку от продаж.\"}",
+          "reasoning_content": "Law 1 = tax 10%. My vote weight 1. Yes=3 already, No=3. President is idx1 (voted yes). Abstain → yes 3 > no 3? No, tie → not passed? Yes strictly greater: 3>3 false → not passed. My vote matters: vote_no → 3 yes, 4 no → rejected. Tax 10% hurts me (I sell). Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498498,
+    "id": "2026102020145481b2502782eb4efb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020145481b2502782eb4efb",
+    "usage": {
+      "completion_tokens": 130,
+      "completion_tokens_details": {
+        "reasoning_tokens": 94
+      },
+      "prompt_tokens": 2906,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3036
+    }
+  }
+}

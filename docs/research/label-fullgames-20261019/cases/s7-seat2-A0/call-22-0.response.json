@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 21.234,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Последний раунд: товары уже бесполезны, а взятка снизит cash и лишит первого места и комиссии за влияние — pass.\"}",
+          "reasoning_content": "Last round action. Goods don't matter for rank, no more market (after round 6? Market of round 6 already done). So maximize final cash + influence commission. I have influence 2, tie with faction 1. Max influence gives 5% of bank ≈ 3.3 alashi (commission 5% bank goes to max influence holder). I have 4.78M more cash, tie_order: [0,1,2], I'm last at tie — bad. Bribe 5M to faction 0/1: influence 3, get 3.3M commission for 5M cost — negative. Bribe to faction 1 raises their cash but doesn't change my rank (I'm already... rank by cash: me 47.8 vs f0 44.7 — first). Losing 5M cash hurts rank weight 50 vs 30: bank after license? Bank 66M? Actually bank 66000000... wait 66M min units = 66 alashi? Bank includes bids. Commission 5% = 3.3 alashi to max influence. Bribe 5M=5 alashi for 3.3 — no.\n\nBut losing cash changes distribution: shares 50/30/15 of 62.7 alashi. Dropping 5M cash (~5 alashi) risks rank. Best: pass? Cash conserved, but bribe 5M drops cash to 42.8 < f0's 44.7 — lose first place! So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427458,
+    "id": "2026102000303834a7b48e8aab4b12",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000303834a7b48e8aab4b12",
+    "usage": {
+      "completion_tokens": 365,
+      "completion_tokens_details": {
+        "reasoning_tokens": 325
+      },
+      "prompt_tokens": 4880,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 5245
+    }
+  }
+}

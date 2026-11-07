@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.52,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вето против снижения цен (карта 6) защищает мою будущую выручку от продаж.\"}",
+          "reasoning_content": "Law 6: prices -2 next market. I want to sell next rounds; low price hurts me. Rival 0 already voted No. I have promissory 21.25M counted in cash next round (round 4 cash=floor(cash/100)*62 devalues cash... my cash 8.06M→5.0M, plus promissory). Veto is best — reject price drop.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490831,
+    "id": "20261020180701c5ea219a61624d47",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180701c5ea219a61624d47",
+    "usage": {
+      "completion_tokens": 123,
+      "completion_tokens_details": {
+        "reasoning_tokens": 89
+      },
+      "prompt_tokens": 2630,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2753
+    }
+  }
+}

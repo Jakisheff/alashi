@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.339,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Набираю товар безопасным produce для продажи в раунде 6, влияние и президентство сохраняются через tie_order.\"}",
+          "reasoning_content": "Round 5 action. I'm richest, cash 37.7 alashi. Influence already 2, others 1 and 2 (idx2). Round 6 next; produce/shuttle gives goods to sell in round 6. Should get goods. Also could secure influence to keep presidency + 5% bank bonus. Influence 2 vs idx2's 2 — tie_order favors me, but law could give +1 to richest (card 5) — still me. Keep presidency via tie order. So just take goods: shuttle (3 goods, grey risk ~25%? shuttle grey goods can be seized; but no tariff... tariff=0, so no border payment/seizure? Actually seizure risk ~25% at red tariff; unclear). produce gives 2 safe goods. Price at round 6 with counter=2 → 10,9... selling 2 gives 19. produce vs shuttle: shuttle 3 goods but grey goods seizure risk exists only with tariff? Red tariff risk; black protects. Tariff 0 currently. Safer: produce choice 1? Shuttle likely also grey seizure ~25% per rules \"серый товар может быть изъят на границе с вероятностью около 25%\" unconditionally. Expected 2.25 goods vs 2. Marginal. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792500017,
+    "id": "20261020204009ecc93c40f52e47da",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020204009ecc93c40f52e47da",
+    "usage": {
+      "completion_tokens": 312,
+      "completion_tokens_details": {
+        "reasoning_tokens": 275
+      },
+      "prompt_tokens": 4818,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 5130
+    }
+  }
+}

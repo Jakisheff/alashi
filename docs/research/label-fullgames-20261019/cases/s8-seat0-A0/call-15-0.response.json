@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.632,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Продать весь товар сейчас по высокой цене выгоднее, чем копить и терять вексель после финального раунда.\"}",
+          "reasoning_content": "Rounds 5-6 remain. Next round cash floors by 62/100. Selling now at high price (12 per unit) better. sell 2 now = +22 cash, avoids devaluation partially. Cash 4590232→floor to 45 units? Devaluation would floor to 4500000, lose ~90k only. But prices drop as others sell too; selling now at 12,10 good. Sell 2 now for cash.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427405,
+    "id": "20261020003001adbdaf64061a4ff8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003001adbdaf64061a4ff8",
+    "usage": {
+      "completion_tokens": 137,
+      "completion_tokens_details": {
+        "reasoning_tokens": 98
+      },
+      "prompt_tokens": 2972,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3109
+    }
+  }
+}

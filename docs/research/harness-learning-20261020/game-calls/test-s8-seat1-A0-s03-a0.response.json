@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.638,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продаю весь товар сейчас по высокой цене, избегая будущей девальвации выручки.\"}",
+          "reasoning_content": "Prices: counter=2, prices index 2 onward: 9,8,7 for 3 units = 24. Cash will be devalued next rounds (62%), so selling now at full price is good. Sell all 3 → 24 cash.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498542,
+    "id": "20261020201539cb9dc724f06241ea",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201539cb9dc724f06241ea",
+    "usage": {
+      "completion_tokens": 88,
+      "completion_tokens_details": {
+        "reasoning_tokens": 55
+      },
+      "prompt_tokens": 2262,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2350
+    }
+  }
+}

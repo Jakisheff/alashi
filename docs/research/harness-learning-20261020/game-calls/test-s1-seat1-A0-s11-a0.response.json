@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.23,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон повышает цены конкурентам на следующем рынке, а мне продавать нечем — наложу вето.\"}",
+          "reasoning_content": "Law 7 raises next market prices +2. That benefits all sellers; I have 0 goods but can shuttle later. Actually next round (4) market comes before I can produce goods — I have no goods, so +2 helps rivals (they have goods? idx0 has 0 goods, idx2 has 2). idx2 has 2 goods and sells. Also I'm president with max influence. Vetoing denies rivals +2 prices. But my round-4 action comes after market; I'd have no goods to sell anyway. Veto hurts idx2. Also veto keeps law from passing — card 7 helps everyone selling next market; I can't sell. Veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498810,
+    "id": "2026102020200304e983bd0deb4e88",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020200304e983bd0deb4e88",
+    "usage": {
+      "completion_tokens": 177,
+      "completion_tokens_details": {
+        "reasoning_tokens": 142
+      },
+      "prompt_tokens": 2520,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2697
+    }
+  }
+}

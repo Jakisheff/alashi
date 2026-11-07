@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.573,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":10,\"reason\":\"Вексель обесценивается меньше кэша и полностью учитывается в итоговом ранге; карта 8 уже вышла из колоды, риск минимален.\"}",
+          "reasoning_content": "Sell all 5 now at high prices; cash counts toward rank. But law 6 was rejected? Round 4 law 6, I voted no — result unknown; price_shift currently 0, so it failed or... state shows price_shift 0, so sell now at full prices. Sell 5 → 48.6M, close to rival 27.6M. Could sell_credit for more promissory next round (cash devalues 62%). Promissory 57.5M added next round vs 48.6*0.62≈30M. But final round 6 promissory also paid at start of 6? Round 6 start: cash devalued, promissory added — counts in final cash! So sell_credit is much better. But card 8 could null promissory — deck without repeats; card 8 already vetoed? Veto prevents the law taking effect but is the card used up? \"Карты вытягиваются без повторов\" — likely consumed. So risk low. Sell credit 5 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498225,
+    "id": "20261020201018d3061e9edc8849aa",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201018d3061e9edc8849aa",
+    "usage": {
+      "completion_tokens": 268,
+      "completion_tokens_details": {
+        "reasoning_tokens": 223
+      },
+      "prompt_tokens": 3236,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3504
+    }
+  }
+}

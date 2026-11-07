@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.781,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Карта 8 обнуляет векселя, но их ни у кого нет — мне выгодно отклонить, чтобы не тратить будущий потенциал sell_credit.\"}",
+          "reasoning_content": "Law 8: обнуляет promissory. У меня promissory=0, у других тоже 0. Vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499379,
+    "id": "202610202029379afb1c62b38e40ac",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202029379afb1c62b38e40ac",
+    "usage": {
+      "completion_tokens": 74,
+      "completion_tokens_details": {
+        "reasoning_tokens": 28
+      },
+      "prompt_tokens": 2204,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2278
+    }
+  }
+}

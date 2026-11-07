@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.148,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Повышение цен выгодит соперников с товаром, а у меня товара нет — налагаю вето.\"}",
+          "reasoning_content": "Card 7 raises prices by 2 — good for me, I have no goods though. Others have goods. Veto would keep prices low, hurting rivals' sales. Yes: I have 0 goods, so price boost helps opponents. Veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497951,
+    "id": "202610202005444d1d780815d74c38",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202005444d1d780815d74c38",
+    "usage": {
+      "completion_tokens": 86,
+      "completion_tokens_details": {
+        "reasoning_tokens": 52
+      },
+      "prompt_tokens": 2190,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2276
+    }
+  }
+}

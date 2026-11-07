@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.435,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 4 даёт влияние беднейшему (сопернику), меня не повышает — голосую против.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest (idx2, 13.3M). That boosts rival's influence; I already voted... I haven't voted yet. idx0 voted No. President idx2 likely votes yes. Vote no won't block (2 yes weights 3+3 vs 2). Doesn't matter; abstain/pass is fine. Vote no in case idx2 vetoes? Actually president wants law (gives himself influence). Just vote no—harmless.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498366,
+    "id": "202610202012403c699c2a96cb4cf8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202012403c699c2a96cb4cf8",
+    "usage": {
+      "completion_tokens": 136,
+      "completion_tokens_details": {
+        "reasoning_tokens": 101
+      },
+      "prompt_tokens": 3317,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3453
+    }
+  }
+}

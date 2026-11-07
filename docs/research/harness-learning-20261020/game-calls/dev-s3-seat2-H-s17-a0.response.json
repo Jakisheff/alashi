@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.542,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Shuttle даёт больше товара для продажи по ещё высокой цене; риск границы меньше ожидаемой выгоды.\"}",
+          "reasoning_content": "Shuttle risk: grey goods may be seized at border ~25% unless tariff black. But shuttle gives 3 goods. Produce gives 2 safe. I'm poorest; final cash matters. Currently 10.5 alashi cash, promissory 15. I hold license (won auction, bid 12). I'm president holder (influence 1 tie, tie_order [2,1,0] — I keep presidency).\n\nShuttle could yield 3 goods worth selling next market at price ~9-10 (counter=1). Expected value of grey seizure... actually shuttle gives 3 goods potentially grey; seizure ~25% of grey. 2 safe worth ~18 vs 3 risky worth ~27*0.75≈20.25 minus possible fine. Shuttle better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495406,
+    "id": "202610201923183bae625518424df6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201923183bae625518424df6",
+    "usage": {
+      "completion_tokens": 194,
+      "completion_tokens_details": {
+        "reasoning_tokens": 162
+      },
+      "prompt_tokens": 4066,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 4260
+    }
+  }
+}

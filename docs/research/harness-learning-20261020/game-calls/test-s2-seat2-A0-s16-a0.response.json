@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.135,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Продаю весь товар в кредит по высоким текущим ценам; вексель придёт в раунде 6 без девальвации и усилит финальный ранг.\"}",
+          "reasoning_content": "I'm president, have license (income 20-60 extra), holder of X. Round 5 market. Cash counts in rank; promissory paid in round 6 start but not counted after final round... wait, promissory added to cash at round start; round 6 start includes it before final market. Selling credit gives 12*1.25=15 per unit at round 6 start, boosting cash that then devalues by 62%? No—cash floor(cash/100)*62 applies to cash, promissory added after. So promissory arrives undevalued at round 6. But wait after round 6 market promissory not repaid — sell in round 6 on credit loses. So sell_credit now is fine.\n\nActually round 6 start: cash deva 62%, promissory added. Good. But rivals also may sell. Price drops as sales occur. Selling credit 3 units gives 38.75 alashi in round 6 cash — best for final rank? Selling now sells at price 12,10,9. Later prices may drop if others sell too. Others have 0 goods but will produce. Selling credit now locks price. Choose choice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498753,
+    "id": "20261020201904514284a8938042b7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201904514284a8938042b7",
+    "usage": {
+      "completion_tokens": 303,
+      "completion_tokens_details": {
+        "reasoning_tokens": 254
+      },
+      "prompt_tokens": 3214,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3517
+    }
+  }
+}

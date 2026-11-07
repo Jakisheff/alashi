@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.326,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Карта 5 даёт +1 влияния мне как самому богатому, усиливая мою долю комиссии, а мой вес 5 всё равно перекрывает соперников.\"}",
+          "reasoning_content": "Card 5: +1 influence to richest. I'm richest (37.4M) and holder. But richest by cash gets +1 influence — already max influence, influence earns 5% bank commission. My vote weight 5, others 1 each; they could outvote 2:1 if both vote no. Card 5 helps me (I get +1 influence, +influence gives 5% commission at end). Vote yes, and if they both vote no (2 vs 5), it fails anyway. Yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491038,
+    "id": "20261020181030082be7f3a8804431",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181030082be7f3a8804431",
+    "usage": {
+      "completion_tokens": 158,
+      "completion_tokens_details": {
+        "reasoning_tokens": 111
+      },
+      "prompt_tokens": 3322,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3480
+    }
+  }
+}

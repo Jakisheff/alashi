@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.871,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Налог 10% на мои будущие продажи невыгоден, а голосом его не заблокировать — применяю veto.\"}",
+          "reasoning_content": "Закон 1 — налог 10% на мои будущие продажи. У меня 2 товара для продажи в раундах 5-6. Налог 10% мне невыгоден → vote_no. Но даже при no, соперники могут проголосовать yes? Вес: я 2, у них 4 и 3. no: 2 против? нужно yes > no. Мой no при их yes (4+? ) — закон всё равно пройдёт. veto гарантирует отклонение. Приму veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496651,
+    "id": "20261020194407c11e2f5fe62c4992",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194407c11e2f5fe62c4992",
+    "usage": {
+      "completion_tokens": 151,
+      "completion_tokens_details": {
+        "reasoning_tokens": 113
+      },
+      "prompt_tokens": 3281,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3432
+    }
+  }
+}

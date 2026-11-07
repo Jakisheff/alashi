@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.27,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Кредитная продажа двух единиц даёт максимум выручки (16.25) при уже разыгранной карте обнуления векселей.\"}",
+          "reasoning_content": "Prices: counter 4 → price 7 for first unit, next 6. Sell 2 gives 13. Sell credit 2: promissory 16.25 but cash doesn't count in rank... promissory counts into cash next rounds though. Sell 2 now vs save? Later rounds there's still selling. Cash deviates by 62% though. Selling now gives cash that survives devaluation at 62%. Credit gives 1.25x but risk of card 8 (already used). Card 8 already drawn. So credit is safe? Cards drawn: 0 and 8. Credit 16.25 later added to cash. Sell 2 credit seems better than sell 2 (13). But cash counts for rank only after; cash at 62% next round: 13→8.06 vs credit 16.25 added fully later (promissory added then also devalued later). Roughly credit wins.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490026,
+    "id": "20261020175340de3191865e374fc7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175340de3191865e374fc7",
+    "usage": {
+      "completion_tokens": 239,
+      "completion_tokens_details": {
+        "reasoning_tokens": 197
+      },
+      "prompt_tokens": 2592,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2831
+    }
+  }
+}

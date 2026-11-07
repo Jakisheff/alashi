@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.94,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Продажа в кредит сохраняет выручку от тройной девальвации и высокой текущей цены.\"}",
+          "reasoning_content": "Round 3 of 6, price list: sold_counter=2, price 9 for next. Sell 3 units: 9+8+7=24. Later rounds: I get more goods each round (subsidy=1, produce 3, shuttle 4). Prices will decline. Cash devaluation round starts: cash=floor(cash/100)*62 — 62% retention. Selling now gives cash that devalues twice (r4, r5 starts? starts of rounds 2 and later). Actually each round start ≥2 devalues. So cash from r3 devalues at r4, r5, r6 starts: 0.62^3 ≈ 0.238. Promissory doesn't devalue until paid at round start... promissory added at start next round, then devalues each subsequent start. Sell_credit: 30 alashi promissory paid at r4 start, then devalued twice (r5, r6): 30*0.62^2=11.5. Sell cash 24 → 24*0.238=5.7. So credit much better. Also price declines as others sell; selling now at higher price. Sell all 3 on credit: choice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497084,
+    "id": "20261020195117eff4d1437db34099",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195117eff4d1437db34099",
+    "usage": {
+      "completion_tokens": 299,
+      "completion_tokens_details": {
+        "reasoning_tokens": 265
+      },
+      "prompt_tokens": 2556,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2855
+    }
+  }
+}

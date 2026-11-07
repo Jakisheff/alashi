@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.213,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продать весь товар, чтобы иметь максимальный cash ≥9 для аукциона лицензии.\"}",
+          "reasoning_content": "Need cash ≥9 for auction. Sell 3 units gives 22.4M cash. Price counter 7 → price 5,4,3? Actually units 3 sell at prices 5,4,3=12 alashi. That maximizes cash. Choice 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498216,
+    "id": "20261020201013b2f7ff05c988452b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201013b2f7ff05c988452b",
+    "usage": {
+      "completion_tokens": 90,
+      "completion_tokens_details": {
+        "reasoning_tokens": 59
+      },
+      "prompt_tokens": 3319,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3409
+    }
+  }
+}

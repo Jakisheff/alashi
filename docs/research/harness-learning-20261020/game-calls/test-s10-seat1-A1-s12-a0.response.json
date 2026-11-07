@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.487,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":43,\"reason\":\"Аукцион выгоден: конкуроры почти без денег, лицензия даёт 20–60 сверху, а ставка частично вернётся через банк.\"}",
+          "reasoning_content": "I'm cash-rich (64 alashi), round 4 action, auction available. License income 20-60 alashi, paid extra, not in wealth rank. Bidding costs go to bank if won (bid adds to bank, distributed back by rank — actually winner's bid goes to bank which gets distributed, so partial refund). I'm richest, so I get top rank likely. Rivals have little cash (19 and 0), so even a moderate bid wins. Bid small, e.g., 5 alashi? Rival 0 has 19 cash, could outbid. Bid ~10-15 to be safe? Winning license gives ~40 alashi extra on average. Bid 10 (choice 43). But note winner's bid goes into bank and I'm richest so I recover ~50%+. Bid 10 alashi.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497106,
+    "id": "202610201951400b4d16dd18664831",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201951400b4d16dd18664831",
+    "usage": {
+      "completion_tokens": 216,
+      "completion_tokens_details": {
+        "reasoning_tokens": 174
+      },
+      "prompt_tokens": 8368,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 8584
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.755,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Больше товара при ожидаемой ценности выше produce\"}",
+          "reasoning_content": "Shuttle gives 3 goods (risk border? tariff 0, default ~25% loss applies to grey goods — shuttle gives grey goods). Produce gives 2 free. I'm cash 0. Take shuttle for 3 goods? Risk of seizure 25%. Expected 2.25 goods vs 2. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495296,
+    "id": "20261020192133cdffd32bc62f40e4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192133cdffd32bc62f40e4",
+    "usage": {
+      "completion_tokens": 88,
+      "completion_tokens_details": {
+        "reasoning_tokens": 67
+      },
+      "prompt_tokens": 2105,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2193
+    }
+  }
+}

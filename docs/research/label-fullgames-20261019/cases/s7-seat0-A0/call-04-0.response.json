@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.89,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Беру shuttle ради 3 товаров без затрат — больше выручки на будущих рынках.\"}",
+          "reasoning_content": "I'm president with influence 1, but vote_weight 3. Shuttle gives 3 goods free (25% risk? tariff=0, so no tariff set yet — shuttle risk ~25% grey seizure). Actually shuttle gives 3+subsidy goods, grey may be seized. Goods sellable later. Produce gives 2 safe. Shuttle expected value higher if no border risk — risk exists \"около 25%\" only with red tariff? \"красный несёт риск\" — seizure 25% risk applies at border; with tariff=0 unclear. Take shuttle for 3 goods.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491017,
+    "id": "2026102018101251409fbe658741dd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102018101251409fbe658741dd",
+    "usage": {
+      "completion_tokens": 152,
+      "completion_tokens_details": {
+        "reasoning_tokens": 122
+      },
+      "prompt_tokens": 2889,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 3041
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.736,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон всё равно не пройдёт при любом моём голосе, влияние потрачено на действие.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest by cash. I'm poorest (7.7M). Yes = yes 1 vs no 1? Currently idx1 Yes, idx2 No, my vote weight 2. Vote yes: yes=3, no=3 → not passed. Actually pass requires yes>no. 3>3 false. So yes fails. Abstain: yes1 no3 fails. No: fails. Law only passes if yes>no — never passes. So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497895,
+    "id": "20261020200451c351782c8d744822",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200451c351782c8d744822",
+    "usage": {
+      "completion_tokens": 137,
+      "completion_tokens_details": {
+        "reasoning_tokens": 105
+      },
+      "prompt_tokens": 2878,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3015
+    }
+  }
+}

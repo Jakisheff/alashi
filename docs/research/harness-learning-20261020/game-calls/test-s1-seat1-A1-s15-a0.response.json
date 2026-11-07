@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.716,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\": 1, \"reason\": \"Карта 4 даёт +1 влияния самому бедному — это я, поэтому голосую за, худший случай — veto президента.\"}",
+          "reasoning_content": "Card 4: +1 influence to poorest by cash. I'm poorest (1.05M). President is idx0. Vote yes gives me influence +1, but holder can veto. Holder 0 is president; card helps me, not holder—likely veto. My vote: yes vs no. Votes: yes needs > no. Holder idx0 vote weight 4. If I vote yes, total yes = mine 1 + maybe holder. Holder likely vetoes anyway. Voting yes costs nothing; if passed I gain influence. But wait president can veto free. Likely veto. Still vote yes—best case passed, no downside? Card 4 might give influence to poorest—if holder vetoes nothing. No downside. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499760,
+    "id": "2026102020355374dbc51819c64b87",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020355374dbc51819c64b87",
+    "usage": {
+      "completion_tokens": 192,
+      "completion_tokens_details": {
+        "reasoning_tokens": 150
+      },
+      "prompt_tokens": 2890,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3082
+    }
+  }
+}

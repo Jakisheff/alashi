@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 15.141,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Кредитная продажа даёт 16.25 alashi векселем без девальвации, выгоднее наличных.\"}",
+          "reasoning_content": "Sell 2 at 10+6? sold_counter=4 → prices next: at counter 4, price index? Price list [12,10,9,8,7,...] counter 4 means 4 units sold, next price = 7? Sell 2 gives 7+6=13 alashi → cash 13. Cash now vs credit: cash devalues 62%, credit adds 1.25x later... sell now cash 13 → next round floor(13/100)*62≈8.06 alashi. Credit 16.25 promissory added later full. Credit better. Choose 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499538,
+    "id": "20261020203204752a2f9534aa45d2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203204752a2f9534aa45d2",
+    "usage": {
+      "completion_tokens": 168,
+      "completion_tokens_details": {
+        "reasoning_tokens": 132
+      },
+      "prompt_tokens": 2213,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2381
+    }
+  }
+}

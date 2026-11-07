@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.509,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель обнулит девальвацию в начале раунда 6, поэтому кредитная продажа всех 3 единиц выгоднее прямой.\"}",
+          "reasoning_content": "Round 5 of 6; after round 6 promissory unredeemed? Devaluation: start of rounds 2+ cash=floor(cash/100)*62. Selling credit now gives promissory added to cash in round 6 start, then round 6 I can still use it... wait promissory added at start of round 6, then no more devaluation (round 7 doesn't happen?). Final ranking counts cash only. So selling all for cash now: cash becomes 33.9M, then round 6 start devalued to 21M. Selling credit: promissory 38.75M added at round 6 start without devaluation → better. But rivals sell in between driving price down... price counter is 0, plenty. Rivals may sell this round though. Still sell_credit 3 is best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490334,
+    "id": "20261020175850e25839fcd9a94a07",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175850e25839fcd9a94a07",
+    "usage": {
+      "completion_tokens": 219,
+      "completion_tokens_details": {
+        "reasoning_tokens": 178
+      },
+      "prompt_tokens": 3156,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3375
+    }
+  }
+}

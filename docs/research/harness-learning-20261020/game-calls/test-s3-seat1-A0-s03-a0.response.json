@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.266,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 4 даёт +1 влияния мне как самому бедному по tie_order, вето не нужно.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest. All cash 0, tie_order [1,0,2] — poorest is me (idx1). So I gain influence. Vote yes passed (2 yes vs 1 no). No veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496698,
+    "id": "20261020194456a6a3a127772b492b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194456a6a3a127772b492b",
+    "usage": {
+      "completion_tokens": 85,
+      "completion_tokens_details": {
+        "reasoning_tokens": 51
+      },
+      "prompt_tokens": 1983,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2068
+    }
+  }
+}

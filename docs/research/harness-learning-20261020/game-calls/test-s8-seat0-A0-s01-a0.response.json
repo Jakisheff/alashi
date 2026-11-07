@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.287,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Шаттл даёт в среднем больше товара при равном действии.\"}",
+          "reasoning_content": "Produce gives 2 certain goods; shuttle 3 with seizure risk 25%. Expected shuttle higher. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498270,
+    "id": "20261020201108df56214d3bcb44d7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201108df56214d3bcb44d7",
+    "usage": {
+      "completion_tokens": 50,
+      "completion_tokens_details": {
+        "reasoning_tokens": 24
+      },
+      "prompt_tokens": 1917,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 1967
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.324,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 0 без эффектов, тратить ход на голосование или вето бессмысленно.\"}",
+          "reasoning_content": "Law id 0 — no effects. Pass, save nothing... vote doesn't matter; veto wastes. Pass is fine (veto also fine but pointless). Actually passing vs voting no: vote_weight 2, currently yes=1(2), no=0. My vote no would make no=2 vs yes=1, law fails—but law 0 has no effect anyway. Pass keeps weight? Weight bonus only if action phase skipped, not law. Pass fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495157,
+    "id": "202610201919147abc5328f8a549d7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201919147abc5328f8a549d7",
+    "usage": {
+      "completion_tokens": 127,
+      "completion_tokens_details": {
+        "reasoning_tokens": 96
+      },
+      "prompt_tokens": 3018,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3145
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.786,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":37,\"reason\":\"Ставка 20 alashi перебивает вероятные заявки соперников за лицензию с доходом 20–60 alashi, выигрывая аукцион.\"}",
+          "reasoning_content": "Round 4 action: auction for license (~20-60 alashi income). Opponents have cash 5.3M and 34.6M. Bid doesn't consume action — but I can only pick one candidate... \"bid не расходует основное действие\" but menu offers one aggregate. However I can only choose one action now; choosing bid means no produce. Actually after bidding I could choose another action, per rules — but interface shows one. Choose bid ~15-20M? License worth 20-60M+ payout. I should beat player 2 (34.6M cash) likely bids up to maybe 15-20M. Tie order [1,0,2] favors me. Bid 20M leaves 3.25M cash, and promissory 38.75M arriving next round (with 62% devaluation applied to cash first... promissory added after). Risky but license 20-60M plus bank share. Bid 20M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490642,
+    "id": "202610201803542a30d845aa8f4319",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201803542a30d845aa8f4319",
+    "usage": {
+      "completion_tokens": 255,
+      "completion_tokens_details": {
+        "reasoning_tokens": 207
+      },
+      "prompt_tokens": 5003,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 5258
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.653,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\": 3, \"reason\": \"Бесплатные 4 товара дают максимум выручки на будущих рынках без затрат.\"}",
+          "reasoning_content": "I'm idx1, influence 1, president is idx2. Need goods to sell later. Shuttle gives 4 goods free of charge — no bribe needed. Bribe 10 to idx2 would make influence 3, but still idx2 has 1... president is highest influence; idx0 has 2. To become president I need influence 3 (tie broken by tie_order where I'm second — idx2 has priority). So need influence >2: bribe 10 to anyone gives 3, making me president. But presidency in round 3 law — value? Could veto tax laws. Cash cost 10M. Round 4 auction also matters.\n\nShuttle gives 4 goods worth later sales (~4-6 alashi each ≈ 20 alashi). Presidency matters in rounds 3-6 laws and the 5% bonus at end (max influence). Bribes also transfer cash to rival.\n\nI think shuttle is best economically: 4 goods free. But influence bonus 5% of bank is small. Presidency could let me veto tax laws (tax hits my sales). Hard to say; simple pick: shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495349,
+    "id": "20261020192222b156fd3e562d409d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192222b156fd3e562d409d",
+    "usage": {
+      "completion_tokens": 268,
+      "completion_tokens_details": {
+        "reasoning_tokens": 236
+      },
+      "prompt_tokens": 3709,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 3977
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.997,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель не девальвируется и даёт премию 25%, продаю весь товар сейчас по высокой цене.\"}",
+          "reasoning_content": "Sell now at price 9 (counter=2), price may drop later; cash inflation 62% each round start punishes holding cash. Sell now is good. Sell 2? Devaluation each round start cash×0.62, so spending cash... actually goods prices drop too. Rival sells likely next. Sell 2 now at price 9 each = 18 alashi. Then cash devalued. Or sell_credit: promissory not devalued but 25% bonus, paid after last round? No—promissory added at start of next round, so it's not devalued once. sell_credit gives 1.25× revenue, better! Sell 2 credit: promissory 21.25, added next round. Yes, choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497609,
+    "id": "202610202000040b8145bc3a034524",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202000040b8145bc3a034524",
+    "usage": {
+      "completion_tokens": 199,
+      "completion_tokens_details": {
+        "reasoning_tokens": 164
+      },
+      "prompt_tokens": 2456,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2655
+    }
+  }
+}

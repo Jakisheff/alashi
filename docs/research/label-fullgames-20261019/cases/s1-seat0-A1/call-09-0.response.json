@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.302,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Беру 3 товара с риском — максимальная ожидаемая выручка для будущих продаж.\"}",
+          "reasoning_content": "Need goods to sell later. Currently no goods, price counter 4, next prices ~8+? Prices list index 4 = 7, boom +2 = 9. Shuttle gives 3 goods, ~25% seizure risk. Produce gives 2 safe. Cash 30, dev 62%. Selling 3 units ~30 alashi later. Shuttle better expected value than produce; plus presidency already held (influence equal 1 all, tie_order 0 keeps). Bribe cost 5 alashi for +1 influence — helps presidency and 5% commission. But cash matters. I'd take shuttle (3 goods).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427873,
+    "id": "20261020003746462a1c901cfc4f5a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003746462a1c901cfc4f5a",
+    "usage": {
+      "completion_tokens": 164,
+      "completion_tokens_details": {
+        "reasoning_tokens": 130
+      },
+      "prompt_tokens": 3452,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 3616
+    }
+  }
+}

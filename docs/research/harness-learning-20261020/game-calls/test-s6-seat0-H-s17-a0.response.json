@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.44,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон о субсидии выгоден мне и всё равно пройдёт; поддерживаю.\"}",
+          "reasoning_content": "Law 3: subsidy_goods=1 — helps all produce. I'm not president (holder 2). Vote weight 1, holder 2 has influence 2 already voted Yes → passes anyway. Subsidy helps me too (I have 3 goods, shuttle next round gives 3+1). So vote_yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498633,
+    "id": "20261020201710308b0d21c302490e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201710308b0d21c302490e",
+    "usage": {
+      "completion_tokens": 97,
+      "completion_tokens_details": {
+        "reasoning_tokens": 67
+      },
+      "prompt_tokens": 3499,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3596
+    }
+  }
+}

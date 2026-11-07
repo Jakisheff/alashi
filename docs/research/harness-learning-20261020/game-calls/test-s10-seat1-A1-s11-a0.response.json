@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.642,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Цена сейчас максимальна, продаю весь товар за наличные.\"}",
+          "reasoning_content": "Round 4 of 6, then rounds 5-6. Sell now at price 12 each (sold_counter 0). But I have auction bid already 0? own_bid:0 — bid phase is in action, not now. Cash 33.1, price high 12. Selling 3 gives +30, but price drops for opponents... Selling now at high price is good; remaining rounds can produce more. Sell 2 or 3? Prices: 12,10,9. Selling all 3 nets 31 (30 shown, 31? 12+10+9=31, but shown +30... maybe tax? whatever). Later rounds prices drop. I'll sell 3 now, keep producing later. Choose 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497099,
+    "id": "20261020195133eefc8429ed234e10",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195133eefc8429ed234e10",
+    "usage": {
+      "completion_tokens": 183,
+      "completion_tokens_details": {
+        "reasoning_tokens": 157
+      },
+      "prompt_tokens": 2874,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 3057
+    }
+  }
+}

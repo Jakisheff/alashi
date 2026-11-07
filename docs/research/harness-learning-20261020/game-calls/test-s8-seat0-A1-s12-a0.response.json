@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.27,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Покупка по 12 при пустом счётчике невыгодна, лучше сохранить cash для аукциона и влияния.\"}",
+          "reasoning_content": "Buying 1 unit for 12? Sold counter 0, price 12. Buy moves counter back... counter already 0. Pay 12 alashi for 1 good — that's bad, I have no goods and can produce. Pass.\n\nWait, but I hold presidency, influence 3. Better keep cash. Buy 1 unit costs 12 alashi, sell later at lower price likely — bad. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497842,
+    "id": "20261020200358ecd7095182af4f28",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200358ecd7095182af4f28",
+    "usage": {
+      "completion_tokens": 125,
+      "completion_tokens_details": {
+        "reasoning_tokens": 87
+      },
+      "prompt_tokens": 2582,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2707
+    }
+  }
+}

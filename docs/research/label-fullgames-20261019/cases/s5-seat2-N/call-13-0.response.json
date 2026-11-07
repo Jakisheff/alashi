@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.743,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":46,\"reason\":\"Ставка на лицензию (доход ~20–60 alashi) не расходует действие, а 15M — выгодная цена при преимуществе по кэшу.\"}",
+          "reasoning_content": "Round 4 action, I have 55.1M cash, highest. License auction this round: bid ~hidden. License income 20-60 alashi. Opponents have 41.5M and 8.4M cash. Bidding modest, e.g. 10M, likely wins (opponents may bid). Bid doesn't consume action—so I should bid and also do an action. But candidates: choose one. Bid is separate from action, and after bid I can pick another action later? \"bid не расходует основное действие: после ставки можно выбрать ещё одно действие.\" So interface—choosing bid now allows further action. So bid 10M then later produce.\n\nExpected license value ~40 alashi mid = 40M units, plus value of rank not counted. So bid up to ~20-25M worth it. Opponent 0 has 41.5M, could outbid. Tie order [0,1,2], I'm last. Bid 15M reasonable.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490375,
+    "id": "2026102017592672851c1672f249ff",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102017592672851c1672f249ff",
+    "usage": {
+      "completion_tokens": 258,
+      "completion_tokens_details": {
+        "reasoning_tokens": 211
+      },
+      "prompt_tokens": 7785,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 8043
+    }
+  }
+}

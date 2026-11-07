@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.896,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Шаттл даёт больше товара при умеренном риске изъятия.\"}",
+          "reasoning_content": "Produce (safe 2 goods) vs shuttle 3 goods with ~25% seizure risk. Shuttle expected 2.25, slightly better; but no tariff known—default border? Round 2 action, tariff? No law on tariff yet. Shuttle gives grey goods risk. EV slightly better for shuttle; choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427992,
+    "id": "202610200039499e6a932a98c14b0a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200039499e6a932a98c14b0a",
+    "usage": {
+      "completion_tokens": 93,
+      "completion_tokens_details": {
+        "reasoning_tokens": 66
+      },
+      "prompt_tokens": 2171,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2264
+    }
+  }
+}

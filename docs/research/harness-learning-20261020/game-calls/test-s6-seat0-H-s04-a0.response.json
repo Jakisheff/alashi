@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.009,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Высокая цена с бумом сейчас; продажа всех 3 единиц даёт 30 alashi и запас к аукциону.\"}",
+          "reasoning_content": "Prices: counter 2, so prices 9,8,7 for 3 units + boom 2 = 11,10,9. Sell all 3 = 30. Later rounds produce more goods; price falls anyway. Sell all now for cash 30 — helps rank and round 4 auction.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498567,
+    "id": "20261020201604f34895fa4b92499b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201604f34895fa4b92499b",
+    "usage": {
+      "completion_tokens": 104,
+      "completion_tokens_details": {
+        "reasoning_tokens": 64
+      },
+      "prompt_tokens": 2794,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2898
+    }
+  }
+}

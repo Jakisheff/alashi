@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.503,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 3 (субсидия) уже не имеет эффекта после финальных действий, менять ничего не нужно.\"}",
+          "reasoning_content": "Law 3: subsidy_goods=1 — but last round, no more produce except others' actions? Law phase is after actions; round 6 action done. No effect. Pass fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496778,
+    "id": "202610201946146c76efc28d204eb1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201946146c76efc28d204eb1",
+    "usage": {
+      "completion_tokens": 76,
+      "completion_tokens_details": {
+        "reasoning_tokens": 39
+      },
+      "prompt_tokens": 3440,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3516
+    }
+  }
+}

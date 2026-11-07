@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.152,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Продажа в кредит конвертирует товар в вексель, который прибавится к cash уже после девальвации в раунде 6, что выгоднее прямой продажи.\"}",
+          "reasoning_content": "Round 5 market, cash tiny. Best to sell now at high price? Sold counter 0, price 12 per unit (no tax). But cash gets devalued in round 6 anyway (cash*0.62). Selling for cash now means devaluation; sell_credit gives promissory paid in round 6 (added after devaluation) — but promissory in round 6 market... round 6 cash floor rule applies at start of round 6, promissory added then. Round 6 sell_credit not repaid, but round 5 sell_credit is repaid at start of round 6, safe.\n\nSell 2 credit = 27.5 promissory, better than 24 cash (which devalues to ~14.9). Yes, choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496640,
+    "id": "20261020194354c07dedce96b441ae",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194354c07dedce96b441ae",
+    "usage": {
+      "completion_tokens": 215,
+      "completion_tokens_details": {
+        "reasoning_tokens": 165
+      },
+      "prompt_tokens": 3490,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3705
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.746,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Финальный раунд: promissory не погашается, поэтому продаю весь товар за наличные.\"}",
+          "reasoning_content": "Sell both — cash counts, promissory doesn't. Choice 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496386,
+    "id": "202610201939418a89dc0207164f4c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201939418a89dc0207164f4c",
+    "usage": {
+      "completion_tokens": 50,
+      "completion_tokens_details": {
+        "reasoning_tokens": 16
+      },
+      "prompt_tokens": 3744,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3794
+    }
+  }
+}

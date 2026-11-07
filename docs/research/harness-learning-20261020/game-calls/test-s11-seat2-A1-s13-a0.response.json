@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.958,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\": 3, \"reason\": \"Налог 10% мне невыгоден, а «против» уже побеждает с весом 4 против 2.\"}",
+          "reasoning_content": "I'm president (idx2, influence 2 +2 if passed... but I did bid+produce, so vote_weight 2). Player 1 voted No with weight 4. Card 1: tax 10%. Law passes if yes > no. I have 2 votes yes, opponent has 4 no → fails anyway. Veto unnecessary but harmless. Just vote_no or abstain. Simplest: veto? Not needed. Choose abstain or vote_no. Tax 10% would hurt my future sales (2 goods). No already wins 4>2. Pass is fine, but pass gives no bonus. Choice 0 pass... actually \"+2 influence if action skipped\" — my action was produce already. Just abstain: choice 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498086,
+    "id": "202610202008014d1348b1c9dc4a77",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202008014d1348b1c9dc4a77",
+    "usage": {
+      "completion_tokens": 197,
+      "completion_tokens_details": {
+        "reasoning_tokens": 156
+      },
+      "prompt_tokens": 2804,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 3001
+    }
+  }
+}

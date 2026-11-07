@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.507,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Продаю весь товар в кредит по максимальной цене 12, вексель не девальвируется, а cash хватает на ставку 12 в аукционе.\"}",
+          "reasoning_content": "Round 4 market. I have 3 goods, cash 33. Later auction needs cash ≥16 → bid 12. Prices high now (sold_counter 0, price 12). Selling 3 now gives 64 cash, but later rounds devalue cash 62%. Sell credit gives promissory not devalued. But round 6 credit not redeemed — last market is round 6, promissory added at start of round... wait promissory adds to cash at round start. Sell in round 6 credit → not redeemed. Round 4 credit redeemable at round 5 start? Promissory added at start of round 5, then devalued at round 6 start. Hmm.\n\nSelling now at 12/unit is best price. Devaluation: cash at start r5 → floor/100*62. Sell 3 now: cash 64.2, r5 start ≈39.8. Sell credit 3 now: promissory 38.75, r5 cash = 33.18*0.62+38.75 ≈ 59.3. Credit better. Keep cash 33 for auction bid 12. Choice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495461,
+    "id": "202610201924147b016c0751e24223",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201924147b016c0751e24223",
+    "usage": {
+      "completion_tokens": 297,
+      "completion_tokens_details": {
+        "reasoning_tokens": 248
+      },
+      "prompt_tokens": 3247,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3544
+    }
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "passed": true,
+  "exact_test_ran": true,
+  "rust_tests_passed": 1,
+  "rust_tests_failed": 0,
+  "rust_tests_ignored": 0,
+  "cases": [
+    {
+      "players": 1,
+      "game": "HBz1FnDztzoqyDBDBRvvwatk5VFTGEGyDingRF79MaZE",
+      "round": 6,
+      "settled": true,
+      "account_lamports": 7217520,
+      "rent_minimum_lamports": 7217520,
+      "rent_only_remainder": true,
+      "account_data_sha256": "cc1ec7c01edfd6504274bb190101509cb23e46f1435471d9293df784a7174056",
+      "confirmed_game_transactions": 57,
+      "phase_asserted_by_test": "Finished"
+    },
+    {
+      "players": 2,
+      "game": "DkCJY9buAszrS6pLArWbH9zpwES5fGukbqhoEg4fqrbM",
+      "round": 6,
+      "settled": true,
+      "account_lamports": 7217520,
+      "rent_minimum_lamports": 7217520,
+      "rent_only_remainder": true,
+      "account_data_sha256": "6a4385f8e2e7f40f6c55c96d3b1f9851527e76e82bcb3e002df42618a6d1c874",
+      "confirmed_game_transactions": 57,
+      "phase_asserted_by_test": "Finished"
+    },
+    {
+      "players": 0,
+      "game": "BctPkbjj5V4B7nUyqKt5Heutar3xZDc5xMEawp91zTrf",
+      "round": 0,
+      "settled": true,
+      "account_lamports": 7217520,
+      "rent_minimum_lamports": 7217520,
+      "rent_only_remainder": true,
+      "account_data_sha256": "2cbd1998f4b04e04e1ec790b534537657a3e80712f7dcdba7bf39080ff91be70",
+      "confirmed_game_transactions": 3,
+      "phase_asserted_by_test": "Aborted"
+    }
+  ],
+  "confirmed_host_receipts": 63,
+  "confirmed_game_transactions": 117,
+  "all_fetched_transactions_successful": true,
+  "duration_seconds": 94.883,
+  "source_commit": "125393d934000f0218863d2ef881d932e3d81c08",
+  "rpc": "http://127.0.0.1:18999",
+  "genesis_hash": "J6CqGTfkDF2bjLgrctXTsnPrSh27FQ944SbJ23B2VTen",
+  "program_id": "3jwunaFDRrSWFfeJ5hFZu3DmxPNTmkdoCweHDvqcXTqC",
+  "program_sha256": "4b197c36bc6b3913a52141b767a92cb6e3255aff071351a7a2ad629392becee4",
+  "program_loaded_identical": true,
+  "test_binary_sha256": "136ec69527c43571bd9802651a0258945b9f46a64d2e06e7922b2647e36170f6",
+  "runtime": "Agave 4.2.1 with process-local loopback bind interposer",
+  "network_isolation": {
+    "rpc": "http://127.0.0.1:18999",
+    "health": "ok",
+    "genesis_hash": "J6CqGTfkDF2bjLgrctXTsnPrSh27FQ944SbJ23B2VTen",
+    "version": {
+      "feature-set": 565236538,
+      "solana-core": "4.2.1"
+    },
+    "slot": 16,
+    "all_ip_sockets_loopback": true,
+    "non_loopback_rpc_blocked": true,
+    "blocked_as": "ConnectionRefusedError",
+    "bind_restriction": "process-local dyld interposer"
+  },
+  "limits": [
+    "Local validator, accelerated one-second phases",
+    "State restart is serialization/deserialization within one process",
+    "Empty-lobby refund has no participants to pay",
+    "Public program downloaded read-only; no public-cluster transactions"
+  ],
+  "validator_binary_sha256": "1915dea3e22fef7a0994a6837d2381f0d86253c51efbc8b3d52060096938fe2f",
+  "bind_interposer_sha256": "99c6ece316fc4aa8934b220112fc06dd2d93c6315e010cbce54cbc0a015e111d",
+  "bind_interposer_source_sha256": "4e95aa01ba94ffc7f23cfe181b07be02107ca1eac609b07451696e126d9fe873",
+  "validator_stopped": true,
+  "rpc_websocket_faucet_ports_closed": true,
+  "ledger_archive_sha256": "818eee10581261ef4a21a1338b1aba3b630eef98da1adcaede0db31c63c7bf70",
+  "ledger_archive_bytes": 191603703,
+  "retained_test_binary_sha256": "136ec69527c43571bd9802651a0258945b9f46a64d2e06e7922b2647e36170f6",
+  "prior_skipped_match_test_resolved": true
+}

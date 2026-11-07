@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.487,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Продажа в кредит даёт больше итоговой стоимости после девальваций.\"}",
+          "reasoning_content": "Sell 2 now at high price (12,10 = 22). Later rounds cash devalues 62%, so selling credit gives 1.25x but promissory added after devaluation, and can be wiped by law 8. Cash devalues each round start though — cash 22 alashi becomes 13.64 at round3. Credit: 27.5 promissory added next round then devalued further rounds. Actually promissory added at round start after devaluation, then becomes cash and devalues next rounds. Sell now: 22 → after r3 start: 13.64, after r4: 8.45, r5: 5.24, r6: 3.25, final ~3.25 (r6 end, no r7). Credit: 27.5 at r3, r4:17, r5:10.6, r6:6.56 final. Credit better unless law 8 wipes. Risk but credit better. Choose 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499556,
+    "id": "202610202032296a65d9af347c4eae",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202032296a65d9af347c4eae",
+    "usage": {
+      "completion_tokens": 242,
+      "completion_tokens_details": {
+        "reasoning_tokens": 214
+      },
+      "prompt_tokens": 2211,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2453
+    }
+  }
+}

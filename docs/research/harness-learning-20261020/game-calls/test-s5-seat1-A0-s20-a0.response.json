@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.412,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Это последний рынок: купленный товар уже не продать, поэтому pass сохраняет cash.\"}",
+          "reasoning_content": "Last market, no promissory possible benefit... buy goods is useless unless can sell? This is last market round; goods bought can't be sold. Wait, buying moves sale counter back, lowering price? I'm selling nothing. Actually I hold no goods; buying just loses cash. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498921,
+    "id": "20261020202157b9b4ce1d0840400d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202157b9b4ce1d0840400d",
+    "usage": {
+      "completion_tokens": 88,
+      "completion_tokens_details": {
+        "reasoning_tokens": 60
+      },
+      "prompt_tokens": 3312,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3400
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.82,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон о субсидии выгоден моему производству, а исход уже решён голосами «за».\"}",
+          "reasoning_content": "Law 3: subsidy_goods=1 — helps my produce next rounds. Both others voted Yes (yes=2 already >0). My vote doesn't change outcome. Vote yes anyway.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499910,
+    "id": "20261020203827b3ab9fcdb7a34ca4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203827b3ab9fcdb7a34ca4",
+    "usage": {
+      "completion_tokens": 72,
+      "completion_tokens_details": {
+        "reasoning_tokens": 38
+      },
+      "prompt_tokens": 3037,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3109
+    }
+  }
+}

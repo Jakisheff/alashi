@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.773,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Ожидаемо больше товара (3 с риском ~25%), деньги всё равно нулевые.\"}",
+          "reasoning_content": "Produce gives 2 goods safely; shuttle 3 goods with 25% seizure risk and I have 0 cash anyway. shuttle expected 2.25 goods — take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490015,
+    "id": "202610201753320022182fb9fe4668",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201753320022182fb9fe4668",
+    "usage": {
+      "completion_tokens": 69,
+      "completion_tokens_details": {
+        "reasoning_tokens": 37
+      },
+      "prompt_tokens": 2114,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2183
+    }
+  }
+}

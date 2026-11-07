@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.86,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Больше товара на финальный рынок, риск изъятия умеренный при цене всего 3 alashi.\"}",
+          "reasoning_content": "I'm president, influence 3, cash low. Promissory 65 alashi but next round start: cash devalued floor/100*62, then promissory added — round 6? Round 6 market: sell goods. But after round 6 promissory unredeemed... wait promissory added at start of round 6, then can sell. Actually I have no goods now. Best action: produce/shuttle to get goods for final market. Shuttle gives 3 goods, ~25% seizure risk (tariff 0? no tariff active — risk applies). Actually seizure risk only when tariff red; black protects. No tariff now, shuttle baseline grey risk 25%. Shuttle 3 goods vs produce 2. Expected 2.25 vs 2, prices ~3 alashi each. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496986,
+    "id": "20261020194940db8ee71c5b374084",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194940db8ee71c5b374084",
+    "usage": {
+      "completion_tokens": 207,
+      "completion_tokens_details": {
+        "reasoning_tokens": 173
+      },
+      "prompt_tokens": 3153,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3360
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.578,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\": 63,\"reason\":\"Сильная ставка на лицензию: доход 20–60 alashi превосходит взнос, а деньги в банке не девальвируются и частично вернутся через долю ранга.\"}",
+          "reasoning_content": "I'm idx 2, cash 61.06. Rival 1 has 35.4, rival 0 has 0 but 6 goods. License auction now. License income 20-60 alashi, paid extra, bid goes into bank and winner's bid doesn't count toward rank. Tie order: I'm last. Income ~40 average, worth bidding significant. If I bid 30M and win, bank grows by 30M (I get share back via payout). License income ~40 alashi is huge vs my cash 61. Cash also devalues 62%. Keeping cash in bank via bid is good (bank doesn't devalue). Bid large, e.g. 30M: if I win, 30M to bank (returns ~50% to me via rank1 share anyway), plus license income. Rival 1 has only 35.4M cash, can't outbid much. Risk: overpaying to bank benefits others too, but I get 50% back if rank1. Bid 30M seems safe and strong. Choose 63 (30M bid).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499608,
+    "id": "202610202033197ed3410e29684b5d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202033197ed3410e29684b5d",
+    "usage": {
+      "completion_tokens": 285,
+      "completion_tokens_details": {
+        "reasoning_tokens": 232
+      },
+      "prompt_tokens": 8168,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 8453
+    }
+  }
+}

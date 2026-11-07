@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.818,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Вексель 15 alashi погасится полностью в раунде 6 без девальвации, лучше прямой продажи.\"}",
+          "reasoning_content": "sell_credit: выручка 12*1.25=15 промиссорий, погасится в раунде 6 (старт раунда 6: cash=floor(cash/100)*62 + promissory). Округление 6: cash обесценится 62%, но промиссория полностью. Так что sell_credit выгоднее sell. Цена 12 при counter 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495386,
+    "id": "20261020192301bb06b6a950c44f27",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192301bb06b6a950c44f27",
+    "usage": {
+      "completion_tokens": 123,
+      "completion_tokens_details": {
+        "reasoning_tokens": 86
+      },
+      "prompt_tokens": 3266,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3389
+    }
+  }
+}

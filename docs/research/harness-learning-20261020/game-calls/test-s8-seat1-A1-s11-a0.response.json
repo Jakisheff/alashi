@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.291,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Покупка по высокой стартовой цене невыгодна, сохраняю cash для аукциона лицензии.\"}",
+          "reasoning_content": "I have 31.3 cash, opponents 22.1 and 3.1. Buying goods to sell later? Price now 12 (counter 0). Buy 1 unit costs 12 — but sell later price lower as counter rises. Buy 2 costs 24 (12+10). Then later sell at reduced price? Not profitable. Also auction in action phase — need cash. Keep cash for bid. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498965,
+    "id": "202610202022428e43569eb7f24361",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202022428e43569eb7f24361",
+    "usage": {
+      "completion_tokens": 121,
+      "completion_tokens_details": {
+        "reasoning_tokens": 88
+      },
+      "prompt_tokens": 2564,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2685
+    }
+  }
+}

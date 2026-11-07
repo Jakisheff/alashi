@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.442,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 10% ударит по моим будущим продажам, голосую против.\"}",
+          "reasoning_content": "Law 1 = 10% tax on future sales. I plan to sell in round 5. Player 1 voted yes (weight 3), player 2 weight 5, unvoted. If I vote no (weight 1, no bonus since I acted), total no=1 vs yes=3 unless player 2 votes no. Tax hurts me; I hold promissory already (not affected). Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428055,
+    "id": "2026102000405130d2b5a651674a47",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000405130d2b5a651674a47",
+    "usage": {
+      "completion_tokens": 118,
+      "completion_tokens_details": {
+        "reasoning_tokens": 89
+      },
+      "prompt_tokens": 2909,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3027
+    }
+  }
+}

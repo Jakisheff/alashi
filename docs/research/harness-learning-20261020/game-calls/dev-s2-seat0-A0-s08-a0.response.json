@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.431,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Шаттл даёт 3 товара бесплатно — лучшая выручка на будущих рынках.\"}",
+          "reasoning_content": "Шаттл даёт 3 товара бесплатно (риск на границе? shuttle может быть изъят ~25% серого... тут после_own_action goods=3, значит чёрный? Риск существовал ранее; shuttle дает 3 товара — лучший ход. Беру choice 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495315,
+    "id": "20261020192150e5f04aee55034c98",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192150e5f04aee55034c98",
+    "usage": {
+      "completion_tokens": 96,
+      "completion_tokens_details": {
+        "reasoning_tokens": 64
+      },
+      "prompt_tokens": 3264,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 3360
+    }
+  }
+}

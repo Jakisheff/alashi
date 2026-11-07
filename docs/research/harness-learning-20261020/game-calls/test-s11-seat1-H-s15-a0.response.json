@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.509,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Высокая цена и остаток раундов малы: продаю оба товара за кэш сейчас.\"}",
+          "reasoning_content": "Round 5 market, price 12/unit, tax 0. Sell 2 now for cash. But future rounds 5-6 markets exist; selling credit may not repay? Round 6 credit not repaid... Round 5 credit repaid at round 6 start (devalued 0.62). Sell now choice 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498739,
+    "id": "20261020201855a3de97a2912e4f85",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201855a3de97a2912e4f85",
+    "usage": {
+      "completion_tokens": 104,
+      "completion_tokens_details": {
+        "reasoning_tokens": 71
+      },
+      "prompt_tokens": 3532,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3636
+    }
+  }
+}

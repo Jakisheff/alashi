@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.194,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон даёт влияние беднейшему сопернику; два «No» уже есть, мой голос гарантированно отклоняет его.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest. I'm president, richest. Two \"No\" votes already (weights 1+2=3). If I vote no: 5 no, rejected anyway. Pass keeps weight but law fails regardless. Law 4 helps poorest (фракция 0), not me — but it fails without me. I could veto to be safe, or pass. Pass preserves nothing (bonus weight only for skipping action, not pass in law? \"влияние плюс 2, если основное действие action было пропущено\" — action already done). vote_no suffices.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498040,
+    "id": "2026102020071673f5fd55e29643cc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020071673f5fd55e29643cc",
+    "usage": {
+      "completion_tokens": 164,
+      "completion_tokens_details": {
+        "reasoning_tokens": 126
+      },
+      "prompt_tokens": 2481,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2645
+    }
+  }
+}

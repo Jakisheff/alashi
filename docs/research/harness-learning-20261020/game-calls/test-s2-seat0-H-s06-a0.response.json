@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.308,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Карта 5 даст +1 влияния самой богатой фракции 2, что угрожает моему посту президента — голосую против.\"}",
+          "reasoning_content": "Card 5: +1 influence to richest by cash. Richest is idx2 (22). I'm president; passing this card hurts me. Vote no. Player 2 voted yes. Vote no; 1 vs 1 → not passed. Good.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496466,
+    "id": "202610201941029f5c2be74fce4850",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201941029f5c2be74fce4850",
+    "usage": {
+      "completion_tokens": 95,
+      "completion_tokens_details": {
+        "reasoning_tokens": 53
+      },
+      "prompt_tokens": 2803,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2898
+    }
+  }
+}

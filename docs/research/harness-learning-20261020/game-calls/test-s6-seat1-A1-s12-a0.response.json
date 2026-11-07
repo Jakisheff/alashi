@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.117,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Продажа в кредит сохраняет выручку от девальвации 62% в начале раунда 5, векселя в ранг не входят, но дают cash к итогу после раунда 5.\"}",
+          "reasoning_content": "Round 4 market, cash will devalue at round 5 start (62%). Selling now gives cash that devalues. Sell credit avoids devaluation but promissory risk of card 8 already used. Only 6 rounds; last round credit unpaid. Round 4: promissory added at round 5 start after devaluation — so promissory is good, avoids 62% haircut. Sell all 2 on credit: 27.5M promissory, plus cash 3.72M → devalues to 2.3M + 27.5 = ~29.8M. Sell now: 25.72M → devalues to 15.9M. Credit better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497082,
+    "id": "20261020195117c2a99f54db8e4fcf",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195117c2a99f54db8e4fcf",
+    "usage": {
+      "completion_tokens": 205,
+      "completion_tokens_details": {
+        "reasoning_tokens": 147
+      },
+      "prompt_tokens": 2752,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2957
+    }
+  }
+}

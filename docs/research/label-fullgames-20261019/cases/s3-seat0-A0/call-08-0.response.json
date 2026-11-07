@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.094,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Покупка двух единиц сохраняет капитал от девальвации и даёт товар для будущих продаж по высокой цене.\"}",
+          "reasoning_content": "I have 30 alashi, no goods. Others have 2 goods each. Price 12 now. Buying reduces counter backwards. Buy units reduce counter? Buying 2 costs 24, gets 2 goods to sell later? Price declines as sold. Actually buying moves counter backward, raising future price. But my cash devalues at 62% at round start. Holding cash loses 38%. Buying goods preserves value. Buy 2 for 24 alashi → 6 cash left, 2 goods. Good move to hedge devaluation.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428139,
+    "id": "20261020004208327a699adcc34d96",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020004208327a699adcc34d96",
+    "usage": {
+      "completion_tokens": 148,
+      "completion_tokens_details": {
+        "reasoning_tokens": 111
+      },
+      "prompt_tokens": 2369,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2517
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.319,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 10% навредит моим продажам в следующем раунде; «нет» уже ведёт, поддерживаю отказ.\"}",
+          "reasoning_content": "Law 1: tax 10% on future sales. I plan to sell goods next round (3 goods). Tax 10% hurts me. Currently No=2, Yes=1, my vote weight 4. Vote no → No wins anyway (No=2 already > Yes=1? Yes needs strictly more than no; already yes=1, no=2, no wins). So vote no or pass. Vote no is safe.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496786,
+    "id": "202610201946227b78c4ad552443db",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201946227b78c4ad552443db",
+    "usage": {
+      "completion_tokens": 131,
+      "completion_tokens_details": {
+        "reasoning_tokens": 91
+      },
+      "prompt_tokens": 3249,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3380
+    }
+  }
+}

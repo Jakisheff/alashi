@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.341,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Кредитная продажа всех 3 единиц даёт максимум выручки без девальвации.\"}",
+          "reasoning_content": "Prices at sold_counter=4: 7,6,5. Sell 3 = 18. Credit = 22.5 promissory, but round 3 start cash gets floor(cash/100)*62... promissory added and reset, no haircut on promissory. Actually devaluation applies to cash only; promissory added full. So credit gives 25% more effective cash now. But holding goods later? Prices decline, sell now. Credit better: 22.5 now vs 18. But devaluation at round 3: cash 22.5 -> 13.95. Sell now cash 18 -> 11.16. Credit better (22.5 no devaluation since promissory added after? Cash floor at start round 3: cash=0, promissory added → 22.5 full). Choose sell_credit 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499666,
+    "id": "2026102020342155969d107f684214",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020342155969d107f684214",
+    "usage": {
+      "completion_tokens": 214,
+      "completion_tokens_details": {
+        "reasoning_tokens": 183
+      },
+      "prompt_tokens": 2325,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2539
+    }
+  }
+}

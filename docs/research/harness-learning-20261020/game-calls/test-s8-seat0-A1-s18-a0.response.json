@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.591,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Товар для продажи на последнем рынке даёт больше, чем взятка или проход.\"}",
+          "reasoning_content": "I'm president (influence 3). Next market round 6: last round. Produce gives 2 goods to sell at price ~ sold_counter currently 5... round 5 sold 2 more? sell_credit units 2 already done (sold counter 5 includes that). Price at counter 5 = 5+? price index 5 → 5 alashi? Prices [12,10,9,8,7,6,...] index 5 = 6 alashi. Selling 2 more units would push price down. Producing 2 goods sold at 6 and 5 = 11 alashi cash (cash not devalued? round 6 is last market; devaluation happens at start of round 6 on cash: cash=floor/100*62!). Wait: start of round 2 and later cash devalues: cash*0.62. So cash earned in round 5 market would be devalued at round 6 start too. Round 5 market revenue already in cash 6581300. Actually promissory adds to cash at round start without devaluation.\n\nSo holding cash is bad. Produce → sell 2 in round 6 at ~6 and 5 alashi = 11 alashi, but devaluation applies? Devaluation at start of round 6, market after. So revenue earned at round 6 market is not devalued (no round 7). Good: produce then sell gives ~11 alashi. That's better than pass. Bribe to raise influence to 4 helps presidency and influence bonus 5% of bank (2 alashi). Bribe 5M costs 5 alashi, gain influence +1 — keeps presidency (already holder with 3 vs 2,2; likely fine). Keeping presidency matters for law round 6 (veto) — influence 3 vs rivals 2. Rivals could bribe though. Influence bonus 5% = 2 alashi; bribe cost 5 not worth unless presidency at risk. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497882,
+    "id": "20261020200431652e4fe372044ba5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200431652e4fe372044ba5",
+    "usage": {
+      "completion_tokens": 450,
+      "completion_tokens_details": {
+        "reasoning_tokens": 422
+      },
+      "prompt_tokens": 3607,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 4057
+    }
+  }
+}

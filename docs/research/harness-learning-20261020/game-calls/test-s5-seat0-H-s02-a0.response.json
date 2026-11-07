@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.822,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон отдал бы +1 влияния президенту (фракция 1 по tie_order), а не мне — отклоняю.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest. All cash 0, tie_order [1,2,0] → poorest is idx1 (tie order). President is idx1, not me. Me idx0 would not get it. Voting: I have weight 1. Yes=1 (idx1), No=1 (idx2). My vote decides. Law gives influence to idx1, not me. So vote no to keep influence balance? Yes means 2>1 passes; No makes 2>1 rejects. Reject — card 4 gives influence to president idx1, which increases his max-influence bonus chances. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499058,
+    "id": "20261020202410b99d4af9e43b4f95",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202410b99d4af9e43b4f95",
+    "usage": {
+      "completion_tokens": 173,
+      "completion_tokens_details": {
+        "reasoning_tokens": 133
+      },
+      "prompt_tokens": 2498,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2671
+    }
+  }
+}

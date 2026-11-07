@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.453,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Покупка по 12 alashi невыгодна при будущих более низких ценах; сохраняю cash для аукциона.\"}",
+          "reasoning_content": "Own bid 0? Actually bid=0, auction later. Market: buy 1 unit costs 12 alashi. Goods worthless for me if I can't sell? I can sell later rounds 5,6. Price is high (12). Buying at 12 to sell later at lower price—bad. Pass.\n\nWait, own_bid:0 means auction still possible? The menu only offers pass/buy. Choose pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496748,
+    "id": "20261020194544cda7fa36f6f34afa",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194544cda7fa36f6f34afa",
+    "usage": {
+      "completion_tokens": 127,
+      "completion_tokens_details": {
+        "reasoning_tokens": 88
+      },
+      "prompt_tokens": 2583,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2710
+    }
+  }
+}

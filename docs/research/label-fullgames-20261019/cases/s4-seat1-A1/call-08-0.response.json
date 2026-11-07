@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 16.455,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Взятка даёт влияние 2 и сохраняет президентство (тай-приоритет) с вето и комиссией.\"}",
+          "reasoning_content": "I hold presidency (influence 1, others influence 2 for idx0? seen shows influence 2 for faction 0, 1 for others). Current state: idx0 influence 2, so idx0 would be president next law, not me. I'm faction 1, influence 1, own_bid 0. I'm currently holder (role holder_idx 1). I should gain goods for sale: produce gives 2 goods, sell later at falling price. sold_counter=6, price now... price list index 6 = 5 alashi. Shuttle gives 3 goods with seizure risk (tariff 0, no tariff set — risk exists? \"grey goods may be seized ~25%\"). Shuttle risk 25%. Produce is safe 2 goods. Also gaining influence would help presidency. Bribing 5 to idx... but bribing gives influence to me. President role gives veto power and 5% commission. Influence 2 needed to beat idx0? Currently idx0 has 2, tie_order favors me (1,0,2)? President = highest influence entering law; tie broken by tie_order. I have 1, idx0 has 2. With bribe 5 I get 2, tie with idx0 → tie_order favors me (idx1 first). So bribe 5 to either keeps presidency plus vote weight. But that costs 5 alashi for influence 2. Value of presidency: veto + 5% commission of bank (~1.5 alashi) plus influence. Also vote weight.\n\nBribe vs produce. I could only do one action. Presidency also matters because bribe recipients may overtake later. I think keeping presidency is valuable; choose choice 4 (bribe 5 to 0) — also weakens rival? No, gives cash to 0. Better bribe to 2? Similar. Choose 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490580,
+    "id": "20261020180244b19eab6df9254c20",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180244b19eab6df9254c20",
+    "usage": {
+      "completion_tokens": 431,
+      "completion_tokens_details": {
+        "reasoning_tokens": 393
+      },
+      "prompt_tokens": 3411,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 3842
+    }
+  }
+}

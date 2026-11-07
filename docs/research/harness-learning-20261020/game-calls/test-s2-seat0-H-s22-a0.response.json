@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.334,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 3 безвреден в последнем раунде и всё равно проходит — veto не нужен.\"}",
+          "reasoning_content": "Card 3 gives subsidy_goods=1 — no effect now (last round already acted, next market no produce). Actually subsidy affects produce, no more action phases. Harmless; pass lets it pass. Yes=3 > no=0 anyway, veto unnecessary. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496564,
+    "id": "20261020194240deb07e4066b540e5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194240deb07e4066b540e5",
+    "usage": {
+      "completion_tokens": 88,
+      "completion_tokens_details": {
+        "reasoning_tokens": 55
+      },
+      "prompt_tokens": 3755,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 3843
+    }
+  }
+}

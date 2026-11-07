@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.2,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Карта 0 без эффектов — исход голосования не влияет на выплату.\"}",
+          "reasoning_content": "Law 0 = no effect. Vote doesn't matter; president is idx2, abstain already. Pass keeps weight? Pass doesn't give +2 — that's only if action skipped. Vote value irrelevant; card 0 no effects. Pass fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427421,
+    "id": "202610200030159f30badf40d842f5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200030159f30badf40d842f5",
+    "usage": {
+      "completion_tokens": 79,
+      "completion_tokens_details": {
+        "reasoning_tokens": 52
+      },
+      "prompt_tokens": 3041,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3120
+    }
+  }
+}

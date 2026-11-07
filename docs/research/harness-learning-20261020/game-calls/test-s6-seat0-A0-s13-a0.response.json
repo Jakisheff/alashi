@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.282,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 6 снижает цены следующего рынка, а мне нужно продавать 5 товаров.\"}",
+          "reasoning_content": "Law 6: price shift -2 next market. I hold 5 goods, want to sell. Vote no. P1 voted Yes (weight 3), P2 not voted weight 4, president P2. My no (weight 1). P2 president likely votes no too? Unknown. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498217,
+    "id": "20261020201015133f2302ffcc44ac",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201015133f2302ffcc44ac",
+    "usage": {
+      "completion_tokens": 95,
+      "completion_tokens_details": {
+        "reasoning_tokens": 65
+      },
+      "prompt_tokens": 2758,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2853
+    }
+  }
+}

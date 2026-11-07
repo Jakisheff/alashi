@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.189,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":11,\"reason\":\"Взятка даёт влияние 2 и сохраняет пост президента по tie_order, тогда как produce дал бы лишь 2 товара при падающих ценах.\"}",
+          "reasoning_content": "I'm president (influence 1 + tie_order priority). Cash 21.25, promissory 21.25. Round 3 action. Selling later at declining prices; produce gives goods. But influence matters: фракция 0 has influence 2, so next law round they might be president? Law president = highest influence at law entry. I have 1, фракция 0 has 2 — I'd lose presidency unless I bribe. Bribe 5 to 0 gives me influence 2 — but tie at 2, priority tie_order: I'm idx1, tie_order [1,2,0] so I win. But bribing 0 gives them 3? No, bribe gives influence to sender, cash to receiver. So bribe 5 → I get 2, фракция 0 stays at 2 (cash to them). Tie broken by tie_order → I hold presidency. That costs 5 alashi but keeps veto/vote control and 5% commission bonus. Also bribe cash to rival weakens rank. Alternatively produce goods worth more. Presidency gives 5% bank (~1.5 alashi) plus veto power. Keeping presidency seems worth 5. Also need goods for income — but only one action. Round 3 of 6; still rounds 4-6 for production. I'll bribe 5 to 0? That gives them 5 cash though. Bribe to 2 instead — also fine, keeps influence 2. Choice 11.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792489978,
+    "id": "2026102017524964457c6a82e84672",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102017524964457c6a82e84672",
+    "usage": {
+      "completion_tokens": 362,
+      "completion_tokens_details": {
+        "reasoning_tokens": 319
+      },
+      "prompt_tokens": 3317,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 3679
+    }
+  }
+}

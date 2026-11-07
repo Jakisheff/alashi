@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.607,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продаю весь товар по высокой цене, чтобы к аукциону раунда 4 иметь cash ≥ 9.\"}",
+          "reasoning_content": "Price at counter 4 = 5. Sell all 3 at 5,5,4 = 14... actually listed cash 18 → price 6? counter 4 means index 4 → 5,5,5? They show 18 total (6+6+6). Round 4 auction rule: need cash ≥9 by round 4 action. Selling gives 18. Do sell 3 units, choice 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497420,
+    "id": "20261020195656f8fe49251b5a485f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195656f8fe49251b5a485f",
+    "usage": {
+      "completion_tokens": 128,
+      "completion_tokens_details": {
+        "reasoning_tokens": 92
+      },
+      "prompt_tokens": 2917,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 3045
+    }
+  }
+}

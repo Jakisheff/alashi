@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.691,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Продаю единицу по высокой цене 12 alashi за наличные, так как наличные влияют на итоговый ранг.\"}",
+          "reasoning_content": "I'm poor (3.25M), bid 0. License income 20-60 but cash matters for rank; bid placed already 0, so skip. Sell now at price 12? sold_counter 0, price 12, but opponents may sell before? Order rotates; I act now in round 4 market. Sell for cash 12M now — cash matters for final rank, promissory doesn't count in rank. Sell choice 1.\n\nWait, my promissory from round 2? Round 2 sell_credit 2 units gave 16.25M promissory to idx... history shows my promissory 16250000 appeared at row... In round 3 market seen: [16250000,0,1,0] — that's me? seen rows: participants in order? Row 1 = element 0? Round 2 market after sell: row0 17M... hmm seems rows correspond to participant types, and my promissory 16.25M shown in row1 (me). But current promissory=0 — round 3 start cash=floor/100*62: 16.25M promissory added → cash 16250000... state shows me cash 3255000. Round 3: I bought 1 unit (-? ) and shuttle gave grey→? Actually cash 5.25M at round3 action: 16.25M - 11M buy = 5.25M. Then round 4 start: floor(5.25M/100)*62 = 3255000. OK.\n\nSell now: 12M cash → total ~15.25M. Still last, but final rank counts cash; selling at 12 better than holding. Choice 1.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490336,
+    "id": "202610201758458627ae67e7234390",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201758458627ae67e7234390",
+    "usage": {
+      "completion_tokens": 410,
+      "completion_tokens_details": {
+        "reasoning_tokens": 371
+      },
+      "prompt_tokens": 2575,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2985
+    }
+  }
+}

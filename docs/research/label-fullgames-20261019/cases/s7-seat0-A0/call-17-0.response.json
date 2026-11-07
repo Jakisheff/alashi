@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.468,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":7,\"reason\":\"Последний рынок — вексель не погасится, поэтому продаю весь товар за наличные, максимизируя ранг богатства.\"}",
+          "reasoning_content": "Last market round, promissory unredeemed → sell normally. Sell 4 at price 12,10,9,8 = 39 alashi = 39,000,000, cash 41.46M. That boosts rank but I'm still behind (16.5M, 5.2M). Selling more raises cash for ranking. Choice 7.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491078,
+    "id": "202610201811137f66fbab554a4c60",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201811137f66fbab554a4c60",
+    "usage": {
+      "completion_tokens": 118,
+      "completion_tokens_details": {
+        "reasoning_tokens": 78
+      },
+      "prompt_tokens": 3327,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3445
+    }
+  }
+}

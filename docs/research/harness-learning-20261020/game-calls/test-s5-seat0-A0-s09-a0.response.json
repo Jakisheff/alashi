@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.386,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Беру 3 товара через shuttle для будущих продаж, деньги сохраняю.\"}",
+          "reasoning_content": "Need goods to sell. I have cash 21.25, promissory 38.75 (paid at round 4 start, devalued 62%: wait promissory added to cash without devaluation). Actually promissory adds to cash at round start. So cash grows. Get goods: shuttle gives 3 goods. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498463,
+    "id": "20261020201420523318d845554306",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201420523318d845554306",
+    "usage": {
+      "completion_tokens": 100,
+      "completion_tokens_details": {
+        "reasoning_tokens": 73
+      },
+      "prompt_tokens": 3384,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 3484
+    }
+  }
+}

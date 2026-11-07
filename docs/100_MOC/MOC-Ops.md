@@ -4,6 +4,17 @@
 
 ## Файлы
 
+- [Перенос в AWS Амира, 2 ноября](../ops/MIGRATION_20261102.md): работающий прод на новом IP, проверки после переключения и цены. В отчёте сохранена хронология задержки; описаны откат и сборка вне прода.
+
+- [Релиз текстов сайта, 31 октября](../ops/SITE_COPY_DEPLOY_20261031.json): публичные HTTP-хэши, проверка главной, About и workspace, сохранённый previous.
+
+- [Работа клиента задаёт границы изменения](../200_ZETTEL/20261026-client-scenario-implementation.md): правило для разработки и делегирования на основе разбора Family & Friends Store.
+
+- [RustSec repair for PR 60](../ops/RUSTSEC_20261025.md): исправленные зависимости, адаптер тестовой среды Solana и проверка совместимости.
+
+- [Private comparison deployment, 26 October](../ops/HUMAN_COMPARISON_DEPLOY_20261026.md): проверки опубликованного релиза и порядок восстановления.
+- [Human hypothesis comparison acceptance](../ops/HUMAN_COMPARISON_20261025.md): приватный цикл одной гипотезы, локальная приёмка и границы проверки.
+
 - [AGENTHANSA_RESEARCH_STATUS_20260927.md](../ops/AGENTHANSA_RESEARCH_STATUS_20260927.md)
 - [ALASHI_LLM_REASONING.md](../ops/ALASHI_LLM_REASONING.md)
 - [ARCH_TRAINING_CAMP.md](../ops/ARCH_TRAINING_CAMP.md)

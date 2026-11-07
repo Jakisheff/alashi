@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.941,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель сохраняет полную стоимость при девальвации в начале раунда 6, поэтому sell_credit на 3 единицы выгоднее прямой продажи.\"}",
+          "reasoning_content": "Price at counter 6 = 5 alashi per unit. Sell 3 gives 15M cash now. Sell_credit 3 gives 18.75M promissory — but round 5 start: cash devalued then promissory added; promissory from round 5 market gets paid at round 6 start, then round 6 market is last — after last round promissory not paid. So sell_credit now still gets paid (added at round 6 start). 18.75M vs 15M — but cash devaluation: cash floor/100*62 at round 6 start, so cash loses 38%. Promissory keeps full value. So sell_credit 3 better: 18.75M intact vs 15M→9.3M. Choice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427592,
+    "id": "20261020003306c04b3040071f439e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003306c04b3040071f439e",
+    "usage": {
+      "completion_tokens": 211,
+      "completion_tokens_details": {
+        "reasoning_tokens": 168
+      },
+      "prompt_tokens": 3309,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3520
+    }
+  }
+}

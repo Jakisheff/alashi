@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.929,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 10% навредит моим будущим продажам, голосую против вместе с фракцией 1.\"}",
+          "reasoning_content": "Law 1: 10% tax on future sales. I'm likely to sell later (2 goods). Faction 1 voted No. President is faction 0 (weight 4). Vote No to block tax — with my No, yes=0, no=2, rejected. But veto could also apply. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490079,
+    "id": "202610201754369d128795eeac49cc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201754369d128795eeac49cc",
+    "usage": {
+      "completion_tokens": 102,
+      "completion_tokens_details": {
+        "reasoning_tokens": 67
+      },
+      "prompt_tokens": 2894,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2996
+    }
+  }
+}

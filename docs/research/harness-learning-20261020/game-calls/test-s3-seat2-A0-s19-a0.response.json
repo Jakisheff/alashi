@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.381,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 3 (субсидия товара) в финальном раунде не влияет на выплаты, мой ранг богатства и так первый.\"}",
+          "reasoning_content": "Law 3 = subsidy goods, no effect now (last round, no more production). Both voted yes (weight 1 each = 2 yes). Abstain keeps law passing but it's harmless. Rich rank: I'm first anyway. Veto pointless. Choose abstain/pass — either fine. pick pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498044,
+    "id": "202610202007210dd7f6448c92442f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202007210dd7f6448c92442f",
+    "usage": {
+      "completion_tokens": 108,
+      "completion_tokens_details": {
+        "reasoning_tokens": 65
+      },
+      "prompt_tokens": 3237,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3345
+    }
+  }
+}

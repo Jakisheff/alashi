@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.453,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":41,\"reason\":\"Ставка 20 alashi на лицензию с ожидаемым доходом 20–60 alashi выгодна и, вероятно, перекрывает соперников.\"}",
+          "reasoning_content": "License доход 20-60 alashi сверх доли. Ставка 20 alashi может победить. Rivals have ~30M and ~9.7M cash. Bid 20M (choice 41) seems reasonable; income EV ~40 alashi vs cost 20M = 20 alashi. Actually cost goes to bank (bid added to bank), so net gain still positive EV? Bid amount leaves my cash but into bank, distributed back partly. Bid ~20M reasonable.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496833,
+    "id": "20261020194708d93ae160cf2b4e99",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194708d93ae160cf2b4e99",
+    "usage": {
+      "completion_tokens": 146,
+      "completion_tokens_details": {
+        "reasoning_tokens": 102
+      },
+      "prompt_tokens": 5803,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 5949
+    }
+  }
+}

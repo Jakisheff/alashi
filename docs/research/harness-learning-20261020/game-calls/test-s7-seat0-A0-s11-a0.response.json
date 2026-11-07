@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.796,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Скупаю дёшево, откатывая счётчик цены к максимуму, сохраняя наличные для аукциона.\"}",
+          "reasoning_content": "No goods to sell. Buy? Sold counter 3, price_shift -2, so price 8-2=6 for me, but opponents sell too. Buying moves counter back. I'm rich; inflation via devolvement cash=floor(cash/100)*62 — big cash loses 38%. Buying goods at 6 alashi to sell later higher? Price declines with sales; buying moves counter back increasing future prices. But I have no goods now; buy 1 at 6, later produce and sell at possibly higher price. Actually buy low now, sell next rounds... next round cash devalues 38%, so converting cash to goods is good. Buy 4? Leaves almost no cash for action (donkey needs 1 alashi, bribe). Round 4 action has auction; need cash to bid. License income 20-60 alashi; bid is important. Keep cash for auction.\n\nBuy 3 for 21 alashi leaves 11.4 for auction. Prices: I buy at counter 3 price index 8-2=6 each? Cash shows 21 spent for 3 units → 7 per unit. Future market round 5: prices shift reset? price_shift -2 applied to this market only. Round 5 prices: counter back at 0 after buying 3 → price 12. Selling 3 then at 12 = 36 alashi... but everyone produces. Likely good: buy 3, sell at 12 next round. Strong choice.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499765,
+    "id": "20261020203554944d20d3e35d4bdc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203554944d20d3e35d4bdc",
+    "usage": {
+      "completion_tokens": 349,
+      "completion_tokens_details": {
+        "reasoning_tokens": 310
+      },
+      "prompt_tokens": 2681,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 3030
+    }
+  }
+}

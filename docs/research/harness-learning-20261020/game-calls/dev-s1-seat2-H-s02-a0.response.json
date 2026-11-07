@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.381,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 8 обнуляет векселя, которых ни у кого нет — отклоняю без потерь.\"}",
+          "reasoning_content": "Law 8 обнуляет promissory — у всех 0. I'm faction 2, president is 1. Vote no — law useless, but veto not mine. Voting no is safe (no harm anyway since promissory=0 for all). Either way no effect. Vote no to avoid future promissory nullification hurting me later? Law affects current promissory only. Neutral. Abstain — faction 1 abstained, so yes=0 needed... actually my vote decides: yes passes, no rejects. No effect either way. Vote no harmless.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495054,
+    "id": "202610201917294b22169a19fd4bc1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201917294b22169a19fd4bc1",
+    "usage": {
+      "completion_tokens": 154,
+      "completion_tokens_details": {
+        "reasoning_tokens": 119
+      },
+      "prompt_tokens": 2432,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2586
+    }
+  }
+}

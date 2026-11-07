@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.808,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Раунд последний, товары проданы, взятка за влияние дороже бонуса — пропускаю.\"}",
+          "reasoning_content": "Final round action. Goods sold already; nothing useful. Pass is fine—no further market. Influence bribe could help max-influence 5% bonus, but rival has influence 2; bribe 5 to idx0 gives me influence 2... tie with idx1, resolved by cash (I win). 5% of bank ~2.25M minus 5M cost = loss. Skip. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499475,
+    "id": "20261020203108fb9e1bb9763d4c7b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203108fb9e1bb9763d4c7b",
+    "usage": {
+      "completion_tokens": 119,
+      "completion_tokens_details": {
+        "reasoning_tokens": 86
+      },
+      "prompt_tokens": 5132,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 5251
+    }
+  }
+}

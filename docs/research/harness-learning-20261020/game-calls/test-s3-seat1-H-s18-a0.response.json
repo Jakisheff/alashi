@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.52,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 10% ударит по моим продажам 6-го раунда; голос No блокирует закон при текущем раскладе 1:1.\"}",
+          "reasoning_content": "Law 1: tax 10% on future sales. I hold goods 3 and will sell next round. Tax hurts me. Vote yes vs no: currently Yes:1 (idx2), No:1 (idx0). My vote decides. Tax 10% on my sales ~ bad. Vote no → No=2 > Yes=1, law fails. Choose veto or vote_no? vote_no suffices. Also veto preserves influence? No, veto is free. vote_no works; veto also. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497003,
+    "id": "2026102019495966ade7f970fb4ad0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019495966ade7f970fb4ad0",
+    "usage": {
+      "completion_tokens": 153,
+      "completion_tokens_details": {
+        "reasoning_tokens": 107
+      },
+      "prompt_tokens": 3609,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3762
+    }
+  }
+}

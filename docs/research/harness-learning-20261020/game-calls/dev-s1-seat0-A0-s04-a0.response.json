@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.938,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Шаттл даёт больше товара; риск около 25% компенсируется, плата за серый товар при cash=0 бесплатна.\"}",
+          "reasoning_content": "I have 0 cash, 1 influence. Shuttle gives 3 grey goods but I can't pay the tariff (min(cash,2)=0). Produce gives 2 safe. Market prices: sold_counter 4, price ~7,5... Selling 2 later gets decent value. Shuttle gives 3 goods, ~25% seizure risk. Expected value shuttle higher. Tariff not black (no law yet). Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495556,
+    "id": "202610201925527ecf76db993e4c18",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201925527ecf76db993e4c18",
+    "usage": {
+      "completion_tokens": 130,
+      "completion_tokens_details": {
+        "reasoning_tokens": 89
+      },
+      "prompt_tokens": 2092,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2222
+    }
+  }
+}

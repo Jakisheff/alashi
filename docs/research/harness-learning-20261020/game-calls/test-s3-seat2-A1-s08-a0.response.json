@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.232,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Взятка даёт влияние 2, отбирает пост президента и бонус 5% банка, что окупается контролью законов.\"}",
+          "reasoning_content": "I'm idx2, cash 51.5, most cash. Round 3 action. Bribes buy influence — presidency is determined by influence; holder is idx1 now. Influence gives commission 5% of bank plus presidency control. Bribe 5M → influence 2, likely presidency for law rounds 3-5+? Others have influence 1. Getting influence 2 now secures presidency and 5% bank (~1.5M+) — bribe costs 5M but money goes to rival. Still, presidency control + max influence commission ~ worthwhile long-term? Bank 30M, 5% = 1.5M. Also veto power over tax laws protects my wealth.\n\nAlternatively shuttle for goods. I sold everything; prices now low (sold_counter 7, price 5+2=7). Producing goods now worth little. Influence is valuable: presidency each law round + commission at end. Bribe 5M to idx0 (closest rival? no, poorest). Bribe to 0 gives money to rival; both equal cost.\n\nAlso vote_weight +1 if action skipped — but bribe uses action. Choose bribe 5M to idx0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499215,
+    "id": "2026102020264757188d1823c84800",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020264757188d1823c84800",
+    "usage": {
+      "completion_tokens": 288,
+      "completion_tokens_details": {
+        "reasoning_tokens": 247
+      },
+      "prompt_tokens": 4024,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 4312
+    }
+  }
+}

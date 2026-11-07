@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.262,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":10,\"reason\":\"Продаю весь товар в кредит: вексель не девальвируется в начале раунда, выгода выше.\"}",
+          "reasoning_content": "Sell all now at high prices; cash devalues 62%, but promissory doesn't devalue and adds to cash. Sell credit all 5 → promissory 57.5, paid next round start without devaluation? Promissory added to cash and reset at round start after devaluation of cash (cash=0). So credit better. But last round credit unpaid — we're round 3 of 6, fine. Also tax may come (law 1 voted last round — did it pass? state tax_bps=0, so no). Sell credit all.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498363,
+    "id": "202610202012360a7aff8dae554cea",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202012360a7aff8dae554cea",
+    "usage": {
+      "completion_tokens": 156,
+      "completion_tokens_details": {
+        "reasoning_tokens": 120
+      },
+      "prompt_tokens": 2725,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2881
+    }
+  }
+}

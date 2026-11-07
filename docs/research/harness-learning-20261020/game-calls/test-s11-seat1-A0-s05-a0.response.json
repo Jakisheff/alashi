@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 18.985,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Шаттл даёт больше товара при хорошем ожидании, кэш всё равно нулевой.\"}",
+          "reasoning_content": "I'm idx1, no cash. shuttle gives 3 goods (possibly seized ~25%?). Actually shuttle gives 3+subsidy goods, grey goods may be seized. produce gives 2 safe. Goods worth ~5-6 alashi later. Risk 25% loss of shuttle → EV 2.25 vs 2 produce. Slight edge to shuttle, but if tariff red, whole goods lost? Currently tariff? Not stated; risk exists. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497626,
+    "id": "202610202000084ddd89d81efc4278",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202000084ddd89d81efc4278",
+    "usage": {
+      "completion_tokens": 130,
+      "completion_tokens_details": {
+        "reasoning_tokens": 98
+      },
+      "prompt_tokens": 2161,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2291
+    }
+  }
+}

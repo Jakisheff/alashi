@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.287,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Беру 3 товара с риском лишь при льготной границе, а влияние с tie_order сохраняет пост президента.\"}",
+          "reasoning_content": "Round 2 action. I'm president. Shuttle gives 3 goods (25% risk? risk applies to border only if tariff). Produce gives 2 safe. Shuttle seems better EV. Also want influence to keep presidency for law control. Tie_order has me first (2), influence all 1 — I keep presidency on ties. Shuttle for 3 goods.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498108,
+    "id": "20261020200825ca062ebb1bc94330",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200825ca062ebb1bc94330",
+    "usage": {
+      "completion_tokens": 110,
+      "completion_tokens_details": {
+        "reasoning_tokens": 73
+      },
+      "prompt_tokens": 3785,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 3895
+    }
+  }
+}

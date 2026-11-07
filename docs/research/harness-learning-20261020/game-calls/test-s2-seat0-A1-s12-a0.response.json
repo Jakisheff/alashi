@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 14.415,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Беру shuttle: бесплатные товары для продаж в оставшихся раундах ценнее взятки, влияние и так удерживает президентство.\"}",
+          "reasoning_content": "I'm president with influence 2, others 1. Rounds 5,6 remain; order rotates. Bid 20M made; cash after bid will be deducted if won (20M to bank, others' cash ~31M each — likely they bid too? Unknown). Best main action: shuttle gives 3 goods for future sale at low price (~1-2 alashi each... counter=10, price 2). Actually price ~2 alashi/unit → 3 goods ~6 alashi revenue, but sell in round 5/6. Shuttle free, better than produce. Risk of border seizure? Shuttle gives grey goods, 25% risk without black tariff. But no tariff now. Still shuttle expected ~2.25 goods. Alternative: bribe to increase influence for the 5% bank commission bonus. Influence 3 vs 2 matters for presidential role and commission. Bank 30M + bid 20M = 50M; 5% commission ~2.5M extra to max influence. Bribe 5M costs 5M for +1 influence — marginal. Keeping presidency matters for veto over tax law. With influence 3 vs their 1, safe. Actually they could bribe too, but their next actions unknown.\n\nShuttle goods: sell price round 5 ~2 alashi each ≈ 6 alashi ≫ 5 alashi bribe? But shuttle risk 25% loss. Expected value of shuttle ~4.5 alashi revenue. Bribe 5M for +1 influence: helps keep presidency and commission. I already have influence 2 vs 1; likely enough. I'll take shuttle for goods.\n\nActually goods price: sold_counter 10, price 2. Round 5 selling 3 units lowers price further but ~6 alashi. Shuttle is best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499750,
+    "id": "20261020203537bf191fec66de47d7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203537bf191fec66de47d7",
+    "usage": {
+      "completion_tokens": 415,
+      "completion_tokens_details": {
+        "reasoning_tokens": 377
+      },
+      "prompt_tokens": 3793,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 4208
+    }
+  }
+}

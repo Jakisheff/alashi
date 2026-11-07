@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.903,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон даёт влияние самому богатому (сопернику), поэтому голосую против, хотя он, вероятно, пройдёт.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest (idx2, cash 22M). Both others voted yes. I'm not president; richest is idx2 who gets influence. If it passes, idx2 gains influence → bad for me. Vote no; but 2 yes already → passes anyway. Still vote no symbolically. Choice 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497840,
+    "id": "20261020200358abf6cef339844783",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200358abf6cef339844783",
+    "usage": {
+      "completion_tokens": 109,
+      "completion_tokens_details": {
+        "reasoning_tokens": 71
+      },
+      "prompt_tokens": 2224,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2333
+    }
+  }
+}

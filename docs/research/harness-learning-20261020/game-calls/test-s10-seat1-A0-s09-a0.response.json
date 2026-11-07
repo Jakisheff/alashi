@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.337,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":11,\"reason\":\"Дешёвая взятка даёт влияние 2 и сохраняет пост президента по tie_order, а производить смогу в следующих раундах.\"}",
+          "reasoning_content": "I'm president (influence tie 1, tie_order gives me presidency; bribe to 0 gives them influence 2+1=3? No—bribe gives influence to me). Currently influence: 0 has 2, I have 1. In law, president is highest influence—I'd lose presidency to 0. Bribing 5 gives me influence 2, tie with 0, tie_order [1,0,2] → I keep presidency. Also goods: produce gives 3 goods (subsidy). Need income too.\n\nCash 21.25M + promissory 21.25M. Round 3 of 6. Bribing 5M to anyone gives me influence 2, keeping presidency, but costs cash. Value of presidency: 5% bank commission (~1.5M) plus vote weight. Alternatively produce 3 goods worth ~24M later.\n\nBribe to 0: gives them 5M cash, boosting rival. Bribe to 2 (poorest, 5M cash): raises rival cash slightly. Influence 2 keeps me president (tie_order).\n\nI think produce is valuable: 3 goods at ~8 alashi each = 24 alashi. But losing presidency to 0 (influence 2) means they control law; they could pass tax laws against me. Also final max influence gets 5% commission—0 would have 2 vs my 1.\n\nCompromise: bribe 5 to 2, keeping presidency at influence 2, then produce later rounds. But cash ranking matters. Bank 30M, my share... rank matters. Cash me 21.25+21.25 promissory(≈13 after deval rounds)... Rival 0 has 30.64M.\n\nI'll pick bribe 5M to 2 (choice 11) to secure presidency cheaply.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497476,
+    "id": "20261020195745c35822d9873944e1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195745c35822d9873944e1",
+    "usage": {
+      "completion_tokens": 438,
+      "completion_tokens_details": {
+        "reasoning_tokens": 396
+      },
+      "prompt_tokens": 3355,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 3793
+    }
+  }
+}

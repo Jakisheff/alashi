@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.942,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 10% сократит выручку моих продаж в раунде 6, поэтому голосую против.\"}",
+          "reasoning_content": "Law 1: tax 10% on future sales. I hold 3 goods, plan to sell in round 6. Tax 10% on revenue is bad for me. Holder is idx1 who has 2 goods too. Vote no.\n\nMy vote weight 1; opponent 0 also sells? Both opponents have 2 goods each; tax hurts them too. vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490417,
+    "id": "20261020180014c974c1985a0d48f0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180014c974c1985a0d48f0",
+    "usage": {
+      "completion_tokens": 114,
+      "completion_tokens_details": {
+        "reasoning_tokens": 79
+      },
+      "prompt_tokens": 3111,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3225
+    }
+  }
+}

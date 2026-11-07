@@ -859,3 +859,283 @@ evaluation protocol. Research only; no model calls, game changes or deployment.
 
 19.10 17:47. Brood War / agent evaluation research completed. Documents and archived original-manual reference are in PR https://github.com/Jakisheff/alashi/pull/59, content commit af68ee148888d1c71164a408dd6fdb79fc51c9fc. All five CI jobs passed for that content commit: https://github.com/Jakisheff/alashi/actions/runs/39253992543. Local scheduler: 15/15; archived fixture: eight runs rechecked; 60 relative links valid; 33 distinct source URLs opened; FULL text checks passed. Private owner manuscripts were not uploaded. No game code, external model call, deployment or transaction changed. The closing commit updates only this progress record.
 Факт: 0,48 часа, включая ожидание CI.
+
+20.10 15:21. Усиленный эксперимент названий alashi завершён и проверен.
+observed: все 72 полные партии GLM-5.3 low завершены, восемь seed с ротацией трёх мест и двумя запусками исходных названий. Разница выплат N минус среднее A0/A1: -4,189567 alashi; 95% bootstrap-интервал [-12,930784; 4,174515], точный двусторонний p=0,338820 по 6561 перестановке. Убедительный эффект по заданному критерию не обнаружен, отсутствие эффекта не доказано. Дистанция профилей действий между названиями 0,293981, при повторе исходных названий 0,287037; описательное сравнение.
+observed: все 1577 решений и 72 GameRecord воспроизвелись точно; независимая арифметика выплат совпала. Проверены первые допустимые ответы и 1391 исходный файл или префикс. 1344 запроса, 1338 ответов; четыре сетевые ошибки и два неизвестных исхода относятся к первому сегменту. После технической поправки 1b6ffc3 новых ошибок нет.
+Ограничение: сбор прервался после 30 партий из-за нехватки диска; техническое продолжение опубликовано до новых ответов. Все задания и принятые решения сохранены, но серверную версию модели за календарный перерыв не контролировали. Исследуются один псевдоним модели, фиксированные боты и ограниченное меню evalgame. Полный CI действующей арены и ончейн-исполнение не запускались; продуктовый код не менялся.
+Материалы: docs/research/label-fullgames-20261019/README.md, results.json и report.html; первичные данные в cases/.
+
+Оценки с техническим перерывом: первоначальный план 19.10 20:59, 1,5 часа до 22:29. Факт: 3,78 часа календарно до проверки 20.10 00:46, включая перерыв. План продолжения 20.10 00:46, 1 час до 01:46. Факт: 14 часов календарно до проверки 14:46. Календарные промежутки не равны активной работе.
+План после возобновления 20.10 14:46: 1 час, до 15:46. Факт: 0.6 часа до готовности проверенного архива (20.10 15:22). Активное время сбора двух сегментов по monotonic: 2820,4 секунды.
+
+20.10 15:46. Самостоятельное открытие закономерности alashi, предварительная фиксация.
+План: 1,5 часа, до 17:16.
+Проверка: 48 старых партий без объяснений и человеческих отчётов, собственная правка обвязки моделью, отдельная диагностика и 108 новых партий после фиксации версии. В начальную задачу не включается готовый стратегический вывод. Правила сохраняются, исходные локальные изменения защищены отдельным индексом Git.
+
+20.10 17:47. Самостоятельное изменение обвязки по старым партиям завершено.
+План: 2,25 часа, до 18:01, начало 15:46; прежние оценки 1,5 и 2 часа заменены этим планом.
+observed. Отдельная GLM-5.3 без истории чата и человеческих разборов исследовала все 48 старых партий A0/A1. Начальная задача не называла готовый механизм. Модель сама нашла потолок ставок 8 alashi, написала memory.md и augment; после 18 диагностических партий подала одну окончательную редакцию. Авторство подтверждено по сырым ответам, человеческой содержательной правки нет.
+source_defined. До первого запроса опубликован протокол 7b9c5bd. После исчерпания 12 ходов поиска публично зафиксирована поправка 9ddc208 на один запрос оформления без новых операций анализа. Обвязка и основной анализатор заморожены в 1fa4442 до контрольного прогона.
+observed. Все 108 новых полных партий завершены без сбоев, 12 seed с тремя местами и A0/A1/H. Проверены все GameRecord и 2422 решений, первые допустимые ответы и независимая арифметика. Основная разница H относительно среднего A0/A1: 1.331283 alashi, 95% bootstrap по seed [-2.948279; 5.686762], точный двусторонний p=0.698375. Устойчивое улучшение выплаты не подтверждено. Лицензии: H 35/36, A0 30/36, A1 29/36.
+observed. Независимый расчёт из исходных выплат в целых числах совпал. Повторный замороженный анализ дал одинаковые файлы. Все исходные хеши и непересечение seed проверены. Одна сетевая попытка без ответа учтена и сохранена; разрешённый повтор завершил партию, подстановки действий нет.
+observed. Контрпример к объяснению агента: в старом replay ставка 25→26 при тех же собственных остальных действиях и местах повысила выплату на 0,5 alashi. Агент не получал эту проверку. Новая пара random/genome также сохраняет потолок ставки 8; перенос против более высоких ставок не установлен.
+source_defined. Изменён только исследовательский архив. Продуктивные правила и код арены сохраняются; полный CI/SBF продукта не запускался. Материалы: docs/research/harness-learning-20261020/README.md, results.json, report.html; исходные ответы и партии сохранены рядом. Ключ авторизации в публикацию не включается.
+Факт: 2.02 часа до готовности проверенного архива. Все оценки этой задачи закрыты этим фактом; публикация и сверка копии следуют ниже.
+
+25.10.2026 00:51. Проверка человеческой гипотезы через сравнение собственных версий. План: 1 час, до 01:51. Исходный main 02e27cc; отдельная ветка codex/human-hypothesis-comparison-20261025. Критерий: один владелец фиксирует вопрос и ожидаемый результат до двух независимых запусков на одном статичном рекламном брифе. Фактическая правка видна; оценка ограничена соответствием брифу. Приватные данные не попадают в публичные дуэли. Проверки: API/reload/runner recovery, frontend и обязательные проверки проекта. Живые партии и платные модельные вызовы не выполняются.
+
+
+### 25 October 2026, human hypothesis comparison: progress (25.10 01:11 Almaty)
+
+Implementation is assembled in the isolated worktree: private comparison API, paired runner and owner form. Bootstrap suite passes 56 tests. Frontend comparison checks and production build passed. Integration and browser acceptance are running. Concurrent cold Rust builds exhausted disk space; only this task's generated target directories were removed. Checks now share a compact target and run sequentially. The existing SBF v1.54 installation is incomplete; its official reinstall also ran out of disk space. No real provider calls or transactions have been made.
+
+
+### 25 October 2026, human hypothesis comparison: progress (01:20 Almaty)
+
+Full arena suite passed, including signed comparison HTTP acceptance and existing duel/game regressions. Local fixture acceptance made exactly two model requests, recovered a lost report without another call, and kept private versions and runs out of the public library. Browser form creation, normalized provider origin, paired preparation and saved owner decision were checked against synthetic local data; no console errors were observed. Frontend production build, comparison/strategy checks and real Vite proxy allowlist checks passed. A final multiline input change is queued for focused comparison recheck. Indexer tests are compiling with the shared compact target. README now describes human idea testing as the product direction and separates this local scenario from existing Solana execution.
+
+
+### 25 October 2026, human hypothesis comparison: progress (01:30 Almaty)
+
+Indexer: PASS, 16 tests. Program host check: PASS. Final focused comparison checks: PASS, 7 tests, including multiline input, private-parent publication rules and signed HTTP recovery. A private child cannot be published until its parent is public; publication never happens automatically. Bots build and a full arena regression after this last guard are running sequentially. Browser QA is complete, screenshots saved, and the temporary preview was stopped. The task-local frontend dependencies were removed after the successful final build to preserve free space; source and built preview files remain. SBF validation is still blocked by the incomplete toolchain and storage limit.
+
+
+### 25 October 2026, human hypothesis comparison: verification complete (01:34 Almaty)
+
+Final arena suite: PASS, 144 tests with one pre-existing ignored canonical-snapshot check. Rules: 40 passed; indexer: 16 passed; Node bootstrap: 56 passed. Frontend production build and comparison/strategy/proxy checks passed. Program host check and bots build passed. SBF build and program SBF tests remain unexecuted after the incomplete v1.54 toolchain failed to reinstall for lack of disk space. Private comparisons, replay-safe recovery and owner decisions are implemented for static English advertising briefs. General scenario packages and external human validation remain future work. Preparing branch publication; no site deployment, provider spending or transactions occurred.
+
+
+### 25 October 2026, human hypothesis comparison: completed (01:36 Almaty)
+
+Published draft PR https://github.com/Jakisheff/alashi/pull/60 on codex/human-hypothesis-comparison-20261025. Local acceptance is recorded in docs/ops/HUMAN_COMPARISON_20261025.md. The first static advertising comparison workflow is implemented; no deployment was made. SBF validation remains outstanding for the documented toolchain/storage reason. Temporary build targets created for this task were removed after checks, leaving 1.8 GiB available. Source, screenshots and check logs are retained.
+
+План: 1 час, до 01:51. Факт: 0,75 часа (00:51-01:36, Алматы).
+
+
+### 25 October 2026, RustSec CI repair (01:47 Almaty)
+
+План: 0,5 часа, до 02:17. Reproduce the failed RustSec job on PR #60, fix its verified cause and verify the audit on the updated commit. Existing feature checks, fresh SBF build/program tests and secret scan passed in CI run40130577454; only the audit failed. No dependency changes made yet.
+
+
+### RustSec repair update, 25 October 2026 02:16 Almaty
+
+План: 1 час суммарно, до 02:47. Arena audit is clear. Indexer and bots audits now report zero vulnerabilities after precise ctutils/TLS patch updates. Root still needs crypto-bigint remediation: its only path is the host-side LiteSVM dev dependency via Solana secp256k1 recovery. A compatible adapter to patched RustCrypto is being prepared; independent review identified a high-S verification behavior change that must be guarded. No advisory ignores or weakened audit policy have been added.
+
+
+### RustSec repair verification, 25 October 2026 02:24 Almaty
+
+All four lockfile audits now report zero blocking vulnerabilities. Precise ctutils and TLS updates fixed root/indexer/bots advisories. A root-only Solana recovery adapter upgrades host RustCrypto while preserving the original syscall block and high-S rejection. The same four fixed-vector tests pass against both upstream 3.3.0 and the adapter. Root normal program dependency tree does not contain crypto-bigint. The adapter is a workspace member, so CI runs its tests; optional frozen-ABI lock resolutions add informational warnings, recorded explicitly. No advisory ignores or CI audit relaxation were introduced. Publishing the fix for full CI validation.
+
+
+### RustSec repair CI update, 25 October 2026 02:26 Almaty
+
+GitHub CI run40134150599 on commit7a7ca22: RustSec audit job120991979631 passed on all four lockfiles; secret scan passed. Frontend, full Rust tests and fresh SBF/program jobs are still running. Four compatibility tests passed on both original SDK and adapter. Waiting for the full compatibility result before closing the task.
+
+
+### RustSec repair completed, 25 October 2026 02:32 Almaty
+
+Fix commit7a7ca22 passed all five jobs in CI run40134150599: all-lockfile RustSec audit, frontend, full Rust tests, fresh SBF/program tests and secret scan. Updated PR #60 description and acceptance reports. The local audit also reports zero blocking vulnerabilities in every scanned lockfile; informational warnings remain recorded. Source behavior is covered by four fixed-vector checks passing on both the original SDK and the adapter. No deployment, transactions or paid model calls occurred.
+
+План: 1 час суммарно, до 02:47. Факт: 0,75 часа (01:47-02:32, Алматы).
+
+### 26 October 2026, client-scenario working rule
+
+13:12 Almaty. План: 0,4 часа, до 13:36. Amir requested adopting the working logic observed in Family & Friends Store for his agents and ALASHI. Scope: persistent instructions and the project application, with source evidence and an independent scenario review. No product execution change is intended.
+
+13:23 Almaty. Added the client-scenario rule and linked it from AGENTS.md and MOC-Ops. The rule keeps the human hypothesis distinct from its executor and connects acceptance to the owner's decision. Existing private comparison capabilities and future scenario-library work remain separate. An independent agent applied the general skill to missing queue data, a partially completed CLI operation and a typo; its review refined proportionality and recovery instructions. This was a review of agent decisions, not an application test run.
+
+13:28 Almaty. Documentation validation passed: local links, skill metadata, source hashes and git diff --check. New text passed FULL checks with meaning review; existing NMT boilerplate was preserved. Change e2a7f662cee070dec67a4bededb6bcb3cdf15cd3 is pushed to codex/human-hypothesis-comparison-20261025. Runtime code, Anchor instructions and game rules are unchanged; application suites were not repeated for this documentation change. Automatic skill selection in a new app session remains untested.
+
+Факт: 0,27 часа (13:12-13:28, Алматы). План до 13:36 закрыт.
+
+
+### 26 October 2026, comparison execution repairs
+
+13:54 Almaty. План: 0,8 часа, до 14:42. Fix the three defects reproduced in the targeted audit: private response/parser mismatch, stranded prepared reservation after a parallel failure, and duplicate model execution from separate journals. Acceptance: actual server serialization accepted by the frontend, interrupted attempts can reach an owner decision, and competing executors cannot both start the same call. Preserve saved receipts and uncertain usage. No provider spending or deployment.
+
+
+26.10.2026 14:10 Almaty. All three repairs are implemented. Fresh bootstrap suite passed 64 tests. Frontend comparison, strategy and trading checks passed. Actual HTTP responses pass the frontend parser, and the competing-journal HTTP case grants two calls for two variants. Full arena suite passed 148 tests with one pre-existing ignored snapshot check. Rules validation is running; remaining cold-build checks will use fresh CI because local disk is constrained. No deployment or paid provider calls.
+
+
+26.10.2026 14:19 Almaty. Comparison repairs completed. Commit e9b181c390269a73c54694587ca22b72a9e1702b is pushed to PR #60. CI run40297668440 passed all five jobs, including fresh SBF/program tests and all-lockfile RustSec audit. Local checks passed 148 arena tests (one pre-existing ignored), 40 rules tests and 64 bootstrap tests. Actual HTTP responses pass the frontend parser; competing independent journals cannot both claim a task. [Acceptance](docs/ops/HUMAN_COMPARISON_20261026_REPAIR.md) records migration and copied-journal limits. No deployment or real provider calls.
+
+План: 0,8 часа, до 14:42. Факт: 0,42 часа (13:54-14:19, Алматы).
+
+
+26.10.2026 14:26 Almaty. User explicitly requested deployment of the comparison repairs. План: 0,75 часа, до 15:11. Verify the current public deployment, prepare a separate build and staging check, preserve state and rollback artifacts, then publish the matched arena/frontend/runner version and verify public behavior. No new blockchain deployment or paid model test is required for these fixes.
+
+26.10.2026 14:40 Almaty. Deployment preparation: current public release is main-523e14a-20261018; no active HTTP games. Candidate arenad built from 678861a (runtime e9b181c), SHA256 8c69fb6ca23ba33b91c9d1d441c3ccb734e0001f0bf0869d39e64ace9efa6d9f. Linux runner/arena checks and frontend build are running. New comparison routes prepared as an exact nginx allowlist. Old binary cannot read new strategy snapshot even with empty comparisons; rollback requires preserving both old binary and pre-upgrade snapshot/sequence. Production remains unchanged.
+
+26.10.2026 14:57 Almaty. Deployment completed: comparison-678861a-20261026 at https://alashi.network/strategies. Arena source678861a contains runtime fixes e9b181c; matching runner archive is published. Fresh Linux checks passed 148 arena tests (one intentionally ignored), 64 runner tests and frontend build/checks. Public HTTPS:48 checks passed. Browser loaded saved TEST receipts without console errors. Thirteen registrations and retained game/dialogue/wish sections match the backup. Active nginx sites-enabled was an independent regular file; corrected its routes after public verification exposed the inactive-file update. Initial POST hold was ineffective; no active HTTP games or lost data were observed. Chain API and Solana program unchanged. No paid model calls. Evidence: docs/ops/HUMAN_COMPARISON_DEPLOY_20261026.md and .json. Факт: 0,52 часа.
+
+26.10.2026 15:07 Almaty. План: 0,3 часа, до 15:25. Diagnose CI run40303742720 after the deployment documentation commit. Four jobs passed; Gitleaks reported two generic-api-key matches on public chain API build identifiers in the deployment JSON. Acceptance: reproduce with CI scanner version, exclude only the two verified historical fingerprints, and prove a new synthetic credential at the same file/line remains detectable. No runtime or production changes.
+
+26.10.2026 15:11 Almaty. Reproduced both findings locally; exact historical fingerprints now suppress them without changing rules. Gitleaks8.24.3 (official archive checksum verified) still detects an inert synthetic key at the same report path/line in a new commit. Preparing CI verification of the fix; no application or production files changed.
+
+26.10.2026 15:18 Almaty. Fix commit 21421de passed all five jobs in [CI run 40305655295](https://github.com/Jakisheff/alashi/actions/runs/40305655295). Both public metadata findings are excluded by exact historical fingerprints; default rules and scanning of the report remain enabled. Pinned scanner evidence and the synthetic-key control are recorded in [Gitleaks verification](docs/ops/GITLEAKS_METADATA_20261026.json). Temporary control repositories were removed after preserving logs. Application and production remain unchanged. Факт: 0,2 часа (15:06-15:18, Алматы). План до 15:25 закрыт.
+
+26.10.2026 15:25 Almaty. План: 1,5 часа, до 16:55. Amir requested implementing the remaining FFS mechanisms. Acceptance: independent sealed forecasts before a comparison, now/later backlog, daily in-app decision digest, explicit selection for subsequent runs, reviewed reusable public cards, and a local-data experiment mode that sends no raw material to ALASHI. Existing private comparisons and recovery remain compatible. Verify authorization, visibility, interruption and persistence through real HTTP and local deterministic providers; no paid model calls.
+
+26.10.2026 15:38 Almaty. Backend workflow and local experiment runner are implemented. First backend build passed seven initial research tests; the expanded suite and HTTP integration remain pending. Local runner passed 16 tests with an isolated HTTP provider and no ALASHI requests. Frontend integration and dependency setup are in progress. Public exports require separate reviewed text; cloud comparison data still remains server-side.
+
+26.10.2026 15:58 Almaty. All 84 bootstrap tests passed with a loopback provider. Full arena run exposed a timing-dependent concurrency assertion (100 ms overlap window); replaced it with a bounded two-request barrier, preserving the requirement of actual overlap. Independent audit found and fixed snapshot validation after clock rollback; runtime still blocks execution before the saved closure time. Full arena rerun is in progress. Frontend build, typecheck, research/comparison/strategy/trading and proxy checks passed; browser acceptance uses synthetic fixtures.
+
+26.10.2026 16:05 Almaty. Final local acceptance passed: arena 157 tests, zero failures, one pre-existing ignored snapshot test; bootstrap 84 tests, including 19 local experiment cases. Browser actions passed for saving an idea, owner decision, applying a version, invalidating stale publication consent and publishing only reviewed synthetic fields. Measured widths 390/424/1280 had no horizontal overflow. Frontend build and all affected contract/proxy checks passed. Evidence: docs/ops/FFS_WORKFLOW_20261026.json. GitHub CI and rollout remain pending.
+
+26.10.2026 16:13 Almaty. Runtime commit 39bda66 passed all five jobs in CI run 40312557998, including fresh SBF execution and all-lockfile RustSec. Isolated deployment-host build is running after Git blob verification. Corrected the preceding local-acceptance timestamp from the typed 16:06 to the actual date output 16:05; test results are unchanged.
+
+26.10.2026 16:32 Almaty. Release research-39bda66-20261026 activated from runtime 39bda66. Full snapshot load passed before and during activation; 13 registrations and four saved runs retained, no active HTTP games. POST hold was confirmed through public DNS and localhost TLS, old workers drained, stable state/sequence backed up, backend and immutable static resources switched, authenticated boundaries probed anonymously, hold removed. First attempt stopped before installing the binary because the nginx reload probe ran before convergence; the previous service/config were restored without replacing data, bounded status convergence was added, then activation succeeded. Public smoke and final browser checks are in progress.
+
+26.10.2026 16:42 Almaty. Public HTTPS acceptance passed 85 checks, including every map input, the GLB and runner digest, private authorization/method gates and public library. A public-file permission defect (0640 after copy) was repaired only within the new release; all 359 content hashes remained unchanged. The live browser now loads the map, retained TEST receipts and workspace without console errors. Seven publisher tests pass, including four regressions that reject unreadable files/directories without changing pointers. Runtime 39bda66 remains deployed; release evidence and the publisher guard are being committed.
+
+26.10.2026 16:53 Almaty. FFS workflow implementation and deployment complete. Runtime 39bda66 is live at https://alashi.network/strategies; tooling/evidence commit 1b80b63 passed all five jobs in CI run40317578757, including the new publisher permission regressions. Public HTTPS passed 85 checks; saved data continuity and the browser view are recorded in docs/ops/FFS_DEPLOY_20261026.md/.json. Public current/previous directories both pass the new guard without pointer changes. No paid model call or Solana transaction. PR #60 updated. Факт: 1,47 часа (15:25-16:53, Алматы). План: 1,5 часа, до 16:55 закрыт.
+
+### 2026-10-28: repair three audit findings
+
+План: 2 часа, до 21:04. Restore independent public reads under slow RPC, enforce model response limits while streaming, and bound child-tool termination. Preserve RPC rate limiting, owner journals and isolated tests; reproduce each failure before fixing.
+Факт: 0,35 часа (19:04-19:25, Алматы). Добавлены ограниченная параллельность chain API с общим RPC-лимитом и отдельной блокировкой игры, потоковый предел ответа модели и принудительное завершение группы внешнего инструмента. Проверки: rules 40, arena 157 (1 ignored), indexer 20, agent-bootstrap 89; cargo check программы и сборка ботов прошли. Три выбранные мутации лимита соединений обнаружены отдельным стендом с поддельным RPC. Начальная мутационная проверка была прервана после конфликта общего Cargo-кеша; кеш пакетов очищен, indexer проверен повторно. SBF и зависимые тесты не выполнены: отсутствует platform-tools v1.54. Деплой и реальные транзакции не проводились.
+
+### 2026-10-28: integrate and prepare audit repairs
+
+План: 2 часа, до 23:17. Verify current main and the repair branch, run required CI including fresh SBF, and prepare a safe release of the changed public API. Record deployment scope and evidence before activation.
+
+28.10.2026 21:39 Almaty. PR #63 CI exposed an HTTP 503 reset on Linux; the overload handler now reads a bounded request header before replying and caps rejection workers. The indexer suite passed on Linux and macOS. The agent suite passed 92 tests with measured coverage; scoped CRAP checks cover the changed functions. RustSec identified four advisories in existing Solana zstd dependencies. A temporary dependency update clears the audit; compatibility and bot builds are under investigation. Production is unchanged.
+
+28.10.2026 21:43 Almaty. Patched the two upstream Solana decoder manifests to use fixed zstd; their Rust sources remain unchanged and provenance is recorded under vendor/. The temporary Linux build passed the full indexer suite and bot build, and a compressed-account round trip. Indexer and bot RustSec audits both report zero vulnerabilities. The upstream decoder exposes one existing deprecation warning; it remains visible. CI on the final commit is still required before merge and deployment.
+
+28.10.2026 21:51 Almaty. CI passed RustSec, frontend, secret scanning and fresh SBF on 0ab0467. The remaining job rejected an upstream deprecation as an error because the decoder is now a local crate. Test the compatible solana-account 3.2.0 rather than suppress warnings; extend the compression round trip to compare every account field. The release binary and runner package were staged without activation and must be rebuilt for the final commit.
+
+28.10.2026 22:04 Almaty. PR #63 merged as 707c668 after all five checks passed on 125393d: RustSec, secret scanning, frontend, fresh SBF/program tests, and the complete host suite. The API and downloadable owner runner are live in release audit-125393d-20261028. Independent public verification confirmed the manifest, runner digest, /strategies HTTP 200 and the unchanged archived game with 72 events. Previous API and frontend versions are retained for rollback. Temporary build caches were removed after verification. No paid provider call or Solana transaction was made.
+
+Факт: 0,78 часа (21:17-22:04, Алматы). План: 2 часа, до 23:17 закрыт.
+
+### 2026-10-28: update local owner runner
+
+28.10.2026 22:13 Almaty. План: 0,5 часа, до 22:43. Locate the owner's local installation, update from the verified deployed runner, preserve settings and private state, and run installed-copy acceptance with isolated test providers. No paid calls or Solana transactions are needed.
+
+28.10.2026 22:23 Almaty. The installed wrapper points to 523e14a; the version acceptance check fails before the update as expected. Downloaded and hash-verified the published 125393d package, then compared all 21 files with the deployed Git source. The staged copy passed 92 tests on the launcher's Node 22.17 using isolated homes and loopback mocks. All 45 private configuration/state entries retain their content and modes. A fresh native companion build is running before activation; the old release is retained.
+
+28.10.2026 22:33 Almaty. Native build passed with warnings denied; 8 signer tests and 9 admission tests passed. One dedicated-validator match test is intentionally ignored. The real launcher acceptance caught the package's entrypoint guard rejecting symlink spelling: version worked but an empty CLI invocation returned zero without running main. Automatic rollback restored both old pointers. Reproduced symlink versus physical-path behavior, then adjusted the launcher to resolve the release physically before Node execution. Package source remains identical to the deployed archive.
+
+28.10.2026 22:37 Almaty. Observed: the installed alashi-strategy command and rebuilt macOS native client now use 125393d. The package passed 92 Node tests; the native client passed 17 tests, with one dedicated-validator match test ignored. The actual launcher completed a loopback TEST-provider run and resumed it without another provider call. Installed MCP returned the unchanged public archive with 72 events. All 45 private configuration/state entries retain their contents and permissions. The old release and wrapper backup remain available for rollback; temporary build output was removed. Evidence is stored locally under the runner updates/20261028-2213 directory. No paid provider request or Solana transaction was made.
+
+Факт: 0,4 часа (22:13-22:37, Алматы). План: 0,5 часа, до 22:43 закрыт.
+
+### 2026-10-29: run the full local-validator match test
+
+29.10.2026 02:03 Almaty. План: 1,5 часа, до 03:33. Prepare an isolated local validator with the matching ALASHI program, run the previously ignored signed full-match test, retain verifiable results, and stop task-owned services. Use only temporary local keys, ledger and local test funds.
+
+29.10.2026 02:14 Almaty. The validator CLI bind-address controls its node sockets, but upstream test-validator hardcodes wildcard binds for two listeners: RPC and PubSub. A remote-IP sandbox filter did not block a same-host LAN-address request; the validator was stopped before any match. Shared failed premise: caller configuration or peer filtering could remove the internal wildcard assignment. Restrict the bind request itself in this validator process, then verify actual sockets and rejection via the LAN address before running the test. Program bytes and transaction logic remain unchanged.
+
+29.10.2026 02:17 Almaty. A process-local macOS bind interposer now replaces wildcard IPv4/IPv6 addresses with loopback. It compiled with warnings denied and was reviewed independently. Final validator started with a fresh ledger; actual socket inventory contains only loopback addresses, local health succeeds, and same-host LAN RPC is refused. The control changes socket binding only, not program bytes or transaction logic. The source/test build is 125393d and remains isolated from the original checkout and private profiles.
+
+29.10.2026 02:31 Almaty. Observed: the previously ignored signed full-match test passed on the isolated validator: one test passed, zero failed, zero ignored. The three cases completed at rounds 6/6/0 with settlement. Independent local RPC reads verified 117 successful game transactions and rent-only balances on all Game accounts; the log contains 63 confirmed host receipts. The validator was stopped and its ports closed. Private ledger/evidence archives and a runnable test executable were retained after hash verification; temporary build and ledger directories were removed. [Execution report](docs/ops/LOCAL_MATCH_VALIDATOR_20261029.md) records the deployed ELF, client source, socket restriction and test limits. No public-cluster transaction or private owner profile was used.
+
+Факт: 0,47 часа (02:03-02:31, Алматы). План: 1,5 часа, до 03:33 закрыт.
+
+### 2026-10-29: deploy the current main release
+
+29.10.2026 03:03 Almaty. План: 1 час, до 04:03. Compare the current main with live component provenance, prepare the matching release with rollback, deploy the authorized scope and verify public pages, resources, APIs and the owner-runner artifact. Preserve existing user work and production state.
+
+29.10.2026 03:12 Almaty. The live frontend contains commit 30f44fd, which main did not include. A deployment of main without that fix would lose the confirmed acted field. Restored its two source files, regression checks and CI step. The regression failed on main before the fix and all 88 adapter checks passed after it. Seven static publisher tests passed. The frontend scene, assets and event choreography match the live version; this change preserves account-state gating. The arena, chain API and runner sources match their deployed build inputs, so the release can retain those artifacts with their original provenance and avoid service restarts. Full CI and release verification remain pending.
+
+29.10.2026 03:32 Almaty. Release main-542a77a-20261029 is live from main commit 542a77ac30ffc85210410e8160c3ccf3da11a856 after all five CI jobs passed. The prior release audit-125393d-20261028 remains available for rollback. The publisher verified the candidate before switching. All 120 immutable frontend files and the root index matched the local production build. Public routes returned 200; the archived game retained its complete 72-event journal. The runner archive matched its SHA and main commit. PDF and PPTX digests matched the existing publication. Anonymous owner routes returned 401 with no-store. All four service PIDs and runtime binary hashes were preserved.
+
+Desktop and mobile checks passed for devnet and strategies without horizontal overflow or JavaScript errors. The existing THREE.Clock deprecation warning remains. The initial claim that WebGL was unavailable was withdrawn after direct visual inspection on 29.10 at 11:16; see the correction below. Paid provider acceptance and public-cluster transactions were not run. Source-equivalence evidence, CI and public checks are recorded in [deployment evidence](docs/ops/DEPLOY_MAIN_20261029.json); screenshots are retained locally.
+
+Факт: 0,48 часа (03:03-03:32, Алматы). План: 1 час, до 04:03 закрыт.
+
+### 2026-10-29: correct the WebGL assessment
+
+29.10.2026 11:16 Almaty. Corrected the deployment report's WebGL claim. The prior conclusion came from reading the canvas fallback text in an accessibility snapshot. Fiber 9.8.1 always puts that text inside canvas; it is not a renderer-failure signal. Direct visual inspection in the same in-app browser confirmed the 3D character rendering in the deployed main-542a77a-20261029 release. The console reported no errors. A screenshot is retained as webgl-confirmed-desktop.jpg. This verifies rendering in the observed replay; exhaustive visual acceptance of every animation was not performed. Product code and the deployment are unchanged.
+
+### 2026-10-29: audit all character animations
+
+29.10.2026 12:34 Almaty. План: 1,5 часа, до 14:04. Inspect every character animation on alashi.network at desktop and phone sizes. Verify intention, contact, consequence and replay controls against the existing Lasseter concepts. Reproduce defects, repair them and verify the published result.
+
+29.10.2026 13:25 Almaty. A fresh clock read confirmed the current time after context recovery. The inventory contains 18 character modes plus the map sprite playback. Baseline build and animation checks passed, including 8,654 sampled frames. Code inspection identified separate text timing and map clip timing for reproduction. Existing purchase and five-action concept images define the visual target; they remain concepts rather than claims about rendered detail.
+
+Viewer acceptance: the same confirmed event drives the motion and receipt. Pause and reverse seek preserve the whole pose, including screen text. Hands maintain contact and the face remains readable at 390 and 320 pixels. The audit must distinguish browser viewport checks from physical-phone and new-viewer acceptance.
+
+29.10.2026 13:38 Almaty. План уточнён: ещё 1 час, до 14:38. All five action contacts and seven reaction key poses were inspected at 390px, with tight compositions also checked at 320px. A separate 8,792-pose projection check found no head cropping. Confirmed defects concern paused screen text, map gesture timing, preview labelling and missing thought clearance in the real stream. Fixes and regression checks are being integrated. The in-app browser connection failed during desktop inspection; Chrome is now connected. Use the production build preview because the local Vite dependency optimizer loaded duplicate React/Fiber modules. Final browser acceptance and publication remain pending.
+
+29.10.2026 13:59 Almaty. Fixed text pause was inspected in Chrome: the face text remained visible at the paused pose. Regression checks now distinguish synchronous preview speech from asynchronous messages in /stream. The browser accepted the local stream fixture; its test-only CSP needed to allow the existing Troika worker compiler. Legacy visual review then exposed clipped fingertips in the home act pose and insufficient top clearance in accepted. A non-studio camera correction and full legacy frustum regression are being prepared.
+
+29.10.2026 14:31 Almaty. План уточнён: ещё 0,75 часа, до 15:15. Source commit 75f1bd9 is pushed in PR #65; CI run 40848875442 is awaiting confirmation. Browser control is available again. The fixed legacy act pose fits the desktop and 390px views. Accepted was checked on desktop and at 320x560 without badge overlap or horizontal overflow; fuckOff was checked on desktop and at 390px. The actual StreamPage renderer shows the long local thinking cue and face message clearly at 390px. These are local build checks; final desktop reactions, map playback and public deployment remain pending. No real game was launched.
+
+Correction to the 13:59 fixture assessment: allowing unsafe-eval did not resolve the test worker failure. The extra CSP belonged to the local fixture and was removed. No production CSP was changed. The stream visual check above used the fixture after that correction.
+
+29.10.2026 14:39 Almaty. Premerge QA update: all five jobs in CI run 40848875442 passed for source commit 75f1bd9. All seven desktop reactions were played from the start and paused at their meaning frames; head and hands remained in frame. Vote release and reverse seek were observed through the native slider. Desktop Sell/Mule/Bribe contact frames were inspected. Legacy rejected at 0.95 s passed on desktop, and legacy idle was observed in the mobile demo. The unsettled mobile rejected capture is excluded. Browser control failed again at 14:37. Map replay and postdeployment alashi.network checks remain open. Physical-phone and browser reduced-motion checks have not run. No general visual PASS is claimed. The existing plan remains open until 15:15; no real game was launched.
+
+29.10.2026 16:15 Almaty. Main CI run 40852936635 passed all five jobs, following PR CI run 40851777684. Release main-a4e85f3-20261029 is published from merge a4e85f379e9cdb295dad0dccea178949c14df13f. Candidate guards retained 60 deck files and four downloads. Postpublish runtime checks confirmed the same four service PIDs and both binary hashes. The corrected archive map was viewed on desktop at 1280px, including rewind from 9.7 to 0 seconds. At 390px, the 33.5-second end frame has scrollWidth equal to viewport width; replay motion was also observed. Public GET verification passed: all 120 immutable assets matched, archived data was unchanged, and there were no failures. Public browser QA is still running. Physical-phone performance and browser reduced motion remain untested. The task and time estimate remain open; no new real game was launched.
+
+Clock correction: two fresh TZ=Asia/Almaty date calls returned 29.10 16:15 after the earlier 15:02 reading. This journal uses the fresh value. Final task duration remains open; the previous 15:15 estimate has elapsed.
+
+29.10.2026 16:18 Almaty. Public browser QA passed for main-a4e85f3-20261029. The loaded script uses that release prefix. Legacy act keeps the full hand in desktop and mobile frames. Thinking at paused 0.6 seconds shows unchanged text in the 15:04:16 and 16:15:18 captures; the clock jump prevents interpreting their difference as continuous observation time. Public map desktop/mobile positions at 9.7 seconds match the local fixed scene; replay start and pause were observed, with no JavaScript errors. GET and runtime verification passed. Physical-phone performance, browser reduced motion and new-viewer comprehension remain untested. Final documentation commit CI is pending.
+План уточнён ведущим агентом в 16:15: ещё 0,25 часа, до 16:30. Факт: 3,7 часа по часам ноутбука, 12:34→16:18, включая подтверждённый скачок примерно на 71 минуту. Активная длительность работы надёжно не измерена. Исправления и публикация завершены, план закрыт. Новая реальная игра не запускалась.
+
+
+### 29.10 16:25 · Завершение CI отчёта анимаций
+
+План: ещё 0,25 часа, до 16:40. Gitleaks принял публичный SHA-256 chain_api за ключ доступа в JSON-поле с путём API. Значение сверено с опубликованным version.json и серверным файлом. Отчёт использует отдельные поля path/sha256; в .gitleaksignore добавлен только точный fingerprint исторической строки. Проверки staged diff и этого коммита проходят. Приложение и опубликованный релиз не меняются. Итог GitHub CI фиксируется в локальном evidence/latest-documentation-ci.json и сообщении владельцу.
+
+
+### 29.10 16:58 · Управление повторами в стиле YouTube
+
+План: 1,5 часа, до 18:26. Зритель на странице devnet должен без поиска находить управление повтором. Панель должна быть удобной на телефоне и компьютере. Карта показывает секунды сокращённого повтора; персонаж показывает номера подтверждённых событий. Это разные часы, поэтому панели подписаны отдельно. Подтверждённые данные сохраняются. Приёмка включает повторы и обратную перемотку на архивном матче. Пауза и продолжение должны сохранять выбранное положение. Сцена не должна перекрываться. Проверяются frontend и CI.
+
+
+### 29.10 17:12 · Уточнение владельца
+
+Амир выбрал основные кнопки без полноэкранного режима. Ранее подготовленное расширение удалено из обеих панелей; предыдущая запись об этом режиме относится к промежуточной версии. Chrome переподключён для дальнейшей проверки.
+
+
+Визуальная цель: элементы управления знакомы по YouTube. [Мобильный референс](https://web.dev/static/case-studies/better-youtube-web-part1/image/youtube-player-controls-9cafce0c55aab.png) показывает структуру плеера и не является кадром ALASHI. Панели расположены под сценами, чтобы не закрывать сцену и контакт предметов.
+
+29.10 17:32. Сборка и check:animations прошли. Встроенный браузер, архивный матч: пауза, продолжение, перемотка и повтор карты и персонажа проверены на ширинах 320, 390 и 1280 пикселей. На 320 пикселях горизонтальной прокрутки нет; кадр продажи и элементы управления сохранены в локальных доказательствах. Ошибок консоли нет. Физический телефон и настройка уменьшенного движения в браузере не проверены. Проверка качества, CI и публикация продолжаются.
+
+29.10 17:53. PR №66 и main CI прошли все пять заданий. Выпуск main-af19b06-20261029 опубликован из af19b064a354dcc94b773ab40474544f95d2f49c. На опубликованной странице проверены мобильные pause, seek, replay и Latest, а также вид на desktop. Все 120 файлов совпали со сборкой; 72 архивных события, четыре PID и оба серверных binary SHA не изменились. Dryer не нашёл дубликатов при пороге 0,8; пять выбранных мутаций обнаружены тестами. Crapper использован без покрытия, CRAP не вычислен. Физический телефон и настройка уменьшенного движения в браузере не проверены. Факт: 0,95 часа, 16:56–17:53.
+
+### 29.10 17:54 · Публикация журналов
+
+План: 0,25 часа, до 18:09. Отправить STATUS.md и PROGRESS.md в GitHub и проверить CI соответствующего коммита.
+
+[31.10 17:11] [README: публикация замысла] сделано: обновлённый README перенесён из Downloads поверх origin/main 12a696df трёхсторонним сравнением; сохранена upstream-правка party_no.txt. Замысел проверки гипотез команд и переноса подходов отделён от реализованных функций и планов; Team обновлён. Проверки: git diff --check, FULL --check: 0, 60 локальных ссылок/якорей, цели ссылок отслеживаются Git, shell-блоки совпадают с origin/main. Код не менялся, Rust/SBF и текущий сервис не запускались. Использован отдельный worktree, исходный staged diff и остальные локальные файлы сохранены | дальше: push в main GitHub | заблокировано: нет
+
+[31.10 17:26] [Тексты сайта] План: 0,5 часа, до 17:53. Сценарий: команда понимает замысел проверки собственной гипотезы, видит доступный рекламный comparison и отличает его от планов междисциплинарных сценариев. Правки: главная/Onboarding, About, metadata/fallback и вводная workspace. Логика, авторизация, игровые сцены и runner-протокол не меняются. Приёмка: build, применимые проверки frontend, FULL, просмотр desktop/mobile | дальше: проверка и публикация кода | заблокировано: нет
+
+[31.10 17:33] [Тексты сайта] Факт: 0,17 часа. Сделано: главная, About, metadata/JSON-LD/fallback и вводная /strategies согласованы с README; Available now и Planned разделены; игра обозначена как отдельная среда, прежний pitch как Earlier pitch. Build на Node 24.6.0, check:strategies, check:research, check:comparisons и git diff --check прошли. Lint exit 0 с существующими предупреждениями вне изменённой логики. FULL: 0 во всех 4 файлах; ручная проверка ритма и фактов выполнена. Browser: главная, About и переход в workspace, ширины CSS 390 и 1280, горизонтального переполнения нет; screenshots сохранены локально. Код до JSX в обоих компонентах совпадает с HEAD; pairing и model prompts не менялись. Crapper: сложность без coverage, CRAP не измерен; Dryer: дублей нет; Mutator: scan существующих участков, мутации не выполнялись для правки текстов. Rust/SBF не запускались. Production deployment не выполнялся | дальше: commit и push кода | заблокировано: нет
+
+[31.10 17:44] [Деплой текстов сайта] План: 0,5 часа, до 18:12. Разрешение: текущее поручение владельца развернуть тексты на alashi.network. Источник frontend 60b03e99; CI 41201692114 success, 7 publisher tests passed. Текущий release main-af19b06-20261029, backend 39bda667; diff frontend между активным релизом и кандидатом содержит только 4 файла текстов. Приёмка: отдельный immutable frontend release, сохранённый previous, совпадение HTTP-хэшей и новых строк на /, /about/, /strategies, браузерный просмотр. Backend/services/nginx не планируются к изменению | дальше: сборка с release base и live API | заблокировано: нет
+
+[31.10 17:53] [Деплой текстов сайта] Факт: 0,18 часа. Сделано: site-copy-60b03e9-20261031 опубликован через static_release.py; previous main-af19b06-20261029 сохранён и проверен для отката. 120/120 immutable файлов совпали по SHA через HTTPS (2 первичных транспортных таймаута устранены последовательной проверкой); /, /about/, /strategies вернули 200 и точные SHA сборки. Public version.json указывает frontend 60b03e99. В браузере подтверждены новые заголовки и Available now/Planned на трёх страницах, загружен новый bundle, console errors: 0; About mobile 390/390. Deck 60 файлов и downloads 4 файла сохранены, 4 сервиса active с прежними PID, nginx/backend не менялись. Свидетельства: docs/ops/SITE_COPY_DEPLOY_20261031.json | дальше: готово | заблокировано: нет
+
+[31.10 17:59] [About: убрать внутреннюю историю] сделано: по замечанию владельца полностью удалён блок Who builds ALASHI с датой смены ответственности и упоминаниями помощников. Остальная страница сохранена | дальше: публикация исправленного About | заблокировано: нет
+
+[31.10 18:03] [About: убрать внутреннюю историю] сделано: about-ef6552d-20261031 опубликован. На сервере сверено, что изменены только about/index.html и version.json; все остальные файлы совпадают с предыдущим релизом. Публичный HTTPS: 200 и точное совпадение HTML с source. В новой браузерной вкладке Who builds ALASHI: 0, текст о прежних участниках отсутствует. Процессы сервисов не менялись; previous site-copy-60b03e9-20261031 сохранён. Скриншот сохранён локально | дальше: готово | заблокировано: нет
+
+[02.11 18:04] [AWS migration] План: 3 часа, до 21:04. Перенос текущего прода alashi.network в AWS-проект Амира по заданию gist b44f5c6d25e808520b830e88437aa7f3. Готовность текущего этапа: отдельный EC2, Elastic IP, точные копии работающих бинарей и current/previous, HTTPS/API smoke через --resolve. Отчёт содержит инструкцию переключения. DNS меняет Иван; до согласования окна старый host остаётся единственным писателем с горячим кошельком. Франкфурт отклонён SCP; Амир выбрал ap-southeast-2 с сохранением FREE. Исходный сервер прочитан без изменения служб; running/disk SHA трёх бинарей совпали. Current about-ef6552d-20261031, previous site-copy-60b03e9-20261031. Секретные файлы и unit Environment не выводятся и не коммитятся.
+
+[02.11 18:14] [AWS migration] Проверены AWS Pricing: t3.nano $0.0066/час, t3.micro $0.0132/час, gp3 $0.096/ГБ-месяц; публичный IPv4 $0.005/час. Для 730 часов nano: $9.428/месяц, micro: $14.246/месяц до трафика/снимков. Реальный RunInstances для nano отклонён как not eligible for Free Tier; dry-run этого ограничения не выявил. Выбран резервный t3.micro из задания, лимит $16 сохраняется. AMI ami-010aeaecac4ab773a (Canonical Ubuntu 26.04 amd64, 28.10), public subnet ap-southeast-2a, encrypted gp3 10GB, IMDSv2, termination protection, Standard CPU credits; SSH только с текущего адреса Амира. Новый match-host и timer до переключения не запускаются. Активных HTTP games на исходном снимке 0, registrations 13. Email бюджета получен отдельно и в Git не записывается.
+
+[02.11 18:41] [AWS migration] Готова read-only копия на 32.236.8.133, i-0d41d049ae2181ffc. 716/716 frontend файлов и три бинаря совпали по SHA с источником. Приватный перенос разрешён после предъявления точного поручения Gist; 26 перенесённых служебных файлов совпали побайтно. Значения и приватные хэши не сохранялись в отчёте. Snapshot загружен: 13 регистраций, 0 активных HTTP игр, proposal-key identity совпала. Все 15 TLS/HTTP/API/security smoke прошли, available 581 MiB, swap 1 GiB, OOM 0. Новый host/timer inactive, HTTP записи 503; старые PID и DNS 15.134.10.182 сохранены. Бюджет $12 и пороги 80/100 настроены. Один encrypted EBS snapshot создаётся. Дальше: финальные проверки отчёта, commit/push и CI; до согласованного с Иваном окна источника не останавливать.
+
+[02.11 18:55] [AWS migration] Все 5 заданий CI 41455735385 для 5d76e171 прошли, включая fresh SBF. Подготовительный encrypted snapshot snap-0ef21e7200146454f completed. По новому поручению каналом связи стал append-only ~/team/BOARD.md на старом сервере; в 13:54:34 UTC опубликованы MIGRATION-20261102-01, -02 и -DNS. Переданы EIP 32.236.8.133 и результаты приёмки; CUTOVER_TIME_UTC=NOT_AGREED, HOLD DNS и старых служб. Окно запрошено у второй стороны. Старый периодический sync не восстанавливался. Следующий шаг: прочитать ответ и сохранить итоговый handoff до переключения.
+
+[02.11 18:58] [AWS migration: граница DNS] Подготовка завершена. Факт: 0,93 часа, 18:02 до 18:58. План: 3 часа, до 21:04 закрыт на запрошенной владельцем границе до DNS. Отчёт PR #68, основной commit 5d76e171, все 5 CI jobs passed. Агент Ивана в MIGRATION-20261102-03 (13:56:14 UTC) подтвердил EIP 32.236.8.133 и три внешних HTTPS маршрута; HTML SHA совпадает со старым, TTL уже 600. Иван предложит время отдельной записью. Текущий статус: CUTOVER_TIME_UTC=NOT_AGREED; старый прод работает, новый host/timer выключены. Дальше только после согласования окна: финальный sync, передача единственного host и A-запись Иваном. Демо нового host и certbot renew dry-run остаются после DNS.
+
+[02.11 19:08] [AWS cutover] План: 1 час, до 20:07. Амир передал сообщение Ивана: DNS уже переведён на новый IP, игроков нет; завершить переключение сейчас. DNS подтверждён: 32.236.8.133. Критерий: финальное состояние источника сохранено, только новый host работает с горячим ключом, обычный HTTPS и certbot renew dry-run проходят, старые службы остановлены и отключены. После восстановления записи: новый snapshot и закрытие отчёта.
+
+[02.11 20:42] [AWS cutover] Прод восстановлен на новом EIP: public /games 200/TLS valid, пустой POST 403 от приложения. Final sync source snapshot SHA проверен до старта; все 13 регистраций сохранены. Старые host/timer/arena/chain API остановлены и отключены в 14:09:50 UTC; новые службы active/enabled, host listen 8098, NRestarts=0. Задержка запуска: внешний IP ноутбука изменился, единственное SSH /32 правило обновлено на текущий IP; весь интернет для SSH не открывался. Поправка часов: после свежей метки 19:08 повторные date показали 20:40 и 20:41; UTC активации нового сервера 15:39:57. Активную длительность этого промежутка надёжно установить нельзя. План уточнён: ещё 0,75 часа, до 21:26. Дальше: certbot dry-run, публичный smoke и итоговый snapshot.
+
+[02.11 20:56] [AWS cutover] Внешний ACK DNS-DONE от ivan/agent (15:43:27 UTC): все DNS на новом EIP, страницы/API 200, старые службы inactive. Все 15 normal-DNS smoke прошли; certbot dry-run PASS. Итоговый encrypted snapshot snap-0af453da46c4b1e39 completed. Новый host PID4377, arena4383, chain_api4376, NRestarts=0, available570MiB. Окно превышено: source stop14:09:50Z -> activate15:39:57Z, 90мин7с. Полная HTTP outage трасса не собиралась; внешний 502 подтверждён14:44:50Z. Тайм-аут активации устранён обновлением единственного SSH /32, предшествующий разрыв статусов и часов зафиксирован без оправдания простоя. Workflow release-server.yml опубликован commit03bd4fe0 и запущен тегом server-v20261102-verify, сборка идёт в Actions, прод не пересобирался. Использован doc-maintenance для исправления устаревших preparation-фактов. Дальше: приёмка build-архива и финальный отчёт.
+
+[02.11 21:04] [AWS cutover: завершение] Факт: 1,95 часа по часам ноутбука, 19:07 до 21:04, включая зафиксированный разрыв показаний. Активная длительность не установлена. Первоначальный план 1 час до 20:07 и уточнение 0,75 часа до 21:26 закрыты. Прод работает на AWS Амира: normal DNS, 15 HTTPS smoke и certbot dry-run PASS; только новый host active/enabled, source старые службы disabled/inactive. Два encrypted snapshot completed, старые файлы не удалены. Workflow build run41475693563 success; 3 Linux release бинаря и frontend собраны на Actions, архив извлечён и все SHA проверены. Artifact13157967029, 22163850B. CI41475703568: 5/5 success для03bd4fe0. Actionlint и YAML/schema PASS; Crapper/Dryer/Mutator не поддерживают YAML, оценок нет. Осталось вне автоматической приёмки: ручное демо Амира и restore rehearsal; merge PR нужен для ручного dispatch с default branch. Превышенное окно и причина SSH задержки записаны в отчёте.
+
+[03.11 00:07] [ALASHI authority and budget] План: 0,5 часа, до 00:37. Создать отдельный ключ владельца программы, проверить резервную копию и передать Ивану только публичный адрес через BOARD. Поднять AWS Budgets до $15 с сохранением писем. Секреты остаются вне Git и вывода команд.
+
+[03.11 00:15] [ALASHI authority and budget] Новый ключ создан с правами 0600; публичный адрес копии совпадает, seed derivation проверен. Основной кошелёк Solana не менялся. AWS API подтвердил $15 MONTHLY и прежние письма 80%/100% с тем же получателем. Импорт двух записей в Apple Passwords выполняется; сохранение ещё не подтверждено.
+
+
+[03.11 00:35] [ALASHI authority and budget: завершение] Факт: 0,5 часа. План 0,5 часа до 00:37 закрыт. Отдельный ключ создан, seed derivation и публичный адрес копии проверены. Зашифрованная запись macOS login Keychain прочитана обратно: ключ и seed совпали побайтно. Apple Passwords зависли; Амир выбрал оставить проверенную копию в Связке ключей. Временные открытые seed/CSV и лишняя копия ключа удалены, рабочий файл 0600 сохранён. Независимая копия вне Mac не проверена. Публичный адрес доставлен Ивану строкой MIGRATION-20261102-AUTH в 19:17:09 UTC; ответ и передача прав пока не подтверждены. Read-only devnet query показывает прежнего владельца, транзакции агент не отправлял. AWS API подтвердил MONTHLY $15; пороги 80%/100% и получатель писем сохранены, предупреждения соответствуют $12/$15. Проверки: JSON/schema consistency, diff-check, FULL text cleaner и redacted secret scan. Rust/SBF не запускались: код приложения не менялся.

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.677,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Кредитная продажа всех 3 единиц даёт 1,25x выручку и обходит девальвацию раунда 6.\"}",
+          "reasoning_content": "Round 5 market, sell 3 now at 7,7,6 (counter at 4: prices [7,6,5]... actually index 4 → 7). Tax 10% passed in round 4 (law_id 1) — but state tax_bps=0? tax shows 0. Fine.\n\nSelling 3 now gives ~18 alashi. Cash counts for final rank; credit in round 5 gets promissory, then round 6 devaluation floor(cash/100)*62 applies to cash only, promissory added later — sell_credit avoids devaluation and gets 1.25x. Round 6 cash 22.5M → floor→13.9M; promissory 22.5M added. Credit better. Also round 6 can sell remaining 0 goods... sell 3 on credit now: choice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490121,
+    "id": "20261020175515f2440ee563f641c0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175515f2440ee563f641c0",
+    "usage": {
+      "completion_tokens": 228,
+      "completion_tokens_details": {
+        "reasoning_tokens": 186
+      },
+      "prompt_tokens": 3194,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3422
+    }
+  }
+}

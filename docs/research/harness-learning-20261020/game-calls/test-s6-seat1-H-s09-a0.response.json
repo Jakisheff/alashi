@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.505,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Бесплатно наращиваю товар для будущих продаж, сохраняя cash≥9 к аукциону раунда 4.\"}",
+          "reasoning_content": "Round 3 action, not auction round. Need influence to become president? Currently president is 0. Bribe 5 to idx0 gives +1 influence → 2, but vote_weight shown as 3 (pass actions? actually weight 3 = influence1+2 pass). To become president need highest influence at law. Bribe 10 → influence 3. But costly. Simpler: shuttle gives 3 goods → sell later. Next round 4 need cash≥9 after market — cash 11 now. Shuttle gives goods without cash cost. Choose shuttle (choice 3).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498295,
+    "id": "202610202011305b97e5c2150a4a4c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202011305b97e5c2150a4a4c",
+    "usage": {
+      "completion_tokens": 160,
+      "completion_tokens_details": {
+        "reasoning_tokens": 121
+      },
+      "prompt_tokens": 3552,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3712
+    }
+  }
+}

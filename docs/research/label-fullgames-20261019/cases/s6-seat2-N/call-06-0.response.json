@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.515,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Карта 8 уже вышла и не повторится, вексель выгоднее (1.25x) и будет погашён в начале раунда 4.\"}",
+          "reasoning_content": "Sell 2 at price 7 each = 14 alashi now. Price drops with each sale; sold_counter=4. Selling now at 7 each is decent. Promissory inflated 1.25 but risk of card 8 again — deck without repeats: cards 6,8 used, card 8 can't repeat. Actually deck no repeats until exhausted, so 8 already drawn — won't repeat. So sell_credit safe. But promissory paid at round start after devaluation 62%. Sell now 14; credit 17.5 promissory but next round devalued... promissory added after devaluation, so full value. But only redeemed at start of next round (round 4 start). Round 6 last—promissory unpaid. Now round 3, redemption round 4 and 5. Safe. Sell credit 2 units: 17.5 vs 14. Better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490194,
+    "id": "2026102017562935b9fe9a9c91461f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102017562935b9fe9a9c91461f",
+    "usage": {
+      "completion_tokens": 238,
+      "completion_tokens_details": {
+        "reasoning_tokens": 192
+      },
+      "prompt_tokens": 2413,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2651
+    }
+  }
+}

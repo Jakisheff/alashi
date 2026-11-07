@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.487,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Налог 10% бьёт по соперникам с товаром, у меня товаров нет — поддерживаю закон.\"}",
+          "reasoning_content": "Law 1: tax 10% on future sales. I'm richest (35.5) — rivals may vote yes. I have 2 goods... wait I sold 2, have 0 goods. Tax on future sales hurts others (they have 2 goods each) more than me. Let it pass? Vote no (I'm rich, tax doesn't hurt me directly since no goods). Actually I'll sell in round 6? I have 0 goods, but may produce. Tax 10% hurts me slightly. As president I can veto. Rivals each have 2 goods; tax hurts them. Let it pass — vote yes? Being neutral: vote_no gives 2+2=4 no vs their yes maybe 2 each = 2... vote_weight 2. If I vote no: 2+2=4 no, likely blocked. Better to let tax hit rivals: vote_abstain or yes. Vote yes to ensure it passes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498638,
+    "id": "202610202017102d39feeb68b74217",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202017102d39feeb68b74217",
+    "usage": {
+      "completion_tokens": 235,
+      "completion_tokens_details": {
+        "reasoning_tokens": 200
+      },
+      "prompt_tokens": 3588,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3823
+    }
+  }
+}

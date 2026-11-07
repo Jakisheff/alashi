@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.108,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель не девальвируется и даёт 1.25x выручку, поэтому продажа обоих товаров в кредит оптимальна.\"}",
+          "reasoning_content": "Sell 2 now at price 9,8 = 17 alashi cash. Credit gives 21.25 but round-end devaluation... cash devalues each round start (62%). Promissory added without devaluation? \"cash=floor(cash/100)*62, then promissory added\" — promissory not devalued. So credit is better. Sell both on credit: 21.25 alashi promissory, paid round 3 start. Take choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490925,
+    "id": "20261020180841558c62cb80114086",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180841558c62cb80114086",
+    "usage": {
+      "completion_tokens": 145,
+      "completion_tokens_details": {
+        "reasoning_tokens": 103
+      },
+      "prompt_tokens": 2218,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2363
+    }
+  }
+}

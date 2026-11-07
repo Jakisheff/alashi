@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 27.519,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Взятка 5 даёт +1 влияния и сохраняет пост президента за счёт tie_order при равенстве, дёшево к аукциону раунда 4.\"}",
+          "reasoning_content": "I'm the president with influence 1 vs rival's 2. I should gain influence or produce goods. Round 3, phase action. Sold counter = 6, price for next sales will drop. The license auction is in round 4 — it makes sense to keep cash for the bid.\n\nBribe 5 to player 0 (influence leader): I gain +1 influence (2), player 0 gains nothing from influence (bribe only gives influence to the sender). Then influence 2 vs 2, tie_order [1,2,0] — I keep the presidency in law? Influence 2 vs 2, tie_order gives me priority. That's cheap — 5 to keep the presidency. But goods and cash for round 4. I can also produce (3 goods), sell in round 4 at low prices (counter 6 → price 5). Hmm, produce 3 goods at 5 = 15. But who will buy? The market is shared.\n\nPriority: bribe 5 to 0 keeps the presidency and influence 2, cheaper than 10. But the presidency is only in law each round. Yes, choice 4.\n\nAlternative: shuttle 4 goods at a 25% risk — but tariff status? Is the tariff currently inactive? With an active favorable tariff I pay 2. There is no info. With produce it's safer.\n\nI think bribing to keep the presidency for the round 3 law vote (vote_weight 4) is worth more. I choose choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490820,
+    "id": "20261020180633d726891d40bf47c5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180633d726891d40bf47c5",
+    "usage": {
+      "completion_tokens": 372,
+      "completion_tokens_details": {
+        "reasoning_tokens": 320
+      },
+      "prompt_tokens": 3120,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 3492
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.184,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Бесплатные 3 товара дадут около 31 alashi на завтрашнем рынке — дороже, чем влияние, которое я и так удержу по tie_order.\"}",
+          "reasoning_content": "Round 5 action, I hold license, president, next round 6 final. Cash devolution: round 6 cash = floor/100*62. Important: spend cash now! Shuttle gives goods to sell in final round... wait round 6 market? Rounds: each round has market, action, law. Round 6 market exists before devaluation? Devaluation at start of round 6, before market. So cash 30.4M → 62% kept. Spend now: bribe gives influence — influence gives 5% bank commission to max influence player (bank 40M, commission 2M). Also president control in law 6.\n\nBuying influence: bribe 10M → +2 influence, influence=4 vs rivals 2 and... but I need cash for rank too. But cash devalues to 62%. Spending 10M saves losing 38%. Actually any spending now is efficient since devaluation. Also goods from shuttle: 3 goods sell in round 6 market at good prices (sold_counter=0, prices 12,10,9...). That's ~31 alashi revenue. Definitely shuttle: 3 goods, free, sell next round at ~12+10+9=31 alashi, taxed maybe. But wait subsidy? law might add subsidy.\n\nBribe vs shuttle: bribe gives influence but shuttle gives goods worth ~30 alashi — huge. But can only do one action. Shuttle gives 3 goods → 31 alashi revenue next market vs influence worth: 5% commission = 2 alashi plus presidency. I already have influence 2, rival 0 has 2 but tie_order [1,0,2] favors me. So I keep presidency. Choose shuttle (choice 3).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497141,
+    "id": "202610201952091a7d8610fc264e33",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201952091a7d8610fc264e33",
+    "usage": {
+      "completion_tokens": 411,
+      "completion_tokens_details": {
+        "reasoning_tokens": 365
+      },
+      "prompt_tokens": 4080,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 4491
+    }
+  }
+}

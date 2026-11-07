@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.459,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель не девальвируется, выручка 1.25x даёт максимум итоговой выплаты.\"}",
+          "reasoning_content": "Prices: sold_counter 2, next price 9 then 8. Sell 2 now: 9+8=17 → 17M cash gain. Promissory gets haircut 62% at round start? No — promissory added to cash, cash devalued. Promissory survives devaluation. Selling credit at 1.25x is good, promissory pays full. Sell_credit 2: 21.25M promissory, paid in full (only cash devalues). That's better than 17 now. Choose choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499200,
+    "id": "20261020202635737a5659efed4513",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202635737a5659efed4513",
+    "usage": {
+      "completion_tokens": 153,
+      "completion_tokens_details": {
+        "reasoning_tokens": 119
+      },
+      "prompt_tokens": 2533,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2686
+    }
+  }
+}

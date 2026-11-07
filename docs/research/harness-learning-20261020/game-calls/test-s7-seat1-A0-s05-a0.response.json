@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.405,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Производство даёт 2 надёжных товара для будущих продаж без риска изъятия и потери влияния.\"}",
+          "reasoning_content": "Need goods to sell later. Vote_weight already 3 (probably from passing action last round? Actually influence 1 + 2 because skipped? No, we produced. vote_weight 3—odd, maybe passed market). President is idx2. Best: produce (choice 1) for goods, keep cash. Influence bribes expensive; presidency holder has influence 1 tied—we have 1 too. Shuttle gives 3 goods free but grey risk ~25% seizure; no tariff yet... Actually shuttle grey goods may be seized at border unless preferential. Tariff 0—unknown. Produce gives 2 goods safely. Shuttle expected 3 grey risky. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496333,
+    "id": "20261020193848d00fa91318ef4e2b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020193848d00fa91318ef4e2b",
+    "usage": {
+      "completion_tokens": 172,
+      "completion_tokens_details": {
+        "reasoning_tokens": 137
+      },
+      "prompt_tokens": 3062,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 3234
+    }
+  }
+}

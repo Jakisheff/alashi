@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.955,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель 27,5 alashi не девальвируется и не облагается сразу, лучше наличных 22.\"}",
+          "reasoning_content": "Sell 2 at 12 and 10 = 22. Credit gives 27.5 promissory but round 3 cash floor: promissory added at start of round... promissory added at start of round 4 market after cash devaluation floor(cash/100)*62 — promissory adds fully. Hard cash 22 will devalue to floor(22/100*... ) cash=22 → floor(22/100)*62 = 0*... wait cash is in min units: 22000000 → floor(22000000/100)*62 = 220000*62=13,640,000 (that's what player 2 has). Credit avoids devaluation: 27.5M full. Sell credit 2 units is better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491182,
+    "id": "20261020181253886f014af5ac4780",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181253886f014af5ac4780",
+    "usage": {
+      "completion_tokens": 199,
+      "completion_tokens_details": {
+        "reasoning_tokens": 162
+      },
+      "prompt_tokens": 2464,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2663
+    }
+  }
+}

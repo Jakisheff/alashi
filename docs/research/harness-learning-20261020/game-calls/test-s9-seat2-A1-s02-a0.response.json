@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.754,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 5 даёт влияние самому богатому — по tie_order это фракция 0, мой соперник, поэтому против.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest. All cash 0, tie_order gives richest = idx0 (president). That boosts rival. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499663,
+    "id": "20261020203421e8e6d3060142470f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203421e8e6d3060142470f",
+    "usage": {
+      "completion_tokens": 71,
+      "completion_tokens_details": {
+        "reasoning_tokens": 33
+      },
+      "prompt_tokens": 2026,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2097
+    }
+  }
+}

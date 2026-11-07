@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.77,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Лицензия почти наверняка моя, нужно место под будущие продажи — produce даёт 3 товара без риска изъятия.\"}",
+          "reasoning_content": "Bid 30M on license, cash 7.275M left, plus likely auction win. If win, cash goes to 0 (escrow already placed? own_bid placed, cash already reduced — cash 7.275 shows bid in escrow). Win pays 20-60 license income. Need goods for round 5 market. Produce gives 3 goods to sell in round 5; shuttle risky (red border? tariff currently? holder 2). Shuttle gives 4 but 25% seizure. Price at counter 6: next sell price ~5..? Sold counter 6, price list index 6 = 5. Sell 3 gives ~4+3+2=... low prices. Still, produce safer. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490977,
+    "id": "202610201809313f3d61559c764034",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201809313f3d61559c764034",
+    "usage": {
+      "completion_tokens": 195,
+      "completion_tokens_details": {
+        "reasoning_tokens": 157
+      },
+      "prompt_tokens": 3265,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 3460
+    }
+  }
+}

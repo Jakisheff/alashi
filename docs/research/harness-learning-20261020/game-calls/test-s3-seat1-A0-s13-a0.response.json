@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.332,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":25,\"reason\":\"Аукцион лицензии выгоден (доход 20–60 alashi), моя высокая ставка с приоритетом tie_order даёт хорошие шансы на победу.\"}",
+          "reasoning_content": "License доход 20-60 alashi, стоит побидить. Но bid не включает основное действие? \"После bid доступно основное действие\" — но здесь только один выбор. Ставка ~10 alashi разумна. Соперники богаты (25.7 и 42.8). Приоритет tie_order у меня первый (tie_order [1,0,2]). Побидить умеренно, скажем 10 alashi — выбор 25. Но 20-60 alashi доход... рациональная ставка до ~20+. Поставлю 12 (choice 27)? Победитель платит в банк, что повышает банк. Моя выплата весом. Ставлю 10000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496754,
+    "id": "20261020194549ff10f57e40bb4dd9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194549ff10f57e40bb4dd9",
+    "usage": {
+      "completion_tokens": 199,
+      "completion_tokens_details": {
+        "reasoning_tokens": 155
+      },
+      "prompt_tokens": 4549,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 4748
+    }
+  }
+}

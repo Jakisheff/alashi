@@ -1,0 +1,31 @@
+.strategies-page .map-player {
+  padding: 0 12px 8px;
+  background: #101820;
+  color: #f6f5fa;
+}
+.strategies-page .map-player input.replay-position {
+  display: block;
+  width: 100%;
+  height: 44px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  accent-color: #a78bfa;
+  background: transparent;
+  cursor: pointer;
+}
+.map-player-row { display: flex; align-items: center; gap: 4px; min-width: 0; }
+.strategies-page .map-player-button {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  border: 0;
+  background: transparent;
+}
+.map-player-button svg { display: block; width: 24px; height: 24px; fill: currentColor; }
+.map-player-time { margin-left: 4px; color: #f6f5fa; font-size: 13px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.map-player-label { margin-left: auto; color: #c5c0d0; font-size: 12px; white-space: nowrap; }
+.map-player input:disabled { cursor: default; opacity: .45; }

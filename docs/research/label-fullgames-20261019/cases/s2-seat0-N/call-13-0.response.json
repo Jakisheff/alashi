@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.628,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":25,\"reason\":\"Ставлю весь cash на лицензию: доход 20–60 alashi перекрывает потерю, при проигрыше ставка вернётся.\"}",
+          "reasoning_content": "I'm last in cash, license income 20-60 alashi is huge. Others have 35.8 and 9.1 cash; they may outbid. License pays 20-60 alashi (~20-60M) — worth bidding all? Winner's bid goes into bank, redistributed 50/30/15. I'm likely poorest (rank 3, weight 15%). If I bid all 11M and win, bid goes to bank and comes back 15%... that's terrible. Actually better to let someone else win? Bid money added to bank, redistributed; if I win with X, bank grows X, I get back 0.15X, net -0.85X plus license income 20-60M. So win with 11M costs 9.35M net + license 20-60M → positive. Also losing bid returned.\n\nIf opponent wins, their bid into bank, I get 15% back. Fine either way.\n\nShould I bid all 11M? Rivals have 35.8M and 9.1M — 9.1 can't beat 11M, 35.8 could. Risk: they outbid me, my cash returned, fine. If I win, net gain. Also bid doesn't consume action, so also pick produce/shuttle. But interface: one candidate is the move; bid candidate presumably allows additional action next? \"bid не расходует основное действие: после ставки можно выбрать ещё одно действие.\" So pick bid + likely follow with shuttle. Choose bid 11085600 (choice 25) — but tie_order [1,2,0], so if I bid max and rival 1 bids same, they win. Bidding all leaves me 0 cash for shuttle risk. Shuttle costs nothing. Better bid all-in, win if rival 1 doesn't outbid.\n\nAlternatively safer bid ~10M keeps 1M cash. Rank matters mostly at end. I'll pick choice 25.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490176,
+    "id": "2026102017560563a7eee14fcf4320",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102017560563a7eee14fcf4320",
+    "usage": {
+      "completion_tokens": 457,
+      "completion_tokens_details": {
+        "reasoning_tokens": 416
+      },
+      "prompt_tokens": 4135,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 4592
+    }
+  }
+}

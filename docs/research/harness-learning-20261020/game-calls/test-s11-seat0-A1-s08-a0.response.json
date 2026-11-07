@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.124,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Продаю весь товар по максимальной цене с бумом; вексель девальвируется.\"}",
+          "reasoning_content": "Boom +2, price base 12+2=14? Candidate sell 1 gives 14 alashi (35250000-21250000=14000000). Sell 2 now at high price — but later rounds 4-6 prices may drop as others sell. Take sell 2 credit? Promissory devalues at 62%. Actually sell 2 now cash 47.25M. Credit gives 32.5M promissory → next round adds 32.5M cash but round start cash floor/100*62: 21250000→13112500 +32.5M = 45.6M cash, less than direct 47.25M but keeps... Actually direct sell all: cash 47.25M, goods 0. Then produce gives 2 goods to sell later at lower prices. Selling now at top price is good; prices only decline. Choose sell 2 (choice 3).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497181,
+    "id": "202610201952556133e74894ab4d92",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201952556133e74894ab4d92",
+    "usage": {
+      "completion_tokens": 231,
+      "completion_tokens_details": {
+        "reasoning_tokens": 197
+      },
+      "prompt_tokens": 2521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2752
+    }
+  }
+}

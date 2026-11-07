@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.279,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":12,\"reason\":\"Вексель погасится в начале раунда 6 без девальвации, поэтому продажа всего в кредит даёт максимум выручки.\"}",
+          "reasoning_content": "Round 5 market. Next round 6: cash devaulued ×62%, promissory added full. Selling credit now avoids devaluation — best. Prices start at 12. Sell all 6 credit: 65 alashi promissory, paid after final round... wait, round 6 start promissory added, then round 6 market, then end. Promissory paid at round 6 start, so not lost. Sell credit all: promissory 65000000 added to cash at round 6 start, then final market can sell more goods. So credit sell is strictly better than sell (1.25x, no devaluation loss since paid round 6). Choice 12.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498998,
+    "id": "20261020202313f12a18b73d35453d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202313f12a18b73d35453d",
+    "usage": {
+      "completion_tokens": 188,
+      "completion_tokens_details": {
+        "reasoning_tokens": 147
+      },
+      "prompt_tokens": 3379,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3567
+    }
+  }
+}

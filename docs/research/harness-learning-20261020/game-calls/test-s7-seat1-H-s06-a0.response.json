@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.303,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон о налоге 20% мне невыгоден; голосую против — он уже отклонён двумя «нет».\"}",
+          "reasoning_content": "Law 2 = tax 20% future sales. Others voted No. I should vote no (with 2 no's it's already rejected). Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499219,
+    "id": "20261020202657271bd36274334fd9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202657271bd36274334fd9",
+    "usage": {
+      "completion_tokens": 70,
+      "completion_tokens_details": {
+        "reasoning_tokens": 33
+      },
+      "prompt_tokens": 2730,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2800
+    }
+  }
+}

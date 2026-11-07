@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.451,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Продажа двух единиц даёт 17 alashi сейчас — финансирует будущий аукцион лицензии и держит высокую цену.\"}",
+          "reasoning_content": "Round 2 market, cash 0. Rule: by round 4 keep cash ≥9. Sell 2 units at price 10 and 9 → 19 cash. Good.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496449,
+    "id": "20261020194045782562774a0e4bd5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194045782562774a0e4bd5",
+    "usage": {
+      "completion_tokens": 79,
+      "completion_tokens_details": {
+        "reasoning_tokens": 38
+      },
+      "prompt_tokens": 2682,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2761
+    }
+  }
+}

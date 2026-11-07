@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 20.123,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Veto отменяет 10% налог на мою будущую продажу.\"}",
+          "reasoning_content": "Tax 10% hurts my future sales. I have 3 goods to sell next round. Veto saves 10%. Veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498390,
+    "id": "20261020201251a572b019b93f42ef",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201251a572b019b93f42ef",
+    "usage": {
+      "completion_tokens": 53,
+      "completion_tokens_details": {
+        "reasoning_tokens": 28
+      },
+      "prompt_tokens": 3155,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3208
+    }
+  }
+}

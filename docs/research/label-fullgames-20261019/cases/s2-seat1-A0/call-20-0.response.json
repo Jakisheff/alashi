@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.734,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Финальный раунд: товары не влияют на ранг, я уже богатейший и имею максимальный голос влияния — сохраняю cash.\"}",
+          "reasoning_content": "Last round action; goods don't count in ranking, cash does. Best to preserve cash and influence. I'm already likely richest: cash 39.5M vs 32.8M (idx2) and 29.8M. Influence max gets extra 5% bank commission (1.9M) and president role. I have influence 2, tied with idx0 (2). Tie broken by cash? Max influence: I have 2, tie with idx0, then cash+hard — I win. So no need to bribe. Goods useless. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491158,
+    "id": "20261020181234014230b144714117",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181234014230b144714117",
+    "usage": {
+      "completion_tokens": 167,
+      "completion_tokens_details": {
+        "reasoning_tokens": 121
+      },
+      "prompt_tokens": 4497,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 4664
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.577,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Карта 0 без эффектов, исход закона безразличен — пропускаю.\"}",
+          "reasoning_content": "Law card 0 — no effects. Vote irrelevant. I hold license (own_bid 0? license_holder_idx 1 — yes). I'm not president. Card 0: no effect, so vote anything. Yes:1, No:0 currently... vote_yes could pass card 0 (no effect). Harmless. But passing keeps it neutral. Card 0 has no effect — pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427935,
+    "id": "202610200038521c0c03241d6c438c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200038521c0c03241d6c438c",
+    "usage": {
+      "completion_tokens": 112,
+      "completion_tokens_details": {
+        "reasoning_tokens": 82
+      },
+      "prompt_tokens": 3065,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3177
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.141,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон о налоге 20% вредит моим будущим продажам; «против» достаточно, так как нет всё равно побеждает.\"}",
+          "reasoning_content": "Law 2: tax 20% on future sales. I have 6 goods to sell in rounds 5-6. Veto avoids 20% tax. Others: yes weight 3, no weight 3; my vote weight 2 — no wins 5>3, tax fails anyway. Veto unnecessary. Just vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427990,
+    "id": "202610200039446d9ec34c8ddb4a5b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200039446d9ec34c8ddb4a5b",
+    "usage": {
+      "completion_tokens": 113,
+      "completion_tokens_details": {
+        "reasoning_tokens": 71
+      },
+      "prompt_tokens": 2960,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3073
+    }
+  }
+}

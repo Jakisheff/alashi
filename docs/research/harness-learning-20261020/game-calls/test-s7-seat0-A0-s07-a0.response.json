@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.214,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продам весь товар по высокой цене с ценовым сдвигом до возможного налога.\"}",
+          "reasoning_content": "Prices: counter 0, base 12. Law 7 +2 price next market (this market, round 3). Price 14 for first units. Sell all 3 now at high prices: cash 26.25+57.25... units 3 gives +31M (14+13+12? counter: sold_counter=0, prices 12,10,9 +2 shift = 14,12,11 → 37? candidate says +31M = 3 units total 37-... candidate says 57250000, i.e. +31M? 57.25-26.25=31. Fine). Law 2 (tax 20%) — did it pass? I voted no but holder 2 has veto; unknown. Tax applies from next market after pass. Sell now at high price before possible tax — but candidate prices already reflect current tax_bps=0. Sell 3 now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499724,
+    "id": "202610202035122923c40e6a1f4027",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202035122923c40e6a1f4027",
+    "usage": {
+      "completion_tokens": 224,
+      "completion_tokens_details": {
+        "reasoning_tokens": 195
+      },
+      "prompt_tokens": 2634,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2858
+    }
+  }
+}

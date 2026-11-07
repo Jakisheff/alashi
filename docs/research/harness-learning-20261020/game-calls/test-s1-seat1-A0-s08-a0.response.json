@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.558,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продаю весь товар сейчас по высоким ценам за наличные — деньги успеют частично пережить девальвации до конца игры.\"}",
+          "reasoning_content": "Цены: sold_counter=2, значит следующая цена 9. Sell 3 units: 9+8+7=24 alashi = 24M. Devaluation 62% на раундах 4-6: продать сейчас за cash лучше. Также у меня promissory от прошлого раунда... wait, promissory=0? Round 2 sell_credit 3 units at prices 10,9,8=27*1.25=33.75M — но state показывает promissory 0, видимо уже... нет, начало раунда 3 не обнуляет promissory, оно прибавлялось в начале раунда. Но promissory=0 в состоянии? Да, округлено... странно, но видно 22.5M cash — 33.75 добавлено? Начало 0, promissory 33.75 → cash должно быть 33.75. Возможно законы обнулили. Не важно.\n\nПродажа сейчас за наличные выгоднее из-за девальвации. Sell 3 → cash 46.5M. Оставить товар нет смысла: буду производить ещё. Выбор 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498790,
+    "id": "202610202019435b444671383a4e3e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202019435b444671383a4e3e",
+    "usage": {
+      "completion_tokens": 294,
+      "completion_tokens_details": {
+        "reasoning_tokens": 255
+      },
+      "prompt_tokens": 2697,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2991
+    }
+  }
+}

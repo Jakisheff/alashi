@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 17.223,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Карта 0 без эффектов, исход голосования не влияет на выплату.\"}",
+          "reasoning_content": "Law_id 0 — no effects, but president (idx1) can veto. Voting doesn't matter. Pass is fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498837,
+    "id": "2026102020202181b689727d6345f0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020202181b689727d6345f0",
+    "usage": {
+      "completion_tokens": 53,
+      "completion_tokens_details": {
+        "reasoning_tokens": 26
+      },
+      "prompt_tokens": 2525,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2578
+    }
+  }
+}

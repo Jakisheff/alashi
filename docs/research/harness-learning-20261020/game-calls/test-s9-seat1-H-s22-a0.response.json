@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.388,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон отдал бы +1 влияния беднейшему (действующему президенту), что усиливает его комиссию — голосую против.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest. Poorest is idx2 (11M), who already holds presidency and max influence (3+2=5 weight, plus 5% commission). Rejecting helps me? I'm richest cash; law 5 would help me. Vote no — but holder 2 veto? No: veto only blocks laws against richest? Veto can be applied freely by president. If yes>no it passes, president may veto anyway. Idx0 already voted No. My vote no adds to no. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496911,
+    "id": "2026102019482701a18b7e57704eae",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019482701a18b7e57704eae",
+    "usage": {
+      "completion_tokens": 154,
+      "completion_tokens_details": {
+        "reasoning_tokens": 113
+      },
+      "prompt_tokens": 3844,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 3998
+    }
+  }
+}

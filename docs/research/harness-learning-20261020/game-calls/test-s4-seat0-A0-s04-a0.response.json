@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.69,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель добавляется кэшем без девальвации, sell_credit даёт максимум выручки.\"}",
+          "reasoning_content": "Prices now: sold_counter=2, price for next units: 9,8,7. Selling 3 gives 24. Credit gives 30 promissory but round 2 devaluation keeps 62%. Actually promissory added to cash at start of round and then cash is devalued? \"Начало раунда 2 и далее: cash=floor(cash/100)*62, затем promissory прибавляется\" — promissory added after devaluation, so full value. So sell_credit 3 = 30 vs sell 24. But promissory risks card 8 nullify — unlikely twice. Credit better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497188,
+    "id": "20261020195304268382a9340e4ad1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195304268382a9340e4ad1",
+    "usage": {
+      "completion_tokens": 168,
+      "completion_tokens_details": {
+        "reasoning_tokens": 135
+      },
+      "prompt_tokens": 2322,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2490
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 21.331,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Больше ожидаемого товара при нулевом cash, риск изъятия приемлем.\"}",
+          "reasoning_content": "I'm element 2, cash 0. Shuttle gives 3 goods with 25% seizure risk. Produce gives 2 safely. I'm poorest, 0 cash; prefer safe produce? Shuttle expected 2.25 goods. Slight edge to shuttle but risk. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428157,
+    "id": "20261020004217130ffd7eeacd4115",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020004217130ffd7eeacd4115",
+    "usage": {
+      "completion_tokens": 89,
+      "completion_tokens_details": {
+        "reasoning_tokens": 59
+      },
+      "prompt_tokens": 2115,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2204
+    }
+  }
+}

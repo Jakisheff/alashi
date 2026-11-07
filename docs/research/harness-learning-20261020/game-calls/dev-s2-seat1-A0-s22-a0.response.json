@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.922,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Карта 6 влияет лишь на следующий рынок, которого уже нет; президент всё равно может наложить veto, поэтому голосование бессмысленно.\"}",
+          "reasoning_content": "Law 6: price shift -2 next market — but round 6 is last market (already passed). No effect anyway. President (idx0) holds veto, likely vetoes anything. I'm not president. My vote doesn't matter; but veto pending by president anyway. Just abstain/pass. Vote_no: if yes>no... president can veto. Simplest: pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495301,
+    "id": "2026102019213879703983f18f438f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019213879703983f18f438f",
+    "usage": {
+      "completion_tokens": 118,
+      "completion_tokens_details": {
+        "reasoning_tokens": 79
+      },
+      "prompt_tokens": 3367,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3485
+    }
+  }
+}

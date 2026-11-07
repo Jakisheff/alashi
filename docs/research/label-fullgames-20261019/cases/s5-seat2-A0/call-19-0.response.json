@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.644,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Последний раунд: товар уже бесполезен, а взятки стоят дороже, чем комиссионные 5% банка за влияние.\"}",
+          "reasoning_content": "Final round action, no more market. Goods useless; influence matters: I already have license income, but max influence gives 5% bank commission. President is idx1 with influence 2; I can overtake by bribing 5M (influence 2, tie broken by cash+hard then tie_order — I'd have less cash). 10M gives influence 3, beating idx1's 2 → 5% of bank ≈ 2.35M, plus influence for law. But bribe costs 10M cash for 2.35M gain + vote weight... net loss on cash ranking? Bribe 10M: cash 16.3M vs rank. Total cash pool ranking: idx0 37.9, idx1 24.5, me 26.3 → I'm 2nd. Giving money to idx1 worsens. 5M to idx0 gives me influence 2, tie with idx1 (2), tie broken by cash+hard: idx1 has more. So 10M bribe to idx0: influence 3, gain 5% commission 2.35M, cost 10M cash but maybe better law? Law card unknown; as president I could veto bad tax. Tax 10% on my... no more sales. Probably no benefit. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427322,
+    "id": "2026102000283450b728fb170c4db2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000283450b728fb170c4db2",
+    "usage": {
+      "completion_tokens": 319,
+      "completion_tokens_details": {
+        "reasoning_tokens": 279
+      },
+      "prompt_tokens": 4159,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 4478
+    }
+  }
+}

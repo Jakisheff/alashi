@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.997,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Продаю весь товар в кредит: вексель не девальвируется сразу и приносит больше, чем наличные при будущих обесцениваниях.\"}",
+          "reasoning_content": "Round 2 market. Cash devalued each round (×0.62). Promissory added next round start after devaluation. Selling now gives cash subject to future devaluation in rounds 3-6? Cash devalues each round start. Cash now spent/banked... Best: sell all for cash? Cash devalued ×62% per round — significant. But sell_credit gets promissory paid full in next round, then devalued afterwards anyway. Sell all 3 now at price 8 (counter 2). sell_credit gives 30 promissory added next round (no devaluation on promissory), then devalued in later rounds like cash would be. Compare: sell cash 24 now → next round floor(24/100)*62 = 14.88, sell_credit 30 next round = 30. Sell_credit better. Also tax may be added by laws. I'm president, cash 0, but risk. Choose choice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496795,
+    "id": "202610201946280d80f9783bb5434c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201946280d80f9783bb5434c",
+    "usage": {
+      "completion_tokens": 247,
+      "completion_tokens_details": {
+        "reasoning_tokens": 203
+      },
+      "prompt_tokens": 2792,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 3039
+    }
+  }
+}

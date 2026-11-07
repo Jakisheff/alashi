@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.963,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Производство даёт товар без риска изъятия при низкой наличности и уже сделанной ставке.\"}",
+          "reasoning_content": "Produce gives 2 goods; shuttle gives 3 but risk. Cash low; I bid 5 already. Produce safest.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427845,
+    "id": "20261020003723429376dbb29c4b06",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003723429376dbb29c4b06",
+    "usage": {
+      "completion_tokens": 58,
+      "completion_tokens_details": {
+        "reasoning_tokens": 26
+      },
+      "prompt_tokens": 2961,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 3019
+    }
+  }
+}

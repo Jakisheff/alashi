@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.609,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Дешёвая взятка усиливает влияние, сохраняя президентство и бонус комиссии, а потраченные деньги избегают девальвации.\"}",
+          "reasoning_content": "I already bid 20M. Remaining cash 25.25M, goods 2. Bid likely wins (rivals max ~34.6M could outbid, but unknown). Keep presidency (influence 2 vs their 1). Produce gives 2 goods; shuttle gives 3 grey with 25% seizure risk. Sold counter 5, price ~5/unit? Sold counter 5 means next price index 5 = 6 alashi... actually selling moves forward. Goods valuable. Shuttle 3 goods better but grey. Next round 5 market and 6. Bribing increases influence → presidency and 5% bonus. Bribe 5M to 1 for influence 3: cost 5M cash but secures presidency (they'd need +2 to match). Influence also gives commission bonus and vote weight. But cash matters for rank. Devaluation: cash floor/100*62 each round — losing 5M now also saves... actually less cash loses less in devaluation? Cash shrinks 38%; spending bribes avoids devaluation loss partly.\n\nI'm already president at influence 2; bribe 5M gives +1, securing vs rivals reaching 2. Rivals could bribe each other. Vote weight 4 already highest. Main benefit: presidency next rounds + 5% bonus. Moderate: choose bribe 5M to 2? To 1 or 2? Same effect; choose 2 (tie_order advantage holder). Either. I'll pick produce to maximize goods? Goods sell at round 5-6: price ~6 down. 2 goods × ~6 = 12M more valuable than influence? Influence gives presidency + 5% of bank (~1.5M) plus control. I'll bribe 5M to 1 — cheaper devaluation-adjusted.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497246,
+    "id": "2026102019535605e02288e53a4e6f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019535605e02288e53a4e6f",
+    "usage": {
+      "completion_tokens": 420,
+      "completion_tokens_details": {
+        "reasoning_tokens": 379
+      },
+      "prompt_tokens": 3799,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 4219
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.663,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\": 3, \"reason\": \"Закон субсидии уже не влияет на итог, исход не изменит мой голос.\"}",
+          "reasoning_content": "Law 3: subsidy_goods=1 — affects future action, but this is round 6 action already passed, so no effect. Neither yes nor no matters much. Currently yes=2 yes (0,1) vs my vote. Vote no makes 2 yes vs 1 no — passes anyway. Vote yes passes. Irrelevant. Abstain or pass saves nothing (weight bonus already applied since action was pass — wait, I passed action in round 6, so vote_weight=4 already). Vote no to maybe reduce... no effect. Just abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498138,
+    "id": "20261020200853d053551630f54889",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200853d053551630f54889",
+    "usage": {
+      "completion_tokens": 147,
+      "completion_tokens_details": {
+        "reasoning_tokens": 116
+      },
+      "prompt_tokens": 3240,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3387
+    }
+  }
+}

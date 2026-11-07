@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.624,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 10% снизит мою будущую выручку от продаж — голосую против.\"}",
+          "reasoning_content": "Law 1: 10% tax on future sales. I plan to sell. President is idx0 with veto pending anyway; president has influence 2 vs my 1. If I vote no, no 2, president decides. President likely wants tax (less cash to me? actually tax affects all). President holds veto, likely will accept or veto. My vote matters little. Tax hurts my sales next rounds — vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427724,
+    "id": "20261020003520d1bd15cbaf4f45b6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003520d1bd15cbaf4f45b6",
+    "usage": {
+      "completion_tokens": 119,
+      "completion_tokens_details": {
+        "reasoning_tokens": 88
+      },
+      "prompt_tokens": 2502,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2621
+    }
+  }
+}

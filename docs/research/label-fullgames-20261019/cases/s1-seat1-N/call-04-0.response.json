@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.627,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель не девальвируется и погашается в начале следующего раунда, что выгоднее продажи за кэш.\"}",
+          "reasoning_content": "Cash floor at round start: cash=0 anyway. Selling now gives cash but round starts decay 62%. Selling all 2 units: 7+6=13 alashi now, later becomes 8 alashi. Credit: 16.25 promissory, but law 8 may nullify promissories — already used in round 1? Law 8 was round 1, already applied/no repeat. Cash devaluation punishes holding cash. But credit pays at round start without decay (promissory added after decay). Selling credit 2 gives 16.25 next round start, better than 13→8. Risk: another law 8? Deck without repeats — card 8 used already. Choose credit all.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427604,
+    "id": "2026102000331718dbb35beb164f42",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000331718dbb35beb164f42",
+    "usage": {
+      "completion_tokens": 190,
+      "completion_tokens_details": {
+        "reasoning_tokens": 151
+      },
+      "prompt_tokens": 2223,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2413
+    }
+  }
+}

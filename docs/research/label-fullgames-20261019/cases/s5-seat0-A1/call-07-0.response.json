@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.737,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель 32.5 даёт больше итоговой ценности, чем 26 cash сейчас, даже с учётом девальвации.\"}",
+          "reasoning_content": "Prices with boom +2: 12+2=14, 10+2=12. Sell 2 units: 14+12=26 alashi. Cash now is valuable (devalued 62% round start). Better to take cash now (choice 3) than promissory? Promissory 32.5 but paid next round and could be wiped by law 8 (already drawn round 1). Cash devalues 62% but I have 0 cash so devaluation irrelevant (cash floor 0*...). 26 vs 32.5 — credit pays at round 4 start, added to cash then round 5 devig... cash 32.5 in round 4, round 5 start becomes floor(32.5)*62% = 20.15, round 6: 12.5. Cash 26 now: round 4 start 16.1, round 5: 9.98, round 6: 6.2. Credit better even after devaluation. Risk: tax law on sales doesn't affect promissory already issued; law 8 already used. But if sold... take credit 2 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491204,
+    "id": "2026102018131749367e06ff524b50",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102018131749367e06ff524b50",
+    "usage": {
+      "completion_tokens": 287,
+      "completion_tokens_details": {
+        "reasoning_tokens": 247
+      },
+      "prompt_tokens": 2403,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2690
+    }
+  }
+}

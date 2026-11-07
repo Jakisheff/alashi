@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.07,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Мой голос «против» отклоняет 20% налог на продажи, что выгодно при продаже товара.\"}",
+          "reasoning_content": "Law card 2: 20% tax on future sales. I'm not president (holder 2), influence 1 vs president. I want low tax. Currently yes=1 (idx2), no=1 (idx0). My vote decides: vote_no → 2 no > 1 yes, law rejected. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427681,
+    "id": "20261020003432dea2189f01264a56",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003432dea2189f01264a56",
+    "usage": {
+      "completion_tokens": 103,
+      "completion_tokens_details": {
+        "reasoning_tokens": 69
+      },
+      "prompt_tokens": 2229,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2332
+    }
+  }
+}

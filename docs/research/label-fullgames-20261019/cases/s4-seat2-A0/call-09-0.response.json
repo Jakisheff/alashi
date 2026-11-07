@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 25.509,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Бесплатный шанс получить 3 товара даёт лучшую ожидаемую выручку, чем 2 от produce.\"}",
+          "reasoning_content": "I'm idx2, influence 1, president is idx1 (influence 1, tie_order 1 beats me). I should get goods and possibly influence. Shuttle gives 3 goods (risk only grey? shuttle gives grey goods — risk 25% seizure unless black tariff). Actually shuttle goods could be seized. But produce gives 2 goods safely. Need goods to sell. Also auction round 4 next round — cash matters.\n\nSelling price next: sold_counter 6, price 5. Producing 2 goods gives ~10 alashi revenue potential. Shuttle 3 goods ~14 alashi but 25% seizure risk and tariff 0 so no fee? \"При льготной границе за серый ход платится min(cash,2)\". Tariff unknown here; tariff=0? Probably risk applies. Shuttle EV: 0.75*3=2.25 goods. Better produce? Also could bribe for influence to become president — but need >1 influence; bribe 5M gives influence 2 > idx1's 1, becoming president in law this round. That costs 5M cash but president can veto bad laws (tax cards). Worth? President saves potential tax. But I need goods for income; action is limited to one. Trade-off: goods vs influence.\n\nGoods earn ~10 alashi later (price falls though; opponents have 2 goods each, market sold 6 counter, price 5, opponents will sell 2 each → counter 10, price 1-2). My 2 goods sold at end: after their 4 sales counter=10 → price 1. Actually selling order matters. Hmm, goods value low already. Influencing vote and getting 5% commission of bank via max influence could be worth: bank 30M, 5% =1.5M... influence also president role with veto.\n\nBribe 5M to 1 gives influence 2 > faction0's 2? Tie: faction0 has influence 2, tie_order [1,0,2] — 0 wins ties. So need influence 3 to be president: bribe 10M (choice 13). 10M for influence 3, president + max influence (commission 1.5M at end + veto). Goods value: 2 goods at price ~2-3 → ~5M. Hmm.\n\nActually vote_weight: my current vote_weight 3 (influence 1 + 2 pass bonus? No—I didn't pass; weight 3 means influence1+2? It shows vote_weight 3 for me, 2 for idx0, 1 for idx1. Odd, maybe +2 for having passed in round1 action... whatever).\n\nI think produce (choice 1) is safe: 2 goods, sell later. But price low. Shuttle EV 2.25 goods free vs produce 2. Shuttle slightly better unless seizure. Seizure probability ~25% if no black tariff. EV equal-ish, shuttle better. Also border fee? Only \"льготная граница\" charges fee. Risk unknown. Choose shuttle? Risky full seizure 25%.\n\nAlternatively bribe to become president: influence 3 via 10M. Presidential veto and law control for remaining rounds could prevent taxes and pick... I only vote, not choose card. Veto lets me block tax laws against me. Value: tax 10-20% on my sales. My future sales maybe ~20 alashi → tax saves up to 4M. Plus commission max influence 1.5M. Cost 10M now. Not clearly worth vs goods ~5-6M.\n\nI'll take produce for goods — income now matters, price declines each sale so earlier goods better. Actually shuttle gives 3>2. Choose shuttle? Risk 25% lose all. EV 2.25 goods ≥ 2. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427513,
+    "id": "20261020003128c2f1ef4fbfef447a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003128c2f1ef4fbfef447a",
+    "usage": {
+      "completion_tokens": 845,
+      "completion_tokens_details": {
+        "reasoning_tokens": 810
+      },
+      "prompt_tokens": 3506,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 4351
+    }
+  }
+}

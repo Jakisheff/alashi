@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.322,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Продаю весь товар по высокой цене, чтобы получить cash и укрепить ранг богатства.\"}",
+          "reasoning_content": "Prices now: sold_counter=2, so next price 9? Counter starts at 12,10 sold twice... sell 1 → price 9, sell 2 → 9+8=17. Law 6 was rejected. Cash ranks: with 17 cash I'd be near richest (opponent has 22). Sell now at good price; promissory deviates but round2 devaluation applies to cash. Selling all for 17 seems good.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428058,
+    "id": "202610200040540f8c271177c745c9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200040540f8c271177c745c9",
+    "usage": {
+      "completion_tokens": 126,
+      "completion_tokens_details": {
+        "reasoning_tokens": 96
+      },
+      "prompt_tokens": 2217,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2343
+    }
+  }
+}

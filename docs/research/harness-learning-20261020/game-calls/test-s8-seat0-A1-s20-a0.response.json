@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.674,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Вето блокирует 10% налог, что выгодно моим будущим продажам.\"}",
+          "reasoning_content": "Tax 10% would hurt my sales (I sell). Veto rejects tax. Veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497891,
+    "id": "20261020200449d739c81c664a47e3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200449d739c81c664a47e3",
+    "usage": {
+      "completion_tokens": 49,
+      "completion_tokens_details": {
+        "reasoning_tokens": 20
+      },
+      "prompt_tokens": 3124,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3173
+    }
+  }
+}

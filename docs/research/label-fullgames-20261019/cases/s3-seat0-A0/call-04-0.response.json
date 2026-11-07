@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.025,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель не девальвируется и не облагается налогом — максимум выручки с защищой от обесценения.\"}",
+          "reasoning_content": "Prices will drop; cash deviates floor(cash/100)*62 each round. Promissory is not devalued and is added to cash in round 2+. Better to sell on credit. Sell all 3 for credit = 30 promissory.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428113,
+    "id": "20261020004150e10a281690a244db",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020004150e10a281690a244db",
+    "usage": {
+      "completion_tokens": 93,
+      "completion_tokens_details": {
+        "reasoning_tokens": 54
+      },
+      "prompt_tokens": 2329,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2422
+    }
+  }
+}

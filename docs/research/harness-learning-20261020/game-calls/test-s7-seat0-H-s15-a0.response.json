@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.668,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Цена сейчас высокая (12), продаю весь товар за наличные до падения цены.\"}",
+          "reasoning_content": "Round 5, price high (12). Sell now at high price. But devaluation at round start: cash floor/100*62. Selling 2 gives +22 alashi cash. Price falls with sales. Selling now at 12 each is good. Sell 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498233,
+    "id": "202610202010297366a5ffd9f54e47",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202010297366a5ffd9f54e47",
+    "usage": {
+      "completion_tokens": 86,
+      "completion_tokens_details": {
+        "reasoning_tokens": 57
+      },
+      "prompt_tokens": 3401,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3487
+    }
+  }
+}

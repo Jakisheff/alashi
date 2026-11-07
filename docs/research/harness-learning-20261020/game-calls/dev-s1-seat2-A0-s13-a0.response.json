@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.187,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Кредитная продажа 3 единиц даёт вексель 38,75 alashi, который добавится к cash в раунде 6 без девальвации, что выгоднее немедленной продажи.\"}",
+          "reasoning_content": "Rounds 5-6 remain. sell now at price [12,...], counter reset to 0. Selling 3 gives 48116960 cash... but cash is devalued floor/100*62 at round 6. Sell 3 = 12+10+9=31 → 31M after tax? no tax. cash→48.1M; round 6 devalue: 48.1→ floor(48116960/100)*62 ≈29.8M. Selling credit: promissory 38.75M added at round 6 without devaluation. That's better! sell_credit 3 → cash stays 17.1M (devalued → ~10.6M) + 38.75M promissory at round 6 = ~49.4M, versus 29.8M. But promissory added to cash at start of round 6, then round 6 market I can sell more goods... but no goods left. Also final promissory at end of round 6 is unredeemed only if not added; promissory is added at start of round 6, so it counts. Choose sell_credit 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495595,
+    "id": "202610201926286a7db8e0da51452d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201926286a7db8e0da51452d",
+    "usage": {
+      "completion_tokens": 307,
+      "completion_tokens_details": {
+        "reasoning_tokens": 252
+      },
+      "prompt_tokens": 3003,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 3310
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.548,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продажа всех 3 единиц сейчас даёт максимум наличных до девальвации; векселя рискованны.\"}",
+          "reasoning_content": "Round 4 market, next rounds: 5,6. Cash devalues each round start (62%). Selling now better than holding. Sell all 3 for cash now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490060,
+    "id": "202610201754170e805e8403d64544",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201754170e805e8403d64544",
+    "usage": {
+      "completion_tokens": 73,
+      "completion_tokens_details": {
+        "reasoning_tokens": 36
+      },
+      "prompt_tokens": 2980,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 3053
+    }
+  }
+}

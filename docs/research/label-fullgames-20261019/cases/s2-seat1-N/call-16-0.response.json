@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.27,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Надёжно получаю 2 товара для финальной продажи без риска изъятия шаттла.\"}",
+          "reasoning_content": "I'm idx 1, holding license (bid 10M won, added to bank). Last market round is 6; promissory 22.5M paid after round 5 into cash, then round 6 market sell remaining goods. Need goods to sell: produce gives 2, shuttle gives 3 (grey, ~25% seizure risk, and tariff roof could pay 2 to X holder). Goods sell at counter 7 → prices [5,4,3,3] ~ 12 alashi remaining. shuttle risk: lose all goods 25% worth ~15 alashi. Expected shuttle 0.75*15=11.25 vs produce 2 goods ~9 alashi... counter resets backwards on buys only, selling units 1-3 at 5,4,3 = 12. Produce 2 → 9. Shuttle 3 → 12, expected 9 minus border risk. Border: roof_armed? tariff current 0, favorable border? \"При льготной границе за серый ход платится min(cash,2)\". Tariff 0 — neither black nor red set. Grey seizure ~25%. So shuttle expected 0.75*12=9 equals produce 9 but zero cost vs donkey... roughly equal. Produce is safer, avoid seizure risk. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490130,
+    "id": "20261020175522896a5ee0ed514ef9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175522896a5ee0ed514ef9",
+    "usage": {
+      "completion_tokens": 311,
+      "completion_tokens_details": {
+        "reasoning_tokens": 277
+      },
+      "prompt_tokens": 3872,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 4183
+    }
+  }
+}

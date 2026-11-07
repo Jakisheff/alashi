@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 14.325,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Кредитная продажа двух единиц даёт больше выручки, а вексель поступит к рунду 3 до обесценивания и аукциона.\"}",
+          "reasoning_content": "Round 2 of 6, prices still high (sold_counter=2, next price 9). Selling 2 now for 17 cash seems good vs credit. Cash devalues at 62%, but credit pays in round 3 fully? Promissory added to cash round 3 start, then devalued next round. Selling credit gives 21.25 which arrives as cash round 3, then 62% at round 4... Selling now gives 17, devalued to ~10.5 at round 3 start. Credit: 21.25 added round 3, then at round 4 start 13.1. Cash now: 17 → round3 start 10.5 → round4 6.5. Credit better if kept, but cash can be used for bribes/auction. As president with influence matters. Also inflation: sell now for 17 vs credit 21.25 — credit yields more long-run. But there will be more selling later; price drops as we sell. Total 2 goods; selling both now at high prices good. Choose credit? Cash allows bribe to gain influence (10 alashi per influence—too expensive). I'm already president with tie_order priority. Keep goods for later? Prices decline with sales, only 3 players selling. Selling both now at 10+9=19... candidate says 17 (prices 9 and 8). Later prices lower. Sell now.\n\nCredit 21.25 vs cash 17: cash gets spent/devalued. Round 3 start: 17→10.5? floor(17/100)*62 = 10.54... actually 17,000,000 → floor /100 *62 = 10,540,000. Credit 21.25 arrives round 3 intact, becomes cash then devalued round 4 to 13.17. So credit clearly better unless need cash before round 3. I might want cash for bribes/auction round 4. Promissory arrives as cash round 3 — fine for auction round 4. Choose sell_credit 2 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498924,
+    "id": "20261020202151d0fbb14e1e084280",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202151d0fbb14e1e084280",
+    "usage": {
+      "completion_tokens": 485,
+      "completion_tokens_details": {
+        "reasoning_tokens": 439
+      },
+      "prompt_tokens": 2210,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2695
+    }
+  }
+}

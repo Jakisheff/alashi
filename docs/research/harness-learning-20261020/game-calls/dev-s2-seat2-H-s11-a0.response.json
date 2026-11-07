@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.795,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон даёт +1 влияния мне как беднейшему, сохраняет президентство и бонус комиссии.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest. Poorest is idx1? cash 19.22 (me, idx2) vs 23.82 (idx1) vs 31.3 (idx0). Poorest is me — ties? No tie, me poorest. I gain +1 influence → helps presidency and the 5% commission. Vote yes already; veto would kill it. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495096,
+    "id": "20261020191813c882a6e00e8b434a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020191813c882a6e00e8b434a",
+    "usage": {
+      "completion_tokens": 116,
+      "completion_tokens_details": {
+        "reasoning_tokens": 84
+      },
+      "prompt_tokens": 2901,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3017
+    }
+  }
+}

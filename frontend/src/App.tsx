@@ -7,6 +7,7 @@ import './brand/brand.css'
 import { Onboarding } from './Onboarding'
 import type { GenieClip } from './genie/pose'
 import type { HomeSearch } from './routes/index'
+import { homePresentation } from './homePresentation'
 import { useScene } from './store'
 
 // three.js + the model load in their own chunk: the onboarding text paints first
@@ -46,6 +47,7 @@ export default function App({ search }: { search: HomeSearch }) {
   const watchedGame = 'game' in watch && watch.game !== null ? String(watch.game) : null
   const chainPreview = !search.game && watch.kind === 'none' && !demo && !search.pose
   const feed = useArenaFeed(chainPreview ? null : search.game ?? watchedGame, false, api)
+  const presentation = homePresentation(search, feed.mode)
   // Stable object: GenieModel replays the clip when it changes
   const frozen = useMemo(() => (search.pose ? { clip: search.pose, t: search.t ?? 0.5 } : null), [search.pose, search.t])
 
@@ -79,9 +81,9 @@ export default function App({ search }: { search: HomeSearch }) {
           </Suspense>
         </SceneBoundary>
 
-        <div className="absolute top-3 left-3 flex items-center gap-2 rounded-full bg-white/90 px-3 py-1 text-sm ring-1 ring-[#E4E4E7]">
+        <div className="absolute top-3 left-3 flex items-center gap-2 rounded-full bg-white/90 px-3 py-1 text-xs whitespace-nowrap sm:text-sm ring-1 ring-[#E4E4E7]">
           <span className="font-semibold">Degenie</span>
-          {feed.mode === 'live' ? (
+          {presentation === 'live' ? (
             <>
               <span className="rounded-full bg-[#1f4a43] px-2 text-xs tracking-wide text-white uppercase">{feed.result ? 'final' : 'live'}</span>
               <span className="hidden text-[#66666f] sm:inline">
@@ -97,7 +99,7 @@ export default function App({ search }: { search: HomeSearch }) {
               </span>
             </>
           ) : (
-            <span className="text-[#66666f]">{demo || search.pose ? 'Animation preview · illustrative poses' : "waiting for your agent's game"}</span>
+            <span className="text-[#66666f]">{presentation === 'preview' ? 'Animation preview · illustrative poses' : "waiting for your agent's game"}</span>
           )}
         </div>
 

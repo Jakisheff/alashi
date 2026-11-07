@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.727,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Взялка за 5 даёт влияние 2 и пост президента с veto, а cash всё равно девальвируется.\"}",
+          "reasoning_content": "I need influence to win presidency (law). Currently 1 influence, holder is idx1 with 1 influence, tie_order [1,0,2] — I lose ties. Bribe 5 to idx0 gives influence 2, beats idx1's 1. But then I lose 5 alashi and don't produce goods. Presidency gives veto and 5% bank commission. Bank = 30 alashi (30M). 5% = 1.5 alashi. Bribe 5M gives presidency over remaining rounds — significant. But goods matter for future sales.\n\nAlternatively shuttle gives 3 goods. I have 0 goods, promissory 30M. Prices: sold_counter=5, price 6 next. Round 4 auction... Round 3 action: shuttle gives 3 goods to sell round 4 at ~6 alashi minus counter moves. Others sell too.\n\nInfluence 2 vs idx1: after round 3, I'd hold presidency with 2 vs 1. But bribes only to idx0/1... bribe to idx0: 5M for influence 2. Then presidency in round 3 law and possibly onwards (influence persists). Veto control worth it; also commission 5%.\n\nBut cash ranking: idx1 has 32.5M, me 27.5M+30M promissory next round. Actually promissory converts to cash at round 4 start? Round start: cash=floor(cash/100)*62 (devaluation!), promissory added. Hmm, cash devaluation: 62% retention. So holding cash is bad, promissory is good (added after). My promissory 30M added next round start.\n\nBribe 5M costs cash which gets devalued anyway... spending cash is actually good since cash devalues. Bribe 5M to idx0: influence 2, presidency. Strong choice.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498439,
+    "id": "202610202013508e9712e42236426f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202013508e9712e42236426f",
+    "usage": {
+      "completion_tokens": 440,
+      "completion_tokens_details": {
+        "reasoning_tokens": 403
+      },
+      "prompt_tokens": 3430,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 3870
+    }
+  }
+}

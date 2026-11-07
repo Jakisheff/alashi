@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.28,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\": 10, \"reason\": \"Кредитная продажа всех 5 единиц по высоким ценам даёт вексель без девальвации в этом раунде, что выгоднее кэша.\"}",
+          "reasoning_content": "Sell all now, counter 0, prices 12,10,9,8,7. But promissory gets 62% at round 5... Selling 4 units now at high prices vs credit? Sell all 5: prices 12+10+9+8+7=46. Credit gives 57.5 promissory, paid next round at full (added to cash after devaluation). Promissory not devalued, so sell_credit 5 gives 57.5 vs 46 — better, but round 5's cash devalues... cash doesn't get devalued until round 6 start: cash=floor(cash/100)*62 at start of each round≥2. If I hold cash through round 6 start it devalues again. Only round 6 matters: payout after round 6 market... round 6 starts with devaluation, so cash from round 5 sales devalues? Round 6 market happens after devaluation. So selling in round 5 for cash devalues. Selling now via credit: promissory added at round 5 start without devaluation, then devalues at round 6 start anyway! So cash now devalues twice (r5, r6), promissory once (r6). Best: sell now, credit — better 57.5 with one devaluation vs sell 46 with two. Actually sell now for cash 46, then devalued twice. Credit: 57.5, devalued once at r6. So credit better. Units 5 credit: 57.5→35.6 final. Units 5 sell: 46→devalued twice→17.5. Credit choice 10.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498680,
+    "id": "202610202017489c5b888a98a449d0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202017489c5b888a98a449d0",
+    "usage": {
+      "completion_tokens": 404,
+      "completion_tokens_details": {
+        "reasoning_tokens": 356
+      },
+      "prompt_tokens": 3121,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 3525
+    }
+  }
+}

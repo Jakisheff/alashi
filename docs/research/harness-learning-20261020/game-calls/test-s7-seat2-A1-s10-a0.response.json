@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 22.063,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Покупка по 12 для последующей продажи дешевле — убыток; лучше сохранить кэш.\"}",
+          "reasoning_content": "We're president, cash 25 alashi, market round 4. sold_counter=0, price 12. Goods 0. Buy option: 1 unit costs 12? cash drops 12m for 1 unit (buy moves counter back, price 12... actually cost 12). Buying goods to sell later at lower price isn't profitable. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497655,
+    "id": "20261020200033a78642374e2b4131",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200033a78642374e2b4131",
+    "usage": {
+      "completion_tokens": 108,
+      "completion_tokens_details": {
+        "reasoning_tokens": 76
+      },
+      "prompt_tokens": 2499,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2607
+    }
+  }
+}

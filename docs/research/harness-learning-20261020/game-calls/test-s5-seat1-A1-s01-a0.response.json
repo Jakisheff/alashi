@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.472,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"shuttle даёт больше товара при положительном ожидании\"}",
+          "reasoning_content": "Round 1 action. Produce gives 2 goods; shuttle 3 goods (grey, 25% seizure risk). Shuttle expected ~2.25 > 2, and no border tariff mentioned active. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496917,
+    "id": "202610201948336be8579603914493",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201948336be8579603914493",
+    "usage": {
+      "completion_tokens": 65,
+      "completion_tokens_details": {
+        "reasoning_tokens": 44
+      },
+      "prompt_tokens": 1917,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 1982
+    }
+  }
+}

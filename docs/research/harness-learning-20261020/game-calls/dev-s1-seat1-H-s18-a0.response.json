@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 15.073,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Последний раунд: товары уже не продать, взятки лишь усиливают соперников и снижают мой cash, поэтому pass.\"}",
+          "reasoning_content": "Round 6, last round. Goods are useless after market? No more market after this action phase... Round 6: market done, action, law. Produce gives goods that can't be sold. Bribes reduce cash. Influence matters only for max influence bonus (5% of bank) and presidency. Currently influence: 0 has 2, I have 1, tie_order [1,0,2] — I'm already not max influence (0 has 2). Bribe 5 gives influence 2, tie with 0, tie_order favors me → I get max influence bonus 5% of bank (~2.1 alashi + commission share?). Max influence gets 5% of bank = 2.1 alashi. Bribe costs 5 alashi to participant 0 — but bribe transfers money to opponent, which counts in their rank. Bad: cost 5 to rival, gain 2.1 bonus but lose rank cash. So best is pass. But skipping action gives +2 vote weight for law — irrelevant since 0 is president (influence 2 > mine unless...). Pass = choice 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495533,
+    "id": "20261020192519c032865911e54158",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192519c032865911e54158",
+    "usage": {
+      "completion_tokens": 274,
+      "completion_tokens_details": {
+        "reasoning_tokens": 237
+      },
+      "prompt_tokens": 5795,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 6069
+    }
+  }
+}

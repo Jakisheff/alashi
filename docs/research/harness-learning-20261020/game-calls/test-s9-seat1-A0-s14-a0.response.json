@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.799,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Карта 0 без эффектов, исход голосования не влияет на выплату — пропускаю.\"}",
+          "reasoning_content": "Law card 0 — no effects. Pass or any vote same. But president is idx2; vote_weight: pass action? I skipped action (shuttle done, action used). vote_weight is 1 for me — actually voting no adds weight? Weight = influence +2 if action passed. My action was shuttle, so weight stays 1. Card 0 neutral; pass is fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498321,
+    "id": "202610202011552b66b048282144fa",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202011552b66b048282144fa",
+    "usage": {
+      "completion_tokens": 112,
+      "completion_tokens_details": {
+        "reasoning_tokens": 80
+      },
+      "prompt_tokens": 2852,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2964
+    }
+  }
+}

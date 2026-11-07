@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.509,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Карта 6 влияет на следующий рынок, которого больше нет — эффект пуст, можно просто пропустить.\"}",
+          "reasoning_content": "Law 6: price shift -2 next market — but market phase is over (last round 6 market done). Wait, law in round 6 law phase; effects on \"next market\" — no next market. So it doesn't matter. Holder is 2 (idx2), richest anyway. Card 6 is harmless now. Vote yes doesn't hurt? Actually shift -2 next market — there's no next market, so neutral. Vote yes or pass. Pass is fine; vote_no could trigger holder veto. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428101,
+    "id": "20261020004136b5702e6b0c664993",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020004136b5702e6b0c664993",
+    "usage": {
+      "completion_tokens": 141,
+      "completion_tokens_details": {
+        "reasoning_tokens": 110
+      },
+      "prompt_tokens": 3323,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3464
+    }
+  }
+}

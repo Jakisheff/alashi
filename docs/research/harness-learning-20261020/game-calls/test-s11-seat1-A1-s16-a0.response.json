@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.7,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce даёт 2 товара без риска изъятия и без пограничного сбора, что выгоднее shuttle по ожиданию.\"}",
+          "reasoning_content": "Round 5 action. I have 0 goods, 3.875 promissory (paid in round 6 market? No, promissory added at start of round; round 6 start cash devalued then promissory added — round 6 market is last market, and promissory doesn't get repaid after final round. So promissory worthless? It adds to cash at start of round 6 before market. Actually \"round 2 start: cash devalued, then promissory added\". So at start of round 6 my promissory 38.75 adds to cash, then round 6 market I can sell. But after last round promissory not repaid — meaning sell_credit in round 6 is bad.\n\nNow choose action: shuttle gives 3 goods (25% seizure risk). I need goods for round 6 market to sell at price ~5-ish (sold_counter 3, others will sell). Produce gives 2 goods safely. Cash 9.19 alashi vs rival 25.78. Bank 70 + my bid 40 = license... bank includes my winning bid 40? I bid 40, own_bid still 0 in state — hmm, \"own_bid\":0, license_holder idx1. Bid added to bank at close of action... bank shows 70000000, bid maybe already there? Whatever.\n\nShuttle: 3 goods vs produce 2. Seizure 25% loses all. Expected: shuttle EV 2.25 goods. Also grey border fee 2 alashi to president (idx0). Tariff black? roof_tariff 0. Border fee min(cash,2) to president idx0. That's 2 alashi to rival. Still EV favors shuttle slightly (2.25 vs 2, minus 2 alashi fee ≈ cost of ~0.4 goods). Roughly equal. Price per unit maybe 5 alashi, so shuttle +0.25 goods*5=1.25 vs fee 2. Produce better. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499631,
+    "id": "20261020203339ceecbc271b104b78",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203339ceecbc271b104b78",
+    "usage": {
+      "completion_tokens": 468,
+      "completion_tokens_details": {
+        "reasoning_tokens": 430
+      },
+      "prompt_tokens": 3477,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3945
+    }
+  }
+}

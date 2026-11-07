@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.978,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Ожидаемая выгода шаттла выше, чем обычного производства.\"}",
+          "reasoning_content": "produce gives 2, shuttle 3 with seizure risk. Shuttle expected higher: 3*0.75=2.25. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499542,
+    "id": "202610202032205e501fcb68d94ac1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202032205e501fcb68d94ac1",
+    "usage": {
+      "completion_tokens": 58,
+      "completion_tokens_details": {
+        "reasoning_tokens": 30
+      },
+      "prompt_tokens": 1917,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 1975
+    }
+  }
+}

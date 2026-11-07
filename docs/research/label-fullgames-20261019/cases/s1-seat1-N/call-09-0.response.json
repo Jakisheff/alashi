@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.286,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон даёт влияние сопернику, а не мне — голосую против.\"}",
+          "reasoning_content": "Card 4: +1 influence to poorest by cash. Poorest is idx2 (30.64). I'm idx1, 35.25. Not me. Giving influence to idx2 reduces my relative standing for future X holder, and influence bonus 5% bank. Also holder idx0 may veto. Vote yes helps idx2. Better vote no (holder is 0, could veto anyway). Vote no to prevent rival getting influence.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427643,
+    "id": "20261020003359f819d01c81fc4bdb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003359f819d01c81fc4bdb",
+    "usage": {
+      "completion_tokens": 117,
+      "completion_tokens_details": {
+        "reasoning_tokens": 91
+      },
+      "prompt_tokens": 2488,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2605
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.949,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Шаттл даёт 4 товара для продажи на последнем рынке — максимальная ожидаемая выплата даже с риском границы.\"}",
+          "reasoning_content": "Round 5 action, I have ~6M cash, last market was round 5 (passed), round 6 market remains. Best: shuttle gives 4 goods to sell in round 6 at ~12 alashi each ≈ 48 alashi... wait price 12 first unit. 4 units sell ~12+10+9+8=39 alashi. Big. But I'm not president (idx2 is). Shuttle risk 25% loss at border? Tariff none set; roof tariff... \"red border risk 25%\". Currently tariff=0 — shuttle grey goods? Shuttle gives grey goods, confiscation ~25% unless black tariff. Choice 3 says goods:4 directly — immediate state shows goods 4 (border resolved after action? shows after own action only). Still, 4 goods worth ~39 alashi minus 25% expected loss — best EV. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491067,
+    "id": "20261020181101e9d07d6b06cc4182",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181101e9d07d6b06cc4182",
+    "usage": {
+      "completion_tokens": 229,
+      "completion_tokens_details": {
+        "reasoning_tokens": 187
+      },
+      "prompt_tokens": 3378,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 3607
+    }
+  }
+}

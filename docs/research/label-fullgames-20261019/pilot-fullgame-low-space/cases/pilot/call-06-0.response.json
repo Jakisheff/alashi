@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.968,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"sell_credit даёт выручку 1.25x в векселе, который избегает девальвации на старте следующего раунда.\"}",
+          "reasoning_content": "Round 3 of 6, price now ~8 (sold_counter=2 → price 9? counter 2 means index 2 = 9). Selling 2 gives 9+8=17M. Devaluation floor(cash/100)*62 only applies above 100 min units... cash is in min units; floor(cash/100)*62 — cash 25M min units → floor(250000/100)=2500? Wait cash in min units: 16250000 min units = 16.25 alashi. Devaluation hits cash hard each round start. So sell_credit converts to promissory (not devalued, paid in round+1... promissory added at start of next round, then devalued the round after? \"cash=floor(cash/100)*62, затем promissory прибавляется\" — promissory added after devaluation, so it survives one round but will be devalued next round start unless spent. Selling credit yields 1.25x, better than 0.62 devaluation. sell_credit 2 → 21.25M promissory, best long-term.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792426549,
+    "id": "2026102000153975710a7bcd4b4746",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000153975710a7bcd4b4746",
+    "usage": {
+      "completion_tokens": 284,
+      "completion_tokens_details": {
+        "reasoning_tokens": 240
+      },
+      "prompt_tokens": 2416,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2700
+    }
+  }
+}

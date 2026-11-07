@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.848,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Продажа в кредит избегает девальвации и даёт больше итоговой ценности.\"}",
+          "reasoning_content": "Prices: counter=4, price 7? list index 4 → 7, +boom 2 = 9 per unit. Selling 2 gives 18M cash (shown 17M? cash 27.5+9=36.5? Actually shown +9M for 1 unit — wait choice1: 27.5+9=36.5 ✓ price 9). Choice3: sell 2 → 44.5, +17M ✓.\n\nDevaluation next round: cash floor/100*62. Selling now gains cash that devalues ~38%. Sell credit gives promissory not devalued, 1.25x. Choice 4: promissory 21.25M (2×9×1.25=22.5? minus? 2*9*1.25=22.5, shown 21.25... maybe price lower for second unit: first 9, second 8 → 17*1.25=21.25 ✓). Promissory untaxed? No tax anyway. Sell credit all: 21.25M safe vs cash 17M devalued to ~10.5M. Choice 4 best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490066,
+    "id": "202610201754181e6dfce742c04a96",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201754181e6dfce742c04a96",
+    "usage": {
+      "completion_tokens": 283,
+      "completion_tokens_details": {
+        "reasoning_tokens": 252
+      },
+      "prompt_tokens": 2593,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2876
+    }
+  }
+}

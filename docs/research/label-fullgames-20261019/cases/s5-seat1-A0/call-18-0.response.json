@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.09,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Последний раунд: векселя не погашаются, продаю весь товар за наличные 17 alashi.\"}",
+          "reasoning_content": "Last round: promissory won't pay. So sell for cash. Sell 2 units at price 9? sold_counter=2, price list [12,10,9,8,7,6,5,4,3,3,2,...] — price for next unit = index 2 → 9 each. Sell 2 gives 17 alashi cash. Choice 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490345,
+    "id": "20261020175902995ffd6991104640",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175902995ffd6991104640",
+    "usage": {
+      "completion_tokens": 118,
+      "completion_tokens_details": {
+        "reasoning_tokens": 83
+      },
+      "prompt_tokens": 3419,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3537
+    }
+  }
+}

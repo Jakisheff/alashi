@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.606,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон даёт +1 влияния мне как беднейшему, повышает вес при дележе комиссии.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest by cash. I'm poorest (12.03 vs 17.07 vs 45.1). Vote yes gains influence. President is idx0 with weight 4, may veto if it hurts them — it doesn't hurt them. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499888,
+    "id": "20261020203803b35eefd0dc4b4f75",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203803b35eefd0dc4b4f75",
+    "usage": {
+      "completion_tokens": 93,
+      "completion_tokens_details": {
+        "reasoning_tokens": 60
+      },
+      "prompt_tokens": 3349,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3442
+    }
+  }
+}

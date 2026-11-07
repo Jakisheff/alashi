@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.549,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Налог 10% бьёт по продажам соперников с товаром сильнее, чем по мне, и сохраняет комиссию за максимальное влияние.\"}",
+          "reasoning_content": "Law 1 = 10% tax future sales. I hold presidency, influence 2, max influence → I get 5% commission. Tax 10% hurts my round 6 sales? I have 0 goods. Tax hurts opponents' sales more. Yes=2 (me) vs No=1, passes without veto. Tax reduces opponents' cash, helping my rank. Don't veto.\n\nBut wait, round 6 is last; I could produce 2+... and sell. Tax 10% on my sales vs opponents' sales. Opponents have 2 goods each, likely to sell. Keep tax. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498646,
+    "id": "20261020201719ec18e0b1e47a45c3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201719ec18e0b1e47a45c3",
+    "usage": {
+      "completion_tokens": 175,
+      "completion_tokens_details": {
+        "reasoning_tokens": 130
+      },
+      "prompt_tokens": 3496,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 3671
+    }
+  }
+}

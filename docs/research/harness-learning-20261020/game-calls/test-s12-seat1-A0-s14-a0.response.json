@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.24,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Субсидия +1 товар выгодна мне как производителю, голосую за.\"}",
+          "reasoning_content": "Law 3 = subsidy_goods=1, good for me (produce/shuttle +1). I'm not president; president is idx0 with weight 4. My vote weight 2. Outcome likely decided by president. Vote yes (support subsidy).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497934,
+    "id": "202610202005299aa5cdee6b4d434c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202005299aa5cdee6b4d434c",
+    "usage": {
+      "completion_tokens": 79,
+      "completion_tokens_details": {
+        "reasoning_tokens": 51
+      },
+      "prompt_tokens": 2804,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2883
+    }
+  }
+}

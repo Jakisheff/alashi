@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.88,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продаю весь товар по высокой цене, сохраняя cash ≥ 16 для ставки 12 на аукционе лицензии.\"}",
+          "reasoning_content": "Round 4 market: need cash ≥9 for auction, and cash≥16 to bid 12. Currently 20.17. Sell 3 gives 38.17 cash, bid 12. Price at sold_counter=4 is 7? sell 3 → cash 38. Sell all now, price high. Choose 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496488,
+    "id": "20261020194124d40ddf11231a4c0b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194124d40ddf11231a4c0b",
+    "usage": {
+      "completion_tokens": 107,
+      "completion_tokens_details": {
+        "reasoning_tokens": 70
+      },
+      "prompt_tokens": 3421,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3528
+    }
+  }
+}

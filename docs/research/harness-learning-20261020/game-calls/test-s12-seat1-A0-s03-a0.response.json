@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.167,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель не девальвируется, выручка 21,25 больше 17.\"}",
+          "reasoning_content": "Price +2 from law 7, so prices start at 12+2=14? Counter at 2, price 9+2=11? Actually price list index by sold_counter=2 → 9, +2=11. Selling 2 units: 11+10=21? Candidate says 17 (9+8=17, +2 each = 21... but candidate shows 17). So shift not applied? Trust candidate numbers. Sell 2 for 17 now vs credit 21.25 promissory. Devaluation round 3: floor/100*62 — 62%. Credit yields 21.25*0.62=13.2 effective plus... actually promissory is added after devaluation, so it survives fully: cash 21.25 promissory added directly, not devalued! Promissory not devalued. So credit better: 21.25 now vs 17. But cash devalues. Yes sell_credit 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497883,
+    "id": "2026102020043664b1b25288754774",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020043664b1b25288754774",
+    "usage": {
+      "completion_tokens": 237,
+      "completion_tokens_details": {
+        "reasoning_tokens": 207
+      },
+      "prompt_tokens": 2153,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2390
+    }
+  }
+}

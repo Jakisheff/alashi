@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.719,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Товар сейчас дороже: shuttle даёт 3 единицы для продажи по высокой ещё цене, влияние можно купить позже.\"}",
+          "reasoning_content": "Взятка 5 to 0 даёт влияние 2 vs 1 у президента (idx0 имеет влияние 1? seen показывает 3 influence... state: idx0 influence 1). Взятка 5 даёт влияние 2, становится президентом? Президент — наибольшее влияние при входе в law. Полезно контролировать veto. Но потратить 5 alashi ради этого... Президент получает 5% комиссии при равном max влиянии — сейчас idx0 и idx1 имеют по 1, я тоже 1. Взятка 5 даёт мне влияние 2 → максимальное влияние, даёт комиссию 5% (~1.5 alashi) и контроль law. Но cash теряется.\n\nАльтернатива shuttle (3 товара) — продажа по сниженной цене (counter=5, цена 5). 3 товара = ~15 alashi брутто. Лучше shuttle? Взятка даёт 5% комиссии каждый раунд при максимальном влиянии — но соперники тоже могут подкупать. Shuttle сейчас даёт товары на ~12-15 alashi прибыли. Считаю shuttle сильнее. Выбор 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499683,
+    "id": "20261020203436bcfde60a4cb14324",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203436bcfde60a4cb14324",
+    "usage": {
+      "completion_tokens": 292,
+      "completion_tokens_details": {
+        "reasoning_tokens": 257
+      },
+      "prompt_tokens": 3311,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 3603
+    }
+  }
+}

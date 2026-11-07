@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.897,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":43,\"reason\":\"Ставка 20 alashi на лицензию: при выигрыше доход 20–60 окупает её, а проигрыш ничего не стоит.\"}",
+          "reasoning_content": "Rounds 4 action: auction license worth 20-60 alashi (avg 40). Bid should be sizable but win probability matters. Rivals cash ~33.5M and ~25.5M. But bid is one aggregate; after bid I still get main action. License income 20-60 alashi ≈ 20-60M units, paid above bank share and not in rank. Bank 30M now; my bid goes to bank. Payoff: license worth ~40M; bidding ~15-20M seems good, but rivals may outbid. Bidding my cash 38M wins surely, cost 38M but income ≥20M, plus bid goes into bank and I get 50% back... Actually bid increases bank, and I get 50:30:15 share of 95%. Half of bid returns effectively 0.5*0.95≈0.475. So effective cost ~0.525*bid, income 20-60M. Bidding high is fine. But also need cash for rank. Effective cost of 25M bid ≈ 13M; income avg 40M. Rivals cash allow up to ~33.5M. Bid ~20M to deter. If lose, no loss. Bid 20M likely to win or tie-break (tie_order 0 first). Choose 33 (10M)? Rivals could outbid. Bidding 20M: if opponent bids 30M, I lose, no loss. Expected: rivals may value similarly. I'll bid 20M (choice 43).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498816,
+    "id": "20261020202005e873b883f484455d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202005e873b883f484455d",
+    "usage": {
+      "completion_tokens": 375,
+      "completion_tokens_details": {
+        "reasoning_tokens": 333
+      },
+      "prompt_tokens": 6186,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 6561
+    }
+  }
+}

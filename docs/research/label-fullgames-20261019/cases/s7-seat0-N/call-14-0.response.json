@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.889,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон даёт субсидию на товар, выгодную мне, и всё равно принимается.\"}",
+          "reasoning_content": "Law 3: subsidy_goods=1 helps me (produce gives 3). Yes votes: 1 and 2 already voted Yes (weights 3+4=7). My vote irrelevant; vote_yes to support.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427452,
+    "id": "202610200030464ebb1a8ea07749ae",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200030464ebb1a8ea07749ae",
+    "usage": {
+      "completion_tokens": 75,
+      "completion_tokens_details": {
+        "reasoning_tokens": 45
+      },
+      "prompt_tokens": 2823,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2898
+    }
+  }
+}

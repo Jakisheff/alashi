@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.954,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон 4 даёт +1 влияния самому бедному — это я, и мой голос «за» проводит его.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest (cash). Poorest is me (4.7M). So vote yes. Currently Yes=1 (weight3), No=1 (weight4). My yes weight 2 → yes 5 > no 4, passes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490325,
+    "id": "20261020175841c3bc94b10c2c4e2e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175841c3bc94b10c2c4e2e",
+    "usage": {
+      "completion_tokens": 94,
+      "completion_tokens_details": {
+        "reasoning_tokens": 57
+      },
+      "prompt_tokens": 2885,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2979
+    }
+  }
+}

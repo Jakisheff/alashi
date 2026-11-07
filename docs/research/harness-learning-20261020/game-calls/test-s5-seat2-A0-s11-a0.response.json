@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.785,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Шаттл даёт больше товара для продажи в оставшихся раундах, ожидаемая ценность выше, чем у produce.\"}",
+          "reasoning_content": "I already bid 2194800 (all cash). Now choose main action. Produce gives 2 goods safe; shuttle 3 goods but risk ~25% confiscation? Black tariff none, currently no tariff... tariff state? roof_tariff 0 — no tariff, so grey risk 25%. Shuttle expected 2.25. Marginal; produce safer? Only 2 rounds of selling left (rounds 5,6 markets). Price at sold_counter 8 → price 3. Shuttle expected value slightly higher. I'll take shuttle for 3 goods.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497223,
+    "id": "202610201953375ae2d3362a9e4a69",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201953375ae2d3362a9e4a69",
+    "usage": {
+      "completion_tokens": 156,
+      "completion_tokens_details": {
+        "reasoning_tokens": 117
+      },
+      "prompt_tokens": 2600,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2756
+    }
+  }
+}

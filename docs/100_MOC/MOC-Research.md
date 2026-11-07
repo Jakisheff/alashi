@@ -7,6 +7,10 @@
 - [Brood War и оценка оркестрации: исследование 19.10.2026](../research/BROOD_WAR_AGENT_EVALS_20261019.md)
 - [Playbook Brood War для сравнения с ALASHI](../research/BROOD_WAR_PLAYBOOK.md)
 - [Источники и границы проверки исследования](../research/BROOD_WAR_AGENT_EVALS_20261019_SOURCES.md)
+- [Названия ролей в целых партиях 19.10.2026](../research/label-fullgames-20261019/README.md)
+
+- [Эксперимент с названиями ролей 19.10.2026](../research/label-experiment-20261019/README.md)
+
 - [AB_LICENSE_RENT.md](../research/AB_LICENSE_RENT.md)
 - [BALAJI_NETWORK_STATE.md](../research/BALAJI_NETWORK_STATE.md)
 - [BLUE_OCEAN.md](../research/BLUE_OCEAN.md)
@@ -43,3 +47,5 @@
 
 - [MOC-AJTBD](MOC-AJTBD.md)
 - [MOC-Product](MOC-Product.md)
+
+- [Самостоятельное изменение обвязки по старым партиям](../research/harness-learning-20261020/README.md)

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.792,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Закон о 20% налоге всё равно провалится (1 да против 2 нет), голос не влияет на исход.\"}",
+          "reasoning_content": "Law 2 = 20% tax. Others voted No already (2 vs my vote weight 1 each). President (idx2) is holder, voted No. Even yes won't pass: yes=1, no=2. So vote doesn't matter much; abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496801,
+    "id": "20261020194637785e42c808f8456b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194637785e42c808f8456b",
+    "usage": {
+      "completion_tokens": 95,
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      },
+      "prompt_tokens": 2259,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2354
+    }
+  }
+}

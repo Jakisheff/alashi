@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.775,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Гарантированные 2 товара без риска изъятия на границе.\"}",
+          "reasoning_content": "Produce is safest (shuttle has seizure risk). Vote weight 3 already from pass — but I passed in market, not action. Passing action gives +2 vote weight. Shuttle gives 3 goods vs 2. Seizure ~25% risk loses grey goods. Produce gives 2 guaranteed.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497145,
+    "id": "20261020195222642ea2081a88468f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195222642ea2081a88468f",
+    "usage": {
+      "completion_tokens": 89,
+      "completion_tokens_details": {
+        "reasoning_tokens": 62
+      },
+      "prompt_tokens": 1917,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2006
+    }
+  }
+}

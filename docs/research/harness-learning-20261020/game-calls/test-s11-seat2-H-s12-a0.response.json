@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.209,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 10% навредит моим будущим продажам — голосую против.\"}",
+          "reasoning_content": "Law 1: tax 10% on future sales. I'm not president; president is idx1 with veto. Vote no. Tax hurts my future sales (I have goods 2, likely sell later).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499221,
+    "id": "2026102020265649dc8757434d47c7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020265649dc8757434d47c7",
+    "usage": {
+      "completion_tokens": 71,
+      "completion_tokens_details": {
+        "reasoning_tokens": 43
+      },
+      "prompt_tokens": 3157,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3228
+    }
+  }
+}

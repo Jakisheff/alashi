@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.204,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 5 даст +1 влияния богатейшему (сопернику 1), но моё влияние 3 всё равно остаётся максимальным; можно пропустить.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest by cash. Richest is participant 1 (28.99M). I have 3 influence, they have 1; giving them +1 keeps me at 3 vs 2 — I keep presidency next round? Influence comparison: 3 vs 2, yes. But final payout: 5% bank to max influence — I have 3, fine. But wealth rank: I'm poorest (2.4M cash + license income ~31-60 hidden). Participant 1 already richest; +1 influence helps them toward... influence only matters for presidency and the 5% bonus. Let law pass, still safe. Vote yes (2 yes > 0 no) or abstain — either passes. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495540,
+    "id": "20261020192528fc00ee46220b44de",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192528fc00ee46220b44de",
+    "usage": {
+      "completion_tokens": 208,
+      "completion_tokens_details": {
+        "reasoning_tokens": 158
+      },
+      "prompt_tokens": 3429,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3637
+    }
+  }
+}

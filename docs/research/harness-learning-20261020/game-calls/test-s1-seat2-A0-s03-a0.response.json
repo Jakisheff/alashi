@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.768,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 8 (обнуление векселей) не имеет эффекта при нулевых promissory, veto не нужен.\"}",
+          "reasoning_content": "Law 8 обнуляет promissory — у всех 0, значит не имеет значения? Он был принят? Yes=1, No=1 → не принят. Но я президент, могу veto. Промиссори у всех ноль, veto не нужен. Но что, если закон примется — ничего не изменит. pass. Хотя закон не принят (yes не больше no). pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499337,
+    "id": "2026102020285386f6d67b8f1a45a9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020285386f6d67b8f1a45a9",
+    "usage": {
+      "completion_tokens": 120,
+      "completion_tokens_details": {
+        "reasoning_tokens": 82
+      },
+      "prompt_tokens": 1985,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2105
+    }
+  }
+}

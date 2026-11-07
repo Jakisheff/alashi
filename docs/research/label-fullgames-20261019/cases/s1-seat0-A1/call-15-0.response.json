@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.849,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 10% ударит по моим будущим продажам, голосую против.\"}",
+          "reasoning_content": "Law 1 = 10% tax on future sales. I sold already this round; rounds 5-6 sales would be taxed. 10% tax hurts me (I'll sell). Vote no. Player 1 already Yes (weight 3). Player 2 (president, weight 5) hasn't voted; unknown. My vote weight 1 barely matters. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427916,
+    "id": "20261020003830c2423455982f4165",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003830c2423455982f4165",
+    "usage": {
+      "completion_tokens": 109,
+      "completion_tokens_details": {
+        "reasoning_tokens": 80
+      },
+      "prompt_tokens": 2880,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2989
+    }
+  }
+}

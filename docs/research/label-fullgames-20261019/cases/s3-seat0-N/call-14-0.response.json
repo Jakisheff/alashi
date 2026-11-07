@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.943,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон даст +1 влияния самому богатому сопернику; мой голос «против» блокирует его.\"}",
+          "reasoning_content": "Law 4: +1 influence to richest cash — that's player 1 (holder), who already has holder advantage. Vote currently Yes(1, weight3) vs No(1, weight3). My vote weight 1. If I vote yes: yes=4>no=3 passes, giving rival influence. Vote no: yes=3, no=4 → fails. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427998,
+    "id": "20261020003952491b85b86dd04d7a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003952491b85b86dd04d7a",
+    "usage": {
+      "completion_tokens": 115,
+      "completion_tokens_details": {
+        "reasoning_tokens": 82
+      },
+      "prompt_tokens": 2847,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2962
+    }
+  }
+}

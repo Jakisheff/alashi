@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.87,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Взятка даёт влияние 2 и пост президента с правом veto, сохраняя лидерство по cash.\"}",
+          "reasoning_content": "President role is held by idx 2. To get presidency, need influence >1 (holder has 1). Bribing 5 gives influence 2, cash 38.25M — still richest? Others 25.06/26.64, so still richest. Presidency gives veto control and 5% commission tie-break by influence. Costs 5M, gives influence 2 > 1. Worth it. Choose 4 (to idx1) or 15 (to idx2)? Bribing the current president strengthens him but takes presidency. Better bribe the weaker player idx1 (lower cash) so president doesn't get richer. Choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497867,
+    "id": "202610202004211fbadd7649b04298",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202004211fbadd7649b04298",
+    "usage": {
+      "completion_tokens": 173,
+      "completion_tokens_details": {
+        "reasoning_tokens": 138
+      },
+      "prompt_tokens": 3775,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 3948
+    }
+  }
+}

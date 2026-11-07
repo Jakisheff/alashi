@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.101,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Shuttle даёт больше товара при умеренном риске, что важнее для будущих продаж.\"}",
+          "reasoning_content": "Cash only 3.25, bid 20 escrow. Choose main action: produce or shuttle. Shuttle gives 3 goods but grey seizure risk ~25%. Cash 3.25 alashi — produce gives 2 goods safely. Goods sellable round 5 (2 units at ~7-8 alashi each after counter back... sold_counter=3, prices low already ~5). Actually price list indexed by sold_counter: counter 3 → next price 8. Shuttle goods valuable. Grey risk: shuttle gives grey goods, ~25% seizure. With tariff... no tariff set yet (roof_tariff 0 — default). Shuttle expected 3*0.75=2.25 goods vs produce 2. Plus maybe border fee. I'll take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490651,
+    "id": "202610201804039f392656c54f4eeb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201804039f392656c54f4eeb",
+    "usage": {
+      "completion_tokens": 188,
+      "completion_tokens_details": {
+        "reasoning_tokens": 158
+      },
+      "prompt_tokens": 2984,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 3172
+    }
+  }
+}

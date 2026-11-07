@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.941,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Взятка 5M даёт влияние 2 и перехват поста президента при голосовании в law, сохраняя большую часть cash.\"}",
+          "reasoning_content": "Президент — игрок 0 с влиянием 1; у меня влияние 1, нужно 2+ чтобы стать президентом. Взятка 5М игроку 0 даёт влияние 2 и убирает у него 5М. Это помогает стать президентом и голосовать в law. Но тратит 5М. Производство даст 2 товара. Взятка 5М — разумно: контроль presidency, вес голоса 2. Выбираю choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497079,
+    "id": "202610201951156d651e99c08e4b7d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201951156d651e99c08e4b7d",
+    "usage": {
+      "completion_tokens": 147,
+      "completion_tokens_details": {
+        "reasoning_tokens": 106
+      },
+      "prompt_tokens": 3067,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 3214
+    }
+  }
+}

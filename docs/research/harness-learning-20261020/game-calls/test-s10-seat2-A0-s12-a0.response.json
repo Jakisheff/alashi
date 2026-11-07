@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.015,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Ожидаемая выгода shuttle выше produce, товара нет для риска большой потери.\"}",
+          "reasoning_content": "We are faction 2, cash 0, promissory 48.75. Auction round 4 action available but candidates only pass/produce/shuttle — bid not offered (cash 0 anyway). Pick shuttle: 3 goods vs produce 2, but shuttle grey may be seized ~25%. Candidate shows goods 3 after own action (no seizure shown yet). Seizure happens maybe later. Expected shuttle ~2.25 > 2. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498273,
+    "id": "202610202011070844879d48224432",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202011070844879d48224432",
+    "usage": {
+      "completion_tokens": 124,
+      "completion_tokens_details": {
+        "reasoning_tokens": 96
+      },
+      "prompt_tokens": 2617,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2741
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.062,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон даёт влияние беднейшему — сопернику 2, который уже президент; голосую против.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest by cash. Poorest is participant 2 (31.64M, also holds presidency with influence 2). That helps rival; I'm richest. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427876,
+    "id": "202610200037539466960beb354315",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200037539466960beb354315",
+    "usage": {
+      "completion_tokens": 75,
+      "completion_tokens_details": {
+        "reasoning_tokens": 43
+      },
+      "prompt_tokens": 2544,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2619
+    }
+  }
+}

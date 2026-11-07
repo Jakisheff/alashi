@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.448,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Покупка в последнем рынке бесполезна — товар уже не продать, pass сохраняет лидерство по cash.\"}",
+          "reasoning_content": "Final round market. I have cash ~39.5, others 29.8 and 15.8. Rank 1 likely. License holder = me. Buying goods now can't be sold (last market? No—round 6 is last round, market happens now; after this, action, law, end). Selling later? No more market. So buy loses money. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491153,
+    "id": "202610201812287021b5734def48c6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201812287021b5734def48c6",
+    "usage": {
+      "completion_tokens": 117,
+      "completion_tokens_details": {
+        "reasoning_tokens": 80
+      },
+      "prompt_tokens": 3179,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3296
+    }
+  }
+}

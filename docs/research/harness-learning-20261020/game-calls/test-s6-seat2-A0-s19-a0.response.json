@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.421,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Субсидия уже не поможет продать товары в финальном раунде, поэтому отклоняю закон.\"}",
+          "reasoning_content": "Law 3 = subsidy_goods=1, benefits me next action (produce/shuttle gives +1). I have 3 goods, will sell in round 6 anyway. Subsidy helps me produce more goods round 6? Action phase round 6: produce 2+1=3 goods then can't sell (order rotates). Round 6 order: market comes before action — I sell in round 6 market? sold_counter=2, price ~10-9. Actually subsidy only helps if I act after law... round 6 has market, action, law. In round 6 I produce more goods but can't sell them. Useless. vote_no to defeat. But president is idx0, who wants... I'm faction idx2, vote_no. Actually vote_yes would give subsidy but goods produced can't be sold. Vote no — either is fine; choose no to keep deck? Deck remaining: 0,2,4,5 after used 7,8,1,6,3. Vote no simpler.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497404,
+    "id": "20261020195637f905194a80494a87",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195637f905194a80494a87",
+    "usage": {
+      "completion_tokens": 249,
+      "completion_tokens_details": {
+        "reasoning_tokens": 213
+      },
+      "prompt_tokens": 3173,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3422
+    }
+  }
+}

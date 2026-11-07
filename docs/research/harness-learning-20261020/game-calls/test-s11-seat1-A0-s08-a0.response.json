@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.082,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Кредитная продажа всех 3 единиц обходит будущую девальвацию cash, а вексель погасится целиком.\"}",
+          "reasoning_content": "Price counter 2, prices: next sold units price index 2 =9, then 8. Boom +2 → 11, 10. Sell 3 gives 11+10+9=30. Devaluation next round: cash → 62%, promissory full. Better sell_credit: 37.5 promissory full value vs 30 cash devalued to 18.6? Wait devaluation applies: cash floor(cash/100)*62 at round start. Cash 30M → 18.6M. Credit 37.5M stays full (round 4 promissory added). So sell_credit 3 is better. But goods left 0; can produce/shuttle later. Also opponent idx2 has 4 goods, will sell. Sell all 3 on credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497660,
+    "id": "202610202000546e0e7cc1c03e41ba",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202000546e0e7cc1c03e41ba",
+    "usage": {
+      "completion_tokens": 208,
+      "completion_tokens_details": {
+        "reasoning_tokens": 169
+      },
+      "prompt_tokens": 2689,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2897
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.513,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Produce даёт 2 товара без риска изъятия — надёжная прибавка к будущим продажам.\"}",
+          "reasoning_content": "Round 2 action. Produce gives 2 goods, shuttle gives 3 but seizure risk 25%. Cash is fine (devaluation will hit round 3 start though). Law holder is idx2. I have influence 1, vote weight 3 (passed market action? no — weight 3 from skipping action in law round 1? whatever). Produce is safe; shuttle expected 3 vs 2 but 25% loss. Expected shuttle ~2.25 goods but could also be blocked... risk red tariff? Currently roof_tariff 0, so shuttle 3 goods no seizure? Seizure risk exists ~25% inherently (\"может быть изъят с вероятностью около 25%\"). Black tariff removes. Current no tariff, so risk applies. Produce = 2 safe. Take produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496582,
+    "id": "20261020194255846f6b08bc69460e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194255846f6b08bc69460e",
+    "usage": {
+      "completion_tokens": 203,
+      "completion_tokens_details": {
+        "reasoning_tokens": 168
+      },
+      "prompt_tokens": 3353,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 3556
+    }
+  }
+}

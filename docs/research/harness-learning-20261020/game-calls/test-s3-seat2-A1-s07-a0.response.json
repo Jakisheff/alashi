@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.601,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продаю весь товар по высокой цене с бумом, cash учитывается в ранге, вексель — нет.\"}",
+          "reasoning_content": "Prices: counter=4, price 7? base [12,10,9,8,7,...] counter 4 → 6, plus boom 2 = 8. Sell 3 units: 8+7+6=21? Candidate 5 gives +24M → price per unit 8,8,8? Anyway sell 3 gives 24M cash. Cash counted in rank; promissory not. Sell all now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499205,
+    "id": "202610202026422d7d01ce51384483",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202026422d7d01ce51384483",
+    "usage": {
+      "completion_tokens": 130,
+      "completion_tokens_details": {
+        "reasoning_tokens": 94
+      },
+      "prompt_tokens": 2642,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2772
+    }
+  }
+}

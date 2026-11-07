@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.865,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Последний раунд: вексель не погашается, поэтому продаю весь товар за живой cash.\"}",
+          "reasoning_content": "Last round market; promissory unredeemed. So sell outright, all 3 units: 12 alashi now. Price at counter 6 is 5? Prices: [12,10,9,8,7,6,5,...] index 6 → 5 alashi/unit? Selling 3 gives 12 alashi per candidate. Yes choice 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490901,
+    "id": "202610201808194d813030d6124694",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201808194d813030d6124694",
+    "usage": {
+      "completion_tokens": 112,
+      "completion_tokens_details": {
+        "reasoning_tokens": 79
+      },
+      "prompt_tokens": 3504,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3616
+    }
+  }
+}

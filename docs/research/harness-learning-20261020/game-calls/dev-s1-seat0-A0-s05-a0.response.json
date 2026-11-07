@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.745,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон даёт +1 влияния богатейшей фракции 2 — против этого.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest. Richest is фракция 2 (22M). I'm poorest with 0 cash. Voting yes gives rival influence. Vote no; фракция 2 already voted yes; фракция 1 (president) will vote. My vote_no helps block.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495560,
+    "id": "202610201925577504e5ce5b2d4a5c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201925577504e5ce5b2d4a5c",
+    "usage": {
+      "completion_tokens": 96,
+      "completion_tokens_details": {
+        "reasoning_tokens": 66
+      },
+      "prompt_tokens": 2205,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2301
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.028,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Финальный раунд: вексель не погасится, поэтому продаю весь товар за наличные и закрепляю высший ранг.\"}",
+          "reasoning_content": "Round 6 last market: sell_credit promissory not paid. Sell all 3 now: cash ~32.5M, keeps me close. Current rival cash 17.9 and 12.9. Selling 3 gives 31M+ → ~32.5M cash, top rank likely. Sell choice 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495546,
+    "id": "20261020192541ec7bcc5fb8824ff4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192541ec7bcc5fb8824ff4",
+    "usage": {
+      "completion_tokens": 110,
+      "completion_tokens_details": {
+        "reasoning_tokens": 69
+      },
+      "prompt_tokens": 3627,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3737
+    }
+  }
+}

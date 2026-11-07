@@ -1,0 +1,491 @@
+{
+  "planned": 288,
+  "completed": 288,
+  "status_counts": {
+    "ok": 282,
+    "request_error": 4,
+    "storage_error": 2
+  },
+  "models": {
+    "glm-4.5-flash": 282,
+    "missing": 6
+  },
+  "usage": {
+    "prompt_tokens": 200841,
+    "completion_tokens": 11858,
+    "total_tokens": 212699
+  },
+  "sampling": {
+    "model": "glm-4.5-flash",
+    "thinking": {
+      "type": "disabled"
+    },
+    "temperature": 0.7,
+    "top_p": 0.95,
+    "max_tokens": 256
+  },
+  "groups": {
+    "PP": {
+      "n": 69,
+      "optimal": 42,
+      "informative_n": 40,
+      "informative_optimal": 13,
+      "mean_regret": 4130434.782608696
+    },
+    "NP": {
+      "n": 69,
+      "optimal": 42,
+      "informative_n": 41,
+      "informative_optimal": 14,
+      "mean_regret": 4347826.0869565215
+    },
+    "PN": {
+      "n": 72,
+      "optimal": 45,
+      "informative_n": 42,
+      "informative_optimal": 15,
+      "mean_regret": 4652777.777777778
+    },
+    "NN": {
+      "n": 72,
+      "optimal": 46,
+      "informative_n": 42,
+      "informative_optimal": 16,
+      "mean_regret": 4027777.777777778
+    }
+  },
+  "by_scenario": [
+    {
+      "id": "L1",
+      "phase": "Law",
+      "payouts": {
+        "no": 15000000,
+        "yes": 20000000,
+        "veto": 15000000,
+        "abstain": 20000000
+      },
+      "choices": {
+        "PP": {
+          "veto": 6
+        },
+        "NP": {
+          "veto": 5,
+          "no": 1
+        },
+        "PN": {
+          "veto": 5,
+          "no": 1
+        },
+        "NN": {
+          "veto": 6
+        }
+      },
+      "primary": {
+        "cross": 0.0,
+        "repeat_a": 0.0,
+        "repeat_b": 0.0,
+        "excess": 0.0
+      }
+    },
+    {
+      "id": "L2",
+      "phase": "Law",
+      "payouts": {
+        "yes": 50000000,
+        "abstain": 50000000,
+        "veto": 55000000,
+        "no": 55000000
+      },
+      "choices": {
+        "PP": {
+          "veto": 4,
+          "yes": 2
+        },
+        "NP": {
+          "yes": 2,
+          "veto": 4
+        },
+        "PN": {
+          "veto": 5,
+          "yes": 1
+        },
+        "NN": {
+          "veto": 6
+        }
+      },
+      "primary": {
+        "cross": 0.33333333333333337,
+        "repeat_a": 0.5333333333333333,
+        "repeat_b": 0.0,
+        "excess": 0.06666666666666671
+      }
+    },
+    {
+      "id": "L3",
+      "phase": "Law",
+      "payouts": {
+        "no": 15000000,
+        "yes": 15000000,
+        "veto": 15000000,
+        "abstain": 15000000
+      },
+      "choices": {
+        "PP": {
+          "yes": 1,
+          "veto": 4,
+          "no": 1
+        },
+        "NP": {
+          "yes": 1,
+          "veto": 5
+        },
+        "PN": {
+          "veto": 4,
+          "no": 2
+        },
+        "NN": {
+          "veto": 6
+        }
+      },
+      "primary": {
+        "cross": 0.33333333333333337,
+        "repeat_a": 0.6,
+        "repeat_b": 0.0,
+        "excess": 0.03333333333333338
+      }
+    },
+    {
+      "id": "L4",
+      "phase": "Law",
+      "payouts": {
+        "no": 55000000,
+        "veto": 55000000,
+        "yes": 55000000,
+        "abstain": 55000000
+      },
+      "choices": {
+        "PP": {
+          "veto": 4,
+          "yes": 1
+        },
+        "NP": {
+          "veto": 6
+        },
+        "PN": {
+          "veto": 6
+        },
+        "NN": {
+          "veto": 6
+        }
+      },
+      "primary": {
+        "cross": 0.19999999999999996,
+        "repeat_a": 0.4,
+        "repeat_b": 0.0,
+        "excess": -5.551115123125783e-17
+      }
+    },
+    {
+      "id": "L5",
+      "phase": "Law",
+      "payouts": {
+        "yes": 15000000,
+        "no": 15000000,
+        "abstain": 15000000
+      },
+      "choices": {
+        "PP": {
+          "no": 5,
+          "yes": 1
+        },
+        "NP": {
+          "no": 5
+        },
+        "PN": {
+          "no": 4,
+          "yes": 2
+        },
+        "NN": {
+          "no": 6
+        }
+      },
+      "primary": {
+        "cross": 0.16666666666666663,
+        "repeat_a": 0.33333333333333337,
+        "repeat_b": 0.0,
+        "excess": -5.551115123125783e-17
+      }
+    },
+    {
+      "id": "L6",
+      "phase": "Law",
+      "payouts": {
+        "yes": 50000000,
+        "abstain": 50000000,
+        "no": 50000000
+      },
+      "choices": {
+        "PP": {
+          "no": 5,
+          "yes": 1
+        },
+        "NP": {
+          "no": 5
+        },
+        "PN": {
+          "no": 4,
+          "yes": 2
+        },
+        "NN": {
+          "yes": 1,
+          "no": 5
+        }
+      },
+      "primary": {
+        "cross": 0.2777777777777778,
+        "repeat_a": 0.33333333333333337,
+        "repeat_b": 0.33333333333333337,
+        "excess": -0.05555555555555558
+      }
+    },
+    {
+      "id": "L7",
+      "phase": "Law",
+      "payouts": {
+        "yes": 15000000,
+        "no": 15000000,
+        "abstain": 15000000
+      },
+      "choices": {
+        "PP": {
+          "no": 3,
+          "yes": 3
+        },
+        "NP": {
+          "no": 6
+        },
+        "PN": {
+          "yes": 4,
+          "no": 2
+        },
+        "NN": {
+          "no": 4,
+          "yes": 2
+        }
+      },
+      "primary": {
+        "cross": 0.5,
+        "repeat_a": 0.6,
+        "repeat_b": 0.5333333333333333,
+        "excess": -0.06666666666666665
+      }
+    },
+    {
+      "id": "L8",
+      "phase": "Law",
+      "payouts": {
+        "no": 50000000,
+        "abstain": 55000000,
+        "yes": 55000000
+      },
+      "choices": {
+        "PP": {
+          "no": 5,
+          "yes": 1
+        },
+        "NP": {
+          "yes": 2,
+          "no": 4
+        },
+        "PN": {
+          "yes": 4,
+          "no": 2
+        },
+        "NN": {
+          "no": 3,
+          "yes": 3
+        }
+      },
+      "primary": {
+        "cross": 0.5,
+        "repeat_a": 0.33333333333333337,
+        "repeat_b": 0.6,
+        "excess": 0.033333333333333326
+      }
+    },
+    {
+      "id": "A1",
+      "phase": "Action",
+      "payouts": {
+        "transfer_10_1": 55000000,
+        "pass": 50000000,
+        "transfer_10_2": 55000000,
+        "produce": 50000000,
+        "transfer_5_1": 55000000,
+        "transfer_5_2": 55000000
+      },
+      "choices": {
+        "PP": {
+          "transfer_10_1": 6
+        },
+        "NP": {
+          "transfer_10_1": 6
+        },
+        "PN": {
+          "transfer_5_2": 1,
+          "transfer_10_2": 1,
+          "transfer_10_1": 4
+        },
+        "NN": {
+          "produce": 3,
+          "transfer_10_1": 3
+        }
+      },
+      "primary": {
+        "cross": 0.5,
+        "repeat_a": 0.0,
+        "repeat_b": 0.6,
+        "excess": 0.2
+      }
+    },
+    {
+      "id": "A2",
+      "phase": "Action",
+      "payouts": {
+        "transfer_10_1": 35000000,
+        "transfer_10_2": 35000000,
+        "pass": 50000000,
+        "transfer_5_1": 30000000,
+        "transfer_5_2": 30000000,
+        "produce": 50000000
+      },
+      "choices": {
+        "PP": {
+          "transfer_10_1": 3,
+          "transfer_10_2": 1,
+          "produce": 1
+        },
+        "NP": {
+          "transfer_10_1": 5,
+          "transfer_10_2": 1
+        },
+        "PN": {
+          "transfer_10_1": 1,
+          "transfer_10_2": 5
+        },
+        "NN": {
+          "transfer_5_1": 1,
+          "transfer_10_2": 3,
+          "transfer_10_1": 2
+        }
+      },
+      "primary": {
+        "cross": 0.7,
+        "repeat_a": 0.7,
+        "repeat_b": 0.7333333333333334,
+        "excess": -0.01666666666666672
+      }
+    },
+    {
+      "id": "A3",
+      "phase": "Action",
+      "payouts": {
+        "transfer_10_2": 35000000,
+        "transfer_5_2": 35000000,
+        "transfer_10_1": 35000000,
+        "pass": 55000000,
+        "produce": 55000000,
+        "transfer_5_1": 35000000
+      },
+      "choices": {
+        "PP": {
+          "transfer_10_2": 4,
+          "transfer_5_2": 2
+        },
+        "NP": {
+          "transfer_10_2": 4,
+          "transfer_10_1": 1
+        },
+        "PN": {
+          "transfer_10_2": 6
+        },
+        "NN": {
+          "transfer_10_2": 5,
+          "produce": 1
+        }
+      },
+      "primary": {
+        "cross": 0.4444444444444444,
+        "repeat_a": 0.5333333333333333,
+        "repeat_b": 0.33333333333333337,
+        "excess": 0.011111111111111072
+      }
+    },
+    {
+      "id": "A4",
+      "phase": "Action",
+      "payouts": {
+        "transfer_10_2": 20000000,
+        "produce": 30000000,
+        "transfer_5_1": 30000000,
+        "pass": 30000000,
+        "transfer_5_2": 30000000,
+        "transfer_10_1": 35000000
+      },
+      "choices": {
+        "PP": {
+          "produce": 2,
+          "transfer_10_1": 1,
+          "transfer_10_2": 2
+        },
+        "NP": {
+          "transfer_10_1": 2,
+          "transfer_10_2": 3,
+          "produce": 1
+        },
+        "PN": {
+          "transfer_10_2": 5,
+          "produce": 1
+        },
+        "NN": {
+          "transfer_10_2": 2,
+          "transfer_10_1": 3,
+          "produce": 1
+        }
+      },
+      "primary": {
+        "cross": 0.7,
+        "repeat_a": 0.8,
+        "repeat_b": 0.7333333333333334,
+        "excess": -0.06666666666666676
+      }
+    }
+  ],
+  "primary": {
+    "scenario_count": 12,
+    "between_disagreement": 0.38796296296296295,
+    "repeat_PP": 0.4305555555555556,
+    "repeat_NN": 0.32222222222222224,
+    "excess": 0.011574074074074056,
+    "permutation_p_one_sided": 0.28257174282571745,
+    "permutations": 10000
+  },
+  "secondary_excess": {
+    "PP_NP": -0.011111111111111132,
+    "PN_NN": 0.022222222222222202,
+    "PP_PN": 0.021759259259259256,
+    "NP_NN": 0.020370370370370344
+  },
+  "posthoc_missing_sensitivity": {
+    "method": "Full 6+6 responses per scenario; enumerate every legal action assignment to missing PP/NN responses; not a preregistered endpoint.",
+    "excess_min": 0.004629629629629627,
+    "excess_max": 0.02546296296296295
+  },
+  "duplicate_provider_response_ids": 0,
+  "limits": [
+    "One model alias; backend version unspecified",
+    "Synthetic terminal states with restricted action menu and prescribed continuation",
+    "Neutral labels also have associations; no claim about archetypes or internal mechanism",
+    "Sampling independence and API alias stability cannot be established"
+  ]
+}

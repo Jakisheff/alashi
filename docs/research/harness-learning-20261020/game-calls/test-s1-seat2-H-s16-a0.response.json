@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.432,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Я уже президент по tie_order и лидирую по cash; shuttle даёт 3 товара для продажи в финальном раунде без лишних трат.\"}",
+          "reasoning_content": "I'm president (tie_order priority). Cash lead ~46.5 vs ~24-25. Remaining law rounds 5,6. Influence 1 vs 1. Max influence gives 5% of bank (~2 alashi) at end plus vote control. Bribe 5 alashi → influence 2, helps presidency in round 6 law and end bonus, costs 5 but gives money to rival (helping their cash). Cash rank: I'm way ahead. Giving rival 5 increases rival cash slightly; influence 2 vs their 1 secures presidency (tie_order favors me anyway at 1-1). Actually presidency: tie_order [2,1,0], I'm idx2, so at equal influence I hold presidency already. End bonus: max influence tie → better cash+hard → me. So bribes unnecessary? But bribe gives influence floor(amount/5M)=1 per 5M; I get vote_weight 4 vs 3, better law control. Cost 5M cash, 5M to rival. Vote: yes strictly > no needed; my weight 3+pass... With presidency and veto, I control laws anyway. So skip bribes; take shuttle for goods to sell round 6 (3 goods). Sold counter 3, price 8. Round 6 selling 3 goods moves counter to 6 (price 6). Shuttle better than produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498155,
+    "id": "20261020200906adf7364340c640f5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200906adf7364340c640f5",
+    "usage": {
+      "completion_tokens": 336,
+      "completion_tokens_details": {
+        "reasoning_tokens": 291
+      },
+      "prompt_tokens": 4944,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 5280
+    }
+  }
+}

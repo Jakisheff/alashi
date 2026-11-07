@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.427,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель обесценивается меньше раундов, чем наличные, поэтому выручка*1.25 строго лучше.\"}",
+          "reasoning_content": "Round 3 market, prices: sold_counter=2, price 9. Devaluation happens at round start (cash=floor/100*62) — likely already applied? cash 22.5M not divisible... 22500000/100*62 = 13950000; seen before was 22.25M promissory paid → 22.25M... actually 22.25M floor/100*62=13815000+... hmm whatever, assume applied.\n\nSelling 3 at 9 each = 27M cash vs credit 30M promissory. There are 3 more rounds of devaluation (rounds 4,5,6? starts round 2... rounds 4,5,6 = three more). Promissory 30M devalued: 0.62^3≈0.238 → ~7.1M effective. Selling now for 27M is better. But selling drops price for future. Still sell cash 3 units? Round 1 player 0 sold, counter=2. Sell 3 → counter 5. Others hold cash. I'd sell 3 for cash now (27M cash after 3 devaluations ≈ 27*0.238=6.4M, still better than credit? credit: 30M*0.238=7.1M > 6.4M! Wait devaluation applies at start of rounds 4,5,6 — that's 3 times? Rounds 2,3,4,5,6: devaluation at start of rounds 2+; current is round 3 already devalued. So devaluations at 4,5,6 = 3 times: factor 0.62^3=0.238. Cash 27→6.43, credit 30→7.14. Credit slightly better! But also tax etc. Also promissory might be wiped by law 8 again (already used). Law 8 already drawn. Credit yields more: 30 vs 27 both then equally devalued... wait, promissory added to cash at start of next round after devaluation of cash only. So credit pays 30 at round 4, then devalued in rounds 5,6: 0.62^2=0.384 → 11.5M vs cash 27*0.238=6.4M. Credit much better. Sell_credit 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497854,
+    "id": "2026102020040294315b6310d54826",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020040294315b6310d54826",
+    "usage": {
+      "completion_tokens": 558,
+      "completion_tokens_details": {
+        "reasoning_tokens": 521
+      },
+      "prompt_tokens": 2639,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 3197
+    }
+  }
+}

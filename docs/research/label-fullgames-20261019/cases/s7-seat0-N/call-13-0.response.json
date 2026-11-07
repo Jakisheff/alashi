@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.41,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"shuttle даёт 3 товара вместо 2, а при нулевом cash плата за границу не взимается.\"}",
+          "reasoning_content": "Need main action after bid. Cash 0, bid 5.775M escrowed. Produce gives 2 goods, shuttle gives 3 grey with 25% seizure risk (tariff?). Red tariff risk. Shuttle gives more goods (3 vs 2), risk of seizure. Grey goods at border risk ~25% unless black tariff. Currently tariff unknown... Take shuttle for 3 goods; but if favorable border pay 2 alashi — cash 0, so min(cash,2)=0. Seizure risk 25% of all goods? \"риск около 25% потери всего товара\" at red tariff. Expected 7*0.75 vs 6. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427444,
+    "id": "20261020003039d1ba547430f04063",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003039d1ba547430f04063",
+    "usage": {
+      "completion_tokens": 185,
+      "completion_tokens_details": {
+        "reasoning_tokens": 146
+      },
+      "prompt_tokens": 2705,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2890
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.602,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Продаю весь товар в кредит: вексель добавится к cash после девальвации в раунде 6 и даст максимальную выручку.\"}",
+          "reasoning_content": "Round 5 market, cash will deva next round (round 6 start: floor/100*62). Selling credit loses value (last round 6 promissory unpaid after final market). Actually round 6 market still exists; promissory from now adds to cash at round 6 start, then devalues after... start of round 6 cash=floor(cash/100)*62, then promissory added. So credit now 1.25x, added to cash round 6 market, but no more devaluation before final ranking? Deviation happens at start of rounds 2+; round 6 start already applied; promissory added after. But final rank counts cash only — promissory from round 6 market sales unpaid. Credit sold in round 5 market converts to cash at round 6 start after devaluation... wait devaluation applies to cash then promissory added. So promissory added fully, not devalued! sell_credit full 1.25x, then usable in round 6. So sell all 3 credit: promissory 38.75M.\n\nBut rivals also sell? sold_counter=0, price 12 each. Rivals will sell in round 6 anyway. Sell 3 credit now: choice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491132,
+    "id": "20261020181202a7634fa8cb7d4852",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181202a7634fa8cb7d4852",
+    "usage": {
+      "completion_tokens": 312,
+      "completion_tokens_details": {
+        "reasoning_tokens": 266
+      },
+      "prompt_tokens": 3142,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3454
+    }
+  }
+}

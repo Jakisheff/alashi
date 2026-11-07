@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.436,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Следую рекомендованной ставке аукциона и беру взятку на +2 влияния для удержания президентства и комиссии.\"}",
+          "reasoning_content": "The bid 12M was already made. Now recommended_choice=5 corresponds to additional bribe 10M — but that would empty cash too much after 12M bid. Wait, the bid already happened (own_bid=12000000, cash reduced?). Actually bid amount is collected at closure if won; cash 16916400 still includes... Hmm, own_bid recorded but cash not yet deducted? Cash shows 16916400 and own_bid 12M. If we win, 12M goes to bank. Recommended choice 5: bribe 10M leaving 6.9M — combined 12M bid + 10M bribe = too much? But recommended_choice says follow it. Hmm, harness says follow recommended_choice. But bribe 10M with 12M bid outstanding leaves 6.9M cash if bid wins. That seems risky but instructions say priority to recommended_choice. However that recommended seems like it assumed bidding phase, not post-bid. Rule 4: \"После ставки обязательно сделай основное действие\". Recommended 5 is a bribe, not main production action... but bribe is a main action. Yet shuttle gives 3 goods for selling later. Given bid already 12M, better keep cash. But instruction: follow recommended_choice if present and valid. It's valid (choice 5). I'll follow the directive.\n\nHmm, but reasonableness: bribe 10M gives +2 influence → 4, securing presidency and the 5% commission. That's plausible value. Follow it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495129,
+    "id": "202610201918371fd6a1be12b846ad",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201918371fd6a1be12b846ad",
+    "usage": {
+      "completion_tokens": 358,
+      "completion_tokens_details": {
+        "reasoning_tokens": 320
+      },
+      "prompt_tokens": 4133,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 4491
+    }
+  }
+}

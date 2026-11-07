@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.137,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":24,\"reason\":\"Следую рекомендованной ставке аукциона 9 alashi, которая обходит кап соперников в 8.\"}",
+          "reasoning_content": "Recommend 24 (9M bid), cash 18.38 < 16? 18.38 ≥ 16 → should be 12M (choice 27)? Rules: 12 if cash≥16, else 9. Harness recommends 24 (9M) though. Instruction: follow recommended_choice. Follow it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496848,
+    "id": "20261020194723b9ea23070e1c4648",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194723b9ea23070e1c4648",
+    "usage": {
+      "completion_tokens": 102,
+      "completion_tokens_details": {
+        "reasoning_tokens": 67
+      },
+      "prompt_tokens": 5190,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 5292
+    }
+  }
+}

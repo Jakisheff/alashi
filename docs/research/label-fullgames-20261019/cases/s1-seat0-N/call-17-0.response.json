@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.412,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Произвожу товар для продажи в финальном раунде; взятки дороже возможной комиссии.\"}",
+          "reasoning_content": "I hold license, goods=0. Produce gives 2 goods to sell round 6. Cash rank: I'm 1st (28.3M + promissory 27.5M). Influence max is opponent 2 (3), gets 5% commission. I could bribe to get influence 3... need 3 to tie, tie_order [0,2,1] gives me priority — bribe 10M to anyone gives influence 3, tying with idx2, tie_order favors me → I get commission 5% of bank (2.2M) plus veto rights. But 10M cost vs 2.2M gain — bad directly. However final cash rank: I'm already top, 50% share. Losing 10M cash reduces rank? My cash+hard 28.3 vs 26.3 vs 9.9 — still top without it. 10M cost for 2.2M gain bad. Also holder X veto might matter but law benefits unknown.\n\nBetter: produce for round-6 sales. Choose 1.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428071,
+    "id": "202610200041039454adfe200149e2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200041039454adfe200149e2",
+    "usage": {
+      "completion_tokens": 261,
+      "completion_tokens_details": {
+        "reasoning_tokens": 226
+      },
+      "prompt_tokens": 4107,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 4368
+    }
+  }
+}

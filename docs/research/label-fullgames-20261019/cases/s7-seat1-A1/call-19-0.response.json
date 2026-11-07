@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 32.472,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Последний раунд: взятки стоят дороже 5% комиссии, товар обесценится — сохраняю cash.\"}",
+          "reasoning_content": "Last round action. Best payout: rank by cash. Produce gives goods worthless at end (no more market). So action should preserve cash or gain influence for commission? Max influence gets 5% bank commission (~1.9 alashi). Bribes reduce cash. Vote weight: passing gives +2 weight, but law vote here — I'm not president. Best: pass, keep cash. But influence 1 vs others 1; max influence tie broken by cash — I'd lose. Bribe 5 alashi to gain influence 2 → wins 5% commission ~1.9 alashi? Commission = 5% of 38M = 1.9M... wait bank 38 alashi → commission 1.9 alashi. Bribe costs 5 alashi to gain 1.9. Not worth. Also cash loss hurts rank. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490495,
+    "id": "20261020180104e6fa696e2d2544a5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180104e6fa696e2d2544a5",
+    "usage": {
+      "completion_tokens": 216,
+      "completion_tokens_details": {
+        "reasoning_tokens": 180
+      },
+      "prompt_tokens": 3954,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 4170
+    }
+  }
+}

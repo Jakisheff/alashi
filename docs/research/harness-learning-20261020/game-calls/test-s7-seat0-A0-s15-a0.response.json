@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.369,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":10,\"reason\":\"Вексель не девальвируется и будет погашен в начале раунда 6, а наличные обрежутся до 62%, поэтому продаю всё в кредит.\"}",
+          "reasoning_content": "Round 5 of 6. Cash gets devalued at round 6 start: floor(cash/100)*62 (~62%). Promissory added at round 6 start without devaluation. So sell_credit is better: promissory 57.5M becomes cash fully vs 46M*0.62=28.5M. Also round 6 market remains to sell remaining, but selling all now via credit maximizes. Note last round promissory not redeemed — but this is round 5, so round 6 start promissory paid. Rival 2 has 0 goods anyway. Sell all 5 credit.\n\nActually check: round 6 sell remaining? If sell 5 credit now, no goods left for round 6, but we got top prices. Good.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499801,
+    "id": "20261020203636f48f97c7f11a499f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203636f48f97c7f11a499f",
+    "usage": {
+      "completion_tokens": 213,
+      "completion_tokens_details": {
+        "reasoning_tokens": 165
+      },
+      "prompt_tokens": 3272,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3485
+    }
+  }
+}

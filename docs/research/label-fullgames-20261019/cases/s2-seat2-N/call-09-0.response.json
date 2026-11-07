@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 14.297,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон даёт +1 влияния самому богатому (сопернику), поэтому голосую против, хотя он всё равно пройдёт.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest by cash. Richest is player 0 (32.54). Both voted Yes. I'm not holder, not richest. Player 0 gains influence — bad for me at final influence bonus. Vote no (weight 1) vs two yes — passes anyway. Abstain equally. Vote no symbolic; no difference. Choose vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427728,
+    "id": "20261020003515be7d10e884dc4ed8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003515be7d10e884dc4ed8",
+    "usage": {
+      "completion_tokens": 119,
+      "completion_tokens_details": {
+        "reasoning_tokens": 79
+      },
+      "prompt_tokens": 2486,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2605
+    }
+  }
+}

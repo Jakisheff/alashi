@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.817,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Финальный раунд: вексель не погашается, поэтому продаю весь товар за наличные.\"}",
+          "reasoning_content": "Last round; promissory won't be paid. Sell all 3 = 70235662.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495410,
+    "id": "202610201923285c439c9bc4344bd6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201923285c439c9bc4344bd6",
+    "usage": {
+      "completion_tokens": 57,
+      "completion_tokens_details": {
+        "reasoning_tokens": 23
+      },
+      "prompt_tokens": 3513,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3570
+    }
+  }
+}

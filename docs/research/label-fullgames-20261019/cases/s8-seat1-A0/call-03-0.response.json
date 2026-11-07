@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.726,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Продаю весь товар в кредит ради выручки ×1,25 — вексель не девальвируется.\"}",
+          "reasoning_content": "Price counter 4, so price 7? sold_counter=4, prices [12,10,9,8] sold, next 7,6,5. Sell 3 units: 7+6+5=18. Cash vs credit: cash needed for ranking; credit 1.25x. Promissory added at round start then devalued cash/100*62 — but promissory itself added to cash after devt, not devalued. So credit better unless last round. Sell 3 credit: 22.5 promissory.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427831,
+    "id": "20261020003706eb523b1ecd6e4bd1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003706eb523b1ecd6e4bd1",
+    "usage": {
+      "completion_tokens": 154,
+      "completion_tokens_details": {
+        "reasoning_tokens": 119
+      },
+      "prompt_tokens": 2272,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2426
+    }
+  }
+}

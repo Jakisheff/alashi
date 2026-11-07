@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.474,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Карта 6 снижает цены следующего рынка — мне это невыгодно, применяю вето гарантированно.\"}",
+          "reasoning_content": "Card 6: price -2 next market. I'm president. My vote weight 1 (influence 1), others 1 each. If I vote no, no votes yes likely → rejected anyway? Others unknown. Card 6 lowers next market prices by 2 — bad for me selling goods. Best to reject: vote_no, or veto to be safe. Vote_no: 1 no, need yes>no; if both others yes, 2>1 passes. Safer: vote_no plus veto available later. Actually veto now guarantees rejection. Veto is free. Choose veto (choice 4)? But veto before counting — could wait. Choose vote_no, veto later if needed; but simpler: veto now guarantees. Veto pending is fine. Choose 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499353,
+    "id": "2026102020290807ef32c0e5974640",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020290807ef32c0e5974640",
+    "usage": {
+      "completion_tokens": 197,
+      "completion_tokens_details": {
+        "reasoning_tokens": 161
+      },
+      "prompt_tokens": 2334,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2531
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.938,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Финальный раунд: товар и влияние уже бесполезны, pass сохраняет максимальный cash для ранга.\"}",
+          "reasoning_content": "Final round, goods useless (no more market). I'm holder, influence 3, top cash anyway. But wait: law phase remains — law can tax... law affects future sales only, none. Card 8 annuls promissory — mine is 0. So action only affects influence via bribe → max influence gets 5% of bank commission = 5% of 38? Commission 5% of 38000000=1.9 alashi, to max influence holder. I already have 3, others have 1, so I get it anyway. Passing keeps cash. But passing gives +2 vote weight—not needed. Just pass, or shuttle (goods worthless). Pass keeps max cash for ranking. But wait, sold already; ranking by cash+hard. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427181,
+    "id": "2026102000261472c87a3db43a4202",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000261472c87a3db43a4202",
+    "usage": {
+      "completion_tokens": 201,
+      "completion_tokens_details": {
+        "reasoning_tokens": 163
+      },
+      "prompt_tokens": 4801,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 5002
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.287,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель не девальвируется, поэтому sell_credit двух единиц даёт максимум выручки.\"}",
+          "reasoning_content": "Prices: counter=4 → price 7. Sell 2: 7+6=13. Sell now is good; credit gives 1.25x but promissory at start of round: cash=floor(cash/100)*62 means massive devaluation! Promissory added after — promissory added after devaluation, so promissory not devalued. Wait: cash devalued 62%, then promissory added. So credit is much better: 16.25 vs 13. Sell credit 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428053,
+    "id": "202610200040494ddf3192d2354d19",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200040494ddf3192d2354d19",
+    "usage": {
+      "completion_tokens": 145,
+      "completion_tokens_details": {
+        "reasoning_tokens": 113
+      },
+      "prompt_tokens": 2220,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2365
+    }
+  }
+}

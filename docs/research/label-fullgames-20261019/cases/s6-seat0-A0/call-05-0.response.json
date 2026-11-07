@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.745,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"shuttle даёт больше товара при нулевом cash, риск изъятия умеренный\"}",
+          "reasoning_content": "Produce gives 2 goods safe; shuttle 3 goods but 25% seizure risk (no tariff black). Expected shuttle 2.25 goods vs 2 — slightly better. Cash=0 so fine. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427913,
+    "id": "202610200038305772b845936e48ea",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200038305772b845936e48ea",
+    "usage": {
+      "completion_tokens": 75,
+      "completion_tokens_details": {
+        "reasoning_tokens": 46
+      },
+      "prompt_tokens": 2169,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2244
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.48,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон о субсидии уже не влияет на выплаты, пропуск безвреден.\"}",
+          "reasoning_content": "Law 3 = subsidy_goods=1, no effect now (no more produce/market? actually law affects future actions—but this is last round's law; no more production benefits market-wise). Subsidy irrelevant. Pass keeps vote_weight 4; but law has no effect on me anyway. vote_yes passes subsidy, useless. Just pass — but voting uses weight; doesn't matter. Pass is fine (keeps my abstain? pass means no vote). Either way outcome irrelevant to payout. Choose pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497031,
+    "id": "20261020195023b1d3fa7ed4264633",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195023b1d3fa7ed4264633",
+    "usage": {
+      "completion_tokens": 132,
+      "completion_tokens_details": {
+        "reasoning_tokens": 104
+      },
+      "prompt_tokens": 3885,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 4017
+    }
+  }
+}

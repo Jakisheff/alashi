@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.39,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 4 даёт +1 влияния самому бедному, а при равенстве cash тай-брейк в мою пользу — я сохраняю президентство и влияние.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest. Cash all 0, tie_order favors 1 (president). Wait, poorest by cash, tie by tie_order: idx1 wins influence. That's me — I gain influence → helps president status and 5% commission. Yes votes 2 vs No 1, passes anyway. Don't veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496926,
+    "id": "20261020194843a86f72b6e75b4ba5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194843a86f72b6e75b4ba5",
+    "usage": {
+      "completion_tokens": 122,
+      "completion_tokens_details": {
+        "reasoning_tokens": 73
+      },
+      "prompt_tokens": 1984,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2106
+    }
+  }
+}

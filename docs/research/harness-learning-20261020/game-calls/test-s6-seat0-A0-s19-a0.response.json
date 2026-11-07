@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.883,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар уже бесполезен, взятка стоит дороже возможного выигрыша влияния — сохраняю cash для ранга.\"}",
+          "reasoning_content": "Last round action; no more market (round 6 market done... actually round 6: market done, now action, then law). Goods can't be sold—no more market. So goods useless. Bribe to whom? Influence matters: max influence gets extra 5% bank commission (~1.9 alashi), and presidency vote. Rival 2 has influence 2. Bribing gives me influence at cost. 5% of bank = 1.9 alashi ≈ 1900000. Bribing 5M to gain influence 2 vs 2's influence 2 — tie broken by cash. With influence 2 I'd beat 2's 2? tie_order [0,2,1] favors me. Gaining presidency in law round 6: could veto bad law. But gain only ~1.9M for 5M bribe — negative. Best: pass, keep cash for rank. Cash counts for rank. Choice 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498253,
+    "id": "20261020201045a823abe73ff84fea",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201045a823abe73ff84fea",
+    "usage": {
+      "completion_tokens": 243,
+      "completion_tokens_details": {
+        "reasoning_tokens": 205
+      },
+      "prompt_tokens": 5707,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 5950
+    }
+  }
+}

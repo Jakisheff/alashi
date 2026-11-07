@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.062,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Закон о 20% налоге вреден моим будущим продажам — налагаю вето как президент.\"}",
+          "reasoning_content": "Law 2 = 20% tax. I'm president, idx2 voted No already by idx1. Veto the tax.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495186,
+    "id": "2026102019194372726622b7714fbd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019194372726622b7714fbd",
+    "usage": {
+      "completion_tokens": 62,
+      "completion_tokens_details": {
+        "reasoning_tokens": 27
+      },
+      "prompt_tokens": 2075,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 2137
+    }
+  }
+}

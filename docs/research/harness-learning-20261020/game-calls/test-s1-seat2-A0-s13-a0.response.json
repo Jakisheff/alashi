@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.322,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Товар нужен для продаж в оставшихся раундах; shuttle даёт максимум (3 единицы) бесплатно, а проигрыш аукциона вернёт ставку.\"}",
+          "reasoning_content": "I'm the president (holder 2) with influence 1. Cash 10.11M, bid 15M already. Bid of 15M means cash after losing returns; if winning, cash -15M... wait bid already deducted? cash=10110000 with own_bid=15000000, so bid already paid. Others have 37M and 29M cash, could outbid. If I lose, 15M returned, cash becomes 25M. License income 20-60 alashi is big — likely opponents outbid.\n\nNow main action: shuttle gives 3 goods for future selling (rounds 5-6 markets). Price at sold_counter=4 → next unit price 7 alashi? List [12,10,9,8,7,...] at counter 4 → price 7. 3 goods worth ~7+6+5=18 alashi later. Produce gives 2. Shuttle better if not confiscated... shuttle 25% seizure? Red tariff risk. Take shuttle for 3 goods.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499401,
+    "id": "202610202029535aedff823dcf4fc9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202029535aedff823dcf4fc9",
+    "usage": {
+      "completion_tokens": 264,
+      "completion_tokens_details": {
+        "reasoning_tokens": 217
+      },
+      "prompt_tokens": 3384,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 3648
+    }
+  }
+}

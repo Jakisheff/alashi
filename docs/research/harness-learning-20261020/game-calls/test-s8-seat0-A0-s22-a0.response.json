@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.633,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Рынок уже прошёл, товары не влияют на итог, а взятка стоит дороже, чем бонус влияния от 5% банка; прохожу.\"}",
+          "reasoning_content": "Last round action. Goods are worthless for rank, but there's no more market after action? Market comes before action in round 6 — already done. So goods don't help. Influence gives 5% bank bonus (~2.3 alashi) and law power. But I'm already president (influence 3 vs 2). A small bribe of 5M costs 5 alashi cash for +1 influence — bank 46M, 5% = 2.3M... actually 5% of bank = 2.3 alashi. Bribe 5M costs 5 alashi for +1 influence → bad. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498413,
+    "id": "20261020201323fbdaba9dea1b4b01",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201323fbdaba9dea1b4b01",
+    "usage": {
+      "completion_tokens": 182,
+      "completion_tokens_details": {
+        "reasoning_tokens": 137
+      },
+      "prompt_tokens": 5933,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 6115
+    }
+  }
+}

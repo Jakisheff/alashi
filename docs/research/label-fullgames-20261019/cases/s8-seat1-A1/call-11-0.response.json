@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.275,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":55,\"reason\":\"Полная ставка гарантированно обыгрывает соперника 2, а доход лицензии 20–60 alashi многократно её окупает.\"}",
+          "reasoning_content": "License income 20-60 alashi (~200-600M units), huge compared to bids. Rivals: idx0 cash 5.3M, idx2 cash 31.5M. Need to outbid 2, who can bid up to ~31.5M. My 33.18M barely more. But tie_order: [2,1,0] — at equal bids, 2 wins. My max bid 33,185,000 beats 2's max. So bid everything? If 2 bids all, I win with 33,185,000. But bid goes to bank if I win — shared back via payouts. Still license profit huge. But wait — bid doesn't consume action; I can also do produce. Candidates list bid options only; menu says one composite. But bid candidates exist; after bid I could choose another action? The prompt says \"bid не расходует основное действие\" but I can only pick one candidate now. Since after_own_action shows bid only, I'll pick full bid 55 — cash 0 risks rank, but license income 20-60 outweighs. However bank: my 33.18M enters bank, redistributed 50:30:15 anyway. Total gain: license income minus bid share. If I win with 33.185M when 2 would bid 31.5M, alternative is 2 wins. Win: license income (say 40 avg) minus losing ~nothing? Bank grows by my bid; my payout share of extra bid money ~50% returned. Net cost maybe ~half bid. Bid 31.5M+1? I don't know 2's bid. 2 likely bids similarly high. Safer: full cash bid guarantees win, but tie_order 2>1 so must strictly exceed; 33,185,000 > 2's 31,516,800 max. Choose 55.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427749,
+    "id": "20261020003538e53027bf873f4b8e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003538e53027bf873f4b8e",
+    "usage": {
+      "completion_tokens": 441,
+      "completion_tokens_details": {
+        "reasoning_tokens": 399
+      },
+      "prompt_tokens": 5903,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 6344
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.483,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":61,\"reason\":\"Ставка 36 alashi перекрывает максимум соперника (~35.1) и обеспечивает лицензию с доходом 20–60 alashi.\"}",
+          "reasoning_content": "Round 4 action: auction. I'm leading in cash (44.27). License income ~20-60 alashi extra, huge compared to bank (~30 alashi). Should bid high to win; rivals have ~35 and ~6. Bid above 35? But spending raises bank for everyone and devalues cash — bank grows though, my payment goes to shared bank. Still license worth ~40 alashi avg. Rivals max ~35. Bid 36 alashi (choice 61)? That leaves me 9.27 cash. But remaining cash counts toward rank; I currently lead cash. If I win at 36, bank becomes ~66+ but paid money returns via shares partially (I get 50%). Net cost ~ half. Worth it. But rival 2 might bid all 35.09? Max cash 35096800 ≈ 35.1. Bid 36 alashi = 36000000 (choice 61). Tie? No, 36>35.1. Also still get to act after — no money left for donkey. Could bid 35.1 not allowed (multiple of 1 alashi? bids кратно 1 alashi — menu only whole alashi). 35 alashi = 35000000 might lose to 35.09? Rival's cash 35096800, so 35M could tie/lose. Bid 36M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495248,
+    "id": "2026102019203910c68e60b60e4cba",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019203910c68e60b60e4cba",
+    "usage": {
+      "completion_tokens": 335,
+      "completion_tokens_details": {
+        "reasoning_tokens": 293
+      },
+      "prompt_tokens": 6688,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 7023
+    }
+  }
+}

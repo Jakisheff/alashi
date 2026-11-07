@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.825,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Карта 7 повышает цены следующего рынка, выгодно всем, включая мои будущие продажи.\"}",
+          "reasoning_content": "Card 7 raises next market prices +2. I'm president (holder idx 2? Actually president is idx 2). Wait, holder_idx=2, not me. So just vote. Card 7 helps prices; I have no goods but will produce later. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499479,
+    "id": "20261020203114d15df41e14c645df",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203114d15df41e14c645df",
+    "usage": {
+      "completion_tokens": 89,
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      },
+      "prompt_tokens": 2026,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2115
+    }
+  }
+}

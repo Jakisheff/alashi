@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.92,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон 5 даёт +1 влияния самому богатому — это я, вреда нет.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest by cash — that's me (idx1, 69.6M). But I already have license; extra influence matters for the 5% commission bonus? Max influence: idx0 has 3. My vote weight 3 vs their 3. President is idx0, can veto. Card 5 helps me (influence 2) but idx0 has 3. If law passes, richest gets +1 influence — that's me. Yes vote good; idx0 voted Yes but could veto... they're president and richest? No, I'm richest. Card 5 gives +1 to richest = me, moving me to 2, still below idx0's 3. Doesn't hurt. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427963,
+    "id": "20261020003911615dc77a07c141e5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003911615dc77a07c141e5",
+    "usage": {
+      "completion_tokens": 188,
+      "completion_tokens_details": {
+        "reasoning_tokens": 157
+      },
+      "prompt_tokens": 3259,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3447
+    }
+  }
+}

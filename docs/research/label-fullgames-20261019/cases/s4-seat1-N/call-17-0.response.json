@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.695,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Финальный раунд: вексель не погасится, поэтому продаю весь товар за наличные.\"}",
+          "reasoning_content": "Last round, promissory won't be paid after final round — sell_credit worthless. Sell all 3 now: 9 alashi. Sell 3 units = choice 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490680,
+    "id": "2026102018043897c4b8f896614f1c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102018043897c4b8f896614f1c",
+    "usage": {
+      "completion_tokens": 72,
+      "completion_tokens_details": {
+        "reasoning_tokens": 38
+      },
+      "prompt_tokens": 3461,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3533
+    }
+  }
+}

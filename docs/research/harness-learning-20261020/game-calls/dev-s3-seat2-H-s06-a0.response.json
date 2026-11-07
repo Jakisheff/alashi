@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.118,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Закон 8 обнуляет векселя, а ни у кого их нет; воздержусь без последствий.\"}",
+          "reasoning_content": "Law 8 обнуляет promissory. У меня promissory=0, у соперников тоже 0. Значит эффект — ничего, кроме устранения карты из колоды. Голосую yes или no — неважно. Пропуск даст +2 веса позже? vote_weight плюс 2 если action пропущен — это про action фазу, не про law. Проголосовать abstain безопасно. Выбор: 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495340,
+    "id": "20261020192213a4e4bd22d77540eb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192213a4e4bd22d77540eb",
+    "usage": {
+      "completion_tokens": 131,
+      "completion_tokens_details": {
+        "reasoning_tokens": 95
+      },
+      "prompt_tokens": 2733,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2864
+    }
+  }
+}

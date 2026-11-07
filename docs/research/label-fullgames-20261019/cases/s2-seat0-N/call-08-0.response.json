@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.483,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Нет товара для продажи; покупка по цене 12 не приносит выгоды.\"}",
+          "reasoning_content": "I have 0 goods, cash 14.88M. Selling nothing. Buy at price 12? Buy 1 costs 12 alashi, pushes counter back. Not useful much. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490143,
+    "id": "20261020175540c3ed8d4c15b945c1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175540c3ed8d4c15b945c1",
+    "usage": {
+      "completion_tokens": 68,
+      "completion_tokens_details": {
+        "reasoning_tokens": 41
+      },
+      "prompt_tokens": 2316,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2384
+    }
+  }
+}

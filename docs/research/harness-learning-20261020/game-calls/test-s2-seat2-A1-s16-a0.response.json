@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.393,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Кредитная продажа всех 3 единиц по высокой цене обходит грядущую девальвацию и даёт премию 25%.\"}",
+          "reasoning_content": "Last market rounds: sold_counter=0, price 12/unit. I have license income anyway. Sell now at 12, or hold? Remaining rounds: market 5, 6. Selling all 3 at 12 = 36 alashi. Devaluation: cash *0.62 at round 6 start. So sell_credit gives promissory which doesn't devalue but... wait, promissory added after devaluation. Round 6 start: cash floor/100*62, then promissory added. So sell_credit avoids devaluation! Promissory pays 1.25x. But round 6 market sales cash will devalue too... actually cash after round 6 market isn't devalued (game ends). So sell all now as credit: promissory 38.75 alashi, added to cash at round 6 start without devaluation, plus I can sell round-6 goods later. Direct sell 49 now → devalued to ~30. Credit better. Choice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497393,
+    "id": "20261020195627ce4febc81e2a4473",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195627ce4febc81e2a4473",
+    "usage": {
+      "completion_tokens": 253,
+      "completion_tokens_details": {
+        "reasoning_tokens": 212
+      },
+      "prompt_tokens": 3197,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3450
+    }
+  }
+}

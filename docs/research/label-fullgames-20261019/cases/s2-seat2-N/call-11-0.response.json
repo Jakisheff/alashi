@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.176,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Продаю весь товар в кредит: вексель 30 alashi выплачивается в раунде 5 без девальвации, что заметно выгоднее немедленной продажи.\"}",
+          "reasoning_content": "Round 4 market, I'm idx2 with 3 goods. Price counter 2 → next price 9. Sell 3 gives 9+8+7=24 → cash 39.8M, near leader 38.8M. Round 5 cash devaluation: floor(cash/100)*62. Selling now: 24M → devalue to ~14.9M... but others' cash also devalued similarly. Sell now vs sell later? Prices drop as more sold. Promissory is added after devaluation (round 5 start: cash=floor/100*62, then promissory added). sell_credit 3 → 24*1.25=30M promissory, added in round5 without devaluation! That's better. But risk of card 8 wiping promissory (already used). So sell_credit 3 → 30M promissory, cash stays 15.8M.\n\nSelling all 3 now credit: get 30M promissory paid in round5 without devaluation, plus keep cash 15.8 devalued to ~9.8. Total ~39.8. Immediate sell: cash 39.8 → devalued ~24.7. Credit clearly better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427737,
+    "id": "202610200035290633c4090f0d42ee",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200035290633c4090f0d42ee",
+    "usage": {
+      "completion_tokens": 314,
+      "completion_tokens_details": {
+        "reasoning_tokens": 264
+      },
+      "prompt_tokens": 2852,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 3166
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.48,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель не девальвируется и даёт 1.25× выручку — продаю весь товар в кредит.\"}",
+          "reasoning_content": "Prices: counter=4, selling 2 units at 5 then 4? Counter 4 means next price... prices list index by sold_counter: 5? List [12,10,9,8,7,6,5,4...] — counter 4 means 4 sold, next price index 4 = 7, then 6. Selling 2 gives 13 alashi, or credit 16.25 promissory. Promissory is paid after round; but each round cash devalues *0.62 except hard. Actually promissory added to cash at start of next round after devaluation — so promissory preserves value! Sell credit better. But final round promissory unredeemed. Round 2 of 6, so credit is good. Later sales at lower prices anyway; selling now vs later same counter. Sell credit 2 units: 16.25 alashi vs 13. Choose credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496555,
+    "id": "20261020194230637ad074968f4c0c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194230637ad074968f4c0c",
+    "usage": {
+      "completion_tokens": 233,
+      "completion_tokens_details": {
+        "reasoning_tokens": 196
+      },
+      "prompt_tokens": 2213,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2446
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 18.616,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":42,\"reason\":\"Ставка не расходует действие и возвращается при проигрыше, а лицензия даёт крупный доход — иду ва-банк, чтобы перебить соперников.\"}",
+          "reasoning_content": "We're фракция 2, round 4 action. Bid is free extra but consumes cash; likely rivals with more cash (41.5M, 8.4M) may bid higher. License income 20-60 alashi is big. Our cash 24.35M; rival 0 has 41.5M and could outbid us. But bidding doesn't consume main action—actually bid candidates here don't include additional action; interface offers one combined move per turn? \"Интерфейс предлагает одну совокупную ставку за ход\" — so choosing bid means action is spent? It says bid doesn't consume main action, after bid you can choose another action; but menu offers one combined bet per turn. Risky.\n\nAlternative: choose produce (choice 1) to get goods for future sales. But license worth 20-60 alashi vs bank 30 alashi split... huge. Bid high? Rival 0 with 41M can beat any our bid. Expected value: if we bid ~24M all cash, rival could outbid. Uncertain. Moderate bid 15M (choice 32)? If we lose, returned.\n\nActually bid doesn't consume action, but menu combined — choose bid then still allowed another? Probably engine will prompt again. But candidates only show bid states without goods. I'll choose a strong bid, say 20M (choice 37) leaving 4.35M. If rival 0 bids higher, we get refund; if not, license worth more. Actually rival 0 likely bids high since richest. Either way refund safe. But we also want produce for round 5 market. Choosing bid risks losing action... spec says after bid you can still choose action, so bid is fine.\n\nPick bid 20M, choice 37? If 0 bids more, refund. If tie_order [0,1,2], 0 wins ties. 0 has 41.5M; likely bids ~half? Bid all 24.35M? Still can be beaten. I'll pick choice 42 (all-in).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490814,
+    "id": "20261020180637a0ae43c894914a94",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180637a0ae43c894914a94",
+    "usage": {
+      "completion_tokens": 481,
+      "completion_tokens_details": {
+        "reasoning_tokens": 433
+      },
+      "prompt_tokens": 5126,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 5607
+    }
+  }
+}

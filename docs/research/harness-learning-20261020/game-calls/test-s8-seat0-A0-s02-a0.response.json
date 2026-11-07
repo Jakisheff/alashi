@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.871,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Карта 0 без эффектов, исход голосования не влияет на выплату.\"}",
+          "reasoning_content": "Law card 0 — no effects. Vote doesn't matter. But wait — president is holder 1, not me. Vote yes/no doesn't matter; law 0 neutral. Abstain fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498274,
+    "id": "202610202011120851db1bfdeb49db",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202011120851db1bfdeb49db",
+    "usage": {
+      "completion_tokens": 69,
+      "completion_tokens_details": {
+        "reasoning_tokens": 42
+      },
+      "prompt_tokens": 2028,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2097
+    }
+  }
+}

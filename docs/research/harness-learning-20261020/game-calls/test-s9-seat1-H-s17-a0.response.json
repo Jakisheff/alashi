@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 16.282,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce даёт 3 надёжных товара для продажи в раунде 6 по высокой цене; shuttle рискует изъятием, а взятки за президентство не окупаются.\"}",
+          "reasoning_content": "Round 5 action, I'm faction 1, license holder, cash 60.7. Options: shuttle gives goods for selling next round. Prices: sold counter 3, next sell starts price 8. Round 6 I can sell. But devaluation at round 6 start: cash → floor/100*62 → 37.65; then sell. Shuttle gives 4 goods (3+subsidy). Shuttle risk: grey goods confiscation ~25%? shuttle gives grey goods? shuttle gives 3+subsidy grey goods which may be seized. produce gives 3 (2+1) black goods. Selling 3 at price 8 → 24 alashi. Prefer produce to avoid seizure? Shuttle gives 4 goods, expected 3 goods. With price 8 next round for first units (sold counter 3, price list index 3 = 8). Selling 4: 8+7+6+5=26. Expected value of shuttle 0.75*26=19.5 vs produce 3 units 8+7+6=21. Produce better.\n\nWhat about presidency? President is idx2 (influence 3). I'm rich (60.7 vs 26 vs 9.8). Law card 5 gives +1 influence to richest; tax laws could hurt me (tax on future sales). Round 6 law — president decides after I sell. Bribe 5M to idx2 gives me +1 influence — but I already have vote_weight 3; president determined at law entry by influence. idx2 has 3, I have 1. Need 5 alashi bribe to reach... influence 3 to tie, tie_order favors 0,2, so need 4 to beat? Bribe 3 (15M) to reach 4 > 3 → I become president. Cost 15M ≈ 15 alashi. Gains: presidency veto/control of law in rounds 5 and 6? Holder determined at law each round. Round 5 law coming now. If I'm president, I can veto tax laws. My sales round 6 could face tax 10-20%. Tax on 21 alashi = ~2-4 alashi. Not worth 15. Also presidency gives 5% bank commission (bank 39M, 5% = ~2 alashi) if max influence — I'd have 4, max. So gains ~2 + tax avoidance ~3, cost 15. Not worth it.\n\nJust produce. Choice 1.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496891,
+    "id": "202610201947565dd7fc32ec4a4b9f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201947565dd7fc32ec4a4b9f",
+    "usage": {
+      "completion_tokens": 582,
+      "completion_tokens_details": {
+        "reasoning_tokens": 531
+      },
+      "prompt_tokens": 5374,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 5956
+    }
+  }
+}

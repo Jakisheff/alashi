@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.914,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Это последний рынок: вексель не погасится, поэтому продаю весь товар за наличные.\"}",
+          "reasoning_content": "Final round, promissory won't be paid after last round. Sell all 3 immediately: cash 76.3M, keeps rank top.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497018,
+    "id": "20261020195015f9571e57caca418c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195015f9571e57caca418c",
+    "usage": {
+      "completion_tokens": 62,
+      "completion_tokens_details": {
+        "reasoning_tokens": 31
+      },
+      "prompt_tokens": 3577,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3639
+    }
+  }
+}

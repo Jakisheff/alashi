@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.354,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Взятка 5 alashi даёт влияние 2 и перехват поста президента до конца игры — veto и комиссия 5% банка перевешивают потерю cash.\"}",
+          "reasoning_content": "Round 3 action. President is rival idx2. Becoming president needs influence 2 (tie_order puts 2 first, so need >1). Bribe 5 to idx1 gives influence 2. Then in law rounds 3-6 I'd be president (if opponent doesn't bribe more). Presidency allows veto, plus 5% bank commission at max influence (~1.5 alashi), and veto of tax laws helps. Also round 4 auction is next.\n\nAlso produce gives goods for selling. But president control is valuable. Bribe 5 to idx1: cash 47.25, influence 2. Then law round 3 I'd be president. Devaluation rounds 4: cash floor(47.25/100)*62... anyway.\n\nAlternatively produce now, bribe later? Bribe now secures presidency for law 3-6. Do it: choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497670,
+    "id": "202610202001025ece467977c0445a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202001025ece467977c0445a",
+    "usage": {
+      "completion_tokens": 236,
+      "completion_tokens_details": {
+        "reasoning_tokens": 187
+      },
+      "prompt_tokens": 4495,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 4731
+    }
+  }
+}

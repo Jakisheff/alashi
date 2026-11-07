@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.654,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар больше не продаётся, а взяточные расходы и рост чужого кэша перевешивают комиссию 5% банка.\"}",
+          "reasoning_content": "Final round action. No more selling after this (round 6 market already done). Goods useless. Influence: max influence gives 5% of bank (~3.3 alashi). President is idx0 with influence 3. Could I buy max influence to get the 5% commission? Bank 66M, 5% = 3.3M. Bribe costs cash, bribe gives influence but bribe target gains cash — bribing to idx0 or idx2 increases their cash too. Getting influence 4 via 5M bribe: cost 5M, gain cash 5M to opponent, and get 3.3M commission. Bad. Rank: cash 40.4M vs 25.5M — I'm 2nd, gap 15M. Bribes reduce my cash and raise theirs. Best: pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495296,
+    "id": "20261020192131c10c1c1162244381",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192131c10c1c1162244381",
+    "usage": {
+      "completion_tokens": 218,
+      "completion_tokens_details": {
+        "reasoning_tokens": 178
+      },
+      "prompt_tokens": 4677,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 4895
+    }
+  }
+}

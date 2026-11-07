@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.438,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Последний раунд: товар уже не продать, влияние уже максимальное — взяточки только отдадут деньги соперникам, поэтому pass.\"}",
+          "reasoning_content": "Last round, no market after. Influence 3 already top. Extra influence gains extra 5% bank commission share (already max? Currently influence 3 vs others 1 — already max). Bribe transfers money to rival, bad. So pass is best (keep cash). Actually produce/shuttle goods worthless now. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499531,
+    "id": "20261020203203bede26c4a5d74f4a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203203bede26c4a5d74f4a",
+    "usage": {
+      "completion_tokens": 109,
+      "completion_tokens_details": {
+        "reasoning_tokens": 66
+      },
+      "prompt_tokens": 5352,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 5461
+    }
+  }
+}

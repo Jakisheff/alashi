@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.409,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Карта 6 уже не влияет (рынок завершён), исход закона не затрагивает мою выплату.\"}",
+          "reasoning_content": "Law 6: -2 prices next market — but this is round 6, last market already done. No effect. Vote doesn't matter. President is faction 0, but we're idx 1 with vote_weight 3. Just abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428183,
+    "id": "20261020004259e124861e87d7447e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020004259e124861e87d7447e",
+    "usage": {
+      "completion_tokens": 86,
+      "completion_tokens_details": {
+        "reasoning_tokens": 52
+      },
+      "prompt_tokens": 3176,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3262
+    }
+  }
+}

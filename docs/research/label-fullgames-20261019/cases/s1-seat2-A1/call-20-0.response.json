@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.219,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон всё равно не проходит (2 против 2), а +1 влияния получил бы соперник — veto не нужен.\"}",
+          "reasoning_content": "Card 5 gives +1 influence to richest — richest is idx1 (24M), not me. Vote count: yes 2 (weights 1+1) vs no 2 (my weight 2). Tie means not passed anyway? Yes strictly greater than no: 2 vs 2 — fails. So veto unnecessary. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490972,
+    "id": "202610201809283cadbd32c3bd426d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201809283cadbd32c3bd426d",
+    "usage": {
+      "completion_tokens": 106,
+      "completion_tokens_details": {
+        "reasoning_tokens": 70
+      },
+      "prompt_tokens": 3111,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3217
+    }
+  }
+}

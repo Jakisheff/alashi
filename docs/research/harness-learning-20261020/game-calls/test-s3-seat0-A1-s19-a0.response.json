@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.703,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Последний раунд: вексель не погашается, поэтому продаю весь товар за наличные.\"}",
+          "reasoning_content": "Last round market. promissory won't be paid after last round? Promissory не погашается после последнего раунда — but round 6 is last, and promissory from round 6? \"После последнего раунда вексель не погашается\" — sell_credit worthless. So sell for cash. Sell 3 units: prices 12,10,9 = 31 → 83.5 cash. Others can't sell after? Market order rotates; others will sell after me, prices drop but my cash fixed. Sell 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498517,
+    "id": "202610202015136a54a00e6c7244bf",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202015136a54a00e6c7244bf",
+    "usage": {
+      "completion_tokens": 151,
+      "completion_tokens_details": {
+        "reasoning_tokens": 119
+      },
+      "prompt_tokens": 3572,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3723
+    }
+  }
+}

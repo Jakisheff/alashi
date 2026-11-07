@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.344,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель не девальвируется, поэтому продажа в кредит 3 единиц даёт максимум итоговой ценности.\"}",
+          "reasoning_content": "Round 5 market. Cash 26.4M, goods 3. Note round 6 start devaluation: cash=floor(cash/100)*62 — so 62.4% of cash. Selling now gets full price. Prices: sold_counter=0, price 12/unit.\n\nWait, but cash after selling gets devalued too. Selling 3 gives +31M cash, total ~57.4M, after devaluation 62%... but if not sold, goods worthless at end. Selling is best — goods don't count. Sell all 3 now (choice 5). Credit gives promissory added after devaluation but unredeemed after last round — round 5 sales credit pays at round 6 start (promissory added at start, and no devaluation on promissory). Actually round 6 start: cash devalued, then promissory added. Last market is round 6; promissory from round 6 not repaid. Selling credit in round 5: promissory added in round 6 cash, no devaluation of promissory, so 38.75M full vs 31M devalued to 19.2M... wait cash from sale also devalued. Cash 26.4M + 31M = 57.4M → devalued to ~35.6M. Credit: cash 26.4M → 16.4M + promissory 38.75M = 55.1M. Credit wins! Choice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498215,
+    "id": "202610202010073883d54accbd42b4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202010073883d54accbd42b4",
+    "usage": {
+      "completion_tokens": 359,
+      "completion_tokens_details": {
+        "reasoning_tokens": 324
+      },
+      "prompt_tokens": 3280,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3639
+    }
+  }
+}

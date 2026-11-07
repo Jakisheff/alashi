@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.531,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон о субсидии уже не влияет на выплаты в финальном раунде, поэтому можно пропустить.\"}",
+          "reasoning_content": "Law 3 = subsidy_goods=1, affects next produce — but round 6 is last, no more produce. Harmless. Element 0 voted Yes. I'm not holder; holder is 0. Subsidy useless now — no benefit. But voting No: element 0 yes(2), if I vote no(3) vs yes(1), no>yes → rejected. Either way no impact on payout. Pass simplest — but if pass, yes=2, no=0 → passes; subsidy has no effect anyway. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427918,
+    "id": "20261020003833487e5f3949454d02",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003833487e5f3949454d02",
+    "usage": {
+      "completion_tokens": 148,
+      "completion_tokens_details": {
+        "reasoning_tokens": 113
+      },
+      "prompt_tokens": 3100,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3248
+    }
+  }
+}

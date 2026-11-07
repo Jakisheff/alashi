@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.359,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Последний рынок — продаю весь товар сейчас, вексель после финала не погашается.\"}",
+          "reasoning_content": "Final round; promissory unpaid after last round. Sell all 3 immediately: cash 75.3M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498647,
+    "id": "202610202017243ad58af5b1224f44",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202017243ad58af5b1224f44",
+    "usage": {
+      "completion_tokens": 56,
+      "completion_tokens_details": {
+        "reasoning_tokens": 24
+      },
+      "prompt_tokens": 3565,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3621
+    }
+  }
+}

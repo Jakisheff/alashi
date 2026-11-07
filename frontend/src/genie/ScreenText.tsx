@@ -3,54 +3,30 @@ import { useFrame } from '@react-three/fiber'
 import { useMemo, useRef, useState } from 'react'
 import { Color } from 'three'
 import { useScene } from '../store'
+import { speechFrame, speechPages } from './screenTimeline.ts'
 
 // Degenie "speaks" on the lower band of its own screen: text is typed out, long lines are split
 // into two-line pages that are typed one after another.
-const PAGE_CHARS = 46
-const CHARS_PER_SECOND = 32
-const HOLD_SECONDS = 1.8
 const GLOW = new Color(1.5, 1.15, 0.55) // above 1 so the bloom pass picks it up, like the eyes
 
-// Jura has no emoji: for a missing glyph troika fetches fallback fonts from cdn.jsdelivr.net (a third-party request
-// that a CSP would block). The screen drops them; captions and the bubble keep the full line.
-const NO_GLYPH = /[\p{Extended_Pictographic}️‍]/gu
-
-function paginate(text: string) {
-  const pages: string[] = []
-  let page = ''
-  for (const word of text.replace(NO_GLYPH, '').split(/\s+/).filter(Boolean)) {
-    if (page && (page + ' ' + word).length > PAGE_CHARS) {
-      pages.push(page)
-      page = word
-    } else page = page ? `${page} ${word}` : word
-  }
-  if (page) pages.push(page)
-  return pages
-}
-
-export function ScreenText() {
+export function ScreenText({ clock, reducedMotion = false }: { clock?: () => number; reducedMotion?: boolean } = {}) {
   const speech = useScene((s) => s.speech)
   const speechId = useScene((s) => s.speechId)
   const clip = useScene((s) => s.clip)
-  const pages = useMemo(() => paginate(speech), [speech])
+  const pages = useMemo(() => speechPages(speech), [speech])
   // typed text and the length of the page it belongs to (the cursor shows while typing)
   const [shown, setShown] = useState({ text: '', of: 0 })
-  const clock = useRef({ id: -1, page: 0, t: 0 })
+  const autonomous = useRef({ id: -1, time: 0 })
 
+  // Scene clocks update at -2; sample their current frame before rendering.
   useFrame((_, delta) => {
-    const c = clock.current
-    if (c.id !== speechId) Object.assign(c, { id: speechId, page: 0, t: 0 })
-    const page = pages[c.page]
-    if (page === undefined) {
-      if (shown.text) setShown({ text: '', of: 0 })
-      return
-    }
-    c.t += delta
-    const typed = page.slice(0, Math.floor(c.t * CHARS_PER_SECOND))
-    if (typed !== shown.text) setShown({ text: typed, of: page.length })
-    const holdReaction = clip === 'fuckOff' && c.page === pages.length - 1
-    if (!holdReaction && c.t > page.length / CHARS_PER_SECOND + HOLD_SECONDS) Object.assign(c, { page: c.page + 1, t: 0 })
-  })
+    const own = autonomous.current
+    if (own.id !== speechId) Object.assign(own, { id: speechId, time: 0 })
+    const time = clock ? clock() : own.time + (Number.isFinite(delta) ? Math.max(0, delta) : 0)
+    own.time = Number.isFinite(time) ? Math.max(0, time) : 0
+    const next = speechFrame(pages, own.time, !clock && clip === 'fuckOff', reducedMotion)
+    if (next.text !== shown.text || next.of !== shown.of) setShown(next)
+  }, -1)
 
   const cursor = shown.text && shown.text.length < shown.of ? '_' : ''
   return (

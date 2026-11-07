@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.11,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Закон 6 снижает цены следующего рынка, которого уже не будет; воздержусь, так как исход на выплату не влияет.\"}",
+          "reasoning_content": "Law 6: price -2 next market — but this is the last round, no more markets. So it's harmless. Vote doesn't matter. Yes=2, No=1 currently; my vote weight 3 (influence 1+2 passed action). If I abstain, yes passes anyway. Vote no: yes=2, no=1+... wait my weight 3, vote_no → no=4 > yes=2, law rejected. But law is harmless anyway (no future market). Either fine. Just pass or abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427815,
+    "id": "20261020003646da51ac062b474225",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003646da51ac062b474225",
+    "usage": {
+      "completion_tokens": 155,
+      "completion_tokens_details": {
+        "reasoning_tokens": 115
+      },
+      "prompt_tokens": 3380,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3535
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.195,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Взятие влияния сохраняет пост президента и бонус 5% банка при ничьей по tie_order.\"}",
+          "reasoning_content": "I'm president (idx1). Best: keep presidency (influence). Currently influence 1 vs others' 2 (idx0) — wait idx0 has influence 2, I have 1. So I'm not president? holder_idx=1 though — holder stays until law? Actually president is determined at law entry. Next law, idx0 with influence 2 will be president. I lose presidency. To keep it I need bribe to get influence 2 — tie broken by tie_order [1,0,2], I win ties. Bribe gives floor(5/5)=1 influence, costs all cash 5. Bribe to whom? Giving 5 to 0 or 2 makes them richer. Give to idx0 who already leads. Presidency gives veto and 5% bank bonus influence — significant (~1.5 alashi + control). Take bribe choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495078,
+    "id": "20261020191753565ed78d0e9f4939",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020191753565ed78d0e9f4939",
+    "usage": {
+      "completion_tokens": 218,
+      "completion_tokens_details": {
+        "reasoning_tokens": 185
+      },
+      "prompt_tokens": 2720,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2938
+    }
+  }
+}

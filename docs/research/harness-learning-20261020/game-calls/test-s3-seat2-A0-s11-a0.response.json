@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.068,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Вексель 11.25 alashi обойдёт девальвацию раунда 5 и даст больше итогового cash, чем немедленная продажа.\"}",
+          "reasoning_content": "Round 4 market, 2 rounds remain. Cash devalues each round: 272800 → floor/100*62 ≈ 169k. Selling now gives 9M cash, but devaluation 62% then next round... sell gives 9M, next round start cash ~5.7M. Better sell_credit? Promissory added at round 5 start: 11.25M, then round 6 start devalued 62%: ~7M. Selling for cash: 9M → devalued to 5.7M, still same after round 6? Cash devalues each round start (rounds 5 and 6), so 9M→5.6M→3.4M. Credit: 0 cash, +11.25M at round 5 → round 6: 6.9M. Credit better since promissory skips round-5 devaluation. But final round promissory not paid—paying at round 5 start though. So sell_credit gives ~6.9M final vs sell 3.4M. Choose credit. But note card 8 could wipe promissory—risk. Still credit better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497991,
+    "id": "20261020200625c0c44a9c34e34f96",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200625c0c44a9c34e34f96",
+    "usage": {
+      "completion_tokens": 296,
+      "completion_tokens_details": {
+        "reasoning_tokens": 252
+      },
+      "prompt_tokens": 2576,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2872
+    }
+  }
+}

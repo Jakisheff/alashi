@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.615,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Шаттл даёт больше всего товара для продажи на последнем рынке; выручка превысит выгоду от покупки влияния.\"}",
+          "reasoning_content": "Need max influence for 5% bank bonus (~2.2 alashi) and presidency. Currently all influence 1, bribes to 0 or 1 (current president is idx 0). Round 5 action, then round 6. Bribing gives influence +1 per 5 alashi. Influence 7 costs 30M cash — too much? Cash matters for rank. License income 20-60 extra, not in rank.\n\nBank 43.8 alashi, shares ~21/13/6.5. Max influence bonus ~2.2. Bribing 5M for influence 2 makes me sole max influence — worth 2.2 alashi bonus plus presidency control in law (influence+2... though pass action also gives +2). But everyone at 1; rivals may also act. Bribing 5M (choice 4) gives influence 2, likely max. Also gives cash to rival 0 though. Cash cost 5 alashi vs bonus 2.2 — negative? But presidency lets me veto/vote. Also president bribe? Hmm.\n\nAlternatively produce 2 goods for final market — but final round promissory unredeemed, sell_cash only. Price at sold_counter 2 → 10 alashi... Round 6 market: I could sell 2-3 goods at ~8-10 each = 16-30 alashi gain, dwarfs influence bonus. Choose produce or shuttle. Shuttle: 3 goods, grey may be seized ~25%, no tariff now. Expected 2.25 goods vs produce 2. Shuttle better EV.\n\nBut wait, sell in round 6 then no promissory redemption — cash from sell counts. Yes.\n\nSo choice 3 shuttle. But influence max bonus ~2.2 — a 5M bribe (5 alashi) also gives rival cash (helping their rank). Skip.\n\nChoice 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496562,
+    "id": "20261020194232d0bd631d0e15401e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194232d0bd631d0e15401e",
+    "usage": {
+      "completion_tokens": 440,
+      "completion_tokens_details": {
+        "reasoning_tokens": 400
+      },
+      "prompt_tokens": 4127,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 4567
+    }
+  }
+}

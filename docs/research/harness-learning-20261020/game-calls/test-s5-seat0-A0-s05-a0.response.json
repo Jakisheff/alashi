@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.251,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"shuttle даёт больше товара в ожидании, риск изъятия умеренный\"}",
+          "reasoning_content": "Produce is safe; shuttle gives 3 goods but grey seizure risk and border payment. Shuttle gives 3 grey goods, ~25% seizure. Produce gives 2 goods. Expected value: shuttle 3*0.75=2.25 goods, plus possible border payment. Slightly better, but goods are grey. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498441,
+    "id": "20261020201357c5a7b20afdae45b5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201357c5a7b20afdae45b5",
+    "usage": {
+      "completion_tokens": 95,
+      "completion_tokens_details": {
+        "reasoning_tokens": 69
+      },
+      "prompt_tokens": 2162,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2257
+    }
+  }
+}

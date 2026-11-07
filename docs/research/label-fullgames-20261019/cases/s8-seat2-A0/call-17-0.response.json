@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.584,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Беру 3 товара челноком для продажи на последнем рынке по высоким ценам, прирост примерно 24 alashi.\"}",
+          "reasoning_content": "Round 5 action, round 6 market remains. I hold presidency, influence 2. Shuttle gives 3 goods to sell in round 6 (price ~4-5). Goods worth maybe 3×4=12 alashi minus tax — good. Bribe to 0 increases influence to 3, but I already hold presidency; also max influence gives extra 5% commission. Opponents have 1. Bribe 5 to 0 gives influence 3 and gives 5M to rival — influence helps me keep presidency in law 5 and 6, and max influence bonus. But rivals could outbid? They have 1 influence; even passing gives weight 3, me 4.\n\nShuttle: 3 goods, sell at round 6. Counter=2, prices [12..] index 2 → 9? Wait counter 2 means next price is 9? Prices array first two sold. I sell 2 more this round? I sold 2 in round 5 → counter now 2. Round 6 I could sell 3 at prices 9,8,7=24 alashi. That's big. Yes shuttle.\n\nRisk: border seizure 25%? \"shuttle даёт 3+subsidy_goods товара; серый товар может быть изъят\" — my shuttle round 3 gave 3 goods (after_own showed goods 3, seizure determined after? Actually candidates show immediate). Tariff state currently? roof_tariff 0. No mention of border risk on shuttle unless tariff... Earlier shuttles worked. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427161,
+    "id": "20261020002550c98bb3abb59a4786",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020002550c98bb3abb59a4786",
+    "usage": {
+      "completion_tokens": 367,
+      "completion_tokens_details": {
+        "reasoning_tokens": 330
+      },
+      "prompt_tokens": 4247,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 4614
+    }
+  }
+}

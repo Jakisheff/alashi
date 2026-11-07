@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.17,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce даёт 2 товара без риска изъятия и серых платежей.\"}",
+          "reasoning_content": "I'm idx 2, vote_weight 3? influence 1 +2 presumably pass earlier? Actually own action passed before (market pass? weight 3 because previous action pass... anyway). Choose produce (safe) vs shuttle 3 goods with seizure risk ~25%. Produce gives 2, shuttle expected 3*0.75=2.25. Slight edge shuttle but risk; also grey goods may incur tariff payments. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497998,
+    "id": "20261020200632263274c0c41e48df",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200632263274c0c41e48df",
+    "usage": {
+      "completion_tokens": 118,
+      "completion_tokens_details": {
+        "reasoning_tokens": 91
+      },
+      "prompt_tokens": 1917,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2035
+    }
+  }
+}

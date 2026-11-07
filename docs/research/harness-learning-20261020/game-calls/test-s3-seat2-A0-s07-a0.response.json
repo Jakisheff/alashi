@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.879,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Покупка товара сохраняет стоимость: cash всё равно девальвируется, а товар можно продать позже с выручкой выше.\"}",
+          "reasoning_content": "I have no goods; buy 1 unit at 7 alashi? Sold counter=4, buy moves back... buying 1 unit costs ~7. But I have little cash; later I could sell at maybe 8. Marginal. Better keep cash? Bank is 30, cash pays rank. Buying 1 for 7 to sell later at higher price later maybe 8 — barely profit, but cash is devalued each round (62%). Actually cash floor/100*62 — 7 alashi becomes 4.34, so spending on goods preserves value if sell later at ~8 with credit*1.25. Buy.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497961,
+    "id": "202610202005531ee811d83d894b92",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202005531ee811d83d894b92",
+    "usage": {
+      "completion_tokens": 171,
+      "completion_tokens_details": {
+        "reasoning_tokens": 133
+      },
+      "prompt_tokens": 2259,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2430
+    }
+  }
+}

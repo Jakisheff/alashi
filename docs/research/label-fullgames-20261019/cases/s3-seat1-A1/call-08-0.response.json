@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 54.288,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель не девальвируется, поэтому продажа в кредит выгоднее из-за стрижки наличных в начале раунда.\"}",
+          "reasoning_content": "Price for unit 3 is 8 alashi (sold_counter=2). Sell both: 17 alashi now vs credit 21.25 promissory. Cash counts in rank; devaflation round start floors cash/100*62 — wait, cash=floor(cash/100)*62: that's a 38% haircut each round. Promissory added without devaluation. So sell_credit better long-term? But promissory unredeemed after final round worthless. Round 3 of 6; promissory paid at start of rounds 4-6, fine. Selling credit 2 units = 21.25M promissory, received round 4 without devaluation, and current cash 8.06M gets devalued to 5M. Selling now: 25.06M cash → devalued to floor(25060000/100)*62 = 15.53M. Credit: 8.06→5.0M cash + 21.25 = 26.25M. Credit better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490792,
+    "id": "20261020180539b96406f142274651",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180539b96406f142274651",
+    "usage": {
+      "completion_tokens": 258,
+      "completion_tokens_details": {
+        "reasoning_tokens": 219
+      },
+      "prompt_tokens": 2484,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2742
+    }
+  }
+}

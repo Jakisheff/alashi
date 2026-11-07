@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.421,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce даёт 2 товара для продажи в раунде 6 без риска изъятия.\"}",
+          "reasoning_content": "Round 5 action. Produce gives 2 goods to sell next round; shuttle gives 3 grey goods with seizure risk but border tariff unknown. Best: produce (safe 2 goods). Choose choice 1.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498124,
+    "id": "20261020200841b0f45b60770643d3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200841b0f45b60770643d3",
+    "usage": {
+      "completion_tokens": 73,
+      "completion_tokens_details": {
+        "reasoning_tokens": 43
+      },
+      "prompt_tokens": 4342,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 4415
+    }
+  }
+}

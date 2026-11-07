@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.511,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Карта 0 без эффектов, исход голосования не влияет на мою выплату.\"}",
+          "reasoning_content": "Law 0 no effect; vote doesn't matter. Pass to preserve vote weight? Vote weight only matters if I'm president; president is idx1. Vote no/yes irrelevant. Pass fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427255,
+    "id": "202610200027326acae1d1f18a4c95",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200027326acae1d1f18a4c95",
+    "usage": {
+      "completion_tokens": 69,
+      "completion_tokens_details": {
+        "reasoning_tokens": 40
+      },
+      "prompt_tokens": 2535,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2604
+    }
+  }
+}

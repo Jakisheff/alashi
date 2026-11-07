@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.667,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Продаю весь товар в кредит по высокой цене с бонусом 25%, вексель погасится в начале раунда 4.\"}",
+          "reasoning_content": "Prices now: boom+2, first units price 14. Sell 2 credit gives 32.5 promissory paid in round 4 cash. Last round credit unpaid—but this is round 3, promissory added at round 4 start, then devalued? No, added after devaluation. Sell credit 2 = best: 32.5M cash in round 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427091,
+    "id": "202610200024464cc7d720908c4e81",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200024464cc7d720908c4e81",
+    "usage": {
+      "completion_tokens": 123,
+      "completion_tokens_details": {
+        "reasoning_tokens": 83
+      },
+      "prompt_tokens": 2537,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2660
+    }
+  }
+}

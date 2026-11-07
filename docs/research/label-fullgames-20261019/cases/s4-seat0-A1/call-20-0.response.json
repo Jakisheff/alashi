@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.527,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Взятка даёт влияние 4, надёжно сохраняя пост президента и бонус 5% банка при уже обеспеченном первом ранге богатства.\"}",
+          "reasoning_content": "Last round, no more markets. Influence matters for 5% commission bonus. I'm richest anyway (71.5M vs 30.6/17.8), rank 1 assured. Max influence: currently 3 vs 2, I'm highest. I keep presidency (holder). The 5% commission goes to max influence — I already have 3, others 1 and 2. Could opponent bribe later? I'm last in turn? Round 6, order rotates; own_idx 0 acts... others may act after and could bribe to surpass influence 3 (need 4+, costly 20M). To secure the 5% bonus (~2.5M) and presidency veto, spending 5M bribe gives influence 4 — not enough if opponent spends 25M. Simplest: cheap insurance 5M bribe to influence 4. Or pass and save money. Wealth rank dominates payout; already rank1. Risk: rival bribes 25M to get influence 4... they'd lose money. I'm president in law (order: this round my turn — after action comes law, president determined at law entry by influence). To be safe, small bribe 5M (choice 4) to influence 4? But bribe gives cash to rival increasing their wealth. Alternatively shuttle goods—useless, no more market. Pass is fine; but if rival 1 takes influence 4, they get 2.5M bonus and presidency. Minor. I'll do choice 4 (bribe 5M to 1, influence 4) — locks influence lead for 2.5M net roughly.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490363,
+    "id": "2026102017591358406114a5fd41b3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102017591358406114a5fd41b3",
+    "usage": {
+      "completion_tokens": 389,
+      "completion_tokens_details": {
+        "reasoning_tokens": 346
+      },
+      "prompt_tokens": 5392,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 5781
+    }
+  }
+}

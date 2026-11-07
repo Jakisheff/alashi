@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.379,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Беру шаттл ради 3 товаров на финальный рынок; ожидаемая выгода выше, чем от produce, а взятки лишь усиливают соперников.\"}",
+          "reasoning_content": "I'm richest (49 vs 23 vs 19), holder of X, license holder. Round 5 action. Remaining: this action, law r5, market r6, action r6, law r6. Getting goods for r6 market is useful: shuttle gives 3 goods. Sold counter=2, prices start 9,8,7 for next sales in r6. 3 goods sell ~24 alashi. Bribe to gain influence: influence matters for 5% bank commission (bank 50 + bid 20 → ~70; commission 5% ≈ 3.5) and holder role. Element 0 has influence 2, I have 1. But bribing transfers cash to opponent, hurting my rank. Cash rank matters most (50:30:15 split of ~66.5). Giving 5 alashi to rival costs more than 3.5 commission gain. So just shuttle.\n\nAlso shuttle grey goods risk ~25% confiscation—but I keep license holder? License fee already paid. Shuttle gives 3 goods at border risk. Produce gives 2 for free, no risk. 3 goods*~8 = 24 vs 2*8=16; 25% risk loses all grey. Expected shuttle: 0.75*24=18 vs produce 16. Slight edge; also tariff state unknown. Shuttle slightly better. Choose 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491306,
+    "id": "20261020181458b39a7bcf6c864fac",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181458b39a7bcf6c864fac",
+    "usage": {
+      "completion_tokens": 338,
+      "completion_tokens_details": {
+        "reasoning_tokens": 291
+      },
+      "prompt_tokens": 4524,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 4862
+    }
+  }
+}

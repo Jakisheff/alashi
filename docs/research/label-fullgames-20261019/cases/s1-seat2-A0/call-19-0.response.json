@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.654,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Закон 5 отдал бы +1 влияния самому богатому сопернику и угрожал моему посту президента и бонусу комиссии — применяю бесплатное veto.\"}",
+          "reasoning_content": "Card 5: +1 influence to richest. Richest is faction 1 (~19.85M vs 19.63M). I'm president with influence 2; if I pass action, I keep vote weight 2, others weight 1 each. If I vote yes, likely passes (2>0 unless others vote no: 2 vs 2? no, yes=2, no=2 → not strictly greater → fails). So yes requires others not both no. Card 5 gives rival +1 influence, threatening my presidency and the 5% commission bonus. Veto is free for president — veto kills it regardless.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427786,
+    "id": "20261020003621ab5b2c849ba7417f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003621ab5b2c849ba7417f",
+    "usage": {
+      "completion_tokens": 179,
+      "completion_tokens_details": {
+        "reasoning_tokens": 132
+      },
+      "prompt_tokens": 3224,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3403
+    }
+  }
+}

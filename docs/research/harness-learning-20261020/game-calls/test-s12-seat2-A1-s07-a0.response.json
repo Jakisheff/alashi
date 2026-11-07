@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.115,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Продаю весь товар в кредит: вексель добавляется после девальвации, выгода максимальна.\"}",
+          "reasoning_content": "Prices decline; sold_counter 4. Sell credit all 3 gives 22.5 promissory, but promissory devalues each round (cash=floor/100*62 — actually promissory added after devaluation, so full value!). So sell_credit is great. Sell all 3 credit: promissory 22.5M added to cash next round at full value.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496345,
+    "id": "20261020193902a110e86ca55643db",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020193902a110e86ca55643db",
+    "usage": {
+      "completion_tokens": 117,
+      "completion_tokens_details": {
+        "reasoning_tokens": 81
+      },
+      "prompt_tokens": 2687,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2804
+    }
+  }
+}

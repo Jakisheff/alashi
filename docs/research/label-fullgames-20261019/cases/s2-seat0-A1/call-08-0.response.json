@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.735,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Наличные девальвируют 62%, а товар можно продать в следующем раунде по высокой цене — выгода от покупки превышает удержание cash.\"}",
+          "reasoning_content": "I have 30 cash, no goods. Buying back: buy 1 costs 12? cash 30→18 costs 12 to move counter -1; buy 2 costs 24. Buying goods lets me sell later at higher price later? Later rounds price drops as counter increases. Rivals hold 2 goods each; buying moves counter back raising prices for them too. I have no goods; buying 2 gives goods to sell next round at possibly ~10-12 each. But cash devalues 62% each round start — spend cash now! Cash 30 → 18.6 next round. Buying 2 goods for 24 leaves 6 cash, goods 2 sellable next round at ~10-12 alashi = 20-24. That beats holding 30 (worth 18.6). Buy 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490611,
+    "id": "20261020180323e3bd2615643f4bcf",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180323e3bd2615643f4bcf",
+    "usage": {
+      "completion_tokens": 218,
+      "completion_tokens_details": {
+        "reasoning_tokens": 173
+      },
+      "prompt_tokens": 2367,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2585
+    }
+  }
+}

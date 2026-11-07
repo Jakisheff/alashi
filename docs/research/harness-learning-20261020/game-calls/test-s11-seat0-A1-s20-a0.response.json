@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.244,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Последний раунд: товар и влияние уже не конвертируются, pass сохраняет максимум cash при уже максимальном влиянии.\"}",
+          "reasoning_content": "Final round, rank by cash. I'm second (40.75M vs 57.8M). Top prize 50% of ~44.65M = 22.3M vs 30% = 13.4M. Gap 17M. Bribe to 1 reduces my cash but increases influence for the max-influence 5% bonus (only 2.35M). Bribing away cash hurts rank. Could bribe to lower 1's cash? No, bribe gives money to recipient. Roof gives cash to recipient too.\n\nBest: maximize own cash. produce gives goods, worthless at end. donkey loses 1M. Pass keeps 40.75M — rank 2, plus influence bonus (I have max influence 3 already, so bonus mine anyway). Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497261,
+    "id": "20261020195416d6d3772ebacd4d70",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195416d6d3772ebacd4d70",
+    "usage": {
+      "completion_tokens": 208,
+      "completion_tokens_details": {
+        "reasoning_tokens": 169
+      },
+      "prompt_tokens": 4616,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 4824
+    }
+  }
+}

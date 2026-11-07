@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.043,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Карта 6 снижает цены следующего рынка и вредит моим продажам; голос «против» отклоняет её при равенстве 3:3.\"}",
+          "reasoning_content": "Card 6: -2 цены следующего рынка. Yes vs No: 3 vs 3... I'm president, my vote weight 1 (action was produce). Currently Yes 3 (weight 3 of idx1), No 3 (idx2). If I vote yes → 4 vs 3, passes. If no → 3 vs 4, fails. Card 6 hurts all equally — price -2 hurts my sales next round (I have goods 2 + license income). Actually -2 price hurts everyone's selling; veto/pass so it fails. Vote no: 3-4 fails. Vote no simplest.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496740,
+    "id": "2026102019453540820b4225d54671",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019453540820b4225d54671",
+    "usage": {
+      "completion_tokens": 177,
+      "completion_tokens_details": {
+        "reasoning_tokens": 131
+      },
+      "prompt_tokens": 2831,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 3008
+    }
+  }
+}

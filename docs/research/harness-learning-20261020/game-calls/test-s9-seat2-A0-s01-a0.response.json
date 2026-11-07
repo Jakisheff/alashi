@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.087,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"shuttle даёт 3 товара против 2 у produce, ожидаемая выгода выше даже с риском изъятия\"}",
+          "reasoning_content": "Produce is safe, shuttle risky but 3 goods. No cost difference. Seizure ~25% risk with shuttle; produce gives 2. Expectations: 3*0.75=2.25 vs 2. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496556,
+    "id": "2026102019423363900d088f884ca5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019423363900d088f884ca5",
+    "usage": {
+      "completion_tokens": 87,
+      "completion_tokens_details": {
+        "reasoning_tokens": 51
+      },
+      "prompt_tokens": 1917,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2004
+    }
+  }
+}

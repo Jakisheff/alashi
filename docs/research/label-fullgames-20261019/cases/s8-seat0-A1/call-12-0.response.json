@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.235,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Бесплатный shuttle даёт 3 товара для продажи по ещё приемлемой цене, сохраняя cash для возможного возврата ставки.\"}",
+          "reasoning_content": "Round 4 action, auction bid 24M already placed. Remaining cash ~9.7M. Best main action: shuttle for 3 goods? If lose bid, cash returned. Price counter 10, price ~1-2, low value. Grey goods at border risk 25%. Goods worth little now (prices 2,2,1...). Actually next rounds: sold_counter 10, price 2. 3 goods worth ~6 alashi minus tax — still more than nothing. Shuttle free. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792489932,
+    "id": "202610201752066f6924ff680a4139",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201752066f6924ff680a4139",
+    "usage": {
+      "completion_tokens": 147,
+      "completion_tokens_details": {
+        "reasoning_tokens": 109
+      },
+      "prompt_tokens": 3210,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 3357
+    }
+  }
+}

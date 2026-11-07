@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.826,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 6 влияет только на следующий рынок, которого уже не будет — исход голосования на выплату не влияет.\"}",
+          "reasoning_content": "Card 6: price shift -2 next market — but round 6 is the last round, next market doesn't matter (round 7 doesn't exist). So pass/abstain fine. Rival 0 voted yes; my vote weight 3, no needs > yes. President (rival 1) may veto or not. Vote no doesn't matter since effect is irrelevant. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490030,
+    "id": "202610201753461243b3a276604c32",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201753461243b3a276604c32",
+    "usage": {
+      "completion_tokens": 118,
+      "completion_tokens_details": {
+        "reasoning_tokens": 84
+      },
+      "prompt_tokens": 3235,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3353
+    }
+  }
+}

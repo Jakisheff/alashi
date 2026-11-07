@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 14.322,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Продажа всей партии в кредит даёт максимальную выручку 30 с бонусом 1.25, что лучше немедленной продажи.\"}",
+          "reasoning_content": "Round 2 of 6, selling 3 now at price 9+8+7=24 gives cash but cash devalues (cash=floor(cash/100)*62? That's applied at round start... actually 100 min units -> 62, so cash devaluates to 62% each round). Promissory 1.25x but added after devaluation and itself not devalued until next round? Promissory adds to cash and resets; next round cash devalues. So selling credit now: 30 promissory, added to cash after devaluation, next round devalues 30->18.6. Selling cash: 24 -> 14.88 next round. Credit better short-term. But prices drop as counter rises; selling later at lower prices... Price counter at 2, prices 9,8,7. Holding goods keeps value via future production. But cash ranking matters — hidden, license round 4.\n\nCredit sell all 3: 30 promissory, no goods. Sell 3 cash: 24. Promissory 30 survives to round 3 as 30 then devalues. Actually compare: sell credit, in round 3 get 30 cash added, which then devalues each round after. End-round-6: promissory paid at round 3 start... rounds 3,4,5,6 starts devalue 4 times: 30*0.62^4≈4.4. Sell cash 24 now, devalues at rounds 3,4,5,6 starts: 24*0.62^4≈3.5. Still credit better. Could also sell credit and later card 8 cancels promissory — risk. But credit better if paid. Sell credit all 3 (choice 6), keeps influence of selling later? Prices fall anyway. Go with 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427217,
+    "id": "20261020002644ae6f877c807a411f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020002644ae6f877c807a411f",
+    "usage": {
+      "completion_tokens": 434,
+      "completion_tokens_details": {
+        "reasoning_tokens": 391
+      },
+      "prompt_tokens": 2329,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2763
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.118,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Карта 0 без эффектов — нет смысла тратить голос или veto.\"}",
+          "reasoning_content": "Law_id=0, no effect. Pass (also keeps veto? pass skips vote). Vote_yes/no irrelevant — pass preserves ability? Actually veto available; card 0 harmless. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496990,
+    "id": "202610201949475c754f4d433f419b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201949475c754f4d433f419b",
+    "usage": {
+      "completion_tokens": 65,
+      "completion_tokens_details": {
+        "reasoning_tokens": 38
+      },
+      "prompt_tokens": 3034,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3099
+    }
+  }
+}

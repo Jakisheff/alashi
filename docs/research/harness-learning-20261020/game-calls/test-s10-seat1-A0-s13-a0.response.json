@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.48,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Произвожу 3 товара без риска изъятия для продажи в оставшихся раундах.\"}",
+          "reasoning_content": "Need main action after bid. Produce gives 3 goods for selling later (rounds 5-6 markets remain). Shuttle gives 4 but grey, seizure risk ~25%? shuttle gives 3+subsidy=4 goods listed as goods in after state — actually shown as goods. Shuttle gives 4 goods free, no cash cost — better than produce 3. But grey seizure risk at border; tariff currently 0? border risk ~25% for grey. Expected 4*0.75=3 vs 3. Equal-ish, but black tariff absence means risk. Also president — bribing influence 3 secures presidency and 5% commission, but cash cost 5 alashi for +1 influence. I already hold presidency via tie_order (influence tie 2-2, tie_order [1,0,2] favors me). Influence also gives commission max influence share 5%. Bribe 5 to idx0 gives me 3 influence — costs 5 alashi, gains presidency certainty + commission ~1.5+. But tie_order already favors me. Shuttle gives 4 grey goods; risk 25% loss all grey. Expected 3. Same as produce. Choose produce (safe).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497506,
+    "id": "20261020195816032db899c6b94424",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195816032db899c6b94424",
+    "usage": {
+      "completion_tokens": 284,
+      "completion_tokens_details": {
+        "reasoning_tokens": 251
+      },
+      "prompt_tokens": 3380,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 3664
+    }
+  }
+}

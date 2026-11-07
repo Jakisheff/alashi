@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.58,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Бесплатные 3 товара дадут выручку на последнем рынке; влияние и так удерживает президентство.\"}",
+          "reasoning_content": "Round 5 action, last market is round 6. I'm president with influence 3. Best: get goods for round 6 market — shuttle gives 3 goods. Bribe increases influence but loses cash; but cash ranks matter. Shuttle free 3 goods (risk of grey seizure ~25% at red border... tariff 0 currently; shuttle gives grey goods seizure risk). Actually risk only if tariff red. Current tariff 0? roof_tariff 0. Shuttle gives 3+subsidy. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498025,
+    "id": "2026102020065973dfab0bd6a9454b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020065973dfab0bd6a9454b",
+    "usage": {
+      "completion_tokens": 143,
+      "completion_tokens_details": {
+        "reasoning_tokens": 108
+      },
+      "prompt_tokens": 3559,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3702
+    }
+  }
+}

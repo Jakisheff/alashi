@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.834,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Больше ожидаемого товара при нулевом риске оплаты границы.\"}",
+          "reasoning_content": "Round 2 action, cash 0. Shuttle gives 3 goods but grey seizure risk ~25%; produce gives 2 safely. Price counter at 7, prices low (5,4,3...). Goods valuable later. Choose shuttle for more goods? Cash is 0, no border payment issue (tariff 0). Risk 25% losing all. Produce safer 2 goods. Expected: shuttle 3*0.75=2.25 goods. Marginal. I'll take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496435,
+    "id": "20261020194031ef5b779a83ce4345",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194031ef5b779a83ce4345",
+    "usage": {
+      "completion_tokens": 130,
+      "completion_tokens_details": {
+        "reasoning_tokens": 104
+      },
+      "prompt_tokens": 2637,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2767
+    }
+  }
+}

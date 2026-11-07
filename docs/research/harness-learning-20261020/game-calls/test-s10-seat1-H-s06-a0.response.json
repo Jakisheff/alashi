@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.298,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Субсидия выгодна моему производству, закон всё равно проходит 2:1.\"}",
+          "reasoning_content": "Law 3: subsidy_goods=1. Both rivals voted yes (weights 1 each, tie? yes=2 already > no). If I vote no: 2 yes vs 1 no — passes anyway. Subsidy is good for me (produce gives 3). Vote yes irrelevant. Actually subsidy benefits all; I produce. Vote yes (it passes anyway). Choice 1.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498071,
+    "id": "202610202007480e3699e91de1432b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202007480e3699e91de1432b",
+    "usage": {
+      "completion_tokens": 110,
+      "completion_tokens_details": {
+        "reasoning_tokens": 80
+      },
+      "prompt_tokens": 2796,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2906
+    }
+  }
+}

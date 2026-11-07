@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.829,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Произвожу товар для будущих продаж, это даёт больше итоговой выплаты, чем трата cash на влияние.\"}",
+          "reasoning_content": "I'm player 2. My bid 30M is in. Cash 31M. Main action: I should produce goods for future markets (rounds 5,6). Produce gives 2 goods. Prices: sold_counter=5, price index 5 → 6 alashi. Selling 2-3 units later at ~5-6 each. But cash matters for rank. Goods sold later becomes cash, so produce is good. Bribe to gain influence: presidency holder gets 5% bonus. Influence also matters in law voting. Bribe 10M to idx1 gives influence 3 — could take presidency later (holder decided at law time by influence; tie priority tie_order [1,0,2], idx1 first). Bribe 10M → influence 3, beats 1s. Presidency gives veto + 5% commission bonus at end (max influence). That seems strong for 10M? Final bank ~30M+30M bid... bank is 30M plus 30M bid = 60M, minus 5% fee; 5% ≈ 3M to max influence. Not worth 10M alone, but veto power in remaining laws (rounds 4-6) is valuable — can block tax laws. Also vote weight 3 in laws vs 3 others... currently weight 3 each.\n\nProduce gives 2 goods → ~10-12 alashi revenue later, that's 10-12M. Similar to bribe 10M but bribe only gives influence 3, spent cash. Produce gives cash directly. I'll pick produce (choice 1).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499622,
+    "id": "20261020203329e19e5be48401459b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203329e19e5be48401459b",
+    "usage": {
+      "completion_tokens": 374,
+      "completion_tokens_details": {
+        "reasoning_tokens": 338
+      },
+      "prompt_tokens": 3880,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 4254
+    }
+  }
+}

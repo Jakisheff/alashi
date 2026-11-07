@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.709,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\": 1, \"reason\": \"Ставка уже сделана; produce даёт 3 товара без риска изъятия для будущих продаж.\"}",
+          "reasoning_content": "I'm president (influence tie at 1 each, tie_order [2,1,0], so I hold). Bid 25 for license already placed; competitors have ~37-41 cash, could outbid. My cash 7.05, so I can't raise. Remaining: choose main action. Best to get goods: produce gives 3 goods. Shuttle gives 4 grey with 25% seizure risk, no tariff currently (grey seized at border ~25% unless black tariff... actually shuttle risk ~25%). Produce safe, 3 goods. Choice 1.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495482,
+    "id": "202610201924370c446d45b139449b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201924370c446d45b139449b",
+    "usage": {
+      "completion_tokens": 155,
+      "completion_tokens_details": {
+        "reasoning_tokens": 119
+      },
+      "prompt_tokens": 3374,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3529
+    }
+  }
+}

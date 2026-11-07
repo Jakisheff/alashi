@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.456,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 4 даёт влияние беднейшему и не влияет на мой ранг или выплату; проход.\"}",
+          "reasoning_content": "Card 4 gives +1 influence to poorest (idx1). Not me; doesn't change cash ranking. My yes vs two no: 4 vs 3 → passes. Veto? Extra influence to idx1 doesn't help me; commission 5% goes to max influence—I have 2, idx2 has 2, tie by cash+hard: I win anyway. Veto changes nothing material... Actually if law passes, idx1 gets +1 influence (→2), doesn't affect me. Veto also cancels—either way no effect on my payout. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496447,
+    "id": "20261020194042a0f0c1bcb559423d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194042a0f0c1bcb559423d",
+    "usage": {
+      "completion_tokens": 154,
+      "completion_tokens_details": {
+        "reasoning_tokens": 121
+      },
+      "prompt_tokens": 3202,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3356
+    }
+  }
+}

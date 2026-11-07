@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.462,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Взятка 5 возвращает мне влияние 2 и пост президента по tie_order, что важнее товара.\"}",
+          "reasoning_content": "Round 3 action. Need influence for presidency. I'm influence 1, rival 0 has 2. But I keep presidency via tie_order? Holder determined by max influence; rival 0 has 2 > mine 1, so I'd lose presidency unless I bribe 5M for influence 2, tying at 2 — tie_order [1,0,2] gives me priority. Bribe 5 to idx0 costs 5 alashi but regains presidency (veto, 5% bank bonus, 30% roof). Worth it. Then produce would be better, but action used. Choose bribe 5 to 0 (choice 4).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496825,
+    "id": "20261020194701fc5825ac4b8045a1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194701fc5825ac4b8045a1",
+    "usage": {
+      "completion_tokens": 174,
+      "completion_tokens_details": {
+        "reasoning_tokens": 140
+      },
+      "prompt_tokens": 4547,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 4721
+    }
+  }
+}

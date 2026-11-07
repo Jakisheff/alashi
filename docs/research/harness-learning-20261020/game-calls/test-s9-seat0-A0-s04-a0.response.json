@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.152,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель не девальвируется, выручка 21.25 alashi против 10.5 после девальвации наличных.\"}",
+          "reasoning_content": "Sell 2 now at price 9 and 8 = 17 alashi. Credit 21.25 but promissory only 62% after round... credit pays out at round start: cash floor(cash/100)*62 applies to cash, promissory added fully. So credit gives 21.25 alashi now, no devaluation? \"Начало раунда 2 и далее: cash=floor(cash/100)*62\" — cash devalues 62%, promissory added after, so full value. Sell credit 2 gives 21.25 vs 17 devalued to ~10.54. Credit better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496331,
+    "id": "20261020193847887bff82cc994e13",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020193847887bff82cc994e13",
+    "usage": {
+      "completion_tokens": 176,
+      "completion_tokens_details": {
+        "reasoning_tokens": 135
+      },
+      "prompt_tokens": 2210,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2386
+    }
+  }
+}

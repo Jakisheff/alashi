@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.121,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 6 отклонён (0 yes против 2 no), veto не нужен.\"}",
+          "reasoning_content": "Card 6: price shift -2 next market. I'm president. Vetoing protects my sales (price shift -2 hurts me since I plan to sell). Yes:1 (me no), No:2 — law fails anyway? Yes=0, No=2, law rejected. So no need to veto... wait, veto blocks yes-majority laws. Law already rejected. Veto unnecessary? Actually I voted no, other two no — rejected. pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496810,
+    "id": "202610201946453539faf6c3f14cfa",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201946453539faf6c3f14cfa",
+    "usage": {
+      "completion_tokens": 125,
+      "completion_tokens_details": {
+        "reasoning_tokens": 96
+      },
+      "prompt_tokens": 2706,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2831
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.272,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Финальный раунд: товар уже нельзя продать, а взятки/roof лишь уменьшают cash, поэтому pass максимизирует выплату.\"}",
+          "reasoning_content": "Last round, action. Goods won't sell (no more market). So goods worthless. Bribes lose cash directly; roof loses cash. Best: pass. But cash devaluation? Cash doesn't devalue at action. Pass keeps cash 59 alashi. Actually influence matters for the 5% commission share — I have 2, rival 2 also (participant 2). Bribing to raise influence costs 5 alashi for +1 → gain commission 5% of ~39M ≈ 1.95M... bribe 5M for +1 influence, plus cash loss. Not worth. Also richer rank: I'm rank 0 in cash anyway. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499045,
+    "id": "202610202024006bc37224ca5345db",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202024006bc37224ca5345db",
+    "usage": {
+      "completion_tokens": 187,
+      "completion_tokens_details": {
+        "reasoning_tokens": 143
+      },
+      "prompt_tokens": 5533,
+      "prompt_tokens_details": {
+        "cached_tokens": 3136
+      },
+      "total_tokens": 5720
+    }
+  }
+}

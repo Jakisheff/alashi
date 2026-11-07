@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.172,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Шаттл даёт больше товара в среднем, а выручка пойдёт на последних рынках.\"}",
+          "reasoning_content": "We bid 6355000 (all cash). Remaining action: produce gives 3 goods, shuttle 4 with seizure risk. Shuttle EV higher but 25% loss of grey. Produce is safe 3 goods. Cash 0, bid escrow returned if lose. Goods sell next rounds. shuttle gives 3+1=4 grey goods, ~25% seizure risk at border? Only with red tariff; tariff currently none? roof_tariff 0, but shuttle always has ~25% seizure. Expected 3 vs shuttle 4*0.75=3. Shuttle better EV. But round 4 action after, market rounds 5,6 to sell. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427269,
+    "id": "20261020002744a1a91c2bec894a2b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020002744a1a91c2bec894a2b",
+    "usage": {
+      "completion_tokens": 174,
+      "completion_tokens_details": {
+        "reasoning_tokens": 141
+      },
+      "prompt_tokens": 2721,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2895
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.596,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар после последнего рынка бесполезен, а взятка за 5% комиссии банка не окупается — пропускаю.\"}",
+          "reasoning_content": "Round 6 action, last round. Goods are worthless at the end (rank by cash). So produce/shuttle useless unless sold — but market already passed in round 6, next market... round 6 is last, so goods don't matter. So just pass? Or bribe for influence — max influence gets extra 5% of bank (~2.1 alashi). I'm president already; my influence 1, rival 1 has 2. Bribing 5M to influence 2 → tied at 2, tie broken by cash+hard then tie_order — I have 39.5 vs 27, and tie_order priority 2. So influence 5% bonus: bribe 5M costs me 5M cash to gain ~2.1M bonus — not worth. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495422,
+    "id": "20261020192336313532d89e814593",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192336313532d89e814593",
+    "usage": {
+      "completion_tokens": 209,
+      "completion_tokens_details": {
+        "reasoning_tokens": 169
+      },
+      "prompt_tokens": 4887,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 5096
+    }
+  }
+}

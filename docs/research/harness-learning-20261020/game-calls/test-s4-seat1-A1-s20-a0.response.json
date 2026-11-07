@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.22,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товары после финального рынка бесполезны; pass сохраняет полный вес голоса президента в последнем законе.\"}",
+          "reasoning_content": "Final round action. Goods don't matter after round 6 market already done (already sold). Actually this is last action; goods useless. Law phase remains: president is me (influence 2, tie with 0 but tie_order favors 2 then 1... wait president decided by max influence at law entry with tie_order priority [2,1,0]: idx1 and idx0 both influence 2, tie_order gives 1 priority over 0). So I'm president with veto. But I'd lose weight if I pass now? Pass gives +2 vote weight. Influence matters for 5% bonus: max influence — I have 2 tied with 0. Bribe 5 gives influence 3, securing the 5% commission bonus (~3.15 alashi) but costs 5 alashi... bad ratio? 5% of 63M = 3.15M, cost 5M. Not worth. Also bribe gives rival cash.\n\nBest: pass, preserving vote weight 4 for law. Goods are useless. Choose 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496662,
+    "id": "202610201944169dab418a74074c63",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201944169dab418a74074c63",
+    "usage": {
+      "completion_tokens": 259,
+      "completion_tokens_details": {
+        "reasoning_tokens": 221
+      },
+      "prompt_tokens": 4230,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 4489
+    }
+  }
+}

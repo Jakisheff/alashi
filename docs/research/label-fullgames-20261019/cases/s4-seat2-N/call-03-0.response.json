@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 14.275,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель не девальвируется и карта 8 уже вышла, поэтому sell_credit даёт 38,75 вместо 31 alashi.\"}",
+          "reasoning_content": "Sell all now, before tax laws possibly. Cash 31 now, sell later after producing more but price drops. Selling 3 now at prices 12+10+9=31 seems best vs credit (promissory devalues? promissory added fully, no devaluation listed except after round start cash devalues; promissory isn't devalued). Credit gives 38.75 but pays after next round start... promissory added to cash, not devalued. So credit better! 38.75 vs 31. But law 8 could wipe promissory — card 8 already used. Risk: no, card 8 drawn already. Credit is strictly better (1.25x, no devaluation of promissory). Choose 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428136,
+    "id": "202610200042030e960af7c8ca4897",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200042030e960af7c8ca4897",
+    "usage": {
+      "completion_tokens": 201,
+      "completion_tokens_details": {
+        "reasoning_tokens": 160
+      },
+      "prompt_tokens": 2270,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2471
+    }
+  }
+}

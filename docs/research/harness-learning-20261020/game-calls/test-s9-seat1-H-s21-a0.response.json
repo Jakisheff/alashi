@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.098,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар после последнего рынка бесполезен, а взятки для влияния стоят дороже 5% банка.\"}",
+          "reasoning_content": "Last round action, goods useless after market (no more market). Only cash matters. So just pass? Goods from produce won't be sold. Bribe gives influence but costs cash; influence gives 5% bank bonus to max influence. Bank 39M, 5% = ~1.95M. Bribing 5M to gain influence... Currently influence 1 vs rival 2 and 3. To beat rival 2's 3, need bribe 15M to get 4 influence. Cost 15M, gain 5% of bank = ~2M plus losing 15M cash → bad. So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496906,
+    "id": "202610201948217a6a37cd07f24bb0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201948217a6a37cd07f24bb0",
+    "usage": {
+      "completion_tokens": 168,
+      "completion_tokens_details": {
+        "reasoning_tokens": 133
+      },
+      "prompt_tokens": 5539,
+      "prompt_tokens_details": {
+        "cached_tokens": 3136
+      },
+      "total_tokens": 5707
+    }
+  }
+}

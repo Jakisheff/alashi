@@ -17,7 +17,7 @@ class StaticReleaseTest(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
-        self.base = Path(self.temp.name)
+        self.base = Path(self.temp.name).resolve()
         self.root = self.base / "web"
         self.state = self.base / "private"
         (self.root / "releases").mkdir(parents=True)
@@ -78,6 +78,39 @@ class StaticReleaseTest(unittest.TestCase):
             '<script src="/releases/base/assets/app.js"></script>'
             '<link rel="stylesheet" href="/releases/' + name + '/assets/app.css">'
         )
+
+    def assert_publish_rejects_permissions(self, relative_path, mode):
+        self.command("publish", "one")
+        journal = (self.state / "journal.jsonl").read_bytes()
+        path = self.root / "releases" / "two" / relative_path
+        original_mode = path.stat().st_mode & 0o777
+        path.chmod(mode)
+        try:
+            with self.assertRaisesRegex(release.InvalidRelease, "public (file|directory)"):
+                release.run("publish", self.root, self.state, "two")
+            self.assertEqual(release.pointer(self.root, "current"), "one")
+            self.assertEqual(release.pointer(self.root, "previous"), "base")
+            self.assertEqual((self.state / "journal.jsonl").read_bytes(), journal)
+            self.assertEqual(path.stat().st_mode & 0o777, mode)
+        finally:
+            path.chmod(original_mode)
+
+    def test_unreadable_model_asset_preserves_pointers(self):
+        path = self.root / "releases" / "two" / "assets" / "model.glb"
+        path.write_bytes(b"glTF")
+        self.assert_publish_rejects_permissions("assets/model.glb", 0o640)
+
+    def test_unreadable_map_outside_assets_preserves_pointers(self):
+        path = self.root / "releases" / "two" / "maps" / "world.json"
+        path.parent.mkdir()
+        path.write_text('{"tiles": []}')
+        self.assert_publish_rejects_permissions("maps/world.json", 0o640)
+
+    def test_unsearchable_subdirectory_preserves_pointers(self):
+        self.assert_publish_rejects_permissions("assets", 0o750)
+
+    def test_unsearchable_release_root_preserves_pointers(self):
+        self.assert_publish_rejects_permissions(".", 0o750)
 
     def test_contention_fails_without_switch(self):
         self.state.mkdir(mode=0o700)

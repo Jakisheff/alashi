@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.668,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 5 даёт влияние богатейшему (не мне), поэтому голосую против.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest by cash. All cash 0, tie_order gives 0 richest. President is idx0 anyway. Vote yes helps idx0's influence, who's already president. Could help me? No. Vote no: veto pending? President idx0 will vote; if I vote no, president might veto... Actually card 5 gives influence to richest (idx0). Vote no seems better for me but president can veto. If president vetoes and result no, fine. Vote no—harm law benefiting rival. But president veto applies to first tax law... veto just kills law? Veto makes law not pass. President would veto \"no\" outcome? No, president vetoes to block law passing... Actually president can veto after counting to flip? Veto blocks the law being accepted... So president wants yes, vetoes if no wins. My no alone can't stop it. Vote no anyway—cheap.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497070,
+    "id": "202610201951031e1d363f34844c8c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201951031e1d363f34844c8c",
+    "usage": {
+      "completion_tokens": 222,
+      "completion_tokens_details": {
+        "reasoning_tokens": 193
+      },
+      "prompt_tokens": 2026,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2248
+    }
+  }
+}

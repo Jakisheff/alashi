@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.139,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Безопасный produce даёт 2 товара без риска изъятия, при нулевом cash shuttle всё равно потребует плату и рискует серым грузом.\"}",
+          "reasoning_content": "Cash 0, promissory 38.75M will add at round 5. Bid done. Main action: produce gives 2 goods guaranteed; shuttle 3 grey goods risk 25% seizure plus tariff payment 2 (cash 0, pay min(cash,2)=0). Tariff unknown; risk. Produce safer: 2 goods. Prices low now but round 5 sale. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427415,
+    "id": "202610200030116f6e3056dfda4a8b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200030116f6e3056dfda4a8b",
+    "usage": {
+      "completion_tokens": 133,
+      "completion_tokens_details": {
+        "reasoning_tokens": 86
+      },
+      "prompt_tokens": 2780,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2913
+    }
+  }
+}

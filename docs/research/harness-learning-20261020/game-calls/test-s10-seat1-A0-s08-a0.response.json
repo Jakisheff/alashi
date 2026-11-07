@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.804,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"sell_credit даёт 1,25x выручку, а вексель не девальвируется в начале раунда 4.\"}",
+          "reasoning_content": "Round 3, price ~9 for next units. Selling 2 gives 18 alashi. Promissory gets 62% later via cash reset (cash=floor(cash/100)*62 applies to cash only, promissory added after devaluation). So promissory is devaluation-proof! Sell credit 2 → 21.25M promissory paid in round 4 without devaluation? Wait, round start: cash devalued, then promissory added. So promissory not devalued. Then sell_credit is strictly better than sell. Yes choice 4.\n\nBut end of game: last round promissory not redeemed. We're in round 3 of 6, fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497464,
+    "id": "2026102019573953b8840bd2e242a3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019573953b8840bd2e242a3",
+    "usage": {
+      "completion_tokens": 189,
+      "completion_tokens_details": {
+        "reasoning_tokens": 149
+      },
+      "prompt_tokens": 2574,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2763
+    }
+  }
+}

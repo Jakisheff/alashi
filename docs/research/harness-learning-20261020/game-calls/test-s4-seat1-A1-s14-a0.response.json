@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.919,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Карта 0 без эффектов — пропуск хода не влияет на исход.\"}",
+          "reasoning_content": "Law 0 no effects. Pass as president is fine (pass keeps vote_weight? No, weight +2 if action pass was earlier in round... already action used). Vote weight 2; others weight 4 and 3. Pass just skip vote. Either way law 0 harmless. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496626,
+    "id": "2026102019434218d4c294907f4e85",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019434218d4c294907f4e85",
+    "usage": {
+      "completion_tokens": 87,
+      "completion_tokens_details": {
+        "reasoning_tokens": 61
+      },
+      "prompt_tokens": 2888,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2975
+    }
+  }
+}

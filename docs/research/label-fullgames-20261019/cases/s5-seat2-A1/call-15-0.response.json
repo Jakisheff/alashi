@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.505,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce даёт гарантированно 5 товаров для продажи по высоким ценам в финальном раунде, без риска изъятия.\"}",
+          "reasoning_content": "Have 3 goods, price counter reset (sold_counter 0), prices 12,10,9... Produce gives 5 goods → next round sell ~5 units high price. Shuttle risk grey seizure 25%, but 6 goods. Next round cash devalues to 62%. Sell 5 goods next market at 12,10,9,8,7 = 46 alashi minus devaluation... better sell now? This is action phase, can't sell. Round 6 final. Produce gives 5 goods guaranteed; shuttle gives 6 but 25% risk of losing all grey. Expected: produce 5 certain ≈ 46; shuttle: 75% chance 6 goods (12+10+9+8+7+6=52). Also sell 3 this round? No, market already passed. Next market can sell 5-6. Produce safer.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491171,
+    "id": "202610201812430223257926d64a78",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201812430223257926d64a78",
+    "usage": {
+      "completion_tokens": 222,
+      "completion_tokens_details": {
+        "reasoning_tokens": 183
+      },
+      "prompt_tokens": 3140,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3362
+    }
+  }
+}

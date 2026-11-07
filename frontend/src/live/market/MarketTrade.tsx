@@ -26,7 +26,7 @@ function fade(materials: Material[], amount: number) {
   for (const m of materials) { m.opacity = amount; m.depthWrite = amount > .98 }
 }
 
-export function MarketTrade({ preview, onTime, onFinished }: { preview: TradePreview; onTime: (t: number) => void; onFinished: () => void }) {
+export function MarketTrade({ preview, onTime, onFinished, syncSpeech = true }: { preview: TradePreview; onTime: (t: number) => void; onFinished: () => void; syncSpeech?: boolean }) {
   const [reduced, setReduced] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches)
   useEffect(() => {
     const media = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -226,7 +226,7 @@ export function MarketTrade({ preview, onTime, onFinished }: { preview: TradePre
     if (!reduced) smokeRef.current.uniforms.uTime.value = actual
     if (Math.abs(actual - reported.current) > .09) { reported.current = actual; onTime(actual) }
     if (preview.playing && actual >= TRADE_SECONDS && !finished.current) { finished.current = true; onTime(TRADE_SECONDS); onFinished() }
-  })
+  }, -2)
 
   return <group ref={root} position={[0, .15, 0]} rotation-y={.35}>
     <primitive object={hero} />
@@ -239,6 +239,10 @@ export function MarketTrade({ preview, onTime, onFinished }: { preview: TradePre
         <meshBasicMaterial color={i % 2 ? GOLD_SPARK : MINT_SPARK} toneMapped={false} />
       </mesh>)}
     </group>
-    {anchor && createPortal(<ScreenText />, anchor)}
+    {anchor && createPortal(<ScreenText clock={syncSpeech ? () => {
+      const t = time.current
+      const stageStart = preview.action === 'buy' ? t >= PURCHASE_CONTACT ? PURCHASE_CONTACT : t >= 2.7 ? 2.7 : 0 : 0
+      return t - stageStart
+    } : undefined} reducedMotion={reduced} />, anchor)}
   </group>
 }

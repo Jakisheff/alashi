@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.928,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Шаттл даёт больше товара, ожидаемая выгода выше даже с риском изъятия.\"}",
+          "reasoning_content": "Shuttle gives 3 goods but risk 25% seizure; produce gives 2 safe. Cash is 0, so tariff fine no. Shuttle expected higher: 3 vs 2, ~25% loss → expected 2.25. But seizure risks all grey goods. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490304,
+    "id": "20261020175821c9cd0601b0714759",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175821c9cd0601b0714759",
+    "usage": {
+      "completion_tokens": 93,
+      "completion_tokens_details": {
+        "reasoning_tokens": 60
+      },
+      "prompt_tokens": 2174,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2267
+    }
+  }
+}

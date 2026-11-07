@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.164,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Взятка даёт влияние 2 и пост президента по тай-ордеру, сохраняя кэш для продаж и бонус влияния в конце.\"}",
+          "reasoning_content": "Cash 54.1M, want president role (influence 2 held by idx0, tie order I'm first). Bid 10M for license already, need main action. Buying influence: bribe 5M→influence 2, tie with idx0's 2 but tie_order [1,0,2] so I become president. President gives veto and 5% bank bonus at end (max influence). Bribe 5M to 0 (choice 4) gives me influence 2, tie→I hold presidency in law. Also gives money to rival though. But presidential power + 5% bonus (~1.5M+) worthwhile. Also I still get sell later. Take choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497113,
+    "id": "20261020195147053b6b56f84d4197",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195147053b6b56f84d4197",
+    "usage": {
+      "completion_tokens": 193,
+      "completion_tokens_details": {
+        "reasoning_tokens": 151
+      },
+      "prompt_tokens": 4395,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 4588
+    }
+  }
+}

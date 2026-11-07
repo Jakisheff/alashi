@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.375,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 6 снижает цены следующего рынка, что вредит моим продажам — голосую против, и закон не проходит.\"}",
+          "reasoning_content": "Law 6: price shift -2 next market. Bad for me (seller). Vote no. Currently Yes=1 (idx2), No=1 (idx0). My vote no → no wins 2:1, law fails. President is idx2 (influence 1, tie_order priority — I have same influence but he's higher in tie order). Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499847,
+    "id": "202610202037231444e78d3b334209",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202037231444e78d3b334209",
+    "usage": {
+      "completion_tokens": 116,
+      "completion_tokens_details": {
+        "reasoning_tokens": 78
+      },
+      "prompt_tokens": 2755,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2871
+    }
+  }
+}

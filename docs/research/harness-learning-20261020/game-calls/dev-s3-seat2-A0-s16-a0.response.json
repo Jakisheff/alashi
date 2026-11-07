@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.194,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель не девальвирует и даёт выручку ×1.25, что лучше продажи перед девальвацией раунда 6.\"}",
+          "reasoning_content": "Round 5 market, counter reset to 0? Sold counter 0. Prices start at 12. Round 6 cash devalues to 62% — but promissory doesn't devalue... sell credit gives 1.25x revenue, paid next round (added to cash after devaluation), but \"after last round promissory not redeemed\" — round 6 is last; promissory from round 5 market is added at start of round 6? Round 6 exists, so redeemed at start of round 6 after devaluation. So sell_credit 3 units = 38.75M promissory, plus round 6 market sells whatever produced. Sell now for cash 36M would be devalued to 62%. Credit better: 38.75M intact. Also sell credit keeps devaluation low on my cash (30.6M → 18.98M + 38.75M). Opponents' cash devalues too. Choose 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495500,
+    "id": "20261020192449efba6a07c31043a0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192449efba6a07c31043a0",
+    "usage": {
+      "completion_tokens": 250,
+      "completion_tokens_details": {
+        "reasoning_tokens": 206
+      },
+      "prompt_tokens": 3251,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3501
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.281,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Больше товара перед последними рынками, риск изъятия приемлем при нулевом cash.\"}",
+          "reasoning_content": "I have 0 cash, bid 27.5M (all cash in escrow). Bid doesn't consume action, choose produce or shuttle. Shuttle gives 3 goods with seizure risk? Shuttle grey may be confiscated ~25% — actually shuttle goods here shown as goods=3. After auction cash is 0 anyway. Shuttle risk: grey goods may be seized with 25% — worth it for 3 vs 2. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491216,
+    "id": "20261020181333c3bde7a338824b79",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181333c3bde7a338824b79",
+    "usage": {
+      "completion_tokens": 123,
+      "completion_tokens_details": {
+        "reasoning_tokens": 91
+      },
+      "prompt_tokens": 2703,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2826
+    }
+  }
+}

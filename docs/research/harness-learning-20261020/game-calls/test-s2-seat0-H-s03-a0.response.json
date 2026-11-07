@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.005,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 8 обнуляет векселя, которых ни у кого нет — эффекта нет, veto не нужен.\"}",
+          "reasoning_content": "Law 8 обнуляет promissory — у всех 0, нет вреда? Но sell_credit будущие — карта 8 обнуляет непогашенные сейчас. У нас нет векселей, у соперников тоже. Карта бесполезна, но безвредна? Хм, лучше veto — нет, карта 8 безвредна сейчас, но занимает ход (без повторов) — может убрать плохую карту? Скорее карта 8 вредна тем, кто потом продаст в кредит... сейчас ни у кого векселей. Pass.\n\nActually карта 8 обнуляет promissory немедленно — сейчас у всех 0, значит никакой эффект. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496447,
+    "id": "2026102019404229bec6bd30f74214",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019404229bec6bd30f74214",
+    "usage": {
+      "completion_tokens": 182,
+      "completion_tokens_details": {
+        "reasoning_tokens": 147
+      },
+      "prompt_tokens": 2458,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2640
+    }
+  }
+}

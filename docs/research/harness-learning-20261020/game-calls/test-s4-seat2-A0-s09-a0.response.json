@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.711,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон о налоге 20% и так отклоняется (2 «против» против 1 «за»), вето не нужно.\"}",
+          "reasoning_content": "Law 2 = 20% tax on future sales. Yes:1 vs No:2 — law fails anyway. But wait, law 2 tax would hurt my sales; but it already fails without veto. Veto unnecessary? Veto blocks passing; No already wins 2:1. So veto doesn't change. But my promissory already sold; future sales taxed. It fails anyway — pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496722,
+    "id": "20261020194517d943482ba6034f51",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194517d943482ba6034f51",
+    "usage": {
+      "completion_tokens": 125,
+      "completion_tokens_details": {
+        "reasoning_tokens": 84
+      },
+      "prompt_tokens": 2383,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2508
+    }
+  }
+}

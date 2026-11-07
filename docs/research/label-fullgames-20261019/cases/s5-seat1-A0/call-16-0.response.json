@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.299,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Произведённый товар даёт около 20 alashi на финальном рынке, больше косвенной выгоды влияния.\"}",
+          "reasoning_content": "I'm faction 1, not president. Round 5 action. Next market round 6: I have 0 goods. Produce gives 2 goods, sellable in round 6 at decent price. Cash counts at end; goods don't. Need cash for final rank — but selling converts goods to cash, good. Produce: 2 goods → sell ~10 each = 20 alashi. Influence matters for max influence bonus (5% of bank = ~3 alashi + presidency). Currently all influence 1, my vote_weight 3 (passed action previously? no, weight = influence+2 if action passed... weight 3 because last round action? whatever). Bribe 5M gives influence 2 — could win max influence bonus? Others might bribe too. Influence stays in round 6? Influence persists. Bribe 5M to gain influence 2, likely securing presidency and 5% commission + veto. But presidency requires most influence; bribe cost 5 vs bonus ~3.15. Also as president in law round 5 and 6 can veto bad laws (tax). Tax 20% on round 6 sales of ~20 alashi = 4 alashi — veto valuable.\n\nProduce gives 2 goods worth ~20 alashi in round 6 market. That's the biggest. Combine? Only one action. Choose produce (choice 1). Actually influence also gives vote weight in law. But 20 alashi produce > bribe benefits. Choose 1.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490333,
+    "id": "20261020175844d8d01d883e8f4dbd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175844d8d01d883e8f4dbd",
+    "usage": {
+      "completion_tokens": 349,
+      "completion_tokens_details": {
+        "reasoning_tokens": 310
+      },
+      "prompt_tokens": 4042,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 4391
+    }
+  }
+}

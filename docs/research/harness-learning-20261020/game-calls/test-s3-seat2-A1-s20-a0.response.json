@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.641,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон о субсидии уже не имеет эффекта в финальном раунде, лишний смысл голосования отсутствует.\"}",
+          "reasoning_content": "Law 3: subsidy_goods=1, affects produce next rounds — final round, no effect. Others voted Yes (1+2=3 yes vs my vote_no 4? My weight 4). Vote no: yes=3, no=4 → not passed. No effect anyway. Pass is fine; my vote weight 4 — if I vote yes it passes; irrelevant. Pass saves nothing... any effect? subsidy affects produce only, no more actions. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499362,
+    "id": "20261020202918390aeea5b447452f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202918390aeea5b447452f",
+    "usage": {
+      "completion_tokens": 135,
+      "completion_tokens_details": {
+        "reasoning_tokens": 97
+      },
+      "prompt_tokens": 3256,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3391
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 34.96,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Финальный раунд: продаю весь товар за наличные, вексель всё равно не погасится.\"}",
+          "reasoning_content": "Last round market — sell_credit not redeemed. Sell 3 at price 8 → 24 alashi cash. Choice 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497702,
+    "id": "202610202001087a23c70fa0474324",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202001087a23c70fa0474324",
+    "usage": {
+      "completion_tokens": 62,
+      "completion_tokens_details": {
+        "reasoning_tokens": 27
+      },
+      "prompt_tokens": 4103,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 4165
+    }
+  }
+}

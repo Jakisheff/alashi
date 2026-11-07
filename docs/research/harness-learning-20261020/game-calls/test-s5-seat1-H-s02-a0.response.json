@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.013,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон 4 даёт +1 влияния самому бедному, а при равном cash приоритет tie_order — это я.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest by cash. All cash=0, tie_order [1,2,0] — poorest is idx1 (me). Vote yes!",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496591,
+    "id": "202610201943093e2c5f5811cb4994",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201943093e2c5f5811cb4994",
+    "usage": {
+      "completion_tokens": 74,
+      "completion_tokens_details": {
+        "reasoning_tokens": 37
+      },
+      "prompt_tokens": 2546,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2620
+    }
+  }
+}

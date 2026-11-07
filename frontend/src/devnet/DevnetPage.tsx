@@ -2,7 +2,7 @@ import { ChainTradingOverview } from './TradingOverview'
 import { stageInViewport } from '../studio/confirmation'
 import { StudioStage } from '../studio/StudioStage'
 import { Link, useNavigate } from '@tanstack/react-router'
-import { Component, lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
+import { Component, lazy, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { MarketTrade, type TradePreview } from '../live/market/MarketTrade'
 import { PurchaseReceipt } from '../live/market/PurchaseReceipt'
 import { ScenarioAction, type ScenarioPreview } from '../live/actions'
@@ -62,6 +62,24 @@ function DetailsTabs({ value, onChange, ready = true }: { value: DetailsTab; onC
     {tabs.map((tab) => <button key={tab} type="button" id={`devnet-tab-${tab}`} role="tab" disabled={!ready && tab !== 'setup'} aria-selected={value === tab} aria-controls="devnet-details" tabIndex={value === tab ? 0 : -1} onClick={() => onChange(tab)}>{tab === 'setup' ? 'Setup' : tab === 'player' ? 'This player' : tab === 'all' ? 'All players' : 'Game'}</button>)}
   </div>
 }
+function PlayerPlayback({ mode, playing, current, position, total, available, onToggle, onReplay, onSeek, onLatest }: {
+  mode: 'live' | 'replay'; playing: boolean; current: boolean; position: number; total: number; available: boolean
+  onToggle: () => void; onReplay: () => void; onSeek: (position: number) => void; onLatest: () => void
+}) {
+  const action = total ? Math.min(total, mode === 'replay' ? Math.max(1, position + 1) : total) : 0
+  const playLabel = mode === 'replay' && playing ? 'Pause' : mode === 'replay' && current ? 'Resume' : 'Play'
+  const transitioning = mode === 'replay' && !current && position < total
+  return <section className="devnet-player-controls" aria-label="Player replay controls">
+    <label className="devnet-player-seek"><span>Player replay · {mode === 'replay' ? `Action ${action} / ${total}` : `${total} actions available`}</span>
+      <input aria-label="Replay action" aria-valuetext={`Action ${action} of ${total}`} type="range" min={0} max={Math.max(0, total - 1)} step={1} value={Math.max(0, Math.min(mode === 'replay' ? position : total - 1, total - 1))} disabled={!available} onChange={(event) => onSeek(Number(event.target.value))} />
+    </label>
+    <div className="devnet-player-buttons">
+      <button type="button" aria-label={playLabel} disabled={!available || transitioning} onClick={onToggle}><span aria-hidden="true">{playLabel === 'Pause' ? '❚❚' : '▶'}</span> {playLabel}</button>
+      <button type="button" aria-label="Replay confirmed actions" disabled={!available} onClick={onReplay}><span aria-hidden="true">↻</span> Replay</button>
+      {mode === 'replay' && <button type="button" aria-label="Return to latest state" disabled={!available} onClick={onLatest}>Latest</button>}
+    </div>
+  </section>
+}
 function GameViewer({ pda, initialPlayer, ownerRecord, setup, detailsTab, onTabChange }: { pda: string; initialPlayer: string; ownerRecord: string; setup: ReactNode; detailsTab: DetailsTab; onTabChange: (tab: DetailsTab) => void }) {
   const { snapshot, error, waiting, retry } = useChainSnapshot(pda)
   const journal = useChainConversations(pda, Boolean(snapshot), Boolean(snapshot && snapshot.complete && ['Finished', 'Aborted'].includes(snapshot.phase)))
@@ -72,8 +90,12 @@ function GameViewer({ pda, initialPlayer, ownerRecord, setup, detailsTab, onTabC
   const [current, setCurrent] = useState<ChainEvent | null>(null)
   const [mode, setMode] = useState<'live' | 'replay'>('live')
   const [playing, setPlaying] = useState(false)
+  const playingRef = useRef(false)
+  const deferredFinish = useRef<number | null>(null)
   const [position, setPosition] = useState(-1)
   const [take, setTake] = useState(0)
+  const takeRef = useRef(take)
+  useLayoutEffect(() => { takeRef.current = take }, [take])
   const [tradeClock, setTradeClock] = useState({ take: -1, time: 0 })
   const tradeTime = tradeClock.take === take ? tradeClock.time : 0
   const reportTradeTime = useCallback((time: number) => { setTradeClock({ take, time }) }, [take])
@@ -87,15 +109,17 @@ function GameViewer({ pda, initialPlayer, ownerRecord, setup, detailsTab, onTabC
   const queue = useRef<ChainEvent[]>([]), liveCursor = useRef(newLiveCursor()), liveEvent = useRef<ChainEvent | null>(null), completedTake = useRef(-1)
   const observed = useMemo(() => faction && snapshot ? playerEvents(snapshot.events, faction) : [], [snapshot, faction])
   const action = current && faction ? visualAction(current, faction) : null
-  const reset = useCallback(() => { queue.current = []; liveEvent.current = null; setCurrent(null); setPosition(-1); setReplayEvents([]); setReplaySnapshot(null); setPlaying(false); setMode('live'); useScene.getState().say('') }, [])
+  const reset = useCallback(() => { completedTake.current = Math.max(completedTake.current, takeRef.current); playingRef.current = false; deferredFinish.current = null; queue.current = []; liveEvent.current = null; setCurrent(null); setPosition(-1); setReplayEvents([]); setReplaySnapshot(null); setPlaying(false); setMode('live'); useScene.getState().say('') }, [])
   const finish = useCallback(() => {
-    if (completedTake.current === take || (mode === 'replay' && !playing)) return
+    if (completedTake.current >= take) return
+    if (mode === 'replay' && !playingRef.current) { deferredFinish.current = take; return }
     completedTake.current = take
+    deferredFinish.current = null
     if (mode === 'replay') { setPosition((i) => i + 1); return }
     if (!stageInViewport(heroElement.current)) queue.current = []
     const next = queue.current.shift() ?? null
     liveEvent.current = next; setCurrent(next); setTake((n) => n + 1)
-  }, [mode, take, playing])
+  }, [mode, take])
   useEffect(() => { reset(); liveCursor.current = newLiveCursor() }, [faction?.pda, reset])
   useEffect(() => {
     if (!snapshot || !faction) return
@@ -119,7 +143,7 @@ function GameViewer({ pda, initialPlayer, ownerRecord, setup, detailsTab, onTabC
   const dialogue = useChainDialogue(pda, Boolean(snapshot))
   useEffect(() => {
     if (mode !== 'replay') return
-    if (!replayEvent) { setCurrent(null); setPlaying(false); return }
+    if (!replayEvent) { playingRef.current = false; deferredFinish.current = null; setCurrent(null); setPlaying(false); return }
     setCurrent(replayEvent); setTake((n) => n + 1)
     // Polling a fresh snapshot must not restart an in-progress replay event.
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -136,7 +160,7 @@ function GameViewer({ pda, initialPlayer, ownerRecord, setup, detailsTab, onTabC
     return () => window.clearTimeout(timer)
   }, [current, action, mode, playing, finish])
   useEffect(() => { const timer = window.setInterval(() => setNow(Date.now()), 1000); return () => { window.clearInterval(timer); useScene.getState().say('') } }, [])
-  const replay = (index = 0, seek = false) => { if (!seek || mode !== 'replay') setReplaySnapshot(snapshot); setReplayEvents(seek && mode === 'replay' ? replayEvents : observed.slice()); queue.current = []; liveEvent.current = null; setCurrent(null); setMode('replay'); setPosition(index); setPlaying(true); setReplayRevision((n) => n + 1) }
+  const replay = (index = 0, seek = false) => { completedTake.current = Math.max(completedTake.current, take); deferredFinish.current = null; if (!seek || mode !== 'replay') setReplaySnapshot(snapshot); setReplayEvents(seek && mode === 'replay' ? replayEvents : observed.slice()); queue.current = []; liveEvent.current = null; setCurrent(null); setMode('replay'); setPosition(index); playingRef.current = seek && mode === 'replay' ? playingRef.current : true; setPlaying(playingRef.current); setReplayRevision((n) => n + 1) }
   useEffect(() => {
     if (initialWinnerReplay.current || selected || !snapshot?.settled || !snapshot.complete || !faction || !observed.length || defaultWinner(snapshot)?.pda !== faction.pda) return
     initialWinnerReplay.current = true
@@ -172,7 +196,7 @@ function GameViewer({ pda, initialPlayer, ownerRecord, setup, detailsTab, onTabC
   const replayPhase = replayEvent?.phase ?? replayPhaseEvent?.phase
   return <>{snapshot && <ChainTradingOverview key={snapshot.pda} snapshot={snapshot} online={!error} />}<div className="live-layout devnet-layout">
     <section className="devnet-stage" aria-label="Confirmed devnet gameplay">
-      <div className="live-frame devnet-frame">
+      <div className="live-frame devnet-frame devnet-frame-player">
         <div className="live-host">
           <span className="live-avatar" aria-hidden="true">{faction?.name.slice(0, 1) ?? 'α'}</span>
           <div><strong>{faction?.name ?? 'Choose a player'}</strong>{faction && <PlayerAddress key={faction.pda} address={faction.pda} />}</div>
@@ -182,16 +206,8 @@ function GameViewer({ pda, initialPlayer, ownerRecord, setup, detailsTab, onTabC
           <span>{snapshot ? mode === 'replay' ? `Replay${replayRound !== undefined ? ` · round ${replayRound}` : ''}` : `Devnet · round ${snapshot.round}` : 'Connecting to the game…'}</span>
           <strong>{mode === 'replay' ? replayPhase ?? 'Replay' : snapshot?.settled ? 'Game finished' : snapshot?.phase ?? 'Connecting'}</strong>
           {snapshot && <div className="live-deadline"><b>{mode === 'replay' ? `${Math.min(position + 1, activeEvents.length)} / ${activeEvents.length}` : snapshot.settled || error ? '—' : `${String(Math.floor(remaining / 60)).padStart(2, '0')}:${String(remaining % 60).padStart(2, '0')}`}</b><small>{mode === 'replay' ? 'confirmed actions' : snapshot.settled ? 'finished' : error ? 'last received state' : remaining === 0 ? 'awaiting next phase' : 'phase ends in'}</small></div>}
-          {snapshot && <div className={`live-progress${mode === 'replay' ? ' devnet-replay-progress' : ''}`} aria-label={mode === 'replay' ? undefined : 'Phase time remaining'} role={mode === 'live' && !snapshot.settled && phaseDuration && !error ? 'progressbar' : undefined} aria-valuemin={0} aria-valuemax={phaseDuration} aria-valuenow={mode === 'live' && phaseDuration && !error ? Math.min(remaining, phaseDuration) : undefined}>
+          {snapshot && <div className="live-progress" aria-label={mode === 'replay' ? undefined : 'Phase time remaining'} role={mode === 'live' && !snapshot.settled && phaseDuration && !error ? 'progressbar' : undefined} aria-valuemin={0} aria-valuemax={phaseDuration} aria-valuenow={mode === 'live' && phaseDuration && !error ? Math.min(remaining, phaseDuration) : undefined}>
             <i style={{ transform: `scaleX(${mode === 'replay' ? replayFraction : error ? 0 : phaseFraction})` }} />
-            {mode === 'replay' && <input className="devnet-replay-seek" aria-label="Replay action" type="range" min={0} max={Math.max(0, activeEvents.length - 1)} value={Math.max(0, Math.min(position, activeEvents.length - 1))} onChange={(e) => replay(Number(e.target.value), true)} />}
-          </div>}
-          {snapshot && <div className="devnet-stage-playback">
-            <button type="button" disabled={!observed.length} onClick={() => replay()} aria-label="Replay confirmed actions">Replay</button>
-            {mode === 'replay' && <>
-              <button type="button" disabled={!current} onClick={() => setPlaying((s) => !s)}>{playing ? 'Pause' : 'Resume'}</button>
-              <button type="button" onClick={reset} aria-label="Return to latest state">Latest</button>
-            </>}
           </div>}
         </div>
         <div ref={heroElement} className="live-hero" data-action={action ?? 'idle'}><div className="live-scene"><HeroBoundary><Suspense fallback={<p className="live-hero-fallback">Loading Degenie…</p>}><StudioStage><Scene frozen={null} background={null} studio interactive={false}>{trade ? <MarketTrade preview={trade} onTime={reportTradeTime} onFinished={finish} /> : scenario ? <ScenarioAction preview={scenario} onTime={ignoreTime} onFinished={finish} /> : <LivingGenie reaction={reaction} onFinished={finish} />}</Scene></StudioStage></Suspense></HeroBoundary></div>{trade?.action === 'buy' && <PurchaseReceipt result={trade.purchase} time={tradeTime} />}</div>
@@ -199,6 +215,7 @@ function GameViewer({ pda, initialPlayer, ownerRecord, setup, detailsTab, onTabC
         {snapshot && <ChainConversationStream variant="stage" confirmedActions={feedEvents.map((e) => { const actor = snapshot.factions.find((f) => f.pda === e.faction || f.pda === e.from || f.wallet === e.wallet) ?? faction; return { id: e.id, label: actor ? eventLabel(e, actor) : e.type, signature: e.signature, selected: selectedEventIds.has(e.id) } })} gamePda={pda} mode={mode === 'replay' ? 'replay' : ['Finished', 'Aborted'].includes(snapshot.phase) ? 'finished' : 'live'} selectedPlayer={faction ? { pda: faction.pda, name: faction.name } : null} entries={conversations.rows} connection={journal.connection} historyComplete={journal.historyComplete && !conversations.unmatched} onRetry={journal.retry} />}
         <footer className="live-frame-footer"><span>{mode === 'replay' ? 'Replay · shortened pauses' : error ? 'Last received snapshot' : 'Confirmed actions'}</span><span>{short(pda)}</span></footer>
       </div>
+      <PlayerPlayback mode={mode} playing={playing} current={Boolean(current)} position={position} total={activeEvents.length} available={Boolean(snapshot && activeEvents.length)} onToggle={() => { if (mode !== 'replay' || position >= replayEvents.length) replay(); else { playingRef.current = !playingRef.current; setPlaying(playingRef.current); if (playingRef.current && deferredFinish.current === take) finish() } }} onReplay={() => replay()} onSeek={(index) => replay(index, true)} onLatest={reset} />
     </section>
     <aside className="devnet-players devnet-sidebar" aria-label="Players and latest balances">
       <div className="devnet-stage-title"><h1>{detailsTab === 'setup' ? 'Setup' : detailsTab === 'all' ? 'Players' : detailsTab === 'game' ? 'Game details' : faction?.name ?? 'Your player'}</h1><span>{snapshot?.settled ? 'Final state' : 'Latest state'}</span></div>

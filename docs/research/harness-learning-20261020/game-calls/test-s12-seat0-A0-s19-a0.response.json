@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.481,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Снижение цен на последний рынок бьёт по моей продаже 3 товаров — ветирую.\"}",
+          "reasoning_content": "Law 6: price shift -2 next market (round 6, last market). I have 3 goods to sell next round. -2 shift lowers price — bad for me. Veto it. Player 2 voted No, so veto helps. Veto (choice 4).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498991,
+    "id": "202610202023088eba2dcbacbe46f5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202023088eba2dcbacbe46f5",
+    "usage": {
+      "completion_tokens": 90,
+      "completion_tokens_details": {
+        "reasoning_tokens": 59
+      },
+      "prompt_tokens": 3217,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3307
+    }
+  }
+}

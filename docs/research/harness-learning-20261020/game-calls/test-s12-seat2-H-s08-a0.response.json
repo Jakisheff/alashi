@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.349,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Продажа 2 единиц по высокой цене даёт cash≥16 для аукциона и сохраняет товар\"}",
+          "reasoning_content": "Round 3, price at counter 4 is 7. Need cash ≥9 by round 4. Selling 2 gives cash 35.94 ≥ 16. Sell 2 now keeps goods for later? Selling raises counter lowering future price. Sell 2 keeps 1 good. Actually sell all 3 → counter 7 price 3 later. Sell 2 is fine; keep cash high.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497551,
+    "id": "20261020195903dbf2932a73844aa3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195903dbf2932a73844aa3",
+    "usage": {
+      "completion_tokens": 116,
+      "completion_tokens_details": {
+        "reasoning_tokens": 83
+      },
+      "prompt_tokens": 3166,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3282
+    }
+  }
+}

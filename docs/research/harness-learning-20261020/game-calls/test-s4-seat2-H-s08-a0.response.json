@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.277,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Шаттл даёт больше товара для будущих продаж; риски невелики.\"}",
+          "reasoning_content": "Round 3 action, not auction. I'm president already (influence 3). Shuttle gives 3 goods (risk ~25% seizure? tariff=0, so risk). Shuttle gives 3+subsidy. Produce gives 2. Shuttle better expected value despite 25% risk.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498691,
+    "id": "202610202018088192728ff9fb40af",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202018088192728ff9fb40af",
+    "usage": {
+      "completion_tokens": 90,
+      "completion_tokens_details": {
+        "reasoning_tokens": 61
+      },
+      "prompt_tokens": 4123,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 4213
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.581,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Финальный раунд: товар и взятки уже не окупаются, сохраняю cash для ранга 1.\"}",
+          "reasoning_content": "Final round, no more market. Goods worthless, cash is what counts. Bribes give influence — max influence gets extra 5% bank = 3 alashi. Currently influence 2 vs my 1 vs 1. To win max influence I need to exceed 2: bribe 10M to anyone gives influence 3. Cost 10M cash for gain 3 alashi prize, but rank matters: payout 50 vs 30 alashi (~20 difference between rank 1 and 2). Cash ranks: 0: 49.0, me: 65.5, 2: 25.1. I'm rank1. Bribing 10M keeps me at 55.5, still rank1. Holder 0 influence 2; if I get influence 3, I'm max — extra 3 alashi. But bribing gives money to opponent 0, who then has 59M, still below 55.5? 49+10=59 > 55.5! I'd lose rank1. Bribe to idx2 instead: 2 gets 35.1, still rank3. My influence 3 > 2, max influence, gain 3 alashi prize, cost 10M cash ~10 alashi minus rank effects... Rank stays 1. Net: -10 + 3 = -7 alashi. Not worth it. Also holder is 0 with veto; law card doesn't matter much for final anyway.\n\nActually pass: keep 65.5M, rank1 → 50 share; influence prize goes to 0. Best is pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490902,
+    "id": "2026102018081275c737277a0d46f0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102018081275c737277a0d46f0",
+    "usage": {
+      "completion_tokens": 376,
+      "completion_tokens_details": {
+        "reasoning_tokens": 339
+      },
+      "prompt_tokens": 5246,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 5622
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.264,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Финальный раунд: сохраняю максимум cash при лидерстве по богатству, взятки лишь усиливают соперников.\"}",
+          "reasoning_content": "Last round action. Cash ranking matters, plus max influence gets 5% commission. I'm idx1 with cash 68.8M, influence 1. Competitors: 33.1 and 30.7M. Bribing gives money away and influence to rivals — bad. Influence 2 via bribe costs 5M to rival; commission 5% of 60M ≈ 3M, not worth and rival's influence 2 already. Best: keep cash. Pass? Goods don't matter. Pass keeps nothing but also no cost; influence from passing? Skipping action gives +2 vote weight, not influence — not needed. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499315,
+    "id": "202610202028293149071a78154f73",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202028293149071a78154f73",
+    "usage": {
+      "completion_tokens": 175,
+      "completion_tokens_details": {
+        "reasoning_tokens": 137
+      },
+      "prompt_tokens": 5309,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 5484
+    }
+  }
+}

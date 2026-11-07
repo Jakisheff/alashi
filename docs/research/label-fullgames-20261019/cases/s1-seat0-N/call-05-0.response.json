@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.133,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Производство даёт товар для будущих продаж без риска и сохраняет деньги и роль держателя X.\"}",
+          "reasoning_content": "Already holder X with vote_weight 3 (passed? no, I sold then shuttle earlier). Currently influence 1, weight 3 means I passed action? Actually vote_weight 3 = influence 1 + 2 (action passed last round? no). Anyway produce gives goods to sell. Shuttle gives 3 goods risk-free if black tariff. Bribe keeps influence advantage. Keep holder role — already tied at influence 1, tie_order favors me (0 first). Produce is free goods for later selling. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427991,
+    "id": "202610200039469b1992176fdd431e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200039469b1992176fdd431e",
+    "usage": {
+      "completion_tokens": 138,
+      "completion_tokens_details": {
+        "reasoning_tokens": 106
+      },
+      "prompt_tokens": 3073,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 3211
+    }
+  }
+}

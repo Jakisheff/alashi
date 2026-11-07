@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.587,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 4 отдаст +1 влияния сопернику (idx1) при равенстве cash по tie_order, поэтому отклоняю.\"}",
+          "reasoning_content": "Law 4 gives +1 influence to poorest cash (all 0; tie_order [1,2,0] — poorest by tie is idx1). We are idx2; president is idx1 (holder). Passing yes gives influence to idx1, strengthening president. But president can veto anyway. If accepted, idx1 gets +1 influence → will be president more, get commission 5%. We compete with idx1? We're idx2. Vote no to deny.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497160,
+    "id": "2026102019523535472004a82b4d40",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019523535472004a82b4d40",
+    "usage": {
+      "completion_tokens": 139,
+      "completion_tokens_details": {
+        "reasoning_tokens": 97
+      },
+      "prompt_tokens": 2025,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2164
+    }
+  }
+}

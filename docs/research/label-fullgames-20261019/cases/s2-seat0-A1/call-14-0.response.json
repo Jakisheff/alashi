@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.668,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 10% снизит мою будущую выручку от продаж; мой голос «против» при 4:4 отклоняет закон.\"}",
+          "reasoning_content": "Law 1 = tax 10% on future sales. I have promissory 43.75 and goods 3 to sell in future rounds. Tax hurts me. Current votes: yes weight 4, no weight 4. I'm vote weight 1. Voting no makes no=5, yes=4 → rejected. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490646,
+    "id": "202610201804006f87a546cfe0409d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201804006f87a546cfe0409d",
+    "usage": {
+      "completion_tokens": 114,
+      "completion_tokens_details": {
+        "reasoning_tokens": 71
+      },
+      "prompt_tokens": 2840,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2954
+    }
+  }
+}

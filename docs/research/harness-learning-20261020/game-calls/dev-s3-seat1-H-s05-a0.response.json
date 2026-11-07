@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.502,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Produce даёт 3 надёжных товара против рискованного шаттла с той же ожидаемой ценностью.\"}",
+          "reasoning_content": "Produce gives 3 (2+1 subsidy), shuttle 4 grey with 25% seizure risk. Produce is safer, shuttle EV higher (4*0.75=3 vs 3). Shuttle slightly better EV but risk of total loss? Only grey at risk. EV: shuttle 3 vs produce 3 — equal EV, produce is safe. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495194,
+    "id": "2026102019195086e67d6c3fca41cc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019195086e67d6c3fca41cc",
+    "usage": {
+      "completion_tokens": 113,
+      "completion_tokens_details": {
+        "reasoning_tokens": 76
+      },
+      "prompt_tokens": 2570,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2683
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 17.739,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":54,\"reason\":\"Высокая ставка на лицензию с положительным ожиданием: проигрыш ничего не стоит, победа приносит доход сверх возврата доли через банк.\"}",
+          "reasoning_content": "Round 4 action: license auction. License income ~20-60 alashi (avg 40), much bigger than bank share (bank 30M = 30 alashi, winner's bid added to bank). Expected license value ~40M minus bid. Rivals have ~42.5M and ~29.5M cash. Bidding over ~30M likely wins. Rival 1 could bid up to 42.5M. Profitable if bid < ~40M. Bid 33M seems strong; but tie_order priority is [1,2,0] — I lose ties. Bid 35M? Expected profit 40-35=5M plus bank return (bid goes into bank and redistributed, ~50% back). Actually bid goes to bank and redistributed by shares, so effective cost is bid minus share returned. If I'm rich rank... currently I'd be rank 1 (34+15 promissory? promissory counts? No—rank uses cash+hard only, promissory not counted). cash after bid 33M vs others ~42.5/29.5M — rank 2, 30% back. So effective cost ~23M, profit ~17M. Strong. But rival 1 with 42.5M may outbid. They also see expected value. Their bid could be large. I'll bid 34M (choice 55)? Keep some cash. Actually bid all-in? No, keep buffer. Bid 34M (34000000, choice 55).\n\nHmm, note: bid doesn't consume main action — I still can pick another action after. The candidate here is just bid. Choose 55? If rival bids 40M I lose and get returned anyway — losing costs nothing. So bid high: 34M maximizes win chance while expected value still positive (income min 20M > returned... if income 20M and effective cost ~24M, negative in worst case). But bank redistribution helps. Bid 33M safer? Differences minor. Choose 54 (33000000).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427987,
+    "id": "20261020003930ebe602849cf8493b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003930ebe602849cf8493b",
+    "usage": {
+      "completion_tokens": 474,
+      "completion_tokens_details": {
+        "reasoning_tokens": 431
+      },
+      "prompt_tokens": 5993,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 6467
+    }
+  }
+}

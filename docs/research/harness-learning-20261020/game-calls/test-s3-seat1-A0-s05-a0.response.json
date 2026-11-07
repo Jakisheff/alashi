@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.941,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"shuttle даёт 3 товара бесплатно с ожидаемой ценностью выше produce, влияние и пост президента уже обеспечены.\"}",
+          "reasoning_content": "Need income: produce gives 2 goods, sell later. Price at sold_counter 6 → 5 alashi each. Shuttle 3 goods, worth ~15 alashi minus 25% risk. I'm president (influence 2), vote_weight 4 already dominant; president determined by influence at law. Influence already highest. But losing cash hurts final rank. Produce gives free goods; shuttle gives 3 free goods but grey? shuttle gives grey goods risk 25% — expected 2.25 goods vs 2 certain. Price low anyway. Take shuttle? Expected value slightly higher. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496714,
+    "id": "20261020194507ce4d5319ca3045d0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194507ce4d5319ca3045d0",
+    "usage": {
+      "completion_tokens": 159,
+      "completion_tokens_details": {
+        "reasoning_tokens": 124
+      },
+      "prompt_tokens": 2820,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2979
+    }
+  }
+}

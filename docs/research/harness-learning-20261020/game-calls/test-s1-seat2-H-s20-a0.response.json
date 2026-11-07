@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.612,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 3 (субсидия товара) бесполезен — рынков больше нет, а итог определяется cash.\"}",
+          "reasoning_content": "Закон 3 — subsidy_goods, мне не нужен товар (рынков больше нет). Голосование: yes=2 (веса 1+2), у меня вес 3. Мне всё равно — pass. Президент фракция 1, влияние 2, а у меня 1; голос мог бы... влияние не влияет на выплату существенно, кроме 5% комиссии за максимальное влияние. У президента 2, у меня 1 — не догнать. Просто pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498182,
+    "id": "2026102020093945eef671b10e4a42",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020093945eef671b10e4a42",
+    "usage": {
+      "completion_tokens": 143,
+      "completion_tokens_details": {
+        "reasoning_tokens": 107
+      },
+      "prompt_tokens": 3715,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 3858
+    }
+  }
+}

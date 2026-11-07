@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.233,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Коплю товар для будущих продаж: shuttle даёт 3 единицы без риска при отсутствии тарифа.\"}",
+          "reasoning_content": "Round 2, not auction round. Produce gives 2 goods. Price counter at 4 (price 7). Selling later at declining prices... Better to accumulate goods and sell at high prices later? Round 2 action: I already sold 2 at 12,10. Produce gives 2 goods, sell next rounds at ~8-9. shuttle gives 3 goods but risk? shuttle grey risk only with tariff. No tariff now, shuttle gives 3 goods free. Choose shuttle (choice 3).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498686,
+    "id": "20261020201802004e5cc0e2c343b4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201802004e5cc0e2c343b4",
+    "usage": {
+      "completion_tokens": 138,
+      "completion_tokens_details": {
+        "reasoning_tokens": 105
+      },
+      "prompt_tokens": 3412,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 3550
+    }
+  }
+}

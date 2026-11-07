@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.607,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce даёт 3 чёрных товара без риска изъятия, что надёжнее shuttle с шансом потери ~25%.\"}",
+          "reasoning_content": "Produce gives 3 goods, shuttle 4 grey with seizure risk ~25%. Shuttle EV = 4*0.75=3 expected but grey can be seized entirely? ~25% loss all. EV 3 equals produce 3 but risk. Also grey may be tariffed. Produce safer.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495067,
+    "id": "202610201917437e066700db09419b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201917437e066700db09419b",
+    "usage": {
+      "completion_tokens": 100,
+      "completion_tokens_details": {
+        "reasoning_tokens": 62
+      },
+      "prompt_tokens": 2162,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2262
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.839,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Карта 5 даёт +1 влияния самому богатому — мне, что может дать пост президента.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest (me, idx0). President is idx1 (influence 2). Passing gives me +1 influence. But I don't hold presidency; president idx1 may veto. My vote weight 1. If yes passes, I get influence 2, ties idx1 → president priority tie_order [2,0,1]... at equality tie_order: idx1 earlier? tie_order 2,0,1 — idx0 before idx1, so I'd become president in future laws. Good. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497525,
+    "id": "202610201958415c000bac13a0422f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201958415c000bac13a0422f",
+    "usage": {
+      "completion_tokens": 147,
+      "completion_tokens_details": {
+        "reasoning_tokens": 115
+      },
+      "prompt_tokens": 2998,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3145
+    }
+  }
+}

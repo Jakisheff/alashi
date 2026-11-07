@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.587,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар и влияние после финального рынка не окупаются, поэтому pass сохраняет максимум cash.\"}",
+          "reasoning_content": "Final round, no more markets, so produce/shuttle goods useless. Bribes lose cash directly, but influence earns 5% commission of bank (~2.25 alashi) if max influence. Holder has influence 2. To beat, need influence 3: bribe 10 alashi = 10 alashi cost for ~2.25 gain plus redistribution? Cash paid to rival reduces own cash and increases theirs. Not worth. Best: pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490431,
+    "id": "202610201800244f09e22f52e24bb6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201800244f09e22f52e24bb6",
+    "usage": {
+      "completion_tokens": 126,
+      "completion_tokens_details": {
+        "reasoning_tokens": 94
+      },
+      "prompt_tokens": 5011,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 5137
+    }
+  }
+}

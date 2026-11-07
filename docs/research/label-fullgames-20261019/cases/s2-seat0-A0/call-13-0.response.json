@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.164,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":11,\"reason\":\"Ставка возвращается при проигрыше, а победа даёт доход лицензии 20–60 alashi, поэтому ставлю весь кэш.\"}",
+          "reasoning_content": "My cash is small (3.72 alashi). Auction: license income 20-60 alashi, worth bidding. Rival 1 has 39 alashi cash; rivals likely bid high. Bid low, e.g. 3 alashi (choice 11) — but keep cash for later? Round 4 action, remaining rounds 5-6. Money devalues: round 5 cash=floor(cash/100)*62. Promissory added at round 5 start: 21.25 alashi cash. Cash kept devalues 38%. If bid loses, returned at close of action — returned before round 5 devaluation? Returned during round 4, then devalued at round 5 start anyway. If win, 3.72 goes to bank (increase own share slightly small). Chance of winning vs rival 1 with 39 cash is low. Bid 1-2 alashi costs nothing if lose (returned), and devaluation would hit anyway. If win: license income 20-60 alashi plus bank share. Bid everything 3.72 — chance rivals bid higher. If lose, refunded; small cost of losing bid? None. So bid 3.72 (choice 11). If win, likely profitable. Also bid doesn't consume action; but we can only pick one candidate here — bidding candidates don't include another action. Choose 11.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427268,
+    "id": "202610200027380fcfd4d5ed3e4fa5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200027380fcfd4d5ed3e4fa5",
+    "usage": {
+      "completion_tokens": 332,
+      "completion_tokens_details": {
+        "reasoning_tokens": 289
+      },
+      "prompt_tokens": 3258,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 3590
+    }
+  }
+}

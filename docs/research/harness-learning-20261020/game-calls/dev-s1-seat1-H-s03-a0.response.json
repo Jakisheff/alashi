@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.928,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон не проходит и без вето (yes не больше no), вето излишне.\"}",
+          "reasoning_content": "Закон 8 обнуляет promissory — у меня promissory=0, но rival тоже 0. Голоса: yes 1, no 1 (мой no весит 1). Без veto — не принято (yes не > no). Veto не нужен... но veto гарантирует отклонение. Без veto already not passed. Пасс.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495408,
+    "id": "20261020192325d237afb82bca4e2f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192325d237afb82bca4e2f",
+    "usage": {
+      "completion_tokens": 106,
+      "completion_tokens_details": {
+        "reasoning_tokens": 76
+      },
+      "prompt_tokens": 2390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2496
+    }
+  }
+}

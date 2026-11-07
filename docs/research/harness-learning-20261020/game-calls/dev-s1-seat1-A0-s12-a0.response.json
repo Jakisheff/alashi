@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.096,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Шаттл даёт больше товара в среднем, сохраняя кэш после ставки в аукционе.\"}",
+          "reasoning_content": "I have cash 1.25 after bidding 20. I hold presidency (influence 2 tie with 0, tie_order favors me). I'm likely to win the auction (opponents haven't bid yet though; bid happens this round). Best to produce goods for later sale: shuttle gives 3 goods but risk? shuttle gives 3 goods but risk of seizure ~25% (no tariff mentioned active). Expected goods 2.25 vs produce 2. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495124,
+    "id": "20261020191835c5adaca85eb845db",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020191835c5adaca85eb845db",
+    "usage": {
+      "completion_tokens": 133,
+      "completion_tokens_details": {
+        "reasoning_tokens": 99
+      },
+      "prompt_tokens": 2937,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 3070
+    }
+  }
+}

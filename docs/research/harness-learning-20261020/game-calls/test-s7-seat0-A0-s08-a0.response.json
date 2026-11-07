@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 14.777,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Дешёвая взятка даёт влияние 2 и пост президента с контролем закона и бонусом влияния.\"}",
+          "reasoning_content": "I need influence to become president and get the 5% bonus. Currently 1 influence, holder is idx 2. The bribe of 5 to participant 1 gives influence 2. Next round (4) — auction. Becoming president: need max influence, currently 1 at all, tie_order [2,1,0] — I'm last. A bribe of 5 gives influence 2 → I become president in law r3. Cheap: 5 alashi for presidency + vote control. Choose 4 (bribe 5 to 1).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499738,
+    "id": "2026102020352571af1ee7d1b044e8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020352571af1ee7d1b044e8",
+    "usage": {
+      "completion_tokens": 154,
+      "completion_tokens_details": {
+        "reasoning_tokens": 120
+      },
+      "prompt_tokens": 4144,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 4298
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.31,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Налог уже не влияет после финального рынка, исход закона безразличен.\"}",
+          "reasoning_content": "Law 2 = 20% tax on future sales. Last round market done; tax affects nothing? Market for round 6 already happened. So law irrelevant. Faction 0 voted No, weight 2. My yes weight 4 > 2, passes if I vote yes. But law 2 has no future effect — any vote fine. Also vetoing gains nothing. Vote yes (passes harmlessly), or abstain. Doesn't matter. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499033,
+    "id": "20261020202347053e0680ddd544c3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202347053e0680ddd544c3",
+    "usage": {
+      "completion_tokens": 124,
+      "completion_tokens_details": {
+        "reasoning_tokens": 95
+      },
+      "prompt_tokens": 3406,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3530
+    }
+  }
+}

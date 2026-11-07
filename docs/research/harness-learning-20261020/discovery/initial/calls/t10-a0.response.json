@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.145,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"tool\":\"calculate\",\"code\":\"def sats(x):\\n    return (min(x), sum(x)/len(x), max(x))\\nsubj_pay=[]; subj_lic=[]; subj_rank=[]\\nfor g in games:\\n    s=g['subject_idx']; o=g['outcome']; lic=o['license']\\n    subj_pay.append(o['payouts'][s])\\n    subj_lic.append(lic['holder_idx']==s)\\n    subj_rank.append(o['ranks'][s])\\nprint('subject payout all', sats(subj_pay))\\nlic_pays=[p for p,l in zip(subj_pay,subj_lic) if l]\\nnolic_pays=[p for p,l in zip(subj_pay,subj_lic) if not l]\\nprint('subject lic', sats(lic_pays), len(lic_pays))\\nprint('subject nolic', sats(nolic_pays), len(nolic_pays))\\nprint('subject rank dist', {r:subj_rank.count(r) for r in set(subj_rank)})\\nfor r in range(3):\\n    ps=[]\\n    for g in games:\\n        o=g['outcome']\\n        ps.append(o['payouts'][o['ranks'].index(r)])\\n    print('rank',r,sats(ps))\"}",
+          "reasoning_content": "I keep making typos. Let me write clean code.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792494612,
+    "id": "20261020191008283941493e7d46a1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020191008283941493e7d46a1",
+    "usage": {
+      "completion_tokens": 306,
+      "completion_tokens_details": {
+        "reasoning_tokens": 12
+      },
+      "prompt_tokens": 9816,
+      "prompt_tokens_details": {
+        "cached_tokens": 9536
+      },
+      "total_tokens": 10122
+    }
+  }
+}

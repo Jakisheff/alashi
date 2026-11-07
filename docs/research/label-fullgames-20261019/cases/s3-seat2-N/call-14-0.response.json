@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 24.227,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Голосование уже 3:3 — закон не пройдёт, а veto заблокировал бы выгодную мне карту.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest by cash — that's me (694400). Yes 3 (me) vs No 3, tie → not passed. Veto would block it anyway, but wait: yes strictly greater no fails anyway. But if I veto, law fails regardless — same result. Law 4 benefits me! Yes:3 No:3 → not passed. I want it passed. Can I change my vote? Only pass or veto. Veto blocks my own beneficial law. So pass.\n\nWait — but law not passing means no influence gain. Can't help it. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491221,
+    "id": "202610201813186802b742fa3249dd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201813186802b742fa3249dd",
+    "usage": {
+      "completion_tokens": 163,
+      "completion_tokens_details": {
+        "reasoning_tokens": 126
+      },
+      "prompt_tokens": 2739,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2902
+    }
+  }
+}

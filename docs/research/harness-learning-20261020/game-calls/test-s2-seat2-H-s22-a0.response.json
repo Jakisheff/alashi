@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.95,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 3 даёт субсидию товара, но action последнего раунда уже прошло — эффект бесполезен, veto незачем.\"}",
+          "reasoning_content": "Закон 3 — subsidy_goods, но раунд 6, последний; subsidy даёт товар в action, которое уже прошло. Полезного эффекта нет? Он не влияет на итог. Проголосовал yes, счёт 7:1 — принято. Veto не нужен. Но subsidy не приносит ничего после раунда 6. pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499538,
+    "id": "20261020203207d51c071a035643bd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203207d51c071a035643bd",
+    "usage": {
+      "completion_tokens": 117,
+      "completion_tokens_details": {
+        "reasoning_tokens": 75
+      },
+      "prompt_tokens": 3716,
+      "prompt_tokens_details": {
+        "cached_tokens": 3136
+      },
+      "total_tokens": 3833
+    }
+  }
+}

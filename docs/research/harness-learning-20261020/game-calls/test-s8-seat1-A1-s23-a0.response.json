@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.083,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Налог уже не влияет — после последнего рынка продаж не будет, закон проходит и без последствий.\"}",
+          "reasoning_content": "Law 2 = 20% tax on future sales. This is the last law, no more markets after round 6? Round 6 market already happened. So tax has no effect. Yes 4 > No 1, passes anyway. Veto doesn't matter; pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499039,
+    "id": "20261020202354753b5f8c8d684c41",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202354753b5f8c8d684c41",
+    "usage": {
+      "completion_tokens": 89,
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      },
+      "prompt_tokens": 3314,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3403
+    }
+  }
+}

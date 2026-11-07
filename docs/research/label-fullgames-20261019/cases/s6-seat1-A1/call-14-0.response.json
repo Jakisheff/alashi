@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.811,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель не девальвируется и добавится к cash в начале раунда 6, что выгоднее прямой продажи.\"}",
+          "reasoning_content": "Prices: sold_counter=0, so 12,10,9... Round 5 market: selling 2 gives 22 (12+10). But round 6 devaluation: cash=floor(cash/100)*62. Better sell_credit gives promissory added to cash at round 6 start then... wait start of round 6: cash devalued then promissory added — promissory not devalued. Then round 6 market can sell... but round 6 market exists, last round. So sell credit 2 units: promissory 27.5, which adds at start of round 6 — not devalued, and paid... promissory added to cash at round 6 start, then can even use. Yes, sell_credit 2 (choice 4) clearly better than sell 2 (22 devalued).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490025,
+    "id": "20261020175339156ba2e7742547e9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175339156ba2e7742547e9",
+    "usage": {
+      "completion_tokens": 217,
+      "completion_tokens_details": {
+        "reasoning_tokens": 180
+      },
+      "prompt_tokens": 2959,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3176
+    }
+  }
+}

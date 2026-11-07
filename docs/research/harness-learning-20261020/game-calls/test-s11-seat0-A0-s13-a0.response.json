@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.555,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":22,\"reason\":\"Взятка даёт влияние 3 и пост президента с veto на ключевые законы и бонус влияния, что перевешивает стоимость товара.\"}",
+          "reasoning_content": "We're at round 4 action, after bid 16. Need main action. Round 5-6 markets remain; goods sellable. I have cash 74.61. Bid 16 possibly wins (rivals have 15.1 and 10.4 cash). But bid was already placed—now choose main action.\n\nBest: gain influence? Presidency currently holder 2 (influence 2). Law this round: opponents vote. Bribing 10M to idx2 gives influence 3 → tie with 2? influence 3 vs 2 → I become president for law round 4 and beyond, plus influence bonus 5% at end. Also bribe costs money but bribed money goes to rival.\n\nValue: presidency gives veto/decide law, plus influence prize ~5% bank (~1.5M+). Also vote weight.\n\nAlternatively produce for goods to sell rounds 5-6. Prices: sold_counter=4 → price 7 next. Goods worth ~7-9 each. shuttle gives 3 goods ~21 alashi but seizure risk? shuttle grey with ~25% risk unless tariff. Produce gives 2 goods ~14-16.\n\nBribe 10M (10 alashi) to 2 gives influence 3 — likely wins presidency (rival could bribe later? Round 5 action they could bribe... order rotates). Cost 10, gains presidency rounds 4-6 plus 5% commission likely.\n\nBut note already bid 16 which may win license and add 16 to bank. If I also bribe, cash drops to 64.6, still richest.\n\nCompare: shuttle gives 3 goods (~21 alashi value, minus seizure ~25% chance of losing all? risk ~25% lose all). Expect ~16. Bribe 10 for influence 3: presidency + veto + 5% of bank. Bank ~30+16=46, 5% ≈2.3, plus controlling laws (avoid tax 20%, choose subsidy/price+2). Being president rounds 4,5,6 laws is significant — could get card 7 (+2 price) etc. Hard to quantify, but presidency likely worth more than 16 alashi? Shuttle 16 vs bribe ~ presidency value. Also card 8 wipes promissory — I have none.\n\nI'd pick bribe 10M to idx 2 (choice 22).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498045,
+    "id": "20261020200713a064d8b9751a430a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200713a064d8b9751a430a",
+    "usage": {
+      "completion_tokens": 543,
+      "completion_tokens_details": {
+        "reasoning_tokens": 502
+      },
+      "prompt_tokens": 4940,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 5483
+    }
+  }
+}

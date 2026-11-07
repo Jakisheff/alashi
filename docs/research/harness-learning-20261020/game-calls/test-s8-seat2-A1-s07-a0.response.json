@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.519,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель не девальвируется, продажа всего товара в кредит даёт максимум 30 alashi.\"}",
+          "reasoning_content": "Sell all at price 9 now (counter 2). Cash later halves. Selling all gives 24 alashi now. But price falls; selling credit gives 1.25x promissory but devalued? promissory is not devalued (promissory added after devaluation, not reduced). Actually cash=floor(cash/100)*62 then promissory added — promissory survives fully! So sell_credit all: 30 alashi promissory next round added fully. Better than sell now (24 which then devalues... cash added now would be devalued at round 4 start). Sell credit units 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498428,
+    "id": "20261020201343d88f8bc3291e4e98",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201343d88f8bc3291e4e98",
+    "usage": {
+      "completion_tokens": 167,
+      "completion_tokens_details": {
+        "reasoning_tokens": 135
+      },
+      "prompt_tokens": 2632,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2799
+    }
+  }
+}

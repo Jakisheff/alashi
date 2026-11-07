@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.497,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Последний раунд, я уже богатейший и президент по tie_order; товары и влияние уже не приносят выплаты.\"}",
+          "reasoning_content": "Last round action. I'm idx1, cash 64.16, richest already. Ranking by cash+hard: I'm first anyway (29.5 and 27.5 vs 64). Final law: I'm president, influence 2 vs idx0 influence 2 — tie broken by tie_order [1,0,2], so I stay president. Influence matters only for the 5% commission bonus — tie broken by cash+hard, I win anyway. Goods worthless now (no more market). Bribe wastes cash. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499645,
+    "id": "202610202034009222ffe80c4c4b23",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202034009222ffe80c4c4b23",
+    "usage": {
+      "completion_tokens": 148,
+      "completion_tokens_details": {
+        "reasoning_tokens": 113
+      },
+      "prompt_tokens": 5135,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 5283
+    }
+  }
+}

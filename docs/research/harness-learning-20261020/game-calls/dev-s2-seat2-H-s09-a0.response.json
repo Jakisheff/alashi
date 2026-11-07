@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.976,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"shuttle даёт максимум товара для продажи в раунде 4, риск 25% приемлем.\"}",
+          "reasoning_content": "Round 3 action, I'm president (influence 3 vs 1s), have 19.22 cash. Produce gives 2 goods, shuttle 3 grey risk 25%. Shuttle higher EV. Prices: counter 4, prices 12,10,9,8,7,6,5... next market round 4: units sold at 7,6,5. Get goods → sell round 4. Shuttle gives 3 goods vs produce 2; EV ~+6 alashi minus 25% loss. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495088,
+    "id": "20261020191802f32e4314ba464ce4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020191802f32e4314ba464ce4",
+    "usage": {
+      "completion_tokens": 146,
+      "completion_tokens_details": {
+        "reasoning_tokens": 114
+      },
+      "prompt_tokens": 3607,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3753
+    }
+  }
+}

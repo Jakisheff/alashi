@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.163,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Последний раунд: деньги кэшем важнее, влияние уже максимальное, взятки лишь дарят кэш соперникам.\"}",
+          "reasoning_content": "Final round action. No goods, no market after. Cash counts. Bribes convert cash to influence; influence matters only for the 5% commission bonus — already 3 vs 2,2, so I already max influence. Bribes just lose cash. Roof transfers 30% to rival. Best: pass.\n\nWait, action phase still followed by law — passing action gives +2 vote weight but I'm already president (influence 3). Best pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490692,
+    "id": "202610201804473f12151ef80e48e2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201804473f12151ef80e48e2",
+    "usage": {
+      "completion_tokens": 137,
+      "completion_tokens_details": {
+        "reasoning_tokens": 97
+      },
+      "prompt_tokens": 5217,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 5354
+    }
+  }
+}

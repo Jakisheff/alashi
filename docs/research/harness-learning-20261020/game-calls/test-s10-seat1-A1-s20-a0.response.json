@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.956,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продажа всех товаров даёт максимальный cash, первое место в ранге и бонус за влияние; вексель в последнем раунде не погасится.\"}",
+          "reasoning_content": "Last round market: sell_credit promissory won't be paid. So sell cash. Sell 3 units: cash 42.87M, exceeds opponent 31.2M — first place, plus influence max bonus.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497154,
+    "id": "20261020195231de0813cfbdaf4909",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195231de0813cfbdaf4909",
+    "usage": {
+      "completion_tokens": 93,
+      "completion_tokens_details": {
+        "reasoning_tokens": 46
+      },
+      "prompt_tokens": 3406,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3499
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.832,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель даёт выручку ×1.25 и погасится в следующем раунде без девальвации, это выгоднее прямой продажи.\"}",
+          "reasoning_content": "Sell all now at 12, cash helps rank; but sell_credit gives 15 per unit promissory, paid next round without devaluation issue (cash=floor(cash/100)*62 only applies to cash, promissory added after). Actually promissory *1.25 is better unless last round. Round 3 of 6 — sell credit 3 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495077,
+    "id": "20261020191753ad5939b8a8174e47",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020191753ad5939b8a8174e47",
+    "usage": {
+      "completion_tokens": 122,
+      "completion_tokens_details": {
+        "reasoning_tokens": 78
+      },
+      "prompt_tokens": 2643,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2765
+    }
+  }
+}

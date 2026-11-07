@@ -1,0 +1,928 @@
+{
+  "bank": 50000000,
+  "entry_fee": 10000000,
+  "epoch": 1,
+  "final_cash": [
+    38485924,
+    33064200,
+    19110720
+  ],
+  "final_goods": [
+    0,
+    2,
+    2
+  ],
+  "final_influence": [
+    2,
+    1,
+    2
+  ],
+  "game_id": 0,
+  "license": {
+    "bid": 20000000,
+    "holder_idx": 0,
+    "holder_payout": 77841739,
+    "holder_rank": 0,
+    "rent": 50341739
+  },
+  "n_factions": 3,
+  "payouts": [
+    77841739,
+    15000000,
+    7500000
+  ],
+  "phases": [
+    {
+      "actions": [
+        {
+          "action": "pass",
+          "actor": 1,
+          "cash_after": 0,
+          "detail": {},
+          "err": null,
+          "goods_after": 0,
+          "ok": true,
+          "phase": "market"
+        },
+        {
+          "action": "pass",
+          "actor": 2,
+          "cash_after": 0,
+          "detail": {},
+          "err": null,
+          "goods_after": 0,
+          "ok": true,
+          "phase": "market"
+        },
+        {
+          "action": "pass",
+          "actor": 0,
+          "cash_after": 0,
+          "detail": {},
+          "err": null,
+          "goods_after": 0,
+          "ok": true,
+          "phase": "market"
+        }
+      ],
+      "law_card": null,
+      "law_passed": null,
+      "no_influence": null,
+      "phase": "market",
+      "round": 1,
+      "vetoed": null,
+      "yes_influence": null
+    },
+    {
+      "actions": [
+        {
+          "action": "produce",
+          "actor": 1,
+          "cash_after": 0,
+          "detail": {},
+          "err": null,
+          "goods_after": 2,
+          "ok": true,
+          "phase": "action"
+        },
+        {
+          "action": "produce",
+          "actor": 2,
+          "cash_after": 0,
+          "detail": {},
+          "err": null,
+          "goods_after": 2,
+          "ok": true,
+          "phase": "action"
+        },
+        {
+          "action": "shuttle",
+          "actor": 0,
+          "cash_after": 0,
+          "detail": {
+            "goods_after": 3,
+            "grey": 3
+          },
+          "err": null,
+          "goods_after": 3,
+          "ok": true,
+          "phase": "action"
+        }
+      ],
+      "law_card": 8,
+      "law_passed": null,
+      "no_influence": null,
+      "phase": "action",
+      "round": 1,
+      "vetoed": null,
+      "yes_influence": null
+    },
+    {
+      "actions": [
+        {
+          "action": "vote_yes",
+          "actor": 1,
+          "cash_after": null,
+          "detail": {
+            "card": 8
+          },
+          "err": null,
+          "goods_after": null,
+          "ok": true,
+          "phase": "law"
+        },
+        {
+          "action": "vote_abstain",
+          "actor": 2,
+          "cash_after": null,
+          "detail": {
+            "card": 8
+          },
+          "err": null,
+          "goods_after": null,
+          "ok": true,
+          "phase": "law"
+        },
+        {
+          "action": "vote_yes",
+          "actor": 0,
+          "cash_after": null,
+          "detail": {
+            "card": 8
+          },
+          "err": null,
+          "goods_after": null,
+          "ok": true,
+          "phase": "law"
+        }
+      ],
+      "law_card": null,
+      "law_passed": true,
+      "no_influence": 0,
+      "phase": "law",
+      "round": 1,
+      "vetoed": false,
+      "yes_influence": 2
+    },
+    {
+      "actions": [
+        {
+          "action": "sell",
+          "actor": 2,
+          "cash_after": 22000000,
+          "detail": {
+            "boom": 0,
+            "counter_after": 2,
+            "revenue": 22000000,
+            "shift": 0,
+            "tax_bps": 0,
+            "units": 2
+          },
+          "err": null,
+          "goods_after": 0,
+          "ok": true,
+          "phase": "market"
+        },
+        {
+          "action": "sell",
+          "actor": 0,
+          "cash_after": 24000000,
+          "detail": {
+            "boom": 0,
+            "counter_after": 5,
+            "revenue": 24000000,
+            "shift": 0,
+            "tax_bps": 0,
+            "units": 3
+          },
+          "err": null,
+          "goods_after": 0,
+          "ok": true,
+          "phase": "market"
+        },
+        {
+          "action": "sell",
+          "actor": 1,
+          "cash_after": 11000000,
+          "detail": {
+            "boom": 0,
+            "counter_after": 7,
+            "revenue": 11000000,
+            "shift": 0,
+            "tax_bps": 0,
+            "units": 2
+          },
+          "err": null,
+          "goods_after": 0,
+          "ok": true,
+          "phase": "market"
+        }
+      ],
+      "law_card": null,
+      "law_passed": null,
+      "no_influence": null,
+      "phase": "market",
+      "round": 2,
+      "vetoed": null,
+      "yes_influence": null
+    },
+    {
+      "actions": [
+        {
+          "action": "produce",
+          "actor": 2,
+          "cash_after": 22000000,
+          "detail": {},
+          "err": null,
+          "goods_after": 2,
+          "ok": true,
+          "phase": "action"
+        },
+        {
+          "action": "bribe",
+          "actor": 0,
+          "cash_after": 19000000,
+          "detail": {
+            "amount": 5000000,
+            "influence_after": 2,
+            "to": 1
+          },
+          "err": null,
+          "goods_after": 0,
+          "ok": true,
+          "phase": "action"
+        },
+        {
+          "action": "produce",
+          "actor": 1,
+          "cash_after": 16000000,
+          "detail": {},
+          "err": null,
+          "goods_after": 2,
+          "ok": true,
+          "phase": "action"
+        }
+      ],
+      "law_card": 2,
+      "law_passed": null,
+      "no_influence": null,
+      "phase": "action",
+      "round": 2,
+      "vetoed": null,
+      "yes_influence": null
+    },
+    {
+      "actions": [
+        {
+          "action": "vote_no",
+          "actor": 2,
+          "cash_after": null,
+          "detail": {
+            "card": 2
+          },
+          "err": null,
+          "goods_after": null,
+          "ok": true,
+          "phase": "law"
+        },
+        {
+          "action": "vote_no",
+          "actor": 0,
+          "cash_after": null,
+          "detail": {
+            "card": 2
+          },
+          "err": null,
+          "goods_after": null,
+          "ok": true,
+          "phase": "law"
+        },
+        {
+          "action": "vote_yes",
+          "actor": 1,
+          "cash_after": null,
+          "detail": {
+            "card": 2
+          },
+          "err": null,
+          "goods_after": null,
+          "ok": true,
+          "phase": "law"
+        }
+      ],
+      "law_card": null,
+      "law_passed": false,
+      "no_influence": 3,
+      "phase": "law",
+      "round": 2,
+      "vetoed": false,
+      "yes_influence": 1
+    },
+    {
+      "actions": [
+        {
+          "action": "pass",
+          "actor": 0,
+          "cash_after": 11780000,
+          "detail": {},
+          "err": null,
+          "goods_after": 0,
+          "ok": true,
+          "phase": "market"
+        },
+        {
+          "action": "sell",
+          "actor": 1,
+          "cash_after": 31920000,
+          "detail": {
+            "boom": 0,
+            "counter_after": 2,
+            "revenue": 22000000,
+            "shift": 0,
+            "tax_bps": 0,
+            "units": 2
+          },
+          "err": null,
+          "goods_after": 0,
+          "ok": true,
+          "phase": "market"
+        },
+        {
+          "action": "sell",
+          "actor": 2,
+          "cash_after": 30640000,
+          "detail": {
+            "boom": 0,
+            "counter_after": 4,
+            "revenue": 17000000,
+            "shift": 0,
+            "tax_bps": 0,
+            "units": 2
+          },
+          "err": null,
+          "goods_after": 0,
+          "ok": true,
+          "phase": "market"
+        }
+      ],
+      "law_card": null,
+      "law_passed": null,
+      "no_influence": null,
+      "phase": "market",
+      "round": 3,
+      "vetoed": null,
+      "yes_influence": null
+    },
+    {
+      "actions": [
+        {
+          "action": "produce",
+          "actor": 0,
+          "cash_after": 11780000,
+          "detail": {},
+          "err": null,
+          "goods_after": 2,
+          "ok": true,
+          "phase": "action"
+        },
+        {
+          "action": "produce",
+          "actor": 1,
+          "cash_after": 31920000,
+          "detail": {},
+          "err": null,
+          "goods_after": 2,
+          "ok": true,
+          "phase": "action"
+        },
+        {
+          "action": "bribe",
+          "actor": 2,
+          "cash_after": 25640000,
+          "detail": {
+            "amount": 5000000,
+            "influence_after": 2,
+            "to": 0
+          },
+          "err": null,
+          "goods_after": 0,
+          "ok": true,
+          "phase": "action"
+        }
+      ],
+      "law_card": 1,
+      "law_passed": null,
+      "no_influence": null,
+      "phase": "action",
+      "round": 3,
+      "vetoed": null,
+      "yes_influence": null
+    },
+    {
+      "actions": [
+        {
+          "action": "vote_no",
+          "actor": 0,
+          "cash_after": null,
+          "detail": {
+            "card": 1
+          },
+          "err": null,
+          "goods_after": null,
+          "ok": true,
+          "phase": "law"
+        },
+        {
+          "action": "vote_yes",
+          "actor": 1,
+          "cash_after": null,
+          "detail": {
+            "card": 1
+          },
+          "err": null,
+          "goods_after": null,
+          "ok": true,
+          "phase": "law"
+        },
+        {
+          "action": "veto",
+          "actor": 2,
+          "cash_after": null,
+          "detail": {
+            "president": "YLPj2f6xQpEs9wTR7dr79fcpVDCwqFmBB3XVjL7jaJs"
+          },
+          "err": null,
+          "goods_after": null,
+          "ok": true,
+          "phase": "law"
+        }
+      ],
+      "law_card": null,
+      "law_passed": false,
+      "no_influence": 2,
+      "phase": "law",
+      "round": 3,
+      "vetoed": false,
+      "yes_influence": 1
+    },
+    {
+      "actions": [
+        {
+          "action": "sell",
+          "actor": 1,
+          "cash_after": 41790400,
+          "detail": {
+            "boom": 0,
+            "counter_after": 2,
+            "revenue": 22000000,
+            "shift": 0,
+            "tax_bps": 0,
+            "units": 2
+          },
+          "err": null,
+          "goods_after": 0,
+          "ok": true,
+          "phase": "market"
+        },
+        {
+          "action": "pass",
+          "actor": 2,
+          "cash_after": 15896800,
+          "detail": {},
+          "err": null,
+          "goods_after": 0,
+          "ok": true,
+          "phase": "market"
+        },
+        {
+          "action": "sell",
+          "actor": 0,
+          "cash_after": 27403600,
+          "detail": {
+            "boom": 0,
+            "counter_after": 4,
+            "revenue": 17000000,
+            "shift": 0,
+            "tax_bps": 0,
+            "units": 2
+          },
+          "err": null,
+          "goods_after": 0,
+          "ok": true,
+          "phase": "market"
+        }
+      ],
+      "law_card": null,
+      "law_passed": null,
+      "no_influence": null,
+      "phase": "market",
+      "round": 4,
+      "vetoed": null,
+      "yes_influence": null
+    },
+    {
+      "actions": [
+        {
+          "action": "bid_license",
+          "actor": 1,
+          "cash_after": 37790400,
+          "detail": {
+            "amount": 4000000,
+            "total_bid": 4000000
+          },
+          "err": null,
+          "goods_after": 0,
+          "ok": true,
+          "phase": "action"
+        },
+        {
+          "action": "bid_license",
+          "actor": 2,
+          "cash_after": 7896800,
+          "detail": {
+            "amount": 8000000,
+            "total_bid": 8000000
+          },
+          "err": null,
+          "goods_after": 0,
+          "ok": true,
+          "phase": "action"
+        },
+        {
+          "action": "bid_license",
+          "actor": 0,
+          "cash_after": 7403600,
+          "detail": {
+            "amount": 20000000,
+            "total_bid": 20000000
+          },
+          "err": null,
+          "goods_after": 0,
+          "ok": true,
+          "phase": "action"
+        },
+        {
+          "action": "produce",
+          "actor": 0,
+          "cash_after": 7403600,
+          "detail": {},
+          "err": null,
+          "goods_after": 2,
+          "ok": true,
+          "phase": "action"
+        }
+      ],
+      "law_card": 4,
+      "law_passed": null,
+      "no_influence": null,
+      "phase": "action",
+      "round": 4,
+      "vetoed": null,
+      "yes_influence": null
+    },
+    {
+      "actions": [
+        {
+          "action": "vote_yes",
+          "actor": 1,
+          "cash_after": null,
+          "detail": {
+            "card": 4
+          },
+          "err": null,
+          "goods_after": null,
+          "ok": true,
+          "phase": "law"
+        },
+        {
+          "action": "veto",
+          "actor": 2,
+          "cash_after": null,
+          "detail": {
+            "president": "YLPj2f6xQpEs9wTR7dr79fcpVDCwqFmBB3XVjL7jaJs"
+          },
+          "err": null,
+          "goods_after": null,
+          "ok": true,
+          "phase": "law"
+        },
+        {
+          "action": "vote_yes",
+          "actor": 0,
+          "cash_after": null,
+          "detail": {
+            "card": 4
+          },
+          "err": null,
+          "goods_after": null,
+          "ok": true,
+          "phase": "law"
+        }
+      ],
+      "law_card": null,
+      "law_passed": false,
+      "no_influence": 0,
+      "phase": "law",
+      "round": 4,
+      "vetoed": true,
+      "yes_influence": 5
+    },
+    {
+      "actions": [
+        {
+          "action": "pass",
+          "actor": 2,
+          "cash_after": 9856016,
+          "detail": {},
+          "err": null,
+          "goods_after": 0,
+          "ok": true,
+          "phase": "market"
+        },
+        {
+          "action": "sell",
+          "actor": 0,
+          "cash_after": 26590232,
+          "detail": {
+            "boom": 0,
+            "counter_after": 2,
+            "revenue": 22000000,
+            "shift": 0,
+            "tax_bps": 0,
+            "units": 2
+          },
+          "err": null,
+          "goods_after": 0,
+          "ok": true,
+          "phase": "market"
+        },
+        {
+          "action": "pass",
+          "actor": 1,
+          "cash_after": 25910048,
+          "detail": {},
+          "err": null,
+          "goods_after": 0,
+          "ok": true,
+          "phase": "market"
+        }
+      ],
+      "law_card": null,
+      "law_passed": null,
+      "no_influence": null,
+      "phase": "market",
+      "round": 5,
+      "vetoed": null,
+      "yes_influence": null
+    },
+    {
+      "actions": [
+        {
+          "action": "produce",
+          "actor": 2,
+          "cash_after": 9856016,
+          "detail": {},
+          "err": null,
+          "goods_after": 2,
+          "ok": true,
+          "phase": "action"
+        },
+        {
+          "action": "produce",
+          "actor": 0,
+          "cash_after": 26590232,
+          "detail": {},
+          "err": null,
+          "goods_after": 2,
+          "ok": true,
+          "phase": "action"
+        },
+        {
+          "action": "produce",
+          "actor": 1,
+          "cash_after": 25910048,
+          "detail": {},
+          "err": null,
+          "goods_after": 2,
+          "ok": true,
+          "phase": "action"
+        }
+      ],
+      "law_card": 0,
+      "law_passed": null,
+      "no_influence": null,
+      "phase": "action",
+      "round": 5,
+      "vetoed": null,
+      "yes_influence": null
+    },
+    {
+      "actions": [
+        {
+          "action": "vote_abstain",
+          "actor": 2,
+          "cash_after": null,
+          "detail": {
+            "card": 0
+          },
+          "err": null,
+          "goods_after": null,
+          "ok": true,
+          "phase": "law"
+        },
+        {
+          "action": "pass",
+          "actor": 0,
+          "cash_after": null,
+          "detail": {},
+          "err": null,
+          "goods_after": null,
+          "ok": true,
+          "phase": "law"
+        },
+        {
+          "action": "vote_yes",
+          "actor": 1,
+          "cash_after": null,
+          "detail": {
+            "card": 0
+          },
+          "err": null,
+          "goods_after": null,
+          "ok": true,
+          "phase": "law"
+        }
+      ],
+      "law_card": null,
+      "law_passed": true,
+      "no_influence": 0,
+      "phase": "law",
+      "round": 5,
+      "vetoed": false,
+      "yes_influence": 1
+    },
+    {
+      "actions": [
+        {
+          "action": "sell",
+          "actor": 0,
+          "cash_after": 38485924,
+          "detail": {
+            "boom": 0,
+            "counter_after": 2,
+            "revenue": 22000000,
+            "shift": 0,
+            "tax_bps": 0,
+            "units": 2
+          },
+          "err": null,
+          "goods_after": 0,
+          "ok": true,
+          "phase": "market"
+        },
+        {
+          "action": "sell",
+          "actor": 1,
+          "cash_after": 33064200,
+          "detail": {
+            "boom": 0,
+            "counter_after": 4,
+            "revenue": 17000000,
+            "shift": 0,
+            "tax_bps": 0,
+            "units": 2
+          },
+          "err": null,
+          "goods_after": 0,
+          "ok": true,
+          "phase": "market"
+        },
+        {
+          "action": "sell",
+          "actor": 2,
+          "cash_after": 19110720,
+          "detail": {
+            "boom": 0,
+            "counter_after": 6,
+            "revenue": 13000000,
+            "shift": 0,
+            "tax_bps": 0,
+            "units": 2
+          },
+          "err": null,
+          "goods_after": 0,
+          "ok": true,
+          "phase": "market"
+        }
+      ],
+      "law_card": null,
+      "law_passed": null,
+      "no_influence": null,
+      "phase": "market",
+      "round": 6,
+      "vetoed": null,
+      "yes_influence": null
+    },
+    {
+      "actions": [
+        {
+          "action": "pass",
+          "actor": 0,
+          "cash_after": 38485924,
+          "detail": {},
+          "err": null,
+          "goods_after": 0,
+          "ok": true,
+          "phase": "action"
+        },
+        {
+          "action": "produce",
+          "actor": 1,
+          "cash_after": 33064200,
+          "detail": {},
+          "err": null,
+          "goods_after": 2,
+          "ok": true,
+          "phase": "action"
+        },
+        {
+          "action": "produce",
+          "actor": 2,
+          "cash_after": 19110720,
+          "detail": {},
+          "err": null,
+          "goods_after": 2,
+          "ok": true,
+          "phase": "action"
+        }
+      ],
+      "law_card": 5,
+      "law_passed": null,
+      "no_influence": null,
+      "phase": "action",
+      "round": 6,
+      "vetoed": null,
+      "yes_influence": null
+    },
+    {
+      "actions": [
+        {
+          "action": "vote_yes",
+          "actor": 0,
+          "cash_after": null,
+          "detail": {
+            "card": 5
+          },
+          "err": null,
+          "goods_after": null,
+          "ok": true,
+          "phase": "law"
+        },
+        {
+          "action": "vote_yes",
+          "actor": 1,
+          "cash_after": null,
+          "detail": {
+            "card": 5
+          },
+          "err": null,
+          "goods_after": null,
+          "ok": true,
+          "phase": "law"
+        },
+        {
+          "action": "veto",
+          "actor": 2,
+          "cash_after": null,
+          "detail": {
+            "president": "YLPj2f6xQpEs9wTR7dr79fcpVDCwqFmBB3XVjL7jaJs"
+          },
+          "err": null,
+          "goods_after": null,
+          "ok": true,
+          "phase": "law"
+        }
+      ],
+      "law_card": null,
+      "law_passed": false,
+      "no_influence": 0,
+      "phase": "law",
+      "round": 6,
+      "vetoed": true,
+      "yes_influence": 5
+    }
+  ],
+  "rake": 0,
+  "ranks": [
+    0,
+    1,
+    2
+  ],
+  "seed": 7038607920892268610,
+  "strategies": [
+    "subject",
+    "greedy",
+    "tactical"
+  ],
+  "vote_weight_mode": 1
+}

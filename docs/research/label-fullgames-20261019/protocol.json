@@ -1,0 +1,660 @@
+{
+  "schema": 1,
+  "created_utc": "2026-10-19T16:21:08.106070+00:00",
+  "status": "frozen_before_first_main_response",
+  "settings": {
+    "model": "glm-5.3",
+    "thinking": {
+      "type": "enabled"
+    },
+    "reasoning_effort": "low",
+    "temperature": 0.7,
+    "top_p": 0.95,
+    "max_tokens": 3072,
+    "response_format": {
+      "type": "json_object"
+    }
+  },
+  "endpoint": "https://api.z.ai/api/coding/paas/v4/chat/completions",
+  "arms": {
+    "A0": [
+      "президент",
+      "фракция"
+    ],
+    "A1": [
+      "президент",
+      "фракция"
+    ],
+    "N": [
+      "держатель X",
+      "элемент"
+    ]
+  },
+  "seeds": [
+    4219882590459898965,
+    9056560286649277022,
+    7451376543782917356,
+    3352959410008123855,
+    4198685333274047402,
+    2608880792136471977,
+    1476019414254659041,
+    7038607920892268610
+  ],
+  "jobs": [
+    {
+      "id": "s1-seat2-N",
+      "seed_index": 0,
+      "seed": 4219882590459898965,
+      "seat": 2,
+      "arm": "N",
+      "partition": "discovery"
+    },
+    {
+      "id": "s3-seat2-A1",
+      "seed_index": 2,
+      "seed": 7451376543782917356,
+      "seat": 2,
+      "arm": "A1",
+      "partition": "discovery"
+    },
+    {
+      "id": "s8-seat2-A0",
+      "seed_index": 7,
+      "seed": 7038607920892268610,
+      "seat": 2,
+      "arm": "A0",
+      "partition": "heldout"
+    },
+    {
+      "id": "s5-seat0-A0",
+      "seed_index": 4,
+      "seed": 4198685333274047402,
+      "seat": 0,
+      "arm": "A0",
+      "partition": "discovery"
+    },
+    {
+      "id": "s3-seat1-A0",
+      "seed_index": 2,
+      "seed": 7451376543782917356,
+      "seat": 1,
+      "arm": "A0",
+      "partition": "discovery"
+    },
+    {
+      "id": "s2-seat0-A0",
+      "seed_index": 1,
+      "seed": 9056560286649277022,
+      "seat": 0,
+      "arm": "A0",
+      "partition": "discovery"
+    },
+    {
+      "id": "s5-seat2-A0",
+      "seed_index": 4,
+      "seed": 4198685333274047402,
+      "seat": 2,
+      "arm": "A0",
+      "partition": "discovery"
+    },
+    {
+      "id": "s4-seat0-N",
+      "seed_index": 3,
+      "seed": 3352959410008123855,
+      "seat": 0,
+      "arm": "N",
+      "partition": "discovery"
+    },
+    {
+      "id": "s8-seat0-A0",
+      "seed_index": 7,
+      "seed": 7038607920892268610,
+      "seat": 0,
+      "arm": "A0",
+      "partition": "heldout"
+    },
+    {
+      "id": "s2-seat1-A1",
+      "seed_index": 1,
+      "seed": 9056560286649277022,
+      "seat": 1,
+      "arm": "A1",
+      "partition": "discovery"
+    },
+    {
+      "id": "s7-seat2-A0",
+      "seed_index": 6,
+      "seed": 1476019414254659041,
+      "seat": 2,
+      "arm": "A0",
+      "partition": "heldout"
+    },
+    {
+      "id": "s7-seat0-N",
+      "seed_index": 6,
+      "seed": 1476019414254659041,
+      "seat": 0,
+      "arm": "N",
+      "partition": "heldout"
+    },
+    {
+      "id": "s4-seat2-A0",
+      "seed_index": 3,
+      "seed": 3352959410008123855,
+      "seat": 2,
+      "arm": "A0",
+      "partition": "discovery"
+    },
+    {
+      "id": "s3-seat2-A0",
+      "seed_index": 2,
+      "seed": 7451376543782917356,
+      "seat": 2,
+      "arm": "A0",
+      "partition": "discovery"
+    },
+    {
+      "id": "s7-seat0-A1",
+      "seed_index": 6,
+      "seed": 1476019414254659041,
+      "seat": 0,
+      "arm": "A1",
+      "partition": "heldout"
+    },
+    {
+      "id": "s3-seat1-N",
+      "seed_index": 2,
+      "seed": 7451376543782917356,
+      "seat": 1,
+      "arm": "N",
+      "partition": "discovery"
+    },
+    {
+      "id": "s1-seat1-N",
+      "seed_index": 0,
+      "seed": 4219882590459898965,
+      "seat": 1,
+      "arm": "N",
+      "partition": "discovery"
+    },
+    {
+      "id": "s2-seat2-N",
+      "seed_index": 1,
+      "seed": 9056560286649277022,
+      "seat": 2,
+      "arm": "N",
+      "partition": "discovery"
+    },
+    {
+      "id": "s8-seat1-A1",
+      "seed_index": 7,
+      "seed": 7038607920892268610,
+      "seat": 1,
+      "arm": "A1",
+      "partition": "heldout"
+    },
+    {
+      "id": "s1-seat2-A0",
+      "seed_index": 0,
+      "seed": 4219882590459898965,
+      "seat": 2,
+      "arm": "A0",
+      "partition": "discovery"
+    },
+    {
+      "id": "s6-seat1-A0",
+      "seed_index": 5,
+      "seed": 2608880792136471977,
+      "seat": 1,
+      "arm": "A0",
+      "partition": "discovery"
+    },
+    {
+      "id": "s1-seat0-A1",
+      "seed_index": 0,
+      "seed": 4219882590459898965,
+      "seat": 0,
+      "arm": "A1",
+      "partition": "discovery"
+    },
+    {
+      "id": "s8-seat1-A0",
+      "seed_index": 7,
+      "seed": 7038607920892268610,
+      "seat": 1,
+      "arm": "A0",
+      "partition": "heldout"
+    },
+    {
+      "id": "s6-seat1-N",
+      "seed_index": 5,
+      "seed": 2608880792136471977,
+      "seat": 1,
+      "arm": "N",
+      "partition": "discovery"
+    },
+    {
+      "id": "s6-seat0-A0",
+      "seed_index": 5,
+      "seed": 2608880792136471977,
+      "seat": 0,
+      "arm": "A0",
+      "partition": "discovery"
+    },
+    {
+      "id": "s3-seat0-N",
+      "seed_index": 2,
+      "seed": 7451376543782917356,
+      "seat": 0,
+      "arm": "N",
+      "partition": "discovery"
+    },
+    {
+      "id": "s1-seat1-A1",
+      "seed_index": 0,
+      "seed": 4219882590459898965,
+      "seat": 1,
+      "arm": "A1",
+      "partition": "discovery"
+    },
+    {
+      "id": "s1-seat0-N",
+      "seed_index": 0,
+      "seed": 4219882590459898965,
+      "seat": 0,
+      "arm": "N",
+      "partition": "discovery"
+    },
+    {
+      "id": "s4-seat1-A0",
+      "seed_index": 3,
+      "seed": 3352959410008123855,
+      "seat": 1,
+      "arm": "A0",
+      "partition": "discovery"
+    },
+    {
+      "id": "s6-seat0-A1",
+      "seed_index": 5,
+      "seed": 2608880792136471977,
+      "seat": 0,
+      "arm": "A1",
+      "partition": "discovery"
+    },
+    {
+      "id": "s4-seat2-N",
+      "seed_index": 3,
+      "seed": 3352959410008123855,
+      "seat": 2,
+      "arm": "N",
+      "partition": "discovery"
+    },
+    {
+      "id": "s3-seat0-A0",
+      "seed_index": 2,
+      "seed": 7451376543782917356,
+      "seat": 0,
+      "arm": "A0",
+      "partition": "discovery"
+    },
+    {
+      "id": "s1-seat1-A0",
+      "seed_index": 0,
+      "seed": 4219882590459898965,
+      "seat": 1,
+      "arm": "A0",
+      "partition": "discovery"
+    },
+    {
+      "id": "s8-seat0-A1",
+      "seed_index": 7,
+      "seed": 7038607920892268610,
+      "seat": 0,
+      "arm": "A1",
+      "partition": "heldout"
+    },
+    {
+      "id": "s2-seat2-A1",
+      "seed_index": 1,
+      "seed": 9056560286649277022,
+      "seat": 2,
+      "arm": "A1",
+      "partition": "discovery"
+    },
+    {
+      "id": "s6-seat1-A1",
+      "seed_index": 5,
+      "seed": 2608880792136471977,
+      "seat": 1,
+      "arm": "A1",
+      "partition": "discovery"
+    },
+    {
+      "id": "s2-seat2-A0",
+      "seed_index": 1,
+      "seed": 9056560286649277022,
+      "seat": 2,
+      "arm": "A0",
+      "partition": "discovery"
+    },
+    {
+      "id": "s4-seat2-A1",
+      "seed_index": 3,
+      "seed": 3352959410008123855,
+      "seat": 2,
+      "arm": "A1",
+      "partition": "discovery"
+    },
+    {
+      "id": "s7-seat2-N",
+      "seed_index": 6,
+      "seed": 1476019414254659041,
+      "seat": 2,
+      "arm": "N",
+      "partition": "heldout"
+    },
+    {
+      "id": "s2-seat1-N",
+      "seed_index": 1,
+      "seed": 9056560286649277022,
+      "seat": 1,
+      "arm": "N",
+      "partition": "discovery"
+    },
+    {
+      "id": "s5-seat1-A1",
+      "seed_index": 4,
+      "seed": 4198685333274047402,
+      "seat": 1,
+      "arm": "A1",
+      "partition": "discovery"
+    },
+    {
+      "id": "s2-seat0-N",
+      "seed_index": 1,
+      "seed": 9056560286649277022,
+      "seat": 0,
+      "arm": "N",
+      "partition": "discovery"
+    },
+    {
+      "id": "s6-seat2-N",
+      "seed_index": 5,
+      "seed": 2608880792136471977,
+      "seat": 2,
+      "arm": "N",
+      "partition": "discovery"
+    },
+    {
+      "id": "s1-seat0-A0",
+      "seed_index": 0,
+      "seed": 4219882590459898965,
+      "seat": 0,
+      "arm": "A0",
+      "partition": "discovery"
+    },
+    {
+      "id": "s5-seat1-A0",
+      "seed_index": 4,
+      "seed": 4198685333274047402,
+      "seat": 1,
+      "arm": "A0",
+      "partition": "discovery"
+    },
+    {
+      "id": "s4-seat0-A1",
+      "seed_index": 3,
+      "seed": 3352959410008123855,
+      "seat": 0,
+      "arm": "A1",
+      "partition": "discovery"
+    },
+    {
+      "id": "s7-seat1-N",
+      "seed_index": 6,
+      "seed": 1476019414254659041,
+      "seat": 1,
+      "arm": "N",
+      "partition": "heldout"
+    },
+    {
+      "id": "s5-seat2-N",
+      "seed_index": 4,
+      "seed": 4198685333274047402,
+      "seat": 2,
+      "arm": "N",
+      "partition": "discovery"
+    },
+    {
+      "id": "s4-seat0-A0",
+      "seed_index": 3,
+      "seed": 3352959410008123855,
+      "seat": 0,
+      "arm": "A0",
+      "partition": "discovery"
+    },
+    {
+      "id": "s7-seat1-A1",
+      "seed_index": 6,
+      "seed": 1476019414254659041,
+      "seat": 1,
+      "arm": "A1",
+      "partition": "heldout"
+    },
+    {
+      "id": "s7-seat1-A0",
+      "seed_index": 6,
+      "seed": 1476019414254659041,
+      "seat": 1,
+      "arm": "A0",
+      "partition": "heldout"
+    },
+    {
+      "id": "s5-seat0-N",
+      "seed_index": 4,
+      "seed": 4198685333274047402,
+      "seat": 0,
+      "arm": "N",
+      "partition": "discovery"
+    },
+    {
+      "id": "s4-seat1-A1",
+      "seed_index": 3,
+      "seed": 3352959410008123855,
+      "seat": 1,
+      "arm": "A1",
+      "partition": "discovery"
+    },
+    {
+      "id": "s4-seat1-N",
+      "seed_index": 3,
+      "seed": 3352959410008123855,
+      "seat": 1,
+      "arm": "N",
+      "partition": "discovery"
+    },
+    {
+      "id": "s2-seat0-A1",
+      "seed_index": 1,
+      "seed": 9056560286649277022,
+      "seat": 0,
+      "arm": "A1",
+      "partition": "discovery"
+    },
+    {
+      "id": "s5-seat1-N",
+      "seed_index": 4,
+      "seed": 4198685333274047402,
+      "seat": 1,
+      "arm": "N",
+      "partition": "discovery"
+    },
+    {
+      "id": "s8-seat1-N",
+      "seed_index": 7,
+      "seed": 7038607920892268610,
+      "seat": 1,
+      "arm": "N",
+      "partition": "heldout"
+    },
+    {
+      "id": "s3-seat1-A1",
+      "seed_index": 2,
+      "seed": 7451376543782917356,
+      "seat": 1,
+      "arm": "A1",
+      "partition": "discovery"
+    },
+    {
+      "id": "s7-seat2-A1",
+      "seed_index": 6,
+      "seed": 1476019414254659041,
+      "seat": 2,
+      "arm": "A1",
+      "partition": "heldout"
+    },
+    {
+      "id": "s1-seat2-A1",
+      "seed_index": 0,
+      "seed": 4219882590459898965,
+      "seat": 2,
+      "arm": "A1",
+      "partition": "discovery"
+    },
+    {
+      "id": "s8-seat0-N",
+      "seed_index": 7,
+      "seed": 7038607920892268610,
+      "seat": 0,
+      "arm": "N",
+      "partition": "heldout"
+    },
+    {
+      "id": "s3-seat0-A1",
+      "seed_index": 2,
+      "seed": 7451376543782917356,
+      "seat": 0,
+      "arm": "A1",
+      "partition": "discovery"
+    },
+    {
+      "id": "s8-seat2-A1",
+      "seed_index": 7,
+      "seed": 7038607920892268610,
+      "seat": 2,
+      "arm": "A1",
+      "partition": "heldout"
+    },
+    {
+      "id": "s7-seat0-A0",
+      "seed_index": 6,
+      "seed": 1476019414254659041,
+      "seat": 0,
+      "arm": "A0",
+      "partition": "heldout"
+    },
+    {
+      "id": "s2-seat1-A0",
+      "seed_index": 1,
+      "seed": 9056560286649277022,
+      "seat": 1,
+      "arm": "A0",
+      "partition": "discovery"
+    },
+    {
+      "id": "s6-seat2-A1",
+      "seed_index": 5,
+      "seed": 2608880792136471977,
+      "seat": 2,
+      "arm": "A1",
+      "partition": "discovery"
+    },
+    {
+      "id": "s5-seat2-A1",
+      "seed_index": 4,
+      "seed": 4198685333274047402,
+      "seat": 2,
+      "arm": "A1",
+      "partition": "discovery"
+    },
+    {
+      "id": "s3-seat2-N",
+      "seed_index": 2,
+      "seed": 7451376543782917356,
+      "seat": 2,
+      "arm": "N",
+      "partition": "discovery"
+    },
+    {
+      "id": "s6-seat0-N",
+      "seed_index": 5,
+      "seed": 2608880792136471977,
+      "seat": 0,
+      "arm": "N",
+      "partition": "discovery"
+    },
+    {
+      "id": "s5-seat0-A1",
+      "seed_index": 4,
+      "seed": 4198685333274047402,
+      "seat": 0,
+      "arm": "A1",
+      "partition": "discovery"
+    },
+    {
+      "id": "s8-seat2-N",
+      "seed_index": 7,
+      "seed": 7038607920892268610,
+      "seat": 2,
+      "arm": "N",
+      "partition": "heldout"
+    },
+    {
+      "id": "s6-seat2-A0",
+      "seed_index": 5,
+      "seed": 2608880792136471977,
+      "seat": 2,
+      "arm": "A0",
+      "partition": "discovery"
+    }
+  ],
+  "workers": 4,
+  "limits": {
+    "calls": 2200,
+    "prompt_tokens": 15000000,
+    "completion_tokens": 3000000,
+    "wall_s": 7200
+  },
+  "primary": "Mean over seeds of neutral payout averaged over three seats minus the average of two original-label runs over the same three seats. Two-sided exact cluster-arm permutation over 3^8=6561 assignments; 95% bootstrap over seed clusters.",
+  "primary_failure_rule": "Only complete seed clusters with all nine games enter primary comparison; report every failure and payout from completed games. No new games replace failed games. If fewer than six complete clusters, primary conclusion is incomplete.",
+  "secondary": "Net profit, wealth rank, bid and bribe spending, accepted action counts by phase, veto use. Compare neutral/original strategy-profile distance with original/original distance. Descriptive only.",
+  "heldout": "Primary endpoint uses all eight frozen seeds. Exploratory tactic with largest absolute count difference in first six seeds is checked for direction in the last two seeds; no significance claim from two heldout seeds.",
+  "errors": "At most three provider attempts total per decision, including at most two retries of the exact request for timeout/network/429/5xx before applying any action. At most one format-only repair for a malformed/out-of-range choice with the same state and candidates, plus a validator message listing allowed indices; no strategic feedback and no echo of prior reasoning. The first valid choice is applied. No substituted pass or weaker model. Forced single-candidate decisions are tagged and require no model call.",
+  "information": "Only current public numeric state and own previously observed states/actions. No seed, future card, hidden license yield or other bids in model messages. Separate history for every game.",
+  "engine": "Full six-round virtual-time games using the same frozen rules as the first experiment (929e4e5). Read-only public candidate probes, extra own balance fields; subject may take a primary action after an auxiliary bid. 12 builtin-equivalence games and six interface/runner tests passed.",
+  "action_interface": "Existing evalgame action families. All affordable integer market units. Bribes in multiples of 5 alashi plus all cash; bids in multiples of 1 alashi plus all cash, one aggregate bid. No currency exchange, barter, vote trading, customs toggle or insight purchase. Same interface in all arms.",
+  "scope": "One GLM-5.3 alias, low reasoning, Russian labels, fixed greedy/tactical opponents, one model-controlled seat. Model capability in alashi is not assumed from vendor benchmarks.",
+  "runtime_binary_sha256": "17121ef5ffcbe8e16f78e9f958aa9ca56ad4cf64dcb9799592fd7a9215b6c3f5",
+  "hashes": {
+    "snapshot/rules/Cargo.toml": "ffdfa521faef095b00bc2c1dd50e322c3de4e46d4aca5e3955148653a6fa8aab",
+    "snapshot/arena/Cargo.toml": "959141a32caab4af9f5de0f96c9d24d2118959fdacd83075f48ecfd6a28a6429",
+    "snapshot/arena/Cargo.lock": "e9841ad63b2b4b3bb2445e50d164229467f5bece94314820115302d39ff06a87",
+    "snapshot/arena/src/lib.rs": "0013843141b3ebf9f94129389c71a1cf6d29b468294b335a70e47902982ae48d",
+    "snapshot/arena/src/strategies.rs": "53ac1fabab0e289236693c9ff54b052b09413c7a965d92a2d44edbc3a33c4e55",
+    "snapshot/arena/src/runner.rs": "6e8df592ed4c464def262398c2b580493b7bd7fc7c71bc36cd566a45c51f018e",
+    "snapshot/arena/src/research_view.rs": "c812734965e09e5e63106ee93af19a876db4be7a8e6be1b7b62b874dfff5a359",
+    "snapshot/arena/src/bin/evalgame.rs": "9cdc2de87864c359c91f0de7b22df535054a21dc9d1ab91e4aea1687c9f61cfd",
+    "snapshot/rules/tests/audit_20260927.rs": "13fbc17661d0fbaa1530038a6037a0f6a14c83b61d1c8aa79ccb4c6fc58d7d21",
+    "snapshot/rules/tests/demo_regressions.rs": "4dd85d630ff136f83098da1bec22c079852facea97468243d58b86a76d991257",
+    "snapshot/rules/tests/audit_regressions.rs": "32384138504bb192e474dde31ae570d06ca1c173db9291a8d7d812fb011362b2",
+    "snapshot/rules/src/actions.rs": "72fa9e2ef1fd933fe90a90b962ab12f4504d4a37f142f7fec60d193b0e98bfb7",
+    "snapshot/rules/src/logic.rs": "f3466d94a1157293a8ddbdbb9a079078d99d2c4fedf9c38de78c974193b70fcd",
+    "snapshot/rules/src/constants.rs": "f0f3eff7023a1b5a75dddbdd83865a7c9cc8d5095edf1be2e2abd33cdc05429f",
+    "snapshot/rules/src/error.rs": "66576541145561be42b3017f5b351722a214dc225146b2b44f3fc31f65115500",
+    "snapshot/rules/src/lib.rs": "5ef66138b53ed8b7b335885a09bdbf4a9679b43fc45b5f1ab4813096f65be69c",
+    "snapshot/rules/src/sim.rs": "6e6fe621257e793448c4d8069384010c422c53cda95f159922df9f1c591fe779",
+    "snapshot/rules/src/state.rs": "ed0b8870a0ff51865b95fe98fc5bc36244ad943cf30a5190fe2444535e45accf",
+    "snapshot/rules/src/transitions.rs": "74352ff93192a7ddb6566febd07ef4c0099280e9ca67191e33a759ade07e7d9f",
+    "run_experiment.py": "bf12b349c6f0258cb9f9df01941e7338cddf62ea1f35093bf423121f06c44f90"
+  }
+}

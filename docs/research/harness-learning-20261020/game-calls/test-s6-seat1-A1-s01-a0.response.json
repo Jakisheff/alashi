@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.103,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Ожидаемая выгода шаттла выше, риск изъятия приемлем в первом раунде.\"}",
+          "reasoning_content": "Produce is safe; shuttle gives 3 with risk 25% confiscation — produce 2 guaranteed vs 3 at 75% = 2.25 expected. Shuttle slightly better EV but risky. Round 1, choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497007,
+    "id": "2026102019500492da3f3839214618",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019500492da3f3839214618",
+    "usage": {
+      "completion_tokens": 84,
+      "completion_tokens_details": {
+        "reasoning_tokens": 49
+      },
+      "prompt_tokens": 1917,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2001
+    }
+  }
+}

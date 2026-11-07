@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.175,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель не девальвируется, поэтому продажа в кредит даёт больше итоговой ценности, чем наличные при будущих девальвациях.\"}",
+          "reasoning_content": "Price for unit 3 at sold_counter=2 is 9 alashi. Sell 2 gives 18 alashi? Wait candidates: sell 2 gives +17 alashi cash (16.5→33.5M). Sell credit 2: promissory 21.25M. Round 4, cash devalues 62% at start of rounds 5,6; promissory adds fully. So credit better: 21.25 vs 17 (17 will devalue to ~10.5 at round5 anyway). Credit sell 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792489967,
+    "id": "202610201752422d1e6387d34147ea",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201752422d1e6387d34147ea",
+    "usage": {
+      "completion_tokens": 160,
+      "completion_tokens_details": {
+        "reasoning_tokens": 117
+      },
+      "prompt_tokens": 2735,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2895
+    }
+  }
+}

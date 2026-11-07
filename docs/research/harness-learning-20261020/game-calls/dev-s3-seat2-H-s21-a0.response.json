@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.221,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Карта 6 уже не влияет (рынков больше нет), исход голосования мне безразличен.\"}",
+          "reasoning_content": "Law 6: price -2 next market. But this is round 6, last round — market already done? Effects apply to next market, which doesn't exist. So no effect. Vote doesn't matter much. I'm not president (holder 1). Just abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495426,
+    "id": "20261020192343720e91dc6dd046e0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192343720e91dc6dd046e0",
+    "usage": {
+      "completion_tokens": 91,
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      },
+      "prompt_tokens": 3701,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 3792
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.301,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":36,\"reason\":\"Аукцион раунда 4: следую рекомендованной ставке 9 alashi, затем сделаю основное действие.\"}",
+          "reasoning_content": "cash 47M ≥16M, but recommended says 9M? Rule: cash≥16 → 12M. recommended_choice 36 is 9M, contradict. Instruction says follow augment recommended_choice if valid. Hmm. 12M = choice 39. But recommended is 36. \"Приоритет: следуй augment.auction.recommended_choice, если оно допустимо\". I'll follow 39 per rule... Actually bid_target 12M yet recommended_amount 9M — inconsistent. The priority says follow recommended choice. I'll pick 36.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498704,
+    "id": "202610202018195c753bd934ba48e0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202018195c753bd934ba48e0",
+    "usage": {
+      "completion_tokens": 154,
+      "completion_tokens_details": {
+        "reasoning_tokens": 116
+      },
+      "prompt_tokens": 7593,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 7747
+    }
+  }
+}

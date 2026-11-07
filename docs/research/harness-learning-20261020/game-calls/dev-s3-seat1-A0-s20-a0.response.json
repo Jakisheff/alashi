@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.486,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 6 снижает цену следующего рынка, которого уже нет — эффект пуст, можно просто пропустить.\"}",
+          "reasoning_content": "Law 6: -2 цены следующего рынка — но рынок уже прошёл (last round market done), so no effect. Actually round 6 market is done, so law 6 has no effect. Vote yes? Tax resets? Law 1 (10% tax) was voted no in round 5, so tax_bps=0. Law 6 only affects next market — none. So pass or yes. Pass keeps vote weight... vote weight irrelevant now. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495433,
+    "id": "20261020192349350ae2783dd94a3a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192349350ae2783dd94a3a",
+    "usage": {
+      "completion_tokens": 132,
+      "completion_tokens_details": {
+        "reasoning_tokens": 99
+      },
+      "prompt_tokens": 3309,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3441
+    }
+  }
+}

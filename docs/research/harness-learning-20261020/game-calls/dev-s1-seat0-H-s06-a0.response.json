@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.22,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон даёт +1 влияния самому богатому сопернику (фракция 2), голосую против.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest by cash. Richest is idx2 (22M). Favors rival. I vote no; idx2 voted yes. Vote: yes=1 (idx2), no=me=1, president idx1 weight 1... president may veto/vote. I vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495443,
+    "id": "20261020192400bb2aa8be5b1b4b7c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192400bb2aa8be5b1b4b7c",
+    "usage": {
+      "completion_tokens": 100,
+      "completion_tokens_details": {
+        "reasoning_tokens": 66
+      },
+      "prompt_tokens": 2670,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2770
+    }
+  }
+}

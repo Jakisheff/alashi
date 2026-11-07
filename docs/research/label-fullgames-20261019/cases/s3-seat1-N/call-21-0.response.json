@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 19.161,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Последний раунд: товар и вексель не конвертируются, а взятки лишь снижают cash и усиливают соперника — pass максимизирует выплату.\"}",
+          "reasoning_content": "Last round action. Goods don't count in ranking; promissory not paid after last round. Only cash matters. Element 0 leads in cash 56.7M; I have 49.6M; element 2 25.2M. Bank 45M: distribution 50/30/15 ranks. Also license income 20-60 alashi for me (I'm license holder), paid extra.\n\nBest action: no spending that reduces cash. produce/shuttle give goods—worthless now. Influence matters: max influence gets extra 5% of bank = 2.25M. Element 0 has influence 3; I have 1. Bribes give me influence: 15M to reach 4 influence beats 0's 3, gaining 2.25M but costs 15M — net loss. Bribing to 0 increases their cash too. So pass is best? Wait bribe gives recipient cash; giving 15M to 0 worsens rank. So pass, choice 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427630,
+    "id": "2026102000333271454a88870444af",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000333271454a88870444af",
+    "usage": {
+      "completion_tokens": 262,
+      "completion_tokens_details": {
+        "reasoning_tokens": 216
+      },
+      "prompt_tokens": 4796,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 5058
+    }
+  }
+}

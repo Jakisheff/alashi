@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.336,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон обнуляет promissory, что может лишить меня выгоды sell_credit в будущем — голосую против.\"}",
+          "reasoning_content": "Law 8: обнуляет promissory. У меня promissory=0, у других тоже 0. Карта бесполезна/нейтральна. Голосовать yes? Не имеет значения. Пас — сохранит вес 1? Вес = влияние+2 если действие пропущено. Мой action был produce (не pass), так что вес 1. Держатель — фракция 2 (инфлюенс равный, tie_order). Фракция 2 abstained. Мой голос может решить. Закон 8 обнуляет promissory — сейчас ни у кого нет promissory, но в будущих раундах может быть выгоден/невыгоден. Я планирую sell_credit? Возможно, но есть риск обнуления. Лучше проголосовать no, чтобы будущие promissory сохранялись? Но я сейчас не имею promissory; соперники тоже. Нейтрально. Просто pass (choice 0)? Президент может veto. Проголосую no — предотвращает обнуление promissory, которое мне может навредить в будущем, если я использую sell_credit. Голос no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497511,
+    "id": "20261020195822b32f44bab15f41a4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195822b32f44bab15f41a4",
+    "usage": {
+      "completion_tokens": 287,
+      "completion_tokens_details": {
+        "reasoning_tokens": 252
+      },
+      "prompt_tokens": 2747,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 3034
+    }
+  }
+}

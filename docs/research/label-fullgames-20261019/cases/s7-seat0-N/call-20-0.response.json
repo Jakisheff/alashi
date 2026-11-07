@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.656,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар уже не продать, взятки только уменьшают cash, а бонус за влияние (1.9 alashi) меньше стоимости взятки — лучший ход pass.\"}",
+          "reasoning_content": "Final round, action phase. Goods can't be sold (market passed). Cash counts. Influence: max influence gets 5% bank = 1.9M. P2 has 2, I have 1. Bribing to 2 costs 5M to get 1.9M — bad. Bribing to 1 transfers money to a rival — pointless. Bribes reduce cash by full amount while influence gain gives only 1.9M and voting power matters little in last law (holder is P2 anyway; my influence can't beat 2 unless I spend 5M... holder is max influence at law entry — actually holder determined at law entry; I'm not holder regardless). Just pass.\n\nWait, devaluation: round 7 doesn't exist. Game ends. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427486,
+    "id": "202610200031217309f23e48cc4f97",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200031217309f23e48cc4f97",
+    "usage": {
+      "completion_tokens": 214,
+      "completion_tokens_details": {
+        "reasoning_tokens": 167
+      },
+      "prompt_tokens": 5651,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 5865
+    }
+  }
+}

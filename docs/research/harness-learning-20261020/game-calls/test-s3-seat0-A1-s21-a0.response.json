@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.066,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 3 (субсидия) уже не влияет на итог, мой голос ничего не меняет.\"}",
+          "reasoning_content": "Law 3: subsidy_goods=1 — no effect now (last round already sold). President is idx2, votes likely? My vote weight 3. Law harmless; voting yes or no doesn't change my payout. Subsidy affects produce in action—but round 6 action already passed. So irrelevant. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498529,
+    "id": "20261020201526c20bc4d1d1154ab5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201526c20bc4d1d1154ab5",
+    "usage": {
+      "completion_tokens": 99,
+      "completion_tokens_details": {
+        "reasoning_tokens": 66
+      },
+      "prompt_tokens": 3299,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3398
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.075,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 10% навредит моей финальной продаже; мой голос «против» даёт 4:1 и отклоняет закон.\"}",
+          "reasoning_content": "Закон 1 — налог 10% на будущие продажи. У меня 3 товара для продажи в раунде 6. Голоса: 0 — No (вес 2), 2 — Yes (вес 1). Мой вес 2. vote_no → 4 против 1 — закон отклонён. Veto тоже отклоняет, но vote_no достаточно.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499629,
+    "id": "202610202033468744c8b516e74019",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202033468744c8b516e74019",
+    "usage": {
+      "completion_tokens": 125,
+      "completion_tokens_details": {
+        "reasoning_tokens": 83
+      },
+      "prompt_tokens": 3093,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3218
+    }
+  }
+}

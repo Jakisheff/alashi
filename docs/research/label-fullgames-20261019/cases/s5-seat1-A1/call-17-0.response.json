@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.612,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 10% уменьшит мою выручку от продажи 9 товаров, поэтому голосую против.\"}",
+          "reasoning_content": "Law 1: tax 10%. I'm the license holder, plan to sell goods next round (9 goods). Tax hurts me. Faction 2 voted yes, president is 0 with veto pending — president might veto. My vote: no. Vote weight 1+? I didn't pass action (shuttle), so weight 1. Yes: 2 votes (0 may vote too), no: me 1. Likely fails anyway; vote_no is right.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490213,
+    "id": "202610201756480daec05876914d32",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201756480daec05876914d32",
+    "usage": {
+      "completion_tokens": 133,
+      "completion_tokens_details": {
+        "reasoning_tokens": 97
+      },
+      "prompt_tokens": 3051,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3184
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.813,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 8 не приносит мне вреда, и «за» нет голосов — он всё равно не проходит, вето не нужно.\"}",
+          "reasoning_content": "Law 8 обнуляет promissory — но у меня promissory 0. Обнуляет чужие векселя? Фракция 1 has promissory? Seeing state: фракция 1 promissory не показан — probably 0. Actually my promissory 0, faction 0 has 0, faction 1 unknown but seen earlier 38750000 was cash of faction 2? Actually my promissory was 38.75M, likely added round 3. Now promissory=0 — already paid. So law 8 harmless. No: votes No (1) vs Abstain — law fails anyway (yes 0 > no 1 false). Veto unnecessary. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499369,
+    "id": "202610202029249489128d4eda44fd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202029249489128d4eda44fd",
+    "usage": {
+      "completion_tokens": 196,
+      "completion_tokens_details": {
+        "reasoning_tokens": 156
+      },
+      "prompt_tokens": 2925,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3121
+    }
+  }
+}

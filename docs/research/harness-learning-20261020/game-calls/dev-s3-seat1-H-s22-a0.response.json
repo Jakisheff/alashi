@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.098,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товары больше не продаются, взятки лишь снижат cash, а бонус за влияние я и так получу по перевесу cash.\"}",
+          "reasoning_content": "Round 6, last action phase. Goods sold. This action gives goods for no use (no more market). Best: gain influence to keep presidency/max influence for 5% bonus? Cash lost via bribe isn't counted in rank (cash decreases). Bribe moves cash away but rank counts cash — bribing reduces my cash. But max influence gets 5% of bank (~2 alashi) and influence determines... I already hold presidency; influence 2 vs rival 2, tie_order [2,1,0] — rival 2 has priority. So influence 2 equal, holder determined at law entry by influence; I'm holder now? role holder_idx=1. In law, president = highest influence at law entry, tie by tie_order — rival idx2 would beat me if influence tied. Vote weight matters only for laws. Final: 5% bonus to max influence; tie broken by cash+hard then tie_order — I have most cash, so I'd win tie. So bribing loses cash for no gain. Goods useless. Best: pass (choice 0).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495287,
+    "id": "20261020192117b4b9eda954f24420",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192117b4b9eda954f24420",
+    "usage": {
+      "completion_tokens": 264,
+      "completion_tokens_details": {
+        "reasoning_tokens": 224
+      },
+      "prompt_tokens": 5298,
+      "prompt_tokens_details": {
+        "cached_tokens": 3136
+      },
+      "total_tokens": 5562
+    }
+  }
+}

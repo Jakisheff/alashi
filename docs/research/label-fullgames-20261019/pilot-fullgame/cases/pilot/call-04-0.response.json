@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.945,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Продажа в кредит даёт 16,25 alashi векселем, который полностью зачислится в следующем раунде до девальвации, что больше 13 сразу.\"}",
+          "reasoning_content": "Sell both for 13 cash (credit 16.25 promissory but dev rounds 2+ devalue... promissory added at round start then cash dev from round 3 onward — 62% applied before adding promissory each round start, so promissory from this round survives to next round cash without devaluation once. Actually cash=floor(cash/100)*62 then promissory added. So promissory converts fully next round. Credit gives 16.25 > 13. Take credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792426659,
+    "id": "2026102000172678cb0807c6c94232",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000172678cb0807c6c94232",
+    "usage": {
+      "completion_tokens": 159,
+      "completion_tokens_details": {
+        "reasoning_tokens": 108
+      },
+      "prompt_tokens": 2220,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2379
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.112,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Вето блокирует +1 влияния беднейшему сопернику и сохраняет моё президентство.\"}",
+          "reasoning_content": "Law 4 gives +1 influence to poorest (cash: idx0 has 10M, poorest). That gives idx0 influence 2, tie with me... I'm holder, influence 2, tie_order [0,2,1], so idx0 would become president later. Veto keeps me president. Veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498046,
+    "id": "202610202007211bc0924dfd9b4c07",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202007211bc0924dfd9b4c07",
+    "usage": {
+      "completion_tokens": 98,
+      "completion_tokens_details": {
+        "reasoning_tokens": 67
+      },
+      "prompt_tokens": 2389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2487
+    }
+  }
+}

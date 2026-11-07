@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.412,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон обнуляет векселя, которых ни у кого нет — карта бесполезна, отклоняю.\"}",
+          "reasoning_content": "Law 8 обнуляет promissory. У меня promissory=0. Но я могу продать с sell_credit в будущем... Сейчас обнуление векселей мне не вредит (у меня 0). Голосовать yes? Возможно, кто-то накопит promissory. Но сейчас ни у кого нет — закон бесполезен всем. Как президент могу голосовать да или нет. Лучше проголосовать no? Закон безвреден сейчас, но в будущем его эффект не повторится (карты без повторов). Отклонить — карта исчерпана. Проголосую yes, чтобы не тратить? Влияние неважно. Простой выбор — yes не вредит. Но если позже я сам использую sell_credit, у меня уже не будет риска... нет, эффект только этого раунда. Голосую no — закон бесполезен (никаких promissory нет), пусть исчерпается. Actually voting no может быть отвергнуто другими. Whatever — abstain. Choose yes? Меньше важно. Pick no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498055,
+    "id": "2026102020072990637f87c2ad4fb9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020072990637f87c2ad4fb9",
+    "usage": {
+      "completion_tokens": 265,
+      "completion_tokens_details": {
+        "reasoning_tokens": 229
+      },
+      "prompt_tokens": 2546,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2811
+    }
+  }
+}

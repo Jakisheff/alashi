@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.886,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":10,\"reason\":\"Взятка даёт +1 влияния для борьбы за пост президента при сохранении большей части cash.\"}",
+          "reasoning_content": "I'm faction 0. President is faction 1. Getting influence helps become president later. Bribe 5 to idx1 gives influence 2, keeping cash. Shuttle gives 3 grey goods at 25% seizure risk. Produce gives 2 goods free. Influence matters for president role and 5% commission. I think bribe 5 to 2 or produce? Bribe to 1 gives me influence 2, president next law is holder 1 now (influence equal tie_order). Next round order rotates; later becoming president helps. But cash loss 5 vs influence gain.\n\nI'd take bribe 5 alashi to idx2 (choice 10) — influence 2, keeps 12 cash. Actually bribing the current president (1) may keep them friendly... just pick influence. Choose 10.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490271,
+    "id": "20261020175739f2339c45c45f4fb9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175739f2339c45c45f4fb9",
+    "usage": {
+      "completion_tokens": 203,
+      "completion_tokens_details": {
+        "reasoning_tokens": 171
+      },
+      "prompt_tokens": 2949,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 3152
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.476,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Продажа обоих товаров в кредит даёт максимум выручки (21,25 alashi), которая полностью попадёт в cash в раунде 3.\"}",
+          "reasoning_content": "Prices are dropping, selling now is best. 2 units at price 9 and 8 = 17. Credit gives 21.25 promissory, but at the start of r3 floor(cash/100)*62 — cash is 0, promissory is added in full. Selling for credit is better: 21.25 vs 17, the promissory is paid out in r3. But at the end of the game an unpromised promissory doesn't count — there's still r3. I'll take choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498436,
+    "id": "2026102020135111d94a4e4ac64b1c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020135111d94a4e4ac64b1c",
+    "usage": {
+      "completion_tokens": 161,
+      "completion_tokens_details": {
+        "reasoning_tokens": 117
+      },
+      "prompt_tokens": 2210,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2371
+    }
+  }
+}

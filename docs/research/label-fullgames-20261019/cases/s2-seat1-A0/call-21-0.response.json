@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.727,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 6 лишь снижает цены следующего рынка, которого уже не будет; пропускаю, оставляя veto в запасе.\"}",
+          "reasoning_content": "Law 6: price -2 next market — but this is round 6, last round, no next market. So harmless; no need to veto. Rival 0 voted No; vote_yes with weight 4: yes 4 > no 2 → passes harmlessly. Fine. Or just veto to be safe—costs nothing either. Veto is free insurance, but vetoing a no-effect law is neutral. vote_yes passes it harmlessly; either fine. Choose veto? Veto adds no benefit. Pass keeps option post_vote. Choose pass (veto still available later).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491166,
+    "id": "202610201812395cdc313751b84c92",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201812395cdc313751b84c92",
+    "usage": {
+      "completion_tokens": 161,
+      "completion_tokens_details": {
+        "reasoning_tokens": 122
+      },
+      "prompt_tokens": 3363,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3524
+    }
+  }
+}

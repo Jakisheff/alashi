@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.404,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон 5 даёт +1 влияния самому богатому — при равенстве cash приоритет tie_order за мной, голосую за.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest (all cash 0, tie_order gives me rank). I'm tie richest (idx 0). Vote yes benefits me. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496438,
+    "id": "202610201940352e6cece02a3e49ad",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201940352e6cece02a3e49ad",
+    "usage": {
+      "completion_tokens": 78,
+      "completion_tokens_details": {
+        "reasoning_tokens": 38
+      },
+      "prompt_tokens": 2548,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2626
+    }
+  }
+}

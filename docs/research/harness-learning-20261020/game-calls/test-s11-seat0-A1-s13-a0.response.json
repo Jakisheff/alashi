@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 14.767,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Бесплатные 2 товара под будущие продажи при сохранении cash для ранга; ставка на лицензию уже перекрывает соперников.\"}",
+          "reasoning_content": "I bid 17M for license, keeping only 12.295M cash. Competitors could bid more — фракция1 has 15.1M, фракция2 10.37M. My 17M likely wins unless... they can't exceed 15.1M. Good. Now choose main action. Need goods to sell later. Produce gives 2 goods free. Vote weight: I have 1+... vote_weight 3 already? Yes vote_weight=3 shown. Influence matters for presidency and 5% commission bonus. Bribe to gain influence? Influence 2 vs фракция2's 2 — president next law determined by influence at law time. With bribe 5M to anyone, influence 2, tie with фракция2, tie_order [0,2,1] favors me → I'd be president. But costs 5M cash (rank matters). Cash 12.3+23.75 promissory... rank by cash+hard, promissory not counted. Current cash: me 12.3M, f1 15.1M, f2 10.4M. I'm second.\n\nProduce (free 2 goods) vs bribe. Presidency gives veto and vote weight influence+2. But I already have vote_weight 3? That seems from somewhere—maybe subsidy? Actually vote_weight=3 displayed already (maybe +2 from prior pass? no). Anyway.\n\nBank 30M + my 17M = 47M, license income 20-60 to winner (me likely). Payouts 50/30/15 of 95% ≈ significant. Rank: cash+hard. Spending 5M for influence: gains presidency (veto, control) and possibly max-influence 5% commission (47M*5%≈2.35M) — фракция2 has influence 2, I'd tie at 2, tie broken by cash+hard then tie_order. If I bribe 5M: cash 7.3M+promissory? hard 0. My cash+hard = 7.3M vs f2 10.4M → f2 wins commission. Bribe 10M → influence 3, cash 2.3M, commission mine, presidency mine. But lose rank cash. Ranks by cash: f1 15.1, f2 10.4, me 2.3 → 15% share = ~6.7M vs 30% share 13.4M. Costly.\n\nBetter: keep cash, take produce. Promissory 23.75M adds at start of round 5: cash=floor(cash/100)*62 first (devaluation of cash, not promissory), then +23.75M. So cash counts. I should keep cash high for rank.\n\nProduce (choice 1) is free goods. Choose that.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497217,
+    "id": "202610201953245b2692a29fb44563",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201953245b2692a29fb44563",
+    "usage": {
+      "completion_tokens": 657,
+      "completion_tokens_details": {
+        "reasoning_tokens": 618
+      },
+      "prompt_tokens": 3425,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 4082
+    }
+  }
+}

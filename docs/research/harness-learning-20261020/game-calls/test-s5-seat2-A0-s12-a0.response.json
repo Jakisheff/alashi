@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.755,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон о налоге 10% мне невыгоден, а голос «против» уже даёт большинство против него без траты veto.\"}",
+          "reasoning_content": "Law 1: 10% tax on future sales. I have 3 goods and promissory 37.5; tax hurts me. Faction 1 voted No already. If I vote No: 2 No vs 0 Yes — law fails anyway. Vote no is safe; veto unnecessary. Actually vote_no gives same result without spending veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497227,
+    "id": "20261020195344b618c1df01bd432f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195344b618c1df01bd432f",
+    "usage": {
+      "completion_tokens": 113,
+      "completion_tokens_details": {
+        "reasoning_tokens": 72
+      },
+      "prompt_tokens": 2780,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2893
+    }
+  }
+}

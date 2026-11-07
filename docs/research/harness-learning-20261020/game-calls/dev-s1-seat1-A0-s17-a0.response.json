@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.874,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Последний раунд — непогашенные векселя списываются, поэтому продаю весь товар за наличные, максимизируя ранг богатства.\"}",
+          "reasoning_content": "Last round market: promissory never paid. Sell all now: choice 5 gives cash 50.68M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495161,
+    "id": "202610201919189fc889b0fe654b1f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201919189fc889b0fe654b1f",
+    "usage": {
+      "completion_tokens": 68,
+      "completion_tokens_details": {
+        "reasoning_tokens": 25
+      },
+      "prompt_tokens": 3376,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3444
+    }
+  }
+}

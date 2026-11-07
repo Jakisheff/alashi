@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.389,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Карта 6 влияет только на следующий рынок, которого уже не будет — закон безразличен, пропускаю.\"}",
+          "reasoning_content": "Law 6: price shift -2 next market — but this is last round, market already done. So no effect anyway. Vote anything; pass gives nothing. President is idx1, not me. Vote doesn't matter; choose pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427584,
+    "id": "2026102000330219d955cc661245aa",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000330219d955cc661245aa",
+    "usage": {
+      "completion_tokens": 85,
+      "completion_tokens_details": {
+        "reasoning_tokens": 49
+      },
+      "prompt_tokens": 3444,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3529
+    }
+  }
+}

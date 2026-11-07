@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.996,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 6 снижает цены следующего рынка, что вредит моим продажам.\"}",
+          "reasoning_content": "Law 6: price shift -2 next market. I plan to sell next round. Vote no. President is idx2 with weight 2, will likely vote yes/no unknown. Vote no anyway.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428165,
+    "id": "20261020004242a725781b3bfe472b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020004242a725781b3bfe472b",
+    "usage": {
+      "completion_tokens": 70,
+      "completion_tokens_details": {
+        "reasoning_tokens": 41
+      },
+      "prompt_tokens": 2546,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2616
+    }
+  }
+}

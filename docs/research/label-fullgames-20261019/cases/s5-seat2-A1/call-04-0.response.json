@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.319,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Касса пустая, shuttle даёт 3 товара — лучшая ожидаемая выгода, риск изъятия оправдан.\"}",
+          "reasoning_content": "I have 0 cash. produce gives 2 goods free; shuttle gives 3 but risk of seizure ~25%. Shuttle better expected value despite risk. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491089,
+    "id": "2026102018112758d782291f27409b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102018112758d782291f27409b",
+    "usage": {
+      "completion_tokens": 73,
+      "completion_tokens_details": {
+        "reasoning_tokens": 34
+      },
+      "prompt_tokens": 2097,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2170
+    }
+  }
+}

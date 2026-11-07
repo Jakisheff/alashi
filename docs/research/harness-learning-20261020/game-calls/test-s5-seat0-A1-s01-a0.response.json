@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.871,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Ожидаемая выгода шаттла (2.25 товара) выше, чем у produce.\"}",
+          "reasoning_content": "Produce is safe, shuttle risk of 25% seizure but gives 3. First round — take shuttle? 3 goods vs 2, risk 25% loss of all goods. Expected: 0.75*3=2.25 > 2. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498785,
+    "id": "202610202019428bdb1d4601da46f3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202019428bdb1d4601da46f3",
+    "usage": {
+      "completion_tokens": 91,
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      },
+      "prompt_tokens": 1917,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2008
+    }
+  }
+}

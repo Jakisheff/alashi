@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.365,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Взятка даёт влияние 3 и пост президента с комиссией, а ставка на аукционе уже сделана.\"}",
+          "reasoning_content": "The auction recommended choice 4 — bribe 5M to 1. But bid already done; recommendation says main action after bid. Bribe 5M to 1 gives influence 3, breaking tie for presidency (I have 2, rival 2, tie_order favors 2). Actually president determined at law entry; bribing increases influence → I become president (2→3 beats 2). President gets 5% bank commission and veto. That's valuable. Choice 4 loses 5M cash but gains presidency and influence-based commission.\n\nHowever cash matters for final rank. Currently cash after bid 14.16M; bid 12M goes to bank if won. Bribe 5M to player 1 also weakens... actually gives cash to rival 1 who's richest (41M). Bribing to 2 instead gives 5M to rival with 13.5M+influence 2. Same influence gain 3. Which is better? Giving to 2 (poorer) helps them less relative... giving to either increases their cash. Player 1 is already far ahead; giving them 5M matters less. Choice 4 (to 1) recommended. Follow augment.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495372,
+    "id": "20261020192243feb657714d104ab5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192243feb657714d104ab5",
+    "usage": {
+      "completion_tokens": 289,
+      "completion_tokens_details": {
+        "reasoning_tokens": 252
+      },
+      "prompt_tokens": 3959,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 4248
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.93,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Продаю весь товар за наличные 17 alashi, деньги укрепят ранг богатства и выплату.\"}",
+          "reasoning_content": "Wait, sold_counter=2 already (others sold? rival 2 has 22 cash). Price for next sales: index 2 → 8? Prices [12,10,9,...], counter=2 means next unit at 9. Sell 1 gives 9 ✓, sell 2 gives 9+8=17 ✓. Cash counts at end; selling now for cash is good. Sell all 2 for 17.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491011,
+    "id": "20261020181007c55f340368ba4f8a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181007c55f340368ba4f8a",
+    "usage": {
+      "completion_tokens": 124,
+      "completion_tokens_details": {
+        "reasoning_tokens": 90
+      },
+      "prompt_tokens": 2159,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2283
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.359,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель даёт 8,75 млн без девальвации и с премией, а деньги обесценятся на 38%.\"}",
+          "reasoning_content": "Round 5 of 6. Current price: sold_counter=7 → price 5. Debt devaluation next round (62%). Sell now with sell_credit 2 gives promissory 8.75M which will be devalued? Promissory added to cash next round without devaluation? \"cash=floor(cash/100)*62, then promissory is added to cash\" — so promissory added after, no devaluation. So sell_credit is good: 8.75M vs 7M now, and avoids cash devaluation... actually cash from selling now would devalue. Promissory pays 1.25x and no devaluation. Sell both via credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496876,
+    "id": "20261020194749247bdc3d099c4e57",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194749247bdc3d099c4e57",
+    "usage": {
+      "completion_tokens": 186,
+      "completion_tokens_details": {
+        "reasoning_tokens": 145
+      },
+      "prompt_tokens": 3264,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3450
+    }
+  }
+}

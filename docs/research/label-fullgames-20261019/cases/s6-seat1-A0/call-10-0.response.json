@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.899,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Наличные девальвируются 62% каждый раунд, товар — нет; покупка 2 единиц сохраняет стоимость для продажи в поздних раундах.\"}",
+          "reasoning_content": "I'm idx1, president, in market round 4. Cash 31.3, no goods. Bidding round later. Buying goods to sell later? Prices devaluate: cash devalues 62% each round start. So holding cash is bad; buying goods at 12 now to sell later at similar prices... Actually buying moves counter forward, price drops. Buy 1 at 12, later sell... counter moves back for buys. Goods don't devalue. Cash devalues to 62%. Better to buy goods (store value) — sell in round 5/6. Buy 2 keeps 12 alashi value ~24 vs cash 24 becoming ~15 then 9. Yes, buy 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427826,
+    "id": "202610200036599b622695e46a4dc3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200036599b622695e46a4dc3",
+    "usage": {
+      "completion_tokens": 196,
+      "completion_tokens_details": {
+        "reasoning_tokens": 149
+      },
+      "prompt_tokens": 2527,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2723
+    }
+  }
+}

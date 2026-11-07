@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.188,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"shuttle даёт 3 товара к продаже на последнем рынке при высоких ценах, ожидаемая выгода перекрывает риск изъятия.\"}",
+          "reasoning_content": "Round 5 action, then round 6 market last. Shuttle gives 3 goods (risk 25% seizure since tariff=0? tariff is 0, so red risk? \"red несёт риск\" — tariff=2 red. tariff=0 — базовый риск 25% всего товара? Actually base shuttle risk ~25% всего серого. I already have 2 goods; shuttle → 5 goods, sell up to 5 units next round at prices 12..8 = 50 alashi. Seizure risk 25%. Produce gives 2 (total 4). Shuttle expected value much higher even with risk. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498875,
+    "id": "20261020202110f204bc7b1fee4468",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202110f204bc7b1fee4468",
+    "usage": {
+      "completion_tokens": 176,
+      "completion_tokens_details": {
+        "reasoning_tokens": 134
+      },
+      "prompt_tokens": 3501,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 3677
+    }
+  }
+}

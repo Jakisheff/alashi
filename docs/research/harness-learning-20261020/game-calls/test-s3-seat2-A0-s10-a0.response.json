@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.413,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон о налоге всё равно отклоняется (No=4 против Yes=1), veto не нужен.\"}",
+          "reasoning_content": "Law 2 = 20% tax, I sold already... future sales taxed 20%. Yes=1, No=4 (my 3+1). Veto would let law pass? No: veto by president kills the bill? Veto applies against passing? \"Закон принимается, если yes строго больше no, и veto не применено.\" President's veto blocks the law. Here No wins anyway, so law fails without veto. Veto is free but redundant—pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497984,
+    "id": "202610202006202de2b9db89ec4b25",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202006202de2b9db89ec4b25",
+    "usage": {
+      "completion_tokens": 133,
+      "completion_tokens_details": {
+        "reasoning_tokens": 100
+      },
+      "prompt_tokens": 2451,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2584
+    }
+  }
+}

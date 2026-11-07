@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.511,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Налог затрагивает будущие продажи, которых больше нет — veto бессмыслен.\"}",
+          "reasoning_content": "Law is 10% tax on future sales — but no more sales after round 6? Law phase round 6 is last; no future market. So tax irrelevant; pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497586,
+    "id": "2026102019594381dd6f039f774f8e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019594381dd6f039f774f8e",
+    "usage": {
+      "completion_tokens": 65,
+      "completion_tokens_details": {
+        "reasoning_tokens": 37
+      },
+      "prompt_tokens": 3258,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3323
+    }
+  }
+}

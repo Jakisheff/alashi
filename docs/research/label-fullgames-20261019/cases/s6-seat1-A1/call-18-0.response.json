@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.797,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Деньги решают ранг, а влияние уже делит первенство в мою пользу по cash — тратить нечего.\"}",
+          "reasoning_content": "Last round, action phase. Cash counts for rank. Bribes reduce cash — bad, but influence bonus gives 5% of bank (2 alashi) for max influence... currently influence tie 2-2 with player 0; tie broken by cash+hard, I win. So no bribe needed. Just produce (goods don't count) or pass. Pass preserves vote weight? Vote weight = influence +2 if action skipped. As president, pass gives vote weight 6 — useful for veto anyway (veto is free regardless). Just pass or produce; produce gives goods useless. Pass.\n\nWait — I'm already president (max influence at law). Bribes waste cash. Choose pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490049,
+    "id": "20261020175404722dcbae169442eb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175404722dcbae169442eb",
+    "usage": {
+      "completion_tokens": 183,
+      "completion_tokens_details": {
+        "reasoning_tokens": 145
+      },
+      "prompt_tokens": 4764,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 4947
+    }
+  }
+}

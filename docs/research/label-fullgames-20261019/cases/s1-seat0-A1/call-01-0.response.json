@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.633,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Больше товара при умеренном риске изъятия даёт лучшую ожидаемую выручку.\"}",
+          "reasoning_content": "Produce goods for later selling. Shuttle gives 3 goods with 25% seizure risk? Shuttle gives 3+subsidy, grey goods may be seized. Shuttle yields 3 vs 2 — risk 25% lose grey goods. Expected shuttle: grey 3 goods all seized? Likely whole shuttle cargo is grey. Expected 2.25 vs 2 produce. Slightly better but risk; also black tariff not active. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427820,
+    "id": "202610200036543e3ee533daec43b2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200036543e3ee533daec43b2",
+    "usage": {
+      "completion_tokens": 124,
+      "completion_tokens_details": {
+        "reasoning_tokens": 92
+      },
+      "prompt_tokens": 1924,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2048
+    }
+  }
+}

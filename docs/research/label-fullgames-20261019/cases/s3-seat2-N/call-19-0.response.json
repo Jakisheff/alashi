@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.915,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Финальный раунд: деньги не потратить, влияние уже максимальное — pass сохраняет cash.\"}",
+          "reasoning_content": "Last round action. After action there's law (I'm holder, influence 3, already top). Final payout: rank by cash+hard; I'm already top by far. Influence max gives extra 5% commission — already influence 3, rivals 1. Nothing to gain from bribes (spend cash). Produce is useless (no more market? Round 6 market already done, sold). Goods don't count. So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491269,
+    "id": "20261020181425e98fd287c64d4091",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181425e98fd287c64d4091",
+    "usage": {
+      "completion_tokens": 125,
+      "completion_tokens_details": {
+        "reasoning_tokens": 91
+      },
+      "prompt_tokens": 5460,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 5585
+    }
+  }
+}

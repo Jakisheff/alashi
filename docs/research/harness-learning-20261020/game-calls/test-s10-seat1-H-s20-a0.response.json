@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.754,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар в ранг не идёт, а максимальное влияние я уже удерживаю по кэшу при равенстве, поэтому pass сохраняет cash без потерь.\"}",
+          "reasoning_content": "Last round action. Goods don't count in rank. Produce/shuttle give goods, useless. Best: maximize influence for the 5% commission? Influence max gets extra 5% bank. I have influence 2, rival 0 has 2 too, tie broken by cash — I win tie already (my cash higher). Bribing increases influence but costs cash. Cash counts in rank; I'm already rank 0 by far. Influence: I'm at 2, other at 2; max influence tie → better cash+hard → me. So no need. Best keep cash: pass (choice 0). Also holder 0 is president in law, not me — wait, I'm not president anyway? Role holder_idx 0. Doesn't matter.\n\nPass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498141,
+    "id": "202610202008561b6ad9fbcff64fd2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202008561b6ad9fbcff64fd2",
+    "usage": {
+      "completion_tokens": 208,
+      "completion_tokens_details": {
+        "reasoning_tokens": 160
+      },
+      "prompt_tokens": 5845,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 6053
+    }
+  }
+}

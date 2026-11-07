@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 14.324,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Вексель уже в эскроу, денег нет; shuttle даёт 3 товара против 2 у produce, риск изъятия приемлем.\"}",
+          "reasoning_content": "My cash is 0 (bid in escrow 26.25). Bid didn't consume action. Shuttle gives 3 goods but grey goods may be seized ~25%. Still better than produce's 2. No cash for donkey. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490514,
+    "id": "2026102018014140f14054736f450b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102018014140f14054736f450b",
+    "usage": {
+      "completion_tokens": 94,
+      "completion_tokens_details": {
+        "reasoning_tokens": 52
+      },
+      "prompt_tokens": 2632,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2726
+    }
+  }
+}

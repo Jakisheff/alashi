@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.842,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Финальный раунд: вексель не погасится, продаю весь товар по высокой цене 12.\"}",
+          "reasoning_content": "Final round, promissory not redeemed. Sell both at 12 each = choice 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497809,
+    "id": "20261020200328a2867a4a26284a34",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200328a2867a4a26284a34",
+    "usage": {
+      "completion_tokens": 55,
+      "completion_tokens_details": {
+        "reasoning_tokens": 20
+      },
+      "prompt_tokens": 3774,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 3829
+    }
+  }
+}

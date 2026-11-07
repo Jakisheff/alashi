@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.685,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Продажа 2 единиц по максимальной цене 12 даёт 24 alashi сразу; кэш важен для ранга и финальной выплаты.\"}",
+          "reasoning_content": "Round 5 market, price 12? sold_counter=0, shift 0. Sell 2 units now at 12 each = 24 alashi cash. Money now valuable (devaluation at round 6 start: 62%). Selling now better than credit. Sell both.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497568,
+    "id": "20261020195920cba1742b51d24abe",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195920cba1742b51d24abe",
+    "usage": {
+      "completion_tokens": 106,
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      },
+      "prompt_tokens": 3538,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3644
+    }
+  }
+}

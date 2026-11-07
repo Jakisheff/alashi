@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.248,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Беру серый товар — на следующем рынке это около 24 alashi выручки, максимум выгоды.\"}",
+          "reasoning_content": "I have cash 33.27M, promissory 27.5M (will be added to cash at round 6 start after devaluation 62%: cash floor/100*62 then promissory added). License holder — get income. Round 5 action, then round 6. Need goods for round 6 market. Currently goods 0. Shuttle gives 3 goods, sell at price... sold_counter=2, price for 3 units: 9,8,7 = 24, minus tax. Worth ~24 alashi. Shuttle best.\n\nAlso president is rival idx1; influence matters for 5% bank. Bribing 10M to idx1? Influence 3 vs their 2+? President at law entry: highest influence. Bribing to 1 gives me influence 3, beating idx1's 2 — but if action isn't passed they get +2 weight only for voting. Influence 3 > 2, so I'd be president round 5 law, and round 6? Influence persists. Max influence gives 5% bank ~2.25M. But bribe costs more than gain. Bribing 5M to 1 gives influence 2, tie with idx1 — tie_order [0,2,1], I win tie (idx2 before idx1). But +1 influence to them? No, bribe gives me influence, receiver only cash. 5M cost for president? Not worth much this late.\n\nShuttle (choice 3) gives 3 goods for ~24M revenue next round — clearly best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497525,
+    "id": "20261020195837ab1e477eed1541c4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195837ab1e477eed1541c4",
+    "usage": {
+      "completion_tokens": 367,
+      "completion_tokens_details": {
+        "reasoning_tokens": 333
+      },
+      "prompt_tokens": 4016,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 4383
+    }
+  }
+}

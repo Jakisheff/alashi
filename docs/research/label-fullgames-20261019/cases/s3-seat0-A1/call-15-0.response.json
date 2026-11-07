@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.476,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель не девальвируется, поэтому продажа всех 3 единиц в кредит (38,75 млн) выгоднее прямой продажи.\"}",
+          "reasoning_content": "Round 5 market. Devaluation: cash*0.62 at round 6 start. Selling now at high prices is good. Prices from counter 0: 12,10,9... price_shift 0. Selling 3 units = 12+10+9=31... but candidate shows 31M gain (35.5-4.5=31M). Good. Sell now vs later? Round 6 would devalue cash and prices lower after others sell. Sell all 3 now — cash gain 31, no promissory (promissory not devalued actually—promissory added after devaluation; sell_credit 38.75M promissory would be paid round 6 without devaluation!). Wait: cash devalued at round 6 start, then promissory added. So sell_credit is better: promissory avoids devaluation. Sell 3 credit: promissory 38.75M vs sell now 31M which then gets devalued to ~62%. 31*0.62≈19.2. So credit much better. Choose 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490999,
+    "id": "202610201809528e6e884c798d4660",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201809528e6e884c798d4660",
+    "usage": {
+      "completion_tokens": 271,
+      "completion_tokens_details": {
+        "reasoning_tokens": 232
+      },
+      "prompt_tokens": 3073,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3344
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 19.998,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Шаттл даёт 3 товара для продаж с высокой маржой; взятка 5 млн дорога и усиливает соперника.\"}",
+          "reasoning_content": "I'm behind in cash; bribe to gain influence could secure presidency and 5% commission. But influence 2 vs faction 2's 2 with tie_order [1,0,2] — I'd win ties? President is highest influence at law entry; tie broken by tie_order presumably same. Bribe 5M to someone gives influence 2; tie with idx2, tie_order 1,0,2 — idx1 first? I'm idx0, second, so I'd win over idx2. That costs 5M for presidency + influence. But goods generation matters too. I have 0 goods, 21M cash. Produce gives 2 goods to sell later (~8 alashi each at current price 8). Trade-off: presidency gives veto and 5% commission (~1.5M+). Bribe 5M to idx1 (current president) also gives them cash, weakening my rank? Giving cash to rival hurts rank.\n\nI think shuttle (3 goods, ~24 alashi revenue) beats 5M bribe. But presidency gives veto control over tax laws — taxes could cost 10-20%. Still, 5M cost + rival gains 5M. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490416,
+    "id": "202610201759575d1485ddd22c42f1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201759575d1485ddd22c42f1",
+    "usage": {
+      "completion_tokens": 293,
+      "completion_tokens_details": {
+        "reasoning_tokens": 253
+      },
+      "prompt_tokens": 3330,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 3623
+    }
+  }
+}

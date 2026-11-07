@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.765,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Небольшая взятка даёт влияние 2 и пост президента с контролем закона и комиссией, сохраняя cash для аукциона раунда 4.\"}",
+          "reasoning_content": "I'm idx 2, cash 62.75. Round 3 action. Want presidency (influence). Currently holder is 1 with influence 1, I have influence 1? Wait seen shows my influence 3? Participants say influence 1, vote_weight 3? odd. Actually influence=1, vote_weight=3 — maybe +2 for skipped action earlier. Presidency determined at law by influence; currently holder is 1. If I bribe to gain influence, I could become president. Bribe 5 alashi to idx0 gives influence 2. Cheapest way to become president. As president, I control laws and veto, plus 5% commission to max influence. Also round 4 auction: cash ≥9 needed; bribe 5 leaves 57.75.\n\nBribe 5 to idx0 gives influence 2 > others' 1, president at law. Value: control taxes, commission 5%. Reasonable. Choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499357,
+    "id": "202610202029082adf48238b414d3b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202029082adf48238b414d3b",
+    "usage": {
+      "completion_tokens": 247,
+      "completion_tokens_details": {
+        "reasoning_tokens": 202
+      },
+      "prompt_tokens": 4750,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 4997
+    }
+  }
+}

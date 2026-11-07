@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.319,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Беру максимум товара перед будущими продажами, сохраняя cash для аукциона в раунде 4.\"}",
+          "reasoning_content": "Round 3 action, not auction. Need cash ≥9 for round 4 auction. Best main action: shuttle (4 goods, may be seized 25%). produce gives 3 (2+subsidy 1). Shuttle gives 4 grey goods with seizure risk 25%. Expected shuttle 3 > produce 3 equal. Shuttle free. Cash stays 31. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497440,
+    "id": "20261020195716bd44a7c9dfc64b80",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195716bd44a7c9dfc64b80",
+    "usage": {
+      "completion_tokens": 113,
+      "completion_tokens_details": {
+        "reasoning_tokens": 79
+      },
+      "prompt_tokens": 4023,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 4136
+    }
+  }
+}

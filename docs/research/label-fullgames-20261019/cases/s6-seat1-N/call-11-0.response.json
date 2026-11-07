@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.9,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Производство бесплатно даёт 2 товара для продажи в оставшихся раундах, сохраняя cash для ставки.\"}",
+          "reasoning_content": "My bid 25M, cash 18.4M. If I win the auction, 25M goes to bank; I need cash. Best action: produce or shuttle for goods to sell later? Cash matters for rank and payment after auction. Actually bid 25M > cash 18.4M — likely fine as escrow? Hmm, engine allowed.\n\nRemaining rounds 5-6 markets. Producing goods gives sellable units. produce gives 2 goods free — best value. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427873,
+    "id": "20261020003749107351bb0c8341fb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003749107351bb0c8341fb",
+    "usage": {
+      "completion_tokens": 139,
+      "completion_tokens_details": {
+        "reasoning_tokens": 104
+      },
+      "prompt_tokens": 3377,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 3516
+    }
+  }
+}

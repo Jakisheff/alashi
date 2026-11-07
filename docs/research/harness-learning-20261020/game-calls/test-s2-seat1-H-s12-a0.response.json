@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.176,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продам весь товар по высокой цене, cash останется выше 9 alashi для аукциона.\"}",
+          "reasoning_content": "Cash 19.79M, sell keeps cash ≥9. Sell all 3 at 12,10,9 → choice 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499898,
+    "id": "202610202038154c6ab81298d445cd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202038154c6ab81298d445cd",
+    "usage": {
+      "completion_tokens": 60,
+      "completion_tokens_details": {
+        "reasoning_tokens": 29
+      },
+      "prompt_tokens": 3441,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3501
+    }
+  }
+}

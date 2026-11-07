@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.96,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Субсидия товара выгодна и мне в будущих раундах, а мои доходы от продаж пока не облагаются.\"}",
+          "reasoning_content": "Law 3: subsidy_goods=1. Good for everyone; I have no goods though. Others produce too. But subsidy helps me when I produce later. Faction 2 voted yes. President is idx1 (not me). Vote yes seems fine—subsidy helps my future shuttle/produce. Yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490942,
+    "id": "202610201808591f74236637fb4884",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201808591f74236637fb4884",
+    "usage": {
+      "completion_tokens": 102,
+      "completion_tokens_details": {
+        "reasoning_tokens": 63
+      },
+      "prompt_tokens": 2288,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2390
+    }
+  }
+}

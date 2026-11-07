@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.891,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Наличные обесценятся на старте раунда 6, товар сохранит ценность; покупаю 5 единиц дёшево для продажи в финальном раунде.\"}",
+          "reasoning_content": "Round 5 market, sold_counter=7, price at 7 units = 5? Next rounds: round 6 market remains. Buying goods moves counter back. I have 43 alashi, license income 20-60 alashi coming. Round 6: cash = floor(cash/100)*62 devaluation! So holding cash loses 38%. Better to buy goods (goods don't devalue) — but final ranking counts only cash+hard, goods not counted. Buy goods now, sell in round 6? Round 6 market: sell at counter reduced. Then that cash stays final (no more devaluation after round 6? Round 6 is last round; start of round 6 cash=floor/100*62 applies to round-5 cash). So buy now (devalue-proof), sell in round 6 to convert back.\n\nBuy 5 units costs 22 alashi (prices: counter 7→ buy moves back, cost per candidate: 1 unit=4M, 2=9M, 3=15M, 4=22M, 5=29M, 6=39M). Selling in round 6 at counter 7-5=2, prices ~10,9: 2 units*10+... actually counter 2 means next price is 10. Selling 5 units from counter 2: 10+9+8+7+6=40M minus tax (round 5 law may set tax). Also rivals sell in round 6, price drops. Also produce in round 5 action gives +2 goods.\n\nBuy 5: spend 29M, cash 14M → round 6 cash = 14*0.62=8.68M + license income. Goods 5+2=7, sell 7 in round 6 at counter 2: 10+9+8+7+6+5+4=49M. But others sell first depending on order. Risky but goods>cash value due to devaluation. Buy 6: spend 39M, cash 4M→2.5M, sell 8 units: +3 = 51M... plus price shift.\n\nBuying 5 seems good balance. Choose 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427725,
+    "id": "202610200035131ed04419e0784bb6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200035131ed04419e0784bb6",
+    "usage": {
+      "completion_tokens": 523,
+      "completion_tokens_details": {
+        "reasoning_tokens": 470
+      },
+      "prompt_tokens": 3084,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3607
+    }
+  }
+}

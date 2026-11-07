@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.54,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Немедленная продажа всех 3 единиц даёт 24 alashi, что лучше векселя из-за девальвации.\"}",
+          "reasoning_content": "Cash devaluation: 62% each round. Sell now gives cash that will be devalued (round 3+ start). Sell all 3 for 24 alashi now; cash = 24, after next rounds: 24 → 14.88 → 9.2 → 5.7. Sell_credit gives 30 promissory, but card 8 already used. Promissory added to cash at round start, then whole cash devalued? \"cash=floor(cash/100)*62, затем promissory прибавляется\" — promissory not devalued this round, but then devalued subsequent rounds. 30 → 18.6 → 11.5... Actually promissory also pays out nothing at end unless converted by selling. Better sell for cash now: 24 vs 30*0.62=18.6. Sell 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499560,
+    "id": "202610202032308e0871c23f4f4ba7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202032308e0871c23f4f4ba7",
+    "usage": {
+      "completion_tokens": 228,
+      "completion_tokens_details": {
+        "reasoning_tokens": 188
+      },
+      "prompt_tokens": 2322,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2550
+    }
+  }
+}

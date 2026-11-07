@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.036,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 8 обнуляет векселя и может позже навредить моей стратегии sell_credit, голосую против.\"}",
+          "reasoning_content": "Law 8: cancels promissory notes. I have no promissory. Others may sell_credit later. Neutral now; no benefit. Vote no or abstain. President is idx2 with influence 1; I have weight 1. Vote no seems fine — law 8 could hurt me later if I plan sell_credit in rounds 2-5? Devaluation at round start converts promissory already; law 8 would zero unpaid promissory — could hurt me later. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497623,
+    "id": "20261020200018f493e36a573143e0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200018f493e36a573143e0",
+    "usage": {
+      "completion_tokens": 139,
+      "completion_tokens_details": {
+        "reasoning_tokens": 104
+      },
+      "prompt_tokens": 2499,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2638
+    }
+  }
+}

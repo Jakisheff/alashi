@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.422,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон на субсидию уже не влияет на итог, а я и так лидирую по выплате.\"}",
+          "reasoning_content": "Law 3 = subsidy_goods=1, no effect this round (game over after). I'm richest, already 1st. President is faction 2. Faction 0 voted yes. My vote: yes vs no — outcome doesn't matter to me. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496428,
+    "id": "2026102019402610b032c55cfc48e8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019402610b032c55cfc48e8",
+    "usage": {
+      "completion_tokens": 88,
+      "completion_tokens_details": {
+        "reasoning_tokens": 55
+      },
+      "prompt_tokens": 3229,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3317
+    }
+  }
+}

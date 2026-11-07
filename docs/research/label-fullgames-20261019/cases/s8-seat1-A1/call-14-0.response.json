@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 18.224,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"sell_credit максимизирует выручку с учётом девальвации: вексель 22.5M добавится после обесценения cash.\"}",
+          "reasoning_content": "Round 5 market, cash devaluation next round (62/100). Sell 3 for cash now: 18M cash. Sell credit gives 22.5M promissory but devaluation... promissory added after devaluation of cash, but final round: promissory doesn't pay after last round. Round 6 market is last market; promissory from now (round 5) is added at round 6 start after devaluation — but wait, sell now gives promissory added at round 6 start, no devaluation on promissory. Then round 6 market could sell goods then. Selling credit 3 units: 22.5M promissory vs 18M cash now → devalued to floor(56.75/100*... wait cash 38.75+18=56.75M → devalued 35.2M + promissory.\n\nCompare: sell 3 now cash: total 56.75 → round 6: 35.19M cash, 0 promissory, 0 goods.\nSell credit 3: cash 38.75 stays → 24.0M + promissory 22.5M = 46.5M at round 6, 0 goods. Better.\n\nBut goods could be sold at round 6 market... only 3 goods, sell counter resets? No, counter continues. Prices drop as sold. Selling 3 now at counter 4 (price 7,6,5). If wait to round 6, counter same but opponents also sell. Sell credit now better than sell cash. Buy? No.\n\nChoice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427776,
+    "id": "202610200035581691731caec64e03",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200035581691731caec64e03",
+    "usage": {
+      "completion_tokens": 388,
+      "completion_tokens_details": {
+        "reasoning_tokens": 345
+      },
+      "prompt_tokens": 3239,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3627
+    }
+  }
+}

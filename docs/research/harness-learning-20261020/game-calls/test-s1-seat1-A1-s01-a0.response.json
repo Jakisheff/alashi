@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.015,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"shuttle даёт больше товара при лучшем ожидании, риска налога пока нет\"}",
+          "reasoning_content": "All cash 0, market passed. Best: produce (safe 2 goods) vs shuttle 3 with 25% seizure risk (expected 2.25). Shuttle slightly better expected, but grey goods could be confiscated. Produce 2 guaranteed; shuttle expected value higher. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499655,
+    "id": "20261020203412e8b7ea974bde477f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203412e8b7ea974bde477f",
+    "usage": {
+      "completion_tokens": 86,
+      "completion_tokens_details": {
+        "reasoning_tokens": 59
+      },
+      "prompt_tokens": 1917,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2003
+    }
+  }
+}

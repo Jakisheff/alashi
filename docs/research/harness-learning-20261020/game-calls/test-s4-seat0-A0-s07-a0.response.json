@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.685,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Продажа всех 3 единиц в кредит даёт 38,75 alashi векселем без девальвации, лучше кэша (61 alashi → ~37,8 после обесценивания).\"}",
+          "reasoning_content": "Prices high early (12,10,9). Selling all 3 gives 61M cash now, and I can produce later. But promissory devaluation: round start cash=floor(cash/100)*62 units... actually cash*0.62? floor(cash/100)*62 min units — that's 62% of cash? Yes, cash devalues to 62%. Promissory added at full. So sell_credit gives 38.75M promissory which stays full, better than cash devaluation. Wait cash devaluates 62%, promissory paid full at round start. So sell_credit 3 units: 31M*1.25=38.75M promissory, no devaluation. Sell for cash: 61M → devalued to ~37.8M. So credit sale of all 3 is better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497204,
+    "id": "20261020195319f1285463cae544e2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195319f1285463cae544e2",
+    "usage": {
+      "completion_tokens": 238,
+      "completion_tokens_details": {
+        "reasoning_tokens": 182
+      },
+      "prompt_tokens": 2635,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2873
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.117,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce даёт +2 товара без риска изъятия, сохраняя влияние и позицию держателя X\"}",
+          "reasoning_content": "I'm holder with influence 2, vote weight 4. Round 3 action. Best: produce (goods 4) vs shuttle (3 goods, ~25% seizure risk? tariff?). Tariff currently 0 — shuttle risk applies? Shuttle has ~25% grey seizure always. produce gives 2, shuttle gives 3 but grey risk. Take produce for safety. Also holder power next law. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491154,
+    "id": "20261020181230fdaf1a7c3ec34551",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181230fdaf1a7c3ec34551",
+    "usage": {
+      "completion_tokens": 117,
+      "completion_tokens_details": {
+        "reasoning_tokens": 86
+      },
+      "prompt_tokens": 2661,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2778
+    }
+  }
+}

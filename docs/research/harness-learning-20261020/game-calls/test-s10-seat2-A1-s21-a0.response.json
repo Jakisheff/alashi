@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.974,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Налог не имеет эффекта после последнего рынка, я уже президент с максимальным влиянием — достаточно пропустить.\"}",
+          "reasoning_content": "Final round, law 1 = tax 10% on future sales — but no future sales remain? Round 6 market already done. I'm president, holder. I have 0 goods, no promissory. Tax irrelevant. Just pass or abstain. Vote_yes would give +1 influence to richest (me already max influence, I have 3). Law 1: tax 10% on future sales — no future sales matter. Doesn't affect me. But influence matters for 5% bonus — I already have max. Actually law 1 doesn't affect influence. Any choice fine; pass simplest. Wait veto: tax affects... no more sales. pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498097,
+    "id": "20261020200812a7755110d37f4a45",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200812a7755110d37f4a45",
+    "usage": {
+      "completion_tokens": 174,
+      "completion_tokens_details": {
+        "reasoning_tokens": 138
+      },
+      "prompt_tokens": 3363,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3537
+    }
+  }
+}

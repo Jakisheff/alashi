@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.126,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Взнос мал против богатых соперников; производю товар для будущих продаж, а крупный вексель даст_cash в следующем раунде.\"}",
+          "reasoning_content": "My cash is small (1.395), rivals 37 and 36. Bid amounts limited to cash. Rivals will likely outbid. Better to produce goods for future selling. My promissory 48.75 will be added to cash next round then taxed (devavl 62%? cash=floor(cash/100)*62 — that's devaluation, promissory added intact). Actually cash devaluation: 1395000→floor(1395000/100)*62 = 13950*62=864900. Promissory 48750000 added intact. So next round I'm rich. License income 20-60 is valuable; rival with 37 alashi can bid high. Bid 1.395 unlikely win. Just produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496859,
+    "id": "20261020194731e8d558bc7f6044fd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194731e8d558bc7f6044fd",
+    "usage": {
+      "completion_tokens": 205,
+      "completion_tokens_details": {
+        "reasoning_tokens": 162
+      },
+      "prompt_tokens": 3052,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 3257
+    }
+  }
+}

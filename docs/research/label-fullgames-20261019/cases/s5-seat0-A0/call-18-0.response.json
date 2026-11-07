@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.93,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce даёт 2 товара для дорогого рынка раунда 6 (цены 12/10/9/8), что стоит ~17 alashi выручки — больше ценности, чем взятка.\"}",
+          "reasoning_content": "I'm president with influence 2. Round 5 action, one more market round. Cash lowest (11.99M vs 24.8/12.96M). Two more markets? Round 5 market done, round 6 remains. Need goods to sell in round 6. Price counter reset to 0 — prices [12,10,...]. Buy 2 already done at cost ~24M. Best action: produce (2 goods → 4) gives units for next market. Bribe for influence: I'm tied influence 2 with player 2; president determined at law entry. Bribe 5M to idx2? I'm poorest in cash, so law card 4 gives +1 to poorest anyway. Influence matters for 5% commission and presidency next round. Bribe 5M gives influence 3 — but president at law phase is determined by influence at entry, and I already hold presidency? Holder determined each law by influence at entry to law. Currently holder 0 (influence 2 tie, tie_order favors me). Bribe gives certainty for round 5 law and round 6.\n\nTrade-off: 5M cash for influence. Cash 12M, rank currently 3rd (last). Cash matters for rank weights 50/30/15. Goods 4 sells for 12+10=22 alashi next market (minus tax) if first seller. Produce gives +2 goods → sell 4 for 12+10+9+8=39 alashi. Huge value. So produce.\n\nBut bribe also? Only one action. Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427171,
+    "id": "20261020002600ef4253f0d11f417a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020002600ef4253f0d11f417a",
+    "usage": {
+      "completion_tokens": 385,
+      "completion_tokens_details": {
+        "reasoning_tokens": 330
+      },
+      "prompt_tokens": 3727,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 4112
+    }
+  }
+}

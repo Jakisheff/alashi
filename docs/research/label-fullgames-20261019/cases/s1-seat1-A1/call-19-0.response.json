@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.821,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":9,\"reason\":\"Последний раунд: вексель не погашается, поэтому продаю весь товар за 35 alashi, максимизируя итоговый cash и ранг.\"}",
+          "reasoning_content": "Last round: promissory won't be paid after last round, so credit is bad. Sell all: cash 35M. But rank counts cash only; also license income extra. Selling more raises my rank; but pushing price down also lowers others' later sales? Others sell after me — lowering price hurts them too. Sell 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428079,
+    "id": "20261020004114375f7757900f4a3e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020004114375f7757900f4a3e",
+    "usage": {
+      "completion_tokens": 115,
+      "completion_tokens_details": {
+        "reasoning_tokens": 70
+      },
+      "prompt_tokens": 3534,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3649
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.923,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон даёт влияние богатейшему (сопернику), а голос президента перевешивает — голосую против символически.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest (idx1). Not me. President is idx2 voting yes; my no with weight 1 vs yes 2 passes anyway. Veto by holder only. I can't stop it. Vote no as signal — actually irrelevant. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490304,
+    "id": "20261020175821c0e7a47deb0d4f0a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175821c0e7a47deb0d4f0a",
+    "usage": {
+      "completion_tokens": 96,
+      "completion_tokens_details": {
+        "reasoning_tokens": 59
+      },
+      "prompt_tokens": 3010,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3106
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.865,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар и влияние уже не окупаются, максимум выплаты достигается сохранением cash.\"}",
+          "reasoning_content": "Last round action; goods worthless now (no more markets? Actually after action comes law, market already done in round 6). So goods useless. Influence: bribe gives influence, but max influence gives 5% bank commission = 2.5 alashi. Rival 0 has influence 3. Bribe 5M (5 alashi) to 0 gives me influence 2, tie? Not max. Bribe 20M→influence 5 beats 3, cost 20, gain 2.5M commission—not worth. Also influence... nothing else. Best: pass (choice 0). Cash counts for rank; keep cash.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427949,
+    "id": "20261020003902687e12a1de8f4c76",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003902687e12a1de8f4c76",
+    "usage": {
+      "completion_tokens": 165,
+      "completion_tokens_details": {
+        "reasoning_tokens": 137
+      },
+      "prompt_tokens": 5213,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 5378
+    }
+  }
+}

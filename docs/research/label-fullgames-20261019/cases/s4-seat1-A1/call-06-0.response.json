@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.799,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Закон даёт +1 влияния самой богатой фракции 2 — конкуренту, поэтому применяю veto.\"}",
+          "reasoning_content": "Card 5: +1 influence to richest. Richest cash: idx2 (22M) — rival. So veto it. Also vote_no; veto guarantees.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490556,
+    "id": "202610201802285e24ce65e9fa4edd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201802285e24ce65e9fa4edd",
+    "usage": {
+      "completion_tokens": 70,
+      "completion_tokens_details": {
+        "reasoning_tokens": 34
+      },
+      "prompt_tokens": 2338,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2408
+    }
+  }
+}

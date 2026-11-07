@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.53,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Veto отменяет 20% налог на мои будущие продажи.\"}",
+          "reasoning_content": "Закон 2: налог 20%. Да: мои 2 + rival1 = 3, No: 2. Принят. Мне налог вреден — применить veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498994,
+    "id": "202610202023115c8b398be4b54935",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202023115c8b398be4b54935",
+    "usage": {
+      "completion_tokens": 62,
+      "completion_tokens_details": {
+        "reasoning_tokens": 38
+      },
+      "prompt_tokens": 2980,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3042
+    }
+  }
+}

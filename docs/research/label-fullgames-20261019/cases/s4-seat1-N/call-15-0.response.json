@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.188,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Shuttle даёт 3 товара бесплатно для финального рынка, максимизируя последующие продажи.\"}",
+          "reasoning_content": "Раунд 5 action. Нужно goods для продажи в раунде 6. Produce даёт 2 товара. Shuttle даёт 3 с риском? Граница сейчас — ставка лицензии? Граница определяется тарифом, сейчас нет тарифа? Roof не активен, риска изъятия нет при отсутствии тарифа? Риск ~25% при красном. При отсутствии тарифа shuttle безопасен? Описание: shuttle серый может быть изъят ~25%; при льготной границе платится. Неясно, но выбор: shuttle даёт 3 товара бесплатно — лучше produce. Шаттл уже дважды успешно. Беру shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490670,
+    "id": "20261020180425474d3e40ead34885",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180425474d3e40ead34885",
+    "usage": {
+      "completion_tokens": 176,
+      "completion_tokens_details": {
+        "reasoning_tokens": 143
+      },
+      "prompt_tokens": 4201,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 4377
+    }
+  }
+}

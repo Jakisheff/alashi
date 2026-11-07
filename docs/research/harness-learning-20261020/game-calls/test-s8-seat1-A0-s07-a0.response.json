@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.362,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Прямая продажа обоих товаров по высокой цене даёт максимум ликвидного cash без девальвации векселя.\"}",
+          "reasoning_content": "Sell 2 units at 10 each? Price counter=2 → next price 10. Sell 2 = 17 alashi gross = 17000000, cash +17 = 31880000. That matches choice 3. Promissory gets devalued 62%, prefer sell now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498566,
+    "id": "202610202015585de16bf4042344a2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202015585de16bf4042344a2",
+    "usage": {
+      "completion_tokens": 100,
+      "completion_tokens_details": {
+        "reasoning_tokens": 64
+      },
+      "prompt_tokens": 2463,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2563
+    }
+  }
+}

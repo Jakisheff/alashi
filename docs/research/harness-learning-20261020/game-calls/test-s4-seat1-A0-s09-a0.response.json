@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.76,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Взятки усиливают соперников и drained cash перед аукционом, а shuttle даёт 3 товара для будущих продаж.\"}",
+          "reasoning_content": "Need to gain presidency? Holder is 2 with influence 1. I have influence 1, tie order 2>1>0, so 2 wins ties. To become president need influence 2+. Bribing 5 to idx0 (influence 2) — no, bribe gives me influence floor(amount/5M). Bribing 5M gives me 2 influence > others (2 has 1, 0 has 2)... idx0 has influence 2. So need 3 influence to be top: 10M bribe. That makes me president in law phase, plus 5% bank bonus at end for max influence? Only I'd have 3 vs 2. Cash cost 10M vs control of law and veto. Bank is 30M, 5% = 1.5M. Value of presidency with veto... but bribe money goes to rival, increasing their rank. Hmm.\n\nAlternative: shuttle gives 3 goods to sell. Also round 4 has license auction — cash is useful for bidding.\n\nInfluence also matters for final 5% bonus (1.5M). Spending 10M to give rival 10M — bad. Perhaps just shuttle for goods.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499847,
+    "id": "202610202037209c74a863c3894bb1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202037209c74a863c3894bb1",
+    "usage": {
+      "completion_tokens": 294,
+      "completion_tokens_details": {
+        "reasoning_tokens": 255
+      },
+      "prompt_tokens": 3469,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 3763
+    }
+  }
+}

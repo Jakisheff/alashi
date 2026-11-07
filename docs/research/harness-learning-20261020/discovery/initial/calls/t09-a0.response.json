@@ -1,0 +1,31 @@
+{
+  "elapsed_s": 14.818,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"tool\":\"calculate\",\"code\":\"def sats(x): return (min(x), sum(x)/len(x), max(x))\\nsubj_pay=[]; subj_lic=[]; subj_rank=[]\\nfor g in games:\\n    s=g['subject_idx']; o=g['outcome']; lic=o['license']\\n    subj_pay.append(o['payouts'][s]); subj_lic.append(lic['holder_idx']==s); subj_rank.append(o['ranks'][s])\\nprint('subject payout all', sats(subj_pay))\\nprint('subject payout when lic', sats([p for p,l in zip(subj_pay,subj_lic) if l]), sum(subj_lic))\\nprint('subject payout when no lic', sats([p marginal]) if False else 0)\\nprint('nolic', sats([p for p,l in zip(subj_pay,subj_lic) if not l]))\\nprint('subject rank dist', {r:subj_rank.count(r) for r in set(subj_rank)})\"}",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792494606,
+    "id": "20261020190952370f16dfcf774866",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020190952370f16dfcf774866",
+    "usage": {
+      "completion_tokens": 226,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      },
+      "prompt_tokens": 9555,
+      "prompt_tokens_details": {
+        "cached_tokens": 9216
+      },
+      "total_tokens": 9781
+    }
+  }
+}

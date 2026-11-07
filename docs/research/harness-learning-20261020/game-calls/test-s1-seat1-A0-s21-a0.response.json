@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.503,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар больше не продать, а взятка ради 5% комиссии банка дороже самой выгоды — просто пропускаю.\"}",
+          "reasoning_content": "Last action round. Goods won't be sold (no more markets). Produce/shuttle useless for cash. Rich already first. Influence max gives 5% bonus of bank (2M). Bribe costs 5M for +1 influence — but 5% of bank = 200k, not worth. But bribe money goes to opponent, harming ranking? Money moves to opponent hurts me relatively. Best: pass, or bribe to keep presidency? I'm already president (holder_idx=1, influence 2 vs others 2,1... tie_order [2,1,0]; influence 2 vs 2 — tie broken by tie_order: 2 beats 1? But holder is 1 now. Next law entry: influence plus 2 if action passed. If I pass, my vote_weight 4. Influence for presidency: I pass → influence stays 2, opponent 0 also 2, tie_order favors 2? But holder currently 1; still veto free for me. Bribe 5M to gain influence 3 secures presidency — but veto is free anyway. Presidency gives influence-max bonus at end: max influence. If I bribe 5M I get influence 3 > others, gaining 5% commission ~2M but losing 5M. Not worth. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498897,
+    "id": "202610202021305c8e8d9a7dd9431d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202021305c8e8d9a7dd9431d",
+    "usage": {
+      "completion_tokens": 311,
+      "completion_tokens_details": {
+        "reasoning_tokens": 273
+      },
+      "prompt_tokens": 5341,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 5652
+    }
+  }
+}

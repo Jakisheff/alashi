@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 14.213,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":42,\"reason\":\"Ставка 15 alashi даёт шанс на лицензию (EV ~40) при частичном возврате через долю банка.\"}",
+          "reasoning_content": "Round 4 action, auction. License income 20-60 alashi. My cash ~45.8. Rivals ~3.3 and 37.0. Tie order favors me (1). Bid moderately: something like 10-12 alashi should beat them likely? Rival 2 has 37 alashi, could bid more. License income EV ~40 alashi, worth bidding. But win bid goes into bank and is redistributed by rank; if I'm top rank, I get 50%. So effective cost lower. Also get license income directly. If rival 2 outbids me, bank grows and I still get 50% of their bid. Best to bid moderate, e.g., 12-15 alashi. Rival 2 has 37 cash, might bid big. Tie_order priority: 1,2,0 — I win ties.\n\nI also want goods for future markets. bid doesn't consume action — but only one combined action offered? \"Интерфейс предлагает одну совокупную ставку за ход\" — so a bid is one choice, and bid doesn't consume the main action... but menu candidates show only bid alone. Hmm, but candidates list includes standalone produce etc. Choose one.\n\nActually bid doesn't consume action, so choosing a bid also performs a default action? Likely pass. Anyway choose bid ~12M plus no goods. Alternatively produce (3 goods worth ~8 each = 24). Bid 12M with license EV 40: cost net ~6 (50% back via bank share). Profitable. Bid 15? Risk rival 2 outbids. Let's bid 15M (choice 42). Actually also want veto holder influence... keep it simple: bid 15M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427571,
+    "id": "2026102000323844f7813d8dd54089",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000323844f7813d8dd54089",
+    "usage": {
+      "completion_tokens": 402,
+      "completion_tokens_details": {
+        "reasoning_tokens": 362
+      },
+      "prompt_tokens": 6927,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 7329
+    }
+  }
+}

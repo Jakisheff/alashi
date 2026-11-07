@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.35,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Субсидия после последнего рынка бесполезна, veto не даёт выгоды.\"}",
+          "reasoning_content": "Law 3 gives subsidy_goods=1 — but it's the last round; after law 6 no more market. Subsidy goods useless now. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499058,
+    "id": "202610202024122728b0a21e414104",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202024122728b0a21e414104",
+    "usage": {
+      "completion_tokens": 63,
+      "completion_tokens_details": {
+        "reasoning_tokens": 33
+      },
+      "prompt_tokens": 3794,
+      "prompt_tokens_details": {
+        "cached_tokens": 3264
+      },
+      "total_tokens": 3857
+    }
+  }
+}

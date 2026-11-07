@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.467,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"20%-налог на будущие продажи повредит моей выручке в последнем раунде, а мой вес 4 гарантирует отклонение.\"}",
+          "reasoning_content": "Law 2 = 20% tax on future sales. I hold presidency, will sell goods later (round 6 market). Tax hurts me — I plan to sell 3 goods round 6. Vote no; participant 2 already no. My no weight 4 makes it fail. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490531,
+    "id": "202610201802062bc1d0975df84ee8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201802062bc1d0975df84ee8",
+    "usage": {
+      "completion_tokens": 104,
+      "completion_tokens_details": {
+        "reasoning_tokens": 62
+      },
+      "prompt_tokens": 3096,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3200
+    }
+  }
+}

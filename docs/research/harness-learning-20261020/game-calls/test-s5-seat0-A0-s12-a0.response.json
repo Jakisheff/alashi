@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.887,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Продаю весь товар в кредит ради выручки +25%, вексель успеет погаситься в девальвациях.\"}",
+          "reasoning_content": "Продажа по 4 alashi? sold_counter=7, prices index 7 = 4. Sell 3 за 10 alashi cash. Но после раунда 6 промиссы не погашаются... Раунд 4, будет ещё два дезвейва, промисс конвертится в cash (обнуляется при девальвации? нет, promissory прибавляется к cash). Продать всё в кредит: 10*1.25=12.5 промисс, cash тот же. Лучше кредит. Однако карта 8 (обнуление промиссов) уже вышла. Осторожно, но 25% бонус стоит. Выбор 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498472,
+    "id": "202610202014270f60dc5a1326497c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202014270f60dc5a1326497c",
+    "usage": {
+      "completion_tokens": 189,
+      "completion_tokens_details": {
+        "reasoning_tokens": 149
+      },
+      "prompt_tokens": 3249,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 3438
+    }
+  }
+}

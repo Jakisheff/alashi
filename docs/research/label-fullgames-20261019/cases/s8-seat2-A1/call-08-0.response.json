@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.62,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Максимум товара для будущих продаж при сохранении cash и влияния к аукциону.\"}",
+          "reasoning_content": "We're president with influence 3. Shuttle gives 3 goods (risk 25% at red border — but tariff may be black? tariff status unknown; roof_tariff=0 for all, tariff state? Border risk applies with red tariff. Unknown. Shuttle gives 3 goods for potential sale later. Also need cash for auction round 4. Influence already 3 secures presidency; bribes cost cash. Produce gives 2 free. Shuttle gives 3 with ~25% risk — expected value fine but goods sell at declining prices (sold_counter 6 → price 3). Selling 3 more gives ~7-8 alashi. Cash matters for rank; we're currently richest. Shuttle maximizes goods.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490988,
+    "id": "20261020180944e2370447612d4300",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180944e2370447612d4300",
+    "usage": {
+      "completion_tokens": 177,
+      "completion_tokens_details": {
+        "reasoning_tokens": 146
+      },
+      "prompt_tokens": 3530,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 3707
+    }
+  }
+}

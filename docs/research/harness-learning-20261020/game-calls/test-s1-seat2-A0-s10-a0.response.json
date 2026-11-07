@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.311,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон 7 повышает цены соперникам, у меня товара нет — вето выгодно.\"}",
+          "reasoning_content": "Law 7 raises prices +2 next market; I've goods 0, rivals have 4 goods total. Veto it to hurt them.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499374,
+    "id": "2026102020293253248dc6213a4f87",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020293253248dc6213a4f87",
+    "usage": {
+      "completion_tokens": 60,
+      "completion_tokens_details": {
+        "reasoning_tokens": 30
+      },
+      "prompt_tokens": 2440,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2500
+    }
+  }
+}

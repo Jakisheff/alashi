@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.648,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Нет товара; покупка по 14 за единицу убыточна при падающих ценах.\"}",
+          "reasoning_content": "I have no goods. Buy at price 12+2=14? costs 11 alashi, goods 1. Boom +2 boosts next sale prices... but price will drop as others sell. Buying moves counter back. With 3 players and future selling, price drops fast. Probably pass — buying at 14 to sell later at ≤12 is bad. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428003,
+    "id": "20261020003959035eed933e114554",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003959035eed933e114554",
+    "usage": {
+      "completion_tokens": 108,
+      "completion_tokens_details": {
+        "reasoning_tokens": 76
+      },
+      "prompt_tokens": 2314,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2422
+    }
+  }
+}

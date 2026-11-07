@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.377,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Цена на пике 12, у соперников нет товара — продаю всё сейчас за cash.\"}",
+          "reasoning_content": "Round 5 market, counter 0, price 12. Sell 2 now at 12 each = 24 cash. Rival have 0 goods. Selling all at 12 seems good; later counter resets? sell 2 (choice 3).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497773,
+    "id": "202610202002421ae70f6263d04d1c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202002421ae70f6263d04d1c",
+    "usage": {
+      "completion_tokens": 84,
+      "completion_tokens_details": {
+        "reasoning_tokens": 53
+      },
+      "prompt_tokens": 3497,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3581
+    }
+  }
+}

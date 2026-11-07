@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.358,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Продать весь товар по максимальной цене 12, чтобы получить cash до девальвации следующего раунда.\"}",
+          "reasoning_content": "sold_counter=0, price 12 alashi. Sell both for 22 alashi cash now. Round 5, cash will be devalued next round (62%). Sell all now for cash is good.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496368,
+    "id": "20261020193925915a597143244b8e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020193925915a597143244b8e",
+    "usage": {
+      "completion_tokens": 81,
+      "completion_tokens_details": {
+        "reasoning_tokens": 44
+      },
+      "prompt_tokens": 3489,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3570
+    }
+  }
+}

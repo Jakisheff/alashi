@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.304,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Максимальная цена 12 за единицу при пустом счётчике — продаю всё сейчас.\"}",
+          "reasoning_content": "Sell both at 12 each (counter 0). Choice 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496654,
+    "id": "20261020194412c60c0ccedb224006",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194412c60c0ccedb224006",
+    "usage": {
+      "completion_tokens": 49,
+      "completion_tokens_details": {
+        "reasoning_tokens": 15
+      },
+      "prompt_tokens": 3422,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3471
+    }
+  }
+}

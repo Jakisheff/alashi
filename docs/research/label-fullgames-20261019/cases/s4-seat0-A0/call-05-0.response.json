@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.667,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"shuttle даёт больше товара, а риска почти нет при нуле cash на пошлину\"}",
+          "reasoning_content": "Produce gives 2 goods safe; shuttle 3 but risk of seizure. No cash for donkey. Shuttle 3 goods but grey seizure ~25% risk and border payments? Prefer shuttle? Seizure ~25% loses all goods; EV 3*0.75=2.25 vs produce 2. Slight edge but also border fee paid to president. Round 2 cash 0, so min(cash,2)=0 fee. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490382,
+    "id": "20261020175936aa3fcc7f414745e5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175936aa3fcc7f414745e5",
+    "usage": {
+      "completion_tokens": 126,
+      "completion_tokens_details": {
+        "reasoning_tokens": 97
+      },
+      "prompt_tokens": 2171,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2297
+    }
+  }
+}

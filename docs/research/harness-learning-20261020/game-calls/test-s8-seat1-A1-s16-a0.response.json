@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.355,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель оплатят в начале раунда 6, а выручка ×1.25 превышает мгновенную продажу.\"}",
+          "reasoning_content": "Round 5, price reset to 12? sold_counter=0, so price 12. Sell both now: cash 34M, leading. Promissory would be devalued at round 6 start anyway? Round 6 start devalues cash, promissory added after devaluation and rounds are 6 total, so round 6's promissory... selling credit round 5 gives promissory added at round 6 start, but last round promissory unredeemed? Promissory at round 6 start is added to cash, so credit sell round 5 gets paid. Actually credit ×1.25 is better since paid at round 6 start. Sell both credit: 27.5M promissory added round 6. But opponents also sell this round pushing price down. Choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498994,
+    "id": "20261020202309704c35ded0584dc4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202309704c35ded0584dc4",
+    "usage": {
+      "completion_tokens": 210,
+      "completion_tokens_details": {
+        "reasoning_tokens": 172
+      },
+      "prompt_tokens": 3011,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3221
+    }
+  }
+}

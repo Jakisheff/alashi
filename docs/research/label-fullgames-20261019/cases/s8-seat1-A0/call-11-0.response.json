@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 20.308,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":43,\"reason\":\"Ставка 20M на лицензию: доход 20–60M сверх доли банка при высокой ожидаемой прибыли, выигрывает у товаров.\"}",
+          "reasoning_content": "Own_bid=0 already placed (interesting—bid 0 placed). We're in action, need main action. Cash 37.06, richest. Round 4. License: we can't re-bid? own_bid=0 shown; bid candidates exist still. Bid doesn't consume action. Question: main action. Value of goods: remaining rounds 5,6 markets. Prices: sold_counter=3, price ~8... With price shift unknown. Produce gives 2 goods, sell at ~8-9 alashi each later — good. Bribe to gain influence: max influence holder gets 5% commission and president role. Currently idx0 has influence 2. Bribe 5 alashi gives +1 influence → tie with 0; tie_order [2,1,0] — 0 wins president anyway. Bribe 10 → influence 3, president, plus 5% commission (~1.5 alashi). Commission 5% of 30 = 1.5. President controls law vote — could block tax laws. Cost 10 alashi for influence 3. But cash counts for rank; spending 10 reduces rank... promissory 38.75 adds next round cash though (round 5 start promissory added, then round 6 dev floor... round 6: cash=floor/100*62 devalues, but promissory added after). Actually round 6 start: cash devalued, promissory added then cleared. So promissory survives once into round 5 already (added at round 5 start).\n\nBank 30, pool 28.5, shares 50/30/15 → 14.25/8.55/4.275 plus commission 1.5. Currently richest: idx1 37.06+38.75 next round. Influence matters little; commission 1.5 to max influence.\n\nBest: produce (goods for later sales) plus bid? Bid already 0, can bid again (interface: one aggregate bid per turn). License income 20-60 alashi, worth bidding. Bid ~10-15 to win? Opponents cash 5.3 and 31.5. Bid 15 alashi costs cash but license pays 20-60 extra plus goes to bank. Winner's bid adds to bank, so net cost lower via bank share. Bid 15 → but then can't take another action? \"bid doesn't consume action; after bid can choose another action.\" Interface offers one aggregate bid per turn — already at 0, maybe still can. But we must pick one candidate only. Choose bid 15M (choice 38)? Or produce (choice 1)? Bidding 15 gives license worth 20-60 expected ~40, net +25 — much better than 2 goods worth ~16. But opponents may outbid 15 with 31.5 cash (idx2 tie_order 2 priority). Risky; but winning value high. Bid 20M (choice 43): opponent2 has 31.5, could outbid. Value still positive. I'll bid 20M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427894,
+    "id": "20261020003755148c1e24ed8c4493",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003755148c1e24ed8c4493",
+    "usage": {
+      "completion_tokens": 692,
+      "completion_tokens_details": {
+        "reasoning_tokens": 649
+      },
+      "prompt_tokens": 6250,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 6942
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 16.251,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Производство даёт гарантированные 5 товаров к финальному рынку без пограничного риска.\"}",
+          "reasoning_content": "I hold presidency with influence 2. I bought 3 goods, have 3. Round 5 action, round 6 last. I have license income plus bank share. Cash is tiny, rank low anyway. Best to maximize goods for last market sell? Sold counter 0, price 12. But rivals have 9 and 2 goods too. I'm holder, in round 5 law I can veto.\n\nAction: shuttle gives 6 goods (risk of border seizure? tariff 0, no protection — grey may be seized 25%). Produce gives 5 safe? Actually produce gives 2, so 3→5. Shuttle 3+0=3 grey? goods=6 grey goods 0... shuttle gives grey goods but count shows goods 6. Seizure ~25% risk unless black tariff. Expected shuttle: 6*0.75=4.5 vs produce 5. Choose produce.\n\nAlso skipping vote pass gives weight bonus — I have influence 2, weight 4, safe. Roof? Black tariff protects grey, could shuttle with tariff... roof pays 30% cash (tiny) to recipient and arms tariff. Tariff 1 = black, protects. Then shuttle: 6 goods safe. But tariff affects market? Only border. Shuttle next round too. Roof to player 2 costs 30% of 22000 = tiny. That seems good: black tariff, shuttle now, shuttle round 6 safe.\n\nBut roof also cancels first tax law against richest — irrelevant. Roof tariff black protects my grey goods. Choose choice 5 (roof tariff1 to idx2), then shuttle... but roof consumes the action this turn. So this round only roof, no goods. Trade-off: produce now (5 goods) vs roof (0 goods now) but protect shuttles? Round 6 I can shuttle once regardless. Round 6 shuttle with black tariff: 6 goods vs 0.75*6=4.5 grey. Also rivals' border.\n\nAlternative: shuttle now (risk), produce round 6? Round 6 only one action.\n\nCompare total goods:\n- produce now: 5; round6 shuttle risky 4.5 → ~9.5\n- roof now: 3; round6 shuttle safe 6 → 9\n- shuttle now 4.5; produce r6 5 → 9.5\n\nRoughly equal. But black tariff also affects... tax roof cancels first tax law against richest — I'm not richest. Also tariff black at border: rivals pay? \"При льготной границе за серый ход платится min(cash,2)\" — not this. Keep simple: produce now (choice 1), less risk, guaranteed 5.\n\nActually wait — shuttle here shows goods 6, but seizure happens at end? Candidate shows after state only. Risk applies. Produce safer. Choose 1.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497824,
+    "id": "2026102020032989793fe3871e4fd7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020032989793fe3871e4fd7",
+    "usage": {
+      "completion_tokens": 636,
+      "completion_tokens_details": {
+        "reasoning_tokens": 601
+      },
+      "prompt_tokens": 3185,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3821
+    }
+  }
+}

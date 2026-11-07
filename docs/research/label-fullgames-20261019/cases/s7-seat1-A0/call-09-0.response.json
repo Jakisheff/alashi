@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.994,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 20% вредит моим будущим продажам, голосую против.\"}",
+          "reasoning_content": "Law 2 = 20% tax on future sales. I have promissory and plan to sell. President is faction 0 who also sells goods — tax hurts them too, but president (idx 0) may veto. I hold 1 influence, president is idx 0. My vote: yes/no each weight 1. If I vote no and president votes yes → tie? yes strictly > no required. Best to vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490460,
+    "id": "20261020180054edc19a9c79884e21",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180054edc19a9c79884e21",
+    "usage": {
+      "completion_tokens": 119,
+      "completion_tokens_details": {
+        "reasoning_tokens": 91
+      },
+      "prompt_tokens": 2479,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2598
+    }
+  }
+}

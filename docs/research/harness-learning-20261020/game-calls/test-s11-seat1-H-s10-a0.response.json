@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.36,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Закон 4 даёт влияние беднейшему (не мне), эффект для меня нейтрален — воздерживаюсь.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest cash. Poorest is idx2 (0 cash). I'm idx1 with 7.3M. President is idx0. Giving +1 influence to idx2 doesn't hurt me directly. My promissory 26.25M gets devalued next round anyway (cash devaluation). Law 4 vs no law — no tax. Neutral for me. Abstain or pass. Pass keeps vote_weight same? vote_weight includes +2 if action passed — my action was shuttle, so no bonus. I'm not president. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498708,
+    "id": "2026102020182460c90fd3bb504da5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020182460c90fd3bb504da5",
+    "usage": {
+      "completion_tokens": 161,
+      "completion_tokens_details": {
+        "reasoning_tokens": 123
+      },
+      "prompt_tokens": 3024,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3185
+    }
+  }
+}

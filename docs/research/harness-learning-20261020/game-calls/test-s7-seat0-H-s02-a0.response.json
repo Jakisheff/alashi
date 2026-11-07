@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.186,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Карта 7 повышает цены следующего рынка — выгодно моим будущим продажам.\"}",
+          "reasoning_content": "Card 7: +2 prices next market. I'm not president (idx 2 is). Vote: yes helps prices, but I have 0 goods, opponents have 2 each — helps them sell. Actually market phase r1 passed already; card 7 affects next market (round 2), where I'll have goods too (shuttle gave 2). Vote yes helps all equally; my sales next round benefit. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498190,
+    "id": "2026102020094740739dfd0be6413b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020094740739dfd0be6413b",
+    "usage": {
+      "completion_tokens": 120,
+      "completion_tokens_details": {
+        "reasoning_tokens": 90
+      },
+      "prompt_tokens": 2498,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2618
+    }
+  }
+}

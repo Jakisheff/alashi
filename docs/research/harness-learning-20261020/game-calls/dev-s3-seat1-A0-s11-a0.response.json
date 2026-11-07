@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.478,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":8,\"reason\":\"Вексель не девальвируется, поэтому продажа всего в кредит при высокой текущей цене максимизирует итоговую выплату.\"}",
+          "reasoning_content": "Round 4 of 6, market. Remaining cards: after 3,8,2 used; cards 0,1,4,5,6,7. Prices now: counter 0, price 12 base. Actually sold_counter 0 means full price 12. Sell 4 units at 12,10,9,8 = 39 alashi. Credit 1.25x=48.75. Round 5 start cash halves (62%), so sell now is better than credit? Credit promissory added to cash at start of round 5 without devaluation — promissory isn't devalued! So sell_credit is better: cash devalues to 62% but promissory stays full. But round 6 start also devalues. Sell credit 4: promissory 48.75M added at round 5 start, then devalued at round 6 start (62%). Still better than sell now: 39M cash devalued twice (to 62% at r5 and r6) = 15M vs credit 48.75*0.62=30M... wait but cash 48.75 added at r5 start, then r6 start devalued to 62%: 30.2M. Compare selling now: 39M cash, r5: 24.2M, r6: 15M. Credit much better. Sell credit 4 (choice 8).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495361,
+    "id": "20261020192234cc0e601c42764c04",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192234cc0e601c42764c04",
+    "usage": {
+      "completion_tokens": 342,
+      "completion_tokens_details": {
+        "reasoning_tokens": 305
+      },
+      "prompt_tokens": 2955,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 3297
+    }
+  }
+}

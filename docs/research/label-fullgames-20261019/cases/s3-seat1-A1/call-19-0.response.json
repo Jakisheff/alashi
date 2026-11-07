@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.943,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Это последнее действие, товары уже бесполезны, а по влиянию я и так выигрываю тай-брейк — раздача денег лишь ухудшит ранг.\"}",
+          "reasoning_content": "Final action round 6. Last law comes after; I'm likely president anyway (influence 2 vs 2, tie_order favors me: [1,2,0], idx1 wins ties). Goods useless after final market? No more markets after round 6 market already done. Actually round 6 market done, goods worthless. So best: keep cash. But max influence gives extra 5% bank. Influence 2 vs 0's 2 — tie broken by tie_order [1,2,0], I win already. Bribing reduces cash (rank), gives money to rival (increases their cash rank). Bad. Pass.\n\nRoof gives away cash, bad. So pass, choice 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490945,
+    "id": "20261020180859fa0fb196a9aa4f07",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180859fa0fb196a9aa4f07",
+    "usage": {
+      "completion_tokens": 196,
+      "completion_tokens_details": {
+        "reasoning_tokens": 149
+      },
+      "prompt_tokens": 4915,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 5111
+    }
+  }
+}

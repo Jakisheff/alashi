@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.327,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce даёт товар для выгодной продажи на следующем рынке при лидерстве по cash и приоритете влияния.\"}",
+          "reasoning_content": "Round 5 action. Two rounds left (5,6). I'm leading cash. Produce gives goods to sell next market at ~10 alashi price. Sold counter 2, price 10 next. Produce is good ROI. Bribe: influence matters for presidency next law and bonus 5%. Small bribe 5 alashi to keep presidency? Currently influence 1 each, tie_order gives me presidency at 0 anyway (round 6 order rotates, but tie_order [0,2,1] favors me). Influence 5% bank bonus ~2 alashi. Produce likely best: 2 goods ×10 = 20 alashi vs 5 bribe cost. Take produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496753,
+    "id": "20261020194549cfde216f33a5422f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194549cfde216f33a5422f",
+    "usage": {
+      "completion_tokens": 177,
+      "completion_tokens_details": {
+        "reasoning_tokens": 142
+      },
+      "prompt_tokens": 4750,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 4927
+    }
+  }
+}

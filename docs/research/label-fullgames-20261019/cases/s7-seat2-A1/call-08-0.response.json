@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.41,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Кредитная продажа всего товара даёт максимум выручки без риска девальвации при нулевом cash.\"}",
+          "reasoning_content": "Prices now: sold_counter=4, price list index 4 = 7, +boom 2 = 9. Sell 2 units: 9+8=17. Credit 21.25. Credit risks devaluation (cash/100*62 each round) but promissory added... cash starts 0, promissory 21.25M; next round cash = 0 + 21.25. Devaluation only applies to cash. But promissory may be zeroed by law 8 (already used, no repeats). Sell credit full gives 21.25M next round — better than 17 now. But final round credit unpaid. We're round 3 of 6, so credit is good. Also holding goods for later markets — prices decline. Sell all credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490727,
+    "id": "20261020180518491a211b67fb4b10",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180518491a211b67fb4b10",
+    "usage": {
+      "completion_tokens": 201,
+      "completion_tokens_details": {
+        "reasoning_tokens": 166
+      },
+      "prompt_tokens": 2459,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2660
+    }
+  }
+}

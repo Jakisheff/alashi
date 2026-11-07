@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.904,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон даёт +1 влияния богатейшему (не мне), но моё влияние 4 всё равно доминирует — угрозы нет.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest. Richest is idx0 (26.3M). I'm idx2 with influence 4 already — president. Giving +1 to idx0 (1→2) doesn't threaten me. But it affects final 5% commission bonus for max influence — I have 4, fine. Vote yes is harmless. Actually maybe veto to deny rival influence? My influence 4 vs others 1; +1 to richest gives them 2. No threat. Vote yes costs nothing; law passes either way? Others vote unknown. Just vote yes (or pass). Either fine. Choose yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495151,
+    "id": "20261020191906d54c73c32fc94ddf",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020191906d54c73c32fc94ddf",
+    "usage": {
+      "completion_tokens": 171,
+      "completion_tokens_details": {
+        "reasoning_tokens": 130
+      },
+      "prompt_tokens": 3627,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 3798
+    }
+  }
+}

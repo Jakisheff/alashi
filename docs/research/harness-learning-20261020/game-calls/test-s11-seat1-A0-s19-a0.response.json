@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.805,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":9,\"reason\":\"Финальный раунд: вексель не погашается и не входит в ранг, поэтому продаю весь товар за живой кэш.\"}",
+          "reasoning_content": "Final round, promissory unredeemed, but final rank uses cash+hard only, promissory ignored. So sell for cash now. Rival 0 has 37M, rival 2 has 5.4M + can sell 9 goods later in round 6? Order rotates; own_idx=1. I'm president in law maybe. I have license income 20-60 extra. Bank 45M plus my bid 15M already added? Bid added to bank when won. Anyway sell all 5 for cash 35M cash → total ~35M vs rival 0's 37M, but their cash will devalue at round start? No—this is round 6 start already; no more devaluation. Rival 2 could sell 9 goods... sold_counter starts at 2; my sales push counter. Rival 2 sells after, price drops. Anyway maximize own cash: sell 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497844,
+    "id": "20261020200358e626c89c04344689",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200358e626c89c04344689",
+    "usage": {
+      "completion_tokens": 239,
+      "completion_tokens_details": {
+        "reasoning_tokens": 196
+      },
+      "prompt_tokens": 3535,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3774
+    }
+  }
+}

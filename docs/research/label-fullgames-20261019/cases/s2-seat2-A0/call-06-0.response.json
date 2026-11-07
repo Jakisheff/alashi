@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.733,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Закон 8 обнуляет векселя, которых ни у кого нет — воздерживаюсь.\"}",
+          "reasoning_content": "Law 8 обнуляет promissory. У меня нет promissory. У соперников? В round 2 cash=floor/100*62, promissory прибавляется. Видно cash: 15, 11, 31 млн — history показывает после продажи. Не видно чужих promissory, но в round 2 они уже обнулились. Никто не имеет promissory сейчас. Закон 8 бесполезен для меня и для всех? Никому не вредит. Президент — фракция 1, я не президент, мой голос weight 1. голосую yes или abstain — без разницы. Президент может veto. Закон нейтрален. Pass сохраняет vote_weight? Нет, vote_weight +2 если action пропущен — уже прошло. Проголосую abstain (нейтрально) или yes. Выберу abstain — меньше рисков будущих налогов? Нет, карта фиксирована. Vote yes — без эффекта. Ладно abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490019,
+    "id": "202610201753320cb3c2f66f884a25",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201753320cb3c2f66f884a25",
+    "usage": {
+      "completion_tokens": 254,
+      "completion_tokens_details": {
+        "reasoning_tokens": 221
+      },
+      "prompt_tokens": 2283,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2537
+    }
+  }
+}

@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 /** Local owner runner. No provider call occurs until a server reservation exists. */
-import { createPrivateKey, createPublicKey, sign, randomUUID } from 'node:crypto';
+import { createPrivateKey, createPublicKey, sign, randomUUID, randomBytes } from 'node:crypto';
 import { readFileSync, writeFileSync, renameSync, lstatSync, openSync, closeSync, fsyncSync, unlinkSync, existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { isDeepStrictEqual } from 'node:util';
 import { spawn } from 'node:child_process';
 import { act as gameAct, lock as gameLock } from './alashi.mjs';
 
@@ -66,14 +67,41 @@ export function providerUsage(raw) {
   if (!Number.isSafeInteger(cached) || cached < 0 || cached > raw.prompt_tokens) return null;
   return {prompt_tokens:raw.prompt_tokens,completion_tokens:raw.completion_tokens,total_tokens:raw.total_tokens,cached_tokens:cached};
 }
-export function modelProvider({url, key, model, test = false}) {
+async function providerText(response) {
+  const limit = 1_000_000;
+  if (Number(response.headers.get('content-length')) > limit) {
+    if (response.body) void response.body.cancel().catch(() => {});
+    fail('provider_response_too_large');
+  }
+  if (!response.body) return '';
+  const reader = response.body.getReader(), chunks = [];
+  let size = 0;
+  try {
+    for (;;) {
+      const {done, value} = await reader.read();
+      if (done) return Buffer.concat(chunks, size).toString('utf8');
+      size += value.byteLength;
+      if (size > limit) {
+        void reader.cancel().catch(() => {});
+        fail('provider_response_too_large');
+      }
+      chunks.push(value);
+    }
+  } finally { reader.releaseLock(); }
+}
+function hasDisallowedUrlParts(u) { return !!(u.username || u.password || u.hash || u.search); }
+function providerEndpoint(url, test) {
   const u = new URL(url), local = ['localhost','127.0.0.1','[::1]'].includes(u.hostname);
-  if (u.username || u.password || u.hash || u.search || !(u.protocol === 'https:' || u.protocol === 'http:' && local) || test && !local || !model || model.length > 128) fail('invalid_provider_config');
-  return {source:test?'test_provider':'provider_reported',provider:u.origin,model,async complete(messages) {
+  if (hasDisallowedUrlParts(u) || !(u.protocol === 'https:' || u.protocol === 'http:' && local) || test && !local) fail('invalid_provider_config');
+  return u;
+}
+export function modelProvider({url, key, model, test = false}) {
+  const u = providerEndpoint(url, test);
+  if (!model || model.length > 128) fail('invalid_provider_config');
+  return {source:test?'test_provider':'provider_reported',provider:u.origin,model,temperature:0,max_tokens:256,async complete(messages) {
     // No retry, fallback model, or tools. Keep provider credentials out of arena receipts.
     const response = await fetch(url,{method:'POST',redirect:'error',signal:AbortSignal.timeout(60_000),headers:{'Content-Type':'application/json',...(key?{Authorization:'Bearer '+key}:{})},body:JSON.stringify({model,messages,max_tokens:256,temperature:0})});
-    if (Number(response.headers.get('content-length'))>1_000_000) fail('provider_response_too_large');
-    const text = await response.text(); if (text.length>1_000_000) fail('provider_response_too_large');
+    const text = await providerText(response);
     let raw; try { raw = JSON.parse(text); } catch { raw = {}; }
     return {response_id:receiptId(raw.id),usage:providerUsage(raw.usage),report:parseCompletion(raw.choices?.[0]?.message?.content),request_failed:!response.ok};
   }};
@@ -93,26 +121,34 @@ export function toolInfo(spec, registry = {}) {
   if (!Number.isSafeInteger(config.max_total_tokens) || config.max_total_tokens<1 || !config.provider || !config.model) fail('tool_usage_budget_required');
   return {source:'provider_reported',provider:config.provider,model:config.model,cap:config.max_total_tokens};
 }
-export async function executeTool(spec, run, reports, registry = {}) {
-  if (spec.tool === 'trade_state') {
-    const c=run.brief.trading;if(!c)fail('trading_challenge_required');
-    return {report:{phase:c.phase,round:c.round,owner:c.participants.find(p=>p.wallet===run.owner),market:c.observation.market??Object.fromEntries(['sold_counter','price_table','price_now','tax_bps','price_shift','boom'].map(k=>[k,c.observation[k]])),allowed_actions:c.phase==='market'?['sell','buy']:['produce']},usage:zeroUsage,response_id:null,request_failed:false};
-  }
-  if (spec.tool === 'brief_extract') return {report:{facts:run.brief.facts,audience:run.brief.audience,required_terms:run.brief.required_terms,cta:run.brief.cta},usage:zeroUsage,response_id:null,request_failed:false};
-  if (spec.tool === 'copy_check') {
-    const draft = spec.depends_on.map(id=>reports[id]).find(r=>r && typeof r.headline==='string' && typeof r.body==='string');
-    const text = draft ? [draft.headline,draft.body,draft.cta].join(' ') : '';
-    return {report:{draft:draft??null,words:text.trim().split(/\s+/).filter(Boolean).length,required_terms:run.brief.required_terms.every(t=>text.toLowerCase().includes(t.toLowerCase())),cta_matches:draft?.cta===run.brief.cta},usage:zeroUsage,response_id:null,request_failed:false};
-  }
-  const config=registry[spec.tool]; toolInfo(spec,registry);
-  // A public strategy selects only a name. The owner supplies the executable locally.
-  const raw=await new Promise((yes,no)=>{
-    const child=spawn(config.argv[0],config.argv.slice(1),{stdio:['pipe','pipe','pipe'],timeout:60_000});
-    let text='',size=0;child.on('error',()=>no(new Error('owner_tool_failed')));
-    child.stdout.on('data',b=>{size+=b.length;if(size>65536)child.kill();else text+=b;});child.stderr.resume();
-    child.on('close',code=>{if(code!==0 || size>65536)no(new Error('owner_tool_failed'));else {try{yes(JSON.parse(text));}catch{no(new Error('invalid_tool_response'));}}});
+function runOwnerTool(config, spec, run, reports) {
+  return new Promise((yes,no)=>{
+    const child=spawn(config.argv[0],config.argv.slice(1),{stdio:['pipe','pipe','pipe'],detached:process.platform!=='win32'});
+    let text='',size=0,stopped=false;
+    const stop=()=>{stopped=true;try{if(process.platform!=='win32' && child.pid)process.kill(-child.pid,'SIGKILL');else child.kill('SIGKILL');}catch{child.kill('SIGKILL');}};
+    const timer=setTimeout(stop,60_000);
+    child.on('error',()=>{clearTimeout(timer);no(new Error('owner_tool_failed'));});
+    child.stdout.on('data',b=>{size+=b.length;if(size>65536){if(!stopped)stop();}else text+=b;});child.stderr.resume();
+    child.on('close',code=>{clearTimeout(timer);if(code!==0 || stopped)no(new Error('owner_tool_failed'));else {try{yes(JSON.parse(text));}catch{no(new Error('invalid_tool_response'));}}});
     child.stdin.on('error',()=>{});child.stdin.end(JSON.stringify({task:spec,brief:run.brief,reports:Object.fromEntries(spec.depends_on.map(id=>[id,reports[id]]))}));
   });
+}
+function tradeState(run) {
+  const c=run.brief.trading;if(!c)fail('trading_challenge_required');
+  return {report:{phase:c.phase,round:c.round,owner:c.participants.find(p=>p.wallet===run.owner),market:c.observation.market??Object.fromEntries(['sold_counter','price_table','price_now','tax_bps','price_shift','boom'].map(k=>[k,c.observation[k]])),allowed_actions:c.phase==='market'?['sell','buy']:['produce']},usage:zeroUsage,response_id:null,request_failed:false};
+}
+function copyCheck(spec, run, reports) {
+  const draft = spec.depends_on.map(id=>reports[id]).find(r=>r && typeof r.headline==='string' && typeof r.body==='string');
+  const text = draft ? [draft.headline,draft.body,draft.cta].join(' ') : '';
+  return {report:{draft:draft??null,words:text.trim().split(/\s+/).filter(Boolean).length,required_terms:run.brief.required_terms.every(t=>text.toLowerCase().includes(t.toLowerCase())),cta_matches:draft?.cta===run.brief.cta},usage:zeroUsage,response_id:null,request_failed:false};
+}
+export async function executeTool(spec, run, reports, registry = {}) {
+  if (spec.tool === 'trade_state') return tradeState(run);
+  if (spec.tool === 'brief_extract') return {report:{facts:run.brief.facts,audience:run.brief.audience,required_terms:run.brief.required_terms,cta:run.brief.cta},usage:zeroUsage,response_id:null,request_failed:false};
+  if (spec.tool === 'copy_check') return copyCheck(spec,run,reports);
+  const config=registry[spec.tool]; toolInfo(spec,registry);
+  // A public strategy selects only a name. The owner supplies the executable locally.
+  const raw=await runOwnerTool(config,spec,run,reports);
   return {report:safeReport(raw.report),usage:config.no_model_calls?zeroUsage:providerUsage(raw.usage),response_id:receiptId(raw.response_id),request_failed:raw.request_failed===true};
 }
 export async function runCycle({api,id,provider,journalPath,tools={},trade,onProgress=()=>{}}) {
@@ -141,10 +177,25 @@ export async function runCycle({api,id,provider,journalPath,tools={},trade,onPro
       const old=run.calls[spec.id];if(old?.quality_passed&&old.usage){reports[spec.id]=old.report;return;}
       if(!recoverOnly&&run.status!=='running')fail('run_stopped');
       if(!journal.calls[spec.id]){journal.calls[spec.id]={phase:old?'inflight':'prepared'};save(journalPath,journal);}
+      const entry=journal.calls[spec.id];
       const who=identity(spec),messages=messagesFor(run,version,spec.id,reports),cap=who.cap??(Buffer.byteLength(JSON.stringify(messages),'utf8')+2048+256);
-      // Recover a paid response even after the round ends; never request another completion.
-      if(!old)await api.post(`/strategy-runs/${id}/reserve`,{task:spec.id,max_total_tokens:cap,source:who.source,provider:who.provider,model:who.model});
-      else if(old.source!==who.source||old.provider!==who.provider||old.model!==who.model)fail('journal_provider_mismatch');
+      if(old&&(old.source!==who.source||old.provider!==who.provider||old.model!==who.model))fail('journal_provider_mismatch');
+      if(!old&&!entry.execution_id){entry.execution_id=randomBytes(32).toString('hex');save(journalPath,journal);}
+      if(entry.execution_id) {
+        if(!/^[0-9a-f]{64}$/.test(entry.execution_id))fail('invalid_execution_id');
+        // A journal is the executor identity. Recheck it before any external effect,
+        // including when another process reserved after this run's initial snapshot.
+        const reserved=await api.post(`/strategy-runs/${id}/reserve`,{task:spec.id,max_total_tokens:old?.reserved??cap,source:who.source,provider:who.provider,model:who.model,execution_id:entry.execution_id});
+        const accepted=reserved.run?.calls?.[spec.id];
+        if(accepted?.execution_claimed!==true)fail('execution_claim_not_confirmed');
+        run.calls[spec.id]=accepted;
+        if(reserved.run.status!=='running')run.status=reserved.run.status;
+      } else {
+        if(old?.execution_claimed)fail('execution_conflict');
+        // Pre-claim journals cannot establish exclusive ownership of a reservation.
+        // Keep saved receipts, but treat even a legacy prepared call as ambiguous.
+        if(!entry.result){entry.phase='inflight';save(journalPath,journal);}
+      }
     }
     async function call(spec,recoverOnly=false) {
       const old=run.calls[spec.id];if(old?.quality_passed&&old.usage)return;
@@ -152,15 +203,18 @@ export async function runCycle({api,id,provider,journalPath,tools={},trade,onPro
       if(!entry.result) {
         if(entry.phase==='inflight')entry.result={response_id:null,usage:null,report:null,request_failed:true};
         else {
-          if(recoverOnly)fail('response_not_saved');
-          if(Date.now()>=run.deadline_at*1000)fail('round_ended');
-          entry.phase='inflight';save(journalPath,journal);onProgress({task:spec.id,status:'started'});
-          try {entry.result=spec.kind==='tool'?await executeTool(spec,run,reports,tools):await provider.complete(messagesFor(run,version,spec.id,reports));}
-          catch {entry.result={response_id:null,usage:null,report:null,request_failed:true};}
+          if(recoverOnly||Date.now()>=run.deadline_at*1000) {
+            // This executor still has a prepared journal: no provider was invoked.
+            entry.result={response_id:null,usage:{...zeroUsage},report:null,request_failed:true};
+          } else {
+            entry.phase='inflight';save(journalPath,journal);onProgress({task:spec.id,status:'started'});
+            try {entry.result=spec.kind==='tool'?await executeTool(spec,run,reports,tools):await provider.complete(messagesFor(run,version,spec.id,reports));}
+            catch {entry.result={response_id:null,usage:null,report:null,request_failed:true};}
+          }
         }
         save(journalPath,journal);
       }
-      const receipt=await api.post(`/strategy-runs/${id}/report`,{task:spec.id,...entry.result});
+      const receipt=await api.post(`/strategy-runs/${id}/report`,{task:spec.id,...entry.result,...(entry.execution_id?{execution_id:entry.execution_id}:{})});
       // Responses can arrive out of order. Merge only this task, never an older full snapshot.
       run.calls[spec.id]=receipt.run.calls[spec.id];
       reports[spec.id]=receipt.run.calls[spec.id].report;onProgress({task:spec.id,status:receipt.run.status,known_tokens:receipt.run.known_tokens});
@@ -173,8 +227,7 @@ export async function runCycle({api,id,provider,journalPath,tools={},trade,onPro
         try {
           await prepare(spec,recoverOnly);
           // Another task may fail while this reservation is awaiting its response.
-          if(failure&&!recoverOnly)return;
-          await call(spec,recoverOnly);
+          await call(spec,recoverOnly||!!failure||run.status!=='running');
         } catch(error) {failure??=error;}
       })();
       pending.set(spec.id,work.then(()=>spec.id));
@@ -182,7 +235,7 @@ export async function runCycle({api,id,provider,journalPath,tools={},trade,onPro
     // Reconcile prior paid/ambiguous calls before spending again, even on a stopped run.
     for(const spec of version.content.plan) {
       const saved=journal.calls[spec.id];
-      if(run.calls[spec.id]&&!passed(spec.id)&&(!saved||saved.result||saved.phase==='inflight'))launch(spec,true);
+      if(run.calls[spec.id]&&!passed(spec.id)&&(!saved||saved.result||saved.phase==='inflight'||!saved.execution_id||run.status!=='running'||Date.now()>=run.deadline_at*1000))launch(spec,true);
     }
     await Promise.all(pending.values());pending.clear();
     if(failure)throw failure;
@@ -208,6 +261,68 @@ export async function runCycle({api,id,provider,journalPath,tools={},trade,onPro
       await trade({api,run,journal,save:()=>save(journalPath,journal)});
     }
     return(await api.post(`/strategy-runs/${id}/finish`,{})).run;
+  } finally {unlinkSync(lockPath);}
+}
+export async function runComparison({api,id,clientId,provider,journalPrefix,onProgress=()=>{}}) {
+  if (!/^[0-9a-f]{64}$/.test(id)) fail('invalid_comparison');
+  if (typeof clientId!=='string' || !/^[a-zA-Z0-9_-]{8,80}$/.test(clientId)) fail('bad_client_id');
+  if(typeof journalPrefix!=='string'||!journalPrefix)fail('invalid_comparison_journal');
+  const lockPath=journalPrefix+'.comparison.lock',fd=openSync(lockPath,'wx',0o600);closeSync(fd);
+  try {
+    const comparisonPath=`/agents/${api.record}/owner/comparisons`;
+    const [owned,listed]=await Promise.all([api.get(),api.request(comparisonPath)]);
+    const comparison=listed.comparisons.find(c=>c.id===id);
+    if(!comparison || comparison.content?.owner!==api.wallet || comparison.content.record!==api.record)fail('comparison_not_owned');
+    const checkProfile=current=>{
+      const expected=current.content.profile;
+      if(!expected || expected.temperature!==0 || expected.max_tokens!==256 ||
+          !['source','provider','model','temperature','max_tokens'].every(k=>provider[k]===expected[k]))fail('comparison_provider_mismatch');
+    };
+    checkProfile(comparison);
+    const versions=[comparison.content.baseline_version,comparison.content.candidate_version].map(version=>owned.versions.find(v=>v.id===version));
+    for(const version of versions) {
+      if(!version || version.content.owner!==api.wallet)fail('comparison_strategy_not_owned');
+      if(!Array.isArray(version.content.plan) || version.content.plan.some(t=>!['model','tool'].includes(t.kind)||t.kind==='tool'&&!['brief_extract','copy_check'].includes(t.tool)))fail('comparison_tool_not_allowed');
+    }
+    const created=await api.post(`/comparisons/${id}/attempts`,{client_id:clientId}),attemptId=created.attempt?.id;
+    if(typeof attemptId!=='string'||!/^[0-9a-f]{64}$/.test(attemptId))fail('comparison_attempt_unavailable');
+    const labels=['baseline','candidate'];
+    function checkAttempt(attempt) {
+      if(!attempt || attempt.id!==attemptId)fail('comparison_attempt_unavailable');
+      const runs=labels.map((label,i)=>{
+        const run=attempt[label];
+        if(!run || !/^[0-9a-f]{64}$/.test(run.id) || run.record!==api.record || run.owner!==api.wallet || run.version!==versions[i].id || run.challenge!==comparison.content.challenge_id)fail('comparison_run_mismatch');
+        return run;
+      });
+      if(runs[0].id===runs[1].id || runs.some(r=>!r.brief || r.brief.trading || !Number.isSafeInteger(r.deadline_at) || r.deadline_at<1) ||
+          !isDeepStrictEqual(runs[0].brief,runs[1].brief) || runs[0].challenge!==runs[1].challenge ||
+          runs[0].budget!==runs[1].budget || runs[0].deadline_at!==runs[1].deadline_at)fail('comparison_conditions_mismatch');
+      return runs;
+    }
+    const runs=checkAttempt(created.attempt),journalPaths=labels.map(label=>`${journalPrefix}.${label}.json`);
+    for(let i=0;i<runs.length;i++) {
+      if(existsSync(journalPaths[i]+'.lock'))fail('comparison_journal_busy');
+      if(existsSync(journalPaths[i])) {
+        const saved=readPrivate(journalPaths[i]);
+        if(saved.run!==runs[i].id || saved.record!==api.record)fail('journal_scope_mismatch');
+      }
+    }
+    const results=await Promise.allSettled(runs.map((run,i)=>runCycle({
+      api:{record:api.record,request:api.request,get:async()=>{
+        const latest=(await api.request(comparisonPath)).comparisons.find(c=>c.id===id);
+        if(!latest || latest.content?.owner!==api.wallet || latest.content.record!==api.record)fail('comparison_not_owned');
+        checkProfile(latest);
+        return {versions,runs:checkAttempt(latest.attempts.find(a=>a.id===attemptId))};
+      },post:(path,body)=>{
+        const prefix=`/strategy-runs/${run.id}/`,action=path.slice(prefix.length);
+        if(!path.startsWith(prefix)||!['reserve','report','finish'].includes(action))fail('invalid_comparison_action');
+        return api.post(`/comparisons/${id}/attempts/${attemptId}/${labels[i]}/${action}`,body);
+      }},id:run.id,provider,journalPath:journalPaths[i],
+      onProgress:value=>onProgress({comparison:id,attempt:attemptId,label:labels[i],...value}),
+    })));
+    // Drain both journals before releasing the pair lock, including a failed half.
+    const failed=results.find(r=>r.status==='rejected');if(failed)throw failed.reason;
+    return {comparison:id,attempt:attemptId,baseline:results[0].value,candidate:results[1].value};
   } finally {unlinkSync(lockPath);}
 }
 export function httpTrade(sessionPath, fetcher=fetch) {
@@ -254,9 +369,17 @@ export function solanaTrade({binary,keyPath,signature}) {
 async function main() {
   const args = process.argv.slice(2), opts = {};
   for (let i=0;i<args.length;i+=2) { if (!/^--[a-z-]+$/.test(args[i]) || !args[i+1] || args[i+1].startsWith('--')) fail('expected_flag_value_pairs'); opts[args[i].slice(2)] = args[i+1]; }
-  if (!opts.profile || !opts.run || !opts.journal || opts['allow-provider']!=='yes') fail('required: --profile FILE --run ID --journal PRIVATE_FILE --allow-provider yes');
+  if(opts.comparison) {
+    if(!opts.profile || !opts['attempt-client'] || !opts['journal-prefix'] || opts['allow-provider']!=='yes')fail('required: --profile FILE --comparison ID --attempt-client ID --journal-prefix PREFIX --allow-provider yes');
+    if(opts.run||opts.journal||opts.tools||opts['trade-session']||opts['trade-key']||opts['trade-signature']||opts['bots-binary'])fail('comparison_options_conflict');
+  } else if (!opts.profile || !opts.run || !opts.journal || opts['allow-provider']!=='yes') fail('required: --profile FILE --run ID --journal PRIVATE_FILE --allow-provider yes');
   const api = await ownerApi(opts.api ?? 'https://alashi.network',readPrivate(resolve(opts.profile)));
   const provider = modelProvider({url:process.env.ALASHI_MODEL_URL,key:process.env.ALASHI_MODEL_KEY,model:process.env.ALASHI_MODEL,test:opts['test-provider']==='yes'});
+  if(opts.comparison) {
+    const result=await runComparison({api,id:opts.comparison,clientId:opts['attempt-client'],provider,journalPrefix:resolve(opts['journal-prefix']),onProgress:v=>process.stdout.write(JSON.stringify(v)+'\n')});
+    process.stdout.write(JSON.stringify({comparison:result.comparison,attempt:result.attempt,baseline:{run:result.baseline.id,status:result.baseline.status,known_tokens:result.baseline.known_tokens},candidate:{run:result.candidate.id,status:result.candidate.status,known_tokens:result.candidate.known_tokens}})+'\n');
+    return;
+  }
   if(opts['trade-session']&&(opts['trade-key']||opts['trade-signature']))fail('choose_one_trade_executor');
   const trade=opts['trade-session']?httpTrade(resolve(opts['trade-session'])):opts['trade-key']||opts['trade-signature']?solanaTrade({binary:opts['bots-binary']?resolve(opts['bots-binary']):undefined,keyPath:opts['trade-key']?resolve(opts['trade-key']):undefined,signature:opts['trade-signature']}):undefined;
   const run = await runCycle({api,id:opts.run,provider,journalPath:resolve(opts.journal),tools:opts.tools?readPrivate(resolve(opts.tools)):{},trade,onProgress:v=>process.stdout.write(JSON.stringify(v)+'\n')});

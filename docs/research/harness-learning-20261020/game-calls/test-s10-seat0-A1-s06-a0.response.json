@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.49,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Субсидия товара выгодна моей стратегии производства.\"}",
+          "reasoning_content": "Law 3 = subsidy_goods=1, benefits me (produce more). Vote yes. Faction 2 voted yes. Vote yes passes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498164,
+    "id": "202610202009229d69a72ab021435a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202009229d69a72ab021435a",
+    "usage": {
+      "completion_tokens": 49,
+      "completion_tokens_details": {
+        "reasoning_tokens": 28
+      },
+      "prompt_tokens": 2261,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2310
+    }
+  }
+}

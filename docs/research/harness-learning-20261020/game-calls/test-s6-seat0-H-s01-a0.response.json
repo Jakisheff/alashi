@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.364,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Больше товара с положительным ожиданием даже с риском изъятия.\"}",
+          "reasoning_content": "Own action round1 already passed; this is action phase? History shows market pass... Now action phase, need main action. Produce gives 2, shuttle 3 grey with risk. Cash 0, cash 0 — shuttle free goods, 25% confiscation risk, no tariff. Shuttle EV 3*0.75=2.25 grey goods vs 2 clean. Grey can be sold too? Presumably yes. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498553,
+    "id": "20261020201549292458267c35427d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201549292458267c35427d",
+    "usage": {
+      "completion_tokens": 117,
+      "completion_tokens_details": {
+        "reasoning_tokens": 91
+      },
+      "prompt_tokens": 2389,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2506
+    }
+  }
+}

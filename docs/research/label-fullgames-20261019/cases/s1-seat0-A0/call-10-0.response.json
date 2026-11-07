@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.82,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Я самый бедный, закон 4 даст мне +1 влияния — голосую за.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest. I'm poorest (24.25M cash). President is idx2, but I'm not president—wait, holder_idx=2, so my vote weight is 1+? I didn't skip action. Vote yes helps pass; gives me +1 influence → helps commission 5% and future presidency. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490258,
+    "id": "20261020175734efe88ada93294c63",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175734efe88ada93294c63",
+    "usage": {
+      "completion_tokens": 105,
+      "completion_tokens_details": {
+        "reasoning_tokens": 76
+      },
+      "prompt_tokens": 2545,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2650
+    }
+  }
+}

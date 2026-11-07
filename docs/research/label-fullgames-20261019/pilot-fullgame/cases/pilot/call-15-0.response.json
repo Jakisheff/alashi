@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 15.411,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Произвожу товар для последней продажи без риска изъятия; влияющие взятки слишком дороги при малом выигрыше.\"}",
+          "reasoning_content": "Round 5 action. Next market round 6 is last. I have license already, promissory 15M added in round 6. Goods=0. Shuttle gives 3 goods (risk of seizure? tariff red ~25% loss of all goods; black protects). Currently tariff? Unknown—not mentioned, likely none. Shuttle ~25% seizure risk. Produce gives 2 safely. Market price counter 9 sold; price at index 9 = 2, next 1... round 6 selling 3 goods at 2,2,2? Index 9 is 10th: list [12,10,9,8,7,6,5,4,3,3,2,...] index 9 = 3, index 10=2,11=2. So selling 2-3 goods gets ~2-3 alashi each. Produce 2 goods → ~5-6 alashi gross (×1.25 if credit, but promissory repaid in round 6 start... round 6 market last, sell_credit not paid). So plain sell. Produce worth ~5-6 alashi. Shuttle 3 goods worth ~7-8 but 25% risk. Also law: president is idx0 with influence 1... holder_idx 0. I could bribe to gain influence for max influence commission bonus? Currently all influence 1, tie by cash+hard → I'm second (38.75 vs 57.2). Commission 5% of ~49M+ license bid = ~2.5M+, small.\n\nProduce is safe and adds ~5-6 alashi. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792426746,
+    "id": "2026102000185236ce0e9f38064a06",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000185236ce0e9f38064a06",
+    "usage": {
+      "completion_tokens": 381,
+      "completion_tokens_details": {
+        "reasoning_tokens": 343
+      },
+      "prompt_tokens": 4185,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 4566
+    }
+  }
+}

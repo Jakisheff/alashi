@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.656,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон обнуляет векселя, которых ни у кого нет — безвреден, голосую да.\"}",
+          "reasoning_content": "Law 8 zeroes promissory. Others have no promissory. I'm president, hold influence 2. Vote counts: yes=1 (idx2), no=0, abstain=1. If I vote no: no=2 vs yes=1 → fails. Vote yes: 2 vs... yes=2, no=0 → passes, but no effect since promissory all 0. Doesn't matter much; vote yes costs nothing. Actually passing law 8 removes card 8 from deck, fine. Choose vote_yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496937,
+    "id": "202610201948510dde5945ae6246bd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201948510dde5945ae6246bd",
+    "usage": {
+      "completion_tokens": 148,
+      "completion_tokens_details": {
+        "reasoning_tokens": 114
+      },
+      "prompt_tokens": 2316,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2464
+    }
+  }
+}

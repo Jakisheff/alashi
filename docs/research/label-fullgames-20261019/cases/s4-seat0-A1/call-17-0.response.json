@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.977,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"shuttle даёт ожидаемо больше товара для финального рынка, чем produce.\"}",
+          "reasoning_content": "Round 5 action, one more market (round 6). Shuttle gives 3 goods (25% seizure risk only if grey under red border; here grey? shuttle gives grey goods? seizure at border ~25%). Actually shuttle gives 3+subsidy; grey may be seized. Risk 25% losing goods. Produce gives 2 safely. Then round 6 cash devaluation floor(cash/100)*62 — small cash. Sell 2 at price: sold_counter=3, price index 4 → 7 alashi... 2 goods * 7 =14 vs 3 goods adds unit at 6 → 20. Expected shuttle value 0.75*20+... = 15+0.25*... plus remaining. Expected shuttle slightly better? Seizure ~25% of all grey goods. Expected value shuttle: 0.75*(7+6+5)=13.5 vs produce 14 (7+6)? Actually with 3 goods: 7+6+5=18. 0.75*18=13.5. Produce 2 goods =13. Hmm produce 7+6=13. Shuttle expected 13.5 > 13. Also cash 1 for donkey: 7-1=6... donkey gives 1 good → sell at 7 → net 6 per donkey but multiple. Best: shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490343,
+    "id": "20261020175855aa5b1f327f8043be",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175855aa5b1f327f8043be",
+    "usage": {
+      "completion_tokens": 319,
+      "completion_tokens_details": {
+        "reasoning_tokens": 290
+      },
+      "prompt_tokens": 3308,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3627
+    }
+  }
+}

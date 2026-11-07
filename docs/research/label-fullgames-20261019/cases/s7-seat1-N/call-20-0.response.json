@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.376,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Последний раунд: товары и влияние уже не окупают затрат, лучший итог — сохранить cash.\"}",
+          "reasoning_content": "Last round, goods don't count for final rank. Cash matters. Shuttle adds goods—useless now. Produce useless. Best: pass to keep cash, or skip? Wait — vote_weight +2 if action skipped, but influence matters only for the 5% commission. Current max influence is 1 each; holder is 0 by tie_order. If I pass, my vote_weight is 3 but influence stays 1 — commission goes to holder by cash tie-break, likely 0 or 2. Bribing gives influence 2 → I'd get 5% of bank (~1.9 alashi) at cost 5 alashi — not worth. So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490380,
+    "id": "20261020175934895a696a724b4f8e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175934895a696a724b4f8e",
+    "usage": {
+      "completion_tokens": 171,
+      "completion_tokens_details": {
+        "reasoning_tokens": 140
+      },
+      "prompt_tokens": 4234,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 4405
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.618,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Ожидаемая ценность серого шаттла выше: ~2.25 единицы против 2 у производства.\"}",
+          "reasoning_content": "I passed market (no goods), rivals produced? They have 2 goods each. Action: produce gives 2 goods, shuttle gives 3 grey goods risk 25%. No tariff set. Shuttle 3 vs produce 2; risk of losing all ~25% → EV 2.25 > 2 but risk. Take shuttle for EV.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499654,
+    "id": "202610202034113a8a8e947dc54f01",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202034113a8a8e947dc54f01",
+    "usage": {
+      "completion_tokens": 108,
+      "completion_tokens_details": {
+        "reasoning_tokens": 71
+      },
+      "prompt_tokens": 1917,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2025
+    }
+  }
+}

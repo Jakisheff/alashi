@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.06,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Последний рынок: товары после него бесполезны, покупка только снизит cash, влияющий на ранг.\"}",
+          "reasoning_content": "Final round market. Last round: cash counts for rank, promissory won't be paid. I'm idx2, cash 48.1, license income extra. Goods bought can't be sold after this market (this is last market). So buying is pointless — goods worthless after round 6. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497538,
+    "id": "202610201958531213a3bd1330489b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201958531213a3bd1330489b",
+    "usage": {
+      "completion_tokens": 99,
+      "completion_tokens_details": {
+        "reasoning_tokens": 64
+      },
+      "prompt_tokens": 3198,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3297
+    }
+  }
+}

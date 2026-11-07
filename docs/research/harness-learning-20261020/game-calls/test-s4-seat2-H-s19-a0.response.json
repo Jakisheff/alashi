@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.67,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Финальный раунд: ранг 0 по cash уже обеспечен, любые траты (bribe/roof) лишь сниживают выплату; pass оптимален.\"}",
+          "reasoning_content": "Round 6 action, last round. Goods won't matter. Cash counts in rank. I'm rank 0 by far (60.1 vs 38.7 vs 26.1). Influence 1 vs 1 vs 2 — max influence is idx1 with 2, gets 5% commission (~1.95M). Could bribe 5M to reach influence 2... tie? I'd tie with idx1 at 2; tie broken by cash+hard, I win. But bribe gives 5M to a rival and costs 5M cash — net: I lose 5M cash, rival gains 5M cash; gain commission 1.95M. Bad.\n\nBest: pass, keep cash. Choice 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498743,
+    "id": "202610202018588615633567d04d74",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202018588615633567d04d74",
+    "usage": {
+      "completion_tokens": 206,
+      "completion_tokens_details": {
+        "reasoning_tokens": 158
+      },
+      "prompt_tokens": 5518,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 5724
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.863,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 8 обнуляет векселя, а сейчас ни у кого их нет — veto бессмысленно.\"}",
+          "reasoning_content": "Law 8 обнуляет promissory. У всех promissory=0, но в раунде 5 возможны promissory. Actually applying now affects existing promissory only — none exist. Vote: yes 3 vs abstain, yes>no passes. But I can veto. Law 8 does nothing now. Harmless? Round 5 market: someone could sell_credit making promissory; law applies now only. So pass. Actually veto to keep deck? No benefit. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496769,
+    "id": "202610201946041e05f8a2f21c4a2b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201946041e05f8a2f21c4a2b",
+    "usage": {
+      "completion_tokens": 140,
+      "completion_tokens_details": {
+        "reasoning_tokens": 106
+      },
+      "prompt_tokens": 2862,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3002
+    }
+  }
+}

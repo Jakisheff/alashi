@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.579,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":53,\"reason\":\"Аукцион выгоден: ставка уходит в банк, из которого я получаю ~50%, поэтому конкурирую за лицензию крупной ставкой.\"}",
+          "reasoning_content": "Round 4 action, auction round. I have 37.3 cash, rival 45.6. License income 20-60 (mean 40) — worth bidding. But winning bid goes to bank, which is shared; I get 50% share of bank, so effective cost ~ half. Bid ~20-25 alashi? Rival has 45.6 cash. Tie order [1,2,0] — rival 1 has priority over me. If I bid 25, rival could bid more. Unknown others' bids. Reasonable: bid 20 million, then also do main action... but bid doesn't consume action; still need to choose one candidate. Bid candidates listed don't include additional action. Bid 20-25 million plus produce would be ideal but not offered. Choose bid 20 million (choice 43)? Actually also produce gives 3 goods worth selling ~4 alashi each. Trade-off: license ~40 expected, my share of bank increases too (bid added to bank, I get 50%). Net cost of winning = bid*0.5 - share gain... bid 20 added to bank: bank 50, I get 25 back, net cost 20-... wait my bid of 20 paid in, bank becomes 50, I get 50% = 25. So winning at 20 costs net ~20-(25-30*0.5)= 20-10=10 for license worth ~40. Definitely bid big. Rival 1 with 45.6 might bid ~30+. Tie order favors them. Bid 30 (choice 53)? Cash after 7.3, still fine. I'll bid 30 million.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490970,
+    "id": "2026102018092197cc1143ce8c4a24",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102018092197cc1143ce8c4a24",
+    "usage": {
+      "completion_tokens": 396,
+      "completion_tokens_details": {
+        "reasoning_tokens": 354
+      },
+      "prompt_tokens": 6143,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 6539
+    }
+  }
+}

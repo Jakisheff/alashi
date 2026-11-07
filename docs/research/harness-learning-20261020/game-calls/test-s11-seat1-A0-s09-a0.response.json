@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 27.14,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Производство даёт бесплатный товар для будущих продаж, а взятки сжигают cash, который важен для итогового ранга.\"}",
+          "reasoning_content": "Bribing for influence: president determined by max influence at law entry. Currently all influence 1, holder is 0. My vote_weight 3 already (they got +2 from pass? no — my weight 3, and idx2 weight 3). Wait state shows own influence 1 but vote_weight 3. Round 3 law order rotates; my vote weight 3.\n\nBuying influence gives max influence → presidency, plus 5% bank bonus at end. Influence also adds to vote weight. Bribe 5 alashi to idx0 → influence 2, presidency this round. But spending 5 alashi cash reduces rank. Presidency allows veto; value?\n\nI need goods for future selling. Produce gives 2 free goods. Shuttle gives 3 with 25% seizure risk? Seizure is border tariff, only with border favors... \"shuttle gives grey goods; may be seized at border ~25%\". But my previous shuttles yielded goods fine. Current cash 30, promissory 37.5 (devalued at round start: floor(cash/100)*62).\n\nCash is devalued at start of rounds 4,5,6 anyway — 30 alashi → 18.6 next round. So spending cash now is cheap! Bribing with devaluing cash is efficient. Spend 15 → influence 4, presidency and max influence for end bonus (5% bank ~1.5 alashi + presidency veto power). Also produce would need action; can't bribe and produce.\n\nBest: large bribe using devaluing cash. But goods also matter for selling. Price now at sold=5: price 5+2=7 alashi next market. Goods sellable. With 0 goods I can't sell. But cash 30 vs devalued 18.6 — converting cash to influence (which doesn't devalue) is good. Influence 7 for 30 alashi (effective cost ~11.4 after devaluation). Max influence gives end bonus 5% of bank (bank 30, so 1.5) plus presidency each law round with veto. Rank: cash doesn't matter for final rank except... rank by cash+hard at end. Hmm, spending all cash hurts rank — final rank determines 50:30:15 split of bank! Bank is 30 alashi; rank 1 gets ~15. So keeping cash matters for final ranking, but cash will devalue anyway: 30→18.6→11.5→7.1 over rounds. Spending on influence doesn't return cash.\n\nTrade-off: rank vs influence bonus. Influence 7 guarantees max influence → 5% commission (~1.5) and presidency vetoes. Rank cost: dropping from ~30 to 0 cash... at end cash devalues regardless. But rank is relative — others have 39.6 and 0. If I drop to 0, I'm rank 3 (15% = 4.7 vs rank 2 = 9.5). Bad. Keep cash.\n\nMiddle ground: bribe 5 (cash 25→15.5 next round) influence 2, gain presidency (veto). Or just produce (2 free goods). Presidency this round: holder currently 0 with influence 1; I'd need influence >1, bribe 5 gives 2. Law control value? Card could be tax or price shift; veto power worth a few alashi maybe.\n\nI think produce (free goods worth ~7 each at next market, sellable ~14) beats 5 alashi bribe. But presidency also brings end-of-round influence bonus if max influence. Bribe 10 → influence 3, cash 20 (devalues to 12.4). Goods forgone 2 (~14 revenue). Hmm.\n\nActually goods: produce 2 goods, sell at round 4 market price: sold_counter=5, if others sell too price drops. Roughly 5-7 each → ~12 revenue via sell_credit ×1.25 ≈ 15. That beats presidency veto value probably. Choose produce (choice 1).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497687,
+    "id": "20261020200101fe98ac0f75194bf3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200101fe98ac0f75194bf3",
+    "usage": {
+      "completion_tokens": 898,
+      "completion_tokens_details": {
+        "reasoning_tokens": 858
+      },
+      "prompt_tokens": 3501,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 4399
+    }
+  }
+}

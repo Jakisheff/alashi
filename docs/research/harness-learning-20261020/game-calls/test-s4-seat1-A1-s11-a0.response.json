@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.576,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Цены на пике при счётчике 0, продаю всё за наличные, пока налога нет.\"}",
+          "reasoning_content": "Rounds 4 market. Sell now at high price 12? counter=0, prices 12. Cash counts for rank; sell now better. Sell 2 for cash. Later rounds devalue cash (×62%). Cash 43m + 12m... selling now converts goods to cash. Devaluation next rounds: cash floor/100*62 — so current cash loses 38%. Still selling goods now at 12 gives immediate cash; later prices drop anyway with more sales. Sell 2 units now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496586,
+    "id": "20261020194302c512ee90583d42d9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194302c512ee90583d42d9",
+    "usage": {
+      "completion_tokens": 141,
+      "completion_tokens_details": {
+        "reasoning_tokens": 106
+      },
+      "prompt_tokens": 2849,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2990
+    }
+  }
+}

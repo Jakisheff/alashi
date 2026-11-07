@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.218,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Последний раунд: товар не продать, а взятка ради комиссии 5% банка стоит дороже выгоды — пас.\"}",
+          "reasoning_content": "Round 6 action, last round. Goods can't be sold—market done. So produce worthless. Bribe to gain influence: 5% commission of bank goes to max influence. Bank 39M, 5% = 1.95M. Bribe 5M gives influence 2, tie with idx2 (2), tie: better cash+hard → idx0 wins → commission 1.95M, but costs 5M. Not worth. Bribe more to exceed 2: need 10M cost for influence 3 — gain 1.95M commission. Not worth. So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498643,
+    "id": "20261020201719bb1fd96c22ba4537",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201719bb1fd96c22ba4537",
+    "usage": {
+      "completion_tokens": 166,
+      "completion_tokens_details": {
+        "reasoning_tokens": 129
+      },
+      "prompt_tokens": 5470,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 5636
+    }
+  }
+}

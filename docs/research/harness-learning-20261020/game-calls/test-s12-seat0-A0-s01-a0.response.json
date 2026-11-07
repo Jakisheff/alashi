@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.809,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"shuttle даёт 3 товара, ожидаемая ценность выше, чем у produce.\"}",
+          "reasoning_content": "Produce gives 2 goods, shuttle gives 3 grey goods with 25% seizure risk (3 expected 2.25). Shuttle EV slightly better but grey goods risk. Choose produce for safety? EV shuttle 2.25 > 2. But grey may be seized. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498886,
+    "id": "202610202021238e4ed42e5b204d3c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202021238e4ed42e5b204d3c",
+    "usage": {
+      "completion_tokens": 89,
+      "completion_tokens_details": {
+        "reasoning_tokens": 60
+      },
+      "prompt_tokens": 1917,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2006
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.34,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":50,\"reason\":\"Ставка 25 alashi даёт хорошие шансы на лицензию (доход 20–60), а действие остаётся для следующего шага.\"}",
+          "reasoning_content": "Bid + produce: license income 20-60 alashi worth bidding. Opponents cash 31.5 and 5.3. Reasonable bid ~20-25 alashi. Bid doesn't consume action. Choose bid 25M (choice 50) plus... but candidates are single actions; bid allows another action after. Interface: one aggregate bid per turn; after bid choose another action next prompt. So choose bid 25M.\n\nActually opponents can bid too; rival with 31.5M may bid. Bid 20M risky tie-order 1 first helps. Bid 25M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427868,
+    "id": "2026102000374289d74debb15f4dea",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000374289d74debb15f4dea",
+    "usage": {
+      "completion_tokens": 168,
+      "completion_tokens_details": {
+        "reasoning_tokens": 124
+      },
+      "prompt_tokens": 6491,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 6659
+    }
+  }
+}

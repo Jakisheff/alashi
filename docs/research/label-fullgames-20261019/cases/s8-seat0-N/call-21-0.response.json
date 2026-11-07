@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.08,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон даёт +1 влияния мне как богатейшему, что приносит и комиссию 5% банка; veto вреден.\"}",
+          "reasoning_content": "Card 5: +1 influence to richest. Richest is me (37.4M vs 30.9M). Yes wins 6-1, law passes, I get +1 influence → max influence → 5% bank commission (~2.6M). No reason to veto. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491043,
+    "id": "2026102018103973331dc69e5f48d1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102018103973331dc69e5f48d1",
+    "usage": {
+      "completion_tokens": 102,
+      "completion_tokens_details": {
+        "reasoning_tokens": 63
+      },
+      "prompt_tokens": 3232,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3334
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.037,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":25,\"reason\":\"Аукцион лицензии даёт большой скрытый доход, проигрыш ставки бесплатен — ставлю максимум.\"}",
+          "reasoning_content": "License income 20-60 alashi, worth bidding. Rivals have more cash (36.6M, 29.2M) — they can outbid. Tie_order puts me last. Moderate bid likely loses to a rival bid. But income is big relative to my 11.9 cash. Bid high? If I bid all 11.935, rival with 36M can outbid. They know bids hidden; rational rivals may bid substantially. Expected value: winning gives ~+20-60 extra; losing costs nothing (refund). So bidding max is optimal—only downside is cash locked during auction (returned if lost). If I win at 11.935, still profitable likely. Bid all.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495346,
+    "id": "20261020192218fe72d8de3de74f67",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192218fe72d8de3de74f67",
+    "usage": {
+      "completion_tokens": 182,
+      "completion_tokens_details": {
+        "reasoning_tokens": 149
+      },
+      "prompt_tokens": 3979,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 4161
+    }
+  }
+}

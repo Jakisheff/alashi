@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.543,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":32,\"reason\":\"Ставка 9 alashi выигрывает аукцион у соперников (их потолок 8), затем сделаю основное действие.\"}",
+          "reasoning_content": "Recommended choice 32 (bid 9M) — but then need main action too; instruction says bid then still take action. Choose 32.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499376,
+    "id": "20261020202934fc1b156ab6314913",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202934fc1b156ab6314913",
+    "usage": {
+      "completion_tokens": 70,
+      "completion_tokens_details": {
+        "reasoning_tokens": 30
+      },
+      "prompt_tokens": 6679,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 6749
+    }
+  }
+}

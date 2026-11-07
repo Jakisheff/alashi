@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.593,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Кредитная продажа всего товара сохраняет полную стоимость через вексель, избегая девальвации; карта 8 уже вышла из колоды.\"}",
+          "reasoning_content": "Round 2 market early, prices will drop as counter grows. Selling now at high prices (9,8,7) is good; but cash gets devalued 62% each round start... only after round 2? Cash devalues at start of each round 2+. So cash from selling now will be devalued. Better sell_credit? Promissory is added to cash and not devalued, but law 8 can wipe promissory. Round 2 of 6: promissory will be added at start of round 3 (devalued first). Sell all 3 credit = 30 alashi promissory, full value, becomes cash in round 3. Cash 24 would be devalued to 14.88. Credit better. Risk: card 8 already used in round 1, no repeats. So credit safe-ish.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496910,
+    "id": "2026102019482621924e01b77240de",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019482621924e01b77240de",
+    "usage": {
+      "completion_tokens": 225,
+      "completion_tokens_details": {
+        "reasoning_tokens": 182
+      },
+      "prompt_tokens": 2262,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2487
+    }
+  }
+}

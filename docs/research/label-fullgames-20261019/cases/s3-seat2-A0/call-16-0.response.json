@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.499,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":8,\"reason\":\"Вексель не девальвируется и будет погашен в начале раунда 6, что даёт максимум выплаты.\"}",
+          "reasoning_content": "Round 5, sell all 4 now at 12,10,9,8 = 39 alashi. Next round cash devalues to 62%. Selling now gives 39.49 cash which becomes 24.48 next round — wait, round 6 start devalues cash? \"Start of round 2 and onwards: cash=floor(cash/100)*62\" — yes, round 6 also devalues. Sell credit: promissory 48.75 paid in round 6, added to cash after devaluation, not devalued. So sell_credit units=4: promissory 48.75 alashi, keeps current cash 8.49 which devalues to ~5.26 in round 6, plus 48.75 → ~54 alashi. Sell now: 47.49 devalues to ~29.4. So sell_credit all 4 is much better (last round promissory unpaid — but round 6 start adds promissory; last round's market is round 6; wait promissory added at start of round 6, then sell in round 6, fine; but \"after the last round the promissory is not repaid\" — this promissory is repaid at start of round 6, ok).\n\nChoice 8.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427595,
+    "id": "20261020003308e0e5542f9b4a418c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003308e0e5542f9b4a418c",
+    "usage": {
+      "completion_tokens": 310,
+      "completion_tokens_details": {
+        "reasoning_tokens": 273
+      },
+      "prompt_tokens": 3274,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3584
+    }
+  }
+}

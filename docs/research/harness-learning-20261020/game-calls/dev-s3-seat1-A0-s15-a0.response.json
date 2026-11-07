@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.514,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель добавляется к кэшу после девальвации в раунде 6, поэтому продажа в кредит выгоднее немедленной продажи.\"}",
+          "reasoning_content": "Price counter 6 → next price 5? Prices list [12,10,9,8,7,6,5,...] index 6 = 5. Selling 3 units gives 5+4+3=12. But round 6 will devalue cash (floor/100*62) — cash held loses 38%. So sell now for real cash is bad vs promissory? Promissory added after devaluation and not devalued in round 6... round 6 start: cash devalued, promissory added. After round 6 no redemption. So promissory worthless after round 6? \"After last round promissory not redeemed\" — sell_credit in round 6 worthless. But promissory from round 5 gets added at start of round 6 after devaluation — so it survives! sell_credit 3 gives 15M promissory, better than 12M cash devalued to ~7.4M. So choice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495396,
+    "id": "2026102019230312e92834083e4f1a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019230312e92834083e4f1a",
+    "usage": {
+      "completion_tokens": 251,
+      "completion_tokens_details": {
+        "reasoning_tokens": 209
+      },
+      "prompt_tokens": 3416,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3667
+    }
+  }
+}

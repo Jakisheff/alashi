@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.594,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон 4 даёт +1 влияния мне как самому бедному — голосую за, даже если президент наложит вето.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest cash — I'm poorest (cash 0). That gives me influence 2. President is idx1 (фракция 1), president can veto. Would they? Law helps me, hurts president's influence lead. President veto likely. Still vote yes; cost nothing.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427133,
+    "id": "202610200025291a595a7abc0b4b04",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200025291a595a7abc0b4b04",
+    "usage": {
+      "completion_tokens": 104,
+      "completion_tokens_details": {
+        "reasoning_tokens": 65
+      },
+      "prompt_tokens": 2826,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2930
+    }
+  }
+}

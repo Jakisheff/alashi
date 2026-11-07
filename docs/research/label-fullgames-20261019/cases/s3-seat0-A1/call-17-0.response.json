@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.964,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Карта 0 нейтральна, исход мне безразличен — воздерживаюсь.\"}",
+          "reasoning_content": "Law card 0: no effects. President is idx2 (voted abstain, weight 2). My vote: yes vs no — idx1 will vote. Card 0 is neutral; voting no could block whatever idx1 wants, but card 0 harmless. Pass is fine; vote_no risks nothing but card is blank. Just abstain/pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491009,
+    "id": "20261020181006fd17aa0ffada4132",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181006fd17aa0ffada4132",
+    "usage": {
+      "completion_tokens": 105,
+      "completion_tokens_details": {
+        "reasoning_tokens": 73
+      },
+      "prompt_tokens": 3048,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3153
+    }
+  }
+}

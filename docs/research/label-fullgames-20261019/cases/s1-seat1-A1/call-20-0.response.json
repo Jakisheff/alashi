@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 16.081,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товары и влияние после последнего рынка не приносят выплаты, а взятки лишь уменьшают cash — сохраняю 35M для ранга.\"}",
+          "reasoning_content": "Last round action. Goods don't count at final; cash+hard ranks. My cash 35M, opponents ~59.5M and 21M. License holder (me) gets income, plus bank share. No more markets, so producing goods useless. Bribe reduces cash — worse. Influence only matters for 5% commission bonus: max influence currently фракция 0 with 2. If I bribe 5M to anyone, influence 2, tie with 0 but 0 better tie_order... but bribe increases my influence and 5% commission = ~3.35M... wait commission 5% of bank (~67M) ≈ 3.35M goes to max influence holder. Tie: better cash+hard then tie_order — I'd have 30M vs 0's 59.5M, lose. Bribe 10M → influence 3, win commission 3.35M but spend 10M, net loss. So just pass, keep 35M cash.\n\nRank: 0 first (50%), me second? 21M opponent vs 35M me — I'm second (30%). Keep cash. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428095,
+    "id": "20261020004121eaf7ee6918fb489a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020004121eaf7ee6918fb489a",
+    "usage": {
+      "completion_tokens": 291,
+      "completion_tokens_details": {
+        "reasoning_tokens": 246
+      },
+      "prompt_tokens": 4309,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 4600
+    }
+  }
+}

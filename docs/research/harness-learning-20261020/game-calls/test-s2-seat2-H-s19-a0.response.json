@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.782,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Последний раунд: продать весь товар за наличные, вексель не погашается.\"}",
+          "reasoning_content": "Round 6, promissory not redeemed — sell_credit worthless for rank. Sell all for cash: choice 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499496,
+    "id": "202610202031275336c9d90fe1485c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202031275336c9d90fe1485c",
+    "usage": {
+      "completion_tokens": 56,
+      "completion_tokens_details": {
+        "reasoning_tokens": 25
+      },
+      "prompt_tokens": 3908,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 3964
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.646,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Продажа всего в кредит избегает девальвации 62% в раунде 5 и даёт максимум 30 alashi.\"}",
+          "reasoning_content": "Cash low (10.7M). Selling 3 units at price 8 gives 24M (cash 34.7M), but rank counts cash only, and remaining rounds: round 5 cash devalues ×0.62. Selling now gets cash that will devalue. Better sell_credit? Promissory adds to cash next round without devaluation. Sell 3 credit: promissory 30M, added at round 5 start. That avoids 62% haircut. Credit better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490903,
+    "id": "202610201808200435c11bb5d344a7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201808200435c11bb5d344a7",
+    "usage": {
+      "completion_tokens": 144,
+      "completion_tokens_details": {
+        "reasoning_tokens": 103
+      },
+      "prompt_tokens": 2915,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 3059
+    }
+  }
+}

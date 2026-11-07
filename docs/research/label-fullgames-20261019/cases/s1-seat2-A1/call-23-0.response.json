@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.387,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 6 снижает цены уже прошедшего последнего рынка, эффект пуст; pass безопасен.\"}",
+          "reasoning_content": "Law 6: -2 цены следующего рынка. Уже продал всё, рынок 6 был последним... закон 6 влияет на следующий рынок — рынков больше нет. Но rank: у меня cash 30.7M, ниже idx0 (35.1M). Все с influence 2, но мой vote_weight 4. Закон 6 не влияет ни на что (нет следующего рынка), так что не важно. Карта 6 ничего не меняет. Проголосовать yes/no без разницы. Выбор: pass — сохранит вес? нет, вес уже 4 (действие прошло). Любое. Выберу pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490994,
+    "id": "202610201809495b1374cd5cbd4ceb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201809495b1374cd5cbd4ceb",
+    "usage": {
+      "completion_tokens": 168,
+      "completion_tokens_details": {
+        "reasoning_tokens": 137
+      },
+      "prompt_tokens": 3470,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3638
+    }
+  }
+}

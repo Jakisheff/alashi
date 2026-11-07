@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.003,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":7,\"reason\":\"Последний рынок: продаю весь товар сразу, вексель уже не погасится.\"}",
+          "reasoning_content": "Round 6 market, last round. Sell credit not redeemed. Price: counter 6 → 5 alashi/unit. But wait, round 6 market: after market there's action and law. Sell 4 units now: counter 6, prices 5,4,3,3 = 15 alashi → 25.1 cash? Candidate 7 gives cash 25098622, total +15. But action phase later: shuttle gives 3 goods (25% seizure risk... tariff? roof_tariff 0). Then could sell again in round 6? No, market only once per round. So selling all now best. Alternatively sell 3 now, shuttle +3, but no more market. So sell all 4: choice 7. Actually could sell fewer and produce? No further market. Sell 4 = 15 alashi vs credit 18.75 unredeemed worthless. Choice 7.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495164,
+    "id": "202610201919188d600dab5f0e4344",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201919188d600dab5f0e4344",
+    "usage": {
+      "completion_tokens": 222,
+      "completion_tokens_details": {
+        "reasoning_tokens": 193
+      },
+      "prompt_tokens": 4062,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 4284
+    }
+  }
+}

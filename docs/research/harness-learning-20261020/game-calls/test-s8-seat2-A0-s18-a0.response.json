@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.677,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Налог 10% ударит сильнее по сопернику с 10 товарами, чем по моим 3.\"}",
+          "reasoning_content": "Law 1: tax 10% on future sales. I have 3 goods left, plan to sell in round 6. Tax hurts me ~10% of revenue. Opponents: idx0 has 10 goods, will sell a lot — tax hurts them more. Also I have promissory 32.5 (uncancelled; card 8 already used). Tax 10% on my remaining sales of ~3 units at maybe 8ish alashi ≈ 2.5 alashi loss; opponent with 10 goods loses more. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499663,
+    "id": "20261020203419d91ea0eb03eb4fba",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203419d91ea0eb03eb4fba",
+    "usage": {
+      "completion_tokens": 153,
+      "completion_tokens_details": {
+        "reasoning_tokens": 117
+      },
+      "prompt_tokens": 3069,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3222
+    }
+  }
+}

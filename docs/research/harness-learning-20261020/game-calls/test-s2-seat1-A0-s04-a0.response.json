@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.534,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Продажа в кредит даёт 16.25 вместо 13 и вексель не попадает под девальвацию следующего раунда.\"}",
+          "reasoning_content": "sell 2 units at 6+? sold_counter=4 → prices 5,4? Actually price list index 4 → 5, index5→4, total 9? Candidate sell 2 gives 13 alashi, so price higher. sell all 2 now for 13, keep goods no. sell_credit gives 16.25 promissory but paid at start of round 3 (added to cash, then round 4 devaluation? promissory added at start of next round, not devalued that round). Actually credit pays next round before devaluation... \"start of round 2 and beyond: cash=floor(cash/100)*62, then promissory is added\" — promissory avoids one devaluation. sell_credit better: 16.25 vs 13. Choose 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499179,
+    "id": "202610202026143041424a201b4b2a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202026143041424a201b4b2a",
+    "usage": {
+      "completion_tokens": 215,
+      "completion_tokens_details": {
+        "reasoning_tokens": 173
+      },
+      "prompt_tokens": 2215,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2430
+    }
+  }
+}

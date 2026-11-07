@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.329,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Сохраняю президентство по tie_order при равном влиянии и производлю товар для будущих продаж.\"}",
+          "reasoning_content": "I'm president with influence 1, tie_order gives me presidency. Cash is lowest among the three. Round 3 action. Produce gives 2 goods. I'm poorest, so laws giving influence to the poorest help me. Key: presidency needs influence—others also at 1, tie_order favors me, but bribes can raise influence. Bribing 5 to rival raises their cash too. Better keep presidency: my influence 1 vs others 1, tie_order wins. So no bribe needed. Produce is best for goods to sell.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427099,
+    "id": "202610200024539256fb46af21404e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200024539256fb46af21404e",
+    "usage": {
+      "completion_tokens": 146,
+      "completion_tokens_details": {
+        "reasoning_tokens": 113
+      },
+      "prompt_tokens": 3389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 3535
+    }
+  }
+}

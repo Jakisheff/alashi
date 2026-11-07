@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.99,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Кэш ниже порога аукциона — продаю весь товар сразу, укрепляя ранг богатства.\"}",
+          "reasoning_content": "Cash 7.3M < 9M, shortfall true — auction rule off; decide myself. Sell 3 units at good price (12? counter=1, so prices ~10,9,8). Sell now for 27M cash, keeps rank strong and funds bid 12. Choice 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499988,
+    "id": "20261020203945211b7a788305418d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203945211b7a788305418d",
+    "usage": {
+      "completion_tokens": 98,
+      "completion_tokens_details": {
+        "reasoning_tokens": 65
+      },
+      "prompt_tokens": 3374,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3472
+    }
+  }
+}

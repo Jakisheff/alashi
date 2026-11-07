@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.943,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Вето против 20% налога защищает мою крупную будущую продажу в раунде 6.\"}",
+          "reasoning_content": "Law 2 = tax 20% on future sales. I have promissory 38.75M and plan to sell round 6. Tax hurts me. Veto it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490682,
+    "id": "202610201804390321136df32e4e63",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201804390321136df32e4e63",
+    "usage": {
+      "completion_tokens": 72,
+      "completion_tokens_details": {
+        "reasoning_tokens": 38
+      },
+      "prompt_tokens": 3100,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3172
+    }
+  }
+}

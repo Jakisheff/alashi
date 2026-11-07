@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.312,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Карта 0 без эффектов, veto не нужен.\"}",
+          "reasoning_content": "Law 0 has no effect; veto unnecessary. But wait, I voted abstain, law 0 no effects — veto pointless. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427950,
+    "id": "20261020003907495ce91572664a0d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003907495ce91572664a0d",
+    "usage": {
+      "completion_tokens": 51,
+      "completion_tokens_details": {
+        "reasoning_tokens": 29
+      },
+      "prompt_tokens": 2538,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2589
+    }
+  }
+}

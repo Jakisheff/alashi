@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.059,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Покупка по 12 с налогом 20% убыточна при падении цены; пропускаю.\"}",
+          "reasoning_content": "I'm idx1, president, round 4 market, no goods. Buy at 12 alashi to sell later? Tax 20% on sales. Buy 1 unit costs 12M, sell later... price drops as others sell. Market counter 0, price 12. Tax 20% means selling later yields maybe 12*0.8=9.6 first unit — loss. Others likely sell. Better pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495098,
+    "id": "2026102019181528971dc19e9e4fd6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019181528971dc19e9e4fd6",
+    "usage": {
+      "completion_tokens": 126,
+      "completion_tokens_details": {
+        "reasoning_tokens": 90
+      },
+      "prompt_tokens": 2453,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2579
+    }
+  }
+}

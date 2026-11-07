@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.136,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Сохраняю cash для решающей ставки на лицензию в этом же раунде.\"}",
+          "reasoning_content": "Round 4 market. I'm faction 1, president, cash 31.3, no goods. Auction later in action. Bank 30. Prices start at 12, tax 0. Buying goods now lets sell later at higher price... but selling reduces price for others. Buying 1 unit costs 12 for a good that can later sell... sold_counter=0, so first sales get price 12. If I buy 2 units, counter moves back? Actually buy moves counter backward... wait counter already 0, buy 1 costs 12 (counter -1? no, candidate shows goods=1, cash -12). Later I can sell at price 12. Neutral. Better keep cash for auction bid. License income 20-60 alashi—huge. Save cash for bid.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497490,
+    "id": "2026102019580501cd16630e104fb8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019580501cd16630e104fb8",
+    "usage": {
+      "completion_tokens": 195,
+      "completion_tokens_details": {
+        "reasoning_tokens": 166
+      },
+      "prompt_tokens": 2564,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2759
+    }
+  }
+}

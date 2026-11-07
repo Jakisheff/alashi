@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.38,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Я самый бедный, закон даёт мне +1 влияния и преимущество в tie_order.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest by cash. I'm poorest (3.58M vs 24.8M vs 4.9M). Voting yes gives me influence 2, tie with holder 2 but tie_order [0,1,2] favors me — I'd become holder next round? Holder determined at law entry; next round holder would be me (influence 2, tie order 0 first). Also closer to max influence bonus. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427476,
+    "id": "20261020003111860034d74527493e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003111860034d74527493e",
+    "usage": {
+      "completion_tokens": 131,
+      "completion_tokens_details": {
+        "reasoning_tokens": 100
+      },
+      "prompt_tokens": 3118,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3249
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.741,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Шаттл даёт больше товара с приемлемым риском для будущих продаж в кредит\"}",
+          "reasoning_content": "Round 3 action. I have no goods, cash 27.5. Shuttle gives 3 goods (grey risk ~25%? shuttle risk applies at... seizure ~25% for grey goods). No tariff active, so shuttle grey can be seized. Produce gives 2 safe. Shuttle 3 goods expected value higher: 3 goods * ~4 alashi ≈ 12 vs produce 2*4=8. Seizure risk of all goods 25%. EV shuttle = 0.75*12=9 > 8. Shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495088,
+    "id": "202610201918003c3e2ef1779d4b89",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201918003c3e2ef1779d4b89",
+    "usage": {
+      "completion_tokens": 144,
+      "completion_tokens_details": {
+        "reasoning_tokens": 114
+      },
+      "prompt_tokens": 3905,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 4049
+    }
+  }
+}

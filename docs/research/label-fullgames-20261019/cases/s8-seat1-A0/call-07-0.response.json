@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.93,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"sell_credit даёт 21,25 alashi векселем без девальвации, что выгоднее прямой продажи (22,5→39,5 alashi обесценятся до ~24,5).\"}",
+          "reasoning_content": "Prices: sold_counter=2, so price 9 alashi next. Sell 2 for 18 alashi (cash 39.5M). Credit gives 22.5M promissory. Devaluation 62%, credit yields 62.5% of nominal at round start... sell_credit rounds 3: cash next round 39.5*0.62=24.5 vs credit now 22.5M added after devaluation. Actually sell now: cash 39.5, next round floor(39.5/0.1... wait 1000000 units → devalue floor(cash/100)*62? No—cash in minor units, /100 then *62? That's huge devaluation to 62%. Hmm, floor(cash/100)*62 means cash kept in 100-unit blocks, ×0.62. So sell 2 → 39.5M → 24.5M next round. Credit: keep 22.5M cash 22.5, next round 13.95 + promissory 21.25 = 35.2M. Credit much better!",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427850,
+    "id": "20261020003722e3042aa90c5445c7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003722e3042aa90c5445c7",
+    "usage": {
+      "completion_tokens": 290,
+      "completion_tokens_details": {
+        "reasoning_tokens": 236
+      },
+      "prompt_tokens": 2533,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2823
+    }
+  }
+}

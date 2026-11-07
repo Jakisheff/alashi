@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.316,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Ожидаемо больше товара при нейтральной границе\"}",
+          "reasoning_content": "Round 1, cash 0, produce gives 2, shuttle gives 3 grey goods (risk of seizure ~25%). Shuttle is better in expectation (3 vs 2), no tariffs yet. Choose 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495437,
+    "id": "202610201923541b29feac3e4b44e1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201923541b29feac3e4b44e1",
+    "usage": {
+      "completion_tokens": 70,
+      "completion_tokens_details": {
+        "reasoning_tokens": 45
+      },
+      "prompt_tokens": 2322,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 2392
+    }
+  }
+}

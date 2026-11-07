@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.925,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон 4 даст +1 влияния мне как самому бедному и обеспечит президентство при 2>1.\"}",
+          "reasoning_content": "Закон 4: +1 влияния самому бедному. Самый бедный — я (idx2). Голоса: idx0 Yes, idx1 No. Если я проголосую Yes — да, 2>1, закон принят, я получаю +1 влияния → президентство. Выбираю vote_yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495092,
+    "id": "2026102019180976a7ab61164c44b3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019180976a7ab61164c44b3",
+    "usage": {
+      "completion_tokens": 103,
+      "completion_tokens_details": {
+        "reasoning_tokens": 68
+      },
+      "prompt_tokens": 2990,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3093
+    }
+  }
+}

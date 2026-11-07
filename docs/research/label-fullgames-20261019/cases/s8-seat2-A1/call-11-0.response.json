@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.839,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":25,\"reason\":\"Ставка 10 alashi — выгодная попытка выиграть лицензию, деньги вернутся при проигрыше, а основное действие остаётся.\"}",
+          "reasoning_content": "I'm currently the president holding influence 1 with tie_order priority [2,1,0], but bribe could help later. Rivals have ~30 and ~29, I have ~20+30 promissory. Round 4 action: shuttle to get goods (risk of seizure? tariff unknown, red border risk). Shuttle gives 3 goods, worth selling later. License income 20-60 — winning bid adds to bank and grants income. Bid moderate, e.g., 10 alashi; but rivals have ~30 each, can outbid. Spending big hurts rank. A bid of 10 leaves 10 cash; rivals likely bid higher. Maybe skip bid, take shuttle. Bid doesn't consume action, so candidates combine? Menu: bid alone here, then action in another turn? \"bid не расходует основное действие: после ставки можно выбрать ещё одно действие. Интерфейс предлагает одну совокупную ставку за ход.\" So choosing bid now likely then action next candidate. Choose modest bid like 5-10? Expected license income 20-60, net positive if win at ≤20. But rivals with more cash may outbid. Tie_order gives me priority at equal bids — hard to exploit. I'll bid 10.\n\nActually cash rank matters for final payout heavily. Rivals likely outbid since they have 30 each. If I bid 10 and lose, cash returned. Cheap to try. Choose choice 25 (10 alashi).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491011,
+    "id": "20261020181002c3823ddf2ce34b6f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181002c3823ddf2ce34b6f",
+    "usage": {
+      "completion_tokens": 346,
+      "completion_tokens_details": {
+        "reasoning_tokens": 302
+      },
+      "prompt_tokens": 4628,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 4974
+    }
+  }
+}

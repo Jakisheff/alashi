@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.161,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Финальный раунд: sell_credit не погасится, продаю все 3 единицы за наличные.\"}",
+          "reasoning_content": "Round 6 last market; sell_credit not honored. So sell all 3 for cash now: choice 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499346,
+    "id": "2026102020290485cba5367ed0425a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020290485cba5367ed0425a",
+    "usage": {
+      "completion_tokens": 59,
+      "completion_tokens_details": {
+        "reasoning_tokens": 24
+      },
+      "prompt_tokens": 3954,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 4013
+    }
+  }
+}

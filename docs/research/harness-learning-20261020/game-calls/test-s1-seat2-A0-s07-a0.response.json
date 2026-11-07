@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.435,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Продаю оба товара по высокой текущей цене, пока она не упала и до возможного налога.\"}",
+          "reasoning_content": "Round 3, price at counter 4 → 7 alashi? sell gives 7. Later rounds prices fall; but I can produce more. Sell now 2 units for 7 each =14 cash, avoid price drop and tax risk later. I'm president with influence... actually holder is me (idx2). Selling now is good since prices decline.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499358,
+    "id": "202610202029144be88eedba264f7e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202029144be88eedba264f7e",
+    "usage": {
+      "completion_tokens": 107,
+      "completion_tokens_details": {
+        "reasoning_tokens": 74
+      },
+      "prompt_tokens": 2578,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2685
+    }
+  }
+}

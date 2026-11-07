@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.238,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Гарантированные 2 товара без риска изъятия на границе.\"}",
+          "reasoning_content": "Produce is safe, shuttle gives 3 grey but can be confiscated (~25%). Produce safer — 2 goods. Shuttle expected 2.25 but 25% loss risk all grey. Choose shuttle? Expected value higher but risk. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499542,
+    "id": "20261020203219a59d338f51a546eb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203219a59d338f51a546eb",
+    "usage": {
+      "completion_tokens": 78,
+      "completion_tokens_details": {
+        "reasoning_tokens": 51
+      },
+      "prompt_tokens": 1917,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 1995
+    }
+  }
+}

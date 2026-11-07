@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.506,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Серый шаттл даёт больше товара для продажи на высоких ценах, ожидаемая выгода выше.\"}",
+          "reasoning_content": "Produce goods to sell later; sell prices at counter 6 → 5 alashi. Need goods. shuttle gives 3 goods but grey, seizure risk; produce gives 2 safe. Boom +2, price 5+2=7. Produce 2 goods ≈14 alashi next market (devalued). Shuttle 3 goods ≈21 but 25% risk. Also inflation: cash halves essentially at round start (62/100). Goods hold value better. Choose produce... or shuttle? Expected 0.75*21=15.75 vs 14. Shuttle slightly better but risk. I'll pick produce for safety? Expected value favors shuttle. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427541,
+    "id": "20261020003212bdab49f6bd57452f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003212bdab49f6bd57452f",
+    "usage": {
+      "completion_tokens": 177,
+      "completion_tokens_details": {
+        "reasoning_tokens": 141
+      },
+      "prompt_tokens": 3389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 3566
+    }
+  }
+}

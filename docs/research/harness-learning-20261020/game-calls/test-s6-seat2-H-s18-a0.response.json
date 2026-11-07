@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 14.788,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Производство даёт товар для продажи в финальном раунде, что превышает выгоды от дорого bribes ради президентства.\"}",
+          "reasoning_content": "Round 5 action, I'm richest. Produce gives goods to sell at price 4-5 (sold_counter=2). Next round prices low anyway. I'm richest, tax laws target me? Card 5 gives influence to richest (me). Being president matters — president is idx 0 currently; influence all 1, tie_order [0,2,1], so idx 0 president unless influence changes. Bribing 5 to idx? Giving cash to rivals reduces my rank lead... my cash 44.7 vs 21/23.7. Bribing 5 for influence 2 → president, tax law 10% costs 10% of revenue — I sell ~few units. Also max influence gets 5% of bank (~2 alashi) plus law control. Bribing 5 to idx0? They're already president. Bribing to idx1 makes me president (influence 2 > 1). Cost 5, gain: 5% bank ≈ 2, veto control over tax, preferential border payments. Tax 20% on sales: I'll sell maybe 4-5 units × ~4 alashi ≈ 20 alashi revenue, 20% = 4 alashi. Worth it. Also veto power round 5 and 6.\n\nBut bribing reduces cash gap; still leader (39.7 vs 23.7). Do shuttle too? Only one action. Bribing spends action. Choice: bribe 5 to idx1 (choice 15). Goods 3 already? No, I sold 2, goods 0. Hmm goods: state shows 0 goods. Selling later needs produce. Trade-off: bribe 5 (control law, tax veto) vs produce 2 goods (~8 alashi revenue at price 4). Presidentship also gives veto, border fees.\n\nRemaining rounds: 5 market(done), action(now), law; round 6 market, action, law. If I don't bribe, idx0 stays president, may pass tax 20% — my revenue round 6 maybe 10-20 alashi, tax 2-4. Bribe 5 + income 2 (5% bank) + avoided tax ≈ break-even, plus veto on card 8 etc. Marginal. Also influence max gives commission 5% regardless rank: 5% of ~39+ bank ≈ 2 alashi.\n\nActually simpler: produce and sell next round. Produce 2 goods, sell round 6 at price ~4 → 8 alashi. That likely beats bribe. Choose produce (choice 1).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496503,
+    "id": "20261020194129539352ca1ef5484a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194129539352ca1ef5484a",
+    "usage": {
+      "completion_tokens": 586,
+      "completion_tokens_details": {
+        "reasoning_tokens": 546
+      },
+      "prompt_tokens": 4949,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 5535
+    }
+  }
+}

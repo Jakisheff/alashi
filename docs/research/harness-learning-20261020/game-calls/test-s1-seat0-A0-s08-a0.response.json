@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.32,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Повышение цен выгодит соперников с товаром, а у меня товара нет — против.\"}",
+          "reasoning_content": "Card 7: +2 to next market prices. I have no goods; opponents have 2 each. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496938,
+    "id": "202610201948560a82585fcea84636",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201948560a82585fcea84636",
+    "usage": {
+      "completion_tokens": 55,
+      "completion_tokens_details": {
+        "reasoning_tokens": 25
+      },
+      "prompt_tokens": 2480,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2535
+    }
+  }
+}

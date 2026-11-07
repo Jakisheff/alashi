@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.2,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 8 обнуляет векселя, но ни у кого их нет видимо; мой голос ничего не меняет, сохраняю статус-кво.\"}",
+          "reasoning_content": "Law 8: обнуляет promissory. У меня promissory=0, но соперник фракция 0 имеет promissory? Seen: [0,0,1,0] — fields? Состояние: у всех promissory 0 в participants. Но seen показывает... фракция 0 cash 22M — вероятно promissory скрыт. Хм, participants показывает promissory:0 у всех. Закон 8 обнуляет векселя — если у кого-то они есть, \"yes\" им вредит. Я не президент; мой голос с весом 1. Текущие: Abstain (вес1), No (вес1). Yes=0, No=1 — закон отклонён, если так. Мне обнуление promissory вроде выгодно, если у соперников есть векселя? Participants показывают promissory=0 у всех публично... но promissory может быть скрыт. Фракция 0 продала 2 в раунде 2 — обычный sell, cash 22M. Никаких векселей. Закон 8 безвреден. vote_no сохраняет статус-кво, тоже без эффекта. Без разницы; голосую no или abstain. Президент — фракция 2, может veto. Не важно. Выберу vote_yes? Никакой разницы — нет векселей у меня, у соперников тоже видим 0. Проголосую no (нейтрально).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496592,
+    "id": "20261020194303a4f035c2afaa46bc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194303a4f035c2afaa46bc",
+    "usage": {
+      "completion_tokens": 372,
+      "completion_tokens_details": {
+        "reasoning_tokens": 327
+      },
+      "prompt_tokens": 2690,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 3062
+    }
+  }
+}

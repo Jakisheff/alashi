@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.602,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продать все 3 единицы по высокой текущей цене и получить максимум cash для аукциона лицензии; кредит невыгоден из-за девальвации.\"}",
+          "reasoning_content": "We're mid game, round 4 market. Promissory devaluation: only rounds 2+ start; selling credit still yields 1.25x and promissory gets paid at round start next round (added to cash, then devalued next round start? Actually cash devalues then promissory added). Round 6 last round—promissory from round 6 never paid. Selling credit now (round 4) gets paid at start of round 5 fully, then devalued at start of round 6 (62%). So credit sale r4 yields ~1.25*0.62=0.775 of value. Bad. Sell now.\n\nPrices: sold_counter=2, price list [12,10,9,...] index 2 → 9 alashi. Sell 3 units gives 9+8+7=24 alashi... candidate shows 56.06-32.06=24. Yes.\n\nRound 5 market I can sell again, but after selling 3 more, counter rises. Also need cash for license bid in round 4 action. Selling all 3 gives 56M cash, strong for bid. Keep some for round 5? Later rounds price drops anyway; selling now at high price good. Sell 3 (choice 5).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427527,
+    "id": "20261020003159d86be243e6ca4263",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003159d86be243e6ca4263",
+    "usage": {
+      "completion_tokens": 315,
+      "completion_tokens_details": {
+        "reasoning_tokens": 270
+      },
+      "prompt_tokens": 3025,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 3340
+    }
+  }
+}

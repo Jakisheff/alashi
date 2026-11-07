@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.58,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон 6 снижает цены будущего рынка, а мне нужно продавать; голос «против» не даст ему пройти.\"}",
+          "reasoning_content": "Law 6: price shift -2 next market. Bad for me (I sell goods). Vote no. Faction 2 voted No, weight 1; holder 1 will vote with weight 2. If I vote no: no=2, yes at most... yes > no required; if holder votes yes: yes 2 vs no 2 → not passed. So vote no blocks.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498286,
+    "id": "20261020201123e030a312bead4d30",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201123e030a312bead4d30",
+    "usage": {
+      "completion_tokens": 117,
+      "completion_tokens_details": {
+        "reasoning_tokens": 81
+      },
+      "prompt_tokens": 2282,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2399
+    }
+  }
+}

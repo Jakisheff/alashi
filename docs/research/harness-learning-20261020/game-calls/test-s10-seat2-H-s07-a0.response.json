@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.666,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Продаю 2 единицы по высокой цене 9, сохраняя товар и cash для аукциона в раунде 4.\"}",
+          "reasoning_content": "Round 3 market. Prices: counter 2, price list index 2 = 9. Need cash ≥9 by round 4 action. Sell 2 now gives 44.5 alashi cash. That keeps prices falling though. Better sell now at 9, keep 1 good for later? Later prices drop. Sell 2 → cash 44.5, then round 4 bid 12, still fine. Keep 1 good for later sale.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499090,
+    "id": "20261020202446b8a8651868984bab",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202446b8a8651868984bab",
+    "usage": {
+      "completion_tokens": 135,
+      "completion_tokens_details": {
+        "reasoning_tokens": 96
+      },
+      "prompt_tokens": 3106,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 3241
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.904,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Субсидия даёт мне больше товара в будущих produce\"}",
+          "reasoning_content": "Law 3: subsidy_goods=1 — good for me (produce gives 3 goods). Vote yes. I have weight 1; holder 0 has weight 3. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490355,
+    "id": "202610201759129ffe2d4e4e5640de",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201759129ffe2d4e4e5640de",
+    "usage": {
+      "completion_tokens": 62,
+      "completion_tokens_details": {
+        "reasoning_tokens": 39
+      },
+      "prompt_tokens": 2824,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2886
+    }
+  }
+}

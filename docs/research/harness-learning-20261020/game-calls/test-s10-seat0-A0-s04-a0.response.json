@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.547,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель обесценивается на раунд меньше и даёт больше итоговой выплаты, чем прямая продажа.\"}",
+          "reasoning_content": "Prices at counter 2: 9 and 8. Sell 2 now for 17. Early rounds, cash devalues 62%. But credit 21.25 promissory... promissory added next round then next round cash devalues again. Selling now gives 17 cash, devalued to floor(17/100)*62≈10.5. Credit: 21.25 added next round, then round 3 devalues... actually promissory added at start of round 3, then devalued at round 4 start? Timeline: start of round cash=floor(cash/100)*62, then promissory added. So cash from selling now devalues 5 times (rounds 3-6? starts of rounds 2..6? we're already in round 2 market). Actually we're in round 2 market, so cash devalues at starts of rounds 3,4,5,6: 4 times: 17→10.54→6.53→4.05→2.51. Credit: promissory 21.25 added at start of round 3, then devalues 3 times: 21.25→13.18→8.17→5.06. Credit slightly better. Also keeping goods to sell later at lower price is bad. Also goods can be produced later. Credit also doesn't count toward wealth rank... final rank uses cash+hard; promissory at final unpaid doesn't count. So credit is slightly better payoff? Final cash: credit 5.06 vs sell 2.51. Choose choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498618,
+    "id": "2026102020165072194fcdced740cf",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020165072194fcdced740cf",
+    "usage": {
+      "completion_tokens": 371,
+      "completion_tokens_details": {
+        "reasoning_tokens": 337
+      },
+      "prompt_tokens": 2212,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2583
+    }
+  }
+}

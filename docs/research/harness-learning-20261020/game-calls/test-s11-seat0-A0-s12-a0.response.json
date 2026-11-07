@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.414,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":61,\"reason\":\"Ставка 16 alashi перекрывает максимум наличности соперников и обеспечивает лицензию стоимостью 20–60 alashi.\"}",
+          "reasoning_content": "License yields 20-60 alashi, worth bidding. Rivals have little cash (15.1 and 10.4). Rival 2 has promissory? No, sold this round so cash 10.4; rival 1 has 15.1. They could bid up to ~15 alashi. Tie order is [0,2,1] — I go first in tie. Bid ~16 alashi beats both and gets license worth 20-60. Bid 17 to be safe? They may spend all cash. Rival 1 max 15.1. Bid 16 (choice 61).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498032,
+    "id": "202610202007088e8c8eada3eb42cb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202007088e8c8eada3eb42cb",
+    "usage": {
+      "completion_tokens": 170,
+      "completion_tokens_details": {
+        "reasoning_tokens": 131
+      },
+      "prompt_tokens": 10712,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 10882
+    }
+  }
+}

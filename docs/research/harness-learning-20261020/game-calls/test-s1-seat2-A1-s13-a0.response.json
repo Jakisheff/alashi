@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.252,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон даёт +1 влияния самому богатому (фракция 1), что угрожает моему посту президента — голосую против.\"}",
+          "reasoning_content": "Law 4: +1 influence to richest by cash. Richest is idx1 (45.7M). He already voted No (weight 3). If passed, idx1 gets +1 influence → 2, threatening my presidency. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497368,
+    "id": "202610201956068af5b36e851447ed",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201956068af5b36e851447ed",
+    "usage": {
+      "completion_tokens": 94,
+      "completion_tokens_details": {
+        "reasoning_tokens": 52
+      },
+      "prompt_tokens": 2833,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2927
+    }
+  }
+}

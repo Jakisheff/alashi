@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.526,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон 7 повышает цены следующего рынка — выгодно мне как продавцу с 2 товарами.\"}",
+          "reasoning_content": "Law 7: +2 цены следующего рынка. Хочу продавать дорого — vote yes. Президент — idx 2, я idx 1, мой вес 1. Есть риск, что 2 применит veto? Закон выгоден и ему (у всех товары). Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496570,
+    "id": "20261020194248554d4869cb834e6a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194248554d4869cb834e6a",
+    "usage": {
+      "completion_tokens": 96,
+      "completion_tokens_details": {
+        "reasoning_tokens": 62
+      },
+      "prompt_tokens": 2497,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2593
+    }
+  }
+}

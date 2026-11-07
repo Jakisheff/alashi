@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.326,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Продажа в кредит даёт выручку ×1,25 без девальвации векселя в следующем раунде.\"}",
+          "reasoning_content": "Prices are falling: counter=2, sell 1 at 9, second at 8. There are few goods (2 each). Later there will be more goods via shuttle/produce; prices fall. But devaluation cash=floor(cash/100)*62 (~38% loss). Credit is better: promissory is not devalued? \"hard is not devalued\" — promissory is added to cash and reset to zero in round 3 — meaning promissory converts to cash without devaluation! So sell_credit is much better: 1.25x and no devaluation. Sell all 2 on credit: 21.25 alashi promissory.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495062,
+    "id": "20261020191735702a4194abe24c35",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020191735702a4194abe24c35",
+    "usage": {
+      "completion_tokens": 181,
+      "completion_tokens_details": {
+        "reasoning_tokens": 142
+      },
+      "prompt_tokens": 2210,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2391
+    }
+  }
+}

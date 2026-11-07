@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.058,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Кандидат показывает товар уже зачисленным без серых излишков, поэтому shuttle даёт максимум товара к продаже.\"}",
+          "reasoning_content": "Produce vs shuttle: shuttle gives 3, produce 2 (no subsidy). Shuttle risk seizure only for grey; shuttle described as grey risk ~25%. Candidates show shuttle goods=6 vs produce 5. Shuttle has 25% seizure risk of grey goods? Grey goods shown as grey_goods=0, goods=6 — maybe seizure already resolved. Actually risk happens at law/border? \"серый товар может быть изъят на границе\" — likely resolved at action end. After state shows 6 goods, no grey. Safer: produce gives 5 certain, shuttle 6 with 25% risk. EV: 6*0.75=4.5 <5. But if seizure already resolved (grey=0, all black?), unclear. Choose shuttle since after state shows goods directly — risk applies to grey_goods, which is 0. Choose 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496967,
+    "id": "20261020194921f7455e7b145548a7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194921f7455e7b145548a7",
+    "usage": {
+      "completion_tokens": 218,
+      "completion_tokens_details": {
+        "reasoning_tokens": 183
+      },
+      "prompt_tokens": 2647,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2865
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 32.148,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Я самый бедный, +1 влияние выгоден; мой голос не меняет исход, но поддерживает полезный закон.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest by cash. I'm poorest (1.9M). Yes: I gain influence → higher max influence bonus? Holder is me. Vote yes: yes=3, no=4 → fails anyway. Abstain: yes 3, no 4, fails. Either way fails unless... yes needs strictly more. Even with my yes: yes=3 vs no=4, fails. So choice doesn't matter for outcome; but voting yes would help if it passed. Abstain keeps vote_weight? No, weight already 3 (influence, action used). Vote yes harmless.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490494,
+    "id": "20261020180102ea8a7e20162d4ab5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180102ea8a7e20162d4ab5",
+    "usage": {
+      "completion_tokens": 165,
+      "completion_tokens_details": {
+        "reasoning_tokens": 130
+      },
+      "prompt_tokens": 2828,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2993
+    }
+  }
+}

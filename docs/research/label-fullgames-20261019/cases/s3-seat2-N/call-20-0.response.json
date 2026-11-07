@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.106,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Налог 20% на продажи уже не влияет — рынок завершён, можно просто пропустить.\"}",
+          "reasoning_content": "Law 2: 20% tax on future sales. Final round, no more sales. Harmless — vote yes or pass. Vote yes makes it pass? Yes 1 vs No 1, tie → not passed, but doesn't matter. Simplest: pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491273,
+    "id": "202610201814308373e46625594376",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201814308373e46625594376",
+    "usage": {
+      "completion_tokens": 86,
+      "completion_tokens_details": {
+        "reasoning_tokens": 56
+      },
+      "prompt_tokens": 3303,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3389
+    }
+  }
+}

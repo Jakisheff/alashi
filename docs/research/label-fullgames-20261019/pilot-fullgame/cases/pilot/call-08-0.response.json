@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.504,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Нужен товар для будущих рынков, shuttle даёт максимум единиц.\"}",
+          "reasoning_content": "We need goods and cash. Shuttle gives 3 goods, 25% seizure risk (no tariff? tariff none set, so shuttle grey goods risk ~25%? Actually shuttle gives grey goods which may be seized). Expected value still good; we sold everything, need goods for future markets. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792426678,
+    "id": "202610200017543b6b149d34114c26",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200017543b6b149d34114c26",
+    "usage": {
+      "completion_tokens": 89,
+      "completion_tokens_details": {
+        "reasoning_tokens": 62
+      },
+      "prompt_tokens": 3530,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 3619
+    }
+  }
+}

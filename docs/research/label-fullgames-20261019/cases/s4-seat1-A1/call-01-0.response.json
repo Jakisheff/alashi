@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.522,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Ожидаемая ценность серого шаттла выше (3 товара при ~75% успеха против 2 гарантированных), cash для взяток всё равно нет.\"}",
+          "reasoning_content": "Produce is guaranteed, shuttle risks 25% loss of 3 goods. Expected shuttle = 2.25 > 2, but produce safer. EV slightly higher for shuttle. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490516,
+    "id": "20261020180150b85f5e2a2cb54205",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180150b85f5e2a2cb54205",
+    "usage": {
+      "completion_tokens": 87,
+      "completion_tokens_details": {
+        "reasoning_tokens": 40
+      },
+      "prompt_tokens": 1924,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2011
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 25.955,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Вето бесплатно мешает сопернику получить +1 влияния и сохраняет мой контроль.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest. Poorest is faction 1 (my rival). Vote count: yes 4, no 3 — passes without me? Yes already 4 (mine) vs no 3. It passes. Veto blocks giving rival +1 influence. I already hold presidency; influence 2 vs their 2 (faction 2). Max influence at end gives 5% bonus; rival 1 getting +1 → tie at 2 with faction 2, worse cash... actually 5% bonus: max influence — if faction 1 goes to 2, I'd be at 2 too, tie broken by cash — I win anyway (66M highest). But blocking is free and safer. Veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497052,
+    "id": "20261020195027dfe32e30b33d4ac6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195027dfe32e30b33d4ac6",
+    "usage": {
+      "completion_tokens": 182,
+      "completion_tokens_details": {
+        "reasoning_tokens": 154
+      },
+      "prompt_tokens": 3334,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3516
+    }
+  }
+}

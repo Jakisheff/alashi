@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.294,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Закон 8 обнуляет векселя, но ни у кого их нет — эффект пустой, воздерживаюсь.\"}",
+          "reasoning_content": "Law 8 обнуляет promissory. У меня promissory=0, соперники тоже 0 (фракция 0 имела 38.75 ранее? promissory now 0 all). Закон бесполезен всем — voted no by 0, abstain by 1. My vote weight 2. Vote yes passes (2>1). No effect since promissory all 0? Faction 1's promissory... after round 2 devaluation, promissory added then reset; currently all 0. So pass irrelevant — abstain safest, or veto unnecessary. Just abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499363,
+    "id": "20261020202918a6c47089304647eb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202918a6c47089304647eb",
+    "usage": {
+      "completion_tokens": 169,
+      "completion_tokens_details": {
+        "reasoning_tokens": 131
+      },
+      "prompt_tokens": 3013,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3182
+    }
+  }
+}

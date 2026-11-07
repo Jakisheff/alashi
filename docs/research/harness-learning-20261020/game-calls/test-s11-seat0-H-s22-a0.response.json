@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.262,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Я уже самый богатый и сохраняю президентство по tie_order; взятки лишь уменьшат cash, а товар продать уже некому.\"}",
+          "reasoning_content": "Round 6, last round, goods=0, no market after this. Influence max gives extra 5% bank (~2 alashi = 1.95). Also rank: I'm richest anyway (45.3M vs 24.3M). Bribing reduces cash but cash already huge; influence 2 vs rival influence 2 (idx2). Getting influence 3+ ensures max influence bonus 5% of bank ≈ 1.95M... 5% of 39M = 1.95M. Bribe 5M to idx2 gives them cash +5M, cost 5M but gain max-influence bonus 1.95M plus president in law (veto power already president at 2 vs 2? tie_order favors me: idx0 first). Actually president decided at law phase; tie 2-2, tie_order [0,2,1] so I stay president even without bribe. Max influence tie: influence equal 2, tie better cash+hard → me. So bribe unnecessary. Produce gives goods but no market left to sell — worthless. Best: pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792500043,
+    "id": "202610202040326d576744e4ea4046",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202040326d576744e4ea4046",
+    "usage": {
+      "completion_tokens": 279,
+      "completion_tokens_details": {
+        "reasoning_tokens": 236
+      },
+      "prompt_tokens": 5340,
+      "prompt_tokens_details": {
+        "cached_tokens": 3136
+      },
+      "total_tokens": 5619
+    }
+  }
+}

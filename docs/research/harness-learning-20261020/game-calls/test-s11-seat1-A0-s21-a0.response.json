@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.843,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон о субсидии уже не влияет на итог — действие безопасно пропустить.\"}",
+          "reasoning_content": "Law 3: subsidy_goods=1 — helps goods production. Opponent 2 has 5 goods but subsidy affects production only. For me: no goods, last round, subsidy doesn't matter much. Yes count: I vote yes with weight 4 → passes. Does it hurt me? Rival 2 produces nothing more (last round, action done). Actually action phase already done for all in round 6? I passed last. Subsidy irrelevant now. Vote doesn't affect payouts except... nothing. Pass is fine; but influence max bonus: 0 and 1 both influence 2, tie by cash+hard: I have more cash. Passing keeps my vote weight 4? Vote weight irrelevant now. Any choice equivalent. Vote yes to pass a harmless law, or just pass. Choose pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497869,
+    "id": "20261020200424b550c3dfee6f495f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200424b550c3dfee6f495f",
+    "usage": {
+      "completion_tokens": 195,
+      "completion_tokens_details": {
+        "reasoning_tokens": 167
+      },
+      "prompt_tokens": 3271,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3466
+    }
+  }
+}

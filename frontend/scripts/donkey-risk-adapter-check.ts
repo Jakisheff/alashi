@@ -34,6 +34,17 @@ for (const [kind, expected] of [['success', 'success'], ['empty', 'empty'], ['ab
   check(input.oracleReady === null && input.actionUsed === null && input.marketPriceUnits === null, 'Absent public account fields remain unknown')
   for (const e of snapshot.events.filter((e) => e.type.startsWith('donkey_'))) check(visualAction(e, snapshot.factions[0]) === null, 'No lottery choreography is invented')
 }
+// The confirmed API now publishes acted; live state must not discard it, while replay cannot use a future stamp.
+for (const acted of [true, false]) {
+  const raw = adapterFixture('terms')
+  Object.assign(raw.factions[0], { acted })
+  const snapshot = decodePublicDonkeySnapshot(raw, game)
+  check(donkeySnapshotInput(snapshot, faction).actionUsed === acted, 'Live action stamp from the confirmed snapshot is retained')
+  check(donkeySnapshotInput(snapshot, faction, []).actionUsed === null, 'Replay does not borrow the live action stamp')
+}
+const malformedActed = adapterFixture('terms')
+Object.assign(malformedActed.factions[0], { acted: 'false' })
+assert.throws(() => decodePublicDonkeySnapshot(malformedActed, game)); checks++
 const snap = decodePublicDonkeySnapshot(adapterFixture(), game), f = snap.factions[0], selected = playerEvents(snap.events, f)
 // Terminal completeness belongs to the full fetched journal, never its replay prefix.
 for (const terminal of [{ phase: 'Law', settled: true }, { phase: 'Finished', settled: false }, { phase: 'Aborted', settled: false }]) {

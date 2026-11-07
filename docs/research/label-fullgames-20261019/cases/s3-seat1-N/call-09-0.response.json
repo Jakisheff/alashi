@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.513,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Shuttle с субсидией даёт 4 товара бесплатно — максимум ожидаемой выручки при текущем влиянии держателя X.\"}",
+          "reasoning_content": "I'm element 1, holder X. Subsidy=1, so shuttle gives 4 goods. Produce gives 3. Shuttle free, no seizure risk for shuttle itself? Shuttle grey goods can be seized ~25%... shuttle gives grey goods at risk. Actually shuttle: 3+subsidy grey goods, risk ~25% seizure at border unless black tariff. But candidates show goods=4. Expected 3 vs 4*0.75=3. Shuttle better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427544,
+    "id": "20261020003219ab4aee5af13d4343",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003219ab4aee5af13d4343",
+    "usage": {
+      "completion_tokens": 139,
+      "completion_tokens_details": {
+        "reasoning_tokens": 100
+      },
+      "prompt_tokens": 3086,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 3225
+    }
+  }
+}

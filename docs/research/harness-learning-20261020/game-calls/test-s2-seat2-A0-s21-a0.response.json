@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.701,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Карта 3 (субсидия) уже не влияет на итог — пропускаю.\"}",
+          "reasoning_content": "Card 3: subsidy_goods=1 — no effect now (last round done markets/actions). It's final law, irrelevant. Others voted yes (2 yes). Doesn't matter. Just pass or yes. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498791,
+    "id": "20261020201948738ad804eb7344dd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201948738ad804eb7344dd",
+    "usage": {
+      "completion_tokens": 75,
+      "completion_tokens_details": {
+        "reasoning_tokens": 44
+      },
+      "prompt_tokens": 3382,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3457
+    }
+  }
+}

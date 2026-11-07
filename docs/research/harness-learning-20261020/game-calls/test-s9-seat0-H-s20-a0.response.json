@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.036,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар уже не продать, взятки лишь уменьшают cash при сохранении президентства, поэтому пас с бонусом к весу голоса.\"}",
+          "reasoning_content": "Round 6 action — no market left to sell goods, so produce is useless for cash. I'm president, hold license income already. Key: final rank is cash+hard; bribing reduces cash but gives influence. Max influence gets 5% of bank (1.95 alashi). Also vote_weight matters in law round 6, but I'm already president (influence 2 vs 1). Bribing loses cash but increases influence — 5M bribe loses 5 cash, gains influence 3... commission 5% of 39M = 1.95M. Not worth it. Cash counts 1:1 in rank, influence only for 5% commission (~2 alashi) — no. Better: pass? Actually shuttle goods can't be sold. Just pass to keep vote_weight bonus? President uses veto anyway. Pass keeps cash, +2 vote weight. Choose pass.\n\nWait: roof gives cash to others, no. Choose 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496547,
+    "id": "20261020194219c6f194486afe49f2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194219c6f194486afe49f2",
+    "usage": {
+      "completion_tokens": 245,
+      "completion_tokens_details": {
+        "reasoning_tokens": 202
+      },
+      "prompt_tokens": 4824,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 5069
+    }
+  }
+}

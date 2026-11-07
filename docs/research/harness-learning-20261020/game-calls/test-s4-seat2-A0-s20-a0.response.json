@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.673,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон уже не влияет на выплаты, последний рынок прошёл; любой выбор равноценен.\"}",
+          "reasoning_content": "Law 7: price +2 next market — but round 6 was last market. No effect anyway. Law affects nothing now. But I'm not president (holder 1). My vote: yes=1+2 already, my no makes 2-2, tie → not passed. Doesn't matter since market done. Just vote_yes, irrelevant.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496793,
+    "id": "20261020194631dce1a72a741d461a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194631dce1a72a741d461a",
+    "usage": {
+      "completion_tokens": 102,
+      "completion_tokens_details": {
+        "reasoning_tokens": 73
+      },
+      "prompt_tokens": 3255,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3357
+    }
+  }
+}

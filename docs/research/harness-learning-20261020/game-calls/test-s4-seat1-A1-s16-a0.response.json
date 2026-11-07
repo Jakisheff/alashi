@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.644,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce даёт 2 товара для продажи по высокой цене в финальном рынке без риска изъятия\"}",
+          "reasoning_content": "Round 5 action, I'm president (idx1). Last market round is 6. Goods can be sold next round. I have 0 goods. shuttle gives 3 goods (risk? shuttle grey seizure ~25%... shuttle gives grey goods, may be seized; with tariff black no seizure but tariff not set). Actually shuttle \"серый товар может быть изъят\" — risk at action end ~25%. But 3 goods at price ~6-12 each is valuable. Round 6 market sold_counter=0, prices 12,10,9. 3 goods sell ~31 alashi. Also president influence — bribing gives influence but costs cash. Keep influence lead for max influence 5% bonus? Currently influence 2 vs rival 2; vote weight matters in law. Bribing 5M gives influence 3 and presidency lock plus max-influence bonus at final. But cash matters for rank too.\n\nCash: 16.85. Selling 3 goods ~31 → strong. Shuttle risk 25% lose all. Expected ~23 alashi value vs produce 2 goods ~22 (12+10). Produce is safe and nearly as good. Produce: 2 goods sell at 12+10=22.\n\nBribe 5M: influence 3 > others, secures max-influence 5% commission (~3.15 alashi) and presidency. Cost 5M cash, gain ~3.15 + control. Rank by cash: I'm currently lowest (13.7, 16.8, 20.0). Bribe 5M makes me 11.8, worse. Better: produce, sell next round → cash ~38+, likely richest.\n\nChoose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496645,
+    "id": "20261020194353b13da98784a242e1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194353b13da98784a242e1",
+    "usage": {
+      "completion_tokens": 389,
+      "completion_tokens_details": {
+        "reasoning_tokens": 357
+      },
+      "prompt_tokens": 3699,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 4088
+    }
+  }
+}

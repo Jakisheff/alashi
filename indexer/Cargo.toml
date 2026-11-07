@@ -22,3 +22,11 @@ solana-signature = "3"
 solana-commitment-config = "3"
 solana-account = "3.2"
 solana-address = "2.7"
+
+[dev-dependencies]
+solana-account-decoder = "=3.1.14"
+solana-pubkey = "3"
+
+[patch.crates-io]
+solana-account-decoder = { path = "../vendor/solana-account-decoder" }
+solana-account-decoder-client-types = { path = "../vendor/solana-account-decoder-client-types" }

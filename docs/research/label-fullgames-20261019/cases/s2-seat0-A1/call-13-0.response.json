@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.659,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"shuttle даёт 3 товара для продажи в оставшихся раундах, а ставка аукциона всё равно проиграет более богатым соперникам.\"}",
+          "reasoning_content": "Need action + bid. My cash small; opponents richer (35.8 and 9.1) may outbid. License income 20-60 alashi is huge; worth trying but likely lose. I'm poor; bribe to gain influence? President is idx2 with influence 2, I have 1, opponent 1 has 2. Bribe 5 to idx2 or idx1 gives me 2 influence — could become president? Tie: influence 2, tie_order [1,2,0] — I'd lose presidency. Not helpful.\n\nBest economic: shuttle gives 3 goods. Combine bid? Bid doesn't consume action but interface offers one aggregate. No candidate combining bid+shuttle. So choose shuttle (goods for selling later).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490638,
+    "id": "2026102018035207dd09c26ad644fa",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102018035207dd09c26ad644fa",
+    "usage": {
+      "completion_tokens": 200,
+      "completion_tokens_details": {
+        "reasoning_tokens": 157
+      },
+      "prompt_tokens": 3645,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 3845
+    }
+  }
+}

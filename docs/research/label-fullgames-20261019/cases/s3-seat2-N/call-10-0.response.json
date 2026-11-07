@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.989,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 6 уже отклонён (No ведёт 2:1), veto не нужен.\"}",
+          "reasoning_content": "Current: Yes=1, No=2 (me weight 2). No already wins without veto. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491163,
+    "id": "20261020181239227fc8d908094cea",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020181239227fc8d908094cea",
+    "usage": {
+      "completion_tokens": 54,
+      "completion_tokens_details": {
+        "reasoning_tokens": 23
+      },
+      "prompt_tokens": 2455,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2509
+    }
+  }
+}

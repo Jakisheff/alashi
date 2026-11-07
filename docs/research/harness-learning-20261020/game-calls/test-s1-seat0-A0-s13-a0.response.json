@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.66,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Закон даёт +1 влияния сопернику-лидеру по cash; veto сохраняет моё преимущество влияния.\"}",
+          "reasoning_content": "Card 4: +1 influence to richest by cash. Richest is faction 1 (36.7M). Yes:1 No:1 currently, my vote weight 3 decides. Giving rival +1 influence reduces my influence edge. Veto kills it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496971,
+    "id": "20261020194928f00e3536281b4d2e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194928f00e3536281b4d2e",
+    "usage": {
+      "completion_tokens": 92,
+      "completion_tokens_details": {
+        "reasoning_tokens": 54
+      },
+      "prompt_tokens": 2816,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2908
+    }
+  }
+}

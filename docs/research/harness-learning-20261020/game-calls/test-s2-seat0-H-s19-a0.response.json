@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.473,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Последний раунд: продаю весь товар, sell_credit здесь не погашается.\"}",
+          "reasoning_content": "Round 6 last market: sell_credit won't be paid. Sell all 3 at 12+? counter=0, price 12 first unit... candidate sell 3 gives 31 alashi.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496547,
+    "id": "20261020194223b9e68c6529184f50",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194223b9e68c6529184f50",
+    "usage": {
+      "completion_tokens": 70,
+      "completion_tokens_details": {
+        "reasoning_tokens": 42
+      },
+      "prompt_tokens": 4061,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 4131
+    }
+  }
+}

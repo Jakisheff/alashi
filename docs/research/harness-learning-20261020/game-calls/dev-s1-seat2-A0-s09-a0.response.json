@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.77,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продаю весь товар сейчас по высокой цене; вексель потерял бы 38% при девальвации.\"}",
+          "reasoning_content": "Round 4 of 6; selling now gets price ~7-8 per unit. Prices decline with sales; holding goods to sell later? Later rounds price lower as sold_counter grows. Sell all 3 now: units at ~8,7,7? Candidate gives 24 alashi cash. That's good. Promissory pays out in round 5 start with 62% haircut — worse. Sell 3 now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495575,
+    "id": "2026102019261175c80f62c24c4a83",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019261175c80f62c24c4a83",
+    "usage": {
+      "completion_tokens": 123,
+      "completion_tokens_details": {
+        "reasoning_tokens": 88
+      },
+      "prompt_tokens": 2727,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2850
+    }
+  }
+}

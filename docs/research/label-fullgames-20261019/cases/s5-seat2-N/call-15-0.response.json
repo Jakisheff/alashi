@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.07,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Снижение цен мне невыгодно — у меня 2 товара на будущую продажу.\"}",
+          "reasoning_content": "Law 6: price shift -2 next market. I have 2 goods, want to sell round 5. So vote no. Holder is idx1 (opponent) can veto anyway. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490389,
+    "id": "202610201759452337c483e2a04a78",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201759452337c483e2a04a78",
+    "usage": {
+      "completion_tokens": 72,
+      "completion_tokens_details": {
+        "reasoning_tokens": 43
+      },
+      "prompt_tokens": 2886,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2958
+    }
+  }
+}

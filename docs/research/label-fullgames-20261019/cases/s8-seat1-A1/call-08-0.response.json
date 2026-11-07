@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.202,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Бесплатный shuttle даёт больше всего товара для будущих продаж при текущем отсутствии красного тарифа.\"}",
+          "reasoning_content": "I'm фракция 1, need goods for future markets. Round 3 action; shuttle gives 3 goods free (risk at border, but tariff currently 0 — no preferential border, 25% seizure risk). Actually tariff=0 means no tariff set? Red tariff risk applies only if tariff=2. Currently tariff 0 — risk unclear; shuttle grey goods can be seized ~25% anyway. Shuttle 3 goods for free, worth selling later at price ~4-6 alashi/unit. Take shuttle? Grey seizure 25% of all goods. Expected 2.25 goods. Still better than produce (2 goods). Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427719,
+    "id": "202610200035146c84ec5747d14efa",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200035146c84ec5747d14efa",
+    "usage": {
+      "completion_tokens": 167,
+      "completion_tokens_details": {
+        "reasoning_tokens": 135
+      },
+      "prompt_tokens": 3316,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 3483
+    }
+  }
+}

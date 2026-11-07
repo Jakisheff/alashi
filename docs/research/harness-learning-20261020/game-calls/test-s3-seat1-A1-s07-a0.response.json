@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.467,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Цены сейчас на пике с бумом, а вексель рискован девальвацией — продаю весь товар за живые деньги.\"}",
+          "reasoning_content": "Prices now: counter=2, base 9+boom2=11. Selling 3 units: 11,10,9 = 30 gross... after_own shows cash 46.25 = +30M, yes.\n\nBoom next round? Boom likely ends; devaluation 62%. Selling now for hard cash is good. Sell all 3 now: cash 46.25M. Later rounds can produce/shuttle again. Prices decline anyway. I'd sell all now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499560,
+    "id": "202610202032319e61ebe19a274b85",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202032319e61ebe19a274b85",
+    "usage": {
+      "completion_tokens": 142,
+      "completion_tokens_details": {
+        "reasoning_tokens": 99
+      },
+      "prompt_tokens": 2581,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2723
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 17.78,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар и влияние уже не окупаются: я ранг 0 и с максимальным влиянием, взятки лишь сжигают cash.\"}",
+          "reasoning_content": "Last round action. I have cash 60.18, influence 2, no goods to sell after market. Bribing gives influence — 5% bank commission (≈2 alashi) to max influence. Also presidency? Holder is idx1 with influence 1? I have influence 2, tie_order [1,0,2] — idx1 is president with influence 1, I have 2 > 1, so I'm president in law this round. Goods 0, no more sales — tax irrelevant. Law could be card 8 (zero promissory — mine is 0, rivals 0) or card 4/5 influence.\n\nGoods useless (no more market). Bribing: each 5 alashi gives +1 influence. Max influence prize: 5% of bank = ~1.85 alashi... bank 39, commission 5% = 1.95 to max influence. Not worth 5 alashi bribe. But influence also affects... already rank 0 in cash (60 vs 43 vs 0). Rank 0 = 50% share, plus max influence 5%. Bribe reduces cash, no benefit. Just produce? Goods worthless. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499168,
+    "id": "2026102020255292d5726173c34a3c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020255292d5726173c34a3c",
+    "usage": {
+      "completion_tokens": 295,
+      "completion_tokens_details": {
+        "reasoning_tokens": 253
+      },
+      "prompt_tokens": 5557,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 5852
+    }
+  }
+}

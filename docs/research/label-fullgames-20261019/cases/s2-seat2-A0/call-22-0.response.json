@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.778,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товары больше нельзя продать, деньги и влияние не меняются — pass оптимален.\"}",
+          "reasoning_content": "Last round action; goods useless (no market left? market already passed in round 6). So just pass. Vote weight already 3 (skipped market? vote_weight 3 = influence 1 + 2 skipped). Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490105,
+    "id": "202610201755037bff9d707c94429d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201755037bff9d707c94429d",
+    "usage": {
+      "completion_tokens": 77,
+      "completion_tokens_details": {
+        "reasoning_tokens": 48
+      },
+      "prompt_tokens": 4639,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 4716
+    }
+  }
+}

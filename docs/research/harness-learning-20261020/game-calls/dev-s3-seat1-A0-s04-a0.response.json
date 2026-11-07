@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.476,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Продажа в кредит даёт 16.25 alashi векселем, что выгоднее прямых продаж из-за девальвации наличных.\"}",
+          "reasoning_content": "Sell now at price ~7 (counter 4 → price index 4? sold_counter=4 means next price is index 4 = 7). Selling 2 gets 13. Later rounds cash gets devalued to 62%. Selling now yields cash that will be devalued multiple times; sell_credit avoids devaluation but promissory paid at end... actually promissory adds to cash at round start, then next devaluation applies. Better to keep goods? Price will fall as others sell. Others have cash but no goods yet. Sell 2 for 13 now, but devaluation 62% twice before end reduces. Sell credit gives 16.25 promissory, added next round, then devalued once (62% at round 3 start? added after devaluation each round). Promissory added at round 3 start after devaluation, then devalued at round 4 start: 16.25*0.62=10.075. Sell now: 13 → round3: 8.06, round4: 5.0. Sell_credit better. Choose 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495315,
+    "id": "20261020192150e9cd6049c37046e5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192150e9cd6049c37046e5",
+    "usage": {
+      "completion_tokens": 277,
+      "completion_tokens_details": {
+        "reasoning_tokens": 234
+      },
+      "prompt_tokens": 2213,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2490
+    }
+  }
+}

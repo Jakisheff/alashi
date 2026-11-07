@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.777,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 10% пройдёт при любом моём голосе (президент не я), но голос против минимизирует шанс.\"}",
+          "reasoning_content": "Law card 1: 10% tax on future sales. I'm the richest (cash 60.7M) and plan to sell round 6. Tax 10% hurts me. Others voted: idx0 No, idx2 Yes. Yes=3+my weight... currently yes=3, no=1. If I vote no: 4 vs 2? No: yes 3 > no 2 → passes. President is idx2 (influence 3), not me. I can't veto. So law passes regardless; vote_no anyway.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496896,
+    "id": "20261020194812f56aa3c30d9244c5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194812f56aa3c30d9244c5",
+    "usage": {
+      "completion_tokens": 155,
+      "completion_tokens_details": {
+        "reasoning_tokens": 117
+      },
+      "prompt_tokens": 3569,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3724
+    }
+  }
+}

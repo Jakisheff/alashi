@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.323,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"The shuttle gives 3 units with an expected value higher than production, despite the risk of seizure.\"}",
+          "reasoning_content": "Produce gives 2 goods for sure; shuttle gives 3 grey goods with seizure risk ~25% at border. Seizure risk only at border crossing? \"grey goods may be seized at the border\" - so shuttle's grey goods risk seizure. Produce is safe, shuttle's expected value is higher (3 * 0.75 = 2.25 > 2). But there's also a tariff payment for grey goods. Seizure risk ~25% of everything? \"confiscation of all goods\"? \"shuttle gives 3+subsidy_goods goods; grey goods may be seized at the border with a probability of about 25%\". Choose shuttle for higher expectation.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499368,
+    "id": "20261020202924fc3ccdb41dd340f7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202924fc3ccdb41dd340f7",
+    "usage": {
+      "completion_tokens": 173,
+      "completion_tokens_details": {
+        "reasoning_tokens": 143
+      },
+      "prompt_tokens": 1917,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2090
+    }
+  }
+}

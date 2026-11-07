@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.442,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Продажа в кредит трёх единиц по высоким ценам даёт максимум выручки при только одной будущей девальвации.\"}",
+          "reasoning_content": "Round 4 of 6, market prices 12,10,9 for first units. Selling 3 now at 12+10+9=31 alashi is strong. Credit gives 38.75 promissory but only one more devaluation round (round 6? Round start 2,3,4,5,6 devaluation applies; promissory paid at round 5 and 6 starts... last round promissory not redeemed). Sell credit at round 4: promissory added at round 5 start after devaluation, then round 6 start cash=floor(cash/100)*62 — no further loss? Actually devaluation at round 6 start applies to cash including promissory from round 5. Selling credit 3 gives 38.75M promissory → at round 5 start added to cash, then round 6 devaluation hits it once (62%). Selling now 31M cash → devalued twice (round 5 and 6): 31→19.2→11.9? Wait round 4 already started. Cash sold now devalues at round5 and round6: 31*0.62²≈11.9. Credit: 38.75 added at round5 start (after that round's devaluation), then one devaluation round6: 38.75*0.62≈24. Better credit. Also sell 3 credit now, keep future produce. Rival with 2 goods may sell too, dropping prices. I'll sell_credit 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427737,
+    "id": "202610200035243c858fcf107e43d1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200035243c858fcf107e43d1",
+    "usage": {
+      "completion_tokens": 359,
+      "completion_tokens_details": {
+        "reasoning_tokens": 321
+      },
+      "prompt_tokens": 2854,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 3213
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.287,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Продажа 2 единиц сейчас даёт максимум cash до девальвации раунда 6, а вексель не погасится.\"}",
+          "reasoning_content": "Round 5 of 6; sell now at price 12+? sold_counter=0, price 12. Selling 2 gives 24 cash now. Round 6 cash floor dev... cash 42.25M → floor(42.25/1M... actually floor(cash/100)*62 per min units: 4225*62 = 261,950,000 = 261.95 alashi vs 20.25 cash = 12.55. Better sell now. Sell 2 → choice 3. Credit: promissory 27.5M added next round start then devalued? Promissory added after dev... promissory added to cash after dev, but end of game round 6 promissory not redeemed. So sell (choice 3).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499586,
+    "id": "20261020203259bba603efbe9a44d3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203259bba603efbe9a44d3",
+    "usage": {
+      "completion_tokens": 212,
+      "completion_tokens_details": {
+        "reasoning_tokens": 170
+      },
+      "prompt_tokens": 2988,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3200
+    }
+  }
+}

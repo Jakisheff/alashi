@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.585,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Кредитная продажа даёт 16,25 alashi, которые будут зачислены в начале раунда 6 до девальвации.\"}",
+          "reasoning_content": "Round 5, sell now; next round start promissory added then cash devalued. Selling with credit gets 1.25x and paid in round 6... wait round 6 is last round; promissory added at start of round 6, so it survives? Yes, devaluation applies then promissory added. After round 6 promissory unredeemed—but we get it at round 6 start. So credit sell is good: 16.25M promissory vs 13M now (2 units at price 7,6? sold_counter=4 → prices 7,6 =13; credit 16.25). And keep 2 goods... choose 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495265,
+    "id": "20261020192100580f4489b2dc4c2e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192100580f4489b2dc4c2e",
+    "usage": {
+      "completion_tokens": 189,
+      "completion_tokens_details": {
+        "reasoning_tokens": 148
+      },
+      "prompt_tokens": 3018,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3207
+    }
+  }
+}

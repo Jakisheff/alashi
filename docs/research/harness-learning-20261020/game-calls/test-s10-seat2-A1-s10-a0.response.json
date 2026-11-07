@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.69,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон даст +1 влияния беднейшему (сопернику), что усилит конкуренцию за пост президента и бонус влияния.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest cash. Poorest is faction 0 (2.1M) — me 6.54M. That gives opponent +1 influence, competing for presidency/5% bonus. Vote no. President (idx1, influence 2, vote weight 2) may pass anyway; my no helps.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498013,
+    "id": "2026102020064957e84145e68a4fb1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020064957e84145e68a4fb1",
+    "usage": {
+      "completion_tokens": 111,
+      "completion_tokens_details": {
+        "reasoning_tokens": 71
+      },
+      "prompt_tokens": 2552,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2663
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.997,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Кредитная продажа всех 3 единиц даёт бонус 25% и защищает выручку от девальвации.\"}",
+          "reasoning_content": "Round 3 of 6. Price at counter 2 = 9, next 8, 7... selling now is good. Cash is needed for later (dev 62%). Selling 3 goods for 24 alashi now vs credit gives 30 promissory paid after this round's market? Promissory added at start of next round before devaluation? \"Начало раунда 2 и далее: cash=floor(cash/100)*62, затем promissory прибавляется\" — so promissory added after devaluation: sell_credit avoids devaluation and gets 25% bonus. Strong. Sell all 3 credit: 30 alashi in promissory, added to cash next round undevalued. But last round credit worthless — not yet. Choose credit 3 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498943,
+    "id": "20261020202216baf10b70d12c477a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202216baf10b70d12c477a",
+    "usage": {
+      "completion_tokens": 205,
+      "completion_tokens_details": {
+        "reasoning_tokens": 168
+      },
+      "prompt_tokens": 2684,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2889
+    }
+  }
+}

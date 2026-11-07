@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.058,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Ожидаемая выгода серой доставки (2.25 товара) выше, чем у produce.\"}",
+          "reasoning_content": "Produce is safe; shuttle gives 3 goods but 25% seizure risk. I have vote_weight 3 already... produce gives 2 goods no risk. Shuttle EV: 0.75*3=2.25 goods. Slight edge; but grey goods may be seized at border only in shuttle — 25% chance lose all. EV still higher. But also grey goods may pay tariff. Choose shuttle? Safer produce. EV slightly favors shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496453,
+    "id": "202610201940499ceda96d75814858",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201940499ceda96d75814858",
+    "usage": {
+      "completion_tokens": 127,
+      "completion_tokens_details": {
+        "reasoning_tokens": 95
+      },
+      "prompt_tokens": 1917,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2044
+    }
+  }
+}

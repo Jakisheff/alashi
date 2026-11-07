@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.495,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 10% снизит выручку моих продаж; голосую против и оставляю себе бесплатное veto на случай прохода.\"}",
+          "reasoning_content": "I have 3 goods to sell next rounds. Tax 10% would hurt. Vote no — but rivals votes: idx0 weight 4, idx2 weight 3, mine 2. As president I can veto. Vote no, and can veto post-vote if needed. But this choice only primary; veto now = choice 4 kills tax regardless. Better: vote_no then veto later if needed? Saves nothing; veto is free. But if others vote yes, law passes unless veto. Vote no, keep option for post_vote.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491117,
+    "id": "202610201811536f60a329882e40f7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201811536f60a329882e40f7",
+    "usage": {
+      "completion_tokens": 149,
+      "completion_tokens_details": {
+        "reasoning_tokens": 111
+      },
+      "prompt_tokens": 2878,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3027
+    }
+  }
+}

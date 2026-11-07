@@ -5,7 +5,7 @@ import { Mesh } from 'three'
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils.js'
 import { ScreenText } from '../../genie/ScreenText'
 import { createSmokeMaterial } from '../../genie/smoke'
-import { ACTION_SECONDS, clampTime, scenarioFraming, type ScenarioPreview } from './definitions.ts'
+import { ACTION_SECONDS, actionStageAt, clampTime, scenarioFraming, type ScenarioPreview } from './definitions.ts'
 import { applyScenario, displayTime } from './motion.ts'
 import { createScenarioProps } from './props.ts'
 import { MuleReference } from './MuleReference'
@@ -25,10 +25,11 @@ function useReducedMotion() {
 }
 
 /** Pure visual preview. Parent owns action confirmation, English copy and controls. */
-export function ScenarioAction({ preview, onTime, onFinished }: {
+export function ScenarioAction({ preview, onTime, onFinished, syncSpeech = true }: {
   preview: ScenarioPreview
   onTime: (time: number) => void
   onFinished: () => void
+  syncSpeech?: boolean
 }) {
   const glb = useGLTF(HERO)
   const hero = useMemo(() => clone(glb.scene), [glb.scene])
@@ -74,7 +75,7 @@ export function ScenarioAction({ preview, onTime, onFinished }: {
     if (preview.playing && actual >= ACTION_SECONDS && !finished.current) {
       finished.current = true; onTime(ACTION_SECONDS); onFinished()
     }
-  })
+  }, -2)
 
   const framing = scenarioFraming(preview.action)
   // Keep side characters and the ballot box inside the portrait camera.
@@ -82,6 +83,6 @@ export function ScenarioAction({ preview, onTime, onFinished }: {
     <primitive object={hero} />
     <primitive object={props.root} />
     {preview.action === 'mule' && <Suspense fallback={null}><MuleReference props={props} /></Suspense>}
-    {anchor && createPortal(<ScreenText />, anchor)}
+    {anchor && createPortal(<ScreenText clock={syncSpeech ? () => time.current - actionStageAt(preview.action, time.current).at : undefined} reducedMotion={reduced} />, anchor)}
   </group>
 }

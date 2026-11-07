@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.189,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Налог 20% мне вреден, голосую против.\"}",
+          "reasoning_content": "Law 2: tax 20% on future sales. I plan to sell — veto it. P0 voted No (weight 2), P2 weight 1 likely. Yes=2? If yes 2 vs no 2 → not passed (strictly greater needed). Even if P2 votes yes: 2 vs... P0 no=2, yes=2 → fail. So tax fails anyway. Veto unnecessary but free safety? Veto only applies to count — safe. But veto pending could... just pass or vote_no. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499570,
+    "id": "20261020203246a5ebed54aeb74d8f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203246a5ebed54aeb74d8f",
+    "usage": {
+      "completion_tokens": 138,
+      "completion_tokens_details": {
+        "reasoning_tokens": 115
+      },
+      "prompt_tokens": 2532,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2670
+    }
+  }
+}

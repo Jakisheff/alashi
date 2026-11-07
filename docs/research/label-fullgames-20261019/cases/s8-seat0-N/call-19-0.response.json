@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.775,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товары и законы уже почти не влияют на итог, а я и так лидирую по cash и влиянию; взятки лишь уменьшат ранг.\"}",
+          "reasoning_content": "Last round action. Goods worthless. Law: I'm holder with influence 3, weight 5. Card could be bad (5: +1 influence richest — I'm richest; 4: +1 poorest; 6/7 price shift irrelevant; 8 promissory none; 1/2 tax irrelevant after last market... market done, so law effects mostly moot except influence for commission 5% of bank). Max influence gives extra 5% of bank (~2.75 alashi). I already have 3 vs 1. Bribes reduce cash which counts in rank — bad. Cash rank: I'm first already. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491029,
+    "id": "202610201810224f9153cce9f649fc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201810224f9153cce9f649fc",
+    "usage": {
+      "completion_tokens": 183,
+      "completion_tokens_details": {
+        "reasoning_tokens": 135
+      },
+      "prompt_tokens": 4449,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 4632
+    }
+  }
+}

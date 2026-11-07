@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 17.603,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Шаттл даёт максимум товара с лучшим ожиданием выручки при текущих ценах.\"}",
+          "reasoning_content": "I have 31 cash, leading. Shuttle risk: shuttle is grey goods, can be confiscated (~25%). I have 0 goods. shuttle gives 3 goods worth selling later. Price after 4 sold counter: price ~8 alashi per unit? Counter 4, prices [12,10,9,8,7,...] → next ~7? Selling 3 units gives decent cash. I'm richest; presidency held by idx1. Bribing idx1 gives influence, could take presidency (need influence ≥2 to beat... holder is idx1 with influence 1, tie_order 1 first). Bribe 5 to idx1 → my influence 2, president. But presidency only matters at law; law after action. Being president gives veto and vote control, plus 5% bank commission for max influence (bank 30 → 1.5 alashi). Influence also helps against card 5 giving rival +1.\n\nShuttle gives 3 goods, ~25% loss risk — but border payment if preferential... tariff 0. Produce gives 2 goods safe. Value per goods ~7-9 alashi. Shuttle 3 goods vs produce 2, risk 25% lose all. EV shuttle = 0.75*3=2.25 > 2. But being president could block bad laws (e.g., card 5 gives richest +1 influence — I'm richest; card 6 price drop hurts me; taxes hurt me as main seller).\n\nI already sold 3 at price 9? (got 31? no — 31 cash starting includes 22 from... round 2 I had 22? Actually started round 3 with cash 31 after selling 3 units — yes I sold at law? I sold units 3, cash 31.)\n\nOption: bribe 5 to idx1 → influence 2, become president this round's law? President determined at entry to law by max influence. I'd have 2 > idx2's 2? tie → tie_order [1,0,2]: idx2 has influence 2 too. Tie between me(2) and idx2(2) → tie_order: 0 before 2, so I'd be president. But losing 5 alashi.\n\nAlternative: shuttle for goods (worth ~21 alashi revenue), then law handled by others.\n\nCash matters for final rank. 5 alashi bribe costs but gains presidency + veto + likely max influence (5% bank = 1.5). Marginal. Shuttle EV ~2.25 goods * ~7 = ~16 alashi revenue next rounds. That's bigger. Choose shuttle.\n\nRisk 25% confiscation but tariff currently 0 (no roof) → \"shuttle may be confiscated ~25%\" always. EV still better than produce (2 goods). Choose shuttle, choice 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495586,
+    "id": "2026102019261066d340fe598e40ec",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019261066d340fe598e40ec",
+    "usage": {
+      "completion_tokens": 623,
+      "completion_tokens_details": {
+        "reasoning_tokens": 591
+      },
+      "prompt_tokens": 3501,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 4124
+    }
+  }
+}

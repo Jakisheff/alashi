@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 14.266,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Кредитная продажа всех 3 единиц по высоким ценам даёт вексель, который не девальвируется при входе в раунд 6, что выгоднее всего.\"}",
+          "reasoning_content": "Round 5 market, price fresh counter 0: 12 alashi per unit. Round 6 market cash gets devalued floor/100*62, promissory added after? \"cash=floor(cash/100)*62, затем promissory прибавляется\" — promissory survives devaluation fully, but after last round promissory не погашается. Wait round 6 is last round; promissory added at start of round 6 market — погашается? \"После последнего раунда вексель не погашается\" — promissory from last round not paid. Selling credit now: promissory 15M added at start of round 6, usable in round 6. So credit sell gives more cash into final round. Actually round 6 market: cash = floor/100*62 + promissory. So promissory is better than cash (no devaluation).\n\nSell 3 units now at prices 12,10,9 = 31M cash, or credit 38.75M promissory. Cash will devalue to 62%, credit full. Cash 9.18M → devalued ~5.7M +38.75 = 44.4M vs sell now 40.18M cash → 24.9M. Definitely sell_credit. Also sell all 3 now at high prices vs keep for round 6? Prices fall with counter. Sell all 3 credit now. Also should we sell 1 credit now and sell rest round 6? Prices would drop to 7,6,5 anyway. Sell all now.\n\nChoice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499618,
+    "id": "202610202033258bd809b8cb8b4197",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202033258bd809b8cb8b4197",
+    "usage": {
+      "completion_tokens": 390,
+      "completion_tokens_details": {
+        "reasoning_tokens": 342
+      },
+      "prompt_tokens": 3058,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3448
+    }
+  }
+}

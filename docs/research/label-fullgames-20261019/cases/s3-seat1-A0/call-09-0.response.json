@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.214,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Шаттл даёт максимум товара (5 единиц) для будущих продаж по высоким ценам.\"}",
+          "reasoning_content": "Need goods for selling later. Shuttle gives 3+1=4+1=5 goods, risk 25% seizure if tariff favorable? Currently no tariff — border default? Risk exists unless black tariff. Shuttle gives most goods. But I'm president (influence 1 vs rivals 1 — tie order favors me, but influence 2 holder 0). Law phase I hold presidency with vote_weight 3. Losing presidency next round? Influence matters. But economics: shuttle best goods. 25% risk. Expected goods from produce = 3 safe vs 4.5 risky shuttle. Shuttle.\n\nBut bribe to gain influence keeps presidency and 5% bank commission (~1.6 alashi + weight). Bribe 5 gives influence 2, equal to holder 0 but tie_order... presidency determined at law entry by influence; round 4 rotation—order rotates, likely another president? Actually president = highest influence at law entry. With bribe influence 2 ties with 0, tie_order [1,2,0] favors me. But cost 5 alashi. Presidency gives veto power and 5% commission at end. Round 3 action, still 3 more law phases? Keeping presidency worth ~5% of bank + license income additions. Bribing 5 to idx0 costs 5, gives 5 to opponent. Hmm.\n\nChoose shuttle (choice 3): more goods to sell at high prices in later rounds.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427242,
+    "id": "20261020002712e6333e7174ee485b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020002712e6333e7174ee485b",
+    "usage": {
+      "completion_tokens": 329,
+      "completion_tokens_details": {
+        "reasoning_tokens": 298
+      },
+      "prompt_tokens": 3088,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 3417
+    }
+  }
+}

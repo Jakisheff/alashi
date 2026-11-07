@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.442,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Налог 20% уже не действует — рынок окончен, закон безвреден, голос не нужен.\"}",
+          "reasoning_content": "Law 2 = 20% tax, but it's the last market already done (round 6 market passed). Tax affects future sales—no more markets. So it's harmless. President is idx2, not me. My vote weight 3 vs president... vote counts yes vs no; president holder idx2 with weight 2. Law 2 has no effect since no future market. Pass or yes doesn't matter much. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498648,
+    "id": "202610202017249a8bcfe2144544f2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202017249a8bcfe2144544f2",
+    "usage": {
+      "completion_tokens": 124,
+      "completion_tokens_details": {
+        "reasoning_tokens": 91
+      },
+      "prompt_tokens": 3765,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 3889
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.82,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон даёт влияние беднейшему (не мне), усиливая соперника — против.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest by cash. Poorest is idx2 (4 alashi). Not me. I should vote no? President is idx0 (influence 2). I'm idx1 with influence 1. Law helps idx2 catch up to me—bad for president race? President currently idx0. I'd rather vote no to prevent rival influence gain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498098,
+    "id": "20261020200815bfa456d4e8c945a3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200815bfa456d4e8c945a3",
+    "usage": {
+      "completion_tokens": 108,
+      "completion_tokens_details": {
+        "reasoning_tokens": 79
+      },
+      "prompt_tokens": 3002,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3110
+    }
+  }
+}

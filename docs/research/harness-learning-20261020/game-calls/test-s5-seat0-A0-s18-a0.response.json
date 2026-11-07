@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.878,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Товар для финальной продажи в раунде 6 даст больше итогового cash, чем дорогая покупка президентства.\"}",
+          "reasoning_content": "Round 5 action, I'm cash-rich but behind. Bribing influence: president role is determined by influence at law. Currently I have influence 1, holder is 1. Buying influence to 5-6 via bribe gives presidency (max influence bonus 5% of bank ~3.25 alashi, plus veto control). But bribing 20 alashi to rival costs me ranking cash too much. Bribe 15M gives influence 4; rivals have 1 each, tie_order favors 1,2 over me — influence 2 beats them (influence 2 vs 1). So 5M bribe to idx1 gives influence 2, presidency. Cost 5M cash, gains 5M cash to rival (harmful for rank). Presidency benefits: veto control, 5% bank bonus (~3.25M), +2 vote weight... but also veto can block bad laws.\n\nAlternatively shuttle for goods to sell in round 6 market (last market). Round 6 price: sold_counter after this round's sells... sold_counter=3. Selling 3 more in round 5 already done (counter 3 shown after? seen counter=3 after my sell). Prices ~8,7. Round 6 sell 3 at ~7,6,5 = decent cash. Shuttle gives 3 goods worth ~18M revenue. That's better than presidency's 3.25M bonus. But promissory in round 6 doesn't get redeemed... sell_credit vs sell — use sell. Shuttle gives 3 goods now; round 6 market sell for ~8+7+6=21 minus nothing, direct cash. That beats bribe.\n\nChoose shuttle (choice 3).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498522,
+    "id": "2026102020151105f2a791a7b445c7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020151105f2a791a7b445c7",
+    "usage": {
+      "completion_tokens": 395,
+      "completion_tokens_details": {
+        "reasoning_tokens": 357
+      },
+      "prompt_tokens": 4027,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 4422
+    }
+  }
+}

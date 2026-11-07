@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.515,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"shuttle даёт 3 товара на финальный рынок, ожидаемая выручка выше produce\"}",
+          "reasoning_content": "Round 5 action; round 6 market remains to sell goods. Cash devalues 62%. I'm richest (47M vs ~18M), influence 2, holder. Shuttle gives 3 goods (tariff? border—grey goods risk). Shuttle produces grey goods maybe; risk 25% seizure unless black tariff. Still expected value: 3 goods × ~12 price in round 6 (devalued cash 29M, price first units 12) ≈ 36 alashi but devaluation... selling in round 6 gives cash that counts. Shuttle expected 0.75×3×~12 = 27 alashi. Produce gives 2×12=24 for free. Shuttle better despite risk? Shuttle gives 3 goods expected 2.25 → 27. Produce 24 risk-free. Close, but shuttle grey goods may also pay tariff... choose shuttle? Cash counts at end; sell in round 6 market counts. Shuttle slightly better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427157,
+    "id": "202610200025489ce84a9b32cd48f0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200025489ce84a9b32cd48f0",
+    "usage": {
+      "completion_tokens": 233,
+      "completion_tokens_details": {
+        "reasoning_tokens": 201
+      },
+      "prompt_tokens": 4530,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 4763
+    }
+  }
+}

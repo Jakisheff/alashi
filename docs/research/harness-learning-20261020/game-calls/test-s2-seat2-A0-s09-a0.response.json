@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.928,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Взятка даёт влияние 3 и пост президента с veto на оставшиеся раунды, что дороже 10 alashi.\"}",
+          "reasoning_content": "I'm idx2, influence 1, holder is 0 with influence 2. Bribing 5 to 0 gives influence 2, but president decided by influence at law entry; holder has 2, tie-break tie_order [0,2,1] — 0 wins. Bribe 10 to 0 → influence 3, I become president with veto. That gives veto power and vote weight 3. Cost 10 alashi but cash is devalued each round (62%), so money now worth more... spending is direct. But presidency gives influence-based 5% bonus of bank (bank 30 → 1.5) plus control of laws, and vote weight 3. Bribing to 0 strengthens rival's cash though. Alternative: bribe to 1 doesn't help presidency.\n\nRound 3 of 6, becoming president now gives law control rounds 3-6 potentially. Choice 5 (10M to 0) makes influence 3 > 2. Do that.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498703,
+    "id": "20261020201816a059f7f2f3a4425d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201816a059f7f2f3a4425d",
+    "usage": {
+      "completion_tokens": 251,
+      "completion_tokens_details": {
+        "reasoning_tokens": 212
+      },
+      "prompt_tokens": 3773,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 4024
+    }
+  }
+}

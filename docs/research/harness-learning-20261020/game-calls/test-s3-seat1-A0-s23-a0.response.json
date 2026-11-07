@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.089,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 3 (субсидия) уже не имеет эффекта после прошедшей фазы action, исход закона безразличен.\"}",
+          "reasoning_content": "Card 3: subsidy_goods=1 — but round 6 action already passed, no future effect. Irrelevant. Just vote yes or pass; nothing matters. Pass keeps things simple.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496804,
+    "id": "20261020194640c202a22433de4bb9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194640c202a22433de4bb9",
+    "usage": {
+      "completion_tokens": 77,
+      "completion_tokens_details": {
+        "reasoning_tokens": 38
+      },
+      "prompt_tokens": 3510,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3587
+    }
+  }
+}

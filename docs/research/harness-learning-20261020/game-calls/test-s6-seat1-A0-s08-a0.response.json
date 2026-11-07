@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.836,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Дёшево покупаю 2 товара, чтобы продать позже по высокой цене при откате счётчика.\"}",
+          "reasoning_content": "I have no goods, cash 21.25. Price at counter=2 is 9 alashi; buy 2 costs 19. Selling later requires higher prices. Counter 2 means next sale price index 2 (9). Buying moves counter back. Buy price: candidate says buy 2 costs 19 for 2 units (~9.5 each). Buying now cheap, sell later at higher... but counter only moves forward; buy moves back so we can sell at 9. Buy 2 → counter back to 0, sell later at 12 each = 24, profit ~5. Also goods useful for shuttle? Buy 2 seems best (keep 2.25 cash).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496825,
+    "id": "20261020194700df4670c3518e489b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194700df4670c3518e489b",
+    "usage": {
+      "completion_tokens": 178,
+      "completion_tokens_details": {
+        "reasoning_tokens": 143
+      },
+      "prompt_tokens": 2360,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2538
+    }
+  }
+}

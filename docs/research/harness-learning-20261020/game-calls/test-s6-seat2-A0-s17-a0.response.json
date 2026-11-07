@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.194,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель выплачивается после девальвации, поэтому продажа всего товара в кредит защищает выручку.\"}",
+          "reasoning_content": "Round 5, next round 6 cash devalues 38%. So promissory (paid before... no, promissory paid at start of next round before devaluation? \"cash=floor(cash/100)*62, then promissory added\"). So sell_credit avoids devaluation — promissory added after devaluation. Great, sell all on credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497391,
+    "id": "20261020195628893434fbe5e44d62",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195628893434fbe5e44d62",
+    "usage": {
+      "completion_tokens": 110,
+      "completion_tokens_details": {
+        "reasoning_tokens": 76
+      },
+      "prompt_tokens": 3083,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3193
+    }
+  }
+}

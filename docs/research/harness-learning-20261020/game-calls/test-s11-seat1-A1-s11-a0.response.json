@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.198,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Цены в начале счётчика максимальны, продаю весь товар, чтобы вырваться вперёд по богатству.\"}",
+          "reasoning_content": "Prices [12,10,9] for 3 units = 31 alashi matches candidate 5. Cash 25.8, opponent 0 has 26.6 — selling all makes me 56.8, leading. But round 5 cash devaluation ×62/100. Round 4 cash doesn't devalue until round 5 start. Selling now: 31 alashi becomes 56.8, then round 5 devalues to ~35. Still goods are worth more sold now (price high at counter 0). Sell 3 now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499588,
+    "id": "20261020203304cef36e128ddc445e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203304cef36e128ddc445e",
+    "usage": {
+      "completion_tokens": 155,
+      "completion_tokens_details": {
+        "reasoning_tokens": 117
+      },
+      "prompt_tokens": 2889,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 3044
+    }
+  }
+}

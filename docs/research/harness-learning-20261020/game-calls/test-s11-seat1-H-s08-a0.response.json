@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.051,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Кредитная продажа 2 единиц по высокой цене сохраняет выручку от девальвации и оставляет cash для аукциона\"}",
+          "reasoning_content": "Round 3 market, keep cash ≥9 for round 4 auction. Cash 9.3 already ≥9. Sell 2 → cash 30.3, good. Prices high now (counter=2, price 9+boom 2=11). Actually sell now at 11 each; round 4 sell would also be decent. Sell 2 keeps goods 1 and cash 30.3 (≥16, bid 12). Sell credit gives promissory but paid in round 4 start anyway (round 4: cash = floor/100*62 devalues!). Better sell now (hard cash avoids devaluation... actually devaluation applies at start of round 2 and beyond? \"Начало раунда 2 и далее\" — yes round 4 also. So cash 30.3 becomes 18.78+promissory. Sell credit keeps full value: sell credit 2 → promissory 26.25 added without devaluation. So sell_credit 2 better. choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498697,
+    "id": "20261020201811b1f3ec469675493a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201811b1f3ec469675493a",
+    "usage": {
+      "completion_tokens": 251,
+      "completion_tokens_details": {
+        "reasoning_tokens": 212
+      },
+      "prompt_tokens": 3057,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3308
+    }
+  }
+}

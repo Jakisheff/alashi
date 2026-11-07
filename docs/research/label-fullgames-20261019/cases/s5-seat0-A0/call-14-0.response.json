@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.016,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":12,\"reason\":\"Взятка 5 бедному сопернику даёт влияние 2 и пост президента при равенстве через tie_order, не усиливая главного конкурента по лицензии.\"}",
+          "reasoning_content": "I need influence to become president (2 has influence 2). Bribing 10 to idx2? To1 vs to2 — bribing gives influence to me. Need 2 influence points to tie (tie_order favors 0). Actually bribe 5 gives influence 2, tie with 2, tie_order [0,1,2] → I become president. That's cheap: choice 4 (to1). But bribing to 1 gives them 5 cash (36→41M, they may outbid). Alternative choice 12 to idx2 (poor, cash to 12.9M). Better bribe idx2? Cash given to rival. Giving 5M to idx1 vs idx2 — idx1 has 36M, may overbid my 20M license bid. Actually bribes in action phase — but others bid during their turns (order rotates). Giving 5M to idx1 risks license overbid. Give to idx2 (7.9M, can't beat 20M+5=12.9? could bid ~12M < 20M). So choice 12: influence 2, tie → president in round 4 law, saves 5M cash.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427133,
+    "id": "202610200025261f4601cc45c84033",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200025261f4601cc45c84033",
+    "usage": {
+      "completion_tokens": 301,
+      "completion_tokens_details": {
+        "reasoning_tokens": 255
+      },
+      "prompt_tokens": 3900,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 4201
+    }
+  }
+}

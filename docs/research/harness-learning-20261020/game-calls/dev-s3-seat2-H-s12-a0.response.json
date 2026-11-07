@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.501,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Продаю 2 единицы по высокой цене, чтобы иметь кэш на аукцион лицензии в этом раунде.\"}",
+          "reasoning_content": "Round 4 market, not auction. Price at sold_counter=2 is 9. Sell now, keep some cash for auction? Auction bid 12 recommended if cash>=16. Selling 2 units gives 28.9M cash → good for auction. Sell 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495370,
+    "id": "20261020192248cc332bc640df4efb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192248cc332bc640df4efb",
+    "usage": {
+      "completion_tokens": 95,
+      "completion_tokens_details": {
+        "reasoning_tokens": 57
+      },
+      "prompt_tokens": 3309,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3404
+    }
+  }
+}

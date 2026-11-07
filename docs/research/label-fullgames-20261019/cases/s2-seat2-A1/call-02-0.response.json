@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.757,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Карта 0 без эффектов, abstain безопасен и без последствий.\"}",
+          "reasoning_content": "Law 0 = no effects. Vote yes doesn't matter... pass gives +2 vote weight? No, weight bonus only if action was pass — that's action phase. Pass here just skips vote. President is idx1 already voted abstain. Card 0 no effects, yes vs no: only I can vote. yes=no currently 0, so law fails unless yes>no. Law 0 harmless either way. Vote yes passes nothing. Just abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792489929,
+    "id": "2026102017520381c8c7301e244e5e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102017520381c8c7301e244e5e",
+    "usage": {
+      "completion_tokens": 122,
+      "completion_tokens_details": {
+        "reasoning_tokens": 95
+      },
+      "prompt_tokens": 2034,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2156
+    }
+  }
+}

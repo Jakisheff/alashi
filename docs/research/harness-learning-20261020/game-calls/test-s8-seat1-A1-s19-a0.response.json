@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.628,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Налог 10% сильнее бьёт по сопернику с 10 товарами, чем по моим 3 единицам, поэтому вето невыгодно.\"}",
+          "reasoning_content": "Tax 10% next round 6 sales. My goods 3, promissory 27.5 not affected (tax affects sales). Tax reduces rivals' sales too? Only my sales... Actually tax applies to all. Veto to cancel tax helps everyone equally; my goods 3 vs rival 2, rival 2 has 10 goods. Tax would reduce sale revenue; but I also have 27.5 promissory unaffected. Canceling tax helps me (sell 3 in round 6) and helps player 2 more. Keep tax? 10% loss on my sales ~ modest. Player 2 has 10 goods, tax hits them harder. Veto costs nothing to me. Marginal: keeping tax hurts rivals more. My round 6 sales: 3 units at ~9 alashi =27, tax 2.7. Player 2 sells maybe 8 units, tax hits more. Keep tax — vote yes already counted, don't veto? But wait, veto pending option. Keeping tax harms player 2's cash relative to me. So choose pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499016,
+    "id": "202610202023282344ce5c873c4bc4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202023282344ce5c873c4bc4",
+    "usage": {
+      "completion_tokens": 272,
+      "completion_tokens_details": {
+        "reasoning_tokens": 225
+      },
+      "prompt_tokens": 3048,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3320
+    }
+  }
+}

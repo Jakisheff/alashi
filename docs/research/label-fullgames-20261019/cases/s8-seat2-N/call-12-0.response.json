@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.529,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":53,\"reason\":\"Ставка 20 млн даёт хороший шанс выиграть лицензию (доход 20–60 alashi) при приоритете в ничьей, не истощая cash.\"}",
+          "reasoning_content": "Round 4 action, I'm rich (63.5M). Auction for license worth 20-60. Bank 30M. I'm holder X with tie_order priority 2. License income 20-60 alashi paid extra—worth winning. Bid ~10M? Others have ~30M cash each. Tie priority favors me. If I bid 10M, they could outbid at ~30M. License EV ~40, so bidding up to ~30M is profitable but risky to rank. Bid ~20M plus shuttle for goods.\n\nActually bid doesn't consume action: I can bid then choose produce/shuttle. Best: bid 20M and shuttle (3 goods, but risk of border seizure ~25%? shuttle gives grey goods which can be seized unless tariff... no tariff set). Prices: counter 7, prices still ok (sold 7 → next price 5). Selling 3 goods at ~5 each =15. Shuttle risk 25% loss of grey goods. Produce gives 2 safe. Either fine.\n\nBid: I want to win. Others may bid high; they have ~30M each. Tie priority [2,1,0] means I win ties. Bid 20M likely wins. Choose candidate 53 (bid 20M) — but then I can't also shuttle this turn? \"bid does not consume the main action: after the bid you can choose another action.\" Interface offers one combined bid per turn... The candidate list includes bid alone; maybe next turn offers action. But safer: choose shuttle now? Then bid opportunity gone? The instruction says after bid you can still choose another action—interface may present another menu. Risky. Simpler: pick bid 20M, expect follow-up menu.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491271,
+    "id": "202610201814194002f8bcbf2b4872",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201814194002f8bcbf2b4872",
+    "usage": {
+      "completion_tokens": 412,
+      "completion_tokens_details": {
+        "reasoning_tokens": 363
+      },
+      "prompt_tokens": 8351,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 8763
+    }
+  }
+}

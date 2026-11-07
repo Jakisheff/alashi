@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 23.745,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce даёт 3 товара без риска изъятия, тогда как shuttle с вероятностью 25% теряет всё.\"}",
+          "reasoning_content": "I have cash=0, own_bid=0 (auction already happened, license to 0). Produce gives 3 goods (2+1 subsidy), shuttle gives 4 but risk 25% confiscation and border fee needs cash (have 0). Shuttle expected 3 goods, but risk of losing all. Produce gives 3 safely. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490449,
+    "id": "202610201800270487780858004049",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201800270487780858004049",
+    "usage": {
+      "completion_tokens": 110,
+      "completion_tokens_details": {
+        "reasoning_tokens": 73
+      },
+      "prompt_tokens": 2850,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2960
+    }
+  }
+}

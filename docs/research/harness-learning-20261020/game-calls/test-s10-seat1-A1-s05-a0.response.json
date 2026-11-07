@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.179,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Набираю товар для продаж, влияние сохраняется через пост президента.\"}",
+          "reasoning_content": "I'm president with influence 1, vote weight 3 (passed last law? vote weight 3 = influence 1 + 2? Actually pass action gives +2 weight). Get goods for selling. Shuttle gives 3 goods (25% seizure risk for grey? goods 3 already shown). Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497067,
+    "id": "20261020195103ce4a871ea78e4a07",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195103ce4a871ea78e4a07",
+    "usage": {
+      "completion_tokens": 89,
+      "completion_tokens_details": {
+        "reasoning_tokens": 64
+      },
+      "prompt_tokens": 2148,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2237
+    }
+  }
+}

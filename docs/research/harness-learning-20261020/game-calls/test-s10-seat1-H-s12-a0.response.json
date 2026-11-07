@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.0,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":36,\"reason\":\"Ставлю 9 alashi по рекомендации аукциона — выше капа соперников в 8.\"}",
+          "reasoning_content": "Own bid already 0? own_bid:0 — cash 48M ≥16M → bid 12M? But recommended is 9M (choice 36). Follow recommendation.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498105,
+    "id": "20261020200822511f16dec045482e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200822511f16dec045482e",
+    "usage": {
+      "completion_tokens": 70,
+      "completion_tokens_details": {
+        "reasoning_tokens": 38
+      },
+      "prompt_tokens": 7678,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 7748
+    }
+  }
+}

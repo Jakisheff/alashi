@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.23,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Получаю 2 товара для будущих продаж; влияние на закон обеспечит tie_order.\"}",
+          "reasoning_content": "Round 1 action, cash=0, pass action skipped gives +2 vote weight for law but no president yet? President = highest influence; all 1, tie_order priority is idx1 (me first). Vote weight matters. But produce gives goods. Passing gives +2 vote weight — as likely president I control law anyway with veto. produce gives 2 goods worth ~12 each. Take produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496588,
+    "id": "202610201943044772c5d3549a4ed9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201943044772c5d3549a4ed9",
+    "usage": {
+      "completion_tokens": 111,
+      "completion_tokens_details": {
+        "reasoning_tokens": 82
+      },
+      "prompt_tokens": 2389,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2500
+    }
+  }
+}

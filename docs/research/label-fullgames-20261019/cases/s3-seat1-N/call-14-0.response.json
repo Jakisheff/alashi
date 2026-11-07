@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.47,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон даёт +1 влияния самому бедному (элементу 0, держателю X), мне невыгоден — голосую против.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest by cash. I'm idx1, cash 30.86M; idx0 has 3.3M — poorest is idx0, gets +1 influence (would go to 3). Doesn't help me. Holder is idx0 (influence 2), vote weight 2; idx2 weight 3. Voting no: my no=1, yes needs... idx0 may veto. Law gives +1 influence to poorest — idx0 is poorest, gains influence, keeps holder role. Not beneficial to me. Vote no? idx2 weight 3 unknown. If yes passes with 2 yes vs my no... idx0 (holder) yes likely (benefits them), plus idx2? If 2 yes vs 1 no passes. My no won't block alone. Abstain vs no — no matters if tie. Vote no weakly. Choose vote_no (choice 2).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427585,
+    "id": "202610200032590ae2cfa0b2544a4a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200032590ae2cfa0b2544a4a",
+    "usage": {
+      "completion_tokens": 235,
+      "completion_tokens_details": {
+        "reasoning_tokens": 194
+      },
+      "prompt_tokens": 2821,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 3056
+    }
+  }
+}

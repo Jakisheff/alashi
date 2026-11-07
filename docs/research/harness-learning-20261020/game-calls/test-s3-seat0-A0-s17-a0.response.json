@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.834,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Произвожу 2 товара для продажи на последнем рынке, сохраняя влияние и деньги.\"}",
+          "reasoning_content": "Round 5 action, last full round + 6. Produce 2 goods to sell next market. My promissory 27.5 must be paid before round 6? Promissory added at start of round; I sold credit in round 5, so at round 6 start cash gets it before final market? Round 6 start: cash=floor(cash/100)*62 then promissory added. Then round 6 market sell. So produce gives 2 goods to sell at price ~9-10 (counter at 2). Choose produce (choice 1).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496749,
+    "id": "20261020194545c95e8cf442b6429e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194545c95e8cf442b6429e",
+    "usage": {
+      "completion_tokens": 152,
+      "completion_tokens_details": {
+        "reasoning_tokens": 121
+      },
+      "prompt_tokens": 3570,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3722
+    }
+  }
+}

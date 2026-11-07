@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.558,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":56,\"reason\":\"Высокая ставка на лицензию с доходом 20–60 alashi даёт наибольшую долгосрочную выгоду.\"}",
+          "reasoning_content": "License income 20-60 alashi is huge; bid high. But bid doesn't consume action—after bid I can produce. Cash others ~35.6, 36 alashi. Bid 30 alashi likely wins (others can't exceed cash ~35.99/35.65; tie_order: I'm idx1, 0 has priority). Bid 33-34 to be safe? Cost goes to bank (returned via share). Bid 33 (33M), then can't take further action this turn? \"bid не расходует основное действие: после ставки можно выбрать ещё одно действие\" — interface offers only one composite. Bid itself. Choose 33 (choice 56).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490303,
+    "id": "202610201758176af093470e6842b1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201758176af093470e6842b1",
+    "usage": {
+      "completion_tokens": 182,
+      "completion_tokens_details": {
+        "reasoning_tokens": 143
+      },
+      "prompt_tokens": 6281,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 6463
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.325,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон о 20% налоге мне невыгоден, соперник уже против — голосую No.\"}",
+          "reasoning_content": "Law 2 = 20% tax on sales. I'm president. Faction 1 voted no. Vote no / veto? Best: veto ensures rejection. Vote_no plus if tied... yes count 0, no 1 + mine = 2, rejected anyway. Just vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495055,
+    "id": "2026102019173147c064df965846e2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019173147c064df965846e2",
+    "usage": {
+      "completion_tokens": 91,
+      "completion_tokens_details": {
+        "reasoning_tokens": 59
+      },
+      "prompt_tokens": 2480,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2571
+    }
+  }
+}

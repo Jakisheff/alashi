@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.642,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Продаю обе единицы сейчас по высокой цене, выручка сразу в cash и избегает будущей девальвации.\"}",
+          "reasoning_content": "Cash 10.54. Selling 2 gives cash 32.54, but devaluation floor(cash/100)*62 applies. 10540000 → floor(105400/100)... wait cash in units: 10540000/1000000=10.54 alashi. Devaluation: floor(cash/100)*62 in minimal units? floor(10540000/100)*62=105400*62=6534800 → 6.53 + proceeds. So selling now avoids devaluation on that cash.\n\nSell 2: 32.54 total. Sell credit: promissory 27.5 but future devaluation reduces further. Cash now better? Round 3 of 6, selling at price 12,10 now while counter low. Sell 2 for cash choice 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496956,
+    "id": "202610201949110cf111278b5842dc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201949110cf111278b5842dc",
+    "usage": {
+      "completion_tokens": 208,
+      "completion_tokens_details": {
+        "reasoning_tokens": 170
+      },
+      "prompt_tokens": 2473,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2681
+    }
+  }
+}

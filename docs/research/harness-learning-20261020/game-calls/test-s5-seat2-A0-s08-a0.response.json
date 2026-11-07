@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.0,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Карта 0 без эффектов, проход не меняет исход.\"}",
+          "reasoning_content": "Law 0 no effect; pass to skip vote weight? Weight 2, I'm poorest, card 0. Pass avoids vote but weight matters only for this vote. Card 0 harmless — abstain or pass same. Pass fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497193,
+    "id": "2026102019531080a9b0f23fb242e8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019531080a9b0f23fb242e8",
+    "usage": {
+      "completion_tokens": 73,
+      "completion_tokens_details": {
+        "reasoning_tokens": 49
+      },
+      "prompt_tokens": 2484,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2557
+    }
+  }
+}

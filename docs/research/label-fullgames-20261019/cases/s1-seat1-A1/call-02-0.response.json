@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.73,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Никто не имеет векселей, отмена механизма sell_credit мне невыгодна — голосую против.\"}",
+          "reasoning_content": "Law 8 обнуляет promissory. Все promissory=0, но в будущем sell_credit может использовать противники. Мне president? No, holder_idx=0. I'm фракция 1. Passing 8 keeps promissory mechanism — likely useful later for whoever sells on credit. I might use sell_credit (62% devaluation vs 1.25 multiplier: 1.25*0.62=0.775, worse than cash). So promissory devalues — actually keeping promissory hurts the holder? Debtor benefits from cancellation. Card 8 cancels promissory — benefits those owing promissory. Likely rarely good for anyone to cancel. Vote no? Neutral—no one has promissory. Vote yes/no similar; vote_no keeps mechanism. Slight preference: no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427976,
+    "id": "20261020003930d4857f0fe8274a5d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003930d4857f0fe8274a5d",
+    "usage": {
+      "completion_tokens": 205,
+      "completion_tokens_details": {
+        "reasoning_tokens": 172
+      },
+      "prompt_tokens": 2032,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2237
+    }
+  }
+}

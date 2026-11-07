@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.307,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Продаю весь товар сейчас за наличные, максимизирую cash для ранга и выплат.\"}",
+          "reasoning_content": "Sell all 3 now at prices 7,6,5 (sold_counter=4). Cash sale gives 64.25M, keeps rank. Credit gives 22.5M promissory later devalued... cash is better for rank. Choice 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499030,
+    "id": "202610202023487d0ab4ed94ca4b7e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202023487d0ab4ed94ca4b7e",
+    "usage": {
+      "completion_tokens": 87,
+      "completion_tokens_details": {
+        "reasoning_tokens": 56
+      },
+      "prompt_tokens": 2798,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2885
+    }
+  }
+}

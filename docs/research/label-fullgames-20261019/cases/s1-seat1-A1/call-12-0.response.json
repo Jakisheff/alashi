@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.819,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":60,\"reason\":\"Ставка 37 alashi перекрывает максимум соперника и обеспечивает лицензию с большим ожидаемым доходом.\"}",
+          "reasoning_content": "License income 20-60 alashi is huge. I'm idx1, richest ~39.8. Competitors have 36.5 and 2.9. Bid high to secure license—but bid goes to bank, increases everyone's payout. Still license income 20-60 alashi above share. Tie order [0,2,1] — I'm last in ties. Opponent idx2 has 36.5 cash, could bid up to that. To beat 36.5 I need ~37. Bid 38 alashi leaves me 1.8 cash; win license ~20-60 income but pays 38 into bank... net negative vs bank redistribution? If I bid 38 and win, 38 goes to bank (~30+38=68, distributed 50:30:15 → my share ~34). If I don't bid, opponent wins, pays bank. License income is pure extra. EV license ~40. Cost of bidding 38: cash -38 but bank +38, my share back ~20 of that (50% of 95% of 38 ≈ 18). So net cost ≈ -38+18+40 = +20. Better than losing (0). Also opponent might not bid max. Bid 38 (choice 61)? Or full 39.8 to be safe. Bid all: choice 63. Cost analysis: paying 1.8 more, get back ~0.9. Worth securing. But opponent max is 36.48; I need 36.5+. Bid 37 (choice 60) suffices vs any opponent. Keep 2.8 cash. Then also bid doesn't consume action—but after bid only one action allowed? \"bid не расходует основное действие: после ставки можно выбрать ещё одно действие\" — but interface offers single combined bid. Candidates show bid alone. Pick choice 60.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428038,
+    "id": "202610200040264278bbfa96a94691",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200040264278bbfa96a94691",
+    "usage": {
+      "completion_tokens": 427,
+      "completion_tokens_details": {
+        "reasoning_tokens": 392
+      },
+      "prompt_tokens": 6269,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 6696
+    }
+  }
+}

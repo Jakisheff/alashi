@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.684,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\": 3, \"reason\": \"Тариф не активен, shuttle даёт 3 товара без видимого риска, сохраняя лидерство и пост президента.\"}",
+          "reasoning_content": "I'm president with influence 1, tied with others but tie_order favors me, so I keep presidency without bribes. Best: shuttle for 3 goods (risk only at favorable border; border tariff unknown, currently 0? shuttle 3 goods shown without grey here — actually shuttle gives grey goods, but after shows goods=3; risk ~25% if red border). produce gives 2 free goods; shuttle gives 3 with 25% risk if border red, and border tariff currently 0 (no roof activated). Tariff 0 — unknown risk? Black protects, red risk. Tariff=0 likely no border confiscation? Rules say favorable border pays fee. Tariff 0 — probably free passage? Ambiguous; shuttle gives 3 vs 2, take 25% loss risk if tariff 2. With tariff 0, likely no confiscation. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498797,
+    "id": "20261020201951c68eda6367014a63",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020201951c68eda6367014a63",
+    "usage": {
+      "completion_tokens": 222,
+      "completion_tokens_details": {
+        "reasoning_tokens": 183
+      },
+      "prompt_tokens": 3525,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 3747
+    }
+  }
+}

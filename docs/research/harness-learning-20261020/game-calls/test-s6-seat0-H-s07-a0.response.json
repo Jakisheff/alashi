@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.535,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 8 обнуляет векселя, а ни у кого их нет — veto не нужен.\"}",
+          "reasoning_content": "Law 8 обнуляет promissory — у меня нет promissory, у соперников тоже 0. Пусть принимается, безвредно. vote_no уже; pass достаточно. Но veto? Никому не вредит, у меня promissory 0. pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498584,
+    "id": "202610202016217607803524be4085",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202016217607803524be4085",
+    "usage": {
+      "completion_tokens": 92,
+      "completion_tokens_details": {
+        "reasoning_tokens": 60
+      },
+      "prompt_tokens": 2713,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2805
+    }
+  }
+}

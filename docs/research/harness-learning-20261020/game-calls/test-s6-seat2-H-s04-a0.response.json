@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.634,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Продаю весь товар в кредит: вексель не девальвируется в начале следующего раунда, выручка максимальна на буме цен.\"}",
+          "reasoning_content": "Round 2 market, boom +2, price 12+2=14. Sell all 3 at 37 (14+13+10). Cash becomes 37, no devaluation yet — round 3 start cash=floor(37/100)*62... devaluation at round starts 2 and later? Round 2 start already applied (cash 0). Round 3 start devalues: 37→floor(37/100)*62? That's 0? Wait 37000000/100... floor(37000000/100000000)=0? No: cash=37 alashi, floor(37/100)*62 = 0. Hmm devaluation kills cash heavily. So sell_credit better: promissory added to cash next round without devaluation? \"Начало раунда 2 и далее: cash=floor(cash/100)*62, затем promissory прибавляется\". So promissory is added after devaluation — protected. So sell_credit preserves value. Best: sell_credit 3 units → promissory 46.25, added to cash in round 3 fully.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496429,
+    "id": "2026102019402308d6b0696c074c8a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019402308d6b0696c074c8a",
+    "usage": {
+      "completion_tokens": 280,
+      "completion_tokens_details": {
+        "reasoning_tokens": 234
+      },
+      "prompt_tokens": 2792,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 3072
+    }
+  }
+}

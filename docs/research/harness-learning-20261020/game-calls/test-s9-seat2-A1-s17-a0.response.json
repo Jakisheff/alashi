@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.668,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"shuttle даёт 4 товара для продажи на последнем рынке по ещё высокой цене, что выгоднее produce.\"}",
+          "reasoning_content": "Last round action; promissory 57.5m will pay into cash in round 6... round 6 start: cash floor/100*62 devaluation then promissory added. So cash counts, promissory added after devaluation — good. Best: produce gives 3 goods worth little (sold_counter 5, price 6, sell 3 units at 6). shuttle gives 4 goods. Selling 4 units at 6,5,5,4 = 20 alashi next market? sold_counter=5, price list index 5: [12,10,9,8,7,6,5,4,...] index5=6, then 5,5,4. 4 units ≈ 20 alashi. Shuttle better (choice 3).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499804,
+    "id": "20261020203639f845a57287e64597",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203639f845a57287e64597",
+    "usage": {
+      "completion_tokens": 200,
+      "completion_tokens_details": {
+        "reasoning_tokens": 167
+      },
+      "prompt_tokens": 3308,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3508
+    }
+  }
+}

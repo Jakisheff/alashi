@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.041,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"produce даёт 3 товара для продажи на последнем рынке напрямую за cash, повышая итоговый ранг.\"}",
+          "reasoning_content": "Round 5 action. Goods will be sold in round 6 market (last round—promissory not repaid after last round! Round 6 market sell_credit would create promissory never paid; sell gives cash directly). Actually round 6 market exists, promissory added at start of round 6 before market. My promissory 38.75M pays at start of round 6. Selling goods in round 6 with sell gives cash counted in rank.\n\nSo produce (3 goods, worth ~4-5 each at counter... sold_counter 3 → price ~8). But if everyone sells, price drops. Produce gives 3 goods worth maybe 20+ alashi. Choose produce: choice 1.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428015,
+    "id": "20261020004009f36761fee7f745f3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020004009f36761fee7f745f3",
+    "usage": {
+      "completion_tokens": 183,
+      "completion_tokens_details": {
+        "reasoning_tokens": 150
+      },
+      "prompt_tokens": 3837,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 4020
+    }
+  }
+}

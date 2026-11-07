@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.617,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон и так проваливается (Yes 3 против No 5), veto не нужен.\"}",
+          "reasoning_content": "Law 1 = 10% tax on future sales. I hold license, want to sell in future rounds. Yes:3 vs No:5? Votes: faction0 Yes weight3, faction1 No weight3, me No weight2. Yes=3, No=5, law fails anyway. Veto not needed. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490939,
+    "id": "20261020180848fa97b8ffe16e49e1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020180848fa97b8ffe16e49e1",
+    "usage": {
+      "completion_tokens": 99,
+      "completion_tokens_details": {
+        "reasoning_tokens": 69
+      },
+      "prompt_tokens": 2849,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 2948
+    }
+  }
+}

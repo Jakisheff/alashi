@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.681,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Взятка 5 даёт влияние 2 и сохраняет пост президента по tie_order — контроль вето и комиссия важнее товаров.\"}",
+          "reasoning_content": "I hold presidency via tie_order (influence 1 vs 1 vs 2? Influence: 1:2, I have 1). Wait holder is me because... law president = highest influence; faction 1 has 2, but holder is 2 (me). Maybe influence shown after last law? Actually history says holder 2. But current influence: idx1=2. Hmm, \"president: highest influence entering law\". Currently idx1 has 2 influence, so next law they'd be president. Round 3 action phase—buying influence helps keep presidency and 5% commission. Bribing 5 to idx0 gives me influence 2, tie with idx1, tie_order favors me [2,1,0] → I stay president, plus veto. Cost 5 alashi but keeps 5% bank + commission bonus... bank 30, 5% = 1.5 alashi. Also veto power over tax laws. But bribe gives money to rival.\n\nAlternative: shuttle gives goods to sell. Sold counter 5, prices ~5,4,3... selling 3 units at ~5*1.25. Goods value: produce 2 goods worth maybe ~8-10 alashi. Shuttle risk 25% loss.\n\nKeeping presidency: I get veto, decide law. Worth 1.5 alashi commission + control. Bribe 5 (choice 4 or 13). To idx0 better (weaker rival gets cash). Choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498954,
+    "id": "20261020202224ad8d9dbac12e4c47",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202224ad8d9dbac12e4c47",
+    "usage": {
+      "completion_tokens": 352,
+      "completion_tokens_details": {
+        "reasoning_tokens": 312
+      },
+      "prompt_tokens": 3559,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 3911
+    }
+  }
+}

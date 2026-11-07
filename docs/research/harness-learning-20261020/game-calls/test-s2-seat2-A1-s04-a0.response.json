@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.006,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Наличные сейчас ценнее векселей из-за девальвации 62%, продаю весь товар по высоким ценам.\"}",
+          "reasoning_content": "Sell 2 now at price 12,11 = 23? Actually price list [12,10,9,...] first unit 12, second 10 = 22 alashi. Cash now beats promissory due to devaluation 62%. Sell 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497324,
+    "id": "20261020195518f14dd97955ac4718",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195518f14dd97955ac4718",
+    "usage": {
+      "completion_tokens": 93,
+      "completion_tokens_details": {
+        "reasoning_tokens": 56
+      },
+      "prompt_tokens": 2209,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2302
+    }
+  }
+}

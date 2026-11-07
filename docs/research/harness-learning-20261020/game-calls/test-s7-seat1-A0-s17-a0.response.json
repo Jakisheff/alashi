@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.201,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Карта 0 без эффекта, закон всё равно не пройдёт при двух голосах против.\"}",
+          "reasoning_content": "Law 0: no effects. President idx2 has 2 no votes (weight 2), idx0 abstained 2. Yes would be 1 vs 2 — fails anyway. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496402,
+    "id": "20261020194000e89786416c3b42be",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020194000e89786416c3b42be",
+    "usage": {
+      "completion_tokens": 72,
+      "completion_tokens_details": {
+        "reasoning_tokens": 41
+      },
+      "prompt_tokens": 3031,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3103
+    }
+  }
+}

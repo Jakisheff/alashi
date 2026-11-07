@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.968,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Карта 8 обнуляет векселя, которых ни у кого нет — закон нейтрален, пропускаю.\"}",
+          "reasoning_content": "Law 8 обнуляет promissory — у всех 0, нейтрально. Президент — idx 0, не я. Пропуск даёт +2 веса голоса; но карта 8 без эффекта. pass даёт вес на будущее? Вес применяется только в этом раунде. Голосовать нет разницы; pass не даёт выгоды. Проголосую abstain? Нет разницы. Выберу pass... но закон 8 ничего не меняет. Простой vote_no/yes не влияет на выплаты (никто не имеет promissory). Пропустить — безопасно.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792426519,
+    "id": "20261020001514c11400ea58a3420b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020001514c11400ea58a3420b",
+    "usage": {
+      "completion_tokens": 170,
+      "completion_tokens_details": {
+        "reasoning_tokens": 132
+      },
+      "prompt_tokens": 2032,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 2202
+    }
+  }
+}

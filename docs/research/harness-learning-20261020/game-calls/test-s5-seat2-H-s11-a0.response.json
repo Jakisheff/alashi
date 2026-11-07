@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.144,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":24,\"reason\":\"Следую рекомендуемой ставке аукциона 9M, затем сделаю основное действие.\"}",
+          "reasoning_content": "Cash 18.92 ≥ 16 → bid 12M? But recommended says 24 (9M). Rules say 12 if cash≥16. Recommended choice is 24. Instruction says follow augment recommended. Cash 18.92 ≥16, so rule 2 says 12 (choice 27). But harness recommends 9M (24). Priority: follow recommended_choice. Hmm, conflict. The wrapper says \"follow augment.auction.recommended_choice if valid\". So choice 24, then do main action next turn.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497438,
+    "id": "20261020195714e0248cb68f174f13",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195714e0248cb68f174f13",
+    "usage": {
+      "completion_tokens": 139,
+      "completion_tokens_details": {
+        "reasoning_tokens": 109
+      },
+      "prompt_tokens": 5059,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 5198
+    }
+  }
+}

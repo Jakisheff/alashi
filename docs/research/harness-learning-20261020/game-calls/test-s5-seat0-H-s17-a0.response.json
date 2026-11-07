@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.826,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель добавляется к cash после девальвации в начале раунда 6 и полностью учитывается в итоговом ранге, поэтому sell_credit выгоднее.\"}",
+          "reasoning_content": "Sell both at 12 each? Sold counter 0, price 12. Sell 2 = 24 alashi cash now, boosts rank. sell_credit not repaid? This is round 5, next round start promissory added to cash after devaluation — sell_credit 2 gives 27.5 promissory, added round 6 but then round 6 sales... promissory added at start of round 6 cash then devalued end? Only devaluation at start rounds. Actually cash=floor(cash/100)*62 then promissory added; no further devaluation before final rank? Round 6 start: devalue then add promissory — so promissory full value! Wait round 6 start includes devaluation then promissory added; final no more devaluation. So sell_credit 2 → 27.5 promissory worth full in final cash. Better than sell 24. But rivals sell in round 6 too, price drops. Sell credit yields 27.5 vs 24 cash immediate — same rank at end. Take choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499122,
+    "id": "20261020202514bc2d687deda94399",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202514bc2d687deda94399",
+    "usage": {
+      "completion_tokens": 272,
+      "completion_tokens_details": {
+        "reasoning_tokens": 227
+      },
+      "prompt_tokens": 3610,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3882
+    }
+  }
+}

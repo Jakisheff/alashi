@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.292,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон 5 даёт +1 влияния мне как богатейшему при равенстве cash и tie_order.\"}",
+          "reasoning_content": "Law 5 gives +1 influence to richest by cash; all cash=0, tie_order favors me (0). So I get +1 influence — good for presidency and influence bonus. Don't veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496326,
+    "id": "2026102019384327d518b284894334",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019384327d518b284894334",
+    "usage": {
+      "completion_tokens": 76,
+      "completion_tokens_details": {
+        "reasoning_tokens": 42
+      },
+      "prompt_tokens": 1985,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2061
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.98,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Производство даёт 2 товара по цене ~7 alashi, что экономически выгоднее траты на влияние.\"}",
+          "reasoning_content": "Wealth rank matters most. I'm idx1, cash 38.25M, richest. Influence 1 vs idx0's 2 — president is idx2. Bribing idx0 to gain influence... bribe gives me influence per 5 alashi, but money transfers to rival. Instead, produce goods for future sales? Price at sold_counter=4, price 7. Producing 2 goods sells at 7 next round. Goods worth money. But bribe 5M to idx0 gives me influence 2 — doesn't make me president (idx0 would have 3). To become president need influence >2 at law time, idx0 has 2. Bribe gives me +1 per 5 alashi. 10M bribe → influence 3, me president. But then cash 28.25M still rich? idx0 would get 48.25M, becoming richest — bad, wealth rank is everything. Actually bribing idx0 makes them richest. Bribe idx2: they get cash 10M → 15M, still below me. Me influence 3 > idx0's 2 → I become president, plus 5% bank bonus for max influence at end (bank 30M, 5% = 1.5M, but bank grows). Cost 10M now; presidency gives veto control and later license auction round 4.\n\nAlternative: just produce (choice 1), keep cash, sell 2 goods later ~7 each = 14M. That's better economically. But presidency influence bonus 5% of final bank ~ small. Bank grows with bids; maybe 50M bank → 2.5M. Veto power matters if bad law (tax). I'm richest, tax 10-20% on sales would hurt me.\n\nBribe 5M to idx2: influence 2, tie with idx0 — priority tie_order [2,0,1], idx2 wins president still. Need 10M to reach influence 3. Then cash 28.25M, still richest. President control + influence bonus later likely worth it vs produce ~14M revenue. Hmm, produce gives goods worth ~14M gross, 2 goods. Bribe costs 10M cash which goes to idx2 (rival). Net difference vs produce: bribe loses 10M cash to rival + foregone 14M revenue ≈ 24M. Too expensive. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497905,
+    "id": "20261020200453e5556901bbd649b5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020200453e5556901bbd649b5",
+    "usage": {
+      "completion_tokens": 548,
+      "completion_tokens_details": {
+        "reasoning_tokens": 512
+      },
+      "prompt_tokens": 3646,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 4194
+    }
+  }
+}

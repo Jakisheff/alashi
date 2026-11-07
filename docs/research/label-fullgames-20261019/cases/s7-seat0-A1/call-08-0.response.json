@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.668,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Кредитная продажа избегает жёсткой девальвации cash, а выручка x1.25 сразу конвертируется в вексель.\"}",
+          "reasoning_content": "Round 3 market, boom +2, price 12+2=14. Sell 2 now = 48 cash before tax? After shown 47.25. Devaluation: cash floor/100*62 — 47.25M → 29.3M... sell_credit gives 32.5M promissory, but round 4 start cash=floor(21.25/100)*62? Wait cash 21.25 already in units min; floor(cash/100)*62 barely matters (cash=21250000 min units, /100=212500, *62=13.175M? Actually devaluation formula in min units: cash 21,250,000 /100 = 212,500 *62 = 13,175,000? That's a huge loss. Wait round 2: cash 21.25M... actually seen values are min units. Round 2 start cash was 0. Hmm, cash 13M for player 1 — from 21.25? No, player 2 had 22M round 2 and now 13.64M = floor(22000000/100)*62? = 220000*62=13,640,000. Yes! So devaluation is massive. So holding cash is bad; sell_credit avoids devaluation (promissory added after). So sell all via credit: 32.5M promissory, goods 0, cash 21.25M stays... wait cash also devaluates. Cash 21.25M → 13.17M next round regardless. Promissory 32.5M added after. Better to sell for credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427531,
+    "id": "20261020003201f68629b247004c8c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003201f68629b247004c8c",
+    "usage": {
+      "completion_tokens": 394,
+      "completion_tokens_details": {
+        "reasoning_tokens": 349
+      },
+      "prompt_tokens": 2537,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2931
+    }
+  }
+}

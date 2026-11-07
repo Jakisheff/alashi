@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.663,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Закон всё равно отклоняется (2 No против 1 Yes), вето не нужно.\"}",
+          "reasoning_content": "Law 1: 10% tax. Votes: Yes=1, No=2 → fails anyway. No veto needed.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427104,
+    "id": "2026102000250142f841a13fcc4141",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102000250142f841a13fcc4141",
+    "usage": {
+      "completion_tokens": 56,
+      "completion_tokens_details": {
+        "reasoning_tokens": 26
+      },
+      "prompt_tokens": 2449,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2505
+    }
+  }
+}

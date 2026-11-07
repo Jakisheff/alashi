@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.169,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Взялка 5 alashi даёт влияние 2 и надёжно сохраняет пост президента с контролем закона и 5% комиссией, а кэш всё равно девальвируется.\"}",
+          "reasoning_content": "Round 2 action. I have 24 alashi. Keeping presidency via influence is useful. Bribing 5 gives influence 2, keeps presidency. But cash devaultion: cash devalues to 62% each round — spending cash on influence is good long-term. Bribe 5 → influence 2, still cash 19. Compared to shuttle goods 3 worth ~ (prices later). Influence 2 secures presidency (5% bank commission bonus = 1.5 alashi, plus law control). Also bribe money goes to rival, boosting their cash.\n\nShuttle gives 3 goods, sellable ~6-8 each later = ~20+ alashi value. But presidency requires highest influence; currently all 1, I'm president via tie_order. If a rival bribes, I lose presidency. Influence 2 secures it.\n\nI'd pick bribe 5 to idx1 (choice 4) — influence 2 secures presidency and its 5% commission + law control. Actually giving cash to rival hurts rank. But devaluation makes cash worth 62%, so spending is efficient. Choose 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499955,
+    "id": "202610202039061fb5bc061bb84ffd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202039061fb5bc061bb84ffd",
+    "usage": {
+      "completion_tokens": 288,
+      "completion_tokens_details": {
+        "reasoning_tokens": 235
+      },
+      "prompt_tokens": 3537,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 3825
+    }
+  }
+}

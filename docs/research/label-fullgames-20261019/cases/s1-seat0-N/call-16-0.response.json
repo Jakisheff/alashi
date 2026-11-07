@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.514,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Вексель не девальвируется и даёт 1.25x выручку; соперники без товара, давить цену незачем.\"}",
+          "reasoning_content": "Round 5 market. Cash devalues 62% at round start (already applied? Cash 28.28M — that's after dev?). Prices start fresh at 12. Selling 2 units at 12+12=24 alashi? sell 2 gives +22M cash (50.28M from 28.28). Promissory 2 units = 27.5M at 1.25x, paid round 6 without devaluation? Promissory added to cash at round 6 start before devaluation — so 27.5M full value. Sell credit 2 better than sell 2 (27.5 vs 22). Selling drives price down for opponents but they have no goods anyway (idx1: 0, idx2: 0). So sell both on credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428062,
+    "id": "202610200040568d06f240d9384ef1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200040568d06f240d9384ef1",
+    "usage": {
+      "completion_tokens": 211,
+      "completion_tokens_details": {
+        "reasoning_tokens": 169
+      },
+      "prompt_tokens": 3154,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3365
+    }
+  }
+}

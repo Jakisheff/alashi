@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.553,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Покупка по 7-8 не даёт прибыли, сохраняю cash для аукциона в раунде 4\"}",
+          "reasoning_content": "Round 3 market, sold_counter=4, price 7. I have 27.5 cash, 0 goods. Buying at 7-8 to sell later? Boom/price may fall as others sell. Rivals have goods 0. Buying moves counter back, increasing price. Price at counter 4 is 7. Buying 1 costs 7 for later sale at maybe lower price? Counter after buy =3, price 8. Others sell later... Actually buying at ~7-8 to resell later at similar prices isn't profitable unless price rises (card 7). Uncertain. Pass keeps cash for auction round 4. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427685,
+    "id": "20261020003432a3938aa8ffe948d0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003432a3938aa8ffe948d0",
+    "usage": {
+      "completion_tokens": 173,
+      "completion_tokens_details": {
+        "reasoning_tokens": 136
+      },
+      "prompt_tokens": 2366,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2539
+    }
+  }
+}

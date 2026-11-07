@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.322,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Финальный раунд, товара нет; сохраняю cash для ранга богатства, любая покупка бесполезна.\"}",
+          "reasoning_content": "Round 6 market: I have 0 goods, so buy or pass. Cash rank matters; buying reduces cash. Just pass — sell not possible anyway.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496538,
+    "id": "2026102019421572c7a337b9614a42",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019421572c7a337b9614a42",
+    "usage": {
+      "completion_tokens": 71,
+      "completion_tokens_details": {
+        "reasoning_tokens": 32
+      },
+      "prompt_tokens": 3588,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 3659
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.797,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Вексель обходит одну девальвацию, поэтому продажа всего в кредит даёт максимальную итоговую выплату при сохранении cash для ставки.\"}",
+          "reasoning_content": "Round 4 market, later rounds exist (5,6). Sell now at price 9 (sold_counter 2, next price 9? counter=2 means price index 2 = 9). Selling 3 gives 30M cash but lowers future prices. Cash devalues ×0.62 at round starts twice. Selling credit: promissory paid at round 5 start then devalued... actually promissory added to cash at start of round 5 after devaluation? \"cash=floor(cash/100)*62, then promissory added\" — promissory avoids devaluation once, but then round 6 devaluation applies. Selling cash now: 47M devalued twice → ~18M. Credit 30M added after devaluation round 5, then devalued round 6 → ~11.5M+... compare: sell cash 47.47M×0.62²=18.2M. Credit: cash 23.5M×0.62²=9M + 30M×0.62=18.6M = 27.6M. Credit better. Also need cash for auction bid (own_bid 0). Bid separately in action. Sell credit keeps goods but no cash... need cash for bid. Cash 23M available for bid. Keep 3 goods? Sell 2 credit, keep 1 good for later? Prices will drop anyway. Selling all 3 credit gives max promissory. But bid money: cash 23.5M enough. Choose choice 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792491094,
+    "id": "202610201811268273ba2297614296",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201811268273ba2297614296",
+    "usage": {
+      "completion_tokens": 369,
+      "completion_tokens_details": {
+        "reasoning_tokens": 326
+      },
+      "prompt_tokens": 2794,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 3163
+    }
+  }
+}

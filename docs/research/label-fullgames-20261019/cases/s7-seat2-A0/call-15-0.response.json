@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.244,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Субсидия увеличивает мой доход от produce в оставшихся раундах.\"}",
+          "reasoning_content": "Law 3 gives subsidy_goods=1 — I produce, so +1 goods each produce. But holder is 0, vote weight 3. Faction 1 voted Yes. If I vote No: no=1, yes=1(w1)+president? President holder 0 hasn't voted yet; order... I'm own_idx 2. If president votes yes, passes 2:1. Subsidy helps me produce 3 goods/turn. Vote yes: supports subsidy. I want subsidy. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427414,
+    "id": "20261020003010c9c6925dd9ed4286",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020003010c9c6925dd9ed4286",
+    "usage": {
+      "completion_tokens": 136,
+      "completion_tokens_details": {
+        "reasoning_tokens": 108
+      },
+      "prompt_tokens": 2885,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 3021
+    }
+  }
+}

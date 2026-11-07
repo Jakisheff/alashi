@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.328,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":11,\"reason\":\"Взятка даёт влияние 2 и пост президента с правом вето против будущих налоговых законов, что окупается на продажах.\"}",
+          "reasoning_content": "Round 2 action. Cash 24, influence 1. To become president (influence 2+ needed vs others at 1, tie order favors 2,1). Bribe 5 to idx2 gives influence 2, tying with others at 1 → I'd be president (highest influence 2). President can veto tax laws, and gets 5% commission possibly. Worth 5 alashi? Round 2-6 presidents matter. Take shuttle for goods? Trade-off: 5 alashi for presidency seems valuable (veto over tax laws affecting sales). I'll take choice 11 (bribe 5 to 2).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495322,
+    "id": "202610201921556afefea914ab486b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201921556afefea914ab486b",
+    "usage": {
+      "completion_tokens": 178,
+      "completion_tokens_details": {
+        "reasoning_tokens": 135
+      },
+      "prompt_tokens": 3470,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 3648
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.823,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Беру 3 товара через shuttle для продажи в раунде 6, риск изъятия оправдан ценой ~9 за единицу.\"}",
+          "reasoning_content": "Round 5 action. Shuttle gives 3 goods for next market (round 6, sell_credit not repaid — better sell normal? Round 6 promissory not repaid, so sell normal). Get goods: shuttle 3 goods, ~25% seizure risk. Produce 2 goods free. Prices low (sold_counter=2 → next sell at 9). 3 goods worth ~26. Shuttle risk but expected value high. I have cash 0.87, president with influence 2. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499026,
+    "id": "20261020202342c728a714b5224bdb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020202342c728a714b5224bdb",
+    "usage": {
+      "completion_tokens": 149,
+      "completion_tokens_details": {
+        "reasoning_tokens": 107
+      },
+      "prompt_tokens": 3762,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3911
+    }
+  }
+}

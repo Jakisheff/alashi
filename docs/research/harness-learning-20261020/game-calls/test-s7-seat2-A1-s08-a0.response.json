@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 16.928,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Взятка беднейшему даёт влияние 3, сохраняя президентство и защиту от девальвации, не усиливая главного соперника.\"}",
+          "reasoning_content": "Need to keep presidency (influence max). My influence 1, weight 3 (passed action last time? vote_weight 3 = influence+2). Rival фракция 1 has influence 2. To hold presidency need influence ≥2. Bribe 5 alashi gives influence 2, but фракция 1 could outbribe later... only this round action phase for me; next round they may bribe. Cost 5 alashi but presidency gives veto power and 5% bank bonus (~1.5 alashi now, plus future banks). Also losing presidency means rivals control laws (taxes). Bribe 10 to reach 3 is safer but expensive. Sold counter 4, price ~7 per unit... produce gives 2 goods ~14 alashi revenue. Also cash is low relative to rival 1 (30 alashi).\n\nAlso goods matter: shuttle gives 3 goods, but risks? Shuttle grey goods seizure — this is border action; tariff unknown? Currently no tariff... \"При льготной границе за серый ход платится min(cash,2)\". Shuttle risk 25% confiscation. EV goods 2.25.\n\nKey: presidency control. I'm holder now; at law this round, presidency determined by influence entering law. If фракция 1 has 2 influence > my 1, they become president and can pass tax laws. Bribe 5 gives me 2, tie → tie_order favors me (idx 2 first). So bribe 5000000 to 0 suffices for tie. But фракция 1 could bribe in their future actions before law? They already acted? Order rotates; this is round 3 action primary for me — others may act after. If фракция 1 bribes too, they'd have 3 > my 2. They have 30 alashi cash. Risk. Bribe 10 gives influence 3, safer.\n\nCost vs benefit: presidency = veto control + 5% bank commission + roof payments. 10 alashi is large (my cash 16). But final rank matters; giving money to rival 0 hurts? Bribe to 0 gives them cash, raising their rank — they're poor (5 alashi) anyway.\n\nDevaluation: round start cash floor/100*62 — holding cash loses 38%. So spending cash is cheap! Round 4 start: 16.12→10 alashi if held. So bribe 10 now costs effectively ~4 net vs keeping. Strongly favors bribe 10 (influence 3, choice 11). Then rival must bribe 15+ to overtake — they hold 30 cash, possible but they'd suffer devaluation too.\n\nChoose 11: bribe 10000000 to 1? Wait to:1 gives rival 1 cash 10 alashi — boosts the main rival's wealth! Bribe to 0 instead: choice 5 gives influence 3, cash 6.12, gives money to poorest. Better: choice 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497626,
+    "id": "202610202000102fa73eee7f6c4c1a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202000102fa73eee7f6c4c1a",
+    "usage": {
+      "completion_tokens": 678,
+      "completion_tokens_details": {
+        "reasoning_tokens": 636
+      },
+      "prompt_tokens": 3164,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 3842
+    }
+  }
+}

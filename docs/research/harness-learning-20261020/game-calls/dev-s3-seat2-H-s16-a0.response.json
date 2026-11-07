@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.895,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"sell_credit даёт 15 вместо 12, а вексель погасится в начале раунда 6 без потерь\"}",
+          "reasoning_content": "Round 5 market, price 12, sell now? But selling now drops counter; next market round 6 price lower anyway. sell gives 12 now; sell_credit gives 15 promissory paid start of round 6 cash — but devaluation floor(cash/100)*62 applies then promissory added. Credit better (15 vs 12, no loss). Choose sell_credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495397,
+    "id": "20261020192314b20ee02eddec43c3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192314b20ee02eddec43c3",
+    "usage": {
+      "completion_tokens": 118,
+      "completion_tokens_details": {
+        "reasoning_tokens": 81
+      },
+      "prompt_tokens": 3308,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3426
+    }
+  }
+}

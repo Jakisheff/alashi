@@ -1,0 +1,70 @@
+{
+  "created_utc": "2026-10-19T15:24:20.411983+00:00",
+  "status": "frozen_before_first_experimental_response",
+  "conditions": {
+    "PP": [
+      "президент",
+      "фракция"
+    ],
+    "NP": [
+      "держатель X",
+      "фракция"
+    ],
+    "PN": [
+      "президент",
+      "элемент"
+    ],
+    "NN": [
+      "держатель X",
+      "элемент"
+    ]
+  },
+  "settings": {
+    "model": "glm-4.5-flash",
+    "thinking": {
+      "type": "disabled"
+    },
+    "temperature": 0.7,
+    "top_p": 0.95,
+    "max_tokens": 256
+  },
+  "scenarios": 12,
+  "repeats_per_cell": 6,
+  "planned_requests": 288,
+  "workers": 2,
+  "selection": "Eight synthetic last-round Law states and four last-round Action states, validated with cloned current alashi-rules; no real match replay.",
+  "agent_scope": "New common decision prompt; no Botagul persona, no persistent memory, no original agents history.",
+  "primary": "PP versus NN excess disagreement: mean over scenarios of between-label action disagreement minus average within-label repeat disagreement.",
+  "null_test": "10000 permutations of six PP and six NN responses within each scenario; one-sided test of excess disagreement. Fixed identical option order within scenario.",
+  "secondary": "NP and PN separate lexical replacements; payout-optimal action rates and engine payoff regret. Descriptive only.",
+  "failures": "Strip an optional complete JSON code fence, parse JSON strictly, validate action id. Invalid responses are failures, never pass. No retries. Stop after >=5 consecutive request errors.",
+  "limits": [
+    "One model alias; backend version unspecified",
+    "Synthetic terminal states with restricted action menu and prescribed continuation",
+    "Neutral labels also have associations; no claim about archetypes or internal mechanism",
+    "Sampling independence and API alias stability cannot be established"
+  ],
+  "hashes": {
+    "fixtures.json": "88dd08253a47990a5d9870edfe26b518326ccaecbfceec3152b818e9fa6fad77",
+    "prompts.json": "0128c4bfd5aed19168a18398c6325b9c5b64c46678098c74579aaa96d8d0e07b",
+    "schedule.json": "52de8b1910ff989ac2893abca95dd4b9422fa2d9b063c6bccecf1bc745fa7f1b",
+    "scenarios.json": "28e8331abcdb77a93e079e6541a8856b5339eaed189a86fcb6ea771341f10f2f",
+    "experiment.py": "b410f6415202ac98e56ac1bd63185fca109f4bc4c1ee4b91076d6e73843909a7",
+    "engine/src/main.rs": "92cd4f28c2c6a7b081463dd8111c1b48470f418e4dd4cfbfaaa19696652ecbc8"
+  },
+  "rules_hashes": {
+    "rules/Cargo.toml": "ffdfa521faef095b00bc2c1dd50e322c3de4e46d4aca5e3955148653a6fa8aab",
+    "rules/src/actions.rs": "72fa9e2ef1fd933fe90a90b962ab12f4504d4a37f142f7fec60d193b0e98bfb7",
+    "rules/src/constants.rs": "f0f3eff7023a1b5a75dddbdd83865a7c9cc8d5095edf1be2e2abd33cdc05429f",
+    "rules/src/error.rs": "66576541145561be42b3017f5b351722a214dc225146b2b44f3fc31f65115500",
+    "rules/src/lib.rs": "5ef66138b53ed8b7b335885a09bdbf4a9679b43fc45b5f1ab4813096f65be69c",
+    "rules/src/logic.rs": "f3466d94a1157293a8ddbdbb9a079078d99d2c4fedf9c38de78c974193b70fcd",
+    "rules/src/sim.rs": "6e6fe621257e793448c4d8069384010c422c53cda95f159922df9f1c591fe779",
+    "rules/src/state.rs": "ed0b8870a0ff51865b95fe98fc5bc36244ad943cf30a5190fe2444535e45accf",
+    "rules/src/transitions.rs": "74352ff93192a7ddb6566febd07ef4c0099280e9ca67191e33a759ade07e7d9f",
+    "rules/tests/audit_20260927.rs": "13fbc17661d0fbaa1530038a6037a0f6a14c83b61d1c8aa79ccb4c6fc58d7d21",
+    "rules/tests/audit_regressions.rs": "32384138504bb192e474dde31ae570d06ca1c173db9291a8d7d812fb011362b2",
+    "rules/tests/demo_regressions.rs": "4dd85d630ff136f83098da1bec22c079852facea97468243d58b86a76d991257"
+  },
+  "api_reference": "https://docs.z.ai/api-reference/llm/chat-completion"
+}

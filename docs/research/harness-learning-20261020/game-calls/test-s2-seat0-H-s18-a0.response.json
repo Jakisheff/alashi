@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.229,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Налог 10% бьёт по моим продажам в раунде 6 — свободное veto надёжно его отменяет.\"}",
+          "reasoning_content": "Law 1: 10% tax on future sales. I plan to sell in round 6 (3 goods). Participant 2 voted No. I'm richest; tax hurts me most. Veto kills tax. But if veto, card dead, no tax. Veto is best — round 6 sales without 10% tax.\n\nVote no would likely fail anyway (opponent votes: 2 votes No, my No = 2 no vs 1 yes → rejected). Actually participant 2 voted No, participant 1 unknown. My vote_no: if 1 votes yes, 1 yes vs 2 no → rejected. If 1 abstains, 0 vs 2 rejected. So vote_no suffices. But safer: veto free. Choose veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496541,
+    "id": "2026102019421657608515981248f0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102019421657608515981248f0",
+    "usage": {
+      "completion_tokens": 198,
+      "completion_tokens_details": {
+        "reasoning_tokens": 158
+      },
+      "prompt_tokens": 3654,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 3852
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 15.631,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":2,\"reason\":\"Закон о повышении цен выгодит соперников с товаром, а у меня товара нет — голосую против.\"}",
+          "reasoning_content": "Law 7: +2 prices next market. I have 0 goods, rivals have 2 each. Higher price helps them sell. Vote no. Yes=1 from faction 1. Vote no → 1 yes, 1 no, not passed. Veto also possible; veto kills it. Vote no suffices.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499082,
+    "id": "2026102020242748dbc90a2bed406f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020242748dbc90a2bed406f",
+    "usage": {
+      "completion_tokens": 101,
+      "completion_tokens_details": {
+        "reasoning_tokens": 67
+      },
+      "prompt_tokens": 2547,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2648
+    }
+  }
+}

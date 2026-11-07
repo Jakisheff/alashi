@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.615,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Покупка по 12 невыгодна при будущем снижении цены; лучше сохранить кэш.\"}",
+          "reasoning_content": "Round 3 market, price 12/unit (shift 0, sold_counter 0? Wait sold_counter 0 — I sold 3 in round 2 via sell_credit... apparently counter reset? state says sold_counter 0). Buy at 12, sell later at... prices only decline as sales happen. Buying at 12 to sell at 12 is neutral, worse actually (counter moves back but price declines). Selling is not offered? I have 0 goods. Only pass/buy. Buy at 12, future prices decline as I sell. Buying 3 for 36 to sell at 12,10,9 = 31, loss. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498173,
+    "id": "2026102020092714f3cbb20664480f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020092714f3cbb20664480f",
+    "usage": {
+      "completion_tokens": 168,
+      "completion_tokens_details": {
+        "reasoning_tokens": 137
+      },
+      "prompt_tokens": 2355,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2523
+    }
+  }
+}

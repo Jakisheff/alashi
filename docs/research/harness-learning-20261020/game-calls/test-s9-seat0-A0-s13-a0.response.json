@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.755,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Produce даёт 3 товара без риска изъятия, надёжнее shuttle, и сохраняет cash.\"}",
+          "reasoning_content": "Bid 42M already placed; remaining cash 16.675M. Main action: shuttle gives 4 goods (2 rounds left, sellable). Produce gives 3. Grey goods may be seized 25% but no tariff currently? Tariff=0, default border risk applies to shuttle. Produce gives 3 goods for free. Shuttle gives 4 but ~25% seizure risk. Expected 3 goods either way, shuttle risk. Produce safer. Also influence: I'm president with 2 influence, rivals have 1 each. Bribing could matter for final influence bonus but costly. Produce.\n\nChoice 1.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792496391,
+    "id": "202610201939462ea1130711ab4319",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201939462ea1130711ab4319",
+    "usage": {
+      "completion_tokens": 162,
+      "completion_tokens_details": {
+        "reasoning_tokens": 129
+      },
+      "prompt_tokens": 3526,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 3688
+    }
+  }
+}

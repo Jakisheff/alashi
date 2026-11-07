@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.301,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":14,\"reason\":\"Взятка даёт влияние 3 и пост президента с контролем закона и бонусом комиссии, что дороже 10 alashi.\"}",
+          "reasoning_content": "Round 5 action. I'm likely to become president next law if I gain influence (2 currently? no, 1; opponent has 2). Bribing 5M to reach influence 2 would tie 2 vs 2, tie_order favors 2 (holder). Need >2, so bribe 10M to reach influence 3, get presidency + law control + 5% commission. Also produce goods for final sale. Action is single though. Influence matters most: choice 14 (bribe 10M to idx2) gives influence 3, presidency in round 5 law and possibly round 6? Next round influence persists. Cash cost 10M, but presidential control prevents bad tax laws and gives commission. Choose 14.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497241,
+    "id": "20261020195355c168abe52cc9497f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195355c168abe52cc9497f",
+    "usage": {
+      "completion_tokens": 197,
+      "completion_tokens_details": {
+        "reasoning_tokens": 158
+      },
+      "prompt_tokens": 4141,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 4338
+    }
+  }
+}

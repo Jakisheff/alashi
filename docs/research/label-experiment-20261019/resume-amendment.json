@@ -1,0 +1,14 @@
+{
+  "reason": "ENOSPC during flush/fsync after request window 125-126 was submitted; raw interrupted file preserved.",
+  "persisted_valid_responses": 124,
+  "invalid_lines": [],
+  "submitted_through_schedule_index": 125,
+  "resume_at_schedule_index": 126,
+  "missing_submitted_ids": [
+    "L6_NP_3",
+    "A2_PP_4"
+  ],
+  "original_protocol_unchanged": true,
+  "before_resume_sha256": "506133c1ae651f8becaccae4fb9cea03305a877a869715ef3a31e0a18b19a49e",
+  "change": "Resume only never-submitted jobs 127-288; mark any lost in-flight response as storage_error without regeneration."
+}

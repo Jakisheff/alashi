@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.363,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":1,\"reason\":\"Закон 4 даёт +1 влияния мне как беднейшему, повышая шанс на бонус 5% банка.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest (me, cash=0). Yes already from idx2. President (idx0) hasn't voted; president is richest so card 4 not his favorite. Vote yes helps me gain influence → influence bonus 5% of bank. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490457,
+    "id": "202610201800504758e51b54de4b05",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610201800504758e51b54de4b05",
+    "usage": {
+      "completion_tokens": 96,
+      "completion_tokens_details": {
+        "reasoning_tokens": 60
+      },
+      "prompt_tokens": 2965,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 3061
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.315,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"shuttle даёт больше товара, ожидаемая ценность выше produce даже с риском изъятия\"}",
+          "reasoning_content": "Round 4 action: I sold 5 credit units already. Now auction + action. License income 20-60 alashi; competitors have ~29-31 alashi cash and can outbid me easily. My max bid 5.4, they can bid more. Bidding low wastes little (returned if lose). But if I win, my cash goes to bank. Better: take an action. produce gives 2 goods, shuttle gives 3 grey goods with seizure risk ~25%. shuttle = 3 goods expected 2.25 > produce 2. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427116,
+    "id": "20261020002511166d47a09f89459d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020002511166d47a09f89459d",
+    "usage": {
+      "completion_tokens": 150,
+      "completion_tokens_details": {
+        "reasoning_tokens": 119
+      },
+      "prompt_tokens": 3652,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 3802
+    }
+  }
+}

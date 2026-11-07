@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.361,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Шаттл даёт больше товара для продажи по ещё высокой цене, ожидаемая выгода выше.\"}",
+          "reasoning_content": "Need main action after bid. We're own_idx=1, cash 13.3M, bid 33M escrow. If win bid, cash spent; cash shown includes? own_bid listed, cash 13335000 — cash after bid is 13335000, bid in escrow. If lose, 33M returned. Rounds left: 4,5,6. Money counts at end. Producing goods gives future sales. Shuttle risks 25% loss but 3 goods. Produce gives 2 free. Price low though (counter 2, price ~9 next at that counter... sold_counter=2 → price 9). Selling 2-3 goods good. Choose produce? shuttle 3 goods, 25% confiscation risk but no grey mention — shuttle gives grey? \"серый товар может быть изъят\". Tariff currently? market shows tax 0. Grey risk applies unless black tariff. Shuttle EV: 3 goods×~9=27, ×0.75=20 vs produce 18. Similar. But later rounds prices decline. Bribing president to gain presidency influence? Holder is 0, needs influence 2 to tie... president gets commission 5% and veto. Influence 2 costs 5M. Commission 5% of bank ~1.5M+ extra — not worth much. License income already bid. I'd pick shuttle? Risk of border seizure ~25% of grey. Produce is safe 2 goods. EV shuttle slightly higher but variance. Take shuttle choice 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792490177,
+    "id": "20261020175607c0a1332700b94e12",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020175607c0a1332700b94e12",
+    "usage": {
+      "completion_tokens": 351,
+      "completion_tokens_details": {
+        "reasoning_tokens": 319
+      },
+      "prompt_tokens": 3446,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 3797
+    }
+  }
+}

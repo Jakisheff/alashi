@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.099,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Взятка дороже выгоды от доли комиссии, товары в финале бесполезны — pass.\"}",
+          "reasoning_content": "Final round action; nothing carries value except cash. Goods useless. Influence gives 5% commission share for max influence. Currently player 0 has influence 2; to beat via cash+... I need influence ≥3 (tie broken by cash+hard; I have max cash). So bribe 5M to anyone → influence 2, not enough; need 10M bribe → influence 3, beats 0's influence 2. 5% of bank ~ 70.3M*... bank 74M, 5% = 3.7M. Also I'm already richest anyway; commission 5% goes to max influence holder — currently player 0 would get 3.7M. Bribe 10M costs me 10M but gains commission... wait, does commission 5% come out of my 50% share? Bank distributed 95% by weights; commission 5% to influence max. If I'm top rank (50% weight) and gain influence max, I'd get 95%*50% + 5% = 52.5% instead of 50%. Bank ~74M: gain 2.5% = 1.85M, cost 10M. Not worth it. But wait, cash is simulated... bribe reduces my cash by 10M, opponent gains. Not worth. Just pass.\n\nAlso rank: I'm already top cash. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499806,
+    "id": "20261020203636c235b00fb8c7473a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203636c235b00fb8c7473a",
+    "usage": {
+      "completion_tokens": 333,
+      "completion_tokens_details": {
+        "reasoning_tokens": 298
+      },
+      "prompt_tokens": 5170,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 5503
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.95,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":15,\"reason\":\"Небольшая взятка даёт пост президента (влияние 2 выше всех) — контроль вето, комиссия 5% банка и защита от налогов выгоднее 3 товаров по низкой цене.\"}",
+          "reasoning_content": "Round 3 action. Produce 3 goods vs shuttle 4 with 25% seizure risk. President is idx2; bribing idx2 for presidency? President benefit: 5% commission and veto. Bribing 10 to 2 gives influence 3, becoming president next law? President determined at law entry by influence. Current holder 2 has influence 1. Bribing 5 gives me influence 2 — tie with idx0's 2? President = max influence; idx0 has 2. Tie priority tie_order [2,1,0]... holder advantage? Tie broken by tie_order: 2(1), then 1. With 5 bribe I have 2, tie with 0: tie_order favors 1 over 0, but holder 2 has 1. So I'd be president with influence 2 at cost 5. President gets 5% of bank (30 → 1.5) plus veto control over tax laws. Veto protects against taxes and card 8 (promissory wipe — I have none now). Maybe more valuable later if I use sell_credit.\n\nAlternatively produce 3 goods worth later sales. Prices falling: counter at 9, price 2. Goods worth little (~2-3 each). 3 goods ~6-9 alashi. Actually with price shifts could be more.\n\nBest: bribe 5 to 2 (choice 15): cost 5, gain presidency, influence 2. President for rounds 3-6 laws, can veto taxes, get commission 5% (~1.5+) and possibly keep presidency by more bribes. Also being president at law lets me control votes. I think choice 15 is good long-term.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792495216,
+    "id": "20261020192004ab292f83935d420f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020192004ab292f83935d420f",
+    "usage": {
+      "completion_tokens": 414,
+      "completion_tokens_details": {
+        "reasoning_tokens": 360
+      },
+      "prompt_tokens": 4239,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 4653
+    }
+  }
+}

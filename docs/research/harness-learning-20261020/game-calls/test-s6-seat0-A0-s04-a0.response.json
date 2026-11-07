@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.063,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":6,\"reason\":\"Кредитная продажа трёх единиц даёт максимум выручки, а вексель обесценивается на один раунд меньше, чем немедленный cash.\"}",
+          "reasoning_content": "Prices: counter=2, next unit at 9+2=11, then 8+2=10, then 7+2=9. Sell 3 = 30 alashi. Credit? Promissory added to cash next round, 31.25 alashi... wait choice 6 promissory 37.5. But last round promissory not redeemed. Selling credit at 1.25x is good if game continues. Also cash devaluation next rounds (x0.62). Promissory paid next round at start, then devalued later rounds too. 6 rounds left plenty. Credit gives 37.5 vs 30, and devaluation: promissory added at round 3 start, then devalued rounds 4-6 (start of rounds 3+... actually start of round 3: promissory added, then devalued at starts of rounds 4,5,6 = 0.62^3≈0.24). Cash from sell now: devalued 4 times (rounds 3-6 starts): 0.62^4≈0.15. Promissory devalued 3 times: better. Also may sell goods now and keep producing? Sell all 3 credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498157,
+    "id": "2026102020090999cd6b065053412a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026102020090999cd6b065053412a",
+    "usage": {
+      "completion_tokens": 311,
+      "completion_tokens_details": {
+        "reasoning_tokens": 266
+      },
+      "prompt_tokens": 2322,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 2633
+    }
+  }
+}

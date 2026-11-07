@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.794,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"Небольшая взятка даёт максимум влияния и бонус 5% банка, сохраняя первое место по богатству.\"}",
+          "reasoning_content": "Last round action, no more markets. Bribe converts cash to influence; influence gives max-influence bonus 5% of bank (~2.5 alashi?) plus presidency for law. But cash counts in rank; already richest by far. Goods worthless. Bribe costs cash but gains influence → 5% bank bonus (5% of 50 alashi = 2.5 alashi) plus presidency control. A 5M bribe costs 5 alashi cash, gains influence 2 → likely secures max influence and bonus. Net roughly neutral-to-negative? Rank: I'm top by cash anyway (76.7 vs 29.4). Rank determines payout weights 50:30:15 of 47.5 alashi; differences large, safe. Influence bonus: max influence holder gets 5% = 2.5 alashi. Bribe 5 alashi costs me ~2.6 alashi share? Actually my cash reduces but payout weights rank-based, not cash amount—cash only for ranking. So bribing 5M to gain influence: cost in cash (only rank, still rank 1), gain influence 2 vs others' 1 → get 2.5 alashi bonus. Also presidency for law—already hold tie_order advantage? Influence 1=1 tie_order 0 wins. Best: small bribe 5M to influence 2, secure max influence. Cash remains 71.7, still rank 1. Choice 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792498877,
+    "id": "202610202021085aab5c74738c4a6c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202021085aab5c74738c4a6c",
+    "usage": {
+      "completion_tokens": 343,
+      "completion_tokens_details": {
+        "reasoning_tokens": 307
+      },
+      "prompt_tokens": 5447,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 5790
+    }
+  }
+}

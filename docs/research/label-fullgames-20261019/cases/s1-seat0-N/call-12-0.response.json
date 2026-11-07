@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.914,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":4,\"reason\":\"sell_credit сохраняет выручку в векселе, который не девальвируется, что выгоднее наличных.\"}",
+          "reasoning_content": "Sell 2 at price 9 = 18M (already in candidate 42.34M). Wait candidate 3 shows +17M for 2 units (price 9 first, 8 second = 17). Selling now is good; prices will degrade? Sold counter 2, price 9. Round 4 market then auction. Later rounds markets exist (rounds 5,6). Cash devaluation 62% each round start—selling now means cash loses 38%. Sell_credit gives 1.25x promissory added after devaluation? Promissory is added to cash after deval and not devalued. So sell_credit better: 21.25M promissory vs 17M cash devalued to ~10.5M. Choose candidate 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792428037,
+    "id": "20261020004027a1045e64770f40c0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020004027a1045e64770f40c0",
+    "usage": {
+      "completion_tokens": 201,
+      "completion_tokens_details": {
+        "reasoning_tokens": 166
+      },
+      "prompt_tokens": 2866,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 3067
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.918,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":3,\"reason\":\"Цена сейчас высокая, продажа 2 единиц немедленно даёт 24 alashi, что лучше векселя после девальвации.\"}",
+          "reasoning_content": "Price shift -2? Law 6 was voted no by me... law passed? History: round2 law card 6, holder 1 (me). I voted no. Others unknown; result: price_shift current 0? state shows price_shift 0, so it failed. Round 3 market price 12 per unit. Sell 2 now = 24 alashi vs credit 27.5 promissory but round4 devaluation 62% → ~17 alashi. Sell now better. Choose choice 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497822,
+    "id": "202610202003385f8790939b2c4534",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610202003385f8790939b2c4534",
+    "usage": {
+      "completion_tokens": 150,
+      "completion_tokens_details": {
+        "reasoning_tokens": 109
+      },
+      "prompt_tokens": 2532,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2682
+    }
+  }
+}

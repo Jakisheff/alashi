@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.879,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":0,\"reason\":\"Товар и рынок закончились; pass сохраняет весь cash и даёт +2 к весу голоса президента для контроля последнего закона.\"}",
+          "reasoning_content": "Last round action. I'm already richest, president, no more market (round 6 law last). Influence matters for the 5% commission bonus (~5% of bank = ~1.9 alashi... bank 38M ≈ 38 alashi, commission 5% ≈ 1.9 alashi to max influence). I already have influence 2 vs 1. Goods useless (no more market; wait—there is market in round 6 already done; action before law, no more market). So pass preserves influence vote weight? Vote weight: skipping action gives +2 to vote weight, but I already hold presidency with influence 2 vs 1. Goods worth nothing. Bribes cost cash (cash counts in rank). Best: pass, keeping cash and +2 vote weight for veto power.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792497279,
+    "id": "20261020195433e5b2f0e3f94843e0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020195433e5b2f0e3f94843e0",
+    "usage": {
+      "completion_tokens": 208,
+      "completion_tokens_details": {
+        "reasoning_tokens": 169
+      },
+      "prompt_tokens": 5604,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 5812
+    }
+  }
+}

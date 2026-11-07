@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.75,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Вексель после последнего раунда не погашается, поэтому продажа всех 3 единиц даёт максимум cash и первое место по богатству.\"}",
+          "reasoning_content": "Last round, promissory won't be repaid after final round. So sell_credit worthless. Sell 3 gives cash 75.4M vs current 54.4M. Rival 0 has 65.7M; selling 3 puts me at 75.4M — top rank. Sell all 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792427320,
+    "id": "202610200028375dfe353f97da45c9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202610200028375dfe353f97da45c9",
+    "usage": {
+      "completion_tokens": 111,
+      "completion_tokens_details": {
+        "reasoning_tokens": 69
+      },
+      "prompt_tokens": 3557,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3668
+    }
+  }
+}

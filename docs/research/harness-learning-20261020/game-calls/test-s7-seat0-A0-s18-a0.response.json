@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.924,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"choice\":5,\"reason\":\"Финальный раунд: вексель не погашается, поэтому продаю весь товар за наличные, максимизируя cash.\"}",
+          "reasoning_content": "Last round, promissory won't be paid. Sell 3 units for 31M immediately.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1792499824,
+    "id": "20261020203701fe7794665a644f20",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261020203701fe7794665a644f20",
+    "usage": {
+      "completion_tokens": 61,
+      "completion_tokens_details": {
+        "reasoning_tokens": 21
+      },
+      "prompt_tokens": 3484,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3545
+    }
+  }
+}
