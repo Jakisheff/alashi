@@ -16,7 +16,7 @@ The viewer PR copies the two production files, staging fixture, lifecycle/visual
 | [24](https://github.com/Jakisheff/alashi/pull/24) | Merged as `0422a03678cbe3a434f79c39bff612ce3f833d02` | Final `f48a44ac` passed all five checks. [Coin/Dance acceptance](pr-merge-20261107/pr24-25-visual/ACCEPTANCE.md), [CI proof](pr-merge-20261107/pr24-final-ci.json). |
 | [25](https://github.com/Jakisheff/alashi/pull/25) | Merged as `96e9ea951f70628b9b40075ba7f37ec74c6cc8a7` | Final `591966c0` passed all five CI jobs. Runtime remains identical to accepted `c0e74cd8`. [CI proof](pr-merge-20261107/pr25-final-ci.json). |
 | 33 | Already integrated | Original head `18650a65` is an ancestor of initial main; no repeat code merge needed. Closed as already integrated; no code was replayed. |
-| Viewer 6/7 | [PR69](https://github.com/Jakisheff/alashi/pull/69) created | Nine fresh lifecycle checks and two controls, frontend build and all animation checks pass. Updated onto main after PR59; mandatory PR CI follows. |
+| Viewer 6/7 | [PR69](https://github.com/Jakisheff/alashi/pull/69), final candidate on main `96e9ea95` | Nine recovery checks, two controls, four real-renderer cases, build and all animation checks pass. Mandatory runtime CI jobs passed; final all-five CI gate follows the evidence commit. |
 
 The viewer PR was moved onto main after PR68 before committing. Application and lockfile content from PR68 does not change the viewer validation inputs. Earlier session/archive fixes stay on `codex/implicit-state-fixes-20261107`.
 
