@@ -1,0 +1,82 @@
+{
+  "source": "c0e74cd8fc3eb2c3e531606dd2e24aa353af64ad",
+  "builtFrom": "026dabe435ad82c179fde8abf0e0c7089c57e264",
+  "runtimeDifference": "none; final commit only adds two coin test assertions",
+  "origin": "http://127.0.0.1:56787",
+  "htmlAssetOrigins": "absolute alashi.network icons localized to this static preview; JS unchanged",
+  "pages": [
+    {
+      "width": 1366,
+      "errors": [],
+      "consoleErrors": [],
+      "externalRequests": [],
+      "frames": [
+        "1366-coin-buy-1.35.png",
+        "1366-coin-sell-3.8.png",
+        "1366-coin-mule-1.9.png",
+        "1366-dance-0.png",
+        "1366-dance-0.45.png",
+        "1366-dance-0.9.png",
+        "1366-dance-1.37.png",
+        "1366-dance-2.8.png",
+        "1366-dance-4.1.png",
+        "1366-dance-reduced-motion.png"
+      ],
+      "checks": [
+        "Buy: payment pose, pause, backward seek and full completion",
+        "Sell: payment pose, pause, backward seek and full completion",
+        "Mule: payment pose, pause, backward seek and full completion",
+        "Dance: Thinking transition, key poses, pause/backward seek, restart and full completion",
+        "Dance reduced motion: pause preserves displayed pose within4/255 raster tolerance, seek0/forward/backward visibly works, resume returns idle"
+      ],
+      "gpu": {
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "renderer": "ANGLE (Intel, ANGLE Metal Renderer: Intel(R) UHD Graphics 617, Unspecified Version)"
+      },
+      "normalSeekDifference": {
+        "max_channel_delta": 231,
+        "pixels_above_8": 46711,
+        "pixel_count": 206360
+      },
+      "reducedPauseTime": 1.75,
+      "reducedCanvasHashes": [
+        "f3b4e8a185b2ac043c1208d5bb52a5b7622e2f78d605e1d5c4794c37eabe8d96",
+        "f3b4e8a185b2ac043c1208d5bb52a5b7622e2f78d605e1d5c4794c37eabe8d96"
+      ],
+      "reducedCanvasDifference": {
+        "max_channel_delta": 0,
+        "pixels_above_8": 0,
+        "pixel_count": 206360
+      },
+      "reducedSeekDifference": {
+        "max_channel_delta": 233,
+        "pixels_above_8": 46637,
+        "pixel_count": 206360
+      },
+      "result": "PASS",
+      "video": "1366-coin-dance.webm"
+    },
+    {
+      "width": 390,
+      "errors": [],
+      "consoleErrors": [],
+      "externalRequests": [],
+      "frames": [
+        "390-coin-buy-1.35.png",
+        "390-coin-sell-3.8.png",
+        "390-coin-mule-1.9.png"
+      ],
+      "checks": [
+        "Buy: payment pose, pause, backward seek and full completion",
+        "Sell: payment pose, pause, backward seek and full completion",
+        "Mule: payment pose, pause, backward seek and full completion"
+      ],
+      "gpu": {
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "renderer": "ANGLE (Intel, ANGLE Metal Renderer: Intel(R) UHD Graphics 617, Unspecified Version)"
+      },
+      "failure": "page.waitForFunction: Timeout 30000ms exceeded.",
+      "video": "390-coin-dance.webm"
+    }
+  ]
+}
