@@ -1,0 +1,26 @@
+vite v8.3.3 building client environment for production...
+transforming...
+✓ 660 modules transformed.
+rendering chunks...
+computing gzip size...
+node_modules/.visual-review/scripts/state-repros/visual.html        1.14 kB │ gzip:   0.61 kB
+node_modules/.visual-review/assets/StudioStage-CVpwrUtE.css         1.13 kB │ gzip:   0.44 kB
+node_modules/.visual-review/assets/StreamPage-DCoa7K7P.css         16.32 kB │ gzip:   4.11 kB
+node_modules/.visual-review/assets/visual-adapters-Cqz2u8qJ.js      0.11 kB │ gzip:   0.11 kB
+node_modules/.visual-review/assets/visual-adapters-C0cJRwke.js      0.51 kB │ gzip:   0.32 kB
+node_modules/.visual-review/assets/StudioStage-CzAJ6N4o.js          3.95 kB │ gzip:   1.80 kB
+node_modules/.visual-review/assets/StreamPage-D-UX7ybR.js          69.32 kB │ gzip:  23.99 kB
+node_modules/.visual-review/assets/visual-U4JgN7bq.js             246.98 kB │ gzip:  76.91 kB
+node_modules/.visual-review/assets/Scene-iaInE-gI.js            1,220.36 kB │ gzip: 340.01 kB
+
+[plugin builtin:vite-reporter]
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 3.52s
+PASS real stream 1366: healthy buy, mid-sell failure, fallback with new transcript event
+PASS real legacy 1366: healthy act/result, clean source boundary, fresh B playback
+PASS real stream 390: healthy buy, mid-sell failure, fallback with new transcript event
+PASS real legacy 390: healthy act/result, clean source boundary, fresh B playback
+PASS real-renderer visual fixture checks; inspect captured frames before visual acceptance.

@@ -1,0 +1,69 @@
+Command: cargo test --offline --locked -p alashi
+Environment: target/host; debug=0; incremental=0; jobs=2.
+Prerequisite: pinned SBF build passed; only host alashi package artifacts were cleaned after same-version crate identity errors.
+   Compiling alashi v0.1.0 (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/programs/alashi)
+    Finished `test` profile [unoptimized] target(s) in 25.58s
+     Running unittests src/lib.rs (target/host/debug/deps/alashi-989439b175c1c150)
+
+running 4 tests
+test instructions::advance::tests::empty_epoch2_lobby_can_abort_but_cannot_enter_market_without_config ... ok
+test instructions::reveal_law::donkey_rng_tests::exact_three_of_five_and_rejection_boundary ... ok
+test test_id ... ok
+test instructions::reveal_law::donkey_rng_tests::same_inputs_are_stable_and_distinct_factions_are_domain_separated ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/game.rs (target/host/debug/deps/game-275d020dc88955d7)
+
+running 28 tests
+test epoch2_configured_lobby_accepts_join ... ok
+test epoch2_uncommitted_action_aborts_after_grace_and_refunds ... ok
+test epoch2_oracle_abort_never_mints_goods ... ok
+test epoch2_multi_ticket_reveal_requires_complete_ordered_set ... ok
+test epoch2_unconfigured_lobby_rejects_join_before_fee_and_can_abort ... ok
+test test_already_acted ... ok
+test test_bribe_and_vote_weight ... ok
+test epoch2_verified_empty_is_paid_once ... ok
+test epoch2_verified_win_is_paid_once ... ok
+test test_close_settled_game_rejects_redirection_and_duplicates ... ok
+test test_contribution_skip_flips_vote ... ok
+test test_donkey ... ok
+test test_epoch90s_factory_pays_in_lamports_and_preserves_rent ... ok
+test test_law_tax_and_veto ... ok
+test test_expired_lobby_refunds_and_closes_empty_or_single_player ... ok
+test test_legacy_same_scenario_passes ... ok
+test test_full_game_six_rounds ... ok
+test test_phase_and_join_guards ... ok
+test test_market_price_drop ... ok
+test test_market_buy ... ok
+test test_set_vote_mode_guards ... ok
+test test_time_gate ... ok
+test test_vrf_future_seed_and_prerevealed_value_are_rejected ... ok
+test test_settle_payout_and_rake ... ok
+test test_vrf_threshold ... ok
+test test_settle_rejects_duplicate_faction_accounts ... ok
+test test_vrf_mode_flow ... ok
+test test_vrf_timeout_abort_refund ... ok
+
+test result: ok. 28 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 70.45s
+
+     Running tests/replay_equivalence.rs (target/host/debug/deps/replay_equivalence-87b7b8eed95afd5f)
+
+running 5 tests
+test replay_audit_s1_vrf_economy_and_special_card_reveal ... ok
+test replay_audit_s1_customs_outcome_varies_with_slot_hash ... ok
+test replay_epoch_90s_full_party ... ok
+test replay_equivalence_full_party ... ok
+test replay_audit_s1_license_yield_matrix ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 18.34s
+
+   Doc-tests alashi
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+Exit status: 0
+Elapsed seconds: 140.958

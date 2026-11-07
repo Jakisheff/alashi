@@ -1,0 +1,7 @@
+Command: bash tools/build_sbf.sh
+Environment: host target/host; debug=0; incremental=0; jobs=2. SBF script uses target/sbf-v1.54.
+[2026-11-07T10:33:01.442771000Z WARN  cargo_build_sbf] Package 'alashi' has two crate types defined: cdylib and lib. This setting precludes link-time optimizations (LTO). Use cdylib for programs to be deployed and rlib for packages to be imported by other programs as libraries.
+    Finished `release` profile [optimized] target(s) in 2.89s
+
+Exit status: 0
+Elapsed seconds: 8.483

@@ -1,0 +1,82 @@
+Command: cargo test --offline --locked -p alashi-rules
+Environment: host target/host; debug=0; incremental=0; jobs=2. SBF script uses target/sbf-v1.54.
+    Finished `test` profile [unoptimized] target(s) in 1.86s
+     Running unittests src/lib.rs (target/host/debug/deps/alashi_rules-211e2b4a2d6f2fa6)
+
+running 26 tests
+test error::tests::legacy_error_codes_stay_stable ... ok
+test logic::tests::draw_law_skips_used_and_wraps ... ok
+test logic::tests::embargo_and_boom_move_market_price ... ok
+test logic::tests::law_effects_map_cards ... ok
+test logic::tests::sale_drops_price_and_purchase_raises_it ... ok
+test logic::tests::settlement_empty_bank ... ok
+test logic::tests::settlement_four_factions_full_shares ... ok
+test logic::tests::settlement_tie_break_by_wallet ... ok
+test logic::tests::settlement_two_factions_exact_split ... ok
+test logic::tests::tally_and_president ... ok
+test state::test_id ... ok
+test transitions::tests::contribution_no_vote_no_bonus ... ok
+test transitions::tests::contribution_skip_adds_weight ... ok
+test transitions::tests::epoch2_cpi_commit_requires_deployed_previous_slot ... ok
+test transitions::tests::legacy_tally_ignores_skip ... ok
+test transitions::tests::m10_vote_offer_requires_accept ... ok
+test transitions::tests::m10_no_accept_no_steal ... ok
+test transitions::tests::m1_depreciation_burns_cash_not_goods ... ok
+test transitions::tests::m11_barter_direct_exchange ... ok
+test transitions::tests::m2_roof_blocks_first_anti_rich_law ... ok
+test transitions::tests::m3_customs_seizes_grey_goods ... ok
+test transitions::tests::m4_amnesty_burns_promissory_and_redemption_pays ... ok
+test transitions::tests::m6_exchanger_spread_and_hard_survives_depreciation ... ok
+test transitions::tests::m78_customs_president_and_tariffs ... ok
+test transitions::tests::m8_president_sets_tight_blindly_and_gets_tribute ... ok
+test transitions::tests::m9_blind_auction_and_insider ... ok
+
+test result: ok. 26 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/audit_20260927.rs (target/host/debug/deps/audit_20260927-74185b2e13256f7a)
+
+running 1 test
+test zero_seed_adapter_changes_epoch_economics ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/audit_regressions.rs (target/host/debug/deps/audit_regressions-2a6b72e61d54e37b)
+
+running 4 tests
+test rejected_zero_purchase_and_dead_actions_do_not_mutate_state ... ok
+test barter_capacity_rejects_without_mutation_and_recovers_after_accept ... ok
+test tied_license_bids_are_independent_of_account_order ... ok
+test zero_payouts_do_not_change_ranking_or_factory_tiebreak ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/demo_regressions.rs (target/host/debug/deps/demo_regressions-4e779bf3ca8a912e)
+
+running 5 tests
+test premature_insight_neither_charges_nor_consumes_the_purchase ... ok
+test underfilled_lobby_aborts_only_after_deadline ... ok
+test large_bank_does_not_overflow_intermediate_share_calculations ... ok
+test factory_uses_distributable_pot_and_preserves_rent ... ok
+test vrf_seed_slot_is_bounded_before_any_transition_mutation ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/donkey_risk.rs (target/host/debug/deps/donkey_risk-520e831bdd1e495b)
+
+running 4 tests
+test all_preconditions_reject_without_fee_or_turn ... ok
+test only_epoch2_can_abort_an_uncommitted_action_after_grace ... ok
+test attempt_commits_fee_and_action_before_either_result ... ok
+test epoch2_inherits_90s_actions_and_settlement_but_replaces_donkey ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests alashi_rules
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+Exit status: 0
+Elapsed seconds: 5.955

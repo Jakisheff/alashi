@@ -1,0 +1,8 @@
+Local fixture server ready; launching isolated headless Chrome.
+Runtime: Node v24.22.1; Chrome 156.0.8078.81.
+Fixture isolation: actual React production modules; mocked renderer/network boundaries; controlled browser clock; no backend or external API.
+Mode: assert recovery invariants.
+CONTROL PASS finding 7: actual useArenaFeed emits queued A speech and its accepted reaction without switching.
+OBSERVED sample re-entry: {"seq":"3","speech":[{"speech":"🗳️ Aitore voted","clip":"idle","take":6,"speechId":5},{"speech":"🗳️ Aitore voted","clip":"act","take":7,"speechId":5},{"speech":"🗳️ Aitore voted","clip":"accepted","take":8,"speechId":5}]}
+INVARIANT PASS finding 7: sample source re-entry
+RESULT 0 failed recovery invariants; 1 checks ran. Harness does not edit production source.

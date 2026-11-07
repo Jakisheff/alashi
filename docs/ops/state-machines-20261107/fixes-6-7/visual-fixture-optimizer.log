@@ -1,0 +1,53 @@
+3:43:23 PM [vite] (client) [optimizer] bundling dependencies...
+3:43:25 PM [vite] (client) dependency optimized: three/examples/jsm/utils/SkeletonUtils.js
+3:43:25 PM [vite] (client) optimized dependencies changed. reloading
+3:43:26 PM [vite] (client) [console.warn] THREE.WARNING: Multiple instances of Three.js being imported.
+3:43:27 PM [vite] (client) [console.error] Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:
+1. You might have mismatching versions of React and the renderer (such as React DOM)
+2. You might be breaking the Rules of Hooks
+3. You might have more than one copy of React in the same app
+See https://react.dev/link/invalid-hook-call for tips about how to debug and fix this problem.
+3:43:27 PM [vite] (client) [console.error] Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:
+1. You might have mismatching versions of React and the renderer (such as React DOM)
+2. You might be breaking the Rules of Hooks
+3. You might have more than one copy of React in the same app
+See https://react.dev/link/invalid-hook-call for tips about how to debug and fix this problem.
+3:43:27 PM [vite] (client) [Unhandled error] TypeError: Cannot read properties of null (reading 'useState')
+ > exports.useState node_modules/react/cjs/react.development.js:1309:33
+ > StreamPage src/live/StreamPage.tsx:155:28
+    153 |  }
+    154 |  export default function StreamPage() {
+    155 |    const [input, setInput] = useState(() => new URLSearchParams(window.location.search).get('agent') ?? '')
+        |                              ^
+    156 |    const [record, setRecord] = useState(''), [error, setError] = useState(''), [opening, setOpening] = useState(false)
+    157 |    const openAgent = useCallback(async (value: string) => {
+ > Object.react_stack_bottom_frame node_modules/.vite-state-visual/deps/react-dom_client.js?v=fbcee56f:13895:12
+ > renderWithHooks node_modules/.vite-state-visual/deps/react-dom_client.js?v=fbcee56f:4153:19
+ > updateFunctionComponent node_modules/.vite-state-visual/deps/react-dom_client.js?v=fbcee56f:5528:16
+ > beginWork node_modules/.vite-state-visual/deps/react-dom_client.js?v=fbcee56f:6144:20
+ > runWithFiberInDEV node_modules/.vite-state-visual/deps/react-dom_client.js?v=fbcee56f:697:66
+ > performUnitOfWork node_modules/.vite-state-visual/deps/react-dom_client.js?v=fbcee56f:8901:92
+ > workLoopSync node_modules/.vite-state-visual/deps/react-dom_client.js?v=fbcee56f:8797:37
+ > renderRootSync node_modules/.vite-state-visual/deps/react-dom_client.js?v=fbcee56f:8781:6
+
+3:43:27 PM [vite] (client) [console.warn] An error occurred in the <StreamPage> component.
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://react.dev/link/error-boundaries to learn more about error boundaries.
+
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.waitFor: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for locator('canvas') to be visible[22m
+
+    at open (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/frontend/scripts/state-repros/visual-run.mjs:45:32)
+    at async stream (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/frontend/scripts/state-repros/visual-run.mjs:63:30)
+    at async file:///Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/frontend/scripts/state-repros/visual-run.mjs:125:38 {
+  log: [ "  - waiting for locator('canvas') to be visible" ],
+  name: 'TimeoutError'
+}
+
+Node.js v24.22.1
