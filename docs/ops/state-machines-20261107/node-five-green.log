@@ -1,0 +1,559 @@
+TAP version 13
+# Subtest: v2 golden hashes and proposal validation
+ok 1 - v2 golden hashes and proposal validation
+  ---
+  duration_ms: 19.138704
+  type: 'test'
+  ...
+# Subtest: start rejects overlong UTF-8 name or model before profile and network work
+ok 2 - start rejects overlong UTF-8 name or model before profile and network work
+  ---
+  duration_ms: 3.132683
+  type: 'test'
+  ...
+# Subtest: one durable Memo, unknown outcome resumes same signature without signing again
+ok 3 - one durable Memo, unknown outcome resumes same signature without signing again
+  ---
+  duration_ms: 2195.200343
+  type: 'test'
+  ...
+# Subtest: one profile joins two games, no prompt upload, pending op replay is exact
+ok 4 - one profile joins two games, no prompt upload, pending op replay is exact
+  ---
+  duration_ms: 1030.579409
+  type: 'test'
+  ...
+# Subtest: only exact definitive unconsumed action rejection clears pending without debit
+ok 5 - only exact definitive unconsumed action rejection clears pending without debit
+  ---
+  duration_ms: 2414.815101
+  type: 'test'
+  ...
+# Subtest: start persists one private wallet and returns identity link while no game is open
+ok 6 - start persists one private wallet and returns identity link while no game is open
+  ---
+  duration_ms: 1078.769691
+  type: 'test'
+  ...
+# Subtest: public state identifies the saved player faction
+ok 7 - public state identifies the saved player faction
+  ---
+  duration_ms: 2.957838
+  type: 'test'
+  ...
+# Subtest: pinned JSON-RPC client supports every bootstrap RPC method
+ok 8 - pinned JSON-RPC client supports every bootstrap RPC method
+  ---
+  duration_ms: 371.318778
+  type: 'test'
+  ...
+# Subtest: signal cleanup removes only this process lock
+ok 9 - signal cleanup removes only this process lock
+  ---
+  duration_ms: 1385.866769
+  type: 'test'
+  ...
+# Subtest: pinned RPC sends one HTTP request on 429
+ok 10 - pinned RPC sends one HTTP request on 429
+  ---
+  duration_ms: 34.032694
+  type: 'test'
+  ...
+# Subtest: failed saved airdrop retries only faucet funding on the same wallet
+ok 11 - failed saved airdrop retries only faucet funding on the same wallet
+  ---
+  duration_ms: 7.087337
+  type: 'test'
+  ...
+# Subtest: ambiguous saved airdrop gives manual funding path without another request
+ok 12 - ambiguous saved airdrop gives manual funding path without another request
+  ---
+  duration_ms: 7.850785
+  type: 'test'
+  ...
+# Subtest: faucet RPC code survives failure without exposing provider cause
+ok 13 - faucet RPC code survives failure without exposing provider cause
+  ---
+  duration_ms: 364.927912
+  type: 'test'
+  ...
+# Subtest: first faucet RPC failure gives same-wallet recovery without repeat request
+ok 14 - first faucet RPC failure gives same-wallet recovery without repeat request
+  ---
+  duration_ms: 23.913283
+  type: 'test'
+  ...
+# Subtest: proxy rate limit and outage are plain errors before non-JSON bodies
+ok 15 - proxy rate limit and outage are plain errors before non-JSON bodies
+  ---
+  duration_ms: 2.566281
+  type: 'test'
+  ...
+# Subtest: matchmaker reports an existing slot and recovery join uses no new Memo
+ok 16 - matchmaker reports an existing slot and recovery join uses no new Memo
+  ---
+  duration_ms: 244.525335
+  type: 'test'
+  ...
+# Subtest: faucet 429 exposes the same public wallet for manual devnet funding
+ok 17 - faucet 429 exposes the same public wallet for manual devnet funding
+  ---
+  duration_ms: 22.612947
+  type: 'test'
+  ...
+# Subtest: CLI exits nonzero when arena JSON says ok false
+ok 18 - CLI exits nonzero when arena JSON says ok false
+  ---
+  duration_ms: 3553.681171
+  type: 'test'
+  ...
+# Subtest: existing-only start cannot create a wallet or call RPC when registration is absent
+ok 19 - existing-only start cannot create a wallet or call RPC when registration is absent
+  ---
+  duration_ms: 23.858024
+  type: 'test'
+  ...
+# Subtest: freeze binds private brief, plans and question with a random salt
+ok 20 - freeze binds private brief, plans and question with a random salt
+  ---
+  duration_ms: 1078.705189
+  type: 'test'
+  ...
+# Subtest: rejects a second changed instruction, changed topology, remote mock and arbitrary executable
+ok 21 - rejects a second changed instruction, changed topology, remote mock and arbitrary executable
+  ---
+  duration_ms: 28.290633
+  type: 'test'
+  ...
+# Subtest: requires explicit provider consent and a matching frozen provider before any request
+ok 22 - requires explicit provider consent and a matching frozen provider before any request
+  ---
+  duration_ms: 223.09501
+  type: 'test'
+  ...
+# Subtest: runs custom private brief locally and resumes without another provider call
+ok 23 - runs custom private brief locally and resumes without another provider call
+  ---
+  duration_ms: 3604.328201
+  type: 'test'
+  ...
+# Subtest: unknown usage or provider failure permits only inconclusive and never repeats requests
+ok 24 - unknown usage or provider failure permits only inconclusive and never repeats requests
+  ---
+  duration_ms: 3887.526284
+  type: 'test'
+  ...
+# Subtest: a saved receipt is reconciled without reissuing a model call
+ok 25 - a saved receipt is reconciled without reissuing a model call
+  ---
+  duration_ms: 1590.662296
+  type: 'test'
+  ...
+# Subtest: an inflight journal without a saved response is unknown and is not retried
+ok 26 - an inflight journal without a saved response is unknown and is not retried
+  ---
+  duration_ms: 1259.115462
+  type: 'test'
+  ...
+# Subtest: reservation budget is checked before provider work and incomplete result cannot be adopted
+ok 27 - reservation budget is checked before provider work and incomplete result cannot be adopted
+  ---
+  duration_ms: 754.49614
+  type: 'test'
+  ...
+# Subtest: a concurrent process cannot run the same experiment or change its decision
+ok 28 - a concurrent process cannot run the same experiment or change its decision
+  ---
+  duration_ms: 1219.180703
+  type: 'test'
+  ...
+# Subtest: decision is immutable and apply writes the actual selected plan for the next experiment
+ok 29 - decision is immutable and apply writes the actual selected plan for the next experiment
+  ---
+  duration_ms: 1496.280692
+  type: 'test'
+  ...
+# Subtest: public export contains only reviewed text, stable retry ID and explicit CC0 consent
+ok 30 - public export contains only reviewed text, stable retry ID and explicit CC0 consent
+  ---
+  duration_ms: 1545.405279
+  type: 'test'
+  ...
+# Subtest: export refuses arbitrary fields and private-state overwrite
+ok 31 - export refuses arbitrary fields and private-state overwrite
+  ---
+  duration_ms: 1974.616
+  type: 'test'
+  ...
+# Subtest: negative usage, changed provider or false completed state is rejected before a request
+ok 32 - negative usage, changed provider or false completed state is rejected before a request
+  ---
+  duration_ms: 1871.329424
+  type: 'test'
+  ...
+# Subtest: export preserves another experiment state and arbitrary existing JSON byte for byte
+ok 33 - export preserves another experiment state and arbitrary existing JSON byte for byte
+  ---
+  duration_ms: 3199.90114
+  type: 'test'
+  ...
+# Subtest: a journal for another attempt cannot invoke the provider
+ok 34 - a journal for another attempt cannot invoke the provider
+  ---
+  duration_ms: 1914.344598
+  type: 'test'
+  ...
+# Subtest: private file and directory permissions and symlink targets are enforced
+ok 35 - private file and directory permissions and symlink targets are enforced
+  ---
+  duration_ms: 313.85204
+  type: 'test'
+  ...
+# Subtest: refuses a saved state from another manifest before any request
+ok 36 - refuses a saved state from another manifest before any request
+  ---
+  duration_ms: 1538.507161
+  type: 'test'
+  ...
+# Subtest: format checks distinguish schema compliance from business effects
+ok 37 - format checks distinguish schema compliance from business effects
+  ---
+  duration_ms: 0.606396
+  type: 'test'
+  ...
+# Subtest: CLI end-to-end calls only the configured loopback provider, never ALASHI
+ok 38 - CLI end-to-end calls only the configured loopback provider, never ALASHI
+  ---
+  duration_ms: 11675.136887
+  type: 'test'
+  ...
+# Subtest: own baseline and candidate run concurrently with independent reports and private journals
+ok 39 - own baseline and candidate run concurrently with independent reports and private journals
+  ---
+  duration_ms: 1720.796632
+  type: 'test'
+  ...
+# Subtest: wrong comparison model is rejected before attempt creation or model work
+ok 40 - wrong comparison model is rejected before attempt creation or model work
+  ---
+  duration_ms: 94.093181
+  type: 'test'
+  ...
+# Subtest: wrong comparison temperature is rejected before attempt creation or model work
+ok 41 - wrong comparison temperature is rejected before attempt creation or model work
+  ---
+  duration_ms: 135.464734
+  type: 'test'
+  ...
+# Subtest: wrong comparison max_tokens is rejected before attempt creation or model work
+ok 42 - wrong comparison max_tokens is rejected before attempt creation or model work
+  ---
+  duration_ms: 13.838005
+  type: 'test'
+  ...
+# Subtest: wrong comparison source is rejected before attempt creation or model work
+ok 43 - wrong comparison source is rejected before attempt creation or model work
+  ---
+  duration_ms: 64.51493
+  type: 'test'
+  ...
+# Subtest: custom executables are rejected before creating or running either half
+ok 44 - custom executables are rejected before creating or running either half
+  ---
+  duration_ms: 4.629099
+  type: 'test'
+  ...
+# Subtest: a different candidate brief stops both halves before reservations
+ok 45 - a different candidate brief stops both halves before reservations
+  ---
+  duration_ms: 103.979209
+  type: 'test'
+  ...
+# Subtest: a mismatched second journal is rejected before the first half starts
+ok 46 - a mismatched second journal is rejected before the first half starts
+  ---
+  duration_ms: 107.88327
+  type: 'test'
+  ...
+# Subtest: recovery after a lost report before acceptance never pays for either model response twice
+ok 47 - recovery after a lost report before acceptance never pays for either model response twice
+  ---
+  duration_ms: 2375.552676
+  type: 'test'
+  ...
+# Subtest: recovery after a lost report after acceptance never pays for either model response twice
+ok 48 - recovery after a lost report after acceptance never pays for either model response twice
+  ---
+  duration_ms: 2102.476208
+  type: 'test'
+  ...
+# Subtest: the real provider adapter sends the fixed comparison generation profile to a local fetch mock
+ok 49 - the real provider adapter sends the fixed comparison generation profile to a local fetch mock
+  ---
+  duration_ms: 80.745487
+  type: 'test'
+  ...
+# Subtest: concurrent journals for one attempt cannot duplicate provider work or alter the winning receipts
+ok 50 - concurrent journals for one attempt cannot duplicate provider work or alter the winning receipts
+  ---
+  duration_ms: 770.180964
+  type: 'test'
+  ...
+# Subtest: a missing trade executor stops before reserving or calling a model
+ok 51 - a missing trade executor stops before reserving or calling a model
+  ---
+  duration_ms: 75.390587
+  type: 'test'
+  ...
+# Subtest: trading tasks receive owner context and a real local state tool, without ad fields
+ok 52 - trading tasks receive owner context and a real local state tool, without ad fields
+  ---
+  duration_ms: 21.957678
+  type: 'test'
+  ...
+# Subtest: an ambiguous Solana submission never starts another signer; a supplied signature only reconciles
+ok 53 - an ambiguous Solana submission never starts another signer; a supplied signature only reconciles
+  ---
+  duration_ms: 7.111925
+  type: 'test'
+  ...
+# Subtest: HTTP execution refuses another owner or another pending run before any request
+ok 54 - HTTP execution refuses another owner or another pending run before any request
+  ---
+  duration_ms: 310.255101
+  type: 'test'
+  ...
+# Subtest: strict completion parsing preserves usage independently of JSON quality
+ok 55 - strict completion parsing preserves usage independently of JSON quality
+  ---
+  duration_ms: 8.660438
+  type: 'test'
+  ...
+# Subtest: profile and endpoint boundaries reject secrets in URLs and insecure remote providers
+ok 56 - profile and endpoint boundaries reject secrets in URLs and insecure remote providers
+  ---
+  duration_ms: 72.284894
+  type: 'test'
+  ...
+# Subtest: owner tools report missing executables, nonzero exits and invalid output
+ok 57 - owner tools report missing executables, nonzero exits and invalid output
+  ---
+  duration_ms: 1543.46233
+  type: 'test'
+  ...
+# Subtest: ambiguous inflight journal is recorded as unknown without a second provider call
+ok 58 - ambiguous inflight journal is recorded as unknown without a second provider call
+  ---
+  duration_ms: 111.599683
+  type: 'test'
+  ...
+# Subtest: builtin tools report zero model usage explicitly; public plans cannot select executables
+ok 59 - builtin tools report zero model usage explicitly; public plans cannot select executables
+  ---
+  duration_ms: 2.352669
+  type: 'test'
+  ...
+# Subtest: an oversized owner-tool report keeps its known usage for the failed quality gate
+ok 60 - an oversized owner-tool report keeps its known usage for the failed quality gate
+  ---
+  duration_ms: 489.054541
+  type: 'test'
+  ...
+# Subtest: report limits count UTF-8 bytes so malformed output cannot lose known usage
+ok 61 - report limits count UTF-8 bytes so malformed output cannot lose known usage
+  ---
+  duration_ms: 385.070461
+  type: 'test'
+  ...
+# Subtest: oversized chunked provider response is cancelled before the entire body is read
+ok 62 - oversized chunked provider response is cancelled before the entire body is read
+  ---
+  duration_ms: 123.362375
+  type: 'test'
+  ...
+# Subtest: provider limit counts bytes and rejects an oversized declared body
+ok 63 - provider limit counts bytes and rejects an oversized declared body
+  ---
+  duration_ms: 19.014279
+  type: 'test'
+  ...
+# Subtest: a provider response exactly at the byte limit is accepted
+ok 64 - a provider response exactly at the byte limit is accepted
+  ---
+  duration_ms: 42.875396
+  type: 'test'
+  ...
+# Subtest: an owner tool response exactly at the byte limit is accepted
+ok 65 - an owner tool response exactly at the byte limit is accepted
+  ---
+  duration_ms: 467.760691
+  type: 'test'
+  ...
+# (node:28943) ExperimentalWarning: The MockTimers API is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: an oversized owner tool that ignores SIGTERM is terminated
+ok 66 - an oversized owner tool that ignores SIGTERM is terminated
+  ---
+  duration_ms: 814.100837
+  type: 'test'
+  ...
+# Subtest: an owner tool ignoring SIGTERM is stopped at the deadline
+ok 67 - an owner tool ignoring SIGTERM is stopped at the deadline
+  ---
+  duration_ms: 702.898851
+  type: 'test'
+  ...
+# Subtest: oversized owner tool also stops a descendant holding its output pipe
+ok 68 - oversized owner tool also stops a descendant holding its output pipe
+  ---
+  duration_ms: 1140.512787
+  type: 'test'
+  ...
+# Subtest: a dependent starts after its accepted report while an unrelated task is still running
+ok 69 - a dependent starts after its accepted report while an unrelated task is still running
+  ---
+  duration_ms: 857.995817
+  type: 'test'
+  ...
+# Subtest: a rejected reservation cannot call the provider or finish the run
+ok 70 - a rejected reservation cannot call the provider or finish the run
+  ---
+  duration_ms: 211.817679
+  type: 'test'
+  ...
+# Subtest: unknown usage stops new work and drains active calls before releasing the journal lock
+ok 71 - unknown usage stops new work and drains active calls before releasing the journal lock
+  ---
+  duration_ms: 480.899943
+  type: 'test'
+  ...
+# Subtest: invalid report stops new work and drains active calls before releasing the journal lock
+ok 72 - invalid report stops new work and drains active calls before releasing the journal lock
+  ---
+  duration_ms: 572.439288
+  type: 'test'
+  ...
+# Subtest: resume a lost report before server acceptance without repeating model work
+ok 73 - resume a lost report before server acceptance without repeating model work
+  ---
+  duration_ms: 704.43996
+  type: 'test'
+  ...
+# Subtest: resume a lost report after server acceptance without repeating model work
+ok 74 - resume a lost report after server acceptance without repeating model work
+  ---
+  duration_ms: 702.342307
+  type: 'test'
+  ...
+# Subtest: a stopped run reconciles saved paid responses without starting more work
+ok 75 - a stopped run reconciles saved paid responses without starting more work
+  ---
+  duration_ms: 51.870911
+  type: 'test'
+  ...
+# Subtest: out-of-order report snapshots cannot forget an accepted dependency or repeat a task
+ok 76 - out-of-order report snapshots cannot forget an accepted dependency or repeat a task
+  ---
+  duration_ms: 926.45858
+  type: 'test'
+  ...
+# Subtest: an overrun with a valid report still blocks dependent model calls
+ok 77 - an overrun with a valid report still blocks dependent model calls
+  ---
+  duration_ms: 117.250702
+  type: 'test'
+  ...
+# Subtest: a reservation that completes after a failure cannot start a model call
+ok 78 - a reservation that completes after a failure cannot start a model call
+  ---
+  duration_ms: 268.585727
+  type: 'test'
+  ...
+# Subtest: a late accepted reservation is drained without spend (none)
+ok 79 - a late accepted reservation is drained without spend (none)
+  ---
+  duration_ms: 571.450314
+  type: 'test'
+  ...
+# Subtest: a late accepted reservation is drained without spend (before report)
+ok 80 - a late accepted reservation is drained without spend (before report)
+  ---
+  duration_ms: 457.350882
+  type: 'test'
+  ...
+# Subtest: a late accepted reservation is drained without spend (after report)
+ok 81 - a late accepted reservation is drained without spend (after report)
+  ---
+  duration_ms: 372.03703
+  type: 'test'
+  ...
+# Subtest: a lost reserve before acceptance resumes with one external call
+ok 82 - a lost reserve before acceptance resumes with one external call
+  ---
+  duration_ms: 222.779831
+  type: 'test'
+  ...
+# Subtest: a lost reserve after acceptance resumes with one external call
+ok 83 - a lost reserve after acceptance resumes with one external call
+  ---
+  duration_ms: 228.424317
+  type: 'test'
+  ...
+# Subtest: an arena without executor claims cannot trigger an external call
+ok 84 - an arena without executor claims cannot trigger an external call
+  ---
+  duration_ms: 139.776151
+  type: 'test'
+  ...
+# Subtest: expiry during reservation prevents a model request
+ok 85 - expiry during reservation prevents a model request
+  ---
+  duration_ms: 1281.662453
+  type: 'test'
+  ...
+# Subtest: a newly ready task cannot spend budget held by an unrelated active call
+ok 86 - a newly ready task cannot spend budget held by an unrelated active call
+  ---
+  duration_ms: 361.273975
+  type: 'test'
+  ...
+# Subtest: a saved response is reconciled after the deadline without another model call
+ok 87 - a saved response is reconciled after the deadline without another model call
+  ---
+  duration_ms: 5.272434
+  type: 'test'
+  ...
+# Subtest: a claimed prepared reservation resumes once with the same executor
+ok 88 - a claimed prepared reservation resumes once with the same executor
+  ---
+  duration_ms: 205.0302
+  type: 'test'
+  ...
+# Subtest: a legacy prepared reservation is ambiguous and never starts another provider call
+ok 89 - a legacy prepared reservation is ambiguous and never starts another provider call
+  ---
+  duration_ms: 152.413947
+  type: 'test'
+  ...
+# Subtest: a terminal reservation retry overrides a stale running snapshot before provider work
+ok 90 - a terminal reservation retry overrides a stale running snapshot before provider work
+  ---
+  duration_ms: 100.313913
+  type: 'test'
+  ...
+# Subtest: fixed workload timing: same reports and four calls, with controlled provider delays
+ok 91 - fixed workload timing: same reports and four calls, with controlled provider delays
+  ---
+  duration_ms: 2468.362174
+  type: 'test'
+  ...
+# {"fixture":"fast30-slow200-follow150-deliver10","milliseconds":[881,812,747],"median_ms":812,"provider_calls_per_run":4,"synthetic_tokens_per_run":40,"external_model_calls":0}
+1..91
+# tests 91
+# suites 0
+# pass 91
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 45696.459367

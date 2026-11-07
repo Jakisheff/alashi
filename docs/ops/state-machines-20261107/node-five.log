@@ -1,0 +1,595 @@
+TAP version 13
+# Subtest: v2 golden hashes and proposal validation
+ok 1 - v2 golden hashes and proposal validation
+  ---
+  duration_ms: 49.357522
+  type: 'test'
+  ...
+# Subtest: start rejects overlong UTF-8 name or model before profile and network work
+ok 2 - start rejects overlong UTF-8 name or model before profile and network work
+  ---
+  duration_ms: 6.211219
+  type: 'test'
+  ...
+# Subtest: one durable Memo, unknown outcome resumes same signature without signing again
+ok 3 - one durable Memo, unknown outcome resumes same signature without signing again
+  ---
+  duration_ms: 4167.067856
+  type: 'test'
+  ...
+# Subtest: one profile joins two games, no prompt upload, pending op replay is exact
+ok 4 - one profile joins two games, no prompt upload, pending op replay is exact
+  ---
+  duration_ms: 678.751655
+  type: 'test'
+  ...
+# Subtest: only exact definitive unconsumed action rejection clears pending without debit
+ok 5 - only exact definitive unconsumed action rejection clears pending without debit
+  ---
+  duration_ms: 1954.509062
+  type: 'test'
+  ...
+# Subtest: start persists one private wallet and returns identity link while no game is open
+ok 6 - start persists one private wallet and returns identity link while no game is open
+  ---
+  duration_ms: 1160.947104
+  type: 'test'
+  ...
+# Subtest: public state identifies the saved player faction
+ok 7 - public state identifies the saved player faction
+  ---
+  duration_ms: 0.962518
+  type: 'test'
+  ...
+# Subtest: pinned JSON-RPC client supports every bootstrap RPC method
+not ok 8 - pinned JSON-RPC client supports every bootstrap RPC method
+  ---
+  duration_ms: 65.65287
+  type: 'test'
+  location: '/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/tools/agent-bootstrap/alashi.test.mjs:243:1'
+  failureType: 'uncaughtException'
+  error: 'listen EPERM: operation not permitted 127.0.0.1'
+  code: 'EPERM'
+  stack: |-
+    Server.setupListenHandle [as _listen2] (node:net:1918:21)
+    listenInCluster (node:net:1997:12)
+    node:net:2206:7
+    process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+  ...
+# Subtest: signal cleanup removes only this process lock
+ok 9 - signal cleanup removes only this process lock
+  ---
+  duration_ms: 6296.270943
+  type: 'test'
+  ...
+# Subtest: pinned RPC sends one HTTP request on 429
+not ok 10 - pinned RPC sends one HTTP request on 429
+  ---
+  duration_ms: 11.961784
+  type: 'test'
+  location: '/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/tools/agent-bootstrap/alashi.test.mjs:301:1'
+  failureType: 'uncaughtException'
+  error: 'listen EPERM: operation not permitted 127.0.0.1'
+  code: 'EPERM'
+  stack: |-
+    Server.setupListenHandle [as _listen2] (node:net:1918:21)
+    listenInCluster (node:net:1997:12)
+    node:net:2206:7
+    process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+  ...
+# Subtest: failed saved airdrop retries only faucet funding on the same wallet
+ok 11 - failed saved airdrop retries only faucet funding on the same wallet
+  ---
+  duration_ms: 9.006108
+  type: 'test'
+  ...
+# Subtest: ambiguous saved airdrop gives manual funding path without another request
+ok 12 - ambiguous saved airdrop gives manual funding path without another request
+  ---
+  duration_ms: 12.296306
+  type: 'test'
+  ...
+# Subtest: faucet RPC code survives failure without exposing provider cause
+ok 13 - faucet RPC code survives failure without exposing provider cause
+  ---
+  duration_ms: 512.975567
+  type: 'test'
+  ...
+# Subtest: first faucet RPC failure gives same-wallet recovery without repeat request
+ok 14 - first faucet RPC failure gives same-wallet recovery without repeat request
+  ---
+  duration_ms: 10.757551
+  type: 'test'
+  ...
+# Subtest: proxy rate limit and outage are plain errors before non-JSON bodies
+ok 15 - proxy rate limit and outage are plain errors before non-JSON bodies
+  ---
+  duration_ms: 1.503996
+  type: 'test'
+  ...
+# Subtest: matchmaker reports an existing slot and recovery join uses no new Memo
+ok 16 - matchmaker reports an existing slot and recovery join uses no new Memo
+  ---
+  duration_ms: 277.697963
+  type: 'test'
+  ...
+# Subtest: faucet 429 exposes the same public wallet for manual devnet funding
+ok 17 - faucet 429 exposes the same public wallet for manual devnet funding
+  ---
+  duration_ms: 10.654755
+  type: 'test'
+  ...
+# Subtest: CLI exits nonzero when arena JSON says ok false
+not ok 18 - CLI exits nonzero when arena JSON says ok false
+  ---
+  duration_ms: 35.111988
+  type: 'test'
+  location: '/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/tools/agent-bootstrap/alashi.test.mjs:504:1'
+  failureType: 'uncaughtException'
+  error: 'listen EPERM: operation not permitted 127.0.0.1'
+  code: 'EPERM'
+  stack: |-
+    Server.setupListenHandle [as _listen2] (node:net:1918:21)
+    listenInCluster (node:net:1997:12)
+    node:net:2206:7
+    process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+  ...
+# Subtest: existing-only start cannot create a wallet or call RPC when registration is absent
+ok 19 - existing-only start cannot create a wallet or call RPC when registration is absent
+  ---
+  duration_ms: 183.53139
+  type: 'test'
+  ...
+# Subtest: freeze binds private brief, plans and question with a random salt
+ok 20 - freeze binds private brief, plans and question with a random salt
+  ---
+  duration_ms: 903.671432
+  type: 'test'
+  ...
+# Subtest: rejects a second changed instruction, changed topology, remote mock and arbitrary executable
+ok 21 - rejects a second changed instruction, changed topology, remote mock and arbitrary executable
+  ---
+  duration_ms: 3.933464
+  type: 'test'
+  ...
+# Subtest: requires explicit provider consent and a matching frozen provider before any request
+ok 22 - requires explicit provider consent and a matching frozen provider before any request
+  ---
+  duration_ms: 267.624727
+  type: 'test'
+  ...
+# Subtest: runs custom private brief locally and resumes without another provider call
+ok 23 - runs custom private brief locally and resumes without another provider call
+  ---
+  duration_ms: 3465.266488
+  type: 'test'
+  ...
+# Subtest: unknown usage or provider failure permits only inconclusive and never repeats requests
+ok 24 - unknown usage or provider failure permits only inconclusive and never repeats requests
+  ---
+  duration_ms: 4408.407476
+  type: 'test'
+  ...
+# Subtest: a saved receipt is reconciled without reissuing a model call
+ok 25 - a saved receipt is reconciled without reissuing a model call
+  ---
+  duration_ms: 2149.397759
+  type: 'test'
+  ...
+# Subtest: an inflight journal without a saved response is unknown and is not retried
+ok 26 - an inflight journal without a saved response is unknown and is not retried
+  ---
+  duration_ms: 2093.348358
+  type: 'test'
+  ...
+# Subtest: reservation budget is checked before provider work and incomplete result cannot be adopted
+ok 27 - reservation budget is checked before provider work and incomplete result cannot be adopted
+  ---
+  duration_ms: 1160.868435
+  type: 'test'
+  ...
+# Subtest: a concurrent process cannot run the same experiment or change its decision
+ok 28 - a concurrent process cannot run the same experiment or change its decision
+  ---
+  duration_ms: 1484.34374
+  type: 'test'
+  ...
+# Subtest: decision is immutable and apply writes the actual selected plan for the next experiment
+ok 29 - decision is immutable and apply writes the actual selected plan for the next experiment
+  ---
+  duration_ms: 2848.784664
+  type: 'test'
+  ...
+# Subtest: public export contains only reviewed text, stable retry ID and explicit CC0 consent
+ok 30 - public export contains only reviewed text, stable retry ID and explicit CC0 consent
+  ---
+  duration_ms: 1676.9664
+  type: 'test'
+  ...
+# Subtest: export refuses arbitrary fields and private-state overwrite
+ok 31 - export refuses arbitrary fields and private-state overwrite
+  ---
+  duration_ms: 1451.25145
+  type: 'test'
+  ...
+# Subtest: negative usage, changed provider or false completed state is rejected before a request
+ok 32 - negative usage, changed provider or false completed state is rejected before a request
+  ---
+  duration_ms: 1907.969135
+  type: 'test'
+  ...
+# Subtest: export preserves another experiment state and arbitrary existing JSON byte for byte
+ok 33 - export preserves another experiment state and arbitrary existing JSON byte for byte
+  ---
+  duration_ms: 4210.216845
+  type: 'test'
+  ...
+# Subtest: a journal for another attempt cannot invoke the provider
+ok 34 - a journal for another attempt cannot invoke the provider
+  ---
+  duration_ms: 1766.843307
+  type: 'test'
+  ...
+# Subtest: private file and directory permissions and symlink targets are enforced
+ok 35 - private file and directory permissions and symlink targets are enforced
+  ---
+  duration_ms: 143.495402
+  type: 'test'
+  ...
+# Subtest: refuses a saved state from another manifest before any request
+ok 36 - refuses a saved state from another manifest before any request
+  ---
+  duration_ms: 1425.171446
+  type: 'test'
+  ...
+# Subtest: format checks distinguish schema compliance from business effects
+ok 37 - format checks distinguish schema compliance from business effects
+  ---
+  duration_ms: 1.423122
+  type: 'test'
+  ...
+# Subtest: CLI end-to-end calls only the configured loopback provider, never ALASHI
+not ok 38 - CLI end-to-end calls only the configured loopback provider, never ALASHI
+  ---
+  duration_ms: 304.249068
+  type: 'test'
+  location: '/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/tools/agent-bootstrap/local-experiment.test.mjs:250:1'
+  failureType: 'testCodeFailure'
+  error: 'listen EPERM: operation not permitted 127.0.0.1'
+  code: 'EPERM'
+  stack: |-
+    Server.setupListenHandle [as _listen2] (node:net:1918:21)
+    listenInCluster (node:net:1997:12)
+    node:net:2206:7
+    process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+  ...
+# Subtest: own baseline and candidate run concurrently with independent reports and private journals
+ok 39 - own baseline and candidate run concurrently with independent reports and private journals
+  ---
+  duration_ms: 1723.267151
+  type: 'test'
+  ...
+# Subtest: wrong comparison model is rejected before attempt creation or model work
+ok 40 - wrong comparison model is rejected before attempt creation or model work
+  ---
+  duration_ms: 24.411883
+  type: 'test'
+  ...
+# Subtest: wrong comparison temperature is rejected before attempt creation or model work
+ok 41 - wrong comparison temperature is rejected before attempt creation or model work
+  ---
+  duration_ms: 7.521527
+  type: 'test'
+  ...
+# Subtest: wrong comparison max_tokens is rejected before attempt creation or model work
+ok 42 - wrong comparison max_tokens is rejected before attempt creation or model work
+  ---
+  duration_ms: 64.602269
+  type: 'test'
+  ...
+# Subtest: wrong comparison source is rejected before attempt creation or model work
+ok 43 - wrong comparison source is rejected before attempt creation or model work
+  ---
+  duration_ms: 27.789415
+  type: 'test'
+  ...
+# Subtest: custom executables are rejected before creating or running either half
+ok 44 - custom executables are rejected before creating or running either half
+  ---
+  duration_ms: 39.728246
+  type: 'test'
+  ...
+# Subtest: a different candidate brief stops both halves before reservations
+ok 45 - a different candidate brief stops both halves before reservations
+  ---
+  duration_ms: 55.517222
+  type: 'test'
+  ...
+# Subtest: a mismatched second journal is rejected before the first half starts
+ok 46 - a mismatched second journal is rejected before the first half starts
+  ---
+  duration_ms: 69.724927
+  type: 'test'
+  ...
+# Subtest: recovery after a lost report before acceptance never pays for either model response twice
+ok 47 - recovery after a lost report before acceptance never pays for either model response twice
+  ---
+  duration_ms: 3042.893501
+  type: 'test'
+  ...
+# Subtest: recovery after a lost report after acceptance never pays for either model response twice
+ok 48 - recovery after a lost report after acceptance never pays for either model response twice
+  ---
+  duration_ms: 2213.082443
+  type: 'test'
+  ...
+# Subtest: the real provider adapter sends the fixed comparison generation profile to a local fetch mock
+ok 49 - the real provider adapter sends the fixed comparison generation profile to a local fetch mock
+  ---
+  duration_ms: 582.679235
+  type: 'test'
+  ...
+# Subtest: concurrent journals for one attempt cannot duplicate provider work or alter the winning receipts
+ok 50 - concurrent journals for one attempt cannot duplicate provider work or alter the winning receipts
+  ---
+  duration_ms: 752.895926
+  type: 'test'
+  ...
+# Subtest: a missing trade executor stops before reserving or calling a model
+ok 51 - a missing trade executor stops before reserving or calling a model
+  ---
+  duration_ms: 116.221413
+  type: 'test'
+  ...
+# Subtest: trading tasks receive owner context and a real local state tool, without ad fields
+ok 52 - trading tasks receive owner context and a real local state tool, without ad fields
+  ---
+  duration_ms: 5.730765
+  type: 'test'
+  ...
+# Subtest: an ambiguous Solana submission never starts another signer; a supplied signature only reconciles
+ok 53 - an ambiguous Solana submission never starts another signer; a supplied signature only reconciles
+  ---
+  duration_ms: 86.495883
+  type: 'test'
+  ...
+# Subtest: HTTP execution refuses another owner or another pending run before any request
+ok 54 - HTTP execution refuses another owner or another pending run before any request
+  ---
+  duration_ms: 195.077254
+  type: 'test'
+  ...
+# Subtest: strict completion parsing preserves usage independently of JSON quality
+ok 55 - strict completion parsing preserves usage independently of JSON quality
+  ---
+  duration_ms: 10.718435
+  type: 'test'
+  ...
+# Subtest: profile and endpoint boundaries reject secrets in URLs and insecure remote providers
+ok 56 - profile and endpoint boundaries reject secrets in URLs and insecure remote providers
+  ---
+  duration_ms: 78.350797
+  type: 'test'
+  ...
+# Subtest: owner tools report missing executables, nonzero exits and invalid output
+ok 57 - owner tools report missing executables, nonzero exits and invalid output
+  ---
+  duration_ms: 2994.336013
+  type: 'test'
+  ...
+# Subtest: ambiguous inflight journal is recorded as unknown without a second provider call
+ok 58 - ambiguous inflight journal is recorded as unknown without a second provider call
+  ---
+  duration_ms: 114.089528
+  type: 'test'
+  ...
+# Subtest: builtin tools report zero model usage explicitly; public plans cannot select executables
+ok 59 - builtin tools report zero model usage explicitly; public plans cannot select executables
+  ---
+  duration_ms: 3.477325
+  type: 'test'
+  ...
+# Subtest: an oversized owner-tool report keeps its known usage for the failed quality gate
+ok 60 - an oversized owner-tool report keeps its known usage for the failed quality gate
+  ---
+  duration_ms: 1260.591524
+  type: 'test'
+  ...
+# Subtest: report limits count UTF-8 bytes so malformed output cannot lose known usage
+ok 61 - report limits count UTF-8 bytes so malformed output cannot lose known usage
+  ---
+  duration_ms: 875.185889
+  type: 'test'
+  ...
+# Subtest: oversized chunked provider response is cancelled before the entire body is read
+ok 62 - oversized chunked provider response is cancelled before the entire body is read
+  ---
+  duration_ms: 258.65322
+  type: 'test'
+  ...
+# Subtest: provider limit counts bytes and rejects an oversized declared body
+ok 63 - provider limit counts bytes and rejects an oversized declared body
+  ---
+  duration_ms: 21.741302
+  type: 'test'
+  ...
+# Subtest: a provider response exactly at the byte limit is accepted
+ok 64 - a provider response exactly at the byte limit is accepted
+  ---
+  duration_ms: 211.454434
+  type: 'test'
+  ...
+# Subtest: an owner tool response exactly at the byte limit is accepted
+ok 65 - an owner tool response exactly at the byte limit is accepted
+  ---
+  duration_ms: 858.945327
+  type: 'test'
+  ...
+# (node:28833) ExperimentalWarning: The MockTimers API is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: an oversized owner tool that ignores SIGTERM is terminated
+ok 66 - an oversized owner tool that ignores SIGTERM is terminated
+  ---
+  duration_ms: 654.261596
+  type: 'test'
+  ...
+# Subtest: an owner tool ignoring SIGTERM is stopped at the deadline
+ok 67 - an owner tool ignoring SIGTERM is stopped at the deadline
+  ---
+  duration_ms: 964.989646
+  type: 'test'
+  ...
+# Subtest: oversized owner tool also stops a descendant holding its output pipe
+ok 68 - oversized owner tool also stops a descendant holding its output pipe
+  ---
+  duration_ms: 1831.925616
+  type: 'test'
+  ...
+# Subtest: a dependent starts after its accepted report while an unrelated task is still running
+ok 69 - a dependent starts after its accepted report while an unrelated task is still running
+  ---
+  duration_ms: 964.778912
+  type: 'test'
+  ...
+# Subtest: a rejected reservation cannot call the provider or finish the run
+ok 70 - a rejected reservation cannot call the provider or finish the run
+  ---
+  duration_ms: 303.121529
+  type: 'test'
+  ...
+# Subtest: unknown usage stops new work and drains active calls before releasing the journal lock
+ok 71 - unknown usage stops new work and drains active calls before releasing the journal lock
+  ---
+  duration_ms: 676.502171
+  type: 'test'
+  ...
+# Subtest: invalid report stops new work and drains active calls before releasing the journal lock
+ok 72 - invalid report stops new work and drains active calls before releasing the journal lock
+  ---
+  duration_ms: 486.285797
+  type: 'test'
+  ...
+# Subtest: resume a lost report before server acceptance without repeating model work
+ok 73 - resume a lost report before server acceptance without repeating model work
+  ---
+  duration_ms: 991.328847
+  type: 'test'
+  ...
+# Subtest: resume a lost report after server acceptance without repeating model work
+ok 74 - resume a lost report after server acceptance without repeating model work
+  ---
+  duration_ms: 757.339168
+  type: 'test'
+  ...
+# Subtest: a stopped run reconciles saved paid responses without starting more work
+ok 75 - a stopped run reconciles saved paid responses without starting more work
+  ---
+  duration_ms: 53.279931
+  type: 'test'
+  ...
+# Subtest: out-of-order report snapshots cannot forget an accepted dependency or repeat a task
+ok 76 - out-of-order report snapshots cannot forget an accepted dependency or repeat a task
+  ---
+  duration_ms: 878.272411
+  type: 'test'
+  ...
+# Subtest: an overrun with a valid report still blocks dependent model calls
+ok 77 - an overrun with a valid report still blocks dependent model calls
+  ---
+  duration_ms: 264.602552
+  type: 'test'
+  ...
+# Subtest: a reservation that completes after a failure cannot start a model call
+ok 78 - a reservation that completes after a failure cannot start a model call
+  ---
+  duration_ms: 260.252925
+  type: 'test'
+  ...
+# Subtest: a late accepted reservation is drained without spend (none)
+ok 79 - a late accepted reservation is drained without spend (none)
+  ---
+  duration_ms: 374.900054
+  type: 'test'
+  ...
+# Subtest: a late accepted reservation is drained without spend (before report)
+ok 80 - a late accepted reservation is drained without spend (before report)
+  ---
+  duration_ms: 433.763742
+  type: 'test'
+  ...
+# Subtest: a late accepted reservation is drained without spend (after report)
+ok 81 - a late accepted reservation is drained without spend (after report)
+  ---
+  duration_ms: 427.919899
+  type: 'test'
+  ...
+# Subtest: a lost reserve before acceptance resumes with one external call
+ok 82 - a lost reserve before acceptance resumes with one external call
+  ---
+  duration_ms: 252.446293
+  type: 'test'
+  ...
+# Subtest: a lost reserve after acceptance resumes with one external call
+ok 83 - a lost reserve after acceptance resumes with one external call
+  ---
+  duration_ms: 235.681862
+  type: 'test'
+  ...
+# Subtest: an arena without executor claims cannot trigger an external call
+ok 84 - an arena without executor claims cannot trigger an external call
+  ---
+  duration_ms: 100.980533
+  type: 'test'
+  ...
+# Subtest: expiry during reservation prevents a model request
+ok 85 - expiry during reservation prevents a model request
+  ---
+  duration_ms: 1282.382464
+  type: 'test'
+  ...
+# Subtest: a newly ready task cannot spend budget held by an unrelated active call
+ok 86 - a newly ready task cannot spend budget held by an unrelated active call
+  ---
+  duration_ms: 520.64518
+  type: 'test'
+  ...
+# Subtest: a saved response is reconciled after the deadline without another model call
+ok 87 - a saved response is reconciled after the deadline without another model call
+  ---
+  duration_ms: 14.190677
+  type: 'test'
+  ...
+# Subtest: a claimed prepared reservation resumes once with the same executor
+ok 88 - a claimed prepared reservation resumes once with the same executor
+  ---
+  duration_ms: 92.596966
+  type: 'test'
+  ...
+# Subtest: a legacy prepared reservation is ambiguous and never starts another provider call
+ok 89 - a legacy prepared reservation is ambiguous and never starts another provider call
+  ---
+  duration_ms: 127.371757
+  type: 'test'
+  ...
+# Subtest: a terminal reservation retry overrides a stale running snapshot before provider work
+ok 90 - a terminal reservation retry overrides a stale running snapshot before provider work
+  ---
+  duration_ms: 65.589974
+  type: 'test'
+  ...
+# Subtest: fixed workload timing: same reports and four calls, with controlled provider delays
+ok 91 - fixed workload timing: same reports and four calls, with controlled provider delays
+  ---
+  duration_ms: 1866.572827
+  type: 'test'
+  ...
+# {"fixture":"fast30-slow200-follow150-deliver10","milliseconds":[750,570,530],"median_ms":570,"provider_calls_per_run":4,"synthetic_tokens_per_run":40,"external_model_calls":0}
+1..91
+# tests 91
+# suites 0
+# pass 87
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 47630.730895

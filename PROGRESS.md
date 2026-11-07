@@ -1101,3 +1101,8 @@ Clock correction: two fresh TZ=Asia/Almaty date calls returned 29.10 16:15 after
 [31.10 17:59] [About: убрать внутреннюю историю] сделано: по замечанию владельца полностью удалён блок Who builds ALASHI с датой смены ответственности и упоминаниями помощников. Остальная страница сохранена | дальше: публикация исправленного About | заблокировано: нет
 
 [31.10 18:03] [About: убрать внутреннюю историю] сделано: about-ef6552d-20261031 опубликован. На сервере сверено, что изменены только about/index.html и version.json; все остальные файлы совпадают с предыдущим релизом. Публичный HTTPS: 200 и точное совпадение HTML с source. В новой браузерной вкладке Who builds ALASHI: 0, текст о прежних участниках отсутствует. Процессы сервисов не менялись; previous site-copy-60b03e9-20261031 сохранён. Скриншот сохранён локально | дальше: готово | заблокировано: нет
+
+
+### 07.11 11:20 · State machine regressions
+
+План: 2 часов, до 13:20. Work in codex/implicit-state-fixes-20261107 from main 7113b9af. Install Node dependencies and run the five previously unloaded suites. Reproduce then fix findings 1 and 2; only reproduce 6 and 7; prepare choices for 3, 5 and 8 without changing game rules. Client outcomes: correct a definitively rejected HTTP action without losing operation identity, and retry archival of the same terminal cached game after storage recovers. Mandatory Rust/SBF checks, isolated test state/ports, red/green logs, scoped commits and pushes.
