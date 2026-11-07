@@ -847,6 +847,19 @@ Source commit 2805d8e is published on codex/ready-task-scheduler.
 Evidence: docs/ops/READY_TASK_SCHEDULER_20261018.md.
 Факт: 1,33 часа. All estimates above are closed; deployment was not performed.
 
+19.10 17:18. Brood War playbook and agent evaluation research requested by Amir.
+План: 1,5 часа, до 18:48. Start with owner's conductor research and current
+ALASHI code, then verify January 2026 social references and current primary
+evaluation sources. Deliver a mechanics comparison, evidence map and a practical
+evaluation protocol. Research only; no model calls, game changes or deployment.
+
+19.10 17:29. Research update: located the owner's two conductor manuscripts; confirmed January StarCraft analogy in the original Tobi Lütke transcript and a first-person Ralv retrospective. Current sources distinguish competitive outcomes from orchestration skill. Inspected rules, usage receipts and the ready-task scheduler at 523e14a. Scheduler check: 15/15 local tests passed; zero external model calls. Writing the playbook, mechanics matrix and source limitations.
+
+19.10 17:37. Research deliverables written: Brood War playbook, current ALASHI mechanics/evaluation comparison, and primary-source register. Checked 32 distinct external URLs through source reads; local links and FULL text checks pass. Recomputed the eight archived TEST runs and 22/17 sale proceeds. No game code changed. Preparing the research-only GitHub PR; external benchmark results and real provider savings remain unvalidated.
+
+19.10 17:47. Brood War / agent evaluation research completed. Documents and archived original-manual reference are in PR https://github.com/Jakisheff/alashi/pull/59, content commit af68ee148888d1c71164a408dd6fdb79fc51c9fc. All five CI jobs passed for that content commit: https://github.com/Jakisheff/alashi/actions/runs/39253992543. Local scheduler: 15/15; archived fixture: eight runs rechecked; 60 relative links valid; 33 distinct source URLs opened; FULL text checks passed. Private owner manuscripts were not uploaded. No game code, external model call, deployment or transaction changed. The closing commit updates only this progress record.
+Факт: 0,48 часа, включая ожидание CI.
+
 20.10 15:21. Усиленный эксперимент названий alashi завершён и проверен.
 observed: все 72 полные партии GLM-5.3 low завершены, восемь seed с ротацией трёх мест и двумя запусками исходных названий. Разница выплат N минус среднее A0/A1: -4,189567 alashi; 95% bootstrap-интервал [-12,930784; 4,174515], точный двусторонний p=0,338820 по 6561 перестановке. Убедительный эффект по заданному критерию не обнаружен, отсутствие эффекта не доказано. Дистанция профилей действий между названиями 0,293981, при повторе исходных названий 0,287037; описательное сравнение.
 observed: все 1577 решений и 72 GameRecord воспроизвелись точно; независимая арифметика выплат совпала. Проверены первые допустимые ответы и 1391 исходный файл или префикс. 1344 запроса, 1338 ответов; четыре сетевые ошибки и два неизвестных исхода относятся к первому сегменту. После технической поправки 1b6ffc3 новых ошибок нет.
