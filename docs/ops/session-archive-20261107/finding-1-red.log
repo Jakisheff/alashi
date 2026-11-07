@@ -1,0 +1,36 @@
+Command: cargo test --locked --offline --manifest-path bots/Cargo.toml v2_definitive_rejection_allows_corrected_action_at_same_id -- --nocapture
+CARGO_TARGET_DIR=/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/host
+CARGO_PROFILE_DEV_DEBUG=0
+CARGO_PROFILE_TEST_DEBUG=0
+CARGO_INCREMENTAL=0
+CARGO_BUILD_JOBS=2
+   Compiling solana-account-decoder-client-types v3.1.14 (/Users/amir/Documents/Codex/worktrees/alashi-session-archive-pr-20261107/vendor/solana-account-decoder-client-types)
+   Compiling alashi-rules v0.1.0 (/Users/amir/Documents/Codex/worktrees/alashi-session-archive-pr-20261107/rules)
+   Compiling alashi v0.1.0 (/Users/amir/Documents/Codex/worktrees/alashi-session-archive-pr-20261107/programs/alashi)
+   Compiling solana-transaction-status-client-types v3.1.14
+   Compiling solana-rpc-client-types v3.1.14
+   Compiling solana-rpc-client-api v3.1.14
+   Compiling solana-account-decoder v3.1.14 (/Users/amir/Documents/Codex/worktrees/alashi-session-archive-pr-20261107/vendor/solana-account-decoder)
+   Compiling solana-rpc-client v3.1.14
+   Compiling bots v0.1.0 (/Users/amir/Documents/Codex/worktrees/alashi-session-archive-pr-20261107/bots)
+    Finished `test` profile [unoptimized] target(s) in 1m 08s
+     Running unittests src/main.rs (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/host/debug/deps/bots-c5e5a32fa0552c2c)
+
+running 1 test
+
+thread 'session_cli::tests::v2_definitive_rejection_allows_corrected_action_at_same_id' panicked at src/session_cli.rs:1509:13:
+bad_action must release the rejected action
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test session_cli::tests::v2_definitive_rejection_allows_corrected_action_at_same_id ... FAILED
+
+failures:
+
+failures:
+    session_cli::tests::v2_definitive_rejection_allows_corrected_action_at_same_id
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 97 filtered out; finished in 0.19s
+
+error: test failed, to rerun pass `--bin bots`
+
+Exit code: 101
+Elapsed seconds: 73.17

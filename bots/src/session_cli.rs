@@ -1046,11 +1046,27 @@ mod tests {
         listener: TcpListener,
         responses: Vec<(u16, Value)>,
     ) -> (Arc<Mutex<Vec<Value>>>, thread::JoinHandle<()>) {
+        fixture_responses(listener, responses.into_iter().map(Some).collect())
+    }
+    fn fixture_responses(
+        listener: TcpListener,
+        responses: Vec<Option<(u16, Value)>>,
+    ) -> (Arc<Mutex<Vec<Value>>>, thread::JoinHandle<()>) {
         let seen = Arc::new(Mutex::new(Vec::new()));
         let out = Arc::clone(&seen);
         let handle = thread::spawn(move || {
-            for (status, response) in responses {
-                let (mut stream, _) = listener.accept().unwrap();
+            listener.set_nonblocking(true).unwrap();
+            for response in responses {
+                let deadline = std::time::Instant::now() + Duration::from_secs(5);
+                let (mut stream, _) = loop {
+                    match listener.accept() {
+                        Ok(connection) => break connection,
+                        Err(e) if e.kind() == std::io::ErrorKind::WouldBlock
+                            && std::time::Instant::now() < deadline => thread::sleep(Duration::from_millis(10)),
+                        Err(e) => panic!("fixture did not receive a request: {e}"),
+                    }
+                };
+                stream.set_nonblocking(false).unwrap();
                 stream
                     .set_read_timeout(Some(Duration::from_secs(5)))
                     .unwrap();
@@ -1077,8 +1093,10 @@ mod tests {
                 } else {
                     serde_json::from_slice(&body).unwrap()
                 });
-                let body = response.to_string();
-                write!(stream,"HTTP/1.1 {status} Fixture\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{body}",body.len()).unwrap();
+                if let Some((status, response)) = response {
+                    let body = response.to_string();
+                    write!(stream,"HTTP/1.1 {status} Fixture\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{body}",body.len()).unwrap();
+                }
             }
         });
         (seen, handle)
@@ -1448,10 +1466,7 @@ mod tests {
         let dir = Temp::new();
         let path = dir.session();
         let (listener, url) = listener();
-        let session = json!({"schema":"alashi.session.v2","config":{"url":url,"game_id":42,
-            "wallet":"public","agent_record_id":"cd".repeat(32)},"token":"private-token",
-            "next_op_id":1,"pending_act":null,"agent_id":"strategy","character_id":"character","faction_idx":0});
-        save_private(&path, &session).unwrap();
+        prepared_v2(&path, &url);
         let (seen, handle) = fixture(listener, vec![
             (401, json!({"ok":false,"error":"bad_token","op_id":1,"op_consumed":false})),
             (200, json!({"ok":true,"op_id":1,"op_consumed":true,"state":{"factions":[{"name":"fixture"}]}})),
@@ -1466,6 +1481,126 @@ mod tests {
         let requests = seen.lock().unwrap();
         assert_eq!(requests.len(), 2);
         assert_eq!(requests[0], requests[1]);
+    }
+    fn prepared_v2(path: &Path, url: &str) {
+        let session = json!({"schema":"alashi.session.v2","config":{"url":url,"game_id":42,
+            "wallet":"public","agent_record_id":"cd".repeat(32)},"token":"private-token",
+            "next_op_id":1,"pending_act":null,"agent_id":"strategy","character_id":"character","faction_idx":0});
+        save_private(path, &session).unwrap();
+    }
+    #[test]
+    fn v2_definitive_rejection_allows_corrected_action_at_same_id() {
+        for (invalid, corrected, code) in [
+            (r#"{"action":"produe"}"#, r#"{"action":"produce"}"#, "bad_action"),
+            (r#"{"action":"sell","params":{}}"#, r#"{"action":"sell","params":{"units":1}}"#, "bad_params"),
+            (r#"{"action":"vote","params":{"choice":"maybe"}}"#, r#"{"action":"vote","params":{"choice":"yes"}}"#, "bad_choice"),
+        ] {
+            let dir = Temp::new();
+            let path = dir.session();
+            let (listener, url) = listener();
+            prepared_v2(&path, &url);
+            let rejection = if code == "bad_params" { json!({"code":code}) } else { json!(code) };
+            let (seen, handle) = fixture(listener, vec![
+                (400, json!({"ok":false,"error":rejection,"op_id":1,"op_consumed":false})),
+                (200, json!({"ok":true,"op_id":1,"op_consumed":true,"state":{"factions":[{"name":"fixture"}]}})),
+            ]);
+            assert_eq!(act_v2(&path, Some(invalid)).unwrap_err()["error"]["code"], code);
+            let rejected = read_private(&path).unwrap();
+            assert!(rejected["pending_act"].is_null(), "{code} must release the rejected action");
+            assert_eq!(rejected["next_op_id"], 1);
+            assert_eq!(act_v2(&path, Some(corrected)).unwrap()["op_id"], 1);
+            let accepted = read_private(&path).unwrap();
+            assert!(accepted["pending_act"].is_null());
+            assert_eq!(accepted["next_op_id"], 2);
+            handle.join().unwrap();
+            let requests = seen.lock().unwrap();
+            assert_eq!(requests.len(), 2);
+            assert_eq!(requests[0]["op_id"], requests[1]["op_id"]);
+            assert_eq!(requests[0]["action"], normalized_action(invalid).unwrap()["action"]);
+            assert_eq!(requests[1]["action"], normalized_action(corrected).unwrap()["action"]);
+            assert_eq!(requests[1]["params"], normalized_action(corrected).unwrap()["params"]);
+        }
+    }
+    #[test]
+    fn v2_uncertain_replies_preserve_exact_pending_action_for_retry() {
+        for response in [
+            json!({"ok":false,"error":"bad_action","op_consumed":false}),
+            json!({"ok":false,"error":"bad_params","op_id":2,"op_consumed":false}),
+            json!({"ok":false,"error":"bad_choice","op_id":"1","op_consumed":false}),
+            json!({"ok":false,"error":"bad_action","op_id":1}),
+            json!({"ok":false,"error":"bad_params","op_id":1,"op_consumed":"false"}),
+            json!({"ok":false,"op_id":1,"op_consumed":false}),
+            json!({"ok":false,"error":"storage_failed","op_id":1,"op_consumed":false}),
+            json!({"ok":false,"error":"unknown_rejection","op_id":1,"op_consumed":false}),
+            json!({"ok":true,"error":"bad_action","op_id":1,"op_consumed":false}),
+            json!({"error":"bad_action","op_id":1,"op_consumed":false}),
+            json!({"ok":"false","error":"bad_action","op_id":1,"op_consumed":false}),
+            json!(["malformed", "response"]),
+        ] {
+            let dir = Temp::new();
+            let path = dir.session();
+            let (listener, url) = listener();
+            prepared_v2(&path, &url);
+            let (seen, handle) = fixture(listener, vec![
+                (200, response.clone()),
+                (200, json!({"ok":true,"op_id":1,"op_consumed":true,"state":{"factions":[{"name":"fixture"}]}})),
+            ]);
+            let action = r#"{"action":"produce","by":"llm"}"#;
+            let _ = act_v2(&path, Some(action));
+            let saved = read_private(&path).unwrap();
+            assert_eq!(saved["pending_act"], json!({"op_id":1,"action":normalized_action(action).unwrap()}), "{response}");
+            assert_eq!(saved["next_op_id"], 1, "{response}");
+            assert_eq!(act_v2(&path, Some(r#"{"action":"shuttle"}"#)).unwrap_err()["error"]["code"], "pending_action");
+            assert_eq!(act_v2(&path, None).unwrap()["op_id"], 1);
+            handle.join().unwrap();
+            let requests = seen.lock().unwrap();
+            assert_eq!(requests.len(), 2);
+            assert_eq!(requests[0], requests[1], "retry must preserve the request after {response}");
+            let saved = read_private(&path).unwrap();
+            assert!(saved["pending_act"].is_null());
+            assert_eq!(saved["next_op_id"], 2);
+        }
+    }
+    #[test]
+    fn v2_transport_failure_preserves_pending_operation() {
+        let dir = Temp::new();
+        let path = dir.session();
+        let (listener, url) = listener();
+        prepared_v2(&path, &url);
+        drop(listener);
+        let action = r#"{"action":"produce","by":"llm"}"#;
+        assert_eq!(act_v2(&path, Some(action)).unwrap_err()["error"]["code"], "http_unavailable");
+        let saved = read_private(&path).unwrap();
+        assert_eq!(saved["pending_act"], json!({"op_id":1,"action":normalized_action(action).unwrap()}));
+        assert_eq!(saved["next_op_id"], 1);
+        assert_eq!(act_v2(&path, Some(r#"{"action":"shuttle"}"#)).unwrap_err()["error"]["code"], "pending_action");
+        assert_eq!(read_private(&path).unwrap(), saved);
+    }
+    #[test]
+    fn v2_lost_response_retries_the_received_request_unchanged() {
+        let dir = Temp::new();
+        let path = dir.session();
+        let (listener, url) = listener();
+        prepared_v2(&path, &url);
+        let (seen, handle) = fixture_responses(listener, vec![
+            None,
+            Some((200, json!({"ok":true,"op_id":1,"op_consumed":true,"state":{"factions":[{"name":"fixture"}]}}))),
+        ]);
+        let action = r#"{"action":"sell","params":{"units":1},"by":"llm"}"#;
+        assert_eq!(act_v2(&path, Some(action)).unwrap_err()["error"]["code"], "http_unavailable");
+        let saved = read_private(&path).unwrap();
+        assert_eq!(saved["pending_act"], json!({"op_id":1,"action":normalized_action(action).unwrap()}));
+        assert_eq!(saved["next_op_id"], 1);
+        assert_eq!(seen.lock().unwrap().len(), 1, "server received the action before dropping its response");
+        assert_eq!(act_v2(&path, Some(r#"{"action":"produce"}"#)).unwrap_err()["error"]["code"], "pending_action");
+        assert_eq!(act_v2(&path, None).unwrap()["op_id"], 1);
+        handle.join().unwrap();
+        let requests = seen.lock().unwrap();
+        assert_eq!(requests.len(), 2);
+        assert_eq!(requests[0], requests[1]);
+        let saved = read_private(&path).unwrap();
+        assert!(saved["pending_act"].is_null());
+        assert_eq!(saved["next_op_id"], 2);
     }
     #[test]
     fn urls_and_redirects_do_not_leak_credentials() {
