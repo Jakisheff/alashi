@@ -1,0 +1,277 @@
+﻿2026-11-07T12:55:21.4390417Z Current runner version: '2.338.2'
+2026-11-07T12:55:21.4414211Z ##[group]Runner Image Provisioner
+2026-11-07T12:55:21.4415099Z Hosted Compute Agent
+2026-11-07T12:55:21.4415753Z Version: 20261028.624
+2026-11-07T12:55:21.4416400Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+2026-11-07T12:55:21.4417126Z Build Date: 2026-10-28T21:51:42Z
+2026-11-07T12:55:21.4418113Z Worker ID: {f63daa34-6138-435c-8613-2de36e1af11b}
+2026-11-07T12:55:21.4418847Z Region: westus3
+2026-11-07T12:55:21.4419432Z Cloud: Azure
+2026-11-07T12:55:21.4419985Z ##[endgroup]
+2026-11-07T12:55:21.4421766Z ##[group]Operating System
+2026-11-07T12:55:21.4422489Z Ubuntu
+2026-11-07T12:55:21.4423046Z 26.04.1
+2026-11-07T12:55:21.4423533Z LTS
+2026-11-07T12:55:21.4424120Z ##[endgroup]
+2026-11-07T12:55:21.4424674Z ##[group]Runner Image
+2026-11-07T12:55:21.4425355Z Image: ubuntu-26.04
+2026-11-07T12:55:21.4425949Z Version: 20261101.186.1
+2026-11-07T12:55:21.4427252Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261101.186/images/ubuntu/Ubuntu2604-Readme.md
+2026-11-07T12:55:21.4429024Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261101.186
+2026-11-07T12:55:21.4430051Z ##[endgroup]
+2026-11-07T12:55:21.4431240Z ##[group]GITHUB_TOKEN Permissions
+2026-11-07T12:55:21.4433189Z Contents: read
+2026-11-07T12:55:21.4433805Z Metadata: read
+2026-11-07T12:55:21.4434349Z Packages: read
+2026-11-07T12:55:21.4435017Z ##[endgroup]
+2026-11-07T12:55:21.4437012Z Secret source: Actions
+2026-11-07T12:55:21.4438340Z Cache mode: write
+2026-11-07T12:55:21.4439047Z Prepare workflow directory
+2026-11-07T12:55:21.4783914Z Prepare all required actions
+2026-11-07T12:55:21.4831427Z Getting action download info
+2026-11-07T12:55:21.7868365Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-07T12:55:21.9326430Z Download action repository 'gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7' (SHA:ff98106e4c7b2bc287b24eaf42907196329070c7)
+2026-11-07T12:55:22.5961742Z Complete job name: Gitleaks secret scan
+2026-11-07T12:55:22.6973086Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+2026-11-07T12:55:22.6974266Z with:
+2026-11-07T12:55:22.6974735Z   fetch-depth: 0
+2026-11-07T12:55:22.6975252Z   repository: Jakisheff/alashi
+2026-11-07T12:55:22.6979669Z   token: ***
+2026-11-07T12:55:22.6980157Z   ssh-strict: true
+2026-11-07T12:55:22.6980645Z   ssh-user: git
+2026-11-07T12:55:22.6981161Z   persist-credentials: true
+2026-11-07T12:55:22.6981704Z   clean: true
+2026-11-07T12:55:22.6982192Z   sparse-checkout-cone-mode: true
+2026-11-07T12:55:22.6982763Z   fetch-tags: false
+2026-11-07T12:55:22.6983252Z   show-progress: true
+2026-11-07T12:55:22.6983746Z   lfs: false
+2026-11-07T12:55:22.6984216Z   submodules: false
+2026-11-07T12:55:22.6984728Z   set-safe-directory: true
+2026-11-07T12:55:22.6985292Z   allow-unsafe-pr-checkout: false
+2026-11-07T12:55:22.6986168Z ##[endgroup]
+2026-11-07T12:55:23.0186344Z Syncing repository: Jakisheff/alashi
+2026-11-07T12:55:23.0189605Z ##[group]Getting Git version info
+2026-11-07T12:55:23.0190504Z Working directory is '/home/runner/work/alashi/alashi'
+2026-11-07T12:55:23.0192251Z [command]/usr/bin/git version
+2026-11-07T12:55:23.0212547Z git version 2.56.0
+2026-11-07T12:55:23.0235481Z ##[endgroup]
+2026-11-07T12:55:23.0253748Z Temporarily overriding HOME='/home/runner/work/_temp/ef83cabe-e017-4efe-bb0f-d992606a2b00' before making global git config changes
+2026-11-07T12:55:23.0256425Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-07T12:55:23.0260309Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/alashi/alashi
+2026-11-07T12:55:23.0334773Z Deleting the contents of '/home/runner/work/alashi/alashi'
+2026-11-07T12:55:23.0339048Z ##[group]Initializing the repository
+2026-11-07T12:55:23.0343356Z [command]/usr/bin/git init /home/runner/work/alashi/alashi
+2026-11-07T12:55:23.0486150Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-07T12:55:23.0489088Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-07T12:55:23.0490316Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-07T12:55:23.0491162Z hint: call:
+2026-11-07T12:55:23.0491615Z hint:
+2026-11-07T12:55:23.0492383Z hint: 	git config --global init.defaultBranch <name>
+2026-11-07T12:55:23.0493206Z hint:
+2026-11-07T12:55:23.0493866Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-07T12:55:23.0495058Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-07T12:55:23.0496039Z hint:
+2026-11-07T12:55:23.0496502Z hint: 	git branch -m <name>
+2026-11-07T12:55:23.0497079Z hint:
+2026-11-07T12:55:23.0498230Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-07T12:55:23.0503657Z Initialized empty Git repository in /home/runner/work/alashi/alashi/.git/
+2026-11-07T12:55:23.0516183Z [command]/usr/bin/git remote add origin https://github.com/Jakisheff/alashi
+2026-11-07T12:55:23.0573767Z ##[endgroup]
+2026-11-07T12:55:23.0574856Z ##[group]Disabling automatic garbage collection
+2026-11-07T12:55:23.0578840Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-07T12:55:23.0613480Z ##[endgroup]
+2026-11-07T12:55:23.0614584Z ##[group]Setting up auth
+2026-11-07T12:55:23.0621818Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-07T12:55:23.0683455Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-07T12:55:23.1237298Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-07T12:55:23.1272304Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-07T12:55:23.1552382Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-07T12:55:23.1586479Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-07T12:55:23.1865802Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-07T12:55:23.1905797Z ##[endgroup]
+2026-11-07T12:55:23.1907685Z ##[group]Fetching the repository
+2026-11-07T12:55:23.1918843Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/* +3944fdce9d5475fb0e11235a073ea05e62df4945:refs/remotes/pull/70/merge
+2026-11-07T12:55:28.8645050Z From https://github.com/Jakisheff/alashi
+2026-11-07T12:55:28.8646656Z  * [new branch]        claude/mcp-wrapper-20261013              -> origin/claude/mcp-wrapper-20261013
+2026-11-07T12:55:28.8648097Z  * [new branch]        codex/agent-guide-dialogue-20261012      -> origin/codex/agent-guide-dialogue-20261012
+2026-11-07T12:55:28.8649086Z  * [new branch]        codex/alashi-animation-audit-20261029    -> origin/codex/alashi-animation-audit-20261029
+2026-11-07T12:55:28.8649976Z  * [new branch]        codex/alashi-audit-fixes-20261028        -> origin/codex/alashi-audit-fixes-20261028
+2026-11-07T12:55:28.8650814Z  * [new branch]        codex/alashi-brood-war-evals-20261019    -> origin/codex/alashi-brood-war-evals-20261019
+2026-11-07T12:55:28.8651662Z  * [new branch]        codex/alashi-deploy-main-20261029        -> origin/codex/alashi-deploy-main-20261029
+2026-11-07T12:55:28.8652551Z  * [new branch]        codex/alashi-local-agent-update-20261028 -> origin/codex/alashi-local-agent-update-20261028
+2026-11-07T12:55:28.8653471Z  * [new branch]        codex/alashi-local-validator-20261029    -> origin/codex/alashi-local-validator-20261029
+2026-11-07T12:55:28.8654367Z  * [new branch]        codex/alashi-replay-coverage-20261029    -> origin/codex/alashi-replay-coverage-20261029
+2026-11-07T12:55:28.8655490Z  * [new branch]        codex/alashi-rts-prototypes-20261016     -> origin/codex/alashi-rts-prototypes-20261016
+2026-11-07T12:55:28.8656354Z  * [new branch]        codex/alashi-youtube-controls-20261029   -> origin/codex/alashi-youtube-controls-20261029
+2026-11-07T12:55:28.8657138Z  * [new branch]        codex/aws-migration-20261102             -> origin/codex/aws-migration-20261102
+2026-11-07T12:55:28.8658191Z  * [new branch]        codex/coin-canon                         -> origin/codex/coin-canon
+2026-11-07T12:55:28.8659143Z  * [new branch]        codex/current-client-guide-20261013      -> origin/codex/current-client-guide-20261013
+2026-11-07T12:55:28.8660001Z  * [new branch]        codex/degenie-dance                      -> origin/codex/degenie-dance
+2026-11-07T12:55:28.8660741Z  * [new branch]        codex/deploy-main-20261018               -> origin/codex/deploy-main-20261018
+2026-11-07T12:55:28.8661517Z  * [new branch]        codex/devnet-animated-viewer             -> origin/codex/devnet-animated-viewer
+2026-11-07T12:55:28.8662552Z  * [new branch]        codex/devnet-conversation-stream         -> origin/codex/devnet-conversation-stream
+2026-11-07T12:55:28.8663610Z  * [new branch]        codex/devnet-rpc-backoff                 -> origin/codex/devnet-rpc-backoff
+2026-11-07T12:55:28.8665050Z  * [new branch]        codex/devnet-sponsorship                 -> origin/codex/devnet-sponsorship
+2026-11-07T12:55:28.8666334Z  * [new branch]        codex/devnet-studio-release              -> origin/codex/devnet-studio-release
+2026-11-07T12:55:28.8667482Z  * [new branch]        codex/dialogue-replay-anchor-20261013    -> origin/codex/dialogue-replay-anchor-20261013
+2026-11-07T12:55:28.8668524Z  * [new branch]        codex/din-owner-wish-140                 -> origin/codex/din-owner-wish-140
+2026-11-07T12:55:28.8669365Z  * [new branch]        codex/donkey-risk-adapter                -> origin/codex/donkey-risk-adapter
+2026-11-07T12:55:28.8670227Z  * [new branch]        codex/donkey-risk-ui                     -> origin/codex/donkey-risk-ui
+2026-11-07T12:55:28.8670895Z  * [new branch]        codex/epoch2-donkey                      -> origin/codex/epoch2-donkey
+2026-11-07T12:55:28.8671815Z  * [new branch]        codex/epoch2-indexer-filter-20261012     -> origin/codex/epoch2-indexer-filter-20261012
+2026-11-07T12:55:28.8672778Z  * [new branch]        codex/epoch2-launch-packet               -> origin/codex/epoch2-launch-packet
+2026-11-07T12:55:28.8673781Z  * [new branch]        codex/epoch2-law-reveal-guard            -> origin/codex/epoch2-law-reveal-guard
+2026-11-07T12:55:28.8674620Z  * [new branch]        codex/epoch2-pda-cpi                     -> origin/codex/epoch2-pda-cpi
+2026-11-07T12:55:28.8675321Z  * [new branch]        codex/epoch2-slot-resume-20261012        -> origin/codex/epoch2-slot-resume-20261012
+2026-11-07T12:55:28.8676063Z  * [new branch]        codex/forall-brand-integration           -> origin/codex/forall-brand-integration
+2026-11-07T12:55:28.8676810Z  * [new branch]        codex/homepage-chain-replay              -> origin/codex/homepage-chain-replay
+2026-11-07T12:55:28.8677867Z  * [new branch]        codex/human-hypothesis-comparison-20261025 -> origin/codex/human-hypothesis-comparison-20261025
+2026-11-07T12:55:28.8678746Z  * [new branch]        codex/implicit-state-fixes-20261107      -> origin/codex/implicit-state-fixes-20261107
+2026-11-07T12:55:28.8679454Z  * [new branch]        codex/owner-wish-140                     -> origin/codex/owner-wish-140
+2026-11-07T12:55:28.8680182Z  * [new branch]        codex/platform-correctness-20261013      -> origin/codex/platform-correctness-20261013
+2026-11-07T12:55:28.8681008Z  * [new branch]        codex/produced-inventory-label-20261013  -> origin/codex/produced-inventory-label-20261013
+2026-11-07T12:55:28.8681819Z  * [new branch]        codex/purchase-weight-and-receipt        -> origin/codex/purchase-weight-and-receipt
+2026-11-07T12:55:28.8682575Z  * [new branch]        codex/ready-task-scheduler               -> origin/codex/ready-task-scheduler
+2026-11-07T12:55:28.8683547Z  * [new branch]        codex/session-archive-repairs-20261107   -> origin/codex/session-archive-repairs-20261107
+2026-11-07T12:55:28.8684307Z  * [new branch]        codex/solo-opponent                      -> origin/codex/solo-opponent
+2026-11-07T12:55:28.8685053Z  * [new branch]        codex/sponsored-agent-guide-20261013     -> origin/codex/sponsored-agent-guide-20261013
+2026-11-07T12:55:28.8685899Z  * [new branch]        codex/sponsored-viewer-refresh-20261013  -> origin/codex/sponsored-viewer-refresh-20261013
+2026-11-07T12:55:28.8686739Z  * [new branch]        codex/viewer-state-fixes-pr-20261107     -> origin/codex/viewer-state-fixes-pr-20261107
+2026-11-07T12:55:28.8687851Z  * [new branch]        codex/work-simulation-prototype-20261018 -> origin/codex/work-simulation-prototype-20261018
+2026-11-07T12:55:28.8688729Z  * [new branch]        ivan/arena-funding-target                -> origin/ivan/arena-funding-target
+2026-11-07T12:55:28.8689553Z  * [new branch]        ivan/chain-conversations-20261009        -> origin/ivan/chain-conversations-20261009
+2026-11-07T12:55:28.8690296Z  * [new branch]        ivan/close-settled-admin                 -> origin/ivan/close-settled-admin
+2026-11-07T12:55:28.8690985Z  * [new branch]        ivan/close-settled-games                 -> origin/ivan/close-settled-games
+2026-11-07T12:55:28.8691808Z  * [new branch]        ivan/conversation-frontend-release-20261009 -> origin/ivan/conversation-frontend-release-20261009
+2026-11-07T12:55:28.8692702Z  * [new branch]        ivan/devnet-agent-dialogue-20261012      -> origin/ivan/devnet-agent-dialogue-20261012
+2026-11-07T12:55:28.8693501Z  * [new branch]        ivan/devnet-chain-api-20261009           -> origin/ivan/devnet-chain-api-20261009
+2026-11-07T12:55:28.8694305Z  * [new branch]        ivan/devnet-final-guidance-20261009      -> origin/ivan/devnet-final-guidance-20261009
+2026-11-07T12:55:28.8695258Z  * [new branch]        ivan/devnet-leaderboard-20261009         -> origin/ivan/devnet-leaderboard-20261009
+2026-11-07T12:55:28.8696062Z  * [new branch]        ivan/devnet-rpc-release-20261009         -> origin/ivan/devnet-rpc-release-20261009
+2026-11-07T12:55:28.8696829Z  * [new branch]        ivan/devnet-spectator-20261009           -> origin/ivan/devnet-spectator-20261009
+2026-11-07T12:55:28.8697845Z  * [new branch]        ivan/devnet-vote-decode-20261009         -> origin/ivan/devnet-vote-decode-20261009
+2026-11-07T12:55:28.8698641Z  * [new branch]        ivan/dialogue-gameplay-20261013          -> origin/ivan/dialogue-gameplay-20261013
+2026-11-07T12:55:28.8699455Z  * [new branch]        ivan/dialogue-local-harness-20261012     -> origin/ivan/dialogue-local-harness-20261012
+2026-11-07T12:55:28.8700255Z  * [new branch]        ivan/dialogue-session-20261012           -> origin/ivan/dialogue-session-20261012
+2026-11-07T12:55:28.8701061Z  * [new branch]        ivan/discover-factions-discriminator     -> origin/ivan/discover-factions-discriminator
+2026-11-07T12:55:28.8701903Z  * [new branch]        ivan/funding-book-legacy-amounts         -> origin/ivan/funding-book-legacy-amounts
+2026-11-07T12:55:28.8702683Z  * [new branch]        ivan/host-resume-recorded-fee            -> origin/ivan/host-resume-recorded-fee
+2026-11-07T12:55:28.8703687Z  * [new branch]        ivan/landing-agent-icons-20261009        -> origin/ivan/landing-agent-icons-20261009
+2026-11-07T12:55:28.8704552Z  * [new branch]        ivan/landing-two-actions-20261009        -> origin/ivan/landing-two-actions-20261009
+2026-11-07T12:55:28.8705303Z  * [new branch]        ivan/live-channel-20261008               -> origin/ivan/live-channel-20261008
+2026-11-07T12:55:28.8706074Z  * [new branch]        ivan/login-opencode-output-20261010      -> origin/ivan/login-opencode-output-20261010
+2026-11-07T12:55:28.8707162Z  * [new branch]        ivan/login-opencode-tutorial-20261010    -> origin/ivan/login-opencode-tutorial-20261010
+2026-11-07T12:55:28.8708300Z  * [new branch]        ivan/owner-browser-session-20261009      -> origin/ivan/owner-browser-session-20261009
+2026-11-07T12:55:28.8709598Z  * [new branch]        ivan/owner-browser-session-copy-20261009 -> origin/ivan/owner-browser-session-copy-20261009
+2026-11-07T12:55:28.8710437Z  * [new branch]        ivan/owner-link-chat-20261009            -> origin/ivan/owner-link-chat-20261009
+2026-11-07T12:55:28.8711200Z  * [new branch]        ivan/owner-link-clean-20261009           -> origin/ivan/owner-link-clean-20261009
+2026-11-07T12:55:28.8711985Z  * [new branch]        ivan/post-hackathon-low-fees             -> origin/ivan/post-hackathon-low-fees
+2026-11-07T12:55:28.8712734Z  * [new branch]        ivan/sol-optional-20261013               -> origin/ivan/sol-optional-20261013
+2026-11-07T12:55:28.8713421Z  * [new branch]        main                                     -> origin/main
+2026-11-07T12:55:28.8714559Z  * [new branch]        review/ivan-fixes-20261027               -> origin/review/ivan-fixes-20261027
+2026-11-07T12:55:28.8715990Z  * [new branch]        review/security-deps-20261027            -> origin/review/security-deps-20261027
+2026-11-07T12:55:28.8717279Z  * [new branch]        sprint-31-08                             -> origin/sprint-31-08
+2026-11-07T12:55:28.8718504Z  * [new tag]           companion-v0.1.0                         -> companion-v0.1.0
+2026-11-07T12:55:28.8719108Z  * [new tag]           pre-hackathon                            -> pre-hackathon
+2026-11-07T12:55:28.8719943Z  * [new tag]           server-v20261102-verify                  -> server-v20261102-verify
+2026-11-07T12:55:28.8720931Z  * [new tag]           submission-2026-10-12                    -> submission-2026-10-12
+2026-11-07T12:55:28.8722005Z  * [new ref]           3944fdce9d5475fb0e11235a073ea05e62df4945 -> pull/70/merge
+2026-11-07T12:55:28.8724530Z ##[endgroup]
+2026-11-07T12:55:28.8725233Z ##[group]Determining the checkout info
+2026-11-07T12:55:28.8726034Z ##[endgroup]
+2026-11-07T12:55:28.8726513Z [command]/usr/bin/git sparse-checkout disable
+2026-11-07T12:55:28.8728227Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-07T12:55:28.8762558Z ##[group]Checking out the ref
+2026-11-07T12:55:28.8763141Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/70/merge
+2026-11-07T12:55:29.9201085Z Updating files:  92% (9872/10684)
+2026-11-07T12:55:30.0109425Z Updating files:  93% (9937/10684)
+2026-11-07T12:55:30.0738459Z Updating files:  94% (10043/10684)
+2026-11-07T12:55:30.1338923Z Updating files:  95% (10150/10684)
+2026-11-07T12:55:30.1410928Z Updating files:  96% (10257/10684)
+2026-11-07T12:55:30.1467982Z Updating files:  97% (10364/10684)
+2026-11-07T12:55:30.1602635Z Updating files:  98% (10471/10684)
+2026-11-07T12:55:30.1680413Z Updating files:  99% (10578/10684)
+2026-11-07T12:55:30.1680932Z Updating files: 100% (10684/10684)
+2026-11-07T12:55:30.1681390Z Updating files: 100% (10684/10684), done.
+2026-11-07T12:55:30.1780636Z Note: switching to 'refs/remotes/pull/70/merge'.
+2026-11-07T12:55:30.1781071Z
+2026-11-07T12:55:30.1781456Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-11-07T12:55:30.1782096Z changes and commit them, and you can discard any commits you make in this
+2026-11-07T12:55:30.1782578Z state without impacting any branches by switching back to a branch.
+2026-11-07T12:55:30.1782860Z
+2026-11-07T12:55:30.1783054Z If you want to create a new branch to retain commits you create, you may
+2026-11-07T12:55:30.1783642Z do so (now or later) by using -c with the switch command. Example:
+2026-11-07T12:55:30.1784125Z
+2026-11-07T12:55:30.1784327Z   git switch -c <new-branch-name>
+2026-11-07T12:55:30.1784641Z
+2026-11-07T12:55:30.1784827Z Or undo this operation with:
+2026-11-07T12:55:30.1785126Z
+2026-11-07T12:55:30.1785283Z   git switch -
+2026-11-07T12:55:30.1785502Z
+2026-11-07T12:55:30.1785883Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-11-07T12:55:30.1786461Z
+2026-11-07T12:55:30.1787070Z HEAD is now at 3944fdce Merge 1ac0315b7a2d29348d3816063641cd2e5570b0fc into 4cdfa4cb20ee6e6d7cd33f849884f062caa39881
+2026-11-07T12:55:30.1885030Z ##[endgroup]
+2026-11-07T12:55:30.1936433Z [command]/usr/bin/git log -1 --format=%H
+2026-11-07T12:55:30.1961793Z 3944fdce9d5475fb0e11235a073ea05e62df4945
+2026-11-07T12:55:30.2281161Z ##[group]Run gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7
+2026-11-07T12:55:30.2281585Z env:
+2026-11-07T12:55:30.2284364Z   GITHUB_TOKEN: ***
+2026-11-07T12:55:30.2284584Z ##[endgroup]
+2026-11-07T12:55:30.4026860Z (node:2402) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-07T12:55:30.4027909Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-07T12:55:30.4205244Z (node:2402) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-07T12:55:30.7550126Z [Jakisheff] is an individual user. No license key is required.
+2026-11-07T12:55:30.7551204Z gitleaks version: 8.24.3
+2026-11-07T12:55:30.7554175Z Version to install: 8.24.3 (target directory: /tmp/gitleaks-8.24.3)
+2026-11-07T12:55:30.9610203Z Cache hit for: gitleaks-cache-8.24.3-linux-x64
+2026-11-07T12:55:31.8352983Z Received 5713646 of 5713646 (100.0%), 8.4 MBs/sec
+2026-11-07T12:55:31.8355056Z Cache Size: ~5 MB (5713646 B)
+2026-11-07T12:55:31.8385103Z [command]/usr/bin/tar -xf /home/runner/work/_temp/85efbc14-3f9f-475d-a701-fb2e576e0ba0/cache.tzst -P -C /home/runner/work/alashi/alashi --use-compress-program unzstd
+2026-11-07T12:55:31.8716580Z Cache restored successfully
+2026-11-07T12:55:31.8721723Z Gitleaks restored from cache
+2026-11-07T12:55:31.8724624Z event type: pull_request
+2026-11-07T12:55:32.2788188Z gitleaks cmd: gitleaks detect --redact -v --exit-code=2 --report-format=sarif --report-path=results.sarif --log-level=debug --log-opts=--no-merges --first-parent 84c7f339bc46c9f7a91bbd41c358e1a1cb6f43ef^..1ac0315b7a2d29348d3816063641cd2e5570b0fc
+2026-11-07T12:55:32.2806093Z [command]/tmp/gitleaks-8.24.3/gitleaks detect --redact -v --exit-code=2 --report-format=sarif --report-path=results.sarif --log-level=debug --log-opts=--no-merges --first-parent 84c7f339bc46c9f7a91bbd41c358e1a1cb6f43ef^..1ac0315b7a2d29348d3816063641cd2e5570b0fc
+2026-11-07T12:55:32.5574520Z
+2026-11-07T12:55:32.5575196Z     ○
+2026-11-07T12:55:32.5575749Z     │╲
+2026-11-07T12:55:32.5576187Z     │ ○
+2026-11-07T12:55:32.5576571Z     ○ ░
+2026-11-07T12:55:32.5576975Z     ░    gitleaks
+2026-11-07T12:55:32.5577235Z
+2026-11-07T12:55:32.5577924Z [90m12:55PM[0m DBG using github.com/wasilibs/go-re2 regex engine
+2026-11-07T12:55:32.5578743Z [90m12:55PM[0m DBG no gitleaks config found in path .gitleaks.toml, using default gitleaks config
+2026-11-07T12:55:32.6957807Z [90m12:55PM[0m DBG found .gitleaksignore file: .gitleaksignore
+2026-11-07T12:55:32.6958789Z [90m12:55PM[0m DBG found .gitleaksignore file: .gitleaksignore
+2026-11-07T12:55:32.6966291Z [90m12:55PM[0m DBG executing: /usr/bin/git -C . log -p -U0 --no-merges --first-parent 84c7f339bc46c9f7a91bbd41c358e1a1cb6f43ef^..1ac0315b7a2d29348d3816063641cd2e5570b0fc
+2026-11-07T12:55:32.7048709Z [90m12:55PM[0m DBG SCM platform parsed from host [36mhost=[0mgithub.com [36mplatform=[0mgithub
+2026-11-07T12:55:32.7454710Z [90m12:55PM[0m [32mINF[0m [1m3 commits scanned.[0m
+2026-11-07T12:55:32.7455737Z [90m12:55PM[0m DBG Note: this number might be smaller than expected due to commits with no additions
+2026-11-07T12:55:32.7456708Z [90m12:55PM[0m [32mINF[0m [1mscanned ~174096 bytes (174.10 KB) in 188ms[0m
+2026-11-07T12:55:32.7457373Z [90m12:55PM[0m [32mINF[0m [1mno leaks found[0m
+2026-11-07T12:55:32.7507859Z Artifact name is valid!
+2026-11-07T12:55:32.7509042Z Root directory input is valid!
+2026-11-07T12:55:33.0953647Z Beginning upload of artifact content to blob storage
+2026-11-07T12:55:33.3382379Z Uploaded bytes 6756
+2026-11-07T12:55:33.4015708Z Finished uploading artifact content to blob storage!
+2026-11-07T12:55:33.4018008Z SHA256 digest of uploaded artifact zip is 9eb1bc12ebf3dff8fca53243b2c72532a1cc5a44e3ee848d153042569bcc7371
+2026-11-07T12:55:33.4019353Z Finalizing artifact upload
+2026-11-07T12:55:33.9396114Z Artifact gitleaks-results.sarif.zip successfully finalized. Artifact ID 13575331363
+2026-11-07T12:55:33.9409996Z ✅ No leaks detected
+2026-11-07T12:55:33.9656834Z Post job cleanup.
+2026-11-07T12:55:34.0505022Z [command]/usr/bin/git version
+2026-11-07T12:55:34.0550332Z git version 2.56.0
+2026-11-07T12:55:34.0589431Z Temporarily overriding HOME='/home/runner/work/_temp/737f0e09-8daa-412d-98f8-9245ae3147b3' before making global git config changes
+2026-11-07T12:55:34.0590806Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-07T12:55:34.0594359Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/alashi/alashi
+2026-11-07T12:55:34.0637306Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-07T12:55:34.0678461Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-07T12:55:34.1010949Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-07T12:55:34.1039274Z http.https://github.com/.extraheader
+2026-11-07T12:55:34.1052787Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-07T12:55:34.1089405Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-07T12:55:34.1473225Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-07T12:55:34.1509441Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-07T12:55:34.1951247Z Cleaning up orphan processes
+2026-11-07T12:55:34.2378593Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262, gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

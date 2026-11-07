@@ -5,13 +5,13 @@
 
 Основа нового PR: main `4cdfa4cb` и закрывающая документация предыдущей задачи `84c7f339`. В этой задаче переносится ремонт находок 1 и 2. Находки №3/№5/№8, не меняются.
 
-## Минимальные семантики
+## Поведение после исправления
 
 Находка 1: [session_cli](../../bots/src/session_cli.rs) освобождает `pending_act` только для ответа с тем же числовым `op_id`, `ok: false`, `op_consumed: false` и известным кодом `bad_action`, `bad_params` или `bad_choice`. Идентификатор не увеличивается: исправленное действие использует тот же свободный `op_id`. При потере ответа, транспортной ошибке, чужом идентификаторе или неоднозначном ответе сохраняется исходное нормализованное действие для точного повтора.
 
-Находка 2: [chain_api](../../indexer/src/chain_api.rs) повторяет запись архива из того же resident cache для complete terminal game. Повтор проходит под существующей блокировкой игры после повторного чтения cache. Повтор не требует перезапуска или вытеснения записи. RPC не вызывается. Свежие live-записи, уже архивированные terminal-записи и конфигурация без архива сохраняют прежние быстрые пути. Неудачная запись не выставляет `archived: true`.
+Находка 2: [chain_api](../../indexer/src/chain_api.rs) повторяет запись архива завершённой игры из того же полного снимка в кэше. Повтор проходит под существующей блокировкой игры после повторного чтения кэша. Повтор не требует перезапуска или вытеснения записи. RPC не вызывается. Свежие записи текущих игр и уже архивированные игры сохраняют прежние быстрые пути. Конфигурация без архива также сохраняет прежнее поведение. Неудачная запись не выставляет `archived: true`.
 
-Целевые исходники переносятся без изменений из `5321258dbfcf89124c1c30b8b803e22c7527f5d2` для `bots/src/session_cli.rs` и `f32168384dff8a8b0d30287605a5f50ab6c44c19` для `indexer/src/chain_api.rs`. Во время RED production-правки отсутствовали. После восстановления подтверждено побайтовое равенство обоих файлов исходным фиксам: [хеши исходников](session-archive-20261107/source-provenance.json).
+Исходники перенесены без изменений из `5321258dbfcf89124c1c30b8b803e22c7527f5d2` для `bots/src/session_cli.rs` и `f32168384dff8a8b0d30287605a5f50ab6c44c19` для `indexer/src/chain_api.rs`. Во время RED правки рабочего кода отсутствовали. После восстановления подтверждено побайтовое равенство обоих файлов исходным фиксам: [хеши исходников](session-archive-20261107/source-provenance.json).
 
 ## Свежие доказательства
 
@@ -23,18 +23,23 @@
 | Находка 2, RED | observed: exit 101, `archived` остаётся Null вместо true после восстановления хранилища | [Свежий лог](session-archive-20261107/finding-2-red.log) |
 | Находка 1, GREEN | observed: 19 тестов session_cli прошли | [Свежий лог](session-archive-20261107/finding-1-green.log) |
 | Находка 2, GREEN | observed: 22 теста indexer прошли | [Свежий лог](session-archive-20261107/finding-2-green.log) |
-| Обязательные проверки и CI итогового коммита | pending | [Каталог прогонов](session-archive-20261107/) |
+| Обязательные проверки на коде 1ac0315b | observed: все пять jobs CI42374591154 прошли | [GitHub Actions](https://github.com/Jakisheff/alashi/actions/runs/42374591154) |
+| Итоговые проверки и состояние слияния | Проверяемый статус хранится в PR70 | [PR70](https://github.com/Jakisheff/alashi/pull/70) |
 
 Свежие RED/GREEN завершены. [40 тестов rules прошли](session-archive-20261107/rules.log). Полный CI итогового PR остаётся условием слияния.
 
-Обязательный набор: `cargo test --locked -p alashi-rules`; `cargo test --locked --manifest-path arena/Cargo.toml`; `cargo test --locked --manifest-path indexer/Cargo.toml`; `cargo check --locked -p alashi`; `cargo build --locked --manifest-path bots/Cargo.toml`. Затем `bash tools/build_sbf.sh` перед `cargo test --locked -p alashi`. Host check не заменяет SBF. Финальные результаты и ссылку на CI нужно добавить после выполнения.
+Обязательный набор: `cargo test --locked -p alashi-rules`; `cargo test --locked --manifest-path arena/Cargo.toml`; `cargo test --locked --manifest-path indexer/Cargo.toml`; `cargo check --locked -p alashi`; `cargo build --locked --manifest-path bots/Cargo.toml`. Затем `bash tools/build_sbf.sh` перед `cargo test --locked -p alashi`. Host check не заменяет SBF. На коде 1ac0315b полный набор выполнен в CI42374591154. Итоговая ревизия с сохранёнными логами пройдёт CI повторно перед слиянием.
 
 [Ревью находки 1](session-archive-20261107/alashi-finding1-review-20261107.md), [ревью находки 2](session-archive-20261107/alashi-finding2-review-20261107.md) и [проверка CI/качества](session-archive-20261107/alashi12-quality-ci-review.md) отдельно описывают границы доказательств.
 
 ## Исторические прогоны и изоляция
 
-[Исторические mutation-прогоны](session-archive-20261107/historical-mutations/) относятся к прежней рабочей ветке. Они не заменяют свежие GREEN или проверки итогового PR. [Классификация mutation evidence](session-archive-20261107/alashi12-mutation-review.json) хранится отдельно; чистый score для нового коммита не заявляется.
+[Исторические mutation-прогоны](session-archive-20261107/historical-mutations/) относятся к прежней рабочей ветке. Они не заменяют свежие GREEN или проверки итогового PR. [Классификация mutation evidence](session-archive-20261107/alashi12-mutation-review.json) хранится отдельно; полный процент обнаруженных мутаций для нового коммита не заявляется.
 
-Используются отдельные тестовые session/state-файлы, временные архивы и loopback-порты. Cargo выполняется последовательно с существующим локальным target. Живые игры не используются. Средства и production RPC не затрагиваются; деплой не выполняется. Правила игры и политика архивированных cache hits не расширяются этой правкой.
+Используются отдельные тестовые session/state-файлы, временные архивы и loopback-порты. Cargo выполняется последовательно с существующим локальным target. Живые игры не используются. Средства и production RPC не затрагиваются; деплой не выполняется. Правила игры и обработка уже архивированных записей кэша не расширяются этой правкой.
 
 Свежий [анализ сложности](session-archive-20261107/complexity.log) дал CC 25 для act_v2, 9 для get и 4 для ready_value. Покрытие не измерялось; CRAP score не заявляется. [Поиск дубликатов](session-archive-20261107/duplication.log) с порогом 0.82 не нашёл кандидатов в двух файлах. Исторические 13 выбранных мутаций обнаружены тестами; это не полный mutation score.
+
+[Итоговое независимое ревью](session-archive-20261107/final-scope-review.md) подтвердило границы diff и соответствие логов. Коммит 9e027c73 сохраняет тесты и RED до исправления; 1ac0315b сохраняет минимальные фиксы и GREEN.
+
+Полные логи всех пяти jobs перечислены в [CI manifest](session-archive-20261107/ci-source-42374591154-manifest.json), вместе с хешами и проверенной ревизией merge. В CI прошли 19 session-тестов, 22 indexer-теста и 91 Node-тест. Program suite: 37 тестов, включая оба replay; свежая SBF-сборка выполнена до них. Arena: 157 passed, один существующий ignored.
