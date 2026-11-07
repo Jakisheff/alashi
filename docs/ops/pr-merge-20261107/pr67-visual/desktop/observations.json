@@ -1,0 +1,615 @@
+{
+  "head": "5a80a6ff37de1eba7b238ebf91ff61fa49c327e5",
+  "node": "v24.22.1",
+  "media": "prefers-reduced-motion: reduce",
+  "source": "actual production /live local demo; isolated build without app config/env/proxies",
+  "cases": [
+    {
+      "width": 1366,
+      "kind": "trade",
+      "label": "Buy",
+      "selectedFrame": 4.25,
+      "frames": [
+        {
+          "filename": "1366-buy-paused.png",
+          "sha256": "b7e3d7fa6ce08bd5eb9886a2a8245c85326df2dd9d7532d8ed005cf8e294f674"
+        },
+        {
+          "filename": "1366-buy-held.png",
+          "sha256": "b7e3d7fa6ce08bd5eb9886a2a8245c85326df2dd9d7532d8ed005cf8e294f674"
+        },
+        {
+          "filename": "1366-buy-seek-zero.png",
+          "sha256": "63d5cddc33162ef75e90a3d9e655487ffb005586dd1b2c10aa839d3b3f2d8e1e"
+        },
+        {
+          "filename": "1366-buy-seek-selected.png",
+          "sha256": "b7e3d7fa6ce08bd5eb9886a2a8245c85326df2dd9d7532d8ed005cf8e294f674"
+        },
+        {
+          "filename": "1366-buy-seek-back.png",
+          "sha256": "718b8a053a3c791fdbf8eb99fd04c564d5ad7d68b2aae8597798a55d621729d5"
+        },
+        {
+          "filename": "1366-buy-resumed.png",
+          "sha256": "b7e3d7fa6ce08bd5eb9886a2a8245c85326df2dd9d7532d8ed005cf8e294f674"
+        }
+      ],
+      "actualTimeAtPause": 2.2,
+      "pausePixelDifference": {
+        "max_channel_delta": 0,
+        "changed_pixels": 0,
+        "pixels_above_8": 0,
+        "pixel_count": 244769
+      },
+      "seekPixelDifference": {
+        "max_channel_delta": 237,
+        "changed_pixels": 62924,
+        "pixels_above_8": 44041,
+        "pixel_count": 244769
+      },
+      "receipt": [
+        "Demo purchase · example valuesGoods +1Cash −2 alashi"
+      ],
+      "stage": [],
+      "result": "PASS paused pixels within4/255 tolerance, positive rendered seek difference, seek0/forward/backward/resume and real frames captured",
+      "contextFrame": "1366-buy-context.png"
+    },
+    {
+      "width": 1366,
+      "kind": "trade",
+      "label": "Sell",
+      "selectedFrame": 4.25,
+      "frames": [
+        {
+          "filename": "1366-sell-paused.png",
+          "sha256": "8280c6f1fe137e7a75606bdd3fe0da1349940b4d054cdc9c79835b05b19b090d"
+        },
+        {
+          "filename": "1366-sell-held.png",
+          "sha256": "8280c6f1fe137e7a75606bdd3fe0da1349940b4d054cdc9c79835b05b19b090d"
+        },
+        {
+          "filename": "1366-sell-seek-zero.png",
+          "sha256": "d39563cd216d72874ebd431be9bacfd91d1e481f56f2c521e7add8131e7e2674"
+        },
+        {
+          "filename": "1366-sell-seek-selected.png",
+          "sha256": "8280c6f1fe137e7a75606bdd3fe0da1349940b4d054cdc9c79835b05b19b090d"
+        },
+        {
+          "filename": "1366-sell-seek-back.png",
+          "sha256": "69e045bd86d21394565218fb415247735eadb2176d0f88aa3a075378ee26d69c"
+        },
+        {
+          "filename": "1366-sell-resumed.png",
+          "sha256": "8280c6f1fe137e7a75606bdd3fe0da1349940b4d054cdc9c79835b05b19b090d"
+        }
+      ],
+      "actualTimeAtPause": 0.84,
+      "pausePixelDifference": {
+        "max_channel_delta": 0,
+        "changed_pixels": 0,
+        "pixels_above_8": 0,
+        "pixel_count": 244769
+      },
+      "seekPixelDifference": {
+        "max_channel_delta": 230,
+        "changed_pixels": 63397,
+        "pixels_above_8": 59418,
+        "pixel_count": 244769
+      },
+      "receipt": [],
+      "stage": [
+        "SELLSold"
+      ],
+      "result": "PASS paused pixels within4/255 tolerance, positive rendered seek difference, seek0/forward/backward/resume and real frames captured"
+    },
+    {
+      "width": 1366,
+      "kind": "scenario",
+      "label": "Mule",
+      "selectedFrame": 3.65,
+      "frames": [
+        {
+          "filename": "1366-mule-paused.png",
+          "sha256": "70f6abd40fe245df664cc49846cc511c7160699202dede7ce93c63b1385cbf28"
+        },
+        {
+          "filename": "1366-mule-held.png",
+          "sha256": "70f6abd40fe245df664cc49846cc511c7160699202dede7ce93c63b1385cbf28"
+        },
+        {
+          "filename": "1366-mule-seek-zero.png",
+          "sha256": "bec355869dbe20c0d1c3a96fb53e3453dd41966e41bf026a9117623f77cbe5e8"
+        },
+        {
+          "filename": "1366-mule-seek-selected.png",
+          "sha256": "009b27a16d8db97d3ac8f261c693361a40c244b71812d4b2507621de946cfbec"
+        },
+        {
+          "filename": "1366-mule-seek-back.png",
+          "sha256": "b6e7d94af6b837cfcca5f08d0994c200e6fec56f3f5fc535d55d24d9eb7c0c5c"
+        },
+        {
+          "filename": "1366-mule-resumed.png",
+          "sha256": "009b27a16d8db97d3ac8f261c693361a40c244b71812d4b2507621de946cfbec"
+        }
+      ],
+      "actualTimeAtPause": 6.19,
+      "pausePixelDifference": {
+        "max_channel_delta": 0,
+        "changed_pixels": 0,
+        "pixels_above_8": 0,
+        "pixel_count": 244769
+      },
+      "seekPixelDifference": {
+        "max_channel_delta": 234,
+        "changed_pixels": 48867,
+        "pixels_above_8": 44254,
+        "pixel_count": 244769
+      },
+      "receipt": [],
+      "stage": [
+        "MULEReceiving the parcel"
+      ],
+      "result": "PASS paused pixels within4/255 tolerance, positive rendered seek difference, seek0/forward/backward/resume and real frames captured"
+    },
+    {
+      "width": 1366,
+      "kind": "scenario",
+      "label": "Bribe",
+      "selectedFrame": 3.65,
+      "frames": [
+        {
+          "filename": "1366-bribe-paused.png",
+          "sha256": "f428fdddc0fbadc654df6c83560b6a62c41c3355c1587980225b9060b713c98d"
+        },
+        {
+          "filename": "1366-bribe-held.png",
+          "sha256": "f428fdddc0fbadc654df6c83560b6a62c41c3355c1587980225b9060b713c98d"
+        },
+        {
+          "filename": "1366-bribe-seek-zero.png",
+          "sha256": "d703f785cedc7b41c5cf7088a542727aa5b0dd07c54b909eee8cef30869d08ef"
+        },
+        {
+          "filename": "1366-bribe-seek-selected.png",
+          "sha256": "dbcd0503b565c53b2c491296f11e24d3fcbde5f78b62a7b19e9b411cff577862"
+        },
+        {
+          "filename": "1366-bribe-seek-back.png",
+          "sha256": "7c39db5382aafac2a4f7f5f7e5fe708a1c5361a6bdd6396b30948b17dc7d47bb"
+        },
+        {
+          "filename": "1366-bribe-resumed.png",
+          "sha256": "f428fdddc0fbadc654df6c83560b6a62c41c3355c1587980225b9060b713c98d"
+        }
+      ],
+      "actualTimeAtPause": 1.09,
+      "pausePixelDifference": {
+        "max_channel_delta": 0,
+        "changed_pixels": 0,
+        "pixels_above_8": 0,
+        "pixel_count": 244769
+      },
+      "seekPixelDifference": {
+        "max_channel_delta": 236,
+        "changed_pixels": 54461,
+        "pixels_above_8": 48271,
+        "pixel_count": 244769
+      },
+      "receipt": [],
+      "stage": [
+        "BRIBEDiscreet exchange"
+      ],
+      "result": "PASS paused pixels within4/255 tolerance, positive rendered seek difference, seek0/forward/backward/resume and real frames captured"
+    },
+    {
+      "width": 1366,
+      "kind": "scenario",
+      "label": "Vote",
+      "selectedFrame": 3.75,
+      "frames": [
+        {
+          "filename": "1366-vote-paused.png",
+          "sha256": "a6b4f110fb4068d1aa0551abf5778a37cd7ff38b1f0636daf4275197f3d83061"
+        },
+        {
+          "filename": "1366-vote-held.png",
+          "sha256": "a6b4f110fb4068d1aa0551abf5778a37cd7ff38b1f0636daf4275197f3d83061"
+        },
+        {
+          "filename": "1366-vote-seek-zero.png",
+          "sha256": "9c56758a897ff0116f1eb5a55118484f8e18df93195253765815984bfa1c2fbb"
+        },
+        {
+          "filename": "1366-vote-seek-selected.png",
+          "sha256": "598278b0a6c72dc0440093998251f5b04a589c7344cac4000587f235421cb7f5"
+        },
+        {
+          "filename": "1366-vote-seek-back.png",
+          "sha256": "afa17b204a36fdbeeda0cadc40a5ca53d9a4b5e26a2f33015c5866de7f62fe66"
+        },
+        {
+          "filename": "1366-vote-resumed.png",
+          "sha256": "a6b4f110fb4068d1aa0551abf5778a37cd7ff38b1f0636daf4275197f3d83061"
+        }
+      ],
+      "actualTimeAtPause": 1.85,
+      "pausePixelDifference": {
+        "max_channel_delta": 0,
+        "changed_pixels": 0,
+        "pixels_above_8": 0,
+        "pixel_count": 244769
+      },
+      "seekPixelDifference": {
+        "max_channel_delta": 239,
+        "changed_pixels": 61446,
+        "pixels_above_8": 46067,
+        "pixel_count": 244769
+      },
+      "receipt": [],
+      "stage": [
+        "VOTEAbove the ballot box"
+      ],
+      "result": "PASS paused pixels within4/255 tolerance, positive rendered seek difference, seek0/forward/backward/resume and real frames captured"
+    },
+    {
+      "width": 1366,
+      "kind": "reaction",
+      "label": "Thumbs up",
+      "selectedFrame": 2.65,
+      "frames": [
+        {
+          "filename": "1366-thumbs-up-paused.png",
+          "sha256": "facfd6b465d738c62dd147c0e13af4ad7d96cf95ee38d9183060a8a2044a82f3"
+        },
+        {
+          "filename": "1366-thumbs-up-held.png",
+          "sha256": "facfd6b465d738c62dd147c0e13af4ad7d96cf95ee38d9183060a8a2044a82f3"
+        },
+        {
+          "filename": "1366-thumbs-up-seek-zero.png",
+          "sha256": "ede3706140b47524ddc7e6b22bce21c972e4293067d6dc84a3f52d9962f350a9"
+        },
+        {
+          "filename": "1366-thumbs-up-seek-selected.png",
+          "sha256": "460977e4981b661ff63cbb554f3d1edfc7e98844abd320f89ca0d5bf3c73a5e6"
+        },
+        {
+          "filename": "1366-thumbs-up-seek-back.png",
+          "sha256": "379ac67c8ba8defc3e7cd190c232909cadf538d426d9921ce88f931c1d05c34b"
+        },
+        {
+          "filename": "1366-thumbs-up-resumed.png",
+          "sha256": "facfd6b465d738c62dd147c0e13af4ad7d96cf95ee38d9183060a8a2044a82f3"
+        }
+      ],
+      "actualTimeAtPause": 1.32,
+      "pausePixelDifference": {
+        "max_channel_delta": 0,
+        "changed_pixels": 0,
+        "pixels_above_8": 0,
+        "pixel_count": 244769
+      },
+      "seekPixelDifference": {
+        "max_channel_delta": 239,
+        "changed_pixels": 65708,
+        "pixels_above_8": 58617,
+        "pixel_count": 244769
+      },
+      "receipt": [],
+      "stage": [],
+      "result": "PASS paused pixels within4/255 tolerance, positive rendered seek difference, seek0/forward/backward/resume and real frames captured"
+    },
+    {
+      "width": 1366,
+      "kind": "reaction",
+      "label": "Realization",
+      "selectedFrame": 2.3,
+      "frames": [
+        {
+          "filename": "1366-realization-paused.png",
+          "sha256": "ca1dbede504f52bf62ad2a3e70d73fd71be79665c23cef44f1bb55a00cb43710"
+        },
+        {
+          "filename": "1366-realization-held.png",
+          "sha256": "ca1dbede504f52bf62ad2a3e70d73fd71be79665c23cef44f1bb55a00cb43710"
+        },
+        {
+          "filename": "1366-realization-seek-zero.png",
+          "sha256": "4cc16fa9796bc5814cf7d533927fcff4f4798253c8862bba057023bcb2ce5d50"
+        },
+        {
+          "filename": "1366-realization-seek-selected.png",
+          "sha256": "8e80a36069c0d6a5cf2a3abaa3356e8aa202364510acbad3be402292d20bf4b6"
+        },
+        {
+          "filename": "1366-realization-seek-back.png",
+          "sha256": "7f66269b955663fa8e66afcc86b289d24050ab486b78ec01cb272259cc08a1e8"
+        },
+        {
+          "filename": "1366-realization-resumed.png",
+          "sha256": "8e80a36069c0d6a5cf2a3abaa3356e8aa202364510acbad3be402292d20bf4b6"
+        }
+      ],
+      "actualTimeAtPause": 0.91,
+      "pausePixelDifference": {
+        "max_channel_delta": 0,
+        "changed_pixels": 0,
+        "pixels_above_8": 0,
+        "pixel_count": 244769
+      },
+      "seekPixelDifference": {
+        "max_channel_delta": 240,
+        "changed_pixels": 63233,
+        "pixels_above_8": 56482,
+        "pixel_count": 244769
+      },
+      "receipt": [],
+      "stage": [],
+      "result": "PASS paused pixels within4/255 tolerance, positive rendered seek difference, seek0/forward/backward/resume and real frames captured"
+    },
+    {
+      "width": 1366,
+      "kind": "reaction",
+      "label": "Facepalm",
+      "selectedFrame": 2.25,
+      "frames": [
+        {
+          "filename": "1366-facepalm-paused.png",
+          "sha256": "fbe41253dc391a3b1843912a8461914b9f639c916a858787ca0f35aad373e11d"
+        },
+        {
+          "filename": "1366-facepalm-held.png",
+          "sha256": "fbe41253dc391a3b1843912a8461914b9f639c916a858787ca0f35aad373e11d"
+        },
+        {
+          "filename": "1366-facepalm-seek-zero.png",
+          "sha256": "c6b3074e5d98533f09b4f4740f722f089f6620116bce9ae7b92ab72b4f5532fa"
+        },
+        {
+          "filename": "1366-facepalm-seek-selected.png",
+          "sha256": "fbe41253dc391a3b1843912a8461914b9f639c916a858787ca0f35aad373e11d"
+        },
+        {
+          "filename": "1366-facepalm-seek-back.png",
+          "sha256": "a5c74891d1c7ccbf6d5473ae833bb3c05b29635cc8353be40d0ca131e99b8464"
+        },
+        {
+          "filename": "1366-facepalm-resumed.png",
+          "sha256": "fbe41253dc391a3b1843912a8461914b9f639c916a858787ca0f35aad373e11d"
+        }
+      ],
+      "actualTimeAtPause": 0.8,
+      "pausePixelDifference": {
+        "max_channel_delta": 0,
+        "changed_pixels": 0,
+        "pixels_above_8": 0,
+        "pixel_count": 244769
+      },
+      "seekPixelDifference": {
+        "max_channel_delta": 233,
+        "changed_pixels": 62368,
+        "pixels_above_8": 56902,
+        "pixel_count": 244769
+      },
+      "receipt": [],
+      "stage": [],
+      "result": "PASS paused pixels within4/255 tolerance, positive rendered seek difference, seek0/forward/backward/resume and real frames captured"
+    },
+    {
+      "width": 1366,
+      "kind": "reaction",
+      "label": "Thinking",
+      "selectedFrame": 2.65,
+      "frames": [
+        {
+          "filename": "1366-thinking-paused.png",
+          "sha256": "10656bc1782173f7ae9a9e91e9d0c04f27400aad5059545901b43651fffee505"
+        },
+        {
+          "filename": "1366-thinking-held.png",
+          "sha256": "10656bc1782173f7ae9a9e91e9d0c04f27400aad5059545901b43651fffee505"
+        },
+        {
+          "filename": "1366-thinking-seek-zero.png",
+          "sha256": "03fcbe551a3e2a0017bb46a680cc310020d2375d673ff7627138e2d62dfb0e5f"
+        },
+        {
+          "filename": "1366-thinking-seek-selected.png",
+          "sha256": "666472c0860237148402f0e462a7feda4a42a7b00e6601b2b8539a7ee49577b8"
+        },
+        {
+          "filename": "1366-thinking-seek-back.png",
+          "sha256": "59a64180cffe71dc76a6f655a6cf950b14565e6ccf9ffda590a8a45775800f7e"
+        },
+        {
+          "filename": "1366-thinking-resumed.png",
+          "sha256": "3a954bd7b2848c5b1d1141bd7ea8fb64f7f637ed11de114b4b919f3d8402819b"
+        }
+      ],
+      "actualTimeAtPause": 4.51,
+      "pausePixelDifference": {
+        "max_channel_delta": 0,
+        "changed_pixels": 0,
+        "pixels_above_8": 0,
+        "pixel_count": 244769
+      },
+      "seekPixelDifference": {
+        "max_channel_delta": 230,
+        "changed_pixels": 80066,
+        "pixels_above_8": 58815,
+        "pixel_count": 244769
+      },
+      "receipt": [],
+      "stage": [],
+      "result": "PASS paused pixels within4/255 tolerance, positive rendered seek difference, seek0/forward/backward/resume and real frames captured"
+    },
+    {
+      "width": 1366,
+      "kind": "reaction",
+      "label": "Shrug",
+      "selectedFrame": 2.65,
+      "frames": [
+        {
+          "filename": "1366-shrug-paused.png",
+          "sha256": "1c36ad3ac5b53f172eff7294dfb9eabef62d15aa47dffc2515d95b8d81c7fde4"
+        },
+        {
+          "filename": "1366-shrug-held.png",
+          "sha256": "1c36ad3ac5b53f172eff7294dfb9eabef62d15aa47dffc2515d95b8d81c7fde4"
+        },
+        {
+          "filename": "1366-shrug-seek-zero.png",
+          "sha256": "f4551a9a7b061be6d70d3792da3c5293c6f55116640f30e429e2c855c5c4a437"
+        },
+        {
+          "filename": "1366-shrug-seek-selected.png",
+          "sha256": "1bd9417cea6fec460d8ff367a746de5380f4664868b86f76ea58beafc4c7ec51"
+        },
+        {
+          "filename": "1366-shrug-seek-back.png",
+          "sha256": "a5bc6de92edeead5c8a423209c435babfbbdbef7a358ece0a806c5cdcebaccee"
+        },
+        {
+          "filename": "1366-shrug-resumed.png",
+          "sha256": "1c36ad3ac5b53f172eff7294dfb9eabef62d15aa47dffc2515d95b8d81c7fde4"
+        }
+      ],
+      "actualTimeAtPause": 0.97,
+      "pausePixelDifference": {
+        "max_channel_delta": 0,
+        "changed_pixels": 0,
+        "pixels_above_8": 0,
+        "pixel_count": 244769
+      },
+      "seekPixelDifference": {
+        "max_channel_delta": 234,
+        "changed_pixels": 65359,
+        "pixels_above_8": 53308,
+        "pixel_count": 244769
+      },
+      "receipt": [],
+      "stage": [],
+      "result": "PASS paused pixels within4/255 tolerance, positive rendered seek difference, seek0/forward/backward/resume and real frames captured"
+    },
+    {
+      "width": 1366,
+      "kind": "reaction",
+      "label": "Look around",
+      "selectedFrame": 2.8,
+      "frames": [
+        {
+          "filename": "1366-look-around-paused.png",
+          "sha256": "01302207cbf5792b8c7a065b620a4df299760eca3dbdfcee35c989d43f663251"
+        },
+        {
+          "filename": "1366-look-around-held.png",
+          "sha256": "67427785b12f78ccfbedf3b4b952a56916120ab956424b0e11a16a4f756b0ac6"
+        },
+        {
+          "filename": "1366-look-around-seek-zero.png",
+          "sha256": "e0d313401a5cd6c6b95f9e6fb4ca415046a872bcac4a8ba15a628e919e3872f1"
+        },
+        {
+          "filename": "1366-look-around-seek-selected.png",
+          "sha256": "2945b037553809bb3e11ef419ba33e1a1b3c0a123d71816da8518805e1952991"
+        },
+        {
+          "filename": "1366-look-around-seek-back.png",
+          "sha256": "48a78a0c29e143adf63dbafcbee770f39617513d529401d1193eaa47eedd2d08"
+        },
+        {
+          "filename": "1366-look-around-resumed.png",
+          "sha256": "67427785b12f78ccfbedf3b4b952a56916120ab956424b0e11a16a4f756b0ac6"
+        }
+      ],
+      "actualTimeAtPause": 0.74,
+      "pausePixelDifference": {
+        "max_channel_delta": 2,
+        "changed_pixels": 8607,
+        "pixels_above_8": 0,
+        "pixel_count": 244769
+      },
+      "seekPixelDifference": {
+        "max_channel_delta": 237,
+        "changed_pixels": 57670,
+        "pixels_above_8": 41701,
+        "pixel_count": 244769
+      },
+      "receipt": [],
+      "stage": [],
+      "result": "PASS paused pixels within4/255 tolerance, positive rendered seek difference, seek0/forward/backward/resume and real frames captured"
+    },
+    {
+      "width": 1366,
+      "kind": "reaction",
+      "label": "Victory",
+      "selectedFrame": 2.3,
+      "frames": [
+        {
+          "filename": "1366-victory-paused.png",
+          "sha256": "6a248778c2d12f11e2fb449e4e16df5068a39c0d82b7dc8bb9aa8b775b64f216"
+        },
+        {
+          "filename": "1366-victory-held.png",
+          "sha256": "6a248778c2d12f11e2fb449e4e16df5068a39c0d82b7dc8bb9aa8b775b64f216"
+        },
+        {
+          "filename": "1366-victory-seek-zero.png",
+          "sha256": "6b13851117c13ca523d9fc248decde6d9f36669e18537df9c096ca36e9d33ec1"
+        },
+        {
+          "filename": "1366-victory-seek-selected.png",
+          "sha256": "6a248778c2d12f11e2fb449e4e16df5068a39c0d82b7dc8bb9aa8b775b64f216"
+        },
+        {
+          "filename": "1366-victory-seek-back.png",
+          "sha256": "1ce978205ef793cb7c0e8632c3971191d08276a1aec801e5f41e21a602fc4560"
+        },
+        {
+          "filename": "1366-victory-resumed.png",
+          "sha256": "6a248778c2d12f11e2fb449e4e16df5068a39c0d82b7dc8bb9aa8b775b64f216"
+        }
+      ],
+      "actualTimeAtPause": 0.82,
+      "pausePixelDifference": {
+        "max_channel_delta": 0,
+        "changed_pixels": 0,
+        "pixels_above_8": 0,
+        "pixel_count": 244769
+      },
+      "seekPixelDifference": {
+        "max_channel_delta": 238,
+        "changed_pixels": 67274,
+        "pixels_above_8": 56301,
+        "pixel_count": 244769
+      },
+      "receipt": [],
+      "stage": [],
+      "result": "PASS paused pixels within4/255 tolerance, positive rendered seek difference, seek0/forward/backward/resume and real frames captured"
+    }
+  ],
+  "pages": [
+    {
+      "width": 1366,
+      "errors": [],
+      "consoleErrors": [],
+      "blocked": [],
+      "gpu": {
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "renderer": "ANGLE (Intel, ANGLE Metal Renderer: Intel(R) UHD Graphics 617, Unspecified Version)"
+      }
+    },
+    {
+      "width": 390,
+      "errors": [],
+      "consoleErrors": [],
+      "blocked": []
+    }
+  ],
+  "chrome": "156.0.8078.81",
+  "origin": "http://127.0.0.1:56004"
+}

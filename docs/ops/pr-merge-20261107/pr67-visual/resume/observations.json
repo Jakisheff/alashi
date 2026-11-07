@@ -1,0 +1,648 @@
+{
+  "head": "5a80a6ff37de1eba7b238ebf91ff61fa49c327e5",
+  "node": "v24.22.1",
+  "media": "prefers-reduced-motion: reduce",
+  "source": "actual production /live local demo; isolated build without app config/env/proxies",
+  "cases": [
+    {
+      "width": 1366,
+      "kind": "trade",
+      "label": "Buy",
+      "canonicalReducedFrame": 4.25,
+      "frames": [
+        {
+          "filename": "1366-buy-canonical.png",
+          "sha256": "b7e3d7fa6ce08bd5eb9886a2a8245c85326df2dd9d7532d8ed005cf8e294f674"
+        },
+        {
+          "filename": "1366-buy-resumed.png",
+          "sha256": "b7e3d7fa6ce08bd5eb9886a2a8245c85326df2dd9d7532d8ed005cf8e294f674"
+        }
+      ],
+      "actualTimeAfterResume": 1.22,
+      "difference": {
+        "max_channel_delta": 0,
+        "changed_pixels": 0,
+        "pixels_above_8": 0,
+        "pixel_count": 244769
+      },
+      "stage": [],
+      "result": "PASS observed timeline advance and resumed rendered pose comparison"
+    },
+    {
+      "width": 1366,
+      "kind": "trade",
+      "label": "Sell",
+      "canonicalReducedFrame": 4.25,
+      "frames": [
+        {
+          "filename": "1366-sell-canonical.png",
+          "sha256": "8280c6f1fe137e7a75606bdd3fe0da1349940b4d054cdc9c79835b05b19b090d"
+        },
+        {
+          "filename": "1366-sell-resumed.png",
+          "sha256": "8280c6f1fe137e7a75606bdd3fe0da1349940b4d054cdc9c79835b05b19b090d"
+        }
+      ],
+      "actualTimeAfterResume": 1.12,
+      "difference": {
+        "max_channel_delta": 0,
+        "changed_pixels": 0,
+        "pixels_above_8": 0,
+        "pixel_count": 244769
+      },
+      "stage": [
+        "SELLSold"
+      ],
+      "result": "PASS observed timeline advance and resumed rendered pose comparison"
+    },
+    {
+      "width": 1366,
+      "kind": "scenario",
+      "label": "Mule",
+      "canonicalReducedFrame": 3.65,
+      "frames": [
+        {
+          "filename": "1366-mule-canonical.png",
+          "sha256": "009b27a16d8db97d3ac8f261c693361a40c244b71812d4b2507621de946cfbec"
+        },
+        {
+          "filename": "1366-mule-resumed.png",
+          "sha256": "009b27a16d8db97d3ac8f261c693361a40c244b71812d4b2507621de946cfbec"
+        }
+      ],
+      "actualTimeAfterResume": 1.79,
+      "difference": {
+        "max_channel_delta": 0,
+        "changed_pixels": 0,
+        "pixels_above_8": 0,
+        "pixel_count": 244769
+      },
+      "stage": [
+        "MULEReceiving the parcel"
+      ],
+      "result": "PASS observed timeline advance and resumed rendered pose comparison"
+    },
+    {
+      "width": 1366,
+      "kind": "scenario",
+      "label": "Bribe",
+      "canonicalReducedFrame": 3.7,
+      "frames": [
+        {
+          "filename": "1366-bribe-canonical.png",
+          "sha256": "f428fdddc0fbadc654df6c83560b6a62c41c3355c1587980225b9060b713c98d"
+        },
+        {
+          "filename": "1366-bribe-resumed.png",
+          "sha256": "f428fdddc0fbadc654df6c83560b6a62c41c3355c1587980225b9060b713c98d"
+        }
+      ],
+      "actualTimeAfterResume": 1.2,
+      "difference": {
+        "max_channel_delta": 0,
+        "changed_pixels": 0,
+        "pixels_above_8": 0,
+        "pixel_count": 244769
+      },
+      "stage": [
+        "BRIBEDiscreet exchange"
+      ],
+      "result": "PASS observed timeline advance and resumed rendered pose comparison"
+    },
+    {
+      "width": 1366,
+      "kind": "scenario",
+      "label": "Vote",
+      "canonicalReducedFrame": 3.3,
+      "frames": [
+        {
+          "filename": "1366-vote-canonical.png",
+          "sha256": "a6b4f110fb4068d1aa0551abf5778a37cd7ff38b1f0636daf4275197f3d83061"
+        },
+        {
+          "filename": "1366-vote-resumed.png",
+          "sha256": "a6b4f110fb4068d1aa0551abf5778a37cd7ff38b1f0636daf4275197f3d83061"
+        }
+      ],
+      "actualTimeAfterResume": 1.12,
+      "difference": {
+        "max_channel_delta": 0,
+        "changed_pixels": 0,
+        "pixels_above_8": 0,
+        "pixel_count": 244769
+      },
+      "stage": [
+        "VOTEAbove the ballot box"
+      ],
+      "result": "PASS observed timeline advance and resumed rendered pose comparison"
+    },
+    {
+      "width": 1366,
+      "kind": "reaction",
+      "label": "Thumbs up",
+      "canonicalReducedFrame": 2.65,
+      "frames": [
+        {
+          "filename": "1366-thumbs-up-canonical.png",
+          "sha256": "cf4ca4d95b120400155ad9e4792a7cf99108a6efafaed464f1e0c1afba58f0d8"
+        },
+        {
+          "filename": "1366-thumbs-up-resumed.png",
+          "sha256": "b43bc39f8d3b37014b192758526435f640c5b1e7c4816373ce01a3d0f3a3d91d"
+        }
+      ],
+      "actualTimeAfterResume": 1.2,
+      "difference": {
+        "max_channel_delta": 229,
+        "changed_pixels": 370,
+        "pixels_above_8": 350,
+        "pixel_count": 244769
+      },
+      "stage": [],
+      "result": "PASS observed timeline advance and resumed rendered pose comparison"
+    },
+    {
+      "width": 1366,
+      "kind": "reaction",
+      "label": "Realization",
+      "canonicalReducedFrame": 2.3,
+      "frames": [
+        {
+          "filename": "1366-realization-canonical.png",
+          "sha256": "770b296cf636f5d6508dbdd7b7dfec0b74042d431b5d859f36369ed91f70e693"
+        },
+        {
+          "filename": "1366-realization-resumed.png",
+          "sha256": "770b296cf636f5d6508dbdd7b7dfec0b74042d431b5d859f36369ed91f70e693"
+        }
+      ],
+      "actualTimeAfterResume": 1.2,
+      "difference": {
+        "max_channel_delta": 0,
+        "changed_pixels": 0,
+        "pixels_above_8": 0,
+        "pixel_count": 244769
+      },
+      "stage": [],
+      "result": "PASS observed timeline advance and resumed rendered pose comparison"
+    },
+    {
+      "width": 1366,
+      "kind": "reaction",
+      "label": "Facepalm",
+      "canonicalReducedFrame": 2.25,
+      "frames": [
+        {
+          "filename": "1366-facepalm-canonical.png",
+          "sha256": "fbe41253dc391a3b1843912a8461914b9f639c916a858787ca0f35aad373e11d"
+        },
+        {
+          "filename": "1366-facepalm-resumed.png",
+          "sha256": "fbe41253dc391a3b1843912a8461914b9f639c916a858787ca0f35aad373e11d"
+        }
+      ],
+      "actualTimeAfterResume": 1.12,
+      "difference": {
+        "max_channel_delta": 0,
+        "changed_pixels": 0,
+        "pixels_above_8": 0,
+        "pixel_count": 244769
+      },
+      "stage": [],
+      "result": "PASS observed timeline advance and resumed rendered pose comparison"
+    },
+    {
+      "width": 1366,
+      "kind": "reaction",
+      "label": "Thinking",
+      "canonicalReducedFrame": 2.65,
+      "frames": [
+        {
+          "filename": "1366-thinking-canonical.png",
+          "sha256": "666472c0860237148402f0e462a7feda4a42a7b00e6601b2b8539a7ee49577b8"
+        },
+        {
+          "filename": "1366-thinking-resumed.png",
+          "sha256": "3a954bd7b2848c5b1d1141bd7ea8fb64f7f637ed11de114b4b919f3d8402819b"
+        }
+      ],
+      "actualTimeAfterResume": 1.57,
+      "difference": {
+        "max_channel_delta": 230,
+        "changed_pixels": 316,
+        "pixels_above_8": 289,
+        "pixel_count": 244769
+      },
+      "stage": [],
+      "result": "PASS observed timeline advance and resumed rendered pose comparison"
+    },
+    {
+      "width": 1366,
+      "kind": "reaction",
+      "label": "Shrug",
+      "canonicalReducedFrame": 2.65,
+      "frames": [
+        {
+          "filename": "1366-shrug-canonical.png",
+          "sha256": "1bd9417cea6fec460d8ff367a746de5380f4664868b86f76ea58beafc4c7ec51"
+        },
+        {
+          "filename": "1366-shrug-resumed.png",
+          "sha256": "1c36ad3ac5b53f172eff7294dfb9eabef62d15aa47dffc2515d95b8d81c7fde4"
+        }
+      ],
+      "actualTimeAfterResume": 1.12,
+      "difference": {
+        "max_channel_delta": 229,
+        "changed_pixels": 441,
+        "pixels_above_8": 413,
+        "pixel_count": 244769
+      },
+      "stage": [],
+      "result": "PASS observed timeline advance and resumed rendered pose comparison"
+    },
+    {
+      "width": 1366,
+      "kind": "reaction",
+      "label": "Look around",
+      "canonicalReducedFrame": 2.8,
+      "frames": [
+        {
+          "filename": "1366-look-around-canonical.png",
+          "sha256": "2945b037553809bb3e11ef419ba33e1a1b3c0a123d71816da8518805e1952991"
+        },
+        {
+          "filename": "1366-look-around-resumed.png",
+          "sha256": "67427785b12f78ccfbedf3b4b952a56916120ab956424b0e11a16a4f756b0ac6"
+        }
+      ],
+      "actualTimeAfterResume": 1.15,
+      "difference": {
+        "max_channel_delta": 230,
+        "changed_pixels": 390,
+        "pixels_above_8": 369,
+        "pixel_count": 244769
+      },
+      "stage": [],
+      "result": "PASS observed timeline advance and resumed rendered pose comparison"
+    },
+    {
+      "width": 1366,
+      "kind": "reaction",
+      "label": "Victory",
+      "canonicalReducedFrame": 2.3,
+      "frames": [
+        {
+          "filename": "1366-victory-canonical.png",
+          "sha256": "412863f541724132b9f32bee98eada7de64c5dc3e335bbe761f07b994b830aab"
+        },
+        {
+          "filename": "1366-victory-resumed.png",
+          "sha256": "6a248778c2d12f11e2fb449e4e16df5068a39c0d82b7dc8bb9aa8b775b64f216"
+        }
+      ],
+      "actualTimeAfterResume": 1.11,
+      "difference": {
+        "max_channel_delta": 2,
+        "changed_pixels": 8660,
+        "pixels_above_8": 0,
+        "pixel_count": 244769
+      },
+      "stage": [],
+      "result": "PASS observed timeline advance and resumed rendered pose comparison"
+    },
+    {
+      "width": 390,
+      "kind": "trade",
+      "label": "Buy",
+      "canonicalReducedFrame": 4.25,
+      "frames": [
+        {
+          "filename": "390-buy-canonical.png",
+          "sha256": "fcc87aa48164c99625e354d20f79d9a6692ef982deb09026f9938812b6fb849c"
+        },
+        {
+          "filename": "390-buy-resumed.png",
+          "sha256": "fcc87aa48164c99625e354d20f79d9a6692ef982deb09026f9938812b6fb849c"
+        }
+      ],
+      "actualTimeAfterResume": 1.44,
+      "difference": {
+        "max_channel_delta": 0,
+        "changed_pixels": 0,
+        "pixels_above_8": 0,
+        "pixel_count": 137114
+      },
+      "stage": [],
+      "result": "PASS observed timeline advance and resumed rendered pose comparison"
+    },
+    {
+      "width": 390,
+      "kind": "trade",
+      "label": "Sell",
+      "canonicalReducedFrame": 4.25,
+      "frames": [
+        {
+          "filename": "390-sell-canonical.png",
+          "sha256": "b6465ccd19dcef969361bbbe2c7605f315d679505eee92260620d7a9fb6fb40c"
+        },
+        {
+          "filename": "390-sell-resumed.png",
+          "sha256": "b6465ccd19dcef969361bbbe2c7605f315d679505eee92260620d7a9fb6fb40c"
+        }
+      ],
+      "actualTimeAfterResume": 1.12,
+      "difference": {
+        "max_channel_delta": 0,
+        "changed_pixels": 0,
+        "pixels_above_8": 0,
+        "pixel_count": 137114
+      },
+      "stage": [
+        "SELLSold"
+      ],
+      "result": "PASS observed timeline advance and resumed rendered pose comparison"
+    },
+    {
+      "width": 390,
+      "kind": "scenario",
+      "label": "Mule",
+      "canonicalReducedFrame": 3.65,
+      "frames": [
+        {
+          "filename": "390-mule-canonical.png",
+          "sha256": "5662ab90fc175c3697eb843434dda8a9f9309772745f073624507090b58d0d2a"
+        },
+        {
+          "filename": "390-mule-resumed.png",
+          "sha256": "5662ab90fc175c3697eb843434dda8a9f9309772745f073624507090b58d0d2a"
+        }
+      ],
+      "actualTimeAfterResume": 1.29,
+      "difference": {
+        "max_channel_delta": 0,
+        "changed_pixels": 0,
+        "pixels_above_8": 0,
+        "pixel_count": 137114
+      },
+      "stage": [
+        "MULEReceiving the parcel"
+      ],
+      "result": "PASS observed timeline advance and resumed rendered pose comparison"
+    },
+    {
+      "width": 390,
+      "kind": "scenario",
+      "label": "Bribe",
+      "canonicalReducedFrame": 3.7,
+      "frames": [
+        {
+          "filename": "390-bribe-canonical.png",
+          "sha256": "59beee2661116fa1eb6e2828730adfacb86ef2a812e51f1266484be76e6b12c7"
+        },
+        {
+          "filename": "390-bribe-resumed.png",
+          "sha256": "59beee2661116fa1eb6e2828730adfacb86ef2a812e51f1266484be76e6b12c7"
+        }
+      ],
+      "actualTimeAfterResume": 1.2,
+      "difference": {
+        "max_channel_delta": 0,
+        "changed_pixels": 0,
+        "pixels_above_8": 0,
+        "pixel_count": 137114
+      },
+      "stage": [
+        "BRIBEDiscreet exchange"
+      ],
+      "result": "PASS observed timeline advance and resumed rendered pose comparison"
+    },
+    {
+      "width": 390,
+      "kind": "scenario",
+      "label": "Vote",
+      "canonicalReducedFrame": 3.3,
+      "frames": [
+        {
+          "filename": "390-vote-canonical.png",
+          "sha256": "6fb2d7f38b5e32ad4168ccb5909d80e2cbf849bdacda99c39e330e85fbb42881"
+        },
+        {
+          "filename": "390-vote-resumed.png",
+          "sha256": "6fb2d7f38b5e32ad4168ccb5909d80e2cbf849bdacda99c39e330e85fbb42881"
+        }
+      ],
+      "actualTimeAfterResume": 1.11,
+      "difference": {
+        "max_channel_delta": 0,
+        "changed_pixels": 0,
+        "pixels_above_8": 0,
+        "pixel_count": 137114
+      },
+      "stage": [
+        "VOTEAbove the ballot box"
+      ],
+      "result": "PASS observed timeline advance and resumed rendered pose comparison"
+    },
+    {
+      "width": 390,
+      "kind": "reaction",
+      "label": "Thumbs up",
+      "canonicalReducedFrame": 2.65,
+      "frames": [
+        {
+          "filename": "390-thumbs-up-canonical.png",
+          "sha256": "1fea67f8ed148dabdb930ebbf074f96327d0e9ccbcc35ae1c7c1688c8b914db4"
+        },
+        {
+          "filename": "390-thumbs-up-resumed.png",
+          "sha256": "bc80955a650e846b4fe79810d554ef2d30e17c4e35a731fdb27b7684d3b25237"
+        }
+      ],
+      "actualTimeAfterResume": 1.12,
+      "difference": {
+        "max_channel_delta": 218,
+        "changed_pixels": 321,
+        "pixels_above_8": 291,
+        "pixel_count": 137114
+      },
+      "stage": [],
+      "result": "PASS observed timeline advance and resumed rendered pose comparison"
+    },
+    {
+      "width": 390,
+      "kind": "reaction",
+      "label": "Realization",
+      "canonicalReducedFrame": 2.3,
+      "frames": [
+        {
+          "filename": "390-realization-canonical.png",
+          "sha256": "2f2c80b139cb2e441d880bc9baa8a06de002584619965c5e47aacaaa5e2ec6c3"
+        },
+        {
+          "filename": "390-realization-resumed.png",
+          "sha256": "2f2c80b139cb2e441d880bc9baa8a06de002584619965c5e47aacaaa5e2ec6c3"
+        }
+      ],
+      "actualTimeAfterResume": 1.11,
+      "difference": {
+        "max_channel_delta": 0,
+        "changed_pixels": 0,
+        "pixels_above_8": 0,
+        "pixel_count": 137114
+      },
+      "stage": [],
+      "result": "PASS observed timeline advance and resumed rendered pose comparison"
+    },
+    {
+      "width": 390,
+      "kind": "reaction",
+      "label": "Facepalm",
+      "canonicalReducedFrame": 2.25,
+      "frames": [
+        {
+          "filename": "390-facepalm-canonical.png",
+          "sha256": "b1e9aba771770e59b84782e1ca3c60c0e9e3c993801982c958e80e3dcc16fafa"
+        },
+        {
+          "filename": "390-facepalm-resumed.png",
+          "sha256": "4b0c035440701a361c540f95829b4b0eb7757d18031bc4669b77debdd816c2b7"
+        }
+      ],
+      "actualTimeAfterResume": 1.2,
+      "difference": {
+        "max_channel_delta": 1,
+        "changed_pixels": 945,
+        "pixels_above_8": 0,
+        "pixel_count": 137114
+      },
+      "stage": [],
+      "result": "PASS observed timeline advance and resumed rendered pose comparison"
+    },
+    {
+      "width": 390,
+      "kind": "reaction",
+      "label": "Thinking",
+      "canonicalReducedFrame": 2.65,
+      "frames": [
+        {
+          "filename": "390-thinking-canonical.png",
+          "sha256": "5ced4cf4a02f57981827cd9a105220a38bf2c70adeb2a0713fa8e9ad0d2ff903"
+        },
+        {
+          "filename": "390-thinking-resumed.png",
+          "sha256": "dbb2a7f36da2990ca746e086a4d825fa27990e8602ad4151338b295e3fb1b894"
+        }
+      ],
+      "actualTimeAfterResume": 1.21,
+      "difference": {
+        "max_channel_delta": 224,
+        "changed_pixels": 220,
+        "pixels_above_8": 207,
+        "pixel_count": 137114
+      },
+      "stage": [],
+      "result": "PASS observed timeline advance and resumed rendered pose comparison"
+    },
+    {
+      "width": 390,
+      "kind": "reaction",
+      "label": "Shrug",
+      "canonicalReducedFrame": 2.65,
+      "frames": [
+        {
+          "filename": "390-shrug-canonical.png",
+          "sha256": "82c55ef1cf837d6d7c6c6c0682897e16746f7bd3bc1d9f84fc602bc45a98425d"
+        },
+        {
+          "filename": "390-shrug-resumed.png",
+          "sha256": "082812124507a7ba61c4d365406ae990a9dbea5a4076fb1167abde8c7107e7a1"
+        }
+      ],
+      "actualTimeAfterResume": 1.12,
+      "difference": {
+        "max_channel_delta": 222,
+        "changed_pixels": 363,
+        "pixels_above_8": 339,
+        "pixel_count": 137114
+      },
+      "stage": [],
+      "result": "PASS observed timeline advance and resumed rendered pose comparison"
+    },
+    {
+      "width": 390,
+      "kind": "reaction",
+      "label": "Look around",
+      "canonicalReducedFrame": 2.8,
+      "frames": [
+        {
+          "filename": "390-look-around-canonical.png",
+          "sha256": "c7a8d74c304bacc1826107c5578762706989338b0e0c7159f2363a98f4c5831e"
+        },
+        {
+          "filename": "390-look-around-resumed.png",
+          "sha256": "2afb9c6af40575599884088a7a33b98544df245248e5b9cee8c3303bbf3af430"
+        }
+      ],
+      "actualTimeAfterResume": 1.11,
+      "difference": {
+        "max_channel_delta": 225,
+        "changed_pixels": 320,
+        "pixels_above_8": 292,
+        "pixel_count": 137114
+      },
+      "stage": [],
+      "result": "PASS observed timeline advance and resumed rendered pose comparison"
+    },
+    {
+      "width": 390,
+      "kind": "reaction",
+      "label": "Victory",
+      "canonicalReducedFrame": 2.3,
+      "frames": [
+        {
+          "filename": "390-victory-canonical.png",
+          "sha256": "c68146294dfd74a18852a7426fcf50d70ec9d71b373d55b2e42927bda5400f13"
+        },
+        {
+          "filename": "390-victory-resumed.png",
+          "sha256": "c68146294dfd74a18852a7426fcf50d70ec9d71b373d55b2e42927bda5400f13"
+        }
+      ],
+      "actualTimeAfterResume": 1.2,
+      "difference": {
+        "max_channel_delta": 0,
+        "changed_pixels": 0,
+        "pixels_above_8": 0,
+        "pixel_count": 137114
+      },
+      "stage": [],
+      "result": "PASS observed timeline advance and resumed rendered pose comparison"
+    }
+  ],
+  "pages": [
+    {
+      "width": 1366,
+      "errors": [],
+      "consoleErrors": [],
+      "blocked": [],
+      "gpu": {
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "renderer": "ANGLE (Intel, ANGLE Metal Renderer: Intel(R) UHD Graphics 617, Unspecified Version)"
+      }
+    },
+    {
+      "width": 390,
+      "errors": [],
+      "consoleErrors": [],
+      "blocked": [],
+      "gpu": {
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "renderer": "ANGLE (Intel, ANGLE Metal Renderer: Intel(R) UHD Graphics 617, Unspecified Version)"
+      }
+    }
+  ],
+  "chrome": "156.0.8078.81",
+  "origin": "http://127.0.0.1:56630"
+}
