@@ -12,8 +12,8 @@ The viewer PR copies the two production files, staging fixture, lifecycle/visual
 |---|---|---|
 | [68](https://github.com/Jakisheff/alashi/pull/68) | Merged as `90d515fd123a8e68dd16bf46f4509c80e8f1931a` | Independent source/workflow review and all five exact-head CI checks passed. The new workflow runs only manually or on release tags; merging does not deploy. [Review](pr-merge-20261107/pr68-review.md) |
 | 59 | Merged as `0db54f864d63d593937200f3d3c1d2a1fcd00390` after all five fresh CI checks passed | Both journal histories and topic-map links preserved. 63 relative links, FULL and Gitleaks pass. [Resolution](pr-merge-20261107/alashi-pr59-resolution.json) |
-| 67 | Additional browser acceptance in progress | Exact-head CI passes; draft and journal conflict remain. Reduced-motion behavior requires direct review. |
-| 24, 25 | Integration and visual checks in progress | Preserve current animation test commands; check coin/dance against current main. |
+| 67 | Source and browser acceptance complete; final evidence-head CI pending | 24 pause/seek and 24 resume checks passed at desktop/phone sizes. Evidence committed as `1244cc9f`; runtime matches refreshed green head `1605f03f`. |
+| 24, 25 | Source, geometry and desktop/phone visual review complete; publication and CI pending | Current animation checks preserved. Mutation review added a failing-then-passing field/rim geometry assertion; reduced-motion Dance uses PR67. |
 | 33 | Already integrated | Original head `18650a65` is an ancestor of initial main; no repeat code merge needed. Closed as already integrated; no code was replayed. |
 | Viewer 6/7 | [PR69](https://github.com/Jakisheff/alashi/pull/69) created | Nine fresh lifecycle checks and two controls, frontend build and all animation checks pass. Updated onto main after PR59; mandatory PR CI follows. |
 
