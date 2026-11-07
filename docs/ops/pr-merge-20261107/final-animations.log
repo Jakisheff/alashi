@@ -1,0 +1,67 @@
+
+> frontend@0.0.0 check:animations
+> node --experimental-strip-types --no-warnings scripts/brand-coin-check.ts && npm run check:pose && npm run check:purchase && node --experimental-strip-types --no-warnings scripts/legacy-animation-check.ts && ALASHI_STUDIO_FRAMING=1 node --experimental-strip-types --no-warnings src/live/reactions/check-rig.mjs && ALASHI_STUDIO_FRAMING=1 node --experimental-strip-types --no-warnings src/live/actions/validate.mjs && node --experimental-strip-types --no-warnings scripts/screen-text-check.mjs && node --experimental-strip-types --no-warnings scripts/map-animation-check.ts && node --experimental-strip-types --no-warnings scripts/home-preview-check.ts && node --experimental-strip-types --no-warnings scripts/stream-staging-check.mjs && node --experimental-strip-types --no-warnings scripts/player-replay-controls-check.mjs && node --experimental-strip-types --no-warnings scripts/player-idle-pause-check.mjs && node --experimental-strip-types --no-warnings scripts/reaction-frame-pause-check.mjs && node --experimental-strip-types --no-warnings scripts/smoke-material-check.mjs && node --experimental-strip-types --no-warnings scripts/action-frame-pause-check.mjs && node --experimental-strip-types --no-warnings scripts/map-player-check.mjs
+
+PASS: coin palette, both raised symbols, open apertures, subtle texture, contact envelope, fade, instance isolation and disposal
+
+> frontend@0.0.0 check:pose
+> node --experimental-strip-types --no-warnings scripts/pose-check.ts
+
+pose check ok
+
+> frontend@0.0.0 check:purchase
+> node --experimental-strip-types --no-warnings scripts/purchase-check.ts && node --experimental-strip-types --no-warnings scripts/trade-contact-check.ts
+
+purchase motion and receipt checks passed
+sale anticipation, weight, payment and reduced-motion checks passed
+PASS: original collision reproduced; 1532 BUY frames, both entrances, reduced-motion poses, crate/counter clearance and support until fade
+PASS: 827 legacy GLB frames, seven responsive camera bounds with face/badge clearance, frozen reverse seeks, held reduced-motion poses and model isolation
+PASS: 1256 GLB frames, sockets, finite transforms, rotation continuity, hand/casing bounds and fingertip/palm surface clearance (2mm), backward seeks, idle endpoints/seam, neutral wrists, alternating Dance fists and weight, facial change, reduced Dance, body turns, reduced idle, cached scene isolation, deterministic bounded fireworks and Dance framing.
+Worst opaque-scene frustum extent (limit .98): {
+  extent: 0.9490412818553726,
+  action: 'vote',
+  t: 1.1,
+  mesh: 'tail',
+  aspect: 0.9375
+}
+Scenario QA: 5196 sampled frames; finite transforms, unchanged finger/thumb/limb lengths, palm support, reference-hoof contact, connected official arms, four-aspect frustum, deterministic scrubs, idle recovery and ballot-slot clearance passed.
+Conservative hand/prop overlap candidates: {}
+PASS: ScreenText pause, seek, repeated take, reduced motion, legacy speech and all three async stream caller bindings
+✔ work begins with preparation, independent of map time and worker idle offset (9.972024ms)
+✔ successful handoff begins accepted at its first pose and ends in idle (0.91729ms)
+✔ chief celebrates completion once, then the replay tail settles in idle (1.002494ms)
+✔ reverse seek and replay reconstruct the same pose without keeping completion state (1.044541ms)
+✔ travel, failed work and reduced motion retain their original meaning (1.587299ms)
+✔ idle offsets stay in idle, and returning starts without retaining the work pose (2.146057ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 47.909914
+✔ /?demo&game=1 keeps the illustrative preview label (3.95663ms)
+✔ /?pose=accepted&game=1 keeps the frozen preview label (0.408825ms)
+✔ ordinary game and agent watches retain the live label (0.36742ms)
+✔ standalone previews and an idle owner view retain their labels (0.359018ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 27.924498
+PASS: actual /stream hero markup activates thinking clearance, keeps the thought outside the scene and preserves its visibility window
+PASS: accessible controls, frozen history, pause/seek, replay restart and stale or repeated completion
+PASS: existing idle moves, paused replay freezes pose and smoke, and resume continues
+PASS: play, pause, backward seek, completion, repeated frames and replay
+PASS: seek zero, resume, reduced toggle, new take, callbacks and idle transition
+PASS: smoke assignment preserves shared materials and effect cleanup
+PASS pause scenario
+PASS seek zero, resume, completion, initial seek, reduced toggle, new take and normal mode scenario
+PASS pause trade
+PASS seek zero, resume, completion, initial seek, reduced toggle, new take and normal mode trade
+PASS visual time stages, missing receipt, event identity, stale callbacks and zero seek
+PASS: map controls, pause on seek, finish, replay and unavailable canvas

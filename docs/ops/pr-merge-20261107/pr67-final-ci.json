@@ -1,0 +1,69 @@
+{
+  "repository": "Jakisheff/alashi",
+  "pr": 67,
+  "expected_head": "1244cc9f2f38dff7ddced4c6e65dc4d972f15206",
+  "observed_pr_head": "1244cc9f2f38dff7ddced4c6e65dc4d972f15206",
+  "actual_main": "0db54f864d63d593937200f3d3c1d2a1fcd00390",
+  "actual_merge_ref": "120b494ebde533da22eae63093a2da16d9765b02",
+  "merge_parents": [
+    "0db54f864d63d593937200f3d3c1d2a1fcd00390",
+    "1244cc9f2f38dff7ddced4c6e65dc4d972f15206"
+  ],
+  "run": {
+    "id": 42369793655,
+    "url": "https://github.com/Jakisheff/alashi/actions/runs/42369793655",
+    "event": "pull_request",
+    "head_sha": "1244cc9f2f38dff7ddced4c6e65dc4d972f15206",
+    "status": "completed",
+    "conclusion": "success"
+  },
+  "jobs": [
+    {
+      "id": 128395357887,
+      "name": "RustSec audit of all lockfiles",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42369793655/job/128395357887"
+    },
+    {
+      "id": 128395357998,
+      "name": "Animation geometry and frontend build",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42369793655/job/128395357998"
+    },
+    {
+      "id": 128395358022,
+      "name": "Fresh SBF build and program tests",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42369793655/job/128395358022"
+    },
+    {
+      "id": 128395358048,
+      "name": "Rules, arena, indexer, and program compile",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42369793655/job/128395358048"
+    },
+    {
+      "id": 128395358051,
+      "name": "Gitleaks secret scan",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42369793655/job/128395358051"
+    }
+  ],
+  "checkout_evidence": {
+    "job_id": 128395358051,
+    "lines": [
+      "2026-11-07T11:49:31.1731940Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/* +120b494ebde533da22eae63093a2da16d9765b02:refs/remotes/pull/67/merge",
+      "2026-11-07T11:49:36.2331777Z  * [new ref]           120b494ebde533da22eae63093a2da16d9765b02 -> pull/67/merge",
+      "2026-11-07T11:49:36.2356311Z ##[group]Checking out the ref",
+      "2026-11-07T11:49:37.4051011Z HEAD is now at 120b494e Merge 1244cc9f2f38dff7ddced4c6e65dc4d972f15206 into 0db54f864d63d593937200f3d3c1d2a1fcd00390",
+      "2026-11-07T11:49:37.4157822Z [command]/usr/bin/git log -1 --format=%H",
+      "2026-11-07T11:49:37.4185535Z 120b494ebde533da22eae63093a2da16d9765b02"
+    ]
+  },
+  "checked_at_almaty": "2026-11-07 16:56:13 +05"
+}
