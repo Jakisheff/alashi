@@ -1,0 +1,187 @@
+{
+  "repository": "Jakisheff/alashi",
+  "pr": 24,
+  "expected_head": "f48a44acdc53e0a3ac530ca14be71b7c3e8d8e53",
+  "observed_pr_head": "f48a44acdc53e0a3ac530ca14be71b7c3e8d8e53",
+  "actual_main": "8c1dffb4267083bcbab6b084769846ada0f70670",
+  "actual_merge_ref": "8f361ec6115ebf58ada1c69abae4e4786cdbf546",
+  "merge_parents": [
+    "8c1dffb4267083bcbab6b084769846ada0f70670",
+    "f48a44acdc53e0a3ac530ca14be71b7c3e8d8e53"
+  ],
+  "run": {
+    "id": 42371049898,
+    "url": "https://github.com/Jakisheff/alashi/actions/runs/42371049898",
+    "event": "pull_request",
+    "head_sha": "f48a44acdc53e0a3ac530ca14be71b7c3e8d8e53",
+    "status": "completed",
+    "conclusion": "success"
+  },
+  "jobs": [
+    {
+      "id": 128399063435,
+      "name": "Fresh SBF build and program tests",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42371049898/job/128399063435"
+    },
+    {
+      "id": 128399063535,
+      "name": "RustSec audit of all lockfiles",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42371049898/job/128399063535"
+    },
+    {
+      "id": 128399063581,
+      "name": "Gitleaks secret scan",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42371049898/job/128399063581"
+    },
+    {
+      "id": 128399063593,
+      "name": "Animation geometry and frontend build",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42371049898/job/128399063593"
+    },
+    {
+      "id": 128399063607,
+      "name": "Rules, arena, indexer, and program compile",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42371049898/job/128399063607"
+    }
+  ],
+  "checkout_and_gitleaks_evidence": {
+    "job_id": 128399063581,
+    "lines": [
+      "2026-11-07T12:07:10.4723714Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/* +8f361ec6115ebf58ada1c69abae4e4786cdbf546:refs/remotes/pull/24/merge",
+      "2026-11-07T12:07:14.9060071Z  * [new ref]           8f361ec6115ebf58ada1c69abae4e4786cdbf546 -> pull/24/merge",
+      "2026-11-07T12:07:14.9694852Z ##[group]Checking out the ref",
+      "2026-11-07T12:07:15.8560114Z HEAD is now at 8f361ec6 Merge f48a44acdc53e0a3ac530ca14be71b7c3e8d8e53 into 8c1dffb4267083bcbab6b084769846ada0f70670",
+      "2026-11-07T12:07:15.8686280Z [command]/usr/bin/git log -1 --format=%H",
+      "2026-11-07T12:07:15.8709294Z 8f361ec6115ebf58ada1c69abae4e4786cdbf546",
+      "2026-11-07T12:07:16.3722712Z gitleaks version: 8.24.3",
+      "2026-11-07T12:07:17.7927798Z gitleaks cmd: gitleaks detect --redact -v --exit-code=2 --report-format=sarif --report-path=results.sarif --log-level=debug --log-opts=--no-merges --first-parent 0814927a469a6716a33a037e53e56c07994ae900^..f48a44acdc53e0a3ac530ca14be71b7c3e8d8e53",
+      "2026-11-07T12:07:17.9617637Z \u001b[90m12:07PM\u001b[0m DBG no gitleaks config found in path .gitleaks.toml, using default gitleaks config",
+      "2026-11-07T12:07:19.1779027Z \u001b[90m12:07PM\u001b[0m \u001b[32mINF\u001b[0m \u001b[1m35 commits scanned.\u001b[0m",
+      "2026-11-07T12:07:19.1780664Z \u001b[90m12:07PM\u001b[0m \u001b[32mINF\u001b[0m \u001b[1mno leaks found\u001b[0m"
+    ]
+  },
+  "historical_failure": {
+    "repository": "Jakisheff/alashi",
+    "pr": 24,
+    "expected_head": "b38053c8ecec5d057337c1d2bf29fb002ceda000",
+    "observed_pr_head": "b38053c8ecec5d057337c1d2bf29fb002ceda000",
+    "actual_main": "8c1dffb4267083bcbab6b084769846ada0f70670",
+    "actual_merge_ref": "52489dd118ac5137fc89b48bd94e846b8e30247f",
+    "merge_parents": [
+      "8c1dffb4267083bcbab6b084769846ada0f70670",
+      "b38053c8ecec5d057337c1d2bf29fb002ceda000"
+    ],
+    "run": {
+      "id": 42370372495,
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42370372495",
+      "event": "pull_request",
+      "head_sha": "b38053c8ecec5d057337c1d2bf29fb002ceda000",
+      "status": "completed",
+      "conclusion": "failure"
+    },
+    "jobs": [
+      {
+        "id": 128397076540,
+        "name": "Rules, arena, indexer, and program compile",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/Jakisheff/alashi/actions/runs/42370372495/job/128397076540"
+      },
+      {
+        "id": 128397076670,
+        "name": "Fresh SBF build and program tests",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/Jakisheff/alashi/actions/runs/42370372495/job/128397076670"
+      },
+      {
+        "id": 128397076686,
+        "name": "Gitleaks secret scan",
+        "status": "completed",
+        "conclusion": "failure",
+        "url": "https://github.com/Jakisheff/alashi/actions/runs/42370372495/job/128397076686"
+      },
+      {
+        "id": 128397076728,
+        "name": "Animation geometry and frontend build",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/Jakisheff/alashi/actions/runs/42370372495/job/128397076728"
+      },
+      {
+        "id": 128397076751,
+        "name": "RustSec audit of all lockfiles",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/Jakisheff/alashi/actions/runs/42370372495/job/128397076751"
+      }
+    ],
+    "checkout_evidence": {
+      "job_id": 128397076686,
+      "lines": [
+        "2026-11-07T11:57:55.7865633Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/* +52489dd118ac5137fc89b48bd94e846b8e30247f:refs/remotes/pull/24/merge",
+        "2026-11-07T11:58:00.2608991Z  * [new ref]           52489dd118ac5137fc89b48bd94e846b8e30247f -> pull/24/merge",
+        "2026-11-07T11:58:00.2637409Z ##[group]Checking out the ref",
+        "2026-11-07T11:58:01.5532364Z HEAD is now at 52489dd1 Merge b38053c8ecec5d057337c1d2bf29fb002ceda000 into 8c1dffb4267083bcbab6b084769846ada0f70670",
+        "2026-11-07T11:58:01.5690073Z [command]/usr/bin/git log -1 --format=%H",
+        "2026-11-07T11:58:01.5719922Z 52489dd118ac5137fc89b48bd94e846b8e30247f"
+      ]
+    },
+    "gitleaks_failure_redacted": [
+      "2026-11-07T11:57:54.2171420Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe",
+      "2026-11-07T11:58:04.0148858Z RuleID:      generic-api-key",
+      "2026-11-07T11:58:04.0149842Z File:        docs/research/harness-learning-20261020/artifact-manifest.json",
+      "2026-11-07T11:58:04.0150474Z Line:        4991",
+      "2026-11-07T11:58:04.0150871Z Commit:      02e27cc883a26fa83353cc5f35836ee5cd6a7524",
+      "2026-11-07T11:58:04.0154375Z Fingerprint: 02e27cc883a26fa83353cc5f35836ee5cd6a7524:docs/research/harness-learning-20261020/artifact-manifest.json:generic-api-key:4991",
+      "2026-11-07T11:58:04.0158752Z RuleID:      generic-api-key",
+      "2026-11-07T11:58:04.0159686Z File:        docs/research/harness-learning-20261020/artifact-manifest.json",
+      "2026-11-07T11:58:04.0160304Z Line:        5657",
+      "2026-11-07T11:58:04.0160705Z Commit:      02e27cc883a26fa83353cc5f35836ee5cd6a7524",
+      "2026-11-07T11:58:04.0163246Z Fingerprint: 02e27cc883a26fa83353cc5f35836ee5cd6a7524:docs/research/harness-learning-20261020/artifact-manifest.json:generic-api-key:5657",
+      "2026-11-07T11:58:04.9379878Z RuleID:      generic-api-key",
+      "2026-11-07T11:58:04.9381421Z File:        docs/research/harness-learning-20261020/results.json",
+      "2026-11-07T11:58:04.9383162Z Line:        518",
+      "2026-11-07T11:58:04.9383709Z Commit:      02e27cc883a26fa83353cc5f35836ee5cd6a7524",
+      "2026-11-07T11:58:04.9387079Z Fingerprint: 02e27cc883a26fa83353cc5f35836ee5cd6a7524:docs/research/harness-learning-20261020/results.json:generic-api-key:518",
+      "2026-11-07T11:58:04.9504901Z RuleID:      generic-api-key",
+      "2026-11-07T11:58:04.9506107Z File:        docs/research/harness-learning-20261020/results.json",
+      "2026-11-07T11:58:04.9506862Z Line:        530",
+      "2026-11-07T11:58:04.9507405Z Commit:      02e27cc883a26fa83353cc5f35836ee5cd6a7524",
+      "2026-11-07T11:58:04.9511055Z Fingerprint: 02e27cc883a26fa83353cc5f35836ee5cd6a7524:docs/research/harness-learning-20261020/results.json:generic-api-key:530",
+      "2026-11-07T11:58:05.3248982Z RuleID:      generic-api-key",
+      "2026-11-07T11:58:05.3269483Z File:        docs/research/harness-learning-20261020/harness-freeze.json",
+      "2026-11-07T11:58:05.3270363Z Line:        17",
+      "2026-11-07T11:58:05.3270814Z Commit:      1fa44420bcfbaa9f88b89f565e9b9130220a0ee2",
+      "2026-11-07T11:58:05.3274059Z Fingerprint: 1fa44420bcfbaa9f88b89f565e9b9130220a0ee2:docs/research/harness-learning-20261020/harness-freeze.json:generic-api-key:17",
+      "2026-11-07T11:58:05.3276940Z RuleID:      generic-api-key",
+      "2026-11-07T11:58:05.3277517Z File:        docs/research/harness-learning-20261020/harness-freeze.json",
+      "2026-11-07T11:58:05.3277873Z Line:        29",
+      "2026-11-07T11:58:05.3278138Z Commit:      1fa44420bcfbaa9f88b89f565e9b9130220a0ee2",
+      "2026-11-07T11:58:05.3280612Z Fingerprint: 1fa44420bcfbaa9f88b89f565e9b9130220a0ee2:docs/research/harness-learning-20261020/harness-freeze.json:generic-api-key:29",
+      "2026-11-07T11:58:05.3729732Z RuleID:      generic-api-key",
+      "2026-11-07T11:58:05.3730728Z File:        docs/research/harness-learning-20261020/protocol.json",
+      "2026-11-07T11:58:05.3731285Z Line:        1601",
+      "2026-11-07T11:58:05.3731900Z Commit:      7b9c5bd94ff05bfac8eb543e426bbac32fb3f3e1",
+      "2026-11-07T11:58:05.3734306Z Fingerprint: 7b9c5bd94ff05bfac8eb543e426bbac32fb3f3e1:docs/research/harness-learning-20261020/protocol.json:generic-api-key:1601",
+      "2026-11-07T11:58:05.4230712Z RuleID:      generic-api-key",
+      "2026-11-07T11:58:05.4231623Z File:        docs/research/label-fullgames-20261019/artifact-manifest.json",
+      "2026-11-07T11:58:05.4232230Z Line:        3116",
+      "2026-11-07T11:58:05.4232730Z Commit:      225f9910db295eae72449188579733e48acfd4fd",
+      "2026-11-07T11:58:05.4235136Z Fingerprint: 225f9910db295eae72449188579733e48acfd4fd:docs/research/label-fullgames-20261019/artifact-manifest.json:generic-api-key:3116",
+      "2026-11-07T11:58:06.1291646Z \u001b[90m11:58AM\u001b[0m \u001b[33mWRN\u001b[0m \u001b[1mleaks found: 8\u001b[0m"
+    ],
+    "checked_at_almaty": "2026-11-07 16:58:18 +05"
+  },
+  "checked_at_almaty": "2026-11-07 17:12:31 +05"
+}
