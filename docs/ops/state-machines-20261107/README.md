@@ -4,9 +4,17 @@ Work started on 7 November 2026 at 11:20, Asia/Almaty, from `7113b9af330a9bce90b
 
 Scope: fix findings 1 and 2 after reproducing them; reproduce findings 6 and 7 without fixing them; leave the rules involved in findings 3, 5 and 8 unchanged. Tests use isolated files and loopback services. No live game, funds or deployment is involved.
 
+| Finding | Result in this branch | Evidence |
+|---|---|---|
+| 1. Rejected session action stays pending | Fixed after RED; 19 session tests pass | [RED](finding-1-red.log), [GREEN](finding-1-green.log) |
+| 2. Terminal cache prevents archive retry | Fixed after RED; 22 indexer tests pass | [RED](finding-2-red.log), [GREEN](finding-2-green.log), [suite](indexer.log) |
+| 6. Stream scheduler stays busy after renderer failure | Reproduced, no production fix | [Observation](finding-6-reproduced.log), [failing recovery invariant](finding-6-assert-fixed.log) |
+| 7. Legacy queues survive game/source switches | Four cases reproduced, no production fix | [Observations](finding-7-reproduced.log), [failing recovery invariants](finding-7-assert-fixed.log) |
+| 3, 5, 8. Roof, forecast, barter | Rules unchanged; decision options prepared | [Choices and costs](product-choices.md) |
+
 ## Node environment
 
-Installed the existing lockfile with `npm ci --offline --ignore-scripts --no-audit --no-fund` in `tools/agent-bootstrap/`. No dependency declaration or lockfile changed. Node: v22.17.0. `@solana/web3.js` is supplied by the lockfile. [Install log](node-install.log).
+Installed the existing lockfile with `npm ci --offline --ignore-scripts --no-audit --no-fund` in `tools/agent-bootstrap/`. No dependency declaration or lockfile changed. Node: v22.17.0. The installed `@solana/web3.js` version is 1.99.0, supplied by the lockfile. [Install log](node-install.log).
 
 ```sh
 node --test tools/agent-bootstrap/alashi.test.mjs \
@@ -22,11 +30,19 @@ Observed result: all five files load; 91 tests pass, zero fail. [Successful log]
 
 Use the repository's pinned Rust 1.89.0. Host runs share `target/host`, with `CARGO_PROFILE_DEV_DEBUG=0`, `CARGO_PROFILE_TEST_DEBUG=0`, `CARGO_INCREMENTAL=0`, and at most two Cargo jobs for subsequent runs. These settings limit local disk use; they do not skip tests. SBF uses the repository script's separate target and pinned toolchain.
 
-`cargo test --offline --locked -p alashi-rules`: 40 tests pass. [Log](rules.log).
+| Required command | Observed result | Log |
+|---|---|---|
+| `cargo test --locked -p alashi-rules` | 40 passed | [rules.log](rules.log) |
+| `cargo test --locked --manifest-path arena/Cargo.toml` | 157 passed, 1 ignored | [arena.log](arena.log) |
+| `cargo test --locked --manifest-path indexer/Cargo.toml` | 22 passed | [indexer.log](indexer.log) |
+| `cargo build --locked --manifest-path bots/Cargo.toml` | Passed | [bots-build.log](bots-build.log) |
+| `bash tools/build_sbf.sh` | Passed with 4.1.0 / v1.54 | [sbf-build-resumed.log](sbf-build-resumed.log) |
+| `cargo check --locked -p alashi` | Passed | [program-check.log](program-check.log) |
+| `cargo test --locked -p alashi` | 37 passed, including both full-party replay tests | [program-tests.log](program-tests.log) |
 
-`cargo test --offline --locked --manifest-path indexer/Cargo.toml`: 22 tests pass. [Log](indexer.log). Other mandatory checks remain pending.
+Host Cargo commands also use `--offline`; required lockfiles are unchanged. Arena's one ignored test requires an explicitly supplied canonical snapshot. It was left ignored. The program result is 4 unit tests, 28 game tests and 5 replay tests. Both `replay_equivalence_full_party` and `replay_epoch_90s_full_party` passed. These are local checks; no GitHub Actions result is claimed.
 
-`cargo build --offline --locked --manifest-path bots/Cargo.toml` passes. [Log](bots-build.log). The pinned SBF build also passes; [artifact metadata](sbf-artifact.json) identifies the exact program for the forthcoming execution tests.
+[Artifact metadata](sbf-artifact.json) identifies the fresh program used for the execution tests. Its SHA-256 remains unchanged [after testing](program-gates.json). [The first SBF attempt](sbf-build.log) failed to download inside the sandbox; [the subsequent attempt](sbf-build-interrupted.log) was interrupted before producing an artifact. Neither is counted as a successful build.
 
 ## Finding 2: terminal archive retry fixed
 
