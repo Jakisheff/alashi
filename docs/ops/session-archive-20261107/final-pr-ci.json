@@ -1,0 +1,402 @@
+{
+  "repository": "Jakisheff/alashi",
+  "pr": 70,
+  "expected_head": "af322f3e0e0faea5eeb6b6c810d26b03f3a225ea",
+  "observed_pr_head": "af322f3e0e0faea5eeb6b6c810d26b03f3a225ea",
+  "base_ref": "main",
+  "actual_main": "4cdfa4cb20ee6e6d7cd33f849884f062caa39881",
+  "actual_merge_ref": "001dfd1e67be4521fedb90e035e8f376a7066bb6",
+  "merge_parents": [
+    "4cdfa4cb20ee6e6d7cd33f849884f062caa39881",
+    "af322f3e0e0faea5eeb6b6c810d26b03f3a225ea"
+  ],
+  "merge_tree": "e7c0b9bb069507d1fa74e241cf8b125e54ece99c",
+  "run": {
+    "id": 42375439124,
+    "url": "https://github.com/Jakisheff/alashi/actions/runs/42375439124",
+    "event": "pull_request",
+    "head_sha": "af322f3e0e0faea5eeb6b6c810d26b03f3a225ea",
+    "status": "completed",
+    "conclusion": "success"
+  },
+  "jobs": [
+    {
+      "id": 128411949570,
+      "name": "Rules, arena, indexer, and program compile",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42375439124/job/128411949570",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions-rust-lang/setup-rust-toolchain@166cdcfd11aee3cb47222f9ddb555ce30ddb9659",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci --ignore-scripts --prefix tools/agent-bootstrap",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Workspace tests (rules crate; the Anchor program needs `anchor build` for its .so tests, excluded here)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Owner film receipts and delivered video",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Arena tests (unit + http e2e)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Bots compile check",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Two-owner match admission tests",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Local signer context tests",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Session action retry tests",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Indexer tests",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Anchor program host compile (SBF execution is the sbf job below)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Local tooling checks",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions-rust-lang/setup-rust-toolchain@166cdcfd11aee3cb47222f9ddb555ce30ddb9659",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 128411949726,
+      "name": "Fresh SBF build and program tests",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42375439124/job/128411949726",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions-rust-lang/setup-rust-toolchain@166cdcfd11aee3cb47222f9ddb555ce30ddb9659",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install cargo-build-sbf 4.1.0 (isolated release dir)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build fresh SBF (tools/build_sbf.sh pins 4.1.0 / platform-tools v1.54)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Program tests on fresh SBF (game + replay equivalence)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions-rust-lang/setup-rust-toolchain@166cdcfd11aee3cb47222f9ddb555ce30ddb9659",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 128411949751,
+      "name": "RustSec audit of all lockfiles",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42375439124/job/128411949751",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions-rust-lang/setup-rust-toolchain@166cdcfd11aee3cb47222f9ddb555ce30ddb9659",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install cargo-audit",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Audit every Cargo.lock",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions-rust-lang/setup-rust-toolchain@166cdcfd11aee3cb47222f9ddb555ce30ddb9659",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 128411949802,
+      "name": "Gitleaks secret scan",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42375439124/job/128411949802",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 128411949884,
+      "name": "Animation geometry and frontend build",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42375439124/job/128411949884",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci --ignore-scripts --prefix ../tools/agent-bootstrap",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run build",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run check:animations",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run check:strategies",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run check:comparisons",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run check:research",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run check:comparison-proxy",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run check:trading",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run node --experimental-strip-types --no-warnings scripts/donkey-risk-adapter-check.ts",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run node --test ../tools/agent-bootstrap/strategy-run.test.mjs ../tools/agent-bootstrap/strategy-scheduler.test.mjs ../tools/agent-bootstrap/strategy-comparison.test.mjs ../tools/agent-bootstrap/local-experiment.test.mjs ../tools/agent-bootstrap/alashi.test.mjs",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Degenie RTS runtime and replay checks",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "checkout_and_gitleaks_evidence": {
+    "job_id": 128411949802,
+    "lines": [
+      "2026-11-07T13:06:39.1519138Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/* +001dfd1e67be4521fedb90e035e8f376a7066bb6:refs/remotes/pull/70/merge",
+      "2026-11-07T13:06:44.5425171Z  * [new ref]           001dfd1e67be4521fedb90e035e8f376a7066bb6 -> pull/70/merge",
+      "2026-11-07T13:06:44.5479416Z ##[group]Checking out the ref",
+      "2026-11-07T13:06:45.6286382Z HEAD is now at 001dfd1e Merge af322f3e0e0faea5eeb6b6c810d26b03f3a225ea into 4cdfa4cb20ee6e6d7cd33f849884f062caa39881",
+      "2026-11-07T13:06:45.6411513Z [command]/usr/bin/git log -1 --format=%H",
+      "2026-11-07T13:06:45.6434046Z 001dfd1e67be4521fedb90e035e8f376a7066bb6",
+      "2026-11-07T13:06:46.0436380Z gitleaks version: 8.24.3",
+      "2026-11-07T13:06:46.9322289Z \u001b[90m1:06PM\u001b[0m \u001b[32mINF\u001b[0m \u001b[1m4 commits scanned.\u001b[0m",
+      "2026-11-07T13:06:46.9324761Z \u001b[90m1:06PM\u001b[0m \u001b[32mINF\u001b[0m \u001b[1mno leaks found\u001b[0m"
+    ]
+  },
+  "checked_at_almaty": "2026-11-07 18:13:04 +05",
+  "source_head_with_full_logs": "1ac0315b7a2d29348d3816063641cd2e5570b0fc",
+  "source_and_workflow_unchanged_since_full_logs": true,
+  "delta_from_source_head": "Only 11 documentation, journal and evidence files, independently verified with git diff --name-only."
+}

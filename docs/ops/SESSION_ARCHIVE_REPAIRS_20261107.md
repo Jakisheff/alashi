@@ -1,7 +1,7 @@
 # Сессии и архивы: находки 1 и 2
 
 План: 1,5 часа, до 19:11. Начало 07.11.2026 в 17:41, Asia/Almaty.
-Факт: pending, записывается после завершения поручения.
+Факт: 0,65 часа (39 минут, с 17:41 до 18:20 Asia/Almaty). План закрыт; обе метки получены свежим вызовом date.
 
 Основа нового PR: main `4cdfa4cb` и закрывающая документация предыдущей задачи `84c7f339`. В этой задаче переносится ремонт находок 1 и 2. Находки №3/№5/№8, не меняются.
 
@@ -24,11 +24,11 @@
 | Находка 1, GREEN | observed: 19 тестов session_cli прошли | [Свежий лог](session-archive-20261107/finding-1-green.log) |
 | Находка 2, GREEN | observed: 22 теста indexer прошли | [Свежий лог](session-archive-20261107/finding-2-green.log) |
 | Обязательные проверки на коде 1ac0315b | observed: все пять jobs CI42374591154 прошли | [GitHub Actions](https://github.com/Jakisheff/alashi/actions/runs/42374591154) |
-| Итоговые проверки и состояние слияния | Проверяемый статус хранится в PR70 | [PR70](https://github.com/Jakisheff/alashi/pull/70) |
+| Итоговые проверки и состояние слияния | observed: все пять jobs прошли, PR70 слит | [PR70](https://github.com/Jakisheff/alashi/pull/70) |
 
-Свежие RED/GREEN завершены. [40 тестов rules прошли](session-archive-20261107/rules.log). Полный CI итогового PR остаётся условием слияния.
+Свежие RED/GREEN завершены. [40 тестов rules прошли](session-archive-20261107/rules.log). Полный CI итогового PR также пройден перед слиянием.
 
-Обязательный набор: `cargo test --locked -p alashi-rules`; `cargo test --locked --manifest-path arena/Cargo.toml`; `cargo test --locked --manifest-path indexer/Cargo.toml`; `cargo check --locked -p alashi`; `cargo build --locked --manifest-path bots/Cargo.toml`. Затем `bash tools/build_sbf.sh` перед `cargo test --locked -p alashi`. Host check не заменяет SBF. На коде 1ac0315b полный набор выполнен в CI42374591154. Итоговая ревизия с сохранёнными логами пройдёт CI повторно перед слиянием.
+Обязательный набор: `cargo test --locked -p alashi-rules`; `cargo test --locked --manifest-path arena/Cargo.toml`; `cargo test --locked --manifest-path indexer/Cargo.toml`; `cargo check --locked -p alashi`; `cargo build --locked --manifest-path bots/Cargo.toml`. Затем `bash tools/build_sbf.sh` перед `cargo test --locked -p alashi`. Host check не заменяет SBF. На коде 1ac0315b полный набор выполнен в CI42374591154. Итоговая ревизия с сохранёнными логами прошла CI42375439124 перед слиянием.
 
 [Ревью находки 1](session-archive-20261107/alashi-finding1-review-20261107.md), [ревью находки 2](session-archive-20261107/alashi-finding2-review-20261107.md) и [проверка CI/качества](session-archive-20261107/alashi12-quality-ci-review.md) отдельно описывают границы доказательств.
 
@@ -43,3 +43,7 @@
 [Итоговое независимое ревью](session-archive-20261107/final-scope-review.md) подтвердило границы diff и соответствие логов. Коммит 9e027c73 сохраняет тесты и RED до исправления; 1ac0315b сохраняет минимальные фиксы и GREEN.
 
 Полные логи всех пяти jobs перечислены в [CI manifest](session-archive-20261107/ci-source-42374591154-manifest.json), вместе с хешами и проверенной ревизией merge. В CI прошли 19 session-тестов, 22 indexer-теста и 91 Node-тест. Program suite: 37 тестов, включая оба replay; свежая SBF-сборка выполнена до них. Arena: 157 passed, один существующий ignored.
+
+PR70 слит в main как e8860613a51f8db985a70409f939d789708c74ba. Итоговая ревизия af322f3e прошла все пять jobs в [CI42375439124](https://github.com/Jakisheff/alashi/actions/runs/42375439124) до слияния. [Метаданные итогового PR CI](session-archive-20261107/final-pr-ci.json) подтверждают проверенную ревизию и шаги. Дерево main e7c0b9bb069507d1fa74e241cf8b125e54ece99c полностью совпадает с принятым деревом PR.
+
+После слияния [main CI42376003675](https://github.com/Jakisheff/alashi/actions/runs/42376003675) также прошёл все пять jobs. [Метаданные main CI](session-archive-20261107/final-main-ci.json) сохранены вместе с итоговым журналом в рабочей ветке после merge. Полные логи проверенного кода уже включены в PR70 и main.
