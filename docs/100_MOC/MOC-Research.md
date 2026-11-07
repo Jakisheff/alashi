@@ -4,6 +4,9 @@
 
 ## Файлы
 
+- [Brood War и оценка оркестрации: исследование 19.10.2026](../research/BROOD_WAR_AGENT_EVALS_20261019.md)
+- [Playbook Brood War для сравнения с ALASHI](../research/BROOD_WAR_PLAYBOOK.md)
+- [Источники и границы проверки исследования](../research/BROOD_WAR_AGENT_EVALS_20261019_SOURCES.md)
 - [Названия ролей в целых партиях 19.10.2026](../research/label-fullgames-20261019/README.md)
 
 - [Эксперимент с названиями ролей 19.10.2026](../research/label-experiment-20261019/README.md)

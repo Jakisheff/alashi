@@ -1,0 +1,121 @@
+{
+  "status": "observed",
+  "release": "site-copy-60b03e9-20261031",
+  "frontend_commit": "60b03e99e7ce6255774296c6823fa2c4517cb55d",
+  "origin": "https://alashi.network",
+  "scope": "Frontend text and metadata only",
+  "activated_at_utc": "2026-10-31T12:49:26.664801+00:00",
+  "ci": {
+    "url": "https://github.com/Jakisheff/alashi/actions/runs/41201692114",
+    "conclusion": "success",
+    "publisher_tests_passed": 7
+  },
+  "artifact": {
+    "dist_files_verified_locally_and_on_server": 120,
+    "immutable_files_verified_over_public_https": 120,
+    "initial_transport_timeouts_recovered": 2,
+    "preserved_directories": {
+      "deck": 60,
+      "downloads": 4
+    }
+  },
+  "public": {
+    "/": {
+      "status": 200,
+      "sha256": "c3ad4f569c012d0988bd597da7e00256d4081c774523df07517a484b25403224",
+      "matches_build": true,
+      "cache_control": "no-store"
+    },
+    "/about/": {
+      "status": 200,
+      "sha256": "e4411197c1da793176a2a1945792170f515380a74996e2265c9764e5eec54a2b",
+      "matches_build": true,
+      "cache_control": "no-store"
+    },
+    "/strategies": {
+      "status": 200,
+      "sha256": "c3ad4f569c012d0988bd597da7e00256d4081c774523df07517a484b25403224",
+      "matches_build": true,
+      "cache_control": "no-store"
+    },
+    "version": {
+      "release": "site-copy-60b03e9-20261031",
+      "frontend_commit": "60b03e99e7ce6255774296c6823fa2c4517cb55d",
+      "backend_commit": "39bda6678ec787eaa47e8c7c2768646e6b2f9fa3"
+    },
+    "/strategy-library": {
+      "status": 200,
+      "json": true
+    },
+    "/research-library": {
+      "status": 200,
+      "json": true
+    },
+    "/games": {
+      "status": 200,
+      "json": true
+    },
+    "/chain/devnet/games/GqHZBaWuJDNERi8xJHXnYF5eWBsLSmEXcAGJYAP94M1b": {
+      "status": 200,
+      "json": true
+    }
+  },
+  "runtime": {
+    "current": "/var/www/alashi/releases/site-copy-60b03e9-20261031",
+    "previous": "/var/www/alashi/releases/main-af19b06-20261029",
+    "frontend_commit": "60b03e99e7ce6255774296c6823fa2c4517cb55d",
+    "backend_commit": "39bda6678ec787eaa47e8c7c2768646e6b2f9fa3",
+    "services": {
+      "alashi-arena": "ActiveState=active\nMainPID=1863379",
+      "alashi-chain-api": "ActiveState=active\nMainPID=2400970",
+      "alashi-live-staging": "ActiveState=active\nMainPID=567708",
+      "alashi-match-host": "ActiveState=active\nMainPID=1166134"
+    },
+    "services_unchanged": true,
+    "publisher_last_entry": {
+      "action": "publish",
+      "at_utc": "2026-10-31T12:49:26.664801+00:00",
+      "from": "main-af19b06-20261029",
+      "phase": "complete",
+      "previous": "main-a4e85f3-20261029",
+      "to": "site-copy-60b03e9-20261031"
+    },
+    "rollback_release_validated": true
+  },
+  "browser": {
+    "pages": {
+      "/": {
+        "heading": "Test your team\u2019s hypothesis.",
+        "labels": [
+          "Available now",
+          "Planned"
+        ]
+      },
+      "/about/": {
+        "heading": "Your team\u2019s question. A testable hypothesis.",
+        "labels": [
+          "Available now: a limited comparison workflow",
+          "Planned: approaches that travel between fields"
+        ]
+      },
+      "/strategies": {
+        "heading": "Test a hypothesis. Record your decision.",
+        "labels": [
+          "Available now:",
+          "Planned:"
+        ]
+      }
+    },
+    "script_loaded": "https://alashi.network/releases/site-copy-60b03e9-20261031/assets/index-DN267sdc.js",
+    "console_errors": [],
+    "about_mobile": {
+      "width": 390,
+      "scroll_width": 390
+    },
+    "screenshots_local": "/Users/amir/Downloads/alashi-site-deploy-20261031/"
+  },
+  "limits": [
+    "No authenticated owner write, paid provider call or blockchain transaction was performed.",
+    "The release verification concerns publication and displayed copy, not external customer demand."
+  ]
+}
