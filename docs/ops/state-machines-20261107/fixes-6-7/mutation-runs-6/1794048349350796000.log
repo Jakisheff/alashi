@@ -1,0 +1,35 @@
+CWD: /Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107
+COMMAND: /Users/amir/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node frontend/scripts/state-repros/run.mjs 6
+SOURCE: frontend/src/live/StreamPage.tsx
+SHA256: 0ba13ac88f009757346c157ae11b24b36e28f0abb38b3363576d7849231d59aa
+BASELINE: source matches working tree
+
+BROWSER OUTPUT:
+Local fixture server ready; launching isolated headless Chrome.
+Runtime: Node v24.22.1; Chrome 156.0.8078.81.
+Production sources: {"/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/frontend/src/feed.ts":"e74ed4b42330cb9096ab2238ae41b2915854e15c5cdd29064a63b2e1efd17832","/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/frontend/src/live/StreamPage.tsx":"0ba13ac88f009757346c157ae11b24b36e28f0abb38b3363576d7849231d59aa"}
+Fixture isolation: actual React production modules; mocked renderer/network boundaries; controlled browser clock; no backend or external API.
+Mode: assert recovery invariants.
+CONTROL PASS finding 6: actual stream scheduler processes two actions and returns idle when renderer completes.
+3:46:19 PM [vite] (client) [console.error] Error: Injected renderer failure during active action
+    at MarketTrade (http://127.0.0.1:55150/scripts/state-repros/render-boundaries.tsx:62:20)
+    at Object.react_stack_bottom_frame (http://127.0.0.1:55150/node_modules/.vite/deps/react-dom_client.js?v=4895e10d:14142:12)
+    at renderWithHooks (http://127.0.0.1:55150/node_modules/.vite/deps/react-dom_client.js?v=4895e10d:4400:19)
+    at updateFunctionComponent (http://127.0.0.1:55150/node_modules/.vite/deps/react-dom_client.js?v=4895e10d:5775:16)
+    at beginWork (http://127.0.0.1:55150/node_modules/.vite/deps/react-dom_client.js?v=4895e10d:6391:20)
+    at runWithFiberInDEV (http://127.0.0.1:55150/node_modules/.vite/deps/react-dom_client.js?v=4895e10d:944:66)
+    at performUnitOfWork (http://127.0.0.1:55150/node_modules/.vite/deps/react-dom_client.js?v=4895e10d:9148:92)
+    at workLoopSync (http://127.0.0.1:55150/node_modules/.vite/deps/react-dom_client.js?v=4895e10d:9044:37)
+    at renderRootSync (http://127.0.0.1:55150/node_modules/.vite/deps/react-dom_client.js?v=4895e10d:9028:6)
+    at performWorkOnRoot (http://127.0.0.1:55150/node_modules/.vite/deps/react-dom_client.js?v=4895e10d:8715:27)
+
+The above error occurred in the <MarketTrade> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, StreamHeroBoundary.
+
+OBSERVED finding 6: {"action":"idle","animationLog":[{"event":"started","action":"buy","take":1}],"receipts":["action-1","action-2","action-3"]}
+INVARIANT PASS finding 6: renderer failure, queued work, fallback and fresh mount
+RESULT 0 failed recovery invariants; 1 checks ran. Harness does not edit production source.
+
+EXIT_CODE: 0
+SECONDS: 34.418

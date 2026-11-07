@@ -173,12 +173,15 @@
       "bytes": 608
     },
     "logs/frontend-build.log": {
-      "sha256": "9f6784ba2f2c1cc31ab027e61455f26416bbcec2b506089f772409ff06da4d45",
-      "bytes": 4280
+      "sha256": "da23f098ece4b55d845d8062e39d49064c794d8e28c40f9721234304600d4503",
+      "bytes": 4279,
+      "original_sha256": "9f6784ba2f2c1cc31ab027e61455f26416bbcec2b506089f772409ff06da4d45",
+      "original_bytes": 4280
     },
     "logs/coin-recess-mutations.log": {
       "sha256": "63fc7454ac898fabfc14e0872ee2fd91ee9c71661c97aacaaf9bbe3f87feb9b3",
       "bytes": 1284
     }
-  }
+  },
+  "publicationNote": "Final viewer integration removes one Vite reporter trailing space from logs/frontend-build.log. Its original hash and byte count remain in that file entry; published hashes match all current payloads. Runtime source and acceptance results are unchanged."
 }

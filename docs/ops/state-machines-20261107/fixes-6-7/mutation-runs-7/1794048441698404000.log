@@ -1,0 +1,23 @@
+CWD: /Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107
+COMMAND: /Users/amir/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node frontend/scripts/state-repros/run.mjs 7 '--case=pending result'
+SOURCE: frontend/src/feed.ts
+SHA256: e74ed4b42330cb9096ab2238ae41b2915854e15c5cdd29064a63b2e1efd17832
+BASELINE: source matches working tree
+
+BROWSER OUTPUT:
+3:47:24 PM [vite] (client) Re-optimizing dependencies because vite config has changed
+Local fixture server ready; launching isolated headless Chrome.
+Runtime: Node v24.22.1; Chrome 156.0.8078.81.
+Production sources: {"/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/frontend/src/feed.ts":"e74ed4b42330cb9096ab2238ae41b2915854e15c5cdd29064a63b2e1efd17832","/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/frontend/src/live/StreamPage.tsx":"0ba13ac88f009757346c157ae11b24b36e28f0abb38b3363576d7849231d59aa"}
+Fixture isolation: actual React production modules; mocked renderer/network boundaries; controlled browser clock; no backend or external API.
+Mode: assert recovery invariants.
+CONTROL PASS finding 7: actual useArenaFeed emits queued A speech and its accepted reaction without switching.
+OBSERVED finding 7 A->B (result pending + one queued): {"mode":"live","game":"2","speechLog":[],"delayedResult":[]}
+INVARIANT PASS finding 7: A->B pending result + queue ownership
+OBSERVED finding 7 A->off (result pending + one queued): {"mode":"off","game":"off","speechLog":[],"delayedResult":[]}
+INVARIANT PASS finding 7: live->off pending result + queue ownership
+INVARIANT PASS finding 7: unmount with pending result
+RESULT 0 failed recovery invariants; 3 checks ran. Harness does not edit production source.
+
+EXIT_CODE: 0
+SECONDS: 21.820

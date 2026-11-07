@@ -1,0 +1,176 @@
+{
+  "runtime": {
+    "node": "v24.22.1",
+    "chrome": "156.0.8078.81",
+    "fixtureOrigin": "http://127.0.0.1:56968/",
+    "realTimers": true
+  },
+  "pages": [
+    {
+      "mode": "stream",
+      "width": 1366,
+      "errors": [],
+      "consoleErrors": [
+        "Error: Injected visual fixture failure around the real renderer\n    at c (http://127.0.0.1:56968/assets/visual-adapters-BNePTwg0.js:1:392)\n    at os (http://127.0.0.1:56968/assets/visual-DWh2dTd5.js:9:49213)\n    at Xc (http://127.0.0.1:56968/assets/visual-DWh2dTd5.js:9:71870)\n    at _l (http://127.0.0.1:56968/assets/visual-DWh2dTd5.js:9:82765)\n    at Zd (http://127.0.0.1:56968/assets/visual-DWh2dTd5.js:9:127892)\n    at Jd (http://127.0.0.1:56968/assets/visual-DWh2dTd5.js:9:126975)\n    at qd (http://127.0.0.1:56968/assets/visual-DWh2dTd5.js:9:126814)\n    at Fd (http://127.0.0.1:56968/assets/visual-DWh2dTd5.js:9:123542)\n    at jf (http://127.0.0.1:56968/assets/visual-DWh2dTd5.js:9:135826)\n    at MessagePort.D (http://127.0.0.1:56968/assets/Scene-Ckw9Lrv7.js:1:10029)"
+      ],
+      "blockedExternal": [],
+      "frames": [
+        "stream-1366-idle.png",
+        "stream-1366-buy-result.png",
+        "stream-1366-fallback-feed.png"
+      ],
+      "trace": [
+        {
+          "at": 2110.4000000003725,
+          "clip": "idle",
+          "speech": "",
+          "take": 0
+        },
+        {
+          "at": 2110.5,
+          "clip": "idle",
+          "speech": "",
+          "take": 1
+        }
+      ],
+      "gpu": {
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "renderer": "ANGLE (Intel, ANGLE Metal Renderer: Intel(R) UHD Graphics 617, Unspecified Version)"
+      },
+      "receipts": [
+        "visual-action-1",
+        "visual-action-2",
+        "visual-action-3"
+      ],
+      "result": "PASS healthy real buy completes; real renderer wrapper fails during sell; fallback idle retains all three confirmed fixture records",
+      "video": "stream-1366.webm"
+    },
+    {
+      "mode": "legacy",
+      "width": 1366,
+      "errors": [],
+      "consoleErrors": [],
+      "blockedExternal": [],
+      "frames": [
+        "legacy-1366-a-act.png",
+        "legacy-1366-b-boundary-idle.png",
+        "legacy-1366-b-result.png"
+      ],
+      "trace": [
+        {
+          "at": 17785.799999998882,
+          "clip": "idle",
+          "speech": "🗳️ Source B actor voted",
+          "take": 5
+        },
+        {
+          "at": 17786,
+          "clip": "act",
+          "speech": "🗳️ Source B actor voted",
+          "take": 6
+        },
+        {
+          "at": 18887.199999999255,
+          "clip": "accepted",
+          "speech": "🗳️ Source B actor voted",
+          "take": 7
+        },
+        {
+          "at": 20117,
+          "clip": "idle",
+          "speech": "🗳️ Source B actor voted",
+          "take": 8
+        }
+      ],
+      "gpu": {
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "renderer": "ANGLE (Intel, ANGLE Metal Renderer: Intel(R) UHD Graphics 617, Unspecified Version)"
+      },
+      "result": "PASS real legacy act/result/idle sequence, same-game API-source switch cancels A work, fresh B vote plays and returns idle",
+      "video": "legacy-1366.webm"
+    },
+    {
+      "mode": "stream",
+      "width": 390,
+      "errors": [],
+      "consoleErrors": [
+        "Error: Injected visual fixture failure around the real renderer\n    at c (http://127.0.0.1:56968/assets/visual-adapters-BNePTwg0.js:1:392)\n    at os (http://127.0.0.1:56968/assets/visual-DWh2dTd5.js:9:49213)\n    at Xc (http://127.0.0.1:56968/assets/visual-DWh2dTd5.js:9:71870)\n    at _l (http://127.0.0.1:56968/assets/visual-DWh2dTd5.js:9:82765)\n    at Zd (http://127.0.0.1:56968/assets/visual-DWh2dTd5.js:9:127892)\n    at Jd (http://127.0.0.1:56968/assets/visual-DWh2dTd5.js:9:126975)\n    at qd (http://127.0.0.1:56968/assets/visual-DWh2dTd5.js:9:126814)\n    at Fd (http://127.0.0.1:56968/assets/visual-DWh2dTd5.js:9:123542)\n    at jf (http://127.0.0.1:56968/assets/visual-DWh2dTd5.js:9:135826)\n    at MessagePort.D (http://127.0.0.1:56968/assets/Scene-Ckw9Lrv7.js:1:10029)"
+      ],
+      "blockedExternal": [],
+      "frames": [
+        "stream-390-idle.png",
+        "stream-390-buy-result.png",
+        "stream-390-fallback-feed.png"
+      ],
+      "trace": [
+        {
+          "at": 3340.7999999988824,
+          "clip": "idle",
+          "speech": "",
+          "take": 0
+        },
+        {
+          "at": 3341,
+          "clip": "idle",
+          "speech": "",
+          "take": 1
+        }
+      ],
+      "gpu": {
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "renderer": "ANGLE (Intel, ANGLE Metal Renderer: Intel(R) UHD Graphics 617, Unspecified Version)"
+      },
+      "receipts": [
+        "visual-action-1",
+        "visual-action-2",
+        "visual-action-3"
+      ],
+      "result": "PASS healthy real buy completes; real renderer wrapper fails during sell; fallback idle retains all three confirmed fixture records",
+      "video": "stream-390.webm"
+    },
+    {
+      "mode": "legacy",
+      "width": 390,
+      "errors": [],
+      "consoleErrors": [],
+      "blockedExternal": [],
+      "frames": [
+        "legacy-390-a-act.png",
+        "legacy-390-b-boundary-idle.png",
+        "legacy-390-b-result.png"
+      ],
+      "trace": [
+        {
+          "at": 18036.800000000745,
+          "clip": "idle",
+          "speech": "🗳️ Source B actor voted",
+          "take": 5
+        },
+        {
+          "at": 18036.900000000373,
+          "clip": "act",
+          "speech": "🗳️ Source B actor voted",
+          "take": 6
+        },
+        {
+          "at": 19139.699999999255,
+          "clip": "accepted",
+          "speech": "🗳️ Source B actor voted",
+          "take": 7
+        },
+        {
+          "at": 20370.099999999627,
+          "clip": "idle",
+          "speech": "🗳️ Source B actor voted",
+          "take": 8
+        }
+      ],
+      "gpu": {
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "renderer": "ANGLE (Intel, ANGLE Metal Renderer: Intel(R) UHD Graphics 617, Unspecified Version)"
+      },
+      "result": "PASS real legacy act/result/idle sequence, same-game API-source switch cancels A work, fresh B vote plays and returns idle",
+      "video": "legacy-390.webm"
+    }
+  ]
+}

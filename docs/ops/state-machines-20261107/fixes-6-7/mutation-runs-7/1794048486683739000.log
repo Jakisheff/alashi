@@ -1,0 +1,42 @@
+CWD: /Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/mutation-workers/run-4696f940-6398-4caf-bf84-8ad4f351906c/worker-0
+COMMAND: /Users/amir/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node frontend/scripts/state-repros/run.mjs 7 '--case=pending result'
+SOURCE: frontend/src/feed.ts
+SHA256: 514b07880d3b255a377139c68c0dff03338abfc7e8a3cf9c87ccc27b9997c697
+--- working-tree
++++ probe-source
+@@ -112,7 +112,7 @@
+       queue.current = []
+       const scene = useScene.getState()
+       if (scene.speechId === speechId) scene.say('')
+-      if (scene.take === take) scene.play('idle')
++      if (scene.take !== take) scene.play('idle')
+     }
+   }, [mode, api, game])
+
+
+BROWSER OUTPUT:
+Local fixture server ready; launching isolated headless Chrome.
+Runtime: Node v24.22.1; Chrome 156.0.8078.81.
+Production sources: {"/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/mutation-workers/run-4696f940-6398-4caf-bf84-8ad4f351906c/worker-0/frontend/src/feed.ts":"514b07880d3b255a377139c68c0dff03338abfc7e8a3cf9c87ccc27b9997c697","/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/mutation-workers/run-4696f940-6398-4caf-bf84-8ad4f351906c/worker-0/frontend/src/live/StreamPage.tsx":"0ba13ac88f009757346c157ae11b24b36e28f0abb38b3363576d7849231d59aa"}
+Fixture isolation: actual React production modules; mocked renderer/network boundaries; controlled browser clock; no backend or external API.
+Mode: assert recovery invariants.
+CONTROL PASS finding 7: actual useArenaFeed emits queued A speech and its accepted reaction without switching.
+FAIL finding 7: A->B pending result + queue ownership: source switch releases its current clip
+
+'act' !== 'idle'
+
+expected="idle" actual="act"
+FAIL finding 7: live->off pending result + queue ownership: source switch releases its current clip
+
+'act' !== 'idle'
+
+expected="idle" actual="act"
+FAIL finding 7: unmount with pending result: Expected values to be strictly equal:
+
+'act' !== 'idle'
+
+expected="idle" actual="act"
+RESULT 3 failed recovery invariants; 3 checks ran. Harness does not edit production source.
+
+EXIT_CODE: 1
+SECONDS: 19.232

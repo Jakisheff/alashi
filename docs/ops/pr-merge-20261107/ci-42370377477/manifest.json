@@ -1,0 +1,487 @@
+{
+  "run_id": 42370377477,
+  "run_url": "https://github.com/Jakisheff/alashi/actions/runs/42370377477",
+  "event": "pull_request",
+  "run_attempt": 1,
+  "source_head_sha": "74ca4c53aad2cf4d1efe431f6e297501c7bb83f4",
+  "base_sha": "8c1dffb4267083bcbab6b084769846ada0f70670",
+  "tested_checkout_merge_sha": "7407ff38ccd573df93ae77527ed2328f26105e89",
+  "run_conclusion": "failure",
+  "overall_merge_gate": "FAILED: Gitleaks reports eight historical generic-api-key fingerprints; mandatory runtime jobs passed.",
+  "log_retrieval": "GitHub plugin fetch_workflow_job_logs structuredContent.content, saved as UTF-8 without normalization",
+  "run_metadata_retrieval": "Read-only gh api because the workflow-run wrapper omitted head/event/attempt fields; no CI action was triggered.",
+  "jobs": [
+    {
+      "key": "tests",
+      "id": 128397091130,
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42370377477/job/128397091130",
+      "conclusion": "success",
+      "log": "tests.log",
+      "utf8_bytes": 209040,
+      "sha256": "d062299af0028b0f388cf0d4a560dc872a5c212eedf50630c6100201a1f66a32",
+      "download_utf8_bytes": 209163,
+      "checkout_merge_sha": "7407ff38ccd573df93ae77527ed2328f26105e89",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions-rust-lang/setup-rust-toolchain@166cdcfd11aee3cb47222f9ddb555ce30ddb9659",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Run Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Run npm ci --ignore-scripts --prefix tools/agent-bootstrap",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Workspace tests (rules crate; the Anchor program needs `anchor build` for its .so tests, excluded here)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Owner film receipts and delivered video",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Arena tests (unit + http e2e)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Bots compile check",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10
+        },
+        {
+          "name": "Two-owner match admission tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Local signer context tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Indexer tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        },
+        {
+          "name": "Anchor program host compile (SBF execution is the sbf job below)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14
+        },
+        {
+          "name": "Local tooling checks",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        },
+        {
+          "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 27
+        },
+        {
+          "name": "Post Run Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 28
+        },
+        {
+          "name": "Post Run actions-rust-lang/setup-rust-toolchain@166cdcfd11aee3cb47222f9ddb555ce30ddb9659",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 29
+        },
+        {
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 30
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 31
+        }
+      ],
+      "trailing_whitespace_lines": 123,
+      "original_download_sha256": "4ba2d31063e338df449ef532430d39424d7407eedd3d9d501c5e144d5878af06"
+    },
+    {
+      "key": "animations",
+      "id": 128397091233,
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42370377477/job/128397091233",
+      "conclusion": "success",
+      "log": "animations.log",
+      "utf8_bytes": 75743,
+      "sha256": "90bb2e6e13946a5d9a573563c3ad21d5aa6250a61e82a18d3c874509c20fdbf4",
+      "download_utf8_bytes": 75778,
+      "checkout_merge_sha": "7407ff38ccd573df93ae77527ed2328f26105e89",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Run npm ci",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Run npm ci --ignore-scripts --prefix ../tools/agent-bootstrap",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Run npm run build",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Run npm run check:animations",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Run npm run check:strategies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Run npm run check:comparisons",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Run npm run check:research",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10
+        },
+        {
+          "name": "Run npm run check:comparison-proxy",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Run npm run check:trading",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Run node --experimental-strip-types --no-warnings scripts/donkey-risk-adapter-check.ts",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        },
+        {
+          "name": "Run node --test ../tools/agent-bootstrap/strategy-run.test.mjs ../tools/agent-bootstrap/strategy-scheduler.test.mjs ../tools/agent-bootstrap/strategy-comparison.test.mjs ../tools/agent-bootstrap/local-experiment.test.mjs ../tools/agent-bootstrap/alashi.test.mjs",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14
+        },
+        {
+          "name": "Degenie RTS runtime and replay checks",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        },
+        {
+          "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 29
+        },
+        {
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 30
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 31
+        }
+      ],
+      "trailing_whitespace_lines": 35,
+      "original_download_sha256": "5bd888f6606431fd6d3a3ee32e95927d6aa70f60981c84f01537b4e5f7aee0a1"
+    },
+    {
+      "key": "sbf",
+      "id": 128397091332,
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42370377477/job/128397091332",
+      "conclusion": "success",
+      "log": "sbf.log",
+      "utf8_bytes": 47737,
+      "sha256": "3183afc2f36cfdae903e754c9db39b62da75b486385915478545ed08740dfe41",
+      "download_utf8_bytes": 47764,
+      "checkout_merge_sha": "7407ff38ccd573df93ae77527ed2328f26105e89",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions-rust-lang/setup-rust-toolchain@166cdcfd11aee3cb47222f9ddb555ce30ddb9659",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Run Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Install cargo-build-sbf 4.1.0 (isolated release dir)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Build fresh SBF (tools/build_sbf.sh pins 4.1.0 / platform-tools v1.54)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Program tests on fresh SBF (game + replay equivalence)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Post Run Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Post Run actions-rust-lang/setup-rust-toolchain@166cdcfd11aee3cb47222f9ddb555ce30ddb9659",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        },
+        {
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        }
+      ],
+      "trailing_whitespace_lines": 27,
+      "original_download_sha256": "b9ddb04515be8680a98e4929ab00e3b82e41f620b12516e9826935673370f3bc"
+    }
+  ],
+  "command_evidence": [
+    {
+      "check": "rules_workspace",
+      "job": "tests",
+      "command": "cargo test --locked --workspace --exclude alashi",
+      "logged_start": "2026-11-07T11:58:23.1118874Z",
+      "result_lines": [
+        "2026-11-07T11:58:24.8572200Z \u001b[1m\u001b[32m    Finished\u001b[0m `test` profile [unoptimized] target(s) in 1.70s",
+        "2026-11-07T11:58:24.9057785Z test result: ok. 26 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "2026-11-07T11:58:24.9059424Z test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "2026-11-07T11:58:24.9076821Z test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "2026-11-07T11:58:24.9108518Z test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "2026-11-07T11:58:24.9112018Z test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "2026-11-07T11:58:24.9118918Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "2026-11-07T11:58:24.9155618Z test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "2026-11-07T11:58:24.9839802Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+      ]
+    },
+    {
+      "check": "arena",
+      "job": "tests",
+      "command": "cargo test --locked --manifest-path arena/Cargo.toml",
+      "logged_start": "2026-11-07T11:58:25.6695019Z",
+      "result_lines": [
+        "2026-11-07T11:58:52.5715459Z \u001b[1m\u001b[32m    Finished\u001b[0m `test` profile [unoptimized] target(s) in 26.86s",
+        "2026-11-07T11:58:56.4239888Z test result: ok. 122 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 3.84s",
+        "2026-11-07T11:58:59.4324589Z test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.01s",
+        "2026-11-07T11:58:59.4341804Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "2026-11-07T11:58:59.4355170Z test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "2026-11-07T11:58:59.5279313Z test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s",
+        "2026-11-07T11:58:59.5293543Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "2026-11-07T11:58:59.5305103Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "2026-11-07T11:58:59.5315985Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "2026-11-07T11:58:59.5415958Z test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s",
+        "2026-11-07T11:59:05.5696353Z test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.03s",
+        "2026-11-07T11:59:05.6459308Z test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s",
+        "2026-11-07T12:00:22.0975451Z test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 76.45s",
+        "2026-11-07T12:00:27.5961077Z test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.49s",
+        "2026-11-07T12:00:27.6445777Z test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s",
+        "2026-11-07T12:00:28.0378715Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+      ]
+    },
+    {
+      "check": "bots_build",
+      "job": "tests",
+      "command": "cargo build --locked --manifest-path bots/Cargo.toml",
+      "logged_start": "2026-11-07T12:00:28.0471091Z",
+      "result_lines": [
+        "2026-11-07T12:01:41.4684308Z \u001b[1m\u001b[32m    Finished\u001b[0m `dev` profile [unoptimized] target(s) in 1m 13s"
+      ]
+    },
+    {
+      "check": "indexer",
+      "job": "tests",
+      "command": "cargo test --locked --manifest-path indexer/Cargo.toml",
+      "logged_start": "2026-11-07T12:01:46.8418296Z",
+      "result_lines": [
+        "2026-11-07T12:03:00.2197504Z \u001b[1m\u001b[32m    Finished\u001b[0m `test` profile [unoptimized] target(s) in 1m 13s",
+        "2026-11-07T12:03:04.2603627Z test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.00s",
+        "2026-11-07T12:03:04.2628149Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "2026-11-07T12:03:04.2640679Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "2026-11-07T12:03:04.2652840Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "2026-11-07T12:03:04.2674007Z test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "2026-11-07T12:03:04.4925753Z test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.22s",
+        "2026-11-07T12:03:04.4950021Z test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "2026-11-07T12:03:04.4970321Z test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "2026-11-07T12:03:04.6314626Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+      ]
+    },
+    {
+      "check": "program_check",
+      "job": "tests",
+      "command": "cargo check --locked -p alashi",
+      "logged_start": "2026-11-07T12:03:04.6479161Z",
+      "result_lines": [
+        "2026-11-07T12:03:05.9808811Z \u001b[1m\u001b[32m    Finished\u001b[0m `dev` profile [unoptimized] target(s) in 1.29s"
+      ]
+    },
+    {
+      "check": "sbf_build",
+      "job": "sbf",
+      "command": "bash tools/build_sbf.sh",
+      "logged_start": "2026-11-07T11:58:32.5098783Z",
+      "result_lines": [
+        "2026-11-07T11:59:15.9819939Z \u001b[1m\u001b[32m    Finished\u001b[0m `release` profile [optimized] target(s) in 5.36s"
+      ]
+    },
+    {
+      "check": "program_test",
+      "job": "sbf",
+      "command": "cargo test --locked -p alashi",
+      "logged_start": "2026-11-07T11:59:16.0152480Z",
+      "result_lines": [
+        "2026-11-07T11:59:19.6677763Z \u001b[1m\u001b[32m    Finished\u001b[0m `test` profile [unoptimized] target(s) in 3.62s",
+        "2026-11-07T11:59:19.6933861Z test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "2026-11-07T11:59:22.7411778Z test result: ok. 28 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.05s",
+        "2026-11-07T11:59:23.8925955Z test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.15s",
+        "2026-11-07T11:59:24.2091557Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+      ]
+    },
+    {
+      "check": "node_five_files",
+      "job": "animations",
+      "command": "node --test ../tools/agent-bootstrap/strategy-run.test.mjs ../tools/agent-bootstrap/strategy-scheduler.test.mjs ../tools/agent-bootstrap/strategy-comparison.test.mjs ../tools/agent-bootstrap/local-experiment.test.mjs ../tools/agent-bootstrap/alashi.test.mjs",
+      "logged_start": "2026-11-07T11:58:58.9011985Z",
+      "result_lines": [
+        "2026-11-07T11:59:03.3293362Z # tests 91",
+        "2026-11-07T11:59:03.3294306Z # pass 91",
+        "2026-11-07T11:59:03.3294549Z # fail 0",
+        "2026-11-07T11:59:03.3294782Z # cancelled 0",
+        "2026-11-07T11:59:03.3295040Z # skipped 0"
+      ]
+    }
+  ],
+  "sbf_order": {
+    "build_step_number": 6,
+    "build_finished_log_timestamp": "2026-11-07T11:59:15.9819939Z",
+    "program_tests_step_number": 7,
+    "program_tests_started_log_timestamp": "2026-11-07T11:59:16.0152480Z",
+    "both_step_conclusions": "success",
+    "both_epoch_replay_tests_passed": true
+  },
+  "exact_local_rules": {
+    "command": "cargo test --locked -p alashi-rules",
+    "head": "321bf71d86ddf7fa683b5bd7fac55f4cfa5e4235",
+    "log": "../final-rules.log",
+    "exit_code": 0,
+    "passed_tests": 40,
+    "elapsed_seconds": 482.36,
+    "bytes": 8479,
+    "sha256": "efa02b3ec810b8ccf100c4a0f4cd00bcddbede97ce03a471403d57878fa83e7a"
+  },
+  "publication_note": "Only trailing spaces/tabs were stripped from published log lines. download_utf8_bytes and original_download_sha256 describe the complete original responses; utf8_bytes and sha256 describe the published files."
+}

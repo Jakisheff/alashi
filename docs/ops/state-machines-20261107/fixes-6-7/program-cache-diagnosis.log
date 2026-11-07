@@ -1,0 +1,18 @@
+Observed: unchanged Rust sources and lockfiles; program integration test compile failed on incompatible same-version crate identities.
+Inference: alashi cdylib/lib outputs in the shared host target were overwritten by another package graph while a workspace fingerprint remained cached.
+Command: cargo tree --offline --locked -p alashi -i anchor-lang
+anchor-lang v1.1.2
+├── alashi v0.1.0 (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/programs/alashi)
+└── alashi-rules v0.1.0 (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/rules)
+    └── alashi v0.1.0 (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/programs/alashi)
+
+Observed alashi fingerprints before cleanup:
+{"path": "target/host/debug/.fingerprint/alashi-1331564c168d53da/lib-alashi.json", "features": "[\"default\"]", "profile": 3385905171097263275, "anchor_dependency": [[14211041244481820127, "anchor_lang", false, 13492202668665069257]]}
+{"path": "target/host/debug/.fingerprint/alashi-6526fd3ab2b0b75c/lib-alashi.json", "features": "[\"default\"]", "profile": 4776731617001319624, "anchor_dependency": [[14211041244481820127, "anchor_lang", false, 12832154557141534234]]}
+{"path": "target/host/debug/.fingerprint/alashi-9684d480fac53312/lib-alashi.json", "features": "[\"default\"]", "profile": 4776731617001319624, "anchor_dependency": [[14211041244481820127, "anchor_lang", false, 9662400095477908803]]}
+{"path": "target/host/debug/.fingerprint/alashi-aa4c2865b7a73672/lib-alashi.json", "features": "[\"default\"]", "profile": 4776731617001319624, "anchor_dependency": [[14211041244481820127, "anchor_lang", false, 9662400095477908803]]}
+{"path": "target/host/debug/.fingerprint/alashi-ca75910f9e814ee1/lib-alashi.json", "features": "[\"default\"]", "profile": 4776731617001319624, "anchor_dependency": [[14211041244481820127, "anchor_lang", false, 7711511583708180829]]}
+{"path": "target/host/debug/.fingerprint/alashi-f7e633795a915b83/lib-alashi.json", "features": "[\"default\"]", "profile": 4776731617001319624, "anchor_dependency": [[14211041244481820127, "anchor_lang", false, 7711511583708180829]]}
+target/host/debug/deps/libalashi.rlib 4799208 bytes
+target/host/debug/deps/libalashi.dylib 2097048 bytes
+Rust source/manifests/build script diff from da57582b: empty.

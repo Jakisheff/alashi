@@ -1,0 +1,70 @@
+{
+  "repository": "Jakisheff/alashi",
+  "pr": 69,
+  "expected_head": "a4c0b81df15169ac007f6c58b7240dc9ab4699e7",
+  "observed_pr_head": "a4c0b81df15169ac007f6c58b7240dc9ab4699e7",
+  "actual_main": "0db54f864d63d593937200f3d3c1d2a1fcd00390",
+  "actual_merge_ref": "714a3ee6a9870dca798643e08194a40ba1f9cdcc",
+  "merge_parents": [
+    "0db54f864d63d593937200f3d3c1d2a1fcd00390",
+    "a4c0b81df15169ac007f6c58b7240dc9ab4699e7"
+  ],
+  "run": [
+    {
+      "id": 42369435058,
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42369435058",
+      "event": "pull_request",
+      "head_sha": "a4c0b81df15169ac007f6c58b7240dc9ab4699e7",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "jobs": [
+    {
+      "id": 128394303903,
+      "name": "Gitleaks secret scan",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42369435058/job/128394303903"
+    },
+    {
+      "id": 128394303933,
+      "name": "Rules, arena, indexer, and program compile",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42369435058/job/128394303933"
+    },
+    {
+      "id": 128394303960,
+      "name": "Animation geometry and frontend build",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42369435058/job/128394303960"
+    },
+    {
+      "id": 128394303975,
+      "name": "Fresh SBF build and program tests",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42369435058/job/128394303975"
+    },
+    {
+      "id": 128394303979,
+      "name": "RustSec audit of all lockfiles",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42369435058/job/128394303979"
+    }
+  ],
+  "checkout_evidence": {
+    "job_id": 128394303960,
+    "lines": [
+      "2026-11-07T11:44:27.6532460Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +714a3ee6a9870dca798643e08194a40ba1f9cdcc:refs/remotes/pull/69/merge",
+      "2026-11-07T11:44:31.9445754Z  * [new ref]         714a3ee6a9870dca798643e08194a40ba1f9cdcc -> pull/69/merge",
+      "2026-11-07T11:44:31.9554178Z ##[group]Checking out the ref",
+      "2026-11-07T11:44:33.1564046Z [command]/usr/bin/git log -1 --format=%H",
+      "2026-11-07T11:44:33.1588184Z 714a3ee6a9870dca798643e08194a40ba1f9cdcc"
+    ]
+  },
+  "checked_at_almaty": "2026-11-07 16:50:41 +05"
+}
