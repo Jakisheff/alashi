@@ -87,3 +87,5 @@
 
 
 - [Owner PR review and merge, 7 November 2026](../ops/PR_MERGE_REVIEW_20261107.md)
+
+- [Ревью монеты и Dance перед слиянием, 07.11.2026](../ops/pr-merge-20261107/pr24-25-visual/ACCEPTANCE.md): источники, кадры, записи, проверки и ограничения.
