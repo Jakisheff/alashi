@@ -14,6 +14,7 @@ function uprightPalm(normal: Vector3) {
 const TEMPLE_LEFT = uprightPalm(new Vector3(-1, 0, 0))
 const TEMPLE_RIGHT = uprightPalm(new Vector3(1, 0, 0))
 const FACE_PALM = uprightPalm(new Vector3(0, 0, -1))
+const DANCE_RATE = Math.PI * 128 / 60
 
 /** Own rig layer: it only rotates arm joints, never relocates finger sockets. */
 export function createLivingRig(hero: Object3D, clips: AnimationClip[]) {
@@ -207,6 +208,36 @@ export function createLivingRig(hero: Object3D, clips: AnimationClip[]) {
       reach('right', new Vector3(-1.0, -.42, .5), PALM_UP, lean * .8)
       bone('left-brow').position.y += .014 * lean
       bone('mouth').scale.y += .18 * lean
+    } else if (kind === 'dance') {
+      const prepare = pulse(t, .12, .35, .5, .85)
+      const groove = pulse(t, .2, .65, 3.9, 4.9)
+      const phase = (t - .65) * DANCE_RATE, sway = Math.sin(phase)
+      const pout = pulse(t, .85, 1.2, 1.5, 1.9) + pulse(t, 2.2, 2.6, 2.95, 3.45)
+      // Replace the idle hover while dancing; weight and fists share one beat.
+      bone('body').position.y *= 1 - groove
+      bodyOffset(.065 * prepare + (.035 * Math.cos(phase * 2) - .04) * groove,
+        .13 * Math.sin(phase - .2) * groove, .07 * Math.sin(phase - .12) * groove,
+        .07 * sway * groove, -.035 * prepare + (.015 + .022 * Math.cos(phase * 2)) * groove)
+      for (const side of ['left', 'right'] as const) {
+        const sign = side === 'left' ? 1 : -1, beat = sign * sway
+        reach(side, new Vector3(sign * (.92 + .04 * beat), -.32 + .13 * beat, .57 + .14 * beat), 'thumb', groove,
+          new Vector3(sign * .7, -.7, -.2))
+        for (const part of ['point', 'middle', 'curl']) for (const [suffix, bend] of [['', -.85], ['-mid', -1.15], ['-tip', -.8]] as const) {
+          bone(`${side}-${part}${suffix}`).quaternion.slerp(new Quaternion().setFromAxisAngle(X, bend), groove)
+        }
+        const thumbDirection = bone(`${side}-thumb-tip`).position.clone().normalize()
+        bone(`${side}-thumb`).quaternion.slerp(new Quaternion().setFromUnitVectors(thumbDirection, new Vector3(-sign * .85, -.4, .35).normalize()), groove)
+        bone(`${side}-thumb-tip`).quaternion.slerp(new Quaternion().setFromAxisAngle(X, -.55), groove)
+        const lid = bone(`${side}-lid`)
+        lid.scale.y += (.36 + .12 * pout - lid.scale.y) * groove
+        bone(`${side}-brow`).position.y += (side === 'left' ? .014 : -.006) * groove
+        bone(`${side}-brow`).quaternion.multiply(new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), (side === 'left' ? .12 : -.08) * groove))
+      }
+      gaze(.45 * Math.sin(phase + .5), .1, pulse(t, 0, .2, 3.9, 4.75))
+      const mouth = bone('mouth')
+      mouth.scale.x += (.62 - mouth.scale.x) * pout
+      mouth.scale.y += (-.32 - mouth.scale.y) * pout
+      mouth.quaternion.multiply(new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), -.14 * groove * (1 - pout)))
     } else if (kind === 'victory') {
       const windup = pulse(t, 0, .4, .5, 1.1)
       const cheer = pulse(t, .45, 1.25, 3.15, 4.6)
@@ -227,7 +258,9 @@ export function createLivingRig(hero: Object3D, clips: AnimationClip[]) {
     // Follow this reaction's effort instead of applying a bow to every gesture.
     for (let i = 0; i <= 7; i++) {
       const delayed = t - .2 - i * .035
-      const drag = kind === 'victory' ? -.09 * pulse(delayed, 0, .4, .5, 1.1) + .1 * pulse(delayed, .45, 1.25, 3.15, 4.6)
+      const danceDrag = .11 * Math.sin((delayed - .65) * DANCE_RATE) * pulse(delayed, .2, .65, 3.9, 4.9)
+      const drag = kind === 'dance' ? danceDrag
+        : kind === 'victory' ? -.09 * pulse(delayed, 0, .4, .5, 1.1) + .1 * pulse(delayed, .45, 1.25, 3.15, 4.6)
         : kind === 'thumbsUp' ? -.16 * pulse(delayed, 1.35, 1.9, 2.05, 2.6)
         : kind === 'thinking' ? -.075 * pulse(delayed, 2.05, 2.6, 2.75, 3.25)
         : kind === 'shrug' ? .035 * pulse(delayed, .15, 1.25, 3.25, 4.85)

@@ -143,4 +143,7 @@
   .live-transcript-head { font-size: 9px; }
   .live-event p { font-size: 11px; }
 }
+@media (min-width: 761px) {
+  .live-frame { align-self: start; position: sticky; top: 24px; }
+}
 @media (prefers-reduced-motion: reduce) { .live-progress i, .live-scene { transition: none; } .live-thought-bubble { animation: none; } }
