@@ -1,0 +1,57 @@
+CWD: /Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/mutation-workers/run-16063fbf-5be4-4361-bbc3-866783ede9ad/worker-0
+COMMAND: cargo test --offline --locked --manifest-path bots/Cargo.toml session_cli::tests::v2_
+SOURCE: bots/src/session_cli.rs
+SHA256: 86b34e13d7ff9e843a468eb19142a9cd51f872760f1a4b9e64e401c8f906d996
+--- working-tree
++++ probe-source
+@@ -930,7 +930,7 @@
+         session["next_op_id"] = json!(op_id.checked_add(1).ok_or_else(|| error("op_exhausted", "operation ID exhausted"))?);
+         save_private(path, &session)?;
+     } else if response["op_id"] == op_id && response["op_consumed"] == false
+-        && response["ok"] == false
++        && response["ok"] != false
+         && matches!(server_code(&response), "bad_action" | "bad_params" | "bad_choice") {
+         session["pending_act"] = Value::Null;
+         save_private(path, &session)?;
+
+CARGO OUTPUT:
+   Compiling bots v0.1.0 (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/mutation-workers/run-16063fbf-5be4-4361-bbc3-866783ede9ad/worker-0/bots)
+    Finished `test` profile [unoptimized] target(s) in 23.88s
+     Running unittests src/main.rs (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/host/debug/deps/bots-57b8a8395c4d1bf4)
+
+running 8 tests
+test session_cli::tests::v2_action_defaults_are_stable ... ok
+test session_cli::tests::v2_golden_identity_and_strategy ... ok
+test session_cli::tests::v2_definitive_rejection_allows_corrected_action_at_same_id ... FAILED
+test session_cli::tests::v2_transport_failure_preserves_pending_operation ... ok
+test session_cli::tests::v2_lost_response_retries_the_received_request_unchanged ... ok
+test session_cli::tests::v2_pending_action_survives_rejection_and_retries_same_id ... ok
+test session_cli::tests::v2_one_profile_joins_two_games_without_sending_prompt ... ok
+test session_cli::tests::v2_uncertain_replies_preserve_exact_pending_action_for_retry ... FAILED
+
+failures:
+
+---- session_cli::tests::v2_definitive_rejection_allows_corrected_action_at_same_id stdout ----
+
+thread 'session_cli::tests::v2_definitive_rejection_allows_corrected_action_at_same_id' panicked at src/session_cli.rs:1514:13:
+bad_action must release the rejected action
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- session_cli::tests::v2_uncertain_replies_preserve_exact_pending_action_for_retry stdout ----
+
+thread 'session_cli::tests::v2_uncertain_replies_preserve_exact_pending_action_for_retry' panicked at src/session_cli.rs:1556:13:
+assertion `left == right` failed: {"error":"bad_action","ok":true,"op_consumed":false,"op_id":1}
+  left: Null
+ right: Object {"action": Object {"action": String("produce"), "by": String("llm"), "params": Object {}}, "op_id": Number(1)}
+
+
+failures:
+    session_cli::tests::v2_definitive_rejection_allows_corrected_action_at_same_id
+    session_cli::tests::v2_uncertain_replies_preserve_exact_pending_action_for_retry
+
+test result: FAILED. 6 passed; 2 failed; 0 ignored; 0 measured; 90 filtered out; finished in 2.43s
+
+error: test failed, to rerun pass `--bin bots`
+
+EXIT_CODE: 101
+SECONDS: 28.907

@@ -1,0 +1,45 @@
++ (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107) python3 docs/ops/state-machines-20261107/mutation-probe.py indexer
+indexer/src/chain_api.rs:131 delete !
++ (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/mutation-workers/run-8245ee18-974f-4a40-8dee-795943e2db0e/worker-0) python3 docs/ops/state-machines-20261107/mutation-probe.py indexer
+indexer/src/chain_api.rs:131 || -> &&
++ (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/mutation-workers/run-8245ee18-974f-4a40-8dee-795943e2db0e/worker-0) python3 docs/ops/state-machines-20261107/mutation-probe.py indexer
+indexer/src/chain_api.rs:131 || -> &&
++ (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/mutation-workers/run-8245ee18-974f-4a40-8dee-795943e2db0e/worker-0) python3 docs/ops/state-machines-20261107/mutation-probe.py indexer
+indexer/src/chain_api.rs:131 == -> !=
++ (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/mutation-workers/run-8245ee18-974f-4a40-8dee-795943e2db0e/worker-0) python3 docs/ops/state-machines-20261107/mutation-probe.py indexer
+indexer/src/chain_api.rs:131 true -> false
++ (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/mutation-workers/run-8245ee18-974f-4a40-8dee-795943e2db0e/worker-0) python3 docs/ops/state-machines-20261107/mutation-probe.py indexer
+Wrote /Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/.metrics/mutate/indexer/chain_api.edn
+Wrote /Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/.metrics/mutate/indexer/chain_api/ChainApi.edn
+Wrote /Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/.metrics/mutate/indexer/chain_api/Error.edn
+KILLED    indexer/src/chain_api.rs:131 delete !
+KILLED    indexer/src/chain_api.rs:131 || -> &&
+KILLED    indexer/src/chain_api.rs:131 || -> &&
+KILLED    indexer/src/chain_api.rs:131 == -> !=
+KILLED    indexer/src/chain_api.rs:131 true -> false
+Function         Namespace                     Killed  Survived  Uncovered  Sites   Score
+-----------------------------------------------------------------------------------------
+archive          indexer::chain_api::ChainApi       0         0          0      1    n/a
+cached           indexer::chain_api::ChainApi       0         0          0      0    n/a
+code             indexer::chain_api::Error          0         0          0      0    n/a
+decode_account   indexer::chain_api                 0         0          0      5    n/a
+event_associated indexer::chain_api                 0         0          0      2    n/a
+faction_filters  indexer::chain_api                 0         0          0      1    n/a
+faction_pda      indexer::chain_api                 0         0          0      1    n/a
+fetch            indexer::chain_api::ChainApi       0         0          0     34    n/a
+filtered_events  indexer::chain_api                 0         0          0      4    n/a
+game_gate        indexer::chain_api::ChainApi       0         0          0      2    n/a
+genesis          indexer::chain_api::ChainApi       0         0          0      3    n/a
+get              indexer::chain_api::ChainApi       0         0          0      6    n/a
+journal          indexer::chain_api::ChainApi       0         0          0     51    n/a
+load_archive     indexer::chain_api::ChainApi       0         0          0     18    n/a
+new              indexer::chain_api::ChainApi       0         0          0      3    n/a
+phase_name       indexer::chain_api                 0         0          0      0    n/a
+remember         indexer::chain_api::ChainApi       0         0          0      2    n/a
+rpc              indexer::chain_api::ChainApi       0         0          0      6    n/a
+save_archive     indexer::chain_api::ChainApi       0         0          0      9    n/a
+status           indexer::chain_api::Error          0         0          0      0    n/a
+stringify_u64    indexer::chain_api                 0         0          0      0    n/a
+ready_value      indexer::chain_api::ChainApi       5         0          0      7 100.0%
+-----------------------------------------------------------------------------------------
+Total                                               5         0          0    155  100.0%

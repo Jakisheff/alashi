@@ -1,0 +1,1044 @@
+﻿2026-11-07T12:55:20.8350974Z Current runner version: '2.338.2'
+2026-11-07T12:55:20.8370320Z ##[group]Runner Image Provisioner
+2026-11-07T12:55:20.8370858Z Hosted Compute Agent
+2026-11-07T12:55:20.8371283Z Version: 20261028.624
+2026-11-07T12:55:20.8371699Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+2026-11-07T12:55:20.8372122Z Build Date: 2026-10-28T21:51:42Z
+2026-11-07T12:55:20.8372601Z Worker ID: {90e87c8d-30f4-493f-93ee-5614b6ad89b7}
+2026-11-07T12:55:20.8373022Z Region: centralus
+2026-11-07T12:55:20.8373389Z Cloud: Azure
+2026-11-07T12:55:20.8373752Z ##[endgroup]
+2026-11-07T12:55:20.8374527Z ##[group]Operating System
+2026-11-07T12:55:20.8374939Z Ubuntu
+2026-11-07T12:55:20.8375257Z 26.04.1
+2026-11-07T12:55:20.8375593Z LTS
+2026-11-07T12:55:20.8375951Z ##[endgroup]
+2026-11-07T12:55:20.8376282Z ##[group]Runner Image
+2026-11-07T12:55:20.8376694Z Image: ubuntu-26.04
+2026-11-07T12:55:20.8377037Z Version: 20261101.186.1
+2026-11-07T12:55:20.8377857Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261101.186/images/ubuntu/Ubuntu2604-Readme.md
+2026-11-07T12:55:20.8378725Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261101.186
+2026-11-07T12:55:20.8379344Z ##[endgroup]
+2026-11-07T12:55:20.8380151Z ##[group]GITHUB_TOKEN Permissions
+2026-11-07T12:55:20.8381407Z Contents: read
+2026-11-07T12:55:20.8381752Z Metadata: read
+2026-11-07T12:55:20.8382142Z Packages: read
+2026-11-07T12:55:20.8382490Z ##[endgroup]
+2026-11-07T12:55:20.8383818Z Secret source: Actions
+2026-11-07T12:55:20.8384454Z Cache mode: write
+2026-11-07T12:55:20.8384888Z Prepare workflow directory
+2026-11-07T12:55:20.8659320Z Prepare all required actions
+2026-11-07T12:55:20.8692262Z Getting action download info
+2026-11-07T12:55:21.0801374Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-07T12:55:21.1954319Z Download action repository 'actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-11-07T12:55:21.3414082Z Complete job name: Animation geometry and frontend build
+2026-11-07T12:55:21.3972004Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+2026-11-07T12:55:21.3972532Z with:
+2026-11-07T12:55:21.3972782Z   repository: Jakisheff/alashi
+2026-11-07T12:55:21.3974862Z   token: ***
+2026-11-07T12:55:21.3975099Z   ssh-strict: true
+2026-11-07T12:55:21.3975349Z   ssh-user: git
+2026-11-07T12:55:21.3975603Z   persist-credentials: true
+2026-11-07T12:55:21.3975873Z   clean: true
+2026-11-07T12:55:21.3976125Z   sparse-checkout-cone-mode: true
+2026-11-07T12:55:21.3976412Z   fetch-depth: 1
+2026-11-07T12:55:21.3976654Z   fetch-tags: false
+2026-11-07T12:55:21.3976912Z   show-progress: true
+2026-11-07T12:55:21.3977161Z   lfs: false
+2026-11-07T12:55:21.3977394Z   submodules: false
+2026-11-07T12:55:21.3977647Z   set-safe-directory: true
+2026-11-07T12:55:21.3977927Z   allow-unsafe-pr-checkout: false
+2026-11-07T12:55:21.3978275Z ##[endgroup]
+2026-11-07T12:55:21.5843719Z Syncing repository: Jakisheff/alashi
+2026-11-07T12:55:21.5845293Z ##[group]Getting Git version info
+2026-11-07T12:55:21.5845742Z Working directory is '/home/runner/work/alashi/alashi'
+2026-11-07T12:55:21.5846550Z [command]/usr/bin/git version
+2026-11-07T12:55:21.5870134Z git version 2.56.0
+2026-11-07T12:55:21.5882235Z ##[endgroup]
+2026-11-07T12:55:21.5892091Z Temporarily overriding HOME='/home/runner/work/_temp/9c22015c-cafd-440b-8b82-d91a40661771' before making global git config changes
+2026-11-07T12:55:21.5893931Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-07T12:55:21.5895771Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/alashi/alashi
+2026-11-07T12:55:21.5947853Z Deleting the contents of '/home/runner/work/alashi/alashi'
+2026-11-07T12:55:21.5954214Z ##[group]Initializing the repository
+2026-11-07T12:55:21.5961020Z [command]/usr/bin/git init /home/runner/work/alashi/alashi
+2026-11-07T12:55:21.6033180Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-07T12:55:21.6034171Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-07T12:55:21.6034704Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-07T12:55:21.6035116Z hint: call:
+2026-11-07T12:55:21.6035355Z hint:
+2026-11-07T12:55:21.6035673Z hint: 	git config --global init.defaultBranch <name>
+2026-11-07T12:55:21.6036023Z hint:
+2026-11-07T12:55:21.6036353Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-07T12:55:21.6036869Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-07T12:55:21.6037279Z hint:
+2026-11-07T12:55:21.6037519Z hint: 	git branch -m <name>
+2026-11-07T12:55:21.6037788Z hint:
+2026-11-07T12:55:21.6038142Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-07T12:55:21.6047493Z Initialized empty Git repository in /home/runner/work/alashi/alashi/.git/
+2026-11-07T12:55:21.6056405Z [command]/usr/bin/git remote add origin https://github.com/Jakisheff/alashi
+2026-11-07T12:55:21.6100571Z ##[endgroup]
+2026-11-07T12:55:21.6101284Z ##[group]Disabling automatic garbage collection
+2026-11-07T12:55:21.6103188Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-07T12:55:21.6133072Z ##[endgroup]
+2026-11-07T12:55:21.6133716Z ##[group]Setting up auth
+2026-11-07T12:55:21.6137345Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-07T12:55:21.6167578Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-07T12:55:21.6542114Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-07T12:55:21.6570599Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-07T12:55:21.6796731Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-07T12:55:21.6825601Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-07T12:55:21.7044519Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-07T12:55:21.7077623Z ##[endgroup]
+2026-11-07T12:55:21.7078115Z ##[group]Fetching the repository
+2026-11-07T12:55:21.7084375Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +3944fdce9d5475fb0e11235a073ea05e62df4945:refs/remotes/pull/70/merge
+2026-11-07T12:55:27.4771583Z From https://github.com/Jakisheff/alashi
+2026-11-07T12:55:27.4773014Z  * [new ref]         3944fdce9d5475fb0e11235a073ea05e62df4945 -> pull/70/merge
+2026-11-07T12:55:27.4775500Z ##[endgroup]
+2026-11-07T12:55:27.4776440Z ##[group]Determining the checkout info
+2026-11-07T12:55:27.4777489Z ##[endgroup]
+2026-11-07T12:55:27.4781255Z [command]/usr/bin/git sparse-checkout disable
+2026-11-07T12:55:27.4827757Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-07T12:55:27.4858338Z ##[group]Checking out the ref
+2026-11-07T12:55:27.4861361Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/70/merge
+2026-11-07T12:55:28.4130224Z Note: switching to 'refs/remotes/pull/70/merge'.
+2026-11-07T12:55:28.4131678Z
+2026-11-07T12:55:28.4131942Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-11-07T12:55:28.4132450Z changes and commit them, and you can discard any commits you make in this
+2026-11-07T12:55:28.4132949Z state without impacting any branches by switching back to a branch.
+2026-11-07T12:55:28.4133240Z
+2026-11-07T12:55:28.4133459Z If you want to create a new branch to retain commits you create, you may
+2026-11-07T12:55:28.4133938Z do so (now or later) by using -c with the switch command. Example:
+2026-11-07T12:55:28.4134567Z
+2026-11-07T12:55:28.4134718Z   git switch -c <new-branch-name>
+2026-11-07T12:55:28.4134919Z
+2026-11-07T12:55:28.4135052Z Or undo this operation with:
+2026-11-07T12:55:28.4135212Z
+2026-11-07T12:55:28.4135321Z   git switch -
+2026-11-07T12:55:28.4135473Z
+2026-11-07T12:55:28.4136266Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-11-07T12:55:28.4136564Z
+2026-11-07T12:55:28.4136808Z HEAD is now at 3944fdc Merge 1ac0315b7a2d29348d3816063641cd2e5570b0fc into 4cdfa4cb20ee6e6d7cd33f849884f062caa39881
+2026-11-07T12:55:28.4202422Z ##[endgroup]
+2026-11-07T12:55:28.4242007Z [command]/usr/bin/git log -1 --format=%H
+2026-11-07T12:55:28.4266303Z 3944fdce9d5475fb0e11235a073ea05e62df4945
+2026-11-07T12:55:28.4550723Z ##[group]Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+2026-11-07T12:55:28.4551005Z with:
+2026-11-07T12:55:28.4551164Z   node-version: 22.18.0
+2026-11-07T12:55:28.4551325Z   cache: npm
+2026-11-07T12:55:28.4551523Z   cache-dependency-path: frontend/package-lock.json
+2026-11-07T12:55:28.4551734Z   always-auth: false
+2026-11-07T12:55:28.4551892Z   check-latest: false
+2026-11-07T12:55:28.4553317Z   token: ***
+2026-11-07T12:55:28.4553470Z ##[endgroup]
+2026-11-07T12:55:28.5469672Z Attempting to download 22.18.0...
+2026-11-07T12:55:28.5570210Z (node:2181) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-07T12:55:28.5570922Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-07T12:55:29.3159130Z Acquiring 22.18.0 - x64 from https://github.com/actions/node-versions/releases/download/22.18.0-16666198358/node-22.18.0-linux-x64.tar.gz
+2026-11-07T12:55:29.8037570Z Extracting ...
+2026-11-07T12:55:29.8137150Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/9178e3f6-dd40-45f3-a3ea-5fd8cee22ef3 -f /home/runner/work/_temp/631a1062-5382-4167-b29e-d3f2346a32e3
+2026-11-07T12:55:30.3613065Z Adding to the cache ...
+2026-11-07T12:55:32.0406482Z ##[group]Environment details
+2026-11-07T12:55:32.2015338Z node: v22.18.0
+2026-11-07T12:55:32.2015661Z npm: 10.9.3
+2026-11-07T12:55:32.2015938Z yarn: 1.22.22
+2026-11-07T12:55:32.2016471Z ##[endgroup]
+2026-11-07T12:55:32.2027090Z [command]/opt/hostedtoolcache/node/22.18.0/x64/bin/npm config get cache
+2026-11-07T12:55:32.2645744Z /home/runner/.npm
+2026-11-07T12:55:32.3912746Z Cache hit for: node-cache-Linux-x64-npm-e2c2ea5d8a461e5a1b19958e708960a3a968bda2d07a8d230da9d20e3edd702b
+2026-11-07T12:55:32.3974893Z (node:2181) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-07T12:55:33.5448704Z Received 100663296 of 143980651 (69.9%), 96.0 MBs/sec
+2026-11-07T12:55:33.8706325Z Received 143980651 of 143980651 (100.0%), 103.6 MBs/sec
+2026-11-07T12:55:33.8706788Z Cache Size: ~137 MB (143980651 B)
+2026-11-07T12:55:33.8800191Z [command]/usr/bin/tar -xf /home/runner/work/_temp/d67d73b6-187b-475f-8934-99beefa301f3/cache.tzst -P -C /home/runner/work/alashi/alashi --use-compress-program unzstd
+2026-11-07T12:55:34.0575733Z Cache restored successfully
+2026-11-07T12:55:34.0642259Z Cache restored from key: node-cache-Linux-x64-npm-e2c2ea5d8a461e5a1b19958e708960a3a968bda2d07a8d230da9d20e3edd702b
+2026-11-07T12:55:34.0855954Z ##[group]Run npm ci
+2026-11-07T12:55:34.0856172Z [36;1mnpm ci[0m
+2026-11-07T12:55:34.0905677Z shell: /usr/bin/bash -e {0}
+2026-11-07T12:55:34.0905872Z ##[endgroup]
+2026-11-07T12:55:36.9900305Z
+2026-11-07T12:55:36.9908152Z added 269 packages, and audited 270 packages in 3s
+2026-11-07T12:55:36.9908545Z
+2026-11-07T12:55:36.9908759Z 45 packages are looking for funding
+2026-11-07T12:55:36.9909058Z   run `npm fund` for details
+2026-11-07T12:55:36.9970272Z
+2026-11-07T12:55:36.9970777Z 2 vulnerabilities (1 moderate, 1 high)
+2026-11-07T12:55:36.9970977Z
+2026-11-07T12:55:36.9971200Z To address all issues, run:
+2026-11-07T12:55:36.9971975Z   npm audit fix
+2026-11-07T12:55:36.9972099Z
+2026-11-07T12:55:36.9972220Z Run `npm audit` for details.
+2026-11-07T12:55:37.0696428Z ##[group]Run npm ci --ignore-scripts --prefix ../tools/agent-bootstrap
+2026-11-07T12:55:37.0696767Z [36;1mnpm ci --ignore-scripts --prefix ../tools/agent-bootstrap[0m
+2026-11-07T12:55:37.0741467Z shell: /usr/bin/bash -e {0}
+2026-11-07T12:55:37.0741644Z ##[endgroup]
+2026-11-07T12:55:37.7602399Z
+2026-11-07T12:55:37.7603192Z added 51 packages, and audited 52 packages in 646ms
+2026-11-07T12:55:37.7603486Z
+2026-11-07T12:55:37.7603642Z 10 packages are looking for funding
+2026-11-07T12:55:37.7603924Z   run `npm fund` for details
+2026-11-07T12:55:37.7607268Z
+2026-11-07T12:55:37.7607407Z found 0 vulnerabilities
+2026-11-07T12:55:37.7736825Z ##[group]Run npm run build
+2026-11-07T12:55:37.7737013Z [36;1mnpm run build[0m
+2026-11-07T12:55:37.7799211Z shell: /usr/bin/bash -e {0}
+2026-11-07T12:55:37.7799384Z ##[endgroup]
+2026-11-07T12:55:37.8501776Z
+2026-11-07T12:55:37.8502231Z > frontend@0.0.0 build
+2026-11-07T12:55:37.8502546Z > tsc -b && vite build
+2026-11-07T12:55:37.8502677Z
+2026-11-07T12:55:43.5834778Z [36mvite v8.3.3 [32mbuilding client environment for production...[36m[39m
+2026-11-07T12:55:43.5906969Z transforming...
+2026-11-07T12:55:44.1396641Z ✓ 1391 modules transformed.
+2026-11-07T12:55:44.2871983Z rendering chunks...
+2026-11-07T12:55:44.4283311Z computing gzip size...
+2026-11-07T12:55:44.4407928Z dist/index.html                                 5.88 kB │ gzip:   1.75 kB
+2026-11-07T12:55:44.4408406Z dist/assets/layout.worker-HEjPjTAp.js          15.74 kB
+2026-11-07T12:55:44.4408916Z dist/assets/BrandMark-GEjOgecT.css              0.83 kB │ gzip:   0.42 kB
+2026-11-07T12:55:44.4409864Z dist/assets/StudioStage-CVpwrUtE.css            1.13 kB │ gzip:   0.44 kB
+2026-11-07T12:55:44.4410422Z dist/assets/HomeChainPreview-ZD1O6_FD.css       2.44 kB │ gzip:   0.84 kB
+2026-11-07T12:55:44.4410937Z dist/assets/stream-DaNdwx88.css                 3.04 kB │ gzip:   1.03 kB
+2026-11-07T12:55:44.4411488Z dist/assets/LogPage-CIczH4g3.css                3.73 kB │ gzip:   1.12 kB
+2026-11-07T12:55:44.4412129Z dist/assets/live-DzD-v2-_.css                  12.52 kB │ gzip:   3.30 kB
+2026-11-07T12:55:44.4412777Z dist/assets/style-D1DOzuLx.css                 21.76 kB │ gzip:   4.79 kB
+2026-11-07T12:55:44.4413320Z dist/assets/devnet-ELpt6G_6.css                24.95 kB │ gzip:   5.52 kB
+2026-11-07T12:55:44.4413846Z dist/assets/index-D-47vATc.css                 28.20 kB │ gzip:   6.60 kB
+2026-11-07T12:55:44.4414361Z dist/assets/pose-y3Glonsv.js                    0.13 kB │ gzip:   0.11 kB
+2026-11-07T12:55:44.4414884Z dist/assets/useNavigate-CI43M4Gq.js             0.22 kB │ gzip:   0.18 kB
+2026-11-07T12:55:44.4415428Z dist/assets/store-gVdKy_pU.js                   0.25 kB │ gzip:   0.18 kB
+2026-11-07T12:55:44.4415956Z dist/assets/geometry-CO2SLUj0.js                0.26 kB │ gzip:   0.22 kB
+2026-11-07T12:55:44.4416490Z dist/assets/BrandMark-C2dJYKIR.js               0.51 kB │ gzip:   0.32 kB
+2026-11-07T12:55:44.4417031Z dist/assets/react-Bvhwkc4m.js                   0.65 kB │ gzip:   0.40 kB
+2026-11-07T12:55:44.4417573Z dist/assets/ThoughtBubble-CsnoYtZ1.js           0.69 kB │ gzip:   0.44 kB
+2026-11-07T12:55:44.4418200Z dist/assets/agent-CDrSGVSK.js                   0.77 kB │ gzip:   0.50 kB
+2026-11-07T12:55:44.4418752Z dist/assets/preload-helper-DjzSQ1t3.js          1.38 kB │ gzip:   0.75 kB
+2026-11-07T12:55:44.4419295Z dist/assets/wallet-C7TY8L1r.js                  1.50 kB │ gzip:   0.83 kB
+2026-11-07T12:55:44.4420005Z dist/assets/with-selector-DIGp_BLX.js           1.62 kB │ gzip:   0.71 kB
+2026-11-07T12:55:44.4420562Z dist/assets/TradingRuns-D6E86Y1s.js             2.13 kB │ gzip:   1.03 kB
+2026-11-07T12:55:44.4421121Z dist/assets/log-CJRJE66E.js                     2.71 kB │ gzip:   1.38 kB
+2026-11-07T12:55:44.4421659Z dist/assets/stream-DHSPvFuD.js                  3.06 kB │ gzip:   1.40 kB
+2026-11-07T12:55:44.4422183Z dist/assets/feed-U_q0Gvwy.js                    3.56 kB │ gzip:   1.80 kB
+2026-11-07T12:55:44.4423084Z dist/assets/model-CcY9gpkK.js                   3.93 kB │ gzip:   1.75 kB
+2026-11-07T12:55:44.4423620Z dist/assets/lazyRouteComponent-h8aHmDr_.js      4.35 kB │ gzip:   1.61 kB
+2026-11-07T12:55:44.4424151Z dist/assets/client-CegwsrfC.js                  4.74 kB │ gzip:   2.18 kB
+2026-11-07T12:55:44.4424697Z dist/assets/HomeChainPreview-JOvaLcoL.js        6.93 kB │ gzip:   2.85 kB
+2026-11-07T12:55:44.4425253Z dist/assets/client-DUZUWr2w.js                  7.54 kB │ gzip:   3.05 kB
+2026-11-07T12:55:44.4425786Z dist/assets/LogPage-DZPNjmhG.js                 7.60 kB │ gzip:   2.87 kB
+2026-11-07T12:55:44.4426312Z dist/assets/jsx-runtime-D3jfb0Ew.js             8.90 kB │ gzip:   3.38 kB
+2026-11-07T12:55:44.4427157Z dist/assets/link-DZEcagUg.js                    9.49 kB │ gzip:   4.33 kB
+2026-11-07T12:55:44.4427708Z dist/assets/useChainSnapshot-CvurkMyU.js       11.98 kB │ gzip:   4.56 kB
+2026-11-07T12:55:44.4428262Z dist/assets/OwnerPanel-CfYnnEj8.js             12.16 kB │ gzip:   4.26 kB
+2026-11-07T12:55:44.4428804Z dist/assets/arena-CIZyFgDo.js                  14.07 kB │ gzip:   5.31 kB
+2026-11-07T12:55:44.4429334Z dist/assets/ChainOwnerPanel-DBMk3S7w.js        15.60 kB │ gzip:   5.65 kB
+2026-11-07T12:55:44.4430048Z dist/assets/live-DRKjX_q6.js                   19.94 kB │ gzip:   6.95 kB
+2026-11-07T12:55:44.4430564Z dist/assets/style-CNQq1qXA.js                  21.18 kB │ gzip:   8.41 kB
+2026-11-07T12:55:44.4431104Z dist/assets/routes-CDa47YJa.js                 21.52 kB │ gzip:   7.84 kB
+2026-11-07T12:55:44.4431654Z dist/assets/useQuery-Dq6JkTCJ.js               22.67 kB │ gzip:   7.54 kB
+2026-11-07T12:55:44.4432212Z dist/assets/StudioStage-Dyx6ZrtS.js            56.44 kB │ gzip:  19.12 kB
+2026-11-07T12:55:44.4432754Z dist/assets/devnet-qIcVm_5D.js                 59.36 kB │ gzip:  18.51 kB
+2026-11-07T12:55:44.4433304Z dist/assets/strategies-BvR8lOcj.js             70.60 kB │ gzip:  20.19 kB
+2026-11-07T12:55:44.4433860Z dist/assets/Scene-DNxvdkIu.js                 110.54 kB │ gzip:  31.58 kB
+2026-11-07T12:55:44.4434409Z dist/assets/graph-BWJIPN1t.js                 111.67 kB │ gzip:  38.02 kB
+2026-11-07T12:55:44.4434932Z dist/assets/index-Ob5FZSkq.js                 291.23 kB │ gzip:  93.12 kB
+2026-11-07T12:55:44.4435457Z dist/assets/smoke-DiJSdYyy.js               1,095.80 kB │ gzip: 303.99 kB
+2026-11-07T12:55:44.4435700Z
+2026-11-07T12:55:44.4435983Z [33m[plugin builtin:vite-reporter]
+2026-11-07T12:55:44.4436394Z (!) Some chunks are larger than 500 kB after minification. Consider:
+2026-11-07T12:55:44.4436839Z - Using dynamic import() to code-split the application
+2026-11-07T12:55:44.4437566Z - Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+2026-11-07T12:55:44.4438351Z - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.[39m
+2026-11-07T12:55:44.4438994Z [32m✓ built in 859ms[39m
+2026-11-07T12:55:44.5091780Z ##[group]Run npm run check:animations
+2026-11-07T12:55:44.5092011Z [36;1mnpm run check:animations[0m
+2026-11-07T12:55:44.5134394Z shell: /usr/bin/bash -e {0}
+2026-11-07T12:55:44.5134550Z ##[endgroup]
+2026-11-07T12:55:44.5809078Z
+2026-11-07T12:55:44.5809842Z > frontend@0.0.0 check:animations
+2026-11-07T12:55:44.5813049Z > node --experimental-strip-types --no-warnings scripts/brand-coin-check.ts && npm run check:pose && npm run check:purchase && node --experimental-strip-types --no-warnings scripts/legacy-animation-check.ts && ALASHI_STUDIO_FRAMING=1 node --experimental-strip-types --no-warnings src/live/reactions/check-rig.mjs && ALASHI_STUDIO_FRAMING=1 node --experimental-strip-types --no-warnings src/live/actions/validate.mjs && node --experimental-strip-types --no-warnings scripts/screen-text-check.mjs && node --experimental-strip-types --no-warnings scripts/map-animation-check.ts && node --experimental-strip-types --no-warnings scripts/home-preview-check.ts && node --experimental-strip-types --no-warnings scripts/stream-staging-check.mjs && node --experimental-strip-types --no-warnings scripts/player-replay-controls-check.mjs && node --experimental-strip-types --no-warnings scripts/player-idle-pause-check.mjs && node --experimental-strip-types --no-warnings scripts/reaction-frame-pause-check.mjs && node --experimental-strip-types --no-warnings scripts/smoke-material-check.mjs && node --experimental-strip-types --no-warnings scripts/action-frame-pause-check.mjs && node --experimental-strip-types --no-warnings scripts/map-player-check.mjs
+2026-11-07T12:55:44.5815653Z
+2026-11-07T12:55:44.7496038Z PASS: coin palette, both raised symbols, open apertures, subtle texture, contact envelope, fade, instance isolation and disposal
+2026-11-07T12:55:44.8187796Z
+2026-11-07T12:55:44.8188429Z > frontend@0.0.0 check:pose
+2026-11-07T12:55:44.8188844Z > node --experimental-strip-types --no-warnings scripts/pose-check.ts
+2026-11-07T12:55:44.8189038Z
+2026-11-07T12:55:44.8870429Z pose check ok
+2026-11-07T12:55:44.9606520Z
+2026-11-07T12:55:44.9607071Z > frontend@0.0.0 check:purchase
+2026-11-07T12:55:44.9607634Z > node --experimental-strip-types --no-warnings scripts/purchase-check.ts && node --experimental-strip-types --no-warnings scripts/trade-contact-check.ts
+2026-11-07T12:55:44.9607958Z
+2026-11-07T12:55:45.0268693Z purchase motion and receipt checks passed
+2026-11-07T12:55:45.0283112Z sale anticipation, weight, payment and reduced-motion checks passed
+2026-11-07T12:55:45.3995663Z PASS: original collision reproduced; 1532 BUY frames, both entrances, reduced-motion poses, crate/counter clearance and support until fade
+2026-11-07T12:55:45.7865269Z PASS: 827 legacy GLB frames, seven responsive camera bounds with face/badge clearance, frozen reverse seeks, held reduced-motion poses and model isolation
+2026-11-07T12:55:48.0146210Z PASS: 1256 GLB frames, sockets, finite transforms, rotation continuity, hand/casing bounds and fingertip/palm surface clearance (2mm), backward seeks, idle endpoints/seam, neutral wrists, alternating Dance fists and weight, facial change, reduced Dance, body turns, reduced idle, cached scene isolation, deterministic bounded fireworks and Dance framing.
+2026-11-07T12:56:03.3921064Z Worst opaque-scene frustum extent (limit .98): {
+2026-11-07T12:56:03.3921348Z   extent: 0.9490412818553726,
+2026-11-07T12:56:03.3921508Z   action: 'vote',
+2026-11-07T12:56:03.3921646Z   t: 1.1,
+2026-11-07T12:56:03.3921767Z   mesh: 'tail',
+2026-11-07T12:56:03.3921899Z   aspect: 0.9375
+2026-11-07T12:56:03.3924561Z }
+2026-11-07T12:56:03.3925625Z Scenario QA: 5196 sampled frames; finite transforms, unchanged finger/thumb/limb lengths, palm support, reference-hoof contact, connected official arms, four-aspect frustum, deterministic scrubs, idle recovery and ballot-slot clearance passed.
+2026-11-07T12:56:03.3926606Z Conservative hand/prop overlap candidates: {}
+2026-11-07T12:56:03.8058563Z PASS: ScreenText pause, seek, repeated take, reduced motion, legacy speech and all three async stream caller bindings
+2026-11-07T12:56:03.8835436Z TAP version 13
+2026-11-07T12:56:03.8836126Z # Subtest: work begins with preparation, independent of map time and worker idle offset
+2026-11-07T12:56:03.8856004Z ok 1 - work begins with preparation, independent of map time and worker idle offset
+2026-11-07T12:56:03.8856723Z   ---
+2026-11-07T12:56:03.8864926Z   duration_ms: 0.961078
+2026-11-07T12:56:03.8877601Z   type: 'test'
+2026-11-07T12:56:03.8877839Z   ...
+2026-11-07T12:56:03.8878298Z # Subtest: successful handoff begins accepted at its first pose and ends in idle
+2026-11-07T12:56:03.8878865Z ok 2 - successful handoff begins accepted at its first pose and ends in idle
+2026-11-07T12:56:03.8879218Z   ---
+2026-11-07T12:56:03.8879441Z   duration_ms: 0.13281
+2026-11-07T12:56:03.8879751Z   type: 'test'
+2026-11-07T12:56:03.8879928Z   ...
+2026-11-07T12:56:03.8880313Z # Subtest: chief celebrates completion once, then the replay tail settles in idle
+2026-11-07T12:56:03.8880935Z ok 3 - chief celebrates completion once, then the replay tail settles in idle
+2026-11-07T12:56:03.8881282Z   ---
+2026-11-07T12:56:03.8881883Z   duration_ms: 0.143947
+2026-11-07T12:56:03.8882110Z   type: 'test'
+2026-11-07T12:56:03.8882294Z   ...
+2026-11-07T12:56:03.8882740Z # Subtest: reverse seek and replay reconstruct the same pose without keeping completion state
+2026-11-07T12:56:03.8883367Z ok 4 - reverse seek and replay reconstruct the same pose without keeping completion state
+2026-11-07T12:56:03.8883748Z   ---
+2026-11-07T12:56:03.8883925Z   duration_ms: 0.154242
+2026-11-07T12:56:03.8884145Z   type: 'test'
+2026-11-07T12:56:03.8884359Z   ...
+2026-11-07T12:56:03.8884737Z # Subtest: travel, failed work and reduced motion retain their original meaning
+2026-11-07T12:56:03.8885239Z ok 5 - travel, failed work and reduced motion retain their original meaning
+2026-11-07T12:56:03.8885554Z   ---
+2026-11-07T12:56:03.8885731Z   duration_ms: 0.156907
+2026-11-07T12:56:03.8885934Z   type: 'test'
+2026-11-07T12:56:03.8886112Z   ...
+2026-11-07T12:56:03.8886553Z # Subtest: idle offsets stay in idle, and returning starts without retaining the work pose
+2026-11-07T12:56:03.8887161Z ok 6 - idle offsets stay in idle, and returning starts without retaining the work pose
+2026-11-07T12:56:03.8887555Z   ---
+2026-11-07T12:56:03.8887749Z   duration_ms: 0.088072
+2026-11-07T12:56:03.8887976Z   type: 'test'
+2026-11-07T12:56:03.8888163Z   ...
+2026-11-07T12:56:03.8888327Z 1..6
+2026-11-07T12:56:03.8888544Z # tests 6
+2026-11-07T12:56:03.8888753Z # suites 0
+2026-11-07T12:56:03.8888938Z # pass 6
+2026-11-07T12:56:03.8889144Z # fail 0
+2026-11-07T12:56:03.8889323Z # cancelled 0
+2026-11-07T12:56:03.8889651Z # skipped 0
+2026-11-07T12:56:03.8889880Z # todo 0
+2026-11-07T12:56:03.8890070Z # duration_ms 9.633533
+2026-11-07T12:56:03.9542876Z TAP version 13
+2026-11-07T12:56:03.9548403Z # Subtest: /?demo&game=1 keeps the illustrative preview label
+2026-11-07T12:56:03.9554176Z ok 1 - /?demo&game=1 keeps the illustrative preview label
+2026-11-07T12:56:03.9554783Z   ---
+2026-11-07T12:56:03.9555178Z   duration_ms: 0.656078
+2026-11-07T12:56:03.9555584Z   type: 'test'
+2026-11-07T12:56:03.9555929Z   ...
+2026-11-07T12:56:03.9556854Z # Subtest: /?pose=accepted&game=1 keeps the frozen preview label
+2026-11-07T12:56:03.9558113Z ok 2 - /?pose=accepted&game=1 keeps the frozen preview label
+2026-11-07T12:56:03.9558372Z   ---
+2026-11-07T12:56:03.9558555Z   duration_ms: 0.132209
+2026-11-07T12:56:03.9558794Z   type: 'test'
+2026-11-07T12:56:03.9558973Z   ...
+2026-11-07T12:56:03.9559843Z # Subtest: ordinary game and agent watches retain the live label
+2026-11-07T12:56:03.9570052Z ok 3 - ordinary game and agent watches retain the live label
+2026-11-07T12:56:03.9570622Z   ---
+2026-11-07T12:56:03.9571192Z   duration_ms: 0.083326
+2026-11-07T12:56:03.9571471Z   type: 'test'
+2026-11-07T12:56:03.9571669Z   ...
+2026-11-07T12:56:03.9572047Z # Subtest: standalone previews and an idle owner view retain their labels
+2026-11-07T12:56:03.9572575Z ok 4 - standalone previews and an idle owner view retain their labels
+2026-11-07T12:56:03.9572906Z   ---
+2026-11-07T12:56:03.9573592Z   duration_ms: 0.081192
+2026-11-07T12:56:03.9573824Z   type: 'test'
+2026-11-07T12:56:03.9574014Z   ...
+2026-11-07T12:56:03.9586678Z 1..4
+2026-11-07T12:56:03.9586908Z # tests 4
+2026-11-07T12:56:03.9587653Z # suites 0
+2026-11-07T12:56:03.9587901Z # pass 4
+2026-11-07T12:56:03.9588109Z # fail 0
+2026-11-07T12:56:03.9588303Z # cancelled 0
+2026-11-07T12:56:03.9588512Z # skipped 0
+2026-11-07T12:56:03.9588710Z # todo 0
+2026-11-07T12:56:03.9588923Z # duration_ms 10.059004
+2026-11-07T12:56:04.2803671Z PASS: actual /stream hero markup activates thinking clearance, keeps the thought outside the scene and preserves its visibility window
+2026-11-07T12:56:04.6974439Z PASS: accessible controls, frozen history, pause/seek, replay restart and stale or repeated completion
+2026-11-07T12:56:05.0458516Z PASS: existing idle moves, paused replay freezes pose and smoke, and resume continues
+2026-11-07T12:56:05.3946627Z PASS: play, pause, backward seek, completion, repeated frames and replay
+2026-11-07T12:56:05.3953416Z PASS: seek zero, resume, reduced toggle, new take, callbacks and idle transition
+2026-11-07T12:56:05.7370417Z PASS: smoke assignment preserves shared materials and effect cleanup
+2026-11-07T12:56:06.2133792Z PASS pause scenario
+2026-11-07T12:56:06.5299953Z PASS seek zero, resume, completion, initial seek, reduced toggle, new take and normal mode scenario
+2026-11-07T12:56:06.5780792Z PASS pause trade
+2026-11-07T12:56:06.6885322Z PASS seek zero, resume, completion, initial seek, reduced toggle, new take and normal mode trade
+2026-11-07T12:56:06.6945545Z PASS visual time stages, missing receipt, event identity, stale callbacks and zero seek
+2026-11-07T12:56:07.1358350Z PASS: map controls, pause on seek, finish, replay and unavailable canvas
+2026-11-07T12:56:07.1544472Z ##[group]Run npm run check:strategies
+2026-11-07T12:56:07.1544695Z [36;1mnpm run check:strategies[0m
+2026-11-07T12:56:07.1586426Z shell: /usr/bin/bash -e {0}
+2026-11-07T12:56:07.1586585Z ##[endgroup]
+2026-11-07T12:56:07.2232995Z
+2026-11-07T12:56:07.2233633Z > frontend@0.0.0 check:strategies
+2026-11-07T12:56:07.2234074Z > node --experimental-strip-types --no-warnings scripts/strategy-check.ts
+2026-11-07T12:56:07.2234268Z
+2026-11-07T12:56:07.2821534Z PASS: parallel task staging, causal handoff, route endpoints and pending completion
+2026-11-07T12:56:07.2832731Z PASS: confirmed trade follows task delivery; pending trade stays absent
+2026-11-07T12:56:07.3041209Z PASS: original terrain, Degenie atlas and route geometry preserved
+2026-11-07T12:56:07.3191688Z ##[group]Run npm run check:comparisons
+2026-11-07T12:56:07.3192022Z [36;1mnpm run check:comparisons[0m
+2026-11-07T12:56:07.3248557Z shell: /usr/bin/bash -e {0}
+2026-11-07T12:56:07.3248730Z ##[endgroup]
+2026-11-07T12:56:07.3910613Z
+2026-11-07T12:56:07.3911277Z > frontend@0.0.0 check:comparisons
+2026-11-07T12:56:07.3911830Z > node --experimental-strip-types --no-warnings scripts/comparison-check.ts
+2026-11-07T12:56:07.3912116Z
+2026-11-07T12:56:07.4997923Z PASS: private instruction diff, structural guards, owner/record/brief isolation, frozen settings, failed/unknown/in-flight decision limits and request error handling
+2026-11-07T12:56:07.5122806Z ##[group]Run npm run check:research
+2026-11-07T12:56:07.5123009Z [36;1mnpm run check:research[0m
+2026-11-07T12:56:07.5164660Z shell: /usr/bin/bash -e {0}
+2026-11-07T12:56:07.5164819Z ##[endgroup]
+2026-11-07T12:56:07.5828813Z
+2026-11-07T12:56:07.5829427Z > frontend@0.0.0 check:research
+2026-11-07T12:56:07.5829921Z > node --experimental-strip-types --no-warnings scripts/research-check.ts
+2026-11-07T12:56:07.5830112Z
+2026-11-07T12:56:07.6688552Z PASS: sealed role projections, disclosed summary integrity, applied strategy, digest CAS, bounded public cards and local-card consent isolation
+2026-11-07T12:56:07.7117942Z ##[group]Run npm run check:comparison-proxy
+2026-11-07T12:56:07.7118178Z [36;1mnpm run check:comparison-proxy[0m
+2026-11-07T12:56:07.7161693Z shell: /usr/bin/bash -e {0}
+2026-11-07T12:56:07.7161859Z ##[endgroup]
+2026-11-07T12:56:07.8023745Z
+2026-11-07T12:56:07.8024460Z > frontend@0.0.0 check:comparison-proxy
+2026-11-07T12:56:07.8024820Z > node scripts/comparison-proxy-check.mjs
+2026-11-07T12:56:07.8024942Z
+2026-11-07T12:56:08.3830641Z PASS: real Vite comparison GET/POST proxy routes and rewrites; wrong methods, malformed IDs and extra paths blocked before upstream
+2026-11-07T12:56:08.4073498Z ##[group]Run npm run check:trading
+2026-11-07T12:56:08.4073705Z [36;1mnpm run check:trading[0m
+2026-11-07T12:56:08.4116345Z shell: /usr/bin/bash -e {0}
+2026-11-07T12:56:08.4116499Z ##[endgroup]
+2026-11-07T12:56:08.4750502Z
+2026-11-07T12:56:08.4750897Z > frontend@0.0.0 check:trading
+2026-11-07T12:56:08.4751399Z > node --experimental-strip-types --no-warnings scripts/trading-check.ts
+2026-11-07T12:56:08.4751689Z
+2026-11-07T12:56:08.5569054Z PASS: confirmed receipt projection, historical balances, two-owner overlap, market destination, deduplication, private/pending/old-event guards and worker ordering
+2026-11-07T12:56:08.5710840Z PASS: public two-wallet devnet snapshot, exact 22/9 sale receipts, four production/sale journeys, initial-backfill and unconfirmed/missing-data guards
+2026-11-07T12:56:08.5995995Z ##[group]Run node --experimental-strip-types --no-warnings scripts/donkey-risk-adapter-check.ts
+2026-11-07T12:56:08.5996416Z [36;1mnode --experimental-strip-types --no-warnings scripts/donkey-risk-adapter-check.ts[0m
+2026-11-07T12:56:08.6038247Z shell: /usr/bin/bash -e {0}
+2026-11-07T12:56:08.6038404Z ##[endgroup]
+2026-11-07T12:56:08.7085208Z donkey-risk-adapter: 88 checks passed; local DTO/fetch mocks, no chain/owner calls
+2026-11-07T12:56:08.7200160Z ##[group]Run node --test ../tools/agent-bootstrap/strategy-run.test.mjs ../tools/agent-bootstrap/strategy-scheduler.test.mjs ../tools/agent-bootstrap/strategy-comparison.test.mjs ../tools/agent-bootstrap/local-experiment.test.mjs ../tools/agent-bootstrap/alashi.test.mjs
+2026-11-07T12:56:08.7201154Z [36;1mnode --test ../tools/agent-bootstrap/strategy-run.test.mjs ../tools/agent-bootstrap/strategy-scheduler.test.mjs ../tools/agent-bootstrap/strategy-comparison.test.mjs ../tools/agent-bootstrap/local-experiment.test.mjs ../tools/agent-bootstrap/alashi.test.mjs[0m
+2026-11-07T12:56:08.7243370Z shell: /usr/bin/bash -e {0}
+2026-11-07T12:56:08.7243521Z ##[endgroup]
+2026-11-07T12:56:08.7630540Z TAP version 13
+2026-11-07T12:56:09.0975484Z # Subtest: v2 golden hashes and proposal validation
+2026-11-07T12:56:09.0980265Z ok 1 - v2 golden hashes and proposal validation
+2026-11-07T12:56:09.1015429Z   ---
+2026-11-07T12:56:09.1038814Z   duration_ms: 2.486557
+2026-11-07T12:56:09.1063197Z   type: 'test'
+2026-11-07T12:56:09.1077228Z   ...
+2026-11-07T12:56:09.1102300Z # Subtest: start rejects overlong UTF-8 name or model before profile and network work
+2026-11-07T12:56:09.1131579Z ok 2 - start rejects overlong UTF-8 name or model before profile and network work
+2026-11-07T12:56:09.1169920Z   ---
+2026-11-07T12:56:09.1199930Z   duration_ms: 5.689855
+2026-11-07T12:56:09.1200203Z   type: 'test'
+2026-11-07T12:56:09.1200403Z   ...
+2026-11-07T12:56:09.1200819Z # Subtest: one durable Memo, unknown outcome resumes same signature without signing again
+2026-11-07T12:56:09.1202388Z ok 3 - one durable Memo, unknown outcome resumes same signature without signing again
+2026-11-07T12:56:09.1229873Z   ---
+2026-11-07T12:56:09.1230101Z   duration_ms: 73.939259
+2026-11-07T12:56:09.1230335Z   type: 'test'
+2026-11-07T12:56:09.1230521Z   ...
+2026-11-07T12:56:09.1230916Z # Subtest: one profile joins two games, no prompt upload, pending op replay is exact
+2026-11-07T12:56:09.1231482Z ok 4 - one profile joins two games, no prompt upload, pending op replay is exact
+2026-11-07T12:56:09.1231820Z   ---
+2026-11-07T12:56:09.1232001Z   duration_ms: 7.609318
+2026-11-07T12:56:09.1232205Z   type: 'test'
+2026-11-07T12:56:09.1232389Z   ...
+2026-11-07T12:56:09.1232778Z # Subtest: only exact definitive unconsumed action rejection clears pending without debit
+2026-11-07T12:56:09.1233333Z ok 5 - only exact definitive unconsumed action rejection clears pending without debit
+2026-11-07T12:56:09.1233685Z   ---
+2026-11-07T12:56:09.1233878Z   duration_ms: 14.974267
+2026-11-07T12:56:09.1234086Z   type: 'test'
+2026-11-07T12:56:09.1234264Z   ...
+2026-11-07T12:56:09.1234669Z # Subtest: start persists one private wallet and returns identity link while no game is open
+2026-11-07T12:56:09.1235255Z ok 6 - start persists one private wallet and returns identity link while no game is open
+2026-11-07T12:56:09.1235604Z   ---
+2026-11-07T12:56:09.1235798Z   duration_ms: 15.478987
+2026-11-07T12:56:09.1236010Z   type: 'test'
+2026-11-07T12:56:09.1236189Z   ...
+2026-11-07T12:56:09.1236505Z # Subtest: public state identifies the saved player faction
+2026-11-07T12:56:09.1236911Z ok 7 - public state identifies the saved player faction
+2026-11-07T12:56:09.1237181Z   ---
+2026-11-07T12:56:09.1237380Z   duration_ms: 0.236937
+2026-11-07T12:56:09.1237585Z   type: 'test'
+2026-11-07T12:56:09.1255975Z   ...
+2026-11-07T12:56:09.1506704Z # Subtest: pinned JSON-RPC client supports every bootstrap RPC method
+2026-11-07T12:56:09.1580155Z ok 8 - pinned JSON-RPC client supports every bootstrap RPC method
+2026-11-07T12:56:09.1624179Z   ---
+2026-11-07T12:56:09.1669988Z   duration_ms: 68.793423
+2026-11-07T12:56:09.1710020Z   type: 'test'
+2026-11-07T12:56:09.1770920Z   ...
+2026-11-07T12:56:09.3285973Z # Subtest: signal cleanup removes only this process lock
+2026-11-07T12:56:09.3286619Z ok 9 - signal cleanup removes only this process lock
+2026-11-07T12:56:09.3300446Z   ---
+2026-11-07T12:56:09.3300934Z   duration_ms: 187.57684
+2026-11-07T12:56:09.3301282Z   type: 'test'
+2026-11-07T12:56:09.3301805Z   ...
+2026-11-07T12:56:09.3490704Z # Subtest: pinned RPC sends one HTTP request on 429
+2026-11-07T12:56:09.3494553Z ok 10 - pinned RPC sends one HTTP request on 429
+2026-11-07T12:56:09.3494947Z   ---
+2026-11-07T12:56:09.3495260Z   duration_ms: 5.503425
+2026-11-07T12:56:09.3495782Z   type: 'test'
+2026-11-07T12:56:09.3496079Z   ...
+2026-11-07T12:56:09.3530353Z # Subtest: failed saved airdrop retries only faucet funding on the same wallet
+2026-11-07T12:56:09.3555718Z ok 11 - failed saved airdrop retries only faucet funding on the same wallet
+2026-11-07T12:56:09.3558803Z   ---
+2026-11-07T12:56:09.3560421Z   duration_ms: 1.334401
+2026-11-07T12:56:09.3560760Z   type: 'test'
+2026-11-07T12:56:09.3561070Z   ...
+2026-11-07T12:56:09.3561584Z # Subtest: ambiguous saved airdrop gives manual funding path without another request
+2026-11-07T12:56:09.3562252Z ok 12 - ambiguous saved airdrop gives manual funding path without another request
+2026-11-07T12:56:09.3562713Z   ---
+2026-11-07T12:56:09.3563008Z   duration_ms: 2.128985
+2026-11-07T12:56:09.3563493Z   type: 'test'
+2026-11-07T12:56:09.3563792Z   ...
+2026-11-07T12:56:09.3564264Z # Subtest: faucet RPC code survives failure without exposing provider cause
+2026-11-07T12:56:09.3564847Z ok 13 - faucet RPC code survives failure without exposing provider cause
+2026-11-07T12:56:09.3565274Z   ---
+2026-11-07T12:56:09.3565631Z   duration_ms: 3.785755
+2026-11-07T12:56:09.3565941Z   type: 'test'
+2026-11-07T12:56:09.3566234Z   ...
+2026-11-07T12:56:09.3566724Z # Subtest: first faucet RPC failure gives same-wallet recovery without repeat request
+2026-11-07T12:56:09.3567388Z ok 14 - first faucet RPC failure gives same-wallet recovery without repeat request
+2026-11-07T12:56:09.3567857Z   ---
+2026-11-07T12:56:09.3568151Z   duration_ms: 1.301551
+2026-11-07T12:56:09.3568467Z   type: 'test'
+2026-11-07T12:56:09.3568765Z   ...
+2026-11-07T12:56:09.3569230Z # Subtest: proxy rate limit and outage are plain errors before non-JSON bodies
+2026-11-07T12:56:09.3570067Z ok 15 - proxy rate limit and outage are plain errors before non-JSON bodies
+2026-11-07T12:56:09.3570519Z   ---
+2026-11-07T12:56:09.3570817Z   duration_ms: 0.450629
+2026-11-07T12:56:09.3571134Z   type: 'test'
+2026-11-07T12:56:09.3571437Z   ...
+2026-11-07T12:56:09.3571933Z # Subtest: matchmaker reports an existing slot and recovery join uses no new Memo
+2026-11-07T12:56:09.3572578Z ok 16 - matchmaker reports an existing slot and recovery join uses no new Memo
+2026-11-07T12:56:09.3573033Z   ---
+2026-11-07T12:56:09.3573330Z   duration_ms: 3.796166
+2026-11-07T12:56:09.3573667Z   type: 'test'
+2026-11-07T12:56:09.3573964Z   ...
+2026-11-07T12:56:09.3574428Z # Subtest: faucet 429 exposes the same public wallet for manual devnet funding
+2026-11-07T12:56:09.3575058Z ok 17 - faucet 429 exposes the same public wallet for manual devnet funding
+2026-11-07T12:56:09.3575499Z   ---
+2026-11-07T12:56:09.3575787Z   duration_ms: 1.202813
+2026-11-07T12:56:09.3576107Z   type: 'test'
+2026-11-07T12:56:09.3576401Z   ...
+2026-11-07T12:56:09.5144737Z # Subtest: CLI exits nonzero when arena JSON says ok false
+2026-11-07T12:56:09.5148471Z ok 18 - CLI exits nonzero when arena JSON says ok false
+2026-11-07T12:56:09.5148962Z   ---
+2026-11-07T12:56:09.5149274Z   duration_ms: 167.24878
+2026-11-07T12:56:09.5149746Z   type: 'test'
+2026-11-07T12:56:09.5150176Z   ...
+2026-11-07T12:56:09.5150751Z # Subtest: existing-only start cannot create a wallet or call RPC when registration is absent
+2026-11-07T12:56:09.5151487Z ok 19 - existing-only start cannot create a wallet or call RPC when registration is absent
+2026-11-07T12:56:09.5152279Z   ---
+2026-11-07T12:56:09.5152620Z   duration_ms: 1.770999
+2026-11-07T12:56:09.5152937Z   type: 'test'
+2026-11-07T12:56:09.5153244Z   ...
+2026-11-07T12:56:09.7431835Z # Subtest: freeze binds private brief, plans and question with a random salt
+2026-11-07T12:56:09.7432862Z ok 20 - freeze binds private brief, plans and question with a random salt
+2026-11-07T12:56:09.7433344Z   ---
+2026-11-07T12:56:09.7433680Z   duration_ms: 23.395859
+2026-11-07T12:56:09.7434343Z   type: 'test'
+2026-11-07T12:56:09.7434681Z   ...
+2026-11-07T12:56:09.7435285Z # Subtest: rejects a second changed instruction, changed topology, remote mock and arbitrary executable
+2026-11-07T12:56:09.7436106Z ok 21 - rejects a second changed instruction, changed topology, remote mock and arbitrary executable
+2026-11-07T12:56:09.7436637Z   ---
+2026-11-07T12:56:09.7436949Z   duration_ms: 0.766275
+2026-11-07T12:56:09.7437281Z   type: 'test'
+2026-11-07T12:56:09.7437586Z   ...
+2026-11-07T12:56:09.7438164Z # Subtest: requires explicit provider consent and a matching frozen provider before any request
+2026-11-07T12:56:09.7438931Z ok 22 - requires explicit provider consent and a matching frozen provider before any request
+2026-11-07T12:56:09.7442025Z   ---
+2026-11-07T12:56:09.7442375Z   duration_ms: 5.194795
+2026-11-07T12:56:09.7442719Z   type: 'test'
+2026-11-07T12:56:09.7443036Z   ...
+2026-11-07T12:56:09.7443595Z # Subtest: runs custom private brief locally and resumes without another provider call
+2026-11-07T12:56:09.7444316Z ok 23 - runs custom private brief locally and resumes without another provider call
+2026-11-07T12:56:09.7444805Z   ---
+2026-11-07T12:56:09.7445111Z   duration_ms: 35.818382
+2026-11-07T12:56:09.7445443Z   type: 'test'
+2026-11-07T12:56:09.7445755Z   ...
+2026-11-07T12:56:09.7446318Z # Subtest: unknown usage or provider failure permits only inconclusive and never repeats requests
+2026-11-07T12:56:09.7447094Z ok 24 - unknown usage or provider failure permits only inconclusive and never repeats requests
+2026-11-07T12:56:09.7447626Z   ---
+2026-11-07T12:56:09.7447930Z   duration_ms: 115.319783
+2026-11-07T12:56:09.7448263Z   type: 'test'
+2026-11-07T12:56:09.7448570Z   ...
+2026-11-07T12:56:09.7449039Z # Subtest: a saved receipt is reconciled without reissuing a model call
+2026-11-07T12:56:09.7449767Z ok 25 - a saved receipt is reconciled without reissuing a model call
+2026-11-07T12:56:09.7450516Z   ---
+2026-11-07T12:56:09.7450812Z   duration_ms: 58.356102
+2026-11-07T12:56:09.7451297Z   type: 'test'
+2026-11-07T12:56:09.7451609Z   ...
+2026-11-07T12:56:09.7452235Z # Subtest: an inflight journal without a saved response is unknown and is not retried
+2026-11-07T12:56:09.7453042Z ok 26 - an inflight journal without a saved response is unknown and is not retried
+2026-11-07T12:56:09.7453547Z   ---
+2026-11-07T12:56:09.7453888Z   duration_ms: 38.96959
+2026-11-07T12:56:09.7454191Z   type: 'test'
+2026-11-07T12:56:09.7454602Z   ...
+2026-11-07T12:56:09.7455279Z # Subtest: reservation budget is checked before provider work and incomplete result cannot be adopted
+2026-11-07T12:56:09.7456167Z ok 27 - reservation budget is checked before provider work and incomplete result cannot be adopted
+2026-11-07T12:56:09.7458981Z   ---
+2026-11-07T12:56:09.7459295Z   duration_ms: 35.210011
+2026-11-07T12:56:09.7459862Z   type: 'test'
+2026-11-07T12:56:09.7460156Z   ...
+2026-11-07T12:56:09.7463914Z # Subtest: a concurrent process cannot run the same experiment or change its decision
+2026-11-07T12:56:09.7464688Z ok 28 - a concurrent process cannot run the same experiment or change its decision
+2026-11-07T12:56:09.7465223Z   ---
+2026-11-07T12:56:09.7465495Z   duration_ms: 40.856769
+2026-11-07T12:56:09.7465894Z   type: 'test'
+2026-11-07T12:56:09.7570346Z   ...
+2026-11-07T12:56:09.7592314Z # Subtest: decision is immutable and apply writes the actual selected plan for the next experiment
+2026-11-07T12:56:09.7593249Z ok 29 - decision is immutable and apply writes the actual selected plan for the next experiment
+2026-11-07T12:56:09.7594076Z   ---
+2026-11-07T12:56:09.7594352Z   duration_ms: 43.882244
+2026-11-07T12:56:09.7594650Z   type: 'test'
+2026-11-07T12:56:09.7594909Z   ...
+2026-11-07T12:56:09.7595397Z # Subtest: public export contains only reviewed text, stable retry ID and explicit CC0 consent
+2026-11-07T12:56:09.7596524Z ok 30 - public export contains only reviewed text, stable retry ID and explicit CC0 consent
+2026-11-07T12:56:09.7596967Z   ---
+2026-11-07T12:56:09.7597295Z   duration_ms: 66.208122
+2026-11-07T12:56:09.7597577Z   type: 'test'
+2026-11-07T12:56:09.7598218Z   ...
+2026-11-07T12:56:09.7598666Z # Subtest: export refuses arbitrary fields and private-state overwrite
+2026-11-07T12:56:09.7599204Z ok 31 - export refuses arbitrary fields and private-state overwrite
+2026-11-07T12:56:09.7599702Z   ---
+2026-11-07T12:56:09.7600003Z   duration_ms: 44.880414
+2026-11-07T12:56:09.7600287Z   type: 'test'
+2026-11-07T12:56:09.7600537Z   ...
+2026-11-07T12:56:09.7601047Z # Subtest: negative usage, changed provider or false completed state is rejected before a request
+2026-11-07T12:56:09.7601738Z ok 32 - negative usage, changed provider or false completed state is rejected before a request
+2026-11-07T12:56:09.7602176Z   ---
+2026-11-07T12:56:09.7602422Z   duration_ms: 88.517874
+2026-11-07T12:56:09.7602693Z   type: 'test'
+2026-11-07T12:56:09.7602943Z   ...
+2026-11-07T12:56:09.7603417Z # Subtest: export preserves another experiment state and arbitrary existing JSON byte for byte
+2026-11-07T12:56:09.7604102Z ok 33 - export preserves another experiment state and arbitrary existing JSON byte for byte
+2026-11-07T12:56:09.7604860Z   ---
+2026-11-07T12:56:09.7609956Z   duration_ms: 126.65443
+2026-11-07T12:56:09.7610468Z   type: 'test'
+2026-11-07T12:56:09.7610700Z   ...
+2026-11-07T12:56:09.7611056Z # Subtest: a journal for another attempt cannot invoke the provider
+2026-11-07T12:56:09.7611659Z ok 34 - a journal for another attempt cannot invoke the provider
+2026-11-07T12:56:09.7611975Z   ---
+2026-11-07T12:56:09.7612169Z   duration_ms: 21.833636
+2026-11-07T12:56:09.7612405Z   type: 'test'
+2026-11-07T12:56:09.7612590Z   ...
+2026-11-07T12:56:09.7612963Z # Subtest: private file and directory permissions and symlink targets are enforced
+2026-11-07T12:56:09.7613520Z ok 35 - private file and directory permissions and symlink targets are enforced
+2026-11-07T12:56:09.7613870Z   ---
+2026-11-07T12:56:09.7614063Z   duration_ms: 3.428768
+2026-11-07T12:56:09.7614276Z   type: 'test'
+2026-11-07T12:56:09.7614455Z   ...
+2026-11-07T12:56:09.7614934Z # Subtest: refuses a saved state from another manifest before any request
+2026-11-07T12:56:09.7615403Z ok 36 - refuses a saved state from another manifest before any request
+2026-11-07T12:56:09.7615730Z   ---
+2026-11-07T12:56:09.7615930Z   duration_ms: 19.282525
+2026-11-07T12:56:09.7616142Z   type: 'test'
+2026-11-07T12:56:09.7616330Z   ...
+2026-11-07T12:56:09.7616682Z # Subtest: format checks distinguish schema compliance from business effects
+2026-11-07T12:56:09.7617201Z ok 37 - format checks distinguish schema compliance from business effects
+2026-11-07T12:56:09.7617541Z   ---
+2026-11-07T12:56:09.7617722Z   duration_ms: 0.17874
+2026-11-07T12:56:09.7617935Z   type: 'test'
+2026-11-07T12:56:09.7618121Z   ...
+2026-11-07T12:56:10.3725586Z # Subtest: CLI end-to-end calls only the configured loopback provider, never ALASHI
+2026-11-07T12:56:10.3726300Z ok 38 - CLI end-to-end calls only the configured loopback provider, never ALASHI
+2026-11-07T12:56:10.3726697Z   ---
+2026-11-07T12:56:10.3726932Z   duration_ms: 644.21504
+2026-11-07T12:56:10.3727194Z   type: 'test'
+2026-11-07T12:56:10.3727433Z   ...
+2026-11-07T12:56:10.3803371Z # Subtest: own baseline and candidate run concurrently with independent reports and private journals
+2026-11-07T12:56:10.3803973Z ok 39 - own baseline and candidate run concurrently with independent reports and private journals
+2026-11-07T12:56:10.3804273Z   ---
+2026-11-07T12:56:10.3804453Z   duration_ms: 65.978275
+2026-11-07T12:56:10.3804625Z   type: 'test'
+2026-11-07T12:56:10.3804742Z   ...
+2026-11-07T12:56:10.3805405Z # Subtest: wrong comparison model is rejected before attempt creation or model work
+2026-11-07T12:56:10.3805812Z ok 40 - wrong comparison model is rejected before attempt creation or model work
+2026-11-07T12:56:10.3806055Z   ---
+2026-11-07T12:56:10.3806224Z   duration_ms: 0.974789
+2026-11-07T12:56:10.3806421Z   type: 'test'
+2026-11-07T12:56:10.3806598Z   ...
+2026-11-07T12:56:10.3806977Z # Subtest: wrong comparison temperature is rejected before attempt creation or model work
+2026-11-07T12:56:10.3807746Z ok 41 - wrong comparison temperature is rejected before attempt creation or model work
+2026-11-07T12:56:10.3808109Z   ---
+2026-11-07T12:56:10.3808291Z   duration_ms: 0.797773
+2026-11-07T12:56:10.3808506Z   type: 'test'
+2026-11-07T12:56:10.3808683Z   ...
+2026-11-07T12:56:10.3820542Z # Subtest: wrong comparison max_tokens is rejected before attempt creation or model work
+2026-11-07T12:56:10.3821127Z ok 42 - wrong comparison max_tokens is rejected before attempt creation or model work
+2026-11-07T12:56:10.3821518Z   ---
+2026-11-07T12:56:10.3821709Z   duration_ms: 0.549828
+2026-11-07T12:56:10.3821923Z   type: 'test'
+2026-11-07T12:56:10.3822102Z   ...
+2026-11-07T12:56:10.3822492Z # Subtest: wrong comparison source is rejected before attempt creation or model work
+2026-11-07T12:56:10.3823067Z ok 43 - wrong comparison source is rejected before attempt creation or model work
+2026-11-07T12:56:10.3823436Z   ---
+2026-11-07T12:56:10.3823622Z   duration_ms: 0.765954
+2026-11-07T12:56:10.3823831Z   type: 'test'
+2026-11-07T12:56:10.3824026Z   ...
+2026-11-07T12:56:10.3824399Z # Subtest: custom executables are rejected before creating or running either half
+2026-11-07T12:56:10.3824937Z ok 44 - custom executables are rejected before creating or running either half
+2026-11-07T12:56:10.3825282Z   ---
+2026-11-07T12:56:10.3825465Z   duration_ms: 0.714657
+2026-11-07T12:56:10.3825668Z   type: 'test'
+2026-11-07T12:56:10.3825857Z   ...
+2026-11-07T12:56:10.3826213Z # Subtest: a different candidate brief stops both halves before reservations
+2026-11-07T12:56:10.3826712Z ok 45 - a different candidate brief stops both halves before reservations
+2026-11-07T12:56:10.3827032Z   ---
+2026-11-07T12:56:10.3827218Z   duration_ms: 0.863552
+2026-11-07T12:56:10.3827424Z   type: 'test'
+2026-11-07T12:56:10.3827608Z   ...
+2026-11-07T12:56:10.3827981Z # Subtest: a mismatched second journal is rejected before the first half starts
+2026-11-07T12:56:10.3828507Z ok 46 - a mismatched second journal is rejected before the first half starts
+2026-11-07T12:56:10.3828829Z   ---
+2026-11-07T12:56:10.3829017Z   duration_ms: 0.982451
+2026-11-07T12:56:10.3829224Z   type: 'test'
+2026-11-07T12:56:10.3829403Z   ...
+2026-11-07T12:56:10.3860374Z # Subtest: recovery after a lost report before acceptance never pays for either model response twice
+2026-11-07T12:56:10.3861055Z ok 47 - recovery after a lost report before acceptance never pays for either model response twice
+2026-11-07T12:56:10.3861451Z   ---
+2026-11-07T12:56:10.3861646Z   duration_ms: 20.5534
+2026-11-07T12:56:10.3861867Z   type: 'test'
+2026-11-07T12:56:10.3862061Z   ...
+2026-11-07T12:56:10.3870458Z # Subtest: recovery after a lost report after acceptance never pays for either model response twice
+2026-11-07T12:56:10.3871119Z ok 48 - recovery after a lost report after acceptance never pays for either model response twice
+2026-11-07T12:56:10.3871490Z   ---
+2026-11-07T12:56:10.3871678Z   duration_ms: 20.375122
+2026-11-07T12:56:10.3871917Z   type: 'test'
+2026-11-07T12:56:10.3872095Z   ...
+2026-11-07T12:56:10.3872530Z # Subtest: the real provider adapter sends the fixed comparison generation profile to a local fetch mock
+2026-11-07T12:56:10.3873168Z ok 49 - the real provider adapter sends the fixed comparison generation profile to a local fetch mock
+2026-11-07T12:56:10.3873544Z   ---
+2026-11-07T12:56:10.3873686Z   duration_ms: 13.826778
+2026-11-07T12:56:10.3873823Z   type: 'test'
+2026-11-07T12:56:10.3873936Z   ...
+2026-11-07T12:56:10.3874218Z # Subtest: concurrent journals for one attempt cannot duplicate provider work or alter the winning receipts
+2026-11-07T12:56:10.3874861Z ok 50 - concurrent journals for one attempt cannot duplicate provider work or alter the winning receipts
+2026-11-07T12:56:10.3875112Z   ---
+2026-11-07T12:56:10.3875230Z   duration_ms: 14.237027
+2026-11-07T12:56:10.3875362Z   type: 'test'
+2026-11-07T12:56:10.3875478Z   ...
+2026-11-07T12:56:10.3875691Z # Subtest: a missing trade executor stops before reserving or calling a model
+2026-11-07T12:56:10.3876124Z ok 51 - a missing trade executor stops before reserving or calling a model
+2026-11-07T12:56:10.3876328Z   ---
+2026-11-07T12:56:10.3876442Z   duration_ms: 2.127647
+2026-11-07T12:56:10.3876570Z   type: 'test'
+2026-11-07T12:56:10.3876688Z   ...
+2026-11-07T12:56:10.3876932Z # Subtest: trading tasks receive owner context and a real local state tool, without ad fields
+2026-11-07T12:56:10.3877294Z ok 52 - trading tasks receive owner context and a real local state tool, without ad fields
+2026-11-07T12:56:10.3877517Z   ---
+2026-11-07T12:56:10.3877632Z   duration_ms: 0.881789
+2026-11-07T12:56:10.3877764Z   type: 'test'
+2026-11-07T12:56:10.3877875Z   ...
+2026-11-07T12:56:10.3878272Z # Subtest: an ambiguous Solana submission never starts another signer; a supplied signature only reconciles
+2026-11-07T12:56:10.3878687Z ok 53 - an ambiguous Solana submission never starts another signer; a supplied signature only reconciles
+2026-11-07T12:56:10.3878931Z   ---
+2026-11-07T12:56:10.3879049Z   duration_ms: 0.394514
+2026-11-07T12:56:10.3879176Z   type: 'test'
+2026-11-07T12:56:10.3879289Z   ...
+2026-11-07T12:56:10.3879672Z # Subtest: HTTP execution refuses another owner or another pending run before any request
+2026-11-07T12:56:10.3880021Z ok 54 - HTTP execution refuses another owner or another pending run before any request
+2026-11-07T12:56:10.3880328Z   ---
+2026-11-07T12:56:10.3880486Z   duration_ms: 2.296491
+2026-11-07T12:56:10.3880657Z   type: 'test'
+2026-11-07T12:56:10.3880769Z   ...
+2026-11-07T12:56:10.3880999Z # Subtest: strict completion parsing preserves usage independently of JSON quality
+2026-11-07T12:56:10.3881331Z ok 55 - strict completion parsing preserves usage independently of JSON quality
+2026-11-07T12:56:10.3881567Z   ---
+2026-11-07T12:56:10.3881680Z   duration_ms: 0.689038
+2026-11-07T12:56:10.3881811Z   type: 'test'
+2026-11-07T12:56:10.3881926Z   ...
+2026-11-07T12:56:10.3882179Z # Subtest: profile and endpoint boundaries reject secrets in URLs and insecure remote providers
+2026-11-07T12:56:10.3882559Z ok 56 - profile and endpoint boundaries reject secrets in URLs and insecure remote providers
+2026-11-07T12:56:10.3882788Z   ---
+2026-11-07T12:56:10.3882902Z   duration_ms: 0.995391
+2026-11-07T12:56:10.3883029Z   type: 'test'
+2026-11-07T12:56:10.3883146Z   ...
+2026-11-07T12:56:10.3883374Z # Subtest: owner tools report missing executables, nonzero exits and invalid output
+2026-11-07T12:56:10.3883701Z ok 57 - owner tools report missing executables, nonzero exits and invalid output
+2026-11-07T12:56:10.3883912Z   ---
+2026-11-07T12:56:10.3884022Z   duration_ms: 53.250373
+2026-11-07T12:56:10.3884154Z   type: 'test'
+2026-11-07T12:56:10.3884270Z   ...
+2026-11-07T12:56:10.3884513Z # Subtest: ambiguous inflight journal is recorded as unknown without a second provider call
+2026-11-07T12:56:10.3884876Z ok 58 - ambiguous inflight journal is recorded as unknown without a second provider call
+2026-11-07T12:56:10.3885104Z   ---
+2026-11-07T12:56:10.3885214Z   duration_ms: 2.876796
+2026-11-07T12:56:10.3885342Z   type: 'test'
+2026-11-07T12:56:10.3885451Z   ...
+2026-11-07T12:56:10.3885712Z # Subtest: builtin tools report zero model usage explicitly; public plans cannot select executables
+2026-11-07T12:56:10.3886105Z ok 59 - builtin tools report zero model usage explicitly; public plans cannot select executables
+2026-11-07T12:56:10.3886337Z   ---
+2026-11-07T12:56:10.3886480Z   duration_ms: 0.498972
+2026-11-07T12:56:10.3886617Z   type: 'test'
+2026-11-07T12:56:10.3886729Z   ...
+2026-11-07T12:56:10.3886973Z # Subtest: an oversized owner-tool report keeps its known usage for the failed quality gate
+2026-11-07T12:56:10.3887451Z ok 60 - an oversized owner-tool report keeps its known usage for the failed quality gate
+2026-11-07T12:56:10.3887683Z   ---
+2026-11-07T12:56:10.3887796Z   duration_ms: 21.324077
+2026-11-07T12:56:10.3887925Z   type: 'test'
+2026-11-07T12:56:10.3888042Z   ...
+2026-11-07T12:56:10.3888267Z # Subtest: report limits count UTF-8 bytes so malformed output cannot lose known usage
+2026-11-07T12:56:10.3888600Z ok 61 - report limits count UTF-8 bytes so malformed output cannot lose known usage
+2026-11-07T12:56:10.3888900Z   ---
+2026-11-07T12:56:10.3889014Z   duration_ms: 24.959961
+2026-11-07T12:56:10.3889144Z   type: 'test'
+2026-11-07T12:56:10.3889258Z   ...
+2026-11-07T12:56:10.3889623Z # Subtest: oversized chunked provider response is cancelled before the entire body is read
+2026-11-07T12:56:10.3890034Z ok 62 - oversized chunked provider response is cancelled before the entire body is read
+2026-11-07T12:56:10.3890264Z   ---
+2026-11-07T12:56:10.3890377Z   duration_ms: 12.651697
+2026-11-07T12:56:10.3890511Z   type: 'test'
+2026-11-07T12:56:10.3890626Z   ...
+2026-11-07T12:56:10.3890841Z # Subtest: provider limit counts bytes and rejects an oversized declared body
+2026-11-07T12:56:10.3891142Z ok 63 - provider limit counts bytes and rejects an oversized declared body
+2026-11-07T12:56:10.3891340Z   ---
+2026-11-07T12:56:10.3891453Z   duration_ms: 1.949067
+2026-11-07T12:56:10.3891583Z   type: 'test'
+2026-11-07T12:56:10.3891696Z   ...
+2026-11-07T12:56:10.3891903Z # Subtest: a provider response exactly at the byte limit is accepted
+2026-11-07T12:56:10.3892180Z ok 64 - a provider response exactly at the byte limit is accepted
+2026-11-07T12:56:10.3892361Z   ---
+2026-11-07T12:56:10.3892471Z   duration_ms: 2.665888
+2026-11-07T12:56:10.3892603Z   type: 'test'
+2026-11-07T12:56:10.3892716Z   ...
+2026-11-07T12:56:10.3892914Z # Subtest: an owner tool response exactly at the byte limit is accepted
+2026-11-07T12:56:10.3893192Z ok 65 - an owner tool response exactly at the byte limit is accepted
+2026-11-07T12:56:10.3893381Z   ---
+2026-11-07T12:56:10.3893492Z   duration_ms: 35.028391
+2026-11-07T12:56:10.3893627Z   type: 'test'
+2026-11-07T12:56:10.3893737Z   ...
+2026-11-07T12:56:10.3894044Z # (node:2642) ExperimentalWarning: The MockTimers API is an experimental feature and might change at any time
+2026-11-07T12:56:10.3894412Z # (Use `node --trace-warnings ...` to show where the warning was created)
+2026-11-07T12:56:10.3894705Z # Subtest: an oversized owner tool that ignores SIGTERM is terminated
+2026-11-07T12:56:10.3894988Z ok 66 - an oversized owner tool that ignores SIGTERM is terminated
+2026-11-07T12:56:10.3895174Z   ---
+2026-11-07T12:56:10.3895291Z   duration_ms: 25.928847
+2026-11-07T12:56:10.3895423Z   type: 'test'
+2026-11-07T12:56:10.3895533Z   ...
+2026-11-07T12:56:10.3895730Z # Subtest: an owner tool ignoring SIGTERM is stopped at the deadline
+2026-11-07T12:56:10.3895998Z ok 67 - an owner tool ignoring SIGTERM is stopped at the deadline
+2026-11-07T12:56:10.3896178Z   ---
+2026-11-07T12:56:10.3896293Z   duration_ms: 26.125608
+2026-11-07T12:56:10.3896423Z   type: 'test'
+2026-11-07T12:56:10.3896535Z   ...
+2026-11-07T12:56:10.3896753Z # Subtest: oversized owner tool also stops a descendant holding its output pipe
+2026-11-07T12:56:10.3897071Z ok 68 - oversized owner tool also stops a descendant holding its output pipe
+2026-11-07T12:56:10.3897276Z   ---
+2026-11-07T12:56:10.3897387Z   duration_ms: 52.077261
+2026-11-07T12:56:10.3897522Z   type: 'test'
+2026-11-07T12:56:10.3897633Z   ...
+2026-11-07T12:56:11.0785897Z # Subtest: a dependent starts after its accepted report while an unrelated task is still running
+2026-11-07T12:56:11.0786654Z ok 69 - a dependent starts after its accepted report while an unrelated task is still running
+2026-11-07T12:56:11.0787074Z   ---
+2026-11-07T12:56:11.0787276Z   duration_ms: 46.581763
+2026-11-07T12:56:11.0787495Z   type: 'test'
+2026-11-07T12:56:11.0787682Z   ...
+2026-11-07T12:56:11.0788050Z # Subtest: a rejected reservation cannot call the provider or finish the run
+2026-11-07T12:56:11.0788572Z ok 70 - a rejected reservation cannot call the provider or finish the run
+2026-11-07T12:56:11.0789294Z   ---
+2026-11-07T12:56:11.0789641Z   duration_ms: 2.09006
+2026-11-07T12:56:11.0789850Z   type: 'test'
+2026-11-07T12:56:11.0790039Z   ...
+2026-11-07T12:56:11.0790479Z # Subtest: unknown usage stops new work and drains active calls before releasing the journal lock
+2026-11-07T12:56:11.0791098Z ok 71 - unknown usage stops new work and drains active calls before releasing the journal lock
+2026-11-07T12:56:11.0791473Z   ---
+2026-11-07T12:56:11.0791837Z   duration_ms: 27.911705
+2026-11-07T12:56:11.0792079Z   type: 'test'
+2026-11-07T12:56:11.0792264Z   ...
+2026-11-07T12:56:11.0792725Z # Subtest: invalid report stops new work and drains active calls before releasing the journal lock
+2026-11-07T12:56:11.0793375Z ok 72 - invalid report stops new work and drains active calls before releasing the journal lock
+2026-11-07T12:56:11.0793765Z   ---
+2026-11-07T12:56:11.0793948Z   duration_ms: 25.194971
+2026-11-07T12:56:11.0794173Z   type: 'test'
+2026-11-07T12:56:11.0794356Z   ...
+2026-11-07T12:56:11.0794804Z # Subtest: resume a lost report before server acceptance without repeating model work
+2026-11-07T12:56:11.0795463Z ok 73 - resume a lost report before server acceptance without repeating model work
+2026-11-07T12:56:11.0796132Z   ---
+2026-11-07T12:56:11.0796453Z   duration_ms: 24.946592
+2026-11-07T12:56:11.0796788Z   type: 'test'
+2026-11-07T12:56:11.0807391Z   ...
+2026-11-07T12:56:11.0807781Z # Subtest: resume a lost report after server acceptance without repeating model work
+2026-11-07T12:56:11.0808203Z ok 74 - resume a lost report after server acceptance without repeating model work
+2026-11-07T12:56:11.0808419Z   ---
+2026-11-07T12:56:11.0808539Z   duration_ms: 16.538435
+2026-11-07T12:56:11.0808673Z   type: 'test'
+2026-11-07T12:56:11.0808791Z   ...
+2026-11-07T12:56:11.0809031Z # Subtest: a stopped run reconciles saved paid responses without starting more work
+2026-11-07T12:56:11.0809361Z ok 75 - a stopped run reconciles saved paid responses without starting more work
+2026-11-07T12:56:11.0809761Z   ---
+2026-11-07T12:56:11.0809879Z   duration_ms: 1.253649
+2026-11-07T12:56:11.0810011Z   type: 'test'
+2026-11-07T12:56:11.0810125Z   ...
+2026-11-07T12:56:11.0810401Z # Subtest: out-of-order report snapshots cannot forget an accepted dependency or repeat a task
+2026-11-07T12:56:11.0810778Z ok 76 - out-of-order report snapshots cannot forget an accepted dependency or repeat a task
+2026-11-07T12:56:11.0811019Z   ---
+2026-11-07T12:56:11.0811135Z   duration_ms: 53.280503
+2026-11-07T12:56:11.0811265Z   type: 'test'
+2026-11-07T12:56:11.0811384Z   ...
+2026-11-07T12:56:11.0811591Z # Subtest: an overrun with a valid report still blocks dependent model calls
+2026-11-07T12:56:11.0811886Z ok 77 - an overrun with a valid report still blocks dependent model calls
+2026-11-07T12:56:11.0812086Z   ---
+2026-11-07T12:56:11.0812198Z   duration_ms: 4.103104
+2026-11-07T12:56:11.0812324Z   type: 'test'
+2026-11-07T12:56:11.0812435Z   ...
+2026-11-07T12:56:11.0812658Z # Subtest: a reservation that completes after a failure cannot start a model call
+2026-11-07T12:56:11.0812973Z ok 78 - a reservation that completes after a failure cannot start a model call
+2026-11-07T12:56:11.0813175Z   ---
+2026-11-07T12:56:11.0813294Z   duration_ms: 25.575535
+2026-11-07T12:56:11.0813425Z   type: 'test'
+2026-11-07T12:56:11.0813536Z   ...
+2026-11-07T12:56:11.0813734Z # Subtest: a late accepted reservation is drained without spend (none)
+2026-11-07T12:56:11.0814010Z ok 79 - a late accepted reservation is drained without spend (none)
+2026-11-07T12:56:11.0814193Z   ---
+2026-11-07T12:56:11.0814303Z   duration_ms: 26.23579
+2026-11-07T12:56:11.0814432Z   type: 'test'
+2026-11-07T12:56:11.0814544Z   ...
+2026-11-07T12:56:11.0814757Z # Subtest: a late accepted reservation is drained without spend (before report)
+2026-11-07T12:56:11.0815065Z ok 80 - a late accepted reservation is drained without spend (before report)
+2026-11-07T12:56:11.0815263Z   ---
+2026-11-07T12:56:11.0815372Z   duration_ms: 25.144645
+2026-11-07T12:56:11.0815678Z   type: 'test'
+2026-11-07T12:56:11.0815787Z   ...
+2026-11-07T12:56:11.0815995Z # Subtest: a late accepted reservation is drained without spend (after report)
+2026-11-07T12:56:11.0816301Z ok 81 - a late accepted reservation is drained without spend (after report)
+2026-11-07T12:56:11.0816526Z   ---
+2026-11-07T12:56:11.0816635Z   duration_ms: 25.147355
+2026-11-07T12:56:11.0816763Z   type: 'test'
+2026-11-07T12:56:11.0816877Z   ...
+2026-11-07T12:56:11.0817164Z # Subtest: a lost reserve before acceptance resumes with one external call
+2026-11-07T12:56:11.0817454Z ok 82 - a lost reserve before acceptance resumes with one external call
+2026-11-07T12:56:11.0817648Z   ---
+2026-11-07T12:56:11.0817756Z   duration_ms: 4.555245
+2026-11-07T12:56:11.0817879Z   type: 'test'
+2026-11-07T12:56:11.0817992Z   ...
+2026-11-07T12:56:11.0818189Z # Subtest: a lost reserve after acceptance resumes with one external call
+2026-11-07T12:56:11.0818476Z ok 83 - a lost reserve after acceptance resumes with one external call
+2026-11-07T12:56:11.0818670Z   ---
+2026-11-07T12:56:11.0818784Z   duration_ms: 2.570775
+2026-11-07T12:56:11.0818909Z   type: 'test'
+2026-11-07T12:56:11.0819019Z   ...
+2026-11-07T12:56:11.0819229Z # Subtest: an arena without executor claims cannot trigger an external call
+2026-11-07T12:56:11.0819692Z ok 84 - an arena without executor claims cannot trigger an external call
+2026-11-07T12:56:11.0819887Z   ---
+2026-11-07T12:56:11.0819999Z   duration_ms: 1.551623
+2026-11-07T12:56:11.0820125Z   type: 'test'
+2026-11-07T12:56:11.0820242Z   ...
+2026-11-07T12:56:11.0820423Z # Subtest: expiry during reservation prevents a model request
+2026-11-07T12:56:11.0820679Z ok 85 - expiry during reservation prevents a model request
+2026-11-07T12:56:11.0820850Z   ---
+2026-11-07T12:56:11.0820965Z   duration_ms: 1107.923305
+2026-11-07T12:56:11.0821104Z   type: 'test'
+2026-11-07T12:56:11.0821216Z   ...
+2026-11-07T12:56:11.1134117Z # Subtest: a newly ready task cannot spend budget held by an unrelated active call
+2026-11-07T12:56:11.1134830Z ok 86 - a newly ready task cannot spend budget held by an unrelated active call
+2026-11-07T12:56:11.1135226Z   ---
+2026-11-07T12:56:11.1135432Z   duration_ms: 53.231174
+2026-11-07T12:56:11.1135705Z   type: 'test'
+2026-11-07T12:56:11.1135900Z   ...
+2026-11-07T12:56:11.1136345Z # Subtest: a saved response is reconciled after the deadline without another model call
+2026-11-07T12:56:11.1136824Z ok 87 - a saved response is reconciled after the deadline without another model call
+2026-11-07T12:56:11.1137074Z   ---
+2026-11-07T12:56:11.1137200Z   duration_ms: 0.765003
+2026-11-07T12:56:11.1137336Z   type: 'test'
+2026-11-07T12:56:11.1137452Z   ...
+2026-11-07T12:56:11.1137680Z # Subtest: a claimed prepared reservation resumes once with the same executor
+2026-11-07T12:56:11.1138010Z ok 88 - a claimed prepared reservation resumes once with the same executor
+2026-11-07T12:56:11.1138236Z   ---
+2026-11-07T12:56:11.1138358Z   duration_ms: 1.704038
+2026-11-07T12:56:11.1138493Z   type: 'test'
+2026-11-07T12:56:11.1138615Z   ...
+2026-11-07T12:56:11.1138877Z # Subtest: a legacy prepared reservation is ambiguous and never starts another provider call
+2026-11-07T12:56:11.1139273Z ok 89 - a legacy prepared reservation is ambiguous and never starts another provider call
+2026-11-07T12:56:11.1139699Z   ---
+2026-11-07T12:56:11.1139885Z   duration_ms: 1.654338
+2026-11-07T12:56:11.1140092Z   type: 'test'
+2026-11-07T12:56:11.1140267Z   ...
+2026-11-07T12:56:11.1140679Z # Subtest: a terminal reservation retry overrides a stale running snapshot before provider work
+2026-11-07T12:56:11.1141263Z ok 90 - a terminal reservation retry overrides a stale running snapshot before provider work
+2026-11-07T12:56:11.1141620Z   ---
+2026-11-07T12:56:11.1141797Z   duration_ms: 1.075041
+2026-11-07T12:56:11.1141991Z   type: 'test'
+2026-11-07T12:56:11.1142171Z   ...
+2026-11-07T12:56:11.7617497Z # Subtest: fixed workload timing: same reports and four calls, with controlled provider delays
+2026-11-07T12:56:11.7618167Z ok 91 - fixed workload timing: same reports and four calls, with controlled provider delays
+2026-11-07T12:56:11.7618685Z   ---
+2026-11-07T12:56:11.7618821Z   duration_ms: 656.570253
+2026-11-07T12:56:11.7618969Z   type: 'test'
+2026-11-07T12:56:11.7619096Z   ...
+2026-11-07T12:56:11.7619754Z # {"fixture":"fast30-slow200-follow150-deliver10","milliseconds":[222,217,216],"median_ms":217,"provider_calls_per_run":4,"synthetic_tokens_per_run":40,"external_model_calls":0}
+2026-11-07T12:56:12.0554026Z 1..91
+2026-11-07T12:56:12.0554261Z # tests 91
+2026-11-07T12:56:12.0554800Z # suites 0
+2026-11-07T12:56:12.0554985Z # pass 91
+2026-11-07T12:56:12.0555174Z # fail 0
+2026-11-07T12:56:12.0555355Z # cancelled 0
+2026-11-07T12:56:12.0555548Z # skipped 0
+2026-11-07T12:56:12.0555725Z # todo 0
+2026-11-07T12:56:12.0555919Z # duration_ms 3308.243523
+2026-11-07T12:56:12.0621879Z ##[group]Run python3 ../experiments/alashi-watch/rts-overview/check_runtime.py
+2026-11-07T12:56:12.0622202Z [36;1mpython3 ../experiments/alashi-watch/rts-overview/check_runtime.py[0m
+2026-11-07T12:56:12.0622476Z [36;1mpython3 ../experiments/alashi-watch/rts-overview/check_export.py[0m
+2026-11-07T12:56:12.0622735Z [36;1mnode ../experiments/alashi-watch/rts-overview/check_visual.mjs[0m
+2026-11-07T12:56:12.0663881Z shell: /usr/bin/bash -e {0}
+2026-11-07T12:56:12.0664034Z ##[endgroup]
+2026-11-07T12:56:24.8477261Z {
+2026-11-07T12:56:24.8477531Z   "checks": {
+2026-11-07T12:56:24.8477734Z     "unmodified_upstream": true,
+2026-11-07T12:56:24.8477933Z     "video_byte_ranges": true,
+2026-11-07T12:56:24.8478105Z     "invalid_video_range_rejected": true,
+2026-11-07T12:56:24.8478282Z     "own_observation_only": true,
+2026-11-07T12:56:24.8478470Z     "enemy_and_early_verification_rejected": true,
+2026-11-07T12:56:24.8478657Z     "other_slot_rejected": true,
+2026-11-07T12:56:24.8478968Z     "clock_runs_without_clients": true,
+2026-11-07T12:56:24.8479144Z     "six_tasks_run_in_parallel": true,
+2026-11-07T12:56:24.8479312Z     "step_did_not_fast_forward": true,
+2026-11-07T12:56:24.8479629Z     "tasks_complete_without_viewer": true,
+2026-11-07T12:56:24.8479881Z     "unassigned_verifiers_still_wait": true,
+2026-11-07T12:56:24.8480061Z     "reports_do_not_change_cash": true,
+2026-11-07T12:56:24.8480239Z     "accept_idempotent": true,
+2026-11-07T12:56:24.8480404Z     "timeline_keeps_all_completions": true,
+2026-11-07T12:56:24.8480574Z     "timeline_monotonic": true,
+2026-11-07T12:56:24.8480747Z     "upstream_replay_contains_events": true,
+2026-11-07T12:56:24.8480921Z     "reset_clears_reports": true,
+2026-11-07T12:56:24.8481084Z     "reset_clears_acceptance": true
+2026-11-07T12:56:24.8481237Z   },
+2026-11-07T12:56:24.8481353Z   "passed": true,
+2026-11-07T12:56:24.8481485Z   "elapsed_seconds": 12.22,
+2026-11-07T12:56:24.8481675Z   "source_commit": "2376c509b6b5691858df2c9d4d1f79a7b1a877d1"
+2026-11-07T12:56:24.8481864Z }
+2026-11-07T12:56:24.8790435Z PASS: incomplete cycle, foreign job, frame order, JPEG bounds, duplicate frame, stale export cleanup, cancellation
+2026-11-07T12:56:24.9028121Z {"passed":true,"route_samples":808,"units":8,"phases":7,"event_gated_replay":true,"reduced_motion":true,"travel_seconds":1.85}
+2026-11-07T12:56:24.9117210Z Post job cleanup.
+2026-11-07T12:56:24.9910909Z (node:2808) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-07T12:56:24.9911378Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-07T12:56:24.9913041Z Cache hit occurred on the primary key node-cache-Linux-x64-npm-e2c2ea5d8a461e5a1b19958e708960a3a968bda2d07a8d230da9d20e3edd702b, not saving cache.
+2026-11-07T12:56:25.0039409Z Post job cleanup.
+2026-11-07T12:56:25.0576962Z [command]/usr/bin/git version
+2026-11-07T12:56:25.0613180Z git version 2.56.0
+2026-11-07T12:56:25.0635776Z Temporarily overriding HOME='/home/runner/work/_temp/316f0aef-2c04-4313-86b8-25bbaa4e6d37' before making global git config changes
+2026-11-07T12:56:25.0636508Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-07T12:56:25.0638842Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/alashi/alashi
+2026-11-07T12:56:25.0672289Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-07T12:56:25.0705671Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-07T12:56:25.0967890Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-07T12:56:25.0999409Z http.https://github.com/.extraheader
+2026-11-07T12:56:25.1005176Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-07T12:56:25.1037380Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-07T12:56:25.1353483Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-07T12:56:25.1384566Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-07T12:56:25.1764478Z Cleaning up orphan processes
+2026-11-07T12:56:25.2026388Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262, actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

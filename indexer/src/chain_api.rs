@@ -128,6 +128,7 @@ impl ChainApi {
     fn ready_value(&self, pda: &str, cached: Option<&Cached>) -> Option<Value> {
         cached
             .filter(|c| c.terminal || c.at.elapsed() < Duration::from_secs(8))
+            .filter(|c| !c.terminal || self.archive_dir.is_none() || c.value["archived"] == true)
             .map(|c| c.value.clone())
             .or_else(|| self.load_archive(pda))
     }
@@ -171,6 +172,14 @@ impl ChainApi {
         let _game_guard = game_gate.lock().unwrap_or_else(|e| e.into_inner());
         let previous = self.cached(pda);
         if let Some(value) = self.ready_value(pda, previous.as_ref()) {
+            return Ok(value);
+        }
+        // A complete terminal snapshot needs no RPC, but a failed archive still
+        // needs a retry. Keep that write under the same per-game gate as fetch.
+        if let Some(mut entry) = previous.as_ref().filter(|c| c.terminal).cloned() {
+            self.archive(pda, &mut entry.value);
+            let value = entry.value.clone();
+            self.remember(pda, entry);
             return Ok(value);
         }
         // A negative cache is deliberately omitted: unknown PDAs cost a single
@@ -895,6 +904,83 @@ mod tests {
         assert_eq!(loaded["archived"], true);
         assert_eq!(loaded["game_pda"], pda);
         let _ = std::fs::remove_dir_all(dir);
+    }
+
+    #[test]
+    fn cached_terminal_game_retries_archive_after_storage_recovers_without_rpc() {
+        use std::sync::Barrier;
+        for age in [Duration::ZERO, Duration::from_secs(60)] {
+            let pda = Pubkey::new_unique().to_string();
+            let dir = std::env::temp_dir().join(format!("alashi-archive-retry-{}-{pda}", std::process::id()));
+            // Block the final rename after the temporary archive has been written.
+            let destination = dir.join(format!("{pda}.json"));
+            std::fs::create_dir_all(&destination).unwrap();
+            let rpc = TcpListener::bind("127.0.0.1:0").unwrap();
+            rpc.set_nonblocking(true).unwrap();
+            let mut api = ChainApi::new();
+            api.rpc_url = format!("http://{}", rpc.local_addr().unwrap());
+            api.http = reqwest::blocking::Client::builder()
+                .no_proxy()
+                .timeout(Duration::from_millis(100))
+                .build()
+                .unwrap();
+            api.archive_dir = Some(dir.clone());
+            let mut terminal = json!({"ok":true,"game_pda":pda,"cluster":"devnet",
+                "program_id":alashi::id().to_string(),"game":{"settled":true},
+                "history_complete":true,"events":[]});
+            api.archive(&pda, &mut terminal);
+            assert_ne!(terminal["archived"], true);
+            let live_pda = Pubkey::new_unique().to_string();
+            let live = json!({"ok":true,"game_pda":live_pda,"game":{"settled":false}});
+            api.remember(&live_pda, Cached {
+                value: live.clone(),
+                at: Instant::now(),
+                terminal: false,
+                seen_signatures: HashSet::new(),
+            });
+            assert_eq!(api.get(&live_pda).unwrap(), live);
+            api.remember(&pda, Cached {
+                value: terminal.clone(),
+                at: Instant::now() - age,
+                terminal: true,
+                seen_signatures: HashSet::new(),
+            });
+            assert_eq!(api.get(&pda).unwrap(), terminal);
+            assert!(api.load_archive(&pda).is_none());
+
+            assert!(dir.join(format!(".{pda}.tmp")).is_file());
+            std::fs::remove_dir(&destination).unwrap();
+            let api = Arc::new(api);
+            let barrier = Arc::new(Barrier::new(3));
+            let workers: Vec<_> = (0..2).map(|_| {
+                let api = Arc::clone(&api);
+                let barrier = Arc::clone(&barrier);
+                let pda = pda.clone();
+                std::thread::spawn(move || {
+                    barrier.wait();
+                    api.get(&pda).unwrap()
+                })
+            }).collect();
+            barrier.wait();
+            let results: Vec<_> = workers.into_iter().map(|w| w.join().unwrap()).collect();
+            assert_eq!(results[0]["archived"], true, "cached terminal game must retry its failed archive");
+            assert_eq!(results[0], results[1]);
+            assert_eq!(api.load_archive(&pda).unwrap(), results[0]);
+            let mut restarted = ChainApi::new();
+            restarted.rpc_url = api.rpc_url.clone();
+            restarted.http = api.http.clone();
+            restarted.archive_dir = Some(dir.clone());
+            assert_eq!(restarted.get(&pda).unwrap(), results[0]);
+
+            // Archived cache hits remain available without rewriting lost storage.
+            std::fs::remove_file(&destination).unwrap();
+            let tmp = dir.join(format!(".{pda}.tmp"));
+            std::fs::write(&tmp, b"untouched").unwrap();
+            assert_eq!(api.get(&pda).unwrap(), results[0]);
+            assert_eq!(std::fs::read(&tmp).unwrap(), b"untouched");
+            assert!(matches!(rpc.accept(), Err(error) if error.kind() == std::io::ErrorKind::WouldBlock));
+            std::fs::remove_dir_all(dir).unwrap();
+        }
     }
 
     #[test]

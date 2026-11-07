@@ -1,0 +1,44 @@
+CWD: /Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/mutation-workers/run-8245ee18-974f-4a40-8dee-795943e2db0e/worker-0
+COMMAND: cargo test --offline --locked --manifest-path indexer/Cargo.toml --lib cached_terminal_game_retries_archive_after_storage_recovers_without_rpc
+SOURCE: indexer/src/chain_api.rs
+SHA256: 1c986e1384d82783a2d543788bcf3aee5e1ae12b17e296fa71e7dd2fa1ce9601
+--- working-tree
++++ probe-source
+@@ -128,7 +128,7 @@
+     fn ready_value(&self, pda: &str, cached: Option<&Cached>) -> Option<Value> {
+         cached
+             .filter(|c| c.terminal || c.at.elapsed() < Duration::from_secs(8))
+-            .filter(|c| !c.terminal || self.archive_dir.is_none() || c.value["archived"] == true)
++            .filter(|c| !c.terminal || self.archive_dir.is_none() || c.value["archived"] != true)
+             .map(|c| c.value.clone())
+             .or_else(|| self.load_archive(pda))
+     }
+
+CARGO OUTPUT:
+   Compiling indexer v0.1.0 (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/mutation-workers/run-8245ee18-974f-4a40-8dee-795943e2db0e/worker-0/indexer)
+    Finished `test` profile [unoptimized] target(s) in 13.00s
+     Running unittests src/lib.rs (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/host/debug/deps/indexer-7a0e1e82b51b4e1e)
+
+running 1 test
+test chain_api::tests::cached_terminal_game_retries_archive_after_storage_recovers_without_rpc ... FAILED
+
+failures:
+
+---- chain_api::tests::cached_terminal_game_retries_archive_after_storage_recovers_without_rpc stdout ----
+
+thread 'chain_api::tests::cached_terminal_game_retries_archive_after_storage_recovers_without_rpc' panicked at src/chain_api.rs:966:13:
+assertion `left == right` failed: cached terminal game must retry its failed archive
+  left: Null
+ right: true
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    chain_api::tests::cached_terminal_game_retries_archive_after_storage_recovers_without_rpc
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.05s
+
+error: test failed, to rerun pass `--lib`
+
+EXIT_CODE: 101
+SECONDS: 15.848

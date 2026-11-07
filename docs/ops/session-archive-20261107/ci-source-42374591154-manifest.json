@@ -1,0 +1,667 @@
+{
+  "repository": "Jakisheff/alashi",
+  "pr": 70,
+  "source_head_sha": "1ac0315b7a2d29348d3816063641cd2e5570b0fc",
+  "actual_main_when_checked": "4cdfa4cb20ee6e6d7cd33f849884f062caa39881",
+  "tested_merge_sha": "3944fdce9d5475fb0e11235a073ea05e62df4945",
+  "tested_merge_parents": [
+    "4cdfa4cb20ee6e6d7cd33f849884f062caa39881",
+    "1ac0315b7a2d29348d3816063641cd2e5570b0fc"
+  ],
+  "tested_tree_sha": "be25ee5f1b6947ce2479ee0c5766a45dead7a83e",
+  "checkout_verified_in_all_jobs": true,
+  "run": {
+    "id": 42374591154,
+    "url": "https://github.com/Jakisheff/alashi/actions/runs/42374591154",
+    "head_sha": "1ac0315b7a2d29348d3816063641cd2e5570b0fc",
+    "event": "pull_request",
+    "status": "completed",
+    "conclusion": "success"
+  },
+  "log_normalization": "Original hash covers UTF-8 encoding of the GitHub connector decoded log, before publication. Published logs retain all lines; only trailing spaces/tabs/CR per line are removed and a final newline is ensured. Both hashes and byte counts are recorded. No log sections are omitted.",
+  "jobs": [
+    {
+      "id": 128409477584,
+      "name": "Fresh SBF build and program tests",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42374591154/job/128409477584",
+      "log_file": "ci-source-42374591154-128409477584.log",
+      "original_utf8_sha256": "4a126af8dc90b151bc812e58c091fb3cdd59052918b47a203ed6c7c088205f20",
+      "published_sha256": "2417a392b8e97eed8b45b745fa13fb4572a7f90900868e3adb73212ea3ccd63a",
+      "original_utf8_bytes": 48495,
+      "published_bytes": 48468,
+      "tested_checkout_sha": "3944fdce9d5475fb0e11235a073ea05e62df4945",
+      "checkout_evidence": [
+        "[command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +3944fdce9d5475fb0e11235a073ea05e62df4945:refs/remotes/pull/70/merge",
+        " * [new ref]         3944fdce9d5475fb0e11235a073ea05e62df4945 -> pull/70/merge",
+        "##[group]Checking out the ref",
+        "[command]/usr/bin/git log -1 --format=%H",
+        "3944fdce9d5475fb0e11235a073ea05e62df4945"
+      ],
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions-rust-lang/setup-rust-toolchain@166cdcfd11aee3cb47222f9ddb555ce30ddb9659",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install cargo-build-sbf 4.1.0 (isolated release dir)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build fresh SBF (tools/build_sbf.sh pins 4.1.0 / platform-tools v1.54)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Program tests on fresh SBF (game + replay equivalence)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions-rust-lang/setup-rust-toolchain@166cdcfd11aee3cb47222f9ddb555ce30ddb9659",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 128409477757,
+      "name": "Animation geometry and frontend build",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42374591154/job/128409477757",
+      "log_file": "ci-source-42374591154-128409477757.log",
+      "original_utf8_sha256": "6537745f16765c09b22f9d472421a31e1cdc6399394534f202c74831c30e8cea",
+      "published_sha256": "637394402d342a17b7cf93763e026a1655b90230de7dfd0c093cdd8cc74c1295",
+      "original_utf8_bytes": 75571,
+      "published_bytes": 75536,
+      "tested_checkout_sha": "3944fdce9d5475fb0e11235a073ea05e62df4945",
+      "checkout_evidence": [
+        "[command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +3944fdce9d5475fb0e11235a073ea05e62df4945:refs/remotes/pull/70/merge",
+        " * [new ref]         3944fdce9d5475fb0e11235a073ea05e62df4945 -> pull/70/merge",
+        "##[group]Checking out the ref",
+        "[command]/usr/bin/git log -1 --format=%H",
+        "3944fdce9d5475fb0e11235a073ea05e62df4945"
+      ],
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci --ignore-scripts --prefix ../tools/agent-bootstrap",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run build",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run check:animations",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run check:strategies",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run check:comparisons",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run check:research",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run check:comparison-proxy",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run check:trading",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run node --experimental-strip-types --no-warnings scripts/donkey-risk-adapter-check.ts",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run node --test ../tools/agent-bootstrap/strategy-run.test.mjs ../tools/agent-bootstrap/strategy-scheduler.test.mjs ../tools/agent-bootstrap/strategy-comparison.test.mjs ../tools/agent-bootstrap/local-experiment.test.mjs ../tools/agent-bootstrap/alashi.test.mjs",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Degenie RTS runtime and replay checks",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 128409477789,
+      "name": "RustSec audit of all lockfiles",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42374591154/job/128409477789",
+      "log_file": "ci-source-42374591154-128409477789.log",
+      "original_utf8_sha256": "7a38504740963b6acfbd8826b3f0dc857f18895c67c803c82c69d4f2d8e86a60",
+      "published_sha256": "168bb975f7f81a05c39e5e80397c000898de59a91e43dc0956018fcbe00d57c8",
+      "original_utf8_bytes": 56340,
+      "published_bytes": 56298,
+      "tested_checkout_sha": "3944fdce9d5475fb0e11235a073ea05e62df4945",
+      "checkout_evidence": [
+        "[command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +3944fdce9d5475fb0e11235a073ea05e62df4945:refs/remotes/pull/70/merge",
+        " * [new ref]         3944fdce9d5475fb0e11235a073ea05e62df4945 -> pull/70/merge",
+        "##[group]Checking out the ref",
+        "[command]/usr/bin/git log -1 --format=%H",
+        "3944fdce9d5475fb0e11235a073ea05e62df4945"
+      ],
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions-rust-lang/setup-rust-toolchain@166cdcfd11aee3cb47222f9ddb555ce30ddb9659",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install cargo-audit",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Audit every Cargo.lock",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions-rust-lang/setup-rust-toolchain@166cdcfd11aee3cb47222f9ddb555ce30ddb9659",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 128409477853,
+      "name": "Rules, arena, indexer, and program compile",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42374591154/job/128409477853",
+      "log_file": "ci-source-42374591154-128409477853.log",
+      "original_utf8_sha256": "e2ea3c9f9c50b6f301994459572d20850f8cfd4da039d21b95d03ac8fec270b5",
+      "published_sha256": "f8571799c4b97817712b5ca4cb045d68a814cc6ab3158496dfe34bfdb372cd91",
+      "original_utf8_bytes": 213429,
+      "published_bytes": 213303,
+      "tested_checkout_sha": "3944fdce9d5475fb0e11235a073ea05e62df4945",
+      "checkout_evidence": [
+        "[command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +3944fdce9d5475fb0e11235a073ea05e62df4945:refs/remotes/pull/70/merge",
+        " * [new ref]         3944fdce9d5475fb0e11235a073ea05e62df4945 -> pull/70/merge",
+        "##[group]Checking out the ref",
+        "[command]/usr/bin/git log -1 --format=%H",
+        "3944fdce9d5475fb0e11235a073ea05e62df4945"
+      ],
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions-rust-lang/setup-rust-toolchain@166cdcfd11aee3cb47222f9ddb555ce30ddb9659",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci --ignore-scripts --prefix tools/agent-bootstrap",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Workspace tests (rules crate; the Anchor program needs `anchor build` for its .so tests, excluded here)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Owner film receipts and delivered video",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Arena tests (unit + http e2e)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Bots compile check",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Two-owner match admission tests",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Local signer context tests",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Session action retry tests",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Indexer tests",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Anchor program host compile (SBF execution is the sbf job below)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Local tooling checks",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions-rust-lang/setup-rust-toolchain@166cdcfd11aee3cb47222f9ddb555ce30ddb9659",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 128409477861,
+      "name": "Gitleaks secret scan",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42374591154/job/128409477861",
+      "log_file": "ci-source-42374591154-128409477861.log",
+      "original_utf8_sha256": "218a93e6dd13268ea94cbe5541c6a46db53d31e615bd91b0e919e65b6eee7091",
+      "published_sha256": "34ae12fbb18152a791eaa66bc0c3021cd40f10fa736855c61c8b3b6b06fd734e",
+      "original_utf8_bytes": 27148,
+      "published_bytes": 27139,
+      "tested_checkout_sha": "3944fdce9d5475fb0e11235a073ea05e62df4945",
+      "checkout_evidence": [
+        "[command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/* +3944fdce9d5475fb0e11235a073ea05e62df4945:refs/remotes/pull/70/merge",
+        " * [new ref]           3944fdce9d5475fb0e11235a073ea05e62df4945 -> pull/70/merge",
+        "##[group]Checking out the ref",
+        "[command]/usr/bin/git log -1 --format=%H",
+        "3944fdce9d5475fb0e11235a073ea05e62df4945"
+      ],
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "required_checks": [
+    {
+      "check": "rules",
+      "job_id": 128409477853,
+      "command": "cargo test --locked --workspace --exclude alashi",
+      "result": "success",
+      "log_file": "ci-source-42374591154-128409477853.log",
+      "command_line": 554,
+      "test_result_lines": [
+        "ok. 26 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+      ],
+      "finished_lines": [
+        "    Finished `test` profile [unoptimized] target(s) in 1.69s"
+      ],
+      "total": {
+        "passed": 44,
+        "failed": 0,
+        "ignored": 0
+      },
+      "requested_command": "cargo test --locked -p alashi-rules",
+      "coverage_note": "CI uses the workspace command, including the alashi-rules member. Aggregate counts also include the vendor crate; this is not a claim that CI invoked the package-only command."
+    },
+    {
+      "check": "arena",
+      "job_id": 128409477853,
+      "command": "cargo test --locked --manifest-path arena/Cargo.toml",
+      "result": "success",
+      "log_file": "ci-source-42374591154-128409477853.log",
+      "command_line": 685,
+      "test_result_lines": [
+        "ok. 122 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 3.37s",
+        "ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.01s",
+        "ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s",
+        "ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s",
+        "ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.02s",
+        "ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s",
+        "ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 76.62s",
+        "ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.21s",
+        "ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s",
+        "ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+      ],
+      "finished_lines": [
+        "    Finished `test` profile [unoptimized] target(s) in 33.75s"
+      ],
+      "total": {
+        "passed": 157,
+        "failed": 0,
+        "ignored": 1
+      }
+    },
+    {
+      "check": "bots_build",
+      "job_id": 128409477853,
+      "command": "cargo build --locked --manifest-path bots/Cargo.toml",
+      "result": "success",
+      "log_file": "ci-source-42374591154-128409477853.log",
+      "command_line": 1091,
+      "test_result_lines": [],
+      "finished_lines": [
+        "    Finished `dev` profile [unoptimized] target(s) in 1m 32s"
+      ]
+    },
+    {
+      "check": "session_tests",
+      "job_id": 128409477853,
+      "command": "cargo test --locked --manifest-path bots/Cargo.toml session_cli::tests",
+      "result": "success",
+      "log_file": "ci-source-42374591154-128409477853.log",
+      "command_line": 1774,
+      "test_result_lines": [
+        "ok. 19 passed; 0 failed; 0 ignored; 0 measured; 79 filtered out; finished in 0.36s"
+      ],
+      "finished_lines": [
+        "    Finished `test` profile [unoptimized] target(s) in 0.27s"
+      ],
+      "total": {
+        "passed": 19,
+        "failed": 0,
+        "ignored": 0
+      },
+      "required_regressions": [
+        "test session_cli::tests::v2_lost_response_retries_the_received_request_unchanged ... ok",
+        "test session_cli::tests::v2_transport_failure_preserves_pending_operation ... ok",
+        "test session_cli::tests::v2_definitive_rejection_allows_corrected_action_at_same_id ... ok",
+        "test session_cli::tests::v2_uncertain_replies_preserve_exact_pending_action_for_retry ... ok"
+      ]
+    },
+    {
+      "check": "indexer",
+      "job_id": 128409477853,
+      "command": "cargo test --locked --manifest-path indexer/Cargo.toml",
+      "result": "success",
+      "log_file": "ci-source-42374591154-128409477853.log",
+      "command_line": 1813,
+      "test_result_lines": [
+        "ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.01s",
+        "ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.22s",
+        "ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+      ],
+      "finished_lines": [
+        "    Finished `test` profile [unoptimized] target(s) in 1m 31s"
+      ],
+      "total": {
+        "passed": 22,
+        "failed": 0,
+        "ignored": 0
+      },
+      "archive_regression": [
+        "test chain_api::tests::cached_terminal_game_retries_archive_after_storage_recovers_without_rpc ... ok"
+      ]
+    },
+    {
+      "check": "program_check",
+      "job_id": 128409477853,
+      "command": "cargo check --locked -p alashi",
+      "result": "success",
+      "log_file": "ci-source-42374591154-128409477853.log",
+      "command_line": 2375,
+      "test_result_lines": [],
+      "finished_lines": [
+        "    Finished `dev` profile [unoptimized] target(s) in 1.65s"
+      ]
+    },
+    {
+      "check": "fresh_sbf",
+      "job_id": 128409477584,
+      "command": "bash tools/build_sbf.sh",
+      "result": "success",
+      "log_file": "ci-source-42374591154-128409477584.log",
+      "command_line": 523,
+      "test_result_lines": [],
+      "finished_lines": [
+        "    Finished `release` profile [optimized] target(s) in 8.18s"
+      ]
+    },
+    {
+      "check": "program_tests",
+      "job_id": 128409477584,
+      "command": "cargo test --locked -p alashi",
+      "result": "success",
+      "log_file": "ci-source-42374591154-128409477584.log",
+      "command_line": 539,
+      "test_result_lines": [
+        "ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "ok. 28 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.24s",
+        "ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.96s",
+        "ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+      ],
+      "finished_lines": [
+        "    Finished `test` profile [unoptimized] target(s) in 5.73s"
+      ],
+      "total": {
+        "passed": 37,
+        "failed": 0,
+        "ignored": 0
+      },
+      "full_party_replays": [
+        "test replay_epoch_90s_full_party ... ok",
+        "test replay_equivalence_full_party ... ok"
+      ]
+    },
+    {
+      "check": "node_five",
+      "job_id": 128409477757,
+      "command": "node --test ../tools/agent-bootstrap/strategy-run.test.mjs ../tools/agent-bootstrap/strategy-scheduler.test.mjs ../tools/agent-bootstrap/strategy-comparison.test.mjs ../tools/agent-bootstrap/local-experiment.test.mjs ../tools/agent-bootstrap/alashi.test.mjs",
+      "result": "success",
+      "log_file": "ci-source-42374591154-128409477757.log",
+      "command_line": 429,
+      "test_result_lines": [],
+      "finished_lines": [],
+      "tap_summary": [
+        "# tests 91",
+        "# pass 91",
+        "# fail 0"
+      ]
+    }
+  ],
+  "sbf_before_program": {
+    "verified": true,
+    "sbf_completed_at": "2026-11-07T12:57:16Z",
+    "program_started_at": "2026-11-07T12:57:16Z",
+    "build_command_line": 523,
+    "program_test_command_line": 539,
+    "log_file": "ci-source-42374591154-128409477584.log"
+  },
+  "source_equality_for_historical_mutation_evidence": [
+    {
+      "file": "bots/src/session_cli.rs",
+      "sha256": "5afdc5deaac02e0cf80db5a1fb3291e1337f67575cdddec96011c58a3d286d18",
+      "historical_fix_ref": "5321258dbfcf89124c1c30b8b803e22c7527f5d2",
+      "byte_equal": true
+    },
+    {
+      "file": "indexer/src/chain_api.rs",
+      "sha256": "a083ebf9e921681c4ccb4788c5d071122de7cef5485a6613ff9970e5108880e5",
+      "historical_fix_ref": "f32168384dff8a8b0d30287605a5f50ab6c44c19",
+      "byte_equal": true
+    }
+  ],
+  "captured_at_almaty": "2026-11-07 18:04:44 +05"
+}
