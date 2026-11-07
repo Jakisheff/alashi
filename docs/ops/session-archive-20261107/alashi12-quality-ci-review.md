@@ -1,0 +1,24 @@
+# Findings 1 and 2: mutation evidence and CI review
+
+Reviewed read-only on 7 November 2026 at 17:48 Asia/Almaty. Integration checkout: `/Users/amir/Documents/Codex/worktrees/alashi-session-archive-pr-20261107`, HEAD `84c7f339bc46c9f7a91bbd41c358e1a1cb6f43ef`, with the tests-only transplant still awaiting its production fixes. No builds, source edits or remote mutations were performed for this review.
+
+Conclusion: the historical mutation evidence can be reused as dated evidence if the final source files match the verified hashes below and the fresh RED/GREEN integration checks pass. It must not be described as a new mutation run. This review found no blocker in the three-line CI addition.
+
+| File | Original fix commit | Verified full-file SHA-256 |
+|---|---|---|
+| `bots/src/session_cli.rs` | `5321258dbfcf89124c1c30b8b803e22c7527f5d2` | `5afdc5deaac02e0cf80db5a1fb3291e1337f67575cdddec96011c58a3d286d18` |
+| `indexer/src/chain_api.rs` | `f32168384dff8a8b0d30287605a5f50ab6c44c19` | `a083ebf9e921681c4ccb4788c5d071122de7cef5485a6613ff9970e5108880e5` |
+
+Both fix-commit blobs equal the corresponding files at repair head `3ea380b5`. They also equal the hashes logged by the two passing mutation baselines. I reconstructed every mutant from that baseline and its saved before/after change, then verified its SHA-256 against both the classification and its individual log. All 13 matched. Detailed observations are in [the independent log audit](alashi12-mutation-review.json).
+
+The evidence at `3ea380b5:docs/ops/state-machines-20261107/` contains eight session guard mutations and five archive-cache guard mutations. Both baselines compile and pass. Every mutant log records compilation of its target crate, execution of the selected unit tests, a completed failed test result, and exit 101. None reports a compiler error or a runner timeout. The wrapper records the command, mutated source hash, diff, Cargo output and final exit code. Its source is `mutation-probe.py`; the completed runs are identified by `mutation-classification.json` and the two `*-mutation-verified.log` files.
+
+Session mutants fail the definitive-rejection, uncertain-reply or pending-identity assertions. The five indexer failures have distinct causes: two incorrectly send a fresh live-cache request to the fixture's deliberately unserved loopback RPC; two rewrite an already archived game and consume the sentinel temporary file; one returns the unarchived terminal value and fails the archived-state assertion. The RPC client has an intentional 100 ms timeout. Those two completed test failures are behavior evidence, not test-runner timeouts or a remote-service outage. The sentinel failures are `unwrap` panics on `NotFound`, not compiler failures. The claim is 13 selected guard mutations detected, not a whole-file mutation score or coverage measurement. Mutations do not cover every statement in the archive retry block.
+
+At review time, both transplanted test modules are byte-identical to the historical test modules. The current production differences from the fix commits consist only of the deliberately absent fix hunks: five session lines and nine indexer lines. No other file differs under `bots/`, `indexer/`, `arena/`, `rules/`, `programs/`, or the checked root Cargo manifests, lockfile, Rust toolchain and SBF build script. After restoring the fixes, recheck the two full-file hashes before citing this evidence for the PR. Fresh RED/GREEN and mandatory checks still establish the integration result.
+
+The workflow addition at `.github/workflows/ci.yml:74` runs `cargo test --locked --manifest-path bots/Cargo.toml session_cli::tests`. `bots/src/main.rs:13` includes `mod session_cli`; the test module has 19 ordinary test functions and no ignored tests. The filter selects all session tests, including the definitive rejection, ambiguous reply, transport failure and lost-response regressions. This closes the previous CI gap where bots were compiled and other bot test modules were selected, but the session tests were not selected.
+
+The existing mandatory checks remain: workspace rules tests at workflow line 55, arena tests at 63, bots build at 66, full indexer tests at 78, program check at 81, then SBF build at 110 before program execution tests at 113. The existing frontend job installs agent-bootstrap dependencies and runs all five named Node files at line 33. The root workspace includes `rules`, so its test command covers `alashi-rules`; the owner's explicit local rules command remains part of the fresh local gate. No trigger, timeout or existing command changed. Reviewed workflow SHA-256: `3540fb705c1c44b074e9656edda4e5cd9aa5ec14deb7b492fb27245ecf16f7fd`.
+
+Final PR head and fresh CI are not available yet. They remain a separate merge gate owned by the root agent. Findings 3, 5 and 8 are outside this review.

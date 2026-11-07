@@ -1,0 +1,383 @@
+{
+  "counts": {
+    "mutants": 13,
+    "baselines": 2
+  },
+  "source_refs": {
+    "bots/src/session_cli.rs": {
+      "historical_commit": "5321258dbfcf89124c1c30b8b803e22c7527f5d2",
+      "historical_hash": "5afdc5deaac02e0cf80db5a1fb3291e1337f67575cdddec96011c58a3d286d18",
+      "evidence_3ea_hash": "5afdc5deaac02e0cf80db5a1fb3291e1337f67575cdddec96011c58a3d286d18",
+      "current_hash": "2bbd798832c944eeddd05d29b711929418137eb6c652447648c4a30e693143a9",
+      "historical_ref_equals_evidence": true,
+      "current_equals_evidence": false
+    },
+    "indexer/src/chain_api.rs": {
+      "historical_commit": "f32168384dff8a8b0d30287605a5f50ab6c44c19",
+      "historical_hash": "a083ebf9e921681c4ccb4788c5d071122de7cef5485a6613ff9970e5108880e5",
+      "evidence_3ea_hash": "a083ebf9e921681c4ccb4788c5d071122de7cef5485a6613ff9970e5108880e5",
+      "current_hash": "de8666525e23534fbe8143068a7491477d43e63c92b8939065d8c0761aa60c82",
+      "historical_ref_equals_evidence": true,
+      "current_equals_evidence": false
+    }
+  },
+  "rows": [
+    {
+      "probe": "indexer",
+      "role": "baseline",
+      "file": "indexer-mutation-runs/1794043522357979000.log",
+      "hash_verified": true,
+      "compiled": true,
+      "ran_tests": true,
+      "exit": 0,
+      "seconds": 32.577,
+      "result": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.16s"
+      ],
+      "mutation": null,
+      "panic": []
+    },
+    {
+      "probe": "indexer",
+      "role": "mutant",
+      "file": "indexer-mutation-runs/1794043559226682000.log",
+      "hash_verified": true,
+      "compiled": true,
+      "ran_tests": true,
+      "exit": 101,
+      "seconds": 107.564,
+      "result": [
+        "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.13s"
+      ],
+      "mutation": {
+        "before": ".filter(|c| !c.terminal || self.archive_dir.is_none() || c.value[\"archived\"] == true)",
+        "after": ".filter(|c| c.terminal || self.archive_dir.is_none() || c.value[\"archived\"] == true)"
+      },
+      "panic": [
+        "thread 'chain_api::tests::cached_terminal_game_retries_archive_after_storage_recovers_without_rpc' panicked at src/chain_api.rs:941:43:",
+        "called `Result::unwrap()` on an `Err` value: Upstream",
+        "note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace",
+        ""
+      ]
+    },
+    {
+      "probe": "indexer",
+      "role": "mutant",
+      "file": "indexer-mutation-runs/1794043667390040000.log",
+      "hash_verified": true,
+      "compiled": true,
+      "ran_tests": true,
+      "exit": 101,
+      "seconds": 16.313,
+      "result": [
+        "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.15s"
+      ],
+      "mutation": {
+        "before": ".filter(|c| !c.terminal || self.archive_dir.is_none() || c.value[\"archived\"] == true)",
+        "after": ".filter(|c| !c.terminal && self.archive_dir.is_none() || c.value[\"archived\"] == true)"
+      },
+      "panic": [
+        "thread 'chain_api::tests::cached_terminal_game_retries_archive_after_storage_recovers_without_rpc' panicked at src/chain_api.rs:941:43:",
+        "called `Result::unwrap()` on an `Err` value: Upstream",
+        "note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace",
+        ""
+      ]
+    },
+    {
+      "probe": "indexer",
+      "role": "mutant",
+      "file": "indexer-mutation-runs/1794043684253159000.log",
+      "hash_verified": true,
+      "compiled": true,
+      "ran_tests": true,
+      "exit": 101,
+      "seconds": 17.382,
+      "result": [
+        "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.14s"
+      ],
+      "mutation": {
+        "before": ".filter(|c| !c.terminal || self.archive_dir.is_none() || c.value[\"archived\"] == true)",
+        "after": ".filter(|c| !c.terminal || self.archive_dir.is_none() && c.value[\"archived\"] == true)"
+      },
+      "panic": [
+        "thread 'chain_api::tests::cached_terminal_game_retries_archive_after_storage_recovers_without_rpc' panicked at src/chain_api.rs:980:44:",
+        "called `Result::unwrap()` on an `Err` value: Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+        "note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace",
+        ""
+      ]
+    },
+    {
+      "probe": "indexer",
+      "role": "mutant",
+      "file": "indexer-mutation-runs/1794043702071185000.log",
+      "hash_verified": true,
+      "compiled": true,
+      "ran_tests": true,
+      "exit": 101,
+      "seconds": 15.848,
+      "result": [
+        "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.05s"
+      ],
+      "mutation": {
+        "before": ".filter(|c| !c.terminal || self.archive_dir.is_none() || c.value[\"archived\"] == true)",
+        "after": ".filter(|c| !c.terminal || self.archive_dir.is_none() || c.value[\"archived\"] != true)"
+      },
+      "panic": [
+        "thread 'chain_api::tests::cached_terminal_game_retries_archive_after_storage_recovers_without_rpc' panicked at src/chain_api.rs:966:13:",
+        "assertion `left == right` failed: cached terminal game must retry its failed archive",
+        "  left: Null",
+        " right: true"
+      ]
+    },
+    {
+      "probe": "indexer",
+      "role": "mutant",
+      "file": "indexer-mutation-runs/1794043718500095000.log",
+      "hash_verified": true,
+      "compiled": true,
+      "ran_tests": true,
+      "exit": 101,
+      "seconds": 15.389,
+      "result": [
+        "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.10s"
+      ],
+      "mutation": {
+        "before": ".filter(|c| !c.terminal || self.archive_dir.is_none() || c.value[\"archived\"] == true)",
+        "after": ".filter(|c| !c.terminal || self.archive_dir.is_none() || c.value[\"archived\"] == false)"
+      },
+      "panic": [
+        "thread 'chain_api::tests::cached_terminal_game_retries_archive_after_storage_recovers_without_rpc' panicked at src/chain_api.rs:980:44:",
+        "called `Result::unwrap()` on an `Err` value: Os { code: 2, kind: NotFound, message: \"No such file or directory\" }",
+        "note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace",
+        ""
+      ]
+    },
+    {
+      "probe": "bots",
+      "role": "baseline",
+      "file": "bots-mutation-runs/1794043755608412000.log",
+      "hash_verified": true,
+      "compiled": true,
+      "ran_tests": true,
+      "exit": 0,
+      "seconds": 50.637,
+      "result": [
+        "test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 90 filtered out; finished in 3.54s"
+      ],
+      "mutation": null,
+      "panic": []
+    },
+    {
+      "probe": "bots",
+      "role": "mutant",
+      "file": "bots-mutation-runs/1794043811156709000.log",
+      "hash_verified": true,
+      "compiled": true,
+      "ran_tests": true,
+      "exit": 101,
+      "seconds": 111.355,
+      "result": [
+        "test result: FAILED. 6 passed; 2 failed; 0 ignored; 0 measured; 90 filtered out; finished in 0.97s"
+      ],
+      "mutation": {
+        "before": "} else if response[\"op_id\"] == op_id && response[\"op_consumed\"] == false",
+        "after": "} else if response[\"op_id\"] != op_id && response[\"op_consumed\"] == false"
+      },
+      "panic": [
+        "thread 'session_cli::tests::v2_definitive_rejection_allows_corrected_action_at_same_id' panicked at src/session_cli.rs:1514:13:",
+        "bad_action must release the rejected action",
+        "note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace",
+        "",
+        "thread 'session_cli::tests::v2_uncertain_replies_preserve_exact_pending_action_for_retry' panicked at src/session_cli.rs:1556:13:",
+        "assertion `left == right` failed: {\"error\":\"bad_action\",\"ok\":false,\"op_consumed\":false}",
+        "  left: Null",
+        " right: Object {\"action\": Object {\"action\": String(\"produce\"), \"by\": String(\"llm\"), \"params\": Object {}}, \"op_id\": Number(1)}"
+      ]
+    },
+    {
+      "probe": "bots",
+      "role": "mutant",
+      "file": "bots-mutation-runs/1794043923049818000.log",
+      "hash_verified": true,
+      "compiled": true,
+      "ran_tests": true,
+      "exit": 101,
+      "seconds": 34.858,
+      "result": [
+        "test result: FAILED. 6 passed; 2 failed; 0 ignored; 0 measured; 90 filtered out; finished in 1.43s"
+      ],
+      "mutation": {
+        "before": "} else if response[\"op_id\"] == op_id && response[\"op_consumed\"] == false",
+        "after": "} else if response[\"op_id\"] == op_id || response[\"op_consumed\"] == false"
+      },
+      "panic": [
+        "thread 'session_cli::tests::v2_pending_action_survives_rejection_and_retries_same_id' panicked at src/session_cli.rs:1480:9:",
+        "assertion `left == right` failed",
+        "  left: Null",
+        " right: 1",
+        "thread 'session_cli::tests::v2_uncertain_replies_preserve_exact_pending_action_for_retry' panicked at src/session_cli.rs:1556:13:",
+        "assertion `left == right` failed: {\"error\":\"bad_action\",\"ok\":false,\"op_consumed\":false}",
+        "  left: Null",
+        " right: Object {\"action\": Object {\"action\": String(\"produce\"), \"by\": String(\"llm\"), \"params\": Object {}}, \"op_id\": Number(1)}"
+      ]
+    },
+    {
+      "probe": "bots",
+      "role": "mutant",
+      "file": "bots-mutation-runs/1794043958286070000.log",
+      "hash_verified": true,
+      "compiled": true,
+      "ran_tests": true,
+      "exit": 101,
+      "seconds": 30.0,
+      "result": [
+        "test result: FAILED. 6 passed; 2 failed; 0 ignored; 0 measured; 90 filtered out; finished in 1.28s"
+      ],
+      "mutation": {
+        "before": "} else if response[\"op_id\"] == op_id && response[\"op_consumed\"] == false",
+        "after": "} else if response[\"op_id\"] == op_id && response[\"op_consumed\"] != false"
+      },
+      "panic": [
+        "thread 'session_cli::tests::v2_definitive_rejection_allows_corrected_action_at_same_id' panicked at src/session_cli.rs:1514:13:",
+        "bad_action must release the rejected action",
+        "note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace",
+        "",
+        "thread 'session_cli::tests::v2_uncertain_replies_preserve_exact_pending_action_for_retry' panicked at src/session_cli.rs:1556:13:",
+        "assertion `left == right` failed: {\"error\":\"bad_action\",\"ok\":false,\"op_id\":1}",
+        "  left: Null",
+        " right: Object {\"action\": Object {\"action\": String(\"produce\"), \"by\": String(\"llm\"), \"params\": Object {}}, \"op_id\": Number(1)}"
+      ]
+    },
+    {
+      "probe": "bots",
+      "role": "mutant",
+      "file": "bots-mutation-runs/1794043988677138000.log",
+      "hash_verified": true,
+      "compiled": true,
+      "ran_tests": true,
+      "exit": 101,
+      "seconds": 30.036,
+      "result": [
+        "test result: FAILED. 7 passed; 1 failed; 0 ignored; 0 measured; 90 filtered out; finished in 3.09s"
+      ],
+      "mutation": {
+        "before": "} else if response[\"op_id\"] == op_id && response[\"op_consumed\"] == false",
+        "after": "} else if response[\"op_id\"] == op_id && response[\"op_consumed\"] == true"
+      },
+      "panic": [
+        "thread 'session_cli::tests::v2_definitive_rejection_allows_corrected_action_at_same_id' panicked at src/session_cli.rs:1514:13:",
+        "bad_action must release the rejected action",
+        "note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace",
+        ""
+      ]
+    },
+    {
+      "probe": "bots",
+      "role": "mutant",
+      "file": "bots-mutation-runs/1794044019093068000.log",
+      "hash_verified": true,
+      "compiled": true,
+      "ran_tests": true,
+      "exit": 101,
+      "seconds": 28.903,
+      "result": [
+        "test result: FAILED. 6 passed; 2 failed; 0 ignored; 0 measured; 90 filtered out; finished in 1.39s"
+      ],
+      "mutation": {
+        "before": "&& response[\"ok\"] == false",
+        "after": "|| response[\"ok\"] == false"
+      },
+      "panic": [
+        "thread 'session_cli::tests::v2_pending_action_survives_rejection_and_retries_same_id' panicked at src/session_cli.rs:1480:9:",
+        "assertion `left == right` failed",
+        "  left: Null",
+        " right: 1",
+        "thread 'session_cli::tests::v2_uncertain_replies_preserve_exact_pending_action_for_retry' panicked at src/session_cli.rs:1556:13:",
+        "assertion `left == right` failed: {\"error\":\"bad_action\",\"ok\":false,\"op_consumed\":false}",
+        "  left: Null",
+        " right: Object {\"action\": Object {\"action\": String(\"produce\"), \"by\": String(\"llm\"), \"params\": Object {}}, \"op_id\": Number(1)}"
+      ]
+    },
+    {
+      "probe": "bots",
+      "role": "mutant",
+      "file": "bots-mutation-runs/1794044048414593000.log",
+      "hash_verified": true,
+      "compiled": true,
+      "ran_tests": true,
+      "exit": 101,
+      "seconds": 28.907,
+      "result": [
+        "test result: FAILED. 6 passed; 2 failed; 0 ignored; 0 measured; 90 filtered out; finished in 2.43s"
+      ],
+      "mutation": {
+        "before": "&& response[\"ok\"] == false",
+        "after": "&& response[\"ok\"] != false"
+      },
+      "panic": [
+        "thread 'session_cli::tests::v2_definitive_rejection_allows_corrected_action_at_same_id' panicked at src/session_cli.rs:1514:13:",
+        "bad_action must release the rejected action",
+        "note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace",
+        "",
+        "thread 'session_cli::tests::v2_uncertain_replies_preserve_exact_pending_action_for_retry' panicked at src/session_cli.rs:1556:13:",
+        "assertion `left == right` failed: {\"error\":\"bad_action\",\"ok\":true,\"op_consumed\":false,\"op_id\":1}",
+        "  left: Null",
+        " right: Object {\"action\": Object {\"action\": String(\"produce\"), \"by\": String(\"llm\"), \"params\": Object {}}, \"op_id\": Number(1)}"
+      ]
+    },
+    {
+      "probe": "bots",
+      "role": "mutant",
+      "file": "bots-mutation-runs/1794044077659153000.log",
+      "hash_verified": true,
+      "compiled": true,
+      "ran_tests": true,
+      "exit": 101,
+      "seconds": 30.202,
+      "result": [
+        "test result: FAILED. 6 passed; 2 failed; 0 ignored; 0 measured; 90 filtered out; finished in 2.45s"
+      ],
+      "mutation": {
+        "before": "&& response[\"ok\"] == false",
+        "after": "&& response[\"ok\"] == true"
+      },
+      "panic": [
+        "thread 'session_cli::tests::v2_definitive_rejection_allows_corrected_action_at_same_id' panicked at src/session_cli.rs:1514:13:",
+        "bad_action must release the rejected action",
+        "note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace",
+        "",
+        "thread 'session_cli::tests::v2_uncertain_replies_preserve_exact_pending_action_for_retry' panicked at src/session_cli.rs:1556:13:",
+        "assertion `left == right` failed: {\"error\":\"bad_action\",\"ok\":true,\"op_consumed\":false,\"op_id\":1}",
+        "  left: Null",
+        " right: Object {\"action\": Object {\"action\": String(\"produce\"), \"by\": String(\"llm\"), \"params\": Object {}}, \"op_id\": Number(1)}"
+      ]
+    },
+    {
+      "probe": "bots",
+      "role": "mutant",
+      "file": "bots-mutation-runs/1794044108199422000.log",
+      "hash_verified": true,
+      "compiled": true,
+      "ran_tests": true,
+      "exit": 101,
+      "seconds": 30.91,
+      "result": [
+        "test result: FAILED. 6 passed; 2 failed; 0 ignored; 0 measured; 90 filtered out; finished in 1.35s"
+      ],
+      "mutation": {
+        "before": "&& matches!(server_code(&response), \"bad_action\" | \"bad_params\" | \"bad_choice\") {",
+        "after": "|| matches!(server_code(&response), \"bad_action\" | \"bad_params\" | \"bad_choice\") {"
+      },
+      "panic": [
+        "thread 'session_cli::tests::v2_pending_action_survives_rejection_and_retries_same_id' panicked at src/session_cli.rs:1480:9:",
+        "assertion `left == right` failed",
+        "  left: Null",
+        " right: 1",
+        "thread 'session_cli::tests::v2_uncertain_replies_preserve_exact_pending_action_for_retry' panicked at src/session_cli.rs:1556:13:",
+        "assertion `left == right` failed: {\"error\":\"bad_action\",\"ok\":false,\"op_consumed\":false}",
+        "  left: Null",
+        " right: Object {\"action\": Object {\"action\": String(\"produce\"), \"by\": String(\"llm\"), \"params\": Object {}}, \"op_id\": Number(1)}"
+      ]
+    }
+  ]
+}

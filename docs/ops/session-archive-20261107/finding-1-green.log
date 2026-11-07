@@ -1,0 +1,36 @@
+Command: cargo test --locked --offline --manifest-path bots/Cargo.toml session_cli::tests -- --nocapture
+CARGO_TARGET_DIR=/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/host
+CARGO_PROFILE_DEV_DEBUG=0
+CARGO_PROFILE_TEST_DEBUG=0
+CARGO_INCREMENTAL=0
+CARGO_BUILD_JOBS=2
+   Compiling bots v0.1.0 (/Users/amir/Documents/Codex/worktrees/alashi-session-archive-pr-20261107/bots)
+    Finished `test` profile [unoptimized] target(s) in 19.97s
+     Running unittests src/main.rs (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/host/debug/deps/bots-c5e5a32fa0552c2c)
+
+running 19 tests
+test session_cli::tests::credentials_cannot_be_echoed_as_error_code_or_object_key ... ok
+test session_cli::tests::existing_balance_skips_sponsorship_and_wrong_genesis_fails_closed ... ok
+test session_cli::tests::empty_wallet_gets_sponsorship_before_any_paid_memo ... ok
+test session_cli::tests::recorded_signature_is_never_signed_again ... ok
+test session_cli::tests::exact_memo_and_proposal_bound_to_session ... ok
+test session_cli::tests::registration_tunnel_is_explicit_loopback_only_and_keeps_canonical_identity ... ok
+test session_cli::tests::http_actions_only_and_public_response_strips_echoed_credentials ... ok
+test session_cli::tests::private_file_atomic_permissions_and_immutable_config ... ok
+test session_cli::tests::v2_action_defaults_are_stable ... ok
+test session_cli::tests::urls_and_redirects_do_not_leak_credentials ... ok
+test session_cli::tests::v2_golden_identity_and_strategy ... ok
+test session_cli::tests::registration_tunnel_routes_sponsorship_without_changing_identity_origin ... ok
+test session_cli::tests::resume_after_http_failure_reuses_signature_without_rpc ... ok
+test session_cli::tests::v2_lost_response_retries_the_received_request_unchanged ... ok
+test session_cli::tests::v2_pending_action_survives_rejection_and_retries_same_id ... ok
+test session_cli::tests::v2_one_profile_joins_two_games_without_sending_prompt ... ok
+test session_cli::tests::v2_transport_failure_preserves_pending_operation ... ok
+test session_cli::tests::v2_definitive_rejection_allows_corrected_action_at_same_id ... ok
+test session_cli::tests::v2_uncertain_replies_preserve_exact_pending_action_for_retry ... ok
+
+test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 79 filtered out; finished in 3.63s
+
+
+Exit code: 0
+Elapsed seconds: 25.24

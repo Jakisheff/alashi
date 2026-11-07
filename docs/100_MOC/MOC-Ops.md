@@ -57,6 +57,7 @@
 - [SECURITY_FIX_20260906.md](../ops/SECURITY_FIX_20260906.md)
 - [SIM_FAIR_QUEUE_AB.md](../ops/SIM_FAIR_QUEUE_AB.md)
 - [SIM_FINDINGS.md](../ops/SIM_FINDINGS.md)
+- [Сессии и архивы: находки 1 и 2, 07.11.2026](../ops/SESSION_ARCHIVE_REPAIRS_20261107.md): свежие RED, ожидаемые GREEN/CI и границы ремонта.
 - [SIM_TEST_PLAN.md](../ops/SIM_TEST_PLAN.md)
 - [SPRINT_REPORT.md](../ops/SPRINT_REPORT.md)
 - [STUDIO_DEMO_20260906.md](../ops/STUDIO_DEMO_20260906.md)

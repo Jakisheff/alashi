@@ -128,6 +128,7 @@ impl ChainApi {
     fn ready_value(&self, pda: &str, cached: Option<&Cached>) -> Option<Value> {
         cached
             .filter(|c| c.terminal || c.at.elapsed() < Duration::from_secs(8))
+            .filter(|c| !c.terminal || self.archive_dir.is_none() || c.value["archived"] == true)
             .map(|c| c.value.clone())
             .or_else(|| self.load_archive(pda))
     }
@@ -171,6 +172,14 @@ impl ChainApi {
         let _game_guard = game_gate.lock().unwrap_or_else(|e| e.into_inner());
         let previous = self.cached(pda);
         if let Some(value) = self.ready_value(pda, previous.as_ref()) {
+            return Ok(value);
+        }
+        // A complete terminal snapshot needs no RPC, but a failed archive still
+        // needs a retry. Keep that write under the same per-game gate as fetch.
+        if let Some(mut entry) = previous.as_ref().filter(|c| c.terminal).cloned() {
+            self.archive(pda, &mut entry.value);
+            let value = entry.value.clone();
+            self.remember(pda, entry);
             return Ok(value);
         }
         // A negative cache is deliberately omitted: unknown PDAs cost a single

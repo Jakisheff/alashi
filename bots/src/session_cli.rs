@@ -929,6 +929,11 @@ fn act_v2(path: &Path, input: Option<&str>) -> ResultJson {
         session["pending_act"] = Value::Null;
         session["next_op_id"] = json!(op_id.checked_add(1).ok_or_else(|| error("op_exhausted", "operation ID exhausted"))?);
         save_private(path, &session)?;
+    } else if response["op_id"] == op_id && response["op_consumed"] == false
+        && response["ok"] == false
+        && matches!(server_code(&response), "bad_action" | "bad_params" | "bad_choice") {
+        session["pending_act"] = Value::Null;
+        save_private(path, &session)?;
     }
     if response["ok"] != true { return Err(safe_server_error(&response)); }
     Ok(public_result(&session, response, "act"))

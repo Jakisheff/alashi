@@ -1,0 +1,27 @@
+CWD: /Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107
+COMMAND: cargo test --offline --locked --manifest-path bots/Cargo.toml session_cli::tests::v2_
+SOURCE: bots/src/session_cli.rs
+SHA256: 5afdc5deaac02e0cf80db5a1fb3291e1337f67575cdddec96011c58a3d286d18
+BASELINE: source matches working tree
+
+CARGO OUTPUT:
+   Compiling alashi v0.1.0 (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/programs/alashi)
+   Compiling bots v0.1.0 (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/bots)
+    Finished `test` profile [unoptimized] target(s) in 43.49s
+     Running unittests src/main.rs (target/host/debug/deps/bots-25f647613de63b3f)
+
+running 8 tests
+test session_cli::tests::v2_action_defaults_are_stable ... ok
+test session_cli::tests::v2_golden_identity_and_strategy ... ok
+test session_cli::tests::v2_lost_response_retries_the_received_request_unchanged ... ok
+test session_cli::tests::v2_pending_action_survives_rejection_and_retries_same_id ... ok
+test session_cli::tests::v2_one_profile_joins_two_games_without_sending_prompt ... ok
+test session_cli::tests::v2_transport_failure_preserves_pending_operation ... ok
+test session_cli::tests::v2_definitive_rejection_allows_corrected_action_at_same_id ... ok
+test session_cli::tests::v2_uncertain_replies_preserve_exact_pending_action_for_retry ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 90 filtered out; finished in 3.54s
+
+
+EXIT_CODE: 0
+SECONDS: 50.637

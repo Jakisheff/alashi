@@ -1,0 +1,88 @@
+Command: cargo test --locked --offline --manifest-path indexer/Cargo.toml
+CARGO_TARGET_DIR=/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/host
+CARGO_PROFILE_DEV_DEBUG=0
+CARGO_PROFILE_TEST_DEBUG=0
+CARGO_INCREMENTAL=0
+CARGO_BUILD_JOBS=2
+   Compiling alashi v0.1.0 (/Users/amir/Documents/Codex/worktrees/alashi-session-archive-pr-20261107/programs/alashi)
+   Compiling indexer v0.1.0 (/Users/amir/Documents/Codex/worktrees/alashi-session-archive-pr-20261107/indexer)
+    Finished `test` profile [unoptimized] target(s) in 38.05s
+     Running unittests src/lib.rs (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/host/debug/deps/indexer-5c9f3511b3199c61)
+
+running 9 tests
+test chain_api::tests::cached_game_is_available_while_another_game_waits_for_rpc ... ok
+test chain_api::tests::faction_discovery_filter_excludes_donkey_config_collision ... ok
+test chain_api::tests::foreign_stack_and_wrong_game_are_not_events ... ok
+test chain_api::tests::archived_is_set_only_when_the_archive_file_is_written ... ok
+test chain_api::tests::cached_terminal_game_retries_archive_after_storage_recovers_without_rpc ... ok
+test events::donkey_tests::distinct_attempt_and_verified_or_abort_resolution_decode ... ok
+test chain_api::tests::complete_cached_journal_reads_only_new_signatures ... ok
+test chain_api::tests::same_slot_transactions_follow_block_position_not_signature_order ... ok
+test chain_api::tests::simultaneous_refreshes_of_the_same_game_share_one_result ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.09s
+
+     Running unittests src/bin/chain_api.rs (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/host/debug/deps/chain_api-7dc54db676eb4d7e)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/export.rs (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/host/debug/deps/export-5c7f2f1a20ddbe96)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/indexer.rs (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/host/debug/deps/indexer-2b69b7c3c875e854)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/aggregation_test.rs (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/host/debug/deps/aggregation_test-f10e4dab63ea362b)
+
+running 7 tests
+test epoch_ranking_counts_all_six_seats_including_zero_payouts ... ok
+test ranks_asymmetric_50_30_15_5 ... ok
+test historical_four_place_aggregates_still_deserialize ... ok
+test agent_id_deterministic_and_prompt_sensitive ... ok
+test tie_break_by_wallet_asc ... ok
+test unsettled_games_ignored ... ok
+test registry_skips_invalid_wallets_without_panicking_or_truncating ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/chain_api_concurrency.rs (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/host/debug/deps/chain_api_concurrency-a81b8e2f138b78c2)
+
+running 2 tests
+test slow_connection_does_not_block_an_unrelated_request ... ok
+test overload_is_bounded_and_service_recovers_when_connections_close ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.14s
+
+     Running tests/export_format_test.rs (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/host/debug/deps/export_format_test-57e84eb1efc8db0b)
+
+running 3 tests
+test incomplete_or_mixed_game_logs_are_not_exported_as_settled_matches ... ok
+test epoch_events_are_preserved_without_claiming_to_apply_them ... ok
+test recorded_payouts_and_events_survive_roundtrip_without_synthetic_cash ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/zstd_account_roundtrip.rs (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/host/debug/deps/zstd_account_roundtrip-0da0311355830029)
+
+running 1 test
+test compressed_rpc_account_round_trips_without_changing_data ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests indexer
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+Exit code: 0
+Elapsed seconds: 51.88
