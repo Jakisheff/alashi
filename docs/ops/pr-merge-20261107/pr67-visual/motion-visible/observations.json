@@ -1,0 +1,51 @@
+{
+  "head": "5a80a6ff37de1eba7b238ebf91ff61fa49c327e5",
+  "node": "v24.22.1",
+  "media": "prefers-reduced-motion: reduce",
+  "source": "actual production /live local demo; isolated build without app config/env/proxies",
+  "cases": [],
+  "pages": [
+    {
+      "width": 390,
+      "errors": [],
+      "consoleErrors": [],
+      "blocked": [],
+      "sequence": [
+        {
+          "label": "Paused reduced held crate",
+          "ms": 1616,
+          "time": 0.91,
+          "receipt": 1
+        },
+        {
+          "label": "Seek zero clears crate and receipt",
+          "ms": 4781,
+          "time": 0,
+          "receipt": 0
+        },
+        {
+          "label": "Seek canonical contact restores receipt",
+          "ms": 7640,
+          "time": 4.25,
+          "receipt": 1
+        },
+        {
+          "label": "Backward seek before contact",
+          "ms": 10679,
+          "time": 1,
+          "receipt": 0
+        },
+        {
+          "label": "Resumed reduced held crate after observed clock advancement",
+          "ms": 13489,
+          "time": 1.33,
+          "receipt": 1
+        }
+      ],
+      "sequenceMillis": 30035,
+      "video": "/tmp/alashi-pr67-visual/motion-visible/page@d80bb5e32c49a633bfd63517329616c3.webm"
+    }
+  ],
+  "chrome": "156.0.8078.81",
+  "origin": "http://127.0.0.1:56696"
+}

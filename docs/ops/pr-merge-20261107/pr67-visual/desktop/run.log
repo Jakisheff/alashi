@@ -1,0 +1,57 @@
+PASS 1366 Buy actual clock paused at2.20; reduced selected4.25
+PASS 1366 Sell actual clock paused at0.84; reduced selected4.25
+PASS 1366 Mule actual clock paused at6.19; reduced selected3.65
+PASS 1366 Bribe actual clock paused at1.09; reduced selected3.65
+PASS 1366 Vote actual clock paused at1.85; reduced selected3.75
+PASS 1366 Thumbs up actual clock paused at1.32; reduced selected2.65
+PASS 1366 Realization actual clock paused at0.91; reduced selected2.3
+PASS 1366 Facepalm actual clock paused at0.80; reduced selected2.25
+PASS 1366 Thinking actual clock paused at4.51; reduced selected2.65
+PASS 1366 Shrug actual clock paused at0.97; reduced selected2.65
+PASS 1366 Look around actual clock paused at0.74; reduced selected2.8
+PASS 1366 Victory actual clock paused at0.82; reduced selected2.3
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.waitFor: Target page, context or browser has been closed
+Browser logs:
+
+<launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/ym/7w5t9pjn0l9fslyn7bznw78c0000gn/T/playwright_chromiumdev_profile-5mwruF --remote-debugging-pipe --no-startup-window
+<launched> pid=12068
+[pid=12068][err] Trying to load the allocator multiple times. This is *not* supported.
+[pid=12068][err] [12074:146292:1107/161458.088650:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670
+[pid=12068][err] [12074:146390:1107/161458.089855:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670
+[pid=12068][err] [12074:146292:1107/161458.206769:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670
+[pid=12068][err] [12074:146390:1107/161458.207012:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670
+[pid=12068][err] [12074:146292:1107/161458.248435:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670
+[pid=12068][err] [12074:146390:1107/161458.248694:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670
+[pid=12068][err] [12074:146292:1107/161458.277970:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670
+[pid=12068][err] [12074:146390:1107/161458.278222:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670
+[pid=12068][err] [12074:146292:1107/161458.282804:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670
+[pid=12068][err] [12074:146390:1107/161458.283097:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670
+[pid=12068][err] Trying to load the allocator multiple times. This is *not* supported.
+[pid=12068][err] WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+[pid=12068][err] I0000 00:00:1794050277.849599  149140 environment.cc:526] Selected adapter: Intel(R) UHD Graphics 617, arch=gen-9, vendor=intel, backend=Metal, adapterType=Integrated GPU
+[pid=12068][err] I0000 00:00:1794050293.704243  149224 environment.cc:526] Selected adapter: Intel(R) UHD Graphics 617, arch=gen-9, vendor=intel, backend=Metal, adapterType=Integrated GPU
+[pid=12068][err] [12068:146235:1107/162501.280868:ERROR:chrome/browser/ui/views/user_education/impl/browser_user_education_interface_impl.cc:186] Attempting to show IPH IPH_ExtensionsZeroStatePromo before browser initialization complete; IPH will not be shown.
+[pid=12068][err] [12074:146292:1107/162501.404905:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670
+[pid=12068][err] [12074:146390:1107/162501.405367:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670
+[pid=12068][err] [12074:146292:1107/162501.475868:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670
+[pid=12068][err] [12074:146390:1107/162501.476136:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670
+[pid=12068][err] [12074:146292:1107/162501.487654:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670
+[pid=12068][err] [12074:146390:1107/162501.487983:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670
+[pid=12068][err] [12074:146292:1107/162501.489581:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670
+[pid=12068][err] [12074:146390:1107/162501.489857:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670
+[pid=12068][err] [12074:146292:1107/162501.490723:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670
+[pid=12068][err] [12074:146390:1107/162501.490929:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670
+[pid=12068] <gracefully close start>
+[pid=12068][err] [12068:146235:1107/162507.467231:ERROR:services/on_device_model/public/cpp/service_client.cc:37] Unexpected on_device_model service disconnect; reason: 0, description:
+Call log:
+[2m  - waiting for locator('canvas') to be visible[22m
+
+    at /private/tmp/alashi-pr67-visual/run.mjs:26:865 {
+  log: [ "  - waiting for locator('canvas') to be visible" ]
+}
+
+Node.js v24.22.1
