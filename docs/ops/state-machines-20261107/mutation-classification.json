@@ -1,0 +1,341 @@
+{
+  "scope": "Five mutations on indexer/src/chain_api.rs line 131 and eight mutations on bots/src/session_cli.rs lines 932-934. This is a focused guard check, not a project-wide mutation score or coverage measurement.",
+  "classification_method": "Independent review of every saved mutation diff and completed Cargo log. Runtime errors caused by violating an invariant in the isolated fixture count as behavioral failures. Compilation failures and runner timeouts do not.",
+  "summary": {
+    "baseline_passes": 2,
+    "behavioral_mutant_failures": 13,
+    "survivors": 0,
+    "compilation_failures": 0,
+    "runner_timeouts": 0,
+    "infrastructure_failures": 0
+  },
+  "runs": [
+    {
+      "probe": "indexer",
+      "role": "baseline",
+      "evidence_file": "indexer-mutation-runs/1794043522357979000.log",
+      "source_file": "indexer/src/chain_api.rs",
+      "source_sha256": "a083ebf9e921681c4ccb4788c5d071122de7cef5485a6613ff9970e5108880e5",
+      "source_change": null,
+      "exit_code": 0,
+      "test_result": "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.16s",
+      "failed_tests": [],
+      "classification": "baseline_pass",
+      "compilation_failure": false,
+      "runner_timeout": false,
+      "infrastructure_failure": false,
+      "completion_evidence": "Cargo finished compilation, ran the selected unit tests, printed their result, and returned the recorded EXIT_CODE.",
+      "reason": "The selected regression tests pass on the unchanged working-tree source."
+    },
+    {
+      "probe": "indexer",
+      "role": "mutant",
+      "evidence_file": "indexer-mutation-runs/1794043559226682000.log",
+      "source_file": "indexer/src/chain_api.rs",
+      "source_sha256": "83865e2c123f99eb763a1da42eec941eef6f9057ddf7b36882ea02161eb3aeb0",
+      "source_change": {
+        "before": ".filter(|c| !c.terminal || self.archive_dir.is_none() || c.value[\"archived\"] == true)",
+        "after": ".filter(|c| c.terminal || self.archive_dir.is_none() || c.value[\"archived\"] == true)"
+      },
+      "exit_code": 101,
+      "test_result": "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.13s",
+      "failed_tests": [
+        "chain_api::tests::cached_terminal_game_retries_archive_after_storage_recovers_without_rpc"
+      ],
+      "classification": "behavioral_test_failure",
+      "compilation_failure": false,
+      "runner_timeout": false,
+      "infrastructure_failure": false,
+      "completion_evidence": "Cargo finished compilation, ran the selected unit tests, printed their result, and returned the recorded EXIT_CODE.",
+      "reason": "Removing the terminal negation rejects a fresh live-cache hit. The test reaches the intentionally unavailable loopback RPC and fails at line 941 on Err(Upstream)."
+    },
+    {
+      "probe": "indexer",
+      "role": "mutant",
+      "evidence_file": "indexer-mutation-runs/1794043667390040000.log",
+      "source_file": "indexer/src/chain_api.rs",
+      "source_sha256": "3fc56c2693db6e9c3d659e7c1b3733588840c57a13b5023bbef74a781088b836",
+      "source_change": {
+        "before": ".filter(|c| !c.terminal || self.archive_dir.is_none() || c.value[\"archived\"] == true)",
+        "after": ".filter(|c| !c.terminal && self.archive_dir.is_none() || c.value[\"archived\"] == true)"
+      },
+      "exit_code": 101,
+      "test_result": "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.15s",
+      "failed_tests": [
+        "chain_api::tests::cached_terminal_game_retries_archive_after_storage_recovers_without_rpc"
+      ],
+      "classification": "behavioral_test_failure",
+      "compilation_failure": false,
+      "runner_timeout": false,
+      "infrastructure_failure": false,
+      "completion_evidence": "Cargo finished compilation, ran the selected unit tests, printed their result, and returned the recorded EXIT_CODE.",
+      "reason": "Changing the first OR to AND rejects a fresh live-cache hit. The test reaches the intentionally unavailable loopback RPC and fails at line 941 on Err(Upstream)."
+    },
+    {
+      "probe": "indexer",
+      "role": "mutant",
+      "evidence_file": "indexer-mutation-runs/1794043684253159000.log",
+      "source_file": "indexer/src/chain_api.rs",
+      "source_sha256": "68dbae7d6f99948927ac88ee2d44bee293760563e9e7ca562ed8f0fa4000ec8b",
+      "source_change": {
+        "before": ".filter(|c| !c.terminal || self.archive_dir.is_none() || c.value[\"archived\"] == true)",
+        "after": ".filter(|c| !c.terminal || self.archive_dir.is_none() && c.value[\"archived\"] == true)"
+      },
+      "exit_code": 101,
+      "test_result": "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.14s",
+      "failed_tests": [
+        "chain_api::tests::cached_terminal_game_retries_archive_after_storage_recovers_without_rpc"
+      ],
+      "classification": "behavioral_test_failure",
+      "compilation_failure": false,
+      "runner_timeout": false,
+      "infrastructure_failure": false,
+      "completion_evidence": "Cargo finished compilation, ran the selected unit tests, printed their result, and returned the recorded EXIT_CODE.",
+      "reason": "Changing the second OR to AND rearchives an already archived cached game. Rename consumes the temporary sentinel; the preservation check at line 980 fails with NotFound."
+    },
+    {
+      "probe": "indexer",
+      "role": "mutant",
+      "evidence_file": "indexer-mutation-runs/1794043702071185000.log",
+      "source_file": "indexer/src/chain_api.rs",
+      "source_sha256": "1c986e1384d82783a2d543788bcf3aee5e1ae12b17e296fa71e7dd2fa1ce9601",
+      "source_change": {
+        "before": ".filter(|c| !c.terminal || self.archive_dir.is_none() || c.value[\"archived\"] == true)",
+        "after": ".filter(|c| !c.terminal || self.archive_dir.is_none() || c.value[\"archived\"] != true)"
+      },
+      "exit_code": 101,
+      "test_result": "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.05s",
+      "failed_tests": [
+        "chain_api::tests::cached_terminal_game_retries_archive_after_storage_recovers_without_rpc"
+      ],
+      "classification": "behavioral_test_failure",
+      "compilation_failure": false,
+      "runner_timeout": false,
+      "infrastructure_failure": false,
+      "completion_evidence": "Cargo finished compilation, ran the selected unit tests, printed their result, and returned the recorded EXIT_CODE.",
+      "reason": "Inverting the archived comparison returns the unarchived terminal cache without retrying storage. The recovery assertion at line 966 finds archived Null instead of true."
+    },
+    {
+      "probe": "indexer",
+      "role": "mutant",
+      "evidence_file": "indexer-mutation-runs/1794043718500095000.log",
+      "source_file": "indexer/src/chain_api.rs",
+      "source_sha256": "1883e3f9e2092761d18e862bd98d47c989975c7ad24fc60744d6346f0e65ed6e",
+      "source_change": {
+        "before": ".filter(|c| !c.terminal || self.archive_dir.is_none() || c.value[\"archived\"] == true)",
+        "after": ".filter(|c| !c.terminal || self.archive_dir.is_none() || c.value[\"archived\"] == false)"
+      },
+      "exit_code": 101,
+      "test_result": "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.10s",
+      "failed_tests": [
+        "chain_api::tests::cached_terminal_game_retries_archive_after_storage_recovers_without_rpc"
+      ],
+      "classification": "behavioral_test_failure",
+      "compilation_failure": false,
+      "runner_timeout": false,
+      "infrastructure_failure": false,
+      "completion_evidence": "Cargo finished compilation, ran the selected unit tests, printed their result, and returned the recorded EXIT_CODE.",
+      "reason": "Comparing archived with false rearchives an already archived cached game. Rename consumes the temporary sentinel; the preservation check at line 980 fails with NotFound."
+    },
+    {
+      "probe": "bots",
+      "role": "baseline",
+      "evidence_file": "bots-mutation-runs/1794043755608412000.log",
+      "source_file": "bots/src/session_cli.rs",
+      "source_sha256": "5afdc5deaac02e0cf80db5a1fb3291e1337f67575cdddec96011c58a3d286d18",
+      "source_change": null,
+      "exit_code": 0,
+      "test_result": "test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 90 filtered out; finished in 3.54s",
+      "failed_tests": [],
+      "classification": "baseline_pass",
+      "compilation_failure": false,
+      "runner_timeout": false,
+      "infrastructure_failure": false,
+      "completion_evidence": "Cargo finished compilation, ran the selected unit tests, printed their result, and returned the recorded EXIT_CODE.",
+      "reason": "The selected regression tests pass on the unchanged working-tree source."
+    },
+    {
+      "probe": "bots",
+      "role": "mutant",
+      "evidence_file": "bots-mutation-runs/1794043811156709000.log",
+      "source_file": "bots/src/session_cli.rs",
+      "source_sha256": "a1039ad824e919b1de5f37da1217c4f7b0257a63f3017fafb5547206fd541aa6",
+      "source_change": {
+        "before": "} else if response[\"op_id\"] == op_id && response[\"op_consumed\"] == false",
+        "after": "} else if response[\"op_id\"] != op_id && response[\"op_consumed\"] == false"
+      },
+      "exit_code": 101,
+      "test_result": "test result: FAILED. 6 passed; 2 failed; 0 ignored; 0 measured; 90 filtered out; finished in 0.97s",
+      "failed_tests": [
+        "session_cli::tests::v2_definitive_rejection_allows_corrected_action_at_same_id",
+        "session_cli::tests::v2_uncertain_replies_preserve_exact_pending_action_for_retry"
+      ],
+      "classification": "behavioral_test_failure",
+      "compilation_failure": false,
+      "runner_timeout": false,
+      "infrastructure_failure": false,
+      "completion_evidence": "Cargo finished compilation, ran the selected unit tests, printed their result, and returned the recorded EXIT_CODE.",
+      "reason": "Inverting identity matching retains the definitively rejected action and clears pending for a reply with missing op_id. Both the correction and uncertainty assertions fail."
+    },
+    {
+      "probe": "bots",
+      "role": "mutant",
+      "evidence_file": "bots-mutation-runs/1794043923049818000.log",
+      "source_file": "bots/src/session_cli.rs",
+      "source_sha256": "cc41d03bc7e223894ffad190cb6809e2efdb35dc77d027d4fa7a5b19cc3262bd",
+      "source_change": {
+        "before": "} else if response[\"op_id\"] == op_id && response[\"op_consumed\"] == false",
+        "after": "} else if response[\"op_id\"] == op_id || response[\"op_consumed\"] == false"
+      },
+      "exit_code": 101,
+      "test_result": "test result: FAILED. 6 passed; 2 failed; 0 ignored; 0 measured; 90 filtered out; finished in 1.43s",
+      "failed_tests": [
+        "session_cli::tests::v2_pending_action_survives_rejection_and_retries_same_id",
+        "session_cli::tests::v2_uncertain_replies_preserve_exact_pending_action_for_retry"
+      ],
+      "classification": "behavioral_test_failure",
+      "compilation_failure": false,
+      "runner_timeout": false,
+      "infrastructure_failure": false,
+      "completion_evidence": "Cargo finished compilation, ran the selected unit tests, printed their result, and returned the recorded EXIT_CODE.",
+      "reason": "Replacing the first AND with OR clears pending after bad_token and after a reply with missing op_id. Both retry-preservation assertions fail."
+    },
+    {
+      "probe": "bots",
+      "role": "mutant",
+      "evidence_file": "bots-mutation-runs/1794043958286070000.log",
+      "source_file": "bots/src/session_cli.rs",
+      "source_sha256": "aa1fc603959bfecfa683429792fe19488b3b6c5e5b9586fdd41362e3c29039d2",
+      "source_change": {
+        "before": "} else if response[\"op_id\"] == op_id && response[\"op_consumed\"] == false",
+        "after": "} else if response[\"op_id\"] == op_id && response[\"op_consumed\"] != false"
+      },
+      "exit_code": 101,
+      "test_result": "test result: FAILED. 6 passed; 2 failed; 0 ignored; 0 measured; 90 filtered out; finished in 1.28s",
+      "failed_tests": [
+        "session_cli::tests::v2_definitive_rejection_allows_corrected_action_at_same_id",
+        "session_cli::tests::v2_uncertain_replies_preserve_exact_pending_action_for_retry"
+      ],
+      "classification": "behavioral_test_failure",
+      "compilation_failure": false,
+      "runner_timeout": false,
+      "infrastructure_failure": false,
+      "completion_evidence": "Cargo finished compilation, ran the selected unit tests, printed their result, and returned the recorded EXIT_CODE.",
+      "reason": "Inverting the consumption comparison retains the definitively rejected action and clears pending for a reply with missing op_consumed. Both correction and uncertainty assertions fail."
+    },
+    {
+      "probe": "bots",
+      "role": "mutant",
+      "evidence_file": "bots-mutation-runs/1794043988677138000.log",
+      "source_file": "bots/src/session_cli.rs",
+      "source_sha256": "4b3c60b74a48ab400d5b61a474aa09b1c0896dc0647f84c1c16f2f1cb47f44cd",
+      "source_change": {
+        "before": "} else if response[\"op_id\"] == op_id && response[\"op_consumed\"] == false",
+        "after": "} else if response[\"op_id\"] == op_id && response[\"op_consumed\"] == true"
+      },
+      "exit_code": 101,
+      "test_result": "test result: FAILED. 7 passed; 1 failed; 0 ignored; 0 measured; 90 filtered out; finished in 3.09s",
+      "failed_tests": [
+        "session_cli::tests::v2_definitive_rejection_allows_corrected_action_at_same_id"
+      ],
+      "classification": "behavioral_test_failure",
+      "compilation_failure": false,
+      "runner_timeout": false,
+      "infrastructure_failure": false,
+      "completion_evidence": "Cargo finished compilation, ran the selected unit tests, printed their result, and returned the recorded EXIT_CODE.",
+      "reason": "Requiring op_consumed true in the rejection branch prevents clearing a definitive unconsumed rejection. The correction assertion fails."
+    },
+    {
+      "probe": "bots",
+      "role": "mutant",
+      "evidence_file": "bots-mutation-runs/1794044019093068000.log",
+      "source_file": "bots/src/session_cli.rs",
+      "source_sha256": "ff7ecffc1f6cad8107a2fe276519afe55a342aa83c1e1144415bdeb4e622f4eb",
+      "source_change": {
+        "before": "&& response[\"ok\"] == false",
+        "after": "|| response[\"ok\"] == false"
+      },
+      "exit_code": 101,
+      "test_result": "test result: FAILED. 6 passed; 2 failed; 0 ignored; 0 measured; 90 filtered out; finished in 1.39s",
+      "failed_tests": [
+        "session_cli::tests::v2_pending_action_survives_rejection_and_retries_same_id",
+        "session_cli::tests::v2_uncertain_replies_preserve_exact_pending_action_for_retry"
+      ],
+      "classification": "behavioral_test_failure",
+      "compilation_failure": false,
+      "runner_timeout": false,
+      "infrastructure_failure": false,
+      "completion_evidence": "Cargo finished compilation, ran the selected unit tests, printed their result, and returned the recorded EXIT_CODE.",
+      "reason": "Replacing the AND before ok with OR clears pending after bad_token and after a reply with missing op_id. Both retry-preservation assertions fail."
+    },
+    {
+      "probe": "bots",
+      "role": "mutant",
+      "evidence_file": "bots-mutation-runs/1794044048414593000.log",
+      "source_file": "bots/src/session_cli.rs",
+      "source_sha256": "86b34e13d7ff9e843a468eb19142a9cd51f872760f1a4b9e64e401c8f906d996",
+      "source_change": {
+        "before": "&& response[\"ok\"] == false",
+        "after": "&& response[\"ok\"] != false"
+      },
+      "exit_code": 101,
+      "test_result": "test result: FAILED. 6 passed; 2 failed; 0 ignored; 0 measured; 90 filtered out; finished in 2.43s",
+      "failed_tests": [
+        "session_cli::tests::v2_definitive_rejection_allows_corrected_action_at_same_id",
+        "session_cli::tests::v2_uncertain_replies_preserve_exact_pending_action_for_retry"
+      ],
+      "classification": "behavioral_test_failure",
+      "compilation_failure": false,
+      "runner_timeout": false,
+      "infrastructure_failure": false,
+      "completion_evidence": "Cargo finished compilation, ran the selected unit tests, printed their result, and returned the recorded EXIT_CODE.",
+      "reason": "Inverting the ok comparison retains a definitive rejection and clears pending for an inconsistent ok:true unconsumed reply. Both correction and uncertainty assertions fail."
+    },
+    {
+      "probe": "bots",
+      "role": "mutant",
+      "evidence_file": "bots-mutation-runs/1794044077659153000.log",
+      "source_file": "bots/src/session_cli.rs",
+      "source_sha256": "a0ec679b08a95bed90a0e6288a90802a1ff0528c73d2e150d635ede0c6f56e31",
+      "source_change": {
+        "before": "&& response[\"ok\"] == false",
+        "after": "&& response[\"ok\"] == true"
+      },
+      "exit_code": 101,
+      "test_result": "test result: FAILED. 6 passed; 2 failed; 0 ignored; 0 measured; 90 filtered out; finished in 2.45s",
+      "failed_tests": [
+        "session_cli::tests::v2_definitive_rejection_allows_corrected_action_at_same_id",
+        "session_cli::tests::v2_uncertain_replies_preserve_exact_pending_action_for_retry"
+      ],
+      "classification": "behavioral_test_failure",
+      "compilation_failure": false,
+      "runner_timeout": false,
+      "infrastructure_failure": false,
+      "completion_evidence": "Cargo finished compilation, ran the selected unit tests, printed their result, and returned the recorded EXIT_CODE.",
+      "reason": "Requiring ok:true retains a definitive rejection and clears pending for an inconsistent ok:true unconsumed reply. Both correction and uncertainty assertions fail."
+    },
+    {
+      "probe": "bots",
+      "role": "mutant",
+      "evidence_file": "bots-mutation-runs/1794044108199422000.log",
+      "source_file": "bots/src/session_cli.rs",
+      "source_sha256": "bf91b19590078732e6bec2a1e4ae600407c9af98a5c535e98783f263ea3decfd",
+      "source_change": {
+        "before": "&& matches!(server_code(&response), \"bad_action\" | \"bad_params\" | \"bad_choice\") {",
+        "after": "|| matches!(server_code(&response), \"bad_action\" | \"bad_params\" | \"bad_choice\") {"
+      },
+      "exit_code": 101,
+      "test_result": "test result: FAILED. 6 passed; 2 failed; 0 ignored; 0 measured; 90 filtered out; finished in 1.35s",
+      "failed_tests": [
+        "session_cli::tests::v2_pending_action_survives_rejection_and_retries_same_id",
+        "session_cli::tests::v2_uncertain_replies_preserve_exact_pending_action_for_retry"
+      ],
+      "classification": "behavioral_test_failure",
+      "compilation_failure": false,
+      "runner_timeout": false,
+      "infrastructure_failure": false,
+      "completion_evidence": "Cargo finished compilation, ran the selected unit tests, printed their result, and returned the recorded EXIT_CODE.",
+      "reason": "Replacing the AND before the error allowlist with OR clears pending after bad_token and after a reply with missing op_id. Both retry-preservation assertions fail."
+    }
+  ]
+}

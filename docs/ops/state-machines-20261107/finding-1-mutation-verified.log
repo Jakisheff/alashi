@@ -1,0 +1,74 @@
++ (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107) python3 docs/ops/state-machines-20261107/mutation-probe.py bots
+bots/src/session_cli.rs:932 == -> !=
++ (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/mutation-workers/run-16063fbf-5be4-4361-bbc3-866783ede9ad/worker-0) python3 docs/ops/state-machines-20261107/mutation-probe.py bots
+bots/src/session_cli.rs:932 && -> ||
++ (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/mutation-workers/run-16063fbf-5be4-4361-bbc3-866783ede9ad/worker-0) python3 docs/ops/state-machines-20261107/mutation-probe.py bots
+bots/src/session_cli.rs:932 == -> !=
++ (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/mutation-workers/run-16063fbf-5be4-4361-bbc3-866783ede9ad/worker-0) python3 docs/ops/state-machines-20261107/mutation-probe.py bots
+bots/src/session_cli.rs:932 false -> true
++ (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/mutation-workers/run-16063fbf-5be4-4361-bbc3-866783ede9ad/worker-0) python3 docs/ops/state-machines-20261107/mutation-probe.py bots
+bots/src/session_cli.rs:933 && -> ||
++ (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/mutation-workers/run-16063fbf-5be4-4361-bbc3-866783ede9ad/worker-0) python3 docs/ops/state-machines-20261107/mutation-probe.py bots
+bots/src/session_cli.rs:933 == -> !=
++ (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/mutation-workers/run-16063fbf-5be4-4361-bbc3-866783ede9ad/worker-0) python3 docs/ops/state-machines-20261107/mutation-probe.py bots
+bots/src/session_cli.rs:933 false -> true
++ (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/mutation-workers/run-16063fbf-5be4-4361-bbc3-866783ede9ad/worker-0) python3 docs/ops/state-machines-20261107/mutation-probe.py bots
+bots/src/session_cli.rs:934 && -> ||
++ (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/mutation-workers/run-16063fbf-5be4-4361-bbc3-866783ede9ad/worker-0) python3 docs/ops/state-machines-20261107/mutation-probe.py bots
+Wrote /Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/.metrics/mutate/bots/session_cli.edn
+Wrote /Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/.metrics/mutate/bots/session_cli/SessionLock.edn
+Wrote /Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/.metrics/mutate/indexer/chain_api.edn
+Wrote /Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/.metrics/mutate/indexer/chain_api/ChainApi.edn
+Wrote /Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/.metrics/mutate/indexer/chain_api/Error.edn
+KILLED    bots/src/session_cli.rs:932 == -> !=
+KILLED    bots/src/session_cli.rs:932 && -> ||
+KILLED    bots/src/session_cli.rs:932 == -> !=
+KILLED    bots/src/session_cli.rs:932 false -> true
+KILLED    bots/src/session_cli.rs:933 && -> ||
+KILLED    bots/src/session_cli.rs:933 == -> !=
+KILLED    bots/src/session_cli.rs:933 false -> true
+KILLED    bots/src/session_cli.rs:934 && -> ||
+Function               Namespace                       Killed  Survived  Uncovered  Sites   Score
+-------------------------------------------------------------------------------------------------
+acquire                bots::session_cli::SessionLock       0         0          0      0    n/a
+check_proposal         bots::session_cli                    0         0          0     21    n/a
+connect                bots::session_cli                    0         0          0      1    n/a
+connect_session        bots::session_cli                    0         0          0     21    n/a
+drop                   bots::session_cli::SessionLock       0         0          0      1    n/a
+ensure_funding         bots::session_cli                    0         0          0      0    n/a
+ensure_funding_via     bots::session_cli                    0         0          0     15    n/a
+error                  bots::session_cli                    0         0          0      1    n/a
+framed_hash            bots::session_cli                    0         0          0      0    n/a
+http_json              bots::session_cli                    0         0          0     11    n/a
+http_operation         bots::session_cli                    0         0          0     10    n/a
+identity_body          bots::session_cli                    0         0          0      0    n/a
+identity_ids           bots::session_cli                    0         0          0      0    n/a
+join_v2                bots::session_cli                    0         0          0     29    n/a
+load_or_create_profile bots::session_cli                    0         0          0      4    n/a
+load_or_create_session bots::session_cli                    0         0          0      2    n/a
+lower_hex64            bots::session_cli                    0         0          0      3    n/a
+memo_ix                bots::session_cli                    0         0          0      1    n/a
+normalized_action      bots::session_cli                    0         0          0      7    n/a
+parse_options          bots::session_cli                    0         0          0     13    n/a
+private_options        bots::session_cli                    0         0          0      2    n/a
+profile_ids            bots::session_cli                    0         0          0      0    n/a
+profile_proposal       bots::session_cli                    0         0          0     20    n/a
+profile_receipt        bots::session_cli                    0         0          0      9    n/a
+public_result          bots::session_cli                    0         0          0      0    n/a
+random_hex32           bots::session_cli                    0         0          0      0    n/a
+read_private           bots::session_cli                    0         0          0     16    n/a
+read_prompt            bots::session_cli                    0         0          0      1    n/a
+redact                 bots::session_cli                    0         0          0      3    n/a
+register               bots::session_cli                    0         0          0     10    n/a
+registration_base      bots::session_cli                    0         0          0      4    n/a
+registration_failure   bots::session_cli                    0         0          0      2    n/a
+registration_step      bots::session_cli                    0         0          0      1    n/a
+run                    bots::session_cli                    0         0          0     21    n/a
+safe_server_error      bots::session_cli                    0         0          0      0    n/a
+save_private           bots::session_cli                    0         0          0      3    n/a
+server_code            bots::session_cli                    0         0          0      0    n/a
+text                   bots::session_cli                    0         0          0      0    n/a
+validate_url           bots::session_cli                    0         0          0     10    n/a
+act_v2                 bots::session_cli                    8         0          0     19 100.0%
+-------------------------------------------------------------------------------------------------
+Total                                                       8         0          0    261  100.0%

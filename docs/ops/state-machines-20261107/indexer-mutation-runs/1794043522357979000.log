@@ -1,0 +1,20 @@
+CWD: /Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107
+COMMAND: cargo test --offline --locked --manifest-path indexer/Cargo.toml --lib cached_terminal_game_retries_archive_after_storage_recovers_without_rpc
+SOURCE: indexer/src/chain_api.rs
+SHA256: a083ebf9e921681c4ccb4788c5d071122de7cef5485a6613ff9970e5108880e5
+BASELINE: source matches working tree
+
+CARGO OUTPUT:
+   Compiling alashi v0.1.0 (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/programs/alashi)
+   Compiling indexer v0.1.0 (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/indexer)
+    Finished `test` profile [unoptimized] target(s) in 29.89s
+     Running unittests src/lib.rs (target/host/debug/deps/indexer-34ebb04d69690bb7)
+
+running 1 test
+test chain_api::tests::cached_terminal_game_retries_archive_after_storage_recovers_without_rpc ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.16s
+
+
+EXIT_CODE: 0
+SECONDS: 32.577

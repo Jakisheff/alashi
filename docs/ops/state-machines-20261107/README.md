@@ -44,6 +44,14 @@ Host Cargo commands also use `--offline`; required lockfiles are unchanged. Aren
 
 [Artifact metadata](sbf-artifact.json) identifies the fresh program used for the execution tests. Its SHA-256 remains unchanged [after testing](program-gates.json). [The first SBF attempt](sbf-build.log) failed to download inside the sandbox; [the subsequent attempt](sbf-build-interrupted.log) was interrupted before producing an artifact. Neither is counted as a successful build.
 
+## Finding 1: definitive rejection releases pending
+
+The [RED test](finding-1-red.log) failed before the production change: `bad_action must release the rejected action`. The fix follows the existing Node client contract. It clears pending only when the response has the same operation ID, explicit `ok: false` and `op_consumed: false`, and `bad_action`, `bad_params` or `bad_choice`. The operation ID remains available for the corrected action. The consumed-success path is unchanged.
+
+All 19 session tests pass in the [GREEN run](finding-1-green.log). The new tests cover three definitive rejection codes and 12 ambiguous or malformed replies, plus connection refusal and a server that receives the request then drops its response. The uncertainty cases preserve the full normalized request and reject replacement actions before retry. Existing authentication rejection coverage also passes. Files and listener ports belong to each test fixture.
+
+[Dryer](finding-1-duplication.log) found no duplicate candidates. [Crapper](finding-1-complexity.log) reports `act_v2` complexity increasing from 20 to 25 with the guarded rejection decision. Coverage and CRAP were not measured. All [eight selected mutations](finding-1-mutation-sites.log) were detected in the [verified run](finding-1-mutation-verified.log), after a passing baseline. [Per-run output](bots-mutation-runs/) records the changed condition and the failing behavior test.
+
 ## Finding 2: terminal archive retry fixed
 
 Before the fix, a failed archive rename left the terminal game cached without `archived: true`. Removing the filesystem obstruction did not trigger another write. The regression failed for both fresh and stale cache entries: [fresh-cache RED](finding-2-red.log), [stale-cache RED](finding-2-red-stale.log). The earlier [environment failure](finding-2-environment.log) was a denied loopback listener and does not count as a reproduction.
@@ -52,15 +60,26 @@ The cache fast path now requires a successfully archived terminal snapshot when 
 
 The [passing regression](finding-2-green.log) checks recovery for both cache ages, concurrent retry requests, archive loading by a new API instance, and zero RPC connections. Controls preserve the fresh live-game fast path and prevent rearchiving an already archived cache entry. The full indexer suite also passes.
 
-[Crapper](finding-2-complexity.log) reports complexity only: `get` is 9 and `ready_value` is 4. Coverage and CRAP were not measured. [Dryer](finding-2-duplication.log) reports no duplicate candidates. The [initial mutation run](finding-2-mutation.log) reports five killed mutations in the cache guard. That tool discards each test subprocess's output and counts any nonzero exit or timeout as killed, so this result alone does not establish five assertion failures. Detailed mutation evidence remains pending.
+[Crapper](finding-2-complexity.log) reports complexity only: `get` is 9 and `ready_value` is 4. Coverage and CRAP were not measured. [Dryer](finding-2-duplication.log) reports no duplicate candidates.
 
-## Finding 1: definitive rejection releases pending
+The [verified mutation run](finding-2-mutation-verified.log) has a passing baseline and five compiled mutants detected by the regression. [Per-run output](indexer-mutation-runs/) distinguishes the observed failures: unwanted RPC for a fresh live cache, failure to retry the archive, and unwanted rearchiving that consumes the sentinel temporary file. There were no compiler failures or test-runner timeouts. The [initial mutation output](finding-2-mutation.log) lacked subprocess diagnostics; the detailed rerun resolves that evidence gap.
 
-The [RED test](finding-1-red.log) failed before the production change: `bad_action must release the rejected action`. The fix follows the existing Node client contract. It clears pending only when the response has the same operation ID, explicit `ok: false` and `op_consumed: false`, and `bad_action`, `bad_params` or `bad_choice`. The operation ID remains available for the corrected action. The consumed-success path is unchanged.
+## Mutation evidence
 
-All 19 session tests pass in the [GREEN run](finding-1-green.log). The new tests cover three definitive rejection codes and 12 ambiguous or malformed replies, plus connection refusal and a server that receives the request then drops its response. The uncertainty cases preserve the full normalized request and reject replacement actions before retry. Existing authentication rejection coverage also passes. Files and listener ports belong to each test fixture.
+The [classification](mutation-classification.json) covers 13 selected mutations in the changed guards, with two passing baselines. Each mutant compiled and then failed a behavior test; none failed during compilation or exceeded the test runner timeout. This selection does not measure whole-file coverage or a whole-file mutation score.
 
-[Dryer](finding-1-duplication.log) found no duplicate candidates. [Crapper](finding-1-complexity.log) reports `act_v2` complexity increasing from 20 to 25 with the guarded rejection decision. Coverage and CRAP were not measured. [Eight mutation sites](finding-1-mutation-sites.log) were identified in the new guard; execution is pending the mandatory build checks.
+The [logging wrapper](mutation-probe.py) preserves each probe's source hash, source diff, Cargo output and exit status outside the temporary mutation checkout. Run from the repository root with the host build environment described above:
+
+```sh
+mutator --no-coverage --mutate-all --max-workers 1 --timeout-factor 1000 \
+  --lines 131 --verbose \
+  --test-command 'python3 docs/ops/state-machines-20261107/mutation-probe.py indexer' \
+  indexer/src/chain_api.rs
+mutator --no-coverage --mutate-all --max-workers 1 --timeout-factor 1000 \
+  --lines 932,933,934 --verbose \
+  --test-command 'python3 docs/ops/state-machines-20261107/mutation-probe.py bots' \
+  bots/src/session_cli.rs
+```
 
 ## Findings 6 and 7: reproduced, not fixed
 
