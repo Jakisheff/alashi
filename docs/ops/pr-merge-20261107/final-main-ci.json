@@ -1,0 +1,84 @@
+{
+  "repository": "Jakisheff/alashi",
+  "branch": "main",
+  "expected_main": "4cdfa4cb20ee6e6d7cd33f849884f062caa39881",
+  "actual_main": "4cdfa4cb20ee6e6d7cd33f849884f062caa39881",
+  "main_parents": [
+    "96e9ea951f70628b9b40075ba7f37ec74c6cc8a7",
+    "641ec5f3b8676c8ff27ead7e39f507833852998d"
+  ],
+  "main_tree": "2e142218fb2336e69b284fc65d74967114592de5",
+  "reviewed_pr69_head": "641ec5f3b8676c8ff27ead7e39f507833852998d",
+  "reviewed_pr69_tree": "2e142218fb2336e69b284fc65d74967114592de5",
+  "full_tree_equal_to_reviewed_pr69": true,
+  "run": {
+    "id": 42372824580,
+    "url": "https://github.com/Jakisheff/alashi/actions/runs/42372824580",
+    "event": "push",
+    "head_sha": "4cdfa4cb20ee6e6d7cd33f849884f062caa39881",
+    "status": "completed",
+    "conclusion": "success"
+  },
+  "jobs": [
+    {
+      "id": 128404272754,
+      "name": "Fresh SBF build and program tests",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42372824580/job/128404272754"
+    },
+    {
+      "id": 128404272832,
+      "name": "Gitleaks secret scan",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42372824580/job/128404272832"
+    },
+    {
+      "id": 128404272857,
+      "name": "RustSec audit of all lockfiles",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42372824580/job/128404272857"
+    },
+    {
+      "id": 128404272900,
+      "name": "Animation geometry and frontend build",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42372824580/job/128404272900"
+    },
+    {
+      "id": 128404273019,
+      "name": "Rules, arena, indexer, and program compile",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42372824580/job/128404273019"
+    }
+  ],
+  "checkout_and_gitleaks_evidence": {
+    "job_id": 128404272832,
+    "lines": [
+      "2026-11-07T12:31:06.8687284Z 4cdfa4cb20ee6e6d7cd33f849884f062caa39881",
+      "2026-11-07T12:31:06.8771205Z ##[group]Checking out the ref",
+      "2026-11-07T12:31:07.9533651Z [command]/usr/bin/git log -1 --format=%H",
+      "2026-11-07T12:31:07.9561612Z 4cdfa4cb20ee6e6d7cd33f849884f062caa39881",
+      "2026-11-07T12:31:08.4582562Z gitleaks version: 8.24.3",
+      "2026-11-07T12:31:09.6673151Z gitleaks cmd: gitleaks detect --redact -v --exit-code=2 --report-format=sarif --report-path=results.sarif --log-level=debug --log-opts=--no-merges --first-parent 39379860de87517f39de2d7466db0bdd3b6c95bb^..4cdfa4cb20ee6e6d7cd33f849884f062caa39881",
+      "2026-11-07T12:31:09.6685430Z [command]/tmp/gitleaks-8.24.3/gitleaks detect --redact -v --exit-code=2 --report-format=sarif --report-path=results.sarif --log-level=debug --log-opts=--no-merges --first-parent 39379860de87517f39de2d7466db0bdd3b6c95bb^..4cdfa4cb20ee6e6d7cd33f849884f062caa39881",
+      "2026-11-07T12:31:09.9975878Z \u001b[90m12:31PM\u001b[0m DBG executing: /usr/bin/git -C . log -p -U0 --no-merges --first-parent 39379860de87517f39de2d7466db0bdd3b6c95bb^..4cdfa4cb20ee6e6d7cd33f849884f062caa39881",
+      "2026-11-07T12:31:10.0013539Z \u001b[90m12:31PM\u001b[0m \u001b[32mINF\u001b[0m \u001b[1m0 commits scanned.\u001b[0m",
+      "2026-11-07T12:31:10.0014788Z \u001b[90m12:31PM\u001b[0m \u001b[32mINF\u001b[0m \u001b[1mno leaks found\u001b[0m"
+    ]
+  },
+  "checked_at_almaty": "2026-11-07 17:36:13 +05",
+  "gitleaks_scope": {
+    "main_push_commits_scanned": 0,
+    "reason": "The main push uses --no-merges --first-parent and contains merge commits.",
+    "reviewed_pr_run_id": 42372281034,
+    "reviewed_pr_head": "641ec5f3b8676c8ff27ead7e39f507833852998d",
+    "reviewed_pr_commits_scanned": 4,
+    "reviewed_pr_gitleaks_conclusion": "success",
+    "full_tree_equal_to_reviewed_pr69": true
+  }
+}
