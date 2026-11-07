@@ -1,24 +1,27 @@
-# State-machine reproductions 6 and 7
+# Viewer lifecycle regressions 6 and 7
 
-These probes run the current production React modules in headless Chrome. They do not change application source. The default command exits 0 only when the known faulty behavior is observed and the healthy controls pass. This exit status means reproduced, not fixed. `--assert-fixed` checks the desired behavior and currently exits 1.
+These checks execute the production React lifecycles in headless Chrome. The default command asserts recovery. `--assert-fixed` remains an alias; `--expect-bug` retains the historical reproduction mode and is expected to fail after the fixes. Healthy controls must pass in every mode.
 
-Run from `frontend/` with Node >=22.18, the locked frontend dependencies installed, Google Chrome, and Playwright 1.62.1 available:
+Run from `frontend/` with Node >=22.18, the locked frontend dependencies installed, Chrome, and Playwright 1.62.1:
 
 ```sh
 ALASHI_PLAYWRIGHT_MODULE=/absolute/path/to/playwright/index.mjs node scripts/state-repros/run.mjs 6
 ALASHI_PLAYWRIGHT_MODULE=/absolute/path/to/playwright/index.mjs node scripts/state-repros/run.mjs 7
-ALASHI_PLAYWRIGHT_MODULE=/absolute/path/to/playwright/index.mjs node scripts/state-repros/run.mjs all --assert-fixed
+ALASHI_PLAYWRIGHT_MODULE=/absolute/path/to/playwright/index.mjs node scripts/state-repros/run.mjs all
 ```
 
-If Playwright resolves from the frontend directory, omit `ALASHI_PLAYWRIGHT_MODULE`. The recorded runs used the Codex bundled Playwright and Node runtime. No package dependency was added. The command needs permission to bind `127.0.0.1` on an ephemeral port and launch Chrome with a temporary profile. Vite ignores the application config and environment files. Browser requests to other origins are blocked, and unexpected application fetches fail the fixture. No backend, wallet, provider, or live game is contacted.
+If Playwright resolves from the frontend directory, omit `ALASHI_PLAYWRIGHT_MODULE`. The recorded runs use the Codex bundled Node and Playwright. No package dependency was added. `--case=sample` selects a check by label for diagnosis; a filter matching zero checks fails.
 
-| Finding | Actual code exercised | Controlled boundary | Observed result |
-| --- | --- | --- | --- |
-| 6 | `StreamPage`, its `StreamHeroBoundary`, `usePublicStream`, API response decoder, production stage visibility checks | Public HTTP replies; renderer child completes normally or throws during an active action. Navigation, private owner controls and GPU scene are test adapters. | Healthy buy/sell both finish. After the child throws during buy, the real boundary shows its fallback. Sell reaches the public feed, but after 20 simulated seconds the scheduler still exposes active buy and never starts sell. |
-| 7 | `useArenaFeed`, event cursor/text functions, React Query, Zustand scene store | Valid snapshots enter the real query cache; an in-memory fetch supplies later polls. The same hook remains mounted when game/mode changes. | Healthy A playback emits speech and accepted reaction. A-to-B and live-to-off each emit old A work after switching, both with two queued actions and with the first result timer pending plus one queued action. |
+| Finding | Boundary and acceptance |
+|---|---|
+| 6 | Buy is active with sell queued when the renderer child throws. The actual stream error boundary shows fallback, active work and receipt overlay clear, and a late completion cannot restore the queue. Later confirmed events remain in the public transcript without starting an animation behind the fallback. A new stream mount can animate normally. |
+| 7 | A-to-B and live-to-off cancel two queued actions, or an active action's delayed result plus another queued action. Old displayed output clears only when still owned by that feed. New B events play. |
+| 7 controls | Same game ID at a different API resets the cursor even with an identical cached object. Unmount cancels work; newer manual output survives cleanup. Sample re-entry waits for new snapshots and plays new events without inheriting the prior cursor. |
 
-The browser clock controls production timers. Finding 7 checks the mode change before advancing time. Its pending-result cases capture the old accepted reaction 1.1 seconds after switching, before the next queue tick, then capture the remaining queued action. Control failures and fixture errors fail the command; they are not accepted as a reproduction.
+The clock controls production timers. The sample control waits for a harness effect marker placed after the hook's ingestion effects, so advancing the clock cannot hide React scheduling behind one large virtual-time jump. Queue and result checks retain their original positive controls.
 
-Finding 6 establishes the scheduler's response to a renderer child error at the real React error boundary. It does not establish that a particular GPU or model fails in production. Finding 7 establishes hook behavior when mounted across a source change. Route retention and callers were reviewed separately in the state-machine audit. These are lifecycle tests, with no visual animation acceptance or production fix.
+The fixture binds an ephemeral loopback port, uses a temporary browser profile and blocks requests to other origins. Vite ignores the application config and environment files. Fetches return synthetic records; unexpected requests fail. No backend, wallet, provider or live game is contacted. Navigation/private controls and GPU children are adapters in the lifecycle suite. These checks do not establish GPU reliability or general animation quality.
 
-Recorded stdout, observed state and exit status are in `docs/ops/state-machines-20261107/finding-6-*.log` and `finding-7-*.log` at the repository root. These probes are separate from normal CI so their success cannot be presented as a repaired regression.
+For mutation checks, `ALASHI_TEST_FRONTEND_ROOT` selects the isolated source checkout. The resolver loads its production feed and StreamPage directly; transform-time hashes must match the selected files. This prevents a symlinked test runner from silently testing the original checkout instead of its mutant. The runner never edits production files.
+
+[Current repair evidence](../../../docs/ops/state-machines-20261107/fixes-6-7/README.md) includes RED/GREEN logs and a separate real-renderer browser review. [Initial reproduction evidence](../../../docs/ops/state-machines-20261107/README.md) retains the old failing invariants. The historical default command's success meant reproduced, not fixed.

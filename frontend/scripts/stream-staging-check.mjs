@@ -39,7 +39,7 @@ function frame({ kind = 'thinking', time = 2.65, trade = null } = {}) {
     StreamHeroBoundary: through, Suspense: through, StudioStage: through,
     Scene: () => createElement('canvas', { 'aria-label': '3D scene' }),
     MarketTrade: ignore, ScenarioAction: ignore, LivingGenie: ignore, PurchaseReceipt: ignore,
-    reportTradeTime: ignore, finish: ignore, ignoreTime: ignore, setReactionTime: ignore, finishReaction: ignore,
+    reportTradeTime: ignore, finish: ignore, ignoreTime: ignore, setReactionTime: ignore, finishReaction: ignore, abandonRenderer: ignore,
   })
   return module.exports
 }

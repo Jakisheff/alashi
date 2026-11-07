@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { advance, eventText, resultText, type ArenaEvent, type ArenaState, type Cursor, type GameResult } from './events'
 import { useScene } from './store'
 
@@ -46,7 +46,7 @@ function useSampleState(enabled: boolean) {
     }
     tick()
     const id = setInterval(tick, 4000)
-    return () => clearInterval(id)
+    return () => { clearInterval(id); setState(null) }
   }, [enabled])
   return state
 }
@@ -76,6 +76,46 @@ export function useArenaFeed(game: string | null, sample = true, api = '') {
 
   const cursor = useRef<Cursor>(null)
   const queue = useRef<{ text: string; ok: boolean }[]>([])
+  // Dispose the old source before it can speak under the new game's label.
+  // This runs before the passive snapshot effects seed the new cursor/queue.
+  useLayoutEffect(() => {
+    cursor.current = null
+    queue.current = []
+    if (mode === 'off') return
+    let disposed = false
+    let speechId: number | undefined
+    let take: number | undefined
+    const timers = new Set<ReturnType<typeof setTimeout>>()
+    const id = setInterval(() => {
+      if (disposed || useScene.getState().clip === 'fuckOff') return
+      const next = queue.current.shift()
+      if (!next) return
+      const { say, play } = useScene.getState()
+      say(next.text)
+      play('act')
+      speechId = useScene.getState().speechId
+      take = useScene.getState().take
+      const timer = setTimeout(() => {
+        timers.delete(timer)
+        if (!disposed && useScene.getState().clip !== 'fuckOff') {
+          useScene.getState().play(next.ok ? 'accepted' : 'rejected')
+          take = useScene.getState().take
+        }
+      }, 1100)
+      timers.add(timer)
+    }, EVENT_SECONDS * 1000)
+    return () => {
+      disposed = true
+      clearInterval(id)
+      timers.forEach(clearTimeout)
+      cursor.current = null
+      queue.current = []
+      const scene = useScene.getState()
+      if (scene.speechId === speechId) scene.say('')
+      if (scene.take === take) scene.play('idle')
+    }
+  }, [mode, api, game])
+
   useEffect(() => {
     if (!state) return
     const u = advance(cursor.current, state)
@@ -83,31 +123,12 @@ export function useArenaFeed(game: string | null, sample = true, api = '') {
     if (u.gap) queue.current.push({ text: '… some events were skipped', ok: true })
     for (const e of u.fresh) queue.current.push({ text: eventText(e, state.factions), ok: e.ok })
     if (queue.current.length > QUEUE_MAX) queue.current.splice(0, queue.current.length - QUEUE_MAX)
-  }, [state])
+  }, [state, mode, api, game])
 
   // The final line goes after any events still queued.
   useEffect(() => {
     if (result) queue.current.push({ text: resultText(result), ok: true })
-  }, [result])
-
-  useEffect(() => {
-    const timers: ReturnType<typeof setTimeout>[] = []
-    const id = setInterval(() => {
-      if (useScene.getState().clip === 'fuckOff') return
-      const next = queue.current.shift()
-      if (!next) return
-      const { say, play } = useScene.getState()
-      say(next.text)
-      play('act')
-      timers.push(setTimeout(() => {
-        if (useScene.getState().clip !== 'fuckOff') useScene.getState().play(next.ok ? 'accepted' : 'rejected')
-      }, 1100))
-    }, EVENT_SECONDS * 1000)
-    return () => {
-      clearInterval(id)
-      timers.forEach(clearTimeout)
-    }
-  }, [])
+  }, [result, mode, api, game])
 
   return { state, result, error: mode === 'live' ? live.error : null, mode }
 }

@@ -1,5 +1,5 @@
 // Test-only adapters for the renderer and unrelated navigation/private controls.
-// StreamPage, its actual error boundary and scheduler remain unmodified.
+// StreamPage, its actual error boundary and scheduler are loaded from production.
 import { useEffect, useState, type ReactNode } from 'react'
 
 export function Link({ children, to, ...props }: { children?: ReactNode; to?: string }) {
@@ -16,10 +16,11 @@ export function MarketTrade({ preview, onFinished }: {
     const fail = () => setFailed(true)
     window.addEventListener('state-repro-renderer-failure', fail)
     window.__stateRepro.animationLog.push({ event: 'started', action: preview.action, take: preview.take })
-    const timer = window.setTimeout(() => {
+    window.__stateRepro.finishCallbacks.push(onFinished)
+    const timer = window.__stateRepro.completeRenderers ? window.setTimeout(() => {
       window.__stateRepro.animationLog.push({ event: 'finished', action: preview.action, take: preview.take })
       onFinished()
-    }, 1000)
+    }, 1000) : undefined
     return () => { window.clearTimeout(timer); window.removeEventListener('state-repro-renderer-failure', fail) }
   }, [preview.action, preview.take, onFinished])
   if (failed) throw new Error('Injected renderer failure during active action')

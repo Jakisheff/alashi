@@ -1,0 +1,156 @@
+{
+  "scope": "One selected renderer-failure mutation and two selected legacy cleanup-ownership mutations. This is a focused check, not project-wide mutation coverage.",
+  "classification_method": "Independent inspection of every completed browser log, reconstruction of each single-line source mutation and verification of its SHA-256 against both the header and Production sources output.",
+  "source_binding": "The logging wrapper sets ALASHI_TEST_FRONTEND_ROOT to the current checkout or mutation overlay. The runner resolves production harness imports into that root, verifies source hashes in its Vite transform hook, and asserts that the selected production module was loaded before printing RESULT. Shared test-runner or renderer-adapter paths do not select the production source.",
+  "expected_renderer_error": "Finding 6 intentionally throws inside its renderer adapter. The React error boundary catches it in both baseline and mutant. The mutant is classified by the later vote-versus-idle assertion, not by that expected error message.",
+  "summary": {
+    "baseline_passes": 2,
+    "behavioral_mutant_failures": 3,
+    "failed_invariant_assertions": 7,
+    "healthy_control_passes": 5,
+    "survivors": 0,
+    "vite_or_chrome_infrastructure_failures": 0,
+    "runner_timeouts": 0
+  },
+  "runs": [
+    {
+      "finding": 6,
+      "role": "baseline",
+      "evidence_file": "mutation-runs-6/1794048349350796000.log",
+      "source_file": "frontend/src/live/StreamPage.tsx",
+      "source_sha256": "0ba13ac88f009757346c157ae11b24b36e28f0abb38b3363576d7849231d59aa",
+      "source_change": null,
+      "source_hash_reconstructed_and_verified": true,
+      "working_directory": "/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107",
+      "selected_production_path": "/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/frontend/src/live/StreamPage.tsx",
+      "production_source_hash": "0ba13ac88f009757346c157ae11b24b36e28f0abb38b3363576d7849231d59aa",
+      "isolated_overlay_selected": false,
+      "exit_code": 0,
+      "recovery_checks_run": 1,
+      "failed_invariant_assertions": 0,
+      "healthy_controls": [
+        "CONTROL PASS finding 6: actual stream scheduler processes two actions and returns idle when renderer completes."
+      ],
+      "failed_assertions": [],
+      "classification": "baseline_pass",
+      "vite_or_chrome_infrastructure_failure": false,
+      "runner_timeout": false,
+      "reason": "The unchanged stream scheduler passes its healthy control and the renderer-failure recovery invariant, including queued work, later feed receipts and a fresh mount."
+    },
+    {
+      "finding": 6,
+      "role": "mutant",
+      "evidence_file": "mutation-runs-6/1794048386844620000.log",
+      "source_file": "frontend/src/live/StreamPage.tsx",
+      "source_sha256": "6f7260b885412a4ffb03c63d569bd2dfbffb0c523bffad203be7196c7bd6aaa2",
+      "source_change": {
+        "before": "    rendererFailed.current = true",
+        "after": "    rendererFailed.current = false"
+      },
+      "source_hash_reconstructed_and_verified": true,
+      "working_directory": "/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/mutation-workers/run-76a1f252-b1cd-49bb-8b97-83741d4e1c3b/worker-0",
+      "selected_production_path": "/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/mutation-workers/run-76a1f252-b1cd-49bb-8b97-83741d4e1c3b/worker-0/frontend/src/live/StreamPage.tsx",
+      "production_source_hash": "6f7260b885412a4ffb03c63d569bd2dfbffb0c523bffad203be7196c7bd6aaa2",
+      "isolated_overlay_selected": true,
+      "exit_code": 1,
+      "recovery_checks_run": 1,
+      "failed_invariant_assertions": 1,
+      "healthy_controls": [
+        "CONTROL PASS finding 6: actual stream scheduler processes two actions and returns idle when renderer completes."
+      ],
+      "failed_assertions": [
+        "finding 6: renderer failure, queued work, fallback and fresh mount: after renderer failure and 20 s, the abandoned action must not remain active"
+      ],
+      "classification": "behavioral_assertion_failure",
+      "vite_or_chrome_infrastructure_failure": false,
+      "runner_timeout": false,
+      "reason": "Changing rendererFailed.current from true to false allows a later confirmed vote to become active behind the failed renderer. The recovery assertion observes vote instead of idle."
+    },
+    {
+      "finding": 7,
+      "role": "baseline",
+      "evidence_file": "mutation-runs-7/1794048441698404000.log",
+      "source_file": "frontend/src/feed.ts",
+      "source_sha256": "e74ed4b42330cb9096ab2238ae41b2915854e15c5cdd29064a63b2e1efd17832",
+      "source_change": null,
+      "source_hash_reconstructed_and_verified": true,
+      "working_directory": "/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107",
+      "selected_production_path": "/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/frontend/src/feed.ts",
+      "production_source_hash": "e74ed4b42330cb9096ab2238ae41b2915854e15c5cdd29064a63b2e1efd17832",
+      "isolated_overlay_selected": false,
+      "exit_code": 0,
+      "recovery_checks_run": 3,
+      "failed_invariant_assertions": 0,
+      "healthy_controls": [
+        "CONTROL PASS finding 7: actual useArenaFeed emits queued A speech and its accepted reaction without switching."
+      ],
+      "failed_assertions": [],
+      "classification": "baseline_pass",
+      "vite_or_chrome_infrastructure_failure": false,
+      "runner_timeout": false,
+      "reason": "The unchanged legacy feed passes its healthy control and all three selected pending-result checks: A to B, live to off, and unmount."
+    },
+    {
+      "finding": 7,
+      "role": "mutant",
+      "evidence_file": "mutation-runs-7/1794048466962929000.log",
+      "source_file": "frontend/src/feed.ts",
+      "source_sha256": "d4d3cb227a0a9a460725b9721d55d87f14f2b1445db6f3708224181b57fa0f17",
+      "source_change": {
+        "before": "      if (scene.speechId === speechId) scene.say('')",
+        "after": "      if (scene.speechId !== speechId) scene.say('')"
+      },
+      "source_hash_reconstructed_and_verified": true,
+      "working_directory": "/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/mutation-workers/run-4696f940-6398-4caf-bf84-8ad4f351906c/worker-0",
+      "selected_production_path": "/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/mutation-workers/run-4696f940-6398-4caf-bf84-8ad4f351906c/worker-0/frontend/src/feed.ts",
+      "production_source_hash": "d4d3cb227a0a9a460725b9721d55d87f14f2b1445db6f3708224181b57fa0f17",
+      "isolated_overlay_selected": true,
+      "exit_code": 1,
+      "recovery_checks_run": 3,
+      "failed_invariant_assertions": 3,
+      "healthy_controls": [
+        "CONTROL PASS finding 7: actual useArenaFeed emits queued A speech and its accepted reaction without switching."
+      ],
+      "failed_assertions": [
+        "finding 7: A->B pending result + queue ownership: source switch clears its displayed line",
+        "finding 7: live->off pending result + queue ownership: source switch clears its displayed line",
+        "finding 7: unmount with pending result: Expected values to be strictly equal:"
+      ],
+      "classification": "behavioral_assertion_failure",
+      "vite_or_chrome_infrastructure_failure": false,
+      "runner_timeout": false,
+      "reason": "Reversing the speech ownership equality prevents cleanup of the feed-owned displayed line. All three selected checks retain Game A actor speech instead of an empty line."
+    },
+    {
+      "finding": 7,
+      "role": "mutant",
+      "evidence_file": "mutation-runs-7/1794048486683739000.log",
+      "source_file": "frontend/src/feed.ts",
+      "source_sha256": "514b07880d3b255a377139c68c0dff03338abfc7e8a3cf9c87ccc27b9997c697",
+      "source_change": {
+        "before": "      if (scene.take === take) scene.play('idle')",
+        "after": "      if (scene.take !== take) scene.play('idle')"
+      },
+      "source_hash_reconstructed_and_verified": true,
+      "working_directory": "/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/mutation-workers/run-4696f940-6398-4caf-bf84-8ad4f351906c/worker-0",
+      "selected_production_path": "/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/target/mutation-workers/run-4696f940-6398-4caf-bf84-8ad4f351906c/worker-0/frontend/src/feed.ts",
+      "production_source_hash": "514b07880d3b255a377139c68c0dff03338abfc7e8a3cf9c87ccc27b9997c697",
+      "isolated_overlay_selected": true,
+      "exit_code": 1,
+      "recovery_checks_run": 3,
+      "failed_invariant_assertions": 3,
+      "healthy_controls": [
+        "CONTROL PASS finding 7: actual useArenaFeed emits queued A speech and its accepted reaction without switching."
+      ],
+      "failed_assertions": [
+        "finding 7: A->B pending result + queue ownership: source switch releases its current clip",
+        "finding 7: live->off pending result + queue ownership: source switch releases its current clip",
+        "finding 7: unmount with pending result: Expected values to be strictly equal:"
+      ],
+      "classification": "behavioral_assertion_failure",
+      "vite_or_chrome_infrastructure_failure": false,
+      "runner_timeout": false,
+      "reason": "Reversing the clip ownership equality prevents cleanup of the feed-owned active clip. All three selected checks observe act instead of idle."
+    }
+  ]
+}
