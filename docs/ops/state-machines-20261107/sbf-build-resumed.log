@@ -1,0 +1,73 @@
+Command: bash tools/build_sbf.sh
+Pinned cargo-build-sbf 4.1.0, platform-tools v1.54; resumed after interrupted process.
+[2026-11-07T08:54:45.764424000Z WARN  cargo_build_sbf] Package 'alashi' has two crate types defined: cdylib and lib. This setting precludes link-time optimizations (LTO). Use cdylib for programs to be deployed and rlib for packages to be imported by other programs as libraries.
+   Compiling anchor-lang-idl v0.1.4
+   Compiling num-derive v0.4.2
+   Compiling block-buffer v0.9.0
+   Compiling solana-serde-varint v2.2.2
+   Compiling stable_deref_trait v1.2.1
+   Compiling bytes v1.12.1
+   Compiling opaque-debug v0.3.1
+   Compiling rust_decimal v1.43.0
+   Compiling solana-define-syscall v3.0.0
+   Compiling keccak-const v0.2.0
+   Compiling const-crypto v0.3.0
+   Compiling solana-invoke v0.5.0
+   Compiling sha2 v0.9.9
+   Compiling prost v0.13.5
+   Compiling heapless v0.8.0
+   Compiling solana-vote-interface v2.2.6
+   Compiling solana-message v2.4.0
+   Compiling thiserror v1.0.69
+   Compiling solana-sysvar v2.3.0
+   Compiling solana-instructions-sysvar v3.0.1
+   Compiling anchor-lang-error v1.1.2
+   Compiling solana-feature-gate-interface v2.2.2
+   Compiling solana-loader-v3-interface v6.1.1
+   Compiling solana-stake-interface v2.0.2
+   Compiling hmac-drbg v0.3.0
+   Compiling switchboard-protos v0.2.6
+   Compiling libsecp256k1 v0.7.2
+   Compiling libsecp256k1-core v0.3.0
+   Compiling memoffset v0.9.1
+   Compiling rand v0.8.8
+   Compiling solana-secp256k1-recover v2.2.1
+   Compiling solana-keccak-hasher v2.2.1
+   Compiling solana-address-lookup-table-interface v2.2.2
+   Compiling anchor-attribute-program v1.1.2
+   Compiling solana-nonce v2.2.1
+   Compiling solana-blake3-hasher v2.2.1
+   Compiling pbjson v0.7.0
+   Compiling solana-loader-v2-interface v2.2.1
+   Compiling solana-loader-v4-interface v2.2.1
+   Compiling solana-loader-v3-interface v5.0.0
+   Compiling anchor-attribute-account v1.1.2
+   Compiling anchor-attribute-event v1.1.2
+   Compiling anchor-attribute-constant v1.1.2
+   Compiling anchor-derive-accounts v1.1.2
+   Compiling anchor-derive-serde v1.1.2
+   Compiling solana-program-pack v2.2.1
+   Compiling solana-feature-gate-interface v3.1.0
+   Compiling anyhow v1.0.104
+   Compiling solana-program-pack v3.1.0
+   Compiling solana-borsh v2.2.1
+   Compiling solana-big-mod-exp v2.2.1
+   Compiling anchor-attribute-access-control v1.1.2
+   Compiling anchor-derive-space v1.1.2
+   Compiling solana-native-token v2.3.0
+   Compiling bs58 v0.5.1
+   Compiling solana-program-option v3.1.0
+   Compiling arrayref v0.3.9
+   Compiling base64 v0.22.1
+   Compiling solana-program-option v2.2.1
+   Compiling solana-program v2.3.0
+   Compiling anchor-lang v1.1.2
+   Compiling faster-hex v0.10.0
+   Compiling base64ct v1.7.3
+   Compiling alashi-rules v0.1.0 (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/rules)
+   Compiling switchboard-on-demand v0.13.0
+   Compiling alashi v0.1.0 (/Users/amir/Documents/Codex/worktrees/alashi-state-fixes-20261107/programs/alashi)
+    Finished `release` profile [optimized] target(s) in 10m 49s
+
+Exit status: 0
+Elapsed seconds: 685.7

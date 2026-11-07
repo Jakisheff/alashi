@@ -1,0 +1,3 @@
+[2026-11-07T06:28:56.326268000Z WARN  cargo_build_sbf] Package 'alashi' has two crate types defined: cdylib and lib. This setting precludes link-time optimizations (LTO). Use cdylib for programs to be deployed and rlib for packages to be imported by other programs as libraries.
+[2026-11-07T06:28:56.363633000Z ERROR cargo_build_sbf::toolchain] Failed to install platform-tools: error sending request for url (https://github.com/anza-xyz/platform-tools/releases/download/v1.54/platform-tools-osx-x86_64.tar.bz2)
+     It looks like the download has failed. If this is a persistent issue, try `cargo-build-sbf --install-only` to download from an alternative source.

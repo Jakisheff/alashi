@@ -26,6 +26,8 @@ Use the repository's pinned Rust 1.89.0. Host runs share `target/host`, with `CA
 
 `cargo test --offline --locked --manifest-path indexer/Cargo.toml`: 22 tests pass. [Log](indexer.log). Other mandatory checks remain pending.
 
+`cargo build --offline --locked --manifest-path bots/Cargo.toml` passes. [Log](bots-build.log). The pinned SBF build also passes; [artifact metadata](sbf-artifact.json) identifies the exact program for the forthcoming execution tests.
+
 ## Finding 2: terminal archive retry fixed
 
 Before the fix, a failed archive rename left the terminal game cached without `archived: true`. Removing the filesystem obstruction did not trigger another write. The regression failed for both fresh and stale cache entries: [fresh-cache RED](finding-2-red.log), [stale-cache RED](finding-2-red-stale.log). The earlier [environment failure](finding-2-environment.log) was a denied loopback listener and does not count as a reproduction.
@@ -35,6 +37,14 @@ The cache fast path now requires a successfully archived terminal snapshot when 
 The [passing regression](finding-2-green.log) checks recovery for both cache ages, concurrent retry requests, archive loading by a new API instance, and zero RPC connections. Controls preserve the fresh live-game fast path and prevent rearchiving an already archived cache entry. The full indexer suite also passes.
 
 [Crapper](finding-2-complexity.log) reports complexity only: `get` is 9 and `ready_value` is 4. Coverage and CRAP were not measured. [Dryer](finding-2-duplication.log) reports no duplicate candidates. The [initial mutation run](finding-2-mutation.log) reports five killed mutations in the cache guard. That tool discards each test subprocess's output and counts any nonzero exit or timeout as killed, so this result alone does not establish five assertion failures. Detailed mutation evidence remains pending.
+
+## Finding 1: definitive rejection releases pending
+
+The [RED test](finding-1-red.log) failed before the production change: `bad_action must release the rejected action`. The fix follows the existing Node client contract. It clears pending only when the response has the same operation ID, explicit `ok: false` and `op_consumed: false`, and `bad_action`, `bad_params` or `bad_choice`. The operation ID remains available for the corrected action. The consumed-success path is unchanged.
+
+All 19 session tests pass in the [GREEN run](finding-1-green.log). The new tests cover three definitive rejection codes and 12 ambiguous or malformed replies, plus connection refusal and a server that receives the request then drops its response. The uncertainty cases preserve the full normalized request and reject replacement actions before retry. Existing authentication rejection coverage also passes. Files and listener ports belong to each test fixture.
+
+[Dryer](finding-1-duplication.log) found no duplicate candidates. [Crapper](finding-1-complexity.log) reports `act_v2` complexity increasing from 20 to 25 with the guarded rejection decision. Coverage and CRAP were not measured. [Eight mutation sites](finding-1-mutation-sites.log) were identified in the new guard; execution is pending the mandatory build checks.
 
 ## Findings 6 and 7: reproduced, not fixed
 

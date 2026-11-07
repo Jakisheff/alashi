@@ -1117,3 +1117,7 @@ Clock correction: two fresh TZ=Asia/Almaty date calls returned 29.10 16:15 after
 
 
 [07.11 13:52] State-machine repair: fresh clock check after the session interruption returned 13:52; the 13:20 estimate has elapsed. План: ещё 1,5 часа, до 15:22. Finding 2 has RED evidence for fresh/stale cache, a passing recovery regression and 22 passing indexer tests. Initial mutation output reports five kills without subprocess diagnostics; these are not yet classified as assertion failures. Finding 1 still has tests only. Resuming its RED/fix/GREEN sequence and checking the interrupted SBF build before remaining mandatory gates.
+
+[07.11 14:02] State-machine repair: finding 2 committed and pushed as f3216838 after 22 passing indexer tests and independent review. The old SBF process had ended without an artifact; the pinned incremental build is running again. Finding 1 RED is still compiling first-use bots dependencies; its production code is unchanged. Next: observe RED, apply the guarded pending reset, run the session suite and bots build, then arena/program gates. Disk remains above 4 GiB free.
+
+[07.11 14:07] Finding 1: observed the required pre-fix bad_action assertion (exit 101), then added the matching-ID, explicit unconsumed failure and allowlisted-error guard. All 19 session tests and the required bots build pass. Independent final review found no blocker. SBF also completed with pinned 4.1.0/v1.54; its fresh artifact is recorded. Arena, program compile and SBF execution gates are starting sequentially. No rule or frontend production changes.
