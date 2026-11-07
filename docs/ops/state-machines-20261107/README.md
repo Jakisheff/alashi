@@ -22,4 +22,10 @@ Observed result: all five files load; 91 tests pass, zero fail. [Successful log]
 
 Use the repository's pinned Rust 1.89.0. Host runs share `target/host`, with `CARGO_PROFILE_DEV_DEBUG=0`, `CARGO_PROFILE_TEST_DEBUG=0`, `CARGO_INCREMENTAL=0`, and at most two Cargo jobs for subsequent runs. These settings limit local disk use; they do not skip tests. SBF uses the repository script's separate target and pinned toolchain.
 
-Regression results and remaining mandatory checks are pending. No finding is marked fixed by this initial environment entry.
+`cargo test --offline --locked -p alashi-rules`: 40 tests pass. [Log](rules.log).
+
+Regression results and remaining mandatory checks are pending. No finding is marked fixed by this environment entry.
+
+## Product decisions
+
+Findings 3, 5 and 8 are unchanged. [Options and costs](product-choices.md) distinguish documenting current behavior, adding guards, and introducing cancellation or expiry. These require an owner's decision before implementation.

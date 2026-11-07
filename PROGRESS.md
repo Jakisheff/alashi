@@ -1106,3 +1106,5 @@ Clock correction: two fresh TZ=Asia/Almaty date calls returned 29.10 16:15 after
 ### 07.11 11:20 · State machine regressions
 
 План: 2 часов, до 13:20. Work in codex/implicit-state-fixes-20261107 from main 7113b9af. Install Node dependencies and run the five previously unloaded suites. Reproduce then fix findings 1 and 2; only reproduce 6 and 7; prepare choices for 3, 5 and 8 without changing game rules. Client outcomes: correct a definitively rejected HTTP action without losing operation identity, and retry archival of the same terminal cached game after storage recovers. Mandatory Rust/SBF checks, isolated test state/ports, red/green logs, scoped commits and pushes.
+
+[07.11 11:30] State-machine repair: Node 91/91 and alashi-rules 40/40 pass. Audit and Node evidence pushed as 1bfc06d9 on codex/implicit-state-fixes-20261107. Findings 1/2 still test-only pending observed failures; browser repros for 6/7 prepared. Pinned SBF platform-tools download in progress. Next: red/green regressions, remaining mandatory checks. No live game or deployment.

@@ -512,3 +512,5 @@ PR №66 объединён в main после успеха всех пяти з
 ### 29.10 17:53 · Выпуск панелей повтора
 
 Main CI прошёл 5 из 5. Выпуск main-af19b06-20261029 опубликован из af19b064a354dcc94b773ab40474544f95d2f49c. Все 120 файлов совпали с локальной сборкой, 72 архивных события не изменились, четыре службы сохранили PID и оба серверных binary SHA. На опубликованной странице во встроенном браузере проверены мобильные pause, seek, replay и Latest, а также вид на desktop; ошибок консоли нет. Кадр мобильной продажи сохранён в ~/.local/share/alashi/playback-controls-20261029/public-player-mobile.jpg. Физический телефон и настройка уменьшенного движения в браузере не проверены. Факт: 0,95 часа, 16:56–17:53.
+
+[07.11 11:30] State-machine repair: Node 91/91 and alashi-rules 40/40 pass. Audit and Node evidence pushed as 1bfc06d9 on codex/implicit-state-fixes-20261107. Findings 1/2 still test-only pending observed failures; browser repros for 6/7 prepared. Pinned SBF platform-tools download in progress. Next: red/green regressions, remaining mandatory checks. No live game or deployment.
