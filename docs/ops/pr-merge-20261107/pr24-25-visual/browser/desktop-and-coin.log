@@ -1,0 +1,26 @@
+FRAME 1366-coin-buy-1.35.png
+FRAME 1366-coin-sell-3.8.png
+FRAME 1366-coin-mule-1.9.png
+FRAME 1366-dance-0.png
+FRAME 1366-dance-0.45.png
+FRAME 1366-dance-0.9.png
+FRAME 1366-dance-1.37.png
+FRAME 1366-dance-2.8.png
+FRAME 1366-dance-4.1.png
+FRAME 1366-dance-reduced-motion.png
+PASS 1366px: Buy: payment pose, pause, backward seek and full completion; Sell: payment pose, pause, backward seek and full completion; Mule: payment pose, pause, backward seek and full completion; Dance: Thinking transition, key poses, pause/backward seek, restart and full completion; Dance reduced motion: pause preserves displayed pose within4/255 raster tolerance, seek0/forward/backward visibly works, resume returns idle
+FRAME 390-coin-buy-1.35.png
+FRAME 390-coin-sell-3.8.png
+FRAME 390-coin-mule-1.9.png
+FAIL 390px: page.waitForFunction: Timeout 30000ms exceeded.
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.waitForFunction: Timeout 30000ms exceeded.
+    at /private/tmp/alashi-coin-dance-evidence/browser-review.mjs:97:18 {
+  log: [],
+  name: 'TimeoutError'
+}
+
+Node.js v24.22.1
