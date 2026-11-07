@@ -1,0 +1,134 @@
+{
+  "pr": 69,
+  "head_sha": "196d2e46a67ddcd562d96257447f542f4c2dc3c9",
+  "branch": "codex/viewer-state-fixes-pr-20261107",
+  "actual_main": "0db54f864d63d593937200f3d3c1d2a1fcd00390",
+  "merge_ref": "34d3c742b7ab1db880e775678fe5259e288817be",
+  "merge_parents": [
+    "0db54f864d63d593937200f3d3c1d2a1fcd00390",
+    "196d2e46a67ddcd562d96257447f542f4c2dc3c9"
+  ],
+  "run_id": 42368103597,
+  "run_url": "https://github.com/Jakisheff/alashi/actions/runs/42368103597",
+  "status": "completed",
+  "conclusion": "success",
+  "checkout_proof": [
+    "2026-11-07T11:25:18.6368174Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +34d3c742b7ab1db880e775678fe5259e288817be:refs/remotes/pull/69/merge",
+    "2026-11-07T11:25:24.2271337Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/69/merge",
+    "2026-11-07T11:25:25.3912948Z Note: switching to 'refs/remotes/pull/69/merge'.",
+    "2026-11-07T11:25:25.3919395Z HEAD is now at 34d3c74 Merge 196d2e46a67ddcd562d96257447f542f4c2dc3c9 into 0db54f864d63d593937200f3d3c1d2a1fcd00390"
+  ],
+  "jobs": [
+    {
+      "id": 128390364554,
+      "name": "Rules, arena, indexer, and program compile",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42368103597/job/128390364554",
+      "completed_at": "2026-11-07T11:30:40Z"
+    },
+    {
+      "id": 128390364679,
+      "name": "RustSec audit of all lockfiles",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42368103597/job/128390364679",
+      "completed_at": "2026-11-07T11:25:48Z"
+    },
+    {
+      "id": 128390364725,
+      "name": "Fresh SBF build and program tests",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42368103597/job/128390364725",
+      "completed_at": "2026-11-07T11:27:22Z"
+    },
+    {
+      "id": 128390364759,
+      "name": "Gitleaks secret scan",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42368103597/job/128390364759",
+      "completed_at": "2026-11-07T11:25:26Z"
+    },
+    {
+      "id": 128390364962,
+      "name": "Animation geometry and frontend build",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Jakisheff/alashi/actions/runs/42368103597/job/128390364962",
+      "completed_at": "2026-11-07T11:26:36Z"
+    }
+  ],
+  "all_five_green": true,
+  "historical_runs": [
+    {
+      "pr": 69,
+      "head_sha": "39379860de87517f39de2d7466db0bdd3b6c95bb",
+      "branch": "codex/viewer-state-fixes-pr-20261107",
+      "draft": false,
+      "actual_main": "0db54f864d63d593937200f3d3c1d2a1fcd00390",
+      "merge_ref": "5d15a2d74ddb0f8d05a1757564cbbca60bcabd98",
+      "merge_parents": [
+        "0db54f864d63d593937200f3d3c1d2a1fcd00390",
+        "39379860de87517f39de2d7466db0bdd3b6c95bb"
+      ],
+      "run_id": 42367932125,
+      "run_url": "https://github.com/Jakisheff/alashi/actions/runs/42367932125",
+      "event": "pull_request",
+      "status": "completed",
+      "conclusion": "success",
+      "checkout_proof": [
+        "2026-11-07T11:22:50.0415199Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +5d15a2d74ddb0f8d05a1757564cbbca60bcabd98:refs/remotes/pull/69/merge",
+        "2026-11-07T11:22:54.6248550Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/69/merge",
+        "2026-11-07T11:22:55.6089393Z Note: switching to 'refs/remotes/pull/69/merge'.",
+        "2026-11-07T11:22:55.6100251Z HEAD is now at 5d15a2d Merge 39379860de87517f39de2d7466db0bdd3b6c95bb into 0db54f864d63d593937200f3d3c1d2a1fcd00390",
+        "2026-11-07T11:22:55.6200499Z [command]/usr/bin/git log -1 --format=%H"
+      ],
+      "jobs": [
+        {
+          "id": 128389846812,
+          "name": "Fresh SBF build and program tests",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/Jakisheff/alashi/actions/runs/42367932125/job/128389846812",
+          "completed_at": "2026-11-07T11:24:37Z"
+        },
+        {
+          "id": 128389846918,
+          "name": "Rules, arena, indexer, and program compile",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/Jakisheff/alashi/actions/runs/42367932125/job/128389846918",
+          "completed_at": "2026-11-07T11:28:10Z"
+        },
+        {
+          "id": 128389846950,
+          "name": "RustSec audit of all lockfiles",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/Jakisheff/alashi/actions/runs/42367932125/job/128389846950",
+          "completed_at": "2026-11-07T11:23:15Z"
+        },
+        {
+          "id": 128389847085,
+          "name": "Animation geometry and frontend build",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/Jakisheff/alashi/actions/runs/42367932125/job/128389847085",
+          "completed_at": "2026-11-07T11:24:02Z"
+        },
+        {
+          "id": 128389847138,
+          "name": "Gitleaks secret scan",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/Jakisheff/alashi/actions/runs/42367932125/job/128389847138",
+          "completed_at": "2026-11-07T11:23:01Z"
+        }
+      ],
+      "all_five_green": true,
+      "superseded_by": "196d2e46a67ddcd562d96257447f542f4c2dc3c9"
+    }
+  ]
+}

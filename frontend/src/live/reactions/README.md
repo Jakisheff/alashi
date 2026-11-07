@@ -22,6 +22,8 @@ playing: boolean; speed: number; seek: number | null } | null`
 
 - Missing/null reaction: normal sly eyes, blink, hover and smoke, with sparse whole-body
   glances on a deterministic 24-second schedule. A curious tilt follows the first glance.
+- `idlePlaying: false` freezes idle pose and smoke until resumed. It defaults to true;
+  reaction playback still follows `reaction.playing`.
 - New `take` or `kind`: starts again at zero, or the provided `seek`. Increment `take`
   for replay (including replaying the same seek). Seek changes are edge-triggered.
 - `playing: false` freezes all motion, including blink/smoke. `seek` clamps to 0–5.2s.

@@ -8,7 +8,9 @@ import react from '@vitejs/plugin-react'
 
 const { chromium } = await import(process.env.ALASHI_PLAYWRIGHT_MODULE ?? 'playwright')
 const frontend = fileURLToPath(new URL('../../', import.meta.url))
-const output = path.resolve(frontend, '../docs/ops/state-machines-20261107/fixes-6-7/visual')
+const output = process.env.ALASHI_VISUAL_OUTPUT
+  ? path.resolve(process.env.ALASHI_VISUAL_OUTPUT)
+  : path.resolve(frontend, '../docs/ops/state-machines-20261107/fixes-6-7/visual')
 const adapters = fileURLToPath(new URL('./visual-adapters.tsx', import.meta.url))
 const config = {
   root: frontend, configFile: false, envDir: false,

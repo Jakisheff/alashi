@@ -526,6 +526,58 @@ PR №66 объединён в main после успеха всех пяти з
 
 Main CI прошёл 5 из 5. Выпуск main-af19b06-20261029 опубликован из af19b064a354dcc94b773ab40474544f95d2f49c. Все 120 файлов совпали с локальной сборкой, 72 архивных события не изменились, четыре службы сохранили PID и оба серверных binary SHA. На опубликованной странице во встроенном браузере проверены мобильные pause, seek, replay и Latest, а также вид на desktop; ошибок консоли нет. Кадр мобильной продажи сохранён в ~/.local/share/alashi/playback-controls-20261029/public-player-mobile.jpg. Физический телефон и настройка уменьшенного движения в браузере не проверены. Факт: 0,95 часа, 16:56–17:53.
 
+### 29.10 18:12 · Crapper с покрытием панелей повтора
+
+План: 1,5 часа, до 19:42. Исследуются способы измерить реальное покрытие двух затронутых компонентов; показатели без покрытия не считаются CRAP. Подтверждённые проблемы будут исправлены и проверены тестами и сборкой.
+
+### 29.10 18:22 · Измерение и исправления
+
+Исходная карта: Crapper с V8-блоками выбранного теста показал CC 89, покрытие 77,5% и CRAP 179,5. Покрытие ограничено этим тестом, а ложное покрытие невызванной функции StrategyMap выявлено и исключено из выводов. Воспроизведены движение idle на паузе и ошибки canvas/повторной загрузки карты; готовятся исправления. Отрисовка и элементы управления разделяются с проверкой сохранения вызовов canvas. Достоверность покрытия GameViewer исследуется.
+
+### 29.10 18:32 · Покрытие и состояние паузы
+
+Повторный Crapper карты: DegenieMap CRAP 30,1; у вызванных вынесенных функций не выше 8,0. PlayerPlayback снизился с 14 до 6, расчёт состояний имеет 9. Числа отражают V8-блоки выбранных тестов, не полное покрытие всех сценариев. GameViewer не исполнялся целиком в тесте и остаётся сложным; перенос жизненного цикла без проверки React-эффектов не подтверждён. На телефонной ширине локальная пауза удерживает idle и дым. Обнаружен скачок позы при паузе в reduced motion; проверяется решение, сохраняющее точный seek.
+
+### 29.10 18:42 · Проверка анимаций
+
+Пауза reduced motion исправлена для реакции, торговли и сценарных действий; тесты проверяют удержание, seek=0, продолжение и новый take. Полный check:animations прошёл. Crapper для общей функции выбора кадра: CRAP 4; LivingGenie после двух тестов с заглушками: около 41,5 при покрытии V8-блоков 88,2%, с ограничениями source map и без полноценного React/GPU. Проверка мутаций и окончательные сборка и просмотр ещё впереди.
+
+### 29.10 18:52 · Повторное измерение после разделения
+
+На финальных исходниках Crapper с V8-блоками выбранных тестов показывает DegenieMap 22,0, LivingGenie около 19,7; обе функции остаются выше целевого порога 10. Проверенные вынесенные функции имеют CRAP не выше 9,1. Невызванный StrategyMap и hook с заглушенными эффектами не считаются покрытыми, несмотря на формальные данные инструмента. Дополнены проверки отмены RAF, таймера реакции, материалов дыма и активных задач. Мутационный тест общей функции кадра обнаружил 4 из 4 проверенных изменений. Снова выполняется полный check:animations, затем сборка и просмотр итоговой версии.
+
+### 29.10 19:02 · Независимое ревью
+
+Полный check:animations и сборка прошли до последнего исправления карты. Независимое ревью обнаружило, что после ошибки ассетов оставались активными пауза и перемотка: теперь они отключены до успешного повтора, повторная загрузка доступна. Также обнаружено расхождение между позой покупки и квитанцией при паузе reduced motion; решение и проверки готовятся. Покрытие карты, сборку и необходимые проверки нужно повторить на окончательной версии.
+
+### 29.10 19:12 · Синхронизация видимого результата
+
+Отдельное визуальное время связывает кадр покупки с квитанцией и подписью действия, оставляя ползунок на фактических часах. Проверены подтверждённые и отсутствующие данные, seek и смена события. Независимое ревью выявило повторное совпадение ключа после seek; защита поколением проверяется тестом. React StrictMode и системный reduced motion в браузере пока не проверены. После обзора требуются финальные покрытие, check:animations, сборка, визуальная проверка и CI ветки.
+
+### 29.10 19:23 · Итоговые проверки
+
+На актуальных исходниках Crapper с V8-блоками: DegenieMap 23,0, MapPlaybackControls 10,0, LivingGenie около 19,7; остальные измеренные вынесенные функции не выше 9,1. Полный check:animations прошёл. Dryer не нашёл дубликатов в 12 изменённых production-файлах; Mutator обнаружил все 4 проверенные мутации playbackFrame. Сборка выполняется. Затем нужны браузерная проверка окончательной версии и CI ветки; реальные React StrictMode, физический телефон и системный reduced motion остаются непроверенными.
+
+### 29.10 19:26 · Приёмка локальной сборки
+
+Финальные сборка и check:animations прошли. На архивном матче во встроенном браузере проверены пауза idle, продажа и перемотка карты на ширине 390; повтор карты просмотрен на ширине 1280. Ошибок консоли нет, кадры в `docs/assets/20261029-replay-pause/`. Данные V8 ограничены выбранными тестами и моками; реальный React StrictMode, системный reduced motion и физический телефон не проверены. Следующий шаг: отправить ветку и проверить CI.
+
+### 29.10 19:29 · Дополнительная проверка React
+
+План уточнён: ещё 0,75 часа, до 20:14. Изменения отправлены в черновой PR №67. Готовятся изолированные страницы для проверки настоящих React StrictMode и lifecycle карты без новых зависимостей. Это позволит оценить возможное разделение оставшихся сложных компонентов. CI текущего коммита выполняется.
+
+### 29.10 19:39 · Проверка React и разделение управления картой
+
+CI PR №67 для ea07eebe прошёл все пять заданий. В настоящем React StrictMode тест визуального времени прошёл A→B→A, seek=0 и отложенное обновление. Для карты до и после отделения useMapPlayback прошли шесть сценариев в обычном React и StrictMode; сеть, canvas и RAF в тесте имитируются. Crapper итоговой карты показал DegenieMap 17,0, useMapPlayback 7,0, MapPlaybackControls 10,0. Показатели отражают выбранные тесты и ограничения source maps. На новом исходнике заново выполняется check:animations; затем нужны сборка, просмотр и новый CI.
+
+### 29.10 19:47 · Проверка новой версии карты
+
+Финальные check:animations и сборка прошли. На ширине 390 повторно проверены пауза, перемотка на 12 секунд и запуск карты с начала; ошибок консоли нет. Кадр `docs/assets/20261029-replay-pause/map-final.jpg`. Dryer повторно не нашёл дубликатов в 12 production-файлах. Изменения готовы к отправке в PR; новый CI ещё не проверен.
+
+### 29.10 19:55 · CI исправлений
+
+CI коммита 0c270a65 прошёл 5 из 5. Факт: 1,72 часа на реализацию и проверку исправлений, 18:12–19:55; с уточнения плана в 19:29 прошло 0,43 часа. DegenieMap, LivingGenie и MapPlaybackControls остаются на пороге CRAP или выше; полное покрытие GameViewer не измерено. PR №67 остаётся черновиком. Системный reduced motion и физический телефон не проверены. Отправка этой записи и её CI ещё впереди.
+
 [02.11 18:04] [AWS migration] План: 3 часа, до 21:04. Старый прод доступен, FREE-проект Амира активен. Амир согласовал ap-southeast-2: eu-central-1 запрещён SCP. Проверяются цены и минимальный разрешённый EC2. Граница: подготовить новый Elastic IP и проверенную копию до DNS; старый host продолжает работу.
 
 [02.11 18:14] [AWS migration] Nano не разрешён FREE-планом; запускается t3.micro согласно fallback задания. База $14.246/месяц при 730 часах, ниже $16. Дальше: Elastic IP, bootstrap, копия данных и HTTPS smoke. Старые службы не менялись; DNS остаётся на старом IP.
@@ -554,3 +606,7 @@ Main CI прошёл 5 из 5. Выпуск main-af19b06-20261029 опублик
 [07.11 16:05] Review and merge owner PRs. План: 2 часа, до 18:05. Review PRs authored by Jakisheff against current main and merge only ready changes. Prepare a separate PR for viewer findings 6/7, with production changes limited to viewer lifecycles. Earlier session/archive fixes stay on their existing branch. Client outcome: main receives verified changes while unresolved work remains identifiable. Mandatory Rust/SBF, frontend and relevant lifecycle checks, exact-head CI and visual evidence govern readiness. No game rules 3/5/8, live games, funds or deployment are included.
 
 [07.11 16:15] Owner PR review: PR68 merged after source/workflow review and five green exact-head CI jobs; no deployment trigger. PR59 preserve-both documentation resolution d90ca591 pushed, fresh CI pending. Viewer6/7 nine recovery checks and two controls pass on the separate branch; build passed and animation checks are running. Coin/Dance integration and PR67 reduced-motion browser acceptance continue. PR33 is already included in main by ancestry. Next: finish acceptance, publish viewer PR, merge only verified candidates and check finalmain.
+
+[07.11 16:26] PR merge review: PR68 merged90d515fd; PR59 merged0db54f86 after fresh5/5 CI. PR33 closed as already integrated (ancestor verified), no code replay. Viewer PR69 created and refreshed to196d2e46; mergeable, CI running. PR67 refreshed1605f03f with journal conflicts resolved; new CI and390px reduced-motion review underway. Coin/Dance candidates will include67 before final browser acceptance because they share LivingGenie playback. No backend/game-rule changes or deployment. Next: finish visual acceptance, merge verified candidates, rerun combined viewer checks and finalmain CI.
+
+[07.11 16:36] PR merge review: exact-head CI67 (1605f03f) and CI69 (196d2e46) are5/5green. Local67+69 integration preserves renderer cleanup and displayed receipt time; nine lifecycle checks, both controls and staging pass, independent review finds no blocker. Browser67 acceptance is refining Resume after viewport re-entry, since offscreen Scene intentionally stops frames. Coin validation now detects a protruding field in an intentional mutant; production geometry unchanged. Remaining: final rendered acceptance for67/coin/Dance, publish verified heads, combine viewer with those changes and verify finalmain.
