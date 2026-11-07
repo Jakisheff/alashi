@@ -12,6 +12,8 @@ for (const [radius, thickness, centerY] of [[.145, .032, 0], [.12, .035, .125], 
   assert(box.max.z < thickness / 2 + radius * .055 && box.min.z > -thickness / 2 - radius * .055, 'Coin grew beyond the original contact envelope')
   const field = coin.root.getObjectByName('alashi-coin-field') as Mesh<BufferGeometry, MeshStandardMaterial>
   const rim = coin.root.getObjectByName('alashi-coin-rim') as Mesh<BufferGeometry, MeshStandardMaterial>
+  const fieldBounds = new Box3().setFromObject(field), rimBounds = new Box3().setFromObject(rim)
+  assert(fieldBounds.max.z < rimBounds.max.z && fieldBounds.min.z > rimBounds.min.z, 'Lilac field must stay recessed inside the silver rim on both faces')
   assert.equal(field.material.color.getHexString(), BRAND.lilac.slice(1).toLowerCase())
   assert.equal(rim.material.color.getHexString(), BRAND.silver.slice(1).toLowerCase())
   const texture = field.material.bumpMap!
