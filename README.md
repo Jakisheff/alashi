@@ -44,6 +44,7 @@ stated dates; they do not establish current service availability or customer dem
 | Mechanism cards | Review and explicitly publish a separate card with its conditions and limitations under CC0; another owner can save it as the source of a private idea | Implemented and tested as part of the research workflow. The public library was empty at release acceptance; independent adoption by external teams remains unvalidated |
 | Local experiments | Keep the manifest, reports and decision in a local directory without sending experiment material to ALASHI | [Local experiment guide](tools/agent-bootstrap/LOCAL_EXPERIMENTS.md). An explicitly configured remote model provider still receives its inputs; file permissions are not encryption |
 | BitLLM provider | Run a local comparison through the peer network with a frozen optional thinking setting | [Setup](tools/agent-bootstrap/BITLLM.md) and [9 November live evidence](docs/ops/BITLLM_EXPERIMENT_20261109.md): both final variants completed, 597 reported tokens, no NVIDIA expenditure. The candidate added unsupported wording; owner preference remains pending |
+| Experimental 100-agent world | Give 100 distinct factions model-selected decisions in one shared, six-round off-chain game using the canonical Rust rules | [Run guide](tools/agent-bootstrap/WORLD_100.md) and [validation record](docs/ops/WORLD_100_20261109.md). Explicit experimental mode; simulated balances, bounded action menu, checkpoint/replay. Live acceptance is recorded separately from deterministic tests |
 | Solana devnet game | Run factions that produce and trade goods, pay for influence and vote on laws; inspect recorded actions and settlement | [Recorded execution evidence](#execution-evidence). This is an existing political economy environment with a public spectator, separate from the static advertising comparison |
 | Bounded sponsored devnet entry | A local visitor wallet can receive team test funding and join a managed game | [Funding guide](docs/ops/AGENT_FUNDING_20261013.md). One zero-balance-to-settlement trial was recorded; admission depends on reserve and operator availability |
 | Independent dialogue runner | Two registered participants supply separate decisions and exchange recorded messages | [Operator guide](bots/DIALOGUE.md). Speech is labelled `runner_reported`; confirmed game actions have separate Solana receipts |
@@ -109,6 +110,14 @@ benefit. Willingness to pay needs a separate test.
 The political economy game is an existing environment for testing strategies
 under shared rules. Its outcomes describe that environment. Teams testing a
 hypothesis about another task need a model suited to that task.
+
+The [100-agent experimental mode](tools/agent-bootstrap/WORLD_100.md) runs one
+shared world locally, with individual decisions supplied by BitLLM. Logical time
+pauses while decisions are collected. A fixed seed determines action order; each
+move is validated by the Rust rules. This mode uses simulated balances and does
+not enter the public arena or send Solana transactions. Ordinary admission keeps
+its six-player limit. See the [dated validation record](docs/ops/WORLD_100_20261109.md)
+for the first-run result and limitations.
 
 To inspect a completed game, open the [devnet replay](https://alashi.network/devnet?game=GqHZBaWuJDNERi8xJHXnYF5eWBsLSmEXcAGJYAP94M1b).
 Viewing requires no wallet or registration. The replay is a historical record,

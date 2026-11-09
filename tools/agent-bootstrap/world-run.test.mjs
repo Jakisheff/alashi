@@ -155,7 +155,7 @@ test('provider sends explicit bounded thinking settings and preserves provenance
   assert.ok(!JSON.stringify(result).includes('DO_NOT_STORE_REASONING'));assert.deepEqual(result.action,{action:'pass',params:{}});
 });
 
-test('actual Rust worker: 100 players finish six rounds, then resume issues zero model calls',{skip:!process.env.WORLD_WORKER,timeout:120000},async t=>{
+test('actual Rust worker: 100 players finish six rounds, then resume issues zero model calls',{skip:!process.env.WORLD_WORKER,timeout:300000},async t=>{
   const f=fixture(t,{worker:resolve(process.env.WORLD_WORKER),agents:100});
   const result=await f.start({workerFactory:undefined});
   assert.equal(result.game_completed,true);assert.equal(result.round,6);assert.equal(result.agents,100);

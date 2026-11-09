@@ -123,7 +123,7 @@ export function validateSnapshot(s, count) {
   if (s.required_actors.some(a=>!integer(a,0,count-1)) || new Set(s.required_actors).size !== s.required_actors.length
       || s.agents.length !== s.required_actors.length || new Set(s.agents.map(a=>a.actor)).size !== s.agents.length
       || s.agents.some(a=>!s.required_actors.includes(a.actor) || !object(a.observation) || !Array.isArray(a.allowed_actions)
-        || a.allowed_actions.length > 64 || a.allowed_actions.some(d=>!exact(d,['action','params']) || !short(d.action,64) || !object(d.params)))) fail('invalid_world_actor_set');
+        || !a.allowed_actions.length || a.allowed_actions.length > 64 || a.allowed_actions.some(d=>!exact(d,['action','params']) || !short(d.action,64) || !object(d.params)))) fail('invalid_world_actor_set');
   if (s.phase === 'finished' && (s.required_actors.length || !object(s.result))) fail('invalid_finished_world');
   if (s.phase !== 'finished' && !s.required_actors.length) fail('world_has_no_required_actors');
   return s;
@@ -144,7 +144,7 @@ const personas = [
 export function messagesForAgent(snapshot, agent, memory, count) {
   const rows = Array.isArray(snapshot.world.public_state) ? snapshot.world.public_state : [];
   // Keep full snapshots on disk; send only game information relevant to a decision.
-  const world = Object.fromEntries(['rounds','peso','rake_bps','payout_shares','market_price','sold_this_round','active_tax_bps','active_subsidy_goods','active_price_shift','active_boom','law_card','law_name','veto_pending','president','current_yes_weight','current_no_weight','laws_passed','last_law_passed'].filter(k=>Object.hasOwn(snapshot.world,k)).map(k=>[k,snapshot.world[k]]));
+  const world = Object.fromEntries(['objective','action_rules','rounds','peso','rake_bps','payout_shares','market_price','sold_this_round','active_tax_bps','active_subsidy_goods','active_price_shift','active_boom','law_card','law_name','veto_pending','president','current_yes_weight','current_no_weight','laws_passed','last_law_passed'].filter(k=>Object.hasOwn(snapshot.world,k)).map(k=>[k,snapshot.world[k]]));
   const ranked=[...rows].filter(r=>r.actor!==agent.actor).sort((a,b)=>Number(b.cash??0)-Number(a.cash??0)||a.actor-b.actor);
   const selected=new Map(ranked.slice(0,3).map(r=>[r.actor,r]));
   for(const neighbor of [(agent.actor+count-1)%count,(agent.actor+1)%count]) {const row=rows.find(r=>r.actor===neighbor);if(row)selected.set(neighbor,row);}
@@ -239,12 +239,12 @@ export async function runWorld({dir,allowProvider,workerPath,key,provider,worker
   if((provider||workerFactory)&&c.profile.source!=='test_provider')fail('world_test_injection_requires_test_profile');
   const actual=provider??bitllmProvider(c.profile,{key,timeoutMs:c.call_timeout_ms});
   if(!isDeepStrictEqual(actual.profile,c.profile))fail('world_provider_profile_mismatch');
-  const calls=loadCalls(dir,frozen.digest);
   const lock=join(dir,'.world.lock');let fd;
   try{fd=openSync(lock,'wx',0o600);}catch(error){if(error.code==='EEXIST')fail('world_busy_check_existing_process');throw error;}
-  try{writeFileSync(fd,JSON.stringify({pid:process.pid}));fsyncSync(fd);}finally{closeSync(fd);}
   let worker,snapshot;const phases=[],memory=Array.from({length:c.init.agents},()=>[]);
   try {
+    try{writeFileSync(fd,JSON.stringify({pid:process.pid}));fsyncSync(fd);}finally{closeSync(fd);}
+    const calls=loadCalls(dir,frozen.digest);
     const metaPath=join(dir,'run.json'),meta=existsSync(metaPath)?read(metaPath):{digest:frozen.digest,started_at_ms:now()};
     if(meta.digest!==frozen.digest||!integer(meta.started_at_ms,0,Number.MAX_SAFE_INTEGER))fail('invalid_world_run_metadata');
     if(!existsSync(metaPath))save(metaPath,meta);
