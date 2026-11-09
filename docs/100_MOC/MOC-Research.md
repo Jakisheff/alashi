@@ -4,6 +4,7 @@
 
 ## Файлы
 
+- [Проверенный контрпример возвращается в память до её фиксации — идея 09.11.2026](../200_ZETTEL/20261109-memory-counterexample-feedback.md)
 - [Brood War и оценка оркестрации: исследование 19.10.2026](../research/BROOD_WAR_AGENT_EVALS_20261019.md)
 - [Playbook Brood War для сравнения с ALASHI](../research/BROOD_WAR_PLAYBOOK.md)
 - [Источники и границы проверки исследования](../research/BROOD_WAR_AGENT_EVALS_20261019_SOURCES.md)
