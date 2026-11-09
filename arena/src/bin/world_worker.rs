@@ -131,6 +131,28 @@ impl World {
         actors
     }
 
+    /// Wealth/influence-blind candidate visibility, separate from action legality.
+    /// Every live actor uses the same nonzero offsets in one seeded live ring:
+    /// each recipient therefore appears once per slot and k times per full cohort.
+    /// With an unchanged 100-player cohort, six rounds use 18 distinct offsets,
+    /// hence 18 distinct peers per actor. A changed live set rebuilds the ring;
+    /// repeated peers across that change are possible. Balancing candidates does
+    /// not promise balanced legal bribe menus or actual transfers (cash matters).
+    fn interaction_peers(&self, actor: usize) -> Vec<usize> {
+        let mut ring: Vec<_> = self.sim.factions.iter().enumerate()
+            .filter_map(|(i, f)| f.alive.then_some(i)).collect();
+        ring.sort_unstable_by_key(|&i| (splitmix64(self.seed ^ 0x70656572736c6976 ^ i as u64), i));
+        let Some(position) = ring.iter().position(|&i| i == actor) else { return vec![]; };
+        let n = ring.len();
+        if n < 2 { return vec![]; }
+        let k = 3.min(n - 1);
+        let mut offsets: Vec<_> = (1..n).collect();
+        offsets.sort_unstable_by_key(|&offset|
+            (splitmix64(self.seed ^ 0x706565726f666673 ^ offset as u64), offset));
+        let start = self.sim.game.round.saturating_sub(1) as usize * k;
+        (0..k).map(|slot| ring[(position + offsets[(start + slot) % (n - 1)]) % n]).collect()
+    }
+
     fn allowed_actions(&self, actor: usize) -> Vec<Value> {
         let f = &self.sim.factions[actor];
         let mut candidates = vec![json!({"action":"pass","params":{}})];
@@ -153,17 +175,15 @@ impl World {
                 add("produce", json!({}));
                 add("donkey", json!({}));
                 if self.sim.game.epoch == EPOCH_90S { add("shuttle", json!({})); }
-                let n = self.sim.factions.len();
-                let richest = (0..n).filter(|&i| i != actor && self.sim.factions[i].alive)
-                    .max_by_key(|&i| (self.sim.factions[i].cash, std::cmp::Reverse(i)));
-                let influential = (0..n).filter(|&i| i != actor && self.sim.factions[i].alive)
-                    .max_by_key(|&i| (self.sim.factions[i].influence, std::cmp::Reverse(i)));
-                for to in richest.into_iter().chain(influential).chain(std::iter::once((actor + 1) % n)) {
+                let peers = self.interaction_peers(actor);
+                for &to in &peers {
                     add("bribe", json!({"to":to,"amount":BRIBE_PRICE}));
                 }
                 if self.sim.game.epoch == EPOCH_90S {
-                    add("roof", json!({"to":(actor+1)%n,"tariff":ROOF_BLACK}));
-                    add("roof", json!({"to":(actor+1)%n,"tariff":ROOF_RED}));
+                    if let Some(&to) = peers.first() {
+                        add("roof", json!({"to":to,"tariff":ROOF_BLACK}));
+                        add("roof", json!({"to":to,"tariff":ROOF_RED}));
+                    }
                     add("bid", json!({"amount":PESO}));
                 }
             },
@@ -193,6 +213,7 @@ impl World {
             "is_president":f.wallet==g.president})).collect();
         let agents: Vec<_> = required.iter().map(|&actor| json!({"actor":actor,
             "name":self.sim.factions[actor].name,"observation":public_state[actor],
+            "interaction_peers":self.interaction_peers(actor),
             "allowed_actions":self.allowed_actions(actor)})).collect();
         let (yes, no) = alashi_rules::logic::tally_votes(&self.sim.factions.iter()
             .filter(|f| f.alive && f.voted_stamp == g.stamp())
@@ -223,6 +244,7 @@ impl World {
                     "law":"Votes are weighted by influence. Yes must exceed no. President may veto after the votes; a veto blocks the law.",
                     "pass":"Leave this decision unused; no action is invented on provider failure."},
                 "turn_order":required,"execution_policy":"common_snapshot_seeded_rotating_order",
+                "interaction_policy":"balanced_cyclic_peers_v1",
                 "menu_scope":"bounded_subset_of_canonical_actions","market_price":market_price(g.sold_this_round,g.active_price_shift,g.active_boom),
                 "sold_this_round":g.sold_this_round,"active_tax_bps":g.active_tax_bps,
                 "active_subsidy_goods":g.active_subsidy_goods,"active_price_shift":g.active_price_shift,
@@ -511,6 +533,126 @@ mod tests {
                     params: option["params"].clone(), error: None };
                 assert!(execute(&mut world.sim.clone(), false, &d).unwrap().ok);
             }
+        }
+    }
+
+    fn assert_peer_exposure_is_balanced(world: &World) {
+        let n = world.sim.factions.len();
+        let live: Vec<_> = (0..n).filter(|&i| world.sim.factions[i].alive).collect();
+        let k = 3.min(live.len().saturating_sub(1));
+        let mut exposure = vec![0; n];
+        let mut slots = vec![vec![0; n]; k];
+        for actor in 0..n {
+            let peers = world.interaction_peers(actor);
+            assert_eq!(peers, world.interaction_peers(actor));
+            if !world.sim.factions[actor].alive { assert!(peers.is_empty()); continue; }
+            assert_eq!(peers.len(), k);
+            let mut unique = peers.clone(); unique.sort_unstable(); unique.dedup();
+            assert_eq!(unique.len(), k);
+            for (slot, peer) in peers.into_iter().enumerate() {
+                assert_ne!(peer, actor);
+                assert!(world.sim.factions[peer].alive);
+                exposure[peer] += 1;
+                slots[slot][peer] += 1;
+            }
+        }
+        for actor in 0..n {
+            assert_eq!(exposure[actor], if world.sim.factions[actor].alive { k } else { 0 });
+            for slot in &slots {
+                assert_eq!(slot[actor], if world.sim.factions[actor].alive { 1 } else { 0 });
+            }
+        }
+        assert!(world.interaction_peers(n).is_empty());
+    }
+
+    #[test]
+    fn cyclic_peers_balance_every_recipient_and_slot_in_small_and_hundred_worlds() {
+        for seed in [0, 42, u64::MAX] {
+            for n in [2, 3, 4, 6, 19, 100] {
+                let mut world = World::new(true, 1, seed, n, EPOCH_CLASSIC, default_fee()).unwrap();
+                for round in 1..=ROUNDS {
+                    world.sim.game.round = round;
+                    assert_peer_exposure_is_balanced(&world);
+                }
+                for actor in (0..n as usize).step_by(3) { world.sim.factions[actor].alive = false; }
+                for round in 1..=ROUNDS {
+                    world.sim.game.round = round;
+                    assert_peer_exposure_is_balanced(&world);
+                }
+                for f in &mut world.sim.factions { f.alive = false; }
+                assert_peer_exposure_is_balanced(&world);
+                world.sim.factions[0].alive = true;
+                assert_peer_exposure_is_balanced(&world);
+            }
+        }
+    }
+
+    #[test]
+    fn hundred_actors_receive_eighteen_distinct_peers_over_six_rounds() {
+        for seed in [0, 42, 20261109, u64::MAX] {
+            let mut world = World::new(true, 1, seed, 100, EPOCH_CLASSIC, default_fee()).unwrap();
+            let mut seen = vec![std::collections::BTreeSet::new(); 100];
+            for round in 1..=ROUNDS {
+                world.sim.game.round = round;
+                for (actor, peers) in seen.iter_mut().enumerate() {
+                    for peer in world.interaction_peers(actor) { assert!(peers.insert(peer)); }
+                }
+            }
+            assert!(seen.iter().all(|peers| peers.len() == 18));
+        }
+    }
+
+    #[test]
+    fn peers_ignore_wealth_influence_phase_and_execution_order() {
+        let mut world = World::new(true, 1, 20261109, 100, EPOCH_CLASSIC, default_fee()).unwrap();
+        for round in 1..=ROUNDS {
+            world.sim.game.round = round;
+            let expected: Vec<_> = (0..100).map(|actor| world.interaction_peers(actor)).collect();
+            for (actor, f) in world.sim.factions.iter_mut().enumerate() {
+                f.cash = (100 - actor as u64) * 13 * PESO;
+                f.influence = (actor * 7 % MAX_INFLUENCE as usize) as u16;
+            }
+            for phase in [Phase::Market, Phase::Action, Phase::Law] {
+                world.sim.game.phase = phase;
+                world.step += 1;
+                for (actor, peers) in expected.iter().enumerate() {
+                    assert_eq!(&world.interaction_peers(actor), peers);
+                }
+            }
+        }
+    }
+
+    #[test]
+    fn snapshot_and_targeted_menus_share_the_same_ordered_peers_in_both_epochs() {
+        for epoch in [EPOCH_CLASSIC, EPOCH_90S] {
+            let mut world = World::new(true, 1, 20261109, 100, epoch, default_fee()).unwrap();
+            world.sim.game.phase = Phase::Action;
+            for f in &mut world.sim.factions { f.cash = 100 * PESO; }
+            let snapshot = world.snapshot().unwrap();
+            assert_eq!(snapshot["world"]["interaction_policy"], "balanced_cyclic_peers_v1");
+            for agent in snapshot["agents"].as_array().unwrap() {
+                let actor = agent["actor"].as_u64().unwrap() as usize;
+                let peers = world.interaction_peers(actor);
+                assert_eq!(agent["interaction_peers"], json!(peers));
+                let menu = agent["allowed_actions"].as_array().unwrap();
+                let bribes: Vec<_> = menu.iter().filter(|a| a["action"] == "bribe")
+                    .map(|a| a["params"]["to"].as_u64().unwrap() as usize).collect();
+                assert_eq!(bribes, peers);
+                for action in menu.iter().filter(|a| a["params"].get("to").is_some()) {
+                    assert!(peers.contains(&(action["params"]["to"].as_u64().unwrap() as usize)));
+                }
+                let roofs: Vec<_> = menu.iter().filter(|a| a["action"] == "roof").collect();
+                if epoch == EPOCH_90S {
+                    assert_eq!(roofs.len(), 2);
+                    assert!(roofs.iter().all(|a| a["params"]["to"] == peers[0]));
+                } else { assert!(roofs.is_empty()); }
+            }
+            // Insufficient cash removes legal bribes, not potential visibility.
+            world.sim.factions[0].cash = 0;
+            let snapshot = world.snapshot().unwrap();
+            let agent = snapshot["agents"].as_array().unwrap().iter().find(|a| a["actor"] == 0).unwrap();
+            assert_eq!(agent["interaction_peers"], json!(world.interaction_peers(0)));
+            assert!(agent["allowed_actions"].as_array().unwrap().iter().all(|a| a["action"] != "bribe"));
         }
     }
 }

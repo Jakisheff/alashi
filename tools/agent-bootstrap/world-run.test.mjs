@@ -28,7 +28,8 @@ function fakeWorker({badActor=false,changedReplay=false,failAfterApply=false}={}
     const menu=stage==='post_vote'?[{action:'pass',params:{}}]:phase==='market'?[{action:'pass',params:{}},{action:'sell',params:{units:1}}]:phase==='action'?[{action:'produce',params:{}}]:[{action:'vote',params:{choice:'yes'}}];
     const public_state=Array.from({length:count},(_,actor)=>({actor,name:`agent-${actor}`,cash:100+actor,goods:2,influence:1,alive:true,is_president:actor===0}));
     return {ok:true,type:'snapshot',step,game_id:init.game_id,round:finished?6:Math.floor(step/4)+1,phase,stage,state_hash:digest({init,step,history,changedReplay}),required_actors:required,
-      agents:required.map(actor=>({actor:badActor?count:actor,name:`agent-${actor}`,observation:{cash:100+actor,goods:2,influence:1},allowed_actions:menu})),world:{public_state,rounds:6},
+      agents:required.map(actor=>({actor:badActor?count:actor,name:`agent-${actor}`,observation:{cash:100+actor,goods:2,influence:1},
+        interaction_peers:Array.from({length:Math.min(3,count-1)},(_,i)=>(actor+i+1)%count),allowed_actions:menu})),world:{public_state,rounds:6,interaction_policy:'balanced_cyclic_peers_v1'},
       ...(finished?{result:{participants:count,ranks:public_state.map(p=>p.actor),bank:count*100,payouts:[count*100]}}:{})};
   }
   return {async request(request) {
@@ -59,7 +60,7 @@ test('100 distinct players complete six protocol rounds with bounded concurrency
   assert.equal(result.status,'completed');assert.equal(result.game_completed,true);assert.equal(result.agents,100);
   assert.equal(result.calls,1806);assert.equal(result.known_tokens,18060);assert.equal(result.agents_with_accepted_model_action,100);assert.equal(result.skipped_decisions,0);
   assert.equal(peak,2);assert.equal(new Set(f.calls.map(m=>JSON.parse(m[1].content).identity)).size,100);
-  assert.ok(f.calls.every(m=>JSON.parse(m[1].content).selected_opponents.length<=7));
+  assert.ok(f.calls.every(m=>JSON.parse(m[1].content).selected_opponents.length===3));
   assert.ok(f.calls.some(m=>JSON.parse(m[1].content).own_recent_receipts.length>0));
   assert.deepEqual(await f.start(),result);assert.equal(f.calls.length,1806);
   assert.equal(existsSync(join(f.dir,'.world.lock')),false);
@@ -128,6 +129,68 @@ test('wrong actor set and changed provider are rejected before any model request
   assert.equal(f.calls.length,0);assert.equal(existsSync(join(f.dir,'.world.lock')),false);
 });
 
+test('visible opponents exactly follow ordered interaction peers independently of wealth, influence and row order',async()=>{
+  const snapshot=await fakeWorker().request({op:'init',game_id:1,agents:8});
+  const agent=snapshot.agents[0];agent.interaction_peers=[4,2,7];
+  agent.allowed_actions=[{action:'produce',params:{}},...agent.interaction_peers.map(to=>({action:'bribe',params:{to,amount:5000000}}))];
+  validateSnapshot(snapshot,8);
+  const prompt=()=>JSON.parse(messagesForAgent(snapshot,agent,[],8)[1].content);
+  const before=prompt();
+  assert.deepEqual(before.selected_opponents.map(row=>row[0]),[4,2,7]);
+  assert.deepEqual(before.allowed_actions.filter(a=>a.action==='bribe').map(a=>a.params.to),[4,2,7]);
+  assert.equal(before.world.interaction_policy,'balanced_cyclic_peers_v1');
+  for (const row of snapshot.world.public_state) {row.cash=(8-row.actor)*100000000;row.influence=100-row.actor;}
+  snapshot.world.public_state.reverse();validateSnapshot(snapshot,8);
+  const after=prompt();
+  assert.deepEqual(after.selected_opponents.map(row=>row[0]),[4,2,7]);
+  assert.deepEqual(after.selected_opponents.map(row=>row[1]),[400000000,600000000,100000000]);
+  assert.deepEqual(after.allowed_actions,before.allowed_actions);
+});
+
+test('malformed interaction peers, public references and unseen bribe targets are rejected',async()=>{
+  const original=await fakeWorker().request({op:'init',game_id:1,agents:8});
+  const mutations=[
+    s=>{delete s.agents[0].interaction_peers;},
+    s=>{s.agents[0].interaction_peers=[1,2];},
+    s=>{s.agents[0].interaction_peers=[1,2,3,4];},
+    s=>{s.agents[0].interaction_peers=[0,2,3];},
+    s=>{s.agents[0].interaction_peers=[1,1,3];},
+    s=>{s.agents[0].interaction_peers=[-1,2,3];},
+    s=>{s.agents[0].interaction_peers=[8,2,3];},
+    s=>{s.agents[0].interaction_peers=['1',2,3];},
+    s=>{s.agents[0].interaction_peers=[1.5,2,3];},
+    s=>{s.world.public_state[1].alive=false;},
+    s=>{s.world.public_state[0].alive=false;},
+    s=>{s.world.public_state.pop();},
+    s=>{s.world.public_state[1].actor=0;},
+    s=>{s.world.public_state[1].actor=8;},
+    s=>{delete s.world.public_state[1].alive;},
+    s=>{s.world.interaction_policy='wealth_ranked';},
+    s=>{s.agents[0].allowed_actions.push({action:'bribe',params:{to:7,amount:5000000}});},
+    s=>{s.agents[0].allowed_actions.push({action:'bribe',params:{to:'1',amount:5000000}});}
+  ];
+  for (const mutate of mutations) {
+    const snapshot=structuredClone(original);mutate(snapshot);
+    assert.throws(()=>validateSnapshot(snapshot,8),/invalid_world_(interaction_peers|public_rows)/);
+  }
+});
+
+test('invalid peers stop before any model request and small worlds show every other living actor',async t=>{
+  const f=fixture(t);
+  await assert.rejects(f.start({workerFactory:()=>{
+    const worker=fakeWorker();return {...worker,async request(input){const result=await worker.request(input);result.agents[0].interaction_peers=[0,1];return result;}};
+  }}),/invalid_world_interaction_peers/);
+  assert.equal(f.calls.length,0);assert.equal(existsSync(join(f.dir,'.world.lock')),false);
+  for (const count of [2,3,4]) {
+    const snapshot=await fakeWorker().request({op:'init',game_id:1,agents:count});validateSnapshot(snapshot,count);
+    for (const agent of snapshot.agents) {
+      const prompt=JSON.parse(messagesForAgent(snapshot,agent,[],count)[1].content);
+      assert.equal(prompt.selected_opponents.length,count-1);
+      assert.deepEqual(new Set(prompt.selected_opponents.map(row=>row[0])),new Set(Array.from({length:count},(_,i)=>i).filter(i=>i!==agent.actor)));
+    }
+  }
+});
+
 test('frozen config and worker binary changes cannot silently resume',async t=>{
   const root=mkdtempSync(join(tmpdir(),'alashi-world-binary-'));t.after(()=>rmSync(root,{recursive:true,force:true}));
   const binary=join(root,'worker');writeFileSync(binary,'original');
@@ -157,9 +220,19 @@ test('provider sends explicit bounded thinking settings and preserves provenance
 
 test('actual Rust worker: 100 players finish six rounds, then resume issues zero model calls',{skip:!process.env.WORLD_WORKER,timeout:300000},async t=>{
   const f=fixture(t,{worker:resolve(process.env.WORLD_WORKER),agents:100});
+  let menusWithBribes=0;
+  f.provider.complete=async messages=>{
+    const prompt=JSON.parse(messages[1].content),seen=prompt.selected_opponents.map(row=>row[0]);
+    assert.equal(prompt.world.interaction_policy,'balanced_cyclic_peers_v1');assert.equal(seen.length,3);
+    assert.equal(new Set(seen).size,3);assert.ok(!seen.includes(prompt.player));
+    const bribes=prompt.allowed_actions.filter(a=>a.action==='bribe');
+    if(bribes.length){menusWithBribes++;assert.deepEqual(bribes.map(a=>a.params.to),seen);}
+    f.calls.push(messages);return response(messages);
+  };
   const result=await f.start({workerFactory:undefined});
   assert.equal(result.game_completed,true);assert.equal(result.round,6);assert.equal(result.agents,100);
   assert.equal(result.agents_with_model_response,100);assert.equal(result.agents_with_accepted_model_action,100);
   assert.ok(result.calls>=1800&&result.calls<=1806);assert.equal(result.unknown_usage_calls,0);assert.equal(result.skipped_decisions,0);
+  assert.ok(menusWithBribes>0);
   const count=f.calls.length;const resumed=await f.start({workerFactory:undefined});assert.deepEqual(resumed,result);assert.equal(f.calls.length,count);
 });
