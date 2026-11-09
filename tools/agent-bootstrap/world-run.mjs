@@ -126,6 +126,15 @@ export function validateSnapshot(s, count) {
         || !a.allowed_actions.length || a.allowed_actions.length > 64 || a.allowed_actions.some(d=>!exact(d,['action','params']) || !short(d.action,64) || !object(d.params)))) fail('invalid_world_actor_set');
   if (s.phase === 'finished' && (s.required_actors.length || !object(s.result))) fail('invalid_finished_world');
   if (s.phase !== 'finished' && !s.required_actors.length) fail('world_has_no_required_actors');
+  const rows=s.world.public_state;
+  if (!Array.isArray(rows) || rows.length!==count || new Set(rows.map(r=>r?.actor)).size!==count
+      || rows.some(r=>!object(r)||!integer(r.actor,0,count-1)||typeof r.alive!=='boolean')) fail('invalid_world_public_rows');
+  const byActor=new Map(rows.map(r=>[r.actor,r])), peerCount=Math.min(3,rows.filter(r=>r.alive).length-1);
+  if (s.world.interaction_policy!=='balanced_cyclic_peers_v1'
+      || s.agents.some(a=>!byActor.get(a.actor).alive || !Array.isArray(a.interaction_peers)
+        || a.interaction_peers.length!==peerCount || new Set(a.interaction_peers).size!==peerCount
+        || a.interaction_peers.some(peer=>!integer(peer,0,count-1)||peer===a.actor||!byActor.get(peer)?.alive)
+        || a.allowed_actions.some(d=>d.action==='bribe'&&!a.interaction_peers.includes(d.params.to)))) fail('invalid_world_interaction_peers');
   return s;
 }
 
@@ -144,13 +153,12 @@ const personas = [
 export function messagesForAgent(snapshot, agent, memory, count) {
   const rows = Array.isArray(snapshot.world.public_state) ? snapshot.world.public_state : [];
   // Keep full snapshots on disk; send only game information relevant to a decision.
-  const world = Object.fromEntries(['objective','action_rules','rounds','peso','rake_bps','payout_shares','market_price','sold_this_round','active_tax_bps','active_subsidy_goods','active_price_shift','active_boom','law_card','law_name','veto_pending','president','current_yes_weight','current_no_weight','laws_passed','last_law_passed'].filter(k=>Object.hasOwn(snapshot.world,k)).map(k=>[k,snapshot.world[k]]));
-  const ranked=[...rows].filter(r=>r.actor!==agent.actor).sort((a,b)=>Number(b.cash??0)-Number(a.cash??0)||a.actor-b.actor);
-  const selected=new Map(ranked.slice(0,3).map(r=>[r.actor,r]));
-  for(const neighbor of [(agent.actor+count-1)%count,(agent.actor+1)%count]) {const row=rows.find(r=>r.actor===neighbor);if(row)selected.set(neighbor,row);}
+  const world = Object.fromEntries(['interaction_policy','objective','action_rules','rounds','peso','rake_bps','payout_shares','market_price','sold_this_round','active_tax_bps','active_subsidy_goods','active_price_shift','active_boom','law_card','law_name','veto_pending','president','current_yes_weight','current_no_weight','laws_passed','last_law_passed'].filter(k=>Object.hasOwn(snapshot.world,k)).map(k=>[k,snapshot.world[k]]));
+  const byActor=new Map(rows.map(r=>[r.actor,r]));
+  const selected=agent.interaction_peers.map(actor=>byActor.get(actor));
   return [{role:'system',content:`You are independent player ${agent.actor} of ${count} in one shared ALASHI political-economy game. Maximize your final game wealth; ${personas[agent.actor%personas.length]} You only know the supplied public observation and your own previous receipts. Select one exact object from allowed_actions and return only {"action":"...","params":{...}}. Do not invent actions, parameters, balances, outcomes or claims. The engine applies all decisions in a fixed order after collection; an action legal now can be rejected after earlier actions. There are six rounds. No commentary or reasoning.`},
     {role:'user',content:JSON.stringify({player:agent.actor,identity:`agent-${String(agent.actor).padStart(3,'0')}`,round:snapshot.round,phase:snapshot.phase,stage:snapshot.stage,observation:agent.observation,world,
-      opponent_fields:['actor','cash','goods','influence','is_president'],selected_opponents:[...selected.values()].map(r=>[r.actor,r.cash,r.goods,r.influence,r.is_president]),
+      opponent_fields:['actor','cash','goods','influence','is_president'],selected_opponents:selected.map(r=>[r.actor,r.cash,r.goods,r.influence,r.is_president]),
       own_recent_receipts:memory.slice(-3).map(r=>({round:r.round,phase:r.phase,action:r.action,params:r.params,accepted:r.accepted,error:r.error,cash_after:r.cash_after,goods_after:r.goods_after})),allowed_actions:agent.allowed_actions})}];
 }
 function usageOf(raw) {
