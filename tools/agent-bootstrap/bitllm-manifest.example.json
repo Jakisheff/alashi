@@ -1,0 +1,63 @@
+{
+  "engine": "alashi-local-ad-v1",
+  "hypothesis": "Adding a headline-prefix instruction makes the supplied workshop fact appear first in the advertisement headline.",
+  "prediction": "The candidate headline begins with Weekly workshop, ignoring case. The baseline is not explicitly instructed to use that prefix.",
+  "decision_criterion": "Both versions must complete with known usage and pass the existing artifact checks. Inspect both drafts for claims unsupported by the fictional brief. Record whether each headline begins with Weekly workshop, ignoring case. Candidate-only success supports instruction-following in this pair; success in both gives no observed differentiating benefit. Leave adoption to the owner after reviewing the drafts; this does not establish advertising performance.",
+  "failure_conditions": "Missing usage, an incomplete response, a timeout, invalid output or an invented claim prevents a positive result. Unknown or different serving peers or execution settings prevent attributing a difference solely to the changed instruction. One pair cannot establish a repeatable improvement, verified model identity, customer preference or sales lift.",
+  "brief": {
+    "title": "Synthetic Acme workshop fixture",
+    "audience": "Teams comparing product ideas",
+    "task": "Write one static advertisement using only the supplied fictional test facts. Acme and this workshop are a synthetic fixture, not a claim about a real business.",
+    "facts": [
+      "Acme holds a weekly workshop for teams.",
+      "Teams compare product ideas during the workshop."
+    ],
+    "required_terms": ["Acme", "workshop"],
+    "cta": "Explore Acme",
+    "max_words": 80
+  },
+  "baseline": [
+    {
+      "id": "facts",
+      "kind": "tool",
+      "depends_on": [],
+      "instruction": "Extract the supplied brief facts.",
+      "tool": "brief_extract"
+    },
+    {
+      "id": "deliver",
+      "kind": "model",
+      "depends_on": ["facts"],
+      "instruction": "Write a clear advertisement using the supplied facts.",
+      "tool": null
+    }
+  ],
+  "candidate": [
+    {
+      "id": "facts",
+      "kind": "tool",
+      "depends_on": [],
+      "instruction": "Extract the supplied brief facts.",
+      "tool": "brief_extract"
+    },
+    {
+      "id": "deliver",
+      "kind": "model",
+      "depends_on": ["facts"],
+      "instruction": "Write a clear advertisement using the supplied facts. Begin the headline with \"Weekly workshop\".",
+      "tool": null
+    }
+  ],
+  "profile": {
+    "url": "http://127.0.0.1:7778/v1/chat/completions",
+    "model": "REPLACE_WITH_SUPPORTED_QWEN_ID_FROM_V1_MODELS",
+    "source": "provider_reported",
+    "temperature": 0,
+    "max_tokens": 256,
+    "chat_template_kwargs": {
+      "enable_thinking": false
+    }
+  },
+  "budget": 30000,
+  "duration_seconds": 300
+}

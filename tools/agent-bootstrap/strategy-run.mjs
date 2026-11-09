@@ -95,12 +95,22 @@ function providerEndpoint(url, test) {
   if (hasDisallowedUrlParts(u) || !(u.protocol === 'https:' || u.protocol === 'http:' && local) || test && !local) fail('invalid_provider_config');
   return u;
 }
-export function modelProvider({url, key, model, test = false}) {
+export function modelProvider({url, key, model, test = false, chat_template_kwargs}) {
   const u = providerEndpoint(url, test);
   if (!model || model.length > 128) fail('invalid_provider_config');
-  return {source:test?'test_provider':'provider_reported',provider:u.origin,model,temperature:0,max_tokens:256,async complete(messages) {
+  // Only the two known boolean thinking switches are supported, one per profile.
+  // Copy before use so caller mutation cannot change a frozen experiment's request.
+  let template;
+  if (chat_template_kwargs !== undefined) {
+    if (!chat_template_kwargs || typeof chat_template_kwargs !== 'object' || Array.isArray(chat_template_kwargs)
+        || Object.keys(chat_template_kwargs).length !== 1
+        || !Object.entries(chat_template_kwargs).every(([k,v]) => ['enable_thinking','thinking'].includes(k) && typeof v === 'boolean')) fail('invalid_provider_config');
+    template = Object.freeze({ ...chat_template_kwargs });
+  }
+  const options = template === undefined ? {} : { chat_template_kwargs: template };
+  return {source:test?'test_provider':'provider_reported',provider:u.origin,model,temperature:0,max_tokens:256,...options,async complete(messages) {
     // No retry, fallback model, or tools. Keep provider credentials out of arena receipts.
-    const response = await fetch(url,{method:'POST',redirect:'error',signal:AbortSignal.timeout(60_000),headers:{'Content-Type':'application/json',...(key?{Authorization:'Bearer '+key}:{})},body:JSON.stringify({model,messages,max_tokens:256,temperature:0})});
+    const response = await fetch(url,{method:'POST',redirect:'error',signal:AbortSignal.timeout(60_000),headers:{'Content-Type':'application/json',...(key?{Authorization:'Bearer '+key}:{})},body:JSON.stringify({model,messages,max_tokens:256,temperature:0,...options})});
     const text = await providerText(response);
     let raw; try { raw = JSON.parse(text); } catch { raw = {}; }
     return {response_id:receiptId(raw.id),usage:providerUsage(raw.usage),report:parseCompletion(raw.choices?.[0]?.message?.content),request_failed:!response.ok};
@@ -276,7 +286,8 @@ export async function runComparison({api,id,clientId,provider,journalPrefix,onPr
     const checkProfile=current=>{
       const expected=current.content.profile;
       if(!expected || expected.temperature!==0 || expected.max_tokens!==256 ||
-          !['source','provider','model','temperature','max_tokens'].every(k=>provider[k]===expected[k]))fail('comparison_provider_mismatch');
+          !['source','provider','model','temperature','max_tokens'].every(k=>provider[k]===expected[k]) ||
+          !isDeepStrictEqual(provider.chat_template_kwargs,expected.chat_template_kwargs))fail('comparison_provider_mismatch');
     };
     checkProfile(comparison);
     const versions=[comparison.content.baseline_version,comparison.content.candidate_version].map(version=>owned.versions.find(v=>v.id===version));

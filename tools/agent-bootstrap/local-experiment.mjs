@@ -91,9 +91,11 @@ export function validateManifest(manifest) {
   });
   if (changed !== 1) fail('one_instruction_change_required');
   const profile = manifest.profile;
-  if (!exactKeys(profile, ['url', 'model', 'source', 'temperature', 'max_tokens']) || !['provider_reported', 'test_provider'].includes(profile.source)
+  const profileKeys = ['url', 'model', 'source', 'temperature', 'max_tokens'];
+  if (object(profile) && Object.hasOwn(profile, 'chat_template_kwargs')) profileKeys.push('chat_template_kwargs');
+  if (!exactKeys(profile, profileKeys) || !['provider_reported', 'test_provider'].includes(profile.source)
       || !text(profile.model, 128) || typeof profile.url !== 'string' || profile.temperature !== 0 || profile.max_tokens !== 256) fail('invalid_local_profile');
-  modelProvider({ url: profile.url, model: profile.model, test: profile.source === 'test_provider' });
+  modelProvider({ url: profile.url, model: profile.model, test: profile.source === 'test_provider', chat_template_kwargs: profile.chat_template_kwargs });
   const providerHost = new URL(profile.url).hostname;
   if (providerHost === 'alashi.network' || providerHost.endsWith('.alashi.network')) fail('alashi_is_not_a_private_model_endpoint');
   if (!Number.isSafeInteger(manifest.budget) || manifest.budget < 1 || manifest.budget > 1_000_000
@@ -247,9 +249,10 @@ export async function runExperiment({ dir, allowProvider, key, provider, now = D
   if (allowProvider !== true) fail('provider_receives_private_brief_and_prompts_require_allow_provider_yes');
   return locked(dir, async () => {
     const frozen = loadFrozen(dir), profile = frozen.manifest.profile;
-    const actual = provider ?? modelProvider({ url: profile.url, key, model: profile.model, test: profile.source === 'test_provider' });
+    const actual = provider ?? modelProvider({ url: profile.url, key, model: profile.model, test: profile.source === 'test_provider', chat_template_kwargs: profile.chat_template_kwargs });
     if (actual.source !== profile.source || actual.provider !== new URL(profile.url).origin || actual.model !== profile.model
-        || actual.temperature !== profile.temperature || actual.max_tokens !== profile.max_tokens) fail('local_provider_mismatch');
+        || actual.temperature !== profile.temperature || actual.max_tokens !== profile.max_tokens
+        || !isDeepStrictEqual(actual.chat_template_kwargs, profile.chat_template_kwargs)) fail('local_provider_mismatch');
     const path = join(dir, 'state.json'), state = existsSync(path) ? readState(dir, frozen) : newState(frozen, now);
     if (state.decision) fail('decision_already_recorded');
     const persist = () => save(path, state); persist();

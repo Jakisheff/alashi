@@ -62,6 +62,25 @@ test('requires explicit provider consent and a matching frozen provider before a
   assert.equal(f.calls.length, 0); assert.equal(existsSync(join(f.dir, 'state.json')), false);
 });
 
+test('thinking configuration is validated, frozen and matched before any provider call', async t => {
+  for (const flags of [null, {}, [], {enable_thinking:'false'}, {unrestricted:false}, {thinking:false,enable_thinking:false}]) {
+    const manifest = exampleManifest(); manifest.profile.chat_template_kwargs = flags;
+    assert.throws(() => validateManifest(manifest), /invalid_provider_config/);
+  }
+  const f = fixture(t, m => { m.profile.chat_template_kwargs = {enable_thinking:false}; });
+  await f.freeze();
+  await assert.rejects(f.run(), /local_provider_mismatch/);
+  await assert.rejects(f.run({provider:{...f.provider,chat_template_kwargs:{enable_thinking:true}}}), /local_provider_mismatch/);
+  assert.equal(f.calls.length,0);
+  f.provider.chat_template_kwargs = {enable_thinking:false};
+  assert.equal((await f.run()).status,'ready_for_owner_decision');
+  assert.equal(f.calls.length,2);
+  f.manifest.profile.chat_template_kwargs.enable_thinking = true;
+  save(join(f.dir,'manifest.json'),f.manifest);
+  await assert.rejects(f.run(), /frozen_manifest_changed/);
+  assert.equal(f.calls.length,2);
+});
+
 test('runs custom private brief locally and resumes without another provider call', async t => {
   const f = fixture(t); await f.freeze();
   const result = await f.run();

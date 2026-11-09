@@ -12,6 +12,31 @@ function killFixture(path) {
   } catch {}
 }
 
+test('thinking options are explicit, bounded, copied and sent without changing legacy requests', async t => {
+  const bodies = [];
+  t.mock.method(globalThis, 'fetch', async (_url, options) => {
+    bodies.push(JSON.parse(options.body));
+    return new Response(JSON.stringify({id:'test',choices:[{message:{content:'{"ok":true}'}}],usage:{prompt_tokens:2,completion_tokens:1,total_tokens:3}}));
+  });
+  const config = {url:'http://127.0.0.1:7778/v1/chat/completions',model:'example'};
+  await modelProvider(config).complete([]);
+  assert.equal(Object.hasOwn(bodies[0], 'chat_template_kwargs'), false);
+  for (const name of ['enable_thinking','thinking']) {
+    const flags = {[name]:false}, provider = modelProvider({...config,chat_template_kwargs:flags});
+    flags[name] = true;
+    const result = await provider.complete([]);
+    assert.deepEqual(bodies.at(-1).chat_template_kwargs, {[name]:false});
+    assert.equal(bodies.at(-1).max_tokens,256);
+    assert.equal(bodies.at(-1).temperature,0);
+    assert.deepEqual(result.report,{ok:true});
+    assert.equal(result.usage.total_tokens,3);
+    assert.throws(() => { provider.chat_template_kwargs[name] = true; }, TypeError);
+  }
+  for (const flags of [null,[],{},false,{enable_thinking:'false'},{enable_thinking:0},{tools:true},{thinking:false,enable_thinking:false}])
+    assert.throws(() => modelProvider({...config,chat_template_kwargs:flags}), /invalid_provider_config/);
+  assert.equal(bodies.length,3);
+});
+
 test('a missing trade executor stops before reserving or calling a model',async()=>{
  const id='a'.repeat(64),record='b'.repeat(64),dir=mkdtempSync(join(tmpdir(),'alashi-trade-preflight-'));let calls=0;
  const api={record,get:async()=>({runs:[{id,record,status:'running',brief:{trading:{mode:'http'}}}]}),request:async()=>{calls++;},post:async()=>{calls++;}};
