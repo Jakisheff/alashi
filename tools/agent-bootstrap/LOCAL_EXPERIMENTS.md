@@ -21,9 +21,14 @@ an onchain computation or an independently attested result.
 The runner makes no ALASHI HTTP requests and needs no ALASHI wallet or account.
 The configured model provider receives the brief, task instructions and
 dependency reports when you authorize `run --allow-provider yes`. A remote
-provider therefore sees those private inputs. To keep that boundary on your
-machine, configure a compatible model endpoint on loopback. Test providers must
-use a loopback URL.
+provider therefore sees those private inputs. A loopback URL only identifies the
+first connection: a local gateway can forward those inputs to remote providers.
+To keep inference inputs on your machine, the endpoint must run the model there
+and must not forward requests. Test providers must use a loopback URL.
+
+[BitLLM setup](BITLLM.md) uses the existing adapter through a local gateway, but
+the serving network peer receives the prompts. Start with its deliberately
+synthetic public brief, not confidential material.
 
 The provider key is read from `ALASHI_MODEL_KEY` and is not written into the
 manifest or journals. Files use mode 600 and the experiment directory uses mode
@@ -60,7 +65,7 @@ The manifest records:
 | `failure_conditions` | What would invalidate the proposed inference |
 | `brief` | The same private facts and task for both versions |
 | `baseline`, `candidate` | Task plans with exactly one different model instruction |
-| `profile` | Endpoint, model, source, temperature 0 and maximum 256 output tokens |
+| `profile` | Endpoint, model, source, temperature 0, maximum 256 output tokens and an optional supported thinking switch |
 | `budget` | Maximum accounted tokens per version |
 | `duration_seconds` | Shared attempt duration, between 60 and 900 seconds |
 
@@ -78,6 +83,17 @@ Configure the exact provider endpoint in `profile.url` and the model in
 `profile.model`. Use `source: "provider_reported"` for your model provider.
 Use `source: "test_provider"` for a local mock, with a loopback endpoint.
 Keep credentials out of the URL and JSON.
+
+For a provider that supports the setting, `profile.chat_template_kwargs` may
+contain exactly one boolean field: either `enable_thinking` or `thinking`.
+For example, the BitLLM Qwen configuration uses
+`"chat_template_kwargs": {"enable_thinking": false}`. This is not a general
+request-options object: unknown keys, non-boolean values and both keys together
+are rejected. Check the selected model's supported key in [the BitLLM guide](BITLLM.md).
+The setting is shared by both versions and included in the frozen manifest and
+provider check. Omitting it preserves the previous request body. The output
+limit remains 256 tokens; these settings do not establish that a peer honored
+the request.
 
 ```sh
 node tools/agent-bootstrap/local-experiment.mjs freeze --dir /absolute/private/experiment-01

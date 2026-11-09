@@ -1,0 +1,788 @@
+{
+  "schema": "alashi-bitllm-live-evidence-v1",
+  "date": "2026-11-09",
+  "base_commit": "e8860613a51f8db985a70409f939d789708c74ba",
+  "runtime": {
+    "node": "v22.23.4",
+    "bitllm": "v0.5.0",
+    "platform": "darwin-arm64"
+  },
+  "final_source_sha256": {
+    "tools/agent-bootstrap/strategy-run.mjs": "09c82b45b9e02f0ce93b4c03dc0917c86f57df62357965e1bd93b097c31252fd",
+    "tools/agent-bootstrap/local-experiment.mjs": "0535608ec4aea3ce0a6f69b948bfe613379f1f01fa12d2d9232cfdb021de7898"
+  },
+  "checks": {
+    "javascript_tests": 95,
+    "javascript_passed": 95,
+    "javascript_failed": 0,
+    "successful_attempt_resume_extra_model_requests": 0
+  },
+  "network": {
+    "gateway": "http://127.0.0.1:7778",
+    "role": "client-only",
+    "membership_linked": false,
+    "nvidia_instances_started": 0,
+    "nvidia_spend_usd": 0,
+    "alashi_http_requests": 0,
+    "blockchain_transactions": 0
+  },
+  "model_calls": 8,
+  "known_total_tokens": 3879,
+  "provider_cost_usd": null,
+  "decision": null,
+  "substantive_result": "inconclusive: candidate adds unsupported effectiveness wording; owner preference pending",
+  "limitations": [
+    "One synthetic pair per configuration; earlier failures retained.",
+    "Model IDs and usage are peer reported, not independently attested. Requested and returned model names differ.",
+    "Peer IDs are hashed consistently; model reasoning text is omitted from publication. Exact returned answer content is retained.",
+    "Transport capture is a local observation, not independently verified evidence.",
+    "No advertising lift, customer behavior or willingness to pay was measured."
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "kind": "initial_experiment",
+      "note": "Original Qwen profile: both outputs truncated by reasoning within the existing 256-token cap.",
+      "frozen": {
+        "manifest": {
+          "engine": "alashi-local-ad-v1",
+          "hypothesis": "For this synthetic Acme brief, explicitly naming the headline opening makes the model place the supplied weekly-workshop fact first.",
+          "prediction": "The candidate headline starts with \"Weekly workshop\"; the baseline may not.",
+          "decision_criterion": "Technical pass requires both variants to pass all artifact checks with complete usage. Observe the predicted difference only if candidate starts with Weekly workshop and baseline does not. Human preference and adoption remain pending Amir review.",
+          "failure_conditions": "Unknown usage, incomplete execution, malformed output, or invented claims make the comparison inconclusive. Different answering peers or unverified weights limit attribution. One pair cannot establish repeatable superiority or advertising impact.",
+          "brief": {
+            "title": "Synthetic public Acme workshop brief",
+            "audience": "Teams comparing product ideas",
+            "task": "Write one advertisement from the supplied fictional test facts. This is a synthetic integration test, not a real commercial offer.",
+            "facts": [
+              "Acme offers a weekly workshop for teams."
+            ],
+            "required_terms": [
+              "Acme",
+              "workshop"
+            ],
+            "cta": "Explore Acme",
+            "max_words": 80
+          },
+          "baseline": [
+            {
+              "id": "facts",
+              "kind": "tool",
+              "depends_on": [],
+              "instruction": "Extract the supplied brief facts.",
+              "tool": "brief_extract"
+            },
+            {
+              "id": "deliver",
+              "kind": "model",
+              "depends_on": [
+                "facts"
+              ],
+              "instruction": "Write a clear advertisement using the supplied facts.",
+              "tool": null
+            }
+          ],
+          "candidate": [
+            {
+              "id": "facts",
+              "kind": "tool",
+              "depends_on": [],
+              "instruction": "Extract the supplied brief facts.",
+              "tool": "brief_extract"
+            },
+            {
+              "id": "deliver",
+              "kind": "model",
+              "depends_on": [
+                "facts"
+              ],
+              "instruction": "Write a clear advertisement using the supplied facts. Begin the headline with \"Weekly workshop\".",
+              "tool": null
+            }
+          ],
+          "profile": {
+            "url": "http://127.0.0.1:7778/v1/chat/completions",
+            "model": "qwen3.8-flash-next-fp4-alesha",
+            "source": "provider_reported",
+            "temperature": 0,
+            "max_tokens": 256
+          },
+          "budget": 30000,
+          "duration_seconds": 300
+        },
+        "salt": "1e068d3897a53f58cec87c5cb6bb8fd1cfb68e684e47751a25f97e53aa5ca19c",
+        "digest": "44be0f147756f6f9a0ccbfc73648c0762a6000566aecf0906ce7d309e82564c8"
+      },
+      "summary": {
+        "digest": "44be0f147756f6f9a0ccbfc73648c0762a6000566aecf0906ce7d309e82564c8",
+        "status": "inconclusive",
+        "runs": [
+          {
+            "label": "baseline",
+            "status": "quality_failed",
+            "known_tokens": 546,
+            "error": "report_or_usage_not_verified"
+          },
+          {
+            "label": "candidate",
+            "status": "quality_failed",
+            "known_tokens": 554,
+            "error": "report_or_usage_not_verified"
+          }
+        ],
+        "decision": null,
+        "alashi_requests": 0,
+        "provider_usage": "owner_submitted_receipts",
+        "cost_usd": null
+      },
+      "calls": [
+        {
+          "label": "baseline",
+          "started_at": "2026-11-09T12:03:10.837Z",
+          "http_status": 200,
+          "elapsed_ms": 4073,
+          "serving_peer_sha256": "835a63fc2d850989c328e02dcad41087286bf96a471cef6830c6249a839eb016",
+          "request_sha256": "49851cd2121ba6dab4fe83d8f7ca5c98bf147d6bea90d1d4604bdeab8efb07e3",
+          "raw_response_sha256": "e17dab3f719de03775f2686fcfb97f0439e856c6a4c61a87512ab5fe95dee2ff",
+          "requested_model": "qwen3.8-flash-next-fp4-alesha",
+          "returned_model": "qwen3.8-flash-next-fp4-local",
+          "request_options": {
+            "temperature": 0,
+            "max_tokens": 256
+          },
+          "response_id": "chatcmpl-2c221eb9beea43678971e018",
+          "finish_reason": "length",
+          "content": "{\"headline\":\"Acme",
+          "reasoning_field_present": true,
+          "usage": {
+            "prompt_tokens": 290,
+            "completion_tokens": 256,
+            "total_tokens": 546,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "checks": {
+            "schema": null,
+            "english_ascii": false,
+            "length": false,
+            "required_terms": false,
+            "cta": false,
+            "no_unsubstantiated_numeric_claims": true,
+            "word_count": 0,
+            "passed": false,
+            "limit": "format_checks_do_not_establish_creative_quality_or_ad_performance"
+          },
+          "headline_prefix": false
+        },
+        {
+          "label": "candidate",
+          "started_at": "2026-11-09T12:03:10.851Z",
+          "http_status": 200,
+          "elapsed_ms": 6485,
+          "serving_peer_sha256": "835a63fc2d850989c328e02dcad41087286bf96a471cef6830c6249a839eb016",
+          "request_sha256": "1209d3aee77dd1bfadf4f2578f86bcd1b4d7511889a89de93782b15255e9d264",
+          "raw_response_sha256": "4a7aecb128b78e84a40f28bfcab65e70ec10ce0b780bfc91bdb6229e473f2ca3",
+          "requested_model": "qwen3.8-flash-next-fp4-alesha",
+          "returned_model": "qwen3.8-flash-next-fp4-local",
+          "request_options": {
+            "temperature": 0,
+            "max_tokens": 256
+          },
+          "response_id": "chatcmpl-5e279352f1db4729bf206234",
+          "finish_reason": "length",
+          "content": "{\"headline\":\"Weekly workshop from Acme for teams comparing",
+          "reasoning_field_present": true,
+          "usage": {
+            "prompt_tokens": 298,
+            "completion_tokens": 256,
+            "total_tokens": 554,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "checks": {
+            "schema": null,
+            "english_ascii": false,
+            "length": false,
+            "required_terms": false,
+            "cta": false,
+            "no_unsubstantiated_numeric_claims": true,
+            "word_count": 0,
+            "passed": false,
+            "limit": "format_checks_do_not_establish_creative_quality_or_ad_performance"
+          },
+          "headline_prefix": false
+        }
+      ]
+    },
+    {
+      "attempt": 2,
+      "kind": "compatibility_exploration",
+      "note": "Compatibility exploration with the other advertised model: both outputs truncated.",
+      "frozen": {
+        "manifest": {
+          "engine": "alashi-local-ad-v1",
+          "hypothesis": "For this synthetic Acme brief, explicitly naming the headline opening makes the model place the supplied weekly-workshop fact first.",
+          "prediction": "The candidate headline starts with \"Weekly workshop\"; the baseline may not.",
+          "decision_criterion": "Technical pass requires both variants to pass all artifact checks with complete usage. Observe the predicted difference only if candidate starts with Weekly workshop and baseline does not. Human preference and adoption remain pending Amir review.",
+          "failure_conditions": "Unknown usage, incomplete execution, malformed output, or invented claims make the comparison inconclusive. Different answering peers or unverified weights limit attribution. One pair cannot establish repeatable superiority or advertising impact.",
+          "brief": {
+            "title": "Synthetic public Acme workshop brief",
+            "audience": "Teams comparing product ideas",
+            "task": "Write one advertisement from the supplied fictional test facts. This is a synthetic integration test, not a real commercial offer.",
+            "facts": [
+              "Acme offers a weekly workshop for teams."
+            ],
+            "required_terms": [
+              "Acme",
+              "workshop"
+            ],
+            "cta": "Explore Acme",
+            "max_words": 80
+          },
+          "baseline": [
+            {
+              "id": "facts",
+              "kind": "tool",
+              "depends_on": [],
+              "instruction": "Extract the supplied brief facts.",
+              "tool": "brief_extract"
+            },
+            {
+              "id": "deliver",
+              "kind": "model",
+              "depends_on": [
+                "facts"
+              ],
+              "instruction": "Write a clear advertisement using the supplied facts.",
+              "tool": null
+            }
+          ],
+          "candidate": [
+            {
+              "id": "facts",
+              "kind": "tool",
+              "depends_on": [],
+              "instruction": "Extract the supplied brief facts.",
+              "tool": "brief_extract"
+            },
+            {
+              "id": "deliver",
+              "kind": "model",
+              "depends_on": [
+                "facts"
+              ],
+              "instruction": "Write a clear advertisement using the supplied facts. Begin the headline with \"Weekly workshop\".",
+              "tool": null
+            }
+          ],
+          "profile": {
+            "url": "http://127.0.0.1:7778/v1/chat/completions",
+            "model": "deepseek-v4.1-flash-1017-heretic",
+            "source": "provider_reported",
+            "temperature": 0,
+            "max_tokens": 256
+          },
+          "budget": 30000,
+          "duration_seconds": 300
+        },
+        "salt": "40769ee0d5538c0da0ae5754a0366477b31f27d237d1b589228ecc940530235b",
+        "digest": "2540945673fbfbcbd978622473190fc6e7bfee99daad6b618f858aafeb0e374f"
+      },
+      "summary": {
+        "digest": "2540945673fbfbcbd978622473190fc6e7bfee99daad6b618f858aafeb0e374f",
+        "status": "inconclusive",
+        "runs": [
+          {
+            "label": "baseline",
+            "status": "quality_failed",
+            "known_tokens": 538,
+            "error": "report_or_usage_not_verified"
+          },
+          {
+            "label": "candidate",
+            "status": "quality_failed",
+            "known_tokens": 546,
+            "error": "report_or_usage_not_verified"
+          }
+        ],
+        "decision": null,
+        "alashi_requests": 0,
+        "provider_usage": "owner_submitted_receipts",
+        "cost_usd": null
+      },
+      "calls": [
+        {
+          "label": "baseline",
+          "started_at": "2026-11-09T12:04:04.044Z",
+          "http_status": 200,
+          "elapsed_ms": 4079,
+          "serving_peer_sha256": "ec4edb80551414a54cdd331b454090b876be48f636c309fed8d880b459f34f92",
+          "request_sha256": "01af457f587b05869c1fedff0e3d050546fc28f3a06c6938a2fc7effa8bbb59c",
+          "raw_response_sha256": "9f50c3021ef8b77b8146f7bc9b290952c673a318ba4f926823aa4d6f0a3f2b55",
+          "requested_model": "deepseek-v4.1-flash-1017-heretic",
+          "returned_model": "deepseek-v4.1-flash",
+          "request_options": {
+            "temperature": 0,
+            "max_tokens": 256
+          },
+          "response_id": "chatcmpl-b51f4eb833fa7b01",
+          "finish_reason": "length",
+          "content": null,
+          "reasoning_field_present": true,
+          "usage": {
+            "prompt_tokens": 282,
+            "total_tokens": 538,
+            "completion_tokens": 256,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "created_cache_tokens": 256,
+              "multimodal_tokens": null
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 256
+            },
+            "sink_rejection": {
+              "flagged_rows": 0,
+              "flagged_draft_zero": 0,
+              "flagged_drafter": 0,
+              "flagged_prompt": 0,
+              "draft_zero_rejections": 0,
+              "draft_cuts": 0,
+              "fallthroughs": 0
+            }
+          },
+          "checks": {
+            "schema": null,
+            "english_ascii": false,
+            "length": false,
+            "required_terms": false,
+            "cta": false,
+            "no_unsubstantiated_numeric_claims": true,
+            "word_count": 0,
+            "passed": false,
+            "limit": "format_checks_do_not_establish_creative_quality_or_ad_performance"
+          },
+          "headline_prefix": false
+        },
+        {
+          "label": "candidate",
+          "started_at": "2026-11-09T12:04:04.092Z",
+          "http_status": 200,
+          "elapsed_ms": 3582,
+          "serving_peer_sha256": "ec4edb80551414a54cdd331b454090b876be48f636c309fed8d880b459f34f92",
+          "request_sha256": "a978b70bda63915038df01a9049c1c473da082b441ba2c877553556bb9be8a31",
+          "raw_response_sha256": "10a3497a242e2b284ddf9a99ce9c911219c094adeadf0f403b8ceb9bc619708d",
+          "requested_model": "deepseek-v4.1-flash-1017-heretic",
+          "returned_model": "deepseek-v4.1-flash",
+          "request_options": {
+            "temperature": 0,
+            "max_tokens": 256
+          },
+          "response_id": "chatcmpl-9bcb56dc10461aac",
+          "finish_reason": "length",
+          "content": null,
+          "reasoning_field_present": true,
+          "usage": {
+            "prompt_tokens": 290,
+            "total_tokens": 546,
+            "completion_tokens": 256,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "created_cache_tokens": 256,
+              "multimodal_tokens": null
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 256
+            },
+            "sink_rejection": {
+              "flagged_rows": 0,
+              "flagged_draft_zero": 0,
+              "flagged_drafter": 0,
+              "flagged_prompt": 0,
+              "draft_zero_rejections": 0,
+              "draft_cuts": 0,
+              "fallthroughs": 0
+            }
+          },
+          "checks": {
+            "schema": null,
+            "english_ascii": false,
+            "length": false,
+            "required_terms": false,
+            "cta": false,
+            "no_unsubstantiated_numeric_claims": true,
+            "word_count": 0,
+            "passed": false,
+            "limit": "format_checks_do_not_establish_creative_quality_or_ad_performance"
+          },
+          "headline_prefix": false
+        }
+      ]
+    },
+    {
+      "attempt": 3,
+      "kind": "compatibility_exploration",
+      "note": "Compatibility exploration: shared /no_think hint did not reliably disable reasoning; only candidate completed.",
+      "frozen": {
+        "manifest": {
+          "engine": "alashi-local-ad-v1",
+          "hypothesis": "For this synthetic Acme brief, explicitly naming the headline opening makes the model place the supplied weekly-workshop fact first.",
+          "prediction": "The candidate headline starts with \"Weekly workshop\"; the baseline may not.",
+          "decision_criterion": "Technical pass requires both variants to pass all artifact checks with complete usage. Observe the predicted difference only if candidate starts with Weekly workshop and baseline does not. Human preference and adoption remain pending Amir review.",
+          "failure_conditions": "Unknown usage, incomplete execution, malformed output, or invented claims make the comparison inconclusive. Different answering peers or unverified weights limit attribution. One pair cannot establish repeatable superiority or advertising impact. The shared /no_think hint is exploratory for this advertised Qwen derivative; its support is not guaranteed.",
+          "brief": {
+            "title": "Synthetic public Acme workshop brief",
+            "audience": "Teams comparing product ideas",
+            "task": "Write one advertisement from the supplied fictional test facts. This is a synthetic integration test, not a real commercial offer.",
+            "facts": [
+              "Acme offers a weekly workshop for teams."
+            ],
+            "required_terms": [
+              "Acme",
+              "workshop"
+            ],
+            "cta": "Explore Acme",
+            "max_words": 80
+          },
+          "baseline": [
+            {
+              "id": "facts",
+              "kind": "tool",
+              "depends_on": [],
+              "instruction": "Extract the supplied brief facts.",
+              "tool": "brief_extract"
+            },
+            {
+              "id": "deliver",
+              "kind": "model",
+              "depends_on": [
+                "facts"
+              ],
+              "instruction": "Write a clear advertisement using the supplied facts. /no_think",
+              "tool": null
+            }
+          ],
+          "candidate": [
+            {
+              "id": "facts",
+              "kind": "tool",
+              "depends_on": [],
+              "instruction": "Extract the supplied brief facts.",
+              "tool": "brief_extract"
+            },
+            {
+              "id": "deliver",
+              "kind": "model",
+              "depends_on": [
+                "facts"
+              ],
+              "instruction": "Write a clear advertisement using the supplied facts. Begin the headline with \"Weekly workshop\". /no_think",
+              "tool": null
+            }
+          ],
+          "profile": {
+            "url": "http://127.0.0.1:7778/v1/chat/completions",
+            "model": "qwen3.8-flash-next-fp4-alesha",
+            "source": "provider_reported",
+            "temperature": 0,
+            "max_tokens": 256
+          },
+          "budget": 30000,
+          "duration_seconds": 300
+        },
+        "salt": "41a1d55ca54260a758332af22be5aac5913802dd4805e25b0163637863df5674",
+        "digest": "d703e11745f4b29f9fa51fb574e8f2b9c1dae5e9f1444ef52b1cb28ac5dc1129"
+      },
+      "summary": {
+        "digest": "d703e11745f4b29f9fa51fb574e8f2b9c1dae5e9f1444ef52b1cb28ac5dc1129",
+        "status": "inconclusive",
+        "runs": [
+          {
+            "label": "baseline",
+            "status": "quality_failed",
+            "known_tokens": 550,
+            "error": "report_or_usage_not_verified"
+          },
+          {
+            "label": "candidate",
+            "status": "completed",
+            "known_tokens": 548,
+            "error": null
+          }
+        ],
+        "decision": null,
+        "alashi_requests": 0,
+        "provider_usage": "owner_submitted_receipts",
+        "cost_usd": null
+      },
+      "calls": [
+        {
+          "label": "baseline",
+          "started_at": "2026-11-09T12:05:21.635Z",
+          "http_status": 200,
+          "elapsed_ms": 2644,
+          "serving_peer_sha256": "835a63fc2d850989c328e02dcad41087286bf96a471cef6830c6249a839eb016",
+          "request_sha256": "33f2014fb2cb2c0eaf1405e352ab8018d106a0368340210e7cda6fb5b9902a4d",
+          "raw_response_sha256": "8d90208dd43e5adfd51789f8d8d030df207864d6bc34d875a66cdc5f2af93e60",
+          "requested_model": "qwen3.8-flash-next-fp4-alesha",
+          "returned_model": "qwen3.8-flash-next-fp4-local",
+          "request_options": {
+            "temperature": 0,
+            "max_tokens": 256
+          },
+          "response_id": "chatcmpl-60e522530cbb4dbe8956c368",
+          "finish_reason": "length",
+          "content": null,
+          "reasoning_field_present": true,
+          "usage": {
+            "prompt_tokens": 294,
+            "completion_tokens": 256,
+            "total_tokens": 550,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "checks": {
+            "schema": null,
+            "english_ascii": false,
+            "length": false,
+            "required_terms": false,
+            "cta": false,
+            "no_unsubstantiated_numeric_claims": true,
+            "word_count": 0,
+            "passed": false,
+            "limit": "format_checks_do_not_establish_creative_quality_or_ad_performance"
+          },
+          "headline_prefix": false
+        },
+        {
+          "label": "candidate",
+          "started_at": "2026-11-09T12:05:21.649Z",
+          "http_status": 200,
+          "elapsed_ms": 4924,
+          "serving_peer_sha256": "835a63fc2d850989c328e02dcad41087286bf96a471cef6830c6249a839eb016",
+          "request_sha256": "076edd62d99f34d0fae15a0c382a13893451e25b08e7870b4fe31efef2d69b34",
+          "raw_response_sha256": "aecb5caf4fbd4004dc1485ef4b8e9f6cfb415ef5cce542e8544a33b13ab1199a",
+          "requested_model": "qwen3.8-flash-next-fp4-alesha",
+          "returned_model": "qwen3.8-flash-next-fp4-local",
+          "request_options": {
+            "temperature": 0,
+            "max_tokens": 256
+          },
+          "response_id": "chatcmpl-606b4d83d6484a7a9880e9be",
+          "finish_reason": "stop",
+          "content": "{\"headline\":\"Weekly workshop from Acme for teams comparing product ideas\",\"body\":\"Acme offers a weekly workshop for teams.\",\"cta\":\"Explore Acme\"}",
+          "reasoning_field_present": true,
+          "usage": {
+            "prompt_tokens": 302,
+            "completion_tokens": 246,
+            "total_tokens": 548,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "checks": {
+            "schema": true,
+            "english_ascii": true,
+            "length": true,
+            "required_terms": true,
+            "cta": true,
+            "no_unsubstantiated_numeric_claims": true,
+            "word_count": 18,
+            "passed": true,
+            "limit": "format_checks_do_not_establish_creative_quality_or_ad_performance"
+          },
+          "headline_prefix": true
+        }
+      ]
+    },
+    {
+      "attempt": 4,
+      "kind": "compatibility_exploration",
+      "note": "Explicit shared chat_template_kwargs.enable_thinking=false: both completed; content review still found an unsupported effectiveness claim in candidate.",
+      "frozen": {
+        "manifest": {
+          "engine": "alashi-local-ad-v1",
+          "hypothesis": "For this synthetic Acme brief, explicitly naming the headline opening makes the model place the supplied weekly-workshop fact first.",
+          "prediction": "The candidate headline starts with \"Weekly workshop\"; the baseline may not.",
+          "decision_criterion": "Technical pass requires both variants to pass all artifact checks with complete usage. Observe the predicted difference only if candidate starts with Weekly workshop and baseline does not. Human preference and adoption remain pending Amir review.",
+          "failure_conditions": "Unknown usage, incomplete execution, malformed output, or invented claims make the comparison inconclusive. Different answering peers or unverified weights limit attribution. One pair cannot establish repeatable superiority or advertising impact.",
+          "brief": {
+            "title": "Synthetic public Acme workshop brief",
+            "audience": "Teams comparing product ideas",
+            "task": "Write one advertisement from the supplied fictional test facts. This is a synthetic integration test, not a real commercial offer.",
+            "facts": [
+              "Acme offers a weekly workshop for teams."
+            ],
+            "required_terms": [
+              "Acme",
+              "workshop"
+            ],
+            "cta": "Explore Acme",
+            "max_words": 80
+          },
+          "baseline": [
+            {
+              "id": "facts",
+              "kind": "tool",
+              "depends_on": [],
+              "instruction": "Extract the supplied brief facts.",
+              "tool": "brief_extract"
+            },
+            {
+              "id": "deliver",
+              "kind": "model",
+              "depends_on": [
+                "facts"
+              ],
+              "instruction": "Write a clear advertisement using the supplied facts.",
+              "tool": null
+            }
+          ],
+          "candidate": [
+            {
+              "id": "facts",
+              "kind": "tool",
+              "depends_on": [],
+              "instruction": "Extract the supplied brief facts.",
+              "tool": "brief_extract"
+            },
+            {
+              "id": "deliver",
+              "kind": "model",
+              "depends_on": [
+                "facts"
+              ],
+              "instruction": "Write a clear advertisement using the supplied facts. Begin the headline with \"Weekly workshop\".",
+              "tool": null
+            }
+          ],
+          "profile": {
+            "url": "http://127.0.0.1:7778/v1/chat/completions",
+            "model": "qwen3.8-flash-next-fp4-alesha",
+            "source": "provider_reported",
+            "temperature": 0,
+            "max_tokens": 256,
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            }
+          },
+          "budget": 30000,
+          "duration_seconds": 300
+        },
+        "salt": "3967249d40fc450a519c8990ad620067788fa2000a5a76f9006ac5417e371d7c",
+        "digest": "f752f64e708298a89afb8a2322508bc65b0a42ce9725139c9f7dbe57e2678fae"
+      },
+      "summary": {
+        "digest": "f752f64e708298a89afb8a2322508bc65b0a42ce9725139c9f7dbe57e2678fae",
+        "status": "ready_for_owner_decision",
+        "runs": [
+          {
+            "label": "baseline",
+            "status": "completed",
+            "known_tokens": 295,
+            "error": null
+          },
+          {
+            "label": "candidate",
+            "status": "completed",
+            "known_tokens": 302,
+            "error": null
+          }
+        ],
+        "decision": null,
+        "alashi_requests": 0,
+        "provider_usage": "owner_submitted_receipts",
+        "cost_usd": null
+      },
+      "calls": [
+        {
+          "label": "baseline",
+          "started_at": "2026-11-09T12:08:23.746Z",
+          "http_status": 200,
+          "elapsed_ms": 1111,
+          "serving_peer_sha256": "835a63fc2d850989c328e02dcad41087286bf96a471cef6830c6249a839eb016",
+          "request_sha256": "fae90b186d46f3fbdc06bc1779a8686c0da4f3a2fb8ec7abec72634a9d30208f",
+          "raw_response_sha256": "d96e5828aa591a84f7f275d08b5a8b594110111cf01f97060fc47c6b28568636",
+          "requested_model": "qwen3.8-flash-next-fp4-alesha",
+          "returned_model": "qwen3.8-flash-next-fp4-local",
+          "request_options": {
+            "temperature": 0,
+            "max_tokens": 256,
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            }
+          },
+          "response_id": "chatcmpl-2c1e4245118d44879313a016",
+          "finish_reason": "stop",
+          "content": "{\"headline\":\"Acme Weekly Workshop for Teams\",\"body\":\"Acme offers a weekly workshop for teams. This is a synthetic integration test, not a real commercial offer.\",\"cta\":\"Explore Acme\"}",
+          "reasoning_field_present": false,
+          "usage": {
+            "prompt_tokens": 254,
+            "completion_tokens": 41,
+            "total_tokens": 295,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "checks": {
+            "schema": true,
+            "english_ascii": true,
+            "length": true,
+            "required_terms": true,
+            "cta": true,
+            "no_unsubstantiated_numeric_claims": true,
+            "word_count": 25,
+            "passed": true,
+            "limit": "format_checks_do_not_establish_creative_quality_or_ad_performance"
+          },
+          "headline_prefix": false
+        },
+        {
+          "label": "candidate",
+          "started_at": "2026-11-09T12:08:23.761Z",
+          "http_status": 200,
+          "elapsed_ms": 1944,
+          "serving_peer_sha256": "835a63fc2d850989c328e02dcad41087286bf96a471cef6830c6249a839eb016",
+          "request_sha256": "9a367163fc147a4845c5df96fdaaefad9d24b380c2f1b2f26982619c1cdebb09",
+          "raw_response_sha256": "a503efcbccaa2aabaf3be1f2227ab2a0611461f37fd36220a5bfdc2ad62a1e49",
+          "requested_model": "qwen3.8-flash-next-fp4-alesha",
+          "returned_model": "qwen3.8-flash-next-fp4-local",
+          "request_options": {
+            "temperature": 0,
+            "max_tokens": 256,
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            }
+          },
+          "response_id": "chatcmpl-98e024a84d7d4bdb9e29d197",
+          "finish_reason": "stop",
+          "content": "{\"headline\":\"Weekly workshop by Acme for teams comparing product ideas\",\"body\":\"Acme offers a weekly workshop for teams. Join us to compare product ideas effectively.\",\"cta\":\"Explore Acme\"}",
+          "reasoning_field_present": false,
+          "usage": {
+            "prompt_tokens": 262,
+            "completion_tokens": 40,
+            "total_tokens": 302,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "checks": {
+            "schema": true,
+            "english_ascii": true,
+            "length": true,
+            "required_terms": true,
+            "cta": true,
+            "no_unsubstantiated_numeric_claims": true,
+            "word_count": 25,
+            "passed": true,
+            "limit": "format_checks_do_not_establish_creative_quality_or_ad_performance"
+          },
+          "headline_prefix": true
+        }
+      ]
+    }
+  ]
+}

@@ -116,6 +116,12 @@ for(const change of ['model', 'temperature', 'max_tokens', 'source']) test(`wron
   assert.equal(f.attemptPosts, 0); assert.deepEqual(f.counts, {});
 });
 
+test('local thinking flags cannot silently override a cloud comparison profile', async t => {
+  const f = fixture(t); f.provider.chat_template_kwargs = {enable_thinking:false};
+  await assert.rejects(f.start(), /comparison_provider_mismatch/);
+  assert.equal(f.attemptPosts,0); assert.deepEqual(f.counts,{});
+});
+
 test('custom executables are rejected before creating or running either half', async t => {
   const f = fixture(t); f.versions[1].content.plan[0].tool = 'owner-custom-command';
   await assert.rejects(f.start(), /comparison_tool_not_allowed/);

@@ -1,0 +1,69 @@
+{
+  "engine": "alashi-local-ad-v1",
+  "hypothesis": "For this synthetic Acme brief, explicitly naming the headline opening makes the model place the supplied weekly-workshop fact first.",
+  "prediction": "The candidate headline starts with \"Weekly workshop\"; the baseline may not.",
+  "decision_criterion": "Technical pass requires both variants to pass all artifact checks with complete usage. Observe the predicted difference only if candidate starts with Weekly workshop and baseline does not. Human preference and adoption remain pending Amir review.",
+  "failure_conditions": "Unknown usage, incomplete execution, malformed output, or invented claims make the comparison inconclusive. Different answering peers or unverified weights limit attribution. One pair cannot establish repeatable superiority or advertising impact.",
+  "brief": {
+    "title": "Synthetic public Acme workshop brief",
+    "audience": "Teams comparing product ideas",
+    "task": "Write one advertisement from the supplied fictional test facts. This is a synthetic integration test, not a real commercial offer.",
+    "facts": [
+      "Acme offers a weekly workshop for teams."
+    ],
+    "required_terms": [
+      "Acme",
+      "workshop"
+    ],
+    "cta": "Explore Acme",
+    "max_words": 80
+  },
+  "baseline": [
+    {
+      "id": "facts",
+      "kind": "tool",
+      "depends_on": [],
+      "instruction": "Extract the supplied brief facts.",
+      "tool": "brief_extract"
+    },
+    {
+      "id": "deliver",
+      "kind": "model",
+      "depends_on": [
+        "facts"
+      ],
+      "instruction": "Write a clear advertisement using the supplied facts.",
+      "tool": null
+    }
+  ],
+  "candidate": [
+    {
+      "id": "facts",
+      "kind": "tool",
+      "depends_on": [],
+      "instruction": "Extract the supplied brief facts.",
+      "tool": "brief_extract"
+    },
+    {
+      "id": "deliver",
+      "kind": "model",
+      "depends_on": [
+        "facts"
+      ],
+      "instruction": "Write a clear advertisement using the supplied facts. Begin the headline with \"Weekly workshop\".",
+      "tool": null
+    }
+  ],
+  "profile": {
+    "url": "http://127.0.0.1:7778/v1/chat/completions",
+    "model": "qwen3.8-flash-next-fp4-alesha",
+    "source": "provider_reported",
+    "temperature": 0,
+    "max_tokens": 256,
+    "chat_template_kwargs": {
+      "enable_thinking": false
+    }
+  },
+  "budget": 30000,
+  "duration_seconds": 300
+}
