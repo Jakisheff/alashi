@@ -159,6 +159,15 @@ round across potential menus, once per slot; affordability filtering can make
 actual legal offers unequal. See the [second-run protocol](../../docs/ops/WORLD_100_BRIBE_FIX_20261109.md)
 for implementation, acceptance and comparison with the original policy.
 
+The second live game completed all six rounds: 1,806 BitLLM responses,
+1,805 accepted actions and one explicitly blocked out-of-menu bribe, reported
+as `completed_with_errors`. All six recorded action snapshots passed the peer
+exposure checks. Fourteen accepted bribes went to fourteen different players;
+the largest recipient share was 7.14% versus 80.56% in the original game.
+Replay and settlement passed. This single pair demonstrates the interface
+correction, not stronger strategies or a generally balanced economy; twelve
+of the fourteen accepted bribes still selected the first menu option.
+
 ## First live run
 
 The [9 November 2026 run](../../docs/ops/WORLD_100_20261109.md) completed all six

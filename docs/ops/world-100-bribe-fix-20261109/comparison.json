@@ -1,0 +1,6906 @@
+{
+  "schema": "alashi-bribe-v2-paired-comparison-v1",
+  "generated_at": "2026-11-09T14:49:35.161Z",
+  "comparison_script_sha256": "e2a29ec55915d76d171674130308cfc8722732ecf8d37edea3c2576da10f2b18",
+  "design": {
+    "type": "one_exploratory_paired_game",
+    "primary_criterion": "balanced_potential_visibility_and_successful_execution",
+    "behavioral_success_threshold": null,
+    "controls_match": true,
+    "differing_control_fields": [],
+    "full_frozen_profiles_equal": true,
+    "full_initialization_equal": true,
+    "initial_system_persona_prompts_equal": true,
+    "initial_canonical_state_equal": true,
+    "realized_primary_execution_orders_equal": true,
+    "intervention": [
+      "wealth_and_influence_blind_seeded_peer_selection",
+      "same_ordered_peers_in_menu_and_compact_observation"
+    ],
+    "structural_acceptance": true
+  },
+  "baseline": {
+    "role": "baseline",
+    "evidence": {
+      "frozen_digest": "d884cc1a0ba1aaf52ee04efe466a75ad22ca04f61f66289a1d4a6564b46b1c0a",
+      "worker_sha256": "bba7ab0126e60aa7bb887fe7ed3e33ee915282288dc246f778940b9ac7736c7e",
+      "driver_sha256": "e205e501c21a9d4ba030e5e21d08eb7a8d77f6b1acfb0e2e170d288bb2d7e145",
+      "final_state_hash": "0a940b8eb56079b0f168ccabf89579dbf65a85f07f48501d39e44cf468ed0ca8",
+      "journal_checks": 38172,
+      "journal_issues": 0,
+      "potential_basis": "reconstructed_from_verified_v1_richest_influential_neighbor_source",
+      "legal_offer_basis": "observed_saved_action_opening_menus",
+      "visible_basis": "observed_saved_action_prompts"
+    },
+    "settings": {
+      "game_id": 20261109,
+      "seed": 20261109,
+      "agents": 100,
+      "epoch": 0,
+      "entry_fee": 10000000,
+      "requested_model": "qwen3.8-flash-next-fp4-alesha",
+      "temperature": 0,
+      "max_completion_tokens": 256,
+      "enable_thinking": false,
+      "parallelism": 2,
+      "max_calls": 2000,
+      "max_tokens": 4000000,
+      "max_seconds": 7200,
+      "call_timeout_ms": 60000,
+      "max_consecutive_provider_failures": 5,
+      "vote_weight_mode": 0
+    },
+    "operations": {
+      "calls": 1806,
+      "known_tokens": 1424513,
+      "unknown_usage_calls": 0,
+      "returned_models": {
+        "qwen3.8-flash-next-fp4-local": 1806
+      },
+      "accepted_actions": 1806,
+      "rejected_actions": 0,
+      "skipped_decisions": 0,
+      "runtime_ms": 2070667,
+      "latency_ms": {
+        "count": 1806,
+        "min": 1134,
+        "median": 2149,
+        "p95": 2927,
+        "max": 5392,
+        "mean": 2256.463,
+        "sum": 4075173
+      },
+      "nvidia_spend_usd": 0,
+      "provider_cost_usd": null
+    },
+    "structural": {
+      "candidate_balance_checked": false,
+      "every_round_balanced": null,
+      "round_checks": [],
+      "distinct_targets_per_actor_min": 4,
+      "distinct_targets_per_actor_max": 6,
+      "all_actors_eighteen_distinct": false
+    },
+    "exposure": {
+      "potential_total": 1588,
+      "potential_min": 6,
+      "potential_max": 496,
+      "potential_by_slot": [
+        600,
+        597,
+        391
+      ],
+      "eligible_total": 1075,
+      "eligible_min": 0,
+      "eligible_max": 388,
+      "eligible_by_menu_slot": [
+        393,
+        392,
+        290
+      ],
+      "eligible_sender_rounds": 393,
+      "per_recipient": [
+        {
+          "actor": 0,
+          "potential_exposures": 202,
+          "potential_by_slot": [
+            99,
+            100,
+            3
+          ],
+          "eligible_offers": 9,
+          "eligible_by_menu_slot": [
+            0,
+            6,
+            3
+          ],
+          "visible_in_action_prompts": 109,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 1,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            1,
+            2,
+            3
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 109,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 2,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 109,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 10000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 3,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 14,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 5000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 4,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 1,
+          "chosen_by_menu_slot": [
+            0,
+            1,
+            0
+          ],
+          "accepted_count": 1,
+          "accepted_by_menu_slot": [
+            0,
+            1,
+            0
+          ],
+          "received_amount": 5000000,
+          "sent_amount": 10000000,
+          "accepted_per_eligible_offer": 0.25
+        },
+        {
+          "actor": 5,
+          "potential_exposures": 104,
+          "potential_by_slot": [
+            0,
+            101,
+            3
+          ],
+          "eligible_offers": 95,
+          "eligible_by_menu_slot": [
+            0,
+            93,
+            2
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 10000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 6,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 3,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            2
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 7,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 8,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 9,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 5000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 10,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 11,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 12,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 5000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 13,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 10000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 14,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 5000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 15,
+          "potential_exposures": 7,
+          "potential_by_slot": [
+            0,
+            3,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 1,
+          "chosen_by_menu_slot": [
+            0,
+            1,
+            0
+          ],
+          "accepted_count": 1,
+          "accepted_by_menu_slot": [
+            0,
+            1,
+            0
+          ],
+          "received_amount": 5000000,
+          "sent_amount": 10000000,
+          "accepted_per_eligible_offer": 0.25
+        },
+        {
+          "actor": 16,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 17,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 18,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 5000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 19,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 1,
+          "chosen_by_menu_slot": [
+            0,
+            1,
+            0
+          ],
+          "accepted_count": 1,
+          "accepted_by_menu_slot": [
+            0,
+            1,
+            0
+          ],
+          "received_amount": 5000000,
+          "sent_amount": 15000000,
+          "accepted_per_eligible_offer": 0.25
+        },
+        {
+          "actor": 20,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 21,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 22,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 23,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 5000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 24,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 5000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 25,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 1,
+          "chosen_by_menu_slot": [
+            0,
+            1,
+            0
+          ],
+          "accepted_count": 1,
+          "accepted_by_menu_slot": [
+            0,
+            1,
+            0
+          ],
+          "received_amount": 5000000,
+          "sent_amount": 15000000,
+          "accepted_per_eligible_offer": 0.25
+        },
+        {
+          "actor": 26,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 27,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 28,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 29,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 5000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 30,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 31,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 32,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 33,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 5000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 34,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 35,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 5000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 36,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 37,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 5000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 38,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 10000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 39,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 2,
+          "chosen_by_menu_slot": [
+            0,
+            1,
+            1
+          ],
+          "accepted_count": 2,
+          "accepted_by_menu_slot": [
+            0,
+            1,
+            1
+          ],
+          "received_amount": 10000000,
+          "sent_amount": 10000000,
+          "accepted_per_eligible_offer": 0.5
+        },
+        {
+          "actor": 40,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 41,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 42,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 10000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 43,
+          "potential_exposures": 496,
+          "potential_by_slot": [
+            297,
+            199,
+            0
+          ],
+          "eligible_offers": 388,
+          "eligible_by_menu_slot": [
+            192,
+            196,
+            0
+          ],
+          "visible_in_action_prompts": 303,
+          "chosen_count": 58,
+          "chosen_by_menu_slot": [
+            43,
+            15,
+            0
+          ],
+          "accepted_count": 58,
+          "accepted_by_menu_slot": [
+            43,
+            15,
+            0
+          ],
+          "received_amount": 290000000,
+          "sent_amount": 10000000,
+          "accepted_per_eligible_offer": 0.14948453608247422
+        },
+        {
+          "actor": 44,
+          "potential_exposures": 7,
+          "potential_by_slot": [
+            2,
+            1,
+            4
+          ],
+          "eligible_offers": 6,
+          "eligible_by_menu_slot": [
+            2,
+            0,
+            4
+          ],
+          "visible_in_action_prompts": 303,
+          "chosen_count": 1,
+          "chosen_by_menu_slot": [
+            1,
+            0,
+            0
+          ],
+          "accepted_count": 1,
+          "accepted_by_menu_slot": [
+            1,
+            0,
+            0
+          ],
+          "received_amount": 5000000,
+          "sent_amount": 10000000,
+          "accepted_per_eligible_offer": 0.16666666666666666
+        },
+        {
+          "actor": 45,
+          "potential_exposures": 9,
+          "potential_by_slot": [
+            0,
+            5,
+            4
+          ],
+          "eligible_offers": 8,
+          "eligible_by_menu_slot": [
+            0,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 109,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 10000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 46,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 3,
+          "eligible_by_menu_slot": [
+            0,
+            0,
+            3
+          ],
+          "visible_in_action_prompts": 14,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 47,
+          "potential_exposures": 204,
+          "potential_by_slot": [
+            200,
+            2,
+            2
+          ],
+          "eligible_offers": 201,
+          "eligible_by_menu_slot": [
+            198,
+            1,
+            2
+          ],
+          "visible_in_action_prompts": 400,
+          "chosen_count": 1,
+          "chosen_by_menu_slot": [
+            1,
+            0,
+            0
+          ],
+          "accepted_count": 1,
+          "accepted_by_menu_slot": [
+            1,
+            0,
+            0
+          ],
+          "received_amount": 5000000,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0.004975124378109453
+        },
+        {
+          "actor": 48,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 5,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            4
+          ],
+          "visible_in_action_prompts": 111,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 10000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 49,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 14,
+          "chosen_count": 1,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            1
+          ],
+          "accepted_count": 1,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            1
+          ],
+          "received_amount": 5000000,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0.25
+        },
+        {
+          "actor": 50,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 51,
+          "potential_exposures": 7,
+          "potential_by_slot": [
+            1,
+            2,
+            4
+          ],
+          "eligible_offers": 5,
+          "eligible_by_menu_slot": [
+            1,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 303,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 52,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 53,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 54,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 55,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 15,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 5000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 56,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 57,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 58,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 5000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 59,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 5000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 60,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 1,
+          "chosen_by_menu_slot": [
+            0,
+            1,
+            0
+          ],
+          "accepted_count": 1,
+          "accepted_by_menu_slot": [
+            0,
+            1,
+            0
+          ],
+          "received_amount": 5000000,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0.25
+        },
+        {
+          "actor": 61,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 15,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 62,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 63,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 5000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 64,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 65,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 10000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 66,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 67,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 68,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 5000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 69,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 1,
+          "chosen_by_menu_slot": [
+            0,
+            1,
+            0
+          ],
+          "accepted_count": 1,
+          "accepted_by_menu_slot": [
+            0,
+            1,
+            0
+          ],
+          "received_amount": 5000000,
+          "sent_amount": 10000000,
+          "accepted_per_eligible_offer": 0.25
+        },
+        {
+          "actor": 70,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 71,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 0,
+          "eligible_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": null
+        },
+        {
+          "actor": 72,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 73,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 5000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 74,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 75,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 10000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 76,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 3,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            2
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 77,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 78,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 5000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 79,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 1,
+          "chosen_by_menu_slot": [
+            0,
+            1,
+            0
+          ],
+          "accepted_count": 1,
+          "accepted_by_menu_slot": [
+            0,
+            1,
+            0
+          ],
+          "received_amount": 5000000,
+          "sent_amount": 10000000,
+          "accepted_per_eligible_offer": 0.25
+        },
+        {
+          "actor": 80,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 81,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 82,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 5000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 83,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 5000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 84,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 85,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 5000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 86,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 87,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 88,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 89,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 10000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 90,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 3,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            2
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 91,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 92,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 10000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 93,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 3,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            2
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 1,
+          "chosen_by_menu_slot": [
+            0,
+            1,
+            0
+          ],
+          "accepted_count": 1,
+          "accepted_by_menu_slot": [
+            0,
+            1,
+            0
+          ],
+          "received_amount": 5000000,
+          "sent_amount": 15000000,
+          "accepted_per_eligible_offer": 0.3333333333333333
+        },
+        {
+          "actor": 94,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 95,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 10000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 96,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 3,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            2
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 97,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 5000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 98,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 5000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 99,
+          "potential_exposures": 6,
+          "potential_by_slot": [
+            0,
+            2,
+            4
+          ],
+          "eligible_offers": 4,
+          "eligible_by_menu_slot": [
+            0,
+            1,
+            3
+          ],
+          "visible_in_action_prompts": 12,
+          "chosen_count": 1,
+          "chosen_by_menu_slot": [
+            0,
+            1,
+            0
+          ],
+          "accepted_count": 1,
+          "accepted_by_menu_slot": [
+            0,
+            1,
+            0
+          ],
+          "received_amount": 5000000,
+          "sent_amount": 10000000,
+          "accepted_per_eligible_offer": 0.25
+        }
+      ],
+      "by_round": [
+        {
+          "round": 1,
+          "eligible_sender_count": 0,
+          "potential_total": 198,
+          "potential_min": 1,
+          "potential_max": 99,
+          "legal_offer_total": 0,
+          "legal_offer_min": 0,
+          "legal_offer_max": 0,
+          "legal_zero_recipient_count": 100,
+          "submitted_bribes": 0,
+          "accepted_bribes": 0,
+          "accepted_concentration": {
+            "total": 0,
+            "recipients": 0,
+            "top_total": 0,
+            "top_share": null,
+            "hhi": null,
+            "effective_recipients": null
+          }
+        },
+        {
+          "round": 2,
+          "eligible_sender_count": 5,
+          "potential_total": 296,
+          "potential_min": 1,
+          "potential_max": 99,
+          "legal_offer_total": 14,
+          "legal_offer_min": 0,
+          "legal_offer_max": 5,
+          "legal_zero_recipient_count": 93,
+          "submitted_bribes": 2,
+          "accepted_bribes": 2,
+          "accepted_concentration": {
+            "total": 2,
+            "recipients": 2,
+            "top_total": 1,
+            "top_share": 0.5,
+            "hhi": 0.5,
+            "effective_recipients": 2
+          }
+        },
+        {
+          "round": 3,
+          "eligible_sender_count": 99,
+          "potential_total": 298,
+          "potential_min": 1,
+          "potential_max": 99,
+          "legal_offer_total": 295,
+          "legal_offer_min": 0,
+          "legal_offer_max": 98,
+          "legal_zero_recipient_count": 1,
+          "submitted_bribes": 1,
+          "accepted_bribes": 1,
+          "accepted_concentration": {
+            "total": 1,
+            "recipients": 1,
+            "top_total": 1,
+            "top_share": 1,
+            "hhi": 1,
+            "effective_recipients": 1
+          }
+        },
+        {
+          "round": 4,
+          "eligible_sender_count": 99,
+          "potential_total": 298,
+          "potential_min": 1,
+          "potential_max": 99,
+          "legal_offer_total": 295,
+          "legal_offer_min": 0,
+          "legal_offer_max": 98,
+          "legal_zero_recipient_count": 1,
+          "submitted_bribes": 15,
+          "accepted_bribes": 15,
+          "accepted_concentration": {
+            "total": 15,
+            "recipients": 1,
+            "top_total": 15,
+            "top_share": 1,
+            "hhi": 1,
+            "effective_recipients": 1
+          }
+        },
+        {
+          "round": 5,
+          "eligible_sender_count": 98,
+          "potential_total": 200,
+          "potential_min": 1,
+          "potential_max": 99,
+          "legal_offer_total": 196,
+          "legal_offer_min": 0,
+          "legal_offer_max": 97,
+          "legal_zero_recipient_count": 2,
+          "submitted_bribes": 44,
+          "accepted_bribes": 44,
+          "accepted_concentration": {
+            "total": 44,
+            "recipients": 11,
+            "top_total": 34,
+            "top_share": 0.7727272727272727,
+            "hhi": 0.6022727272727272,
+            "effective_recipients": 1.6603773584905663
+          }
+        },
+        {
+          "round": 6,
+          "eligible_sender_count": 92,
+          "potential_total": 298,
+          "potential_min": 1,
+          "potential_max": 99,
+          "legal_offer_total": 275,
+          "legal_offer_min": 0,
+          "legal_offer_max": 92,
+          "legal_zero_recipient_count": 7,
+          "submitted_bribes": 10,
+          "accepted_bribes": 10,
+          "accepted_concentration": {
+            "total": 10,
+            "recipients": 3,
+            "top_total": 8,
+            "top_share": 0.8,
+            "hhi": 0.6600000000000001,
+            "effective_recipients": 1.515151515151515
+          }
+        }
+      ]
+    },
+    "bribes": {
+      "submitted": 72,
+      "accepted": 72,
+      "rejected": 0,
+      "count_concentration": {
+        "total": 72,
+        "recipients": 14,
+        "top_total": 58,
+        "top_share": 0.8055555555555556,
+        "hhi": 0.6520061728395066,
+        "effective_recipients": 1.5337278106508867
+      },
+      "amount_concentration": {
+        "total": 360000000,
+        "recipients": 14,
+        "top_total": 290000000,
+        "top_share": 0.8055555555555556,
+        "hhi": 0.6520061728395066,
+        "effective_recipients": 1.5337278106508867
+      },
+      "chosen_by_menu_slot": [
+        45,
+        25,
+        2
+      ],
+      "accepted_by_menu_slot": [
+        45,
+        25,
+        2
+      ],
+      "uniform_expected_choices_by_slot_same_choice_sets": [
+        32.33333333333332,
+        31.33333333333332,
+        8.33333333333333
+      ],
+      "chosen_cash_preference": {
+        "decisions": 72,
+        "chosen_mean_cash_percentile": 0.8420138888888882,
+        "uniform_within_offer_mean_cash_percentile": 0.6907291666666668,
+        "mean_chosen_minus_uniform_percentile": 0.15128472222222225,
+        "chose_cash_maximal_count": 45,
+        "chose_cash_maximal_share": 0.625,
+        "uniform_expected_cash_maximal_count": 32.33333333333332,
+        "uniform_cash_maximal_share": 0.4490740740740739
+      },
+      "accepted_cash_preference": {
+        "decisions": 72,
+        "chosen_mean_cash_percentile": 0.8420138888888882,
+        "uniform_within_offer_mean_cash_percentile": 0.6907291666666668,
+        "mean_chosen_minus_uniform_percentile": 0.15128472222222225,
+        "chose_cash_maximal_count": 45,
+        "chose_cash_maximal_share": 0.625,
+        "uniform_expected_cash_maximal_count": 32.33333333333332,
+        "uniform_cash_maximal_share": 0.4490740740740739
+      }
+    },
+    "wealth": {
+      "unit": "micro_peso",
+      "peso": 1000000,
+      "total_final_cash": 1494000000,
+      "winner": {
+        "actor": 43,
+        "initial_cash": 0,
+        "net_sale_revenue": 23000000,
+        "purchase_spending": 3000000,
+        "incoming_bribes": 290000000,
+        "outgoing_bribes": 10000000,
+        "other_direct_spending": 0,
+        "transition_or_unclassified_delta": 0,
+        "final_cash": 300000000,
+        "rank": 1,
+        "payout": 475000000,
+        "cash_reconciles": true,
+        "gross_incoming_bribes_over_final_cash": 0.9666666666666667,
+        "share_of_all_bribe_money": 0.8055555555555556,
+        "share_of_all_final_cash": 0.20080321285140562
+      },
+      "actor43": {
+        "actor": 43,
+        "initial_cash": 0,
+        "net_sale_revenue": 23000000,
+        "purchase_spending": 3000000,
+        "incoming_bribes": 290000000,
+        "outgoing_bribes": 10000000,
+        "other_direct_spending": 0,
+        "transition_or_unclassified_delta": 0,
+        "final_cash": 300000000,
+        "rank": 1,
+        "payout": 475000000,
+        "cash_reconciles": true,
+        "gross_incoming_bribes_over_final_cash": 0.9666666666666667,
+        "share_of_all_bribe_money": 0.8055555555555556,
+        "share_of_all_final_cash": 0.20080321285140562
+      },
+      "unclassified_action_types": []
+    }
+  },
+  "candidate": {
+    "role": "candidate",
+    "evidence": {
+      "frozen_digest": "85831ef2b8cefa3fb56418d53ccee5a4527f03c6f1dbc0afc9ac401cd19637b9",
+      "worker_sha256": "b6bacfc2c66501498cafa024d50b4eac9d9f33c8e3b6f6d6a20c0a908ac8410d",
+      "driver_sha256": "912bf75b3a99ad7642e6d14225449d2ba0ff1270ab64c7d5ce2e61881bdb77c8",
+      "final_state_hash": "2f74018a5fd7e4c09c92b60d14a0cfad720a79757b0fa07991609578ac8f79d7",
+      "journal_checks": 38171,
+      "journal_issues": 0,
+      "potential_basis": "recorded_interaction_peers",
+      "legal_offer_basis": "observed_saved_action_opening_menus",
+      "visible_basis": "observed_saved_action_prompts"
+    },
+    "settings": {
+      "game_id": 20261109,
+      "seed": 20261109,
+      "agents": 100,
+      "epoch": 0,
+      "entry_fee": 10000000,
+      "requested_model": "qwen3.8-flash-next-fp4-alesha",
+      "temperature": 0,
+      "max_completion_tokens": 256,
+      "enable_thinking": false,
+      "parallelism": 2,
+      "max_calls": 2000,
+      "max_tokens": 4000000,
+      "max_seconds": 7200,
+      "call_timeout_ms": 60000,
+      "max_consecutive_provider_failures": 5,
+      "vote_weight_mode": 0
+    },
+    "operations": {
+      "calls": 1806,
+      "known_tokens": 1395132,
+      "unknown_usage_calls": 0,
+      "returned_models": {
+        "qwen3.8-flash-next-fp4-local": 1806
+      },
+      "accepted_actions": 1805,
+      "rejected_actions": 0,
+      "skipped_decisions": 1,
+      "runtime_ms": 1958699,
+      "latency_ms": {
+        "count": 1806,
+        "min": 1144,
+        "median": 2101,
+        "p95": 2570,
+        "max": 3075,
+        "mean": 2131.625,
+        "sum": 3849714
+      },
+      "nvidia_spend_usd": 0,
+      "provider_cost_usd": null
+    },
+    "structural": {
+      "candidate_balance_checked": true,
+      "every_round_balanced": true,
+      "round_checks": [
+        {
+          "round": 1,
+          "balanced": true,
+          "live_count": 100,
+          "peers_per_sender": 3,
+          "potential_incoming_min": 3,
+          "potential_incoming_max": 3
+        },
+        {
+          "round": 2,
+          "balanced": true,
+          "live_count": 100,
+          "peers_per_sender": 3,
+          "potential_incoming_min": 3,
+          "potential_incoming_max": 3
+        },
+        {
+          "round": 3,
+          "balanced": true,
+          "live_count": 100,
+          "peers_per_sender": 3,
+          "potential_incoming_min": 3,
+          "potential_incoming_max": 3
+        },
+        {
+          "round": 4,
+          "balanced": true,
+          "live_count": 100,
+          "peers_per_sender": 3,
+          "potential_incoming_min": 3,
+          "potential_incoming_max": 3
+        },
+        {
+          "round": 5,
+          "balanced": true,
+          "live_count": 100,
+          "peers_per_sender": 3,
+          "potential_incoming_min": 3,
+          "potential_incoming_max": 3
+        },
+        {
+          "round": 6,
+          "balanced": true,
+          "live_count": 100,
+          "peers_per_sender": 3,
+          "potential_incoming_min": 3,
+          "potential_incoming_max": 3
+        }
+      ],
+      "distinct_targets_per_actor_min": 18,
+      "distinct_targets_per_actor_max": 18,
+      "all_actors_eighteen_distinct": true
+    },
+    "exposure": {
+      "potential_total": 1800,
+      "potential_min": 18,
+      "potential_max": 18,
+      "potential_by_slot": [
+        600,
+        600,
+        600
+      ],
+      "eligible_total": 1203,
+      "eligible_min": 11,
+      "eligible_max": 14,
+      "eligible_by_menu_slot": [
+        401,
+        401,
+        401
+      ],
+      "eligible_sender_rounds": 401,
+      "per_recipient": [
+        {
+          "actor": 0,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 1,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 2,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 3,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 4,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 5,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 6,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 7,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 13,
+          "eligible_by_menu_slot": [
+            4,
+            5,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 8,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 13,
+          "eligible_by_menu_slot": [
+            4,
+            5,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 9,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 10,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 11,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 12,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 13,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 1,
+          "chosen_by_menu_slot": [
+            1,
+            0,
+            0
+          ],
+          "accepted_count": 1,
+          "accepted_by_menu_slot": [
+            1,
+            0,
+            0
+          ],
+          "received_amount": 5000000,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0.08333333333333333
+        },
+        {
+          "actor": 14,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 15,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 5000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 16,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 17,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 18,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 19,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 20,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 13,
+          "eligible_by_menu_slot": [
+            5,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 1,
+          "chosen_by_menu_slot": [
+            1,
+            0,
+            0
+          ],
+          "accepted_count": 1,
+          "accepted_by_menu_slot": [
+            1,
+            0,
+            0
+          ],
+          "received_amount": 5000000,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0.07692307692307693
+        },
+        {
+          "actor": 21,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 1,
+          "chosen_by_menu_slot": [
+            1,
+            0,
+            0
+          ],
+          "accepted_count": 1,
+          "accepted_by_menu_slot": [
+            1,
+            0,
+            0
+          ],
+          "received_amount": 5000000,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0.08333333333333333
+        },
+        {
+          "actor": 22,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 23,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 11,
+          "eligible_by_menu_slot": [
+            4,
+            3,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 24,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 25,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 26,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 27,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 28,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 29,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            5,
+            3,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 30,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 31,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 13,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            5
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 32,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 13,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            5
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 33,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 11,
+          "eligible_by_menu_slot": [
+            3,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 34,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 35,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 36,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 37,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 38,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 13,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            5
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 1,
+          "chosen_by_menu_slot": [
+            1,
+            0,
+            0
+          ],
+          "accepted_count": 1,
+          "accepted_by_menu_slot": [
+            1,
+            0,
+            0
+          ],
+          "received_amount": 5000000,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0.07692307692307693
+        },
+        {
+          "actor": 39,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 11,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            3
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 40,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 14,
+          "eligible_by_menu_slot": [
+            5,
+            5,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 1,
+          "chosen_by_menu_slot": [
+            1,
+            0,
+            0
+          ],
+          "accepted_count": 1,
+          "accepted_by_menu_slot": [
+            1,
+            0,
+            0
+          ],
+          "received_amount": 5000000,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0.07142857142857142
+        },
+        {
+          "actor": 41,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 13,
+          "eligible_by_menu_slot": [
+            4,
+            5,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 42,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 11,
+          "eligible_by_menu_slot": [
+            3,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 43,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 11,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            3
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 1,
+          "chosen_by_menu_slot": [
+            1,
+            0,
+            0
+          ],
+          "accepted_count": 1,
+          "accepted_by_menu_slot": [
+            1,
+            0,
+            0
+          ],
+          "received_amount": 5000000,
+          "sent_amount": 10000000,
+          "accepted_per_eligible_offer": 0.09090909090909091
+        },
+        {
+          "actor": 44,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 45,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 1,
+          "chosen_by_menu_slot": [
+            0,
+            1,
+            0
+          ],
+          "accepted_count": 1,
+          "accepted_by_menu_slot": [
+            0,
+            1,
+            0
+          ],
+          "received_amount": 5000000,
+          "sent_amount": 10000000,
+          "accepted_per_eligible_offer": 0.08333333333333333
+        },
+        {
+          "actor": 46,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 47,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 48,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 11,
+          "eligible_by_menu_slot": [
+            4,
+            3,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 49,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 50,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 51,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 52,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 53,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 54,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 55,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 56,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 57,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 1,
+          "chosen_by_menu_slot": [
+            1,
+            0,
+            0
+          ],
+          "accepted_count": 1,
+          "accepted_by_menu_slot": [
+            1,
+            0,
+            0
+          ],
+          "received_amount": 5000000,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0.08333333333333333
+        },
+        {
+          "actor": 58,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 5000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 59,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 5000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 60,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 61,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 62,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 1,
+          "chosen_by_menu_slot": [
+            1,
+            0,
+            0
+          ],
+          "accepted_count": 1,
+          "accepted_by_menu_slot": [
+            1,
+            0,
+            0
+          ],
+          "received_amount": 5000000,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0.08333333333333333
+        },
+        {
+          "actor": 63,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 11,
+          "eligible_by_menu_slot": [
+            3,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 64,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 65,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 66,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 1,
+          "chosen_by_menu_slot": [
+            1,
+            0,
+            0
+          ],
+          "accepted_count": 1,
+          "accepted_by_menu_slot": [
+            1,
+            0,
+            0
+          ],
+          "received_amount": 5000000,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0.08333333333333333
+        },
+        {
+          "actor": 67,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 68,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 69,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 5000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 70,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 1,
+          "chosen_by_menu_slot": [
+            1,
+            0,
+            0
+          ],
+          "accepted_count": 1,
+          "accepted_by_menu_slot": [
+            1,
+            0,
+            0
+          ],
+          "received_amount": 5000000,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0.08333333333333333
+        },
+        {
+          "actor": 71,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 72,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 13,
+          "eligible_by_menu_slot": [
+            5,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 73,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 74,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 1,
+          "chosen_by_menu_slot": [
+            1,
+            0,
+            0
+          ],
+          "accepted_count": 1,
+          "accepted_by_menu_slot": [
+            1,
+            0,
+            0
+          ],
+          "received_amount": 5000000,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0.08333333333333333
+        },
+        {
+          "actor": 75,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 10000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 76,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 1,
+          "chosen_by_menu_slot": [
+            1,
+            0,
+            0
+          ],
+          "accepted_count": 1,
+          "accepted_by_menu_slot": [
+            1,
+            0,
+            0
+          ],
+          "received_amount": 5000000,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0.08333333333333333
+        },
+        {
+          "actor": 77,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 78,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 11,
+          "eligible_by_menu_slot": [
+            4,
+            3,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 79,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 5000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 80,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 81,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 82,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 11,
+          "eligible_by_menu_slot": [
+            3,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 83,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 11,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            3
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 84,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 85,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 5000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 86,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 87,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 88,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 13,
+          "eligible_by_menu_slot": [
+            5,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 89,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 5000000,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 90,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 13,
+          "eligible_by_menu_slot": [
+            4,
+            5,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 91,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 92,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 93,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 94,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 13,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            5
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 95,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 1,
+          "chosen_by_menu_slot": [
+            0,
+            1,
+            0
+          ],
+          "accepted_count": 1,
+          "accepted_by_menu_slot": [
+            0,
+            1,
+            0
+          ],
+          "received_amount": 5000000,
+          "sent_amount": 5000000,
+          "accepted_per_eligible_offer": 0.08333333333333333
+        },
+        {
+          "actor": 96,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 97,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 12,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            4
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 98,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 11,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            3
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        },
+        {
+          "actor": 99,
+          "potential_exposures": 18,
+          "potential_by_slot": [
+            6,
+            6,
+            6
+          ],
+          "eligible_offers": 13,
+          "eligible_by_menu_slot": [
+            4,
+            4,
+            5
+          ],
+          "visible_in_action_prompts": 18,
+          "chosen_count": 0,
+          "chosen_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "accepted_count": 0,
+          "accepted_by_menu_slot": [
+            0,
+            0,
+            0
+          ],
+          "received_amount": 0,
+          "sent_amount": 0,
+          "accepted_per_eligible_offer": 0
+        }
+      ],
+      "by_round": [
+        {
+          "round": 1,
+          "eligible_sender_count": 0,
+          "potential_total": 300,
+          "potential_min": 3,
+          "potential_max": 3,
+          "legal_offer_total": 0,
+          "legal_offer_min": 0,
+          "legal_offer_max": 0,
+          "legal_zero_recipient_count": 100,
+          "submitted_bribes": 0,
+          "accepted_bribes": 0,
+          "accepted_concentration": {
+            "total": 0,
+            "recipients": 0,
+            "top_total": 0,
+            "top_share": null,
+            "hhi": null,
+            "effective_recipients": null
+          }
+        },
+        {
+          "round": 2,
+          "eligible_sender_count": 5,
+          "potential_total": 300,
+          "potential_min": 3,
+          "potential_max": 3,
+          "legal_offer_total": 15,
+          "legal_offer_min": 0,
+          "legal_offer_max": 2,
+          "legal_zero_recipient_count": 86,
+          "submitted_bribes": 2,
+          "accepted_bribes": 2,
+          "accepted_concentration": {
+            "total": 2,
+            "recipients": 2,
+            "top_total": 1,
+            "top_share": 0.5,
+            "hhi": 0.5,
+            "effective_recipients": 2
+          }
+        },
+        {
+          "round": 3,
+          "eligible_sender_count": 100,
+          "potential_total": 300,
+          "potential_min": 3,
+          "potential_max": 3,
+          "legal_offer_total": 300,
+          "legal_offer_min": 3,
+          "legal_offer_max": 3,
+          "legal_zero_recipient_count": 0,
+          "submitted_bribes": 1,
+          "accepted_bribes": 1,
+          "accepted_concentration": {
+            "total": 1,
+            "recipients": 1,
+            "top_total": 1,
+            "top_share": 1,
+            "hhi": 1,
+            "effective_recipients": 1
+          }
+        },
+        {
+          "round": 4,
+          "eligible_sender_count": 100,
+          "potential_total": 300,
+          "potential_min": 3,
+          "potential_max": 3,
+          "legal_offer_total": 300,
+          "legal_offer_min": 3,
+          "legal_offer_max": 3,
+          "legal_zero_recipient_count": 0,
+          "submitted_bribes": 3,
+          "accepted_bribes": 3,
+          "accepted_concentration": {
+            "total": 3,
+            "recipients": 3,
+            "top_total": 1,
+            "top_share": 0.3333333333333333,
+            "hhi": 0.3333333333333333,
+            "effective_recipients": 3
+          }
+        },
+        {
+          "round": 5,
+          "eligible_sender_count": 97,
+          "potential_total": 300,
+          "potential_min": 3,
+          "potential_max": 3,
+          "legal_offer_total": 291,
+          "legal_offer_min": 2,
+          "legal_offer_max": 3,
+          "legal_zero_recipient_count": 0,
+          "submitted_bribes": 7,
+          "accepted_bribes": 7,
+          "accepted_concentration": {
+            "total": 7,
+            "recipients": 7,
+            "top_total": 1,
+            "top_share": 0.14285714285714285,
+            "hhi": 0.14285714285714285,
+            "effective_recipients": 7
+          }
+        },
+        {
+          "round": 6,
+          "eligible_sender_count": 99,
+          "potential_total": 300,
+          "potential_min": 3,
+          "potential_max": 3,
+          "legal_offer_total": 297,
+          "legal_offer_min": 2,
+          "legal_offer_max": 3,
+          "legal_zero_recipient_count": 0,
+          "submitted_bribes": 1,
+          "accepted_bribes": 1,
+          "accepted_concentration": {
+            "total": 1,
+            "recipients": 1,
+            "top_total": 1,
+            "top_share": 1,
+            "hhi": 1,
+            "effective_recipients": 1
+          }
+        }
+      ]
+    },
+    "bribes": {
+      "submitted": 14,
+      "accepted": 14,
+      "rejected": 0,
+      "count_concentration": {
+        "total": 14,
+        "recipients": 14,
+        "top_total": 1,
+        "top_share": 0.07142857142857142,
+        "hhi": 0.07142857142857142,
+        "effective_recipients": 14
+      },
+      "amount_concentration": {
+        "total": 70000000,
+        "recipients": 14,
+        "top_total": 5000000,
+        "top_share": 0.07142857142857142,
+        "hhi": 0.07142857142857142,
+        "effective_recipients": 14
+      },
+      "chosen_by_menu_slot": [
+        12,
+        2,
+        0
+      ],
+      "accepted_by_menu_slot": [
+        12,
+        2,
+        0
+      ],
+      "uniform_expected_choices_by_slot_same_choice_sets": [
+        4.666666666666666,
+        4.666666666666666,
+        4.666666666666666
+      ],
+      "chosen_cash_preference": {
+        "decisions": 14,
+        "chosen_mean_cash_percentile": 0.4342857142857143,
+        "uniform_within_offer_mean_cash_percentile": 0.45047619047619053,
+        "mean_chosen_minus_uniform_percentile": -0.0161904761904762,
+        "chose_cash_maximal_count": 9,
+        "chose_cash_maximal_share": 0.6428571428571429,
+        "uniform_expected_cash_maximal_count": 10.000000000000002,
+        "uniform_cash_maximal_share": 0.7142857142857144
+      },
+      "accepted_cash_preference": {
+        "decisions": 14,
+        "chosen_mean_cash_percentile": 0.4342857142857143,
+        "uniform_within_offer_mean_cash_percentile": 0.45047619047619053,
+        "mean_chosen_minus_uniform_percentile": -0.0161904761904762,
+        "chose_cash_maximal_count": 9,
+        "chose_cash_maximal_share": 0.6428571428571429,
+        "uniform_expected_cash_maximal_count": 10.000000000000002,
+        "uniform_cash_maximal_share": 0.7142857142857144
+      }
+    },
+    "wealth": {
+      "unit": "micro_peso",
+      "peso": 1000000,
+      "total_final_cash": 1550600000,
+      "winner": {
+        "actor": 47,
+        "initial_cash": 0,
+        "net_sale_revenue": 37400000,
+        "purchase_spending": 0,
+        "incoming_bribes": 0,
+        "outgoing_bribes": 0,
+        "other_direct_spending": 0,
+        "transition_or_unclassified_delta": 0,
+        "final_cash": 37400000,
+        "rank": 1,
+        "payout": 475000000,
+        "cash_reconciles": true,
+        "gross_incoming_bribes_over_final_cash": 0,
+        "share_of_all_bribe_money": 0,
+        "share_of_all_final_cash": 0.024119695601702566
+      },
+      "actor43": {
+        "actor": 43,
+        "initial_cash": 0,
+        "net_sale_revenue": 22000000,
+        "purchase_spending": 0,
+        "incoming_bribes": 5000000,
+        "outgoing_bribes": 10000000,
+        "other_direct_spending": 0,
+        "transition_or_unclassified_delta": 0,
+        "final_cash": 17000000,
+        "rank": 23,
+        "payout": 0,
+        "cash_reconciles": true,
+        "gross_incoming_bribes_over_final_cash": 0.29411764705882354,
+        "share_of_all_bribe_money": 0.07142857142857142,
+        "share_of_all_final_cash": 0.010963498000773893
+      },
+      "unclassified_action_types": []
+    }
+  },
+  "descriptive_changes": {
+    "bribe_count": -58,
+    "recipient_top_share": -0.7341269841269842,
+    "recipient_hhi": -0.5805776014109352,
+    "unique_recipients": 0,
+    "actor43_received_amount": -285000000,
+    "actor43_final_cash": -283000000,
+    "conditional_cash_preference_difference": -0.16747519841269845
+  },
+  "limitations": [
+    "One paired game; actor decisions are correlated and are not independent statistical samples.",
+    "Changing target inclusion and opponent visibility together does not isolate their separate effects.",
+    "Potential exposure is balanced; sender eligibility can still make legal exposures unequal.",
+    "The graph mechanically caps recipient opportunities. Reduced transfer concentration does not prove smarter agents or a fair economy.",
+    "Cash preference is conditional on offered alternatives in the same bribe-deciding cohort; its uniform reference is descriptive, not an experiment.",
+    "Cash-flow attribution is accounting, not a counterfactual replay. Payout is separate from final game cash.",
+    "Alias, temperature and seed do not guarantee the same remote model execution; model names and usage are peer reported.",
+    "No local paths, endpoint URLs, peer IDs, prompt text, raw model content or credentials are published."
+  ]
+}
