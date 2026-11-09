@@ -37,10 +37,29 @@ impl Simulator {
     }
 
     pub fn join(&mut self, wallet: Pubkey, name: &str) -> Result<(), GameError> {
+        self.join_with_capacity(wallet, name, MAX_FACTIONS)
+    }
+
+    /// Explicit admission for isolated off-chain scale experiments only.
+    /// Ordinary simulator admission and Solana's account schema remain at six.
+    /// This changes the participant count, not actions, economics or transitions.
+    pub fn join_for_experiment(
+        &mut self,
+        wallet: Pubkey,
+        name: &str,
+        capacity: u8,
+    ) -> Result<(), GameError> {
+        if !(MIN_FACTIONS..=100).contains(&capacity) {
+            return Err(GameError::InvalidFactionSet);
+        }
+        self.join_with_capacity(wallet, name, capacity)
+    }
+
+    fn join_with_capacity(&mut self, wallet: Pubkey, name: &str, capacity: u8) -> Result<(), GameError> {
         if self.game.phase != Phase::Lobby {
             return Err(GameError::GameNotInLobby);
         }
-        if self.factions.len() >= MAX_FACTIONS as usize {
+        if self.factions.len() >= capacity as usize {
             return Err(GameError::GameFull);
         }
         // R6 (REVIEW_EXTERNAL): сивилла — один клиент не занимает все
@@ -282,5 +301,34 @@ impl Simulator {
             })
             .collect();
         (g, fs)
+    }
+}
+
+#[cfg(test)]
+mod experimental_admission_tests {
+    use super::*;
+
+    fn wallet(i: u8) -> Pubkey { Pubkey::new_from_array([i; 32]) }
+
+    #[test]
+    fn ordinary_admission_stays_at_six() {
+        let mut sim = Simulator::new(1, PESO, 1, ENTROPY_SLOTHASH);
+        for i in 0..MAX_FACTIONS { sim.join(wallet(i), "normal").unwrap(); }
+        assert!(matches!(sim.join(wallet(7), "seventh"), Err(GameError::GameFull)));
+    }
+
+    #[test]
+    fn explicit_experiment_is_bounded_and_preserves_join_guards() {
+        let mut sim = Simulator::new(1, PESO, 1, ENTROPY_SLOTHASH);
+        assert!(sim.join_for_experiment(wallet(1), "bad", 1).is_err());
+        assert!(sim.join_for_experiment(wallet(1), "bad", 101).is_err());
+        sim.join_for_experiment(wallet(0), "first", 100).unwrap();
+        assert!(matches!(sim.join_for_experiment(wallet(0), "duplicate", 100), Err(GameError::DuplicateWallet)));
+        for i in 1..100 { sim.join_for_experiment(wallet(i), "agent", 100).unwrap(); }
+        assert_eq!(sim.game.faction_count, 100);
+        assert!(matches!(sim.join_for_experiment(wallet(100), "extra", 100), Err(GameError::GameFull)));
+        sim.advance(1, 42).unwrap();
+        assert_eq!(sim.game.phase, Phase::Market);
+        assert!(matches!(sim.join_for_experiment(wallet(101), "late", 100), Err(GameError::GameNotInLobby)));
     }
 }
