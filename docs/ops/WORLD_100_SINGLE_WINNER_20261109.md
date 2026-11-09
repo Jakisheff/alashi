@@ -100,8 +100,12 @@ top-four and both-epoch checks remain part of regression coverage.
 
 The driver integration uses an explicitly labelled test provider. A passing
 fixture proves the protocol and settlement, not that BitLLM agents learned to
-earn more. No third live model party is claimed by this change. The two earlier
-frozen journals and their runtimes retain their original incentives and payouts.
+earn more. A subsequent [predeclared paired BitLLM pilot](WORLD_100_MARKET_CONTEXT_RESULT_20261109.md)
+completed two 100-agent games under the same one-winner rules. Additional market
+information changed none of the focal agent's decisions: cash 6, rank 89 and
+payout 0 in both arms. Agent 26 won both games with cash 50 and the sole prize
+of 950. This single pair showed no improvement. The two earlier frozen journals
+and their runtimes retain their original incentives and payouts.
 
 The new top prize is twice the old top prize because it is redistributed from
 four recipients to one. That mechanical change is not evidence of better

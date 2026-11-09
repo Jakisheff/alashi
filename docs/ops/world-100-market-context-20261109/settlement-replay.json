@@ -1,0 +1,54 @@
+{
+  "schema": "alashi-single-winner-settlement-replay-v1",
+  "source_commit": "bb6f788e6dc2c1b382aba9116327fe66d092a8fa",
+  "worker_sha256": "4db7cebd02be1ce2a476fee35312873c09837997b6fbf492f32b6489c8b8fcf1",
+  "driver_sha256": "fb2f7ec36fb062d5ba5855f97b728e82cb23e526c5c3a1721318c50de0a7f34e",
+  "original_experiment_digest": "85831ef2b8cefa3fb56418d53ccee5a4527f03c6f1dbc0afc9ac401cd19637b9",
+  "original_call_count": 1806,
+  "original_final_state_hash": "2f74018a5fd7e4c09c92b60d14a0cfad720a79757b0fa07991609578ac8f79d7",
+  "verification": "Fixed-decision replay of run 02 through two payout policies; not a third model game or behavioral counterfactual.",
+  "additional_model_calls": 0,
+  "nvidia_used": false,
+  "money_unit": "micro_peso",
+  "results": [
+    {
+      "payout_policy": "canonical_top4",
+      "batches": 24,
+      "all_receipts_match": true,
+      "all_economic_states_match": true,
+      "ranking_unchanged": true,
+      "legacy_state_hashes_match": true,
+      "accepted_actions": 1805,
+      "skipped_decisions": 1,
+      "winner_actor": 47,
+      "winner_cash": 37400000,
+      "winner_payout": 475000000,
+      "payout_recipients": 4,
+      "bank": 1000000000,
+      "rake": 50000000,
+      "final_state_hash": "2f74018a5fd7e4c09c92b60d14a0cfad720a79757b0fa07991609578ac8f79d7"
+    },
+    {
+      "payout_policy": "winner_takes_all",
+      "batches": 24,
+      "all_receipts_match": true,
+      "all_economic_states_match": true,
+      "ranking_unchanged": true,
+      "legacy_state_hashes_match": null,
+      "accepted_actions": 1805,
+      "skipped_decisions": 1,
+      "winner_actor": 47,
+      "winner_cash": 37400000,
+      "winner_payout": 950000000,
+      "payout_recipients": 1,
+      "bank": 1000000000,
+      "rake": 50000000,
+      "final_state_hash": "a86303700077ef0460edd8bc8057eb927b29b96afcb151f6c42eab210443c85b"
+    }
+  ],
+  "limits": [
+    "The original skipped decision is retained.",
+    "Choices were not regenerated under the new incentive or prompt.",
+    "A larger top payout is redistribution, not evidence of better play or real revenue."
+  ]
+}

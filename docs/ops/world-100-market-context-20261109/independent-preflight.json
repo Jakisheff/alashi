@@ -1,0 +1,61 @@
+{
+  "schema": "alashi-market-context-pair-audit-v1",
+  "generated_at": "2026-11-09T15:50:34.225Z",
+  "mode": "cpu_preflight",
+  "auditor_sha256": "95fc3f680edf264af45a83e436605d804b27442067b98657f73107665f573767",
+  "generic_auditor_sha256": "f7182a687bbb563bf586c7bdd866ee05a57fe2b11b6fe93664b5f5a10f28c62a",
+  "protocol_sha256": "9700e3ccf261db42ccf913c4ad7f9743fa512dc0ed619a0317744b5415f7cd15",
+  "worker_sha256": "4db7cebd02be1ce2a476fee35312873c09837997b6fbf492f32b6489c8b8fcf1",
+  "driver_sha256": "fb2f7ec36fb062d5ba5855f97b728e82cb23e526c5c3a1721318c50de0a7f34e",
+  "experimental_unit": "one predeclared paired scenario; 100 interacting actors and repeated decisions are not independent evaluation samples",
+  "provenance": {
+    "recorded": true,
+    "source_commit": "bb6f788e6dc2c1b382aba9116327fe66d092a8fa",
+    "preflight_sha256": "203dd44281e366dc39b18a389189268199acb16f89513dd804e51d82b57e66fa",
+    "protocol_sha256": "9700e3ccf261db42ccf913c4ad7f9743fa512dc0ed619a0317744b5415f7cd15",
+    "preflight_created_at": "2026-11-09T15:48:51.310Z",
+    "initial_state_hash": "d3c23921b1578f03046dc5770d19c483a4121a854e88d2da2a475d57fcb12cd9",
+    "launch_recorded": false,
+    "launch_started_at": null,
+    "basis": "locally recorded preflight and preserved protocol copy; Git commit publication timing is verified separately"
+  },
+  "focal_actor": 0,
+  "seed": 20261110,
+  "game_id": 20261110,
+  "payout_policy": "winner_takes_all",
+  "unit": "micro_peso",
+  "peso": 1000000,
+  "ceilings": {
+    "per_arm_calls": 2000,
+    "per_arm_tokens": 4000000,
+    "per_arm_seconds": 7200,
+    "pair_calls": 4000,
+    "pair_tokens": 8000000,
+    "per_arm_concurrency": 1,
+    "pair_concurrency": 2
+  },
+  "preflight": {
+    "initial_snapshots_equal": true,
+    "initial_state_hash": "d3c23921b1578f03046dc5770d19c483a4121a854e88d2da2a475d57fcb12cd9",
+    "scope_cases": 200,
+    "model_calls": 0,
+    "limitation": "CPU initialization and initial prompt scope only; actual journal evidence and completed canonical replay remain pending"
+  },
+  "evidence": {
+    "checks": 223,
+    "issues_count": 0,
+    "issues": [],
+    "issues_truncated": false,
+    "valid": true,
+    "journals_unchanged": true,
+    "additional_model_calls": 0
+  },
+  "limitations": [
+    "Only one paired scenario, one fixed focal seat and one environment seed; no holdout, seat rotation, win-rate estimate or meaningful effect confidence interval.",
+    "All 100 players are fresh model-controlled identities in each arm. Distinct states do not imply independent models or independent statistical samples.",
+    "Alias, returned model names and token usage are peer-reported; matching names and temperature zero do not attest identical weights or deterministic inference.",
+    "The intervention is a whole information block including extra tokens, not a test that separately identifies price-curve versus queue-position value.",
+    "A higher simulated cash score is a diagnostic. Only rank one receives the fixed prize; increasing the prize relative to previous four-winner games is not evidence of intelligence.",
+    "This allowlisted report excludes local paths, endpoint URLs, peer identifiers, raw prompts, response IDs, content and error text. Private journals retain that metadata."
+  ]
+}

@@ -51,6 +51,12 @@ one-winner mode gives the full context to all players. See the
 [pre-run paired protocol](../../docs/ops/WORLD_100_MARKET_CONTEXT_PROTOCOL_20261109.md)
 for the fixed seed, budgets, exact intervention and single-pair limitations.
 
+The [completed paired pilot](../../docs/ops/WORLD_100_MARKET_CONTEXT_RESULT_20261109.md)
+made 3,612 live BitLLM requests across two 100-agent games. Both games had one
+winner and passed full offline replay. The additional information changed no
+focal market decision: cash 6, rank 89 and payout 0 in both arms. This result
+does not validate a stronger strategy or estimate a population win rate.
+
 ## Build and freeze the experiment
 
 Use Node 22 and a native Rust worker built from the same reviewed checkout:

@@ -1,0 +1,87 @@
+{
+  "schema": "alashi-market-context-timing-interpretation-correction-v1",
+  "created_at": "2026-11-09T16:39:08.083Z",
+  "initial_auditor_sha256": "7f80b737587e2adb799ec5595d8b8a29a0aa7ec21987e49a25585f6a6f98bd03",
+  "initial_report_sha256": "77832a6d30002759904d691a542f7da080c553443a6ee545626b6f0a41fe8753",
+  "final_auditor_sha256": "5678a797a1617c595f16e03dd99e443fa26c70dafb781c5883a18187697abbbd",
+  "final_report_sha256": "ba401bce2849035c18b42e42397352f5b8d45cb091523de85696fad565cf7391",
+  "source_commit": "bb6f788e6dc2c1b382aba9116327fe66d092a8fa",
+  "worker_sha256": "4db7cebd02be1ce2a476fee35312873c09837997b6fbf492f32b6489c8b8fcf1",
+  "driver_sha256": "fb2f7ec36fb062d5ba5855f97b728e82cb23e526c5c3a1721318c50de0a7f34e",
+  "initial_status": {
+    "valid": false,
+    "issues": [
+      {
+        "code": "observed_request_overlap_exceeds_protocol"
+      }
+    ]
+  },
+  "final_status": {
+    "valid": true,
+    "issues": [],
+    "timing_quality_warnings": [
+      {
+        "code": "hybrid_clock_overlap_not_network_concurrency",
+        "observed_adjacent_overlap_count": 2
+      }
+    ]
+  },
+  "journals_unchanged": true,
+  "economic_outcomes_and_criterion_unchanged": true,
+  "raw_interval_peaks_preserved": {
+    "baseline": 2,
+    "candidate": 2,
+    "pair": 3
+  },
+  "raw_timing_anomalies": [
+    {
+      "arm": "baseline",
+      "previous": {
+        "step": 12,
+        "actor": 65,
+        "started_at": "2026-11-09T16:12:46.137Z"
+      },
+      "next": {
+        "step": 12,
+        "actor": 66,
+        "started_at": "2026-11-09T16:12:47.462Z"
+      },
+      "previous_monotonic_elapsed_ms": 1370,
+      "wall_clock_start_delta_ms": 1325,
+      "raw_duration_minus_start_delta_ms": 45,
+      "estimator_overlap_ms": 44
+    },
+    {
+      "arm": "candidate",
+      "previous": {
+        "step": 12,
+        "actor": 65,
+        "started_at": "2026-11-09T16:12:46.046Z"
+      },
+      "next": {
+        "step": 12,
+        "actor": 66,
+        "started_at": "2026-11-09T16:12:47.365Z"
+      },
+      "previous_monotonic_elapsed_ms": 1362,
+      "wall_clock_start_delta_ms": 1319,
+      "raw_duration_minus_start_delta_ms": 43,
+      "estimator_overlap_ms": 42
+    }
+  ],
+  "actual_network_request_peak": null,
+  "configured_client_request_bounds": {
+    "serialized_driver_and_config_verified": true,
+    "per_arm_client_request_bound": 1,
+    "pair_client_request_bound": 2,
+    "basis": "Hash-bound reviewed driver creates one lane per arm and awaits complete(), including response-body reading, before the next request. This bounds these two runner processes; it is not a network traffic measurement."
+  },
+  "correction": "The initial auditor treated a sum of wall-clock started_at and monotonic elapsed time as a direct concurrency measurement. The clocks and start instants differ. Both 43–45 ms duration-versus-start gaps are retained (42–44 ms after the existing 1 ms estimator allowance). A shared clock adjustment is plausible but not proven. The final audit verifies journal, prompt, game replay and money consistency while recording this separate timing-quality limitation; it does not claim the raw network peak was two.",
+  "verification": {
+    "auditor_regression_tests_passed": 11,
+    "canonical_batches_replayed": 48,
+    "full_response_matches": 48,
+    "additional_model_calls": 0,
+    "source_runtime_unchanged": true
+  }
+}
