@@ -16,6 +16,10 @@
 
 - Данные 18 партий ещё не стали внешним спросом.
 
+## Зеттели
+
+- [20261111-evo-ladder-heldout-retention](../200_ZETTEL/20261111-evo-ladder-heldout-retention.md): лестница evoagents не подгоняется под тренировочные сиды; следующий барьер — скрытый микс соперников
+
 ## Связанные MOC
 
 - [MOC-Product](MOC-Product.md)
