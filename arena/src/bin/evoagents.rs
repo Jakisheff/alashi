@@ -198,8 +198,7 @@ fn evolve(p: &Params, opponents: &[&str], cfg: &GameConfig, target_alashi: Optio
 /// Парная проверка лестницы на свежих сидах: более поздний уровень
 /// против более раннего на зеркальных местах.
 fn verify(ladder: &[(usize, Genome, f64)], base_seed: u64, seeds: usize,
-          opponents: &[&str], cfg: &GameConfig) -> Vec<serde_json::Value> {
-    let seats = opponents.len() + 1;
+          opponents: &[&str], cfg: &GameConfig) -> Vec<serde_json::Value> {    let seats = opponents.len() + 1;
     let mut out = Vec::new();
     for w in ladder.windows(2) {
         let (ga, gb) = (&w[0].1, &w[1].1);
@@ -231,6 +230,46 @@ fn verify(ladder: &[(usize, Genome, f64)], base_seed: u64, seeds: usize,
         }));
     }
     out
+}
+
+/// Оценка обобщения лестницы: выплата каждого уровня на тренировочных
+/// сидах эволюции против выплаты на скрытом расписании, которое эволюция
+/// не видела. Разрыв (visible − heldout) — местный аналог reward hacking
+/// gap: на сколько селекция подогнала геном под видимые партии.
+fn heldout_report(ladder: &[(usize, Genome, f64)], p: &Params, heldout_seeds: usize,
+                  opponents: &[&str], cfg: &GameConfig) -> serde_json::Value {
+    let seats = opponents.len() + 1;
+    let visible_sched = schedule(p.base_seed, p.seeds, seats);
+    // База скрытого расписания не пересекается ни с тренировочной
+    // (base_seed + s*7919), ни с проверочной (base_seed ^ 0x5EED).
+    let heldout_base = p.base_seed ^ 0x0DDBA11;
+    let heldout_sched = schedule(heldout_base, heldout_seeds, seats);
+    let per_level: Vec<serde_json::Value> = ladder
+        .iter()
+        .enumerate()
+        .map(|(i, &(_, ref g, _))| {
+            let visible = fitness(g, &visible_sched, opponents, cfg);
+            let heldout = fitness(g, &heldout_sched, opponents, cfg);
+            let gap = visible - heldout;
+            serde_json::json!({
+                "level": i + 1,
+                "visible_payout_alashi": visible / 1_000_000.0,
+                "heldout_payout_alashi": heldout / 1_000_000.0,
+                "gap_alashi": gap / 1_000_000.0,
+                "retention": if visible.abs() > f64::EPSILON {
+                    Some(heldout / visible)
+                } else { None },
+            })
+        })
+        .collect();
+    serde_json::json!({
+        "heldout_base_seed": heldout_base,
+        "heldout_seeds": heldout_seeds,
+        "per_level": per_level,
+        "interpretation": "Разрыв visible − heldout показывает, сколько силы уровня \
+                           существует только на тренировочном расписании сидов; \
+                           retention ниже 1 — подгонка под видимые партии.",
+    })
 }
 
 fn main() {
@@ -304,6 +343,20 @@ fn main() {
                   v["mean_payout_delta"].as_f64().unwrap_or(0.0) / 1_000_000.0,
                   v["paired_matches"]);
     }
+    // Скрытая оценка обобщения: считается только при явном флаге.
+    let heldout_seeds: usize = flag(&args, "--heldout-seeds").and_then(|v| v.parse().ok()).unwrap_or(0);
+    let heldout = if heldout_seeds >= 1 {
+        let report = heldout_report(&ladder, &params, heldout_seeds, &opponents, &cfg);
+        for level in report["per_level"].as_array().expect("per_level array") {
+            eprintln!("обобщение: уровень {:>2}: видимые {:>8.3}M, скрытые {:>8.3}M, разрыв {:+.3}M alashi",
+                      level["level"], level["visible_payout_alashi"].as_f64().unwrap_or(0.0),
+                      level["heldout_payout_alashi"].as_f64().unwrap_or(0.0),
+                      level["gap_alashi"].as_f64().unwrap_or(0.0));
+        }
+        Some(report)
+    } else {
+        None
+    };
     let payload = serde_json::json!({
         "schema_version": 1,
         "params": {
@@ -322,6 +375,7 @@ fn main() {
             .map(|h| h.iter().map(|f| f / 1_000_000.0).collect::<Vec<_>>())
             .collect::<Vec<_>>(),
         "verification": verification,
+        "heldout": heldout,
         "elapsed_s": started.elapsed().as_secs_f64(),
         "interpretation": "Локальная калибровка на фиксированном расписании сидов; сила уровня гарантируется только относительно этого микса соперников.",
     });
@@ -399,5 +453,41 @@ mod tests {
         let f_deep = fitness(&deepdip, &sched, DEFAULT_OPPONENTS, &cfg);
         let f_passive = fitness(&passive, &sched, DEFAULT_OPPONENTS, &cfg);
         assert!(f_deep > f_passive, "deepdip {} <= passive {}", f_deep, f_passive);
+    }
+
+    #[test]
+    fn heldout_report_uses_disjoint_seeds_and_is_deterministic() {
+        let (p, cfg) = small_cfg();
+        let opponents = ["greedy", "random"];
+        let (ladder, _) = evolve(&p, &opponents, &cfg, None);
+        assert!(!ladder.is_empty());
+        let r1 = heldout_report(&ladder, &p, 3, &opponents, &cfg);
+        let r2 = heldout_report(&ladder, &p, 3, &opponents, &cfg);
+        assert_eq!(r1, r2, "отчёт обобщения должен быть детерминированным");
+        // Скрытая база не совпадает с тренировочной и проверочной.
+        let heldout_base = r1["heldout_base_seed"].as_u64().expect("seed");
+        assert_ne!(heldout_base, p.base_seed);
+        assert_ne!(heldout_base, p.base_seed ^ 0x5EED);
+        let levels = r1["per_level"].as_array().expect("per_level");
+        assert_eq!(levels.len(), ladder.len());
+        for level in levels {
+            assert!(level["visible_payout_alashi"].is_f64());
+            assert!(level["heldout_payout_alashi"].is_f64());
+            let gap = level["visible_payout_alashi"].as_f64().unwrap()
+                    - level["heldout_payout_alashi"].as_f64().unwrap();
+            assert!((gap - level["gap_alashi"].as_f64().unwrap()).abs() < 1e-9);
+        }
+    }
+
+    #[test]
+    fn heldout_schedule_shares_no_seed_with_training_schedule() {
+        let seats = DEFAULT_OPPONENTS.len() + 1;
+        let p = Params { generations: 3, population: 6, seeds: 8, base_seed: 42, mutation_rate: 0.25 };
+        let training: std::collections::HashSet<u64> =
+            schedule(p.base_seed, p.seeds, seats).iter().map(|&(s, _)| s).collect();
+        let heldout: std::collections::HashSet<u64> =
+            schedule(p.base_seed ^ 0x0DDBA11, 12, seats).iter().map(|&(s, _)| s).collect();
+        assert!(training.is_disjoint(&heldout),
+                "скрытые сиды пересекаются с тренировочными");
     }
 }
