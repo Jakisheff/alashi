@@ -8,6 +8,8 @@
 //! Пример:
 //!   cargo run --manifest-path arena/Cargo.toml --bin evoagents -- \
 //!       --generations 12 --population 16 --out data/eval/evolved/ladder.json
+//!   cargo run --manifest-path arena/Cargo.toml --bin evoagents -- \
+//!       --heldout-seeds 8 --out data/eval/evolved/ladder-heldout.json
 
 use arena::runner::{play_game, GameConfig};
 use arena::strategies::{from_genome, by_name, Genome, GENE_MAX, GENE_MIN, GENE_NAMES};
@@ -232,27 +234,33 @@ fn verify(ladder: &[(usize, Genome, f64)], base_seed: u64, seeds: usize,
     out
 }
 
-/// Оценка обобщения лестницы: выплата каждого уровня на тренировочных
-/// сидах эволюции против выплаты на скрытом расписании, которое эволюция
+/// Оценка обобщения лестницы: выплата каждого уровня на его тренировочном
+/// расписании сидов против выплаты на скрытом расписании, которое эволюция
 /// не видела. Разрыв (visible − heldout) — местный аналог reward hacking
 /// gap: на сколько селекция подогнала геном под видимые партии.
-fn heldout_report(ladder: &[(usize, Genome, f64)], p: &Params, heldout_seeds: usize,
+///
+/// Уровни приходят парами (тренировочная база сидов, геном): в main() у
+/// каждой цели своё расписание (base_seed + idx*0x9E37_79B9), поэтому
+/// visible считается на расписании именно этого уровня, а не общем.
+fn heldout_report(levels: &[(u64, Genome)], p: &Params, heldout_seeds: usize,
                   opponents: &[&str], cfg: &GameConfig) -> serde_json::Value {
     let seats = opponents.len() + 1;
-    let visible_sched = schedule(p.base_seed, p.seeds, seats);
-    // База скрытого расписания не пересекается ни с тренировочной
-    // (base_seed + s*7919), ни с проверочной (base_seed ^ 0x5EED).
+    // База скрытого расписания не пересекается ни с тренировочными
+    // (base_seed + idx*0x9E37_79B9 + s*7919), ни с проверочной
+    // (base_seed ^ 0x5EED).
     let heldout_base = p.base_seed ^ 0x0DDBA11;
     let heldout_sched = schedule(heldout_base, heldout_seeds, seats);
-    let per_level: Vec<serde_json::Value> = ladder
+    let per_level: Vec<serde_json::Value> = levels
         .iter()
         .enumerate()
-        .map(|(i, &(_, ref g, _))| {
+        .map(|(i, &(training_base, ref g))| {
+            let visible_sched = schedule(training_base, p.seeds, seats);
             let visible = fitness(g, &visible_sched, opponents, cfg);
             let heldout = fitness(g, &heldout_sched, opponents, cfg);
             let gap = visible - heldout;
             serde_json::json!({
                 "level": i + 1,
+                "training_base_seed": training_base,
                 "visible_payout_alashi": visible / 1_000_000.0,
                 "heldout_payout_alashi": heldout / 1_000_000.0,
                 "gap_alashi": gap / 1_000_000.0,
@@ -346,7 +354,15 @@ fn main() {
     // Скрытая оценка обобщения: считается только при явном флаге.
     let heldout_seeds: usize = flag(&args, "--heldout-seeds").and_then(|v| v.parse().ok()).unwrap_or(0);
     let heldout = if heldout_seeds >= 1 {
-        let report = heldout_report(&ladder, &params, heldout_seeds, &opponents, &cfg);
+        // Тренировочная база уровня — сдвиг base_seed на idx цели
+        // (см. цикл по targets выше); ladder хранит исходный idx.
+        let levels: Vec<(u64, Genome)> = ladder
+            .iter()
+            .map(|&(idx, ref g, _)| {
+                (params.base_seed.wrapping_add((idx as u64) * 0x9E37_79B9), g.clone())
+            })
+            .collect();
+        let report = heldout_report(&levels, &params, heldout_seeds, &opponents, &cfg);
         for level in report["per_level"].as_array().expect("per_level array") {
             eprintln!("обобщение: уровень {:>2}: видимые {:>8.3}M, скрытые {:>8.3}M, разрыв {:+.3}M alashi",
                       level["level"], level["visible_payout_alashi"].as_f64().unwrap_or(0.0),
@@ -358,7 +374,7 @@ fn main() {
         None
     };
     let payload = serde_json::json!({
-        "schema_version": 1,
+        "schema_version": 2,
         "params": {
             "generations_per_level": params.generations, "population": params.population,
             "seeds": params.seeds, "base_seed": params.base_seed,
@@ -461,16 +477,20 @@ mod tests {
         let opponents = ["greedy", "random"];
         let (ladder, _) = evolve(&p, &opponents, &cfg, None);
         assert!(!ladder.is_empty());
-        let r1 = heldout_report(&ladder, &p, 3, &opponents, &cfg);
-        let r2 = heldout_report(&ladder, &p, 3, &opponents, &cfg);
+        // Уровни одного прогона эволюции делят одно тренировочное расписание.
+        let levels: Vec<(u64, Genome)> =
+            ladder.iter().map(|&(_, ref g, _)| (p.base_seed, g.clone())).collect();
+        let r1 = heldout_report(&levels, &p, 3, &opponents, &cfg);
+        let r2 = heldout_report(&levels, &p, 3, &opponents, &cfg);
         assert_eq!(r1, r2, "отчёт обобщения должен быть детерминированным");
         // Скрытая база не совпадает с тренировочной и проверочной.
         let heldout_base = r1["heldout_base_seed"].as_u64().expect("seed");
         assert_ne!(heldout_base, p.base_seed);
         assert_ne!(heldout_base, p.base_seed ^ 0x5EED);
-        let levels = r1["per_level"].as_array().expect("per_level");
-        assert_eq!(levels.len(), ladder.len());
-        for level in levels {
+        let levels_json = r1["per_level"].as_array().expect("per_level");
+        assert_eq!(levels_json.len(), ladder.len());
+        for level in levels_json {
+            assert!(level["training_base_seed"].is_u64());
             assert!(level["visible_payout_alashi"].is_f64());
             assert!(level["heldout_payout_alashi"].is_f64());
             let gap = level["visible_payout_alashi"].as_f64().unwrap()
@@ -480,14 +500,42 @@ mod tests {
     }
 
     #[test]
+    fn heldout_visible_uses_each_levels_own_training_schedule() {
+        let (p, cfg) = small_cfg();
+        let opponents = ["greedy", "random"];
+        // Как в main(): у каждой цели своё тренировочное расписание.
+        let mut p_shifted = params_clone(&p);
+        p_shifted.base_seed = p.base_seed.wrapping_add(0x9E37_79B9);
+        let (l1, _) = evolve(&p, &opponents, &cfg, None);
+        let (l2, _) = evolve(&p_shifted, &opponents, &cfg, None);
+        let (_, g1, f1) = l1.last().expect("ladder nonempty").clone();
+        let (_, g2, f2) = l2.last().expect("ladder nonempty").clone();
+        assert_ne!(g1, g2, "прогоны с разными сидами должны давать разные геномы");
+        // visible каждого уровня обязан совпадать с его тренировочной
+        // выплатой; общий сценарий (одно расписание на всех) здесь бы
+        // не сошёлся на втором уровне.
+        let levels = vec![(p.base_seed, g1), (p_shifted.base_seed, g2)];
+        let report = heldout_report(&levels, &p, 2, &opponents, &cfg);
+        let per = report["per_level"].as_array().expect("per_level");
+        assert!((per[0]["visible_payout_alashi"].as_f64().unwrap() - f1 / 1e6).abs() < 1e-9);
+        assert!((per[1]["visible_payout_alashi"].as_f64().unwrap() - f2 / 1e6).abs() < 1e-9);
+        assert_eq!(per[0]["training_base_seed"].as_u64().unwrap(), p.base_seed);
+        assert_eq!(per[1]["training_base_seed"].as_u64().unwrap(), p_shifted.base_seed);
+    }
+
+    #[test]
     fn heldout_schedule_shares_no_seed_with_training_schedule() {
         let seats = DEFAULT_OPPONENTS.len() + 1;
         let p = Params { generations: 3, population: 6, seeds: 8, base_seed: 42, mutation_rate: 0.25 };
-        let training: std::collections::HashSet<u64> =
-            schedule(p.base_seed, p.seeds, seats).iter().map(|&(s, _)| s).collect();
         let heldout: std::collections::HashSet<u64> =
             schedule(p.base_seed ^ 0x0DDBA11, 12, seats).iter().map(|&(s, _)| s).collect();
-        assert!(training.is_disjoint(&heldout),
-                "скрытые сиды пересекаются с тренировочными");
+        // Тренировочные расписания всех целей лестницы (сдвиг idx*0x9E37_79B9).
+        for idx in 0..8u64 {
+            let training: std::collections::HashSet<u64> =
+                schedule(p.base_seed.wrapping_add(idx * 0x9E37_79B9), p.seeds, seats)
+                    .iter().map(|&(s, _)| s).collect();
+            assert!(training.is_disjoint(&heldout),
+                    "скрытые сиды пересекаются с тренировочными (idx {})", idx);
+        }
     }
 }
