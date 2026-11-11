@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-27",
+  "status": "application_deployment_blocked",
+  "pull_request": "https://github.com/Jakisheff/alashi/pull/62",
+  "application_deployment_attempted": false,
+  "frontend_zod_bundled": false,
+  "audit_blockers": ["RUSTSEC-2026-0391", "RUSTSEC-2026-0398", "RUSTSEC-2026-0403"],
+  "disk_free_before": "2.3G",
+  "disk_free_after_cleanup": "19G",
+  "security_packages": {
+    "libbrotli1": "1.2.0-3ubuntu0.1",
+    "nginx": "1.28.3-2ubuntu1.12",
+    "nginx-common": "1.28.3-2ubuntu1.12"
+  },
+  "nginx_pid_before": 1412574,
+  "nginx_pid_after": 2358135,
+  "application_processes_unchanged": true,
+  "reboot_required_marker_present": true,
+  "reboot_performed": false,
+  "rollback_performed": false
+}
