@@ -1,0 +1,1078 @@
+{
+  "schema": "alashi-run02-income-diagnostics-v1",
+  "generated_at": "2026-11-09T15:23:23.189Z",
+  "frozen_digest": "85831ef2b8cefa3fb56418d53ccee5a4527f03c6f1dbc0afc9ac401cd19637b9",
+  "worker_sha256": "b6bacfc2c66501498cafa024d50b4eac9d9f33c8e3b6f6d6a20c0a908ac8410d",
+  "driver_sha256": "912bf75b3a99ad7642e6d14225449d2ba0ff1270ab64c7d5ce2e61881bdb77c8",
+  "final_state_hash": "2f74018a5fd7e4c09c92b60d14a0cfad720a79757b0fa07991609578ac8f79d7",
+  "objective_boundary": "Current game ranks individual cash, with four positive payouts. Winner-takes-all would change reward semantics, not demonstrate stronger strategy.",
+  "baseline": {
+    "agents": 100,
+    "rounds": 6,
+    "calls": 1806,
+    "accepted_actions": 1805,
+    "skipped": 1,
+    "game_cash_total": 1550600000,
+    "game_cash_min": 1600000,
+    "game_cash_median": 13400000,
+    "game_cash_max": 37400000,
+    "bank": 1000000000,
+    "rake": 50000000,
+    "total_payout": 950000000,
+    "positive_payouts": 4,
+    "top_ten": [
+      {
+        "actor": 47,
+        "rank": 1,
+        "cash": 37400000,
+        "payout": 475000000
+      },
+      {
+        "actor": 51,
+        "rank": 2,
+        "cash": 35400000,
+        "payout": 285000000
+      },
+      {
+        "actor": 55,
+        "rank": 3,
+        "cash": 33200000,
+        "payout": 142500000
+      },
+      {
+        "actor": 61,
+        "rank": 4,
+        "cash": 32300000,
+        "payout": 47500000
+      },
+      {
+        "actor": 62,
+        "rank": 5,
+        "cash": 31900000,
+        "payout": 0
+      },
+      {
+        "actor": 48,
+        "rank": 6,
+        "cash": 30400000,
+        "payout": 0
+      },
+      {
+        "actor": 57,
+        "rank": 7,
+        "cash": 29200000,
+        "payout": 0
+      },
+      {
+        "actor": 52,
+        "rank": 8,
+        "cash": 28900000,
+        "payout": 0
+      },
+      {
+        "actor": 56,
+        "rank": 9,
+        "cash": 28700000,
+        "payout": 0
+      },
+      {
+        "actor": 44,
+        "rank": 10,
+        "cash": 26600000,
+        "payout": 0
+      }
+    ]
+  },
+  "prices": {
+    "source": "canonical PRICE_TABLE and compute_sale/compute_purchase; all recorded sales reproduced exactly",
+    "price_table": [
+      12,
+      10,
+      9,
+      8,
+      7,
+      6,
+      5,
+      4,
+      3,
+      3,
+      2,
+      2,
+      2,
+      1,
+      1,
+      1
+    ],
+    "unit": "micro_peso",
+    "peso": 1000000
+  },
+  "market": {
+    "by_round": [
+      {
+        "round": 1,
+        "opening_unit_price": 12000000,
+        "active_tax_bps": 0,
+        "active_boom": 0,
+        "active_price_shift": 0,
+        "executed_sales": 0,
+        "pass_with_goods": 0,
+        "partial_sales": 0,
+        "units": 0,
+        "gross": 0,
+        "net": 0,
+        "tax": 0,
+        "unit_price_counts": {},
+        "first_six_actors": [
+          39,
+          40,
+          41,
+          42,
+          43,
+          44
+        ]
+      },
+      {
+        "round": 2,
+        "opening_unit_price": 12000000,
+        "active_tax_bps": 0,
+        "active_boom": 0,
+        "active_price_shift": 0,
+        "executed_sales": 100,
+        "pass_with_goods": 0,
+        "partial_sales": 0,
+        "units": 200,
+        "gross": 260000000,
+        "net": 260000000,
+        "tax": 0,
+        "unit_price_counts": {
+          "1000000": 187,
+          "2000000": 3,
+          "3000000": 2,
+          "4000000": 1,
+          "5000000": 1,
+          "6000000": 1,
+          "7000000": 1,
+          "8000000": 1,
+          "9000000": 1,
+          "10000000": 1,
+          "12000000": 1
+        },
+        "first_six_actors": [
+          43,
+          44,
+          45,
+          46,
+          47,
+          48
+        ]
+      },
+      {
+        "round": 3,
+        "opening_unit_price": 14000000,
+        "active_tax_bps": 0,
+        "active_boom": 2,
+        "active_price_shift": 0,
+        "executed_sales": 98,
+        "pass_with_goods": 0,
+        "partial_sales": 0,
+        "units": 196,
+        "gross": 648000000,
+        "net": 648000000,
+        "tax": 0,
+        "unit_price_counts": {
+          "3000000": 183,
+          "4000000": 3,
+          "5000000": 2,
+          "6000000": 1,
+          "7000000": 1,
+          "8000000": 1,
+          "9000000": 1,
+          "10000000": 1,
+          "11000000": 1,
+          "12000000": 1,
+          "14000000": 1
+        },
+        "first_six_actors": [
+          47,
+          48,
+          49,
+          50,
+          51,
+          52
+        ]
+      },
+      {
+        "round": 4,
+        "opening_unit_price": 12000000,
+        "active_tax_bps": 1000,
+        "active_boom": 0,
+        "active_price_shift": 0,
+        "executed_sales": 99,
+        "pass_with_goods": 0,
+        "partial_sales": 0,
+        "units": 198,
+        "gross": 258000000,
+        "net": 232200000,
+        "tax": 25800000,
+        "unit_price_counts": {
+          "1000000": 185,
+          "2000000": 3,
+          "3000000": 2,
+          "4000000": 1,
+          "5000000": 1,
+          "6000000": 1,
+          "7000000": 1,
+          "8000000": 1,
+          "9000000": 1,
+          "10000000": 1,
+          "12000000": 1
+        },
+        "first_six_actors": [
+          51,
+          52,
+          53,
+          54,
+          55,
+          56
+        ]
+      },
+      {
+        "round": 5,
+        "opening_unit_price": 12000000,
+        "active_tax_bps": 1000,
+        "active_boom": 0,
+        "active_price_shift": 0,
+        "executed_sales": 91,
+        "pass_with_goods": 0,
+        "partial_sales": 0,
+        "units": 182,
+        "gross": 242000000,
+        "net": 217800000,
+        "tax": 24200000,
+        "unit_price_counts": {
+          "1000000": 169,
+          "2000000": 3,
+          "3000000": 2,
+          "4000000": 1,
+          "5000000": 1,
+          "6000000": 1,
+          "7000000": 1,
+          "8000000": 1,
+          "9000000": 1,
+          "10000000": 1,
+          "12000000": 1
+        },
+        "first_six_actors": [
+          55,
+          56,
+          57,
+          58,
+          59,
+          60
+        ]
+      },
+      {
+        "round": 6,
+        "opening_unit_price": 12000000,
+        "active_tax_bps": 1000,
+        "active_boom": 0,
+        "active_price_shift": 0,
+        "executed_sales": 77,
+        "pass_with_goods": 0,
+        "partial_sales": 0,
+        "units": 154,
+        "gross": 214000000,
+        "net": 192600000,
+        "tax": 21400000,
+        "unit_price_counts": {
+          "1000000": 141,
+          "2000000": 3,
+          "3000000": 2,
+          "4000000": 1,
+          "5000000": 1,
+          "6000000": 1,
+          "7000000": 1,
+          "8000000": 1,
+          "9000000": 1,
+          "10000000": 1,
+          "12000000": 1
+        },
+        "first_six_actors": [
+          59,
+          60,
+          61,
+          62,
+          63,
+          64
+        ]
+      }
+    ],
+    "executed_sales": 465,
+    "units_sold": 930,
+    "gross": 1622000000,
+    "net": 1550600000,
+    "tax": 71400000,
+    "phase_floor_units": 865,
+    "phase_floor_unit_share": 0.9301075268817204,
+    "pass_with_goods": 0,
+    "partial_sales": 0
+  },
+  "action": {
+    "by_round": [
+      {
+        "round": 1,
+        "produce": 100,
+        "bribe": 0,
+        "pass": 0,
+        "skipped": 0
+      },
+      {
+        "round": 2,
+        "produce": 98,
+        "bribe": 2,
+        "pass": 0,
+        "skipped": 0
+      },
+      {
+        "round": 3,
+        "produce": 99,
+        "bribe": 1,
+        "pass": 0,
+        "skipped": 0
+      },
+      {
+        "round": 4,
+        "produce": 91,
+        "bribe": 3,
+        "pass": 6,
+        "skipped": 0
+      },
+      {
+        "round": 5,
+        "produce": 77,
+        "bribe": 7,
+        "pass": 15,
+        "skipped": 1
+      },
+      {
+        "round": 6,
+        "produce": 7,
+        "bribe": 1,
+        "pass": 92,
+        "skipped": 0
+      }
+    ],
+    "early_passes_count": 21,
+    "uncreated_free_goods": 42,
+    "early_passes_by_persona": {
+      "0": 15,
+      "3": 2,
+      "4": 1,
+      "5": 2,
+      "9": 1
+    },
+    "early_passes": [
+      {
+        "actor": 70,
+        "round": 4,
+        "persona": 0,
+        "cash_before": 9800000,
+        "goods_before": 0,
+        "produce_legal": true,
+        "unused_free_goods": 2
+      },
+      {
+        "actor": 90,
+        "round": 4,
+        "persona": 0,
+        "cash_before": 9800000,
+        "goods_before": 0,
+        "produce_legal": true,
+        "unused_free_goods": 2
+      },
+      {
+        "actor": 20,
+        "round": 4,
+        "persona": 0,
+        "cash_before": 14800000,
+        "goods_before": 0,
+        "produce_legal": true,
+        "unused_free_goods": 2
+      },
+      {
+        "actor": 40,
+        "round": 4,
+        "persona": 0,
+        "cash_before": 14800000,
+        "goods_before": 0,
+        "produce_legal": true,
+        "unused_free_goods": 2
+      },
+      {
+        "actor": 43,
+        "round": 4,
+        "persona": 3,
+        "cash_before": 12000000,
+        "goods_before": 0,
+        "produce_legal": true,
+        "unused_free_goods": 2
+      },
+      {
+        "actor": 50,
+        "round": 4,
+        "persona": 0,
+        "cash_before": 16800000,
+        "goods_before": 0,
+        "produce_legal": true,
+        "unused_free_goods": 2
+      },
+      {
+        "actor": 60,
+        "round": 5,
+        "persona": 0,
+        "cash_before": 13400000,
+        "goods_before": 0,
+        "produce_legal": true,
+        "unused_free_goods": 2
+      },
+      {
+        "actor": 70,
+        "round": 5,
+        "persona": 0,
+        "cash_before": 9800000,
+        "goods_before": 0,
+        "produce_legal": true,
+        "unused_free_goods": 2
+      },
+      {
+        "actor": 79,
+        "round": 5,
+        "persona": 9,
+        "cash_before": 4800000,
+        "goods_before": 0,
+        "produce_legal": true,
+        "unused_free_goods": 2
+      },
+      {
+        "actor": 80,
+        "round": 5,
+        "persona": 0,
+        "cash_before": 11600000,
+        "goods_before": 0,
+        "produce_legal": true,
+        "unused_free_goods": 2
+      },
+      {
+        "actor": 90,
+        "round": 5,
+        "persona": 0,
+        "cash_before": 9800000,
+        "goods_before": 0,
+        "produce_legal": true,
+        "unused_free_goods": 2
+      },
+      {
+        "actor": 95,
+        "round": 5,
+        "persona": 5,
+        "cash_before": 4800000,
+        "goods_before": 0,
+        "produce_legal": true,
+        "unused_free_goods": 2
+      },
+      {
+        "actor": 0,
+        "round": 5,
+        "persona": 0,
+        "cash_before": 11600000,
+        "goods_before": 0,
+        "produce_legal": true,
+        "unused_free_goods": 2
+      },
+      {
+        "actor": 10,
+        "round": 5,
+        "persona": 0,
+        "cash_before": 11600000,
+        "goods_before": 0,
+        "produce_legal": true,
+        "unused_free_goods": 2
+      },
+      {
+        "actor": 20,
+        "round": 5,
+        "persona": 0,
+        "cash_before": 14800000,
+        "goods_before": 0,
+        "produce_legal": true,
+        "unused_free_goods": 2
+      },
+      {
+        "actor": 30,
+        "round": 5,
+        "persona": 0,
+        "cash_before": 11600000,
+        "goods_before": 0,
+        "produce_legal": true,
+        "unused_free_goods": 2
+      },
+      {
+        "actor": 40,
+        "round": 5,
+        "persona": 0,
+        "cash_before": 14800000,
+        "goods_before": 0,
+        "produce_legal": true,
+        "unused_free_goods": 2
+      },
+      {
+        "actor": 43,
+        "round": 5,
+        "persona": 3,
+        "cash_before": 12000000,
+        "goods_before": 0,
+        "produce_legal": true,
+        "unused_free_goods": 2
+      },
+      {
+        "actor": 44,
+        "round": 5,
+        "persona": 4,
+        "cash_before": 26600000,
+        "goods_before": 0,
+        "produce_legal": true,
+        "unused_free_goods": 2
+      },
+      {
+        "actor": 45,
+        "round": 5,
+        "persona": 5,
+        "cash_before": 4800000,
+        "goods_before": 0,
+        "produce_legal": true,
+        "unused_free_goods": 2
+      },
+      {
+        "actor": 50,
+        "round": 5,
+        "persona": 0,
+        "cash_before": 16800000,
+        "goods_before": 0,
+        "produce_legal": true,
+        "unused_free_goods": 2
+      }
+    ],
+    "terminal_produces": [
+      {
+        "actor": 76,
+        "persona": 6,
+        "goods_created": 2
+      },
+      {
+        "actor": 86,
+        "persona": 6,
+        "goods_created": 2
+      },
+      {
+        "actor": 6,
+        "persona": 6,
+        "goods_created": 2
+      },
+      {
+        "actor": 16,
+        "persona": 6,
+        "goods_created": 2
+      },
+      {
+        "actor": 26,
+        "persona": 6,
+        "goods_created": 2
+      },
+      {
+        "actor": 36,
+        "persona": 6,
+        "goods_created": 2
+      },
+      {
+        "actor": 56,
+        "persona": 6,
+        "goods_created": 2
+      }
+    ],
+    "terminal_goods_count": 14,
+    "terminal_note": "Free final-round production has zero terminal rank value in epoch0, but is not itself a cash loss. All ending goods here were produced after the final market."
+  },
+  "politics": {
+    "accepted_bribes": 14,
+    "outgoing_amount": 70000000,
+    "bribes_gaining_immediate_presidency": 4,
+    "terminal_bribes": [
+      {
+        "actor": 75,
+        "recipient": 62,
+        "round": 6,
+        "amount": 5000000,
+        "influence_before": 2,
+        "influence_after": 3,
+        "president_after": 75,
+        "became_president": true,
+        "terminal": true,
+        "final_cash": 1600000,
+        "final_rank": 100
+      }
+    ],
+    "bribes": [
+      {
+        "actor": 45,
+        "recipient": 20,
+        "round": 2,
+        "amount": 5000000,
+        "influence_before": 1,
+        "influence_after": 2,
+        "president_after": 45,
+        "became_president": true,
+        "terminal": false,
+        "final_cash": 9800000,
+        "final_rank": 93
+      },
+      {
+        "actor": 43,
+        "recipient": 40,
+        "round": 2,
+        "amount": 5000000,
+        "influence_before": 1,
+        "influence_after": 2,
+        "president_after": 45,
+        "became_president": false,
+        "terminal": false,
+        "final_cash": 17000000,
+        "final_rank": 23
+      },
+      {
+        "actor": 43,
+        "recipient": 74,
+        "round": 3,
+        "amount": 5000000,
+        "influence_before": 2,
+        "influence_after": 3,
+        "president_after": 43,
+        "became_president": true,
+        "terminal": false,
+        "final_cash": 17000000,
+        "final_rank": 23
+      },
+      {
+        "actor": 79,
+        "recipient": 13,
+        "round": 4,
+        "amount": 5000000,
+        "influence_before": 1,
+        "influence_after": 2,
+        "president_after": 45,
+        "became_president": false,
+        "terminal": false,
+        "final_cash": 4800000,
+        "final_rank": 99
+      },
+      {
+        "actor": 95,
+        "recipient": 21,
+        "round": 4,
+        "amount": 5000000,
+        "influence_before": 1,
+        "influence_after": 2,
+        "president_after": 45,
+        "became_president": false,
+        "terminal": false,
+        "final_cash": 9800000,
+        "final_rank": 94
+      },
+      {
+        "actor": 45,
+        "recipient": 38,
+        "round": 4,
+        "amount": 5000000,
+        "influence_before": 2,
+        "influence_after": 3,
+        "president_after": 45,
+        "became_president": true,
+        "terminal": false,
+        "final_cash": 9800000,
+        "final_rank": 93
+      },
+      {
+        "actor": 58,
+        "recipient": 43,
+        "round": 5,
+        "amount": 5000000,
+        "influence_before": 1,
+        "influence_after": 2,
+        "president_after": 45,
+        "became_president": false,
+        "terminal": false,
+        "final_cash": 12900000,
+        "final_rank": 86
+      },
+      {
+        "actor": 59,
+        "recipient": 70,
+        "round": 5,
+        "amount": 5000000,
+        "influence_before": 1,
+        "influence_after": 2,
+        "president_after": 45,
+        "became_president": false,
+        "terminal": false,
+        "final_cash": 10200000,
+        "final_rank": 91
+      },
+      {
+        "actor": 69,
+        "recipient": 76,
+        "round": 5,
+        "amount": 5000000,
+        "influence_before": 1,
+        "influence_after": 2,
+        "president_after": 45,
+        "became_president": false,
+        "terminal": false,
+        "final_cash": 6600000,
+        "final_rank": 98
+      },
+      {
+        "actor": 75,
+        "recipient": 45,
+        "round": 5,
+        "amount": 5000000,
+        "influence_before": 1,
+        "influence_after": 2,
+        "president_after": 45,
+        "became_president": false,
+        "terminal": false,
+        "final_cash": 1600000,
+        "final_rank": 100
+      },
+      {
+        "actor": 85,
+        "recipient": 66,
+        "round": 5,
+        "amount": 5000000,
+        "influence_before": 1,
+        "influence_after": 2,
+        "president_after": 45,
+        "became_president": false,
+        "terminal": false,
+        "final_cash": 6600000,
+        "final_rank": 97
+      },
+      {
+        "actor": 89,
+        "recipient": 95,
+        "round": 5,
+        "amount": 5000000,
+        "influence_before": 1,
+        "influence_after": 2,
+        "president_after": 45,
+        "became_president": false,
+        "terminal": false,
+        "final_cash": 6600000,
+        "final_rank": 96
+      },
+      {
+        "actor": 15,
+        "recipient": 57,
+        "round": 5,
+        "amount": 5000000,
+        "influence_before": 1,
+        "influence_after": 2,
+        "president_after": 45,
+        "became_president": false,
+        "terminal": false,
+        "final_cash": 6600000,
+        "final_rank": 95
+      },
+      {
+        "actor": 75,
+        "recipient": 62,
+        "round": 6,
+        "amount": 5000000,
+        "influence_before": 2,
+        "influence_after": 3,
+        "president_after": 75,
+        "became_president": true,
+        "terminal": true,
+        "final_cash": 1600000,
+        "final_rank": 100
+      }
+    ],
+    "laws": [
+      {
+        "round": 1,
+        "law": "status_quo",
+        "yes_weight": 1,
+        "no_weight": 0,
+        "president": 70,
+        "decision": "pass",
+        "passed": true,
+        "tax_after": 0,
+        "subsequent_observed_tax_paid_by_president": 200000
+      },
+      {
+        "round": 2,
+        "law": "next_round_price_plus_two",
+        "yes_weight": 76,
+        "no_weight": 17,
+        "president": 45,
+        "decision": "pass",
+        "passed": true,
+        "tax_after": 0,
+        "subsequent_observed_tax_paid_by_president": 200000
+      },
+      {
+        "round": 3,
+        "law": "tax_10_percent",
+        "yes_weight": 72,
+        "no_weight": 31,
+        "president": 43,
+        "decision": "pass",
+        "passed": true,
+        "tax_after": 1000,
+        "subsequent_observed_tax_paid_by_president": 0
+      },
+      {
+        "round": 4,
+        "law": "tax_20_percent",
+        "yes_weight": 43,
+        "no_weight": 63,
+        "president": 45,
+        "decision": "veto",
+        "passed": false,
+        "tax_after": 1000,
+        "subsequent_observed_tax_paid_by_president": 0
+      },
+      {
+        "round": 5,
+        "law": "poorest_gains_influence",
+        "yes_weight": 46,
+        "no_weight": 67,
+        "president": 45,
+        "decision": "veto",
+        "passed": false,
+        "tax_after": 1000,
+        "subsequent_observed_tax_paid_by_president": 0
+      },
+      {
+        "round": 6,
+        "law": "richest_gains_influence",
+        "yes_weight": 10,
+        "no_weight": 104,
+        "president": 75,
+        "decision": "veto",
+        "passed": false,
+        "tax_after": 1000,
+        "subsequent_observed_tax_paid_by_president": 0
+      }
+    ],
+    "interpretation": "A bribe transfers money to a rival and purchases influence for its sender. Not becoming president immediately does not by itself prove the whole bribe was irrational. Tax reduces collective sale receipts but can benefit an individual cash holder relative to producing opponents."
+  },
+  "menu_gap": {
+    "definition": "Buy action absent from the opening-snapshot menu although affordable at the recorded execution turn, with all preceding recorded market decisions fixed. This establishes a legal opportunity gap, not profitability or a causal better game.",
+    "option_pairs": 526,
+    "actor_rounds": 286,
+    "option_pairs_with_later_market": 366,
+    "by_round": {
+      "3": 10,
+      "4": 183,
+      "5": 173,
+      "6": 160
+    },
+    "examples": [
+      {
+        "actor": 20,
+        "round": 3,
+        "execution_position": 74,
+        "units": 1,
+        "cash_before": 7000000,
+        "opening_cost": 14000000,
+        "cost_at_recorded_turn": 3000000,
+        "counter_at_recorded_turn": 146,
+        "markets_after_this_round": 3
+      },
+      {
+        "actor": 20,
+        "round": 3,
+        "execution_position": 74,
+        "units": 2,
+        "cash_before": 7000000,
+        "opening_cost": 28000000,
+        "cost_at_recorded_turn": 6000000,
+        "counter_at_recorded_turn": 146,
+        "markets_after_this_round": 3
+      },
+      {
+        "actor": 40,
+        "round": 3,
+        "execution_position": 94,
+        "units": 1,
+        "cash_before": 7000000,
+        "opening_cost": 14000000,
+        "cost_at_recorded_turn": 3000000,
+        "counter_at_recorded_turn": 186,
+        "markets_after_this_round": 3
+      },
+      {
+        "actor": 40,
+        "round": 3,
+        "execution_position": 94,
+        "units": 2,
+        "cash_before": 7000000,
+        "opening_cost": 28000000,
+        "cost_at_recorded_turn": 6000000,
+        "counter_at_recorded_turn": 186,
+        "markets_after_this_round": 3
+      },
+      {
+        "actor": 43,
+        "round": 3,
+        "execution_position": 97,
+        "units": 2,
+        "cash_before": 17000000,
+        "opening_cost": 28000000,
+        "cost_at_recorded_turn": 6000000,
+        "counter_at_recorded_turn": 192,
+        "markets_after_this_round": 3
+      },
+      {
+        "actor": 44,
+        "round": 3,
+        "execution_position": 98,
+        "units": 2,
+        "cash_before": 17000000,
+        "opening_cost": 28000000,
+        "cost_at_recorded_turn": 6000000,
+        "counter_at_recorded_turn": 192,
+        "markets_after_this_round": 3
+      },
+      {
+        "actor": 45,
+        "round": 3,
+        "execution_position": 99,
+        "units": 1,
+        "cash_before": 8000000,
+        "opening_cost": 14000000,
+        "cost_at_recorded_turn": 3000000,
+        "counter_at_recorded_turn": 194,
+        "markets_after_this_round": 3
+      },
+      {
+        "actor": 45,
+        "round": 3,
+        "execution_position": 99,
+        "units": 2,
+        "cash_before": 8000000,
+        "opening_cost": 28000000,
+        "cost_at_recorded_turn": 6000000,
+        "counter_at_recorded_turn": 194,
+        "markets_after_this_round": 3
+      },
+      {
+        "actor": 46,
+        "round": 3,
+        "execution_position": 100,
+        "units": 1,
+        "cash_before": 9000000,
+        "opening_cost": 14000000,
+        "cost_at_recorded_turn": 3000000,
+        "counter_at_recorded_turn": 194,
+        "markets_after_this_round": 3
+      },
+      {
+        "actor": 46,
+        "round": 3,
+        "execution_position": 100,
+        "units": 2,
+        "cash_before": 9000000,
+        "opening_cost": 28000000,
+        "cost_at_recorded_turn": 6000000,
+        "counter_at_recorded_turn": 194,
+        "markets_after_this_round": 3
+      },
+      {
+        "actor": 52,
+        "round": 4,
+        "execution_position": 2,
+        "units": 1,
+        "cash_before": 10000000,
+        "opening_cost": 12000000,
+        "cost_at_recorded_turn": 9000000,
+        "counter_at_recorded_turn": 2,
+        "markets_after_this_round": 2
+      },
+      {
+        "actor": 53,
+        "round": 4,
+        "execution_position": 3,
+        "units": 1,
+        "cash_before": 9000000,
+        "opening_cost": 12000000,
+        "cost_at_recorded_turn": 7000000,
+        "counter_at_recorded_turn": 4,
+        "markets_after_this_round": 2
+      }
+    ]
+  },
+  "conditional_inventory_quotes": [
+    {
+      "actor": 47,
+      "earlier_round": 2,
+      "later_round": 3,
+      "actual_earlier_sale": 6000000,
+      "actual_later_sale": 26000000,
+      "actual_two_sales": 32000000,
+      "earlier_units_retained": 2,
+      "later_units_in_quote": 4,
+      "later_recorded_position": 1,
+      "later_recorded_counter": 0,
+      "conditional_later_quote": 47000000,
+      "quote_minus_actual_sales": 15000000,
+      "interpretation": "Two-transaction arithmetic with recorded tax, boom, queue position and later production held fixed. Not a regenerated game, final-cash prediction or causal win estimate."
+    },
+    {
+      "actor": 51,
+      "earlier_round": 3,
+      "later_round": 4,
+      "actual_earlier_sale": 10000000,
+      "actual_later_sale": 19800000,
+      "actual_two_sales": 29800000,
+      "earlier_units_retained": 2,
+      "later_units_in_quote": 4,
+      "later_recorded_position": 1,
+      "later_recorded_counter": 0,
+      "conditional_later_quote": 35100000,
+      "quote_minus_actual_sales": 5300000,
+      "interpretation": "Two-transaction arithmetic with recorded tax, boom, queue position and later production held fixed. Not a regenerated game, final-cash prediction or causal win estimate."
+    },
+    {
+      "actor": 55,
+      "earlier_round": 4,
+      "later_round": 5,
+      "actual_earlier_sale": 5400000,
+      "actual_later_sale": 19800000,
+      "actual_two_sales": 25200000,
+      "earlier_units_retained": 2,
+      "later_units_in_quote": 4,
+      "later_recorded_position": 1,
+      "later_recorded_counter": 0,
+      "conditional_later_quote": 35100000,
+      "quote_minus_actual_sales": 9900000,
+      "interpretation": "Two-transaction arithmetic with recorded tax, boom, queue position and later production held fixed. Not a regenerated game, final-cash prediction or causal win estimate."
+    }
+  ],
+  "limitations": [
+    "No model, network or GPU calls; original evidence and source were not changed.",
+    "One completed shared-model game supplies diagnostics, not a win-rate estimate.",
+    "Improving all100agents does not make all100winners; competitive evaluation needs policy-level win rate across independent games and rotated seats.",
+    "Transaction quotes hold intervening economics and opponent behavior fixed; no whole-game causal counterfactual is claimed.",
+    "A winner-only prize of950 instead of475 is a rule change, not measured strategic gain."
+  ]
+}

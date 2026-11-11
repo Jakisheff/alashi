@@ -1,0 +1,127 @@
+{
+  "schema": "alashi-market-context-pair-economics-diagnostics-v1",
+  "game_id": 20261110,
+  "seed": 20261110,
+  "peso": 1000000,
+  "all_saved_requests_and_responses_equal_across_arms": true,
+  "matching_phase_batches": 24,
+  "focal_actor": 0,
+  "winner_actor": 26,
+  "winner_sale_receipts": 45000000,
+  "winner_incoming_bribes": [
+    {
+      "round": 4,
+      "sender": 69,
+      "amount": 5000000
+    }
+  ],
+  "winner_final_cash": 50000000,
+  "focal_actions": [
+    {
+      "round": 1,
+      "step": 1,
+      "call_id": "0001-000",
+      "action": "produce",
+      "accepted": true,
+      "remaining_markets": 5,
+      "produce_offered": true,
+      "produce_cash_cost": 0,
+      "cash_after": 0,
+      "goods_after": 2,
+      "phase_file_sha256": "fb94cfc188533a2a83682f1286849f65328f999fb76e3ef923811252608c7474"
+    },
+    {
+      "round": 2,
+      "step": 5,
+      "call_id": "0005-000",
+      "action": "produce",
+      "accepted": true,
+      "remaining_markets": 4,
+      "produce_offered": true,
+      "produce_cash_cost": 0,
+      "cash_after": 2000000,
+      "goods_after": 2,
+      "phase_file_sha256": "7488d2ae9ea8fbf639acdb6651c5de04b0c24ec75d343a8746eb06de1ec92308"
+    },
+    {
+      "round": 3,
+      "step": 9,
+      "call_id": "0009-000",
+      "action": "produce",
+      "accepted": true,
+      "remaining_markets": 3,
+      "produce_offered": true,
+      "produce_cash_cost": 0,
+      "cash_after": 4000000,
+      "goods_after": 2,
+      "phase_file_sha256": "b94f7ea2c6e954715589f15ff8c4b0974d353baf9167deadd8c45cea7f3496a8"
+    },
+    {
+      "round": 4,
+      "step": 13,
+      "call_id": "0013-000",
+      "action": "pass",
+      "accepted": true,
+      "remaining_markets": 2,
+      "produce_offered": true,
+      "produce_cash_cost": 0,
+      "cash_after": 6000000,
+      "goods_after": 0,
+      "phase_file_sha256": "6d69f5e525ef1dad89ebab8067854db0434e51ab823ea128bc9fa4b9b660374e"
+    },
+    {
+      "round": 5,
+      "step": 17,
+      "call_id": "0017-000",
+      "action": "pass",
+      "accepted": true,
+      "remaining_markets": 1,
+      "produce_offered": true,
+      "produce_cash_cost": 0,
+      "cash_after": 6000000,
+      "goods_after": 0,
+      "phase_file_sha256": "50dcf2b5e126ea7e7900b7a7c434136feade2efe0dbd3595bab42555b966fb50"
+    },
+    {
+      "round": 6,
+      "step": 21,
+      "call_id": "0021-000",
+      "action": "pass",
+      "accepted": true,
+      "remaining_markets": 0,
+      "produce_offered": true,
+      "produce_cash_cost": 0,
+      "cash_after": 6000000,
+      "goods_after": 0,
+      "phase_file_sha256": "963c2d169198616f3fa54ad3557949608c2a5d2978373e3a286302117f5353b3"
+    }
+  ],
+  "winner_sales": [
+    {
+      "round": 2,
+      "units": 2,
+      "revenue": 2000000
+    },
+    {
+      "round": 3,
+      "units": 2,
+      "revenue": 2000000
+    },
+    {
+      "round": 4,
+      "units": 2,
+      "revenue": 2000000
+    },
+    {
+      "round": 5,
+      "units": 2,
+      "revenue": 17000000
+    },
+    {
+      "round": 6,
+      "units": 2,
+      "revenue": 22000000
+    }
+  ],
+  "interpretation": "The focal actor passed at Action rounds 4 and 5 while free production remained offered and 2/1 markets remained. This is a directly observed candidate for a future decision-quality hypothesis, not an evaluated counterfactual or a guarantee of a higher rank. The winner also received one incoming bribe; its cash is not attributed entirely to sales."
+}

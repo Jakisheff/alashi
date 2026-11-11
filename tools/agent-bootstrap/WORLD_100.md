@@ -1,7 +1,8 @@
 # Experimental 100-player world through BitLLM
 
 This driver gives up to 100 named agents separate observations, short private
-receipt histories and distinct identity prompts in **one canonical ALASHI game**.
+receipt histories and distinct identity prompts in **one shared ALASHI game**
+using the canonical action rules.
 The same configured model serves all identities. This does not demonstrate 100
 different models or independent intelligences. All balances, fees and payouts
 are simulated; the driver sends no wallet transactions or public ALASHI HTTP
@@ -11,6 +12,50 @@ The Rust `world_worker` owns the rules, state, action validation, phase changes
 and six-round settlement. Node only collects model decisions, journals them and
 submits a complete phase batch. The simulation clock pauses during collection.
 The normal six-player path and on-chain admission rules are unchanged.
+
+## Compete for one prize
+
+For Amir's competitive 100-player mode, initialize with
+`--payout-policy winner_takes_all --epoch 0`. Each agent plays for itself. Final
+cash determines rank; goods have no terminal value. Equal cash is resolved by
+the canonical wallet-byte ordering, so exactly one player wins. That player
+receives the entire simulated bank after rake; everyone else receives zero.
+At 100 entries of 10 units and the existing 5% rake, this is a 950-unit prize.
+Cash is a ranking score, not an additional withdrawal from the prize bank.
+
+This experimental policy is frozen before play and included in state identity.
+It uses the existing settlement calculator with one 100% share. Without the
+option, `canonical_top4` preserves the ordinary four-place schedule. The
+one-winner policy currently accepts epoch 0 only; epoch 1 has additional rent
+and factory payments that would require a separate design.
+
+In this mode the model sees its current rank, cash score, leader score, gap to
+the leader, execution position, current price curve, and the number of remaining
+market phases (including the current market when applicable). Earlier players'
+trades affect its actual execution price. It is told to pursue its own first place, with its
+personality secondary to that goal. Free production costs no cash, but goods
+made after the last market cannot improve the final cash rank. Menus still
+allow strategic choices; no scripted policy replaces a model decision.
+
+See the [decision and evaluation boundary](../../docs/ops/WORLD_100_SINGLE_WINNER_20261109.md).
+The earlier two BitLLM games used the four-place policy; they are not evidence
+that the new incentives improve model play.
+
+For the narrowly scoped market-information pilot, freeze
+`--market-context-arm baseline --focal-actor 0` or
+`--market-context-arm candidate --focal-actor 0` together with the one-winner
+policy. Both require a new directory. These options hold all other players'
+prompt policies fixed and reveal the additional market block only to the
+candidate focal player in market phases. Without these options, the ordinary
+one-winner mode gives the full context to all players. See the
+[pre-run paired protocol](../../docs/ops/WORLD_100_MARKET_CONTEXT_PROTOCOL_20261109.md)
+for the fixed seed, budgets, exact intervention and single-pair limitations.
+
+The [completed paired pilot](../../docs/ops/WORLD_100_MARKET_CONTEXT_RESULT_20261109.md)
+made 3,612 live BitLLM requests across two 100-agent games. Both games had one
+winner and passed full offline replay. The additional information changed no
+focal market decision: cash 6, rank 89 and payout 0 in both arms. This result
+does not validate a stronger strategy or estimate a population win rate.
 
 ## Build and freeze the experiment
 
@@ -22,9 +67,10 @@ node tools/agent-bootstrap/world-run.mjs init \
   --dir /absolute/private/path/alashi-world-100 \
   --worker /absolute/path/alashi/arena/target/debug/world_worker \
   --agents 100 --seed 20261109 --game-id 20261109 --epoch 0 \
+  --payout-policy winner_takes_all \
   --url http://127.0.0.1:7778/v1/chat/completions \
   --model qwen3.8-flash-next-fp4-alesha \
-  --parallelism 2 --max-calls 2000 --max-tokens 2000000 \
+  --parallelism 2 --max-calls 2000 --max-tokens 4000000 \
   --max-seconds 7200 --max-consecutive-provider-failures 5
 ```
 
@@ -45,6 +91,10 @@ configuration, seed, worker SHA-256 and driver SHA-256. Keep that worker binary
 and driver for replay. A modified binary, profile or configuration cannot
 silently resume an existing experiment. A new configuration needs a new run
 directory and must be reported as a separate experiment.
+
+The example explicitly reserves a four-million-token ceiling for the expanded
+competitive observations. This is a hard limit, not measured usage or a price
+quote; the unchanged CLI default is two million tokens when omitted.
 
 With the locally authenticated BitLLM gateway running, explicitly start:
 
