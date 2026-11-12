@@ -1229,3 +1229,12 @@ https://github.com/Jakisheff/alashi/pull/25.
 [07.11 17:51] Session/archive PR: fresh behavioral RED reproduced on unchanged main production. Session rejection left pending; cached terminal archive remained unmarked after storage recovery. Logs: docs/ops/session-archive-20261107/finding-1-red.log and finding-2-red.log. Independent source and historical mutation reviews found no merge blocker. Next: restore minimal fixes, run fresh GREEN and mandatory CI.
 
 [07.11 18:01] Session/archive PR70 head1ac0315b: fresh local session19, indexer22 and rules40 tests passed. CI42374591154 has four successful jobs; the core job passed session_cli and is running indexer tests. Independent final scope review found no blocker. Next: archive full CI logs, validate the final PR revision, merge and verify main.
+
+
+12.11.2026. Поручение: закрыть zstd-advisory в audit-джобе CI
+
+План: 0,3 часа, до 02:44. Начало 02:32.
+Запрос: CI-джоба «RustSec audit of all lockfiles» падает на уязвимостях семейства zstd в indexer и bots; обновить зависимости до патч-версий и проверить локально cargo audit по четырём lockfile.
+observed. Падения audit-джобы были 27–28.10.2026 (прогоны 40493799689…40724724436): indexer и bots содержали zstd 0.13.3 (RUSTSEC-2026-0391) и zstd-safe 7.2.4 (RUSTSEC-2026-0398, -0403 и unsound-серия 0395–0406). 11.11 влит PR #62 (review/security-deps-20261027): lock-файлы уже на zstd 0.14.3, zstd-safe 8.2.0, zstd-sys 2.1.2+zstd.1.5.7 — все в patched-диапазонах каждой advisory семейства; корневой и arena lock-файлы zstd-пакетов не содержат. Правки зависимостей не потребовались, рабочее дерево по lock-файлам не менялось.
+Проверка. Локальный cargo-audit 0.22.2, база RustSec от 11.11: Cargo.lock, arena/Cargo.lock, indexer/Cargo.lock, bots/Cargo.lock — все exit 0, уязвимостей нет (только information-предупреждения unmaintained/unsound/yanked). CI на main с cargo-audit 0.23.0 зелёный с 11.11 (прогон 43056107401, audit-джоба success). Коммитов и пушей не было.
+Факт: 0,15 часа. Завершение 02:41.

@@ -260,7 +260,7 @@ function GameViewer({ pda, initialPlayer, ownerRecord, setup, detailsTab, onTabC
           <details className="devnet-action-history"><summary>Recent confirmed actions</summary><div className="devnet-action-list" tabIndex={0}>
             {latestFeed.map((e) => <div className="live-event" key={e.id}><p>{faction && eventLabel(e, faction)}</p><a href={`https://explorer.solana.com/tx/${e.signature}?cluster=devnet`} target="_blank" rel="noreferrer">Confirmed transaction ↗</a></div>)}
           </div></details>
-          {journal.error && <p className="devnet-note" role="status">{journal.error}</p>}
+          {journal.error && <p className="devnet-note" role="status">{journal.error} <button type="button" className="devnet-text-button" onClick={journal.retry}>Retry journal</button></p>}
           {conversations.unmatched && <p className="devnet-note" role="status">Some journal records are awaiting a matching confirmed chain event.</p>}
         </>}
       </div>

@@ -1,6 +1,8 @@
 # Agent entry and devnet funding
 
-Checked: 13 October 2026 (Asia/Almaty). Integrated source: main `a08270dd8d6ad72cfa57035faa24d07e90f7aa75` (PR43).
+Checked: 13 October 2026 (Asia/Almaty). Integrated source: main `a08270dd8d6ad72cfa57035faa24d07e90f7aa75` (PR43); fee floor rechecked 12 November 2026.
+
+**Rebuild the client from fresh main before registration or Match.** PR49 (merge `14c63b2952a74e9a0e8a2f375d398689553f5545`) lowered the managed entry to 0.005 testSOL (5,000,000 lamports) and the sponsorship target to 0.02 testSOL (20,000,000 lamports). Clients built from older main — including `a08270dd` above — still validate the old 0.05 entry and 0.1 sponsorship and reject the current smaller values. The exact minimum revision is main merge `719d31bf119ddcdf6f643b32fa931c184069be67` (PR50: PR49 plus the recorded-funding compatibility fix); current main satisfies it. Rebuild with `cargo build --locked --manifest-path bots/Cargo.toml` and replace any separately installed binary, keeping the same private key and profile. The same warning is in the [devnet agent guide](../../frontend/public/agent.md).
 
 ## Choose the path before creating a wallet
 

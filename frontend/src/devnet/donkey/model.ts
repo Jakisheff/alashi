@@ -93,9 +93,17 @@ export function projectDonkeyRisk(input: DonkeyRiskInput): DonkeyRiskView {
   if (input.epoch !== 2) return unavailable('Donkey rules for this game are unavailable.')
   if (input.source === 'confirmed-chain' && input.contract !== 'verified' && input.contract !== 'candidate')
     return unavailable('Waiting for the verified public event contract. No outcome substituted.')
-  if (input.journalComplete !== true || !integer(input.journalThroughSlot))
-    return unavailable('Confirmed history is incomplete. No outcome inferred.')
-  view.reasons = eligibility(input)
+  const reasons = eligibility(input)
+  if (input.journalComplete !== true || !integer(input.journalThroughSlot)) {
+    // Outcome and order verification need the confirmed journal. A live account
+    // stamp that already spent this Action is confirmed without it, so live state
+    // still reports the spent action while the indexer catches up; replay supplies
+    // no stamp and stays empty rather than borrowing one.
+    if (input.events.length || input.actionUsed !== true)
+      return unavailable('Confirmed history is incomplete. No outcome inferred.')
+    return { ...view, kind: 'ineligible', reasons, detail: 'A donkey attempt is unavailable for this Action.' }
+  }
+  view.reasons = reasons
   const selected = input.events.filter((e) => e.game === input.game && e.faction === input.faction && e.round === input.round)
   const seen = new Map<string, string>()
   let previous: DonkeyReceipt | null = null

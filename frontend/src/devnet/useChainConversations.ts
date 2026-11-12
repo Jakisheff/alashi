@@ -9,7 +9,7 @@ export function useChainConversations(game: string, enabled: boolean, terminal: 
   const [journal, setJournal] = useState(initial)
   const [error, setError] = useState('')
   const [revision, setRevision] = useState(0)
-  const inFlight = useRef(false), retryAt = useRef(0), terminalRef = useRef(terminal)
+  const inFlight = useRef(false), retryAt = useRef(0), rateLimitUntil = useRef(0), terminalRef = useRef(terminal)
   useEffect(() => { terminalRef.current = terminal }, [terminal])
   useEffect(() => {
     if (!enabled) return
@@ -40,16 +40,23 @@ export function useChainConversations(game: string, enabled: boolean, terminal: 
           : problem instanceof ChainApiError && problem.code === 'invalid' ? 'Public journal validation failed. Keeping the last received records.'
             : problem instanceof ChainApiError && problem.code === 'rate_limit' ? 'Public journal is busy. Retrying after a pause.' : 'Public journal connection interrupted.')
         failures++
-        retryAt.current = Date.now() + Math.max(12_000 * 2 ** Math.min(failures - 1, 4), problem instanceof ChainApiError ? problem.retryMs : 0)
+        if (problem instanceof ChainApiError && problem.code === 'rate_limit') rateLimitUntil.current = Date.now() + problem.retryMs
+        retryAt.current = Math.max(rateLimitUntil.current, Date.now() + 12_000 * 2 ** Math.min(failures - 1, 4))
       } finally { inFlight.current = false; schedule() }
     }
-    const visible = () => { if (document.hidden) window.clearTimeout(timer); else schedule() }
+    // Manual Retry and foreground recovery fetch at once; a server Retry-After still holds.
+    const recover = () => {
+      retryAt.current = Math.max(Date.now(), rateLimitUntil.current)
+      schedule()
+    }
+    const visible = () => { if (document.hidden) window.clearTimeout(timer); else recover() }
     document.addEventListener('visibilitychange', visible)
     window.addEventListener('pageshow', visible)
+    window.addEventListener('online', recover)
     void poll()
-    return () => { stopped = true; controller.abort(); window.clearTimeout(timer); document.removeEventListener('visibilitychange', visible); window.removeEventListener('pageshow', visible) }
+    return () => { stopped = true; controller.abort(); window.clearTimeout(timer); document.removeEventListener('visibilitychange', visible); window.removeEventListener('pageshow', visible); window.removeEventListener('online', recover) }
   }, [game, enabled, revision])
   return { entries: journal.game === game ? journal.entries : [], historyComplete: journal.game === game && journal.historyComplete,
     connection: error ? (journal.loaded ? 'reconnecting' as const : 'unavailable' as const) : journal.loaded ? 'connected' as const : 'loading' as const,
-    error, retry: () => setRevision((n) => n + 1) }
+    error, retry: () => { retryAt.current = Math.max(Date.now(), rateLimitUntil.current); setRevision((n) => n + 1) } }
 }
