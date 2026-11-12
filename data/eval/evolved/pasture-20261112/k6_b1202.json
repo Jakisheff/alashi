@@ -1,0 +1,225 @@
+{
+  "elapsed_s": 7.898800834,
+  "fitness_histories_alashi": [
+    [
+      -0.18125,
+      -0.18125,
+      -0.18125,
+      -0.18125,
+      -0.18125,
+      -0.18125
+    ],
+    [
+      -0.5,
+      -0.14375,
+      -0.14375,
+      -0.14375,
+      -0.025,
+      -0.025
+    ],
+    [
+      -0.225,
+      -0.225,
+      -0.10625,
+      -0.10625,
+      -0.10625,
+      -0.10625
+    ],
+    [
+      -0.06875,
+      -0.06875,
+      -0.05,
+      -0.05,
+      -0.05,
+      -0.05
+    ],
+    [
+      17.1,
+      17.45625,
+      18.40625,
+      18.40625,
+      19.2375,
+      19.2375
+    ]
+  ],
+  "gene_max": [
+    8,
+    10,
+    4,
+    3,
+    20,
+    20
+  ],
+  "gene_min": [
+    1,
+    2,
+    1,
+    0,
+    4,
+    0
+  ],
+  "gene_names": [
+    "dip_buy",
+    "buy_reserve",
+    "max_buy_units",
+    "bribe_appetite",
+    "bribe_gate",
+    "license_bid"
+  ],
+  "heldout": {
+    "heldout_base_seed": 14532259,
+    "heldout_seeds": 8,
+    "interpretation": "Разрыв visible − heldout показывает, сколько силы уровня существует только на тренировочном расписании сидов; retention ниже 1 — подгонка под видимые партии.",
+    "per_level": [
+      {
+        "gap_alashi": 0.59375,
+        "heldout_payout_alashi": 5.225,
+        "level": 1,
+        "retention": 0.8979591836734694,
+        "training_base_seed": 1202,
+        "visible_payout_alashi": 5.81875
+      },
+      {
+        "gap_alashi": -1.06875,
+        "heldout_payout_alashi": 11.04375,
+        "level": 2,
+        "retention": 1.1071428571428572,
+        "training_base_seed": 2654436971,
+        "visible_payout_alashi": 9.975
+      },
+      {
+        "gap_alashi": -1.959375,
+        "heldout_payout_alashi": 15.853125,
+        "level": 3,
+        "retention": 1.141025641025641,
+        "training_base_seed": 5308872740,
+        "visible_payout_alashi": 13.89375
+      },
+      {
+        "gap_alashi": -3.028125,
+        "heldout_payout_alashi": 21.078125,
+        "level": 4,
+        "retention": 1.167763157894737,
+        "training_base_seed": 7963308509,
+        "visible_payout_alashi": 18.05
+      },
+      {
+        "gap_alashi": -0.771875,
+        "heldout_payout_alashi": 20.009375,
+        "level": 5,
+        "retention": 1.0401234567901234,
+        "training_base_seed": 10617744278,
+        "visible_payout_alashi": 19.2375
+      }
+    ]
+  },
+  "interpretation": "Локальная калибровка на фиксированном расписании сидов; сила уровня гарантируется только относительно этого микса соперников.",
+  "levels": [
+    {
+      "achieved_alashi": 5.81875,
+      "genome": {
+        "bribe_appetite": 3,
+        "bribe_gate": 6,
+        "buy_reserve": 7,
+        "dip_buy": 1,
+        "license_bid": 2,
+        "max_buy_units": 3
+      },
+      "level": 1,
+      "target_alashi": 6.0
+    },
+    {
+      "achieved_alashi": 9.975,
+      "genome": {
+        "bribe_appetite": 1,
+        "bribe_gate": 7,
+        "buy_reserve": 9,
+        "dip_buy": 8,
+        "license_bid": 20,
+        "max_buy_units": 4
+      },
+      "level": 2,
+      "target_alashi": 10.0
+    },
+    {
+      "achieved_alashi": 13.89375,
+      "genome": {
+        "bribe_appetite": 0,
+        "bribe_gate": 4,
+        "buy_reserve": 10,
+        "dip_buy": 2,
+        "license_bid": 9,
+        "max_buy_units": 2
+      },
+      "level": 3,
+      "target_alashi": 14.0
+    },
+    {
+      "achieved_alashi": 18.05,
+      "genome": {
+        "bribe_appetite": 2,
+        "bribe_gate": 18,
+        "buy_reserve": 5,
+        "dip_buy": 8,
+        "license_bid": 5,
+        "max_buy_units": 1
+      },
+      "level": 4,
+      "target_alashi": 18.0
+    },
+    {
+      "achieved_alashi": 19.2375,
+      "genome": {
+        "bribe_appetite": 0,
+        "bribe_gate": 16,
+        "buy_reserve": 7,
+        "dip_buy": 7,
+        "license_bid": 10,
+        "max_buy_units": 1
+      },
+      "level": 5,
+      "target_alashi": null
+    }
+  ],
+  "params": {
+    "base_seed": 1202,
+    "generations_per_level": 6,
+    "mutation_rate": 0.25,
+    "opponents": [
+      "greedy",
+      "tactical",
+      "greedy",
+      "random"
+    ],
+    "population": 16,
+    "seeds": 4,
+    "targets_arg": "6,10,14,18"
+  },
+  "schema_version": 2,
+  "verification": [
+    {
+      "earlier_generation": 0,
+      "later_generation": 1,
+      "mean_payout_delta": 5462500.0,
+      "paired_matches": 40
+    },
+    {
+      "earlier_generation": 1,
+      "later_generation": 2,
+      "mean_payout_delta": 4987500.0,
+      "paired_matches": 40
+    },
+    {
+      "earlier_generation": 2,
+      "later_generation": 3,
+      "mean_payout_delta": 4215625.0,
+      "paired_matches": 40
+    },
+    {
+      "earlier_generation": 3,
+      "later_generation": 4,
+      "mean_payout_delta": -356250.0,
+      "paired_matches": 40
+    }
+  ]
+}
