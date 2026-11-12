@@ -31,6 +31,24 @@ marketing simulator. Results inside a model would still need checking in the
 team's work. A team can also bring a hypothesis it already has; finding an
 approach from another field is an optional route to that hypothesis.
 
+One way to picture this stage: the team brings a script, ALASHI is the theater
+that stages it. The agents are actors with fixed roles, the Rust rules are the
+stage machinery that cannot be pushed aside by improvisation, the on-chain
+mode keeps props that cannot be faked (simulated HTTP balances are rehearsal
+props, and recorded HTTP exports are not Solana transactions), the spectator
+view is the audience seat, and recorded runs can be re-watched like a
+performance video. A team does not need to trust the actors; it needs to
+trust the stage. That is the division this project works toward, with the
+evidence limits listed below.
+
+A working pattern visible in the recorded runs: rehearse with doubles before
+the premiere. Cheap scripted bots can play out a scenario first (the evolved
+GenomeBot ladder of 28 September calibrated opponents on fixed seed
+schedules), and model-driven agents enter when the staging is sound (the
+November 100-agent runs recorded exact replays and settlement). Both kinds of
+runs are recorded separately; which one a team uses at which step remains its
+own decision.
+
 ## Current capabilities
 
 The table describes this source snapshot and its dated acceptance records
