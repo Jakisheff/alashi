@@ -1,0 +1,210 @@
+{
+  "elapsed_s": 4.024407595,
+  "fitness_histories_alashi": [
+    [
+      -0.65,
+      -0.18125,
+      -0.18125
+    ],
+    [
+      -1.6875,
+      -0.14375,
+      -0.14375
+    ],
+    [
+      -0.25,
+      -0.25,
+      -0.25
+    ],
+    [
+      -0.16875,
+      -0.16875,
+      -0.16875
+    ],
+    [
+      23.75,
+      23.75,
+      23.75
+    ]
+  ],
+  "gene_max": [
+    8,
+    10,
+    4,
+    3,
+    20,
+    20
+  ],
+  "gene_min": [
+    1,
+    2,
+    1,
+    0,
+    4,
+    0
+  ],
+  "gene_names": [
+    "dip_buy",
+    "buy_reserve",
+    "max_buy_units",
+    "bribe_appetite",
+    "bribe_gate",
+    "license_bid"
+  ],
+  "heldout": {
+    "heldout_base_seed": 14531390,
+    "heldout_seeds": 8,
+    "interpretation": "Разрыв visible − heldout показывает, сколько силы уровня существует только на тренировочном расписании сидов; retention ниже 1 — подгонка под видимые партии.",
+    "per_level": [
+      {
+        "gap_alashi": -1.1875,
+        "heldout_payout_alashi": 7.00625,
+        "level": 1,
+        "retention": 1.2040816326530612,
+        "training_base_seed": 303,
+        "visible_payout_alashi": 5.81875
+      },
+      {
+        "gap_alashi": 2.078125,
+        "heldout_payout_alashi": 7.778125,
+        "level": 2,
+        "retention": 0.7891566265060241,
+        "training_base_seed": 2654436072,
+        "visible_payout_alashi": 9.85625
+      },
+      {
+        "gap_alashi": 0.95,
+        "heldout_payout_alashi": 13.3,
+        "level": 3,
+        "retention": 0.9333333333333333,
+        "training_base_seed": 5308871841,
+        "visible_payout_alashi": 14.25
+      },
+      {
+        "gap_alashi": -1.840625,
+        "heldout_payout_alashi": 20.009375,
+        "level": 4,
+        "retention": 1.1013071895424837,
+        "training_base_seed": 7963307610,
+        "visible_payout_alashi": 18.16875
+      },
+      {
+        "gap_alashi": 0.415625,
+        "heldout_payout_alashi": 23.334375,
+        "level": 5,
+        "retention": 0.9825,
+        "training_base_seed": 10617743379,
+        "visible_payout_alashi": 23.75
+      }
+    ]
+  },
+  "interpretation": "Локальная калибровка на фиксированном расписании сидов; сила уровня гарантируется только относительно этого микса соперников.",
+  "levels": [
+    {
+      "achieved_alashi": 5.81875,
+      "genome": {
+        "bribe_appetite": 3,
+        "bribe_gate": 4,
+        "buy_reserve": 7,
+        "dip_buy": 7,
+        "license_bid": 5,
+        "max_buy_units": 4
+      },
+      "level": 1,
+      "target_alashi": 6.0
+    },
+    {
+      "achieved_alashi": 9.85625,
+      "genome": {
+        "bribe_appetite": 1,
+        "bribe_gate": 11,
+        "buy_reserve": 6,
+        "dip_buy": 2,
+        "license_bid": 2,
+        "max_buy_units": 3
+      },
+      "level": 2,
+      "target_alashi": 10.0
+    },
+    {
+      "achieved_alashi": 14.25,
+      "genome": {
+        "bribe_appetite": 3,
+        "bribe_gate": 14,
+        "buy_reserve": 6,
+        "dip_buy": 1,
+        "license_bid": 8,
+        "max_buy_units": 3
+      },
+      "level": 3,
+      "target_alashi": 14.0
+    },
+    {
+      "achieved_alashi": 18.16875,
+      "genome": {
+        "bribe_appetite": 3,
+        "bribe_gate": 19,
+        "buy_reserve": 2,
+        "dip_buy": 7,
+        "license_bid": 16,
+        "max_buy_units": 1
+      },
+      "level": 4,
+      "target_alashi": 18.0
+    },
+    {
+      "achieved_alashi": 23.75,
+      "genome": {
+        "bribe_appetite": 3,
+        "bribe_gate": 20,
+        "buy_reserve": 9,
+        "dip_buy": 8,
+        "license_bid": 0,
+        "max_buy_units": 2
+      },
+      "level": 5,
+      "target_alashi": null
+    }
+  ],
+  "params": {
+    "base_seed": 303,
+    "generations_per_level": 3,
+    "mutation_rate": 0.25,
+    "opponents": [
+      "greedy",
+      "tactical",
+      "greedy",
+      "random"
+    ],
+    "population": 16,
+    "seeds": 4,
+    "targets_arg": "6,10,14,18"
+  },
+  "schema_version": 2,
+  "verification": [
+    {
+      "earlier_generation": 0,
+      "later_generation": 1,
+      "mean_payout_delta": 1721875.0,
+      "paired_matches": 40
+    },
+    {
+      "earlier_generation": 1,
+      "later_generation": 2,
+      "mean_payout_delta": 6293750.0,
+      "paired_matches": 40
+    },
+    {
+      "earlier_generation": 2,
+      "later_generation": 3,
+      "mean_payout_delta": 4571875.0,
+      "paired_matches": 40
+    },
+    {
+      "earlier_generation": 3,
+      "later_generation": 4,
+      "mean_payout_delta": 4453125.0,
+      "paired_matches": 40
+    }
+  ]
+}

@@ -1,0 +1,315 @@
+{
+  "elapsed_s": 26.161340966,
+  "fitness_histories_alashi": [
+    [
+      -0.175,
+      -0.175,
+      -0.175,
+      -0.175,
+      -0.175,
+      -0.175,
+      -0.175,
+      -0.175,
+      -0.175,
+      -0.175,
+      -0.175,
+      -0.175,
+      -0.0625,
+      -0.0625,
+      -0.0625,
+      -0.0625,
+      -0.0625,
+      -0.0625,
+      -0.0625,
+      -0.0625,
+      -0.0625,
+      -0.0625,
+      -0.0625,
+      -0.0625
+    ],
+    [
+      -1.28125,
+      -0.14375,
+      -0.14375,
+      -0.14375,
+      -0.14375,
+      -0.025,
+      -0.025,
+      -0.025,
+      -0.025,
+      -0.025,
+      -0.025,
+      -0.025,
+      -0.025,
+      -0.025,
+      -0.025,
+      -0.025,
+      -0.025,
+      -0.025,
+      -0.025,
+      -0.025,
+      -0.025,
+      -0.025,
+      -0.025,
+      -0.025
+    ],
+    [
+      -0.13125,
+      -0.13125,
+      -0.0125,
+      -0.0125,
+      -0.0125,
+      -0.0125,
+      -0.0125,
+      -0.0125,
+      -0.0125,
+      -0.0125,
+      -0.0125,
+      -0.0125,
+      -0.0125,
+      -0.0125,
+      -0.0125,
+      -0.0125,
+      -0.0125,
+      -0.0125,
+      -0.0125,
+      -0.0125,
+      -0.0125,
+      -0.0125,
+      -0.0125,
+      -0.0125
+    ],
+    [
+      -0.7625,
+      -0.40625,
+      -0.40625,
+      -0.40625,
+      -0.2875,
+      -0.06875,
+      -0.06875,
+      -0.06875,
+      -0.06875,
+      -0.06875,
+      -0.06875,
+      -0.06875,
+      -0.06875,
+      -0.06875,
+      -0.06875,
+      -0.06875,
+      -0.06875,
+      -0.06875,
+      -0.06875,
+      -0.06875,
+      -0.06875,
+      -0.06875,
+      -0.06875,
+      -0.06875
+    ],
+    [
+      23.75,
+      23.75,
+      23.75,
+      23.75,
+      23.75,
+      23.75,
+      23.75,
+      23.75,
+      23.75,
+      23.75,
+      23.75,
+      23.75,
+      23.75,
+      23.75,
+      23.75,
+      23.75,
+      23.75,
+      23.75,
+      23.75,
+      23.75,
+      23.75,
+      23.75,
+      23.75,
+      23.75
+    ]
+  ],
+  "gene_max": [
+    8,
+    10,
+    4,
+    3,
+    20,
+    20
+  ],
+  "gene_min": [
+    1,
+    2,
+    1,
+    0,
+    4,
+    0
+  ],
+  "gene_names": [
+    "dip_buy",
+    "buy_reserve",
+    "max_buy_units",
+    "bribe_appetite",
+    "bribe_gate",
+    "license_bid"
+  ],
+  "heldout": {
+    "heldout_base_seed": 14530195,
+    "heldout_seeds": 8,
+    "interpretation": "Разрыв visible − heldout показывает, сколько силы уровня существует только на тренировочном расписании сидов; retention ниже 1 — подгонка под видимые партии.",
+    "per_level": [
+      {
+        "gap_alashi": -0.83125,
+        "heldout_payout_alashi": 6.76875,
+        "level": 1,
+        "retention": 1.14,
+        "training_base_seed": 3202,
+        "visible_payout_alashi": 5.9375
+      },
+      {
+        "gap_alashi": 0.771875,
+        "heldout_payout_alashi": 9.203125,
+        "level": 2,
+        "retention": 0.9226190476190477,
+        "training_base_seed": 2654438971,
+        "visible_payout_alashi": 9.975
+      },
+      {
+        "gap_alashi": 0.178125,
+        "heldout_payout_alashi": 13.834375,
+        "level": 3,
+        "retention": 0.9872881355932204,
+        "training_base_seed": 5308874740,
+        "visible_payout_alashi": 14.0125
+      },
+      {
+        "gap_alashi": 1.1875,
+        "heldout_payout_alashi": 16.74375,
+        "level": 4,
+        "retention": 0.9337748344370861,
+        "training_base_seed": 7963310509,
+        "visible_payout_alashi": 17.93125
+      },
+      {
+        "gap_alashi": 0.415625,
+        "heldout_payout_alashi": 23.334375,
+        "level": 5,
+        "retention": 0.9825,
+        "training_base_seed": 10617746278,
+        "visible_payout_alashi": 23.75
+      }
+    ]
+  },
+  "interpretation": "Локальная калибровка на фиксированном расписании сидов; сила уровня гарантируется только относительно этого микса соперников.",
+  "levels": [
+    {
+      "achieved_alashi": 5.9375,
+      "genome": {
+        "bribe_appetite": 1,
+        "bribe_gate": 4,
+        "buy_reserve": 9,
+        "dip_buy": 3,
+        "license_bid": 3,
+        "max_buy_units": 1
+      },
+      "level": 1,
+      "target_alashi": 6.0
+    },
+    {
+      "achieved_alashi": 9.975,
+      "genome": {
+        "bribe_appetite": 1,
+        "bribe_gate": 6,
+        "buy_reserve": 7,
+        "dip_buy": 8,
+        "license_bid": 11,
+        "max_buy_units": 1
+      },
+      "level": 2,
+      "target_alashi": 10.0
+    },
+    {
+      "achieved_alashi": 14.0125,
+      "genome": {
+        "bribe_appetite": 3,
+        "bribe_gate": 5,
+        "buy_reserve": 2,
+        "dip_buy": 8,
+        "license_bid": 0,
+        "max_buy_units": 1
+      },
+      "level": 3,
+      "target_alashi": 14.0
+    },
+    {
+      "achieved_alashi": 17.93125,
+      "genome": {
+        "bribe_appetite": 3,
+        "bribe_gate": 15,
+        "buy_reserve": 8,
+        "dip_buy": 8,
+        "license_bid": 8,
+        "max_buy_units": 2
+      },
+      "level": 4,
+      "target_alashi": 18.0
+    },
+    {
+      "achieved_alashi": 23.75,
+      "genome": {
+        "bribe_appetite": 1,
+        "bribe_gate": 19,
+        "buy_reserve": 4,
+        "dip_buy": 8,
+        "license_bid": 0,
+        "max_buy_units": 2
+      },
+      "level": 5,
+      "target_alashi": null
+    }
+  ],
+  "params": {
+    "base_seed": 3202,
+    "generations_per_level": 24,
+    "mutation_rate": 0.25,
+    "opponents": [
+      "greedy",
+      "tactical",
+      "greedy",
+      "random"
+    ],
+    "population": 16,
+    "seeds": 4,
+    "targets_arg": "6,10,14,18"
+  },
+  "schema_version": 2,
+  "verification": [
+    {
+      "earlier_generation": 0,
+      "later_generation": 1,
+      "mean_payout_delta": 2137500.0,
+      "paired_matches": 40
+    },
+    {
+      "earlier_generation": 1,
+      "later_generation": 2,
+      "mean_payout_delta": 6412500.0,
+      "paired_matches": 40
+    },
+    {
+      "earlier_generation": 2,
+      "later_generation": 3,
+      "mean_payout_delta": 2731250.0,
+      "paired_matches": 40
+    },
+    {
+      "earlier_generation": 3,
+      "later_generation": 4,
+      "mean_payout_delta": 6234375.0,
+      "paired_matches": 40
+    }
+  ]
+}
