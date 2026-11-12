@@ -45,6 +45,14 @@ for (const acted of [true, false]) {
 const malformedActed = adapterFixture('terms')
 Object.assign(malformedActed.factions[0], { acted: 'false' })
 assert.throws(() => decodePublicDonkeySnapshot(malformedActed, game)); checks++
+// Live polls during indexer catch-up still show the spent Action; replay stays empty.
+const catching = adapterFixture('terms')
+Object.assign(catching.factions[0], { acted: true }); catching.history_complete = false
+const liveCatch = decodePublicDonkeySnapshot(catching, game)
+check(projectDonkeyRisk(donkeySnapshotInput(liveCatch, faction)).kind === 'ineligible', 'Live spent Action survives journal catch-up')
+check(projectDonkeyRisk(donkeySnapshotInput(liveCatch, faction)).reasons.includes('acted'), 'Live catch-up reports the acted reason')
+const replayCatch = donkeySnapshotInput(liveCatch, faction, liveCatch.events.slice(0, 1))
+check(replayCatch.actionUsed === null && !projectDonkeyRisk(replayCatch).reasons.includes('acted'), 'Replay catch-up never borrows the live Action stamp')
 const snap = decodePublicDonkeySnapshot(adapterFixture(), game), f = snap.factions[0], selected = playerEvents(snap.events, f)
 // Terminal completeness belongs to the full fetched journal, never its replay prefix.
 for (const terminal of [{ phase: 'Law', settled: true }, { phase: 'Finished', settled: false }, { phase: 'Aborted', settled: false }]) {

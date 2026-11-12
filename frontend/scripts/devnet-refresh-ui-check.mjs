@@ -10,13 +10,13 @@ export default async (page) => {
   for (const width of [1920, 390]) for (const recovery of ['manual', 'online', 'visible', 'rate-limit', 'partial']) {
     const context = await page.context().browser().newContext({ viewport: { width, height: 844 } })
     const p = await context.newPage(), errors = []
-    let requests = 0, writes = 0, unavailable = true, complete = recovery !== 'partial'
+    let requests = 0, writes = 0, unavailable = true, complete = recovery !== 'partial', journalDown = false, journalRequests = 0
     p.on('pageerror', e => errors.push(e.message))
     try {
       await p.route('**/chain/devnet/**', async route => {
         if (route.request().method() !== 'GET') { writes++; return route.abort() }
         const path = new URL(route.request().url()).pathname
-        if (path.endsWith('/conversations')) return route.fulfill({ json: { ok: true, schema: 'alashi.chain_conversations.v1', game_pda: game, entries: [], next_cursor: '0', latest_seq: '0', has_more: false, history_complete: false, recording_started_at: null } })
+        if (path.endsWith('/conversations')) { journalRequests++; if (journalDown) return route.fulfill({ status: 503, json: { ok: false } }); return route.fulfill({ json: { ok: true, schema: 'alashi.chain_conversations.v1', game_pda: game, entries: [], next_cursor: '0', latest_seq: '0', has_more: false, history_complete: false, recording_started_at: null } }) }
         if (path.endsWith('/dialogue')) return route.fulfill({ status: 404, json: { ok: false } })
         requests++
         return unavailable ? route.fulfill({ status: recovery === 'rate-limit' ? 429 : 503, headers: recovery === 'rate-limit' ? { 'Retry-After': '60' } : {}, json: { ok: false } })
@@ -29,6 +29,7 @@ export default async (page) => {
       if (!await retry.isVisible()) throw new Error('Retry must be visible on Setup before any snapshot loads')
       const before = requests
       unavailable = false
+      if (recovery === 'manual') journalDown = true
       if (recovery === 'online') await p.evaluate(() => window.dispatchEvent(new Event('online')))
       else if (recovery === 'visible') await p.evaluate(() => {
         Object.defineProperty(document, 'hidden', { configurable: true, value: true }); document.dispatchEvent(new Event('visibilitychange'))
@@ -46,6 +47,23 @@ export default async (page) => {
       if (requests <= before) throw new Error(`${recovery} did not recover without reloading`)
       await retry.waitFor({ state: 'detached' })
       if (!(await p.locator('body').innerText()).includes('Finished')) throw new Error('Recovered terminal snapshot did not render')
+      if (recovery === 'manual') {
+        // A failed journal request must keep recovery reachable from the details
+        // tabs, and manual Retry must fetch fresh instead of keeping the old backoff.
+        const interruptedBar = p.locator('.chain-talk-network[data-interrupted=true]')
+        await interruptedBar.waitFor()
+        await p.locator('#devnet-tab-game').click()
+        const journalRetry = p.getByRole('button', { name: 'Retry journal', exact: true })
+        if (!await journalRetry.isVisible()) throw new Error('Journal recovery missing from the Game tab')
+        const beforeJournal = journalRequests
+        await journalRetry.click()
+        await p.clock.runFor(1000); await p.waitForTimeout(100)
+        if (journalRequests <= beforeJournal) throw new Error('Journal Retry kept the stale backoff')
+        journalDown = false
+        await p.clock.fastForward(25_000); await p.waitForTimeout(100)
+        await interruptedBar.waitFor({ state: 'detached' })
+        await journalRetry.waitFor({ state: 'detached' })
+      }
       if (recovery === 'partial') {
         const partialRequests = requests
         complete = true
