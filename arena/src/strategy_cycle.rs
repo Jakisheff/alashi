@@ -2098,6 +2098,7 @@ mod tests {
     }
     #[test]
     fn signed_marketing_duel_http() {
+        crate::node_tools::ensure_agent_bootstrap_deps();
         let s = fixture();
         let addr = crate::api::serve_on(s.clone(), "127.0.0.1:0", 60_000).unwrap();
         let script = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
@@ -2118,6 +2119,7 @@ mod tests {
     }
     #[test]
     fn signed_human_comparison_http() {
+        crate::node_tools::ensure_agent_bootstrap_deps();
         let s = fixture();
         let addr = crate::api::serve_on(s.clone(), "127.0.0.1:0", 60_000).unwrap();
         let script = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))

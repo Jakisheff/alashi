@@ -5,6 +5,7 @@
 #![recursion_limit = "512"]
 
 pub mod api;
+pub mod node_tools;
 pub mod http;
 pub mod rating;
 pub mod runner;

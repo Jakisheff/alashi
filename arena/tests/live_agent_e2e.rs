@@ -44,6 +44,7 @@ fn trading_strategies_two_processes_then_third_owner_reuse() {
     let repo = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
         .parent()
         .unwrap();
+    arena::node_tools::ensure_agent_bootstrap_deps();
     let log = root.join("driver.log");
     let file = std::fs::File::create(&log).unwrap();
     let mut child = KillChild(
