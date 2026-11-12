@@ -282,12 +282,32 @@ fn heldout_report(levels: &[(u64, Genome)], p: &Params, heldout_seeds: usize,
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
+    // Fail-fast парсинг числовых флагов: молчаливый подстанов дефолта при
+    // непарсируемом значении маскировал неверную конфигурацию прогона
+    // (наблюдение пастбищной серии 12.11: серия из 25 прогонов тихо
+    // свернулась к дефолту 12/7 и выглядела валидной).
+    let parse_num = |name: &str, default: &str| -> String {
+        match flag(&args, name) {
+            None => default.to_string(),
+            Some(v) => {
+                if v.parse::<f64>().is_ok() || v.parse::<u64>().is_ok() {
+                    v
+                } else {
+                    eprintln!("[ERROR] {}: ожидалось число, получено {:?}", name, v);
+                    std::process::exit(2);
+                }
+            }
+        }
+    };
+    let num = |name: &str, default: &str| -> f64 {
+        parse_num(name, default).parse::<f64>().expect("validated above")
+    };
     let params = Params {
-        generations: flag(&args, "--generations").and_then(|v| v.parse().ok()).unwrap_or(12),
-        population: flag(&args, "--population").and_then(|v| v.parse().ok()).unwrap_or(16),
-        seeds: flag(&args, "--seeds").and_then(|v| v.parse().ok()).unwrap_or(4),
-        base_seed: flag(&args, "--seed").and_then(|v| v.parse().ok()).unwrap_or(7),
-        mutation_rate: flag(&args, "--mutation-rate").and_then(|v| v.parse().ok()).unwrap_or(0.25),
+        generations: num("--generations", "12") as usize,
+        population: num("--population", "16") as usize,
+        seeds: num("--seeds", "4") as usize,
+        base_seed: num("--seed", "7") as u64,
+        mutation_rate: num("--mutation-rate", "0.25"),
     };
     let opponents_arg = flag(&args, "--opponents")
         .unwrap_or_else(|| DEFAULT_OPPONENTS.join(","));
