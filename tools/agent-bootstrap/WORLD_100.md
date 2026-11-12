@@ -226,3 +226,18 @@ usage, and 1,424,513 peer-reported tokens. The live run froze a 4,000,000-token
 ceiling; the example above uses the configurable 2,000,000 default. Exact Rust
 replay made no new model calls. The report separates successful execution from
 strategic quality and documents the recipient bias of the bounded bribe menu.
+
+## Context probe: a standing context-blindness check
+
+`node context-probe.mjs <world-dir> [--focal N] [--limit K] [--phase market]`
+replays the focal agent's recorded prompts against the recorded profile:
+a control arm must reproduce every recorded answer bit for bit (the run
+profile is temperature 0), and an advisory arm adds one bulletin that
+looks informative but is not game state. Verdicts: `blind_to_advisory`
+(every answer reproduced while ignoring the note; the run stays valid but
+the decision layer provably could not use extra context),
+`sensitive_to_advisory`, or `inconclusive_control_mismatch` (the endpoint
+no longer reproduces; the probe does not apply). The report lands in
+`<world-dir>/context-probe.json`. In the recorded market-context pair of
+9 November the arms were bit-identical, which motivated this probe; it
+turns that one-off finding into a cheap standing check.
