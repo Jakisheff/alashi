@@ -163,7 +163,7 @@ function GameViewer({ pda, initialPlayer, ownerRecord, setup, detailsTab, onTabC
     const timer = window.setTimeout(finish, 10_000)
     return () => window.clearTimeout(timer)
   }, [current, action, mode, playing, finish])
-  useEffect(() => { const timer = window.setInterval(() => setNow(Date.now()), 1000); return () => { window.clearInterval(timer); useScene.getState().say('') } }, [])
+  useEffect(() => { const timer = window.setInterval(() => { if (!document.hidden) setNow(Date.now()) }, 1000); return () => { window.clearInterval(timer); useScene.getState().say('') } }, [])
   const replay = (index = 0, seek = false) => { completedTake.current = Math.max(completedTake.current, take); deferredFinish.current = null; if (!seek || mode !== 'replay') setReplaySnapshot(snapshot); setReplayEvents(seek && mode === 'replay' ? replayEvents : observed.slice()); queue.current = []; liveEvent.current = null; setCurrent(null); setMode('replay'); setPosition(index); playingRef.current = seek && mode === 'replay' ? playingRef.current : true; setPlaying(playingRef.current); setReplayRevision((n) => n + 1) }
   useEffect(() => {
     if (initialWinnerReplay.current || selected || !snapshot?.settled || !snapshot.complete || !faction || !observed.length || defaultWinner(snapshot)?.pda !== faction.pda) return

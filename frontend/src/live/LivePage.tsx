@@ -80,6 +80,8 @@ export default function LivePage() {
       const current = performance.now()
       const delta = (current - previous) / 1000
       previous = current
+      // A hidden tab accrues no elapsed time; the first visible tick resumes from now.
+      if (document.hidden) return
       setNow(Date.now())
       if (running) setElapsed((t) => Math.min(45, t + delta * speed))
     }, 250)

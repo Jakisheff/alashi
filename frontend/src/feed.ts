@@ -45,7 +45,7 @@ function useSampleState(enabled: boolean) {
       })
     }
     tick()
-    const id = setInterval(tick, 4000)
+    const id = setInterval(() => { if (!document.hidden) tick() }, 4000)
     return () => { clearInterval(id); setState(null) }
   }, [enabled])
   return state
@@ -87,7 +87,8 @@ export function useArenaFeed(game: string | null, sample = true, api = '') {
     let take: number | undefined
     const timers = new Set<ReturnType<typeof setTimeout>>()
     const id = setInterval(() => {
-      if (disposed || useScene.getState().clip === 'fuckOff') return
+      // A hidden tab paints nothing: leave events queued and skip the scene work.
+      if (disposed || document.hidden || useScene.getState().clip === 'fuckOff') return
       const next = queue.current.shift()
       if (!next) return
       const { say, play } = useScene.getState()

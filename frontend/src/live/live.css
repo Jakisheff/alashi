@@ -119,7 +119,7 @@
 .live-thought-bubble { position: absolute; z-index: 3; top: 0; right: 5%; width: 54%; min-height: clamp(40px, 12cqw, 60px); display: grid; place-items: center; padding: clamp(8px, 2.7cqw, 13px) clamp(14px, 4.6cqw, 22px); color: var(--live-ink); pointer-events: none; transform-origin: 25% 100%; animation: live-thought-arrive .24s ease-out both; filter: drop-shadow(0 3px 8px #051e2440); }
 .live-thought-bubble svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .live-thought-bubble path { fill: #F4F2F8; stroke: var(--live-gold); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
-.live-thought-bubble p { position: relative; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; margin: 0; font-size: clamp(10px, 2.8cqw, 13px); font-weight: 550; line-height: 1.4; text-align: center; overflow-wrap: anywhere; white-space: pre-line; }
+.live-thought-bubble p { position: relative; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; line-clamp: 3; overflow: hidden; margin: 0; font-size: clamp(10px, 2.8cqw, 13px); font-weight: 550; line-height: 1.4; text-align: center; overflow-wrap: anywhere; white-space: pre-line; }
 .live-thought-trail { position: absolute; top: calc(100% - 4px); left: 18%; display: flex; flex-direction: column; align-items: flex-start; gap: 5px; }
 .live-thought-trail i { width: 11px; height: 9px; border-radius: 50%; background: #F4F2F8; border: 1px solid var(--live-gold); }
 .live-thought-trail i + i { width: 5px; height: 5px; margin-left: -7px; }

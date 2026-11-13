@@ -117,7 +117,7 @@ function ConnectedStream({ record, onChange }: { record: string; onChange: () =>
       if (!stopped) timer = window.setTimeout(poll, 5000)
     }
     void poll()
-    const clock = window.setInterval(() => setNow(Date.now()), 1000)
+    const clock = window.setInterval(() => { if (!document.hidden) setNow(Date.now()) }, 1000)
     useScene.getState().say(''); useScene.getState().play('idle')
     return () => { stopped = true; controller.abort(); window.clearTimeout(timer); window.clearInterval(clock); useScene.getState().say(''); useScene.getState().play('idle') }
   }, [record])
