@@ -8,16 +8,28 @@
 // uniform-within-offer choices on the same recorded offers, and the
 // one-sided permutation p-values for share and HHI (B resamples of
 // uniform target re-picks on the same offer sets).
-// Usage: node world-bribe-deep.mjs <world-dir> [B]
-import { readFileSync, readdirSync } from 'node:fs';
+// Usage: node world-bribe-deep.mjs <world-dir> [B] [--true-cash]
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
 
 const dir = process.argv[2];
 const B = Number(process.argv[3] ?? 2000);
-if (!dir) { console.error('usage: node world-bribe-deep.mjs <world-dir> [B]'); process.exit(1); }
+const trueCash = process.argv.includes('--true-cash');
+if (!dir) { console.error('usage: node world-bribe-deep.mjs <world-dir> [B] [--true-cash]'); process.exit(1); }
 
 const frozen = JSON.parse(readFileSync(join(dir, 'frozen.json'), 'utf8'));
+
+// Under --true-cash, the cash used for the within-offer percentile comes
+// from the engine snapshot at the decision step, not from the prompt;
+// this is what the preregistered blind ablation requires, because the
+// blind driver zeroes the prompt's cash channel.
+const snapshotCash = step => {
+  const path = join(dir, 'snapshots', String(step).padStart(4, '0') + '.json');
+  if (!existsSync(path)) return null;
+  const snapshot = JSON.parse(readFileSync(path, 'utf8'));
+  return new Map(snapshot.world.public_state.map(row => [row.actor, row.cash]));
+};
 const receiptsByStep = new Map();
 for (const name of readdirSync(join(dir, 'phases')).filter(n => /^[0-9]{4}\.json$/.test(n))) {
   const phase = JSON.parse(readFileSync(join(dir, 'phases', name), 'utf8'));
@@ -37,7 +49,7 @@ for (const name of readdirSync(join(dir, 'calls')).filter(n => /^[0-9]{4}-[0-9]{
   const offers = prompt.allowed_actions.filter(a => a.action === 'bribe').map(a => a.params.to);
   if (!offers.includes(call.result.action.params.to)) continue;
   const cash = new Map(prompt.selected_opponents.map(row => [row[0], row[1]]));
-  decisions.push({ offers, chosen: call.result.action.params.to, cash });
+  decisions.push({ step: call.step, offers, chosen: call.result.action.params.to, cash });
 }
 
 const countsOf = picks => { const counts = new Map(); let i = 0;
@@ -54,8 +66,10 @@ const observed = { n_bribe_decisions: decisions.length, ...statsOf(countsOf()) }
 // Conditional cash percentile of the chosen target inside its offer set
 // (rank 1..k mapped to (rank-0.5)/k; uniform choice gives expectation 0.5).
 const percentiles = decisions.map(d => {
-  const values = d.offers.map(to => d.cash.get(to) ?? -1).sort((a, b) => a - b);
-  const rank = values.indexOf(d.cash.get(d.chosen) ?? -1) + 1;
+  const cashMap = trueCash ? snapshotCash(d.step) : d.cash;
+  const at = to => (trueCash ? cashMap?.get(to) : d.cash.get(to)) ?? -1;
+  const values = d.offers.map(at).sort((a, b) => a - b);
+  const rank = values.indexOf(at(d.chosen)) + 1;
   return (rank - 0.5) / values.length;
 });
 const mean_cash_percentile = percentiles.length
