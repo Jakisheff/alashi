@@ -49,7 +49,7 @@ real-user LCP ever breaches budget. No code-splitting change made.
 - `src/perf/vitals.ts`: opt-in console vitals (?perf=1) with web-vitals
   attribution (CLS/INP/LCP) and a long-animation-frame summary; wired
   into /live and /stream.
-- `scripts/hidden-tab-check.mjs`: a test that can fail — emulates
+- `scripts/hidden-tab-check.mjs`: a test that can fail: it emulates
   document.hidden and asserts the demo clock and feed freeze while
   hidden and resume without loss; added to the check:animations chain.
 - `scripts/perf-trace-check.mjs`: the scripted trace used above (CDP
