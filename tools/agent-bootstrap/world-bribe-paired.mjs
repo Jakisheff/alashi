@@ -17,15 +17,17 @@ const load = prefix => { const games = new Map();
   } return games; };
 const A = load(aPrefix), B = load(bPrefix);
 const seeds = [...A.keys()].filter(s => B.has(s)).sort((x, y) => x - y);
-const diffs = { largest_share: [], hhi: [], percentile: [] };
+const diffs = { largest_share: [], hhi: [], percentile: [], percentile_midrank: [] };
 for (const seed of seeds) {
   const a = A.get(seed), b = B.get(seed);
   diffs.largest_share.push(a.largest_share - b.largest_share);
   diffs.hhi.push(a.hhi - b.hhi);
   diffs.percentile.push(a.mean_cash_percentile_within_offer - b.mean_cash_percentile_within_offer);
+  diffs.percentile_midrank.push(a.mean_cash_percentile_midrank_within_offer - b.mean_cash_percentile_midrank_within_offer);
 }
+const comb = (n, k) => { let c = 1; for (let i = 0; i < k; i++) c = c * (n - i) / (i + 1); return Math.round(c); };
 const binomP = k => { let p = 0; const n = seeds.length;
-  for (let i = k; i <= n; i++) p += Math.comb(n, i); return p / 2 ** n; };
+  for (let i = k; i <= n; i++) p += comb(n, i); return p / 2 ** n; };
 const wilcoxon = values => {
   const nonzero = values.map((v, i) => ({ v, i })).filter(x => x.v !== 0);
   const ranks = [...nonzero].sort((x, y) => Math.abs(x.v) - Math.abs(y.v))

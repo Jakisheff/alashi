@@ -70,10 +70,15 @@ const percentiles = decisions.map(d => {
   const at = to => (trueCash ? cashMap?.get(to) : d.cash.get(to)) ?? -1;
   const values = d.offers.map(at).sort((a, b) => a - b);
   const rank = values.indexOf(at(d.chosen)) + 1;
-  return (rank - 0.5) / values.length;
+  const same = values.filter(v => v === at(d.chosen)).length;
+  const low = values.indexOf(at(d.chosen));
+  return { raw: (rank - 0.5) / values.length,
+    midrank: (low + (same - 1) / 2 + 0.5) / values.length };
 });
-const mean_cash_percentile = percentiles.length
-  ? percentiles.reduce((a, b) => a + b, 0) / percentiles.length : null;
+const mean = key => percentiles.length
+  ? percentiles.reduce((a, p) => a + p[key], 0) / percentiles.length : null;
+const mean_cash_percentile = mean('raw');
+const mean_cash_percentile_midrank = mean('midrank');
 
 // Structural HHI: expected recipient shares under uniform-within-offer
 // target picks on the same recorded offer sets.
@@ -104,5 +109,6 @@ const report = { digest: frozen.digest, seed: frozen.config.init.seed,
   expected_hhi_uniform_within_offer: expected_hhi,
   choice_excess_hhi: observed.hhi - structural_hhi,
   mean_cash_percentile_within_offer: mean_cash_percentile,
+  mean_cash_percentile_midrank_within_offer: mean_cash_percentile_midrank,
   perm_p_share: geShare / B, perm_p_hhi: geHhi / B, B };
 process.stdout.write(JSON.stringify(report, null, 2) + '\n');
