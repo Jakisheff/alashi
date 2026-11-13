@@ -5,7 +5,7 @@ use alashi_rules::{
     logic::compute_settlement_epoch,
     state::{Faction, Game, Phase},
 };
-use anchor_lang::prelude::Pubkey;
+use alashi_rules::Pubkey;
 
 fn setup() -> (Game, Faction) {
     let mut game = Game::default();

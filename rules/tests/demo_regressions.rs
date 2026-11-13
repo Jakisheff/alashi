@@ -1,6 +1,6 @@
-use anchor_lang::prelude::borsh;
+use borsh;
 use alashi_rules::{constants::*, logic::compute_settlement_epoch, sim::Simulator, state::Phase};
-use alashi_rules::anchor_lang::prelude::Pubkey;
+use alashi_rules::Pubkey;
 
 fn two_players() -> Simulator {
     let mut sim = Simulator::new(1, 10 * PESO, 1, ENTROPY_SLOTHASH);
@@ -58,7 +58,7 @@ fn premature_insight_neither_charges_nor_consumes_the_purchase() {
 #[test]
 fn vrf_seed_slot_is_bounded_before_any_transition_mutation() {
     use alashi_rules::{sim::Simulator, transitions, state::Phase};
-    use alashi_rules::anchor_lang::prelude::Pubkey;
+    use alashi_rules::Pubkey;
     let mut sim = Simulator::new(90, 10, 0, 0);
     sim.game.phase = Phase::Action;
     sim.game.entropy_mode = alashi_rules::constants::ENTROPY_SWITCHBOARD;
@@ -75,7 +75,7 @@ fn vrf_seed_slot_is_bounded_before_any_transition_mutation() {
 #[test]
 fn underfilled_lobby_aborts_only_after_deadline() {
     use alashi_rules::{sim::Simulator, state::Phase};
-    use alashi_rules::anchor_lang::prelude::Pubkey;
+    use alashi_rules::Pubkey;
     for count in [0, 1] {
         let mut sim = Simulator::new(91, 10, 10, 0);
         if count == 1 { sim.join(Pubkey::new_unique(), "A").unwrap(); }

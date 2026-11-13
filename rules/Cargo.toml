@@ -3,5 +3,10 @@ name = "alashi-rules"
 version = "0.1.0"
 edition = "2021"
 
+[features]
+default = ["chain"]
+chain = ["dep:anchor-lang"]
+
 [dependencies]
-anchor-lang = "1.1.2"
+anchor-lang = { version = "1.1.2", optional = true }
+borsh = { version = "1.8.1", features = ["derive"] }

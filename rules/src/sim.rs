@@ -9,8 +9,13 @@ use crate::constants::*;
 use crate::error::GameError;
 use crate::state::{Faction, Game, Phase, VoteChoice};
 use crate::transitions;
-use anchor_lang::prelude::Pubkey;
+use crate::Pubkey;
+
+#[cfg(feature = "chain")]
 use anchor_lang::AccountSerialize;
+
+#[cfg(not(feature = "chain"))]
+use borsh::BorshSerialize as AccountSerialize;
 
 #[derive(Clone)]
 pub struct Simulator {
@@ -288,18 +293,26 @@ impl Simulator {
         actions::accept_vote_offer(&self.game, f_buyer, f_seller)
     }
 
+    /// Host-режим пишет borsh-поле без 8-байтового дискриминатора
+    /// anchor: сравнения внутри одного режима консистентны, формат
+    /// state_bytes между режимами не смешивается.
+    #[cfg(feature = "chain")]
+    fn account_bytes<T: AccountSerialize>(acc: &T) -> Vec<u8> {
+        let mut out = Vec::new();
+        acc.try_serialize(&mut out).ok();
+        out
+    }
+
+    #[cfg(not(feature = "chain"))]
+    fn account_bytes<T: AccountSerialize>(acc: &T) -> Vec<u8> {
+        let mut out = Vec::new();
+        acc.serialize(&mut out).ok();
+        out
+    }
+
     pub fn state_bytes(&self) -> (Vec<u8>, Vec<Vec<u8>>) {
-        let mut g = Vec::new();
-        self.game.try_serialize(&mut g).ok();
-        let fs = self
-            .factions
-            .iter()
-            .map(|f| {
-                let mut out = Vec::new();
-                f.try_serialize(&mut out).ok();
-                out
-            })
-            .collect();
+        let g = Self::account_bytes(&self.game);
+        let fs = self.factions.iter().map(|f| Self::account_bytes(f)).collect();
         (g, fs)
     }
 }

@@ -1,9 +1,10 @@
-use anchor_lang::prelude::*;
+#[cfg(feature = "chain")]
+use anchor_lang::constant;
 
-#[constant]
+#[cfg_attr(feature = "chain", constant)]
 pub const GAME_SEED: &[u8] = b"game";
 
-#[constant]
+#[cfg_attr(feature = "chain", constant)]
 pub const FACTION_SEED: &[u8] = b"faction";
 
 pub const MIN_FACTIONS: u8 = 2;
@@ -113,7 +114,7 @@ pub const REVEAL_TIMEOUT_SLOTS: u64 = 25;
 pub const DONKEY_COMMIT_GRACE_SECONDS: i64 = 30;
 pub const MAX_VRF_RETRIES: u8 = 3;
 
-#[constant]
+#[cfg_attr(feature = "chain", constant)]
 pub const PRICE_TABLE: [u64; 16] = [12, 10, 9, 8, 7, 6, 5, 4, 3, 3, 2, 2, 2, 1, 1, 1];
 
 pub fn price_at(sold: u16) -> u64 {

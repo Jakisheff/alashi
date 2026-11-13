@@ -1,10 +1,17 @@
-use anchor_lang::prelude::*;
+use crate::Pubkey;
 
+#[cfg(feature = "chain")]
+use anchor_lang::prelude::{account, AnchorDeserialize, AnchorSerialize, InitSpace};
+#[cfg(feature = "chain")]
+use anchor_lang::Discriminator;
+
+#[cfg(feature = "chain")]
 anchor_lang::declare_id!("3jwunaFDRrSWFfeJ5hFZu3DmxPNTmkdoCweHDvqcXTqC");
 
-#[derive(
-    AnchorSerialize, AnchorDeserialize, Clone, Copy, Debug, Default, PartialEq, Eq, InitSpace,
-)]
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+#[cfg_attr(feature = "chain", derive(AnchorSerialize, AnchorDeserialize))]
+#[cfg_attr(feature = "chain", derive(InitSpace))]
+#[cfg_attr(not(feature = "chain"), derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub enum Phase {
     #[default]
     Lobby,
@@ -15,9 +22,10 @@ pub enum Phase {
     Aborted,
 }
 
-#[derive(
-    AnchorSerialize, AnchorDeserialize, Clone, Copy, Debug, Default, PartialEq, Eq, InitSpace,
-)]
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+#[cfg_attr(feature = "chain", derive(AnchorSerialize, AnchorDeserialize))]
+#[cfg_attr(feature = "chain", derive(InitSpace))]
+#[cfg_attr(not(feature = "chain"), derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub enum VoteChoice {
     #[default]
     Yes,
@@ -25,8 +33,10 @@ pub enum VoteChoice {
     Abstain,
 }
 
-#[account]
-#[derive(InitSpace, Default)]
+#[cfg_attr(feature = "chain", account)]
+#[derive(Default)]
+#[cfg_attr(feature = "chain", derive(InitSpace))]
+#[cfg_attr(not(feature = "chain"), derive(Clone, borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct Game {
     pub admin: Pubkey,
     pub game_id: u64,
@@ -79,7 +89,7 @@ pub struct Game {
     pub license_sold: bool,
     /// M11 бартерные оферы (в Game: ончейн-хранилище и симулятор
     /// сериализуются одинаково байт-в-байт).
-    #[max_len(crate::constants::MAX_BARTER_OFFERS)]
+    #[cfg_attr(feature = "chain", max_len(crate::constants::MAX_BARTER_OFFERS))]
     pub barter_offers: Vec<BarterOfferRec>,
     /// M11 счётчик идентификаторов оферов.
     pub barter_next_id: u64,
@@ -91,9 +101,10 @@ pub struct Game {
 
 /// M11 бартерный офер: товар за кэш напрямую между фракциями.
 /// from/to — кошельки (to = Pubkey::default() = любому).
-#[derive(
-    AnchorSerialize, AnchorDeserialize, Clone, Copy, Debug, Default, PartialEq, Eq, InitSpace,
-)]
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+#[cfg_attr(feature = "chain", derive(AnchorSerialize, AnchorDeserialize))]
+#[cfg_attr(feature = "chain", derive(InitSpace))]
+#[cfg_attr(not(feature = "chain"), derive(borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct BarterOfferRec {
     pub id: u64,
     pub from: Pubkey,
@@ -108,12 +119,14 @@ impl Game {
     }
 }
 
-#[account]
-#[derive(InitSpace, Default)]
+#[cfg_attr(feature = "chain", account)]
+#[derive(Default)]
+#[cfg_attr(feature = "chain", derive(InitSpace))]
+#[cfg_attr(not(feature = "chain"), derive(Clone, borsh::BorshSerialize, borsh::BorshDeserialize))]
 pub struct Faction {
     pub game: Pubkey,
     pub wallet: Pubkey,
-    #[max_len(16)]
+    #[cfg_attr(feature = "chain", max_len(16))]
     pub name: String,
     pub cash: u64,
     pub goods: u16,

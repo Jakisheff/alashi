@@ -6,7 +6,7 @@
 // tests pin the core mapping seed -> economy outcome, including the
 // boundary value 0.
 
-use alashi_rules::anchor_lang::prelude::Pubkey;
+use alashi_rules::Pubkey;
 use alashi_rules::constants::{
     AUCTION_ROUND, ENTROPY_SWITCHBOARD, EPOCH_90S, LICENSE_MIN_YIELD, NO_LAW, ROOF_RED,
 };

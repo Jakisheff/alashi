@@ -1,87 +1,67 @@
-use anchor_lang::prelude::*;
+#[cfg(feature = "chain")]
+use anchor_lang::error_code;
 
-#[error_code]
-pub enum GameError {
-    #[msg("entry fee must be greater than zero")]
-    InvalidEntryFee,
-    #[msg("phase duration cannot be negative")]
-    InvalidPhaseDuration,
-    #[msg("name longer than 16 bytes")]
-    NameTooLong,
-    #[msg("game is not in lobby phase")]
-    GameNotInLobby,
-    #[msg("game is finished")]
-    GameFinished,
-    #[msg("game is full")]
-    GameFull,
-    #[msg("action not allowed in this phase")]
-    WrongPhase,
-    #[msg("faction already acted in this phase")]
-    AlreadyActed,
-    #[msg("faction already voted in this phase")]
-    AlreadyVoted,
-    #[msg("no units to sell")]
-    NoUnits,
-    #[msg("not enough goods")]
-    NotEnoughGoods,
-    #[msg("not enough cash")]
-    NotEnoughCash,
-    #[msg("bribe must buy at least one influence")]
-    BribeTooSmall,
-    #[msg("bribe exceeds influence cap")]
-    BribeTooBig,
-    #[msg("cannot bribe yourself")]
-    SelfBribe,
-    #[msg("faction is not alive")]
-    NotAlive,
-    #[msg("phase deadline not reached yet")]
-    TooEarly,
-    #[msg("not enough factions joined")]
-    NotEnoughFactions,
-    #[msg("faction set does not match game factions")]
-    InvalidFactionSet,
-    #[msg("slot hashes sysvar is empty")]
-    NoSlotHashes,
-    #[msg("signer is not the president")]
-    NotPresident,
-    #[msg("veto already cast this law phase")]
-    AlreadyVetoed,
-    #[msg("game is not finished")]
-    NotFinished,
-    #[msg("game already settled")]
-    AlreadySettled,
-    #[msg("settle account set is invalid")]
-    InvalidSettleSet,
-    #[msg("bank is empty")]
-    EmptyBank,
-    #[msg("invalid entropy mode")]
-    InvalidEntropyMode,
-    #[msg("bank above threshold requires VRF entropy mode")]
-    VrfRequired,
-    #[msg("law card not revealed yet")]
-    LawNotRevealed,
-    #[msg("randomness account mismatch")]
-    RandomnessMismatch,
-    #[msg("randomness not resolved for this slot")]
-    RandomnessNotReady,
-    #[msg("game aborted by oracle failure")]
-    GameAborted,
-    #[msg("caller is not the game admin")]
-    NotAdmin,
-    #[msg("invalid vote weight mode")]
-    InvalidVoteWeightMode,
-    #[msg("invalid epoch (0 classic | 1 90s | 2 donkey risk)")]
-    InvalidEpoch,
-    #[msg("wallet already joined this game")]
-    DuplicateWallet,
-    #[msg("at most eight open barter offers per game")]
-    TooManyOffers,
-    #[msg("donkey risk is unavailable in the final round")]
-    NoMarketRemaining,
-    #[msg("donkey reward would overflow goods")]
-    DonkeyRewardOverflow,
-    #[msg("donkey oracle configuration is missing or invalid")]
-    DonkeyOracleInvalid,
+#[cfg(feature = "chain")]
+macro_rules! game_error_enum {
+    ($( $name:ident => $msg:expr, )*) => {
+        #[error_code]
+        pub enum GameError {
+            $( #[msg($msg)] $name, )*
+        }
+    };
+}
+
+#[cfg(not(feature = "chain"))]
+macro_rules! game_error_enum {
+    ($( $name:ident => $msg:expr, )*) => {
+        #[derive(Debug)]
+        pub enum GameError {
+            $( $name, )*
+        }
+    };
+}
+
+game_error_enum! {
+    InvalidEntryFee => "entry fee must be greater than zero",
+    InvalidPhaseDuration => "phase duration cannot be negative",
+    NameTooLong => "name longer than 16 bytes",
+    GameNotInLobby => "game is not in lobby phase",
+    GameFinished => "game is finished",
+    GameFull => "game is full",
+    WrongPhase => "action not allowed in this phase",
+    AlreadyActed => "faction already acted in this phase",
+    AlreadyVoted => "faction already voted in this phase",
+    NoUnits => "no units to sell",
+    NotEnoughGoods => "not enough goods",
+    NotEnoughCash => "not enough cash",
+    BribeTooSmall => "bribe must buy at least one influence",
+    BribeTooBig => "bribe exceeds influence cap",
+    SelfBribe => "cannot bribe yourself",
+    NotAlive => "faction is not alive",
+    TooEarly => "phase deadline not reached yet",
+    NotEnoughFactions => "not enough factions joined",
+    InvalidFactionSet => "faction set does not match game factions",
+    NoSlotHashes => "slot hashes sysvar is empty",
+    NotPresident => "signer is not the president",
+    AlreadyVetoed => "veto already cast this law phase",
+    NotFinished => "game is not finished",
+    AlreadySettled => "game already settled",
+    InvalidSettleSet => "settle account set is invalid",
+    EmptyBank => "bank is empty",
+    InvalidEntropyMode => "invalid entropy mode",
+    VrfRequired => "bank above threshold requires VRF entropy mode",
+    LawNotRevealed => "law card not revealed yet",
+    RandomnessMismatch => "randomness account mismatch",
+    RandomnessNotReady => "randomness not resolved for this slot",
+    GameAborted => "game aborted by oracle failure",
+    NotAdmin => "caller is not the game admin",
+    InvalidVoteWeightMode => "invalid vote weight mode",
+    InvalidEpoch => "invalid epoch (0 classic | 1 90s | 2 donkey risk)",
+    DuplicateWallet => "wallet already joined this game",
+    TooManyOffers => "at most eight open barter offers per game",
+    NoMarketRemaining => "donkey risk is unavailable in the final round",
+    DonkeyRewardOverflow => "donkey reward would overflow goods",
+    DonkeyOracleInvalid => "donkey oracle configuration is missing or invalid",
 }
 
 #[cfg(test)]

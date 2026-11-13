@@ -1,7 +1,13 @@
 use crate::constants::*;
 use crate::error::GameError;
 use crate::state::{Faction, VoteChoice};
-use anchor_lang::prelude::*;
+use crate::Pubkey;
+
+#[cfg(feature = "chain")]
+use anchor_lang::prelude::Result;
+
+#[cfg(not(feature = "chain"))]
+pub type Result<T> = std::result::Result<T, GameError>;
 
 pub struct FactionSnapshot {
     pub wallet: Pubkey,
@@ -21,6 +27,7 @@ impl From<&Faction> for FactionSnapshot {
     }
 }
 
+#[cfg(feature = "chain")]
 impl<'info> From<&anchor_lang::prelude::Account<'info, Faction>> for FactionSnapshot {
     fn from(f: &anchor_lang::prelude::Account<'info, Faction>) -> Self {
         FactionSnapshot::from(&**f)

@@ -1,5 +1,5 @@
 use alashi_rules::{actions, constants::*, error::GameError, logic::compute_settlement_epoch, sim::Simulator, state::{Faction, Game, Phase, VoteChoice}};
-use alashi_rules::anchor_lang::prelude::Pubkey;
+use alashi_rules::Pubkey;
 
 fn faction(key: u8) -> Faction {
     let mut f = Faction::default();

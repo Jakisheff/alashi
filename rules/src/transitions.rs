@@ -6,7 +6,7 @@ use crate::constants::*;
 use crate::error::GameError;
 use crate::logic::{compute_law_effect, draw_law_index, tally_votes, FactionSnapshot};
 use crate::state::{Faction, Game, Phase, VoteChoice};
-use anchor_lang::prelude::Pubkey;
+use crate::Pubkey;
 
 pub struct AdvanceResult {
     pub law_card_drawn: Option<u8>,

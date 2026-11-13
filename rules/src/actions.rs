@@ -6,7 +6,7 @@ use crate::constants::*;
 use crate::error::GameError;
 use crate::logic::{compute_purchase, compute_sale};
 use crate::state::{Faction, Game, Phase, VoteChoice};
-use anchor_lang::prelude::Pubkey;
+use crate::Pubkey;
 
 // ---------- фаза Market ----------
 
