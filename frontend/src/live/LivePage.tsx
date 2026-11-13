@@ -7,6 +7,7 @@ import { demoState, formatDuration, SCENARIOS, type Scenario } from './demo'
 import { MarketTrade, TRADE_SECONDS, type TradeAction, type TradeEntry, type TradePreview } from './market/MarketTrade'
 import { PurchaseReceipt } from './market/PurchaseReceipt'
 import { useVisualTime } from './visualTime'
+import { startVitals } from '../perf/vitals'
 import { DEMO_PURCHASE } from './market/purchase'
 import { ScenarioAction, ACTION_SECONDS, ACTION_META, actionStageAt, type ScenarioActionName } from './actions'
 import { LivingGenie, REACTION_SECONDS, REACTION_KEYFRAMES, REACTION_LABELS, REACTION_THOUGHTS, type ReactionKind, type ReactionPreview } from './reactions'
@@ -72,6 +73,11 @@ export default function LivePage() {
       useScene.getState().play('idle')
       useScene.getState().say('')
     }
+  }, [])
+
+  useEffect(() => {
+    const clean = new URLSearchParams(window.location.search).has('perf') ? startVitals() : () => {}
+    return clean
   }, [])
 
   useEffect(() => {
