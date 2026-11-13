@@ -23,6 +23,7 @@
 - [20261111-evo-ladder-heldout-retention](../200_ZETTEL/20261111-evo-ladder-heldout-retention.md): лестница evoagents не подгоняется под тренировочные сиды; следующий барьер — скрытый микс соперников
 - [20261113-constraint-beats-detection](../200_ZETTEL/20261113-constraint-beats-detection.md): гипотеза переноса из лестницы обхода EDR: недостижимый исход надёжнее замеченного; run 1/run 2 как параллель
 - [20261113-red-team-ladder](../200_ZETTEL/20261113-red-team-ladder.md): лестница соперников L1-L4 по избегаемой телеметрии; L4-приёмка 13.11 пройдена: 3.57%/HHI 0.0213 против границ 7.14%/0.071, ноль вне-меню ходов
+- [20261113-bribe-grid-prereg](../200_ZETTEL/20261113-bribe-grid-prereg.md): пререгистрация решётки {uniform-legal, first-slot, L4, модель} × сиды; перестановочный критерий пробоя p<0.05 на share/HHI
 
 ## Связанные MOC
 
