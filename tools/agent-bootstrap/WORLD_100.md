@@ -218,6 +218,16 @@ Replay and settlement passed. This single pair demonstrates the interface
 correction, not stronger strategies or a generally balanced economy; twelve
 of the fourteen accepted bribes still selected the first menu option.
 
+A deterministic worst-case check of this policy ran on 13 November 2026: all
+100 agents followed an L4 legal-only concentration attacker
+([l4-provider.mjs](l4-provider.mjs), see the
+[L4 run record](../../docs/ops/WORLD_100_L4_20261113.md)) that bribes the
+richest visible legal target and never leaves the menu. The bounded rotation
+held: 224 accepted bribes across 70 recipients, largest share 3.57%, HHI
+0.0213, zero out-of-menu moves. One seed; the L4 volume being higher than
+the model games shows menu legality, not model intent, was the binding
+constraint.
+
 ## First live run
 
 The [9 November 2026 run](../../docs/ops/WORLD_100_20261109.md) completed all six
