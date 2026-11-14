@@ -7,6 +7,7 @@ import { demoState, formatDuration, SCENARIOS, type Scenario } from './demo'
 import { MarketTrade, TRADE_SECONDS, type TradeAction, type TradeEntry, type TradePreview } from './market/MarketTrade'
 import { PurchaseReceipt } from './market/PurchaseReceipt'
 import { useVisualTime } from './visualTime'
+import { startVitals } from '../perf/vitals'
 import { DEMO_PURCHASE } from './market/purchase'
 import { ScenarioAction, ACTION_SECONDS, ACTION_META, actionStageAt, type ScenarioActionName } from './actions'
 import { LivingGenie, REACTION_SECONDS, REACTION_KEYFRAMES, REACTION_LABELS, REACTION_THOUGHTS, type ReactionKind, type ReactionPreview } from './reactions'
@@ -75,11 +76,18 @@ export default function LivePage() {
   }, [])
 
   useEffect(() => {
+    const clean = new URLSearchParams(window.location.search).has('perf') ? startVitals() : () => {}
+    return clean
+  }, [])
+
+  useEffect(() => {
     let previous = performance.now()
     const timer = window.setInterval(() => {
       const current = performance.now()
       const delta = (current - previous) / 1000
       previous = current
+      // A hidden tab accrues no elapsed time; the first visible tick resumes from now.
+      if (document.hidden) return
       setNow(Date.now())
       if (running) setElapsed((t) => Math.min(45, t + delta * speed))
     }, 250)

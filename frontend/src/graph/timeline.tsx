@@ -18,6 +18,8 @@ export function GraphTimeline({ interactions, rounds }: { interactions: GraphInt
   useEffect(() => {
     if (!playing) return
     const id = setInterval(() => {
+      // Replay does not advance while nobody watches it.
+      if (document.hidden) return
       const p = (useGraphView.getState().play ?? 0) + 1
       setPlay(Math.min(p, rounds), p <= rounds)
     }, TICK_MS)

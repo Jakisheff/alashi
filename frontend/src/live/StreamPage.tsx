@@ -4,6 +4,7 @@ import { BrandMark } from '../brand/BrandMark'
 import { Component, lazy, Suspense, useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
 import { Link } from '@tanstack/react-router'
 import { useScene } from '../store'
+import { startVitals } from '../perf/vitals'
 import { createLiveApi, friendlyError, validRecord, type AgentSlot, type PublicEvent } from './api/client'
 import { OwnerPanel } from './api/OwnerPanel'
 import { usePublicStream } from './api/usePublicStream'
@@ -67,6 +68,10 @@ function ConnectedStream({ record, onChange }: { record: string; onChange: () =>
   }, [])
   const slotRef = useRef(slots)
   useEffect(() => { slotRef.current = slots }, [slots])
+  useEffect(() => {
+    const clean = new URLSearchParams(window.location.search).has('perf') ? startVitals() : () => {}
+    return clean
+  }, [])
   const event = useCallback((e: PublicEvent) => {
     if (rendererFailed.current) return
     if (e.kind === 'agent_message' && e.author === record) {
@@ -117,7 +122,7 @@ function ConnectedStream({ record, onChange }: { record: string; onChange: () =>
       if (!stopped) timer = window.setTimeout(poll, 5000)
     }
     void poll()
-    const clock = window.setInterval(() => setNow(Date.now()), 1000)
+    const clock = window.setInterval(() => { if (!document.hidden) setNow(Date.now()) }, 1000)
     useScene.getState().say(''); useScene.getState().play('idle')
     return () => { stopped = true; controller.abort(); window.clearTimeout(timer); window.clearInterval(clock); useScene.getState().say(''); useScene.getState().play('idle') }
   }, [record])

@@ -137,7 +137,7 @@ export function Onboarding({ watch }: { watch: AgentWatch }) {
       } finally { polling.current = false }
     }
     void tick()
-    const timer = window.setInterval(() => void tick(), 5000)
+    const timer = window.setInterval(() => { if (!document.hidden) void tick() }, 5000)
     return () => { stopped = true; window.clearInterval(timer) }
   }, [pairing, copied, resuming])
 
