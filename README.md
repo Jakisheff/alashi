@@ -337,12 +337,10 @@ After the tag, `main` has 235 commits (195 non-merge), all from 16 September on:
 
 Git history before the tag was rewritten twice: a branch squash and a key-file removal.
 
-## Team
+## Author
 
-Since 19 October 2026, Amir develops ALASHI alone and owns all areas, including
-backend and frontend. Codex assists with implementation and documentation.
-Earlier references to Ivan and Din describe historical responsibilities.
-[Repository owner](https://github.com/Jakisheff).
+Amir Zhakyshev develops ALASHI and owns all areas including backend, frontend,
+game design and research. [GitHub](https://github.com/Jakisheff).
 
 The [next test](#next-test) concerns an external owner's decision, followed by
 independent reuse of a prepared scenario. Public game onboarding has its own
