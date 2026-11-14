@@ -4,6 +4,7 @@
 
 ## Файлы
 
+- [20261114-license-hire-bets](../200_ZETTEL/20261114-license-hire-bets.md): опоры сделок лицензия+найм проверены по EDGAR и текстам ворот Kaggle/OpenSpiel; пять ставок с evidence-gate и kill, риск-регистр, трекер чужих P1-P6
 - [Проверенный контрпример возвращается в память до её фиксации — идея 09.11.2026](../200_ZETTEL/20261109-memory-counterexample-feedback.md)
 - [Brood War и оценка оркестрации: исследование 19.10.2026](../research/BROOD_WAR_AGENT_EVALS_20261019.md)
 - [Playbook Brood War для сравнения с ALASHI](../research/BROOD_WAR_PLAYBOOK.md)
