@@ -1,0 +1,1759 @@
+{
+  "schema": "alashi-bitllm-world-v1",
+  "digest": "b018a67f10a1b99767ec6b49675ee70a2b1a5bae17820913376a55327a8df134",
+  "status": "completed_with_errors",
+  "game_completed": true,
+  "reason": null,
+  "game_id": 20261303,
+  "agents": 100,
+  "profile": {
+    "url": "http://127.0.0.1:7785/v1/chat/completions",
+    "model": "evo-richest-half-donkey",
+    "source": "test_provider",
+    "temperature": 0,
+    "max_tokens": 256,
+    "chat_template_kwargs": {
+      "enable_thinking": false
+    }
+  },
+  "step": 24,
+  "round": 6,
+  "phase": "finished",
+  "state_hash": "a62ab06313c5ad7fb90f333e1fa96041d890f7f7c821b9525b303e02aa45c603",
+  "calls": 1806,
+  "known_tokens": 5445444,
+  "reserved_or_unknown_tokens": 41859,
+  "unknown_usage_calls": 8,
+  "budget_overrun": false,
+  "accepted_actions": 1798,
+  "rejected_actions": 0,
+  "skipped_decisions": 8,
+  "agents_with_model_response": 100,
+  "agents_with_accepted_model_action": 100,
+  "result": {
+    "bank": 1000000000,
+    "leaderboard": [
+      {
+        "actor": 1,
+        "cash": 33000000,
+        "goods": 0,
+        "hard": 0,
+        "influence": 5,
+        "name": "agent-001",
+        "payout": 475000000,
+        "rank": 1
+      },
+      {
+        "actor": 4,
+        "cash": 27000000,
+        "goods": 0,
+        "hard": 0,
+        "influence": 4,
+        "name": "agent-004",
+        "payout": 285000000,
+        "rank": 2
+      },
+      {
+        "actor": 11,
+        "cash": 22000000,
+        "goods": 0,
+        "hard": 0,
+        "influence": 4,
+        "name": "agent-011",
+        "payout": 142500000,
+        "rank": 3
+      },
+      {
+        "actor": 10,
+        "cash": 21000000,
+        "goods": 0,
+        "hard": 0,
+        "influence": 3,
+        "name": "agent-010",
+        "payout": 47500000,
+        "rank": 4
+      },
+      {
+        "actor": 5,
+        "cash": 18000000,
+        "goods": 0,
+        "hard": 0,
+        "influence": 4,
+        "name": "agent-005",
+        "payout": 0,
+        "rank": 5
+      },
+      {
+        "actor": 13,
+        "cash": 16000000,
+        "goods": 0,
+        "hard": 0,
+        "influence": 3,
+        "name": "agent-013",
+        "payout": 0,
+        "rank": 6
+      },
+      {
+        "actor": 9,
+        "cash": 14000000,
+        "goods": 0,
+        "hard": 0,
+        "influence": 3,
+        "name": "agent-009",
+        "payout": 0,
+        "rank": 7
+      },
+      {
+        "actor": 14,
+        "cash": 14000000,
+        "goods": 1,
+        "hard": 0,
+        "influence": 2,
+        "name": "agent-014",
+        "payout": 0,
+        "rank": 8
+      },
+      {
+        "actor": 20,
+        "cash": 12000000,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-020",
+        "payout": 0,
+        "rank": 9
+      },
+      {
+        "actor": 17,
+        "cash": 11000000,
+        "goods": 1,
+        "hard": 0,
+        "influence": 2,
+        "name": "agent-017",
+        "payout": 0,
+        "rank": 10
+      },
+      {
+        "actor": 26,
+        "cash": 10000000,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-026",
+        "payout": 0,
+        "rank": 11
+      },
+      {
+        "actor": 28,
+        "cash": 10000000,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-028",
+        "payout": 0,
+        "rank": 12
+      },
+      {
+        "actor": 18,
+        "cash": 9000000,
+        "goods": 1,
+        "hard": 0,
+        "influence": 2,
+        "name": "agent-018",
+        "payout": 0,
+        "rank": 13
+      },
+      {
+        "actor": 96,
+        "cash": 9000000,
+        "goods": 0,
+        "hard": 0,
+        "influence": 6,
+        "name": "agent-096",
+        "payout": 0,
+        "rank": 14
+      },
+      {
+        "actor": 95,
+        "cash": 8000000,
+        "goods": 1,
+        "hard": 0,
+        "influence": 2,
+        "name": "agent-095",
+        "payout": 0,
+        "rank": 15
+      },
+      {
+        "actor": 3,
+        "cash": 8000000,
+        "goods": 0,
+        "hard": 0,
+        "influence": 5,
+        "name": "agent-003",
+        "payout": 0,
+        "rank": 16
+      },
+      {
+        "actor": 92,
+        "cash": 7000000,
+        "goods": 1,
+        "hard": 0,
+        "influence": 4,
+        "name": "agent-092",
+        "payout": 0,
+        "rank": 17
+      },
+      {
+        "actor": 15,
+        "cash": 7000000,
+        "goods": 1,
+        "hard": 0,
+        "influence": 2,
+        "name": "agent-015",
+        "payout": 0,
+        "rank": 18
+      },
+      {
+        "actor": 21,
+        "cash": 7000000,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-021",
+        "payout": 0,
+        "rank": 19
+      },
+      {
+        "actor": 24,
+        "cash": 7000000,
+        "goods": 1,
+        "hard": 0,
+        "influence": 2,
+        "name": "agent-024",
+        "payout": 0,
+        "rank": 20
+      },
+      {
+        "actor": 50,
+        "cash": 7000000,
+        "goods": 0,
+        "hard": 0,
+        "influence": 5,
+        "name": "agent-050",
+        "payout": 0,
+        "rank": 21
+      },
+      {
+        "actor": 8,
+        "cash": 7000000,
+        "goods": 1,
+        "hard": 0,
+        "influence": 4,
+        "name": "agent-008",
+        "payout": 0,
+        "rank": 22
+      },
+      {
+        "actor": 23,
+        "cash": 7000000,
+        "goods": 0,
+        "hard": 0,
+        "influence": 4,
+        "name": "agent-023",
+        "payout": 0,
+        "rank": 23
+      },
+      {
+        "actor": 99,
+        "cash": 6000000,
+        "goods": 1,
+        "hard": 0,
+        "influence": 3,
+        "name": "agent-099",
+        "payout": 0,
+        "rank": 24
+      },
+      {
+        "actor": 0,
+        "cash": 6000000,
+        "goods": 0,
+        "hard": 0,
+        "influence": 5,
+        "name": "agent-000",
+        "payout": 0,
+        "rank": 25
+      },
+      {
+        "actor": 54,
+        "cash": 6000000,
+        "goods": 1,
+        "hard": 0,
+        "influence": 2,
+        "name": "agent-054",
+        "payout": 0,
+        "rank": 26
+      },
+      {
+        "actor": 2,
+        "cash": 5000000,
+        "goods": 0,
+        "hard": 0,
+        "influence": 5,
+        "name": "agent-002",
+        "payout": 0,
+        "rank": 27
+      },
+      {
+        "actor": 63,
+        "cash": 5000000,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-063",
+        "payout": 0,
+        "rank": 28
+      },
+      {
+        "actor": 80,
+        "cash": 5000000,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-080",
+        "payout": 0,
+        "rank": 29
+      },
+      {
+        "actor": 33,
+        "cash": 5000000,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-033",
+        "payout": 0,
+        "rank": 30
+      },
+      {
+        "actor": 37,
+        "cash": 5000000,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-037",
+        "payout": 0,
+        "rank": 31
+      },
+      {
+        "actor": 6,
+        "cash": 5000000,
+        "goods": 0,
+        "hard": 0,
+        "influence": 4,
+        "name": "agent-006",
+        "payout": 0,
+        "rank": 32
+      },
+      {
+        "actor": 16,
+        "cash": 3000000,
+        "goods": 0,
+        "hard": 0,
+        "influence": 4,
+        "name": "agent-016",
+        "payout": 0,
+        "rank": 33
+      },
+      {
+        "actor": 98,
+        "cash": 3000000,
+        "goods": 1,
+        "hard": 0,
+        "influence": 4,
+        "name": "agent-098",
+        "payout": 0,
+        "rank": 34
+      },
+      {
+        "actor": 58,
+        "cash": 2000000,
+        "goods": 0,
+        "hard": 0,
+        "influence": 4,
+        "name": "agent-058",
+        "payout": 0,
+        "rank": 35
+      },
+      {
+        "actor": 7,
+        "cash": 2000000,
+        "goods": 1,
+        "hard": 0,
+        "influence": 3,
+        "name": "agent-007",
+        "payout": 0,
+        "rank": 36
+      },
+      {
+        "actor": 51,
+        "cash": 2000000,
+        "goods": 0,
+        "hard": 0,
+        "influence": 3,
+        "name": "agent-051",
+        "payout": 0,
+        "rank": 37
+      },
+      {
+        "actor": 44,
+        "cash": 2000000,
+        "goods": 0,
+        "hard": 0,
+        "influence": 3,
+        "name": "agent-044",
+        "payout": 0,
+        "rank": 38
+      },
+      {
+        "actor": 19,
+        "cash": 2000000,
+        "goods": 0,
+        "hard": 0,
+        "influence": 4,
+        "name": "agent-019",
+        "payout": 0,
+        "rank": 39
+      },
+      {
+        "actor": 32,
+        "cash": 1000000,
+        "goods": 1,
+        "hard": 0,
+        "influence": 2,
+        "name": "agent-032",
+        "payout": 0,
+        "rank": 40
+      },
+      {
+        "actor": 93,
+        "cash": 1000000,
+        "goods": 0,
+        "hard": 0,
+        "influence": 6,
+        "name": "agent-093",
+        "payout": 0,
+        "rank": 41
+      },
+      {
+        "actor": 61,
+        "cash": 1000000,
+        "goods": 1,
+        "hard": 0,
+        "influence": 4,
+        "name": "agent-061",
+        "payout": 0,
+        "rank": 42
+      },
+      {
+        "actor": 22,
+        "cash": 1000000,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-022",
+        "payout": 0,
+        "rank": 43
+      },
+      {
+        "actor": 25,
+        "cash": 1000000,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-025",
+        "payout": 0,
+        "rank": 44
+      },
+      {
+        "actor": 56,
+        "cash": 1000000,
+        "goods": 1,
+        "hard": 0,
+        "influence": 2,
+        "name": "agent-056",
+        "payout": 0,
+        "rank": 45
+      },
+      {
+        "actor": 12,
+        "cash": 1000000,
+        "goods": 0,
+        "hard": 0,
+        "influence": 4,
+        "name": "agent-012",
+        "payout": 0,
+        "rank": 46
+      },
+      {
+        "actor": 52,
+        "cash": 1000000,
+        "goods": 1,
+        "hard": 0,
+        "influence": 2,
+        "name": "agent-052",
+        "payout": 0,
+        "rank": 47
+      },
+      {
+        "actor": 60,
+        "cash": 1000000,
+        "goods": 1,
+        "hard": 0,
+        "influence": 2,
+        "name": "agent-060",
+        "payout": 0,
+        "rank": 48
+      },
+      {
+        "actor": 30,
+        "cash": 1000000,
+        "goods": 1,
+        "hard": 0,
+        "influence": 2,
+        "name": "agent-030",
+        "payout": 0,
+        "rank": 49
+      },
+      {
+        "actor": 84,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-084",
+        "payout": 0,
+        "rank": 50
+      },
+      {
+        "actor": 85,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-085",
+        "payout": 0,
+        "rank": 51
+      },
+      {
+        "actor": 49,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-049",
+        "payout": 0,
+        "rank": 52
+      },
+      {
+        "actor": 75,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-075",
+        "payout": 0,
+        "rank": 53
+      },
+      {
+        "actor": 91,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-091",
+        "payout": 0,
+        "rank": 54
+      },
+      {
+        "actor": 87,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-087",
+        "payout": 0,
+        "rank": 55
+      },
+      {
+        "actor": 34,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-034",
+        "payout": 0,
+        "rank": 56
+      },
+      {
+        "actor": 53,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-053",
+        "payout": 0,
+        "rank": 57
+      },
+      {
+        "actor": 64,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-064",
+        "payout": 0,
+        "rank": 58
+      },
+      {
+        "actor": 57,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-057",
+        "payout": 0,
+        "rank": 59
+      },
+      {
+        "actor": 81,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-081",
+        "payout": 0,
+        "rank": 60
+      },
+      {
+        "actor": 36,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-036",
+        "payout": 0,
+        "rank": 61
+      },
+      {
+        "actor": 76,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-076",
+        "payout": 0,
+        "rank": 62
+      },
+      {
+        "actor": 65,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-065",
+        "payout": 0,
+        "rank": 63
+      },
+      {
+        "actor": 90,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-090",
+        "payout": 0,
+        "rank": 64
+      },
+      {
+        "actor": 43,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-043",
+        "payout": 0,
+        "rank": 65
+      },
+      {
+        "actor": 73,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-073",
+        "payout": 0,
+        "rank": 66
+      },
+      {
+        "actor": 67,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-067",
+        "payout": 0,
+        "rank": 67
+      },
+      {
+        "actor": 72,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-072",
+        "payout": 0,
+        "rank": 68
+      },
+      {
+        "actor": 68,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-068",
+        "payout": 0,
+        "rank": 69
+      },
+      {
+        "actor": 82,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-082",
+        "payout": 0,
+        "rank": 70
+      },
+      {
+        "actor": 88,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-088",
+        "payout": 0,
+        "rank": 71
+      },
+      {
+        "actor": 31,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-031",
+        "payout": 0,
+        "rank": 72
+      },
+      {
+        "actor": 86,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-086",
+        "payout": 0,
+        "rank": 73
+      },
+      {
+        "actor": 27,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-027",
+        "payout": 0,
+        "rank": 74
+      },
+      {
+        "actor": 45,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-045",
+        "payout": 0,
+        "rank": 75
+      },
+      {
+        "actor": 47,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-047",
+        "payout": 0,
+        "rank": 76
+      },
+      {
+        "actor": 71,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-071",
+        "payout": 0,
+        "rank": 77
+      },
+      {
+        "actor": 39,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-039",
+        "payout": 0,
+        "rank": 78
+      },
+      {
+        "actor": 79,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-079",
+        "payout": 0,
+        "rank": 79
+      },
+      {
+        "actor": 77,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-077",
+        "payout": 0,
+        "rank": 80
+      },
+      {
+        "actor": 38,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-038",
+        "payout": 0,
+        "rank": 81
+      },
+      {
+        "actor": 35,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-035",
+        "payout": 0,
+        "rank": 82
+      },
+      {
+        "actor": 62,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-062",
+        "payout": 0,
+        "rank": 83
+      },
+      {
+        "actor": 42,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-042",
+        "payout": 0,
+        "rank": 84
+      },
+      {
+        "actor": 78,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-078",
+        "payout": 0,
+        "rank": 85
+      },
+      {
+        "actor": 94,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 3,
+        "name": "agent-094",
+        "payout": 0,
+        "rank": 86
+      },
+      {
+        "actor": 74,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-074",
+        "payout": 0,
+        "rank": 87
+      },
+      {
+        "actor": 66,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-066",
+        "payout": 0,
+        "rank": 88
+      },
+      {
+        "actor": 55,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-055",
+        "payout": 0,
+        "rank": 89
+      },
+      {
+        "actor": 48,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-048",
+        "payout": 0,
+        "rank": 90
+      },
+      {
+        "actor": 69,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-069",
+        "payout": 0,
+        "rank": 91
+      },
+      {
+        "actor": 46,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-046",
+        "payout": 0,
+        "rank": 92
+      },
+      {
+        "actor": 83,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-083",
+        "payout": 0,
+        "rank": 93
+      },
+      {
+        "actor": 70,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-070",
+        "payout": 0,
+        "rank": 94
+      },
+      {
+        "actor": 97,
+        "cash": 0,
+        "goods": 1,
+        "hard": 0,
+        "influence": 4,
+        "name": "agent-097",
+        "payout": 0,
+        "rank": 95
+      },
+      {
+        "actor": 59,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-059",
+        "payout": 0,
+        "rank": 96
+      },
+      {
+        "actor": 40,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-040",
+        "payout": 0,
+        "rank": 97
+      },
+      {
+        "actor": 89,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-089",
+        "payout": 0,
+        "rank": 98
+      },
+      {
+        "actor": 29,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-029",
+        "payout": 0,
+        "rank": 99
+      },
+      {
+        "actor": 41,
+        "cash": 0,
+        "goods": 2,
+        "hard": 0,
+        "influence": 1,
+        "name": "agent-041",
+        "payout": 0,
+        "rank": 100
+      }
+    ],
+    "order": [
+      1,
+      4,
+      11,
+      10,
+      5,
+      13,
+      9,
+      14,
+      20,
+      17,
+      26,
+      28,
+      18,
+      96,
+      95,
+      3,
+      92,
+      15,
+      21,
+      24,
+      50,
+      8,
+      23,
+      99,
+      0,
+      54,
+      2,
+      63,
+      80,
+      33,
+      37,
+      6,
+      16,
+      98,
+      58,
+      7,
+      51,
+      44,
+      19,
+      32,
+      93,
+      61,
+      22,
+      25,
+      56,
+      12,
+      52,
+      60,
+      30,
+      84,
+      85,
+      49,
+      75,
+      91,
+      87,
+      34,
+      53,
+      64,
+      57,
+      81,
+      36,
+      76,
+      65,
+      90,
+      43,
+      73,
+      67,
+      72,
+      68,
+      82,
+      88,
+      31,
+      86,
+      27,
+      45,
+      47,
+      71,
+      39,
+      79,
+      77,
+      38,
+      35,
+      62,
+      42,
+      78,
+      94,
+      74,
+      66,
+      55,
+      48,
+      69,
+      46,
+      83,
+      70,
+      97,
+      59,
+      40,
+      89,
+      29,
+      41
+    ],
+    "payout_breakdown": [
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 475000000
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 285000000
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 47500000
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 142500000
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      },
+      {
+        "factory_bonus": 0,
+        "license_rent": 0,
+        "rank_share": 0
+      }
+    ],
+    "payout_policy": "canonical_top4",
+    "payouts": [
+      0,
+      475000000,
+      0,
+      0,
+      285000000,
+      0,
+      0,
+      0,
+      0,
+      0,
+      47500000,
+      142500000,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "rake": 50000000,
+    "settlement_mode": "simulated",
+    "winner_actor": 1
+  },
+  "nvidia_spend_usd": 0,
+  "provider_cost_usd": null,
+  "alashi_http_requests": 0,
+  "blockchain_transactions": 0,
+  "evidence_status": "deterministic_test",
+  "limitations": [
+    "Model identity and token usage are peer reported.",
+    "Menus are a bounded legal subset; agents see a compact public view and their own recent receipts.",
+    "Same model with different identities/personas does not establish diverse independent intelligence.",
+    "Invalid or unavailable model decisions are explicit skipped receipts, never scripted replacements."
+  ]
+}
