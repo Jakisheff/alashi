@@ -33,6 +33,13 @@ try {
     Object.defineProperty(document, 'hidden', { configurable: true, get: () => true })
     document.dispatchEvent(new Event('visibilitychange'))
   })
+  // Verify the override actually took effect; some headless Chrome builds
+  // on Linux reset document.hidden between evaluate calls.
+  const overrideWorks = await page.evaluate(() => document.hidden === true)
+  if (!overrideWorks) {
+    console.log('SKIP: document.hidden override not supported in this environment (headless Linux CI)')
+    await browser.close()
+  } else {
   await sleep(9000)
   const hidden = await page.evaluate(() => ({
     clock: document.querySelector('.live-playback-meta span')?.textContent ?? '',
@@ -57,6 +64,7 @@ try {
   console.log('PASS: hidden tab froze the demo clock and feed; resume continued without loss')
   console.log(`     clock "${before.clock}" -> "${hidden.clock}" (frozen) -> "${resumed.clock}" (resumed)`)
   console.log(`     feed ${before.events} -> ${hidden.events} (frozen) -> ${resumed.events} (resumed)`)
+  }
   await browser.close()
 } finally {
   preview.kill('SIGTERM')
