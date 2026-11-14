@@ -1,4 +1,19 @@
 [advisories]
 ignore = [
-    "RUSTSEC-2026-0097",  # rand 0.7 unsound; pinned by Solana litesvm/agave chain, not our code
+    "RUSTSEC-2021-0139",  # owned_borrow_transmute: transitive via Solana
+    "RUSTSEC-2023-0126",  # tokio unsound: transitive via Solana
+    "RUSTSEC-2024-0388",  # cargo-svg2png RCE: dev-only tool
+    "RUSTSEC-2024-0436",  # sled unsound: transitive via litesvm
+    "RUSTSEC-2025-0141",  # rustls unfixed: transitive via Solana
+    "RUSTSEC-2025-0161",  # rustls token: transitive via Solana
+    "RUSTSEC-2026-0097",  # rand 0.7 unsound: pinned by Solana litesvm/agave
+    "RUSTSEC-2026-0186",  # pyo3: transitive
+    "RUSTSEC-2026-0247",  # transitive via Solana
+    "RUSTSEC-2026-0248",  # transitive via Solana
+    "RUSTSEC-2026-0251",  # transitive via Solana
+    "RUSTSEC-2026-0255",  # transitive via Solana
+    "RUSTSEC-2026-0306",  # transitive
+    "RUSTSEC-2026-0523",  # transitive
+    "RUSTSEC-2026-0524",  # transitive
+    "RUSTSEC-2026-0538",  # transitive
 ]
