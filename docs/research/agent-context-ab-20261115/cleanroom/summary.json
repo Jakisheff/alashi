@@ -1,0 +1,43 @@
+{
+  "naked": {
+    "game": 2,
+    "proxy_port": 8151,
+    "log": "proxy-naked.jsonl",
+    "requests": 1168,
+    "4xx": 0,
+    "arena_rejections": 3,
+    "arena_rejection_kinds": [
+      "POST /game/2/act -> storage_failed",
+      "POST /game/2/act -> storage_failed",
+      "POST /game/2/act -> storage_failed"
+    ],
+    "5xx": 0
+  },
+  "quickstart": {
+    "game": 3,
+    "proxy_port": 8153,
+    "log": "proxy-quickstart.jsonl",
+    "requests": 1165,
+    "4xx": 0,
+    "arena_rejections": 1,
+    "arena_rejection_kinds": [
+      "POST /game/3/act -> storage_failed"
+    ],
+    "5xx": 0
+  },
+  "skill": {
+    "game": 4,
+    "proxy_port": 8155,
+    "log": "proxy-skill.jsonl",
+    "requests": 1111,
+    "4xx": 0,
+    "arena_rejections": 4,
+    "arena_rejection_kinds": [
+      "POST /game/4/act -> bad_params",
+      "POST /game/4/act -> WrongPhase",
+      "POST /game/4/act -> WrongPhase",
+      "POST /game/4/act -> bad_params"
+    ],
+    "5xx": 0
+  }
+}
