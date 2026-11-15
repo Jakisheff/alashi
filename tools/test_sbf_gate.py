@@ -79,6 +79,12 @@ def valid(tmp):
     return sbf_gate.check(tmp)
 
 
+def valid_solana_machine(tmp):
+    # cargo-build-sbf 4.1.0 / v1.54 emits EM_SBF=263 (observed in CI 15.11)
+    make_repo(tmp, make_elf(machine=263), GOOD_MANIFEST)
+    return sbf_gate.check(tmp)
+
+
 def no_artifact(tmp):
     make_repo(tmp, make_elf(), GOOD_MANIFEST)
     os.remove(os.path.join(tmp, sbf_gate.ARTIFACT_REL))
@@ -135,7 +141,8 @@ def elf_flags_drift(tmp):
 
 def main() -> int:
     results = [
-        case("valid build passes", False, valid),
+        case("valid build passes (EM_BPF 247)", False, valid),
+        case("valid build passes (EM_SBF 263, toolchain actual)", False, valid_solana_machine),
         case("missing artifact refused", True, no_artifact),
         case("missing manifest refused", True, no_manifest),
         case("tampered .so refused (sha mismatch)", True, tampered_so),

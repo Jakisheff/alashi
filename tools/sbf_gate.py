@@ -25,7 +25,11 @@ import sys
 
 ARTIFACT_REL = "target/deploy/alashi.so"
 MANIFEST_REL = "target/sbf-v1.54/build-manifest.json"
-SBF_ELF_MACHINE = 247  # EM_BPF / SBF, fixed by the target definition
+# Classic BPF is EM_BPF=247, but the Solana toolchain (cargo-build-sbf 4.1.0,
+# platform-tools v1.54) emits EM_SBF=263 (0x107); observed on a real CI build
+# 15.11 after the gate refused with 263 != 247. Both are the SBF family;
+# anything else (x86-64=62 etc.) is a foreign artifact.
+SBF_ELF_MACHINES = (247, 263)
 SOURCE_PATHS = (
     "programs/alashi/src",
     "programs/alashi/Cargo.toml",
@@ -147,9 +151,9 @@ def check(repo: str) -> tuple:
     else:
         if header["class"] != 2 or header["data"] != 1:
             failures.append("ELF is not 64-bit little-endian")
-        if header["e_machine"] != SBF_ELF_MACHINE:
+        if header["e_machine"] not in SBF_ELF_MACHINES:
             failures.append(
-                f"ELF e_machine {header['e_machine']} != {SBF_ELF_MACHINE} (SBF)"
+                f"ELF e_machine {header['e_machine']} not in {SBF_ELF_MACHINES} (SBF family)"
             )
         recorded = manifest.get("elf", {})
         for key in ("e_type", "e_flags"):
