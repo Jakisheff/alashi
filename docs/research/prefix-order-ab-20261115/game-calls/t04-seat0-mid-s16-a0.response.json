@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.395,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Больше товара с положительным EV, несмотря на риск конфискации; продаю на рынке следующего раунда.\"}",
+          "reasoning_content": "Round 5, cash 12.71, others richer. I should increase influence via bribe? Bribe 5M to whom? Bribe gives +1 influence to me, money goes to rival. Influence helps final bonus and vote weight. Currently influence 1 vs 2 for idx2. Vote weight 3,3,2. Bribe 5M gives influence 2, vote weight 4.\n\nBut cash matters for payout. 5M bribe costs ~5 alashi to me (transferred to rival, hurts relatively). Payout depends on cash rank. I'm poorest already. Roof: pays 30% cash to someone — costly.\n\nProduce gives 2 goods, no subsidy. Shuttle gives 3 goods, 25% confiscation. Goods can be sold next market for ~12 each? Actually this round's market already passed? Order: market, action, law each round. So market passed, goods sold next round 6's market at prices minus ladder. 2 goods via produce worth ~20 alashi. Shuttle: 3 goods expected 22.5 minus risk. Shuttle slightly better EV but confiscation loses all? Probably confiscates shuttle goods. EV shuttle 0.75*3=2.25 vs produce 2. Shuttle better. But border may be favorable to influence-holder... unclear. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766700,
+    "id": "20261116021813fdabad5edf14480c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021813fdabad5edf14480c",
+    "usage": {
+      "completion_tokens": 316,
+      "completion_tokens_details": {
+        "reasoning_tokens": 279
+      },
+      "prompt_tokens": 1520,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1836
+    }
+  }
+}

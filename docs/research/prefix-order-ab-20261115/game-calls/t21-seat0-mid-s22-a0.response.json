@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.335,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Закон пустой, исход не влияет на выплату\"}",
+          "reasoning_content": "Law card 0 = nothing. Vote abstain or anything. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767335,
+    "id": "20261116022853f9999e22293640b1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022853f9999e22293640b1",
+    "usage": {
+      "completion_tokens": 41,
+      "completion_tokens_details": {
+        "reasoning_tokens": 17
+      },
+      "prompt_tokens": 1389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1430
+    }
+  }
+}

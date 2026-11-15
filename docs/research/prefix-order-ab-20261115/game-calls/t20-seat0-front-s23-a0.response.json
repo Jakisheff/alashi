@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.812,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон даёт +1 влияния беднейшему (фракция 2), а не мне — против.\"}",
+          "reasoning_content": "Law card 4: +1 influence to poorest. Poorest is idx2 (cash ~23.8M), not me. Gives influence to rival. Vote no. My weight 3 vs yes 2+1=3... likely tie → fails (yes must strictly exceed). Vote no: no=3, yes=3 fails anyway? Others may have voted. voted all true, but I'm deciding now? vote_weight_mode 1... just vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767333,
+    "id": "202611160228492e6e86646d92438c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160228492e6e86646d92438c",
+    "usage": {
+      "completion_tokens": 131,
+      "completion_tokens_details": {
+        "reasoning_tokens": 96
+      },
+      "prompt_tokens": 1393,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1524
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.022,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 8 списывает непогашённые promissory, что может лишить меня выручки перед итогом.\"}",
+          "reasoning_content": "Law 8 wipes unredeemed promissory. I don't know if I have promissory outstanding. Round 6, post_vote — vote already happened? decision_stage post_vote, voted all true. Hmm, but phase law still. Voted already... maybe I must still choose? Law card 8 wipes promissory — risky. Vote no.\n\nActually if everyone already voted, my action might matter little. Choose vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767158,
+    "id": "2026111602255347a1ea876575418f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602255347a1ea876575418f",
+    "usage": {
+      "completion_tokens": 128,
+      "completion_tokens_details": {
+        "reasoning_tokens": 90
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1518
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.379,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":30000000,\"reason\":\"Ожидаемый доход лицензии ~40 alashi, ставка частично вернётся через банк, поэтому выгодно перебить соперников.\"}",
+          "reasoning_content": "Round 4, license auction. Expected license income ~20-60 alashi (~40 avg). Bank commission? Payouts proportional... bidding makes sense up to expected value minus share. If I don't bid, license goes to rival. My share weight 50:30:15 — I'm probably the biggest. If I bid A and win, I get license income L plus my share. Net gain vs losing: license income L minus bid A (bid goes to bank, but bank is distributed back...). Bid goes to bank, which is distributed — so partially refunded. So bid close to expected L is fine. Expected L ~40 alashi (avg). Bid maybe 25-30M = 25-30 alashi. Also competitors may bid. Bid 30M (30000000).\n\nAlso president with veto — but that's law phase. Bid 30000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766770,
+    "id": "20261116021925c32f479dfcbd43b0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021925c32f479dfcbd43b0",
+    "usage": {
+      "completion_tokens": 228,
+      "completion_tokens_details": {
+        "reasoning_tokens": 182
+      },
+      "prompt_tokens": 1520,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1748
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.514,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Цены высокие без налога, а promissory по 1.25x добавляется к cash после девальвации, что выгоднее прямой продажи.\"}",
+          "reasoning_content": "I have 3 goods, sell now at price 12, no tax. Sell all 3 normally? Credit gives 1.25x but boundary devaluation: promissory added to cash after floor(cash/100)*62? Promissory added after devaluation, actually \"promissory прибавляется к cash и обнуляется\" — added after devaluation, so credit better if round<6. Round 3, credit paid at end of round 3 boundary, cash then devalued next boundary. So sell_credit: 3*12*1.25=45 promissory, added after devaluation. Sell credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766738,
+    "id": "20261116021853893c9e8047f9466f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021853893c9e8047f9466f",
+    "usage": {
+      "completion_tokens": 182,
+      "completion_tokens_details": {
+        "reasoning_tokens": 133
+      },
+      "prompt_tokens": 1425,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1607
+    }
+  }
+}

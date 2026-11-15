@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.632,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Финальный раунд, sell_credit уже не погасится; продаю весь товар по максимальной цене лестницы.\"}",
+          "reasoning_content": "Round 6, last market. Cash ~9.8, others 15.4 and 12.9. I'm poorest. Sell 3 at price 12 (sold_counter 0), no tax. Sell credit won't redeem after last round. Sell 3 units at 12 = 36 alashi.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767821,
+    "id": "20261116023657326976c6fd6d4749",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023657326976c6fd6d4749",
+    "usage": {
+      "completion_tokens": 108,
+      "completion_tokens_details": {
+        "reasoning_tokens": 66
+      },
+      "prompt_tokens": 1427,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1535
+    }
+  }
+}

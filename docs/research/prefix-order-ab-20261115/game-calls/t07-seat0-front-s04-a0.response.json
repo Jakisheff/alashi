@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.585,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Цены ещё высокие (9,8,7), а кэш девальвируется на границе раунда — кредитная продажа даёт 1,25х без девальвации.\"}",
+          "reasoning_content": "Round 2, prices: sold_counter=2, next prices 9,8,7... selling 3 units at 9,8,7 = 24 alashi. Tax 0. Cash would then be devalued at round 2+ border? Devaluation happens at round borders 2+. Border after round 2? \"At round 2+ borders\" — likely at end of round 2 onward. So cash earned this round will be devalued (floor/100*62) if border after this round. Sell_credit gives 1.25x promissory added after devaluation — better. Sell all 3 on credit: 24*1.25=30 alashi promissory, received at next border without devaluation? Promissory returns at next round border and is added to cash, not devaluated (only cash devalued). So sell_credit is better.\n\nRisk: card 8 cancels promissory. Unknown. Still, 30 vs 24*0.62≈15. Do sell_credit 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766773,
+    "id": "20261116021927869b902dae3247f2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021927869b902dae3247f2",
+    "usage": {
+      "completion_tokens": 280,
+      "completion_tokens_details": {
+        "reasoning_tokens": 222
+      },
+      "prompt_tokens": 1420,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1700
+    }
+  }
+}

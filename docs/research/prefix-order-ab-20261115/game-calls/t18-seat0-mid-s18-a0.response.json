@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.549,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bribe\",\"to\":0,\"amount\":5000000,\"reason\":\"Взятка себе бесплатна по итогу: +1 влияние даёт президентство/вес в законе и шанс на бонус влияния, товар и деньги больше не конвертируются (рынок прошёл).\"}",
+          "reasoning_content": "Round 6 last round. Market next? Phase order: market, action, law each round. We're in action of round 6, so market already happened? goods 0 — yes. Law phase follows; no law card yet (255). Only law phase benefit: influence bonus 5% of bank. Bribe 5M for +1 influence → voting weight and max influence bonus. Cash tight, middle. Bribe to self is waste (money to self, +influence). Bribe 5M to another player costs 5M, gives +1 influence — could get max influence bonus (5% of bank, small) and vote weight. Probably not worth 5M. Better: shuttle gives goods but no market left (market of round 6 already done). So goods useless. Best is bribe to self? Bribe to self transfers to self... net zero but +influence for law vote and final bonus. 5M bribe to self: +1 influence, vote weight 4. Could win president? Influence tie: currently 1,1,1; president tie by tie_order. With +1 I'd be 2, others 1 — president, veto. Law card unknown, round 6. Bribe self costs nothing net. Do it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767220,
+    "id": "202611160226519fc78a936cad4444",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160226519fc78a936cad4444",
+    "usage": {
+      "completion_tokens": 334,
+      "completion_tokens_details": {
+        "reasoning_tokens": 266
+      },
+      "prompt_tokens": 1523,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1857
+    }
+  }
+}

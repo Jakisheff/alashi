@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.056,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Продажа в кредит по высоким ценам раунда 4 с премией 25%, погашение на границе раунда 5.\"}",
+          "reasoning_content": "Prices: counter 7, ladder index 7 =4, +boom 2 → 6? Ladder [12,10,9,8,7,6,5,4,...] counter 7 means next price 4? Sold 7 units → price index 7 = 4, +2 = 6. Selling 3 units: 6+2 boom? Next prices 4,3,3 →+2 = 6,5,5 = 16 total, no tax. Sell directly (round 4, credit pays at boundary round 5... boundary after round 4? Round 4 of 6, credit repaid next round boundary — yes, but plain sell fine; credit gives 1.25x repaid at boundary of round 5, before final — that's fine actually. Credit 16*1.25=20. Better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766751,
+    "id": "20261116021906b716b6b7f1054623",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021906b716b6b7f1054623",
+    "usage": {
+      "completion_tokens": 231,
+      "completion_tokens_details": {
+        "reasoning_tokens": 184
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1659
+    }
+  }
+}

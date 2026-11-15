@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.034,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Лестница свежая, продаю по высоким ценам 12/10/9 без риска списания promissory.\"}",
+          "reasoning_content": "Sell 3 units at 12,10,9 = 31. Or sell_credit? Credit pays at boundary round 4, fine, but card 8 risk wipes promissory. Safe: sell now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766938,
+    "id": "202611160222157f05e6a24f744491",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160222157f05e6a24f744491",
+    "usage": {
+      "completion_tokens": 83,
+      "completion_tokens_details": {
+        "reasoning_tokens": 44
+      },
+      "prompt_tokens": 1425,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1508
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.79,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":30000000,\"reason\":\"Ожидаемый доход лицензии ~40 alashi сверх доли, ставка 30 alashi выгодна и отправляет деньги соперников в банк.\"}",
+          "reasoning_content": "Auction round 4. License income 20-60 alashi, paid extra. Bid some amount. Cash ~41.5. Expected license value ~40 alashi. But paying goes to bank, not shared. Bidding ~25-30 could be worth it. If I win, I get 20-60 extra directly. Bid 30 (in units? amount in minimal units, multiple of... bid amount integer of minimal units). Bid 30M = 30 alashi? Wait cash is 41,540,000 = 41.54 alashi. Bid amounts likely in minimal units. Expected license 40 alashi extra. Bid 30000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767495,
+    "id": "20261116023131ef7ceba9911a487b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023131ef7ceba9911a487b",
+    "usage": {
+      "completion_tokens": 187,
+      "completion_tokens_details": {
+        "reasoning_tokens": 140
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1708
+    }
+  }
+}

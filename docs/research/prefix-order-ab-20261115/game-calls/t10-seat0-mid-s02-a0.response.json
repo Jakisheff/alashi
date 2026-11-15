@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.119,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Закон 8 списывает непогашённые promissory, а при sold_counter=0 их ни у кого нет — безвреден, пропускаю.\"}",
+          "reasoning_content": "Law 8 cancels all promissory notes. Round 1, nobody has promissory visible... but others may have sold credit? sold_counter=0, so no sales happened. So law 8 is harmless — pass it? It wipes promissory; nobody has any. Vote yes, harmless. Or abstain. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766827,
+    "id": "202611160220233333e59f73394183",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160220233333e59f73394183",
+    "usage": {
+      "completion_tokens": 119,
+      "completion_tokens_details": {
+        "reasoning_tokens": 71
+      },
+      "prompt_tokens": 1380,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1499
+    }
+  }
+}

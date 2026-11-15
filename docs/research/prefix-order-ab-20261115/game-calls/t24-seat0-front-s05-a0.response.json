@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.033,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Безопасно даёт 3 товара (субсидия), лучше риска 25% конфискации у shuttle при отсутствии денег\"}",
+          "reasoning_content": "No cash. Shuttle gives 4 goods, 25% confiscation. Produce gives 3 goods safe. Shuttle expected 3 goods vs 3 safe — produce better.\n\nvote_weight shows [3,3,1] — mode 1 means skip? I haven't skipped yet... actually weights include +2 for skip already? Odd. Anyway.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767374,
+    "id": "20261116022929640950bf5fa849d1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022929640950bf5fa849d1",
+    "usage": {
+      "completion_tokens": 109,
+      "completion_tokens_details": {
+        "reasoning_tokens": 71
+      },
+      "prompt_tokens": 1515,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1624
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.076,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Высокая цена 12 в начале лестницы, налога нет — продаю оба товара.\"}",
+          "reasoning_content": "Round 3, prices start at 12. Sell 2 now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767420,
+    "id": "20261116023018e1b0297fb4b64216",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023018e1b0297fb4b64216",
+    "usage": {
+      "completion_tokens": 49,
+      "completion_tokens_details": {
+        "reasoning_tokens": 15
+      },
+      "prompt_tokens": 1425,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1474
+    }
+  }
+}

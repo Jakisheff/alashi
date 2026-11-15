@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.054,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2}",
+          "reasoning_content": "Round 2, sell 2 at price ladder: sold_counter=2, so prices continue at index 2 = 9? Ladder [12,10,9,...]. Selling 2 gives 9+8=17. sell_credit gives *1.25 and cash converts 62% at border... sell_credit adds to promissory which is added after devaluation. So sell_credit better: 17*1.25=21.25 vs 17 devalued to floor(17/100... wait cash=floor(cash/100)*62 — that's per 100 units? cash in minimal units: floor(cash/100)*62, so ~62%. So credit much better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766839,
+    "id": "2026111602203401c88884a7f84a6c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602203401c88884a7f84a6c",
+    "usage": {
+      "completion_tokens": 158,
+      "completion_tokens_details": {
+        "reasoning_tokens": 146
+      },
+      "prompt_tokens": 1420,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1578
+    }
+  }
+}

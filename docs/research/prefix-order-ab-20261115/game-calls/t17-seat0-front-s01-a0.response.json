@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.889,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемая ценность 3 товаров с учётом 25% риска (~2.25) выше, чем 2 от produce, при нулевом кэше штрафы отсутствуют.\"}",
+          "reasoning_content": "Produce gives 2 goods; shuttle gives 3 with risk. Shuttle EV = 2.25 > 2, but no subsidy. Shuttle better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767129,
+    "id": "20261116022526730df4103b7f4b1b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022526730df4103b7f4b1b",
+    "usage": {
+      "completion_tokens": 86,
+      "completion_tokens_details": {
+        "reasoning_tokens": 32
+      },
+      "prompt_tokens": 1511,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1597
+    }
+  }
+}

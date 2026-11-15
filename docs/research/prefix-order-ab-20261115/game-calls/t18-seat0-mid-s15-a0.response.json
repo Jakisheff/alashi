@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.997,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Субсидия товара выгодна всем, включая меня, и я не теряю относительных позиций.\"}",
+          "reasoning_content": "Law card 3: subsidy_goods=1, helps everyone, I'm slightly poorer. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767204,
+    "id": "202611160226410b85e89a91014ed1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160226410b85e89a91014ed1",
+    "usage": {
+      "completion_tokens": 55,
+      "completion_tokens_details": {
+        "reasoning_tokens": 21
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1445
+    }
+  }
+}

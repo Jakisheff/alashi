@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.577,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":28000000,\"reason\":\"Ожидаемый доход лицензии ~40 alashi против ставки 28 — выгодная покупка сверх доли, соперники ограничены кэшем ~32\"}",
+          "reasoning_content": "Round 4 action, bid available. License income 20-60, paid above share. I'm richest. Value of license: expected ~40. Bidding: winner pays, others refunded. Competitors might bid. Bid ~25-30 alashi? Cash 45. Bid 30? EV: license mean 40, so bid up to ~30-35 reasonable. But risk of overpaying. Also passing primary action gives +2 vote weight. Bid is the primary action? Yes, bid is an action. If I bid, I lose the +2 weight, but no law card shown (law_card 255 — no card? Actually law_card 255 means no card, so law phase trivial). I'll bid 30M.\n\nActually also produce/shuttle gives goods for selling later. But license pays 20-60 above share — bid ~30 (mean 40). Competitors with cash 32 could bid up to 32. Bid 28M? I'll bid 28.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767215,
+    "id": "20261116022649676bdc89270e46cb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022649676bdc89270e46cb",
+    "usage": {
+      "completion_tokens": 259,
+      "completion_tokens_details": {
+        "reasoning_tokens": 207
+      },
+      "prompt_tokens": 1523,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1782
+    }
+  }
+}

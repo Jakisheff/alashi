@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.801,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Снижение цен на следующем рынке вредит моей выручке, а я могу бесплатно наложить вето как президент.\"}",
+          "reasoning_content": "Law card 6: prices -2 next market. I'm president, all voted. I'm president with cash second. Round 4, next market is round 5. Lower prices hurt everyone. Should I veto? Veto kills the law. Votes already happened — unknown outcome. If law passes and lowers prices, bad for me. Veto it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766971,
+    "id": "20261116022248c7e7df151da24c46",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022248c7e7df151da24c46",
+    "usage": {
+      "completion_tokens": 110,
+      "completion_tokens_details": {
+        "reasoning_tokens": 73
+      },
+      "prompt_tokens": 1392,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1502
+    }
+  }
+}

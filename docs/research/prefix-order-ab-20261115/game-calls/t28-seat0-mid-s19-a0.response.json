@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.525,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Закон +2 к ценам выгоден моим продажам\"}",
+          "reasoning_content": "Law card 7: prices +2, cancels -2 shift. Good for me selling 3 goods. Vote yes. But rival influence 3 dominates anyway. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767595,
+    "id": "2026111602331372bfec5411604277",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602331372bfec5411604277",
+    "usage": {
+      "completion_tokens": 60,
+      "completion_tokens_details": {
+        "reasoning_tokens": 37
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1451
+    }
+  }
+}

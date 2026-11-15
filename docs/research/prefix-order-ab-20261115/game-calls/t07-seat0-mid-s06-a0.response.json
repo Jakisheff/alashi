@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.117,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Цена высокая (12), кредит даёт 1.25x выручки, погашение на границе раунда 4 — больше итоговой выплаты.\"}",
+          "reasoning_content": "Sell 2 at price 12. Cash already high 21.25. Sell credit? Credit pays 1.25 at next round boundary — round 3, boundary between 3 and 4 exists, so fine. 2*12*1.25=30 alashi. Devaluation floor applies to cash, promissory added after. Sell credit better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766754,
+    "id": "202611160219103138ec5681cd437e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160219103138ec5681cd437e",
+    "usage": {
+      "completion_tokens": 127,
+      "completion_tokens_details": {
+        "reasoning_tokens": 76
+      },
+      "prompt_tokens": 1425,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1552
+    }
+  }
+}

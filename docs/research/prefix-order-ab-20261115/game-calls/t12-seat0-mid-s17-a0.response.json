@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.233,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемая выручка 3 товаров (≈24.8 после налога) выше, чем 2 от produce, а риск 25% конфискации приемлем.\"}",
+          "reasoning_content": "Round 5, no goods, tax 20%, price normal. Shuttle gives 3 goods, ~25% confiscation. Expected value: prices 12,10,9 for 3 units minus 20% tax ≈ 24.8 vs produce 2 goods → 22*0.8=17.6. Shuttle better. Do shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766980,
+    "id": "202611160222557e97a0fc8ffd4852",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160222557e97a0fc8ffd4852",
+    "usage": {
+      "completion_tokens": 125,
+      "completion_tokens_details": {
+        "reasoning_tokens": 74
+      },
+      "prompt_tokens": 1523,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1648
+    }
+  }
+}

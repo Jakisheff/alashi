@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.484,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":25000000,\"reason\":\"Лицензия приносит 20-60 alashi сверх доли, проигрышная ставка возвращается, а моя касса позволяет перебить соперников.\"}",
+          "reasoning_content": "Round 4, auction available. License income ~20-60 alashi extra beyond share. Bid moderate, e.g. 20M (20 alashi). Competitors cash ~32M and ~25M. Bid ~15M to be safe? Expected value ~40 alashi income; bidding 20M still profitable if win. Risk losing money if not highest—losing bids returned. Only winner pays. So bid high, e.g. 30M (30 alashi). License income up to 60 alashi, minus 30 bid = up to +30, maybe breakeven if 20. Bid 25M seems reasonable to beat opponents likely bids.\n\nAlso I should preserve goods production? Only one action. Bid is likely best EV.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767088,
+    "id": "202611160224439a100266aaef4a7f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160224439a100266aaef4a7f",
+    "usage": {
+      "completion_tokens": 207,
+      "completion_tokens_details": {
+        "reasoning_tokens": 155
+      },
+      "prompt_tokens": 1520,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1727
+    }
+  }
+}

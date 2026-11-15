@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.266,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Безопасные 2 товара для продажи на рынке при нулевом риске конфискации.\"}",
+          "reasoning_content": "I have 0 goods, little cash. Produce gives 2 goods. Shuttle gives 3 with 25% confiscation risk. Produce is safe, 2 goods. Round 5, produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766779,
+    "id": "2026111602193695d1a73ae46b4cc1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602193695d1a73ae46b4cc1",
+    "usage": {
+      "completion_tokens": 73,
+      "completion_tokens_details": {
+        "reasoning_tokens": 41
+      },
+      "prompt_tokens": 1520,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1593
+    }
+  }
+}

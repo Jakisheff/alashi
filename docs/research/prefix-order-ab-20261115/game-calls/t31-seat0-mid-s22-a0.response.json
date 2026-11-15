@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.881,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Дополнительное влияние беднейшему сопернику может лишить меня бонуса за максимальное влияние, поэтому против\"}",
+          "reasoning_content": "Card 4: +1 influence to poorest. I'm richest (40.9M). Poorest is idx2 (31.8M). Card passed already (post_vote, voted all true). Abstain irrelevant? post_vote — vote already happened? We must still output an action but it's likely counted already... Just vote_no to try to deny rival influence, though card 4 doesn't help me either way. Actually post_vote means voting done; action is symbolic. Vote no — extra influence to idx2 could cost me max-influence bonus (tie 2-2 currently, I win via cash).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767715,
+    "id": "20261116023510dcbc446d523e43d5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023510dcbc446d523e43d5",
+    "usage": {
+      "completion_tokens": 161,
+      "completion_tokens_details": {
+        "reasoning_tokens": 126
+      },
+      "prompt_tokens": 1393,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1554
+    }
+  }
+}

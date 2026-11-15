@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.661,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Ноль товара и денег — производлю 3 единицы без риска ради продаж по высокой цене\"}",
+          "reasoning_content": "Cash 0, no goods. Produce gives 3 goods. Shuttle could be confiscated but I have no cash anyway; produce is safe, 3 goods.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767466,
+    "id": "2026111602310359d9150c12df4b0e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602310359d9150c12df4b0e",
+    "usage": {
+      "completion_tokens": 61,
+      "completion_tokens_details": {
+        "reasoning_tokens": 32
+      },
+      "prompt_tokens": 1515,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1576
+    }
+  }
+}

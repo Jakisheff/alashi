@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.993,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 6 снижает цены только следующего рынка, которого уже не будет, поэтому закон безвреден и голос не имеет значения.\"}",
+          "reasoning_content": "Card 6: prices -2 next market. But this is round 6, the last market? Actually round 6 law comes after market of round 6? Phases per round: market, action, law. So card 6 affects next market — none. So the law has no effect; vote anything. My weight 3 vs 1,1. If card has no effect, doesn't matter. Abstain or yes. Vote yes — irrelevant. I'll vote_abstain... actually safest: pass meaningless. vote_yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766580,
+    "id": "2026111602161752930b2d9c424179",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602161752930b2d9c424179",
+    "usage": {
+      "completion_tokens": 152,
+      "completion_tokens_details": {
+        "reasoning_tokens": 112
+      },
+      "prompt_tokens": 1392,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1544
+    }
+  }
+}

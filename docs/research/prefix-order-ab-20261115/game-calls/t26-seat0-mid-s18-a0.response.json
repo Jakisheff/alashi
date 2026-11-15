@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.027,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Карта даёт +1 влияния богатейшему (сопернику), мне не выгодно\"}",
+          "reasoning_content": "Law card 5: +1 influence to richest. Richest is faction 1 (23.5M). I gain nothing. Vote no. Others voted: idx2 voted already (unknown). I'm president with weight 1, +2 only if primary skipped — but this is law phase; vote weight 1. If veto: kills it. Blocking +1 influence for richest helps me compete for influence bonus. Veto free.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767529,
+    "id": "2026111602320556e709bce1c840fa",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602320556e709bce1c840fa",
+    "usage": {
+      "completion_tokens": 121,
+      "completion_tokens_details": {
+        "reasoning_tokens": 89
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1511
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.078,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Бесплатно 3 товара при высоких ценах (boom+2), риск конфискации приемлем\"}",
+          "reasoning_content": "Shuttle: 3 goods, ~25% confiscation, no cash cost. No tariff mentioned. Best action: shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767626,
+    "id": "2026111602334271a7af55ea064fd3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602334271a7af55ea064fd3",
+    "usage": {
+      "completion_tokens": 60,
+      "completion_tokens_details": {
+        "reasoning_tokens": 26
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1581
+    }
+  }
+}

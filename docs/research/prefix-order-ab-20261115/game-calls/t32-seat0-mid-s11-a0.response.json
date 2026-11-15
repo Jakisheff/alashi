@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.285,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":35000000,\"reason\":\"Ожидаемый доход лицензии ~40 alashi при чистой цене ставки ~50% от неё из-за перераспределения банка — выгодно поставить примерно 35\"}",
+          "reasoning_content": "Round 4, license auction available. Expected license income ~40 alashi. Share weight ~50%. Bid amount: winning gets income minus bid; bid goes to bank (reduces pot, 5% commission... actually bid to bank increases bank). EV of license: 20-60, mean 40, paid above share. If I bid, I pay A and gain ~40. Share of losing: bank grows by A, I get ~50% back? Bank redistributed 50:30:15, so paying A into bank returns ~0.5A to me. So net cost ~0.5A. Gain 40. So bid up to ~80? But rivals also bid. Reasonable bid ~30-40 alashi = 30-40M units, multiples? amount in minimal units. Bid 35000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767680,
+    "id": "202611160234357b7f8741181446b4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160234357b7f8741181446b4",
+    "usage": {
+      "completion_tokens": 229,
+      "completion_tokens_details": {
+        "reasoning_tokens": 175
+      },
+      "prompt_tokens": 1520,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1749
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.765,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Бонус уходит беднейшему (idx2), мой лидер по влиянию сохраняется, отдам лишнее добро\"}",
+          "reasoning_content": "Card 4: +1 influence to poorest. I'm richest; poorest is idx2. My vote weight 3 vs their 1 each. Vote no? Giving influence to poorest barely matters; influence bonus 5% tiebreak. Vote yes costs nothing materially... final influence affects 5% commission bonus to max influence. I have 3, poorest would get to 2. Still fine. Vote yes, harmless—actually keep influence lead: still 3 vs 2. Yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767840,
+    "id": "20261116023716ffe0b07c13944ca8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023716ffe0b07c13944ca8",
+    "usage": {
+      "completion_tokens": 137,
+      "completion_tokens_details": {
+        "reasoning_tokens": 100
+      },
+      "prompt_tokens": 1393,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1530
+    }
+  }
+}

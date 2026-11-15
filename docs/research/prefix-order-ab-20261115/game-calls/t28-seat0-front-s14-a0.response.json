@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.656,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Снижение цен на следующем рынке уменьшит мою выручку, а компенсации мне нет\"}",
+          "reasoning_content": "Card 6: prices -2 next market. Bad for me. Others voted (unknown how). I'm poorest, not president. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767554,
+    "id": "20261116023232888b8b290ae14f7a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023232888b8b290ae14f7a",
+    "usage": {
+      "completion_tokens": 66,
+      "completion_tokens_details": {
+        "reasoning_tokens": 30
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1457
+    }
+  }
+}

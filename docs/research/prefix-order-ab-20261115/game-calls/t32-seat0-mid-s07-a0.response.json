@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.066,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продам оба товара по высокой цене 12 без налога; кредитный возврат рискован из-за девальвации на границе раунда.\"}",
+          "reasoning_content": "Sell 2 at price 12, tax 0. Cash 30M, no devaluation benefit from credit? Devaluation rounds 2+: cash floor/100*62 at rounds 2+. Round 3 boundary devalues cash. So selling credit gives 1.25x but returned next round boundary (round 4 boundary?) — returned at boundary of next round, then round 4 boundary devalues again? Boundary of round 4: promissory added then... order: promissory added to cash and zeroed, then devaluation? Actually devaluation at rounds 2+ borders; likely devalue then promissory added. Sell credit revenue returned at next round boundary; if devaluation applies after, loses 38%. Risky. Just sell now: 2*12=24 alashi, gets devalued 62% → but same as cash anyway. Actually keeping cash loses to devaluation regardless. Sell normally.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767661,
+    "id": "202611160234150d3624cab53340d5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160234150d3624cab53340d5",
+    "usage": {
+      "completion_tokens": 243,
+      "completion_tokens_details": {
+        "reasoning_tokens": 194
+      },
+      "prompt_tokens": 1425,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1668
+    }
+  }
+}

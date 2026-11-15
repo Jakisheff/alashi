@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.891,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"abstain\",\"reason\":\"Карта +2 к ценам выгодна мне — у меня больше всех товара, вето не нужно\"}",
+          "reasoning_content": "Card 7: prices +2 next market. I'm president with influence 2, others vote already... vote already happened (post_vote). Actually decision_stage post_vote — vote already counted? voted all true. So my remaining option is veto. Card 7 benefits everyone equally (prices +2). I have 3 goods to sell, most goods. Prices +2 helps me most since I sell most. Don't veto. But if it already passed, veto would kill it — bad. Abstain/pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766869,
+    "id": "202611160221059b778011289c4884",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160221059b778011289c4884",
+    "usage": {
+      "completion_tokens": 137,
+      "completion_tokens_details": {
+        "reasoning_tokens": 105
+      },
+      "prompt_tokens": 1388,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1525
+    }
+  }
+}

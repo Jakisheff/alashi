@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.041,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 8 списывает текущие promissory, которых у меня нет, — исход мне безразличен.\"}",
+          "reasoning_content": "Card 8 cancels promissories — no one has promissory visible (could have sold on credit in round 1? post_vote means vote happened... decision_stage post_vote, we already voted? voted all true). Phase law with post_vote... we're asked vote again? Odd. Card 8 with no promissory outstanding: harmless, but could hurt us later? It applies now. Likely no promissory yet (round1). Abstain/vote_no? Card 8 hurts whoever uses sell_credit later? No, only current outstanding. Harmless now. Just vote yes or abstain — trivial. Vote abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766718,
+    "id": "20261116021832ae2e0079d71e430c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021832ae2e0079d71e430c",
+    "usage": {
+      "completion_tokens": 170,
+      "completion_tokens_details": {
+        "reasoning_tokens": 132
+      },
+      "prompt_tokens": 1381,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1551
+    }
+  }
+}

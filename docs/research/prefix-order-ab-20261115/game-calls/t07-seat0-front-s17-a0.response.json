@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.681,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Понижение цен на следующем рынке мне невыгодно, я планирую продавать\"}",
+          "reasoning_content": "Card 6: prices next market -2. Round 5 market remaining — bad for me? I have 0 goods, others have goods. Lower prices hurt them. But I'll produce round 6? Actually law affects next market (round 6?). I plan to produce and sell in round 6. Prices -2 hurts me. Vote no. Weight 2 vs their votes; idx2 voted already (unknown). My 2 votes no likely blocks. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766834,
+    "id": "20261116022030e4f588f26ca24c82",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022030e4f588f26ca24c82",
+    "usage": {
+      "completion_tokens": 127,
+      "completion_tokens_details": {
+        "reasoning_tokens": 98
+      },
+      "prompt_tokens": 1389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1516
+    }
+  }
+}

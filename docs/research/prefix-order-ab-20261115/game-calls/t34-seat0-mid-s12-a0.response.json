@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.655,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Снижение цен следующего рынка мне невыгодно, а два голоса «за» пройдут без вето\"}",
+          "reasoning_content": "Law 6: next market prices -2. Round 4 is last market? Rounds 6 total; round 4's market already passed? Phase order market, action, law — market already done this round. So -2 applies to round 5 market. Bad for me. Others voted (probably yes). Vote no; but their votes 3-3 tie, passes if yes>no strictly — my no makes it fail? They both voted; if both yes, yes=6, my no=3, passes anyway. Veto then.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767776,
+    "id": "20261116023612c13779601abc4305",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023612c13779601abc4305",
+    "usage": {
+      "completion_tokens": 148,
+      "completion_tokens_details": {
+        "reasoning_tokens": 113
+      },
+      "prompt_tokens": 1389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1537
+    }
+  }
+}

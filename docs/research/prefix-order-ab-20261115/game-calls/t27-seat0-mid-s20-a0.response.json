@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.783,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара для продажи, а покупка в последнем раунде бессмысленна.\"}",
+          "reasoning_content": "Round 6, last market. I have 0 goods, cash ~15.3M. No goods to sell. Buy? Prices next... buying costs money and no benefit—last round, buying moves counter back but no more sales. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767542,
+    "id": "2026111602321993768a1c74d6430e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602321993768a1c74d6430e",
+    "usage": {
+      "completion_tokens": 80,
+      "completion_tokens_details": {
+        "reasoning_tokens": 51
+      },
+      "prompt_tokens": 1427,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1507
+    }
+  }
+}

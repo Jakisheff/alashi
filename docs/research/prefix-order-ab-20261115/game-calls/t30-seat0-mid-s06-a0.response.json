@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.585,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Снижение цен на 2 вредимо моим продажам; если пройдёт — применю veto как президент.\"}",
+          "reasoning_content": "Law card 6: цены следующего рынка -2. Bad. Vote no; but others voted yes? voted[2]=true unknown direction. I'm president, vote_no; if passes, veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767585,
+    "id": "202611160233020688fe8bb33a4a9b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160233020688fe8bb33a4a9b",
+    "usage": {
+      "completion_tokens": 78,
+      "completion_tokens_details": {
+        "reasoning_tokens": 42
+      },
+      "prompt_tokens": 1384,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1462
+    }
+  }
+}

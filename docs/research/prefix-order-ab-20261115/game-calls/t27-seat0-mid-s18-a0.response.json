@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.651,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 20% урежет мою выручку с продаж в следующем рынке\"}",
+          "reasoning_content": "Law card 2: tax 20%. I'm not richest (I'm lowest cash). Tax hurts sellers. Round 5 of 6, market follows. Vote no. But weight 1 vs voter... opponent idx2 voted (yes unknown). Faction 1 has weight 2 and voted? voted [false,false,true] — idx2 voted. I can't know direction. Tax reduces my revenue; vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767533,
+    "id": "20261116023210aa0ab120d7ad4d48",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023210aa0ab120d7ad4d48",
+    "usage": {
+      "completion_tokens": 116,
+      "completion_tokens_details": {
+        "reasoning_tokens": 86
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1506
+    }
+  }
+}

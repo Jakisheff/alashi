@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.63,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Налог 10% вредит богатым соперникам, а у меня почти нет выручки — поддерживаю.\"}",
+          "reasoning_content": "Law card 1: tax 10%. I'm poor, others rich — tax hurts them. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766779,
+    "id": "20261116021937b85008e3a3694574",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021937b85008e3a3694574",
+    "usage": {
+      "completion_tokens": 59,
+      "completion_tokens_details": {
+        "reasoning_tokens": 23
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1449
+    }
+  }
+}

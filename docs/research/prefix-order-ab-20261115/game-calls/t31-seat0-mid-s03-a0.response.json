@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.631,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 5 даёт +1 влияния богатейшему — это усилит соперника и снизит мою долю выплат.\"}",
+          "reasoning_content": "Card 5: +1 influence to richest. All cash 0, tie_order — I'm likely tie advantage? Richest by cash+hard? tie_order better? Unclear. Voting has passed already (post_vote, voted all true). This vote is mine? phase law, decision_stage post_vote... all voted true. My vote may be last. If card 5 benefits richest—if I'm idx0 with tie advantage, I might be richest tie. But safest: vote_no to deny rivals +1 influence (influence helps payout bonus). Influence bonus 5% to max influence; giving anyone +1 could hurt me. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767633,
+    "id": "20261116023348152e6afdb08f4909",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023348152e6afdb08f4909",
+    "usage": {
+      "completion_tokens": 171,
+      "completion_tokens_details": {
+        "reasoning_tokens": 132
+      },
+      "prompt_tokens": 1381,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1552
+    }
+  }
+}

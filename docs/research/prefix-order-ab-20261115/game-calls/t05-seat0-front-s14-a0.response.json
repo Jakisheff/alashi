@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.707,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Закон даёт +1 влияния богатейшему (idx 2), что усилит конкурента и лишит меня бонуса влияния — наложу вето.\"}",
+          "reasoning_content": "Card 5: +1 influence to richest (idx 2). I'm poorest, president, vote weight 4. Voting no: 4 no vs yes unknown (others voted already—both voted; likely yes/no unknown to me). Passes if yes>no. Others influence 1 each, weight 3 each. If both voted yes: 6 yes vs my 4 no → passes anyway; veto stops it. Richest gets +1 influence—bad for me (influence bonus share). I should veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766762,
+    "id": "202611160219188834c6881c23497f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160219188834c6881c23497f",
+    "usage": {
+      "completion_tokens": 155,
+      "completion_tokens_details": {
+        "reasoning_tokens": 108
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1546
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.008,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":20000000,\"reason\":\"Ожидаемый доход лицензии ~20-60 alashi превышает разумную ставку; соперник богат, ставлю 20M\"}",
+          "reasoning_content": "Round 4, auction available. License income 20-60. Cash 11. Bid? Expected license value ~40, but payment goes to bank (lost). My share of bank... bids return to losers. If I win with bid A, I gain license income - A roughly (plus share effects). Bid ~15-20M? Opponent 1 has 44.8M cash. Winning bid needs to beat them. Bid 20M reasonable — expected value 40 gain minus 20 = +20. But opponents may bid high. Bid 20M.\n\nAlternatively shuttle gives 4 goods worth ~4 alashi later. Bid seems better. Bid 20.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767394,
+    "id": "202611160229484eba49e0d67f46ed",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160229484eba49e0d67f46ed",
+    "usage": {
+      "completion_tokens": 184,
+      "completion_tokens_details": {
+        "reasoning_tokens": 139
+      },
+      "prompt_tokens": 1522,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1706
+    }
+  }
+}

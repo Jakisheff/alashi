@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.16,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Налог 20% бьёт по кассе соперников, у меня денег и больших продаж нет — поддерживаю.\"}",
+          "reasoning_content": "Card 2: tax 20%. I have 0 cash, no goods sold... tax on revenue hurts others, not me (I sell little). I'm president. Votes already cast? voted all true, post_vote stage — but I still must act. Actually decision_stage post_vote, is_president, no veto pending. Likely law passed already? Ambiguous; if I benefit from tax hurting rivals, veto not needed. Tax 20% only on market revenue; I have 0 goods revenue concerns little. Abstain/pass is fine — vote_yes to harm rivals.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766787,
+    "id": "20261116021942e23be8cebc034dcf",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021942e23be8cebc034dcf",
+    "usage": {
+      "completion_tokens": 156,
+      "completion_tokens_details": {
+        "reasoning_tokens": 118
+      },
+      "prompt_tokens": 1385,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1541
+    }
+  }
+}

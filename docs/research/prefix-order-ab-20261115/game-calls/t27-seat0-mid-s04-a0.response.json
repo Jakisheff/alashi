@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.827,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Продажа в кредит даёт 1.25x выручку, которая вернётся после девальвации, что выгоднее обычной продажи в раунде 2.\"}",
+          "reasoning_content": "Round 2, cash 0, goods 3. Sell for cash gets devalued 62% at round boundary. Sell_credit gives 1.25x promissory paid at round boundary after devaluation — better: sell now cash devalued to 62%, credit gives 125%. So sell_credit 3 units.\n\nPrice: sold_counter=2, prices [12,10,9,8...], so next 9,8,7 = 24. Credit: 30, paid after boundary. Sell cash: 24 → devalued to floor(24/... 24*62%)? Actually cash=floor(cash/100)*62 → 24 → 14.88. Credit better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767462,
+    "id": "20261116023057cacd935c7c9647db",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023057cacd935c7c9647db",
+    "usage": {
+      "completion_tokens": 205,
+      "completion_tokens_details": {
+        "reasoning_tokens": 151
+      },
+      "prompt_tokens": 1420,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1625
+    }
+  }
+}

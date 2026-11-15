@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.761,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 20% режет мою выручку от будущих продаж, я против\"}",
+          "reasoning_content": "Law card 2: tax 20%. All voted already? voted all true, post_vote — this is my vote. Tax hurts me (I'll sell goods). Vote no; I'm president, can veto if passes. Actually simpler: vote_no, and veto if needed—but veto before count? \"post_vote\" but my action pending. Just vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766508,
+    "id": "20261116021505edbf9bc396fd496d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021505edbf9bc396fd496d",
+    "usage": {
+      "completion_tokens": 104,
+      "completion_tokens_details": {
+        "reasoning_tokens": 74
+      },
+      "prompt_tokens": 1385,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1489
+    }
+  }
+}

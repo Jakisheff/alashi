@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.477,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продажа сейчас по 3 даёт больше, чем кредит с девальвацией 62%.\"}",
+          "reasoning_content": "Round 4, last market for credit matters only via border after round 4? sell_credit returns at border of next round; after last round not redeemed — round 6 last. Round 4 credit returns at round 5 border, fine but devalued 62%. Sell now: price at counter 8 = ladder index 8 → [12,10,9,8,7,6,5,4,3,...] index 8 = 3. Sell 2 units: prices 3 and 3 = 6 alashi, taxed 0. Credit: 6*1.25=7.5 but devalued to 62% → 4.65. Sell directly better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767516,
+    "id": "202611160231510cf8e6db71304ac1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160231510cf8e6db71304ac1",
+    "usage": {
+      "completion_tokens": 185,
+      "completion_tokens_details": {
+        "reasoning_tokens": 148
+      },
+      "prompt_tokens": 1426,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1611
+    }
+  }
+}

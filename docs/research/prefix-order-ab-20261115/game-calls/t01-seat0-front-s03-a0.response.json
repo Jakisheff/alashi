@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.039,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 8 списывает непогашенные promissory — не могу исключить, что они есть у меня, выгоды от неё для меня нет.\"}",
+          "reasoning_content": "Card 8 wipes all promissory notes. I have no promissory (state doesn't show, but round 1 I might have sold credit in market... unknown). All cash 0. Card 8 hurts whoever holds promissory. Since state doesn't show my promissory, risky but with 0 cash likely no promissory. Others also 0 cash. Vote outcome unknown; I'm president with veto. Card 8 benefits nobody particularly; but if others used sell_credit they lose. I don't know my own promissory. Given uncertainty, vote yes — if I have no promissory and rivals might, it hurts them. Actually my vote counts. Decision: vote_no? If I might have sell_credit outstanding, it wipes mine. Safer: vote_abstain? I'm president, can veto. Vote yes and veto if... but post_vote, veto not counted yet. Given all cash 0, likely no one sold credit yet (market done but cash 0 — sales would show cash; sell_credit revenue is promissory not cash). So I might have promissory! Can't see. Risky either way. Card 8 has no benefit to me; if rivals have promissory it hurts them, if I have it hurts me. Symmetric-ish. I'll vote yes — actually with equal cash, I could benefit relatively. But I could be victim. Hmm.\n\nCoin flip; vote_yes with veto option if... at post_vote, my vote already counted (voted all true). I just choose action. Card 8 hurts holders; unknown. I'll vote_no to be safe? No — since already voted true? \"voted\":[true,true,true] means votes cast. My remaining choice: yes/no/abstain or veto. To avoid risk of wiping my own unknown promissory, vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766493,
+    "id": "20261116021444cb6924e6c55d4be4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021444cb6924e6c55d4be4",
+    "usage": {
+      "completion_tokens": 429,
+      "completion_tokens_details": {
+        "reasoning_tokens": 385
+      },
+      "prompt_tokens": 1381,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1810
+    }
+  }
+}

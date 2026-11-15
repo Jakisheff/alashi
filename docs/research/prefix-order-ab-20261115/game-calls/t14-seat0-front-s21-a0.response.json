@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.505,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Раунд 6 последний, повышение цен уже не действует на будущие рынки — закон безразличен.\"}",
+          "reasoning_content": "Card 7: prices +2 on next market — but this is round 6, last round? Round 6 law affects... market already passed? Market phase of round 6 already happened (round 6 law phase). So card 7 has no effect? Law applies to \"next market\" which doesn't exist. Vote doesn't matter much. I'm richest? No, I'm poorest. Vote yes/no irrelevant — abstain or pass. Just vote_abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767116,
+    "id": "202611160225139003b250ef334d91",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160225139003b250ef334d91",
+    "usage": {
+      "completion_tokens": 135,
+      "completion_tokens_details": {
+        "reasoning_tokens": 98
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1526
+    }
+  }
+}

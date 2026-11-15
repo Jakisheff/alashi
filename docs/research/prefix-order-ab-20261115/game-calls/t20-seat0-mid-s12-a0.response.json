@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.277,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Продаю в кредит по высоким ценам (7 и 6), чтобы избежать девальвации и получить ×1.25\"}",
+          "reasoning_content": "Round 4 market. Sold counter 4, price ladder index 4 → 7 alashi. Sell 2 units: 7+6=13 alashi. Next round boundary devaluation: cash → floor(cash/100)*62, applies to cash, promissory added after. Better use sell_credit to avoid devaluation and get 1.25x. Revenue 13 → promissory 16.25, added after devaluation. Yes, sell_credit both units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767281,
+    "id": "202611160227572b227f08488e454a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160227572b227f08488e454a",
+    "usage": {
+      "completion_tokens": 142,
+      "completion_tokens_details": {
+        "reasoning_tokens": 101
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1570
+    }
+  }
+}

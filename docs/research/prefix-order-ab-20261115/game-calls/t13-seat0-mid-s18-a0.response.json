@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.811,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Финальный раунд: продаю весь товар по высоким ценам, sell_credit после последнего раунда не погашается.\"}",
+          "reasoning_content": "Round 6, last market. Boom +2. Ladder starts at 12+2=14. Sell 3 units: 14+12+10=36 alashi... tax 0. Sell all 3, direct sell (credit won't be paid after last round).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767013,
+    "id": "20261116022330d149c462def9478f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022330d149c462def9478f",
+    "usage": {
+      "completion_tokens": 101,
+      "completion_tokens_details": {
+        "reasoning_tokens": 59
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1529
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.076,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нет денег для взяток, produce даёт гарантированные 2 товара без риска\"}",
+          "reasoning_content": "No cash, produce gives 2 goods. Shuttle risky. Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767084,
+    "id": "20261116022439cfd8db47a40d4631",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022439cfd8db47a40d4631",
+    "usage": {
+      "completion_tokens": 41,
+      "completion_tokens_details": {
+        "reasoning_tokens": 14
+      },
+      "prompt_tokens": 1515,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1556
+    }
+  }
+}

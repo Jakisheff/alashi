@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.696,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Карта 6 снизит цены следующего рынка, что вредит всем — как президент отменяю её независимо от голосов.\"}",
+          "reasoning_content": "Card 6: prices -2 next market. My cash highest-ish (37.35 vs 41.36 idx2 — actually idx2 richest). Vote no to hurt others. Others voted already; vote_no passes nothing... law passes if yes>no. Card 6 hurts everyone; I likely don't want it (round 5 market lower prices). But if others voted yes, I can veto or vote no (weight 4 beats 3+3? No — yes would be 6 > 4). Unknown their votes. Veto is safest: veto card 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767733,
+    "id": "2026111602352865c237481fcc40bf",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602352865c237481fcc40bf",
+    "usage": {
+      "completion_tokens": 158,
+      "completion_tokens_details": {
+        "reasoning_tokens": 120
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1549
+    }
+  }
+}

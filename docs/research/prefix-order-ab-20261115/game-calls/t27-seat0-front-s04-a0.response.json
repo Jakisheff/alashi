@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.095,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Продажа в кредит по цене 10 даёт 25 promissory без девальвации, тогда как наличные обесценятся до 62% на границе раунда.\"}",
+          "reasoning_content": "Round 2 market, prices at counter 2: next price 10. Tax 0. Sell now, cash devalues at round boundary 62%... sell credit gets 1.25x but paid at next round boundary — wait, boundary after round 2? Promissory adds at next round boundary. Cash floor(cash/100)*62 applies at round 2+ boundaries. If I sell now for cash, it devalues at end of round 2. Sell credit pays 1.25x at start of round 3 without devaluation. So sell_credit better: 2 units * 10 *1.25 = 25 promissory vs 20*0.62=12.4. Sell credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767482,
+    "id": "20261116023117383f4a3dd6ea41e1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023117383f4a3dd6ea41e1",
+    "usage": {
+      "completion_tokens": 209,
+      "completion_tokens_details": {
+        "reasoning_tokens": 152
+      },
+      "prompt_tokens": 1420,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1629
+    }
+  }
+}

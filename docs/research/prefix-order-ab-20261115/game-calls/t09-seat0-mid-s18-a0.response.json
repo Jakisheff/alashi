@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.185,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 0 — пустой закон, исход не влияет на выплату.\"}",
+          "reasoning_content": "Card 0 = nothing, voting already done? post_vote stage, phase law... card 0 empty. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766884,
+    "id": "20261116022121b420eeef12d346e6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022121b420eeef12d346e6",
+    "usage": {
+      "completion_tokens": 55,
+      "completion_tokens_details": {
+        "reasoning_tokens": 26
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1446
+    }
+  }
+}

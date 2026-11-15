@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.547,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Закон +2 к ценам выгоден мне как продавцу с товаром.\"}",
+          "reasoning_content": "Card 7: prices +2 — good for me, I have goods. Vote yes. Already voted? post_vote stage — but we must respond. Likely vote_yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766745,
+    "id": "20261116021902d5cdb90048a34e21",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021902d5cdb90048a34e21",
+    "usage": {
+      "completion_tokens": 62,
+      "completion_tokens_details": {
+        "reasoning_tokens": 35
+      },
+      "prompt_tokens": 1388,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1450
+    }
+  }
+}

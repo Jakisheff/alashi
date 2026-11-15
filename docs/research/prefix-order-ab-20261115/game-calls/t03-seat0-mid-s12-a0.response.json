@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.775,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон даёт влияние богатейшему (не мне), усиливая конкурента — против.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest. Richest is idx1 (41.4M). I'm not richest. My weight 3, others voted (unknown how). Abstain—doesn't help me. Vote no—richest gains influence, hurts me. Others voted; if both voted yes, no fails anyway. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766675,
+    "id": "2026111602175293f825cf25194704",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602175293f825cf25194704",
+    "usage": {
+      "completion_tokens": 102,
+      "completion_tokens_details": {
+        "reasoning_tokens": 72
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1492
+    }
+  }
+}

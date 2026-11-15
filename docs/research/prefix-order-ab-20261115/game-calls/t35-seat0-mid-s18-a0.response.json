@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.206,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Субсидия товара даёт мне больше продукции в последнем раунде производства.\"}",
+          "reasoning_content": "Law card 3: subsidy_goods=1. Benefits me next produce. Player 2 already voted yes presumably. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767814,
+    "id": "20261116023652ecc6987c1d5c462d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023652ecc6987c1d5c462d",
+    "usage": {
+      "completion_tokens": 55,
+      "completion_tokens_details": {
+        "reasoning_tokens": 26
+      },
+      "prompt_tokens": 1389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1444
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.361,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Цены сейчас высокие, а кредитная выручка 1.25x прибавляется после девальвации, избегая 62% потерь.\"}",
+          "reasoning_content": "Round 4 market, then round 5-6 markets later. Ladder at sold_counter=4: next prices 8,7,6,... Selling 3 units now at 8,7,6 = 21. Round 5 sell later? Goods only 3. Sell now for cash, avoid devaluation (62%)? Cash already large; devaluation hits anyway. Sell now vs hold to round 5/6: prices may drop if others sell. Sell now at higher prices, sell_credit gives 1.25x but paid at next round boundary — round 4 boundary devalues 62%? Promissory added after devaluation? \"cash=floor(cash/100)*62, promissory прибавляется к cash\" — promissory added after, so credit avoids devaluation! 21*1.25=26.25 vs 21*0.62=13. So sell_credit all 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767767,
+    "id": "20261116023600ff5ca400a61543d1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023600ff5ca400a61543d1",
+    "usage": {
+      "completion_tokens": 245,
+      "completion_tokens_details": {
+        "reasoning_tokens": 196
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1673
+    }
+  }
+}

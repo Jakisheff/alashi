@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.676,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 8 гасит чужие promissory; у меня кредитов нет, значит закон вредит только соперникам.\"}",
+          "reasoning_content": "Law 8 cancels all promissory notes. I have no promissory (probably). But I can't see my promissory. I sold nothing yet (cash 0, no credit mentioned). Others have cash — maybe they have promissory. Canceling promissory hurts those who used sell_credit. I likely have none, so vote yes? But it may hurt me if I used sell_credit — unknown. Cash 0 suggests I didn't sell. Vote yes hurts rivals. Also could veto is opposite. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766922,
+    "id": "202611160221574b68e6d28872420b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160221574b68e6d28872420b",
+    "usage": {
+      "completion_tokens": 149,
+      "completion_tokens_details": {
+        "reasoning_tokens": 111
+      },
+      "prompt_tokens": 1384,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1533
+    }
+  }
+}

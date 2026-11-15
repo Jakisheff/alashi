@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.028,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемая ценность 3×0.75=2.25 товара выше, чем 2 у produce\"}",
+          "reasoning_content": "Produce gives 2 goods; opponents have 2 each. Shuttle gives 3 but 25% confiscation. EV: produce=2, shuttle=2.25 but grey goods—likely still count as goods? Shuttle EV slightly better but risk; confiscation at border 25%. EV 2.25 vs 2. Marginal. Choose produce to be safe? Risk-neutral: shuttle better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767339,
+    "id": "202611160228565575e40a03d44920",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160228565575e40a03d44920",
+    "usage": {
+      "completion_tokens": 119,
+      "completion_tokens_details": {
+        "reasoning_tokens": 83
+      },
+      "prompt_tokens": 1511,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1630
+    }
+  }
+}

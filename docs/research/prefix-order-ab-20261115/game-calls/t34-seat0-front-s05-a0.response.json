@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.309,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Нет денег и товара; shuttle даёт 3 единицы, что лучше EV, чем produce при 25% риске.\"}",
+          "reasoning_content": "No cash, no goods. Produce gives 2 goods, shuttle gives 3 but 25% confiscation. Shuttle EV better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767746,
+    "id": "202611160235430899e4483b5246e3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160235430899e4483b5246e3",
+    "usage": {
+      "completion_tokens": 64,
+      "completion_tokens_details": {
+        "reasoning_tokens": 27
+      },
+      "prompt_tokens": 1515,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1579
+    }
+  }
+}

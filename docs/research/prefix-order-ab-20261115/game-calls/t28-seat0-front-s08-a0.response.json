@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.91,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Продаю весь товар в кредит по высоким ценам 12/10/9 с бонусом 1.25, погашение на следующей границе раунда.\"}",
+          "reasoning_content": "Round 3 market, sold_counter 0, prices start 12. Sell 3 units at 12,10,9 = 31. No tax. Use sell_credit for 1.25x? Promissory paid at round boundary 3→4, fine (not last round). So sell_credit 3 → 38.75 promissory, but devaluation? Promissory added to cash then devalued at boundary? Devaluation: cash floored at round 2+ boundaries; promissory added to cash and zeroed — order unclear. Likely devaluation applies to cash before promissory added, safe. Sell credit better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767532,
+    "id": "202611160232079c7a2e0ac7a346e2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160232079c7a2e0ac7a346e2",
+    "usage": {
+      "completion_tokens": 188,
+      "completion_tokens_details": {
+        "reasoning_tokens": 136
+      },
+      "prompt_tokens": 1422,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1610
+    }
+  }
+}

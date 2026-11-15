@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.007,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Субсидия +1 товар выгодна мне бесплатно\"}",
+          "reasoning_content": "Card 3: subsidy_goods=1, benefits me, free. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767207,
+    "id": "202611160226449733c67525224db1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160226449733c67525224db1",
+    "usage": {
+      "completion_tokens": 39,
+      "completion_tokens_details": {
+        "reasoning_tokens": 17
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1430
+    }
+  }
+}

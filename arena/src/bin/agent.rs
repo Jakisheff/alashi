@@ -1392,11 +1392,11 @@ fn decide(
             }
         };
         let mut user = format!(
-            "{}\nСостояние: {}\nТы — фракция idx {}.\nДоступно: {}\nОтветь одним JSON.",
+            "{}\nТы — фракция idx {}.\nДоступно: {}\nСостояние: {}\nОтветь одним JSON.",
             prompt,
-            serde_json::to_string(s).unwrap_or_default(),
             me["idx"],
-            space
+            space,
+            serde_json::to_string(s).unwrap_or_default()
         );
         // свой инсайд state не показывает — LLM должен видеть yield,
         // за который заплачено 5M (иначе ставка вслепую даже после inspect)

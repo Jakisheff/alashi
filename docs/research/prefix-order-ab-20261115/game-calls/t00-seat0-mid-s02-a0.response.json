@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.113,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Закон 8 списывает чужие promissory, мне при неизвестных кредитах это выгодно.\"}",
+          "reasoning_content": "Law 8 cancels promissory notes. Others may have promissories? Unknown; I sold credit? Round 1, no info. Likely others voted yes? voted [false,true,true]. Card 8 wipes promissories; could hurt rivals if they used sell_credit. But unknown. I'm president, can veto. Others likely voted yes (maybe they know they have no promissories). Since I don't know my promissories, likely none. Card 8 cancels all promissories including rivals' — that hurts them, good for me. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766484,
+    "id": "20261116021440af5e3b2758404146",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021440af5e3b2758404146",
+    "usage": {
+      "completion_tokens": 153,
+      "completion_tokens_details": {
+        "reasoning_tokens": 120
+      },
+      "prompt_tokens": 1380,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1533
+    }
+  }
+}

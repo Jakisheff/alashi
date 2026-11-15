@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.646,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемо ~2.25 товара бесплатно против 2 от produce — шаттл выгоднее при нуле издержек.\"}",
+          "reasoning_content": "Round 5 action, no law card yet (law_card 255 at this stage). I'm richest, president is someone else. Goods=0. Produce gives 2. Shuttle gives 3 with 25% confiscation risk — expected 2.25 goods, worth it. No cash cost. Shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767604,
+    "id": "2026111602331946ca198f52ca41de",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602331946ca198f52ca41de",
+    "usage": {
+      "completion_tokens": 105,
+      "completion_tokens_details": {
+        "reasoning_tokens": 64
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1626
+    }
+  }
+}

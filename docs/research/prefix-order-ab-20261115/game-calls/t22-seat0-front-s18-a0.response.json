@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.512,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Картa +2 к ценам выгодит соперников с товаром, а мне на следующем рынке продавать нечего.\"}",
+          "reasoning_content": "Card 7: prices +2 next market. I'm poorest, no goods (others have 2 each). Higher prices benefit sellers — others. But I sell later? Round 5, only one more market after this... actually market each round; round 5 market already passed (this is law phase of round 5, market done). Next market round 6. I have 0 goods but can produce in round 6 action... no, market comes before action. So I'd have 0 goods at round 6 market unless... order: market, action, law each round. So round 6 market I sell only what I have: 0. Others sell. +2 prices help them. Vote no. But they may outvote me (2 vs 1, one already voted). Still, vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767359,
+    "id": "2026111602291389129c5b5a244afc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602291389129c5b5a244afc",
+    "usage": {
+      "completion_tokens": 206,
+      "completion_tokens_details": {
+        "reasoning_tokens": 169
+      },
+      "prompt_tokens": 1389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1595
+    }
+  }
+}

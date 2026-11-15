@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.949,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Закон 4 даёт +1 влияния мне как беднейшему, выгодно\"}",
+          "reasoning_content": "Card 4 gives +1 influence to poorest — me. Passed already? decision_stage post_vote, voted all true. I'm president, can veto. Law gives me +1 influence. Don't veto; vote_yes (though post_vote?). Phase law allows vote actions. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767190,
+    "id": "20261116022627cb0dc25a3e9c4136",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022627cb0dc25a3e9c4136",
+    "usage": {
+      "completion_tokens": 87,
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      },
+      "prompt_tokens": 1392,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1479
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.351,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"У меня нет товара, а рост цен на 2 выгодит только соперников-продавцов в финальном раунде.\"}",
+          "reasoning_content": "Law card 7: prices +2. I have no goods. Opponents have goods and will sell next market? Round 5 law phase, next market round 6. Prices +2 helps sellers, not me. Vote no. Also could veto. Vote no; others voted? idx2 voted (unknown how). Just vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766987,
+    "id": "20261116022304ce62c08a2ade4b75",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022304ce62c08a2ade4b75",
+    "usage": {
+      "completion_tokens": 110,
+      "completion_tokens_details": {
+        "reasoning_tokens": 69
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1500
+    }
+  }
+}

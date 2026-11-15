@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.045,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Карта даёт +1 влияния богатейшему при равенстве cash — выгода может уйти сопернику, а влияние дорого на итог; вето бесплатно.\"}",
+          "reasoning_content": "Card 5: +1 influence to richest. All equal cash 0, tie_order — I'm idx 0? Tie likely favors lower idx? Risky. If it goes to me, good; if not, opponent gets influence. I'm president, can veto. Vote no; if passes... safer to veto? Veto free. Vote no + veto? But veto before counting; I can just veto. I'll vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767280,
+    "id": "202611160227550295249d941a4528",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160227550295249d941a4528",
+    "usage": {
+      "completion_tokens": 136,
+      "completion_tokens_details": {
+        "reasoning_tokens": 90
+      },
+      "prompt_tokens": 1381,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1517
+    }
+  }
+}

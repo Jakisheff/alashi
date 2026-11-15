@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.947,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":4}",
+          "reasoning_content": "Round 6, last round — sell_credit won't pay. Sell all 4 units at prices 12,10,9,8.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766564,
+    "id": "2026111602160160c7fbc4e0f7457c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602160160c7fbc4e0f7457c",
+    "usage": {
+      "completion_tokens": 40,
+      "completion_tokens_details": {
+        "reasoning_tokens": 29
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1468
+    }
+  }
+}

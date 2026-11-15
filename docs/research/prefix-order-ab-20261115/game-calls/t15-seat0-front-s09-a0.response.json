@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.461,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Снижение цен на 2 навредит моим продажам, и закон скорее пройдёт голосами соперников — применяю вето.\"}",
+          "reasoning_content": "Card 6: prices -2 next market. I'm rich, likely selling. Vote no. Others with 2,5 goods may vote yes. Passes if 2 yes vs 1 no. Veto available — I'm president. Should I veto? Likely passes 2-1; veto kills it. -2 prices hurts me. Veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767076,
+    "id": "202611160224315993b1d458a3493f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160224315993b1d458a3493f",
+    "usage": {
+      "completion_tokens": 116,
+      "completion_tokens_details": {
+        "reasoning_tokens": 74
+      },
+      "prompt_tokens": 1388,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1504
+    }
+  }
+}

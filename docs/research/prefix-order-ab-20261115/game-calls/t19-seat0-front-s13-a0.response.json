@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.699,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Рост цен +2 на следующем рынке повышает мою выручку от будущих продаж, а я беднейший — терять нечего.\"}",
+          "reasoning_content": "Card 7: prices +2 next market. I'm poorest. Others voted already — unknown votes. +2 prices benefits sellers; round 5 market I could sell. Everyone has goods=0, likely produce. +2 helps me too. But if others want it, passing... I'm president; +2 benefits me since I can sell next round. Vote yes seems fine. Actually +2 to prices helps everyone equally; relative rank matters. Selling gains cash — but who benefits more? Unknown. Prices +2 raises ladder for all; increases cash for whoever sells. My rank matters. Could veto? If it passes, everyone gains similar amounts, ranks may hold. I'd say vote yes; I benefit from higher prices.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767222,
+    "id": "202611160226563f1f108fe14c42d6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160226563f1f108fe14c42d6",
+    "usage": {
+      "completion_tokens": 191,
+      "completion_tokens_details": {
+        "reasoning_tokens": 148
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1582
+    }
+  }
+}

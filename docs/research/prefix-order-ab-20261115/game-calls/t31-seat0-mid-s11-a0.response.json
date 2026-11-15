@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.923,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Цены с бумом ещё высоки, продам все 3 единицы сейчас за наличные, избегая риска девальвации кредитной выручки.\"}",
+          "reasoning_content": "Round 4, prices: sold_counter 7, ladder index 7 = 5? ladder [12,10,9,8,7,6,5,4,3,3,2,...] index 7 → 4. Plus boom 2 → 6. Sell 3 units at 6,6,6? Actually prices per unit: 4,3,3... boom +2 → 6,5,5. Tax 0. Sell for cash now (round 4, devaluation at round boundary after 4? Rounds 2+ cash devalued floor/100*62 each boundary; selling credit gives 1.25x but devaluation cuts to 62%... promissory added after devaluation? \"promissory прибавляется к cash и обнуляется\" at boundary — order unclear; cash devalued then promissory added likely. 1.25x promissory then no further devaluation before round 5 boundary? There is boundary at round 5 too. If promissory added after devaluation at round-4 boundary, then devalued at round-5 boundary → 0.78x net. Sell now: 6+5+5=16, then devalued to 62%. Credit: 16*1.25=20, then devalued twice? Uncertain. Cash now is safer: sell normally.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767665,
+    "id": "202611160234195ab2ed4ae294442b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160234195ab2ed4ae294442b",
+    "usage": {
+      "completion_tokens": 345,
+      "completion_tokens_details": {
+        "reasoning_tokens": 295
+      },
+      "prompt_tokens": 1429,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1774
+    }
+  }
+}

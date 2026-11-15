@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.582,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Денежная выручка девальвируется на границе раунда 2, а sell_credit даёт 1.25x без девальвации.\"}",
+          "reasoning_content": "Sell 3 units at price ladder: sold_counter=2, so prices 9,8,7 = 24. Cash 0. Better sell_credit? Round 2 boundary devalues cash floor(cash/100)*62 — sell now for cash would be devalued at end of round 2. sell_credit revenue*1.25 becomes promissory added at boundary and not devalued. So sell_credit 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767638,
+    "id": "202611160233545d74615c50784073",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160233545d74615c50784073",
+    "usage": {
+      "completion_tokens": 142,
+      "completion_tokens_details": {
+        "reasoning_tokens": 90
+      },
+      "prompt_tokens": 1420,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1562
+    }
+  }
+}

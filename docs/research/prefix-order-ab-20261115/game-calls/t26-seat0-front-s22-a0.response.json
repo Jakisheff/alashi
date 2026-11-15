@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.025,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон даёт влияние беднейшему сопернику, а не мне — против.\"}",
+          "reasoning_content": "Card 4: +1 influence to poorest. I'm not poorest (cash 40.7, poorest is idx2 24.4). So it helps opponent. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767536,
+    "id": "202611160232143ac08c914ed04a2e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160232143ac08c914ed04a2e",
+    "usage": {
+      "completion_tokens": 66,
+      "completion_tokens_details": {
+        "reasoning_tokens": 38
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1456
+    }
+  }
+}

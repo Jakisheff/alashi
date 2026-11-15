@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.119,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"При равном cash я, вероятно, богатейший по tie_order — получу +1 влияния.\"}",
+          "reasoning_content": "Law card 5: +1 influence to richest. Everyone cash 0, tie — tie_order? Richest likely idx0? tie_order probably favor earlier idx. If I'm richest, vote yes. Cash all 0, likely tie broken by tie_order — my_idx 0 likely wins ties. So +1 influence to me. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767626,
+    "id": "202611160233433ba022f36f594dfc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160233433ba022f36f594dfc",
+    "usage": {
+      "completion_tokens": 105,
+      "completion_tokens_details": {
+        "reasoning_tokens": 72
+      },
+      "prompt_tokens": 1380,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1485
+    }
+  }
+}

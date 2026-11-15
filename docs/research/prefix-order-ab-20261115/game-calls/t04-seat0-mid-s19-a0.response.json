@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.973,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товары уже нельзя продать (рынок этого раунда прошёл), а взятка 5M не даёт максимума влияния из-за тай-брейка по кэшу — выгоднее сохранить деньги.\"}",
+          "reasoning_content": "Round 6, last round. Market then action already? Actually phase action round 6. Goods 0. After this comes market... no, market comes before action. Round 6: market, action, law. We're in action phase, market already passed? sold_counter=4, cash ~7.88M. Shuttle gives 3 goods but confiscation risk — no market left after action? Market already happened this round. Goods won't be sold. Law phase remains. So produce/donkey/shuttle useless. Best: bribe for influence? Influence max gets 5% bonus of bank. P2 has influence 2, we have 1, P1 has 1. Bribing 5M gives +1 influence → tied 2-2 with P2, tie broken by cash+hard → P2 higher. Two bribes 10M gives 3 influence, we'd be max → 5% bank bonus. Bank size unknown. Cash 7.88M, spending 10M impossible (cash 7.88). One bribe 5M leaves 2.88M cash, influence 2 tied with P2 but P2 wins tie via cash. Not worth. Pass is best; keep cash.\n\nActually donkey costs cash, shuttle risk. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766716,
+    "id": "2026111602182910f3e06db06b460d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602182910f3e06db06b460d",
+    "usage": {
+      "completion_tokens": 327,
+      "completion_tokens_details": {
+        "reasoning_tokens": 269
+      },
+      "prompt_tokens": 1522,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1849
+    }
+  }
+}

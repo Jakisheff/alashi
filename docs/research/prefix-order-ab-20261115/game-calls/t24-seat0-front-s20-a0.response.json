@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.113,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bribe\",\"to\":0,\"amount\":5000000,\"reason\":\"Товар и деньги на рынок уже не пригодятся; +1 влияние закрепляет бонус 5% банка и президентство за 5M\"}",
+          "reasoning_content": "Round 6 last round, no goods. Produce gives 2 goods but no market left this round (market already passed this round? order: market, action, law). So goods useless. Donkey 1 alashi cost useless. Shuttle gives goods useless. Bid not allowed (not round 4). Bribe 5M for influence — influence gives 5% bank share at end? Max influence gets 5% commission. I already have 2 influence, others 1. Could bribe to increase influence... bribing increases my influence, but costs 5M cash. Bank commission 5% of bank—unknown size. Increase influence keeps me max. Influence also gives law voting weight, but no law card. Bribing costs 5M cash reduces my payout. Influence reward: 5% of bank. If bank big, maybe worth. Cash lead is 49M vs 34M — I'm richest; anti-rich law possible? law_card 255 means no card visible... Actually law card comes after action. Bribe increases influence safely. 5M cost vs uncertain 5% of bank. Likely pass is fine, but influence also affects roof... Risk: others bribe to overtake. Bribing 5M gives +1 influence (to 3), cost 5M≈ payout loss maybe 5M*share weight... cash reduced by 5M but final payout is share of bank 50:30:15 plus position rank. Rank by cash+hard — reducing cash could risk losing rank 1? 49 vs 34, safe. Bank share unknown; the 5% max-influence bonus matters if bank large. I bribe to secure it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767452,
+    "id": "202611160230426a2e0834ff124001",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160230426a2e0834ff124001",
+    "usage": {
+      "completion_tokens": 400,
+      "completion_tokens_details": {
+        "reasoning_tokens": 350
+      },
+      "prompt_tokens": 1522,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1922
+    }
+  }
+}

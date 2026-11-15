@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.423,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемая ценность 3×0.75=2.25 товара против 2 у produce, при цене ~9-10 alashi за единицу выигрыш ~2.5M перекрывает риск.\"}",
+          "reasoning_content": "I'm president, need influence. Bribe 5M to gain influence? Round 5, cash 12.8M. Bribe 5M gives +1 influence, helps final 5% bonus and presidency next law. Who to bribe? To opponent gives them cash — worse for ranking? Payout based on cash+hard rank weights 50:30:15, so giving opponent cash lowers my rank. But influence determines presidency/veto and max-influence bonus 5%.\n\nVote weight currently [3,3,1] — I have 3, faction1 has 3. Bribe 5M gives me +1 influence → weight 4 vs 3, presidency secured. But giving 5M to faction... bribe goes \"to\" recipient — to myself? Probably bribe to other faction. Could bribe to faction 2 (last place, weight 1) to gain influence without strengthening the rival. Cost 5M to them, I get +1 influence.\n\nAlternative: produce goods to sell next market (round 5 market already passed? Order: market, action, law each round. We're in action round 5, market round 5 done, next market round 6. Produce 2 goods, sell next round at price ~9-10 after tax. ~2*9*0.9≈16 alashi? Wait prices are alashi per unit where 1M units = 1 alashi... prices [12,10,9...] alashi per unit — huge. So 2 goods ≈ 18+ alashi = 18M+? Cash 12.8M = ~12.8 alashi. So producing 2 goods worth ~2*10=20 alashi = 20M. That's big!\n\nSo produce is highly valuable: 2 goods × ~9-10 alashi each. Shuttle gives 3+ goods, 25% confiscation risk — EV 3*0.75=2.25 < 2? No wait shuttle gives 3 goods vs produce 2. EV goods: shuttle 2.25 < produce 2? No, 2.25 > 2. Wait 25% chance entire shuttle confiscated. EV = 3*0.75 = 2.25 goods vs 2. Slightly better, plus black tariff risk none. Shuttle EV slightly better. But risk. Also goods are worth ~10 alashi each = 10M. Difference EV = 0.25*10 = 2.5M. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767645,
+    "id": "202611160233531475014a9e234255",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160233531475014a9e234255",
+    "usage": {
+      "completion_tokens": 588,
+      "completion_tokens_details": {
+        "reasoning_tokens": 529
+      },
+      "prompt_tokens": 1520,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 2108
+    }
+  }
+}

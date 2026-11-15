@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.202,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Мой вес решает исход; списание promissory скорее ударит по более богатым соперникам, чем по мне.\"}",
+          "reasoning_content": "Law card 8: cancels all promissory notes. I'm richest-ish? Cash: I'm lowest actually. Do I have outstanding sell_credit? Unknown; state doesn't show. Card 8 wipes promissory. Likely opponents may have promissory? Hard to know. My vote weight 2, others 1 each — my vote decides. Card 8 harms anyone with outstanding sell_credit. I likely have none visible. Risky either way; cancelling promissory could hurt me if I have pending credits (can't see). Round 5, credits from round 5 market would pay at round 6 boundary — still paid. Card 8 wipes them, a loss if I sold credit. I don't know. Abstain is safest? My weight 2 decides either way; if I abstain, yes(1) vs no(1) — not strictly greater, fails. So vote decides. Wiping promissory: if opponents used sell_credit more than me, helps me. My cash is lowest, others likely larger economies with promissory. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766994,
+    "id": "20261116022307537cfc57dfa94686",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022307537cfc57dfa94686",
+    "usage": {
+      "completion_tokens": 262,
+      "completion_tokens_details": {
+        "reasoning_tokens": 225
+      },
+      "prompt_tokens": 1393,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1655
+    }
+  }
+}

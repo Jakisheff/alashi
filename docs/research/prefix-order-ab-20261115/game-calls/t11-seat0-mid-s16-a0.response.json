@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.06,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемая выручка от 3 товаров выше, чем от produce; риск конфискации приемлем при низкой цене хода.\"}",
+          "reasoning_content": "Round 5, no goods, cash ~9.98. I'm president with weight 3. Produce gives 2 goods — sell ~8-9 each = ~16. Shuttle gives 3 with 25% risk — expected value higher. Cash is low; donkey costs. Shuttle: 75% chance 3 goods (~27), 25% loss. Expected ~20 > produce 16. But confiscation risk — I have low cash for bribe. I'll take shuttle.\n\nActually influence matters for extra 5% bank. Bribe 5M to gain influence? Cash 9.98M; bribe 5M gives +1 influence, weight 4→ maybe president. Influence max gives 5% bank bonus. But cash matters for roof etc. I'm already president with weight 3? Others have 1,1. Max influence tie at 1,1,1 but bonus by cash+hard. I have lowest cash. Influence bribe could get me the 5% bonus. Bank size unknown. Bribing 5M gives me influence 2, max influence → 5% bonus. But 5M spent vs 5% of bank... bank commission 5% of bank total sales maybe ~100+ alashi → 5M-ish. Roughly break-even. Better to just produce/shuttle for goods.\n\nShuttle for value.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766983,
+    "id": "20261116022253d5cc75b0174b460b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022253d5cc75b0174b460b",
+    "usage": {
+      "completion_tokens": 329,
+      "completion_tokens_details": {
+        "reasoning_tokens": 287
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1850
+    }
+  }
+}

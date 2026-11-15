@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.279,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Закон о снижении цен действует на следующий рынок, которого уже не будет — эффект пустой.\"}",
+          "reasoning_content": "Law 6: prices next market -2. Final round 6; the market already happened this round. Next market? Round 6 is last, law phase after market — next market doesn't exist. So card is harmless/irrelevant. Vote whatever; my weight 3 dominates. Vote yes or no — no effect. Abstain? Just pass... vote_abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767627,
+    "id": "202611160233447b65cb3dc26749f4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160233447b65cb3dc26749f4",
+    "usage": {
+      "completion_tokens": 112,
+      "completion_tokens_details": {
+        "reasoning_tokens": 79
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1503
+    }
+  }
+}

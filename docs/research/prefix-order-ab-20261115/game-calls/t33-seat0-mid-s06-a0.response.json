@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.307,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 8 списывает непогашенные promissory — рискованно для моих возможных кредитных продаж, поэтому отклоняю\"}",
+          "reasoning_content": "Law card 8: cancels all promissory notes. I have no cash, likely no promissory (unknown). Others may have promissory from sell_credit. Canceling promissory hurts whoever used sell_credit. I'm poorest; card 8 also doesn't hurt me. But I don't know my own promissory — state doesn't show it. I might have promissory from round 1 sell_credit. If I sold on credit, canceling hurts me. Hard to know. Safer: vote no? Actually if opponents have promissory, passing hurts them. But risk of my own loss. Round 2, I have 0 cash — maybe I sold credit in round 1. Uncertain. Vote no to protect potential own promissory? But others already voted (idx2 voted). President with veto. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767689,
+    "id": "20261116023444981750f32ed24671",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023444981750f32ed24671",
+    "usage": {
+      "completion_tokens": 219,
+      "completion_tokens_details": {
+        "reasoning_tokens": 178
+      },
+      "prompt_tokens": 1384,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1603
+    }
+  }
+}

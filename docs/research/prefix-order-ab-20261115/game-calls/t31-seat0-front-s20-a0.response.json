@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.682,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bribe\",\"to\":1,\"amount\":5000000,\"reason\":\"Товар уже не продать (рынок прошёл), а взятка даёт +1 влияние, обгоняя фракцию 2 в борьбе за бонус 5% банка при сохранении первого места по cash.\"}",
+          "reasoning_content": "Round 6 last round. Goods 0. Shuttle gives 3+1=4 goods, but can't sell after? Market phase of round 6 already passed (market before action). Goods produced now can't be sold. So money-wise actions mostly useless except increasing influence for the 5% commission bonus. Influence: rival 2 has 2 influence and less cash. I have most cash. Bribe 5M to gain influence 2 would tie... commission bonus to max influence. Bribe to faction 2 (they'd get cash, I get influence 2) then tie broken by cash+hard, I win. That costs 5M cash but gains 5% of bank commission. Bank size unknown; bank is commission pool. Might be worth it? 5% bank likely > 5M? Unknown. Also final ranking: cash+hard affects rank weights 50:30:15 — bigger cash gives rank 1. Giving 5M to faction 2 reduces my cash but still far ahead. Gaining influence 2 secures the 5% bonus. Risky but plausible bank has >100M. Alternatively bribe faction 1 — gives them cash too. Same. I'll bribe 5M to faction 1 (weaker influence after? no, I get influence). Give to faction 1 (lowest cash) to not boost rival close to me.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767727,
+    "id": "20261116023519cf6fb69ee22c42fb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023519cf6fb69ee22c42fb",
+    "usage": {
+      "completion_tokens": 355,
+      "completion_tokens_details": {
+        "reasoning_tokens": 288
+      },
+      "prompt_tokens": 1522,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1877
+    }
+  }
+}

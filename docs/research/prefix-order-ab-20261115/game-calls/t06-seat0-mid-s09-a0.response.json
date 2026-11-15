@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.745,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемо ~2,25 товара против 2 у produce, а влияние и так у меня\"}",
+          "reasoning_content": "I'm president, most influence. I'm poorest. Action: shuttle gives 3 goods, risk ~25% confiscation. No subsidy. Shuttle EV: 3 goods × ~0.75 = 2.25 goods at prices ~8. Produce gives 2 free. Shuttle better EV. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766742,
+    "id": "20261116021859933d66c49c374fb9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021859933d66c49c374fb9",
+    "usage": {
+      "completion_tokens": 97,
+      "completion_tokens_details": {
+        "reasoning_tokens": 64
+      },
+      "prompt_tokens": 1518,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1615
+    }
+  }
+}

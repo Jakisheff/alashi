@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.539,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара для продажи, покупка в последнем раунде бессмысленна.\"}",
+          "reasoning_content": "Round 6 last market, sold_counter=0, boom=2, prices ladder 14,12,11,... I have 0 goods, others have 2 each. Can't sell. Buy? Buying goods to sell later? Market phase only once; buying moves counter back — pointless since I have nothing to sell. Pass.\n\nCould buy to raise price ladder for... no, I can't sell this round again. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767370,
+    "id": "202611160229251c6809e435e1483a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160229251c6809e435e1483a",
+    "usage": {
+      "completion_tokens": 116,
+      "completion_tokens_details": {
+        "reasoning_tokens": 88
+      },
+      "prompt_tokens": 1427,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1543
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.376,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон даёт +1 влияния богатейшему (сопернику), а мне выгоднее заблокировать его своим весом 3.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest. I'm richest? cash: I have 29.5, others 30.95 and 28.27. Player 1 richest. Gives influence to rival. Vote no — my weight 3 passes anything I want. Voting no blocks it. Do that.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767223,
+    "id": "202611160227016cd44ccb6c514536",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160227016cd44ccb6c514536",
+    "usage": {
+      "completion_tokens": 106,
+      "completion_tokens_details": {
+        "reasoning_tokens": 64
+      },
+      "prompt_tokens": 1392,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1498
+    }
+  }
+}

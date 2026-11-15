@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.725,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Финальный раунд: EV шаттла ~13.5 alashi против 12 у производства, риск оправдан.\"}",
+          "reasoning_content": "Round 6, last round. Cash 45.98. Best action: shuttle gives 3 goods, but confiscation risk; produce gives 2 goods. Then market: sell at price... sold_counter 7, prices ladder: index 7 → price 4? Ladder [12,10,9,8,7,6,5,4,...] so next unit sells at 4, plus boom 2 = 6 each. Produce 2 goods = ~12 alashi, shuttle 3 goods EV ~13.5 minus risk. Shuttle better EV: 3*6=18 *0.75 ≈13.5 vs produce 12. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767758,
+    "id": "202611160235545653a4dc4d234537",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160235545653a4dc4d234537",
+    "usage": {
+      "completion_tokens": 182,
+      "completion_tokens_details": {
+        "reasoning_tokens": 142
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1703
+    }
+  }
+}

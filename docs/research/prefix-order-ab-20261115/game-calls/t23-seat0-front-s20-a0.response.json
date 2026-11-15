@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.294,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Раунд последний, рынка больше нет — закон о +2 к ценам ни на что не влияет.\"}",
+          "reasoning_content": "Card 7: prices +2 next market — round 6 last market already done? Round 6 law after market... market happens each round; law after market, so +2 affects next round's market — none left. Actually round 6 is last; prices +2 useless. But no harm? Card 7 beneficial if there were a market. No future market, so neutral. Vote doesn't matter; I'm not president. Player 2 has influence 3, weight 3; others 1 each. Whatever passes doesn't matter. Abstain.\n\nActually wait — final payout: cash divided 50:30:15 by rank... rank by cash+hard. Card 7 has no effect. Abstain safe.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767440,
+    "id": "20261116023034de0736ab5163450c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023034de0736ab5163450c",
+    "usage": {
+      "completion_tokens": 185,
+      "completion_tokens_details": {
+        "reasoning_tokens": 151
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1575
+    }
+  }
+}

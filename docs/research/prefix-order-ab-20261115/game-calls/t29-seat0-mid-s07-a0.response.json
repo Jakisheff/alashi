@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.062,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Наличные обесценятся на границе раунда (floor(cash/100)*62), поэтому продаю в кредит с 25% бонусом и без девальвации.\"}",
+          "reasoning_content": "Round 3 of 6, sell now for cash at price 12. Better sell now to have cash for bribes etc. Sell 2 units at 12 each = 24 alashi. Cash no devaluation issues (floor(cash/100)*62 devalues cash >100... wait cash in millions: 30 alashi cash becomes floor(30/100)*62 = 0? Actually cash=30,000,000 = 30 alashi; floor(30/100)=0! Devaluation at round borders wipes cash below 100! So sell_credit is better: promissory added after devaluation. Yes — sell via credit to avoid devaluation, ×1.25 too.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767575,
+    "id": "20261116023250ace8d2bb77a24115",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023250ace8d2bb77a24115",
+    "usage": {
+      "completion_tokens": 201,
+      "completion_tokens_details": {
+        "reasoning_tokens": 145
+      },
+      "prompt_tokens": 1425,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1626
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.868,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара для продажи, а покупка без ясной выгоды рискованна\"}",
+          "reasoning_content": "No goods, cash ~24.7. Buy? Round 5 of 6. Buying goods to sell later at price 12? Buy units: buying moves counter backward and buys at... unclear price. Buying goods cheaply to sell at ladder prices later could profit? Buy price not specified—likely at current ladder price. Selling at 12 vs buying... risky. Pass is safest.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767525,
+    "id": "20261116023201963b051da54b47e5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023201963b051da54b47e5",
+    "usage": {
+      "completion_tokens": 106,
+      "completion_tokens_details": {
+        "reasoning_tokens": 79
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1534
+    }
+  }
+}

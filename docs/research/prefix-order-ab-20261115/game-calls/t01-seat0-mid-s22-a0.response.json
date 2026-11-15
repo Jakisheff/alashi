@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.498,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Закон о +2 к ценам уже не влияет на итоги (рынок этого раунда прошёл), исход ничего не меняет.\"}",
+          "reasoning_content": "Card 7: prices +2 next market. Round 6, last market already done? Round 6, decision_stage post_vote — market already happened. Card 7 affects next market, which doesn't exist. So it's harmless; vote doesn't matter. I'm richest, fine. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766575,
+    "id": "202611160216129adfd56fe8d7468f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160216129adfd56fe8d7468f",
+    "usage": {
+      "completion_tokens": 106,
+      "completion_tokens_details": {
+        "reasoning_tokens": 64
+      },
+      "prompt_tokens": 1392,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1498
+    }
+  }
+}

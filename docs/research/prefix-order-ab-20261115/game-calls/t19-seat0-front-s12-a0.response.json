@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.298,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":20000000,\"reason\":\"Ожидаемый доход лицензии ~40 alashi; ставка 20 даёт положительное матожидание против соперников с меньшим кэшем.\"}",
+          "reasoning_content": "Round 4, auction available. Cash 45.75. Bid some amount. License income 20-60, expected ~40. Opponents cash ~34, ~32. Bid maybe 20? Payout share weights: winning gives income over share. Bid 25 seems reasonable but risky vs opponents bidding. I'm richest, roof not needed... bid 20 maybe. Choose bid 20.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767215,
+    "id": "20261116022651cae9c96d508f4d05",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022651cae9c96d508f4d05",
+    "usage": {
+      "completion_tokens": 130,
+      "completion_tokens_details": {
+        "reasoning_tokens": 82
+      },
+      "prompt_tokens": 1522,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1652
+    }
+  }
+}

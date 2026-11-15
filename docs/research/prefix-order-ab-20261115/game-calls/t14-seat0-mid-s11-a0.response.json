@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.597,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":20000000,\"reason\":\"Аукцион только в этом раунде; ожидаемый доход лицензии (~40) заметно выше разумной ставки, ставлю 20M\"}",
+          "reasoning_content": "License value ~20-60 alashi, paid super of share. Bid maybe 15-20M? Expected value 40 alashi average. Share weights 50:30:15 — winning bid costs me cash but license income is additional. Bid 15M (15 alashi). Rivals bid too, blind. Reasonable bid ~20 alashi? Income 20-60, expected 40. Bid 20M.\n\nBut I'm president with influence ties; bid uses primary action so lose +2 vote weight. Cash matters for final rank. Bid 20M is fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767071,
+    "id": "2026111602242606183725013e4af3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602242606183725013e4af3",
+    "usage": {
+      "completion_tokens": 167,
+      "completion_tokens_details": {
+        "reasoning_tokens": 121
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1688
+    }
+  }
+}

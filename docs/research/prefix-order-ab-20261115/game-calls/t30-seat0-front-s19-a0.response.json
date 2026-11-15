@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.366,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товар уже нельзя продать (рынок этого раунда прошёл), а взятка лишь передаст деньги сопернику без выгоды.\"}",
+          "reasoning_content": "Round 6, last round. Produce gives goods but no market to sell (round 6: market already done? market comes before action each round, so market this round already passed). Goods won't convert to cash. So pass or bribe for influence bonus (5% of bank to max influence). Influence all 1; cash 26.4M not richest (idx1 richer). Max influence payout: need 2+ influence costs 10M bribe. 5% of bank... bank size unknown. Cash differences small; final payout via shares 50:30:15. Spending 10M to get influence bonus—5% of bank likely small. Also influence affects vote weight, no more laws after action? Law phase comes after action in round 6. Bribe 10M to idx? bribe gives influence to self, transfers money to target. Giving 10M to idx2 (poorest) hurts relative rank. Not worth. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767649,
+    "id": "2026111602340204261b8eddd2447d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602340204261b8eddd2447d",
+    "usage": {
+      "completion_tokens": 238,
+      "completion_tokens_details": {
+        "reasoning_tokens": 199
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1759
+    }
+  }
+}

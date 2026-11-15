@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.551,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара для продажи, счётчик продаж уже 0, покупка только потратит деньги\"}",
+          "reasoning_content": "Round 3, no goods. Buy to move counter back? I have 30 cash, others have goods 2 each. Buying moves counter backward so future prices higher — but I spend. Counter is 0, buy at price 12? Buy costs price. Buying 1 unit at 12 moves counter back... counter already 0. Not worth. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766842,
+    "id": "20261116022038cc0f16dc79474dd2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022038cc0f16dc79474dd2",
+    "usage": {
+      "completion_tokens": 105,
+      "completion_tokens_details": {
+        "reasoning_tokens": 75
+      },
+      "prompt_tokens": 1425,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1530
+    }
+  }
+}

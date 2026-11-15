@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.825,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Беру 3 товара для последнего рынка, EV выше produce; влияние догонять взяткой дорого и снижает cash.\"}",
+          "reasoning_content": "Cash 19.9M, no goods. Need goods for last round market (round 5 market already passed? Round 5, decision_stage primary... market phase comes before action, so market of round 5 already done. Remaining markets: round 6 only). Shuttle gives 3 goods, ~25% confiscation. Cash low anyway. Influence matters for payout bonus: max influence bonus. Influence 2 vs mine 1. Bribing 10M gives +2 influence to get max influence tie? Player 2 has 2, cash 31.6M. Bribe 10M to get influence 3 → could win 5% bonus. But that costs 10M cash. Payout 5% of bank — hard to know. Alternatively shuttle for goods worth ~3*3=9M minus confiscation risk. Actually produce gives 2 goods (~6M value). Shuttle EV 3*0.75*3=6.75M. Similar. Bribe for influence may matter for final ranking too. Final rank by cash; bribing reduces cash. Influence bonus 5% bank—bank maybe ~100M+? Total cash ~76M, bank gets commissions... 5% of bank could be several M. Bribing 5M gives +1 influence → tie with player 2 (2 each), tie broken by cash; player2 cash higher. Need 10M bribe for influence 3. Cost 10M for maybe 5M gain? Bank size unknown, likely commission 5% of total sales. Risky. Better: shuttle for goods.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767709,
+    "id": "20261116023501a4f34bc449bd4cb7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023501a4f34bc449bd4cb7",
+    "usage": {
+      "completion_tokens": 369,
+      "completion_tokens_details": {
+        "reasoning_tokens": 332
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1890
+    }
+  }
+}

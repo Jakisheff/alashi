@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.612,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемая ценность 3 товаров с учётом 25% риска выше, чем 2 от produce, а денег на взятки всё равно нет.\"}",
+          "reasoning_content": "Round 1, no cash. Shuttle gives 3 goods with 25% confiscation risk, vs produce 2 free. Shuttle EV 2.25 goods, better. But if confiscated, lose all. Shuttle slightly better EV.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767759,
+    "id": "20261116023556f5c515977f9145db",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023556f5c515977f9145db",
+    "usage": {
+      "completion_tokens": 93,
+      "completion_tokens_details": {
+        "reasoning_tokens": 48
+      },
+      "prompt_tokens": 1511,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1604
+    }
+  }
+}

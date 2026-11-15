@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.783,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Производство даёт 3 товара без риска примерно за ту же ожидаемую цену, что шаттл с риском конфискации.\"}",
+          "reasoning_content": "Round 6 action, then market last round. Shuttle gives 4 goods, ~25% confiscation. Expected value: market prices — sold_counter 6, ladder next prices ~5,4,3... 4 goods worth ~15 alashi, 75% → ~11. Produce gives 3 goods, no risk, ~5+4+3=12 alashi actually. sold_counter=6 → prices 5,4,3,3,2... produce 3 goods = 5+4+3=12. Shuttle 4 goods = 5+4+3+3=15, EV 11.25. Produce slightly better, no risk. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767125,
+    "id": "2026111602251981a31ef6c94f4618",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602251981a31ef6c94f4618",
+    "usage": {
+      "completion_tokens": 185,
+      "completion_tokens_details": {
+        "reasoning_tokens": 143
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1706
+    }
+  }
+}

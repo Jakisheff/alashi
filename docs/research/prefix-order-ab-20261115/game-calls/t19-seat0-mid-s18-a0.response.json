@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.398,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 0 — пустая, исход голосования не влияет на выплату.\"}",
+          "reasoning_content": "Law card 0 = nothing. Vote doesn't matter much. I'm richest? cash: 24.6 vs 23.2 vs 22.5 — I'm idx0 with 23.2, not richest. Card 0 — pass on voting; abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767235,
+    "id": "20261116022711d61e76cfa257486d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022711d61e76cfa257486d",
+    "usage": {
+      "completion_tokens": 88,
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      },
+      "prompt_tokens": 1389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1477
+    }
+  }
+}

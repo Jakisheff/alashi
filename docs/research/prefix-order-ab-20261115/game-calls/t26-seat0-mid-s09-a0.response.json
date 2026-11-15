@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.528,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Бум даёт высокие цены, ожидаемая ценность ~2,25 товара превышает produce, а влияние и так на максимуме при равенстве.\"}",
+          "reasoning_content": "Round 3, no goods. Boom +2 prices. Shuttle gives 3 goods, 25% confiscation. Expected value ~2.25 goods at price ~9+2? Better than produce (2 goods, safe). Price high due to boom. I'm president with cash 67M. Bribe 5M gives +1 influence → 4 vs 3, but president already decided by max influence at law; +1 influence helps future presidency and bonus. But goods matter. Shuttle expected ~2.25 goods worth ~11 each ≈ 24M vs produce 22M. Marginal; but bribe gives influence bonus share. Actually influence 5% bonus for max influence at end. Bribing 5M for +1 influence keeps me top influence (others 1). Cost 5M vs gain influence bonus share (5% of bank) plus presidency. Uncertain. I'll take shuttle for goods given boom prices... but confiscation risk. Actually donkey: buy 1 for 1M each, could do multiple? Action single: donkey gives 1 good per action. Shuttle better.\n\nChoose bribe? I'm already president and top influence at 1-1-1 tie. Bribing 5M → influence 2, secures presidency and bonus. But that gives cash advantage away... bribe transfers to opponent. Hmm, bribe \"to\" recipient receives money. I'd pay 5M to a rival to gain influence. Net: -5M cash, +1 influence. Future earnings uncertain. Goods worth more with boom: shuttle EV ~2.25 goods × ~11 = ~24.75M revenue. I'll do shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767480,
+    "id": "202611160231109553ac33e8c04b98",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160231109553ac33e8c04b98",
+    "usage": {
+      "completion_tokens": 395,
+      "completion_tokens_details": {
+        "reasoning_tokens": 351
+      },
+      "prompt_tokens": 1520,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1915
+    }
+  }
+}

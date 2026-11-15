@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.529,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Закон 6 снижает цены следующего рынка, но раунд последний — рынокa больше нет, закон бесполезен.\"}",
+          "reasoning_content": "Card 6: prices -2 next market — but round 6 is last round, no next market. Harmless. Tax 20% currently active though. Card 6 replaces? Passing it does nothing meaningful. Others may vote yes/no. As president, doesn't matter. Abstain or vote yes. Card 6 with no future market — neutral. I'll vote_abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767221,
+    "id": "20261116022658548639c5d1be4318",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022658548639c5d1be4318",
+    "usage": {
+      "completion_tokens": 121,
+      "completion_tokens_details": {
+        "reasoning_tokens": 81
+      },
+      "prompt_tokens": 1392,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1513
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.703,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Я богатейший и налог 10% снизит мою выручку на финальном рынке; мой вес 3 блокирует закон.\"}",
+          "reasoning_content": "Law card 1: tax 10%. I'm richest; tax on revenue reduces my payout. Round 6 final market — tax hurts me if I sell. Vote no. Others might vote yes? My weight 3, others 1+2=3 — need strictly more yes. Vote no carries 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766795,
+    "id": "202611160219528eacb4e0317d48dc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160219528eacb4e0317d48dc",
+    "usage": {
+      "completion_tokens": 107,
+      "completion_tokens_details": {
+        "reasoning_tokens": 65
+      },
+      "prompt_tokens": 1389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1496
+    }
+  }
+}

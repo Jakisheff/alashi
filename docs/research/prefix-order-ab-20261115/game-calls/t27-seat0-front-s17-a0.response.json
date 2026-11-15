@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.127,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Без денег и товара shuttle даёт больше товара (EV ~2.25 vs 2), риск только в потере серого груза.\"}",
+          "reasoning_content": "Round 5, no cash, no goods. Produce gives 2 goods for selling next round at decent price (~10-12). Shuttle gives 3 goods with 25% confiscation risk, better EV. I'm president. Produce is safe, shuttle EV 2.25 goods. Take shuttle.\n\nWait — shuttle grey confiscation ~25%. EV higher than produce. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767539,
+    "id": "20261116023214ff60926750054cb2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023214ff60926750054cb2",
+    "usage": {
+      "completion_tokens": 119,
+      "completion_tokens_details": {
+        "reasoning_tokens": 79
+      },
+      "prompt_tokens": 1519,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1638
+    }
+  }
+}

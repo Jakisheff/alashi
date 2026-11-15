@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.262,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Продажа в кредит избегает девальвации и даёт множитель 1.25\"}",
+          "reasoning_content": "Round 5, no tax, no price shift. Sell 3 units at 12 each = 36. Cash currently 0, devaluation on border rounds 2+ — cash floor(cash/100)*62. If I sell normally, cash=36M → after devaluation 36*0.62≈22.3M. If sell_credit: promissory returns at border and added to cash after devaluation? \"promissory прибавляется к cash и обнуляется\" — added after devaluation, so full value. sell_credit gives 36*1.25=45 alashi promissory, better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767404,
+    "id": "202611160229599b49f0c08f6544fb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160229599b49f0c08f6544fb",
+    "usage": {
+      "completion_tokens": 169,
+      "completion_tokens_details": {
+        "reasoning_tokens": 132
+      },
+      "prompt_tokens": 1425,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1594
+    }
+  }
+}

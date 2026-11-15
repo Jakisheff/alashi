@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.546,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемо ~2,25 товара против 2 у produce, риск приемлем ради большей выручки\"}",
+          "reasoning_content": "No goods; produce gives 2 goods to sell later. Shuttle gives 3 with 25% confiscation risk. Cash 13.6. Shuttle EV ~2.25 goods vs produce 2. Shuttle slightly better; also shuttle has no tariff issue. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766974,
+    "id": "202611160222500bd0f3ac30c942f8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160222500bd0f3ac30c942f8",
+    "usage": {
+      "completion_tokens": 91,
+      "completion_tokens_details": {
+        "reasoning_tokens": 56
+      },
+      "prompt_tokens": 1517,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1608
+    }
+  }
+}

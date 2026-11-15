@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.217,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":15000000,\"reason\":\"Ожидаемый доход лицензии ~40 alashi, ставка 15M даёт положительный EV и лишает соперника.\"}",
+          "reasoning_content": "Round 4 auction. License income 20-60, plus share 50:30:15. Bidding ~ license value. Rival cash 35M. A bid of maybe 10-15M? Expected license value ~40 alashi = 40M units. My cash 27.5M. Bid 15M? Winning gives ~40M plus extra beyond share... actually winner pays bid to bank. Net gain = license income - bid (paid to bank reduces bank? goes to bank, increases pool shared). Roughly EV positive to bid up to ~income. Bid 15M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767287,
+    "id": "20261116022802669a9e247f914e2c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022802669a9e247f914e2c",
+    "usage": {
+      "completion_tokens": 168,
+      "completion_tokens_details": {
+        "reasoning_tokens": 125
+      },
+      "prompt_tokens": 1519,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1687
+    }
+  }
+}

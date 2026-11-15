@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.081,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон даёт влияние богатейшему (idx 2), а не мне; голосую против и наложу вето, если пройдет.\"}",
+          "reasoning_content": "Card 5: +1 influence to richest — that's idx 2. I'm president. Vote no and consider veto. Others: idx2 voted (unknown). Vote no; if it passes, veto. But I only have one action per turn. Vote no first; veto may be pending next? veto_pending false now, primary stage. Just vote_no; veto possible later if passes? Safer: vote_no now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766505,
+    "id": "2026111602150227af76c5cbf745b8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602150227af76c5cbf745b8",
+    "usage": {
+      "completion_tokens": 128,
+      "completion_tokens_details": {
+        "reasoning_tokens": 87
+      },
+      "prompt_tokens": 1384,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1512
+    }
+  }
+}

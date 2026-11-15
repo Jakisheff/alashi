@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.378,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 20% бьёт по моей будущей выручке от продажи товара, а кэша у меня нет, так что закон мне невыгоден.\"}",
+          "reasoning_content": "Law card 2: tax 20%. Others have cash, I have 0 cash and 3 goods. Tax on revenue hurts sellers—I plan to sell. Vote no. I'm president; veto after? Voting no suffices only if others vote yes... Just vote_no; can veto later.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767272,
+    "id": "20261116022747a94cfa227bf84524",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022747a94cfa227bf84524",
+    "usage": {
+      "completion_tokens": 107,
+      "completion_tokens_details": {
+        "reasoning_tokens": 61
+      },
+      "prompt_tokens": 1386,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1493
+    }
+  }
+}

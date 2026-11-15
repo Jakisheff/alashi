@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.466,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 20% мне невыгоден, а своей продажей в этом раунде налог только увеличу.\"}",
+          "reasoning_content": "Law card 2: tax 20%. We already voted? voted true all, post_vote stage — but we must still choose? Phase law, decision_stage post_vote. Probably our vote was already cast? We have vote_weight 1. Not president. Voting no is safe; but votes already recorded... choose vote_no anyway.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767538,
+    "id": "202611160232130a40fb89cdf44ead",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160232130a40fb89cdf44ead",
+    "usage": {
+      "completion_tokens": 102,
+      "completion_tokens_details": {
+        "reasoning_tokens": 67
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1493
+    }
+  }
+}

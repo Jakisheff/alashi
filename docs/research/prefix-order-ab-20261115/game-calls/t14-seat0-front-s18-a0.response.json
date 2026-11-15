@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.94,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Налог 20% сильнее бьёт по более богатым соперникам, а я беднейший — поддерживаю.\"}",
+          "reasoning_content": "Law card 2: tax 20%. I'm not clearly richest (I'm lowest cash). Tax hurts others more... but tax reduces market revenue for everyone including me. But hurting rivals helps relative rank. Payout is by rank then weights 50:30:15? Final payout based on rank. Tax 20% on revenue hurts the richer rivals more. Vote yes, no veto.\n\nWait, phase says post_vote but actions are vote... whatever, choose vote_yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767104,
+    "id": "202611160224599d9f557af9b44c4b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160224599d9f557af9b44c4b",
+    "usage": {
+      "completion_tokens": 135,
+      "completion_tokens_details": {
+        "reasoning_tokens": 97
+      },
+      "prompt_tokens": 1392,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1527
+    }
+  }
+}

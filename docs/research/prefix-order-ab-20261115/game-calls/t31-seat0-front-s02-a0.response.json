@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.285,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"При равном кэше tie_order даёт «богатейшего» мне — бесплатное +1 влияния полезен для будущих голосов и бонуса комиссии.\"}",
+          "reasoning_content": "Card 5 gives +1 influence to richest. Cash all 0, tie order likely favors me (idx0)? Richest by cash tie, tie_order likely me first. So I get +1 influence. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767638,
+    "id": "202611160233564ba4b15333bc4b2c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160233564ba4b15333bc4b2c",
+    "usage": {
+      "completion_tokens": 94,
+      "completion_tokens_details": {
+        "reasoning_tokens": 46
+      },
+      "prompt_tokens": 1380,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1474
+    }
+  }
+}

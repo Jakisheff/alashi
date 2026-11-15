@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.932,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Гарантированные 3 товара без риска конфискации лучше шаттла с ожиданием 3 при 25% риска\"}",
+          "reasoning_content": "Subsidy active: produce gives 3 goods. Shuttle gives 4 with 25% confiscation risk. Cash 36.8, goods 0. Round 5, next market prices ~12 at top. Produce gives 3, shuttle 4 with risk. Expected shuttle 3 goods vs produce 3 — equal but risk. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766546,
+    "id": "20261116021542703e748f1ea7433d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021542703e748f1ea7433d",
+    "usage": {
+      "completion_tokens": 111,
+      "completion_tokens_details": {
+        "reasoning_tokens": 73
+      },
+      "prompt_tokens": 1522,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1633
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.796,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Закон отдал бы +1 влияния богатейшему сопернику, подрывая мой бонус за максимальное влияние; вето бесплатно гарантирует провал.\"}",
+          "reasoning_content": "Law card 5: +1 influence to richest. Richest is faction 1 (30M). I'm not richest. Voting no helps it fail? I have weight 3, others 1 each (one already voted, likely yes). Yes needs strictly more than no. If other voted yes (1), and third votes... I vote no (3): no=3+? If third abstains: yes 1, no 3 → fails. If third yes: 4 vs 3, passes. Veto guarantees fail. I'm president, veto free — but maybe better to keep? Law 5 gives influence to richest (rival), reducing my max-influence bonus. Veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767414,
+    "id": "2026111602300860d76c0d43564317",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602300860d76c0d43564317",
+    "usage": {
+      "completion_tokens": 191,
+      "completion_tokens_details": {
+        "reasoning_tokens": 145
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1581
+    }
+  }
+}

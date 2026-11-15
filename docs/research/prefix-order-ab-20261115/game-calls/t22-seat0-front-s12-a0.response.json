@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.706,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Продаю оба товара в кредит: цены 4 и 3 дают 7, с премией 1.25 — 8.75 alashi, погасится на границе раунда 5.\"}",
+          "reasoning_content": "Round 4 market. Prices: ladder index 7 onward price 4, then 3... I have 2 goods. Sell now: prices 4 and 3 = 7 alashi. Sell cash, no tax. Could sell_credit? Credit matures at round 5 boundary, fine, 1.25x. But sell credit converts to promissory, added at boundary round 5 — yes, redeemed. Do sell_credit both: 7*1.25=8.75. Good.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767325,
+    "id": "202611160228409c65176a820e4cf8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160228409c65176a820e4cf8",
+    "usage": {
+      "completion_tokens": 166,
+      "completion_tokens_details": {
+        "reasoning_tokens": 105
+      },
+      "prompt_tokens": 1429,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1595
+    }
+  }
+}

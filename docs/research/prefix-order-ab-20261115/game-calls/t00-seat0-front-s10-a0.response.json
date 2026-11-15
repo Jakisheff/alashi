@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.961,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 0 ничего не меняет, исход безразличен.\"}",
+          "reasoning_content": "Card 0 — no effect. Vote doesn't matter, but president; abstain is safe. Card 0, nothing passes — just vote_abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766520,
+    "id": "202611160215186c5915e415784d68",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160215186c5915e415784d68",
+    "usage": {
+      "completion_tokens": 61,
+      "completion_tokens_details": {
+        "reasoning_tokens": 33
+      },
+      "prompt_tokens": 1388,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1449
+    }
+  }
+}

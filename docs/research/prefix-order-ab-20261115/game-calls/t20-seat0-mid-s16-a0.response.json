@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.269,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара для продажи, покупка в раунде 5 с налогом 20% невыгодна.\"}",
+          "reasoning_content": "No goods, market phase. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767298,
+    "id": "2026111602281527ffeb117743455b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602281527ffeb117743455b",
+    "usage": {
+      "completion_tokens": 41,
+      "completion_tokens_details": {
+        "reasoning_tokens": 8
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1469
+    }
+  }
+}

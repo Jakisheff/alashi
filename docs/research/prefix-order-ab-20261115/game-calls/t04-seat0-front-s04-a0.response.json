@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.717,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Продажа в кредит даёт 1.25x и избегает девальвации на границе раунда\"}",
+          "reasoning_content": "Round 2 market, prices ladder sold_counter=2, price = [12,10,9...] next at index 2 → 9, +boom 2 = 11. Sell 2 goods now, cash. Devaluation at border: floor(cash/100)*62 — selling for 11 gives cash 22... cash units: 11 alashi = 11,000,000? Cash floor(cash/100)*62 means percent. Sell credit gives 1.25x but promissory added at border and not devalued... promissory returned at boundary, added to cash and zeroed — but then next border devalues. Actually sell now: cash 22 alashi, then devaluation: floor(22/100)*62=0 since under 100? Wait 1000000 units = 1 alashi; cash in units. 22 alashi = 22,000,000; floor(22000000/100)*62 = 220000*62=13,640,000 → 13.64 alashi. Hmm devaluation is severe (62% kept) at rounds 2+ border? \"На границе раундов 2+ cash=floor(cash/100)*62\". So selling now loses 38%. Sell_credit: promissory returned at boundary and added after devaluation? Likely promissory added to cash after devaluation — so credit avoids devaluation and gains 1.25x. So sell_credit 2 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766646,
+    "id": "202611160217171f25785efddc4994",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160217171f25785efddc4994",
+    "usage": {
+      "completion_tokens": 355,
+      "completion_tokens_details": {
+        "reasoning_tokens": 313
+      },
+      "prompt_tokens": 1420,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1775
+    }
+  }
+}

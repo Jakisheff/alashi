@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.982,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Продажа 3 единиц по высоким ценам 9/8/7 без налога даёт ~24 alashi немедленно.\"}",
+          "reasoning_content": "Round 2 market, prices at counter 2: next price 9. Sell 3 units at 9,8,7 = 24. No tax. Sell now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767457,
+    "id": "202611160230558cb35b5a1db54ebf",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160230558cb35b5a1db54ebf",
+    "usage": {
+      "completion_tokens": 80,
+      "completion_tokens_details": {
+        "reasoning_tokens": 37
+      },
+      "prompt_tokens": 1420,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1500
+    }
+  }
+}

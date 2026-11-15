@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.014,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Снижение цен вредит продавцам-соперникам, а у меня нет товара — относительно мне выгодно\"}",
+          "reasoning_content": "Law card 6: prices next market -2. Round 4 is last market? Six rounds, so market round 5,6 remain. -2 prices hurts me (I have no goods, cash 18.75). Actually lower prices hurt others who sell—I have no goods. Vote yes (weight 3 vs others 5,3 — outcome depends). Card 6 reduces prices next market; as non-producer with 0 goods, I benefit relatively. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767558,
+    "id": "20261116023235028885503f4c42eb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023235028885503f4c42eb",
+    "usage": {
+      "completion_tokens": 134,
+      "completion_tokens_details": {
+        "reasoning_tokens": 99
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1525
+    }
+  }
+}

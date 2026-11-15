@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.614,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Снижение цен hurts моим продажам в следующем раунде; я против, и при необходимости наложу вето как президент.\"}",
+          "reasoning_content": "Card 6: prices -2 next market. Bad for me (I have 3 goods). Vote no, veto if passes. Just vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767653,
+    "id": "20261116023410feb916f5a34d4058",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023410feb916f5a34d4058",
+    "usage": {
+      "completion_tokens": 72,
+      "completion_tokens_details": {
+        "reasoning_tokens": 31
+      },
+      "prompt_tokens": 1380,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1452
+    }
+  }
+}

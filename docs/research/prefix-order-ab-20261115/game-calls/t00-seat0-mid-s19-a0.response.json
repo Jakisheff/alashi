@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.81,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% снижает мою выручку от продаж — против.\"}",
+          "reasoning_content": "Law card 1 = tax 10%. I'm poorest. Tax hurts sellers. Vote no — but already voted? decision_stage post_vote... phase law though. Abstain? Votes already cast (voted all true), post_vote means vote already happened? Then pass? Available actions include vote. Likely my vote not yet counted... \"voted\":[true,true,true] suggests done. Safest: veto? Tax 10% on market hurts me. If president, veto the tax law. But if votes already... I'll veto — actually veto after passing is allowed (\"veto_pending\"). veto_pending false. Hmm, ambiguous. Card 1 tax hurts me (I sell next round). Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766569,
+    "id": "202611160216038a30fd2767d24ac3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160216038a30fd2767d24ac3",
+    "usage": {
+      "completion_tokens": 172,
+      "completion_tokens_details": {
+        "reasoning_tokens": 144
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1563
+    }
+  }
+}

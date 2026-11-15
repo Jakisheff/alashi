@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.914,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Налог 10% сильнее бьёт по более богатым соперникам, чем по мне.\"}",
+          "reasoning_content": "Law card 1: tax 10%. I'm richest? cash 20.7 vs 37.5, 33.5 — no, I'm poorest. Tax 10% hurts richer rivals more. Also richest player gets +influence... card 1 is just tax 10%. Others already voted; I'm last. Tax hurts rivals more than me. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767622,
+    "id": "20261116023337ccae133f187340a1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023337ccae133f187340a1",
+    "usage": {
+      "completion_tokens": 111,
+      "completion_tokens_details": {
+        "reasoning_tokens": 79
+      },
+      "prompt_tokens": 1389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1500
+    }
+  }
+}

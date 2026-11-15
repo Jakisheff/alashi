@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.188,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Цена высокая (9+2), а кредитная продажа даёт 1.25x и обходит девальвацию на границе раунда.\"}",
+          "reasoning_content": "Round 2 market, price ladder at sold=2 → price 9, +2 boom = 11. Sell 3 goods for cash. But round 2 boundary devalues floor(cash/100)*62 — cash in alashi... cash=0. Selling 3 → 33 alashi = 33000000, devalued: floor(33/100)=0? Actually cash in units; 33 alashi = 33,000,000 units, floor(33,000,000/100)*62 = 330,000*62 = 20,460,000. So use sell_credit to avoid devaluation? sell_credit: revenue*1.25 added at next round boundary, no devaluation. 3*11=33 → *1.25 = 41.25 alashi credited fresh. Definitely sell_credit 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766639,
+    "id": "202611160217142e022bf89ebc4276",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160217142e022bf89ebc4276",
+    "usage": {
+      "completion_tokens": 228,
+      "completion_tokens_details": {
+        "reasoning_tokens": 179
+      },
+      "prompt_tokens": 1420,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1648
+    }
+  }
+}

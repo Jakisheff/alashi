@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.082,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Субсидия товара выгодна мне как производителю\"}",
+          "reasoning_content": "Law card 3: subsidy_goods=1 — good for me, vote_yes. Already post_vote? Phase law, voted all true but decision_stage post_vote... still must respond. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767685,
+    "id": "202611160234432b1814e187474e7e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160234432b1814e187474e7e",
+    "usage": {
+      "completion_tokens": 62,
+      "completion_tokens_details": {
+        "reasoning_tokens": 40
+      },
+      "prompt_tokens": 1381,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1443
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.946,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Продажа в кредит избегает девальвации 62% на границе раунда 2 и даёт 1.25x выручку.\"}",
+          "reasoning_content": "Round 2, border devaluation 62% — sell_credit avoids devaluation? Promissory returns at next round border and is added to cash then reset... cash devaluation happens at border 2+. Selling now gives cash that will be devalued at border 2. sell_credit: promissory added at border of next round — so it avoids this round's devaluation and gets 1.25x. Better: sell_credit all 3 goods. Prices: sold_counter=2, ladder next price 9,8,7.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767677,
+    "id": "20261116023433ef742fbba88e4ff3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023433ef742fbba88e4ff3",
+    "usage": {
+      "completion_tokens": 163,
+      "completion_tokens_details": {
+        "reasoning_tokens": 112
+      },
+      "prompt_tokens": 1420,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1583
+    }
+  }
+}

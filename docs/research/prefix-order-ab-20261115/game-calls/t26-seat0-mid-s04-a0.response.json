@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.214,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Кредитная продажа даёт 1.25x и позволяет избежать девальвации наличных на границе раунда\"}",
+          "reasoning_content": "Sell 3 units at price 10? sold_counter=2, prices: [12,10,9,...] next price index 2 = 9. Sell now vs hold. Selling 3 at 9 = 27 alashi cash. Devaluation: cash floor/100*62 — cash 27M → floor(27000000/100)*62 = 270000*62=16.74M. So hard currency devalues. Better sell_credit: 27*1.25=33.75 promissory, added to cash at boundary then... promissory прибавляется к cash и обнуляется — but that happens at round boundary, same boundary devalues? \"На границе раунндов 2+ cash=floor(cash/100)*62, promissory прибавляется к cash и обнуляется\" — order suggests devaluation then promissory added, so credit avoids devaluation. So sell_credit all 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767454,
+    "id": "20261116023049c1eabf71093f4a6c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023049c1eabf71093f4a6c",
+    "usage": {
+      "completion_tokens": 244,
+      "completion_tokens_details": {
+        "reasoning_tokens": 202
+      },
+      "prompt_tokens": 1420,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1664
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.29,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Налог 10% бьёт по продажам богатых соперников, мне без товара и наличных он почти не вредит.\"}",
+          "reasoning_content": "Card 1: tax 10%. I'm poor; tax hits sellers. No goods anyway. As poorest, tax reduces rivals. Vote yes? Rivals have cash, tax affects revenue not cash. I won't sell. Vote yes harms rivals' sales slightly. But vote weight all 3, president not me. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767805,
+    "id": "20261116023642002d0daf9435456c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023642002d0daf9435456c",
+    "usage": {
+      "completion_tokens": 107,
+      "completion_tokens_details": {
+        "reasoning_tokens": 68
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1497
+    }
+  }
+}

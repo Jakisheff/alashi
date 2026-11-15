@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.665,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Продажа в кредит избегает девальвации 62% на границе раунда и даёт 1.25x выручку\"}",
+          "reasoning_content": "Sell 3 units at 12,10,9 = 31. Sell credit? Devaluation at round boundaries: 62% haircut applies to cash at rounds 2+... boundary after round 3? Devaluation applies at rounds 2+ boundaries — after this round cash devalues 62%. Promissory not devalued? \"cash=floor(cash/100)*62 (hard not devalued), promissory is added to cash and reset to zero\" — promissory added after devaluation, so sell_credit avoids devaluation and ×1.25. Definitely sell_credit 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767659,
+    "id": "202611160234152aae270533404c46",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160234152aae270533404c46",
+    "usage": {
+      "completion_tokens": 174,
+      "completion_tokens_details": {
+        "reasoning_tokens": 126
+      },
+      "prompt_tokens": 1425,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1599
+    }
+  }
+}

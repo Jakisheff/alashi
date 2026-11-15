@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.226,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Последний раунд, цены на пике 12, продажа сейчас даёт максимум выручки\"}",
+          "reasoning_content": "Round 6, last round. Sell now at high price. sell_credit won't redeem after last round. I have 3 goods, sell at 12 each = 36 alashi.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767700,
+    "id": "202611160234572378a5746bcb4abf",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160234572378a5746bcb4abf",
+    "usage": {
+      "completion_tokens": 73,
+      "completion_tokens_details": {
+        "reasoning_tokens": 39
+      },
+      "prompt_tokens": 1427,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1500
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.858,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Продам весь товар по максимальной цене 12 без налога; кредит сомнителен из-за девальвации.\"}",
+          "reasoning_content": "Round 3 of 6. Sell now at price 12, tax 0. Cash high, inflation devalues at round borders 62%. Sell for cash now — cash 30M will devalue 62% at end of round 3 (border of round 2+? Devaluation occurs at borders of rounds 2+, so yes at end of each round). Actually cash floor(cash/100)*62 applies at every round border from 2+. So cash loses 38% each round. Promissory: added to cash then reset — also subject? Promissory added to cash at border; devaluation formula includes promissory addition. So credit defers to next border anyway.\n\nSell 3 units at 12 = 36 alashi cash now, will devalue at end of round. Sell_credit: 45 promissory, added at next border (end of round 3 border = after market of round 4? \"вернётся только на границе следующего раунда\" — border after this round). Then devalued at subsequent border. Credit gives 1.25x but one extra devaluation round? Both devalue same number of times if promissory returns at end of this round's border... Border happens after law phase; promissory from this round's market returns at border after round 3, then devaluation applies including it? cash=floor(cash/100)*62 and promissory added to cash — order unclear. Likely promissory added after devaluation or before. Risky. Simpler: sell now, spend via bribe later. Sell 3 units = 36M cash.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767050,
+    "id": "20261116022358d38c7447904a40e4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022358d38c7447904a40e4",
+    "usage": {
+      "completion_tokens": 385,
+      "completion_tokens_details": {
+        "reasoning_tokens": 343
+      },
+      "prompt_tokens": 1425,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1810
+    }
+  }
+}

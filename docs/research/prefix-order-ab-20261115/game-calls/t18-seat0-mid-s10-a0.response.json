@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.954,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Цена 5 и выручка*1.25 через sell_credit выше обычной продажи, а погашение на границе раунда 5 успевает.\"}",
+          "reasoning_content": "Round 4, sold_counter 7, price = index 7 → 5 alashi. I have 2 goods. Selling gives 2*5=10. sell_credit gives 12.5 promissory, paid at round 4→5 border (rounds 6 total, so it redeems after round 4 market at border of round 5). Border applies at rounds 2+, cash floor/100*62 devaluation—promissory added to cash then... Actually promissory added at border of next round; devaluation applies to cash, promissory added after. Fine, sell_credit is better: 25% more, redeemed at border round 5, still usable.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767176,
+    "id": "20261116022612d74a2c13d29d4752",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022612d74a2c13d29d4752",
+    "usage": {
+      "completion_tokens": 198,
+      "completion_tokens_details": {
+        "reasoning_tokens": 146
+      },
+      "prompt_tokens": 1430,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1628
+    }
+  }
+}

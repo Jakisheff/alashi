@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.651,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Финальный раунд: продать всё по высокой цене 14, sell_credit после последнего раунда не погашается.\"}",
+          "reasoning_content": "Round 6 final market. Sell now at boom 2, price 12+2=14 per unit. Sell all 3 for cash (sell_credit won't redeem after last round).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767599,
+    "id": "2026111602331501819cef4fad4b05",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602331501819cef4fad4b05",
+    "usage": {
+      "completion_tokens": 82,
+      "completion_tokens_details": {
+        "reasoning_tokens": 39
+      },
+      "prompt_tokens": 1427,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1509
+    }
+  }
+}

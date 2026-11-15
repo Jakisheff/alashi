@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.327,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Продажа в кредит по высокой цене 11 избегает девальвации границы раунда и даёт 1.25x выручку\"}",
+          "reasoning_content": "Round 2 market, prices at sold=2: 9+2=11. Sell 2 now, cash before devaluation? Devaluation at round 2+ boundary. Sell now, cash devalued 62%. Better sell_credit: 1.25× then devalued? Promissory paid at boundary and not devalued? \"На границе раундов 2+ cash=floor(cash/100)*62 (hard не девальвируется), promissory прибавляется к cash и обнуляется\" — promissory added after devaluation, so credit avoids devaluation and gives 1.25×. Sell credit 2 units: 2×11×1.25=27.5 alashi.\n\nBut card 8 risk wipes promissory — unknown. Still credit is better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766821,
+    "id": "202611160220173a67bcc1a3f34122",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160220173a67bcc1a3f34122",
+    "usage": {
+      "completion_tokens": 221,
+      "completion_tokens_details": {
+        "reasoning_tokens": 174
+      },
+      "prompt_tokens": 1420,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1641
+    }
+  }
+}

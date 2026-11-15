@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.384,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Повышение цен уже не действует после последнего раунда, закон безразличен\"}",
+          "reasoning_content": "Law 7: prices +2 next market — but this is round 6, last round. Market already happened this round? Phases: market, action, law per round. Round 6 law — no future market, so law is irrelevant. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766563,
+    "id": "20261116021559a92dc8e68f454a87",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021559a92dc8e68f454a87",
+    "usage": {
+      "completion_tokens": 87,
+      "completion_tokens_details": {
+        "reasoning_tokens": 55
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1477
+    }
+  }
+}

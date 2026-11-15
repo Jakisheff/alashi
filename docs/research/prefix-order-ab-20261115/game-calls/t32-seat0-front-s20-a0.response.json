@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.446,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Финальный раунд: товары больше негде продать, а тратить деньги на взятки бессмысленно.\"}",
+          "reasoning_content": "Round 6, last round. Goods 0. Subsidy=1: produce gives 3 goods, shuttle gives 4 with 25% confiscation. Cash ~38 alashi. No market anymore? Round 6: market, action, law. Market already happened this round? decision_stage primary in round 6... market happens before action, so this is last chance for goods—but no market after action, so goods useless except... no selling. So produce is useless. Bid not round 4. Shuttle useless. So pass, or bribe? Bribe transfers money—bad. Influence bonus 5% of bank goes to max influence; already max. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767747,
+    "id": "2026111602354283a03b1adb0e4a5a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602354283a03b1adb0e4a5a",
+    "usage": {
+      "completion_tokens": 174,
+      "completion_tokens_details": {
+        "reasoning_tokens": 139
+      },
+      "prompt_tokens": 1523,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1697
+    }
+  }
+}

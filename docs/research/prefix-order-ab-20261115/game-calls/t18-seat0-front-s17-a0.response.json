@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.279,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Последний раунд, цены высокие, налога нет; продажа сейчас даёт максимум выручки, а sell_credit уже не погасится.\"}",
+          "reasoning_content": "Round 6 last market. Sell all 3 at price 12 (minus nothing). tax 0. Sell credit not paid after last round. Sell 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767214,
+    "id": "20261116022651b8745534e0e14d6e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022651b8745534e0e14d6e",
+    "usage": {
+      "completion_tokens": 78,
+      "completion_tokens_details": {
+        "reasoning_tokens": 34
+      },
+      "prompt_tokens": 1427,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1505
+    }
+  }
+}

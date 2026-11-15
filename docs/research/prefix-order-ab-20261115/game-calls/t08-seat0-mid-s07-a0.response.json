@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.053,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Списание promissory наверняка бьёт по соперникам, а у меня самого кредитов нет — относительное положение улучшается.\"}",
+          "reasoning_content": "Card 8 cancels promissory notes. Do I have any? Unknown — state says not shown. I sold nothing, cash=0, likely no promissory. Rivals have cash 17, 26; maybe they have promissory? Cash floor rounding hurts. Card 8 cancels promissory—could hurt rivals who sold credit. Likely hurts others, helps me relatively. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766827,
+    "id": "2026111602202458c10f38af7b45ed",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602202458c10f38af7b45ed",
+    "usage": {
+      "completion_tokens": 124,
+      "completion_tokens_details": {
+        "reasoning_tokens": 85
+      },
+      "prompt_tokens": 1385,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1509
+    }
+  }
+}

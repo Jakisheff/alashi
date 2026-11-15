@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.502,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон даёт влияние беднейшему (сопернику idx1), мне выгоднее заблокировать его\"}",
+          "reasoning_content": "Law card 4: +1 influence to poorest. I have cash 35.5, others 31.3 and 35.12 — poorest is idx1. So this helps them, not me. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766658,
+    "id": "20261116021735fd797899163640cb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021735fd797899163640cb",
+    "usage": {
+      "completion_tokens": 80,
+      "completion_tokens_details": {
+        "reasoning_tokens": 46
+      },
+      "prompt_tokens": 1389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1469
+    }
+  }
+}

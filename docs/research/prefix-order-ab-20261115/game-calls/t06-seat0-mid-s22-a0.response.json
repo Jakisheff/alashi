@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.233,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 6 снижает цены следующего рынка, которого уже не будет — закон бесполезен, но и не вредит.\"}",
+          "reasoning_content": "Card 6: prices next market -2. Final round, no next market. Useless. I'm richest, so anti-rich laws... card 6 isn't anti-rich. Vote doesn't matter; veto not needed. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766800,
+    "id": "202611160219578f0f9edfc23044bb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160219578f0f9edfc23044bb",
+    "usage": {
+      "completion_tokens": 91,
+      "completion_tokens_details": {
+        "reasoning_tokens": 50
+      },
+      "prompt_tokens": 1389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1480
+    }
+  }
+}

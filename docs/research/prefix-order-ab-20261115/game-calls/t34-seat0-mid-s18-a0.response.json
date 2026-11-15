@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.73,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"У меня нет товара, а рост цен на последнем рынке выгоден только соперникам с товаром.\"}",
+          "reasoning_content": "Law card 7: prices +2 next market. Round 6 is last round — prices +2 benefits sellers. My goods=0, others have goods. Rivals will sell at higher prices, lowering sold_counter faster for my... I have no goods. So I should vote no. Vote no; president, veto if passes — but veto is separate action before vote count. I can vote_no now; if it passes I can't veto later. Should I veto now instead? Veto is strongest: kills the law. Others benefit, I don't. Veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767802,
+    "id": "2026111602363887d2724ba06446c4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602363887d2724ba06446c4",
+    "usage": {
+      "completion_tokens": 149,
+      "completion_tokens_details": {
+        "reasoning_tokens": 117
+      },
+      "prompt_tokens": 1392,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1541
+    }
+  }
+}

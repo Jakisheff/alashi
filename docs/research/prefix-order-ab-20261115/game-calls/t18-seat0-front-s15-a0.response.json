@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.494,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Субсидия товара выгодна и мне, вреда нет\"}",
+          "reasoning_content": "Law card 3: subsidy_goods=1. Helps everyone; I produce more goods relative? I'm poorest. Subsidy gives +1 goods per produce/shuttle. It's neutral-positive. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767207,
+    "id": "202611160226442e74d000d8e74fb4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160226442e74d000d8e74fb4",
+    "usage": {
+      "completion_tokens": 67,
+      "completion_tokens_details": {
+        "reasoning_tokens": 43
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1457
+    }
+  }
+}

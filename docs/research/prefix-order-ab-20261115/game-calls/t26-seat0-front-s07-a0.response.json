@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.577,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта +2 к ценам выгодна мне как продавцу с товаром, вето не нужно\"}",
+          "reasoning_content": "Card 7: prices +2. Post_vote stage? Already voted... decision_stage post_vote, phase law, I'm president. If veto_pending false and voted all true — likely can pass. Card 7 helps me selling (I have goods). But I already have cash 24M, goods 3. Higher prices good. Vote yes? Post_vote seems vote already done; maybe only veto remains. Action must be from list; vote_abstain safe. Card 7 benefits me; no veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767471,
+    "id": "20261116023106f10edba5545b46cf",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023106f10edba5545b46cf",
+    "usage": {
+      "completion_tokens": 137,
+      "completion_tokens_details": {
+        "reasoning_tokens": 104
+      },
+      "prompt_tokens": 1387,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1524
+    }
+  }
+}

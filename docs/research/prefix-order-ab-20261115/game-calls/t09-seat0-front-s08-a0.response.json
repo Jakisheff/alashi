@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.469,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемо ~2.25 товара против 2 от produce, конфискация только ~25%\"}",
+          "reasoning_content": "Round 3, cash 30M, no goods. Produce gives 2 goods. Shuttle gives 3, 25% confiscation. Shuttle EV better if prices ~8+: expected 2.25 goods vs 2. Shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766846,
+    "id": "202611160220430efb6cd53a9c4a05",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160220430efb6cd53a9c4a05",
+    "usage": {
+      "completion_tokens": 84,
+      "completion_tokens_details": {
+        "reasoning_tokens": 49
+      },
+      "prompt_tokens": 1518,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1602
+    }
+  }
+}

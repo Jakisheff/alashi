@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.292,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 8 списывает promissory — с нулевым кэшем мне не вредит, а потенциально вредит соперникам, если они продавали в кредит.\"}",
+          "reasoning_content": "Card 8 wipes promissory notes. All cash 0; nobody has credit visible to me... others may have used sell_credit? sold_counter 0, cash all 0, round 1 market already happened. If others sold credit, their promissory would be wiped. Uncertain. Card 8 hurts only those with promissory. Since sold_counter=0 and cash 0, likely no sales. Neutral card—harmless mostly, could hurt rivals if they have credit. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766762,
+    "id": "20261116021918927a8112a2ea49f2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021918927a8112a2ea49f2",
+    "usage": {
+      "completion_tokens": 154,
+      "completion_tokens_details": {
+        "reasoning_tokens": 105
+      },
+      "prompt_tokens": 1380,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1534
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.857,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":30000000,\"reason\":\"Ожидаемый доход лицензии ~40 alashi; ставка 30 даёт положительное матожидание и вероятно перекрывает соперников с меньшим кэшем.\"}",
+          "reasoning_content": "Round 4, auction available. License income 20-60 alashi. Bid some amount, e.g. 25 alashi? Cash 72M = 72 alashi. Bid 30? Expected value ~40. Others have ~35-43 cash. Bid 35 alashi seems strong but risky. Bid 30.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767670,
+    "id": "202611160234265f0ff3f0f18542af",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160234265f0ff3f0f18542af",
+    "usage": {
+      "completion_tokens": 121,
+      "completion_tokens_details": {
+        "reasoning_tokens": 69
+      },
+      "prompt_tokens": 1522,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1643
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.934,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Рынок в этом раунде уже прошёл, товары продать нельзя, а взятка лишь переводит деньги сопернику ради неясного бонуса влияния.\"}",
+          "reasoning_content": "Round 6, last round. Market phase comes after action? Round order: market, action, law. Wait, phase order per round is market, action, law. So round 6 action... market already happened? sold_counter=7, goods=0. Next market would be... round 6 market already passed? decision_stage primary, phase action in round 6. So this is last chance to get goods for selling? Actually market comes before action in each round, so goods produced now can't be sold — no market after action in round 6. Then produce is useless unless shuttle... no market left. So bribe for influence (5% bank bonus to max influence)? Cash difference matters little. Bribe costs 5M but influence ties... bribe 5M gives +1 influence, could win max influence bonus (5% of bank). But I don't know bank size. Alternatively pass saves cash. Bribe transfers money away—net loss unless bonus exceeds 5M. Bank unknown; risky. Pass is safest.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767829,
+    "id": "20261116023702fb77745e51644cca",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023702fb77745e51644cca",
+    "usage": {
+      "completion_tokens": 258,
+      "completion_tokens_details": {
+        "reasoning_tokens": 213
+      },
+      "prompt_tokens": 1522,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1780
+    }
+  }
+}

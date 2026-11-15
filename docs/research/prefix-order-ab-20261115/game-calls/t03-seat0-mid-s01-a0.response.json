@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.295,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Математическое ожидание товара у shuttle (2.25) выше, чем у produce (2), а риск умеренный.\"}",
+          "reasoning_content": "Round 1, no cash. Shuttle gives 3 goods, 25% risk. Produce gives 2. Shuttle EV = 3*0.75=2.25 goods. Shuttle better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766626,
+    "id": "20261116021703d91b0bc8451848d5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021703d91b0bc8451848d5",
+    "usage": {
+      "completion_tokens": 78,
+      "completion_tokens_details": {
+        "reasoning_tokens": 41
+      },
+      "prompt_tokens": 1511,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1589
+    }
+  }
+}

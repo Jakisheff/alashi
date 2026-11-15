@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.336,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Кредитная продажа даёт 1.25x выручку, и promissory добавляется после делявации cash, так что это выгоднее.\"}",
+          "reasoning_content": "Round 4, cash 27.5. Sell 2 units now at price ~9 (sold_counter 4 → next price 9,10?). Ladder starts 12,10,9... sold 4, so next price ~8. Tax 0. Selling credit gives 1.25x but round 4 border devalues cash 62%... promissory added then devalued? Border: cash devalues, promissory added and reset. Devaluation happens at rounds 2+ — round 4→5 border. Promissory returned at next round border — but does devaluation apply? Order: cash=floor(cash/100)*62, promissory added. So promissory avoids devaluation this border. Actually devaluation applies to cash before promissory added. So sell_credit at 1.25x is strictly better here. Sell 2 credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767789,
+    "id": "202611160236230bea182b0c834222",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160236230bea182b0c834222",
+    "usage": {
+      "completion_tokens": 236,
+      "completion_tokens_details": {
+        "reasoning_tokens": 187
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1664
+    }
+  }
+}

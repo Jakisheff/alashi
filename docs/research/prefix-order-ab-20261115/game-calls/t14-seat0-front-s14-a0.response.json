@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.682,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Закон даёт +1 влияния беднейшему — это я, повышает мой вес и бонус влияния.\"}",
+          "reasoning_content": "Card 4: +1 influence to poorest — that's me. Already voted, post_vote stage. I'm president; veto? No, law benefits me. But phase says only vote actions... decision_stage post_vote, voted all true. Any action likely no-op. Pass is not listed... vote_abstain? Safest: vote_yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767084,
+    "id": "202611160224402edf2bc3a34f4267",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160224402edf2bc3a34f4267",
+    "usage": {
+      "completion_tokens": 106,
+      "completion_tokens_details": {
+        "reasoning_tokens": 71
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1497
+    }
+  }
+}

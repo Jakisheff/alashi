@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.961,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 2 товара без риска конфискации; взятки сейчас дороги относительно выгоды влияния.\"}",
+          "reasoning_content": "Round 2 action. Cash 24. I have 0 goods, sold_counter 7 (prices low ~3). Shuttle gives 3 goods, 25% confiscation, but I have cash and no border role mentioned. Options: shuttle for goods to sell later? Prices at sold_counter 7 are ~3. Market round 2 already passed? No — round 2 phases: market, action, law. Actually decision_stage primary, market probably already done this round. So goods produced now sell in round 3. Expected value of shuttle: 3 goods, price later maybe ~4-6. Producing gives 2 free. Shuttle gives 3 with 25% risk → EV 2.25 goods. Slightly better than produce but confiscation risk. Also grey goods tribute at favored border? Unknown. Shuttle EV 2.25 vs produce 2 — marginal. Safer: produce. Also bribery for influence for later? 5M cash for 1 influence — influence affects vote and 5% bank bonus. I'm richest. Bid round 4 later. I'd bribe now? Influence matters for president/law and 5% commission bonus. Cost 5M for 1 influence — payout share weights 50:30:15 based on rank... actually weights by rank. Influence gives 5% bank bonus to max influence — worth maybe a few alashi. Bribing 5M costs 5M cash directly reduces my final. Probably not now. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766989,
+    "id": "202611160223002f3096c7bd5c4c4e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160223002f3096c7bd5c4c4e",
+    "usage": {
+      "completion_tokens": 343,
+      "completion_tokens_details": {
+        "reasoning_tokens": 310
+      },
+      "prompt_tokens": 1517,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1860
+    }
+  }
+}

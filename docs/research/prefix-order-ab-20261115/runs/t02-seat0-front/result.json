@@ -1,0 +1,46 @@
+{
+  "id": "t02-seat0-front",
+  "seed_index": 2,
+  "seed": 7903238188612657053,
+  "seat": 0,
+  "arm": "front",
+  "opponents": [
+    "greedy",
+    "tactical"
+  ],
+  "partition": "test",
+  "status": "completed",
+  "started_utc": "2026-11-15T18:16:59.843962+00:00",
+  "payout": 20900000,
+  "net_profit": 10900000,
+  "rank": 1,
+  "decisions": 21,
+  "model_decisions": 21,
+  "parse_errors": [],
+  "illegal_actions": 4,
+  "illegal_detail": [
+    {
+      "phase": "law",
+      "err": "AlreadyVoted",
+      "detail": {}
+    },
+    {
+      "phase": "law",
+      "err": "AlreadyVoted",
+      "detail": {}
+    },
+    {
+      "phase": "action",
+      "err": "NotEnoughCash",
+      "detail": {
+        "amount": 20000000
+      }
+    },
+    {
+      "phase": "law",
+      "err": "AlreadyVoted",
+      "detail": {}
+    }
+  ],
+  "elapsed_s": 87.917
+}

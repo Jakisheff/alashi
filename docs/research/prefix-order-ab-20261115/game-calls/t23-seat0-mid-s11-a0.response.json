@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.247,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Налог 20% снизит мою будущую выручку, а я президент — отменяю закон бесплатно.\"}",
+          "reasoning_content": "Law card 2 = tax 20%. I'm richest? cash 25 vs 28.82 vs 26.64 — I'm poorest. Tax hits future sales revenue. Vote no; others likely vote yes to hurt me? Tax applies to everyone. I'll veto since president? Veto kills law. Tax 20% bad for me going forward. Veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767384,
+    "id": "202611160229395667cb0e3486468d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160229395667cb0e3486468d",
+    "usage": {
+      "completion_tokens": 113,
+      "completion_tokens_details": {
+        "reasoning_tokens": 77
+      },
+      "prompt_tokens": 1389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1502
+    }
+  }
+}

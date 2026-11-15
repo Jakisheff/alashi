@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.16,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Не могу подтвердить, что у меня нет непогашенных sell_credit, а выгода от списывания чужих promissory неопределённа.\"}",
+          "reasoning_content": "Law card 8: cancels all promissory notes. I have cash 16.78M, unknown promissory others may have. Do I have outstanding sell_credit? Not shown; my cash is high—likely I sold credit earlier? Unknown. If others hold promissory, card 8 hurts them and me maybe. I'm president, can veto. Card 8 wipes promissory; if I have promissory outstanding, it hurts me. I can't know. sold_counter 4 suggests selling happened. My cash 16.78M relatively lower than others—possibly I sold on credit? Actually sell_credit gives promissory, not cash. My cash could come from earlier rounds after devaluation. Hard to tell.\n\nSafer: vote no (card hurts whoever holds promissory; uncertainty). Or if I think rivals hold promissory, yes helps me. Cash: I'm lowest cash. Promissory adds at round boundary. If I had promissory it'd boost me next boundary. Risky—vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766748,
+    "id": "202611160219030f90bb024b08446b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160219030f90bb024b08446b",
+    "usage": {
+      "completion_tokens": 261,
+      "completion_tokens_details": {
+        "reasoning_tokens": 217
+      },
+      "prompt_tokens": 1387,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1648
+    }
+  }
+}

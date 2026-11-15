@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.468,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Все при нуле cash — вероятно, включая меня, у всех непогашенные promissory, и списание карты 8 ударило бы по моей выручке.\"}",
+          "reasoning_content": "Card 8 wipes promissory notes. I may have sold on credit earlier? Round 1 market done; unknown promissory. If I used sell_credit, card 8 hurts me. Cash all 0, so likely everyone sold credit? Risky. If I have no promissory, card 8 helps if rivals used sell_credit. I'm president, can veto. Vote yes to wipe rivals' promissories (likely they used credit since cash=0 for all — meaning all sold credit, including possibly me). Uncertain. If all sold credit, card 8 hurts me too; then veto/no. Cash=0 for everyone suggests everyone sold credit (or passed). Given symmetric uncertainty, if all have promissories, wiping harms me equally but also rivals — net neutral-ish, but neutral harm to all is fine; actually reduces total, hurting everyone proportionally. Safer to assume rivals likely also used credit; wiping mine loses 1.25x revenue. I'd vote no / veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766490,
+    "id": "20261116021443118156067bfe4ab2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021443118156067bfe4ab2",
+    "usage": {
+      "completion_tokens": 256,
+      "completion_tokens_details": {
+        "reasoning_tokens": 208
+      },
+      "prompt_tokens": 1381,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1637
+    }
+  }
+}

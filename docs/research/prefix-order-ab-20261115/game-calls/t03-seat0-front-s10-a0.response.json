@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.133,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Нет налогов, цены ещё высокие (8/7/6), продаю весь товар за ~21 alashi.\"}",
+          "reasoning_content": "Round 4 market. Ladder at sold_counter=4: next prices 8,7,6,... Selling 3 units: 8+7+6=21, minus 5% bank tax? tax_bps=0, so 21 alashi. Sell now is good; donkey/shuttle later. Sell 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766662,
+    "id": "20261116021736145f8aa079ea477e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021736145f8aa079ea477e",
+    "usage": {
+      "completion_tokens": 108,
+      "completion_tokens_details": {
+        "reasoning_tokens": 70
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1536
+    }
+  }
+}

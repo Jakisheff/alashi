@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.478,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"С субсидией даёт 4 товара, ожидаемая ценность заметно выше безопасного produce, а конфискация бьёт только по товару.\"}",
+          "reasoning_content": "I have 14.88 cash, no goods. Shuttle gives 4 goods (3+1 subsidy) with 25% confiscation risk → sell at ~8ish (sold_counter=4, prices 8,7,6...). Produce gives 3 goods safe. Shuttle EV higher: 4 goods*7.5=30 vs 3*7.5=22.5, minus 25% risk. Shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767380,
+    "id": "2026111602293713f1207d564d4d4d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602293713f1207d564d4d4d",
+    "usage": {
+      "completion_tokens": 136,
+      "completion_tokens_details": {
+        "reasoning_tokens": 90
+      },
+      "prompt_tokens": 1518,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1654
+    }
+  }
+}

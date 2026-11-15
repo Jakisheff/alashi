@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.58,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон 8 уничтожает непогашенные promissory — это чистая потеря денег, опасно при неизвестных кредитных продажениях.\"}",
+          "reasoning_content": "Law 8: cancels all promissory notes. Currently nobody has cash; promissory unknown. Others voted. Likely vote_no as it could hurt, but we have no info about our own sell_credit (not shown). Round 1, we may have promissory if we sold credit. Unknown. Card 8 generally hurts whoever sold on credit. Since we can't know, and it's symmetric, as president vote... Others voted (unknown how). Safer vote_no? Cancelling promissory destroys money; vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767136,
+    "id": "202611160225307dc417ca78e740a8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160225307dc417ca78e740a8",
+    "usage": {
+      "completion_tokens": 153,
+      "completion_tokens_details": {
+        "reasoning_tokens": 111
+      },
+      "prompt_tokens": 1380,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1533
+    }
+  }
+}

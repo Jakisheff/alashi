@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.51,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Гарантированные 2 товара для продажи на последнем рынке без риска конфискации, при этом я сохраняю лидерство по влиянию и пост президента.\"}",
+          "reasoning_content": "Round 5 action, no goods. Produce gives 2 goods to sell later (market phase of round 6?). Round 6 will be last market; price ladder 12 first units. Shuttle gives 3 goods but 25% confiscation risk. Produce safer: 2 goods guaranteed. Shuttle EV: 2.25 goods but confiscation loses all? Likely confiscation of gray goods. Produce is fine; also I'm president with influence lead. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767086,
+    "id": "202611160224427a2e48d71b154497",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160224427a2e48d71b154497",
+    "usage": {
+      "completion_tokens": 142,
+      "completion_tokens_details": {
+        "reasoning_tokens": 96
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1663
+    }
+  }
+}

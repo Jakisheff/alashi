@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.471,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 8 списывает непогашенные promissory — у меня их нет, вреда нет, но и пользы; я уже проголосовал, остаюсь нейтральным.\"}",
+          "reasoning_content": "Card 8 cancels promissory notes; I have none. Pass? I already voted (post_vote, voted all true). Post_vote — no action needed, but must respond. Choose pass/veto? Card 8 harmless now. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767041,
+    "id": "2026111602235749fa88ceaaaa48f6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602235749fa88ceaaaa48f6",
+    "usage": {
+      "completion_tokens": 109,
+      "completion_tokens_details": {
+        "reasoning_tokens": 53
+      },
+      "prompt_tokens": 1381,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1490
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.352,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"EV 2.25 товара против 2 от produce, цены ещё высокие\"}",
+          "reasoning_content": "Shuttle: 3 goods, 25% confiscation. Produce: 2 goods. Value per good high (prices ~8-7). Shuttle EV = 2.25 goods vs 2. Shuttle better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767430,
+    "id": "2026111602302777a6ff9c1da14f87",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602302777a6ff9c1da14f87",
+    "usage": {
+      "completion_tokens": 71,
+      "completion_tokens_details": {
+        "reasoning_tokens": 45
+      },
+      "prompt_tokens": 1519,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1590
+    }
+  }
+}

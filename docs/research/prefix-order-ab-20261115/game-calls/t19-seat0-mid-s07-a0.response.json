@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.413,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Закон даёт +1 влияния богатейшему (фракция 2), что ослабляет мой статус президента — veto бесплатен и гарантирует отклонение.\"}",
+          "reasoning_content": "Card 5: +1 influence to richest. Richest is idx2 (22M). I'm president. My weight 1, others 1 each — I can't pass alone. I'm richest? No, idx2 is. Giving them influence hurts me. Vote no; but vote counts: yes vs no — others unknown. Veto guarantees it fails. Veto costs nothing. Use veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767182,
+    "id": "20261116022616d2517b52bc6f4a92",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022616d2517b52bc6f4a92",
+    "usage": {
+      "completion_tokens": 131,
+      "completion_tokens_details": {
+        "reasoning_tokens": 83
+      },
+      "prompt_tokens": 1387,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1518
+    }
+  }
+}

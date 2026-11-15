@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.823,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Devaluation at the round boundary will hit cash, so selling on credit preserves and multiplies revenue by 1.25\"}",
+          "reasoning_content": "Round 2 market. Selling now: prices from counter 2: 9,8,7,6... Selling 3 units gives 9+8+7=24. But cash gets devalued at round boundary 2+? \"at the boundary of rounds 2+ cash=floor(cash/100)*62\" — so round 2→3 boundary devalues. Better use sell_credit? sell_credit converts revenue to promissory, added at next round boundary, avoiding devaluation, and 1.25x. Yes, sell_credit 3 units: 24*1.25=30 promissory, paid next round without devaluation. Do that.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767580,
+    "id": "202611160232550acb3a58b2d14831",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160232550acb3a58b2d14831",
+    "usage": {
+      "completion_tokens": 180,
+      "completion_tokens_details": {
+        "reasoning_tokens": 141
+      },
+      "prompt_tokens": 1420,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1600
+    }
+  }
+}

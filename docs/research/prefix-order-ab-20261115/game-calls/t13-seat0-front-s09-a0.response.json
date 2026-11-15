@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.999,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Снижение цен вредит соперникам с товаром, у меня товара нет — так падение цен мне выгодно\"}",
+          "reasoning_content": "Card 6: prices -2 next market. I'm poorest with goods 0. Lower prices hurt sellers (opponents). Vote no? Actually -2 prices hurt rivals selling; good for me. But I might sell later rounds too... I have no goods now, but could produce later. Still, hurting richer rivals helps rank. Vote yes.\n\nPrices -2 hits price ladder min 1; rivals have goods. Yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767005,
+    "id": "202611160223217cff953550be450b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160223217cff953550be450b",
+    "usage": {
+      "completion_tokens": 122,
+      "completion_tokens_details": {
+        "reasoning_tokens": 87
+      },
+      "prompt_tokens": 1388,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1510
+    }
+  }
+}

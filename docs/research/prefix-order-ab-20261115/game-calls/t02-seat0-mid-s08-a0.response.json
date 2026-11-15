@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.794,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Шаттл даёт лишь ожидаемые 3 товара с риском, produce — гарантированные 3.\"}",
+          "reasoning_content": "Round 3 action. Produce gives 3 goods. Shuttle gives 4 goods with 25% confiscation risk. I have 31M cash, no goods. Best: shuttle expected 3 goods vs produce 3 — same, but shuttle risk confiscation of all? \"серый товар может быть конфискован\" — likely all confiscated. Expected 0.75*4=3 = produce 3, safer to produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766651,
+    "id": "20261116021726e6daec2e674a42d7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021726e6daec2e674a42d7",
+    "usage": {
+      "completion_tokens": 124,
+      "completion_tokens_details": {
+        "reasoning_tokens": 90
+      },
+      "prompt_tokens": 1518,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1642
+    }
+  }
+}

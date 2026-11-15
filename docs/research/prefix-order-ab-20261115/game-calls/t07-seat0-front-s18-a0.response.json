@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.345,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Снижение цен на следующем рынке вредит соперникам с товаром, а у меня товара нет\"}",
+          "reasoning_content": "Law card 6: prices -2 next market. I have no goods, so lower prices hurt rivals who have goods. Vote no? Wait, post_vote already... but I still choose action. Card 6 hurts sellers; I have 0 goods, rivals have 2 each. Vote no to keep prices high? Wait card 6 = prices -2, so passing it lowers prices. I want it rejected → vote_no. I'm president, influence 2+... weights [2,1,1], already voted? voted shows all true but I still decide. Vote no; if it passes I could veto. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766840,
+    "id": "2026111602203573a52e95dab345ba",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602203573a52e95dab345ba",
+    "usage": {
+      "completion_tokens": 162,
+      "completion_tokens_details": {
+        "reasoning_tokens": 130
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1552
+    }
+  }
+}

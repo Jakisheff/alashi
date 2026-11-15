@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.757,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Все при cash=0, при равенстве тай-брейк скорее в мою пользу — получу +1 влияния.\"}",
+          "reasoning_content": "Card 5: +1 influence to richest. All cash 0, tie. Likely tie_order determines; I'm idx 0, maybe tie favors lower index? Uncertain. If I get +1 influence, good for president bonus. Vote yes? Others already voted—unknown direction. I'm president, can veto. Voting yes gives me possible +1 influence if I'm richest (tie). Risk: opponent gets it. Tie likely resolved by tie_order; unknown my position. idx 0 probably first in tie_order? Ambiguous. Safer: vote yes and hope; or veto to deny. Influence bonus gives 5% bank share. If card passes and opponent gains influence, they may take presidency later. I'll veto to deny others—no, if I gain, benefit me. Tie with all equal cash; tie_order unknown but idx 0 often first. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767270,
+    "id": "20261116022744832da377d85a4591",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022744832da377d85a4591",
+    "usage": {
+      "completion_tokens": 220,
+      "completion_tokens_details": {
+        "reasoning_tokens": 181
+      },
+      "prompt_tokens": 1380,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1600
+    }
+  }
+}

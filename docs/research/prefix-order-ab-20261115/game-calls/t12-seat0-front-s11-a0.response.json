@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.814,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 0 пустая, исход не влияет на выплату — голосую нейтрально, сберегая позицию.\"}",
+          "reasoning_content": "Card 0 empty, vote already counted? decision_stage post_vote, voted all true. Phase law with only vote actions. Card 0 = nothing. Just abstain/pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766962,
+    "id": "20261116022239a0f9a7a1b48847e0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022239a0f9a7a1b48847e0",
+    "usage": {
+      "completion_tokens": 76,
+      "completion_tokens_details": {
+        "reasoning_tokens": 36
+      },
+      "prompt_tokens": 1388,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1464
+    }
+  }
+}

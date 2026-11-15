@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.793,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Налог 10% вредит более богатому сопернику больше, чем мне, а вырученная сумма делится через банк.\"}",
+          "reasoning_content": "Law card 1: tax 10%. I'm mid-cash, no goods. Tax hurts richer player 1 more. Others voted already (unknown how). I have no goods to sell; tax affects revenue. Player 1 richer, tax benefits? Tax goes to bank, shared. I'm middle. Slight benefit since richer pays more. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766766,
+    "id": "20261116021922810c77ba230e4107",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021922810c77ba230e4107",
+    "usage": {
+      "completion_tokens": 112,
+      "completion_tokens_details": {
+        "reasoning_tokens": 74
+      },
+      "prompt_tokens": 1389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1501
+    }
+  }
+}

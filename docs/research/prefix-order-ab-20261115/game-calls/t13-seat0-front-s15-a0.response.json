@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.641,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Без риска даёт 3 товара для продажи по высокой цене на следующем рынке\"}",
+          "reasoning_content": "Round 5, no goods, cash 13.5. Produce gives 3 goods, sell at ~12 price → 36 alashi. Shuttle gives 4 goods ~25% confiscation risk but no cash... produce safe: 3 goods. Shuttle 4 goods, risk 25% lose all? Better produce, no cash to lose anyway; but confiscation could lose goods. Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767032,
+    "id": "20261116022348234d0b5500964d22",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022348234d0b5500964d22",
+    "usage": {
+      "completion_tokens": 108,
+      "completion_tokens_details": {
+        "reasoning_tokens": 82
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1629
+    }
+  }
+}

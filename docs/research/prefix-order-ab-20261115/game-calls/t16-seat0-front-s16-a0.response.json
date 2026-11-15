@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.003,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 2 товара для продажи на следующем рынке при высокой цене\"}",
+          "reasoning_content": "Cash 13.08, no goods. Round 5. Buy donkey? Later can sell. Donkey: 1 alashi per good, sell at ~12... but cash low. Donkey gives 1 good for 1 alashi — profitable if sell price >1. Do donkey (cost 1, sell at high price). Actually produce gives 2 free goods — better. Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767132,
+    "id": "2026111602252830a2f607517945bb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602252830a2f607517945bb",
+    "usage": {
+      "completion_tokens": 109,
+      "completion_tokens_details": {
+        "reasoning_tokens": 84
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1630
+    }
+  }
+}

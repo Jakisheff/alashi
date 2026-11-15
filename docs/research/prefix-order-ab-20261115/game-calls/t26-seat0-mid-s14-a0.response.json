@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.069,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Налог 10% сильнее вредит более богатым соперникам, у меня почти нет товара.\"}",
+          "reasoning_content": "Card 1: tax 10%. I'm not selling much? Others have cash and will sell. Tax hurts sellers. I'm poorest with 11.5M, goods 0. Tax 10% on revenue reduces others' cash more than mine. Also could make me poorest for influence card later. Vote yes? But wait, I'm president and can veto. Others already voted (both true) — unknown how. Tax 10% hurts richer rivals more; vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767500,
+    "id": "202611160231351d08461a689d4f27",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160231351d08461a689d4f27",
+    "usage": {
+      "completion_tokens": 131,
+      "completion_tokens_details": {
+        "reasoning_tokens": 99
+      },
+      "prompt_tokens": 1389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1520
+    }
+  }
+}

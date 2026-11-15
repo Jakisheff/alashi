@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.765,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон даёт влияние богатейшему (не мне), поэтому против; при необходимости наложу вето как президент.\"}",
+          "reasoning_content": "Law card 5: +1 influence to richest. Richest cash: idx2 (29.12). I'm poorest (0). Vote no. Opponents each weight 1; if they vote yes 2>1 it passes, but I'm president — can veto. Vote no and veto? Vote no first.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766665,
+    "id": "20261116021742a44d8bb1bb4341b3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021742a44d8bb1bb4341b3",
+    "usage": {
+      "completion_tokens": 102,
+      "completion_tokens_details": {
+        "reasoning_tokens": 66
+      },
+      "prompt_tokens": 1386,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1488
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.172,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":25000000,\"reason\":\"Лицензия с ожидаемым доходом ~40 alashi сверх доли, а потраченный кэш избегает девальвации 38% на границе раунда.\"}",
+          "reasoning_content": "Round 4, auction available. License income 20-60, plus 5% bank bonus for max influence. I'm richest (51.9M) and have most influence (2). Bid something like 20M? Shares 50:30:15; license paid on top. Expected value ~40M, bidding ~25M seems reasonable. But money devalues at round boundary? Devaluation applies to cash at rounds 2+... \"На границе раундов 2+ cash=floor(cash/100)*62\". Round 4 boundary — after this round cash devalues 38%. So spending cash now on license is good (avoids devaluation). Bid 25M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766767,
+    "id": "202611160219215d7b7e911a414788",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160219215d7b7e911a414788",
+    "usage": {
+      "completion_tokens": 205,
+      "completion_tokens_details": {
+        "reasoning_tokens": 146
+      },
+      "prompt_tokens": 1522,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1727
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.655,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Снижение цен вредит продавцам-соперникам больше, чем мне, поэтому закон выгодно пропустить.\"}",
+          "reasoning_content": "Law 6: prices -2 next market. I'm poorest, likely want to veto? Prices -2 hurt everyone's sales next round; I have no goods. Others have cash but no goods either. Round 4, next market round 5 and 6. Lower prices hurt rivals more; I could let it pass. But final payout proportional... Veto doesn't cost me directly. Passing -2 prices reduces rivals' future cash more than mine (I have little capacity?). Unclear production. Let it pass: vote_abstain won't stop it; but as president I could veto. Letting -2 pass harms rivals selling more. I'll abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767734,
+    "id": "2026111602352917de6a0a28b642d4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602352917de6a0a28b642d4",
+    "usage": {
+      "completion_tokens": 175,
+      "completion_tokens_details": {
+        "reasoning_tokens": 137
+      },
+      "prompt_tokens": 1392,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1567
+    }
+  }
+}

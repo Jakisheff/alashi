@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.466,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 0 ничего не меняет, финальный раунд, лучший выбор — нейтральный ход.\"}",
+          "reasoning_content": "Round 6 final, law card 0 (nothing). Post-vote stage, already voted. Abstain/pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767059,
+    "id": "20261116022416cbc857e03a924998",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022416cbc857e03a924998",
+    "usage": {
+      "completion_tokens": 63,
+      "completion_tokens_details": {
+        "reasoning_tokens": 25
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1454
+    }
+  }
+}

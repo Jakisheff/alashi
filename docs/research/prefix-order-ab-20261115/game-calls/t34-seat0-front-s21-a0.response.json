@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.399,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Рынок этого раунда уже прошёл, товар бесполезен, а взятка дороже выгоды от влияния — пропускаю.\"}",
+          "reasoning_content": "Round 6, last round. No goods. Cash rich. Tax 20%. Law card none. Best action: produce gives 2 goods — but market comes next round? Order is market, action, law each round; round 6 is last, so market after action? Round order: market, action, law — so market already passed in round 6. Produce goods are useless. Shuttle useless. Bribe: influence bonus 5% of bank at end for max influence. Bribing 5M to a rival gives them cash and me +1 influence — influence 2 vs others 1, I'd get the extra 5%. But bribe costs 5M cash, and bank pool split 50:30:15... extra 5% of bank might exceed 5M? Bank = total taxes etc, unknown. Commission 5% of bank, another 5% to top influence. Likely 5% of bank > 5M? Bank accumulated from taxes over 6 rounds — taxes 20% on sales. Sales maybe ~100 alashi total, tax ~20 alashi; 5% = ~1 alashi... bank probably commission base = total money? \"Комиссия 5% банка\" — bank is pool of money paid in (bids, bribes, taxes?). Unclear. 5M=5 alashi bribe for possibly ~1 alashi return — not worth. Also roof: 30% cash to someone — no. Pass, or shuttle for gray goods useless (no market after).\n\nPass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767830,
+    "id": "2026111602370252cf489d26e94e65",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602370252cf489d26e94e65",
+    "usage": {
+      "completion_tokens": 365,
+      "completion_tokens_details": {
+        "reasoning_tokens": 322
+      },
+      "prompt_tokens": 1523,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1888
+    }
+  }
+}

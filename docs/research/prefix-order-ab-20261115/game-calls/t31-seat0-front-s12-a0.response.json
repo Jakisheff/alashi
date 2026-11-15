@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.615,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":40000000,\"reason\":\"Лицензия приносит 20–60 alashi сверх доли, а проигравшая ставка возвращается — ставка 40M с моим кэшем 72M выгодна даже при победе.\"}",
+          "reasoning_content": "Round 4, action phase. Bid auction available. Goods=0, cash 72.11. Produce gives 2 goods, shuttle 3 with 25% confiscation. Bid for license income 20-60 plus share... License revenue 20-60 alashi is huge. Bid some amount. Cash 72.11 alashi. Losing bid refunded. Bid e.g. 30000000? License expected ~40 alashi extra (minus share effect?). Paid to bank, but final payout is share of bank... paying to bank returns partially via shares. Bid ~30M is safe; opponents have ~35-42M cash, may bid high. I'd bid 40M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767686,
+    "id": "20261116023439608a5ed1f818487b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023439608a5ed1f818487b",
+    "usage": {
+      "completion_tokens": 203,
+      "completion_tokens_details": {
+        "reasoning_tokens": 143
+      },
+      "prompt_tokens": 1522,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1725
+    }
+  }
+}

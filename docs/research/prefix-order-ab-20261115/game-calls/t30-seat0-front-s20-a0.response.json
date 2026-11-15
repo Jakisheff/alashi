@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.629,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Субсидия уже бесполезна после последнего рынка, исход не влияет на выплату\"}",
+          "reasoning_content": "Card 3: subsidy_goods=1, helps all equally, no harm. My weight 3, irrelevant. Vote yes? Subsidy doesn't matter much this round—final round, produce gives 2+1 goods but no more market after round 6? Market happens each round before action; law after action. Round 6 law: no more markets. Subsidy useless. Abstain or vote_no. Vote doesn't affect my payout. Just abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767654,
+    "id": "202611160234098feec387fef24b5e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160234098feec387fef24b5e",
+    "usage": {
+      "completion_tokens": 131,
+      "completion_tokens_details": {
+        "reasoning_tokens": 98
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1521
+    }
+  }
+}

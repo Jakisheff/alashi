@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.252,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нет денег для взяток, производлю товар без риска.\"}",
+          "reasoning_content": "Cash 0, so bribe impossible (no cash). Produce gives 2 goods.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767059,
+    "id": "20261116022416a7269da21ee5443a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022416a7269da21ee5443a",
+    "usage": {
+      "completion_tokens": 40,
+      "completion_tokens_details": {
+        "reasoning_tokens": 18
+      },
+      "prompt_tokens": 1515,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1555
+    }
+  }
+}

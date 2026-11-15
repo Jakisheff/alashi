@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.976,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Налог 20% вредит соперникам с cash, а мой cash=0, так что закон выгоден\"}",
+          "reasoning_content": "Law card 2: tax 20%. I have cash 0, no sales. Tax hurts others more than me. Vote yes. President — no veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766782,
+    "id": "2026111602193826ddd8d6a0744cef",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602193826ddd8d6a0744cef",
+    "usage": {
+      "completion_tokens": 67,
+      "completion_tokens_details": {
+        "reasoning_tokens": 33
+      },
+      "prompt_tokens": 1384,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1451
+    }
+  }
+}

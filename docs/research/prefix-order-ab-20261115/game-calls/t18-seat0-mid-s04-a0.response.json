@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.791,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Цена ещё высокая, а кредитная выручка 1.25x выплачивается после девальвации, что лучше наличных\"}",
+          "reasoning_content": "Sell 2 at price ~10 (counter=2). Cash devalues 62% at border unless credit... sell_credit gives 1.25x promissory added after devaluation — better. Sell credit 2 units: 10*2*1.25=25 promissory.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767150,
+    "id": "20261116022547157f7e4adc204c4e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022547157f7e4adc204c4e",
+    "usage": {
+      "completion_tokens": 105,
+      "completion_tokens_details": {
+        "reasoning_tokens": 61
+      },
+      "prompt_tokens": 1420,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1525
+    }
+  }
+}

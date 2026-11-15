@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.171,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":20000000,\"reason\":\"Аукцион только в раунде 4; ожидаемый доход лицензии ~40 при ставке 20 даёт положительный чистый выигрыш.\"}",
+          "reasoning_content": "Round 4, bid for license. Cash 11 alashi. License income ~20-60. Bid maybe 15? Expected value ~40, but pays from bank; winning pays bid, gets license income + share. Bid high enough to win but not overpay. Rival has 35.8 cash. Blind auction. Bid 20 alashi? Expected gain = income ~40 - 20 = 20 if win. Risk rival outbids. Bid 20M = 20000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766532,
+    "id": "202611160215273c0af9c5d14b43f2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160215273c0af9c5d14b43f2",
+    "usage": {
+      "completion_tokens": 153,
+      "completion_tokens_details": {
+        "reasoning_tokens": 105
+      },
+      "prompt_tokens": 1522,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1675
+    }
+  }
+}

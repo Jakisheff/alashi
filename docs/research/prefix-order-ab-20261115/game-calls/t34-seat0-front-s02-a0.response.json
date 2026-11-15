@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.032,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон 8 списывает непогашенные promissory — у меня cash=0 и, вероятно, нет кредита, а у соперников может быть; это выгодно им во вред мне.\"}",
+          "reasoning_content": "Card 8 wipes promissory notes. Others have goods 2 each, no cash shown. Nobody has promissory yet visible... but state doesn't show my promissory; I don't know my own—actually I'd know my own actions, but I have no history. Cash all 0, round 1 market already passed—someone may have sold credit. Unknown. Card 8 hurts anyone with promissory; I likely didn't sell (goods? mine not shown... my goods not shown in list? goods[0] not given). Rivals have 2 goods, likely produced/sold? Cash 0 so maybe sold credit. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767732,
+    "id": "20261116023526008739f18d8848a6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023526008739f18d8848a6",
+    "usage": {
+      "completion_tokens": 190,
+      "completion_tokens_details": {
+        "reasoning_tokens": 138
+      },
+      "prompt_tokens": 1380,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1570
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.792,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Понижение цен вредит соперникам с товаром, а у меня товаров нет — закон мне выгоден\"}",
+          "reasoning_content": "Card 6: prices -2 next market. I'm president with weight 2; no vote needed, decide. I have 0 goods, rivals have 2 each. Lower prices hurt rivals' sales, benefit me. Vote yes (pass the law) — wait, vote has already happened? voted all true, post_vote... phase law, options vote_yes/no/abstain still. Passing -2 prices hurts rivals who have goods. Yes, vote_yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766794,
+    "id": "20261116021950c2b7a7445f0b433b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021950c2b7a7445f0b433b",
+    "usage": {
+      "completion_tokens": 129,
+      "completion_tokens_details": {
+        "reasoning_tokens": 96
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1519
+    }
+  }
+}

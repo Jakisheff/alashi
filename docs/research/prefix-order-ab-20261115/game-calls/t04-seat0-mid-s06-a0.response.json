@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.681,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 8 списывает непогашенные promissory соперников, а у меня их, вероятно, нет — выгодно.\"}",
+          "reasoning_content": "Law card 8: writes off all outstanding promissory notes. I have cash 0 — do I have promissory? Unknown; possibly sold credit earlier? goods 2, cash 0 — likely no. Others may have promissory from sell_credit. Wiping promissory harms others. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766645,
+    "id": "202611160217229c73dea65a474989",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160217229c73dea65a474989",
+    "usage": {
+      "completion_tokens": 105,
+      "completion_tokens_details": {
+        "reasoning_tokens": 66
+      },
+      "prompt_tokens": 1384,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1489
+    }
+  }
+}

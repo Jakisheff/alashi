@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.531,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемо ~2,25 товара против 2 от produce, цены ещё высокие\"}",
+          "reasoning_content": "Round 3 action. Cash 30M, goods 0. Need goods to sell. Shuttle gives 3 goods with 25% confiscation risk (subsidy 0 → 3 goods). Produce gives 2 goods risk-free. Shuttle EV: 0.75×3=2.25 goods. Prices ~9-10 remaining at counter 4. Shuttle slightly better EV.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766751,
+    "id": "2026111602190809046bc7dc744433",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602190809046bc7dc744433",
+    "usage": {
+      "completion_tokens": 111,
+      "completion_tokens_details": {
+        "reasoning_tokens": 81
+      },
+      "prompt_tokens": 1518,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1629
+    }
+  }
+}

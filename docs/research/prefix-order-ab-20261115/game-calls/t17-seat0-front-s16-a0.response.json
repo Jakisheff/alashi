@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.197,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемая ценность ~2,25 товара выше, чем 2 от produce, а товары продам в финальном раунде.\"}",
+          "reasoning_content": "Round 5 of 6, action phase. Cash 15.1, others have more cash. I'm president with influence 2. Best action: shuttle gives 3 goods (25% confiscation risk), expected 2.25 goods; produce gives 2 safe. Round 6 remains for selling. Shuttle expected value higher. But also bribe to gain influence for payout bonus (5% of bank to max influence). Influence 2 vs others 1 — I'm already max. Bribe 5M gives +1 influence but costs 5M cash; influence bonus share of 5% bank — bank unknown. Probably keep cash. Shuttle expected: sell price maybe ~10 next round... shuttle 3 goods worth ~30, EV ~22.5 vs produce 20. Slight edge to shuttle, but confiscation risk. I'll shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767200,
+    "id": "20261116022634a59dde50096d45cf",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022634a59dde50096d45cf",
+    "usage": {
+      "completion_tokens": 221,
+      "completion_tokens_details": {
+        "reasoning_tokens": 177
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1742
+    }
+  }
+}

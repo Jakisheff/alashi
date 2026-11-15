@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.946,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 8 списывает promissory, но продаж ещё не было — закон пустой, нет причин поддерживать или блокировать.\"}",
+          "reasoning_content": "Law card 8: cancels all outstanding promissory notes. I have no promissory (unknown, but likely none). Opponents may have. Vote yes? Cancelling promissory hurts whoever holds them — probably opponents used sell_credit. But if I might have sell_credit outstanding, it wipes mine. Unknown. Cash all 0, round 1, sold_counter 0 — no sales yet, so no promissory outstanding. Card is a no-op. Vote yes/abstain — irrelevant. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767240,
+    "id": "20261116022715ae192bc6a5fb44f7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022715ae192bc6a5fb44f7",
+    "usage": {
+      "completion_tokens": 151,
+      "completion_tokens_details": {
+        "reasoning_tokens": 110
+      },
+      "prompt_tokens": 1380,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1531
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.582,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Высокие цены на лестнице и отсутствие налога; девальвация делает кредит невыгодным.\"}",
+          "reasoning_content": "Sell all 3 for cash now. Prices: 12,10,9. Sell 3 → 31 alashi, no tax. Credit gives 1.25x but devaluation 62% kills it. Sell.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767170,
+    "id": "2026111602260774276f055c58488c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602260774276f055c58488c",
+    "usage": {
+      "completion_tokens": 83,
+      "completion_tokens_details": {
+        "reasoning_tokens": 47
+      },
+      "prompt_tokens": 1425,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1508
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.525,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон снижает цены, а я богатейший и продаю — мне невыгодно, особенно в последний раунд\"}",
+          "reasoning_content": "Card 6: prices -2 next market — but this is round 6, last round? Round 6 of 6, market after? Round 6 law is final; next market may not exist. Even so, -2 prices would hurt me. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767641,
+    "id": "202611160233586c22a40329fa464d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160233586c22a40329fa464d",
+    "usage": {
+      "completion_tokens": 92,
+      "completion_tokens_details": {
+        "reasoning_tokens": 56
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1483
+    }
+  }
+}

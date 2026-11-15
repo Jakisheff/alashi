@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.128,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемая ценность 3*0.75=2.25 товара выше, чем 2 от produce.\"}",
+          "reasoning_content": "Produce gives 2 goods, no cash. Shuttle gives 3 goods with 25% confiscation risk but no cash cost. EV shuttle = 3*0.75 = 2.25 > 2. But I already have 2 goods; shuttle adds 3 → 5 goods. Confiscation loses only the 3. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767345,
+    "id": "20261116022901d4e2b08e6de1489d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022901d4e2b08e6de1489d",
+    "usage": {
+      "completion_tokens": 111,
+      "completion_tokens_details": {
+        "reasoning_tokens": 74
+      },
+      "prompt_tokens": 1511,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1622
+    }
+  }
+}

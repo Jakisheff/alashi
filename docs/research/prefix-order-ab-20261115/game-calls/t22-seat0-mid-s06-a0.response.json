@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.161,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"У меня явно нет непогашенных promissory (cash=0), а списание долгов вредит только соперникам.\"}",
+          "reasoning_content": "Card 8: wipes all promissory notes. I have no outstanding sell_credit (cash 0, goods 2 — I don't know my promissory; state doesn't show. I likely have none since cash=0). Others' promissory unknown. Rival 2 has 22M cash — may have promissory? Card 8 hurts anyone with promissory. I likely have none; rivals may. Vote yes? My weight 2, one rival already voted (unknown how). Passing card 8 likely harms others, not me. But I might have promissory I can't see... I sold nothing (cash 0, goods 2, started with 0 goods... actually goods=2 could be produced). Risk: I might have promissory. Uncertain. Also can veto. Abstain seems safe middle? Voting yes could wipe my own promissory if I had one. Given cash=0 and goods=2, I probably didn't sell on credit. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767289,
+    "id": "2026111602280461dc4113397a48ba",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602280461dc4113397a48ba",
+    "usage": {
+      "completion_tokens": 249,
+      "completion_tokens_details": {
+        "reasoning_tokens": 212
+      },
+      "prompt_tokens": 1384,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1633
+    }
+  }
+}

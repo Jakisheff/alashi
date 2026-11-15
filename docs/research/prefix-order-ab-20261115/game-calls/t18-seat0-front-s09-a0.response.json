@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.171,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Снижение цен мне невыгодно, ведь я планирую продавать в следующем раунде\"}",
+          "reasoning_content": "Card 6: prices -2 next market. I'm richest, want to sell later? Goods 0 currently. -2 prices hurts rivals more (they have goods 2,5). Vote yes? But next round I'll produce goods too. Price -2 hurts me too. I'd rather vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767182,
+    "id": "2026111602261445d75c8032154e77",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602261445d75c8032154e77",
+    "usage": {
+      "completion_tokens": 96,
+      "completion_tokens_details": {
+        "reasoning_tokens": 64
+      },
+      "prompt_tokens": 1387,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1483
+    }
+  }
+}

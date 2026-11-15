@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.788,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Понижение цен на следующем рынке вредит мне как единственному с товаром, а голосованием я не перебью соперников.\"}",
+          "reasoning_content": "Law card 6: prices next market -2. Round 4, next market is round 5. I have 3 goods, others have none. Lower prices hurt me. Others voted (unknown how). My weight 2; others weight 3 each. If both voted yes, yes=6, my no=2 → passes anyway; veto as president blocks it. Veto card 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767399,
+    "id": "202611160229540757d03ccea24c02",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160229540757d03ccea24c02",
+    "usage": {
+      "completion_tokens": 124,
+      "completion_tokens_details": {
+        "reasoning_tokens": 83
+      },
+      "prompt_tokens": 1388,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1512
+    }
+  }
+}

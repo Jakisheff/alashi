@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.934,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Продажа в кредит даёт 1.25x выручку и заходит в кэш уже после девальвации на границе раунда.\"}",
+          "reasoning_content": "Round 3, sell 3 units at price 12. Sell credit gives 1.25x paid at round 4 boundary (devaluation floor(cash/100)*62 applies to cash... promissory added to cash and reset — after round 3, cash devalues? \"On boundary of rounds 2+ cash=floor(cash/100)*62\" then promissory added. So promissory avoids devaluation and gains 25%. Sell credit all 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767384,
+    "id": "202611160229406e3b355744cf4779",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160229406e3b355744cf4779",
+    "usage": {
+      "completion_tokens": 152,
+      "completion_tokens_details": {
+        "reasoning_tokens": 101
+      },
+      "prompt_tokens": 1425,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1577
+    }
+  }
+}

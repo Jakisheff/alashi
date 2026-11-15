@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.325,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Продаю весь товар в кредит ради +25% выручки, promissory вернётся на границе раунда 4\"}",
+          "reasoning_content": "Round 4 market. Prices at sold_counter 8: ladder index 8 → 3 alashi. Selling 3 units at 3 each = 9. Sell_credit gives *1.25 but paid at round boundary—round 4 boundary still pays (next round 5 exists). Actually sell_credit pays at boundary of next round, which happens (rounds 5,6). Fine: sell_credit 3 → 9*1.25=11.25 promissory. But risk of card 8 wiping promissory. Safe to sell normally? 25% bonus worth it, but card 8 risk. Law card unknown. Sell_credit better EV unless wiped. Modest gain; I'll sell credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766968,
+    "id": "20261116022243ccea368d6cfa4b56",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022243ccea368d6cfa4b56",
+    "usage": {
+      "completion_tokens": 195,
+      "completion_tokens_details": {
+        "reasoning_tokens": 150
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1623
+    }
+  }
+}

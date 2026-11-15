@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.066,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Налог 20% сильнее бьёт по более богатым соперникам, я беднейший — относительно выигрываю.\"}",
+          "reasoning_content": "Law card 2: tax 20%. I'm poorest with 18.4M. Tax hurts richer rivals more. Vote yes? Wait — tax on revenue, not wealth. Still helps relatively? Tax reduces rivals' future revenue more than mine... Actually it hurts me too, but I'm poorest, relative standing matters. Yes, and it already passed (post_vote)? decision_stage post_vote — hmm, phase law with post_vote. I'm president; veto possible. Tax 20% hurts richer rivals relatively — let it pass: vote_yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767097,
+    "id": "20261116022453e17ffcc41e1c4f6a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022453e17ffcc41e1c4f6a",
+    "usage": {
+      "completion_tokens": 150,
+      "completion_tokens_details": {
+        "reasoning_tokens": 112
+      },
+      "prompt_tokens": 1392,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1542
+    }
+  }
+}

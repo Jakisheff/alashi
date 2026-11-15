@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.142,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта даёт +1 влияния беднейшему — мне, повышая вес и шанс на бонус влияния.\"}",
+          "reasoning_content": "Card 4 gives +1 influence to poorest — me. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767186,
+    "id": "20261116022623a50df4ea189744ce",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022623a50df4ea189744ce",
+    "usage": {
+      "completion_tokens": 50,
+      "completion_tokens_details": {
+        "reasoning_tokens": 15
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1441
+    }
+  }
+}

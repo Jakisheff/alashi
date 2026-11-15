@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.699,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Налог бьёт по конкурентам с деньгами и товарами, а у меня нет ни того ни другого — ослабление соперников выгодно.\"}",
+          "reasoning_content": "Law card 1: tax 10%. I'm poorest, no cash. Tax on market revenue hurts sellers, not me (I have no goods). Could harm rivals slightly. I have no strong stake. Abstain? Tax reduces rivals' cash relative ranking — good for me. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766646,
+    "id": "202611160217236d456e6dedd340bb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160217236d456e6dedd340bb",
+    "usage": {
+      "completion_tokens": 106,
+      "completion_tokens_details": {
+        "reasoning_tokens": 61
+      },
+      "prompt_tokens": 1384,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1490
+    }
+  }
+}

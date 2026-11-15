@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.02,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Неясно, у кого непогашенные promissory, поэтому воздерживаюсь, чтобы не навредить себе.\"}",
+          "reasoning_content": "Card 8 wipes unredeemed promissories. My cash 29M vs others. Do I have outstanding sell_credit? Unknown, but my cash is 0-base... likely I sold credit? Can't know. Card 8 wipes promissories — hurts whoever holds them. I might have some. Opponent 2 cash 10.6M low—likely holds promissory. Hard to say. Cash of mine 29M plausible from selling. Vote yes? Wiping promissory reduces someone's cash at round boundary. Devaluation: cash floor(cash/100)*62 anyway. Risky either way; I'll vote no to be safe? If I hold promissory, yes hurts me. Others likely hold some too. Neutral—abstain. Actually if opponents hold promissory and I don't, yes helps me. My cash 29M round 3, no devaluation seen yet applied? Round 3 means two boundaries passed. Can't tell. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766665,
+    "id": "20261116021738248d9449af6044fd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021738248d9449af6044fd",
+    "usage": {
+      "completion_tokens": 249,
+      "completion_tokens_details": {
+        "reasoning_tokens": 208
+      },
+      "prompt_tokens": 1387,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1636
+    }
+  }
+}

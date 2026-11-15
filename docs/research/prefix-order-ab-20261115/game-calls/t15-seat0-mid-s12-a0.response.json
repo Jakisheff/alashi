@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.663,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Продам 3 товара по высоким ценам 7/6/5 в последнем рынке перед возможной девальвацией.\"}",
+          "reasoning_content": "Round 4, sold_counter 4. Prices: [12,10,9,8,...]. Sell 3 units at prices 8,7,6? Actually counter 4 means next price is index 4 = 7, then 6, 5. Total 18 alashi. Sell now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767082,
+    "id": "20261116022438d9b8b625952240a8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022438d9b8b625952240a8",
+    "usage": {
+      "completion_tokens": 106,
+      "completion_tokens_details": {
+        "reasoning_tokens": 65
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1534
+    }
+  }
+}

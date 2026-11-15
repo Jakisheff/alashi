@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.197,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Кредитная продажа избегает девальвации 62% в этом раунде и даёт множитель 1.25, что выгоднее прямой продажи.\"}",
+          "reasoning_content": "Round 2, devaluation 62% on cash. Sell via credit avoids devaluation? Credit paid at next round boundary — promissory added to cash and reset at boundary of round 3... Actually boundary happens, cash devalued then promissory added. So credit protects from this round's devaluation but faces next boundary. Prices: counter at 2, prices [12,10,9,...] next units 9,8,7. Sell 2 now for 17, but cash devalued to 62% → ~10.5. Credit: 17*1.25=21.25 next round, no devaluation now, but will face next boundary (62% then, unless spent/invested). Still credit better (21.25*0.62≈13.2 > 10.5).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767579,
+    "id": "20261116023253284d46dd2f13447e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023253284d46dd2f13447e",
+    "usage": {
+      "completion_tokens": 225,
+      "completion_tokens_details": {
+        "reasoning_tokens": 174
+      },
+      "prompt_tokens": 1420,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1645
+    }
+  }
+}

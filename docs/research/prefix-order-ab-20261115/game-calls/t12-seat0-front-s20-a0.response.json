@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.741,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара для продажи, действие невозможно.\"}",
+          "reasoning_content": "Round 6, no goods. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767010,
+    "id": "2026111602232881c62fbb46894c0d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602232881c62fbb46894c0d",
+    "usage": {
+      "completion_tokens": 27,
+      "completion_tokens_details": {
+        "reasoning_tokens": 9
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1455
+    }
+  }
+}

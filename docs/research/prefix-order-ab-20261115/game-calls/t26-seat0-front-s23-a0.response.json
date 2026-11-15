@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.377,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Закон даёт влияние беднейшему (не мне), итоговой выплате не вредит — воздерживаюсь.\"}",
+          "reasoning_content": "Card 4: +1 influence to poorest. Poorest is idx2 (24M). Not me. Doesn't affect payout much; no cash effect. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767540,
+    "id": "202611160232179f01a8e6faf04545",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160232179f01a8e6faf04545",
+    "usage": {
+      "completion_tokens": 75,
+      "completion_tokens_details": {
+        "reasoning_tokens": 36
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1466
+    }
+  }
+}

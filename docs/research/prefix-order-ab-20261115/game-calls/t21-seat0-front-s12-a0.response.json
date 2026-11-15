@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.555,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":25000000,\"reason\":\"Ожидаемый доход лицензии ~40 превышает умеренную ставку, выгоднее, чем 2 товара\"}",
+          "reasoning_content": "Round 4 action: bid available. License income 20-60, expected 40. Bid amount? Competitive. Bidding ~20-30 maybe. Opponents have ~26-35 cash. Blind auction. Expected value ~40; bid 25? Winning pays bid, income ~40, profit ~15. Risk: opponents may bid high. Bid 20 seems safe-ish. But also produce for goods. Can't do both. License income comes on top of share, so worth it if bid < ~30. Bid 25.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767290,
+    "id": "202611160228061d373a0b735c44bb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160228061d373a0b735c44bb",
+    "usage": {
+      "completion_tokens": 150,
+      "completion_tokens_details": {
+        "reasoning_tokens": 111
+      },
+      "prompt_tokens": 1519,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1669
+    }
+  }
+}

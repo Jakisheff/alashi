@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.918,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Налог 20% бьёт по продавцам-соперникам в финальном раунде, а мне с нулевым товаром не вредит — поддерживаю.\"}",
+          "reasoning_content": "Law card 2: tax 20%. I'm richest in cash; tax hurts. President, can veto. But veto after? \"veto до подсчёта\" — I can veto now or vote. Tax 20% on my sales; I have 0 goods, final round — I won't sell. Others may sell. Tax reduces their cash, helping my rank. I'm cash leader. Vote yes? Tax hurts them more. But I can't sell. Vote yes helps me relatively. Actually veto not needed since I can just vote yes.\n\nVote yes: yes=2, others? Either way pass uncertain. Yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767764,
+    "id": "20261116023558412b3481dc9141cd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023558412b3481dc9141cd",
+    "usage": {
+      "completion_tokens": 184,
+      "completion_tokens_details": {
+        "reasoning_tokens": 131
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1575
+    }
+  }
+}

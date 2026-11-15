@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.031,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"EV 3 товара против 2–3 у produce, риск только потерей товара\"}",
+          "reasoning_content": "Shuttle gives 4 goods, 25% confiscation. Produce gives 3 goods. I'm richest, president. Bid is round 4 only. Shuttle: 4 vs 3, worth it (25% risk of losing 4 goods vs +1 gain). EV: produce 3; shuttle 0.75*4=3. Shuttle slightly better but risk. Grey goods confiscation only, no fine. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766554,
+    "id": "20261116021550f2d3c0e4fc7b486b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021550f2d3c0e4fc7b486b",
+    "usage": {
+      "completion_tokens": 118,
+      "completion_tokens_details": {
+        "reasoning_tokens": 90
+      },
+      "prompt_tokens": 1522,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1640
+    }
+  }
+}

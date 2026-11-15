@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.998,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 8 списывает непогашенные promissory — у меня их нет, а у соперников при нулевом cash они могут быть, что ослабит их.\"}",
+          "reasoning_content": "Card 8 wipes promissory notes — nobody has any (round 1, cash 0). Vote yes, harmless. Or maybe someone used sell_credit? sold_counter 0, cash 0 — could have promissory hidden. Selling on credit round1 possible? Market already happened before law? Phase order market then action then law. sold_counter=0 but buy could reduce... uncertain. Card 8 hurts anyone with promissory; my own unknown. If I sold on credit, I'd know — I didn't (assume). Others cash 0, maybe they sold credit. Vote yes could hurt rivals. Do it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766483,
+    "id": "202611160214395eaf30efd259474e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160214395eaf30efd259474e",
+    "usage": {
+      "completion_tokens": 181,
+      "completion_tokens_details": {
+        "reasoning_tokens": 130
+      },
+      "prompt_tokens": 1380,
+      "prompt_tokens_details": {
+        "cached_tokens": 1152
+      },
+      "total_tokens": 1561
+    }
+  }
+}

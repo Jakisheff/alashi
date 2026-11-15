@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.943,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Повышение цен выгодно для моих будущих продаж в следующих раундах\"}",
+          "reasoning_content": "Law 7: prices +2 — good for sellers. I have 0 goods but can produce later rounds (boom applies next market). Round 1 prices +2 helps everyone sell; rivals have goods now. Net: voting yes helps them sell at high price. But I'm president, can veto. +2 prices benefit me later rounds too. But rivals sell 2 goods each now at ~+2. Actually helps me more across 6 rounds? Hard to say; I'd vote yes — higher prices generally good, and majority may pass anyway. Keep it simple: vote_yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766929,
+    "id": "20261116022202ffd75d863e814c5f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022202ffd75d863e814c5f",
+    "usage": {
+      "completion_tokens": 148,
+      "completion_tokens_details": {
+        "reasoning_tokens": 120
+      },
+      "prompt_tokens": 1381,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1529
+    }
+  }
+}

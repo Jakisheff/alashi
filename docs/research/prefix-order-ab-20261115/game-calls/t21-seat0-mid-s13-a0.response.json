@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.01,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":18000000,\"reason\":\"Ожидаемый доход лицензии ~40 alashi при доходе сверх доли — ставка 18 alashi даёт положительное матожидание при разумной вероятности победы\"}",
+          "reasoning_content": "License income 20-60 alashi. My cash 27.5. Bid maybe 15-20 alashi. Rivals similar. Expected value 40, but only surplus matters. Bid ~18 alashi (18M? amounts in units — cash 27,500,000 units = 27.5 alashi). Bid 18000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767292,
+    "id": "20261116022808964f457e5d154e5d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022808964f457e5d154e5d",
+    "usage": {
+      "completion_tokens": 129,
+      "completion_tokens_details": {
+        "reasoning_tokens": 74
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1650
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.133,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемо ~2,25 товара против 2 у produce — выше выгода\"}",
+          "reasoning_content": "Produce gives 2 goods; shuttle gives 3 with 25% confiscation risk — expected 2.25 goods. Cash 26.25. Shuttle slightly better EV.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766841,
+    "id": "20261116022038c16047d52eaa479c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022038c16047d52eaa479c",
+    "usage": {
+      "completion_tokens": 67,
+      "completion_tokens_details": {
+        "reasoning_tokens": 37
+      },
+      "prompt_tokens": 1520,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1587
+    }
+  }
+}

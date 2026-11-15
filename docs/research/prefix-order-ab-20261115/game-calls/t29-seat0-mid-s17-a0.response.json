@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.23,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Финальный раунд, налога нет — продаю весь товар по верхней лестнице цен.\"}",
+          "reasoning_content": "Round 6 market. Sell 3 at 12,10,9 = 31. No tax. Sell straight.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767612,
+    "id": "20261116023330784455e5da664862",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023330784455e5da664862",
+    "usage": {
+      "completion_tokens": 60,
+      "completion_tokens_details": {
+        "reasoning_tokens": 25
+      },
+      "prompt_tokens": 1427,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1487
+    }
+  }
+}

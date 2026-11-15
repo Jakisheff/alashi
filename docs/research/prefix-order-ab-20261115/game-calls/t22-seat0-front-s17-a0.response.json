@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.5,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Матожидание 2,25 товара против 2 у produce, риск оправдан\"}",
+          "reasoning_content": "Round 5, cash 14.175M. Shuttle gives 3 goods, ~25% confiscation. Donkey costs 1. Produce gives 2 free. Shuttle EV vs produce: +1 extra good with 25% risk. Goods sell ~10-12 alashi... actually prices ladder down. Extra good worth maybe ~7-10 alashi, confiscation loses 3 goods at 25% → EV shuttle = 0.75*3=2.25 goods vs 2 produce. Extra 0.25 goods worth ~2 alashi. Shuttle better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767353,
+    "id": "20261116022909d6bd7de243814ec2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022909d6bd7de243814ec2",
+    "usage": {
+      "completion_tokens": 149,
+      "completion_tokens_details": {
+        "reasoning_tokens": 120
+      },
+      "prompt_tokens": 1520,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1669
+    }
+  }
+}

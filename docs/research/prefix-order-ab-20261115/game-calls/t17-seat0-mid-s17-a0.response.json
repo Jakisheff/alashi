@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.725,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемая ценность ~2,25 товара существенно выше альтернатив, а лидерство во влиянии и так безопасно.\"}",
+          "reasoning_content": "I'm president, cash 16.175M, influence 2. Shuttle gives 3 goods with 25% confiscation risk (worth it for expected value). Or bribe 10M for +2 influence to secure presidency and influence bonus. Influence matters for the 5% bank bonus and vote weight. I have 4 votes vs 3 vs 1 already. Bribing 10M for +2 influence → 6 votes, secures max influence bonus (5% of bank). But bank size unknown; 5% bank could be large. Cost 10M goes to opponent though.\n\nShuttle: 3 goods worth ~9-12 alashi with ~25% loss risk. Also last round market in round 6.\n\nBribe 5M = +1 influence, ties with... I already lead. The 5% bank bonus for max influence: keep lead. I have 2 vs 1,1 — safe. So shuttle is good EV: 0.75*3 goods ≈ 2.25 goods * ~8-10 = ~20M value. Do shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767199,
+    "id": "20261116022631ab30bbdbf9544b13",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022631ab30bbdbf9544b13",
+    "usage": {
+      "completion_tokens": 270,
+      "completion_tokens_details": {
+        "reasoning_tokens": 231
+      },
+      "prompt_tokens": 1520,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1790
+    }
+  }
+}

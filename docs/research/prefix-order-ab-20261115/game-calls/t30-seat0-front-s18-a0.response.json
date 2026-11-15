@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.23,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Финальный раунд: продать весь товар по высокой цене, кредит не успеет погаситься.\"}",
+          "reasoning_content": "Round 6 final market, sell all 2 units. Price 12,12 → 24 alashi minus 10% tax. Sell directly (credit won't pay out).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767641,
+    "id": "202611160233596374bf8fd41d4574",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160233596374bf8fd41d4574",
+    "usage": {
+      "completion_tokens": 75,
+      "completion_tokens_details": {
+        "reasoning_tokens": 37
+      },
+      "prompt_tokens": 1429,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1504
+    }
+  }
+}

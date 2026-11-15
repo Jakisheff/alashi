@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.734,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 0 ничего не делает, исход не имеет значения\"}",
+          "reasoning_content": "Law card 0 (nothing). Round 6 final market next? Round 6, post_vote already happened? voted all true, card 0 — voting meaningless. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767616,
+    "id": "20261116023331ca2acb21113c48b8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023331ca2acb21113c48b8",
+    "usage": {
+      "completion_tokens": 63,
+      "completion_tokens_details": {
+        "reasoning_tokens": 38
+      },
+      "prompt_tokens": 1393,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1456
+    }
+  }
+}

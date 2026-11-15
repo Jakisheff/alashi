@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.237,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Финальный раунд: кредиты не погашаются, продаю весь товар по максимальной цене 12 без налога.\"}",
+          "reasoning_content": "Round 6, last round. Sell now at top price. I have 3 goods. Price 12, no tax. Sell all 3 → cash. Credit not redeemed after last round, so sell.\n\nsell 3 → 36 alashi minus nothing. Yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767741,
+    "id": "20261116023536e0773f09fa2a4a7a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023536e0773f09fa2a4a7a",
+    "usage": {
+      "completion_tokens": 100,
+      "completion_tokens_details": {
+        "reasoning_tokens": 56
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1528
+    }
+  }
+}

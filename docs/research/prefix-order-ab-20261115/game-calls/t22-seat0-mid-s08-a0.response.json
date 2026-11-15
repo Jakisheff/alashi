@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.614,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Продажа в кредит даёт 1.25x выручку и обходит девальвацию на границе раунда.\"}",
+          "reasoning_content": "Round 3 of 6, cash=0. Sell 2 goods at 12,10 = 22, or sell_credit for 27.5 promissory paid at end of round 3 boundary — devaluation? Promissory added to cash at round boundary, then cash=floor(cash/100)*62 devaluation applies... promissory is added to cash and reset at boundary; devaluation applies to cash at boundary 2+. So credit inflates away? Actually promissory added to cash at boundary after devaluation or before? \"На границе раунундов 2+ cash=floor(cash/100)*62 (hard не девальвируется), promissory прибавляется к cash и обнуляется.\" Order suggests devaluation then promissory added — so credit avoids devaluation, plus 1.25x. Sell credit 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767305,
+    "id": "2026111602281970854d0d6c944c95",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602281970854d0d6c944c95",
+    "usage": {
+      "completion_tokens": 229,
+      "completion_tokens_details": {
+        "reasoning_tokens": 184
+      },
+      "prompt_tokens": 1423,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1652
+    }
+  }
+}

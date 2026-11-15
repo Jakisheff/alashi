@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.761,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Наличные обесценятся на границе раунда, а sell_credit даёт 1.25x без девальвации\"}",
+          "reasoning_content": "Round 3 market, later rounds matter. Sell now for cash (safe). Prices start at 12. Sell 3 units: 12+10+9=31 alashi. But tax 0. Selling now gives cash; but cash devaluation at border of round 4? Devaluation applies to cash at round 2+ borders — cash=floor(cash/100)*62. So holding cash through border loses 38%! Better sell_credit: promissory added at border of NEXT round without devaluation, ×1.25. Yes, sell_credit better.\n\nSell 3 credit: 31*1.25=38.75 promissory.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767370,
+    "id": "20261116022925b1ac55f8c04947f8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022925b1ac55f8c04947f8",
+    "usage": {
+      "completion_tokens": 182,
+      "completion_tokens_details": {
+        "reasoning_tokens": 137
+      },
+      "prompt_tokens": 1422,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1604
+    }
+  }
+}

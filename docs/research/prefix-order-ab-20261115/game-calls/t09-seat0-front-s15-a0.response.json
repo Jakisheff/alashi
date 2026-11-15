@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.366,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Цена высокая (12) и налога нет, продаю весь товар за наличные.\"}",
+          "reasoning_content": "Round 5, sell 2 goods at price 12, tax 0. Sell.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766883,
+    "id": "20261116022120e892c7cdb45d479a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022120e892c7cdb45d479a",
+    "usage": {
+      "completion_tokens": 52,
+      "completion_tokens_details": {
+        "reasoning_tokens": 19
+      },
+      "prompt_tokens": 1427,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1479
+    }
+  }
+}

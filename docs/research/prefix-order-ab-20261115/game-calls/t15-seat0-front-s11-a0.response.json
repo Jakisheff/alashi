@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.986,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":20000000,\"reason\":\"Ожидаемый доход лицензии 20–60 alashi оправдывает ставку 20 при лидерстве по кэшу\"}",
+          "reasoning_content": "Round 4, license auction. I have 38.4 cash. Bid reasonable amount, e.g., 15 alashi? Expected license income 20-60, mean 40, split over shares... license income paid extra to holder. Bid ~20.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767087,
+    "id": "202611160224440d0313b3f1ac4843",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160224440d0313b3f1ac4843",
+    "usage": {
+      "completion_tokens": 98,
+      "completion_tokens_details": {
+        "reasoning_tokens": 54
+      },
+      "prompt_tokens": 1522,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1620
+    }
+  }
+}

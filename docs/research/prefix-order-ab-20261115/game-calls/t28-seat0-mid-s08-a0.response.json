@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.978,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Наличных нет — девальвации не избежать, а credit даёт 1.25× выручку при погашении после девальвации\"}",
+          "reasoning_content": "Sell 3 units at price 12 = 36 alashi. Cash 0, no devaluation risk this round... devaluation happens at round borders 2+. Cash becomes promissory? sell_credit gives 36*1.25=45 promissory added at next round border — but my cash is 0, so no devaluation loss. sell_credit better: 45 vs 36. Promissory added to cash then floor(cash/100)*62? Wait: at border cash=floor(cash/100)*62, promissory added to cash then reset. So promissory paid after devaluation, full value. So sell_credit yields 45. Do it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767531,
+    "id": "202611160232068ffad884453b450b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160232068ffad884453b450b",
+    "usage": {
+      "completion_tokens": 191,
+      "completion_tokens_details": {
+        "reasoning_tokens": 143
+      },
+      "prompt_tokens": 1423,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1614
+    }
+  }
+}

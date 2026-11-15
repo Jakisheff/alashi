@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.594,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нулевой кэш и товар: бесплатное производство 2 единиц надёжнее рискованного шаттла.\"}",
+          "reasoning_content": "I have 0 cash, 0 goods. Produce gives 2 goods free. Shuttle risky, 3 goods, but 25% confiscation; produce is free. As president? Influence tie, I'm president. Vote weight 3 vs 3 vs 1 — wait, others have weight 3 too; I'm president via tie_order. Bribe needs cash (0). Best: produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767409,
+    "id": "2026111602300617f391c913c54f96",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602300617f391c913c54f96",
+    "usage": {
+      "completion_tokens": 120,
+      "completion_tokens_details": {
+        "reasoning_tokens": 83
+      },
+      "prompt_tokens": 1515,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1635
+    }
+  }
+}

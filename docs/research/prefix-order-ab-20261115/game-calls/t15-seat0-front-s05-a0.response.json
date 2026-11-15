@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.181,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемая ценность 3 товаров выше, чем 2 от produce, даже с риском конфискации ~25%.\"}",
+          "reasoning_content": "Shuttle gives 3 goods, 25% confiscation risk. Cash 24. Produce gives 2 safe. Value per goods ~ sale prices low (sold_counter=7, price ladder index 7 → 4). Shuttle: 3 goods × ~4 = 12 minus risk ~3. Produce: 2×4=8. Shuttle better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767054,
+    "id": "202611160224090bbbd59f042b4307",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160224090bbbd59f042b4307",
+    "usage": {
+      "completion_tokens": 115,
+      "completion_tokens_details": {
+        "reasoning_tokens": 74
+      },
+      "prompt_tokens": 1517,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1632
+    }
+  }
+}

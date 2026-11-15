@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.262,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Шаттл даёт 3 товара вместо 2, ожидаемая выгода ~+1 товар (~8 alashi) перекрывает 25% риск конфискации.\"}",
+          "reasoning_content": "Round 5, I'm president, produce gives 2 goods. No goods. Shuttle 3 goods risk 25% confiscation. Produce is safe: 2 goods, worth ~7-8 each after tax... prices ladder start 12. Shuttle gives 3, expected ~2.25. Shuttle better expected value. Confiscation ~25%: EV 2.25 vs 2 goods. Prices ~12 → shuttle +1 goods ≈ +8 alashi net. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767353,
+    "id": "20261116022910f902e368dad3431a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022910f902e368dad3431a",
+    "usage": {
+      "completion_tokens": 153,
+      "completion_tokens_details": {
+        "reasoning_tokens": 103
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1674
+    }
+  }
+}

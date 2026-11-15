@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.633,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара для продажи, а покупка в последнем раунде лишь сжигает деньги\"}",
+          "reasoning_content": "Round 6, last round. I have 0 goods, cash 84568. Nothing to sell. Buy? Buying costs money, moves counter back — no benefit since I won't sell. Sell_credit after last round not redeemed. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767553,
+    "id": "202611160232295d87bf1038e24c0b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160232295d87bf1038e24c0b",
+    "usage": {
+      "completion_tokens": 80,
+      "completion_tokens_details": {
+        "reasoning_tokens": 51
+      },
+      "prompt_tokens": 1427,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1507
+    }
+  }
+}

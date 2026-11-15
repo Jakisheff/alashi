@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.441,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нулевые деньги и товар — бесплатное производство 2 единиц даёт максимум ценности.\"}",
+          "reasoning_content": "I have cash=0, no goods. Produce gives 2 goods free. Do it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766744,
+    "id": "20261116021902258fd1089f2a42cb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021902258fd1089f2a42cb",
+    "usage": {
+      "completion_tokens": 49,
+      "completion_tokens_details": {
+        "reasoning_tokens": 19
+      },
+      "prompt_tokens": 1515,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1564
+    }
+  }
+}

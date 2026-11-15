@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.218,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон 6 снизит цены на 6, что вредит моим продажам в следующем раунде.\"}",
+          "reasoning_content": "Law 6: prices -2 next market. Bad for sellers. Vote no. I'm not president, no veto (veto_pending true but president is idx2). vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767123,
+    "id": "20261116022520cb5380624f564aa3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022520cb5380624f564aa3",
+    "usage": {
+      "completion_tokens": 74,
+      "completion_tokens_details": {
+        "reasoning_tokens": 38
+      },
+      "prompt_tokens": 1389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1463
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.302,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Налог 20% бьёт по продажам богатых соперников, а я беден и без товара, к тому же налог пополняет банк.\"}",
+          "reasoning_content": "Law card 2: tax 20%. I'm richest? cash: me 15.5, others 37.5, 33.5 — I'm poorest. Tax hurts sellers with revenue; tax applies to sales revenue. Others will sell more. Also tax collected? Tax reduces revenue of sellers; I have no goods. Tax hurts rivals more. But tax goes... probably to bank, increasing payout pool? Commission is 5% of bank; bank bigger = more payout? Remaining bank split by weights. Tax likely increases bank, benefiting all. I have influence 2, weights 4v3v3, others voted (unknown). I'm poorest so card 2 tax 20% taxes their sales. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767340,
+    "id": "20261116022854c105a46bbd074d23",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022854c105a46bbd074d23",
+    "usage": {
+      "completion_tokens": 193,
+      "completion_tokens_details": {
+        "reasoning_tokens": 150
+      },
+      "prompt_tokens": 1389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1582
+    }
+  }
+}

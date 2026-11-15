@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.482,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Налог бьёт по богатым соперникам, у меня товаров нет — мне это выгодно относительно.\"}",
+          "reasoning_content": "Law card 1: tax 10%. I'm poorest, likely others vote no. Tax hits sellers; I have no goods. With tax, others pay later. I'm not president. Tax 10% helps me relatively. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767813,
+    "id": "20261116023650d14aa15448d54645",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023650d14aa15448d54645",
+    "usage": {
+      "completion_tokens": 83,
+      "completion_tokens_details": {
+        "reasoning_tokens": 50
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1473
+    }
+  }
+}

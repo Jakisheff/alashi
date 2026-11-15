@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.899,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Последний раунд: продаю весь товар по высоким ценам, credit не погасится.\"}",
+          "reasoning_content": "Round 6, last round. Sell all 3 at prices 12,10,9 = 31. sell_credit worthless after last round. Sell.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766686,
+    "id": "202611160218041147ca59e8b44969",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160218041147ca59e8b44969",
+    "usage": {
+      "completion_tokens": 65,
+      "completion_tokens_details": {
+        "reasoning_tokens": 32
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1493
+    }
+  }
+}

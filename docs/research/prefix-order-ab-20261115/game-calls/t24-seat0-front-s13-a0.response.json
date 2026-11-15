@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.453,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":20000000,\"reason\":\"Лицензия стоит в среднем ~40 alashi сверх доли — ставка 20 alashi положительна по EV и сгорает только при победе.\"}",
+          "reasoning_content": "Round 4, license auction. Bid some amount. Cash ~51.9. License income 20-60, payout supra share. Bid maybe 25M? Bid must be in minimal units. Bid 25000000.\n\nExpected value: license income uniform 20-60, mean 40, paid supra share — worth bidding up to ~30? But money kept also counts toward final payout (weighted shares though). Keep cash matters. Bid 20M maybe. I'll bid 20000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767408,
+    "id": "202611160230030cbc2a702ab447d7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160230030cbc2a702ab447d7",
+    "usage": {
+      "completion_tokens": 154,
+      "completion_tokens_details": {
+        "reasoning_tokens": 104
+      },
+      "prompt_tokens": 1520,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1674
+    }
+  }
+}

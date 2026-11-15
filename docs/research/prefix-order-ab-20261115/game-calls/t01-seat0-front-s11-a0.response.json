@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.016,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Кредитная продажа даёт 1.25x и возвращает деньги после девальвации, избегая одного цикла обесценивания.\"}",
+          "reasoning_content": "Round 4 market. Prices: ladder from sold_counter=2: price 9. Tax 0. Sell 3 units at 9 each = 27. Sell now better; credit returns at next round boundary (round 5) — 1.25x returns, but devaluation floor(cash/100)*62 applies... promissory added to cash after devaluation? \"at round boundaries 2+ cash=floor(cash/100)*62, promissory is added to cash and reset to zero\" — promissory added after devaluation, so credit is better: 27*1.25=33.75 vs 27. But devaluation after round 5 also hits that cash at end... selling now gives cash that gets devalued twice (boundary 4 and 5?). Current boundary already passed. Cash now will be devalued at boundary 4 (end of this round) and 5 and 6? Rounds 6 rounds, devaluation at boundaries 2..6. Credit returns at boundary next round (5), avoiding one devaluation round. So sell_credit all 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766526,
+    "id": "20261116021520359de1af18614f70",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021520359de1af18614f70",
+    "usage": {
+      "completion_tokens": 280,
+      "completion_tokens_details": {
+        "reasoning_tokens": 233
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1708
+    }
+  }
+}

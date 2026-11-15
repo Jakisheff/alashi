@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.759,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Выручка 24 превратится в 30 promissory, добавляемых после девальвации, что почти вдвое лучше прямой продажи.\"}",
+          "reasoning_content": "Cash 0, goods 3. Sell 3 units: prices from counter 2: 9,8,7 = 24. Or sell_credit 1.25x=30 but arrives next round boundary and may be wiped (card 8) — round 2 boundary devaluation happens anyway; promissory added after devaluation? \"На границе раунндов 2+ cash=floor(cash/100)*62, promissory прибавляется к cash\". So sell_credit converts 24→30 alashi added after devaluation — better! 30 > 24*0.62=14.9. But risk of card 8 wipes promissory. Card unknown yet. Also tax next round? Tax withheld at sale. Moderate. I'd sell_credit 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766493,
+    "id": "2026111602144986c391d764954ace",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602144986c391d764954ace",
+    "usage": {
+      "completion_tokens": 215,
+      "completion_tokens_details": {
+        "reasoning_tokens": 167
+      },
+      "prompt_tokens": 1420,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1635
+    }
+  }
+}

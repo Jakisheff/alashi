@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.065,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":27000000,\"reason\":\"Ожидаемый доход лицензии ~40 alashi; в слепом аукционе с тремя равными игроками ставка ~2/3 ценности максимизирует прибыль.\"}",
+          "reasoning_content": "Round 4 auction available. License income 20-60 alashi, paid above share. Bid? Rivals likely bid too. Blind auction; reasonable bid maybe 30 alashi (30,000,000). Cash ~32.4. If win at 30, expected income ~40 → +10. Rivals also have cash ~32. Risk. Bid 25M seems balanced.\n\nAlternative: shuttle for goods. Goods=0, so this market in round 4 we already... sold_counter 9 means others sold. Next market round 5,6 remain. Shuttle gives 3 goods ~ price ladder: counter 9, prices [.. ] price 3 at counter 9. ~3*4=12 minus tax. Bid competes with that... but auction is separate primary action only this round; shuttle gives goods for future markets.\n\nExpected license profit: value ~40 alashi uniform 20-60. Second-price? No, highest bid wins, winner pays. With three symmetric bidders, bid ~expected value ~40? But paying full bid. Profit if win: V - B. Risk-neutral bid in first-price with 3 bidders ~ V*(2/3)≈27. Bid 27M.\n\nActually cash payment goes to bank, reducing my share but increasing others'? Bid 27M for expected 40M gain — good. I'll bid 27M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767189,
+    "id": "202611160226181a34d445128e4b49",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160226181a34d445128e4b49",
+    "usage": {
+      "completion_tokens": 343,
+      "completion_tokens_details": {
+        "reasoning_tokens": 288
+      },
+      "prompt_tokens": 1523,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1866
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.771,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Без денег и льгот shuttle даёт ожидаемые ~2.25 товара против 2 у produce\"}",
+          "reasoning_content": "Round 1, no cash, no goods. Shuttle gives 3 goods, 25% confiscation risk, no cash for tariff anyway. Expected 2.25 goods vs produce 2. Shuttle better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766758,
+    "id": "20261116021914543122838d2b4300",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021914543122838d2b4300",
+    "usage": {
+      "completion_tokens": 74,
+      "completion_tokens_details": {
+        "reasoning_tokens": 43
+      },
+      "prompt_tokens": 1511,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1585
+    }
+  }
+}

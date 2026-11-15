@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.08,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Голосование уже учтено (post_vote), моё действие фактически не влияет; выбираю нейтральное.\"}",
+          "reasoning_content": "Card 6: prices -2 next market. Vote already happened (post_vote, voted all true). We're in law phase... but all voted. We must still act? Phase law, allowed actions vote. Vote seems counted already; our choice likely irrelevant? Probably abstain is safest — but vote_weight counted regardless of choice? Just vote_no? If already voted, choice may not matter. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767558,
+    "id": "20261116023235904c2af6ef8c4789",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023235904c2af6ef8c4789",
+    "usage": {
+      "completion_tokens": 122,
+      "completion_tokens_details": {
+        "reasoning_tokens": 84
+      },
+      "prompt_tokens": 1392,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1514
+    }
+  }
+}

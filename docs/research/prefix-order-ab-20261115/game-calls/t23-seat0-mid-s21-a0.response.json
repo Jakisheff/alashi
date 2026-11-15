@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.4,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Раунд последний, рынка больше нет — закон о +2 к ценам ничего не меняет.\"}",
+          "reasoning_content": "Law card 7: prices +2 next market — but round 6 is last, no next market? Round 6 market already happened (sold_counter=6, we're in law phase). So card 7 has no effect. Pass or abstain; law is meaningless. Vote yes doesn't matter. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767427,
+    "id": "20261116023023af393e60530a4a7f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023023af393e60530a4a7f",
+    "usage": {
+      "completion_tokens": 100,
+      "completion_tokens_details": {
+        "reasoning_tokens": 67
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1490
+    }
+  }
+}

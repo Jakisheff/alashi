@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.885,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Налог бьёт по более богатым соперникам сильнее, чем по мне, а моего вето не требуется.\"}",
+          "reasoning_content": "Law card 1 = tax 10%. I'm not the richest. Tax hurts richer players more. Vote yes. voted[2]=true but weights 1,1,1; I'm president with veto not needed. Tax 10% on revenue — actually hurts me too when selling, but hurts richer rivals more relatively. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766562,
+    "id": "2026111602155890845c9f86544b07",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602155890845c9f86544b07",
+    "usage": {
+      "completion_tokens": 106,
+      "completion_tokens_details": {
+        "reasoning_tokens": 70
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1496
+    }
+  }
+}

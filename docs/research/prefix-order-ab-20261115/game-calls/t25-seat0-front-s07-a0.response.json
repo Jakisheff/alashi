@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.671,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта даёт +1 влияния самому бедному — это я, и влияние усилит мой голос и бонус.\"}",
+          "reasoning_content": "Card 4: +1 influence to poorest. I'm poorest (cash 0). I gain influence. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767423,
+    "id": "20261116023021d9c6404a2b504bac",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023021d9c6404a2b504bac",
+    "usage": {
+      "completion_tokens": 60,
+      "completion_tokens_details": {
+        "reasoning_tokens": 25
+      },
+      "prompt_tokens": 1385,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1445
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.003,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":12000000,\"reason\":\"Ожидаемый доход лицензии 20–60 alashi заметно превышает разумную ставку 12 alashi, а банк не даёт rivals выгоды.\"}",
+          "reasoning_content": "Round 4 action, bid available. License income 20-60 alashi, paid above share. Cash 27.5. Bid ~10-15? Expected value: license 20-60, mean 40. Bidding 15 alashi seems reasonable if others bid too. I'm president with weight 4. Also could bribe to increase influence for influence bonus. But license likely worth it. Bid 12000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767333,
+    "id": "20261116022849cd2a0c2b1c15423b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022849cd2a0c2b1c15423b",
+    "usage": {
+      "completion_tokens": 141,
+      "completion_tokens_details": {
+        "reasoning_tokens": 90
+      },
+      "prompt_tokens": 1520,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1661
+    }
+  }
+}

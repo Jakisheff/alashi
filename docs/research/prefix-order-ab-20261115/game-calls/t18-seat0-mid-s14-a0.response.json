@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.937,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Производство даёт 2 товара без риска, что лучше шаттла с 25% конфискации.\"}",
+          "reasoning_content": "Round 5, produce gives 2 goods, shuttle gives 3 with 25% confiscation risk. Produce is safe: 2 goods worth ~10 each = 20 alashi. Shuttle EV = 3*0.75=2.25 goods. Produce better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767201,
+    "id": "202611160226376947b2751b9d4a9a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160226376947b2751b9d4a9a",
+    "usage": {
+      "completion_tokens": 93,
+      "completion_tokens_details": {
+        "reasoning_tokens": 57
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1614
+    }
+  }
+}

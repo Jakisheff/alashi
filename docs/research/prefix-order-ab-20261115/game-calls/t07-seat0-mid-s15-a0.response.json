@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.795,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон о снижении цен вредит моим продажам на следующем рынке.\"}",
+          "reasoning_content": "Law card 6: prices -2 next market. I'm president, sold_counter=0. Cheaper prices hurt me as seller. Vote no; others likely... P2 voted already (unknown how). I have weight 2+? vote_weight 2. I'm not richest. Cheap prices hurt me. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766789,
+    "id": "20261116021946779f9e0a60a14220",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021946779f9e0a60a14220",
+    "usage": {
+      "completion_tokens": 95,
+      "completion_tokens_details": {
+        "reasoning_tokens": 67
+      },
+      "prompt_tokens": 1389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1484
+    }
+  }
+}

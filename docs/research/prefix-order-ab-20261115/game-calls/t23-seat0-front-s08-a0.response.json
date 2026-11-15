@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.784,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара для продажи, покупать нецелесообразно.\"}",
+          "reasoning_content": "Round 3 market, cash ~14.88, goods 0. Can't sell. Buying? cash 0? Cash 14.88 but buying moves counter back—useless. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767376,
+    "id": "20261116022933c68098f881434896",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022933c68098f881434896",
+    "usage": {
+      "completion_tokens": 63,
+      "completion_tokens_details": {
+        "reasoning_tokens": 41
+      },
+      "prompt_tokens": 1425,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1488
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.839,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Субсидия даёт всем +1 товар бесплатно — полезно для моих будущих продаж\"}",
+          "reasoning_content": "Law card 3: subsidy_goods=1. Benefit to me — free goods. Vote yes. But phase shows post_vote? voted all true... still answer a vote. vote_yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767023,
+    "id": "202611160223391921a586923f434f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160223391921a586923f434f",
+    "usage": {
+      "completion_tokens": 68,
+      "completion_tokens_details": {
+        "reasoning_tokens": 38
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1458
+    }
+  }
+}

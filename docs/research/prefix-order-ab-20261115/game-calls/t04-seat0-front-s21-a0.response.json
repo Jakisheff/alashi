@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.19,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Шаттл с риском конфискации даёт ту же ожидаемую ценность, что и бесплатное производство — беру надёжные 2 товара под высокие цены\"}",
+          "reasoning_content": "Round 6, last round. Action: shuttle gives 3 goods, ~25% confiscation. Price shift -2, ladder price ~ from sold_counter 4: next price ~7-2=5. Shuttle: 3 goods worth ~5+4+3=12, expected 0.75*12=9, free. Produce gives 2 goods ~5+4=9 no risk. Shuttle slightly better but confiscation. 0.75*(5+4+3)=9 equals produce 9. Border duty? No favored border info. Produce safer.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766744,
+    "id": "20261116021900eef546f88fd1482a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021900eef546f88fd1482a",
+    "usage": {
+      "completion_tokens": 168,
+      "completion_tokens_details": {
+        "reasoning_tokens": 120
+      },
+      "prompt_tokens": 1522,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1690
+    }
+  }
+}

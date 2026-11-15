@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.547,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Налог 10% затрагивает только выручку будущих рынков, которых больше нет, а я богатейший — блокировать бессмысленно, но и поддерживать незачем.\"}",
+          "reasoning_content": "Law card 1 = tax 10%. I'm richest (49.8M cash). Tax hurts me — but post_vote? phase says law, decision_stage post_vote... voted all true already. Hmm, but we must still choose action. Card 1 tax 10% on my future sales — no more market rounds? Round 6, law phase after market, so tax won't affect markets anymore. It affects nothing (tax on revenue only). So abstain/pass. Vote abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766805,
+    "id": "20261116022000c39b05c51164421a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022000c39b05c51164421a",
+    "usage": {
+      "completion_tokens": 156,
+      "completion_tokens_details": {
+        "reasoning_tokens": 102
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1547
+    }
+  }
+}

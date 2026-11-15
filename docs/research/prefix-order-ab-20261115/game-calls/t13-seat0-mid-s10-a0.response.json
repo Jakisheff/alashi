@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 1.923,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара для продажи.\"}",
+          "reasoning_content": "No goods, pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766979,
+    "id": "20261116022258f95a0b17dbd346d5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022258f95a0b17dbd346d5",
+    "usage": {
+      "completion_tokens": 20,
+      "completion_tokens_details": {
+        "reasoning_tokens": 5
+      },
+      "prompt_tokens": 1430,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1450
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.258,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% бьёт по мне как богатейшему, а моего веса 4 хватает для отклонения без вето.\"}",
+          "reasoning_content": "Law card 1: tax 10%. I'm richest (49.9M). Tax hurts my sales. Vote no. Vote weight 4 vs yes max 2 — no wins anyway, no need veto. But no wins, tax fails.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766799,
+    "id": "20261116021956b545869b25f945a7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021956b545869b25f945a7",
+    "usage": {
+      "completion_tokens": 91,
+      "completion_tokens_details": {
+        "reasoning_tokens": 51
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1481
+    }
+  }
+}

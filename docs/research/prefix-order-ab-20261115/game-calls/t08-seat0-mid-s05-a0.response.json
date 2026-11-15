@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.079,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Нет денег для взяток, а ожидающий доход шаттла (~2.25 товара) выше, чем у produce.\"}",
+          "reasoning_content": "No cash, so bribe/roof/bid impossible. Produce gives 2 goods. Shuttle gives 3 with 25% risk, no cash to pay tribute. Expected shuttle 2.25 > 2. But devaluation on round boundary: cash only. Shuttle better expected.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766818,
+    "id": "20261116022016656a9be486b14ba5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022016656a9be486b14ba5",
+    "usage": {
+      "completion_tokens": 96,
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      },
+      "prompt_tokens": 1515,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1611
+    }
+  }
+}

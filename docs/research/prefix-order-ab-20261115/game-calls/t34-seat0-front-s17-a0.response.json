@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.05,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"EV ~2.25 товара против 2 у produce, риск оправдан\"}",
+          "reasoning_content": "Round 5, no goods, low cash. Need goods to sell. Produce gives 2, donkey 1 for 1 alashi, shuttle 3 with 25% confiscation. Shuttle EV = 2.25 goods vs 2 free. Produce safer, but shuttle gives more. 25% risk of losing all. EV shuttle 2.25 > 2. Choose shuttle? With tariff free border, no. I'll shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767812,
+    "id": "20261116023648ccab41df578140c5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023648ccab41df578140c5",
+    "usage": {
+      "completion_tokens": 120,
+      "completion_tokens_details": {
+        "reasoning_tokens": 93
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1641
+    }
+  }
+}

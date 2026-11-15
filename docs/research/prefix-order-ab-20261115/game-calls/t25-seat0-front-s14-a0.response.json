@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.305,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 0 (пусто) не влияет на исход, ход не имеет значения.\"}",
+          "reasoning_content": "Law card 0 = пусто. Президент, карта пустая — ничего не влияет. Vote yes/no same. Abstain fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767454,
+    "id": "202611160230512625a2aee5744900",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160230512625a2aee5744900",
+    "usage": {
+      "completion_tokens": 63,
+      "completion_tokens_details": {
+        "reasoning_tokens": 31
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1453
+    }
+  }
+}

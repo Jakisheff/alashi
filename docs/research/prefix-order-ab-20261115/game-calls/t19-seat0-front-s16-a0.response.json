@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.117,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Бум даёт +2 к цене, 3 товара через shuttle дают заметно больше ожидаемой выручки, чем produce\"}",
+          "reasoning_content": "Round 5 action, no goods. Shuttle gives 3 goods at boom 2, ~25% confiscation risk. Price ladder 12+2=14 each, 3 goods ≈ 42. Produce gives 2 goods ≈ 28. Shuttle EV higher. Shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767232,
+    "id": "20261116022710dc381a16bccd4bb7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022710dc381a16bccd4bb7",
+    "usage": {
+      "completion_tokens": 97,
+      "completion_tokens_details": {
+        "reasoning_tokens": 59
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1618
+    }
+  }
+}

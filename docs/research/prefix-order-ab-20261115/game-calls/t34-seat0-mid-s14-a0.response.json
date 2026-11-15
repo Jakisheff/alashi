@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.155,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Спокойные 2 товара без риска конфискации, влияние президента уже обеспечено\"}",
+          "reasoning_content": "I'm richest. Produce 2 goods, sell later. But influence matters: bribe 5M gives +1 influence. Shuttle gives 3 goods with 25% risk. Expected value of goods: price ladder high (12 first). Goods worth ~10 each. Shuttle 3 goods ~30 vs produce 2 ~20. Risk 25% lose all. EV shuttle ~22.5. Produce safer. Also bribe could boost influence but president already. I'll produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767784,
+    "id": "2026111602362006feb7dde92241a8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602362006feb7dde92241a8",
+    "usage": {
+      "completion_tokens": 127,
+      "completion_tokens_details": {
+        "reasoning_tokens": 99
+      },
+      "prompt_tokens": 1520,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1647
+    }
+  }
+}

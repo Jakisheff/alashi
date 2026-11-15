@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.249,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нет денег и товара — бесплатный produce даст 2 единицы для будущей продажи\"}",
+          "reasoning_content": "No cash, no goods. Produce gives 2 goods.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767789,
+    "id": "2026111602362743b63602aaad4e37",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602362743b63602aaad4e37",
+    "usage": {
+      "completion_tokens": 39,
+      "completion_tokens_details": {
+        "reasoning_tokens": 12
+      },
+      "prompt_tokens": 1517,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1556
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.355,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта +2 к ценам выгодна мне как продавцу, поддерживаю\"}",
+          "reasoning_content": "Law card 7: prices +2 next market. Beneficial. It apparently passed already (post_vote stage)? Stage is post_vote, all voted. So voting is moot? Actions available still vote... but post_vote means my vote already cast? Odd. Best: pass? Abstain? Card 7 helps me sell—yes, but vote already recorded. Use vote_yes anyway harmless? Better \"pass\".",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767304,
+    "id": "20261116022819915d6d5159234694",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022819915d6d5159234694",
+    "usage": {
+      "completion_tokens": 111,
+      "completion_tokens_details": {
+        "reasoning_tokens": 84
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1502
+    }
+  }
+}

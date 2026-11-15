@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.53,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Закон даёт +1 влияния богатейшему — это я, прибыльно, вето не нужно.\"}",
+          "reasoning_content": "Card 5: +1 influence to richest. I'm richest (26.25M). Already voted? decision_stage post_vote, voted all true. President can still veto. Law benefits me — no veto. Actions left: veto or pass... allowed actions listed are vote options; but stage post_vote — voting done. Is president, can veto before count? post_vote means voting done. Card benefits me, so pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766679,
+    "id": "20261116021755bf3a3b5f60194d05",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021755bf3a3b5f60194d05",
+    "usage": {
+      "completion_tokens": 119,
+      "completion_tokens_details": {
+        "reasoning_tokens": 86
+      },
+      "prompt_tokens": 1389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1508
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.057,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 8 списывает непогашенные promissory — вероятно вредит соперникам, у меня нет обязательств, а налогов и субсидий закон не даёт.\"}",
+          "reasoning_content": "Card 8 wipes all promissory — but no one has promissory (not displayed, round 1... could have sold credit in market round 1). I have 2 goods, no cash. Card 8 hurts only those with promissory; unknown. I'm president; voting no safe? Passing it hurts opponents if they used sell_credit. Abstain? Vote yes — if opponents sold credit, they lose. But I might have promissory too — I don't know. Likely I didn't sell credit (cash 0). Risky either way; card 8 is generally deflationary, hurts debtors. As president with no cash, vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766833,
+    "id": "20261116022028e7a2671aa4634819",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022028e7a2671aa4634819",
+    "usage": {
+      "completion_tokens": 190,
+      "completion_tokens_details": {
+        "reasoning_tokens": 141
+      },
+      "prompt_tokens": 1381,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1571
+    }
+  }
+}

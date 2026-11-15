@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.338,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 2 товара к следующему рынку, донки дороже\"}",
+          "reasoning_content": "Produce gives 2 goods. Donkey: 1 alashi per good. Better produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767056,
+    "id": "20261116022413372a1599a6dd47f4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022413372a1599a6dd47f4",
+    "usage": {
+      "completion_tokens": 46,
+      "completion_tokens_details": {
+        "reasoning_tokens": 20
+      },
+      "prompt_tokens": 1519,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1565
+    }
+  }
+}

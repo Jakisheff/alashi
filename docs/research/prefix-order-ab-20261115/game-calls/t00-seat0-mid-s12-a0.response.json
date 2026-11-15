@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.551,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Продам весь товар по высоким ценам лестницы сейчас, кредитный риск девальвации не оправдан.\"}",
+          "reasoning_content": "Round 4, last devaluation boundary after round 4? Rounds 6 total; devaluation at borders 2+... Actually \"границе раундов 2+\". sell_credit pays at next border — fine, round 4 sells credit pays at round 5 border with devaluation? Promissory added to cash then cash devalued? Probably devalue applies to cash before? Risky. Just sell now. Price ladder: sold_counter 4, prices [12,10,9,8,...] next price index 4 =7,6,5. 3 units → 7+6+5=18.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766536,
+    "id": "2026111602153218788039bcfb4aaa",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602153218788039bcfb4aaa",
+    "usage": {
+      "completion_tokens": 169,
+      "completion_tokens_details": {
+        "reasoning_tokens": 132
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1597
+    }
+  }
+}

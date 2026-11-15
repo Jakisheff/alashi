@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.482,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bribe\",\"to\":1,\"amount\":5000000,\"reason\":\"Взятка даёт +1 влияния: президентство, вето и бонус 5% банка перевешивают 5M\"}",
+          "reasoning_content": "Cash 24, no goods. Vote weight 3 vs 3 vs1 — influence matters. Bribe 5M for +1 influence could win president and 5% bonus. But president decided at law phase by influence; current influence [1,1,1], tie_order matters. Bribe 5M to someone gives me +1 influence → influence 2, president, veto power, plus 5% bonus at end. Worth it. Bribe to whom? Any to index 1 or 2; bribe transfers money to a rival. To idx2? Either way. Give to idx1 (poorest) — or idx2? Doesn't matter much. Choose to:1, amount 5000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766730,
+    "id": "202611160218452e459496ca214277",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160218452e459496ca214277",
+    "usage": {
+      "completion_tokens": 201,
+      "completion_tokens_details": {
+        "reasoning_tokens": 151
+      },
+      "prompt_tokens": 1517,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1718
+    }
+  }
+}

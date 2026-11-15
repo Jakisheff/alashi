@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.043,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"При ожидаемых 2,25 товара shuttle выгоднее бесплатного produce, а денег на взятки нет.\"}",
+          "reasoning_content": "Cash 0, no goods. Produce gives 2 goods free. Shuttle gives 3+2? boom=2 no. Shuttle 3 goods with 25% confiscation risk, no cash needed. Shuttle expected higher than produce (3 vs 2 with risk). 0.75*3=2.25 > 2. But also risk. Choose shuttle? Also president. I'd take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766927,
+    "id": "20261116022202c9b08d3950d649b2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022202c9b08d3950d649b2",
+    "usage": {
+      "completion_tokens": 117,
+      "completion_tokens_details": {
+        "reasoning_tokens": 84
+      },
+      "prompt_tokens": 1515,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1632
+    }
+  }
+}

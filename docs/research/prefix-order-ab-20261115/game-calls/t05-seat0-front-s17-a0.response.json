@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.609,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон о налоге 20% бьёт по мне как по богатейшему; мой голос с весом 2 блокирует его.\"}",
+          "reasoning_content": "Law card 2: tax 20%. I'm richest. Vote no. If passes, veto — but veto is president option now (до подсчёта). Should I veto? Voting no with weight 2 vs yes needs >2. Faction 2 (idx2) voted already, unknown direction. Safer: vote_no, and if it passes... veto only available before count. I can choose veto instead of vote? Options include veto. But if I vote_no, worst tie 2:2 fails (strict majority needed). If idx2 voted yes: 2 vs 2, fails. So vote_no suffices; veto is also an option but voting no is fine. Actually veto might be safer but costs nothing. Vote_no works: yes needs strictly more than no. Max yes = 1+2=3? weights: 2,1,2. If idx2 yes (2) and idx1... only 3 factions. idx2 voted already. If idx2 yes(2), idx1 no/abstain, me no(2): 2:2 fails. Good.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766777,
+    "id": "2026111602192962105d9bb94244a1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602192962105d9bb94244a1",
+    "usage": {
+      "completion_tokens": 270,
+      "completion_tokens_details": {
+        "reasoning_tokens": 229
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1661
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.079,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Закон даёт +1 влияния богатейшему сопернику, а не мне — налагаю вето.\"}",
+          "reasoning_content": "Card 5: +1 influence to richest. I'm poorest, rivals richer. Others voted already (voted all true—already voted). I'm president, can veto. Vote passed presumably; card 5 helps richest rival. Veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767187,
+    "id": "20261116022622e67a707097eb40ac",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022622e67a707097eb40ac",
+    "usage": {
+      "completion_tokens": 85,
+      "completion_tokens_details": {
+        "reasoning_tokens": 50
+      },
+      "prompt_tokens": 1385,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1470
+    }
+  }
+}

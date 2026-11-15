@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.026,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Продажа в кредит обходит девальвацию на границе раунда: выручка ×1.25 без потерь, тогда как обычная продажа обесценится на 38%\"}",
+          "reasoning_content": "Round 4, sell 3 units at price ladder from counter 4: prices [12,10,9,8,7,6,...] index 4 → 7,6,5 = 18. No tax. Sell cash. sell_credit would give *1.25 but cash devalues at round boundary? Boundary after round 2+; devaluation applies rounds 2+ so round 4→5 boundary also. Promissory avoids devaluation. 18*1.25=22.5 vs 18 floor(cash/100*62)... selling now 46.1+18=64.1 → floor... 64.1M cash, deval: floor(64.1/1)*0.62 = 39.7M vs credit 22.5 promissory + floor(46.1*0.62)=28.5 → 51M. Wait cash in units: 46100000 units = 46.1 alashi. floor(cash/100)*62 means in units of 100 units? cash units are millions-of-thousands... likely cash in \"units\" where 1 alashi = 1,000,000. floor(46100000/100)*62=28,582,000. Yes sell_credit better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766530,
+    "id": "20261116021523081b4dc7dfa44c0f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021523081b4dc7dfa44c0f",
+    "usage": {
+      "completion_tokens": 330,
+      "completion_tokens_details": {
+        "reasoning_tokens": 272
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1758
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.202,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% снизит мою будущую выручку от продаж, а выгоды от него нет.\"}",
+          "reasoning_content": "Law card 1: tax 10%. I have no cash and no goods, tax on revenue hurts. But I plan to sell later... tax hurts my future revenue too. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766648,
+    "id": "20261116021725177311c764494043",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021725177311c764494043",
+    "usage": {
+      "completion_tokens": 74,
+      "completion_tokens_details": {
+        "reasoning_tokens": 39
+      },
+      "prompt_tokens": 1384,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1458
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.639,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 8 списывает чужие непогашенные promissory, у меня их нет — мне выгодно ослабить соперников.\"}",
+          "reasoning_content": "Card 8 cancels all promissory notes. I have none, others may. Vote yes; also no, I'm not affected. Pass yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767702,
+    "id": "202611160235008c6e1fd2134a42e2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160235008c6e1fd2134a42e2",
+    "usage": {
+      "completion_tokens": 74,
+      "completion_tokens_details": {
+        "reasoning_tokens": 32
+      },
+      "prompt_tokens": 1385,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1459
+    }
+  }
+}

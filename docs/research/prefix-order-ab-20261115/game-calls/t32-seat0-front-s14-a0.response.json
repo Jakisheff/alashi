@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.244,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Карта 5 даст влияние богатейшему (фракция 1), усилив соперника — блокирую вето.\"}",
+          "reasoning_content": "Card 5: +1 influence to richest. Richest is idx1 (35.5). That helps idx1. I'm president with veto. I have influence 2, weight 4; others voted already (weights 3 each — they likely voted; voted[1],[2] true). If they both voted yes, yes=6 vs my 4 no → passes, so veto. Vote no + veto to be safe. Veto is safest.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767717,
+    "id": "202611160235120f78005f8a8a4b0f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160235120f78005f8a8a4b0f",
+    "usage": {
+      "completion_tokens": 133,
+      "completion_tokens_details": {
+        "reasoning_tokens": 95
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1523
+    }
+  }
+}

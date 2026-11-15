@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.086,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Закон даёт +1 влияния беднейшему — это я, и я президент.\"}",
+          "reasoning_content": "Law card 4: +1 influence to poorest. I'm poorest (24.82M). Yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767075,
+    "id": "202611160224324d589fe752994d2f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160224324d589fe752994d2f",
+    "usage": {
+      "completion_tokens": 52,
+      "completion_tokens_details": {
+        "reasoning_tokens": 22
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1443
+    }
+  }
+}

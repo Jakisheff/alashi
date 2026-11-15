@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.644,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":25000000,\"reason\":\"Ожидаемый доход лицензии ~20–60 превышает мою максимальную ставку 25, при проигрыше ставка вернётся.\"}",
+          "reasoning_content": "Round 4, license auction. Cash 25.2. Bid some amount. License income 20-60 alashi. Opponents have 36 each. Bid maybe 20-25? Value ~40 expected; but only winner pays. Bid 25? Risky vs opponents. I'm not president. Bid ~28? I have 25.2 only. Bid 25? If lose, refunded. If win, pay 25, gain ~40 → +15. Reasonable. Bid 25000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767523,
+    "id": "20261116023157c355da3a4485438d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023157c355da3a4485438d",
+    "usage": {
+      "completion_tokens": 157,
+      "completion_tokens_details": {
+        "reasoning_tokens": 108
+      },
+      "prompt_tokens": 1520,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1677
+    }
+  }
+}

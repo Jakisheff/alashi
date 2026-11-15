@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.549,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Больше ожидаемого товара, чем от produce, при пустом складе перед рынком\"}",
+          "reasoning_content": "Round 5, no goods. Produce gives 2 goods. Shuttle gives 3 with 25% risk. Prices likely decent. Expected shuttle = 3*0.75=2.25 goods. Confiscation — I'm president with influence 2. Shuttle better EV. But shuttle gray confiscation vs tribute at favored border — unknown role. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766786,
+    "id": "2026111602194209fe26bef32c40e4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602194209fe26bef32c40e4",
+    "usage": {
+      "completion_tokens": 105,
+      "completion_tokens_details": {
+        "reasoning_tokens": 75
+      },
+      "prompt_tokens": 1520,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1625
+    }
+  }
+}

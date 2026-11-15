@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.161,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон даёт влияние богатейшему сопернику, а не мне — против и вето при необходимости.\"}",
+          "reasoning_content": "Card 5: +1 influence to richest. Richest is faction 1 (23.5M). I'm president, can veto. Giving rival influence hurts me (influence bonus 5%). Vote no; if passes, veto. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767524,
+    "id": "20261116023159ada21352d4e44217",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023159ada21352d4e44217",
+    "usage": {
+      "completion_tokens": 85,
+      "completion_tokens_details": {
+        "reasoning_tokens": 52
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1475
+    }
+  }
+}

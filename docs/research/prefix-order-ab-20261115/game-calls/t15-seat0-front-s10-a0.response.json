@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.518,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Продажа 3 товаров по высоким ценам сразу; sell_credit потерял бы ~38% на девальвации границы раунда.\"}",
+          "reasoning_content": "Round 4, sell 3 units at counter 7: prices 5,4,3 → 12 alashi. Tax 0. Sell normally; sell_credit pays at end of round 4? Border after round 4... last round is 6, so credit still pays at border of round 4→5. But credit also adds to cash before devaluation at round 5 border? Promissory added at next round border and reset. Credit revenue 1.25×12=15, paid at border of round 4→5 — cash then devalued? Devaluation happens at border 2+: order ambiguous. Safer to just sell normally: 12 now. Actually credit pays at next border where devaluation applies floor(cash/100)*62 — credit would lose 38%. Sell now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767083,
+    "id": "2026111602243648e489132c41418b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602243648e489132c41418b",
+    "usage": {
+      "completion_tokens": 213,
+      "completion_tokens_details": {
+        "reasoning_tokens": 170
+      },
+      "prompt_tokens": 1430,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1643
+    }
+  }
+}

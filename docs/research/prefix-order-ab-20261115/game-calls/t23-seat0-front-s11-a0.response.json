@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.732,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":4,\"reason\":\"Продажа в кредит даёт +25% выручки и погасится на границе этого раунда, цены высокие.\"}",
+          "reasoning_content": "Sell 4 units at price ~10. Use sell_credit for 1.25x? Round 4, boundary before round 5 market — credit pays at round boundary, so yes it pays. sell_credit 4 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767388,
+    "id": "202611160229450486712d2d67429f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160229450486712d2d67429f",
+    "usage": {
+      "completion_tokens": 91,
+      "completion_tokens_details": {
+        "reasoning_tokens": 47
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1519
+    }
+  }
+}

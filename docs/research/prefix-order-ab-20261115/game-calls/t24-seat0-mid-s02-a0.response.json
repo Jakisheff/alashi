@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.745,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Субсидия выгодна соперникам с товаром больше, чем у меня; отказываюсь поддерживать, но не трачу влияние на блокировку\"}",
+          "reasoning_content": "Card 3: subsidy_goods=1 benefits me (I have 0 goods, others have 2). They voted (probably yes). Abstain? Law gives subsidy to everyone; I produce too. It's mild benefit. Others voted first — unknown direction. Abstain is safe? Actually subsidy helps me too later. Vote yes? Fine, vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767350,
+    "id": "2026111602290664c33a6d36c14379",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602290664c33a6d36c14379",
+    "usage": {
+      "completion_tokens": 120,
+      "completion_tokens_details": {
+        "reasoning_tokens": 75
+      },
+      "prompt_tokens": 1380,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1500
+    }
+  }
+}

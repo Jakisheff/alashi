@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.301,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Закон о снижении цен не имеет эффекта после последнего рынка, исход безразличен.\"}",
+          "reasoning_content": "Law card 6: prices -2 next market — but round 6 is last round, next market already happened? Market phase precedes law; card 6 affects next market, which won't exist. So harmless. Vote yes/no doesn't matter much. Vote weight 3 vs 2,2 — I can decide outcome. Harmless law, abstain or yes. Since it's irrelevant, abstain? Money 5% to max influence — influence rewards, but law doesn't affect. Pass/abstain fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767557,
+    "id": "202611160232347f475866ea5544b0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160232347f475866ea5544b0",
+    "usage": {
+      "completion_tokens": 143,
+      "completion_tokens_details": {
+        "reasoning_tokens": 109
+      },
+      "prompt_tokens": 1389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1532
+    }
+  }
+}

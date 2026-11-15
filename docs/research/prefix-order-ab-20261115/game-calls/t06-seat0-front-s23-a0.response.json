@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.637,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Голоса уже поданы (post_vote), вето недоступно — хожу нейтрально.\"}",
+          "reasoning_content": "Round 6, law 6: prices -2 next market — but this is post_vote stage, vote already happened? decision_stage \"post_vote\", veto_pending false. Only vote actions... Actually phase law with voted all true, post_vote — only veto possible if president, but veto_pending false means law passed. No veto available? veto_pending false means no veto allowed. So pass... but pass not in allowed list. Allowed: vote_yes/no/abstain; votes already cast. Vote again would be rejected→pass. Abstain is safe.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766816,
+    "id": "20261116022010063c771cba084648",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022010063c771cba084648",
+    "usage": {
+      "completion_tokens": 151,
+      "completion_tokens_details": {
+        "reasoning_tokens": 114
+      },
+      "prompt_tokens": 1393,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1544
+    }
+  }
+}

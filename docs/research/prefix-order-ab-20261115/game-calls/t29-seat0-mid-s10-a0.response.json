@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.166,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Продажа в кредит даёт 1.25× и защищает выручку от девальвации 62% на границе раунда\"}",
+          "reasoning_content": "Round 4, ladder at sold 4: next prices 8,7,6,5... Selling 3 units at 8,7,6 = 21 alashi. Cash will be devalued 62% at end of round. sell_credit gives *1.25 promissory paid at boundary and not devalued? Promissory added to cash at boundary — cash devaluation applies floor(cash/100)*62 at boundary of rounds 2+. Promissory added after devaluation presumably, so credit avoids devaluation. Better sell_credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767585,
+    "id": "202611160233013953b98512c04f8f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160233013953b98512c04f8f",
+    "usage": {
+      "completion_tokens": 165,
+      "completion_tokens_details": {
+        "reasoning_tokens": 117
+      },
+      "prompt_tokens": 1429,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1594
+    }
+  }
+}

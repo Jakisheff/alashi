@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.633,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон даёт влияние беднейшему сопернику и угрожает моему бонусу за влияние; моим весом 2 он всё равно не проходит.\"}",
+          "reasoning_content": "Law card 4: +1 influence to poorest. I have most cash; poorest is idx2, giving them influence 2 — threatens my president/influence bonus. Vote no; my weight 2 vs 1+1 tie → no passes? Yes strictly greater than no required: yes=1, no=2 → fails anyway. Just vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766899,
+    "id": "202611160221357f9a55efb9934245",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160221357f9a55efb9934245",
+    "usage": {
+      "completion_tokens": 117,
+      "completion_tokens_details": {
+        "reasoning_tokens": 73
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1508
+    }
+  }
+}

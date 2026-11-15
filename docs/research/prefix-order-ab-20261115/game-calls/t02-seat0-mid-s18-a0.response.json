@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.966,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Последний раунд: произведённый товар продать уже нельзя, а взятка 5M за шанс на небольшой бонус невыгодна при равном влиянии соперников.\"}",
+          "reasoning_content": "Round 6, last round. Produce gives goods to sell this round? Market phase already passed (decision_stage primary, after market). Order per round: market, action, law. We're in action, so goods produced can't be sold. So produce is useless. Bribe for influence: 5% of bank to max influence. Bank size unknown. Bribe 5M gives +1 influence; rivals have 1. Spending 5M to gain potential 5% bonus. Bank: sales counter etc. 5% bank likely small... could be tens of alashi. Not worth 5M likely. Just pass? Donkey/shuttle useless. Pass keeps cash. But influence bonus 5% of bank — bank includes bids etc. Unknown; risky. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766692,
+    "id": "202611160218071ea3380073144db1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160218071ea3380073144db1",
+    "usage": {
+      "completion_tokens": 206,
+      "completion_tokens_details": {
+        "reasoning_tokens": 160
+      },
+      "prompt_tokens": 1522,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1728
+    }
+  }
+}

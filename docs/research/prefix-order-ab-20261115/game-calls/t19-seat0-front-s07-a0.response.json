@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.27,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Продаю в кредит по максимальной цене 12, получая 45 вместо 36 с обесцениванием, выручка вернётся на границе раунда 4 без девальвации.\"}",
+          "reasoning_content": "Round 3 market, sold_counter 0, prices 12,10,9. I have 3 goods. Sell now for cash (devaluation at end of round 3: floor/100*62 applies? Devaluation on rounds 2+ boundary). Cash carried gets devalued each boundary, so holding cash is bad. sell_credit gives 1.25x paid at next boundary — round 4 boundary, avoiding round-3 devaluation. But after last round not redeemed. Round 4 boundary pays out, fine. So sell_credit 3 units: revenue 3*12=36 → *1.25=45 promissory, paid at round 4 boundary, avoiding 62% devaluation. Good.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767194,
+    "id": "20261116022628d695314499094f0b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022628d695314499094f0b",
+    "usage": {
+      "completion_tokens": 215,
+      "completion_tokens_details": {
+        "reasoning_tokens": 151
+      },
+      "prompt_tokens": 1422,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1637
+    }
+  }
+}

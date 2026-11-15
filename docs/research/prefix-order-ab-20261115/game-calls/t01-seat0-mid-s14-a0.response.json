@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.665,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Закон нейтрален для относительного положения (субсидия доступна всем), нет смысла тратить-president veto или поддерживать\"}",
+          "reasoning_content": "Law card 3: subsidy_goods=1 benefits all equally; I have no goods, no production advantage. Voting doesn't matter much; I'm president, could veto. Card helps everyone producing. I have 0 goods, cash lowest-ish. Subsidy helps rivals equally too. It also gives me +1 goods on produce. Not harmful. Just abstain? Vote yes is fine. Actually subsidy benefits everyone; relative impact neutral. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766546,
+    "id": "2026111602154245563f094365488b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602154245563f094365488b",
+    "usage": {
+      "completion_tokens": 135,
+      "completion_tokens_details": {
+        "reasoning_tokens": 93
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1526
+    }
+  }
+}

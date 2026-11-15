@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.714,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Повышение цен выгодно — у меня много товара для продажи.\"}",
+          "reasoning_content": "Card 7: prices +2 next market. Good for me (I have 3 goods, will produce more). Vote yes. Not richest? Cash 33.8 for idx1; law 7 no redistribution anyway. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766903,
+    "id": "2026111602214161a567094a3247fa",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602214161a567094a3247fa",
+    "usage": {
+      "completion_tokens": 74,
+      "completion_tokens_details": {
+        "reasoning_tokens": 49
+      },
+      "prompt_tokens": 1387,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1461
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.52,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"3 товара с учётом риска дают EV ~2.25 товара против 2 у produce — больше выручки по высокой цене.\"}",
+          "reasoning_content": "Round 5 action. Cash ~19.8, no goods. Produce gives 2 goods. Shuttle gives 3 with 25% confiscation risk. Goods sell at price 12 first... produce safer, but shuttle EV: 3*0.75=2.25 goods vs 2. Price 12, tax 0. Extra 0.25*12=3 alashi — worth it. But shuttle confiscation. EV slightly better with shuttle. Also border tribute? Role owner unknown. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767427,
+    "id": "2026111602302310beedf6ef0a44ca",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602302310beedf6ef0a44ca",
+    "usage": {
+      "completion_tokens": 145,
+      "completion_tokens_details": {
+        "reasoning_tokens": 107
+      },
+      "prompt_tokens": 1522,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1667
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.342,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Наличные обесценятся на 62% на границе раунда, а sell_credit вернёт 30 alashi без девальвации\"}",
+          "reasoning_content": "Sell 2 at price 12 = 24. Cash will be devalued at border round 3→4? Borders at rounds 2+: cash=floor(cash/100)*62. So selling now, cash devalues 62%. Sell_credit keeps 1.25x promissory, added at next border without devaluation. Better sell_credit: 24*1.25=30 promissory paid at border of round 4 fully. Yes, sell_credit 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767161,
+    "id": "2026111602255728ee16989796462b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602255728ee16989796462b",
+    "usage": {
+      "completion_tokens": 151,
+      "completion_tokens_details": {
+        "reasoning_tokens": 102
+      },
+      "prompt_tokens": 1422,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1573
+    }
+  }
+}

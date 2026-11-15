@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.311,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Дешёвый шанс получить 3 товара для продажи в следующем рынке; ожидаемая ценность выше produce.\"}",
+          "reasoning_content": "Round 5, low cash 10.1M. Shuttle gives 3 goods with 25% confiscation risk — expected value good (goods worth ~6-10 each later). Shuttle better than produce. No bribe worthwhile (need 5M for 1 influence, I have 10M but poor). Shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766680,
+    "id": "20261116021754e959a5be38814abe",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021754e959a5be38814abe",
+    "usage": {
+      "completion_tokens": 102,
+      "completion_tokens_details": {
+        "reasoning_tokens": 67
+      },
+      "prompt_tokens": 1520,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1622
+    }
+  }
+}

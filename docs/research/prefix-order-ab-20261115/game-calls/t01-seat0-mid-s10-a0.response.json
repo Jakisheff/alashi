@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.741,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Налог 10% бьёт по мне как по богатейшему, а голосованием я могу проиграть 2:1.\"}",
+          "reasoning_content": "Law card 1: tax 10%. I'm richest (30M). Vote no; but I'm president — can veto. If veto used before count, kills it. Vote no is enough? Others may vote yes (2 vs 1). Veto to be safe.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766523,
+    "id": "20261116021520fdc107e2e29f4346",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021520fdc107e2e29f4346",
+    "usage": {
+      "completion_tokens": 96,
+      "completion_tokens_details": {
+        "reasoning_tokens": 57
+      },
+      "prompt_tokens": 1388,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1484
+    }
+  }
+}

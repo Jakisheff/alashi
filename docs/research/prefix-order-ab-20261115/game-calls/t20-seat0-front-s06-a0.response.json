@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.474,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 8 может списать мои непогашённые promissory при нулевом кэше — рискованно, отклоняю.\"}",
+          "reasoning_content": "Card 8 cancels promissory notes. I don't appear to have any (unknown). Opponents have cash already... canceling promissory hurts anyone holding them. Risky but I have low cash and might have promissory from sell_credit—unknown. Safer vote no? Card 8 wipes promissory; if I have any pending credit sales they'd be erased. I have cash 0, so I may have sold on credit—danger. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767249,
+    "id": "202611160227250c179c20709a4d2f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160227250c179c20709a4d2f",
+    "usage": {
+      "completion_tokens": 144,
+      "completion_tokens_details": {
+        "reasoning_tokens": 99
+      },
+      "prompt_tokens": 1384,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1528
+    }
+  }
+}

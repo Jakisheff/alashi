@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.003,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Налог 20% сильнее вредит более богатым соперникам, чем мне.\"}",
+          "reasoning_content": "Law card 2: tax 20%. I'm president. My cash is lowest (15.4M). Tax hurts the richer ones more. I have influence 2, others 1 each. Vote yes? Tax reduces their cash... but tax applies to sales revenue, not cash. It will apply going forward. I'm selling less perhaps. Others richer, likely sell more goods. Tax 20% hurts them more. Also veto option. I'd say vote_yes and it passes anyway? My weight 2 vs 1+1 tie — yes needs strictly more no. If I abstain: 1 yes vs 1 no → fails. If I vote yes: 3 vs 1... wait others voted already? voted all true. Unknown their votes. As president I could also veto. Tax likely hurts rivals more; vote_yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767101,
+    "id": "20261116022453f3984ba2f2bf45a2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022453f3984ba2f2bf45a2",
+    "usage": {
+      "completion_tokens": 202,
+      "completion_tokens_details": {
+        "reasoning_tokens": 173
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1593
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.789,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Гарантированные 3 товара без риска конфискации, ожидание shuttle то же при риске потери всего\"}",
+          "reasoning_content": "Shuttle: 4 goods, 25% confiscation risk. Produce gives 3. Shuttle expected 3 > 3? Expected 3.0, same, but risk. I'm poorest; confiscation risk 25% loses all. Better produce (3 goods certain).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767003,
+    "id": "20261116022319951d5c3f43df450b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022319951d5c3f43df450b",
+    "usage": {
+      "completion_tokens": 92,
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      },
+      "prompt_tokens": 1520,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1612
+    }
+  }
+}

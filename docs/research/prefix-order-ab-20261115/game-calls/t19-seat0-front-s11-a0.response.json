@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.928,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продам весь товар по высокой цене (6 и 5), денег хватит на ставку в аукционе.\"}",
+          "reasoning_content": "Round 4 market, prices at sold 7: next prices 6,5... Sell 2 units at ~6 and 5? Actually sell both: 6+5=11 alashi. Tax 0. Sell.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767211,
+    "id": "202611160226472a2e71a0ce644c41",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160226472a2e71a0ce644c41",
+    "usage": {
+      "completion_tokens": 87,
+      "completion_tokens_details": {
+        "reasoning_tokens": 48
+      },
+      "prompt_tokens": 1429,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1516
+    }
+  }
+}

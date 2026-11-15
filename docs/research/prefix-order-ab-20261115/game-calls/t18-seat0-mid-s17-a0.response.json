@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.634,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Последний раунд, кредит не погасится — продаю по максимальной цене 12\"}",
+          "reasoning_content": "Round 6, last round. Sell at top price 12 (+subsidy? no). Sell 2 units at 12 = 24 alashi. sell_credit won't redeem. Tax 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767210,
+    "id": "20261116022647b30aded2cd33460c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022647b30aded2cd33460c",
+    "usage": {
+      "completion_tokens": 78,
+      "completion_tokens_details": {
+        "reasoning_tokens": 43
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1506
+    }
+  }
+}

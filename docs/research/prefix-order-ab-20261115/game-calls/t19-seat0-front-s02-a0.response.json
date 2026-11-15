@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.106,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Карта 8 обнуляет promissory, что помешает моей будущей продаже в кредит; вето безопасно при нулевом cash у всех.\"}",
+          "reasoning_content": "Card 8 wipes promissory notes. I'm president, everyone cash 0, I could use sell_credit... card 8 is bad for me. Others voted already — unknown how. Veto? I don't know vote outcome. Abstain and veto? Veto only if passes. Simplest: veto to be safe? Card 8 could hurt if I plan sell_credit. Round 1, no promissory yet; card 8 in round 1 is harmless now but blocks future credits. Veto is safe.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767171,
+    "id": "20261116022607c0e6988081014bce",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022607c0e6988081014bce",
+    "usage": {
+      "completion_tokens": 156,
+      "completion_tokens_details": {
+        "reasoning_tokens": 110
+      },
+      "prompt_tokens": 1380,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1536
+    }
+  }
+}

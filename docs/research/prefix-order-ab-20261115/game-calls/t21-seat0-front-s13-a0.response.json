@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.154,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Повышение цен выгодно и моим будущим продажам, а решающего перевеса соперникам не даёт.\"}",
+          "reasoning_content": "Law 7: prices +2 next market. I have no goods, cash lowest. Others benefit from selling. But I'm president; veto is free. Others voted already (unknown). Prices +2 helps sellers; I sell nothing next market (could produce). Actually I might produce goods later. Round 4 of 6 — next market rounds 5,6. Price shift applies to next market only. I could benefit if I sell next round. But rivals richer with goods... all goods 0. Passing +2 helps everyone who sells, including me potentially. I can't veto yet? veto_pending false, decision_stage primary. I'm president, can veto. Simplest: vote yes — helps my future sales too. But rivals get more benefit? Cash difference large; final payout rank matters. Raising prices increases their cash more than mine likely. But I can also produce. Vote yes seems fine either way; small effect. I'll vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767297,
+    "id": "20261116022811e9f7b761f2144c23",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022811e9f7b761f2144c23",
+    "usage": {
+      "completion_tokens": 231,
+      "completion_tokens_details": {
+        "reasoning_tokens": 195
+      },
+      "prompt_tokens": 1389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1620
+    }
+  }
+}

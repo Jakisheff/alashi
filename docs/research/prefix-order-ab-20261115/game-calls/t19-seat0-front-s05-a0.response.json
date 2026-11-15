@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.795,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон даёт +1 влияния богатейшему сопернику (idx 2), мне вредит — голосую против, при необходимости наложу вето.\"}",
+          "reasoning_content": "Card 5: +1 influence richest. Richest is idx2 (22M). I'm president. If passes, opponent gets influence. Vote no; if it passes anyway, veto. Vote no first.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767182,
+    "id": "20261116022618137137f6dbec46ec",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022618137137f6dbec46ec",
+    "usage": {
+      "completion_tokens": 88,
+      "completion_tokens_details": {
+        "reasoning_tokens": 43
+      },
+      "prompt_tokens": 1384,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1472
+    }
+  }
+}

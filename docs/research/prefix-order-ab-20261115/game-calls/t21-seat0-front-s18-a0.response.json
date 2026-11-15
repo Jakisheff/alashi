@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.046,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон даёт влияние беднейшей фракции 2, снижая мои шансы на бонус за максимальное влияние.\"}",
+          "reasoning_content": "Card 4: +1 influence to poorest. I'm richest (24.05 vs 24.22 vs 20.78) — poorest is idx2. Giving influence to idx2 reduces my influence bonus share. But president... it passed? decision_stage post_vote, voted all true. My vote: vote_no? Law passes if yes>no. I should vote no to keep influence advantage tie for max-influence bonus (all tie at 1, better cash decides — idx1 wins). Hmm, currently idx1 has max influence bonus by cash. Card gives +1 to poorest (idx2), making idx2 max influence. Either way not me. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767324,
+    "id": "20261116022839847a0eed6b604593",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022839847a0eed6b604593",
+    "usage": {
+      "completion_tokens": 177,
+      "completion_tokens_details": {
+        "reasoning_tokens": 138
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1567
+    }
+  }
+}

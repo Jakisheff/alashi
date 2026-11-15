@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.782,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара для продажи, покупать невыгодно.\"}",
+          "reasoning_content": "No goods, cash 19M. No goods to sell. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767101,
+    "id": "20261116022457a940eed729f14283",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022457a940eed729f14283",
+    "usage": {
+      "completion_tokens": 35,
+      "completion_tokens_details": {
+        "reasoning_tokens": 15
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1463
+    }
+  }
+}

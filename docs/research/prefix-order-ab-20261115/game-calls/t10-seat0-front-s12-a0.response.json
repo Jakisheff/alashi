@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.45,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":20000000,\"reason\":\"Лицензия даёт 20–60 alashi сверх доли; ставка 20 alashi выгодна и, вероятно, перебьёт соперников.\"}",
+          "reasoning_content": "Round 4, license auction. Bid worth: license income ~20-60 alashi, mine extra. Cash 48.6. Opponents 42.9, 7.9. Bid maybe 20 alashi to win? Risky. EV of license ~40 alashi marginal. Opponents may bid; third player poor. Bid ~18-20.\n\nAlso could shuttle for goods to sell round 5. But license pays extra over share... Bid 20M (20 alashi). Reasonable.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766914,
+    "id": "20261116022151598c23e7281b42cb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022151598c23e7281b42cb",
+    "usage": {
+      "completion_tokens": 156,
+      "completion_tokens_details": {
+        "reasoning_tokens": 106
+      },
+      "prompt_tokens": 1522,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1678
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.701,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Закон даёт +1 влияния беднейшему — это я, а влияние приносит бонус и вес голоса.\"}",
+          "reasoning_content": "Law card 4: +1 influence to poorest. I have 0 cash, poorest — likely me. Influence helps final bonus and voting. Player 2 already voted (unknown). Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767413,
+    "id": "20261116023010d0e75a468f6241be",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023010d0e75a468f6241be",
+    "usage": {
+      "completion_tokens": 76,
+      "completion_tokens_details": {
+        "reasoning_tokens": 40
+      },
+      "prompt_tokens": 1384,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1460
+    }
+  }
+}

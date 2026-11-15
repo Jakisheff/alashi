@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.869,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":25000000,\"reason\":\"Лицензия даёт ожидаемые ~40 alashi дохода сверх доли; ставка 25M大概率 выигрывает у соперников с 25-32M, а кэш всё равно девальвируется.\"}",
+          "reasoning_content": "License bid round 4. Income 20-60 alashi, mean ~40. I'm richest. Bid maybe 20M (20 alashi). Rivals cash 32M, 25M. Bid 20 alashi reasonable? Expected license value 40 alashi; paying 20 nets ~20. But cash devalues 62% at round boundary — cash spent now worth more... actually cash loses value, so spending cash is good. Bid high-ish, 25M? Rivals could bid up to ~32M. Bid 25M likely wins often, pays 25 for expected 40. Value = license income - bid (bid goes to bank, not to me). So profit expected ~40-25=15. Bid 30M? Still positive if they don't outbid. They can bid up to 32M. Bid 30M wins almost surely, net ~10 expected. Bid 25M better EV. Note tie-break tie_order unknown. I'll bid 25M.\n\nAlternatively produce? Goods sell next market ~7-8/unit, shuttle gives 3 goods ~24 minus risk. License better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766865,
+    "id": "20261116022057943899bd6197442a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022057943899bd6197442a",
+    "usage": {
+      "completion_tokens": 299,
+      "completion_tokens_details": {
+        "reasoning_tokens": 236
+      },
+      "prompt_tokens": 1520,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1819
+    }
+  }
+}

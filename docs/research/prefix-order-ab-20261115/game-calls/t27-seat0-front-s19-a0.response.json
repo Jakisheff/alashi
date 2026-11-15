@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.902,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Налог 20% бьёт по богатым соперникам с товаром, а у меня товаров нет — поддерживаю.\"}",
+          "reasoning_content": "Law card 2: tax 20%. Others voted already; I'm poor, so tax hurts rich rivals selling goods. Vote yes. As president, yes passes (2>... others likely no/no but 2>... yes wins). Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767548,
+    "id": "20261116023225a495b24aea0f455b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023225a495b24aea0f455b",
+    "usage": {
+      "completion_tokens": 90,
+      "completion_tokens_details": {
+        "reasoning_tokens": 52
+      },
+      "prompt_tokens": 1389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1479
+    }
+  }
+}

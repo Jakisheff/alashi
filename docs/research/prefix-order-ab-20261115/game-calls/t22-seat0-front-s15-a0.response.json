@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.093,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Налог 20% сильно урежет мою будущую выручку от продаж в оставшихся раундах, а я президент — налагаю вето.\"}",
+          "reasoning_content": "Law card 2: tax 20%. I'm poorest (8.75M cash). Tax is collected on sales revenue, not cash — a 20% tax hurts sellers. R6 selling. I'm president with veto, but votes already cast, post_vote stage — actions allowed: yes/no/abstain/veto. If tax passes, my future sales taxed 20%. Vote no; if it passes anyway, veto. Safest: veto directly? Veto blocks the law. Just veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767343,
+    "id": "202611160228592ed30d7e842847c1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160228592ed30d7e842847c1",
+    "usage": {
+      "completion_tokens": 151,
+      "completion_tokens_details": {
+        "reasoning_tokens": 104
+      },
+      "prompt_tokens": 1392,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1543
+    }
+  }
+}

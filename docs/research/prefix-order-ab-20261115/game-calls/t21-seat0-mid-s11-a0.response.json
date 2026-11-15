@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.394,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 20% вредит мне как продавцу; закон и так проваливается при моём голосе против\"}",
+          "reasoning_content": "Card 2: tax 20%. Vote no. Weights: others 1 each, I have 1. If I vote no: 2 no vs 1 yes → fails anyway. Veto unnecessary but safe? Veto free, but vote_no suffices. Just vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767282,
+    "id": "202611160227596a775495c0ef431b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160227596a775495c0ef431b",
+    "usage": {
+      "completion_tokens": 95,
+      "completion_tokens_details": {
+        "reasoning_tokens": 60
+      },
+      "prompt_tokens": 1387,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1482
+    }
+  }
+}

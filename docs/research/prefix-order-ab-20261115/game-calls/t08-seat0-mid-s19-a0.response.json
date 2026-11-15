@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.133,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bribe\",\"to\":2,\"amount\":5000000,\"reason\":\"Товар продать уже нельзя; за 5M догоняю лидера по влиянию и при равенстве беру бонус 5% банка благодаря большему cash\"}",
+          "reasoning_content": "Round 6, no goods. Market phase likely done? Decision stage primary, round 6. Shuttle gives 4 goods but risk 25% confiscation; gray goods could be confiscated at border — but selling happens next market? Actually goods would be sold in market phase... round 6 is last, order market-action-law? If market already happened (sold_counter=10), goods produced now can't be sold. So best: bribe for influence? Influence gives extra 5% of bank. Cash ~39.3M, I'm richest? 39 vs 34 vs 13. Bribe costs money but influence affects 5% bonus share. Bribe 5M to someone gives +1 influence to me. Influence bonus 5% of bank — is bank large? Bank from bids etc. Influence [1,1,2]; faction 2 has 2. If I bribe 10M, influence 3, get the 5%. Bank likely modest (bids went to bank). 5% of bank vs 10M cost... uncertain. Also wealth rank: roof? Tariff laws?\n\nSimpler: bribe 5M gives influence 2, still less than faction 2 (2, tie broken by cash? Max influence, tie → better cash+hard). I'd have 2, faction2 has 2, tie by cash → I win. So bribe 5M (cost 5M) gains 5% of bank minus my share change. If bank is, say, 200M alashi*? Units: cash in units, 5M=5 alashi. Bank commission 5% of bank... unclear magnitude. 5% bonus could exceed 5 alashi if bank >100 alashi. Likely fine. But bribe also reduces cash which affects rank/share. Alternative: produce/donkey useless (no market left). Actually can I sell? Market phase passed. So bribe 5M to faction 2 (giving money to poorest rival, helps them?). Must give to someone — give to faction 2 (poorest, increases their cash slightly, maybe changes richest determination for anti-rich laws—not relevant). Give to faction 1? Either. Give to idx 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766883,
+    "id": "20261116022111281f870445c94d66",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022111281f870445c94d66",
+    "usage": {
+      "completion_tokens": 524,
+      "completion_tokens_details": {
+        "reasoning_tokens": 466
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 2045
+    }
+  }
+}

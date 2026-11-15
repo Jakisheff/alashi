@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.88,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 3 (субсидия) уже не влияет на итог в последнем раунде, а я уже проголосовал; никаких выгодных действий нет.\"}",
+          "reasoning_content": "Round 6, last round. Card 3: subsidy_goods=1 gives me 1 extra good per produce — but this is law phase, next phase would be... round 6 is last. Card applies next market? Actually card 3 subsidy — active subsidy affects produce, which won't happen again. Voting happens; I'm president, voted already? voted all true, post_vote stage. So my action now: veto or pass? Law already passed presumably. Card 3 subsidy useless now (no more action phases). If it passed, no harm. But could subsidy affect anything? No. I can't change my vote. Phase \"law\", decision_stage post_vote, is_president, veto_pending false. Available actions given: vote options only plus maybe veto. I'm president — veto a useless law? No harm in letting it pass; also veto free. Card 3 harmless. Just vote_abstain/pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767032,
+    "id": "20261116022345353e61f9f57d4827",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022345353e61f9f57d4827",
+    "usage": {
+      "completion_tokens": 237,
+      "completion_tokens_details": {
+        "reasoning_tokens": 189
+      },
+      "prompt_tokens": 1393,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1630
+    }
+  }
+}

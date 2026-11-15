@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.078,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нет денег для взяток; produce даёт гарантированные 2 товара без риска конфискации.\"}",
+          "reasoning_content": "Cash 0, no bribe possible. Produce gives 2 goods; shuttle gives 3 with 25% loss → EV 2.25 but confiscation risk; produce safer. Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767140,
+    "id": "2026111602253861a4dc045de74bec",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602253861a4dc045de74bec",
+    "usage": {
+      "completion_tokens": 72,
+      "completion_tokens_details": {
+        "reasoning_tokens": 40
+      },
+      "prompt_tokens": 1511,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1583
+    }
+  }
+}

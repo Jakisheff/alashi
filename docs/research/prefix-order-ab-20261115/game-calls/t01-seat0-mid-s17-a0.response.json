@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.657,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Я богатейший, закон даёт +1 влияния мне, что также усиливает мой голос и бонус за влияние в итоге.\"}",
+          "reasoning_content": "Card 5: +1 influence to richest. I'm richest (38.7M). Passes if yes>no; opponent 2 already voted? voted[2]=true, unknown how. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766557,
+    "id": "20261116021554228ec8adb9124541",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021554228ec8adb9124541",
+    "usage": {
+      "completion_tokens": 82,
+      "completion_tokens_details": {
+        "reasoning_tokens": 44
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1473
+    }
+  }
+}

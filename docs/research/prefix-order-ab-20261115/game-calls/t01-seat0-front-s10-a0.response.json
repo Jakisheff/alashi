@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.327,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% ударит по моим продажам, у меня больше всех товара\"}",
+          "reasoning_content": "Law card 1: tax 10%. I'm poorest (17.88M vs 28.8, 27.6). Tax hurts sellers with goods — rivals have goods 2 and 0, I have 3. Tax reduces revenue on future sales. I have most goods, tax hurts me most. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766520,
+    "id": "20261116021516f6dd5423fc2d4195",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021516f6dd5423fc2d4195",
+    "usage": {
+      "completion_tokens": 97,
+      "completion_tokens_details": {
+        "reasoning_tokens": 68
+      },
+      "prompt_tokens": 1388,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1485
+    }
+  }
+}

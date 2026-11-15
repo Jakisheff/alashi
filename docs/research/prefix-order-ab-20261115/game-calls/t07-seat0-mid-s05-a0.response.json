@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.01,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Налог 20% бьёт по моей будущей выручке, а голосов у меня мало — надёжнее бесплатное вето.\"}",
+          "reasoning_content": "Law card 2: tax 20%. I'm poorest (cash 0), tax hurts sellers. Others likely vote yes? Voted[2]=true (unknown how). Tax hurts me? I have no cash, but tax on revenue future. As poorest, tax reduces my selling revenue — bad. Vote no; but with veto option: president can veto freely. Veto kills it regardless. Use veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766749,
+    "id": "202611160219056df6f5da0c9c4155",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160219056df6f5da0c9c4155",
+    "usage": {
+      "completion_tokens": 126,
+      "completion_tokens_details": {
+        "reasoning_tokens": 84
+      },
+      "prompt_tokens": 1384,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1510
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.019,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Снижение цен вредит конкурентам с товаром, у меня товара нет, поэтому поддерживаю\"}",
+          "reasoning_content": "Law card 6: prices -2 next market. Round 6 is last market, so it would hurt my sales — but I have 0 goods. Others have goods (idx1 has 2). Lower prices hurt them. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767561,
+    "id": "202611160232382c802514f67e4a26",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160232382c802514f67e4a26",
+    "usage": {
+      "completion_tokens": 82,
+      "completion_tokens_details": {
+        "reasoning_tokens": 50
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1472
+    }
+  }
+}

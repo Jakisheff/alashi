@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.772,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":25000000,\"reason\":\"Аукцион в раунде 4: ожидаемый доход лицензии (~40 alashi) с учётом 50%-возврата через банк делает ставку 25 выгодной, соперники вряд ли перекроют\"}",
+          "reasoning_content": "Round 4, auction available. Bid? Cash 48.75. License income 20-60, expected ~40, paid from own cash to bank but paid out over share... Final payout shares 50:30:15 of bank remainder; bid goes to bank, so partially returns via share. Bidding ~20-30 could be profitable. My share 50% (rich? shares fixed 50:30:15 — likely by rank). I'm richest. Expected license value ~40 to me. Bid 25: cost effectively 25*0.5=12.5, gain 40 → good. Bid 25 alashi = 25000000... amount in units? amount is units of min units, bribe multiples 5000000. Bid any integer. Others have ~33 cash, may bid up to ~20. Bid 25 (25000000) to win. Risk: if income only 20, still fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767792,
+    "id": "2026111602362312b5da51bc844809",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602362312b5da51bc844809",
+    "usage": {
+      "completion_tokens": 259,
+      "completion_tokens_details": {
+        "reasoning_tokens": 197
+      },
+      "prompt_tokens": 1522,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1781
+    }
+  }
+}

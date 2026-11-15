@@ -1,0 +1,62 @@
+{
+  "source": ".",
+  "arms": [
+    "front",
+    "mid"
+  ],
+  "bool_fields": [
+    "license_won",
+    "wealth_first"
+  ],
+  "pairs": {
+    "front-mid": {
+      "license_won": {
+        "n_pairs": 36,
+        "arm_a_wins": 31,
+        "arm_b_wins": 33,
+        "pass_hat_1": 0.8889,
+        "pass_at_2_empirical": 0.9722,
+        "pass_hat_2_empirical": 0.8056,
+        "pass_hat_2_ci95": [
+          0.6763,
+          0.9348
+        ],
+        "pass_hat_2_if_independent": 0.7901,
+        "pass_hat_3_if_independent": 0.7023,
+        "pass_hat_8_if_independent": 0.3897
+      },
+      "wealth_first": {
+        "n_pairs": 36,
+        "arm_a_wins": 25,
+        "arm_b_wins": 25,
+        "pass_hat_1": 0.6944,
+        "pass_at_2_empirical": 0.8056,
+        "pass_hat_2_empirical": 0.5833,
+        "pass_hat_2_ci95": [
+          0.4223,
+          0.7444
+        ],
+        "pass_hat_2_if_independent": 0.4823,
+        "pass_hat_3_if_independent": 0.3349,
+        "pass_hat_8_if_independent": 0.0541
+      }
+    }
+  },
+  "tokens_per_saved_call": {
+    "mid": {
+      "calls": 817,
+      "input": 1431.6,
+      "output": 114.5
+    },
+    "front": {
+      "calls": 823,
+      "input": 1431.4,
+      "output": 110.1
+    }
+  },
+  "reliability": {
+    "planned_games": 72,
+    "completed_games": 72,
+    "failed_games": 0
+  }
+}

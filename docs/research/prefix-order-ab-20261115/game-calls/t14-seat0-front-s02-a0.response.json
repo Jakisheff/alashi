@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.236,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Продано 0 единиц, карта 8 ничего не меняет — нет смысла голосовать.\"}",
+          "reasoning_content": "Law card 8 cancels promissory notes — I have none. Round 1, no cash. Vote yes? It may hurt others later. I'm president. Card 8 wipes promissory; nobody has any visible... others might have sold credit. Vote yes harmless; or abstain. If others used sell_credit (possible, sold_counter=0 though). Sold_counter 0 means no sales happened, so no promissory. Vote yes costs nothing—actually card 8 in later rounds would be good for me? It only matters now. It does nothing now. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767028,
+    "id": "202611160223433f7efd0f62344c9e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160223433f7efd0f62344c9e",
+    "usage": {
+      "completion_tokens": 157,
+      "completion_tokens_details": {
+        "reasoning_tokens": 123
+      },
+      "prompt_tokens": 1380,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1537
+    }
+  }
+}

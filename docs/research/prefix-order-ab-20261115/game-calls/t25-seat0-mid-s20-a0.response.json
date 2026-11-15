@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.011,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Final round: sell all at top ladder prices, tax is 0.\"}",
+          "reasoning_content": "Round 6, last round — sell_credit won't pay off. Sell all 3 at price 12,10,9 no tax. Sell 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767473,
+    "id": "20261116023111b146d4f85ef04915",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023111b146d4f85ef04915",
+    "usage": {
+      "completion_tokens": 62,
+      "completion_tokens_details": {
+        "reasoning_tokens": 33
+      },
+      "prompt_tokens": 1427,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1489
+    }
+  }
+}

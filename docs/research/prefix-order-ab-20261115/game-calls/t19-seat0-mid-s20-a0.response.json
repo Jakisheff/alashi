@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.569,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Финальный раунд: продаю весь товар по высокой цене, кредит бессмысленен\"}",
+          "reasoning_content": "Round 6, last round. Sell all 3 at price 12+... sold_counter 0, price 12. Sell cash immediately since sell_credit won't be redeemed.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767242,
+    "id": "20261116022719beedc10d8ca543eb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022719beedc10d8ca543eb",
+    "usage": {
+      "completion_tokens": 71,
+      "completion_tokens_details": {
+        "reasoning_tokens": 37
+      },
+      "prompt_tokens": 1427,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1498
+    }
+  }
+}

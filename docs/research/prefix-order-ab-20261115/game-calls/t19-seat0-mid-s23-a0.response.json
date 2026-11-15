@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.717,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Субсидия безвредна и, возможно, ещё успеет дать +1 товар в финальный рынок\"}",
+          "reasoning_content": "Law card 3: subsidy_goods=1 benefits everyone equally, helps me produce more this round? It's round 6, last round — law already passed (post_vote). Actually decision_stage post_vote... but I can veto. Card 3 subsidy gives +1 goods to produce action — but action phase already done this round. Useless now. Veto changes nothing harmful; no reason to veto. Vote... voting already happened? voted all true. Just pass-ish. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767255,
+    "id": "20261116022731349fec003fe54a26",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022731349fec003fe54a26",
+    "usage": {
+      "completion_tokens": 136,
+      "completion_tokens_details": {
+        "reasoning_tokens": 99
+      },
+      "prompt_tokens": 1393,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1529
+    }
+  }
+}

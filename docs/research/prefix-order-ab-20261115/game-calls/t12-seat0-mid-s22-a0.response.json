@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.144,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"abstain\",\"reason\":\"Субсидия в последнем раунде уже ни на что не влияет, закон безразличен.\"}",
+          "reasoning_content": "Card 3 subsidy_goods=1 — helps everyone, but I have no goods production? I have influence 2, cash low. Subsidy helps rivals produce more, they sell more, depress prices? It's final round (6), market already passed? Round 6, market phase already happened presumably. Subsidy affects action phase which... decision_stage primary, phases: market, action, law. Law is last in round, so subsidy useless now? Actually produce in action already happened this round? Round 6 order: market, action, law. We're in law, so subsidy has no future effect. Vote yes/no doesn't matter; others weight 1+... subsidy no effect anyway. Just abstain or yes. Card 3 harmless. I'm president; veto kills law anyway if passes. Just vote yes (harmless) — actually zero effect. Abstain fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767012,
+    "id": "20261116022325331f9008293a40b7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022325331f9008293a40b7",
+    "usage": {
+      "completion_tokens": 219,
+      "completion_tokens_details": {
+        "reasoning_tokens": 184
+      },
+      "prompt_tokens": 1393,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1612
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.051,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта даёт влияние беднейшему — это фракция 2, не я; голосую против.\"}",
+          "reasoning_content": "Card 4: +1 influence to poorest. I'm poorest (13.08M vs 26.25M vs 9.85M)? No, faction 2 is poorest. So vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767140,
+    "id": "20261116022537920ace6ce5f442a0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022537920ace6ce5f442a0",
+    "usage": {
+      "completion_tokens": 77,
+      "completion_tokens_details": {
+        "reasoning_tokens": 43
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1468
+    }
+  }
+}

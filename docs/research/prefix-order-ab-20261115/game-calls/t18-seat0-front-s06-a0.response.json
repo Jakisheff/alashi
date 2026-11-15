@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.574,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% снижает мою будущую выручку, а выгоды от него нет\"}",
+          "reasoning_content": "Tax 10%. My cash 22M (richest is idx2 24M). Tax reduces final payout? Tax applies to market revenue this round. Mildly harmful. Vote no. Anti-rich? Card 1 isn't anti-rich. Vote no seems fine—tax hurts my sales. But tax hurts rivals too... they also sell. Tax harms all proportionally; my payout share matters relatively. Voting yes increases final bank? Tax goes to bank, redistributed by shares. I have ~22/57 cash... roughly proportional. Better to vote no (tax mainly reduces market revenue redistributed—neutralish). I'll vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767167,
+    "id": "20261116022602680aca9874bb4ee3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022602680aca9874bb4ee3",
+    "usage": {
+      "completion_tokens": 160,
+      "completion_tokens_details": {
+        "reasoning_tokens": 128
+      },
+      "prompt_tokens": 1386,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1546
+    }
+  }
+}

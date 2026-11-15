@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.142,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара и выгодных возможностей на рынке\"}",
+          "reasoning_content": "Round 5, no goods, cash only. Nothing to sell. Could buy? Buy counter backward to raise future prices, but we have no cash to benefit later selling? Buying goods to sell later — round 5 of 6, market next round. Buy at current ladder price (sold_counter 0 → price 12) minus... buy moves counter backward so price high. Buy units costs ~12 each, then produce next rounds and sell at low prices later? Not profitable. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766871,
+    "id": "202611160221071b0a2324c89945b6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160221071b0a2324c89945b6",
+    "usage": {
+      "completion_tokens": 118,
+      "completion_tokens_details": {
+        "reasoning_tokens": 100
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1546
+    }
+  }
+}

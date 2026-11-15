@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.135,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":4,\"reason\":\"Цена на лестнице всего 2, поэтому продаю в кредит с множителем 1.25 — выручка 10 вместо 8 alashi.\"}",
+          "reasoning_content": "Round 4 market, sold_counter 10, price index 10 → price 2. Sell 4 units at 2 = 8. Or sell_credit ×1.25=10 promissory returned at round boundary after round 4? \"на границе следующего раунда\" — after round 4 boundary, cash devaluation floor(cash/100)*62 applies. Round 4 is not last round (6 rounds), so credit gets paid. Actually promissory added at boundary between rounds... round 4 boundary leads to round 5, so it's paid. Credit better: 10 vs 8. But devaluation applies to cash including promissory? At boundary cash=floor(cash/100)*62, promissory added and reset. If promissory added after devaluation, 10 is safe. Order unclear but sell_credit typically better. Take sell_credit 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766672,
+    "id": "20261116021746880249539fa341c3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021746880249539fa341c3",
+    "usage": {
+      "completion_tokens": 238,
+      "completion_tokens_details": {
+        "reasoning_tokens": 189
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1666
+    }
+  }
+}

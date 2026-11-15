@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.476,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нет денег для взяток; produce даёт гарантированный товар без риска конфискации.\"}",
+          "reasoning_content": "Round 3, no cash, no goods. Produce gives 2 goods for selling later. Shuttle risks confiscation but 3 goods. No cash to lose via shuttle—confiscation risk 25%. Produce is safe. But no cash to bribe. Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767273,
+    "id": "202611160227501190dbbb375c498f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160227501190dbbb375c498f",
+    "usage": {
+      "completion_tokens": 85,
+      "completion_tokens_details": {
+        "reasoning_tokens": 55
+      },
+      "prompt_tokens": 1517,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1602
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.795,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Продажа в кредит даёт 1.25x и защищает выручку от девальвации на границе раунда.\"}",
+          "reasoning_content": "Round 2 market, ladder at sold_counter=2 → next price 9. Sell 3 goods at ~9,8,7? Ladder [12,10,9,...] counter=2 means next is index2=9. Sell now cash, devaluation 62% at border. sell_credit gives 1.25x but paid next round border... promissory added at next round border after devaluation? \"promissory прибавляется к cash и обнуляется\" at round border — but round 2 devaluation applies to cash floor(cash/100)*62; promissory added and zeroed—likely promissory escapes devaluation. Sell credit yields 1.25x and skips devaluation. So sell_credit 3 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767647,
+    "id": "2026111602340254c0a7b1928e4b32",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602340254c0a7b1928e4b32",
+    "usage": {
+      "completion_tokens": 205,
+      "completion_tokens_details": {
+        "reasoning_tokens": 159
+      },
+      "prompt_tokens": 1420,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1625
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.978,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Я богатейшая фракция, а налог 20% бьёт по моей выручке.\"}",
+          "reasoning_content": "Card 2: tax 20%. I'm richest (24M). Vote no; if it passes, veto. I'm president, veto after vote? Phase allows veto now. post_vote already voted... voted all true. Vote no — but others unknown. Safer: veto directly.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766509,
+    "id": "202611160215079f3fad06e2c64c2a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160215079f3fad06e2c64c2a",
+    "usage": {
+      "completion_tokens": 92,
+      "completion_tokens_details": {
+        "reasoning_tokens": 59
+      },
+      "prompt_tokens": 1387,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1479
+    }
+  }
+}

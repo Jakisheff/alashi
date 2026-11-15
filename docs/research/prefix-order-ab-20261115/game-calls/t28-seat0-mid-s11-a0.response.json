@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.763,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон даёт влияние богатейшему сопернику (idx1), мне это невыгодно\"}",
+          "reasoning_content": "Card 5: +1 influence to richest. Richest is idx1 (23.06). That helps idx1, not me. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767543,
+    "id": "20261116023220b4b05e6532d44dc0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023220b4b05e6532d44dc0",
+    "usage": {
+      "completion_tokens": 61,
+      "completion_tokens_details": {
+        "reasoning_tokens": 31
+      },
+      "prompt_tokens": 1386,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1447
+    }
+  }
+}

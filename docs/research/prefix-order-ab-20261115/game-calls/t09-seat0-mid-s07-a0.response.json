@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.837,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Продаю в кредит по высокой цене 12, выручка 1.25x вернётся после девальвации, что выгоднее прямой продажи.\"}",
+          "reasoning_content": "Sell 2 at price 12, no tax. Cash now ~38. But devaluation at round boundary: floor(cash/100)*62? That's cash/1.61 loss. Better sell_credit? Promissory returns 1.25x added after devaluation boundary — actually promissory added at boundary and cleared... \"At round boundaries 2+ cash=floor(cash/100)*62, promissory is added to cash and reset to zero\" — likely promissory added after devaluation, avoiding it. So sell_credit gives 12*2*1.25=30 alashi promissory, paid at next boundary. Sell now gives 24 cash → devalued to ~14.8. Credit better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766842,
+    "id": "20261116022037e8c45506418544a0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022037e8c45506418544a0",
+    "usage": {
+      "completion_tokens": 204,
+      "completion_tokens_details": {
+        "reasoning_tokens": 155
+      },
+      "prompt_tokens": 1425,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1629
+    }
+  }
+}

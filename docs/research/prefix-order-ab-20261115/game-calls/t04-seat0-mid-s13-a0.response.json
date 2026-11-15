@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.003,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":20000000,\"reason\":\"Ожидаемый доход лицензии ~40 alashi сверх доли, ставка 20 alashi выгодна и, вероятно, перекроет соперников с меньшим кэшем.\"}",
+          "reasoning_content": "License auction round 4. Income 20-60 alashi. My share 50% of remainder. Bidding ~ up to maybe 25-35 alashi worth. But cash is 40.5M = 40.5 alashi? Cash in units: 40500000 = 40.5 alashi. Bid in minimal units, multiple of 5M? Bid just integer. License income 20-60 alashi, expected ~40, I get it all extra. Bid maybe 20M (20 alashi) but that's half my cash. Cash also devalues? floor(cash/100)*62 at round 2+... wait round 4 boundary next is round 5. Hard devaluation applies to cash. So spending cash now on bid is fine (bid to bank). Expected gain 40 alashi extra minus losing share... Actually license income paid extra over share, so full value to me. Expected ~40. Opponents have ~34M, ~27M. Bid 25M could win. But losing bid returned. Risk: winner pays. Expected value if income ~40: bid 25 → gain ~15. Bid 20 safer. Choose 20000000.\n\nAlternatively produce for goods worth selling later. Goods produce 2 units ~ sell at price ~3-6 each = ~8-12 alashi later, but need market later rounds. Round 4 action, rounds 5-6 markets remain. Bid seems more valuable. Go bid 20000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766685,
+    "id": "20261116021756e8c06efddb714599",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021756e8c06efddb714599",
+    "usage": {
+      "completion_tokens": 368,
+      "completion_tokens_details": {
+        "reasoning_tokens": 314
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1889
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.269,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Высокие цены на вершине лестницы (9/8/7), продаю весь товар за наличные.\"}",
+          "reasoning_content": "Round 2 market, prices at sold=2: next prices 9,8,7... Sell 3 units at 9,8,7 = 24. Or sell_credit? Cash devalues 62% at round boundary — but promissory also devalued? \"cash=floor(cash/100)*62; promissory прибавляется к cash и обнуляется\" — added before devaluation likely, so promissory also devalues? Ambiguous; safer sell now? Actually devaluation applies to cash; promissory added to cash then devalued... Likely promissory added after devaluation. Either way selling now at good prices fine. Sell 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767157,
+    "id": "20261116022550a4f1d0c6eff84da7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022550a4f1d0c6eff84da7",
+    "usage": {
+      "completion_tokens": 182,
+      "completion_tokens_details": {
+        "reasoning_tokens": 144
+      },
+      "prompt_tokens": 1420,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1602
+    }
+  }
+}

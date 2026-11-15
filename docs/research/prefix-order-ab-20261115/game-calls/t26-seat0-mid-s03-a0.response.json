@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.559,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 8 списывает непогашённые promissory соперников — вредит им, а мне почти безразлична в раунде 1.\"}",
+          "reasoning_content": "Law card 8: cancels all outstanding promissory. Round 1, promissories unknown but my sell_credits not shown; likely few. No harm? Card 8 hurts whoever sold credit. Selling on credit gives 1.25x; cancelling helps me if I plan credit sales later... Actually card 8 cancels existing promissories (bad for creditors). I might have none. If others did sell_credit, card 8 hurts them, good for my ranking. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767447,
+    "id": "202611160230424a2548419586466f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160230424a2548419586466f",
+    "usage": {
+      "completion_tokens": 149,
+      "completion_tokens_details": {
+        "reasoning_tokens": 103
+      },
+      "prompt_tokens": 1381,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1530
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.527,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товар и взятки в последнем раунде не окупаются, влияние без денег на банк ничего не даёт.\"}",
+          "reasoning_content": "Round 6, final action. No goods. Market phase already past? Round 6 order: market, action, law. Decision stage primary, action phase. Producing goods now useless? Market already happened this round; no more markets. So goods worthless. Best action: gain influence for the 5% bank bonus? Influence max tie — everyone 1. Bribe 5M to someone gives +1 influence to me? No, bribe gives influence to me (briber). floor(amount/5M) influence to me. Cost 5M cash for +1 influence → tie-break among 3 at 2? Others have 1, I'd have 2, best influence → +5% of bank bonus. Bank size unknown. Cash: I'm richest. Bribe 5M reduces cash 5M but gains max influence (2 vs 1). 5% of bank — bank likely large? Commission 5% of bank; 5% of that to influence holder. Unknown bank, probably hundreds? Risky. Simpler: pass. But influence bonus could be worth more than 5M. Total money in game ~86M cash plus... bank =? Unclear. Pass is safe; but +1 influence likely worth it if bank > 1 billion? Bank probably from bids and roof... unknown, likely small. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767662,
+    "id": "202611160234147611030009ab4520",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160234147611030009ab4520",
+    "usage": {
+      "completion_tokens": 317,
+      "completion_tokens_details": {
+        "reasoning_tokens": 281
+      },
+      "prompt_tokens": 1524,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1841
+    }
+  }
+}

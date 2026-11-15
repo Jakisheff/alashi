@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.636,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 8 обнуляет promissory, но сейчас ни у кого их нет — закон безвреден, нет смысла тратить вето.\"}",
+          "reasoning_content": "Card 8 wipes promissory. I have no promissory (cash 0). Others likely also 0 cash round 1. Card 8 is harmless now — but voting? Wait, post_vote stage, my vote already cast? voted all true, decision_stage post_vote... but I'm asked to vote? Possibly veto decision. Card 8 with no outstanding promissory is neutral; veto not needed. Pass? Only vote actions allowed. Since already voted, maybe veto option. Abstain to be safe — but action must be one of listed. Actually card 8 is harmless, so pass-equivalent: abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767034,
+    "id": "202611160223496482fdef914442c4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160223496482fdef914442c4",
+    "usage": {
+      "completion_tokens": 177,
+      "completion_tokens_details": {
+        "reasoning_tokens": 131
+      },
+      "prompt_tokens": 1381,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1558
+    }
+  }
+}

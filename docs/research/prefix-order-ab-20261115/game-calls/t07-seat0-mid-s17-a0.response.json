@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.392,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара для продажи, а покупка в последнем раунде бессмысленна.\"}",
+          "reasoning_content": "Round 6, last round. I have 0 goods. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766798,
+    "id": "202611160219554d5598fcd35b4c78",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160219554d5598fcd35b4c78",
+    "usage": {
+      "completion_tokens": 44,
+      "completion_tokens_details": {
+        "reasoning_tokens": 15
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1472
+    }
+  }
+}

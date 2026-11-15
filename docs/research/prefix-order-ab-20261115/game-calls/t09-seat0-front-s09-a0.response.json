@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.471,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Бонус влияния получит богатейший (фракция 2), а не я — мне невыгодно усиление соперника.\"}",
+          "reasoning_content": "Card 5: +1 influence to richest. Richest is idx2 (30.64) vs me 30. I don't benefit. Vote no. But rivals react... no benefit to me; vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766850,
+    "id": "20261116022047f5b235564df546a5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022047f5b235564df546a5",
+    "usage": {
+      "completion_tokens": 86,
+      "completion_tokens_details": {
+        "reasoning_tokens": 45
+      },
+      "prompt_tokens": 1387,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1473
+    }
+  }
+}

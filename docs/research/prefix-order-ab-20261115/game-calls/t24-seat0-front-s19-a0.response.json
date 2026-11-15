@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.21,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Последний раунд — promissory не погасится, поэтому продаю весь товар сразу по высоким ценам с бумом.\"}",
+          "reasoning_content": "Round 6, last market. Sell for cash. Prices start at 12+2=14. Sell 3 units. Sell credit worthless after round 6. Sell all 3 now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767441,
+    "id": "202611160230395086a7a96f554523",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160230395086a7a96f554523",
+    "usage": {
+      "completion_tokens": 81,
+      "completion_tokens_details": {
+        "reasoning_tokens": 40
+      },
+      "prompt_tokens": 1427,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1508
+    }
+  }
+}

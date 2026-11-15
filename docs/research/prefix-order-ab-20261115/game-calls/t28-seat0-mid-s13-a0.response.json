@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.265,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":20000000,\"reason\":\"Ожидаемый доход лицензии ~40 alashi, ставка 20 даёт положительное ожидание даже при конкуренции\"}",
+          "reasoning_content": "License income 20-60, expected ~40. I have 38.75 cash. Bid ~20-25? Competitors have ~32 each. Bid 25 seems reasonable. Rivals likely bid too. I have least influence (1 vs 3), so max-influence bonus unlikely. License pays above share, worth bidding. Bid 20M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767551,
+    "id": "2026111602322770efcda72888447e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602322770efcda72888447e",
+    "usage": {
+      "completion_tokens": 116,
+      "completion_tokens_details": {
+        "reasoning_tokens": 74
+      },
+      "prompt_tokens": 1522,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1638
+    }
+  }
+}

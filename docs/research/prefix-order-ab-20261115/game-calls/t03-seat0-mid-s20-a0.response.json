@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.567,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Налог 20% бьёт по выручке соперников, у меня товара нет — голосую за\"}",
+          "reasoning_content": "Law card 2: tax 20%. Last round; tax collected before market? Tax applies to sales revenue. We have no goods (goods 0), so tax doesn't hurt us. Tax hurts others' market revenue, increases bank. Vote yes? Tax increases bank, and I won't sell. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766706,
+    "id": "202611160218220a74122cd3044269",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160218220a74122cd3044269",
+    "usage": {
+      "completion_tokens": 99,
+      "completion_tokens_details": {
+        "reasoning_tokens": 65
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1490
+    }
+  }
+}

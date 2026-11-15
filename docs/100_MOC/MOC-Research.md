@@ -52,5 +52,6 @@
 - [MOC-Product](MOC-Product.md)
 
 - [Самостоятельное изменение обвязки по старым партиям](../research/harness-learning-20261020/README.md)
+- [A/B порядка блоков промпта: кэш и parse-ошибки](../research/prefix-order-ab-20261115/README.md)
 - [Аудит внешнего отчёта по harness engineering: факт против прогноза](../research/harness-audit-20261115/README.md)
 - [Среда решает, является ли кратчайший путь к награде целевым навыком](../200_ZETTEL/20261115-environment-decides-shortcut.md)
