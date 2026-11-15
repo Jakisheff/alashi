@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "status": "hypothesis",
+  "name": "agent-context-ab",
+  "question": "Does the repo agent loop (skills + gate) change first-contact protocol behavior versus a naked agent and versus QUICKSTART_JURY text in context?",
+  "arms": {
+    "naked": {
+      "context": "base arena URL only",
+      "skill": null
+    },
+    "quickstart": {
+      "context": "docs/QUICKSTART_JURY.md inline (4070 bytes)",
+      "skill": null
+    },
+    "skills": {
+      "context": "base arena URL",
+      "skill": ".agents/skills/sbf-verify for internal checks; arena procedure via AGENTS.md"
+    }
+  },
+  "design": {
+    "type": "paired-seed",
+    "model": "glm-5.3",
+    "arena": "local arenad, isolated state dir and port per run (repo rule)",
+    "same_seed_all_arms": true,
+    "sequential_early_stop": "allowed, repo precedent: data/eval/power/harness-learning-power-20261112/power-v2-deep-dive.py"
+  },
+  "metrics": {
+    "primary": "first_contact_4xx_rate (share of HTTP game calls rejected by schema/phase on first attempt)",
+    "secondary": "mean payout vs builtin opponents (greedy, tactical)",
+    "tertiary": "tokens_per_game",
+    "activation": "observed skill/QUICKSTART load in the session log, reported per arm, never assumed"
+  },
+  "power": {
+    "source": "docs/research/harness-learning-20261020 (measured SD of paired payout diffs 8.16M, 64k tokens/game LLM arm)",
+    "payout_branch": {
+      "effect_5M": "21 seeds",
+      "effect_2M": "131 seeds"
+    },
+    "error_branch": {
+      "test": "McNemar paired binary (first-contact call accepted vs rejected)",
+      "assumptions": "base rejection 15%, arm difference 30pp, discordance 0.35",
+      "n_pairs": 32,
+      "note": "rounded up to a multiple of seats; primary metric drives N, payout branch rides the same games"
+    },
+    "recommended_n_seeds": 36,
+    "cost_upper_bound_tokens": 6900000,
+    "cost_note": "36 seeds x 3 arms x ~64k tokens; the naked arm is expected to cost less (early errors shorten games); refine after a 2-seed pilot"
+  },
+  "decision_rule": {
+    "run": "only after owner approves the token spend",
+    "payout": "exact Wilcoxon two-sided p < 0.05 plus bootstrap CI excluding 0 (tools/eval_report.py)",
+    "errors": "McNemar p < 0.05 on 32+ pairs",
+    "report": "tools/eval_report.py --write, committed raw logs under docs/research/<name>/"
+  }
+}

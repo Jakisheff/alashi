@@ -87,6 +87,7 @@ jobs:
           python3 tools/anchor_dataset_test.py
           python3 tools/lint_agent_configs.py
           python3 tools/test_sbf_gate.py
+          python3 tools/test_eval_report.py
           node --test tools/hotseat_engine_test.cjs tools/board_view_test.cjs tools/city_rules_test.cjs
           bash -n tools/stack_up.sh
 

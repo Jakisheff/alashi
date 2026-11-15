@@ -30,6 +30,9 @@ python3 tools/lint_agent_configs.py || fail "lint_agent_configs"
 step "sbf gate self-test"
 python3 tools/test_sbf_gate.py || fail "test_sbf_gate"
 
+step "eval report reproduction"
+python3 tools/test_eval_report.py || fail "test_eval_report"
+
 if [ -d frontend/node_modules ]; then
     step "frontend typecheck"
     (cd frontend && npm run typecheck) || fail "typecheck"
