@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.561,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Налог 20% прошёл против моего голоса и сильно режет будущую выручку — блокирую вето президента.\"}",
+          "reasoning_content": "Law card 2 (tax 20%) passed? Voted no, all voted. It seems veto_pending false, decision_stage post_vote — means result known. I'm president; if it passed I could veto... but veto_pending false and post_vote stage; law passed since I voted no, others likely yes. In post_vote stage previously I could act... previously in round1 post_vote I made a market action? Odd. Protocol law actions: veto allowed. If veto_pending false, veto maybe not available. Vote no already recorded. Best: veto to block 20% tax. But veto only if pending? Risk of wasted turn → pass. Actually round 1 post_vote action was \"sell\" — weird harness. Here phase law, post_vote, actions: vote options... I'll try veto to block tax.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738921,
+    "id": "20261115183515c2e465f1f36c4557",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183515c2e465f1f36c4557",
+    "usage": {
+      "completion_tokens": 206,
+      "completion_tokens_details": {
+        "reasoning_tokens": 167
+      },
+      "prompt_tokens": 2976,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3182
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.917,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта даёт +1 влияния богатейшему (сопернику, не мне) — против.\"}",
+          "reasoning_content": "Law card 5: +1 influence to richest. Richest is faction 1 (37.5M) vs me 13.1M. So helps rival — vote no. But vote_weight_mode shows rivals already voted; my vote 3 vs their 3+3 — no way yes wins anyway unless they voted no. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738153,
+    "id": "20261115182230884970a1c14942c8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182230884970a1c14942c8",
+    "usage": {
+      "completion_tokens": 105,
+      "completion_tokens_details": {
+        "reasoning_tokens": 71
+      },
+      "prompt_tokens": 3455,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 3560
+    }
+  }
+}

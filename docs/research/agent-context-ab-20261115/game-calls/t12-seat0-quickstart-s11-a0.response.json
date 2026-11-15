@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.146,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":35000000,\"reason\":\"Аукцион раунда 4: ставка 35M перекрывает максимальный cash соперников, а доход лицензии 20–60 alashi плюс возврат ~50% ставки через банк делает это прибыльным.\"}",
+          "reasoning_content": "Round 4 action phase, auction available. Cash 40.675M. Bid for license (income 20-60 alashi, huge). Bid must be multiple of 5M. Bidding ~30M? Payout: license income 20-60 alashi = 20-60M, paid beyond share. Bank total cash pool ~99.7M, shares... a 30M bid returns if lost. If win, pay 30M to bank but get 20-60M extra plus share. Expected ~40M income, bid 30M net gain ~10M, but losing 30M from my cash reduces my share... still worth. Others have 33.5M and 25.5M, can't exceed that. Bid 35M? I have 40.675M. Bid 35M likely wins over rivals' max cash. Risk: license pays only 20M. Expected value roughly break-even; share redistribution: my 35M to bank increases everyone's shares 50:30:15 — I get back 50% = 17.5M, so effective cost 17.5M plus losing rank. Income 20-60M on top. Net positive. Bid 35M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738516,
+    "id": "2026111518282937f1be2cce984d74",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518282937f1be2cce984d74",
+    "usage": {
+      "completion_tokens": 326,
+      "completion_tokens_details": {
+        "reasoning_tokens": 262
+      },
+      "prompt_tokens": 3327,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 3653
+    }
+  }
+}

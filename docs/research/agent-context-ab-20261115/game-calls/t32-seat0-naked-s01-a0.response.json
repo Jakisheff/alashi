@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.043,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатно получить 2 товара для продажи на следующем рынке.\"}",
+          "reasoning_content": "I passed market with no goods, so vote_weight 3 (abstained action? Actually pass gives +2 weight). Now action phase: produce gives 2 goods (no subsidy). Others have 2 goods. Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739576,
+    "id": "202611151846135db841fe73f14264",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151846135db841fe73f14264",
+    "usage": {
+      "completion_tokens": 70,
+      "completion_tokens_details": {
+        "reasoning_tokens": 46
+      },
+      "prompt_tokens": 1360,
+      "prompt_tokens_details": {
+        "cached_tokens": 1152
+      },
+      "total_tokens": 1430
+    }
+  }
+}

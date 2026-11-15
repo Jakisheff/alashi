@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.09,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, я не президент — вето недоступно.\"}",
+          "reasoning_content": "Law phase, post_vote stage? voted all true, decision_stage post_vote. Actions allowed: veto if president — I'm not president. So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737963,
+    "id": "202611151819207ed0765087594625",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151819207ed0765087594625",
+    "usage": {
+      "completion_tokens": 57,
+      "completion_tokens_details": {
+        "reasoning_tokens": 31
+      },
+      "prompt_tokens": 2004,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2061
+    }
+  }
+}

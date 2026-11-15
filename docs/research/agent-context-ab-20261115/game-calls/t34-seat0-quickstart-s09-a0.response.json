@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.711,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Субсидия даёт +1 товар к каждому производству — я произвожу каждый раунд, это прямая выгода.\"}",
+          "reasoning_content": "Card 3: subsidy_goods=1 — helps everyone, I have goods already; I produce each round, so more goods from shuttle/produce. Positive but symmetric; vote yes since it benefits production. Everyone produces, symmetric — but it increases goods, prices may drop as sales counter rises. Mildly negative externality? Still likely beneficial to me since I sell. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746676,
+    "id": "202611152044320a8d4df4e3084cc0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611152044320a8d4df4e3084cc0",
+    "usage": {
+      "completion_tokens": 117,
+      "completion_tokens_details": {
+        "reasoning_tokens": 77
+      },
+      "prompt_tokens": 3160,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3277
+    }
+  }
+}

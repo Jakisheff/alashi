@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.203,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 7 уже не действует (рынок этого раунда пройден), поэтому закон безвреден и можно голосовать как угодно.\"}",
+          "reasoning_content": "Card 7: prices +2 — but market is done (last round market already passed). Useless. Vote doesn't matter for payout except law passing affects nothing. Vote yes freely or abstain. Just pass or vote_yes; nothing changes. Choose vote_abstain... simplest: vote_yes harmless.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738568,
+    "id": "2026111518292538bd86c26bb9478e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518292538bd86c26bb9478e",
+    "usage": {
+      "completion_tokens": 105,
+      "completion_tokens_details": {
+        "reasoning_tokens": 62
+      },
+      "prompt_tokens": 3240,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 3345
+    }
+  }
+}

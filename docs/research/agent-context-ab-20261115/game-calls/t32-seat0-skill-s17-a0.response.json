@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.809,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 1 вводит налог 10%, который ударит по моей финальной продаже в раунде 6 — голосую против, при необходимости применю вето как президент.\"}",
+          "reasoning_content": "Card 1: tax 10% next round — hurts sellers. I plan to sell 1 unit in round 6; tax reduces revenue. Vote no. I'm president with weight 2, others 1 each; one already voted (voted[2]=true, unknown). Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746640,
+    "id": "20261115204357ac0021a79d1944a7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115204357ac0021a79d1944a7",
+    "usage": {
+      "completion_tokens": 113,
+      "completion_tokens_details": {
+        "reasoning_tokens": 62
+      },
+      "prompt_tokens": 3277,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 3390
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.494,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Финальный раунд: товара продать некуда, донки/шаттл бесполезны без рынка, а взятка 5M за 5% банка (банк ≈ моей ставки 18M, бонус <1M) — чистый убыток и потеря ранга по кэшу.\"}",
+          "reasoning_content": "Round 6 action, no goods, cash 35.6M. Last round — bribe? Influence bonus 5% of bank to max influence. I'm tied 1,1,1 with cash lead. Bribe 5M gives 1 influence, 5M cost. Bank share bonus? 5% of bank to max influence — bank likely large (bid 18M + sales). Tie-break: influence equal → best cash. Bribing 5M loses 5M cash but gains influence → 5% bonus if I win. But rivals could bribe too after me? I'm index 0, they act after. Risky. Expected: bank maybe ~60M? 5% = 3M... uncertain. But rivals also may not bribe. Bribing 5M gives influence 2; then rivals could outbid. If they don't, I gain 5% bonus ~3M minus 5M cost = net loss. Bank: license bid 18M went to bank, plus commission 5%. Commission is 5% of bank... actually bank funded by my bid 18M + winner's? Winner's bid went to bank. Bank ≈ 18M+ maybe. 5% = 0.9M. Not worth 5M bribe. Also final rank by cash+hard; losing 5M hurts rank. Skip: donkey? Costs 1M gives 1 goods — no market left to sell. Shuttle gives goods but no market after. So pass.\n\nBut protocol says don't pass without reason. Reason: no profitable action last round.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738410,
+    "id": "20261115182638aab6797d6e8e4fe8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182638aab6797d6e8e4fe8",
+    "usage": {
+      "completion_tokens": 418,
+      "completion_tokens_details": {
+        "reasoning_tokens": 338
+      },
+      "prompt_tokens": 3614,
+      "prompt_tokens_details": {
+        "cached_tokens": 3328
+      },
+      "total_tokens": 4032
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.692,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Карта 8 (списание promissory) уже принята и мне не вредит — вето не требуется.\"}",
+          "reasoning_content": "Card 8 already passed? voted all true, post_vote stage. It passed (I voted yes, effect wipes promissory—no one has any visible). Nothing to do; veto not needed... card 8 is harmless to me. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739494,
+    "id": "2026111518445165bd27e56b1e42bc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518445165bd27e56b1e42bc",
+    "usage": {
+      "completion_tokens": 86,
+      "completion_tokens_details": {
+        "reasoning_tokens": 51
+      },
+      "prompt_tokens": 2948,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3034
+    }
+  }
+}

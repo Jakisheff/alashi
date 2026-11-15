@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.072,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Финальный раунд: продаю оба товара по вершине лестницы (12, 10) без кредита.\"}",
+          "reasoning_content": "Round 6 final, sell both goods, ladder 12,10 — plain sell.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739633,
+    "id": "20261115184710620ea049d1104df7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184710620ea049d1104df7",
+    "usage": {
+      "completion_tokens": 57,
+      "completion_tokens_details": {
+        "reasoning_tokens": 18
+      },
+      "prompt_tokens": 3588,
+      "prompt_tokens_details": {
+        "cached_tokens": 3328
+      },
+      "total_tokens": 3645
+    }
+  }
+}

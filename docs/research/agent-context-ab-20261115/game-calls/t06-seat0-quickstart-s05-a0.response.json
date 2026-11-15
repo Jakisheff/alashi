@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.38,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемая ценность шаттла (3 товара с риском ~25% конфискации) выше, чем бесплатный produce (2), а денежные альтернативы хуже из-за грядущей девальвации.\"}",
+          "reasoning_content": "Action phase, round 2. Cash 17, goods 0. Options: produce (2 goods), donkey, shuttle, bribe, roof. Influence 2 already; bribes give influence. Cash will devalue at round boundaries (62%). Best use cash: donkey converts 1 cash→1 good (good sells ~5-8, but cash devalues 38% anyway). Buy influence via bribe? Bribe 5M gives 1 influence, weight matters for laws. I'm president already with weight 4 of 8 total... vote yes needs strictly more; opponents 3+1=4 vs my 4 — laws can pass without me; more influence helps.\n\nProduce gives 2 free goods. Then donkey: 1 alashi → 1 good, likely sells ≥5 later; good even after devaluation. Cash 17: bribe 5 for influence vs donkey goods. Money splits at end 50:30:15 — cash contributes only via rank mostly. Bribing transfers cash to opponent. Better: produce, and maybe donkey few.\n\nOnly one action per phase. Produce is free 2 goods. But donkey/shuttle give more. Shuttle: 3 goods, 25% confiscation risk — expected 2.25 goods free. Shuttle better than produce (EV 2.25 vs 2). But shuttle risk: confiscation of gray goods at border ~25%; no privileged border role mentioned. Still EV higher. However confiscation could take all 3? Probably yes. EV shuttle 2.25 > produce 2. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738203,
+    "id": "2026111518231207696e21fd9d4342",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518231207696e21fd9d4342",
+    "usage": {
+      "completion_tokens": 399,
+      "completion_tokens_details": {
+        "reasoning_tokens": 334
+      },
+      "prompt_tokens": 2816,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3215
+    }
+  }
+}

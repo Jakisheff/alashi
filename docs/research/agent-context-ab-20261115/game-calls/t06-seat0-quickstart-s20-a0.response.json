@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.403,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Рынок финального раунда уже прошёл, товар производить некому продавать, а взятки не окупаются — сохраняю cash для итога.\"}",
+          "reasoning_content": "Round 6 action, no goods, cash ~51.8M. Produce gives 2 goods — no market after? Round 6 is last, market already done. So production worthless. Bribe influence affects final influence bonus 5% bank — small. Cash counts directly (cash+hard at final? cash after devaluation? Round 6 no devaluation since boundary rounds 2+... devaluation at boundaries of rounds 2+ — after round 6? Probably settlement counts cash+hard). Best: pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738300,
+    "id": "20261115182455242be1d764d34bfb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182455242be1d764d34bfb",
+    "usage": {
+      "completion_tokens": 155,
+      "completion_tokens_details": {
+        "reasoning_tokens": 107
+      },
+      "prompt_tokens": 4380,
+      "prompt_tokens_details": {
+        "cached_tokens": 4096
+      },
+      "total_tokens": 4535
+    }
+  }
+}

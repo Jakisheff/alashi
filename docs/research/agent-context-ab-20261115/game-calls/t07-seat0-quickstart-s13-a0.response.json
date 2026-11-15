@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.953,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":10000000,\"reason\":\"Аукцион только в раунде 4: лицензия даёт ~40 alashi сверх доли, а ставка частично вернётся через распределение банка; 10 alashi — сильная, но прибыльная ставка при моём превосходстве по кэшу.\"}",
+          "reasoning_content": "Round 4 action: auction bid available. License income ~20-60. Bid? Competitors' cash ~33.5M and ~25.5M. I have 40.7M. Bidding e.g. 10M could win but profit uncertain; loser's bid returns. If I bid 10M and win, I pay 10M into bank (reduces bank pool, which returns via shares partially?). Bid goes to bank — bank commission 5%... bank gets bigger; my share 50%? Actually payout is commission 5% of bank plus remainder by weights — bid into bank reduces my cash but increases bank distribution, partially returned via 50% share. Net loss if bid > license*~... License 20-60, expected 40. Paying 10M(=10 alashi) but recovering ~50%+ via share = net cost ~5 alashi, plus license 40. Worth bidding. Bid 10M (multiple? any integer amount). Competitors might bid. I'll bid 10000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738270,
+    "id": "20261115182423a045c0c36a4f4e18",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182423a045c0c36a4f4e18",
+    "usage": {
+      "completion_tokens": 295,
+      "completion_tokens_details": {
+        "reasoning_tokens": 222
+      },
+      "prompt_tokens": 3524,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 3819
+    }
+  }
+}

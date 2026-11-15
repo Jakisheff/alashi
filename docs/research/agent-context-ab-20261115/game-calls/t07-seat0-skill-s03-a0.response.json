@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.572,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено (post_vote), допустимо только пассивное ожидание.\"}",
+          "reasoning_content": "Phase law, post_vote — action pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738206,
+    "id": "20261115182324465b46aee19d42b7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182324465b46aee19d42b7",
+    "usage": {
+      "completion_tokens": 37,
+      "completion_tokens_details": {
+        "reasoning_tokens": 9
+      },
+      "prompt_tokens": 2012,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2049
+    }
+  }
+}

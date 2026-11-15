@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.999,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Производство бесплатно даёт 2 товара для будущих продаж.\"}",
+          "reasoning_content": "Action phase round 1: I passed market, others bought? They have goods. I have 0 cash, 0 goods. Best: produce (free, 2 goods).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739015,
+    "id": "20261115183652aade271ddf674642",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183652aade271ddf674642",
+    "usage": {
+      "completion_tokens": 61,
+      "completion_tokens_details": {
+        "reasoning_tokens": 37
+      },
+      "prompt_tokens": 2451,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 2512
+    }
+  }
+}

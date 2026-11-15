@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.223,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Пустая карта 0, исход голосования ничего не меняет — экономлю действие.\"}",
+          "reasoning_content": "Law card 0, empty — nothing matters. Vote yes/no both irrelevant; pass costs nothing. Abstain/pass fine. Pass keeps... actually vote weight: skipping action not relevant. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738290,
+    "id": "20261115182448a51c37bdf17c4ce2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182448a51c37bdf17c4ce2",
+    "usage": {
+      "completion_tokens": 70,
+      "completion_tokens_details": {
+        "reasoning_tokens": 41
+      },
+      "prompt_tokens": 4178,
+      "prompt_tokens_details": {
+        "cached_tokens": 3904
+      },
+      "total_tokens": 4248
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.348,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование уже завершено, я не президент и вето не доступно.\"}",
+          "reasoning_content": "Post_vote stage, nothing to do.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739136,
+    "id": "2026111518385469396d7d1e7347b6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518385469396d7d1e7347b6",
+    "usage": {
+      "completion_tokens": 35,
+      "completion_tokens_details": {
+        "reasoning_tokens": 8
+      },
+      "prompt_tokens": 2952,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 2987
+    }
+  }
+}

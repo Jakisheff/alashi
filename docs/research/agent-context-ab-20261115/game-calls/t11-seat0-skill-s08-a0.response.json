@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.978,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продаю оба товара на открытии раунда 3 по вершине лестницы (12 и 10 alashi), пока цена не упала.\"}",
+          "reasoning_content": "Sell 2 units at 12 and 10.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738455,
+    "id": "20261115182733fe06bda6fe1844e1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182733fe06bda6fe1844e1",
+    "usage": {
+      "completion_tokens": 57,
+      "completion_tokens_details": {
+        "reasoning_tokens": 11
+      },
+      "prompt_tokens": 2421,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2478
+    }
+  }
+}

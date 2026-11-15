@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.114,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нет товара, а в раунде 6 нужна продажа — produce бесплатно даёт 2 единицы.\"}",
+          "reasoning_content": "R5 action. I bid 15M in R4 — outcome unknown; if lost, returned. My cash 11.27M suggests... R4 cash was 18.17M after bid; now 11.27M — devaluation happened, bid lost and returned? 18.17+15=33.17... wait seen showed 18.17 after bid (bid deducted). Boundary: floor(33.17/100*?) if returned... Actually 33.17*0.62=20.6, not 11.27. If bid lost: 18.17→11.27 (62%). Yes bid lost. Produce: I have 0 goods, need goods for R6. Produce gives 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738794,
+    "id": "20261115183310779458d8449c4521",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183310779458d8449c4521",
+    "usage": {
+      "completion_tokens": 186,
+      "completion_tokens_details": {
+        "reasoning_tokens": 154
+      },
+      "prompt_tokens": 3208,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 3394
+    }
+  }
+}

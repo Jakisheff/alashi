@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.589,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, я не президент, повлиять на исход больше нечем — экономлю деньги.\"}",
+          "reasoning_content": "Law card 3 post_vote; I voted yes. Card passed? voted all true, weights 1 each — my yes, unknown others. Decision stage post_vote: options include bribe? Actions in law phase: votes, veto, pass. I'm not president, veto_pending false. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738349,
+    "id": "202611151825466d1c1bf442224173",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151825466d1c1bf442224173",
+    "usage": {
+      "completion_tokens": 95,
+      "completion_tokens_details": {
+        "reasoning_tokens": 62
+      },
+      "prompt_tokens": 2156,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2251
+    }
+  }
+}

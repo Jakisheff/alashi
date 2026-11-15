@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.062,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Кредитная продажа 2 товаров по вершине лестницы (~30 промиссори) избегает децимации и налога, соперники без товара не обвалят цену.\"}",
+          "reasoning_content": "Round 5 market, I have 2 goods, cash 9.7M, promissory from round 4 credit sale (17.5). Prices start at 12. Sell credit 2 units: 2*12*1.25=30 promissory, repaid at boundary of round 6? \"returns at boundary of next round\" — round 5 sale repaid at boundary round 6, before final? Boundary after round 6 is end; promissory created round 5 returns at boundary of round 6 (start of round 6)... Actually boundary of next round = boundary between r5 and r6, credited to cash then. Then cash devaluation only at boundaries 2+. At r5→r6 boundary cash devalues too. Hmm, cash credited at boundary then immediately? Hard to know order. Even if devalued, sell credit avoids tax and multiplies 1.25. Opponents have 0 goods. Sell credit 2 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738513,
+    "id": "202611151828278613a99f38224963",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151828278613a99f38224963",
+    "usage": {
+      "completion_tokens": 261,
+      "completion_tokens_details": {
+        "reasoning_tokens": 206
+      },
+      "prompt_tokens": 2814,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3075
+    }
+  }
+}

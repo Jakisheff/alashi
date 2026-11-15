@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.483,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карты 8 списывает векселя — у меня их нет, а возможные векселя соперников сгорают, что мне выгодно.\"}",
+          "reasoning_content": "Card 8: cancels promissory notes. I have no promissory notes visible; but my sell in r2 was plain sell, cash visible 16M. Opponent 3 sold and may have credit? I don't. Card 8 cancels promissory notes — harmful only if I hold them. I don't, so neutral/harmful to opponents? Opponents' credit unknown. Vote yes if opponents might hold promissory. Unknown; likely fine to vote yes to hurt potential creditors. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738502,
+    "id": "20261115182817485f3b22367045f3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182817485f3b22367045f3",
+    "usage": {
+      "completion_tokens": 154,
+      "completion_tokens_details": {
+        "reasoning_tokens": 110
+      },
+      "prompt_tokens": 2186,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2340
+    }
+  }
+}

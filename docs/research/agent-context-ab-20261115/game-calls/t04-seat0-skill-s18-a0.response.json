@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.136,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Последний раунд: продаю оба товара на открытии по максимальной лестнице, кредит не использую.\"}",
+          "reasoning_content": "Final round, sell 2 goods at opening.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738152,
+    "id": "20261115182230c5f67fa78ac44372",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182230c5f67fa78ac44372",
+    "usage": {
+      "completion_tokens": 49,
+      "completion_tokens_details": {
+        "reasoning_tokens": 10
+      },
+      "prompt_tokens": 3443,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 3492
+    }
+  }
+}

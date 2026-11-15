@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.213,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":20000000,\"reason\":\"Ожидаемый доход лицензии 20–60 превышает разумную ставку, а проигравшим ставка возвращается — риск минимален.\"}",
+          "reasoning_content": "Round 4 action: bid auction available. Cash ~39. license income 20-60. Bidding maybe worth. Competitors may bid. Bid e.g. 10? Expected profit ~40-10=30. But rivals may outbid. Bid 15.\n\nCash 39.4M = 39 alashi. Bid 15 million. If lose, returned. Reasonable bid 20 to secure? Expected gain 40-20=20. Bid 20.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738669,
+    "id": "20261115183104488428ee5d754c5d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183104488428ee5d754c5d",
+    "usage": {
+      "completion_tokens": 145,
+      "completion_tokens_details": {
+        "reasoning_tokens": 99
+      },
+      "prompt_tokens": 2389,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2534
+    }
+  }
+}

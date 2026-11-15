@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.395,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голос по карте 8 уже подан, на post_vote новых решений нет.\"}",
+          "reasoning_content": "Post_vote, already voted yes. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738120,
+    "id": "20261115182157c08a0976a94b46a3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182157c08a0976a94b46a3",
+    "usage": {
+      "completion_tokens": 36,
+      "completion_tokens_details": {
+        "reasoning_tokens": 9
+      },
+      "prompt_tokens": 2755,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 2791
+    }
+  }
+}

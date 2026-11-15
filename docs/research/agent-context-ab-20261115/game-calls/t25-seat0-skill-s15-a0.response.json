@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.172,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 2 товара на финальный рынок надёжнее шаттла с 25% риском конфискации и сохраняют кассу.\"}",
+          "reasoning_content": "Action phase, round 5, no goods, no license won. Options: produce (2 goods for next market), donkey (1 alashi for 1 good), shuttle (25% confiscation risk, 3 goods). Goods sell next round at decent prices. Shuttle gives 3 goods, grey — confiscation ~25% chance. Produce gives 2 free. Donkey: pay 1 for 1. Produce is free 2 goods ~ sell at ~12,10 → ~22 alashi. Shuttle EV: 3 goods, expected ~2.25*~11 ≈ 24.7 minus risk. Shuttle slightly better EV but confiscation probability on all? Risk ~25% lose everything. Produce is safe. With subsidy 0, shuttle = 3 goods. EV shuttle ≈ 0.75*3*11 = 24.75 vs produce 22. Slight edge but variance; also cash 9.4 needed. I'll do produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739269,
+    "id": "20261115184102d4f7b85334794385",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184102d4f7b85334794385",
+    "usage": {
+      "completion_tokens": 249,
+      "completion_tokens_details": {
+        "reasoning_tokens": 203
+      },
+      "prompt_tokens": 3110,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3359
+    }
+  }
+}

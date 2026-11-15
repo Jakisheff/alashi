@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.114,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нет денег на donkey; produce даёт 2 товара бесплатно\"}",
+          "reasoning_content": "No cash, no goods. produce gives 2 goods.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739310,
+    "id": "202611151841486c87215cad6d4f7a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151841486c87215cad6d4f7a",
+    "usage": {
+      "completion_tokens": 35,
+      "completion_tokens_details": {
+        "reasoning_tokens": 12
+      },
+      "prompt_tokens": 1359,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1394
+    }
+  }
+}

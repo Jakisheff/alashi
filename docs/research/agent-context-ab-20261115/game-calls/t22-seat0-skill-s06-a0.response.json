@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.194,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"У меня нет непогашенных векселей, а списание долгов выгодит только соперников с promissory.\"}",
+          "reasoning_content": "Law card 8: writes off all promissory notes. I sold normally, no credit outstanding. But opponents may have? Selling in round 2... opponent 2 sold 2 units earlier — unknown if credit. Card 8 benefits those with promissory. I have none, so it's neutral-to-negative for me if others have credit. But likely others sold normal. Actually removing debt benefits debtors. I'll vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739052,
+    "id": "202611151837282e72c78a94fc45f3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151837282e72c78a94fc45f3",
+    "usage": {
+      "completion_tokens": 126,
+      "completion_tokens_details": {
+        "reasoning_tokens": 90
+      },
+      "prompt_tokens": 2244,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2370
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.556,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Закон 4 уже прошёл в мою пользу, вето не нужно.\"}",
+          "reasoning_content": "Law 4 passed (yes 3 > no). Post_vote, nothing to do — pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738509,
+    "id": "202611151828279ddbc8fdaa934209",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151828279ddbc8fdaa934209",
+    "usage": {
+      "completion_tokens": 47,
+      "completion_tokens_details": {
+        "reasoning_tokens": 20
+      },
+      "prompt_tokens": 2170,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2217
+    }
+  }
+}

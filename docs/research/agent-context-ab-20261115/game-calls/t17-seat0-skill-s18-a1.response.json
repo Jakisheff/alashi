@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.225,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 5 даёт +1 влияния богатейшему (фракция 1), усиливая соперника в борьбе за бонус влияния — против.\"}",
+          "reasoning_content": "Law card 5: +1 influence to richest. Richest is faction 1 (25.27M). I'm poorest. Vote no? If passes, richest gets influence which affects final influence bonus. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738855,
+    "id": "2026111518341105c91a455ae241aa",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518341105c91a455ae241aa",
+    "usage": {
+      "completion_tokens": 89,
+      "completion_tokens_details": {
+        "reasoning_tokens": 45
+      },
+      "prompt_tokens": 3328,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 3417
+    }
+  }
+}

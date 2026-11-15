@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.036,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 2 товара на продажу в market раунда 4, кэш сохраняю под ставку на лицензию\"}",
+          "reasoning_content": "Action phase round 3. Produce gives 2 goods. Cash 36.5 alashi, need cash for R4 bid. Produce free is best.\n\nWait, cash here — my cash 36.54M? Cash was 10.54M after round 3 sale (2×~11 minus... price ladder with boom +2: units 5,6 at 8+2=10 → 20M, minus tax? no tax. Hmm cash 36.54 includes? Devaluation? Round 3 already passed boundary? Anyway, produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738866,
+    "id": "20261115183421f7b17e0d9faa4133",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183421f7b17e0d9faa4133",
+    "usage": {
+      "completion_tokens": 154,
+      "completion_tokens_details": {
+        "reasoning_tokens": 116
+      },
+      "prompt_tokens": 2543,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2697
+    }
+  }
+}

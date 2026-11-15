@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.83,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Финальный раунд: промиссори после игры не погашаются, поэтому прямая продажа 2 товаров по вершине лестницы (12+10) оптимальна.\",\"units\":2}",
+          "reasoning_content": "Round 6 market, final round. I have 2 goods, price ladder [12,10,9,8,...] at sold_counter 0. Opponents have 2+2 goods too. Selling now at high prices: sell 2 units → 12+10=22. Sell_credit won't redeem after last round — must sell normally. Sell 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738922,
+    "id": "2026111518351922ac50abdbee4e5c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518351922ac50abdbee4e5c",
+    "usage": {
+      "completion_tokens": 133,
+      "completion_tokens_details": {
+        "reasoning_tokens": 77
+      },
+      "prompt_tokens": 4049,
+      "prompt_tokens_details": {
+        "cached_tokens": 3776
+      },
+      "total_tokens": 4182
+    }
+  }
+}

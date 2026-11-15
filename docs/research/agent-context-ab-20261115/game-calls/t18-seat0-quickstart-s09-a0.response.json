@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.105,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бум +2 ещё действует: произвожу 2 бесплатных товара для продажи на высоких ценах.\"}",
+          "reasoning_content": "Round 3 action. Cash 47.25. Produce gives 2 goods. Donkey costs 1. Boom +2 active — prices next market... boom applies to next market presumably. Produce is free goods. Buy donkey too? Only one action. Donkey: 1 good for 1 alashi — profitable if price ~14. Produce gives 2 free goods. Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738861,
+    "id": "202611151834180a24033c759d4b65",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151834180a24033c759d4b65",
+    "usage": {
+      "completion_tokens": 114,
+      "completion_tokens_details": {
+        "reasoning_tokens": 80
+      },
+      "prompt_tokens": 3112,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3226
+    }
+  }
+}

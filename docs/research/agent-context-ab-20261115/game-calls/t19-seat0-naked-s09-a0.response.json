@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.051,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемая ценность 3 товаров выше, чем 2 от produce, а налог нулевой и граница без роли — риск конфискации приемлем\"}",
+          "reasoning_content": "Round 3 action. Options: produce (2 goods), donkey, shuttle (3 goods, 25% confiscation risk), bribe, pass. Cash 32.5. Shuttle gives 3 goods vs produce 2. Risk ~25% lose all. Expected 2.25 goods for shuttle vs 2 free. Shuttle slightly better but risky. I'm richest, likely anti-rich laws; influence matters for license round 4 bid? Influence affects extra 5% commission and presidency. Bribe 25M gives 5 influence — huge but costs 25 alashi. Too expensive? Payout is relative rank; spending 25 to gain influence 5 → presidency + 5% bank share. Bank size unknown. Probably produce is safe and solid.\n\nShuttle: EV 0.75*3=2.25 goods vs 2. Prices will be at 5,4 area after sold 6? Ladder index 6,7 → prices 5,4. Fine. Shuttle slightly better EV. But confiscation loses turn entirely. I'll take shuttle for EV.\n\nActually bribe consideration: round 4 license auction — winner pays bid, gains 20-60. Cash matters. Keep cash. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738917,
+    "id": "20261115183509e2e92860784647c5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183509e2e92860784647c5",
+    "usage": {
+      "completion_tokens": 303,
+      "completion_tokens_details": {
+        "reasoning_tokens": 255
+      },
+      "prompt_tokens": 2039,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2342
+    }
+  }
+}

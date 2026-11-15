@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.031,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 4 даёт +1 влияние беднейшему (сопернику с 7.6M), а не мне — голосую против; при равенстве 2:2 закон не пройдёт.\"}",
+          "reasoning_content": "Law card 4: +1 influence to poorest. Cash 7.64M poorest is player 2. That gives them influence 2. My vote weight: I'm 2, plus if I passed action? No, I produced. Vote: I have 2, others 1 and 1. If I vote no: no=2, yes=2 (both others likely yes?) — actually ties: passes if yes > no strictly. Poorest benefits; others may vote yes. If yes=2, no=2 → fails. Should I veto? It only helps opponent, not me. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738024,
+    "id": "20261115182016296b756f464b4654",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182016296b756f464b4654",
+    "usage": {
+      "completion_tokens": 185,
+      "completion_tokens_details": {
+        "reasoning_tokens": 128
+      },
+      "prompt_tokens": 2663,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2848
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.129,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 2 — налог 20%, который урежет мой итоговый cash; мой вес 3 против их 1+2 делает провал закона при моём голосовании против.\",\"reason\":\"Налог 20% бьёт по моему максимальному cash, голосую против\"}",
+          "reasoning_content": "Law card 2: tax 20%. I'm richest; roof at tariff=2 already extinguished the first anti-rich law... card 2 is tax, anti-rich likely. My vote weight 3 (skipped action? no, did roof—weight 3 from influence 1+2? vote_weight_mode... whatever). Opponents: weights 1 and 2. My no=3 vs yes possibly 3 (1+2). If both vote yes, tie 3=3, fails (strictly more needed). So vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746758,
+    "id": "202611152045547ddfca6edd314393",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611152045547ddfca6edd314393",
+    "usage": {
+      "completion_tokens": 186,
+      "completion_tokens_details": {
+        "reasoning_tokens": 114
+      },
+      "prompt_tokens": 4156,
+      "prompt_tokens_details": {
+        "cached_tokens": 3840
+      },
+      "total_tokens": 4342
+    }
+  }
+}

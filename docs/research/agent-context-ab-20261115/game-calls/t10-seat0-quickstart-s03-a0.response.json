@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.374,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено (post_vote), в этой стадии нет содержательного действия.\"}",
+          "reasoning_content": "Round 2 market phase likely. State shows law phase post_vote... but request asks decision now. Phase field: state says phase law, decision_stage post_vote — probably new decision needed for round 2 market? Actually the prompt gives current state with phase law, post_vote — my action needed now. If post_vote, likely pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738388,
+    "id": "202611151826259e3216376ebe4043",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151826259e3216376ebe4043",
+    "usage": {
+      "completion_tokens": 95,
+      "completion_tokens_details": {
+        "reasoning_tokens": 68
+      },
+      "prompt_tokens": 2607,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2702
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.777,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":30000000,\"reason\":\"Лицензия приносит ~20–60M сверх доли; ставка 30M обгоняет максимум соперников (33.5M у одного, но с риском), ожидаемая прибыль положительная\"}",
+          "reasoning_content": "Round 4 action: bid for license. I have 40.675M, richest. License income 20-60 alashi (M units?). Income 20-60M paid extra. Others have ~33.5M and 25.5M. Bid should exceed what others can/will bid. Bid 20M? Winning bid goes to bank (lost). Expected license ~40M average; paying up to ~35M still positive EV. But bid amount lost entirely. I should bid enough to outbid rivals. Their max ~33.5M and 25.5M. Bid 30000000 (30M, multiple of 5000000). Reasonable.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739379,
+    "id": "20261115184253119d79e034ad4184",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184253119d79e034ad4184",
+    "usage": {
+      "completion_tokens": 203,
+      "completion_tokens_details": {
+        "reasoning_tokens": 143
+      },
+      "prompt_tokens": 2377,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2580
+    }
+  }
+}

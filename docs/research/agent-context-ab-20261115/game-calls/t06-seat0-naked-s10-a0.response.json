@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.504,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 3 даёт +1 товар к produce — выгодно и мне, и безвредно для моей позиции лидера.\"}",
+          "reasoning_content": "Card 3: subsidy_goods=1, helps everyone equally next produce. I plan produce next round anyway; +1 good for me. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738192,
+    "id": "202611151823094a4c0ec160444295",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151823094a4c0ec160444295",
+    "usage": {
+      "completion_tokens": 70,
+      "completion_tokens_details": {
+        "reasoning_tokens": 31
+      },
+      "prompt_tokens": 2110,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2180
+    }
+  }
+}

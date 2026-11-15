@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.128,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Карта 6 снизит цены рынка раунда 5, где я продам свои товары — блокирую её ветеринарным правом президента.\"}",
+          "reasoning_content": "Post_vote, I'm president, veto available. Card 6 lowers prices next market. I have no goods, won't sell next round? Round 5: I'd produce 2 goods and sell at lowered prices. But rivals also sell. I voted no. Vote outcome: my weight 4, others 3+3. Voted all true; likely others voted yes? Unknown. Veto pending false — means vote passed? veto_pending false with post_vote... Actually as president I can veto. Card 6 hurts my round-5 sales. Veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739643,
+    "id": "20261115184719c523369498bd47ed",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184719c523369498bd47ed",
+    "usage": {
+      "completion_tokens": 159,
+      "completion_tokens_details": {
+        "reasoning_tokens": 116
+      },
+      "prompt_tokens": 2538,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2697
+    }
+  }
+}

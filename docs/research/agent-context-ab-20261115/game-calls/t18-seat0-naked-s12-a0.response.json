@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.724,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":35000000,\"reason\":\"Ожидаемый доход лицензии 20–60 при фактической цене ставки ~50% (ставка возвращается в банк и делится) — ставка 35 alashi перекрывает максимум соперников и остаётся выгодной даже при минимальном доходе.\"}",
+          "reasoning_content": "Round 4 action: auction bid. License income 20-60 alashi. Cash ~39.65. Bid reasonable? Others also. Winning bid goes to bank (paid). Expected license 40; paying beats share... paying reduces bank? Bid goes to bank (redistributed via shares 50:30:15). So net cost is ~ (1-my share)*bid = 0.5*bid roughly. Expected value 40 → bid up to ~80? But competition: others cash 39.1 and 7.9. Bid ~30 to beat them while winning. Player 1 has 39.1. Bid 35: cost net ~17.5, EV gain 40-35=5 plus share return... Actually license paid on top of share. Bid B: payoff license ~40 - 0.5B (my share of bank return... actually bank distribution: I get 50% of bank anyway, bid increases bank by B, I get back 0.5B, also commission 5% twice? roughly). So net cost ~0.5B. With B=35, cost 17.5 < 40. Others may bid up to 39.1 but must keep... they'd bid too. Risk overbidding: if license only 20, B=35 net cost 17.5 vs 20, still ok. Bid 30? Tie risk. I'll bid 35.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738851,
+    "id": "202611151834028d060d1c4b8a483c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151834028d060d1c4b8a483c",
+    "usage": {
+      "completion_tokens": 374,
+      "completion_tokens_details": {
+        "reasoning_tokens": 299
+      },
+      "prompt_tokens": 2331,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2705
+    }
+  }
+}

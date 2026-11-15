@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.591,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продаю весь товар на вершине лестницы цен (12) без налога — максимум выручки.\"}",
+          "reasoning_content": "Sell 2 units, price 12 each.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739674,
+    "id": "202611151847518d0de34c4a3241b4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151847518d0de34c4a3241b4",
+    "usage": {
+      "completion_tokens": 47,
+      "completion_tokens_details": {
+        "reasoning_tokens": 10
+      },
+      "prompt_tokens": 2327,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2374
+    }
+  }
+}

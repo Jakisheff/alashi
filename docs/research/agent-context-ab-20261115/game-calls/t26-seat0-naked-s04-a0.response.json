@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.364,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 2 товара для продажи на рынке 3 — лучшая доходность; влияние пока не критично.\"}",
+          "reasoning_content": "I sold 2, got ~17 cash. Round 2 action. Cash 17. Options: produce (free), donkey, bribe, shuttle. Vote weight mode: influence +2 if action skipped. I should produce? Influence matters for law votes and 5% bonus. Bribe gives influence: 5M = 1 influence. But long-run cash matters. Produce gives 2 goods free — good. But I want influence? Bribing 5M for 1 influence seems weak mid-game. Take produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739273,
+    "id": "2026111518411046f5fca95d8f40cd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518411046f5fca95d8f40cd",
+    "usage": {
+      "completion_tokens": 144,
+      "completion_tokens_details": {
+        "reasoning_tokens": 110
+      },
+      "prompt_tokens": 1610,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1754
+    }
+  }
+}

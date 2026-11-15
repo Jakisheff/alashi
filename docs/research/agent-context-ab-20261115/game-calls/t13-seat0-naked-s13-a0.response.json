@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.293,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":25000000,\"reason\":\"Аукцион раунда 4: ожидаемый доход лицензии ~40 alashi при затратах 25 — положительное EV, проигрыш возвращается\"}",
+          "reasoning_content": "Round 4 action: bid for license. Auction available. License income 20-60 alashi. Cash ~40.7 alashi. Bid? Reasonable bid maybe 25-30 alashi = 25000000-30000000 units, multiple of nothing required for bid. But bribe must be multiple of 5M; bid amount just integer. Bid 25000000 (25 alashi) — expected income ~40, EV positive. But losing bid returns. Risk: bid too high vs income. Bid 30000000? Expected value 20-60, median 40. Bid 30 gives profit ~10 expected. But cash also counts for final; still license pays above share. Also final market round 5-6 I can still earn. Bid 25000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738585,
+    "id": "20261115182938c1dce881dfef493b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182938c1dce881dfef493b",
+    "usage": {
+      "completion_tokens": 215,
+      "completion_tokens_details": {
+        "reasoning_tokens": 165
+      },
+      "prompt_tokens": 2392,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2607
+    }
+  }
+}

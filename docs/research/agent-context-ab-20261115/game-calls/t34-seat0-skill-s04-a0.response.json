@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.881,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 2 товара — лучшая доходность действия; покупка осла за 1 alashi ради одного товара хуже.\"}",
+          "reasoning_content": "Round 2 action, cash 17M (17 alashi), goods 0. Vote weight 3 (passed? no — weight 3 means skipped action? Actually I didn't skip... weight 3 = influence 1 + 2, maybe from law 4? Whatever). Options: produce (free 2 goods), donkey (1 alashi per good), shuttle risky. Devaluation at round boundary 2+: cash floor/100*62 — donkey spending reduces cash anyway, good. Produce free is best. But produce gives goods sold next round at lower prices. Donkey adds more goods for 1 alashi each; but cash will devalue anyway (17→10.54), so spending 3 alashi on donkeys to get goods sold next round at ~5-6 each is profitable. Cash 17M, units must be integer... donkey action gives 1 good, cost 1 alashi. Do donkey too? Only one action per phase. Choose donkey? Produce gives 2 free. Donkey gives 1 for 1 alashi. Produce better EV. But devaluation makes spending cash attractive — still produce is free and donkey only 1 good. Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746671,
+    "id": "20261115204425595a485c254f4758",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115204425595a485c254f4758",
+    "usage": {
+      "completion_tokens": 288,
+      "completion_tokens_details": {
+        "reasoning_tokens": 251
+      },
+      "prompt_tokens": 2096,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2384
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.119,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидание 2.25 товара против 2 у produce — при равном нуле издержек риск оправдан, граница обычная и роли-сборщика нет.\"}",
+          "reasoning_content": "Round 3 action. Produce gives 2 goods for round 4 market. Shuttle gives 3 with 25% confiscation risk—expected 2.25 goods. Prices will decline though; sold_counter=6. Boom 2 applies to next market? Boom was applied at round 3 market (already used). Actually active_boom=2 may persist to next market? It applied to round 3 market already sold at high prices. Shuttle expected value slightly better: 3 goods, 25% lose all? Confiscation likely per-unit or whole shipment. If whole ~25% chance lose all, EV 2.25 goods. Border type unknown; no special roles. Produce is safe 2. Slight edge shuttle, but risk. Take shuttle? Expected +0.25 goods ≈ 2-3 alashi at future prices ~5-6. Small gain, and no tribute issue. I'll do shuttle... risk-neutral EV positive. Confiscation \"серый товар может быть конфискован\" ~25%. EV: 0.75*3=2.25 goods vs 2. Marginal. Prices low later anyway. Choose produce for safety? Expected payoff max: shuttle. Go shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738321,
+    "id": "20261115182511a8054267c0fb48d3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182511a8054267c0fb48d3",
+    "usage": {
+      "completion_tokens": 305,
+      "completion_tokens_details": {
+        "reasoning_tokens": 253
+      },
+      "prompt_tokens": 3136,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3441
+    }
+  }
+}

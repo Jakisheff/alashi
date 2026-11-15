@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.177,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Налог 10% ударит по выручке соперников с деньгами и товаром сильнее, чем по мне без товара; моё влияние 8 против 7 обеспечивает принятие.\",\"vote_weight\":null}",
+          "reasoning_content": "Law card 1: tax 10%. As president with veto. Tax hits my future sales... but I have no goods and little cash; tax applies to market revenue. Opponents have more cash and likely goods. But tax only affects sales revenue next market. I have no goods, low cash. Tax hurts rivals more? Vote yes. I'm president, weight 8 vs 3+4=7 — yes passes. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738637,
+    "id": "202611151830326acf3282e9c34517",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151830326acf3282e9c34517",
+    "usage": {
+      "completion_tokens": 145,
+      "completion_tokens_details": {
+        "reasoning_tokens": 90
+      },
+      "prompt_tokens": 3627,
+      "prompt_tokens_details": {
+        "cached_tokens": 3328
+      },
+      "total_tokens": 3772
+    }
+  }
+}

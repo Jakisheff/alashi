@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.272,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Продаю в кредит по высоким ценам 12/10; ×1.25 обходит девальвацию на границе раунда.\"}",
+          "reasoning_content": "Round 3 market, prices start at 12. Sell 2 at 12/10. Not last round, credit? Credit ×1.25 paid at round boundary after devaluation — cash devalues to 62% then promissory added; better than selling now (cash would devalue). Yes, sell_credit 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739071,
+    "id": "2026111518374739411414c6b04992",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518374739411414c6b04992",
+    "usage": {
+      "completion_tokens": 115,
+      "completion_tokens_details": {
+        "reasoning_tokens": 69
+      },
+      "prompt_tokens": 3085,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3200
+    }
+  }
+}

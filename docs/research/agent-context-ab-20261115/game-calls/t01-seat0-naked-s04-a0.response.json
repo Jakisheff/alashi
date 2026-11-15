@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.935,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Кредитная продажа даёт +25% и, по-видимому, избегает девальвации на границе раунда, при нулевом налоге.\"}",
+          "reasoning_content": "We have 2 goods. Sell now at price ~9-10. Sold counter=2; ladder: first units 12,10, so next price 9. Selling 2 gives 19, tax 0. Others may sell too. Better sell now. Could sell_credit for 1.25x but devaluation cuts cash... promissory added to cash then devalued? At border cash = floor(cash/100)*62; promissory adds to cash then resets — order matters: \"cash=floor(cash/100)*62 (hard not devalued), promissory added to cash and reset\" — likely promissory added after devaluation? Ambiguous; likely promissory returned after devaluation, so credit avoids devaluation plus 25% bonus. Sell credit 2 units → 19*1.25=23.75 promissory. That's better if returned post-devaluation. Risk card 8 wipes promissory but we just had card 8. Sell credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737766,
+    "id": "202611151815596b24337311af428f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151815596b24337311af428f",
+    "usage": {
+      "completion_tokens": 267,
+      "completion_tokens_details": {
+        "reasoning_tokens": 212
+      },
+      "prompt_tokens": 1573,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1840
+    }
+  }
+}

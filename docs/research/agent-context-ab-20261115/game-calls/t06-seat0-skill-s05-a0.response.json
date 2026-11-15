@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.377,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"donkey\",\"reason\":\"За 1 alashi получаю товар, который продам на следующем рынке по ~5 — чистая прибыль, кэш сохраняю для девальвации и ставки в R4.\"}",
+          "reasoning_content": "Round 2 action, cash 17M. I have goods 0, cash 17. Best: donkey? costs 1 alashi gives 1 good worth ~5-6 next market... sold_counter 6, price next would be index 6 = 5. Donkey costs 1, gain ~5 — profitable. Do donkey. Or bribe for influence? Influence gives 5% bonus. Bribe 10M = 2 influence → vote weight up. But cash needed for R4 license bid. Donkey x1 only (one action per phase). Donkey: +1 good, cost 1, sell at ~5. Do donkey.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738198,
+    "id": "20261115182314fcca1b20d5a248a0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182314fcca1b20d5a248a0",
+    "usage": {
+      "completion_tokens": 193,
+      "completion_tokens_details": {
+        "reasoning_tokens": 141
+      },
+      "prompt_tokens": 2222,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2415
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.229,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара, а покупка по цене 14 (12+2) убыточна при падающей лестнице; сохраняю песо для ставки и действий.\"}",
+          "reasoning_content": "Round 5 market, I have 0 goods, cash 10.6. Pass (no goods). Buy? Buying at price 12 with +2 boom = 14 alashi/unit, then sell later at lower price — losing. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738971,
+    "id": "20261115183607825c5f3e6ae14a17",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183607825c5f3e6ae14a17",
+    "usage": {
+      "completion_tokens": 96,
+      "completion_tokens_details": {
+        "reasoning_tokens": 51
+      },
+      "prompt_tokens": 3249,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 3345
+    }
+  }
+}

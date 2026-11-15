@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.287,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Девальвация на границе раунда съест 38% наличных, поэтому продаю в кредит: выручка 17×1.25 вернётся целиком как promissory.\"}",
+          "reasoning_content": "I have 2 goods, others 2 each. Sold counter 2 means two sold already? Prices ladder [12,10,9,...], counter 2 → next price 9. Selling 2 gives 9+8=17. Tax 0. But cash dev at round border: floor(cash/100)*62 — selling now loses 38% at round 3 border... actually border of rounds 2+ means after round 2 ends. Selling in round 2, cash becomes 17, then devalued: floor(17000000/1000000)=17... units are alashi; floor(cash/100)*62 means per 100k? cash in units; floor(17,000,000/100)*62 = 170,000*62 = 10.54M. So sell_credit better: revenue*1.25 promissory, paid next border. sell 2 → 17*1.25=21.25 promissory, added at round 3 border without devaluation. Yes, sell_credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738580,
+    "id": "202611151829331458408cea7b401d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151829331458408cea7b401d",
+    "usage": {
+      "completion_tokens": 281,
+      "completion_tokens_details": {
+        "reasoning_tokens": 221
+      },
+      "prompt_tokens": 1571,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1852
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.828,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатно получить 2 товара и не терять вес голоса.\"}",
+          "reasoning_content": "Others produced 2 goods. I passed market, so vote weight 3. Now action phase. I have 0 cash, 0 goods. Produce gives 2 goods free. Do produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738635,
+    "id": "2026111518303381bd038cb7af4a21",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518303381bd038cb7af4a21",
+    "usage": {
+      "completion_tokens": 65,
+      "completion_tokens_details": {
+        "reasoning_tokens": 40
+      },
+      "prompt_tokens": 1359,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1424
+    }
+  }
+}

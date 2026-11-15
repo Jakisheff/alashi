@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.926,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 7 (+2 к ценам) уже не действует — рынок этого раунда прошёл, закон нейтрален.\"}",
+          "reasoning_content": "Law card 7: prices +2 next market — but round 6 market already passed, so no effect. Vote doesn't matter much. I'm president? No. Abstain or yes? Card 7 harmless/useless now. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738748,
+    "id": "202611151832246962a6db75cc4ac1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151832246962a6db75cc4ac1",
+    "usage": {
+      "completion_tokens": 93,
+      "completion_tokens_details": {
+        "reasoning_tokens": 53
+      },
+      "prompt_tokens": 3595,
+      "prompt_tokens_details": {
+        "cached_tokens": 3328
+      },
+      "total_tokens": 3688
+    }
+  }
+}

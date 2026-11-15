@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.281,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продам оба товара по высоким ценам лестницы (9 и 8) — держать товар нельзя, а песо нужны для ставки на лицензию в этом же раунде.\",\"commentary\":\"sold_counter=2, значит цены 9 и 8 — максимум доступного; продажа сейчас даёт ~17 alashi на ставку в аукционе лицензии.\"}",
+          "reasoning_content": "I have 2 goods, sold_counter=2, ladder next prices: index 2 → 9,8? Ladder [12,10,9,8,...], sold_counter=2 so next price 9 then 8. Sell both ~17. Round 4 — final sell now, cash needed for bid in action. Sell now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739407,
+    "id": "2026111518432358bae128321b4267",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518432358bae128321b4267",
+    "usage": {
+      "completion_tokens": 162,
+      "completion_tokens_details": {
+        "reasoning_tokens": 72
+      },
+      "prompt_tokens": 2821,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 2983
+    }
+  }
+}

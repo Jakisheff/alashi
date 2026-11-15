@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.295,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемая ценность shuttle (≈2.25×12=27M) выше гарантированных 2 товаров от produce перед последним рынком\"}",
+          "reasoning_content": "Round 5 action: I have 40.9M cash, no goods, others no goods, P3 has 2 goods. Options: shuttle (3 goods, sell in round 6 at price ~12) — expected 3*0.75*12 ≈ 27M, good. Or produce 2 goods = 24M risk-free. Shuttle EV: 2.25 units * ~12 = 27M slightly better, but shuttle may have border confiscation ~25% (no gray privilege info; standard confiscation loses goods). Produce gives 2 free. Difference small; shuttle EV higher. Also border duty scenario min(cash,2). Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739449,
+    "id": "20261115184403104d04ddc8704136",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184403104d04ddc8704136",
+    "usage": {
+      "completion_tokens": 185,
+      "completion_tokens_details": {
+        "reasoning_tokens": 141
+      },
+      "prompt_tokens": 2754,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 2939
+    }
+  }
+}

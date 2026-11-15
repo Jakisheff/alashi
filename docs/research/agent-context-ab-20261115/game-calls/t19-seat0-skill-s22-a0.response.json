@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.163,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 4 даст +1 влияния беднейшему (idx2), который обойдёт меня в борьбе за бонус максимального влияния — блокирую своим весом 3.\"}",
+          "reasoning_content": "Card 4: +1 influence to poorest. Poorest by cash is me (28.6M vs 31.4M vs 25.9M)? Actually poorest is idx2 (25.88M). Influence helps final 5% bonus share and voting. My weight 3 (passed action, +2). Vote yes — helps idx2, not me. But influence only matters for the 5% bank bonus to max influence. Card 4 gives +1 to poorest (idx2), possibly tying with me at 2... I have influence 1, they'd get 2, beating me for the max-influence bonus. So vote no. My weight 3 vs their 1 each — my no blocks. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738995,
+    "id": "20261115183630d0d06aa6cbe548de",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183630d0d06aa6cbe548de",
+    "usage": {
+      "completion_tokens": 206,
+      "completion_tokens_details": {
+        "reasoning_tokens": 154
+      },
+      "prompt_tokens": 3832,
+      "prompt_tokens_details": {
+        "cached_tokens": 3520
+      },
+      "total_tokens": 4038
+    }
+  }
+}

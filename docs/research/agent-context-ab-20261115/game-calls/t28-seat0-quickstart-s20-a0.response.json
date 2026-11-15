@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.174,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Последний раунд — продаю все 3 единицы с торгов (кредитная продажа после финального раунда не погашается).\"}",
+          "reasoning_content": "Round 6, final market. I have 3 goods, cash 24.4M, plus promissory from round 5 credit sale (~38.75 alashi? Actually cash got devalued: 39412900 -> 24435998 = floor/100*62; promissory added: sold 3 at prices 12,10,9 → 31*1.25=38.75... cash 24435998 includes promissory 38750000. Anyway). Final round: sell normally (credit won't redeem after last round). Sell 3 now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739473,
+    "id": "20261115184428f1f9402769c94095",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184428f1f9402769c94095",
+    "usage": {
+      "completion_tokens": 175,
+      "completion_tokens_details": {
+        "reasoning_tokens": 129
+      },
+      "prompt_tokens": 4172,
+      "prompt_tokens_details": {
+        "cached_tokens": 3904
+      },
+      "total_tokens": 4347
+    }
+  }
+}

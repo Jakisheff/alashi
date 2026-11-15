@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.595,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 2 товара для продажи на буме в следующем раунде; деньги выгоднее приберечь.\"}",
+          "reasoning_content": "Action phase round 3. Cash 21.25, no goods, no promissory pending (I sold credit r2 → got 21.25 at boundary r3; r3 sale becomes promissory 25 at r4 boundary? Round 3 sale returns at round 4 boundary — will survive to r5-6, fine). Options: produce (free 2 goods), donkey costs 1 alashi for 1 good. Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739187,
+    "id": "20261115183943c3e0ba6a239d4e3b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183943c3e0ba6a239d4e3b",
+    "usage": {
+      "completion_tokens": 130,
+      "completion_tokens_details": {
+        "reasoning_tokens": 95
+      },
+      "prompt_tokens": 3117,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3247
+    }
+  }
+}

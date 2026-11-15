@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.796,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Цены на пике, налога нет; sell_credit даёт 1.25x выручку, которая придёт до следующей девальвации.\",\"note\":\"Выплата по кредиту раунда 2 уже получена (21.25M cash)\"}",
+          "reasoning_content": "Sell 2 at high prices now (cash). Promissory already received (21.25M cash). Sell 2 units, price 12 and 10 = 22. Sell credit? Next devaluation round 4 boundary: promissory added at round boundary then floor(cash/100)*62. Credit gives 1.25x revenue paid before devaluation — so sell_credit again is better. Revenue 2 units*~11*1.25. Tax 0. Yes, sell_credit 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738498,
+    "id": "20261115182812ddb710a3ab644f89",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182812ddb710a3ab644f89",
+    "usage": {
+      "completion_tokens": 178,
+      "completion_tokens_details": {
+        "reasoning_tokens": 107
+      },
+      "prompt_tokens": 2948,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3126
+    }
+  }
+}

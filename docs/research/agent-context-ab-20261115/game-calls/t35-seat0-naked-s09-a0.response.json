@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.249,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"3 единицы против 2 у produce: при цене ~14 это заметно больше выгоды даже с ~25% риском конфискации\"}",
+          "reasoning_content": "Action phase round 3. I have 21.25 cash, no goods. Produce gives 2. Shuttle gives 3 with confiscation risk. Donkey costs 1 for 1. Produce is safe free 2 goods. But wait, my sell_credit — I sold 2 units this round, promissory ~35 alashi returns at boundary round 4. Cash 21.25 will be devalued: floor(21.25/100... wait cash 21250000 = 21.25 alashi; floor(21.25/100)? floor(cash/100)*62 — cash in millions? floor(21.25... probably floor(21250000/100)*62 = 212500*62 = 13.175M. Hmm.\n\nBetter: shuttle gives 3 goods, 25% confiscation chance. Expected value higher. But at privileged border pay tribute. No special roles known. Shuttle EV: 3 goods * 14+ price ~ worth ~40 alashi vs produce 2 goods ~27. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746717,
+    "id": "2026111520451237a997d79e2e49d1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111520451237a997d79e2e49d1",
+    "usage": {
+      "completion_tokens": 261,
+      "completion_tokens_details": {
+        "reasoning_tokens": 220
+      },
+      "prompt_tokens": 2091,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2352
+    }
+  }
+}

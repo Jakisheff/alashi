@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.32,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 0 пуста и уже прошла — подтверждаю пустой закон, влияния не трачу.\"}",
+          "reasoning_content": "Law 0 empty, already voted yes. Post-vote, law passes regardless. Just pass (or vote_yes). Card 0 is empty—no veto needed.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738506,
+    "id": "202611151828240fc61765450941dd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151828240fc61765450941dd",
+    "usage": {
+      "completion_tokens": 68,
+      "completion_tokens_details": {
+        "reasoning_tokens": 34
+      },
+      "prompt_tokens": 2726,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2794
+    }
+  }
+}

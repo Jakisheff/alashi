@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.701,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Открываю раунд продажей 2 единиц по высокой цене, пока лестница не упала.\"}",
+          "reasoning_content": "I'm player 0, cash 0, goods 2. Sell both now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738296,
+    "id": "202611151824531c066a357b814968",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151824531c066a357b814968",
+    "usage": {
+      "completion_tokens": 55,
+      "completion_tokens_details": {
+        "reasoning_tokens": 18
+      },
+      "prompt_tokens": 2099,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2154
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.844,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 0 — пустая, закон ни на что не влияет, воздерживаюсь без риска.\"}",
+          "reasoning_content": "Law card 0 — пусто. Пропуск action был? Все действия не пропускались. voted: соперник 2 уже проголосовал. Карта 0 — нет эффекта, но голос всё равно. Что выгодно? Пасс или голосовать? Карта 0 ничего не меняет; чтобы закон не прошёл или прошёл — неважно. Проголосую no (или yes) — нет разницы. vote_abstain безопасно.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738243,
+    "id": "2026111518235920dc9b6a2e4e4305",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518235920dc9b6a2e4e4305",
+    "usage": {
+      "completion_tokens": 135,
+      "completion_tokens_details": {
+        "reasoning_tokens": 99
+      },
+      "prompt_tokens": 3479,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 3614
+    }
+  }
+}

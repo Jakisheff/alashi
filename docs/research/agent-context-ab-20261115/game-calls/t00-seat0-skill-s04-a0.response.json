@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.262,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Лестница цен падает, продаю оба товара сразу по высокой цене.\"}",
+          "reasoning_content": "Sell 2 goods at price ~9 (counter 2).{\"action\":\"sell\",\"units\":2,\"reason\":\"Продажа двух товаров сейчас на высокой цене лестницы.\"}",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737769,
+    "id": "20261115181607e420df68c5f741f3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181607e420df68c5f741f3",
+    "usage": {
+      "completion_tokens": 67,
+      "completion_tokens_details": {
+        "reasoning_tokens": 37
+      },
+      "prompt_tokens": 2108,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2175
+    }
+  }
+}

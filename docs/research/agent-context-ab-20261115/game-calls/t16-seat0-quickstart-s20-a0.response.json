@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.329,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Финальный рынок: продаю все 3 единицы по максимальным ценам с бумом +2, кредит бесполезен (после раунда не погашается)\"}",
+          "reasoning_content": "Final market, boom +2, sold_counter 0, ladder starts at 12+2=14? Prices ladder [12,...]+boom 2. I have 3 goods, cash ~14.4M. Sell all 3 now at top prices, no credit (won't redeem after last round).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738788,
+    "id": "202611151833049358c0834a624006",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151833049358c0834a624006",
+    "usage": {
+      "completion_tokens": 120,
+      "completion_tokens_details": {
+        "reasoning_tokens": 64
+      },
+      "prompt_tokens": 4125,
+      "prompt_tokens_details": {
+        "cached_tokens": 3840
+      },
+      "total_tokens": 4245
+    }
+  }
+}

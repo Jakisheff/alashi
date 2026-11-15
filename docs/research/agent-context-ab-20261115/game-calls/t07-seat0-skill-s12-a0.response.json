@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.299,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":12000000,\"reason\":\"Раунд 4 — аукцион лицензии решает партию; ставка ~45% кассы (12 из 26.6 alashi) в рекомендуемом коридоре 40-60%.\"}",
+          "reasoning_content": "Round 4 action: bid. Cash 26.6M ≈ 26.6 alashi. Bid ~40-60%: ~12M. Minimum 5. Bid 12000000.\n\nCheck bribe multiple rule applies to bid? Bid amount just integer. 12000000 units = 12 alashi.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738240,
+    "id": "20261115182356c9c51e1fc1ae4c0e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182356c9c51e1fc1ae4c0e",
+    "usage": {
+      "completion_tokens": 129,
+      "completion_tokens_details": {
+        "reasoning_tokens": 68
+      },
+      "prompt_tokens": 2841,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 2970
+    }
+  }
+}

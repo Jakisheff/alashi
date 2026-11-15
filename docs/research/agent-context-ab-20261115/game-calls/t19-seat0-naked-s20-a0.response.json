@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.986,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Финальный рынок с нулевым налогом и полным счётчиком — продаю оба товара по высоким ценам 12 и 10 немедленно\"}",
+          "reasoning_content": "Round 6 final market. Price shift? State shows active_price_shift=0 — but card 7 passed in round 4... apparently reset? Boom 0. Ladder reset? sold_counter=0, so prices 12,10,9 for first 3 units... wait ladder [12,10,9,8,...]. I have 2 goods. Tax 0. Sell all 2 now before others push prices down.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738982,
+    "id": "202611151836177d8fa55be4a245b1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151836177d8fa55be4a245b1",
+    "usage": {
+      "completion_tokens": 138,
+      "completion_tokens_details": {
+        "reasoning_tokens": 90
+      },
+      "prompt_tokens": 3069,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3207
+    }
+  }
+}

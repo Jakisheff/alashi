@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.273,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Карта 0 пустая и исход голосования не влияет на выплаты — вмешиваться нечего.\"}",
+          "reasoning_content": "Law card 0, post_vote, veto pending? No. Action must be law phase: pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739621,
+    "id": "20261115184658b2eff37a3cf74daa",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184658b2eff37a3cf74daa",
+    "usage": {
+      "completion_tokens": 51,
+      "completion_tokens_details": {
+        "reasoning_tokens": 21
+      },
+      "prompt_tokens": 3729,
+      "prompt_tokens_details": {
+        "cached_tokens": 3456
+      },
+      "total_tokens": 3780
+    }
+  }
+}

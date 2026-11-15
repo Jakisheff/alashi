@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.181,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 7 повышает цены следующего рынка на +2 — выгодно мне как продавцу с товаром.\",\"action_json\":{\"action\":\"vote_yes\"}}",
+          "reasoning_content": "Law card 7: prices +2 next market. Vote yes. My weight 2, others' likely yes too. Approve.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739646,
+    "id": "20261115184724587847e324594047",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184724587847e324594047",
+    "usage": {
+      "completion_tokens": 70,
+      "completion_tokens_details": {
+        "reasoning_tokens": 28
+      },
+      "prompt_tokens": 2157,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2227
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.828,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено (я уже проголосовал против карты 5); закон, дающий влияние богатейшему, в любом случае не пройдёт 1:2.\"}",
+          "reasoning_content": "Card 5 gives influence to richest (faction 2). We voted no. All voted; need outcome — post_vote means we must send something? Phase law post_vote: actions vote_yes/no/abstain/veto/pass. We already voted, decision_stage post_vote — likely we already acted, now need another action? History round1 post_vote we sent a market action (wrong phase → pass). Best: pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739236,
+    "id": "2026111518403259a4fed4cca54840",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518403259a4fed4cca54840",
+    "usage": {
+      "completion_tokens": 133,
+      "completion_tokens_details": {
+        "reasoning_tokens": 86
+      },
+      "prompt_tokens": 2952,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3085
+    }
+  }
+}

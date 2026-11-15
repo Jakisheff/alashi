@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.942,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нет товара, produce даёт 2 единицы бесплатно.\"}",
+          "reasoning_content": "Produce (2 goods) — but others already have 2 goods (from donkey? no, start goods=0... they did something). Anyway produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739442,
+    "id": "20261115184400fad5604de29f419c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184400fad5604de29f419c",
+    "usage": {
+      "completion_tokens": 55,
+      "completion_tokens_details": {
+        "reasoning_tokens": 33
+      },
+      "prompt_tokens": 2451,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2506
+    }
+  }
+}

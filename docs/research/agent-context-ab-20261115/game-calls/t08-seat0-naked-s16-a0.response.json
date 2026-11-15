@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.885,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"С субсидией produce даёт гарантированные 3 товара — тот же EV, что рискованный shuttle.\"}",
+          "reasoning_content": "Round 5 action. I have ~44 cash, 0 goods. Subsidy active =1, so shuttle gives 4 goods (25% confiscation), produce 3. Shuttle expected 3 goods vs produce 3. Shuttle can yield 4 if not confiscated — 75% chance 4, 25% zero. EV = 3. Produce = 3 guaranteed. Risk aversion: produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738338,
+    "id": "2026111518253383922a095cf6477f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518253383922a095cf6477f",
+    "usage": {
+      "completion_tokens": 120,
+      "completion_tokens_details": {
+        "reasoning_tokens": 86
+      },
+      "prompt_tokens": 2676,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2796
+    }
+  }
+}

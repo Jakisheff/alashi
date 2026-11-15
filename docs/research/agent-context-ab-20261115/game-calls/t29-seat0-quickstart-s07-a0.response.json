@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.424,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, вето не предложено — действие в post_vote недоступно.\"}",
+          "reasoning_content": "Tax 10% passed? voted all yes? Veto pending false, post_vote — likely passed. Vote already done; just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739470,
+    "id": "20261115184423000f3cc77acc43bc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184423000f3cc77acc43bc",
+    "usage": {
+      "completion_tokens": 58,
+      "completion_tokens_details": {
+        "reasoning_tokens": 28
+      },
+      "prompt_tokens": 2957,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3015
+    }
+  }
+}

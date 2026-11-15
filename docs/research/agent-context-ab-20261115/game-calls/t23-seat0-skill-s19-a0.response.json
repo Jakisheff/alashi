@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.462,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Карта 3 (субсидия товара) уже ничего не даёт — после R6 рынка и действий не будет, исход выплаты не изменит.\"}",
+          "reasoning_content": "Law card 3: subsidy_goods=1 — irrelevant now (last action phase done, no more market). Vote doesn't matter for payout. But procedure says vote. Vote yes? Subsidy gives +1 goods to produce next round — no next round. Effect irrelevant. Pass loses nothing. Pass.\n\nActually voting doesn't affect payout; pass is fine. But rule 7 says vote per interest — no interest. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739195,
+    "id": "202611151839528a1c82d0e8ce413e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151839528a1c82d0e8ce413e",
+    "usage": {
+      "completion_tokens": 129,
+      "completion_tokens_details": {
+        "reasoning_tokens": 87
+      },
+      "prompt_tokens": 3564,
+      "prompt_tokens_details": {
+        "cached_tokens": 3264
+      },
+      "total_tokens": 3693
+    }
+  }
+}

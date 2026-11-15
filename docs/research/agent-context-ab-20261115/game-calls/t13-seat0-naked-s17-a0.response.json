@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.577,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"produce бесплатно даёт 2 единицы для последнего рынка раунда 6\"}",
+          "reasoning_content": "I have 2 goods sold in round 5 already (sold on credit). Round 5 action: cash 9.7M, others have ~25.7M and 23.3M. License was won in round 4 (bid 25M paid). Options: produce gives 2 goods for market round 6. Donkey costs 1 alashi for 1 good. Produce is free — take it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738604,
+    "id": "2026111518300126ea6deb16734034",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518300126ea6deb16734034",
+    "usage": {
+      "completion_tokens": 115,
+      "completion_tokens_details": {
+        "reasoning_tokens": 88
+      },
+      "prompt_tokens": 2785,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 2900
+    }
+  }
+}

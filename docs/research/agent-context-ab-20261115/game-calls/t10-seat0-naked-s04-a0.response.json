@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.146,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Бум +2: продаю 2 единицы по высоким ценам (10 и 9) сейчас.\"}",
+          "reasoning_content": "Market round 2, prices boom +2. I have 2 goods. Sell now at top prices. Ladder: sold_counter=2, next price 8+2=10, then 7+2=9. Sell 2 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738387,
+    "id": "20261115182625a1aeb7e79b8d400c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182625a1aeb7e79b8d400c",
+    "usage": {
+      "completion_tokens": 88,
+      "completion_tokens_details": {
+        "reasoning_tokens": 52
+      },
+      "prompt_tokens": 1593,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1681
+    }
+  }
+}

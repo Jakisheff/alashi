@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.952,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 3 (субсидия produce) нейтральна — раундов больше нет, рынок раунда 6 уже прошёл, влияю только на распределение банка через cash.\"}",
+          "reasoning_content": "Law card 3: subsidy_goods=1. I'm richest cash. Card 3 benefits produce next round—but this is last round, no more markets? Round 6 action already passed, law comes after action; no round 7. So neutral. But vote weight 3 vs 2/1. Abstain or vote yes? Neutral—abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737850,
+    "id": "202611151817269040c8d955974464",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151817269040c8d955974464",
+    "usage": {
+      "completion_tokens": 131,
+      "completion_tokens_details": {
+        "reasoning_tokens": 76
+      },
+      "prompt_tokens": 3773,
+      "prompt_tokens_details": {
+        "cached_tokens": 3456
+      },
+      "total_tokens": 3904
+    }
+  }
+}

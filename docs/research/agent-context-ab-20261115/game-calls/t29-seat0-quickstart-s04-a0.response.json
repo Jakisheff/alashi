@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.053,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Товар есть, цены ещё высокие (9 и 8 за единицу), продаю до обвала лестницы соперниками.\"}",
+          "reasoning_content": "Round 2 market, I have 2 goods. sold_counter=2, prices: next unit sells at 9. Sell 2 → 9+8=17? Wait counter=2 means next price index 2 = 9. Sell both: 17, tax 0. Others have 2 goods each. Selling now before they dump prices. Sell 2 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739457,
+    "id": "202611151844130ced148efcbd4f8a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151844130ced148efcbd4f8a",
+    "usage": {
+      "completion_tokens": 120,
+      "completion_tokens_details": {
+        "reasoning_tokens": 79
+      },
+      "prompt_tokens": 2682,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2802
+    }
+  }
+}

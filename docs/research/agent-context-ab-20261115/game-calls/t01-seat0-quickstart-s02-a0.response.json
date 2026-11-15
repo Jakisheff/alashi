@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.092,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 8 мне безразлична (нет promissory), экономлю пропуск действия ради веса голоса.\"}",
+          "reasoning_content": "Card 8 cancels promissory notes — I have none. Others produced, no credit seen. Harmless either way. As president, veto not needed. Others voted already? voted=[false,true,true] — unknown how. Pass/abstain. Card 8 could hurt if I plan sell_credit, but I won't rely on it. Vote no? If it passes and later I use sell_credit before law... law happens after market, so card 8 would cancel this round's credit sales. I don't plan credits; but it may hurt rivals. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737755,
+    "id": "202611151815518c45ee86cab2406f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151815518c45ee86cab2406f",
+    "usage": {
+      "completion_tokens": 157,
+      "completion_tokens_details": {
+        "reasoning_tokens": 120
+      },
+      "prompt_tokens": 2521,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 2678
+    }
+  }
+}

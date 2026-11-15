@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.181,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продажа двух товаров сразу по высокой цене лестницы — больше ждать некуда.\"}",
+          "reasoning_content": "Round 2 market, I have 2 goods, prices: sold_counter=2, ladder next prices... sold 2 already, next price 9. Sell both.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739044,
+    "id": "202611151837216d6abddd32e342d4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151837216d6abddd32e342d4",
+    "usage": {
+      "completion_tokens": 66,
+      "completion_tokens_details": {
+        "reasoning_tokens": 35
+      },
+      "prompt_tokens": 2074,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2140
+    }
+  }
+}

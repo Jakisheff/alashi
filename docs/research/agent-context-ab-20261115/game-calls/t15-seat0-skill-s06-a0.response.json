@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.292,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 8 нейтральна: непогашенных векселей ни у кого нет, моя позиция в cash не зависит\"}",
+          "reasoning_content": "Card 8 cancels promissory notes — no one has promissory notes visible? I sold for cash, no credit. Card 8 is neutral/harmless. Vote? Card 8 hurts only those holding promissories. Nobody visible. It could hurt rivals if they take sell_credit later. Abstain or no? If passes, future sell_credit worthless for me — I might use sell_credit? I won't in round 2? Actually credit gives 1.25x, but card 8 in future rounds... This is round 2 law. If card 8 passes now, only current promissory canceled. It benefits those with promissory (none). Neutral. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738686,
+    "id": "2026111518312119db8d0f71104cd0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518312119db8d0f71104cd0",
+    "usage": {
+      "completion_tokens": 188,
+      "completion_tokens_details": {
+        "reasoning_tokens": 147
+      },
+      "prompt_tokens": 2230,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2418
+    }
+  }
+}

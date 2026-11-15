@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.462,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Кредитная продажа даёт выручку ×1.25, а погашение после девальвации на границе раунда выгоднее текущей продажи.\"}",
+          "reasoning_content": "Round 2 market. I have 3 goods, price ladder counter=2, so my units at prices 10,9,8... Tax 0. Sell all 3 → 27 alashi. Or sell_credit ×1.25 → promissory 33.75 credited at round 3 boundary. But round 2 boundary: cash floor(cash/100)*62 devaluation — promissory added to cash after devaluation. Sell credit is better value if I survive; no risk of card 8? Card 8 cancels promissory. Round 2's law is unknown. Sell credit gives 25% more, paid next round. Devaluation applies to cash only, promissory added after. Credit is better. Sell all 3 via sell_credit.\n\nWait, do others also sell? Their goods may also sell first. sold_counter=2. Others may sell too, pushing prices down. Still sell credit all.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738211,
+    "id": "20261115182324b815467a651f4bd4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182324b815467a651f4bd4",
+    "usage": {
+      "completion_tokens": 246,
+      "completion_tokens_details": {
+        "reasoning_tokens": 195
+      },
+      "prompt_tokens": 1607,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1853
+    }
+  }
+}

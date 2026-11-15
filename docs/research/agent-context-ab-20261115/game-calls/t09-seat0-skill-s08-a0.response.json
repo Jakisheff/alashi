@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.838,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 2 единицы товара для продажи в следующем раунде — лучший ход, сохраняя кассу к аукциону в раунде 4.\"}",
+          "reasoning_content": "Action phase round 3. Cash 32.54M. Produce gives 2 goods free. Donkey gives 1 for 1M. Buy none. Produce best; maybe also donkey? Only one action. Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738350,
+    "id": "2026111518254730fc1d1d71314741",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518254730fc1d1d71314741",
+    "usage": {
+      "completion_tokens": 94,
+      "completion_tokens_details": {
+        "reasoning_tokens": 47
+      },
+      "prompt_tokens": 2433,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2527
+    }
+  }
+}

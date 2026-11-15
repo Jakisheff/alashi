@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.973,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Открытие рынка с бумом +2 даёт максимум цены — продаю весь товар немедленно.\"}",
+          "reasoning_content": "Sell 3 goods at price 12+2=14.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738961,
+    "id": "202611151835595b24aee4160f4e5b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151835595b24aee4160f4e5b",
+    "usage": {
+      "completion_tokens": 50,
+      "completion_tokens_details": {
+        "reasoning_tokens": 13
+      },
+      "prompt_tokens": 2432,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2482
+    }
+  }
+}

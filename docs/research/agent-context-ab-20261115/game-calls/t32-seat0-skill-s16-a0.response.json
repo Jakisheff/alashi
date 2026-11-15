@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.526,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"donkey\",\"reason\":\"Покупаю товар за 1 alashi для продажи в финальном раунде по высокой цене — явный плюс против пропуска хода.\"}",
+          "reasoning_content": "Round 5 action. I have cash 10.6, no goods. Options: donkey (1 alashi → 1 good) for round 6 sale. Donkey costs 1, gives good to sell at 12 next market — profitable. But action skipped gives +2 vote weight... I'm president with influence 2, weight 4. Donkey: spend 1, sell for ~12 next round. Better than passing.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746636,
+    "id": "20261115204353d7cc7491384d4b0a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115204353d7cc7491384d4b0a",
+    "usage": {
+      "completion_tokens": 136,
+      "completion_tokens_details": {
+        "reasoning_tokens": 92
+      },
+      "prompt_tokens": 3178,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3314
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.657,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Налог 10% бьёт только по будущим продажам, а рынок уже прошёл — закон не влияет на мою выплату.\"}",
+          "reasoning_content": "Map 1 = tax 10%. I sold already, but tax applies to future sales? Round 6 market is past. Tax would apply next market — none. So law irrelevant? Tax law likely affects current/next market only. No future market, so abstain. But rivals pass action → their weights: 1 and 2; mine 3. Yes would pass tax — irrelevant now. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739111,
+    "id": "20261115183827fe4291f3b8c645f9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183827fe4291f3b8c645f9",
+    "usage": {
+      "completion_tokens": 129,
+      "completion_tokens_details": {
+        "reasoning_tokens": 86
+      },
+      "prompt_tokens": 3620,
+      "prompt_tokens_details": {
+        "cached_tokens": 3328
+      },
+      "total_tokens": 3749
+    }
+  }
+}

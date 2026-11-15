@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.297,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Закон 5 уже принят в мою пользу (влияние богатейшему), вето не нужно.\"}",
+          "reasoning_content": "Law phase, already voted, post_vote. No further actions possible except veto. Card 5 passed giving +1 influence to richest (all equal cash 0, tie-break — me? tie_order 0 first). It benefits me. No veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739508,
+    "id": "2026111518450467844b719d93425c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518450467844b719d93425c",
+    "usage": {
+      "completion_tokens": 84,
+      "completion_tokens_details": {
+        "reasoning_tokens": 51
+      },
+      "prompt_tokens": 2018,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2102
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.991,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голос по пустой карте 0 уже подан, повторное действие недоступно.\"}",
+          "reasoning_content": "Post_vote, card 0 already voted. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738435,
+    "id": "2026111518271315597b164702443a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518271315597b164702443a",
+    "usage": {
+      "completion_tokens": 40,
+      "completion_tokens_details": {
+        "reasoning_tokens": 11
+      },
+      "prompt_tokens": 2722,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2762
+    }
+  }
+}

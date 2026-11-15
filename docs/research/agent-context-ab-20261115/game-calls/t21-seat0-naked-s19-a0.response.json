@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.661,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, я не президент и вето недоступно — пассивен.\"}",
+          "reasoning_content": "Law card 3 passed post_vote; I'm not president, just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739089,
+    "id": "20261115183807962a4dd262984f05",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183807962a4dd262984f05",
+    "usage": {
+      "completion_tokens": 46,
+      "completion_tokens_details": {
+        "reasoning_tokens": 16
+      },
+      "prompt_tokens": 2987,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3033
+    }
+  }
+}

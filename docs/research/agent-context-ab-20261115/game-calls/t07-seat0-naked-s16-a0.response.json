@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.46,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 5 даёт +1 влияния богатейшему (сопернику), что усилит его вес голосов и бонус комиссии против меня.\"}",
+          "reasoning_content": "Law card 5: +1 influence to richest. That's player 1 (22796408 vs 22780416), not me. Vote no. Vote no; card 5 hurts me.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738269,
+    "id": "202611151824262ae27bab5bea47c2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151824262ae27bab5bea47c2",
+    "usage": {
+      "completion_tokens": 88,
+      "completion_tokens_details": {
+        "reasoning_tokens": 45
+      },
+      "prompt_tokens": 2734,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2822
+    }
+  }
+}

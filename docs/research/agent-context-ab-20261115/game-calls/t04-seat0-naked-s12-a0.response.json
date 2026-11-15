@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.767,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Кредитная продажа избегает девальвации на границе раунда 5 и даёт +25% к выручке.\"}",
+          "reasoning_content": "Round 4 market, I have 2 goods. Boom 0, no tax. Sold counter 4, price ladder next ~4? Ladder: [12,10,9,8,7,6,5,4,...] counter=4 → price 6? Index 4 → 7. Slight. Sell now vs sell_credit: round 5 border promissory pays, round 6 sell_credit unpaid. Selling now gives cash that devalues 62% at border 5? Only 2+ borders devalue. Round 4→5 border devalues. So sell_credit better (+25%, no devaluation).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738105,
+    "id": "20261115182141dcbf4b5f607e4949",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182141dcbf4b5f607e4949",
+    "usage": {
+      "completion_tokens": 179,
+      "completion_tokens_details": {
+        "reasoning_tokens": 133
+      },
+      "prompt_tokens": 2283,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2462
+    }
+  }
+}

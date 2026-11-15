@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.756,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% ударит по моей продаже в раунде 5; голосую против и при необходимости наложу вето как президент.\"}",
+          "reasoning_content": "Card 1: tax 10%. Tax on market revenue next round. I plan to sell round 5 (produce). Tax 10% hurts me as seller. Vote no. I'm president, weight 4 vs 3+3 if both yes... wait voted shows [false,true,true] — they already voted? Vote weight mode. My no with weight 4: if both yes = 6 vs 4, passes. But president can veto. So veto if it passes? Tax 10% on my sales hurts. First check post_vote for veto. Now primary: vote_no, and veto later if needed.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739666,
+    "id": "2026111518474240461b191dfe498b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518474240461b191dfe498b",
+    "usage": {
+      "completion_tokens": 170,
+      "completion_tokens_details": {
+        "reasoning_tokens": 128
+      },
+      "prompt_tokens": 2583,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2753
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.282,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Закон 6 уже прошёл в мою пользу, промиссари уже зафиксирован — вето не нужно.\"}",
+          "reasoning_content": "Law 6 passed already (voted yes), lowers next market prices -2. I have promissory outstanding worth 2*price... wait, sell_credit revenue was already computed at round-4 market price (before shift). Fine. Post-vote: nothing to do, pass. But could veto my own passed law? No need. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738528,
+    "id": "2026111518284641d48400f2834619",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518284641d48400f2834619",
+    "usage": {
+      "completion_tokens": 107,
+      "completion_tokens_details": {
+        "reasoning_tokens": 72
+      },
+      "prompt_tokens": 2569,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 2676
+    }
+  }
+}

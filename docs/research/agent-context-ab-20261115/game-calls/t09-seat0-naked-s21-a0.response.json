@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.698,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 4 даст +1 влияния беднейшему сопернику — он обойдёт меня по влиянию и заберёт бонус 5% банка, поэтому против.\"}",
+          "reasoning_content": "Card 4: +1 influence to poorest. I'm richest, rivals poorest tie. Vote yes? Poorest gets +1 influence — influence affects 5% bonus share. Rivals tie poorest; one of them gains influence, reducing my chance at max-influence bonus? I currently have 1 influence, same as them. The 5% bonus goes to max influence; if a rival gets +1, they win bonus. So vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738406,
+    "id": "202611151826425906195c24404fac",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151826425906195c24404fac",
+    "usage": {
+      "completion_tokens": 139,
+      "completion_tokens_details": {
+        "reasoning_tokens": 92
+      },
+      "prompt_tokens": 3232,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 3371
+    }
+  }
+}

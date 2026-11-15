@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.755,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара для продажи, финальный рынок без девальвации не даёт смысла в покупках\"}",
+          "reasoning_content": "Round 6 market, no goods. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739458,
+    "id": "20261115184416e0cf009e174d4c99",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184416e0cf009e174d4c99",
+    "usage": {
+      "completion_tokens": 43,
+      "completion_tokens_details": {
+        "reasoning_tokens": 10
+      },
+      "prompt_tokens": 3034,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3077
+    }
+  }
+}

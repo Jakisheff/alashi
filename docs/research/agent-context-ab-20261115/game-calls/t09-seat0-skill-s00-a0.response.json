@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.537,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара и нет денег — рынок пропустить вынужденно, действие произведёт товар.\"}",
+          "reasoning_content": "No goods, first round. Buy? No cash. Pass in market — but rule says don't pass... can't sell. Could buy with 0 cash — impossible. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738314,
+    "id": "202611151825117bbbe7fdba224c06",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151825117bbbe7fdba224c06",
+    "usage": {
+      "completion_tokens": 64,
+      "completion_tokens_details": {
+        "reasoning_tokens": 37
+      },
+      "prompt_tokens": 1775,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 1839
+    }
+  }
+}

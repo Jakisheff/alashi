@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.288,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 8 сейчас ничего не списывает (векселей ни у кого нет), а мой голос ничего не решает при двух «за».\"}",
+          "reasoning_content": "Card 8: writes off promissory notes — nobody has any yet (round 1). Actually it cancels outstanding promissory — I have none, others likely none. Harmless/neutral. I haven't voted yet; vote yes? Others voted true. Card 8 would let sell_credit be voided — bad for future if I use credit. But nobody has notes. Vote no to keep credit option? Or abstain. Voting yes passes it, removing nothing. Actually card 8 is only harmful if I hold promissory later — it's a current snapshot? Likely applies immediately. No promissory exists, so it's a no-op. Vote yes to stay agreeable? My vote doesn't matter (others yes already). Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738833,
+    "id": "2026111518334784a4169f0bd94909",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518334784a4169f0bd94909",
+    "usage": {
+      "completion_tokens": 201,
+      "completion_tokens_details": {
+        "reasoning_tokens": 157
+      },
+      "prompt_tokens": 1914,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2115
+    }
+  }
+}

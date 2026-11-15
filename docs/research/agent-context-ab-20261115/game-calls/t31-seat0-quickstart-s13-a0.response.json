@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.636,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":20000000,\"reason\":\"Ожидаемый доход лицензии 20–60 alashi превышает ставку 20 alashi, а проигрыш ставки возвращается.\"}",
+          "reasoning_content": "Round 4 action: auction bid available. I'm richest? cash: me 39.75M, others 40M, 48.35M — I'm not richest. License income 20-60 alashi, paid on top of share. Bidding: cash in alashi ~40, 40, 48. Bidding amount is in minimal units. Should I bid? License ~20-60 alashi profit. But winner pays bid to bank. Bid must be less than expected value. Others may bid high. A moderate bid like 15 alashi (15000000)? Risk: lose value. Opponents also want it. Bid maybe 10000000-15000000. But also cash affects roof anti-rich and ranking. Being richest pays influence bonus. Currently third. I'll bid 15000000.\n\nWait, bid units: \"amount — целое число минимальных единиц\" — bid 15000000 = 15 alashi. Expected license 40 avg, so bid up to ~25. But rivals with 48M may outbid. I'll bid 20000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739614,
+    "id": "202611151846488ddb1002a13c4158",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151846488ddb1002a13c4158",
+    "usage": {
+      "completion_tokens": 278,
+      "completion_tokens_details": {
+        "reasoning_tokens": 232
+      },
+      "prompt_tokens": 3544,
+      "prompt_tokens_details": {
+        "cached_tokens": 3264
+      },
+      "total_tokens": 3822
+    }
+  }
+}

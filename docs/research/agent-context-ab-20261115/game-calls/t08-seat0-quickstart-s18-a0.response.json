@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.259,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Финальный рынок без последующей девальвации — продаю все 3 товара по верхним ценам (12+10+9=31 alashi) без налога.\"}",
+          "reasoning_content": "Round 6 final market. Prices: ladder starts 12,10,9. I sell 3 → 12+10+9=31 each... wait prices per unit. Sell 3 units: 31 alashi. No devaluation after. Sell all 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738378,
+    "id": "202611151826141c628373f1b34a4c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151826141c628373f1b34a4c",
+    "usage": {
+      "completion_tokens": 109,
+      "completion_tokens_details": {
+        "reasoning_tokens": 57
+      },
+      "prompt_tokens": 4033,
+      "prompt_tokens_details": {
+        "cached_tokens": 3776
+      },
+      "total_tokens": 4142
+    }
+  }
+}

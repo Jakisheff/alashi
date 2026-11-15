@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.54,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 2 товара для продажи в раунде 4 — лучшее действие.\"}",
+          "reasoning_content": "Action phase, round 3, no goods. Produce gives 2 goods free. Do produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746684,
+    "id": "202611152044421c8a1605733f4194",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611152044421c8a1605733f4194",
+    "usage": {
+      "completion_tokens": 49,
+      "completion_tokens_details": {
+        "reasoning_tokens": 20
+      },
+      "prompt_tokens": 2468,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2517
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.375,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нет товара и денег — produce бесплатно даёт 2 единицы на следующий рынок\"}",
+          "reasoning_content": "Round 2 action. I have 0 goods, cash 0 (plus pending promissory from selling 2 units credit... wait, my round1 law post_vote action \"sell_credit\" without units—probably invalid. Round 2 I sold 2 units credit: promissory revenue*1.25 returns at round 3 boundary. Cash 0, no goods. Best: produce (free goods).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746700,
+    "id": "20261115204457ca1c10aef47b458f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115204457ca1c10aef47b458f",
+    "usage": {
+      "completion_tokens": 111,
+      "completion_tokens_details": {
+        "reasoning_tokens": 85
+      },
+      "prompt_tokens": 1735,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1846
+    }
+  }
+}

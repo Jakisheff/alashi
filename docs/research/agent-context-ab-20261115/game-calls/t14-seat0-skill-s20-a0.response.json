@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.188,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Финальный раунд: продаю весь товар немедленно по максимальной лестнице, кредиты не погасятся.\"}",
+          "reasoning_content": "Round 6, sell all 3, last round no credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738667,
+    "id": "20261115183104497f7ab51cfc4c0e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183104497f7ab51cfc4c0e",
+    "usage": {
+      "completion_tokens": 57,
+      "completion_tokens_details": {
+        "reasoning_tokens": 14
+      },
+      "prompt_tokens": 3641,
+      "prompt_tokens_details": {
+        "cached_tokens": 3392
+      },
+      "total_tokens": 3698
+    }
+  }
+}

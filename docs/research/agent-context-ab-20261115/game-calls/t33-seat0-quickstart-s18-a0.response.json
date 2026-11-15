@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.185,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 4 даёт +1 влияния беднейшему — это я (15M против 20.8M и 26M), а влияние даёт вес в голосах и бонус 5% банка в итоге.\"}",
+          "reasoning_content": "Card 4: +1 influence to poorest. Poorest cash: I have 15.0M, others 26.0M and 20.8M. I'm poorest → I get +1 influence. That helps the 5% bonus and vote weight. Vote yes. Also I didn't pass action (shuttle), so weight 1+... card 4 gives influence. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746668,
+    "id": "202611152044247c468e66549041d8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611152044247c468e66549041d8",
+    "usage": {
+      "completion_tokens": 142,
+      "completion_tokens_details": {
+        "reasoning_tokens": 84
+      },
+      "prompt_tokens": 3971,
+      "prompt_tokens_details": {
+        "cached_tokens": 3648
+      },
+      "total_tokens": 4113
+    }
+  }
+}

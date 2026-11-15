@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.715,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Последний рынок: продаю весь товар сразу по высоким ценам лестницы; кредитная выручка после финала не погашается.\"}",
+          "reasoning_content": "Round 6, last market. I have 3 goods. Sell now — plain sell (no credit, not redeemed after). Sell 3 units; price ladder first units 12,10,9, but rivals also sell 3 each; I sell first? Order matters; selling 3 now at high prices best. Sell immediately rather than wait. Prices: units 1-3 → 12,10,9.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738289,
+    "id": "2026111518244588c5fd282eff411f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518244588c5fd282eff411f",
+    "usage": {
+      "completion_tokens": 130,
+      "completion_tokens_details": {
+        "reasoning_tokens": 87
+      },
+      "prompt_tokens": 4037,
+      "prompt_tokens_details": {
+        "cached_tokens": 3776
+      },
+      "total_tokens": 4167
+    }
+  }
+}

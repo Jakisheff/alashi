@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.029,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Товар есть только у соперника; produce даёт 2 единицы для продажи в финальном раунде — максимум EV.\"}",
+          "reasoning_content": "Action phase round 5, cash 11.7. Produce gives 2 goods to sell in R6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746662,
+    "id": "2026111520442066548b68b99d45ad",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111520442066548b68b99d45ad",
+    "usage": {
+      "completion_tokens": 62,
+      "completion_tokens_details": {
+        "reasoning_tokens": 23
+      },
+      "prompt_tokens": 3252,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 3314
+    }
+  }
+}

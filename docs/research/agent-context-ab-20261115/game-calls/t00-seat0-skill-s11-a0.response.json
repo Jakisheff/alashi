@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.751,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Карта 7 (+2 к ценам) прошла и выгодна мне как продавцу — veto не применяю.\"}",
+          "reasoning_content": "Card 7 passed (yes from me, others? voted all true; likely passed). Post-vote: president veto? Card 7 benefits me. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737797,
+    "id": "202611151816358bb15ba656bf4f7e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151816358bb15ba656bf4f7e",
+    "usage": {
+      "completion_tokens": 67,
+      "completion_tokens_details": {
+        "reasoning_tokens": 33
+      },
+      "prompt_tokens": 2740,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 2807
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.718,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Последний раунд: продаю все 3 юнита на вершине лестницы обычной продажей (не sell_credit — вексель не погасится).\"}",
+          "reasoning_content": "Final round: sell all 3, use sell (not credit).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739433,
+    "id": "202611151843497b407020205740e8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151843497b407020205740e8",
+    "usage": {
+      "completion_tokens": 63,
+      "completion_tokens_details": {
+        "reasoning_tokens": 14
+      },
+      "prompt_tokens": 3454,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 3517
+    }
+  }
+}

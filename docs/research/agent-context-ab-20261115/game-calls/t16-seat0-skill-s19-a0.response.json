@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.824,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Финальный раунд, бум +2 к лестнице — продаю всё сейчас, держать товар некуда.\"}",
+          "reasoning_content": "Sell 2 units at boom +2, final round — sell now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738807,
+    "id": "202611151833244017212d827d46bc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151833244017212d827d46bc",
+    "usage": {
+      "completion_tokens": 55,
+      "completion_tokens_details": {
+        "reasoning_tokens": 15
+      },
+      "prompt_tokens": 3477,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 3532
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.048,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Свободное производство даёт ещё 2 товара к продаже в R6 вместе с купленной единицей, кассы на донки не хватает.\"}",
+          "reasoning_content": "Round 5 action. I have 1 goods, cash 185976 (~0.19 alashi). Options: produce gives 2 goods, then sell in R6. Best: produce. Donkey costs 1 alashi — can't afford (cash 0.19). Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746747,
+    "id": "20261115204544c837cf435976475a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115204544c837cf435976475a",
+    "usage": {
+      "completion_tokens": 102,
+      "completion_tokens_details": {
+        "reasoning_tokens": 61
+      },
+      "prompt_tokens": 3158,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3260
+    }
+  }
+}

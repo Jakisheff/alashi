@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.303,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 8 списывает векселя, которых ни у кого нет — исход не изменит, воздержусь.\"}",
+          "reasoning_content": "Card 8: writes off promissory — nobody has any. Neutral. Others voted yes already. My vote decides? yes=2, no would make 1 vs 2 — passes anyway. Abstain or yes. Harmless — abstain to keep... actually card 8 could hurt me if I plan sell_credit later; writing off promissory only affects current outstanding (none). Pass/abstain fine. Vote yes for goodwill? It passes regardless. Vote abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739216,
+    "id": "202611151840129cfd798a073e4edc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151840129cfd798a073e4edc",
+    "usage": {
+      "completion_tokens": 140,
+      "completion_tokens_details": {
+        "reasoning_tokens": 101
+      },
+      "prompt_tokens": 1919,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2059
+    }
+  }
+}

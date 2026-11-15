@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.325,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 4 даёт +1 влияния беднейшему (фракция 2), что угрожает моему президентству и бонусу влияния — против.\"}",
+          "reasoning_content": "Law card 4: +1 influence to poorest — that's faction 2 (7.64 cash). Not me (41.5 richest). Voting no helps? Influence matters for presidency and 5% bonus. Poorest gains influence → could shift presidency from me. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737793,
+    "id": "20261115181631337ccc87c3be4038",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181631337ccc87c3be4038",
+    "usage": {
+      "completion_tokens": 105,
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      },
+      "prompt_tokens": 2638,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2743
+    }
+  }
+}

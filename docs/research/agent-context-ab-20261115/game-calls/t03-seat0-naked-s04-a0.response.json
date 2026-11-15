@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.253,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Цены ещё высокие, а credit ×1.25 защищает от девальвации cash на границе раунда\"}",
+          "reasoning_content": "Sell 2 goods at price ladder: sold_counter=2, price index 3... ladder [12,10,9,8...] current price 9? Sales move counter forward. Price at position 2 → 9. Sell both for 9+8=17. No tax. Cash vs credit: credit ×1.25 but devaluation at round boundary cash=floor(cash/100)*62?? Wait that devalues cash? floor(cash/100)*62 means 38% devaluation. So cash devalues, promissory doesn't. So sell_credit better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737966,
+    "id": "20261115181921c8952705eb754e97",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181921c8952705eb754e97",
+    "usage": {
+      "completion_tokens": 162,
+      "completion_tokens_details": {
+        "reasoning_tokens": 121
+      },
+      "prompt_tokens": 1586,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1748
+    }
+  }
+}

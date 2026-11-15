@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.743,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Субсидия даёт +1 товар всем, включая меня, перед тремя оставшимися рынками — выгодно\"}",
+          "reasoning_content": "Law card 3: subsidy_goods=1. Helps everyone equally; but I plan to sell next round (last sell? round 6 is last market... round 4,5,6 remain). Subsidy gives extra goods to all including me. Vote yes seems fine — more goods = more sales for me. But also helps rivals equally. Neutral-positive. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739392,
+    "id": "20261115184308cf0f1fb1137844b7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184308cf0f1fb1137844b7",
+    "usage": {
+      "completion_tokens": 114,
+      "completion_tokens_details": {
+        "reasoning_tokens": 77
+      },
+      "prompt_tokens": 2099,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2213
+    }
+  }
+}

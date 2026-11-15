@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.863,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 2 (налог 20%) удержит пятую часть моей выручки от продажи 3 товаров в финальном раунде — блокирую.\"}",
+          "reasoning_content": "Law card 2: tax 20%. Round 5 law phase. Tax hurts when selling round 6. Vote no. I'm not president but veto_pending true — president may veto. My action: vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738028,
+    "id": "20261115182024b8077dcbc9944bf5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182024b8077dcbc9944bf5",
+    "usage": {
+      "completion_tokens": 93,
+      "completion_tokens_details": {
+        "reasoning_tokens": 45
+      },
+      "prompt_tokens": 3312,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 3405
+    }
+  }
+}

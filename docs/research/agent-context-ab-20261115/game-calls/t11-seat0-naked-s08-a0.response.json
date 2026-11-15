@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.606,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Кредитная продажа избегает децимации наличных: 28.75 промиссори на границе против ~14 alashi обесцененной выручки.\"}",
+          "reasoning_content": "Round 3 market. Sell 2 units normally? Price 12 first. Cash becomes 21.25+24 = 45.25? Tax 0. Sell 2 at 12,11 = 23 alashi. That's good. Sell normal (credit only pays at next boundary; round 6 credit won't pay, but now credit at 1.25x vs 1.0 — same value since boundary is next round either way... actually cash now sells later rounds too. Cash doesn't matter until final; but cash gets devalued at boundaries. Cash 21.25M → floor(21/100)*62? floor(21250000/1000000)=21, *62 = 13.02? Wait cash in units; floor(cash/100)... cash=21250000 units? \"cash=floor(cash/100)*62\" — 1000000 units = 1 alashi, so devaluation: floor(21.25 alashi)... floor(21250000/1000000)=21 → 21*0.62=13.02M. So credit sale now avoids devaluation: sell 2 credit → 28.75 promissory paid next boundary fully. Sell normal: 23 alashi now → devalued to floor(23.25+21.25... let's compute: cash 21.25 + 23 = 44.25 → floor 44 *62 = 27.28M. Credit: 21.25 cash devalued → 13.02 + 28.75 promissory = 41.77M. Credit better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738447,
+    "id": "20261115182718052e23b4cc0c4d09",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182718052e23b4cc0c4d09",
+    "usage": {
+      "completion_tokens": 395,
+      "completion_tokens_details": {
+        "reasoning_tokens": 342
+      },
+      "prompt_tokens": 1988,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2383
+    }
+  }
+}

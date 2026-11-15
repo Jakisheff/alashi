@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.039,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продажа всего товара на ранней позиции лестницы цен без налога — максимум выручки.\"}",
+          "reasoning_content": "I'm player 0, cash 0, goods 2. Sell 2 units. Sold counter already 2 (others sold? sold_counter=2). Prices: ladder index 2,3 → 9,8? Prices [12,10,9,...]. Selling 2 at ~9,8. No tax. Sell all 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739663,
+    "id": "202611151847390aade5e714714ec9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151847390aade5e714714ec9",
+    "usage": {
+      "completion_tokens": 108,
+      "completion_tokens_details": {
+        "reasoning_tokens": 73
+      },
+      "prompt_tokens": 2074,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2182
+    }
+  }
+}

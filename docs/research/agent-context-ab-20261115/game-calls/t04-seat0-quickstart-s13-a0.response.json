@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.78,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":8000000,\"reason\":\"Ожидаемый доход лицензии (20–60 alashi) многократно превышает мою ставку, проигрыш возвращается — ставлю максимум доступного.\"}",
+          "reasoning_content": "Round 4 action: bid auction available. License income 20-60 alashi, huge. I have ~8 alashi cash. Opponents have 38 and 29.5. Bid high? Bid winner pays; loser refunded. I should bid aggressively — value ~40 expected, but payout at end. I need cash for final ranking; but license pays above share, huge boost. Bid my max? Risk: if I win with my full cash 8, net gain expected 40-8=32. But if a rival bids more, I get refund. Bid amount must be affordable. Bid 8,000,000? Actually cash 8.07M → 8 alashi. Rivals likely bid more. Bid all: 8000000.\n\nWait — bid is integer minimal units? bid amount A; no multiple constraint. Bid 8000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738139,
+    "id": "20261115182213bdb3e6c330864c7c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182213bdb3e6c330864c7c",
+    "usage": {
+      "completion_tokens": 231,
+      "completion_tokens_details": {
+        "reasoning_tokens": 180
+      },
+      "prompt_tokens": 3506,
+      "prompt_tokens_details": {
+        "cached_tokens": 3264
+      },
+      "total_tokens": 3737
+    }
+  }
+}

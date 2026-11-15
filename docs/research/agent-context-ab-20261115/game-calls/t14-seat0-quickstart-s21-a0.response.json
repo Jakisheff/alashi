@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.276,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Финальный раунд: рынок уже прошёл, товары и влияние теперь бесполезны, любой перевод денег только снижает итоговый cash.\"}",
+          "reasoning_content": "Round 6 action: no cash spending useful? I have 21.6M cash. Devaluation? Round 6 is last, no boundary after? Boundary after round 6 probably settles. Cash not devalued if last round... Actually boundaries rounds 2+ — round 6→settlement. Donkey gives 1 good but market passed already, useless. Produce gives 2 goods — also after market, useless. License income already bid round 4 (did I win? bid all 4.67M, lost to? cash returned apparently — cash 21.6M after selling). Nothing useful; bribe? no point. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738681,
+    "id": "20261115183115a825f9c680f340a7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183115a825f9c680f340a7",
+    "usage": {
+      "completion_tokens": 176,
+      "completion_tokens_details": {
+        "reasoning_tokens": 135
+      },
+      "prompt_tokens": 4276,
+      "prompt_tokens_details": {
+        "cached_tokens": 3968
+      },
+      "total_tokens": 4452
+    }
+  }
+}

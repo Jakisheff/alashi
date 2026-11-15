@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.318,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голос уже отдан, карта пустая, дополнительных действий в post_vote нет\"}",
+          "reasoning_content": "Post_vote, law phase. Voted already; pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738725,
+    "id": "20261115183203bfc098f6a35f440b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183203bfc098f6a35f440b",
+    "usage": {
+      "completion_tokens": 38,
+      "completion_tokens_details": {
+        "reasoning_tokens": 12
+      },
+      "prompt_tokens": 2941,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 2979
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.784,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Закон 4 даёт +1 влияния мне как беднейшему, усиливая мой голос и бонус влияния в финале — подтверждаю «за».\"}",
+          "reasoning_content": "Law 4 gives +1 influence to poorest — that's me (21.25 vs 25.06, 26.64). Already voted yes. Now post_vote: all voted, law passes if yes>no. I should vote yes again (confirm) — pass might count as abstain? Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738482,
+    "id": "20261115182759e211762f7b894ca9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182759e211762f7b894ca9",
+    "usage": {
+      "completion_tokens": 112,
+      "completion_tokens_details": {
+        "reasoning_tokens": 65
+      },
+      "prompt_tokens": 2314,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2426
+    }
+  }
+}

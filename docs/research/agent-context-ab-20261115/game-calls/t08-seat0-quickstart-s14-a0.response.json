@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.661,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, в post_vote доступных действий нет.\"}",
+          "reasoning_content": "Post_vote law phase. Card 3 passed? voted all, post_vote stage — likely passed, subsidy active? state shows active_subsidy_goods 0 still... but stage post_vote, no action available. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738358,
+    "id": "2026111518255573e41dc3ceea4f2f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518255573e41dc3ceea4f2f",
+    "usage": {
+      "completion_tokens": 69,
+      "completion_tokens_details": {
+        "reasoning_tokens": 45
+      },
+      "prompt_tokens": 3671,
+      "prompt_tokens_details": {
+        "cached_tokens": 3392
+      },
+      "total_tokens": 3740
+    }
+  }
+}

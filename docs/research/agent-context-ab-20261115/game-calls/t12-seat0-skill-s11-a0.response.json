@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.292,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":7000000,\"reason\":\"Раунд 4, лицензия — ключ к выплате; ставка ~50% моей песо-кассы в рекомендуемом коридоре 40-60%.\"}",
+          "reasoning_content": "R4 action: bid. My cash 13.59, bid 40-60% → ~6-7. Bid 6? Others have more cash; bid ~7 (≈50%).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738530,
+    "id": "20261115182846d425fa7de6c047dd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182846d425fa7de6c047dd",
+    "usage": {
+      "completion_tokens": 93,
+      "completion_tokens_details": {
+        "reasoning_tokens": 41
+      },
+      "prompt_tokens": 2763,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 2856
+    }
+  }
+}

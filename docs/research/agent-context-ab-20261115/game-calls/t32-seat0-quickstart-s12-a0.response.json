@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.787,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Цена ~6 за единицу, кредитная выручка ~15 alashi избежит девальвации 62% на границе раунда.\"}",
+          "reasoning_content": "Round 4 market. I have 2 goods, sold_counter 4, price ladder: 5th unit = 6. Sell credit: 2*6*1.25 = 15 alashi promissory, paid at round boundary (after round 4 → round 5, then it devalues? Promissory added to cash at boundary, then cash devaluation? \"cash=floor(cash/100)*62\" then promissory added? Order stated: promissory added to cash and reset. Actually \"cash=floor(cash/100)*62 (hard не девальвирует), promissory прибавляется к cash\" — likely promissory added after devaluation. So credit avoids devaluation. Also round 6 credit unpaid — round 4 credit pays at boundary 5, fine. Sell credit 2 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739651,
+    "id": "20261115184726184a4a4fa355468a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184726184a4a4fa355468a",
+    "usage": {
+      "completion_tokens": 229,
+      "completion_tokens_details": {
+        "reasoning_tokens": 178
+      },
+      "prompt_tokens": 3442,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 3671
+    }
+  }
+}

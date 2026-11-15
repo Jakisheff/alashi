@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.268,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 8 спишет мой непогашенный вексель с раунда 4 — против; голосов против не хватает, поэтому следующим шагом применю veto как президент.\"}",
+          "reasoning_content": "Law card 8: списывает все непогашенные promissory. У меня есть непогашенный вексель (sell_credit 3 units, ~+25% выручки). Закон 8 спишет мои векселя — я потеряю. Голосую no. Voted: [false,true,true] — уже 2 yes. My weight 4 (я делал bid, action не пропущен... вес 4 = influence 2+2? нет, +2 даётся за пропуск action. Мне weight 4, у них 3. Голосуя no: yes=6, no=4 — проходит. Президент — ветировать!",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738048,
+    "id": "20261115182042366a6d14f98f4672",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182042366a6d14f98f4672",
+    "usage": {
+      "completion_tokens": 196,
+      "completion_tokens_details": {
+        "reasoning_tokens": 145
+      },
+      "prompt_tokens": 3110,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3306
+    }
+  }
+}

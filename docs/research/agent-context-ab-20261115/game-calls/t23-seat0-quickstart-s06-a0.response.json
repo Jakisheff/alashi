@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.216,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование уже завершено, дополнительных действий в law-фазе нет.\"}",
+          "reasoning_content": "Law 7 passed presumably (voted yes). Post_vote stage — we already voted. Action should be pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739138,
+    "id": "20261115183855d173b9bb549240af",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183855d173b9bb549240af",
+    "usage": {
+      "completion_tokens": 50,
+      "completion_tokens_details": {
+        "reasoning_tokens": 23
+      },
+      "prompt_tokens": 2874,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 2924
+    }
+  }
+}

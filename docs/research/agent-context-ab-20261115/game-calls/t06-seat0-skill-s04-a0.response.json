@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.038,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Лестница цен только падает — продаю все 2 единицы сейчас по ~9, налога нет, выручка уйдёт в кэш до девальвации.\"}",
+          "reasoning_content": "My cash 22M (from card? probably bribe effect... anyway), goods 2. Sell 2 at price ~9 (sold_counter=2). Price ladder: index 2 → 9. Sell both.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738193,
+    "id": "202611151823072571d24746ed4512",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151823072571d24746ed4512",
+    "usage": {
+      "completion_tokens": 100,
+      "completion_tokens_details": {
+        "reasoning_tokens": 46
+      },
+      "prompt_tokens": 2117,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2217
+    }
+  }
+}

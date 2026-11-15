@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.02,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Налог 20% действует на выручку рынка, а рынков больше нет — карта не влияет на мой итог.\"}",
+          "reasoning_content": "Law card 2: 20% tax on revenue — I already sold, so tax hits future sales. Round 6 market done; tax would affect nothing? Active tax applies to next market — no more markets. Card 2 harmless now? Actually if passed, tax applies... no future market, so vote doesn't matter much. My weight 3 (passed action), others 1 each. Voting yes/no irrelevant? If it passes, tax_bps active but no market. Could affect final? Tax withheld from revenue—no revenue. Vote yes harmlessly, or abstain. I'll vote yes? Actually safest: no? Either fine. Card 8-like irrelevant. Vote yes — no effect.\n\nWait—tax could apply to final payout? No, \"налог tax_bps удерживается с выручки\" only market. Vote abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738468,
+    "id": "20261115182742d8c2327574664249",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182742d8c2327574664249",
+    "usage": {
+      "completion_tokens": 213,
+      "completion_tokens_details": {
+        "reasoning_tokens": 175
+      },
+      "prompt_tokens": 3542,
+      "prompt_tokens_details": {
+        "cached_tokens": 3264
+      },
+      "total_tokens": 3755
+    }
+  }
+}

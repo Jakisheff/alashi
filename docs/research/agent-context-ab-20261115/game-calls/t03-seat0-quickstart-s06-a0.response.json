@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.847,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 5 даёт +1 влияния богатейшему (сопернику с 22 alashi), а не мне — блокирую.\",\"phase_note\":\"law\"}",
+          "reasoning_content": "Law card 5: +1 influence to richest. Richest is player 2 (22). I'm not richest. Vote no. Player 2 already voted yes presumably. Others each weight 1; vote yes > no requires strict. If I vote no: 1 yes (p2), 1 no → fails. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737977,
+    "id": "2026111518193481fb0dd54fc74a65",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518193481fb0dd54fc74a65",
+    "usage": {
+      "completion_tokens": 117,
+      "completion_tokens_details": {
+        "reasoning_tokens": 70
+      },
+      "prompt_tokens": 2861,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 2978
+    }
+  }
+}

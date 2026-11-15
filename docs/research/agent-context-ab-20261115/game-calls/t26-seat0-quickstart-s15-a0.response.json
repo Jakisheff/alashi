@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.333,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта +2 к ценам увеличит выручку моих 3 товаров на последнем рынке.\"}",
+          "reasoning_content": "Law card 7: prices +2 next market — great for me, I sell 3 goods. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739329,
+    "id": "202611151842037e4314be74574150",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151842037e4314be74574150",
+    "usage": {
+      "completion_tokens": 55,
+      "completion_tokens_details": {
+        "reasoning_tokens": 24
+      },
+      "prompt_tokens": 3716,
+      "prompt_tokens_details": {
+        "cached_tokens": 3456
+      },
+      "total_tokens": 3771
+    }
+  }
+}

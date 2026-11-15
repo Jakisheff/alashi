@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.986,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 0 пустая, исход не влияет на выплаты.\"}",
+          "reasoning_content": "Law card 0 (empty). Others already voted (voted true). My vote: yes/no equal weight 3 each? Their votes unknown. Card 0 does nothing. Abstain or pass. Just abstain — no effect.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746700,
+    "id": "202611152044577dada7ffb73641ac",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611152044577dada7ffb73641ac",
+    "usage": {
+      "completion_tokens": 75,
+      "completion_tokens_details": {
+        "reasoning_tokens": 49
+      },
+      "prompt_tokens": 3564,
+      "prompt_tokens_details": {
+        "cached_tokens": 3264
+      },
+      "total_tokens": 3639
+    }
+  }
+}

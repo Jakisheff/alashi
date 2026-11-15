@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.596,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Финальный рынок: продаю оба товара по высоким ценам (12+10) сразу за наличные — кредит после последнего раунда не погашается.\"}",
+          "reasoning_content": "Round 6 market, I have 2 goods, price ladder [12,10,...], six units sold by all. Sell all 2 now (cash, no promissory after last round).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737854,
+    "id": "202611151817319bfce41bcb0144d0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151817319bfce41bcb0144d0",
+    "usage": {
+      "completion_tokens": 90,
+      "completion_tokens_details": {
+        "reasoning_tokens": 41
+      },
+      "prompt_tokens": 3046,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3136
+    }
+  }
+}

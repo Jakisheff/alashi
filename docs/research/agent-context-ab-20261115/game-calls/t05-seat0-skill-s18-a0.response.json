@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.015,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Финальный раунд: продаю весь товар по вершине лестницы, кредит не использовать — вексель не погасится.\"}",
+          "reasoning_content": "Round 6, sell all 3. Cash 2.8M, sell 3 units ~12+10+9=31 alashi.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738169,
+    "id": "20261115182246ac9607124f794ab8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182246ac9607124f794ab8",
+    "usage": {
+      "completion_tokens": 74,
+      "completion_tokens_details": {
+        "reasoning_tokens": 31
+      },
+      "prompt_tokens": 3426,
+      "prompt_tokens_details": {
+        "cached_tokens": 3136
+      },
+      "total_tokens": 3500
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.647,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Свободное производство даёт 2 товара для продажи на последнем рынке по высоким ценам начала лестницы (~12/10), а с кредитом выручка не пострадает от девальвации.\"}",
+          "reasoning_content": "Round 5 action, I have 25.9 cash, 0 goods. Produce gives 2 goods to sell in round 6 market at ~12 price (counter resets each round? sold_counter=0, prices start at 12). Sell 2 in round 6 = 24ish, plus credit 1.25x. Produce is best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739672,
+    "id": "202611151847480f4235ff386c4dd4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151847480f4235ff386c4dd4",
+    "usage": {
+      "completion_tokens": 127,
+      "completion_tokens_details": {
+        "reasoning_tokens": 74
+      },
+      "prompt_tokens": 3845,
+      "prompt_tokens_details": {
+        "cached_tokens": 3584
+      },
+      "total_tokens": 3972
+    }
+  }
+}

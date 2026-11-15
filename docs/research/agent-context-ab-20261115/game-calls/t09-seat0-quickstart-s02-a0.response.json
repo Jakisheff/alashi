@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.682,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% снижает мою будущую выручку от продажи товара.\"}",
+          "reasoning_content": "Law card 1: tax 10%. I have goods to sell later; tax hurts. But all equal, someone already voted yes? voted[1]=true. Vote no — but as tax reduces my future revenue, vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738308,
+    "id": "20261115182505af83137b811342ea",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182505af83137b811342ea",
+    "usage": {
+      "completion_tokens": 77,
+      "completion_tokens_details": {
+        "reasoning_tokens": 48
+      },
+      "prompt_tokens": 2520,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 2597
+    }
+  }
+}

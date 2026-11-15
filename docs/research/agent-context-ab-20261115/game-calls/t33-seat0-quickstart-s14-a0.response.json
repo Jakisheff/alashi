@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.284,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"У меня нет непогашенных promissory, а карта 8 спишет promissory соперников, чей cash вырос после рынка — это снижает их выплаты.\"}",
+          "reasoning_content": "Law card 8: cancels all promissory notes. I have outstanding promissory from round 3 sell_credit? Wait, round 3 sell_credit — promissory pays at round-4 border. My cash 27435000 — that reflects? Let's check: round 4 market I sold 3 units, cash was 39435000 before, now 27435000? Actually state shows 27.4M... Hmm, bid 30M was placed but losing? Voted already true — both others voted. I haven't voted (voted[0] false). Card 8 cancels promissory — do I have outstanding? Round 3 sell_credit returned at round-4 border already (cash 39435000 seen). So no promissory outstanding. Card 8 would wipe others' promissories — rivals? Unknown, probably none or some. It hurts nobody of mine. Also they keep cash lower... Card 8 does nothing to cash directly. Vote: if opponents have promissories, yes helps me. Cash suggests they sold normally in round 4 market? Rival cash 38777200 unchanged from before? Rival 1 was 38777200, 25516800 — both unchanged... wait round 4 market rival cash: 38777200 and 25516800? Earlier seen [57435000, 34777200, 25516800] after my sale. Now [27435000, 38777200, 33516800] — cash changed weirdly; my 57435000 → 27435000 (bid 30M deducted, losing? but returns...). Hmm, my bid lost, refund pending? Confusing. Anyway card 8 cancels promissories; rivals' cash increased, suggesting their promissories paid... Actually they may have sold_credit in round 4 market and gained. Card 8 now would cancel their outstanding promissories from round 4? Those pay at round-5 border. So vote yes hurts rivals — good.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746653,
+    "id": "20261115204404d83d7b0b3c9b4286",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115204404d83d7b0b3c9b4286",
+    "usage": {
+      "completion_tokens": 489,
+      "completion_tokens_details": {
+        "reasoning_tokens": 441
+      },
+      "prompt_tokens": 3600,
+      "prompt_tokens_details": {
+        "cached_tokens": 3328
+      },
+      "total_tokens": 4089
+    }
+  }
+}

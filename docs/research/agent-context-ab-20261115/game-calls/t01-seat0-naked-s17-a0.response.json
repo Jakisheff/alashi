@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.289,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Гарантированные 2 товара без риска конфискации; при высоких ценах следующего рынка это стабильная выгода.\"}",
+          "reasoning_content": "Round 5 action. I have 32.2 cash, 0 goods. Produce gives 2 goods. Shuttle gives 3 goods with ~25% confiscation risk—no, shuttle confiscates goods. Shuttle gives 3 goods, risk 25% confiscation of grey goods. Expected 2.25 goods vs 2 free. Cash rich; donkey costs 1 for 1 good. Could do produce (2) + maybe more later? Only one action. Shuttle: 3 goods, 25% lose all? Probably better produce. Actually boom +2, prices high next round with prices 12,10,9+2... selling 3 vs 2 goods gives extra ~12 alashi, minus 25% risk of losing all. Expected shuttle = 0.75*3=2.25 goods vs 2. Slight edge but risk. Also tariffs — border tribute? I'm not privileged. Choose produce for safety.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737838,
+    "id": "20261115181713d35f6c21a3214c9c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181713d35f6c21a3214c9c",
+    "usage": {
+      "completion_tokens": 235,
+      "completion_tokens_details": {
+        "reasoning_tokens": 197
+      },
+      "prompt_tokens": 2812,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3047
+    }
+  }
+}

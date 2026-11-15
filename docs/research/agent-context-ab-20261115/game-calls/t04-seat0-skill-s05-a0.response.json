@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.071,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Товара нет, а шаттл даёт 3 товара бесплатно; даже с риском конфискации ~25% EV продажи при ценах ~6 с бумом выше, чем осёл.\"}",
+          "reasoning_content": "I'm idx 0, cash 21M, no goods. Action phase round 2. Buy? Buying moves counter back, then sell... I have cash but no goods. Donkey costs 1 alashi, gives 1 goods — profitable (sell ~3-4). Donkey gives 1 goods for 1 alashi. Prices ladder at counter 6 → price 4-5ish +2 boom ≈ 6-7 per unit. Donkey worth it. Maybe shuttle: 3 goods, 25% confiscation — better EV. Shuttle gives 3 goods, ~expected 2.25 goods, grey confiscation risk. Do shuttle: EV ~2.25*6 ≈ 13 alashi vs cost 0? Shuttle costs nothing stated. Yes shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738097,
+    "id": "202611151821314868fefaca7b4455",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151821314868fefaca7b4455",
+    "usage": {
+      "completion_tokens": 220,
+      "completion_tokens_details": {
+        "reasoning_tokens": 164
+      },
+      "prompt_tokens": 2172,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2392
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.333,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатно +2 товара к имеющимся 2 для продажи по высокой цене в следующем рынке; деньги на взятки отсутствуют.\"}",
+          "reasoning_content": "We have 0 cash, 2 goods... wait state shows goods[0]=2. Yes, 2 goods left. Action phase round 2. Produce gives 2 more goods (free). Donkey costs 1 alashi which we don't have. Best: produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739167,
+    "id": "202611151839233d98356c1dc344f2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151839233d98356c1dc344f2",
+    "usage": {
+      "completion_tokens": 97,
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      },
+      "prompt_tokens": 2771,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 2868
+    }
+  }
+}

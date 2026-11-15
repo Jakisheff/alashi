@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.79,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товара и рынка больше нет, аукцион не в этом раунде; влияние уже максимальное, взятки лишь зря сожгут cash перед итогом.\"}",
+          "reasoning_content": "Round 6 action: no goods, cash large. Options: donkey gives 1 good but no market left to sell. Bid only round 4. Bribe increases influence — final influence bonus 5% of bank to max influence; I already have 2 vs 1,1. Bribe to increase influence? Influence affects final 5% bonus and vote now. Law phase remains — vote weight matters. Bribe 5M gives +1 influence. Is it worth it? It secures max influence bonus tie-break... I already have 2 vs others' 1, they can't overtake unless they bribe. Donkey useless. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738537,
+    "id": "20261115182851727d80ba582b4f6d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182851727d80ba582b4f6d",
+    "usage": {
+      "completion_tokens": 185,
+      "completion_tokens_details": {
+        "reasoning_tokens": 137
+      },
+      "prompt_tokens": 3357,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 3542
+    }
+  }
+}

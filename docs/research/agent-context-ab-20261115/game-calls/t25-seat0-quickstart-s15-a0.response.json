@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.381,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товара нет, покупать по 12 с последующей девальвацией невыгодно — пропускаю.\"}",
+          "reasoning_content": "Round 5 market, cash 16.36, goods 0. Nothing to sell. No goods. Could buy? Buying moves counter back — but no cash use? Cash will devalue 62%. Buying goods now to sell later... buying at price ladder current sold_counter=0, price 12 per unit, buying pushes counter back increasing price. But goods could be sold next round after devaluation — bad. Sell later at 12 vs buy 12 — no. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739293,
+    "id": "20261115184129941842414f0246f0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184129941842414f0246f0",
+    "usage": {
+      "completion_tokens": 135,
+      "completion_tokens_details": {
+        "reasoning_tokens": 99
+      },
+      "prompt_tokens": 3697,
+      "prompt_tokens_details": {
+        "cached_tokens": 3456
+      },
+      "total_tokens": 3832
+    }
+  }
+}

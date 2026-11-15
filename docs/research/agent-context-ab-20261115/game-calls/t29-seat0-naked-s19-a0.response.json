@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.308,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Последний рынок без налога: продаю 2 товара по 12 alashi за немедленный кэш, кредит не погасится\"}",
+          "reasoning_content": "Final round market. Price ladder starts at 12, no tax. I have 2 goods. Sell now at 12 each = 24 alashi cash, no devaluation after round 6? Boundary after round 6? Game ends; cash floors... Actually devaluation happens at borders of rounds 2+, so after round 6 too? Likely yes at boundary of rounds 2+, but final payout cash+hard. Selling now gives 24 alashi immediately. Sell credit would not be redeemed — bad. Sell 2 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739541,
+    "id": "2026111518453694fe3072a5464778",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518453694fe3072a5464778",
+    "usage": {
+      "completion_tokens": 154,
+      "completion_tokens_details": {
+        "reasoning_tokens": 110
+      },
+      "prompt_tokens": 3029,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3183
+    }
+  }
+}

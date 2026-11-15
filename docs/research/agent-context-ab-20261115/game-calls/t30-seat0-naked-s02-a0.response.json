@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.224,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта даёт +1 влияния богатейшему — при равном cash тай-брейг скорее в мою пользу, влияние ценно для президентства и бонуса.\"}",
+          "reasoning_content": "Law card 5: +1 influence to richest. All tied at 0 cash; tie_order matters — I'm idx 0, likely best tie order? Cash all 0, tie_order presumably by index, so richest = me? Not sure. Voting yes gives me +1 influence possibly. Others already voted. My weight 1 (I did action). Vote yes — +1 influence helps president status and final 5% bonus.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739455,
+    "id": "202611151844105275c234d5e146bf",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151844105275c234d5e146bf",
+    "usage": {
+      "completion_tokens": 138,
+      "completion_tokens_details": {
+        "reasoning_tokens": 90
+      },
+      "prompt_tokens": 1426,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1564
+    }
+  }
+}

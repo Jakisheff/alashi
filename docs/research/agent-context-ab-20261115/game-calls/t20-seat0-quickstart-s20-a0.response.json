@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.315,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Рынок уже прошёл, товары бесполезны, а взятки и крыша только уменьшают итоговый cash; сохраняю всё до выплат.\"}",
+          "reasoning_content": "Final round, action phase. I have cash 27.6, no goods. Best action? Shuttle gives 3+subsidy=4 goods, but goods can't be sold (market passed). Actually market is over for round 6, so goods worthless. Bid only round 4. Bribe gives influence — influence 5% bonus bank share for max influence. I have influence 1, rival 2 has 2. Bribe 25M → 5 influence? amount/5M = 5 influence, but costs 25 alashi from cash which counts toward final payout. Bank commission bonus 5% of bank — small. Not worth 25 alashi. Roof? transfers 30% cash, no. Donkey/produce goods worthless. Best is pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739002,
+    "id": "202611151836363c61c4d858fe46b3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151836363c61c4d858fe46b3",
+    "usage": {
+      "completion_tokens": 208,
+      "completion_tokens_details": {
+        "reasoning_tokens": 162
+      },
+      "prompt_tokens": 4088,
+      "prompt_tokens_details": {
+        "cached_tokens": 3776
+      },
+      "total_tokens": 4296
+    }
+  }
+}

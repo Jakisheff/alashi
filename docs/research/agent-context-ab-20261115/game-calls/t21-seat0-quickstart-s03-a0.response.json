@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.86,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Продаю весь товар в кредит по верхним ценам (12+10=22, выручка 27.5), чтобы избежать девальвации на границе раунда 2.\"}",
+          "reasoning_content": "Round 2 market, I have 2 goods, others have 2 each. Cash all 0. Sell at top price 12? Tax 0. Selling first 2 units at 12, 10 = 22 alashi. But cash devaluation at border rounds 2+: floor(cash/100)*62 — cash counted in units? Cash in units of 1000000; floor(22/100)*62 = 0. Devaluation only affects cash≥100 alashi? floor(cash/100)*62 where cash in units... cash=22 (alashi), floor(22/100)=0 → 0! That wipes cash below 100 alashi?? Hmm, cash in minimal units: 22 alashi = 22,000,000 units; floor(22000000/100)*62 = 220000*62=13,640,000, keeps 62%. OK so units-based, 62% retained.\n\nSelling 2 units now: 22 alashi revenue, after round 2 border → ~13.64. Or use sell_credit for 1.25x, paid at border next round (round 3 border) — but then no devaluation? Promissory added to cash and reset at border — added after devaluation. Sell credit now gets 27.5 at round 2 border, then devalued at round 3 border → 17. Sell direct: 22 now, devalued at round 2 border → 13.64. Credit better. Sell credit 2 units → 27.5 promissory, at round 2 border becomes cash 27.5, then devalued at round 3 border 62%... Actually sell now vs later: prices drop as others sell. Sell credit 2 now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739014,
+    "id": "202611151836419fccb337ccfe4f25",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151836419fccb337ccfe4f25",
+    "usage": {
+      "completion_tokens": 433,
+      "completion_tokens_details": {
+        "reasoning_tokens": 376
+      },
+      "prompt_tokens": 2620,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 3053
+    }
+  }
+}

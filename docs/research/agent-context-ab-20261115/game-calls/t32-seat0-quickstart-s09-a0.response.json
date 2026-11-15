@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.428,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Производство бесплатно даёт 2 товара; шаттл рискует конфискацией при сопоставимой ожидаемой выгоде.\"}",
+          "reasoning_content": "Round 3 action. Cash 21.25M, no goods. Options: produce (2 goods), donkey (1 alashi per good), shuttle (3 goods, 25% confiscation risk). Shuttle gives 3 goods vs produce 2; expected value: shuttle 3 goods with 25% chance of losing all? Actually confiscation of goods. Expected 2.25 goods vs 2 free — shuttle slightly better but risk. With price ladder declining (sold_counter 6, price ~5-6 next round), difference small. Produce is safe. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739639,
+    "id": "2026111518471495f1dcc604034631",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518471495f1dcc604034631",
+    "usage": {
+      "completion_tokens": 161,
+      "completion_tokens_details": {
+        "reasoning_tokens": 120
+      },
+      "prompt_tokens": 3177,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3338
+    }
+  }
+}

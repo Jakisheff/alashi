@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.045,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":30000000,\"reason\":\"Лицензия приносит 20–60 alashi сверх доли, а ставка сразу уходит в банк, обходя девальвицию; ставка 30 даёт положительное матожидание и хороший шанс победы.\"}",
+          "reasoning_content": "Round 4 action: bid available. License income 20-60, likely worth bidding. Cash ~52 alashi. Bid maybe 15-20? Competitors also rich. Winning bid pays to bank but income comes on top of share. Net gain = income - bid. Bid ~25 gives decent expected value. Others may bid. Tie favors tie_order — unknown mine. Bid 30 alashi? Expected income ~40, net +10 if win. Bid 25.\n\nBut cash devalues at round boundary (floor/100*62) unless spent? Bid money goes to bank immediately, avoiding devaluation — good. Bid 30 alashi.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739620,
+    "id": "202611151846544de9204a562d4d85",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151846544de9204a562d4d85",
+    "usage": {
+      "completion_tokens": 197,
+      "completion_tokens_details": {
+        "reasoning_tokens": 134
+      },
+      "prompt_tokens": 2444,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2641
+    }
+  }
+}

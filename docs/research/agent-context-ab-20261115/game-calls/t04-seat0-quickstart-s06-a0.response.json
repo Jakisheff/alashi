@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.079,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 5 даёт +1 влияния богатейшему (сопернику с 26M), что усилит его в будущих голосах и борьбе за бонус влияния — против.\"}",
+          "reasoning_content": "Law card 5: +1 influence to richest. Richest is player 2 (26M). I'm not president, card benefits rival. Vote no. Player 2 already voted (likely yes). Others weight 1 each; if both vote no, 2>1 passes... wait yes strictly greater than no to pass. If I vote no and p1 votes no: yes=1 (p2), no=2 → fails. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738102,
+    "id": "2026111518213881cd0d2830324451",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518213881cd0d2830324451",
+    "usage": {
+      "completion_tokens": 146,
+      "completion_tokens_details": {
+        "reasoning_tokens": 94
+      },
+      "prompt_tokens": 2879,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3025
+    }
+  }
+}

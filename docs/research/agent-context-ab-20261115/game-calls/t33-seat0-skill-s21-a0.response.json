@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.724,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"abstain\",\"reason\":\"Карта 3 (субсидия товара) уже бесполезна в последнем раунде — воздерживаюсь, тратить вето незачем.\"}",
+          "reasoning_content": "Card 3 subsidy_goods — no effect now (last round, no more produce? Actually action phase already passed). Subsidy irrelevant. As president could veto, but card 3 useless — pass or abstain. Abstain fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746677,
+    "id": "20261115204435d019234f064b43df",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115204435d019234f064b43df",
+    "usage": {
+      "completion_tokens": 98,
+      "completion_tokens_details": {
+        "reasoning_tokens": 49
+      },
+      "prompt_tokens": 3737,
+      "prompt_tokens_details": {
+        "cached_tokens": 3456
+      },
+      "total_tokens": 3835
+    }
+  }
+}

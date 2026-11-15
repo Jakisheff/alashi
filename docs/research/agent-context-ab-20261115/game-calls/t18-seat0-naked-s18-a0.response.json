@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.631,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Последний рынок: продаю 2 товара по максимальным ценам (12 и 10) без налога, девальвации больше не будет.\"}",
+          "reasoning_content": "Round 6 market, I have 2 goods, cash 1.79. Also unclaimed promissory? No sell_credit used. Also license won — license pays out at end regardless. Sell now at top prices 12 and 10. Sell 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738876,
+    "id": "202611151834333d1195d11924446e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151834333d1195d11924446e",
+    "usage": {
+      "completion_tokens": 102,
+      "completion_tokens_details": {
+        "reasoning_tokens": 55
+      },
+      "prompt_tokens": 2906,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3008
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.958,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":1,\"reason\":\"Лестница цен падает, держать товар невыгодно — продаю единицу сейчас по высокой цене.\"}",
+          "reasoning_content": "Sell 1 unit at price ~9-ish (sold_counter 0, ladder starts 12? Round 3 ladder [12,10,9,...] but earlier round prices may differ — just sell all 1 unit).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738223,
+    "id": "20261115182340788646b510084d8b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182340788646b510084d8b",
+    "usage": {
+      "completion_tokens": 84,
+      "completion_tokens_details": {
+        "reasoning_tokens": 46
+      },
+      "prompt_tokens": 2373,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2457
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.094,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Карта 7 влияет на следующий рынок, которого уже не будет — закон бессмысленен, тратить ход не нужно.\"}",
+          "reasoning_content": "Card 7: prices +2 next market — but round 6 market already happened, so it affects nothing? It's the law phase of round 6; market next round doesn't exist. So irrelevant. Vote either way. I have weight 3, president is faction 1 (influence 2). Card 7 no effect — abstain or pass. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738168,
+    "id": "20261115182244654b88f9e9d44045",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182244654b88f9e9d44045",
+    "usage": {
+      "completion_tokens": 113,
+      "completion_tokens_details": {
+        "reasoning_tokens": 77
+      },
+      "prompt_tokens": 3033,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3146
+    }
+  }
+}

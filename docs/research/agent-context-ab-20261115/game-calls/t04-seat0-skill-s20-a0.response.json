@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.749,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Налог 10% касается только рыночной выручки, а рынков после раунда 6 больше нет — карте всё равно, мне безразлично.\"}",
+          "reasoning_content": "Law card 1: tax 10%. Tax affects sale revenue; I have no goods left, opponents each have 2 goods to sell next round? Round 6 market already happened, sold_counter=6... Actually round 6 is last round, market done. Opponents still hold 2 goods each but no more markets? No more market after round 6. So tax won't hurt me or them (no sales remain). Influence ranking: rival 2 has influence 2. Vote: tax doesn't matter now—but cash ranking: tax applies to revenue only. Pass/vote... President is idx2. Just abstain or vote yes? Tax reduces others' future revenue—none. Vote yes harmlessly? No effect either way. Abstain is fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738171,
+    "id": "20261115182244b8360caad40a4021",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182244b8360caad40a4021",
+    "usage": {
+      "completion_tokens": 206,
+      "completion_tokens_details": {
+        "reasoning_tokens": 157
+      },
+      "prompt_tokens": 3638,
+      "prompt_tokens_details": {
+        "cached_tokens": 3328
+      },
+      "total_tokens": 3844
+    }
+  }
+}

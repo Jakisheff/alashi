@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.268,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":1,\"reason\":\"Продаю единственный товар на открытии по максимальной цене 12, ждать невыгодно.\"}",
+          "reasoning_content": "Round 3 market, I have 1 good. Sell now at price 12.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738508,
+    "id": "20261115182826e8d53e2fbba84b8b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182826e8d53e2fbba84b8b",
+    "usage": {
+      "completion_tokens": 55,
+      "completion_tokens_details": {
+        "reasoning_tokens": 18
+      },
+      "prompt_tokens": 2365,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2420
+    }
+  }
+}

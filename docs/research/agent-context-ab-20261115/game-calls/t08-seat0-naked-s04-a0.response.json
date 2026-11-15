@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.472,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Продам в кредит: 2 единицы по 9 и 8 дадут 21,25 promissory, что избежит девальвации 62% на границе раунда.\"}",
+          "reasoning_content": "Round 2 market. I have 2 goods, price ladder starts at index sold_counter=2 → price 9. Selling 2 units gets 9+8=17. But cash devaluation at round boundary 2+: wait, we're in round 2, border after round 2? \"round boundaries 2+\" — after round 2 cash floors to 62%. So selling now would devalue 62%. Better to use sell_credit: promissory ×1.25 added to cash after devaluation. So sell_credit 2 units → revenue (9+8)*1.25=21.25 as promissory, added at border after devaluation, no devaluation loss.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738278,
+    "id": "2026111518243420def0a73f754d5b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518243420def0a73f754d5b",
+    "usage": {
+      "completion_tokens": 205,
+      "completion_tokens_details": {
+        "reasoning_tokens": 145
+      },
+      "prompt_tokens": 1578,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1783
+    }
+  }
+}

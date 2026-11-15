@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.262,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Произвожу 2 товара для продажи на следующем рынке; мой вес голоса и так базовый.\"}",
+          "reasoning_content": "Produce gives 2 goods. Others have 2 goods. Vote weight mode 1: my weight 3 (passed action). Produce is better long-run: 2 goods to sell.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738077,
+    "id": "202611151821119c7a8be27b804f8d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151821119c7a8be27b804f8d",
+    "usage": {
+      "completion_tokens": 73,
+      "completion_tokens_details": {
+        "reasoning_tokens": 39
+      },
+      "prompt_tokens": 1842,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 1915
+    }
+  }
+}

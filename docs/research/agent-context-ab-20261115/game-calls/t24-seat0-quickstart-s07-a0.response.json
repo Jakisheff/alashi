@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.855,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, я не президент — доступных действий нет.\"}",
+          "reasoning_content": "Law 7 already voted, post_vote, not president — pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739174,
+    "id": "202611151839323b8374db18304551",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151839323b8374db18304551",
+    "usage": {
+      "completion_tokens": 39,
+      "completion_tokens_details": {
+        "reasoning_tokens": 14
+      },
+      "prompt_tokens": 2942,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 2981
+    }
+  }
+}

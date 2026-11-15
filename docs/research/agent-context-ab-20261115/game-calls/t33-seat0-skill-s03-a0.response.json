@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.494,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продаю весь товар сразу по высокой цене лестницы (9 за единицу), дальше цены только падают.\"}",
+          "reasoning_content": "Market round 2, I have 2 goods, prices start at sold_counter=2 → price 9. Sell now. Sell all 2 units. Cash 22M appeared for player 2... anyway. Action: sell.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739695,
+    "id": "202611151848125c906c80c3db4203",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151848125c906c80c3db4203",
+    "usage": {
+      "completion_tokens": 86,
+      "completion_tokens_details": {
+        "reasoning_tokens": 48
+      },
+      "prompt_tokens": 2004,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2090
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.851,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемая ценность 3 товаров с риском 25% конфискации выше, чем 2 от бесплатного производства, а денег на границу хватает.\"}",
+          "reasoning_content": "Action phase round 3. Cash 32.5. Options: produce (2 goods), donkey (1 alashi for 1 good), shuttle (3 goods, 25% confiscation risk but I have no protection). Cash is fine; produce gives 2 free. Shuttle gives 3 goods expected value ~2.25 goods minus risk. Shuttle better? 3 goods at ~25% confiscation chance — likely all-or-nothing? Ambiguous. Expected goods: 2.25 vs 2. But remaining rounds: 3 markets (4,5,6). Produce is safe. Shuttle with 25% risk losing all 3. Expected slightly better. But cash fine either way. I'll shuttle for 3 goods.\n\nActually risk: confiscation ~25% whole shipment → EV 2.25 > 2. Go shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738343,
+    "id": "2026111518253765599d8c89ef48c3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518253765599d8c89ef48c3",
+    "usage": {
+      "completion_tokens": 225,
+      "completion_tokens_details": {
+        "reasoning_tokens": 176
+      },
+      "prompt_tokens": 1963,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2188
+    }
+  }
+}

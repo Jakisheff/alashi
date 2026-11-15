@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.043,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"У меня нет товаров; производство даёт 2 единицы для продажи на рынке следующего хода.\"}",
+          "reasoning_content": "Vote weight mode 1: influence plus 2 if action skipped. I should produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739600,
+    "id": "20261115184637891185d06b9f49de",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184637891185d06b9f49de",
+    "usage": {
+      "completion_tokens": 49,
+      "completion_tokens_details": {
+        "reasoning_tokens": 18
+      },
+      "prompt_tokens": 2456,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 2505
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.516,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% урежет и мою выручку будущих рынков, а преференций мне не даёт — против.\"}",
+          "reasoning_content": "Law card 1: tax 10%. I have no goods, cash 17. Tax hits sale revenue—my rivals plan to sell in round 5? I already sold. Tax 10% hurts rivals who sell later. Vote yes? Card 1 applies tax 10% to market revenue. I sold already this round; future markets 5-6 I'd sell too, but tax affects everyone equally. As president with weight 4 vs 3+3... Rivals already voted. voted[1,2]=true, me false. Unknown their votes. Tax hurts sellers equally; my cash smaller so relatively taxes hurt my peso less? Tax reduces my future revenue too. But it devalues rivals' larger future cash less... Actually tax hurts me in rounds 5-6 sales (I'll sell ~2 units each). Slight negative. But rivals sell too. Roughly symmetric; maybe vote no to protect own sales. I'll vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739552,
+    "id": "20261115184545ad122672556b4209",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184545ad122672556b4209",
+    "usage": {
+      "completion_tokens": 239,
+      "completion_tokens_details": {
+        "reasoning_tokens": 197
+      },
+      "prompt_tokens": 3057,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3296
+    }
+  }
+}

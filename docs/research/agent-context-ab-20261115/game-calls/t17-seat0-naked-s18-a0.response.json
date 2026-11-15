@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.544,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 5 даёт +1 влияния богатейшему — это фракция 1, а не я, мне это невыгодно\"}",
+          "reasoning_content": "Law card 5: +1 influence to richest. Cash: me 10.77, others 25.27, 24.63 — richest is faction 1. So card gives influence to rival. My cash dropped because tribute? Anyway vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738851,
+    "id": "202611151834030b9b4c1311c64733",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151834030b9b4c1311c64733",
+    "usage": {
+      "completion_tokens": 94,
+      "completion_tokens_details": {
+        "reasoning_tokens": 53
+      },
+      "prompt_tokens": 2841,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 2935
+    }
+  }
+}

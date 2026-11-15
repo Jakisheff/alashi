@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.856,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Субсидия товара в последнем раунде уже бесполезна, исход голосования не влияет на мою выплату.\"}",
+          "reasoning_content": "Card 3: subsidy_goods=1 — irrelevant now (no more production). Vote yes/no doesn't matter; abstain fine. Actually pass? Abstain is fine; outcome irrelevant. I'm president anyway. Vote yes to keep weight? Weight is 3 due to passing action. Just vote_abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737839,
+    "id": "20261115181716f404c9535d204a14",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181716f404c9535d204a14",
+    "usage": {
+      "completion_tokens": 106,
+      "completion_tokens_details": {
+        "reasoning_tokens": 65
+      },
+      "prompt_tokens": 4350,
+      "prompt_tokens_details": {
+        "cached_tokens": 4096
+      },
+      "total_tokens": 4456
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.077,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Production is worth far more than the one-round +2 voting weight from passing.\"}",
+          "reasoning_content": "Vote weight 3 means primary action passed? Actually vote_weight_mode 1... I'm player 0 with weight 3 (skipped action gives +2). Others produced. I should produce? But if I act, lose +2 weight. Vote weight matters for law votes. Skip action to keep weight 3? Influence matters for final bonus. Passing action gives +2 weight only this round's law vote. Producing gives goods worth money. 2 goods × ~10 alashi = 20 alashi, but tax maybe. Weight 3 vs 1 for law vote — modest. Production worth ~20 alashi each round; long-term better to produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737753,
+    "id": "2026111518154816edbb4c5a8643ac",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518154816edbb4c5a8643ac",
+    "usage": {
+      "completion_tokens": 162,
+      "completion_tokens_details": {
+        "reasoning_tokens": 136
+      },
+      "prompt_tokens": 2453,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2615
+    }
+  }
+}

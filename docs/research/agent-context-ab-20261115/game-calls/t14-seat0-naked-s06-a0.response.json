@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.787,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта даёт +1 влияния богатейшему (idx2, 22 млн), а не мне — против.\"}",
+          "reasoning_content": "Law card 5: +1 influence to richest. Richest is idx2 (22M). Someone voted already (idx2 probably yes). My vote: weight 1. I'm not president. If it passes, richest gains influence — not me. Vote no. Vote no risks tie? yes=1 (idx2), no=me, idx1 unknown. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738589,
+    "id": "202611151829448455d59df9bc4d37",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151829448455d59df9bc4d37",
+    "usage": {
+      "completion_tokens": 114,
+      "completion_tokens_details": {
+        "reasoning_tokens": 78
+      },
+      "prompt_tokens": 1752,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 1866
+    }
+  }
+}

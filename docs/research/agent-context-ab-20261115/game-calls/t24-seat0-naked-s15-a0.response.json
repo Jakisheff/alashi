@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.107,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Без товара shuttle даёт 3 единицы на последний рынок по высоким стартовым ценам (12/10/9=31M) — ожидаемо лучше, чем 22M от produce, риск конфискации компенсируется объёмом.\"}",
+          "reasoning_content": "I have 35.8M cash, no goods. Options: produce (2 goods), donkey (need 1 alashi cash — I have cash, gives 1 good), shuttle (3 goods, risk). Selling later at round 6 market: prices 12,10 for 2 goods. Produce gives 2 goods, safe. Shuttle gives 3 but confiscation risk ~25%. Prices high at start (sold_counter 0). 3 goods: 12+10+9=31; 2 goods 22. Shuttle EV higher, and cash fine. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739216,
+    "id": "20261115184011d4c43ad2022a4629",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184011d4c43ad2022a4629",
+    "usage": {
+      "completion_tokens": 185,
+      "completion_tokens_details": {
+        "reasoning_tokens": 122
+      },
+      "prompt_tokens": 2719,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2904
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "id": "t07-seat0-skill",
+  "seed_index": 7,
+  "seed": 7376980301324979958,
+  "seat": 0,
+  "arm": "skill",
+  "opponents": [
+    "greedy",
+    "tactical"
+  ],
+  "partition": "test",
+  "status": "completed",
+  "started_utc": "2026-11-15T10:23:12.006165+00:00",
+  "harness": {
+    "memory.md": "0ef04e2d60c4c63619c2d5ffb9c9891e8ef9e1fb4cf1856aba5db707582068a1",
+    "helper.py": "a992bf32be20d8a85d5e3b6e8fbcaa4369ab70ef88b6b8c31a903e7b0de6e2c8"
+  },
+  "payout": 78022410,
+  "net_profit": 68022410,
+  "rank": 1,
+  "decisions": 22,
+  "model_decisions": 22,
+  "parse_errors": [
+    {
+      "phase": "law",
+      "decision": "Pass",
+      "parse_error": "unknown law action"
+    }
+  ],
+  "illegal_actions": 1,
+  "illegal_detail": [
+    {
+      "phase": "action",
+      "err": "SelfBribe",
+      "detail": {
+        "amount": 5000000,
+        "to": 0
+      }
+    }
+  ],
+  "elapsed_s": 86.789
+}

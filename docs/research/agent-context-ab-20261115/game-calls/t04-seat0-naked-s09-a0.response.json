@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.28,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 2 товара для продажи в следующем раунде — лучший ход без затрат.\"}",
+          "reasoning_content": "Round 3 action. I have 13.02 cash, 0 goods. Options: produce (free 2 goods), donkey, shuttle, bribe. Produce is free.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738094,
+    "id": "202611151821313aaae48778644fdd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151821313aaae48778644fdd",
+    "usage": {
+      "completion_tokens": 68,
+      "completion_tokens_details": {
+        "reasoning_tokens": 38
+      },
+      "prompt_tokens": 2012,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2080
+    }
+  }
+}

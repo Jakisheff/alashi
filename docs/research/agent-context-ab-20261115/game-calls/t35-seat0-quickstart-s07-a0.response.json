@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.225,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голос уже подан, на post_vote остаётся только пассивное ожидание результата\"}",
+          "reasoning_content": "Card 7 passed? vote stage post_vote, all voted. I voted yes. Others likely yes too. Now pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746705,
+    "id": "20261115204503d121ba47f4064f0e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115204503d121ba47f4064f0e",
+    "usage": {
+      "completion_tokens": 54,
+      "completion_tokens_details": {
+        "reasoning_tokens": 25
+      },
+      "prompt_tokens": 2942,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 2996
+    }
+  }
+}

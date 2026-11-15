@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.156,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":30000000,\"reason\":\"Лицензия приносит ~20–60 alashi сверх доли; ставка 30 alashi имеет положительное ожидание, проигрышная ставка возвращается\"}",
+          "reasoning_content": "Round 4 action: auction available. License income 20-60 alashi, paid above share. Bidding could be profitable. Cash 48.775. Rival 1 has 36. Rival 2 has 7.9 (just lost cash? their cash dropped... they had 25.64 goods sold? whatever). Bid maybe 25 alashi (25000000, must be multiple of 5000000 for bribe only; bid any integer units? amount is min units). Bid 20 million? Expected license value ~40 alashi, worth bidding ~25-30. Rival 1 could outbid with 36. But after bid, cash lost only if win. Bid 30000000? Leaves 18.775. Rival 1 max 36. Risk bidding war. Expected value ~40, bid 30 gives +10 expected. But if rival bids 35, I lose, no loss. So bid high-ish: 30000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746728,
+    "id": "202611152045231bc6eb56ac664aff",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611152045231bc6eb56ac664aff",
+    "usage": {
+      "completion_tokens": 257,
+      "completion_tokens_details": {
+        "reasoning_tokens": 207
+      },
+      "prompt_tokens": 3463,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 3720
+    }
+  }
+}

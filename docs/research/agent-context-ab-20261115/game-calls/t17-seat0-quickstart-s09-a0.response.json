@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.253,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 1 вводит налог 10% на будущие продажи, что снижает мою выручку — против.\"}",
+          "reasoning_content": "Law card 1: tax 10%. I sold already; future sales taxed. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738791,
+    "id": "202611151833096ce33df46bbe4914",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151833096ce33df46bbe4914",
+    "usage": {
+      "completion_tokens": 57,
+      "completion_tokens_details": {
+        "reasoning_tokens": 20
+      },
+      "prompt_tokens": 3122,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3179
+    }
+  }
+}

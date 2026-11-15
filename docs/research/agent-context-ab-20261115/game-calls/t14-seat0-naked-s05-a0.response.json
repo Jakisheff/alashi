@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.664,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нет денег на другие действия, беру 2 товара бесплатно.\"}",
+          "reasoning_content": "Round 2 action. I have 0 goods, 0 cash. Promissory ~ 2×? Wait I sold 2 at price ~... sold_counter=6, price around 5-6? ×1.25. Cash 0 — can't bribe or donkey. Produce gives 2 goods.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738584,
+    "id": "202611151829410ff5fdad89be4b06",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151829410ff5fdad89be4b06",
+    "usage": {
+      "completion_tokens": 90,
+      "completion_tokens_details": {
+        "reasoning_tokens": 67
+      },
+      "prompt_tokens": 1680,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1770
+    }
+  }
+}

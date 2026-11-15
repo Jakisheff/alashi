@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.503,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара для продажи; кредитная выручка вернётся на границе раунда, рынок пропускаю.\"}",
+          "reasoning_content": "Round 4 market, I have 0 goods. Wait, I sold everything... goods 0. Also promissory from round 3 sell (2 units at 12+10 with boom 2? prices sold_counter=4: units sold before were 4). My round-3 credit sale added to sold_counter. Promissory will return at round 4/5 border. No goods — pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737811,
+    "id": "202611151816467d0d6cd3017340e7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151816467d0d6cd3017340e7",
+    "usage": {
+      "completion_tokens": 122,
+      "completion_tokens_details": {
+        "reasoning_tokens": 85
+      },
+      "prompt_tokens": 2373,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2495
+    }
+  }
+}

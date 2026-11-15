@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.022,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Субсидия даёт соперникам по лишнему товару и снижает мою относительную долю продаж на последнем рынке, а также давит цены вниз — отклоняю своим весом 2.\"}",
+          "reasoning_content": "Law card 3: subsidy_goods=1. I have shuttle (3 goods) possibly confiscated; others have 2 goods each. Subsidy helps everyone equally; market sells — more goods sold lowers prices for all. With 2 vote weight vs others' 1+? voted[1]=true already. Vote weight 2 vs 1+2? Others didn't skip action likely, so 2 vs 1 and 1 — my yes passes. Card 3 benefits all sellers; rivals have 2 goods each, me 3 (if not confiscated). It's mildly positive for me too (extra good). But price ladder: more supply lowers prices. Rivals sell 4, me 3-4 → total ~8, prices drop. Without subsidy same relative. Subsidy gives +1 to all — actually reduces my relative share? Currently I'd have 3, they 2 each: 43% share. With subsidy: 4,3,3: 40%. Marginal. Also early sales at top of ladder favor... eh. It's roughly neutral. Abstain or yes? Slight no perhaps to keep relative share. Vote no with weight 2 passes no (strictly more yes needed; yes=0 or 1, no=2). I'll vote no — helps keep my share advantage and limits supply.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739411,
+    "id": "2026111518432226b9ae63b9174d94",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518432226b9ae63b9174d94",
+    "usage": {
+      "completion_tokens": 336,
+      "completion_tokens_details": {
+        "reasoning_tokens": 280
+      },
+      "prompt_tokens": 2864,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3200
+    }
+  }
+}

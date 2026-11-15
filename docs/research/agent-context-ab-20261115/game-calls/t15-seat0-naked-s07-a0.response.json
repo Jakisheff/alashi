@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.91,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, я не президент — доступных действий нет.\"}",
+          "reasoning_content": "Card 8 wipes promissory; everyone voted (voted all true). Post_vote stage, I'm not president. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738666,
+    "id": "202611151831045900d3003ceb4e90",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151831045900d3003ceb4e90",
+    "usage": {
+      "completion_tokens": 53,
+      "completion_tokens_details": {
+        "reasoning_tokens": 28
+      },
+      "prompt_tokens": 1857,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 1910
+    }
+  }
+}

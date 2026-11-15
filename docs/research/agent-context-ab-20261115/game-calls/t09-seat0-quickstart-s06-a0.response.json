@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.229,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голос уже подан (yes), карта 8 выгодна мне — дополнительных действий в фазе law нет.\"}",
+          "reasoning_content": "Law phase round 2, card 8, already voted yes (post_vote). Action now must be law phase action. Just pass? We already voted, so vote_abstain again? Probably pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738336,
+    "id": "202611151825326ae9f41ef243448c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151825326ae9f41ef243448c",
+    "usage": {
+      "completion_tokens": 76,
+      "completion_tokens_details": {
+        "reasoning_tokens": 42
+      },
+      "prompt_tokens": 2876,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 2952
+    }
+  }
+}

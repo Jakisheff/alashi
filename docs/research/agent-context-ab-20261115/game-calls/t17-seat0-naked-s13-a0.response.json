@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.302,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":26000000,\"reason\":\"Лицензия приносит 20–60 alashi сверх доли, а ставка возвращает деньги при проигрыше — ставлю почти весь кэш, тратя его до девальвации\"}",
+          "reasoning_content": "Round 4 action: auction available. Bid? License income 20-60 alashi, huge. Bidding is key. I have ~26.4 cash. Others ~33.5 and ~31.7. Also promissory from sell_credit: 3 units at prices after counter 10 → 1,1,1 *1.25... small.\n\nLicense pays 20-60 alashi to winner. Bidding close to my cash could win. Others also have cash. Tie_order unknown... I'm index 0. Bid amount should maximize: win value ~40 avg minus bid. Bid most of cash? Note cash devalues at round 5 boundary (floor/100*62) anyway — but 62% retained. Spending cash on license avoids devaluation. Win → +20-60 alashi, minus bid. If I bid 26 alashi and win, net gain ~14-34 minus devaluation loss ~10 → still good. If others bid higher, my bid returned.\n\nAlso remember shuttle for goods? Round 4 action bid replaces shuttle. After auction, no goods for round 5 market — but license worth more.\n\nShould I bid nearly all cash? If I win at 26, I get license worth avg 40, keeps me ahead. If they outbid, refund. Bid 26000000 (cash 26436800). Yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738820,
+    "id": "202611151833292846ef5ff2d040ad",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151833292846ef5ff2d040ad",
+    "usage": {
+      "completion_tokens": 345,
+      "completion_tokens_details": {
+        "reasoning_tokens": 286
+      },
+      "prompt_tokens": 2388,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2733
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.637,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, карта 7 (+2 к ценам) мне выгодна как продавцу — вето не требуется, я и не президент.\"}",
+          "reasoning_content": "Law 7 passed? voted all; yes vs no: I voted yes. Card 7 +2 prices benefits me as seller. Not president, veto pending false. Action: pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737811,
+    "id": "20261115181648792d6c21d77847e1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181648792d6c21d77847e1",
+    "usage": {
+      "completion_tokens": 79,
+      "completion_tokens_details": {
+        "reasoning_tokens": 38
+      },
+      "prompt_tokens": 3140,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3219
+    }
+  }
+}

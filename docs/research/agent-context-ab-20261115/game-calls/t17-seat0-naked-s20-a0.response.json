@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.399,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Последний раунд: продаю весь товар по максимальным ценам 12/10/9 без кредита, который уже не погасится\"}",
+          "reasoning_content": "Final market, sold_counter 0, sell 3 units at 12,10,9 = 31, tax 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738857,
+    "id": "20261115183414369f04abb6bb4f22",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183414369f04abb6bb4f22",
+    "usage": {
+      "completion_tokens": 71,
+      "completion_tokens_details": {
+        "reasoning_tokens": 27
+      },
+      "prompt_tokens": 3018,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3089
+    }
+  }
+}

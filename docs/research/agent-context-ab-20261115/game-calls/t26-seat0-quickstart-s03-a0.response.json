@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.04,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продаю 2 единицы по лестнице (9 и 8 alashi) — лучшая цена, дальше счётчик продаж цену только снизит.\"}",
+          "reasoning_content": "I have 2 goods, cash 0. Sold counter 2 means prices already down? Ladder from start: sold_counter 2 → next unit price 9. Sell 2 units at 9 and 8.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739255,
+    "id": "202611151840510a2dfccd072e481c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151840510a2dfccd072e481c",
+    "usage": {
+      "completion_tokens": 93,
+      "completion_tokens_details": {
+        "reasoning_tokens": 46
+      },
+      "prompt_tokens": 2601,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2694
+    }
+  }
+}

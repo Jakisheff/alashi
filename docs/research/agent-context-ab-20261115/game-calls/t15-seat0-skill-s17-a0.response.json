@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.077,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 0 пуста, закон ничего не меняет — воздерживаюсь без потери позиции.\"}",
+          "reasoning_content": "Law phase round 5, card 0 = empty. Vote abstain/pass. Card 0 is nothing — abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738732,
+    "id": "20261115183210a1e40aabc29240c4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183210a1e40aabc29240c4",
+    "usage": {
+      "completion_tokens": 61,
+      "completion_tokens_details": {
+        "reasoning_tokens": 26
+      },
+      "prompt_tokens": 3231,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 3292
+    }
+  }
+}

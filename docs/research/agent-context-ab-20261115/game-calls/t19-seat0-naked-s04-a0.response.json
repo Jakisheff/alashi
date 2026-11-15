@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.212,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продаю оба товара по текущим высоким ценам 9 и 8 alashi до дальнейшего падения лестницы\"}",
+          "reasoning_content": "We're round 2 market, I have 22 cash, 2 goods, promissory from selling 2 credit at price... sold counter 2. Prices: units 1-2 sold at 12,10 → revenue 22*1.25=27.5 promissory arriving at border... wait promissory added at border of next round (round 2 border). Actually sold in round 1 law phase (post_vote — odd, but recorded as sell_credit). Promissory returns at boundary of round 2. Cash currently 22M shown? cash[0]=22000000 — hmm, that's promissory already added? State cash 22M. But wait devaluation happens at boundary round 2: floor(22/100)*62? Devaluation floor(cash/100)*62 — cash 22M = 22 alashi, floor(22/100)=0 → no devaluation (below 100). OK.\n\nNow market round 2: sell my 2 goods. sold_counter=2, so next prices: 9,8 → 17 alashi, no tax. Sell now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738891,
+    "id": "202611151834431cc809f7a5284907",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151834431cc809f7a5284907",
+    "usage": {
+      "completion_tokens": 275,
+      "completion_tokens_details": {
+        "reasoning_tokens": 237
+      },
+      "prompt_tokens": 1610,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1885
+    }
+  }
+}

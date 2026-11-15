@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.275,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товара нет, рынок уже прошёл, а взятка уменьшила бы мой cash и лидерство в ранге — любое действие здесь проигрышно, пропуск оптимален.\"}",
+          "reasoning_content": "Round 6 action, no goods, cash 33.5M. Options: produce gives 2 goods but no market left (market already passed this round). Goods at end useless. Donkey useless. Bribe gives influence — influence bonus: 5% of bank goes to max influence. Currently influence [1,1,2], faction 2 has 2. Bank commission 5% split... If I bribe 10M to faction1? Bribe gives influence to me and cash to recipient — bad, gives away money which counts in rank? Cash+hard matters for rank; bank share 50:30:15. I'm cash leader 33.5 vs 28.9. Giving away money reduces my share. Influence tiebreak for 5% bonus: I'd need 3 influence → bribe 10M, losing 10M cash but gaining 5% bank bonus. Bank size unknown; total cash ~90M... bank is separate? Commission 5% of bank — bank meaning pot? Unclear. Rank matters more: 50 vs 30 share. I'm already richest, my cash would drop to 23.5, losing top rank? 23.5 vs 28.9 → drop to second: 30% vs 50%. Bad. So pass... but rule says no pass without reason. Pass is correct here. Actually could bribe to hurt? No. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737845,
+    "id": "202611151817168e50aa6761ee4db3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151817168e50aa6761ee4db3",
+    "usage": {
+      "completion_tokens": 346,
+      "completion_tokens_details": {
+        "reasoning_tokens": 295
+      },
+      "prompt_tokens": 3666,
+      "prompt_tokens_details": {
+        "cached_tokens": 3392
+      },
+      "total_tokens": 4012
+    }
+  }
+}

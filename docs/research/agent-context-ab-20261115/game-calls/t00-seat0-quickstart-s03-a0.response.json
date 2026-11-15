@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.298,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, а закон 8 для меня безвреден — вето не нужно.\"}",
+          "reasoning_content": "Law card 8 passed already; phase law post_vote? Round1 law phase, we already voted. Actually stage is post_vote — decision still needed? Probably veto option? We're president, law 8 harmless to us (no promissory). Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737765,
+    "id": "2026111518160012b0b6598ca7440b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518160012b0b6598ca7440b",
+    "usage": {
+      "completion_tokens": 86,
+      "completion_tokens_details": {
+        "reasoning_tokens": 54
+      },
+      "prompt_tokens": 2613,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2699
+    }
+  }
+}

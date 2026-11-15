@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.412,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продажа товара на открытии по лестнице (~7 и 6 alashi), дальше цены только падают, а в раунде 4 нужна песо-касса под ставку на лицензию.\"}",
+          "reasoning_content": "Sell 2 units at current ladder position. sold_counter=4, so prices next are 7,6? Ladder [12,10,9,8,7,6,...] — first two sold at index 0,1? Actually counter=4 means units 5,6 → 7,6 alashi. Sell 2 now, prices fall.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738772,
+    "id": "20261115183248733ffcbe4da64bc4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183248733ffcbe4da64bc4",
+    "usage": {
+      "completion_tokens": 135,
+      "completion_tokens_details": {
+        "reasoning_tokens": 76
+      },
+      "prompt_tokens": 2722,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 2857
+    }
+  }
+}

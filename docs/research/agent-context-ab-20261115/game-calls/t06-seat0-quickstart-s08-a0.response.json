@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.562,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Продажа в кредит по высоким ценам с бумом +2 даёт 1.25x выручку, которая вернётся после девальвации, сохранив максимум стоимости.\"}",
+          "reasoning_content": "I'm president, influence 2. Market round 3, prices with boom +2: ladder 12+2,10+2,... but sold_counter=0 (devalued cash boundary reset ladder? sold_counter resets per game?). Prices: 14,12,11... Sell 3 units cash? Boom +2 applies now? active_boom=2 likely affects current market. Sell all 3 for cash — but devaluation at round boundary: cash floor to 62%. Selling credit avoids devaluation. But wait, my cash already 10.54M — I could sell credit to get 1.25x promissory returned after boundary without devaluation. Better: sell_credit all 3.\n\nWait, promissory adds to cash and zeroes; on boundary cash floor/100*62 — does promissory get devalued? \"cash=floor(cash/100)*62 (hard не девальвируется), promissory прибавляется к cash и обнуляется\" — promissory added after devaluation presumably. Yes, sell_credit 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738232,
+    "id": "202611151823457c6b580f17c44e05",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151823457c6b580f17c44e05",
+    "usage": {
+      "completion_tokens": 281,
+      "completion_tokens_details": {
+        "reasoning_tokens": 224
+      },
+      "prompt_tokens": 3144,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3425
+    }
+  }
+}

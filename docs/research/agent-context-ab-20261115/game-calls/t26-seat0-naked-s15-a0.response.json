@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.864,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Закон +2 к ценам увеличит выручку от моей продажи 3 товаров на последнем рынке.\"}",
+          "reasoning_content": "Card 7: +2 prices. I have 3 goods to sell round 6. Vote yes. But card 7 applies next market? \"цены +2\" — benefits me. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739329,
+    "id": "202611151842067cd21d9f94a74df6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151842067cd21d9f94a74df6",
+    "usage": {
+      "completion_tokens": 76,
+      "completion_tokens_details": {
+        "reasoning_tokens": 43
+      },
+      "prompt_tokens": 2668,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2744
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.597,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 2 товара выгоднее осла: следующая цена лестницы ~5, а donkey даёт лишь 1 товар за 1 alashi.\"}",
+          "reasoning_content": "I'm president, cash 17M, goods 0. Round 2 action: produce gives 2 goods. Donkey costs 1 alashi per good — with cash 17M, buying donkeys also fine? Donkey gives 1 good for 1 alashi — price per good sold ~9 next market... actually sold_counter 6, prices at index 6: 5, then 4... wait ladder [12,10,9,8,7,6,5,4,3,3,2,...] — sold 6, next unit price 5. Hmm, my history shows I sold at 12,10 then 9,8 — others sold 2. Next price 5. Donkey 1 good costs 1 alashi, sells at ~5 — profitable. But only one action per phase. Produce gives 2 free. Best: produce (2 free goods worth ~10). Donkey gives only 1 good for 1 alashi. Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738909,
+    "id": "202611151835018939c9af0a53415b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151835018939c9af0a53415b",
+    "usage": {
+      "completion_tokens": 252,
+      "completion_tokens_details": {
+        "reasoning_tokens": 208
+      },
+      "prompt_tokens": 2789,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3041
+    }
+  }
+}

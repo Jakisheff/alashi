@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.655,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, моя позиция уже зафиксирована.\"}",
+          "reasoning_content": "Law phase post_vote? decision_stage post_vote — likely no action needed, but must return something. Vote already done. Return pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738671,
+    "id": "20261115183107978f87bcb1044ad5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183107978f87bcb1044ad5",
+    "usage": {
+      "completion_tokens": 51,
+      "completion_tokens_details": {
+        "reasoning_tokens": 27
+      },
+      "prompt_tokens": 1988,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2039
+    }
+  }
+}

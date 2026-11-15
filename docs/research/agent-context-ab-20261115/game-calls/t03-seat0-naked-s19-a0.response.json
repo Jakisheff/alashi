@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.382,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Рынок уже прошёл, товара нет — любое действие сейчас только тратит деньги без выгоды\"}",
+          "reasoning_content": "Round 6 action phase, no goods, cash 55.78M. Donkey costs 1 alashi gives 1 good — but market already passed (sold counter 10, can't sell). Goods useless now. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738063,
+    "id": "20261115182059c98dc65265ac409d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182059c98dc65265ac409d",
+    "usage": {
+      "completion_tokens": 79,
+      "completion_tokens_details": {
+        "reasoning_tokens": 48
+      },
+      "prompt_tokens": 3001,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3080
+    }
+  }
+}

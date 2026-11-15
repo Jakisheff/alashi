@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.387,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Я президент с равным капиталом, карта даёт +1 влияния богатейшему — вероятно мне, усиливая бонус влияния и президентство.\"}",
+          "reasoning_content": "Law card 5: +1 influence to richest. All cash 0, tie? Richest — tie probably goes to tie_order, I'm idx 0, may win? Uncertain. I'm president. Vote yes gives +1 influence to richest (possibly me), boosts influence bonus share. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739474,
+    "id": "2026111518443099904ff0235249ee",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518443099904ff0235249ee",
+    "usage": {
+      "completion_tokens": 106,
+      "completion_tokens_details": {
+        "reasoning_tokens": 64
+      },
+      "prompt_tokens": 2521,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2627
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.506,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товара нет (goods=0), продавать нечего.\"}",
+          "reasoning_content": "Round 5 market, no goods. Pass — nothing to sell. But rule says never pass in market without goods — we have 0 goods. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738449,
+    "id": "2026111518272799abf1b19ef54ded",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518272799abf1b19ef54ded",
+    "usage": {
+      "completion_tokens": 56,
+      "completion_tokens_details": {
+        "reasoning_tokens": 32
+      },
+      "prompt_tokens": 3113,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3169
+    }
+  }
+}

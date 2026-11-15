@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.115,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Товара и цены рынка нет — shuttle даёт 3 единицы для продажи в последнем раунде; даже с риском ~25% конфискации EV выше, чем donkey за 1 alashi.\"}",
+          "reasoning_content": "Round 5 action, no cash for donkey (16 alashi, donkey costs 1 alashi — actually affordable!). Donkey costs 1 alashi gives 1 good. Cash 16 alashi, donkey costs 1 → goods 1, sell next round. Shuttle gives 3+ subsidy = 3 grey goods, ~25% confiscation risk; costs? Not stated a cash cost. Shuttle seems free? \"shuttle даёт 3+subsidy_goods товара\" — no cost mentioned. Then shuttle > donkey. But wait, opponent has 2 goods. Shuttle: 3 goods, ~25% confiscation at border. EV 2.25 goods vs donkey 1 for 1 alashi. Choose shuttle? Risk confiscation—then lose turn. EV strongly favors shuttle. Also check \"льготная граница дань min(cash,2)\". Still shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738626,
+    "id": "202611151830190be0fb176e5b4788",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151830190be0fb176e5b4788",
+    "usage": {
+      "completion_tokens": 248,
+      "completion_tokens_details": {
+        "reasoning_tokens": 190
+      },
+      "prompt_tokens": 3415,
+      "prompt_tokens_details": {
+        "cached_tokens": 3136
+      },
+      "total_tokens": 3663
+    }
+  }
+}

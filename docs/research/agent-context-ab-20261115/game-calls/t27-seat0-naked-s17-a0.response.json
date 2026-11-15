@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.632,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемая выручка шаттла выше produce даже с риском конфискации: ~3 товара против 2, продажа на последнем рынке по высокой цене.\"}",
+          "reasoning_content": "Round 5 action. I have 6.6M cash, 0 goods. Options: produce (free, 2 goods, sell next market round 6 at top price ~12 minus tax 20%... prices start at 12 for round 6). Shuttle gives 3 goods but confiscation risk; tax 20% applies. Produce 2 goods → sell at 12 = 24 revenue, tax 20% → 19.2. Shuttle: 3 goods, 25% confiscation risk → expected 36*0.75=27 gross, tax→~21.6. Shuttle better EV but risk; cash is low anyway, no roof. Prefer produce? Shuttle expected higher. But confiscation whole shipment ~25%. EV shuttle = 27*0.8=21.6 vs produce 16. Shuttle better. Also could bribe self? Bribe to self just converts, but +1 influence — with 5M bribe I'd have 1.6M left, influence 3, helps max-influence bonus 5%. 5% of bank... bank likely modest. Vote weight already 4. Probably shuttle.\n\nShuttle: 3 goods, sell in round 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739401,
+    "id": "202611151843133567b85a6fd547e8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151843133567b85a6fd547e8",
+    "usage": {
+      "completion_tokens": 304,
+      "completion_tokens_details": {
+        "reasoning_tokens": 254
+      },
+      "prompt_tokens": 2760,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3064
+    }
+  }
+}

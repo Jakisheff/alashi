@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.959,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара и денег для действий на рынке в раунде 1.\"}",
+          "reasoning_content": "No goods, cash 0. Pass in market is fine (no goods).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739249,
+    "id": "20261115184047b01aaa02454c4382",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184047b01aaa02454c4382",
+    "usage": {
+      "completion_tokens": 41,
+      "completion_tokens_details": {
+        "reasoning_tokens": 16
+      },
+      "prompt_tokens": 1775,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 1816
+    }
+  }
+}

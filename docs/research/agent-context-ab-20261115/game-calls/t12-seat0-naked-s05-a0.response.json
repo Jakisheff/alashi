@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.266,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"У меня нет непогашенных promissory, а списание может ударить по соперникам — закон мне выгоден.\"}",
+          "reasoning_content": "Card 8: cancels all promissory. I have none? I sold normally, no promissory. Others may have. I'm president, influence 3. Vote no — but card 8 only wipes promissory, I have none; opponents might. Vote no? Actually unclear who benefits. Voted[2]=true already. I have no promissory, so law hurts others potentially. Vote yes? Card 8 wipes promissory; I don't know if others have promissory. No evidence. My weight 3 vs... yes strictly greater passes. Voting yes may hurt rivals (if they hold promissory). Voting no risk: none for me. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738490,
+    "id": "202611151828054fe4558bcdb146c4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151828054fe4558bcdb146c4",
+    "usage": {
+      "completion_tokens": 182,
+      "completion_tokens_details": {
+        "reasoning_tokens": 145
+      },
+      "prompt_tokens": 1719,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1901
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.888,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Налог 10% режет мою выручку от будущих продаж; как президент ветирую.\"}",
+          "reasoning_content": "Law 1 already failed? All voted, post_vote stage. Veto_pending false. Card 1 tax 10% — likely failed since I voted no, but others may have yes yes. Unknown. As president can veto. Others both richer? I'm poorest. Tax hurts sellers. But I'm not president rich... tax cuts my revenue. If passed 2:1, veto. I can't see votes. Safe: veto tax to protect my sales.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739350,
+    "id": "20261115184226b013cdab7611467f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184226b013cdab7611467f",
+    "usage": {
+      "completion_tokens": 129,
+      "completion_tokens_details": {
+        "reasoning_tokens": 95
+      },
+      "prompt_tokens": 2952,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3081
+    }
+  }
+}

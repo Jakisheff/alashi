@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.992,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":20000000,\"reason\":\"Лицензия даёт ~20–60 alashi сверх доли; ставка 20 alashi из кэша, который всё равно девальвируется на 38%, ожидаемо прибыльна.\"}",
+          "reasoning_content": "Round 4 action: auction bid available. Income 20-60 alashi, share weights... bidding could win. Cash 40.675 alashi. Others have 33.5 and 25.5. Bid maybe 15 alashi (15000000000? units are 1M per alashi, amount in minimal units). Bid 15 alashi = 15000000? Wait 1 alashi = 1000000 units. Amount integer in minimal units. License income 20-60, expected ~40, but paid from cash which devalues at 62%... actually cash floor(cash/100)*62 devalues; spending bid avoids devaluation partially? Bid goes to bank, so it's spent. Expected value: license income ~40 vs share. Paying 15-20 alashi for expected 40 seems good. But bid winner's money goes to bank — increases bank? Probably not for commission much. Bid 20 alashi = 20000000 units? No wait: 1 alashi = 1,000,000 units. So 20 alashi = 20,000,000. Yes.\n\nOthers may bid too. Bid ~20 alashi. Expected 40 alashi income minus 20 bid = +20 net, better than letting opponent win. Also cash devalues 38%, so spending now is efficient. Bid 20000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746697,
+    "id": "2026111520445048513d2f0e0444f2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111520445048513d2f0e0444f2",
+    "usage": {
+      "completion_tokens": 348,
+      "completion_tokens_details": {
+        "reasoning_tokens": 289
+      },
+      "prompt_tokens": 3451,
+      "prompt_tokens_details": {
+        "cached_tokens": 3136
+      },
+      "total_tokens": 3799
+    }
+  }
+}

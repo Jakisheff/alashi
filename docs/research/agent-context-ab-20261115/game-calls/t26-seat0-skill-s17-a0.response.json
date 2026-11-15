@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.061,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Финальный раунд: продаю все 3 единицы по максимуму лестницы (12+2), кредит не нужен — вексель не погасится.\"}",
+          "reasoning_content": "Sell 3 units at price 12+2=14.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739307,
+    "id": "20261115184145a8005c17c2434249",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184145a8005c17c2434249",
+    "usage": {
+      "completion_tokens": 63,
+      "completion_tokens_details": {
+        "reasoning_tokens": 13
+      },
+      "prompt_tokens": 3269,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 3332
+    }
+  }
+}

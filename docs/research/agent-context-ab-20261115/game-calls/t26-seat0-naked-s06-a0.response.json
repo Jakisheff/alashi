@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.682,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование уже завершено, я не президент — в Vetostage нет доступных действий.\"}",
+          "reasoning_content": "Law card 3 already voted yes; post_vote stage? President could veto. I'm not president. Vote already done. Action: pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739282,
+    "id": "202611151841198265b48aea3c41db",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151841198265b48aea3c41db",
+    "usage": {
+      "completion_tokens": 59,
+      "completion_tokens_details": {
+        "reasoning_tokens": 29
+      },
+      "prompt_tokens": 1786,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 1845
+    }
+  }
+}

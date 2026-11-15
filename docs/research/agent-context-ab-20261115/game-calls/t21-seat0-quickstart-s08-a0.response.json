@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.327,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Кредитная продажа по высоким ценам раунда 3 превращает выручку в promissory и спасает её от полного обнуления при девальвации на границе раунда 4.\"}",
+          "reasoning_content": "Round 3 market, cash 21.25M, counter reset. I have 2 goods. Sell credit again? Credit avoids devaluation. But note: cash 21.25M will be devaluated at round 4 boundary (floor/100*62 → only cash multiple of 100M matters... floor(21.25/100)*62 = 0). Wait cash=21250000 → floor(21250000/100000000)=0, so devaluation wipes... 0*62=0? That can't be right — cash 21.25M < 100M so floor(cash/100)=0 → cash becomes 0? That seems harsh but per rules. So holding cash is bad; sell credit converts to promissory which is added to cash at boundary without devaluation. So sell_credit all units now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739051,
+    "id": "202611151837251ec0f7ab16e34e4c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151837251ec0f7ab16e34e4c",
+    "usage": {
+      "completion_tokens": 237,
+      "completion_tokens_details": {
+        "reasoning_tokens": 177
+      },
+      "prompt_tokens": 3112,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3349
+    }
+  }
+}

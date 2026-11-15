@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.034,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 20% режет выручку моей продажи в финальном раунде, голосую против; при необходимости применю вето.\"}",
+          "reasoning_content": "Law card 2: tax 20%. I'm richest; tax hurts my sales? Tax applies next market. I have 2 goods to sell round 6. 20% tax on revenue vs no tax. Others already voted (voted[1]=true, likely no? unknown). My weight 2+2(passed action? I did produce so no bonus)=2. Card 2 bad for me — vote no. Could veto if passes. voted shows index 2 true, others false — wait voted[2]=true? Array [false,false,true]. I haven't voted. Vote no first.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737843,
+    "id": "20261115181719b9cfc01fa1f640b2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181719b9cfc01fa1f640b2",
+    "usage": {
+      "completion_tokens": 169,
+      "completion_tokens_details": {
+        "reasoning_tokens": 126
+      },
+      "prompt_tokens": 2905,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3074
+    }
+  }
+}

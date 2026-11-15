@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.699,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Финальный рынок: кредитная продажа уже не погасится, продаю все 3 единицы по высоким ценам лестницы без налога.\"}",
+          "reasoning_content": "Round 6 final market, 3 goods, subsidy active. No more promissory value (sell_credit after last round not redeemed). So sell normally. Sold counter 0, price ladder 12,10,9 for 3 units, tax 0. Sell 3 → 31 alashi.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738700,
+    "id": "20261115183136b949ed0935a849c9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183136b949ed0935a849c9",
+    "usage": {
+      "completion_tokens": 108,
+      "completion_tokens_details": {
+        "reasoning_tokens": 63
+      },
+      "prompt_tokens": 2952,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3060
+    }
+  }
+}

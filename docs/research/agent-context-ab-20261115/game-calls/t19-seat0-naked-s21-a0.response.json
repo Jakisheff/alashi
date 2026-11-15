@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.133,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товар продан, рынок последний — взятка ради 5% банка стоит дороже возможного выигрыша, пассивный ход оптимален\"}",
+          "reasoning_content": "Final round action. No bid (only round 4). No goods; produce gives 3 but no market left. Law phase remains but selling not possible. Best: donkey? gives 1 goods, useless. Shuttle useless. Bribe cash → influence; final payout: max influence gets extra 5% of bank. All influence 1, tie broken by cash — I'm lowest cash. Bribe 5M to... bribe gives influence to me floor(amount/5M). Bank commission 5% — size unknown but bank likely large (~100M+?). 5% could be ~say 5 alashi. Bribe 5M (cost 5) gains influence 2, winning the 5% bonus worth maybe 5+ alashi. But bank size: money sunk (my bid 30M went to bank). Total injected maybe ~100M. 5% ≈ 5M. Marginal. Bribe 5M costs 5M, gains ~5M bonus... plus bribe reduces my cash for rank. Roughly neutral; but bank includes bid 30M and tax 0. Bank could be ~85M, 5% ≈ 4.25M < 5M cost. Also the bribe goes to rival, increasing their cash. Skip. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738991,
+    "id": "2026111518362236495bb359ce4a32",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518362236495bb359ce4a32",
+    "usage": {
+      "completion_tokens": 312,
+      "completion_tokens_details": {
+        "reasoning_tokens": 273
+      },
+      "prompt_tokens": 3174,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3486
+    }
+  }
+}

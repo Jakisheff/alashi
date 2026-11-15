@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.209,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Это последний рынок — кредитная выручка не погасится, поэтому продаю все 3 единицы сразу по высоким ценам лестницы.\"}",
+          "reasoning_content": "Round 6, final market. I have 3 goods, cash 40.8. Sell all 3 now (sell_credit won't be redeemed after last round). Prices ~12,10,9.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738052,
+    "id": "20261115182049e91237d92ca94105",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182049e91237d92ca94105",
+    "usage": {
+      "completion_tokens": 86,
+      "completion_tokens_details": {
+        "reasoning_tokens": 43
+      },
+      "prompt_tokens": 4030,
+      "prompt_tokens_details": {
+        "cached_tokens": 3776
+      },
+      "total_tokens": 4116
+    }
+  }
+}

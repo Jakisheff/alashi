@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.275,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":15000000,\"reason\":\"Аукцион лицензии в раунде 4: ставка ~40-50% песо-кассы (15 из 32) даёт шанс на доход 20-60 сверх доли.\"}",
+          "reasoning_content": "Round 4 action: bid for license. Cash 32.17M ≈ 32 alashi. Bid 40-60% ≈ 13-19 → bid 15M? Must be multiple? Bid amount integer units. Bid 15000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739290,
+    "id": "20261115184127d2b4511f92174bfb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184127d2b4511f92174bfb",
+    "usage": {
+      "completion_tokens": 113,
+      "completion_tokens_details": {
+        "reasoning_tokens": 55
+      },
+      "prompt_tokens": 2720,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2833
+    }
+  }
+}

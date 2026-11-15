@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.766,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, вето не ожидается — у меня нет векселей, карта 8 в раунде 1 нейтральна.\"}",
+          "reasoning_content": "Law phase post_vote, veto pending decision? veto_pending=false, decision_stage post_vote. We already voted no. Law passed? Unknown. Card 8 wipes promissory notes — I have none. If passed and others sold on credit... nobody has cash. Likely failed or passed. Now as president I can veto? decision_stage post_vote, action allowed: veto. If it passed, vetoing helps opponents' promissory stay? I have none, card 8 benefits debtors; nobody has promissory yet (round 1). Blocking is fine either way—actually card 8 in round 1 harmless. Just veto if passed to deny rivals? Rivals also no promissory. Veto has no cost; but if law failed, veto not applicable... veto_pending false. So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738565,
+    "id": "20261115182919fbf873bed92c496f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182919fbf873bed92c496f",
+    "usage": {
+      "completion_tokens": 208,
+      "completion_tokens_details": {
+        "reasoning_tokens": 165
+      },
+      "prompt_tokens": 2007,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2215
+    }
+  }
+}

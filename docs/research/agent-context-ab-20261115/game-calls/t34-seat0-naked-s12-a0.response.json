@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.549,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":33000000,\"reason\":\"Ставка 33 млн превышает максимум наличных соперников (~32.5 млн), лицензия ожидаемо даёт 20–60 alashi, а ставка в банк частично вернётся через мою долю 50%.\"}",
+          "reasoning_content": "Round 4 action: auction bid. License income 20-60 alashi (~20-60M). My cash 44.5M, richest. Bid multiples? Amount integer min units, bribe multiple of 5M — bid amount unclear constraints. Bid highest to win; competitors cash ~32-33M. Bid 33M? That leaves me 11M and license expected ~40M — but payout is via final shares, cash still counted. Winning bid goes to bank (lost to me). If I bid 33M, I pay 33M for expected ~40M income, plus I keep bank? Bid goes to bank, redistributed via shares anyway. Actually bid to bank increases pot; my share 50% of it... paying 33 gets back ~16.5 through share plus license ~40. Net gain ~23? Worth it if opponents can't outbid. They have ~32.3M each. Bid 32505600 to top them? Bid 33,000,000 to exceed their max cash. Expected value positive. Yes, bid 33000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746686,
+    "id": "2026111520443933ac536e74d14ea0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111520443933ac536e74d14ea0",
+    "usage": {
+      "completion_tokens": 296,
+      "completion_tokens_details": {
+        "reasoning_tokens": 229
+      },
+      "prompt_tokens": 2425,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2721
+    }
+  }
+}

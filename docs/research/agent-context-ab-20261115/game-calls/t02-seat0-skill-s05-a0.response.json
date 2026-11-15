@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.593,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Бесплатно даёт 3 товара против 2 у produce; 25% риск конфискации всё равно даёт ожидание ~2.25 товара, а кашу берегу к ставке за лицензию в раунде 4.\"}",
+          "reasoning_content": "Action phase, round 2. I have 17M cash. Options: produce (free 2 goods), donkey, shuttle, bribe. Produce free gives 2 goods. Bribe 10M for +2 influence? I already have weight 4 of 8; law cards unknown. Influence helps for license bonus and votes. But bribe costs money. Cash devaluation at round 2 boundary: 17M → floor(17/100)... wait cash in units, 17000000 units = 17 alashi. floor(17/100)*62? Actually cash=floor(cash/100)*62 in alashi terms? 17 alashi → floor(17000000/100)*62 = 170000*62 = 10.54M. Hmm heavy devaluation each round. So spending cash now on bribes/goods is good.\n\nSpend on donkeys? Donkey costs 1 alashi gives 1 good; sell price up to ~6 (counter at 6, ladder next: prices index 6 = 5). Marginal. Shuttle: 3 goods, 25% confiscation — expected fine, costs nothing? Shuttle gives 3+subsidy, free action, risk confiscation (cash tribute at favorable border, no border roles here). Confiscation ~25% risk of losing goods; still better than produce's 2 goods free? Shuttle free too. Take shuttle: 3 goods expected 2.25.\n\nAlso bribe 10M → +2 influence, boosting votes and possible 5% bank commission. Influence 4 vs others... Max influence gets extra 5% of bank. Bribe 10M (devalues to ~6.2M anyway). But cash needed for round 4 bid (15-25 alashi). I have 17, bidding needs peso. Spend 10 on bribe leaves 7 — too low. Produce is free and safe; but shuttle EV higher. Do shuttle (free, more goods). Only one action allowed. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737981,
+    "id": "202611151819300510b7e2fd824616",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151819300510b7e2fd824616",
+    "usage": {
+      "completion_tokens": 485,
+      "completion_tokens_details": {
+        "reasoning_tokens": 423
+      },
+      "prompt_tokens": 2170,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2655
+    }
+  }
+}

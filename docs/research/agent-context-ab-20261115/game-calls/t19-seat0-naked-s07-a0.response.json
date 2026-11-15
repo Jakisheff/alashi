@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.279,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Налог 20% сильно режет мою будущую выручку от продаж, блокирую его президентским вето\"}",
+          "reasoning_content": "Card 2: tax 20% next round. I voted no, all voted? voted all true. Vote: yes vs no. I'm no; if others yes... president can veto. Tax 20% hurts my future sales, I plan to sell. Veto if it passes. But post_vote stage — likely veto option if passed. Choose veto if it passed; otherwise pass. Since veto_pending=false and stage post_vote... likely it failed (my no, unknown others). Safe: veto if passed. Actually action must be from law options; veto is allowed. If it didn't pass, veto may be rejected→pass. I'll pick veto to block tax.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738903,
+    "id": "20261115183458c4c97dd39f3d49ae",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183458c4c97dd39f3d49ae",
+    "usage": {
+      "completion_tokens": 175,
+      "completion_tokens_details": {
+        "reasoning_tokens": 138
+      },
+      "prompt_tokens": 1863,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 2038
+    }
+  }
+}

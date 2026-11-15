@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.626,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Налог на выручку уже не влияет на меня — финальных рынков нет, исход карты безразличен.\"}",
+          "reasoning_content": "Law card 1: tax 10%. I have cash highest. Tax reduces my market revenue—no more markets, but tax_bps applies to sales... final round market done. Tax probably applies going forward only—no effect now. Vote no? Tax hurts if any future sales; none. Harmless but abstain. Others may want to tax me? Tax applies to revenue, cash unaffected. Pass effect likely nil; abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739122,
+    "id": "202611151838374712a2a667cc4bd9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151838374712a2a667cc4bd9",
+    "usage": {
+      "completion_tokens": 129,
+      "completion_tokens_details": {
+        "reasoning_tokens": 89
+      },
+      "prompt_tokens": 4316,
+      "prompt_tokens_details": {
+        "cached_tokens": 4032
+      },
+      "total_tokens": 4445
+    }
+  }
+}

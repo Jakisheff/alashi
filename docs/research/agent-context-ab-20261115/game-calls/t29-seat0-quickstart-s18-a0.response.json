@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.007,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 3 даёт субсидию +1 товар — моё производство в раунде 6 станет 3 единицы для финального рынка.\"}",
+          "reasoning_content": "Law card 3: subsidy_goods=1. I have 2 goods, produce in round 6 would give 3. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739519,
+    "id": "2026111518451661691a302515407a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518451661691a302515407a",
+    "usage": {
+      "completion_tokens": 74,
+      "completion_tokens_details": {
+        "reasoning_tokens": 29
+      },
+      "prompt_tokens": 3973,
+      "prompt_tokens_details": {
+        "cached_tokens": 3712
+      },
+      "total_tokens": 4047
+    }
+  }
+}

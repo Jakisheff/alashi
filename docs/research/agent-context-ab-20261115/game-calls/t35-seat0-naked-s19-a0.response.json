@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.393,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 2 (налог 20%) бьёт по рыночной выручке, но рынок раунда 6 уже прошёл и я больше не продаю — исход безразличен\"}",
+          "reasoning_content": "Card 2: tax 20%. I sold already; tax affects market revenue — but market phase of round 6 is over, so tax applies to... next market doesn't exist. So card 2 has no effect on me. But tax affects future sales only? I have no more sales. Vote? Opponents each have 2 goods... wait goods [0,2,2], market phase done, so no more selling. Tax won't matter. Abstain or pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746761,
+    "id": "20261115204557dec32a38aed74d25",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115204557dec32a38aed74d25",
+    "usage": {
+      "completion_tokens": 156,
+      "completion_tokens_details": {
+        "reasoning_tokens": 100
+      },
+      "prompt_tokens": 3073,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3229
+    }
+  }
+}

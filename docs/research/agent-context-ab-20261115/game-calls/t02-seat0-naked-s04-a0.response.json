@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.636,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Цены ещё высокие, а sell_credit даёт 1.25x в promissory, который придёт на границе раунда без девальвации 62%.\"}",
+          "reasoning_content": "Round 2 market. I have 2 goods. Price ladder at sold_counter=2: next price 9? Prices [12,10,9,...], sold 2 units so next price is 9. Sell 2 units for 9+... actually first unit at 9, second at 8 → 17. Tax 0. Sell now before devaluation boundary after round 2 (cash/100*62). Hmm, selling in round 2 gives cash which gets devalued at boundary of round 2? \"На границе раундов 2+ cash=floor(cash/100)*62\". So cash from round 2 market gets devalued to 62%. Selling round 2 → keep 62%. Selling later (round 3) also devalued at round 3 boundary... actually every round boundary devalues. So devaluation happens regardless; better sell earlier to get more price. But sell_credit gives 1.25x promissory, paid at next boundary without devaluation! Sell credit in round 2: promissory added to cash at round 3 boundary — wait \"promissory прибавляется к cash и обнуляется\" at boundary, then devalued? Order: cash devalued, promissory added? Likely promissory added at boundary after devaluation, avoiding devaluation. Yes classic. So sell_credit 2 units: revenue 17*1.25=21.25 alashi promissory, added at boundary round 3 without devaluation. Direct sell: 17 → 62% = 10.5. So sell_credit much better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737972,
+    "id": "20261115181924178c5858297b4f85",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181924178c5858297b4f85",
+    "usage": {
+      "completion_tokens": 395,
+      "completion_tokens_details": {
+        "reasoning_tokens": 341
+      },
+      "prompt_tokens": 1602,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1997
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.257,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 2 товара на следующий рынок — лучший ход без товара на руках.\"}",
+          "reasoning_content": "Round 2 action. I sold 2 units, have cash 17M, goods 0. Others have goods 2 each. Produce gives 2 goods. Donkey costs 1 gives 1. Produce is free — take produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739229,
+    "id": "20261115184023e5468f08d7e44d14",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184023e5468f08d7e44d14",
+    "usage": {
+      "completion_tokens": 77,
+      "completion_tokens_details": {
+        "reasoning_tokens": 50
+      },
+      "prompt_tokens": 2170,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2247
+    }
+  }
+}

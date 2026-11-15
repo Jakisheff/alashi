@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.886,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Цены у нижней границы лестницы (~2), налога нет; вексель даёт +25% к выручке и погасится на границе раунда 5 до конца игры.\"}",
+          "reasoning_content": "Round 4 market: I have 3 goods, sold_counter=9. Price ladder: prices at units 10-12 = 2,2,2. Selling 3 gives ~2 each = ~6 alashi. Or sell_credit: revenue*1.25 promissory repaid at round boundary 5... rounds 5,6 remain, so credit repaid at boundary into round 5. But cash devalues floor(cash/100)*62 anyway; promissory added to cash then devalued? \"promissory прибавляется к cash и обнуляется\" at boundary — then devaluation applies to cash? Order: cash=floor(cash/100)*62, promissory added to cash. Likely devalue then add. Either way sell_credit gives +25%. Tax 0. sell_credit revenue ~7.5 alashi → repaid at round 5 boundary, usable round 5-6. Devaluation risk: promissory added after? If devalued too, it becomes 62%. If added after, it's free 25%. Uncertain; plain sell is safer but credit likely better. I'll sell all 3 plain — no, guidance says credit is fine mid-game. Actually rule 4 mentions buy_hard — but here no buy_hard action exists in this protocol. I'll do sell_credit for 25% bonus since repayment happens at round 5 boundary (rounds 5,6 remain).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738037,
+    "id": "2026111518202897c04c2ece714377",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518202897c04c2ece714377",
+    "usage": {
+      "completion_tokens": 361,
+      "completion_tokens_details": {
+        "reasoning_tokens": 302
+      },
+      "prompt_tokens": 2871,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3232
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.893,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Бесплатные 3 товара дают EV ~2.25×12 alashi против 1 товара осла за 1 alashi — шаттл строго лучше перед последним рынком с бумом +2.\"}",
+          "reasoning_content": "I'm faction 0, cash ~6 alashi. Actions: donkey costs 1, gives 1 good. Shuttle gives 3 goods, confiscation risk 25% — but I'm at border? Shuttle gives 3 goods, confiscation ~25% risk; no cash for bribe anyway. EV: donkey = 1 good for 1 alashi; shuttle free 3 goods, 75% keep. Prices next market: ladder 12,10,9 + boom 2 → 14,12,11. Shuttle clearly better EV (~2.25 goods × ~12 = ~27 alashi vs donkey 12-1=11). Do shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737829,
+    "id": "202611151817003f7daabe3e28470e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151817003f7daabe3e28470e",
+    "usage": {
+      "completion_tokens": 199,
+      "completion_tokens_details": {
+        "reasoning_tokens": 142
+      },
+      "prompt_tokens": 3346,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 3545
+    }
+  }
+}

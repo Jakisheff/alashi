@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.652,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Мой вес 3 уже заблокировал закон (нет veto_pending), карта 4 не прошла — делать нечего.\"}",
+          "reasoning_content": "Карта 4: +1 влияния самому беднейшему — это idx2. Я голосовал no; проголосовали ли no enough? Vote weights: я 3, соперники по 1. Они probably voted yes? Result unknown but veto_pending false — my no weight 3 beats yes 1+1? Actually если уже не прошёл, veto не нужен. Но veto бесплатно — если прошёл (yes 2 > no 3? нет), значит не прошёл. Vote yes=2, no=3 → не прошёл. Veto unnecessary. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739001,
+    "id": "20261115183636ddd4d1598b0c4407",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183636ddd4d1598b0c4407",
+    "usage": {
+      "completion_tokens": 156,
+      "completion_tokens_details": {
+        "reasoning_tokens": 120
+      },
+      "prompt_tokens": 3942,
+      "prompt_tokens_details": {
+        "cached_tokens": 3648
+      },
+      "total_tokens": 4098
+    }
+  }
+}

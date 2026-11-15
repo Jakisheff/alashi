@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.505,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Закон о субсидии выгоден и уже прошёл голосование — ветировать не нужно.\"}",
+          "reasoning_content": "We need answer JSON one object action for current phase law post_vote, law card 3 subsidy already voted yes likely passed. Available actions law: vote_yes/no/abstain/veto/pass. We're post_vote after everyone voted. Need decide veto? I'm president. Law 3 favorable (subsidy_goods=1). vote likely yes votes: my weight2, others maybe unknown but voted. It doesn't matter; don't veto. pass. Return {\"action\":\"pass\",\"reason\":...}. Must ensure schema includes only action/reason. final channel.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737989,
+    "id": "20261115181945ebe0e56c01494a08",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181945ebe0e56c01494a08",
+    "usage": {
+      "completion_tokens": 146,
+      "completion_tokens_details": {
+        "reasoning_tokens": 116
+      },
+      "prompt_tokens": 2376,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2522
+    }
+  }
+}

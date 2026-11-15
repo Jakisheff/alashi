@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.992,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товара нет, а покупка по завышенной бум-цене с последующей продажей ниже убыточна — экономлю песо к раунду 4.\"}",
+          "reasoning_content": "I have 0 goods, 10.54 cash. Market: pass is forced (no goods, buying moves counter back—could buy? Buying costs money, price high due to boom. Not worth buying to resell later at lower prices. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739392,
+    "id": "2026111518430933ac8dc77d444808",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518430933ac8dc77d444808",
+    "usage": {
+      "completion_tokens": 101,
+      "completion_tokens_details": {
+        "reasoning_tokens": 52
+      },
+      "prompt_tokens": 2443,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2544
+    }
+  }
+}

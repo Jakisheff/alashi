@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.286,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара и денег, рыночные действия невозможны/невыгодны\"}",
+          "reasoning_content": "Round 1, no goods. Pass? No goods, buy at high price to resell? Buying moves counter back, price high — buying unprofitable. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739343,
+    "id": "20261115184220ced2063548904e35",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184220ced2063548904e35",
+    "usage": {
+      "completion_tokens": 61,
+      "completion_tokens_details": {
+        "reasoning_tokens": 35
+      },
+      "prompt_tokens": 1295,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1356
+    }
+  }
+}

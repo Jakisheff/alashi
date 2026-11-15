@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.97,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Открытие раунда 3, лестница на максимуме 12/10 — продаю оба товара сразу.\"}",
+          "reasoning_content": "I have 2 goods, price ladder at 12,10... Sell 2 now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739356,
+    "id": "202611151842342460fecd647f49b1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151842342460fecd647f49b1",
+    "usage": {
+      "completion_tokens": 58,
+      "completion_tokens_details": {
+        "reasoning_tokens": 19
+      },
+      "prompt_tokens": 2412,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2470
+    }
+  }
+}

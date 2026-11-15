@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.465,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование по пустой карте завершено, влияния на исход нет — хода не трачу.\"}",
+          "reasoning_content": "Post-vote law phase; card 0, no effect. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739107,
+    "id": "20261115183825a57daa4dd58f473e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183825a57daa4dd58f473e",
+    "usage": {
+      "completion_tokens": 47,
+      "completion_tokens_details": {
+        "reasoning_tokens": 15
+      },
+      "prompt_tokens": 4039,
+      "prompt_tokens_details": {
+        "cached_tokens": 3776
+      },
+      "total_tokens": 4086
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.216,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 3 даёт +1 товар к производству/шаттлу — полезна мне с 3 товарами и не несёт издержек\"}",
+          "reasoning_content": "Law card 3: subsidy_goods=1 — good for me, I have 3 goods. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739216,
+    "id": "202611151840131bd4ad4c0087436e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151840131bd4ad4c0087436e",
+    "usage": {
+      "completion_tokens": 68,
+      "completion_tokens_details": {
+        "reasoning_tokens": 23
+      },
+      "prompt_tokens": 3778,
+      "prompt_tokens_details": {
+        "cached_tokens": 3520
+      },
+      "total_tokens": 3846
+    }
+  }
+}

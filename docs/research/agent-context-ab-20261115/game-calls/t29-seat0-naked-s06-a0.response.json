@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.314,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% сократит выручку моих будущих продаж; если пройдет — наложу вето как президент\"}",
+          "reasoning_content": "Law card 1: tax 10%. As president. Tax hurts future sales. Players 1,2 have cash; tax affects revenue only. I have no cash, selling later... tax reduces my future sale revenue. I already have promissory from sell_credit (25 alashi) — tax already deducted? Tax applied at sale time. Tax 10% applies to future market sales. I plan to sell goods; tax would cost me ~10%. Player 2 already voted yes? voted[2]=true but unknown direction. Best: vote_no? With veto option. President can veto. I vote no; if it passes, veto. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739464,
+    "id": "2026111518442042113092102548a4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518442042113092102548a4",
+    "usage": {
+      "completion_tokens": 172,
+      "completion_tokens_details": {
+        "reasoning_tokens": 135
+      },
+      "prompt_tokens": 1785,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 1957
+    }
+  }
+}

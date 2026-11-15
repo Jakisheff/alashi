@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.983,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":20000000,\"reason\":\"Ожидаемый доход лицензии 20–60 alashi превышает ставку 20, а потраченные деньги всё равно подлежали девальвации 62%\"}",
+          "reasoning_content": "Round 4 action: bid for license. Cash 57.4M. Opponents ~34.8 and 25.5. Bid something like 12M to win. License income 20-60 alashi, expected ~40. Bid 15M? Need to beat opponents' plausible bids. Bid 20M (20 alashi) — expected value positive if income ~40. But cash devalues at round boundary (floor/100*62). Winning bid goes to bank — spending cash that would devalue anyway. Bid high: 20M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738752,
+    "id": "2026111518322783a153092c1b4d0f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518322783a153092c1b4d0f",
+    "usage": {
+      "completion_tokens": 169,
+      "completion_tokens_details": {
+        "reasoning_tokens": 116
+      },
+      "prompt_tokens": 3493,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 3662
+    }
+  }
+}

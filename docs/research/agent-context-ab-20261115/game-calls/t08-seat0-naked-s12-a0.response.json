@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.557,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":25000000,\"reason\":\"Лицензия даёт 20..60 alashi сверх доли; ставка 25 alashi с учётом предстоящей девальвации стоит лишь ~15,5, матожидание прибыли положительное.\"}",
+          "reasoning_content": "Round 4 action: bid available. Cash 47.5. License income 20-60 alashi. Competitors have 36 and 9. Bidding could win but spending reduces payout. Final payout is rank-based then 50:30:15 split. My cash is highest. Bidding e.g. 20 alashi = 20,000,000... but cash is 47.5. License pays 20-60, expected 40 minus bid. Net positive if bid < 40. But cash spent reduces final rank/split. Actually cash counts toward final. Bid 20 → spend 20M, gain 20-60 extra. Expected +40 - 20 = +20 gain, but cash also devalues... final round no devaluation after round 6 boundary? Devaluation at rounds 2+ boundaries. Bid in round 4, cash devalues at end of round 4 and 5. So spending 20M cash = post-devalue ~12.4. Bid like 25M (~15.5 post-dev). Competitor 1 has 36M could outbid. Reasonable: bid 25,000,000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738323,
+    "id": "20261115182515a13bd08b6c094acc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182515a13bd08b6c094acc",
+    "usage": {
+      "completion_tokens": 304,
+      "completion_tokens_details": {
+        "reasoning_tokens": 243
+      },
+      "prompt_tokens": 2320,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2624
+    }
+  }
+}

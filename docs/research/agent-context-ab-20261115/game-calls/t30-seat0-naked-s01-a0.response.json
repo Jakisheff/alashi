@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.832,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатно получить 2 товара для будущей продажи.\"}",
+          "reasoning_content": "I have 0 cash, 0 goods. Donkey costs 1 — no cash. Produce gives 2 goods free. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739448,
+    "id": "202611151844068ab74cd27cd1426c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151844068ab74cd27cd1426c",
+    "usage": {
+      "completion_tokens": 51,
+      "completion_tokens_details": {
+        "reasoning_tokens": 29
+      },
+      "prompt_tokens": 1359,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1410
+    }
+  }
+}

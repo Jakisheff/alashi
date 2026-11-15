@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.302,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Субсидия увеличит мой товар в финальном раунде (shuttle даст 4 единицы), выгода примерно равная для всех, поэтому поддерживаю.\"}",
+          "reasoning_content": "Law card 3: subsidy_goods=1 — helps everyone equally, but I plan shuttle (3 goods) and sell. It benefits me too. Vote yes? It also helps opponents. I have goods 3 to sell next round; subsidy doesn't apply retroactively. Slightly beneficial overall; neutral. Vote yes is fine — but it applies to future actions (round 6). Everyone gets +1 goods. Equal benefit, but cash differs... marginal. I'll vote yes since it increases my round-6 produce/shuttle output.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738692,
+    "id": "20261115183127790a53d4d12a43a1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183127790a53d4d12a43a1",
+    "usage": {
+      "completion_tokens": 158,
+      "completion_tokens_details": {
+        "reasoning_tokens": 109
+      },
+      "prompt_tokens": 2772,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 2930
+    }
+  }
+}

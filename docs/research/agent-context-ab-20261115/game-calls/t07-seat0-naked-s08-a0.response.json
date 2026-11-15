@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.175,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемая ценность шаттла (~2.25 товара) выше производства (2), а деньги на взятку окупаются хуже, чем товар по текущим ценам.\"}",
+          "reasoning_content": "Round 3 action. Cash 30. Shuttle gives 3 goods, ~25% confiscation. No money use for bribe? Bribe 5 for 1 influence. Influence affects vote weight and the 5% bank bonus. Bribe min 5 alashi gives 1 influence — cost 5, benefit: vote weight +1 and potential 5% bank bonus. Bank commission depends on total sales. Influence bonus 5% of bank could be significant. But competitors may also bribe later.\n\nShuttle: 3 goods, expected 2.25 sell at ~7-8 each ≈ 17 vs produce 2 goods ≈ 15. Shuttle slightly better. Bribe gives influence which could win the 5% bonus. Bank size: sold 6 units so far, maybe total ~30-60 alashi bank over game; 5% = ~2-3 alashi. Bribe 5 costs more than expected bonus alone, plus vote weight. Maybe shuttle is best. But selling shuttle grey risk 25% confiscation. Expected 2.25 goods × ~7 = 15.75 vs produce 2×7=14. Shuttle better.\n\nAlternatively bribe 5 to faction 1 (has 23.8)? Bribing increases influence to 2, president next law. President can veto. Card outcomes uncertain. I'll do shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738234,
+    "id": "2026111518234408eb567b759248ff",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518234408eb567b759248ff",
+    "usage": {
+      "completion_tokens": 337,
+      "completion_tokens_details": {
+        "reasoning_tokens": 287
+      },
+      "prompt_tokens": 1966,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2303
+    }
+  }
+}

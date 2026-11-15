@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.844,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Финальный рынок: продаю все 3 единицы по высоким ценам с бумом +2, кредит бессмысленен — promissory после раунда не погашается.\",\"reason\":\"финальная продажа 3 единиц по высоким ценам\"}",
+          "reasoning_content": "Final market, prices ladder from 12 with +2 boom, 3 units. Sell now (sell_credit won't pay off after last round). Sell 3 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738772,
+    "id": "2026111518324875595fe85f2d4a47",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518324875595fe85f2d4a47",
+    "usage": {
+      "completion_tokens": 104,
+      "completion_tokens_details": {
+        "reasoning_tokens": 35
+      },
+      "prompt_tokens": 2758,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 2862
+    }
+  }
+}

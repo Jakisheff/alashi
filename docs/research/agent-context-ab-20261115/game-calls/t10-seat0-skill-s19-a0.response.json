@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.597,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Рынок уже прошёл, товар больше негде продать — любое действие бессмысленно.\"}",
+          "reasoning_content": "Round 6 action: no license (already given in R4). Options: donkey costs 1, gives 1 good—but market already passed, good useless. Produce gives goods useless now. So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738461,
+    "id": "202611151827398624b5d8573e4797",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151827398624b5d8573e4797",
+    "usage": {
+      "completion_tokens": 73,
+      "completion_tokens_details": {
+        "reasoning_tokens": 43
+      },
+      "prompt_tokens": 3459,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 3532
+    }
+  }
+}

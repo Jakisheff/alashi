@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.404,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, я не президент — veto недоступно, пропускаю.\"}",
+          "reasoning_content": "Law 3 failed? Post-vote, veto unavailable, pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739199,
+    "id": "202611151839515e3d082c9ca04c00",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151839515e3d082c9ca04c00",
+    "usage": {
+      "completion_tokens": 44,
+      "completion_tokens_details": {
+        "reasoning_tokens": 14
+      },
+      "prompt_tokens": 3107,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3151
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.05,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 20% режет выручку моих будущих продаж, а кредитная выручка вернётся при cash, где налог уже навредит раунду 3.\"}",
+          "reasoning_content": "Law card 2: tax 20%. I'm president, I have promissory pending (~21.25 alashi) and cash 0. Tax applies to market revenue. Tax would reduce my round 3 sales revenue by 20%. I should vote no. Others voted: idx2 true (yes?), likely meaning voted yes. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737779,
+    "id": "20261115181614d9eb01409c6e4bf7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181614d9eb01409c6e4bf7",
+    "usage": {
+      "completion_tokens": 121,
+      "completion_tokens_details": {
+        "reasoning_tokens": 72
+      },
+      "prompt_tokens": 1786,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 1907
+    }
+  }
+}

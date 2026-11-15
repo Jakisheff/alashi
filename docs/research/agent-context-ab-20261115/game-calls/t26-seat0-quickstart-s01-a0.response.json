@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.06,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нет товара, произвожу 2 единицы для будущих продаж.\"}",
+          "reasoning_content": "I have weight 3 (passed market). Others produced? They have goods 2. Action phase: produce gives 2 goods. I have 0 goods, so produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739245,
+    "id": "202611151840437232cbafbfd64082",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151840437232cbafbfd64082",
+    "usage": {
+      "completion_tokens": 62,
+      "completion_tokens_details": {
+        "reasoning_tokens": 36
+      },
+      "prompt_tokens": 2451,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2513
+    }
+  }
+}

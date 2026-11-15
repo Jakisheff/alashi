@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.818,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Гарантированные 2 бесплатных товара: shuttle даёт EV лишь 2.25 с риском полной конфискации\"}",
+          "reasoning_content": "I'm idx0, cash 17M, action phase r2. Others have goods 0 and 0? goods [0,0,2] — I have 0 goods, idx2 has 2. Buy shuttle: needs cash for tariff? Buy costs money? Buy purchases goods — moves counter back. I have 17M cash. Subsidy 0, shuttle gives 3 goods, 25% confiscation risk. Donkey: 1 alashi per good. Shuttle gives 3 goods for free but confiscation risk — actually shuttle seems free? \"shuttle gives 3+subsidy_goods goods, gray goods may be confiscated\" — no cost mentioned. So shuttle dominates donkey (3 goods vs 1 for 1 alashi). Risk 25% confiscation vs donkey guaranteed. Expected: shuttle EV = 3*0.75=2.25 goods vs donkey 1 good for 1 alashi. Do shuttle? Confiscation loses all. Alternatively produce gives 2 free. Produce is guaranteed 2 goods free. Shuttle: 75% 3 goods, 25% 0. EV 2.25 goods vs 2 guaranteed. Marginal. Also sold_counter 6, buy would move counter back... but I have no use. Produce is safe.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739471,
+    "id": "20261115184423717f076d895648f9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184423717f076d895648f9",
+    "usage": {
+      "completion_tokens": 310,
+      "completion_tokens_details": {
+        "reasoning_tokens": 273
+      },
+      "prompt_tokens": 2146,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2456
+    }
+  }
+}

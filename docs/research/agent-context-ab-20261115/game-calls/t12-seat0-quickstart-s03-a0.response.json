@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.422,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Цены ещё высокие, а promissory прибавится после девальвации с множителем 1.25 — это выгоднее прямой продажи.\"}",
+          "reasoning_content": "Round 2 market, I have 2 goods. Sell both now at price ladder: sold_counter=2, next prices 9,8. Devaluation at round boundary: cash floored*0.62. So sell_credit better? sell_credit gives 1.25x promissory, added at next round boundary after devaluation — promissory is added after devaluation, so it avoids devaluation and gains 1.25x. That's much better. Sell both on credit.\n\nWait — card 8 wipes promissory, risk. Expected: normal sell 2 units ~9+8=17, devalued to 62% ≈ 10.5. Credit: 21.25 paid fully next boundary. Do it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738481,
+    "id": "202611151827563170c18cd1bb4b7c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151827563170c18cd1bb4b7c",
+    "usage": {
+      "completion_tokens": 203,
+      "completion_tokens_details": {
+        "reasoning_tokens": 156
+      },
+      "prompt_tokens": 2595,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2798
+    }
+  }
+}

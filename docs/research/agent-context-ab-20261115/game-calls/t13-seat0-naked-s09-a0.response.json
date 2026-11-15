@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.002,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Товара нет, produce бесплатно даёт 2 единицы для рынка раунда 4\"}",
+          "reasoning_content": "I'm president, action phase round 3. Produce gives 2 goods for round 4 sale. Bid is round 4 only. Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738563,
+    "id": "202611151829202ee0604472df4f83",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151829202ee0604472df4f83",
+    "usage": {
+      "completion_tokens": 60,
+      "completion_tokens_details": {
+        "reasoning_tokens": 30
+      },
+      "prompt_tokens": 2028,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2088
+    }
+  }
+}

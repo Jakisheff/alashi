@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.905,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Нет налога, счётчик продаж на нуле, цены 12 и 10 — продаю оба товара.\"}",
+          "reasoning_content": "Round 3 market, no tax, prices high, sold_counter=0. Sell both. But boom=0, prices 12,10 → 22 alashi. Sell now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738336,
+    "id": "20261115182533227c09cc87ff4380",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182533227c09cc87ff4380",
+    "usage": {
+      "completion_tokens": 76,
+      "completion_tokens_details": {
+        "reasoning_tokens": 38
+      },
+      "prompt_tokens": 1872,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 1948
+    }
+  }
+}

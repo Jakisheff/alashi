@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.827,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Финальный раунд, рынок уже пройден — товар производить некуда продавать, других выгодных действий в action нет.\"}",
+          "reasoning_content": "Round 6 action. Cash 33, no goods. Options: produce gives 2 goods but market already passed — useless. Donkey same. No bid round. So pass is reasonable? But rule says no pass without reason. Goods can't be sold. Shuttle gives goods but confiscation/no sale. Pass.\n\nActually produce goods would add to goods but rank is cash+hard only. So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738811,
+    "id": "20261115183327377e3170ddf9436e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183327377e3170ddf9436e",
+    "usage": {
+      "completion_tokens": 121,
+      "completion_tokens_details": {
+        "reasoning_tokens": 82
+      },
+      "prompt_tokens": 3574,
+      "prompt_tokens_details": {
+        "cached_tokens": 3328
+      },
+      "total_tokens": 3695
+    }
+  }
+}

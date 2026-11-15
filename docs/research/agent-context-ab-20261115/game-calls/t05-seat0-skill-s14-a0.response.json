@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.492,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара; покупка по 12 при нулевом счётчике убыточна — сохраняю 6.5M к дефолтной позиции и роли беднейшего.\"}",
+          "reasoning_content": "Round 5 market, no goods, cash ~6.5M. Buy? Sold counter 0, price 12. Buy units cheap, sell later same round? Market only one action per phase. Buy now then produce in action gives goods... buy gives goods now, sell next round 6. Ladder falls from others' sales. Buying at 12 and selling at ~10-9 later loses. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738154,
+    "id": "202611151822308ec403fd2409465e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151822308ec403fd2409465e",
+    "usage": {
+      "completion_tokens": 139,
+      "completion_tokens_details": {
+        "reasoning_tokens": 86
+      },
+      "prompt_tokens": 3021,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3160
+    }
+  }
+}

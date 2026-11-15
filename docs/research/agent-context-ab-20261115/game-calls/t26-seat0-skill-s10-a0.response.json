@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.488,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Продаю все 3 единицы на открытии раунда 4 по высоким ступеням лестницы до её падения, налога нет.\"}",
+          "reasoning_content": "Round 4 market, I have 3 goods. Sell all at opening. Prices: sold_counter 6, ladder next prices 5,4,3... Boom 0, shift 0. Sell 3 → 5+4+3=12 alashi gross, no tax.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739286,
+    "id": "20261115184123a3ce7c4e83c746a1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184123a3ce7c4e83c746a1",
+    "usage": {
+      "completion_tokens": 106,
+      "completion_tokens_details": {
+        "reasoning_tokens": 60
+      },
+      "prompt_tokens": 2618,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2724
+    }
+  }
+}

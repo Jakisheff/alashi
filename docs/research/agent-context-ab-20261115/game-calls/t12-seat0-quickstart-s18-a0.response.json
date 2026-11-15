@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.201,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Рынков больше нет, товар бесполезен; взятка 5M снизит мой cash и не гарантированно даст бонус влияния при ничьей с соперником (tie по cash я проигрываю).\"}",
+          "reasoning_content": "Round 6 action. I sold 2 units (final market), cash 24.18M. Options: produce (goods useless now, no more market), donkey (buys 1 good, useless), shuttle (grey goods useless, no market left), bribe 5M for 1 influence → bonus 5% of bank. Cash will floor... bank = sum of everything? Bribe costs 5M cash, gives +1 influence to me and 5M to opponent. Bonus 5% of bank — bank likely large. My influence 1 vs opponent 2. Bribe gives me 2, tie with opponent at 2; tie broken by cash+hard — I'm lowest. Bribe to whom? Gives money to a rival, reducing my cash and share. Probably better to pass. License income comes to me separately. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738549,
+    "id": "20261115182903e579ca0f47494bb4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182903e579ca0f47494bb4",
+    "usage": {
+      "completion_tokens": 235,
+      "completion_tokens_details": {
+        "reasoning_tokens": 178
+      },
+      "prompt_tokens": 3985,
+      "prompt_tokens_details": {
+        "cached_tokens": 3712
+      },
+      "total_tokens": 4220
+    }
+  }
+}

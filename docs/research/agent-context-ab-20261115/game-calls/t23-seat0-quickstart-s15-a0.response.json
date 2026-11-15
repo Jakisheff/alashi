@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.073,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Бесплатные 3 товара дают ~27 alashi на финальном рынке против ~11 у donkey, конфискация лишь 25% и не убивает выручку.\"}",
+          "reasoning_content": "Round 5 action, I have 0 cash (30 alashi... wait cash 30295976 ≈30 alashi), goods 0. Options: donkey costs 1 alashi, gives 1 good, sell next round for ~10-12. Profitable. Donkey twice? Only one action. Shuttle gives 3+subsidy but 25% confiscation; donkey: buy 1 good for 1 alashi, sell at ~12 → profit ~11. Shuttle free 3 goods, expected 2.25×~12 ≈ 27, better. Shuttle.\n\nWait cash is ~30 alashi, plenty. Donkey gives only 1 good; shuttle gives 3 with 25% loss expected value much higher. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739190,
+    "id": "20261115183945d6102a95c00e4472",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183945d6102a95c00e4472",
+    "usage": {
+      "completion_tokens": 214,
+      "completion_tokens_details": {
+        "reasoning_tokens": 163
+      },
+      "prompt_tokens": 3761,
+      "prompt_tokens_details": {
+        "cached_tokens": 3520
+      },
+      "total_tokens": 3975
+    }
+  }
+}

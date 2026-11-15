@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.807,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 4 даёт +1 влияния самому беднему (фракция 2), усиливая соперника перед финальным бонусом влияния — против\"}",
+          "reasoning_content": "Law card 4: +1 influence to poorest. I'm richest, poorest is faction 2 (26.2M... actually faction 2 has least cash). Not beneficial to me. Vote no. Opponents' votes unknown; my weight 3. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738880,
+    "id": "20261115183437839f7db650114006",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183437839f7db650114006",
+    "usage": {
+      "completion_tokens": 102,
+      "completion_tokens_details": {
+        "reasoning_tokens": 56
+      },
+      "prompt_tokens": 3230,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 3332
+    }
+  }
+}

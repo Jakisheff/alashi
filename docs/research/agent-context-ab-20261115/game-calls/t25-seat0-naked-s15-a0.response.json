@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.608,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 2 товара на финальный рынок дадут ~24 alashi по цене 12, что гораздо ценнее рискованных альтернатив\"}",
+          "reasoning_content": "I'm player 0, cash 8.17, round 5 action. Options: produce (free 2 goods), donkey, shuttle, bribe. Produce gives 2 goods for round 6 market. Bribe 5M → +1 influence helps final influence bonus? Influence bonus is 5% of bank for max influence. Player 2 has 2 influence; I'd need bribe 5M twice to reach 3... 8M cash: bribe 5 gives me 2, tied with player 2 (better cash? player 2 has more cash). Bribe 10 not possible (only 8.17). Could bribe 5M and produce? Only one action. Produce gives 2 goods worth ~2×(market price). Round 6 price ~12 at counter 0? sold_counter=0, prices [12,...] minus devaluation... selling 2 goods at 12 = 24 alashi. Much better than influence gamble. Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739285,
+    "id": "20261115184115ba82d1d026f748de",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184115ba82d1d026f748de",
+    "usage": {
+      "completion_tokens": 250,
+      "completion_tokens_details": {
+        "reasoning_tokens": 208
+      },
+      "prompt_tokens": 2594,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 2844
+    }
+  }
+}

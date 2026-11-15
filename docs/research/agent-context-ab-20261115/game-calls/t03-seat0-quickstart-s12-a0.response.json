@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.399,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":5000000,\"reason\":\"Аукцион только в этом раунде: ставка при проигрыше возвращается, а выигрыш лицензии (20–60 alashi) стоит 5 alashi, рискуя почти ничем.\"}",
+          "reasoning_content": "Round 4 action: bid available. I have ~5.29 cash, license income 20-60, bid must win. Bidding all cash? Bid amount max ~5 alashi. Likely rivals richer (36, 29) could outbid. But they may not bid. License income 20-60, plus payoff. Bidding 5 alashi could win if others pass. Risk: lose nothing if outbid (refunded). So bid max ~5294800? Amount in minimal units; keep some? Bid 5 alashi.\n\nActually bid must be affordable; if I win, cash spent to bank but license pays 20-60. Worth bidding most of cash.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738018,
+    "id": "202611151820131a5fcc30984640b0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151820131a5fcc30984640b0",
+    "usage": {
+      "completion_tokens": 202,
+      "completion_tokens_details": {
+        "reasoning_tokens": 143
+      },
+      "prompt_tokens": 3402,
+      "prompt_tokens_details": {
+        "cached_tokens": 3136
+      },
+      "total_tokens": 3604
+    }
+  }
+}

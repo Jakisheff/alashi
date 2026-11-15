@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.165,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатно даю себе 2 товара для продажи в последнем раунде.\"}",
+          "reasoning_content": "Action phase, round 5. Cash 8.45. Options: produce gives 2 goods, sell next round (round 6 market) — yes. Donkey costs 1 gives 1. Produce is free, do it.\n\nWait, goods shown [0,0,2] — I have 0? sold_counter=0, others sold? Rival 2 has 2 goods. My cash 8.45. Produce gives 2 goods for round 6 sale. Do produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739069,
+    "id": "202611151837463f4f1d2a52144a60",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151837463f4f1d2a52144a60",
+    "usage": {
+      "completion_tokens": 132,
+      "completion_tokens_details": {
+        "reasoning_tokens": 104
+      },
+      "prompt_tokens": 3196,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 3328
+    }
+  }
+}

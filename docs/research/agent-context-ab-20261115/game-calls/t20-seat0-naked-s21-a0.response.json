@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.099,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Финальный раунд: товаров к продаже больше нет, влияние уже максимальное, любые траты лишь уменьшат итоговый cash.\"}",
+          "reasoning_content": "Final action phase, round 6. Cash 37. License auction is round 4 only. Bribe gives influence but final payout: max influence gets extra 5% of bank. My influence 6 already max. Nothing profitable: donkey gives goods but no market left. Best pass? Actually could produce—no market after. So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738972,
+    "id": "2026111518360682361fc41a4d4b99",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518360682361fc41a4d4b99",
+    "usage": {
+      "completion_tokens": 115,
+      "completion_tokens_details": {
+        "reasoning_tokens": 71
+      },
+      "prompt_tokens": 3152,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3267
+    }
+  }
+}

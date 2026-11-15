@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.055,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Мой кэш далёк от порога девальвации, а кредитный тариф даёт ×1.25; риск карты 8 невелик.\",\"units_note\":2}",
+          "reasoning_content": "Round 3 market, 2 goods, cash 21.25M. Sell now at high prices. Price ladder starts at 12, tax 0. Sell 2 units = 22M. But sell_credit gives 1.25x, repaid at round 4 border. Cash will be ~21+ cash, devaluation floor(cash/100)*62... wait cash in units, so cash above 100 alashi? 21.25M = 21 alashi, less than 100 → no devaluation. Sell credit: revenue 27.5M promissory → becomes cash at round 4 border, then round 5 border devaluation only if cash≥100M (100 alashi). Cash stays low. So sell_credit better: +25%. Risk: card 8 cancels promissory. But law this round could cancel it. Still, expected value better. But opponents sold cash — they hold cash, no credit. Card 8 risk small. I'll sell_credit 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739699,
+    "id": "202611151848124fb80361de67401e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151848124fb80361de67401e",
+    "usage": {
+      "completion_tokens": 265,
+      "completion_tokens_details": {
+        "reasoning_tokens": 212
+      },
+      "prompt_tokens": 2997,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3262
+    }
+  }
+}

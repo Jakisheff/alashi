@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.02,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Карта 8 уже прошла всеобщим «за» и мне выгодна/безвредна — veto не нужен.\"}",
+          "reasoning_content": "Law phase post_vote... phase \"law\", need action. Already voted; now post_vote stage — is_president can veto? The action field: vote options. Card 8 passed already? voted all true. Best: pass (no veto).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737766,
+    "id": "202611151816022f37b19e70524ae4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151816022f37b19e70524ae4",
+    "usage": {
+      "completion_tokens": 86,
+      "completion_tokens_details": {
+        "reasoning_tokens": 50
+      },
+      "prompt_tokens": 2025,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2111
+    }
+  }
+}

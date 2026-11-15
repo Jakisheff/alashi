@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.623,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Кредитная продажа даёт 1.25x, и даже если промиссори добавится к наличным до девальвации на границе раунда, это выгоднее прямой продажи.\"}",
+          "reasoning_content": "Round 5 market, I have 2 goods, cash 39.4M. Sell now (cash; round 5→6 border devalues cash by 62% though). Better sell_credit? Promissory returns at border of next round added to cash, then round 6 border? Only round 6+ devalues... cash=floor(cash/100)*62 at round 2+ borders, i.e., after rounds 2,3,4,5. If I sell_credit round 5, promissory returns at border round 5→6 and added to cash — but then immediately devalued? Order: promissory added to cash then devaluation? \"cash=floor(cash/100)*62... promissory added to cash\". Likely promissory added at border, and devaluation applies to cash — if added before devaluation, lose 38%. Selling plain gives cash now, also devalued at border 5→6. Either way devalued. Credit gives 1.25x, if promissory added before devaluation it's still better (1.25*0.62 > 0.62). Sell credit 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738898,
+    "id": "20261115183451b924c4ac8cb8461e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183451b924c4ac8cb8461e",
+    "usage": {
+      "completion_tokens": 304,
+      "completion_tokens_details": {
+        "reasoning_tokens": 247
+      },
+      "prompt_tokens": 3712,
+      "prompt_tokens_details": {
+        "cached_tokens": 3456
+      },
+      "total_tokens": 4016
+    }
+  }
+}

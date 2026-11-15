@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.59,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Финальный рынок: продаю оба товара по максимальной цене 12; sell_credit после последнего раунда не погашается, поэтому обычная продажа.\"}",
+          "reasoning_content": "Round 6 market. Sell 2 units. Price ladder start 12, no shifts. Tax 0. Use sell (not credit — credit unpaid after last round).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738965,
+    "id": "20261115183603ebf1d0e40a15478c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183603ebf1d0e40a15478c",
+    "usage": {
+      "completion_tokens": 86,
+      "completion_tokens_details": {
+        "reasoning_tokens": 35
+      },
+      "prompt_tokens": 3046,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3132
+    }
+  }
+}

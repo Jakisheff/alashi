@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.483,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 7 повышает цены следующего рынка на 2 — выгодно мне с товаром на продажу.\"}",
+          "reasoning_content": "Law phase, card 7 (+2 prices). It's round 2, market already done; prices next market +2. My goods 2. Good for me. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739396,
+    "id": "20261115184313eb0102da10fc4e7f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184313eb0102da10fc4e7f",
+    "usage": {
+      "completion_tokens": 72,
+      "completion_tokens_details": {
+        "reasoning_tokens": 38
+      },
+      "prompt_tokens": 2866,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 2938
+    }
+  }
+}

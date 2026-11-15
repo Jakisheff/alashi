@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.463,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 20% ударит по моей будущей продаже товаров; голосую против и при необходимости наложу вето как президент.\"}",
+          "reasoning_content": "Law card 2: tax 20%. Player 2 already voted yes. If it passes, my next round sales taxed 20%. Vote no; as president I can veto? Veto pending false — voted shows player2 voted. I should vote no. If it passes I can veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738434,
+    "id": "20261115182711896c4e575bc24e8d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182711896c4e575bc24e8d",
+    "usage": {
+      "completion_tokens": 99,
+      "completion_tokens_details": {
+        "reasoning_tokens": 60
+      },
+      "prompt_tokens": 1807,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 1906
+    }
+  }
+}

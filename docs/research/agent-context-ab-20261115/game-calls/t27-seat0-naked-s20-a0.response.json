@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.003,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товара нет, продавать нечего; покупать на финальном рынке с налогом 20% и отсутствием последующей продажи бессмысленно\"}",
+          "reasoning_content": "Round 6, final market. I have 0 goods. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739424,
+    "id": "20261115184335714abc0aa5bf48b1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184335714abc0aa5bf48b1",
+    "usage": {
+      "completion_tokens": 57,
+      "completion_tokens_details": {
+        "reasoning_tokens": 15
+      },
+      "prompt_tokens": 3049,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3106
+    }
+  }
+}

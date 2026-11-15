@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.134,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нет денег на donkey/bribe, производим бесплатные 2 единицы для продажи\"}",
+          "reasoning_content": "Round 2 action. I sold 2 credit, have 0 cash, 0 goods. Rival 2 has 22M cash, 0 goods; rival 1 has 13M, 2 goods. I have cash 0, can't bribe. Options: produce (free, +2 goods). Yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738719,
+    "id": "20261115183156a0163c7e69d947e8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183156a0163c7e69d947e8",
+    "usage": {
+      "completion_tokens": 97,
+      "completion_tokens_details": {
+        "reasoning_tokens": 69
+      },
+      "prompt_tokens": 2787,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 2884
+    }
+  }
+}

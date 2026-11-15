@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.646,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bribe\",\"to\":0,\"amount\":5000000,\"reason\":\"Денег и товара больше использовать нечего, а взятка себе за 5M даёт +1 влияния — сравняет меня с лидером, и при тайне по влиянию бонус 5% комиссии достанется мне при максимальном cash.\"}",
+          "reasoning_content": "Round 6 action. Cash 36.6, no goods. Options: produce gives 2 goods but no more market phases — goods useless. Donkey useless. Bid not allowed (round 4 only). Bribe? Influence: I have 1, others 2 and 1. Extra 5% commission bonus to max influence; ties broken by cash+hard — I have most cash. Bribe 5 to faction... whom? Bribe to myself? \"to\" is recipient faction index — could bribe myself? Giving influence to others hurts. Bribe to index 0 (myself)? Likely allowed? Risky. Actually bribe to myself transfers money to myself, net zero, +1 influence — helps tie for max influence and vote weight. But law card is 255 (no law this round?). If no law, influence matters only for commission bonus. Currently influence [1,2,1]; faction 1 would win bonus. If I bribe myself 5M, I become [2,2,1], tie broken by cash+hard — I have highest cash, so I'd win the 5% bonus. Cost 0 if to myself... but transferring to self may be disallowed? Rules say bribe transfers amount to recipient to and gives influence. If to self, money stays with me — free +1 influence. Reasonable play: bribe self 5000000.\n\nRisk: might be rejected as impossible (self-bribe). If rejected, turn burns — pass equivalent. So no loss. Do it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738272,
+    "id": "20261115182422464109e42a704798",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182422464109e42a704798",
+    "usage": {
+      "completion_tokens": 397,
+      "completion_tokens_details": {
+        "reasoning_tokens": 320
+      },
+      "prompt_tokens": 3555,
+      "prompt_tokens_details": {
+        "cached_tokens": 3264
+      },
+      "total_tokens": 3952
+    }
+  }
+}

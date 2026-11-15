@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.261,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% снизит мою выручку будущих продаж, а я планирую продавать в оставшихся раундах\"}",
+          "reasoning_content": "Card 1: tax 10%. I'm richest (37.4 vs 38.8? Actually faction 1 has 38777200 > 37435000, so I'm second). Tax reduces future revenue — but I already sold this round. It affects round 5 market. No goods now anyway; rivals also no goods. Tax hurts everyone selling later. I'm president, weight 4 vs 3+3 — yes passes if I vote yes (4>... others 3+3 could outvote). voted[0]=false, others voted already. Law card 1 tax 10% — mildly bad. Vote no; I'm president with veto pending... veto_pending false, my vote counts 4, rivals 3+3=6 could pass. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738759,
+    "id": "2026111518323365ef4663ba204dcc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518323365ef4663ba204dcc",
+    "usage": {
+      "completion_tokens": 206,
+      "completion_tokens_details": {
+        "reasoning_tokens": 166
+      },
+      "prompt_tokens": 3601,
+      "prompt_tokens_details": {
+        "cached_tokens": 3328
+      },
+      "total_tokens": 3807
+    }
+  }
+}

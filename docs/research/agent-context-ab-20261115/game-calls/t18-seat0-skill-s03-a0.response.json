@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.079,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, карта 8 для меня нейтральна — нет доступных осмысленных действий.\"}",
+          "reasoning_content": "Round 1 law, post_vote stage. Law 8 passed presumably. Actions allowed: vote_yes/no/abstain, veto, pass. Already voted; stage post_vote — nothing to do. Return pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738838,
+    "id": "20261115183355ff04ea0e773e4f17",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183355ff04ea0e773e4f17",
+    "usage": {
+      "completion_tokens": 78,
+      "completion_tokens_details": {
+        "reasoning_tokens": 44
+      },
+      "prompt_tokens": 2004,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2082
+    }
+  }
+}

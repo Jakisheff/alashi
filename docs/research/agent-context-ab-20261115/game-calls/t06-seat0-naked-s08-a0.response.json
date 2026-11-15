@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.128,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Бум +2 даёт высокие цены (14/12/11) — продаю все 3 товара за ~37 alashi без налога.\"}",
+          "reasoning_content": "Prices: 12+2=14, 10+2=12, 9+2=11... Sell 3 units: 14+12+11=37, minus tax 0. Sell all.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738176,
+    "id": "202611151822537fcbd34a9dfe4efc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151822537fcbd34a9dfe4efc",
+    "usage": {
+      "completion_tokens": 90,
+      "completion_tokens_details": {
+        "reasoning_tokens": 45
+      },
+      "prompt_tokens": 1917,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2007
+    }
+  }
+}

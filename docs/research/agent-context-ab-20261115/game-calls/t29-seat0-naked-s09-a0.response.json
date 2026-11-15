@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 14.309,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bribe\",\"to\":1,\"amount\":10000000,\"reason\":\"Взятка 10 alashi даёт +2 влияния: закрепляю пост президента и бонус 5% банка за максимальное влияние, что стоит дороже потери товара\"}",
+          "reasoning_content": "I have 43.25 cash, richest. Actions: bribe gives influence, but bribing others costs cash to rivals. Influence prize: 5% of bank at end for max influence. Bribe 10 alashi gives 2 influence. That gives cash to a rival though. Alternatively shuttle (donkey) — cash rich, could produce? produce gives 2 goods free. Donkey: 1 alashi per good. Buy goods to sell later? Market phase already passed; produce now, sell next round at price index 7 (~5)... price ladder continues declining. Selling 2 next round gives maybe 2*5=10.\n\nBribe: pay 10 to faction 2 → they get 10 cash, I get 2 influence, likely max influence → 5% of bank. Bank size? Commission 5% of bank... unclear magnitude. Influence also matters for president/veto.\n\nAlternative: bribe myself? \"to\" index of faction—could bribe own? Probably allowed to any faction; bribing self loses nothing? That'd be degenerate; assume to must be another. Bribe to faction 1 (poorest) 10 alashi. Gain 2 influence, likely securing influence bonus 5% of bank plus presidency. That seems worth it.\n\nBut cost: rival gains 10. Payout differences 50:30:15 — giving rival cash worsens rank. Still influence prize + presidency likely worth more.\n\nActually bank splits 50:30:15 — relative cash matters less than influence? Final = share of remaining bank. Gaining max influence gives extra 5% of bank. Bank likely hundreds of alashi → 5% ~ tens of alashi. Bribe 10 to rival increases rival cash by 10 (rank). Worth it.\n\nProduce gives 2 goods → ~10 alashi next market. Bribe gives influence prize ~ maybe 20+. Choose bribe 10 to faction 1.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739490,
+    "id": "20261115184436cf23534dea0d40a7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184436cf23534dea0d40a7",
+    "usage": {
+      "completion_tokens": 465,
+      "completion_tokens_details": {
+        "reasoning_tokens": 405
+      },
+      "prompt_tokens": 2065,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2530
+    }
+  }
+}

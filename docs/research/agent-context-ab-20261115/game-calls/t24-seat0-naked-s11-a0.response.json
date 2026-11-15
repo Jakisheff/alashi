@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.58,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Продаю все 3 товара в кредит по ценам 9/8/7: ×1.25 и возврат на границе раунда 5 защищает выручку от девальвации cash.\"}",
+          "reasoning_content": "Cash 34.36M, 3 goods, boom/shift 0. Round 4 market. Sell now at prices: sold_counter=2, next prices 9,8,7? Ladder [12,10,9,...] index 2 → 9,8,7. Selling cash is fine, but devaluation at round boundaries 4+? Round 4→5 border devalues cash (floor/100*62). sell_credit pushes to promissory, returned next round without devaluation. Round 4 sell_credit revenue arrives at border of round 5, added to cash after devaluation — good. 3 units × ~9,8,7 = 24 ×1.25 = 30 alashi promissory. Do sell_credit units 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739189,
+    "id": "20261115183943e121641bb96649e1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183943e121641bb96649e1",
+    "usage": {
+      "completion_tokens": 225,
+      "completion_tokens_details": {
+        "reasoning_tokens": 164
+      },
+      "prompt_tokens": 2293,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2518
+    }
+  }
+}

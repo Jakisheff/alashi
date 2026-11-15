@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.571,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, вето не требуется — жду рынка раунда 3 для продажи товара.\"}",
+          "reasoning_content": "Post-vote, card 6 passed or not? voted all true, veto pending false. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738583,
+    "id": "2026111518294146845ffba34a41bd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518294146845ffba34a41bd",
+    "usage": {
+      "completion_tokens": 55,
+      "completion_tokens_details": {
+        "reasoning_tokens": 22
+      },
+      "prompt_tokens": 2398,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2453
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.631,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Кредитная продажа даёт 1.25x и избегает девальвации 62% на границе раунда.\"}",
+          "reasoning_content": "Round 3 market, goods 2. Sell both now at price 12? sold_counter 0, prices 12,10. Selling 2 gives 22, tax 0. But devaluation at round 4+... cash floor(cash/100)*62 applies at rounds 2+. Selling now gives cash that will be devalued at boundary 3→4 (62%). Wait, boundary rounds 2+: yes devaluation. Sell credit gives 1.25x promissory returned at next boundary without devaluation. Sell credit 2 units: revenue 22*1.25=27.5 promissory. That's clearly better than selling 22 and losing 38%.\n\nBut other players may sell first, lowering price. Still sell_credit 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738464,
+    "id": "202611151827393b8d4cf81d814510",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151827393b8d4cf81d814510",
+    "usage": {
+      "completion_tokens": 206,
+      "completion_tokens_details": {
+        "reasoning_tokens": 161
+      },
+      "prompt_tokens": 2964,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3170
+    }
+  }
+}

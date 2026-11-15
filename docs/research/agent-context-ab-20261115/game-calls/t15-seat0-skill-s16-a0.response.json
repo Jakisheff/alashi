@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.08,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 2 товара для продажи на последнем рынке, безопаснее шаттла с риском конфискации.\"}",
+          "reasoning_content": "Last round action: produce gives 2 goods; donkey costs 1 alashi gives 1; shuttle gives 3 but confiscation risk. I have cash 10.78. Best: produce (free 2 goods) then sell next market... wait this is round 5 of 6, so market 6 exists. Produce gives 2 goods, sell in R6. Shuttle gives 3 goods, ~75% keep all, worth ~3*price. Shuttle EV: 0.75*3=2.25 goods vs produce 2. Slight edge, plus possibly tariff. Produce is safer and free. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738729,
+    "id": "20261115183205542bb8990c204f28",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183205542bb8990c204f28",
+    "usage": {
+      "completion_tokens": 170,
+      "completion_tokens_details": {
+        "reasoning_tokens": 133
+      },
+      "prompt_tokens": 3139,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3309
+    }
+  }
+}

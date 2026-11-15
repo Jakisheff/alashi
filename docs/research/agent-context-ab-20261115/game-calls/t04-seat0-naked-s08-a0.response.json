@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.721,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Кредитная продажа даёт +25% и защищает выручку от девальвации 62% на границе раунда.\"}",
+          "reasoning_content": "Round 3 market, boom=0, prices start at 12. Sell 2 at top prices. Sell credit? Boom 0, price 12 fine. Cash devaluation 62% at round boundaries — sell_credit boosts 25% but returns next round... promissory added at next boundary and not devalued. Actually sell credit converts cash that would be devalued: revenue*1.25 promissory added at next boundary — better. Wait: devaluation applies to cash; promissory added to cash after floor. So sell_credit 1.25x and escapes devaluation. Definitely sell_credit 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738091,
+    "id": "20261115182125ebb07657b63343ef",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182125ebb07657b63343ef",
+    "usage": {
+      "completion_tokens": 177,
+      "completion_tokens_details": {
+        "reasoning_tokens": 131
+      },
+      "prompt_tokens": 1913,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2090
+    }
+  }
+}

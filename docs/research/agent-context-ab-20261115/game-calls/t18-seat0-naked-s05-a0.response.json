@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.69,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатное производство даёт 2 товара для следующего рынка без риска и трат.\"}",
+          "reasoning_content": "We're at round 2 action. I have cash 17M, no goods. Options: produce (2 goods), donkey (costs 1 for 1), shuttle (3 goods, 25% confiscation), bribe, roof.\n\nRivals have 2 goods each, sold 6 units total. Cash 17/13/22. Best: produce (free 2 goods). Shuttle risks confiscation but gives 3. Produce is safe. Later bid in round 4 needs cash. Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738814,
+    "id": "2026111518332971309e25ae854822",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518332971309e25ae854822",
+    "usage": {
+      "completion_tokens": 136,
+      "completion_tokens_details": {
+        "reasoning_tokens": 107
+      },
+      "prompt_tokens": 1689,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1825
+    }
+  }
+}

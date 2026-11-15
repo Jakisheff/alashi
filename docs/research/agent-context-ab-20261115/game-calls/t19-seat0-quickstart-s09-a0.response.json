@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.304,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 2 товара без затрат — лучший ход при нулевом запасе.\"}",
+          "reasoning_content": "Round 3 action: cash 32.5M, no goods. Produce gives 2 free goods. Donkey costs 1. Produce is best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738932,
+    "id": "202611151835245a270c95b5f141c3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151835245a270c95b5f141c3",
+    "usage": {
+      "completion_tokens": 61,
+      "completion_tokens_details": {
+        "reasoning_tokens": 32
+      },
+      "prompt_tokens": 3166,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3227
+    }
+  }
+}

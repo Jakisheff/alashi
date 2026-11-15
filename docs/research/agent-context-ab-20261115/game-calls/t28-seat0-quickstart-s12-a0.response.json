@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.708,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Продажа в кредит обходит девальвации на границах раундов 5 и 6 и даёт 1.25× выручки.\"}",
+          "reasoning_content": "Round 4 market, price ladder position sold_counter=2, no boom, no shift, tax 0. Selling 2 units at prices 9 and 8 = 17. But round 4→5 boundary? Devaluation only rounds 2+; cash floors to 62%. Selling now gets cash that will devalue at round 5 boundary (floor(cash/100)*62). Wait, boundary rounds 2+ means after each round starting at 2? Cash devalues each round boundary. So selling now → cash devalued 62%. Better sell_credit: 1.25× becomes promissory, added to cash after next round boundary — added at boundary round 5, but then devalued at boundary 6? Hmm, promissory added at boundary of next round and cleared; cash=floor(cash/100)*62 applies to hard cash. Selling credit avoids devaluation at round-5 boundary: revenue 2*8.5*1.25≈21.25 arrives after devaluation... arrives at boundary of round 5 (i.e., start of round 5), then devalues at start of round 6. Selling now: 17 → devalued to ~10.5 at round5, then 62% again at round 6 → ~6.5. Credit: 21.25 at round 5 boundary, then devalued to ~13.2 at round 6. Credit much better. Also auction in action round 4. Sell credit 2 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739420,
+    "id": "2026111518433121227f4e22d043ff",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518433121227f4e22d043ff",
+    "usage": {
+      "completion_tokens": 368,
+      "completion_tokens_details": {
+        "reasoning_tokens": 318
+      },
+      "prompt_tokens": 3379,
+      "prompt_tokens_details": {
+        "cached_tokens": 3136
+      },
+      "total_tokens": 3747
+    }
+  }
+}

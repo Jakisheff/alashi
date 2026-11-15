@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.069,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Рынок уже прошёл, товара нет, влияние уже максимально — любое действие лишь потратит деньги.\",\"reason\":\"Нет доступных выгодных действий: рынок завершён, товар не продать, влияние уже максимально.\"}",
+          "reasoning_content": "Round 6 action. Cash high, no goods. Options: donkey (1 alashi for 1 good, sell at price... market already past — selling happens in market phase which is done). No more market after action. So donkey useless. Bid not available (only round 4). Bribe gives influence — I already have max influence 2 vs 1,1. Could bribe to increase influence for the 5% bonus? I already have max influence (2 vs 1). Tie? No, mine is max. So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737858,
+    "id": "2026111518173266d89d7ad97848a0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518173266d89d7ad97848a0",
+    "usage": {
+      "completion_tokens": 174,
+      "completion_tokens_details": {
+        "reasoning_tokens": 114
+      },
+      "prompt_tokens": 3199,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3373
+    }
+  }
+}

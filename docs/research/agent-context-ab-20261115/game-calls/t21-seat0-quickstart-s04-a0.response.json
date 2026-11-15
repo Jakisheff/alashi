@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.693,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Денег нет — девальвация не грозит, но кредит даёт +25% и вернётся на границе раунда 3 без потерь.\",\"units\":2}",
+          "reasoning_content": "Weird: post_vote action \"sell_credit\" — that was likely rejected, but state shows cash 22M, goods 2? Wait seen [0,2,1]... actually my cash 0 in state, goods 2, others have 2 goods each. Wait cash [0,0,22000000] — third faction has 22. Hmm, cash 22M belongs to idx2. My goods=2. So my sell_credit was rejected (wrong phase) and instead... no, cash 22M at idx2 — opponent sold somehow. Anyway, current: round 2 market, my goods=2, cash=0. Sold counter 2. Sell 2 units at price ladder positions 3,4: 9,8 = 17 alashi. Others likely sell too, prices drop. Sell now or credit? Devaluation floor(cash/100)*62 — with 0 cash, credit better: promissory added at boundary then... wait promissory is added to cash at round boundary and cash devaluation happens... \"On boundary of rounds 2+ cash=floor(cash/100)*62\" and promissory added to cash and zeroed. Order: probably promissory added after devaluation, avoiding devaluation. So sell_credit gives 1.25x and skips devaluation. But last round credit not redeemed. Round 2 of 6, so credit is good. Sell 2 units credit: revenue 17*1.25=21.25 promissory → added at round 3 boundary, no devaluation (cash 0).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739024,
+    "id": "20261115183655e100a0be672d412f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183655e100a0be672d412f",
+    "usage": {
+      "completion_tokens": 388,
+      "completion_tokens_details": {
+        "reasoning_tokens": 333
+      },
+      "prompt_tokens": 2724,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3112
+    }
+  }
+}

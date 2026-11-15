@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.289,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Shuttle даёт 3 товара против 1 у осла; даже с 25% риска конфискации EV выше для продажи в раунде 3.\"}",
+          "reasoning_content": "I have 0 cash... wait cash[0]=17M. Action round 2: buy donkey (1 alashi = 1M) to get goods for next market. Cash 17M, spend 5M on donkey? Donkey costs 1 alashi gives 1 good. Buy 1 donkey? Or shuttle gives 3 goods, risk 25% confiscation. Shuttle seems better EV: 3 goods, 25% confiscation chance, no tariff protection. No cash tribute issue (no border role?). Buy donkey multiple times? Only one action per round. Shuttle gives 3+0=3 goods at risk. EV goods ~2.25 vs donkey 1. Shuttle better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739382,
+    "id": "20261115184257dce38c6b2717492b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184257dce38c6b2717492b",
+    "usage": {
+      "completion_tokens": 197,
+      "completion_tokens_details": {
+        "reasoning_tokens": 151
+      },
+      "prompt_tokens": 2172,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2369
+    }
+  }
+}

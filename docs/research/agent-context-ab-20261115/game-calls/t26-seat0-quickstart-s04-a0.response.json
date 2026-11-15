@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.63,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Дешёвая закупка товара: произвожу 2 единицы для продажи на следующем рынке.\"}",
+          "reasoning_content": "Round 2 action. Cash 17M, goods 0, produce gives 2. Best: produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739258,
+    "id": "20261115184056c3a42b93fe7d491a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184056c3a42b93fe7d491a",
+    "usage": {
+      "completion_tokens": 56,
+      "completion_tokens_details": {
+        "reasoning_tokens": 23
+      },
+      "prompt_tokens": 2699,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2755
+    }
+  }
+}

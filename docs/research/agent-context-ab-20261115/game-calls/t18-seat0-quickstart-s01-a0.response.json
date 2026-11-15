@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.635,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Свободный товар для будущих продаж; денег на осла нет.\"}",
+          "reasoning_content": "Produce gives 2 goods; others already have 2. Donkey costs 1 cash I don't have. Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738811,
+    "id": "2026111518332869660d8b618e411c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518332869660d8b618e411c",
+    "usage": {
+      "completion_tokens": 51,
+      "completion_tokens_details": {
+        "reasoning_tokens": 26
+      },
+      "prompt_tokens": 2450,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2501
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.802,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":15000000,\"reason\":\"Ожидаю доход лицензии ~40 alashi, ставка 15 даёт чистую прибыль даже при проигрыше возврата; соперники с сопоставимым cash вряд ли переплатят сильно.\"}",
+          "reasoning_content": "Round 4 action: bid for license. I have ~36 alashi, license income 20-60. Bidding some amount. Rivals have similar cash. Bid ~15-20? Net expected license ~40 alashi, paying up to 40 still fine, plus pays to bank (wasted). Bid moderate, e.g. 18,000,000. If lose, refunded. Risk: tie/overbid. Bid 20 alashi — rivals may not outbid. But overpaying reduces payout? Payment goes to bank, not back — so paying X to gain ~40 net. Bid 15.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738206,
+    "id": "20261115182319a2d4787199974323",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182319a2d4787199974323",
+    "usage": {
+      "completion_tokens": 187,
+      "completion_tokens_details": {
+        "reasoning_tokens": 129
+      },
+      "prompt_tokens": 2385,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2572
+    }
+  }
+}

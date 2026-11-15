@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.7,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продажа на верху лестницы (цена ~9) даёт первую выручку, которая нужна под раунд 4.\"}",
+          "reasoning_content": "I have 2 goods, sell at price ladder. sold_counter=2, next price 9? Ladder index by total sales: prices [12,10,9,...]. sold 2 units, so next price 9. Sell 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738843,
+    "id": "20261115183400365daa73a6664012",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183400365daa73a6664012",
+    "usage": {
+      "completion_tokens": 95,
+      "completion_tokens_details": {
+        "reasoning_tokens": 52
+      },
+      "prompt_tokens": 2085,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2180
+    }
+  }
+}

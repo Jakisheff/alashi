@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.116,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 20% мне невыгоден (может затронуть итоговые выплаты), а с весом 4 мой голос всё равно решает исход.\"}",
+          "reasoning_content": "Law card 2: 20% tax. Tax applies to market revenue — but market already done? Tax likely active next round... probably affects next market, which doesn't exist. Ambiguous; tax could apply to final settlement? Likely affects market revenue next round — no next market. Safer to vote no anyway? Tax hurts competitors? I already sold. If tax applies to current round's law → next market (none), so irrelevant. But maybe tax applies at settlement. Vote no to be safe; president with weight 4, others 1 each — my no wins anyway.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738306,
+    "id": "20261115182501cd2817e31bb34cb7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182501cd2817e31bb34cb7",
+    "usage": {
+      "completion_tokens": 163,
+      "completion_tokens_details": {
+        "reasoning_tokens": 119
+      },
+      "prompt_tokens": 4485,
+      "prompt_tokens_details": {
+        "cached_tokens": 4224
+      },
+      "total_tokens": 4648
+    }
+  }
+}

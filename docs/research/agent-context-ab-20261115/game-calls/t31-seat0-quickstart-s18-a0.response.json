@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.061,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% уменьшит выручку моего последнего рынка, где я продам 2 товара.\"}",
+          "reasoning_content": "Law card 1: tax 10%. No tax benefit... tax reduces market revenue round 6. I have 2 goods to sell round 6; tax 10% hurts me. Vote no. Opponents also have goods (2 each?). Opponents have 2 goods each too. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739634,
+    "id": "202611151847091ff3b80be3254e4c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151847091ff3b80be3254e4c",
+    "usage": {
+      "completion_tokens": 100,
+      "completion_tokens_details": {
+        "reasoning_tokens": 63
+      },
+      "prompt_tokens": 3986,
+      "prompt_tokens_details": {
+        "cached_tokens": 3712
+      },
+      "total_tokens": 4086
+    }
+  }
+}

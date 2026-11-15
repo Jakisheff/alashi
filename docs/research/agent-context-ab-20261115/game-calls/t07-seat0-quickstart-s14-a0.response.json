@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.634,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 4 даёт +1 влияния самому бедному — это я, а влияние приносит бонусную долю при итоговом распределении.\"}",
+          "reasoning_content": "Card 4: +1 influence to poorest. My cash 30.675M is lowest — I get +1 influence. Influence matters for the 5% bonus share. Vote yes? It's a benefit to me directly. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738274,
+    "id": "2026111518243157e96ae9f8064844",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518243157e96ae9f8064844",
+    "usage": {
+      "completion_tokens": 93,
+      "completion_tokens_details": {
+        "reasoning_tokens": 51
+      },
+      "prompt_tokens": 3651,
+      "prompt_tokens_details": {
+        "cached_tokens": 3328
+      },
+      "total_tokens": 3744
+    }
+  }
+}

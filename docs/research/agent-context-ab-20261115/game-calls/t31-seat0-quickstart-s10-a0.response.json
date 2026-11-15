@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.18,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 7 повышает цены следующего рынка на 2 — выгодно, у меня 3 товара на продажу.\"}",
+          "reasoning_content": "Law card 7: +2 prices next market. Good for me — I sell. But rivals also sell... prices +2 benefits all sellers, I have 3 goods, others have 2+6. Total goods 11. Still +2 price is good. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739595,
+    "id": "2026111518463215916dbb87b2426f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518463215916dbb87b2426f",
+    "usage": {
+      "completion_tokens": 94,
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      },
+      "prompt_tokens": 3258,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 3352
+    }
+  }
+}

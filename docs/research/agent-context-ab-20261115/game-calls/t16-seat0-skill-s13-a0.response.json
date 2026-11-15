@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.434,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% режет мою будущую выручку от продаж — отклоняю.\"}",
+          "reasoning_content": "Card 1: tax 10% next market? Active tax. I'm poorest with 18.2 cash, others 37.5/33.5. Tax hurts sellers; in round 5 I'll sell. Vote no. voted[false] — I haven't voted; action was bid (not pass), weight 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738782,
+    "id": "20261115183257b4b8419a1cd24034",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183257b4b8419a1cd24034",
+    "usage": {
+      "completion_tokens": 103,
+      "completion_tokens_details": {
+        "reasoning_tokens": 70
+      },
+      "prompt_tokens": 2945,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3048
+    }
+  }
+}

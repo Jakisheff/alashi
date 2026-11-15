@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.936,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Цены ещё высокие (9/8), а sell_credit рискован из-за девальвации на границе раунда.\",\"reason\":\"Продам 2 товара по высокой цене, избегая риска девальвации промиссаров.\"}",
+          "reasoning_content": "Round 2 market. My sell_credit happened? Cash shows 22M for me (idx 0). Wait cash=[22M,0,0]? cash[0]=22000000 — yes, my credit sale paid off? Actually promissory adds at round boundary; I sold in post_vote of round 1... boundary gives 22M. So I have 22M cash, 2 goods. Others have 2 goods each. Price ladder at counter 2: next price 9.\n\nSell 2 now: 9*2=18? Prices descend: [12,10,9,8...]. Selling pushes counter. Sell 2 at 9 and 8 = 17. Or sell_credit gives 1.25x but round boundary after round 2: cash=floor(cash/100)*62 — devaluation! Promissory added at boundary then... \"promissory прибавляется к cash и обнуляется\" at boundary. Devaluation applies then promissory? Order unclear. Risky. Just sell normally now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739005,
+    "id": "20261115183639a45c5d66b63f44c9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183639a45c5d66b63f44c9",
+    "usage": {
+      "completion_tokens": 287,
+      "completion_tokens_details": {
+        "reasoning_tokens": 220
+      },
+      "prompt_tokens": 1594,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1881
+    }
+  }
+}

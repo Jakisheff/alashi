@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.135,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 7 повышает цены финального рынка на +2, а я президент с тремя товарами — выгода для меня\"}",
+          "reasoning_content": "Card 7: prices +2 next market — I sell next round. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738777,
+    "id": "20261115183254c317a9ca2fa84b0f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183254c317a9ca2fa84b0f",
+    "usage": {
+      "completion_tokens": 59,
+      "completion_tokens_details": {
+        "reasoning_tokens": 18
+      },
+      "prompt_tokens": 3950,
+      "prompt_tokens_details": {
+        "cached_tokens": 3648
+      },
+      "total_tokens": 4009
+    }
+  }
+}

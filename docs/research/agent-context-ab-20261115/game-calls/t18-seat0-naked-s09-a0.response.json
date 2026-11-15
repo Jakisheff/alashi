@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.784,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 2 товара к следующему рынку без риска и трат.\"}",
+          "reasoning_content": "Round 3 action: no cash? Cash 36.5. Produce gives 2 goods free. Shuttle risk 25%. Produce is safe.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738831,
+    "id": "202611151833498e2b3f3b7d494266",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151833498e2b3f3b7d494266",
+    "usage": {
+      "completion_tokens": 57,
+      "completion_tokens_details": {
+        "reasoning_tokens": 30
+      },
+      "prompt_tokens": 2049,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2106
+    }
+  }
+}

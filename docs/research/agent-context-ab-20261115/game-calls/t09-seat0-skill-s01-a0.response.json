@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.267,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нет товара и денег, produce даёт 2 единицы бесплатно для продажи в следующем раунде.\"}",
+          "reasoning_content": "Action phase round 1, goods 0. Produce gives 2 goods. Donkey costs 1 alashi but cash=0. So produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738326,
+    "id": "20261115182515e916d9ce96834924",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182515e916d9ce96834924",
+    "usage": {
+      "completion_tokens": 63,
+      "completion_tokens_details": {
+        "reasoning_tokens": 31
+      },
+      "prompt_tokens": 1846,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 1909
+    }
+  }
+}

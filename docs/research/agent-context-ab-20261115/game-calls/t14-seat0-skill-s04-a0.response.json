@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.743,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Лестница падает, продаю все 3 единицы сразу по 9-8-7, это максимум выручки.\"}",
+          "reasoning_content": "I have 3 goods, cash 0. Sell 3 units now at price ~9 (counter 2). Price ladder: [12,10,9,...] sold_counter=2 means next unit at 9. Sell all 3: 9+8+7=24 alashi. Tax 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738600,
+    "id": "20261115182957915ceb30f1854347",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182957915ceb30f1854347",
+    "usage": {
+      "completion_tokens": 108,
+      "completion_tokens_details": {
+        "reasoning_tokens": 66
+      },
+      "prompt_tokens": 2077,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2185
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.204,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Продаю весь товар в кредит: выручка ×1.25 придёт как promissory на границе раунда и не пострадает от девальвации cash\"}",
+          "reasoning_content": "Round 2 market, I have 2 goods, price ladder start at 12 (sold_counter=2 means next price ~10? Counter 2, prices: 12,10,... next unit price 10? Actually sold_counter counts sold units; next price index 2 = 9). Sell 2 units for credit? Cash devaluation at border 2+: floor(cash/100)*62 — cash in millions? Devaluation applies; promissory converts to cash at border and isn't devalued. So sell_credit is better: revenue*1.25 as promissory. Sell credit 2 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738540,
+    "id": "20261115182855f72544e1c4334b85",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182855f72544e1c4334b85",
+    "usage": {
+      "completion_tokens": 183,
+      "completion_tokens_details": {
+        "reasoning_tokens": 129
+      },
+      "prompt_tokens": 1586,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1769
+    }
+  }
+}

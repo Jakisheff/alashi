@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.457,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"У меня нет непогашенных promissory, а списание чужих векселей ослабляет соперников.\"}",
+          "reasoning_content": "Law card 8: cancels all promissory notes. I have no promissory. Others? R1 sold... rival 2 sold 2 (cash 26M at start of round2), they sold via regular sell probably. Someone may have sell_credit. I don't know. Vote: card 8 hurts holders of promissory. I have none — vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738402,
+    "id": "202611151826388e69209e5b4242c5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151826388e69209e5b4242c5",
+    "usage": {
+      "completion_tokens": 117,
+      "completion_tokens_details": {
+        "reasoning_tokens": 80
+      },
+      "prompt_tokens": 1784,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1901
+    }
+  }
+}

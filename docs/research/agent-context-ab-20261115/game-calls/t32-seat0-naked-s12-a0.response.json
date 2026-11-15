@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.095,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продам 2 товара по 6 и 5 alashi — цены ещё высоки, ждать снижения нет смысла.\"}",
+          "reasoning_content": "Round 4 market, sold_counter=4, price for units 5-6: ladder index... sold_counter=4 means next units priced at 5,4? Ladder [12,10,9,8,7,6,...] — counter 4 means 4 sold, next price 6. I sell 2 units at 6 and 5 = 11 alashi. Sell now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739620,
+    "id": "202611151846574dee6e74111a42f1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151846574dee6e74111a42f1",
+    "usage": {
+      "completion_tokens": 125,
+      "completion_tokens_details": {
+        "reasoning_tokens": 85
+      },
+      "prompt_tokens": 2243,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2368
+    }
+  }
+}

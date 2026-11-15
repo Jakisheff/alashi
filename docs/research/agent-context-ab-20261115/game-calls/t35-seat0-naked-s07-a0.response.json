@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.287,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование уже учтено, карта 7 (+2 к ценам) прошла в мою пользу — дополнительных действий нет\"}",
+          "reasoning_content": "Post_vote law phase. Card 7 passed (+2 prices) — good. Action: something valid in law phase post_vote: vote_yes/no/abstain/veto/pass. Vote already counted? voted all true. Choose pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746707,
+    "id": "202611152045036efefa800cc24c03",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611152045036efefa800cc24c03",
+    "usage": {
+      "completion_tokens": 83,
+      "completion_tokens_details": {
+        "reasoning_tokens": 48
+      },
+      "prompt_tokens": 1902,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 1985
+    }
+  }
+}

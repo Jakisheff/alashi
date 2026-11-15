@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.11,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нет денег и товара; produce даёт 2 единицы бесплатно, чтобы продать позже\"}",
+          "reasoning_content": "I have vote_weight 3 (skipped action gives +2? Actually vote_weight_mode 1 — I passed in market... weight 3 means I get +2 from skipping action? No, action phase hasn't happened). Actually weight [3,1,1] — maybe skipping action gives +2. I should probably produce goods instead to earn money, but weight 3 helps law votes. Produce gives 2 goods; donkey gives 1 good for 1 alashi but I have 0 cash. So produce is the only option. But then lose +2 weight? The +2 comes from skipping action in action phase. I can't sell without goods anyway; competitors have 2 goods each already? They produced presumably. Better produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738525,
+    "id": "20261115182840b31411066db54ada",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182840b31411066db54ada",
+    "usage": {
+      "completion_tokens": 181,
+      "completion_tokens_details": {
+        "reasoning_tokens": 153
+      },
+      "prompt_tokens": 1358,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1539
+    }
+  }
+}

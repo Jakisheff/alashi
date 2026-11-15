@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.212,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товара нет, покупка по цене ~14 с падающей лестницей убыточна — пропускаю рынок, кэш сохраняю к R4-аукциону.\"}",
+          "reasoning_content": "I have 0 goods, cash 10.54. Market: nothing to sell. Buy? Buying moves counter back and gives goods to resell later — buying at price ~? Ladder start 12+2=14... buying cost likely at current price ~14, resale falling prices — bad. Pass is fine here (no goods). Context says never pass in market with goods; no goods, so pass.\n\nActually cash of 10.54M will devalue at round border: floor(10540000/100)*62 = 105400*62=6,534,800. Should convert to hard? buy is \"buy goods\", buy_hard not in protocol... protocol market actions: sell, buy, sell_credit, pass. Buy purchases goods, moving counter back. So no hard conversion available in this hand? Then just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739145,
+    "id": "2026111518385887f8e9fec13a4648",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518385887f8e9fec13a4648",
+    "usage": {
+      "completion_tokens": 226,
+      "completion_tokens_details": {
+        "reasoning_tokens": 174
+      },
+      "prompt_tokens": 2358,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2584
+    }
+  }
+}

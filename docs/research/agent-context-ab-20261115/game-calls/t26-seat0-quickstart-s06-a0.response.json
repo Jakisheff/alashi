@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.442,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, я не президент и вето не ожидается — пропускаю.\"}",
+          "reasoning_content": "Law phase, post_vote stage, card 3 subsidy — passed? I voted yes; decision needed anyway? Post_vote stage but still must return action. Likely subsidy passed. Vote yes... already voted. Just pass? Stage post_vote means votes counted; action probably veto decision. I'm not president, veto_pending false. Return pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739265,
+    "id": "20261115184101bd770c0ef37c4616",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184101bd770c0ef37c4616",
+    "usage": {
+      "completion_tokens": 99,
+      "completion_tokens_details": {
+        "reasoning_tokens": 68
+      },
+      "prompt_tokens": 2862,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 2961
+    }
+  }
+}

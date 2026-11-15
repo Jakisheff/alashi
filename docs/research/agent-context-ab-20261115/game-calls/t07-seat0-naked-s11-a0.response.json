@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.235,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара для продажи; деньги приберегаю для ставки на аукцион лицензии в action-фазе этого раунда.\"}",
+          "reasoning_content": "Round 4 market, no goods, cash 46.1. No goods to sell. Bid comes in action phase round 4. Now pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738244,
+    "id": "20261115182402b895f1e44c304e4a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182402b895f1e44c304e4a",
+    "usage": {
+      "completion_tokens": 69,
+      "completion_tokens_details": {
+        "reasoning_tokens": 31
+      },
+      "prompt_tokens": 2235,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2304
+    }
+  }
+}

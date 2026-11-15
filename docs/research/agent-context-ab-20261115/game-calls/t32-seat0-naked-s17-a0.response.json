@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.795,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"3 товара дают ожидаемо ~27 alashi против 24 у produce; риск конфискации ~25% компенсируется большей выручкой\"}",
+          "reasoning_content": "Round 5 action. I have 3.2 cash, 0 goods. Options: produce (free 2 goods), donkey, shuttle. Produce gives 2 goods free. Shuttle gives 3 goods but ~25% confiscation of grey goods — with 3 cash, tribute risk min(cash,2). Shuttle: 3 goods, ~sell ~12+ next market? sold_counter=0, prices start at 12. 3 goods sell ~36 alashi. Risk 25% lose all. Expected ~27 vs produce 24. Also tribute risk. Shuttle slightly better but confiscation takes everything. Also border—do I have favorable border role? Unknown. Donkey costs 1 alashi for 1 good.\n\nShuttle: expected 0.75*36=27, plus tribute. Slight edge but risky. Produce is safe 24. I'll take shuttle for EV? If confiscation, I get 0 goods and lose nothing else (no favorable border info). EV higher with shuttle. Go shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739654,
+    "id": "202611151847280a66ce5811df41da",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151847280a66ce5811df41da",
+    "usage": {
+      "completion_tokens": 256,
+      "completion_tokens_details": {
+        "reasoning_tokens": 214
+      },
+      "prompt_tokens": 2722,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2978
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.396,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Shuttle даёт 3 товара бесплатно, EV 2.25 товара против 2 у produce, риск конфискации приемлем.\"}",
+          "reasoning_content": "Phase action round 2, cash 17M, no goods. Options: produce (2 goods), donkey (1 good, costs 1), shuttle (3 goods, 25% confiscation). Shuttle gives 3 goods for free with risk — best EV. At 25% confiscation risk of losing all 3 goods. Produce gives 2 guaranteed. Shuttle EV = 0.75*3 = 2.25 > 2. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737774,
+    "id": "202611151816105a1deb34d3704e4b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151816105a1deb34d3704e4b",
+    "usage": {
+      "completion_tokens": 136,
+      "completion_tokens_details": {
+        "reasoning_tokens": 96
+      },
+      "prompt_tokens": 2189,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2325
+    }
+  }
+}

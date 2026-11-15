@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.242,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемо даёт больше товара (0.75×4=3 против 3 у produce) бесплатно, а кредитные продажи следующего раунда монетизируют его с премией 1.25x.\"}",
+          "reasoning_content": "Round 3 action, cash 21.25, goods 0. Produce gives 3 goods. Donkey costs 1 alashi for 1 good. Shuttle gives 3+1=4 grey goods with 25% confiscation risk (no role owner). Shuttle: expected 3 goods but risk of losing all 4? Confiscation ~25% chance of losing shipment. Expected value shuttle = 0.75*4 = 3 goods free vs produce 3 free. Shuttle slightly better EV but variance and only 3 rounds left (sell in round 4 market). Actually sell next round; credit sale lasts through round 6. Take shuttle? Risk: lose all. EV slightly higher. But also bribing for influence? Influence 1 each, president tie. Bribe 5M gives +1 influence, could win presidency and 5% bonus. But cash needed for final payout... Influence bonus is 5% of bank—unknown bank size. Keep simple: shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738679,
+    "id": "202611151831120f0be2ace55d4082",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151831120f0be2ace55d4082",
+    "usage": {
+      "completion_tokens": 264,
+      "completion_tokens_details": {
+        "reasoning_tokens": 205
+      },
+      "prompt_tokens": 2045,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2309
+    }
+  }
+}

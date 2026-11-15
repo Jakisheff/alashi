@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.475,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 6 снижает цены следующего рынка на 2, а мне нужно продать 3 товара — прямо вредит моей выручке\"}",
+          "reasoning_content": "Law card 6: prices -2 next market, harmful to me as seller with 3 goods. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738707,
+    "id": "202611151831449f1e0bbfc6cd468e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151831449f1e0bbfc6cd468e",
+    "usage": {
+      "completion_tokens": 65,
+      "completion_tokens_details": {
+        "reasoning_tokens": 24
+      },
+      "prompt_tokens": 2586,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 2651
+    }
+  }
+}

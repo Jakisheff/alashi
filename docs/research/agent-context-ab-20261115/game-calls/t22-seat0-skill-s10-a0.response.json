@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.055,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 7 повышает цены следующего рынка на 2, а у меня 3 товара на продажу — прямая выгода.\"}",
+          "reasoning_content": "Law card 7: prices +2 next market. I sold already, buying? I have 3 goods (shuttle may lose some? shuttle resolved). Card 7 benefits me as seller next round — vote yes. I'm not president. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739067,
+    "id": "20261115183744c278a272a555472b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183744c278a272a555472b",
+    "usage": {
+      "completion_tokens": 92,
+      "completion_tokens_details": {
+        "reasoning_tokens": 53
+      },
+      "prompt_tokens": 2587,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 2679
+    }
+  }
+}

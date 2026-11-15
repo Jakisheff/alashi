@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.936,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Финальный раунд: продаю все 3 товара по высоким ценам 12+10+9=31 alashi без налога; кредит бессмыслен, так как promissory после последнего раунда не погашается.\"}",
+          "reasoning_content": "Round 6 market, prices reset: first sales at 12,10,9... sell 3 units at 12,10,9 = 31 alashi. No tax. Sell all 3.\n\nWait, my cash shown 6.2M but I sold? Round 6 final round — sell outright, not credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739174,
+    "id": "2026111518393126fe420241b148c5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518393126fe420241b148c5",
+    "usage": {
+      "completion_tokens": 134,
+      "completion_tokens_details": {
+        "reasoning_tokens": 69
+      },
+      "prompt_tokens": 2790,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 2924
+    }
+  }
+}

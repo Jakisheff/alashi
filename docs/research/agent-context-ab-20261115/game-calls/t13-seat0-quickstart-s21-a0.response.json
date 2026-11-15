@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.3,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Рынок уже прошёл, товар больше некуда продать — любое производящее действие бессмысленно, пропускаю.\"}",
+          "reasoning_content": "Round 6 action, final. Options: produce (goods useless now—can't sell after market? next market is next round, round 7 doesn't exist). So produce/donkey/shuttle give goods worth nothing. Best: pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738621,
+    "id": "202611151830181560a759e83f42e1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151830181560a759e83f42e1",
+    "usage": {
+      "completion_tokens": 87,
+      "completion_tokens_details": {
+        "reasoning_tokens": 50
+      },
+      "prompt_tokens": 4277,
+      "prompt_tokens_details": {
+        "cached_tokens": 3968
+      },
+      "total_tokens": 4364
+    }
+  }
+}

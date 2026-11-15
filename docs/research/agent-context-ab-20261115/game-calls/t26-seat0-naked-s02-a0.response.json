@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.87,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 20% невыгоден; мой голос против даёт 1:1 и блокирует закон.\"}",
+          "reasoning_content": "Law card 2: tax 20%. Player 1 voted (probably yes). Voting no: 1 yes vs 1 no, doesn't pass (strictly more yes needed). So vote no to block.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739265,
+    "id": "202611151841038ac5d381a12045b9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151841038ac5d381a12045b9",
+    "usage": {
+      "completion_tokens": 78,
+      "completion_tokens_details": {
+        "reasoning_tokens": 44
+      },
+      "prompt_tokens": 1444,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1522
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.515,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голос уже подан, карты нет для вето — ожидаю итог раунда.\"}",
+          "reasoning_content": "{\"action\":\"pass\"}? Law phase post_vote, voted already true. Phase law, actions allowed: vote/veto/pass. Already voted. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739372,
+    "id": "20261115184250ec27c40a53b741c3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184250ec27c40a53b741c3",
+    "usage": {
+      "completion_tokens": 62,
+      "completion_tokens_details": {
+        "reasoning_tokens": 32
+      },
+      "prompt_tokens": 2009,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2071
+    }
+  }
+}

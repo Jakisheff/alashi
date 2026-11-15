@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.586,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара для продажи, рынок пропускаю.\"}",
+          "reasoning_content": "I have 0 goods, sell_credit 2 units paid back? Promissory added at round boundary: round 3 start, cash 21.25M — that's my promissory (2×~8.5×1.25). No goods, so pass market.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738725,
+    "id": "202611151832022e0063f7cc3a4315",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151832022e0063f7cc3a4315",
+    "usage": {
+      "completion_tokens": 80,
+      "completion_tokens_details": {
+        "reasoning_tokens": 59
+      },
+      "prompt_tokens": 1851,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 1931
+    }
+  }
+}

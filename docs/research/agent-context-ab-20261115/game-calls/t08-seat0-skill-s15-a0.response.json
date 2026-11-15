@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.313,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товара нет, продавать нечего — экономлю фазу action для produce с субсидией 3 единицы.\"}",
+          "reasoning_content": "Round 5 market, goods=0, nothing to sell. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738338,
+    "id": "2026111518253663b1eeb8e9ba4865",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518253663b1eeb8e9ba4865",
+    "usage": {
+      "completion_tokens": 52,
+      "completion_tokens_details": {
+        "reasoning_tokens": 15
+      },
+      "prompt_tokens": 3124,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3176
+    }
+  }
+}

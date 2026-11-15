@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.759,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 6 снижает цены следующего рынка на 2, что режет мою плановую выручку от продажи произведённого товара — против, и наложу вето при прохождении.\"}",
+          "reasoning_content": "Law card 6: prices -2 next market. I already sold this round; next round I plan to produce and sell. Bad for me. But it's next market only; I'll produce 2 and sell at -2. Vote no; if passes, veto as president.\n\nCards 6 prices -2 — hurts everyone equally, but hurts my sales. Vote no, veto if passes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738937,
+    "id": "20261115183533c9c44556f1a5434b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183533c9c44556f1a5434b",
+    "usage": {
+      "completion_tokens": 135,
+      "completion_tokens_details": {
+        "reasoning_tokens": 81
+      },
+      "prompt_tokens": 3248,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 3383
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.22,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Счётчик сброшен, нет налога — продаю все 3 единицы по максимальным ценам 12/10/9.\"}",
+          "reasoning_content": "Round 5 market, sold_counter=0, prices 12/10/9 for 3 units, no tax. Sell 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739302,
+    "id": "20261115184140210055108f0e40de",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184140210055108f0e40de",
+    "usage": {
+      "completion_tokens": 75,
+      "completion_tokens_details": {
+        "reasoning_tokens": 29
+      },
+      "prompt_tokens": 3517,
+      "prompt_tokens_details": {
+        "cached_tokens": 3264
+      },
+      "total_tokens": 3592
+    }
+  }
+}

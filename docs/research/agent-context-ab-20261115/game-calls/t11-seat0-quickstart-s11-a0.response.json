@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.844,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Кредитная продажа по ~7/6/5 с множителем 1.25 избегает девальвации и вернётся на границе раунда 5.\",\"amount\":0}",
+          "reasoning_content": "Round 4 market, I have 3 goods, sold_counter=4, prices: ladder at index 4 = 7. Sell credit again? Round 4 of 6, credit returns at round 5 border — fine. Sell all 3 in credit: avoids devaluation, 1.25x.\n\nPrices: units 5-7 at 7,6,5? Counter=4 means next prices 7,6,5 → sum 18*1.25. Sell credit 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738481,
+    "id": "2026111518275763ac81043bd249b5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518275763ac81043bd249b5",
+    "usage": {
+      "completion_tokens": 164,
+      "completion_tokens_details": {
+        "reasoning_tokens": 106
+      },
+      "prompt_tokens": 3329,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 3493
+    }
+  }
+}

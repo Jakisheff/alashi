@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.415,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 8 списывает promissory, что лишит меня инструмента дешёвого кредитования в будущем\"}",
+          "reasoning_content": "Law card 8: cancels promissory notes — bad if I use sell_credit; but voting: weights 1 each, others already voted (voted true). I don't know their choices. Card 8 wipes promissory; no one has promissory. Harmless but I might use sell_credit later. Actually it also wipes opponents' promissory. Currently nobody has any. Vote no? Abstain keeps flexibility... Vote no to keep promissory option.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739150,
+    "id": "20261115183906b25013af01694176",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183906b25013af01694176",
+    "usage": {
+      "completion_tokens": 135,
+      "completion_tokens_details": {
+        "reasoning_tokens": 100
+      },
+      "prompt_tokens": 2515,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 2650
+    }
+  }
+}

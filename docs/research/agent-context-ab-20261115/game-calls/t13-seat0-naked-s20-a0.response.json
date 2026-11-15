@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.308,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Это последний рынок: sell_credit после раунда 6 не погашается, поэтому продаю за живые деньги\"}",
+          "reasoning_content": "Round 6 market: sell now or sell_credit? sell_credit after last round is not redeemed — must sell now for cash.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738615,
+    "id": "20261115183013bd62d05c2208491b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183013bd62d05c2208491b",
+    "usage": {
+      "completion_tokens": 64,
+      "completion_tokens_details": {
+        "reasoning_tokens": 26
+      },
+      "prompt_tokens": 3034,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3098
+    }
+  }
+}

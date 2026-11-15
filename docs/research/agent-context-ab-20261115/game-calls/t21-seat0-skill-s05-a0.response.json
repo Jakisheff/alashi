@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.003,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"donkey\",\"reason\":\"За 1 alashi получаю товар для продажи в следующем раунде по цене выше цены лестницы.\"}",
+          "reasoning_content": "I have cash 17M, no goods. Round 2 action. Donkey costs 1 alashi (1M units? 1 alashi = 1M units). Cash 17 alashi. Buy donkey: cost 1 alashi, gives 1 good, sell later ~6-7? sold_counter=6, prices at 7,6,5... 3 more sales this round. Sell next round maybe ~5-6. Donkey profitable. Do donkey.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739021,
+    "id": "202611151836569d19625b2eea4df6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151836569d19625b2eea4df6",
+    "usage": {
+      "completion_tokens": 137,
+      "completion_tokens_details": {
+        "reasoning_tokens": 103
+      },
+      "prompt_tokens": 2157,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2294
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.384,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продаю весь товар на открытии раунда 3 по высокой цене лестницы — держать невыгодно, цены падают с каждым раундом.\"}",
+          "reasoning_content": "Sell 2 units at price ~10-12? sold_counter=0, price ladder 12,10 → get 22, minus devaluation... sell now.\n\n{\"action\":\"sell\",\"units\":2}",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737980,
+    "id": "20261115181937c43af0f0272e49d6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181937c43af0f0272e49d6",
+    "usage": {
+      "completion_tokens": 91,
+      "completion_tokens_details": {
+        "reasoning_tokens": 43
+      },
+      "prompt_tokens": 2430,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2521
+    }
+  }
+}

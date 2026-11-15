@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.372,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Финальный раунд: продаю весь товар сразу — вексель не погасится, а лестница цен только падает.\"}",
+          "reasoning_content": "Final round: sell all 3 goods, not sell_credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737912,
+    "id": "202611151818300ebc9c50437b4e8c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151818300ebc9c50437b4e8c",
+    "usage": {
+      "completion_tokens": 56,
+      "completion_tokens_details": {
+        "reasoning_tokens": 13
+      },
+      "prompt_tokens": 3530,
+      "prompt_tokens_details": {
+        "cached_tokens": 3264
+      },
+      "total_tokens": 3586
+    }
+  }
+}

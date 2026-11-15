@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.178,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Последний раунд — продаю весь товар на открытии по высокой цене, держать нечего.\"}",
+          "reasoning_content": "Sell 2 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738249,
+    "id": "2026111518240758d7474b12924abd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518240758d7474b12924abd",
+    "usage": {
+      "completion_tokens": 40,
+      "completion_tokens_details": {
+        "reasoning_tokens": 5
+      },
+      "prompt_tokens": 3659,
+      "prompt_tokens_details": {
+        "cached_tokens": 3392
+      },
+      "total_tokens": 3699
+    }
+  }
+}

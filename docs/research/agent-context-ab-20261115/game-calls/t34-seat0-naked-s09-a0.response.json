@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.388,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Субсидия +1 товара выгодна моим будущим produce/shuttle, налогов и списаний нет.\"}",
+          "reasoning_content": "Card 3: subsidy_goods=1, good for me (I produce/shuttle). Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746672,
+    "id": "202611152044304df9350bc6ba4e02",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611152044304df9350bc6ba4e02",
+    "usage": {
+      "completion_tokens": 56,
+      "completion_tokens_details": {
+        "reasoning_tokens": 21
+      },
+      "prompt_tokens": 2151,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2207
+    }
+  }
+}

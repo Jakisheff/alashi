@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.096,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"3 товара против 2 от produce: даже с риском ~25% конфискации EV продажи выше при падающей лестнице.\"}",
+          "reasoning_content": "Round 3 action. Options: produce (2 goods), donkey (costs 1, gives 1), shuttle (3 goods, 25% confiscation risk). Cash 32.5. Best: shuttle gives 3 goods vs produce 2. Risk 25% lose all shuttle goods? \"gray goods may be confiscated\" — likely lose shuttle goods. EV: produce 2×~9=18; shuttle 0.75×3×9=20.25. Slightly better. But donkey? No. Shuttle EV slightly higher. Prices declining: sold_counter=6, prices ~[3,3,2...] actually after 6 sold, price index 6 → 5? Ladder index 6 = 5? [12,10,9,8,7,6,5,...] index 6 = 5. Selling 3 more at ~5,4,3. Produce 2×~5,4=9; shuttle 0.75×(5+4+3)=9. Similar. Shuttle slightly better EV but variance. Also law card may help. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739063,
+    "id": "20261115183737a453b442cc014fcf",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183737a453b442cc014fcf",
+    "usage": {
+      "completion_tokens": 274,
+      "completion_tokens_details": {
+        "reasoning_tokens": 235
+      },
+      "prompt_tokens": 2496,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2770
+    }
+  }
+}

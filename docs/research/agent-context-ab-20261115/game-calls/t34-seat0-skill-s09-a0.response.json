@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.112,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 3 даёт subsidy_goods=1 — больше товара с produce в будущих раундах, явно выгодно.\"}",
+          "reasoning_content": "Card 3: subsidy_goods=1, benefits produce. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746686,
+    "id": "20261115204445ab55fd94e7c94b49",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115204445ab55fd94e7c94b49",
+    "usage": {
+      "completion_tokens": 53,
+      "completion_tokens_details": {
+        "reasoning_tokens": 15
+      },
+      "prompt_tokens": 2550,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 2603
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.054,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование по налогу завершено, я уже проголосовал против — вмешиваться нечем.\"}",
+          "reasoning_content": "Law card 1, tax 10% — voted no. Others voted... unknown how. Already voted. Now post_vote stage — action needed? We must return something; phase law, post_vote. Likely veto pending? veto_pending false. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738945,
+    "id": "20261115183543877e7fc12188419a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183543877e7fc12188419a",
+    "usage": {
+      "completion_tokens": 83,
+      "completion_tokens_details": {
+        "reasoning_tokens": 52
+      },
+      "prompt_tokens": 1998,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2081
+    }
+  }
+}

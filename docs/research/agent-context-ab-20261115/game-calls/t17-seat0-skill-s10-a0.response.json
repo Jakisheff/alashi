@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.39,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% режет выручку моих продаж — против.\"}",
+          "reasoning_content": "Law card 1: tax 10% — harms me as seller. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738820,
+    "id": "20261115183336d0ad72a687034b00",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183336d0ad72a687034b00",
+    "usage": {
+      "completion_tokens": 44,
+      "completion_tokens_details": {
+        "reasoning_tokens": 18
+      },
+      "prompt_tokens": 2581,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 2625
+    }
+  }
+}

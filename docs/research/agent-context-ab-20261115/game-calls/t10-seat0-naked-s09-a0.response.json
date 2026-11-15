@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.274,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидание 2.25 единицы от шаттла выше, чем 2 от бесплатного производства, а цена следующего рынка ~6-7 alashi делает риск оправданным.\"}",
+          "reasoning_content": "Buy a donkey? Donkey gives 1 goods for 1 alashi, sell at price ~5-6 (sold_counter=4, price 6 minus tax). Actually donkey costs 1 alashi, gives 1 goods → profitable if sell price >1. Next market price at counter 4: ladder index 4 = 7. Yes, donkey. Shuttle gives 3 goods with 25% confiscation — better EV. Shuttle: 3 goods, ~6-7 each ≈ 18-20 expected minus 25% risk → ~14. Produce gives 2 free. Produce is free, shuttle gives 3 with risk. Expected shuttle = 0.75*3+0.25*0=2.25 goods > 2? Risk: confiscation of all grey goods? \"grey goods can be confiscated\" — probably all confiscated. 2.25 > 2, so shuttle slightly better, plus boom gone. Border duty if favorable border — 25% chance pay min(cash,2) to role holder. Risk-averse but EV higher. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738415,
+    "id": "20261115182647d040482e6ee24cc7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182647d040482e6ee24cc7",
+    "usage": {
+      "completion_tokens": 283,
+      "completion_tokens_details": {
+        "reasoning_tokens": 230
+      },
+      "prompt_tokens": 2036,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2319
+    }
+  }
+}

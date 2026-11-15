@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.613,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"donkey\",\"reason\":\"За 1 alashi покупаю товар: цены лестницы (7-8) всё ещё много выше себестоимости, к следующему рынку будет 2 единицы.\"}",
+          "reasoning_content": "I have 1 goods, cash 9.92. Options: sell left for later? Action phase: donkey costs 1, gives 1 goods → 2 goods next round. Ladder at 4 sold, next round prices lower. Donkey profitable. Do donkey.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739038,
+    "id": "20261115183714b0d65fdb8a624192",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183714b0d65fdb8a624192",
+    "usage": {
+      "completion_tokens": 106,
+      "completion_tokens_details": {
+        "reasoning_tokens": 59
+      },
+      "prompt_tokens": 2497,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2603
+    }
+  }
+}

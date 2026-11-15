@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.832,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Финальный раунд: продаю весь товар на вершине лестницы, держать нечего, sell_credit не погасится\"}",
+          "reasoning_content": "Final round: sell 2 immediately at top of ladder.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739526,
+    "id": "20261115184524f3e13f8b5c6c456a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184524f3e13f8b5c6c456a",
+    "usage": {
+      "completion_tokens": 54,
+      "completion_tokens_details": {
+        "reasoning_tokens": 12
+      },
+      "prompt_tokens": 3540,
+      "prompt_tokens_details": {
+        "cached_tokens": 3264
+      },
+      "total_tokens": 3594
+    }
+  }
+}

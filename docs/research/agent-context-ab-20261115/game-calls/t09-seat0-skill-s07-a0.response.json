@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.649,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продам весь товар на открытии по максимальной цене 12 до падения лестницы.\"}",
+          "reasoning_content": "Sell 2 units at 12 each = 24 alashi, minus tax 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738347,
+    "id": "20261115182545f300156895f84bb6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182545f300156895f84bb6",
+    "usage": {
+      "completion_tokens": 54,
+      "completion_tokens_details": {
+        "reasoning_tokens": 19
+      },
+      "prompt_tokens": 2345,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2399
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.594,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":1,\"reason\":\"Открываю продажу по максимальной цене лестницы с бумом +2.\"}",
+          "reasoning_content": "I have 1 good, boom +2. Sell it now at price 12+2=14.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739189,
+    "id": "20261115183947db83e3de3cf743d7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183947db83e3de3cf743d7",
+    "usage": {
+      "completion_tokens": 56,
+      "completion_tokens_details": {
+        "reasoning_tokens": 22
+      },
+      "prompt_tokens": 2429,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2485
+    }
+  }
+}

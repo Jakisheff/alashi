@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.493,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, я президент и не хочу вето против выгодной себе карты.\"}",
+          "reasoning_content": "Card 5 passed? post_vote stage — already voted yes. Now phase law, post_vote — action should be pass? No pending veto (I'm president, no veto_pending). Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737963,
+    "id": "202611151819207a7b4f21b1894e0a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151819207a7b4f21b1894e0a",
+    "usage": {
+      "completion_tokens": 69,
+      "completion_tokens_details": {
+        "reasoning_tokens": 40
+      },
+      "prompt_tokens": 1526,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1595
+    }
+  }
+}

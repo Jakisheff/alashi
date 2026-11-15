@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.48,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, в post_vote доступен только pass/veto, а закон выгоден мне.\"}",
+          "reasoning_content": "Post_vote, law passed presumably. Action: pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738621,
+    "id": "20261115183019b9b51b9c9bf34666",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183019b9b51b9c9bf34666",
+    "usage": {
+      "completion_tokens": 43,
+      "completion_tokens_details": {
+        "reasoning_tokens": 11
+      },
+      "prompt_tokens": 3349,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 3392
+    }
+  }
+}

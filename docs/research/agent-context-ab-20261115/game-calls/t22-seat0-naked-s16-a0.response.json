@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.693,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 2 товара к моим 3 дадут 5 единиц на финальный рынок без риска и без траты денег.\"}",
+          "reasoning_content": "I have 3 goods, cash 13.3. Options: produce (+2 goods), donkey (1 alashi → 1 goods; only 13 alashi, can do one action). Actually action is single. Produce gives 2 goods free — better than donkey. Then round 6 market sell 5 goods.\n\nWait, but produce gives 2+subsidy=2. Yes, produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739130,
+    "id": "2026111518384642cae10d9b4a4a41",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518384642cae10d9b4a4a41",
+    "usage": {
+      "completion_tokens": 129,
+      "completion_tokens_details": {
+        "reasoning_tokens": 86
+      },
+      "prompt_tokens": 2769,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2898
+    }
+  }
+}

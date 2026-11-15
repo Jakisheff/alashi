@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.417,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 8 спишет мои непогашенные promissory (~20+ alashi с продажи в кредит) — категорически против.\"}",
+          "reasoning_content": "Card 8 cancels all promissory notes — I have outstanding sell_credit revenue (2 units at price ~8? sold_counter was 6 before; price ladder... they sold 2 at some price, ×1.25 promissory). Card 8 wipes it. Vote no. Others: player2 voted? voted shows [false,false,true] — player2 (idx2) already voted yes? voted array true for idx2. If card 8 passes, I lose my promissory. I must vote no. Weights: 1 each (+2 if skipped action; I did produce, so weight 1). Player2 voted (likely yes since they have cash and no promissory? Actually idx2 has 22M cash, no promissory—card 8 hurts creditors; idx1 sold... idx1 bought? idx1 has 13M cash). Actually card 8 helps nobody except... my promissory ~2*8*1.25=20 alashi lost. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738663,
+    "id": "20261115183054724db0e7fef448cf",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183054724db0e7fef448cf",
+    "usage": {
+      "completion_tokens": 253,
+      "completion_tokens_details": {
+        "reasoning_tokens": 211
+      },
+      "prompt_tokens": 1765,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2018
+    }
+  }
+}

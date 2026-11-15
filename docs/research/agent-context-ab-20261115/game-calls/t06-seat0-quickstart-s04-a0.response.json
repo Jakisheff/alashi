@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.483,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Цены ещё высоки (9 и 8 за единицу), продаю оба товара за наличные перед возможным падением лестницы.\"}",
+          "reasoning_content": "Round 2 market, I have 2 goods, cash 0 (but 22M promissory? Actually cash[0]=0... wait cash shows 22000000 at idx 2? my_idx=0, cash[0]=0? seen arrays: [cash, goods, influence]. cash=[0,0,22000000], so player 2 has 22M? Odd, I had sell_credit 2 at 12 each = 24*1.25=30M promissory... but cash[0]=0. Hmm, my promissory should have paid at round boundary. It seems not shown? cash[0]=0, maybe my promissory didn't convert? Actually seen [0,2,1] at round1 market... whatever. Now prices: sold_counter=2, next price=9. Sell 2 units now for cash.\n\nSell at price 9,8 → 17 alashi. Do it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738191,
+    "id": "2026111518230643970f22b42d458d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518230643970f22b42d458d",
+    "usage": {
+      "completion_tokens": 245,
+      "completion_tokens_details": {
+        "reasoning_tokens": 201
+      },
+      "prompt_tokens": 2721,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2966
+    }
+  }
+}

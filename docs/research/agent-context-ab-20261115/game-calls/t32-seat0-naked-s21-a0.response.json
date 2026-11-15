@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.498,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Рынок раунда уже прошёл — новые товары продать нельзя, а donkey только потратит 1 alashi; pass оптимален.\"}",
+          "reasoning_content": "Round 6 action. Options: donkey (1 alashi for 1 good — useless, can't sell). Bid not available (round 4 only). Produce gives goods but market passed. Shuttle no cash? Costs? shuttle gives goods but no cash needed—goods can't be sold after market. Nothing gains value. Pass.\n\nActually donkey costs 1 alashi — loses money. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739673,
+    "id": "202611151847491122f4be7f3f40df",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151847491122f4be7f3f40df",
+    "usage": {
+      "completion_tokens": 124,
+      "completion_tokens_details": {
+        "reasoning_tokens": 82
+      },
+      "prompt_tokens": 3109,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3233
+    }
+  }
+}

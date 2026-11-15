@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.736,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Финальный рынок: продаю оба товара по вершине лестницы (~12 за единицу), прямой кэш идёт в итог без девальвации.\"}",
+          "reasoning_content": "Round 6 market: I have 2 goods, no tax, sold_counter=0, price_shift=0. Ladder starts at 12. Sell all 2 units immediately (cash, no devaluation after round 6). Sell for cash.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739646,
+    "id": "20261115184723aa9251f03d00479c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184723aa9251f03d00479c",
+    "usage": {
+      "completion_tokens": 102,
+      "completion_tokens_details": {
+        "reasoning_tokens": 52
+      },
+      "prompt_tokens": 3025,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3127
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.424,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет денег и товара; пропуск даёт +2 к весу голоса в законе, что ценнее недоступных действий.\"}",
+          "reasoning_content": "I have 0 cash, 0 goods. Others have 2 goods each. No cash for bribe. Pass? Vote weight mode 1 — I have 3 weight (abstained action gives +2). Actually vote_weight already shows 3 for me. Best action: pass (keeps +2 vote weight). Donkey costs 1 alashi which I don't have. So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738895,
+    "id": "20261115183450de13bce378e84cf1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183450de13bce378e84cf1",
+    "usage": {
+      "completion_tokens": 120,
+      "completion_tokens_details": {
+        "reasoning_tokens": 83
+      },
+      "prompt_tokens": 1367,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1487
+    }
+  }
+}

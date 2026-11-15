@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.205,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% срежет мой финальный cash — против.\"}",
+          "reasoning_content": "Tax 10% — reduces final cash. I have 38M cash, vote no. Weights: me 3, rival2 3, rival1 1 — no (3) vs yes? Rival1 1, rival2 3. If both yes, 4>3 passes. Tax hurts me. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738145,
+    "id": "202611151822220140b44d9252469f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151822220140b44d9252469f",
+    "usage": {
+      "completion_tokens": 99,
+      "completion_tokens_details": {
+        "reasoning_tokens": 71
+      },
+      "prompt_tokens": 3139,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3238
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.811,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Цена ещё 12 у начала лестницы; sell_credit даёт 1.25x в promissory, который вернётся на границе раунда 4 и переживёт на одну девальвацию меньше, чем наличные.\",\"chosen_action\":null}",
+          "reasoning_content": "Round 3 market. My cash 21.25M (post-devaluation of 13M? Actually cash = 21.25M includes promissory). Prices start at 12, subsidy active. I have 2 goods. Sell now at 12 each? Others will also sell. Sell 2 units at ~12 = 24M cash, no tax. Selling credit again risky—devaluation 62% at round boundaries 4+? \"cash=floor(cash/100)*62\" on rounds 2+... it applied; but I got full? My promissory 30M *? cash shows 21.25M = 0.625*... 13M*1.25=16.25 + something? Whatever. Sell now, cash safe? Devaluation applies anyway. Sell cash now at round 3 gives value that survives only one devaluation before end... rounds 4,5,6 boundaries = three devaluations. Selling credit defers but pays 1.25x, gets devalued once more? Cash devalues every round boundary regardless. Promissory arrives next round boundary, so credit = same number of devaluations minus one? Sell now: cash devalues at boundaries 3,4,5 (three times before end). Credit: arrives at boundary 3, then devalues at 4,5 (two times) with 1.25x. So credit much better. My prior reason said same. Sell credit 2 units: 2*12*1.25=30M promissory. But sell credit after last round not honored — round 3 fine. Others selling will lower price; sell now first anyway at market stage all simultaneous? I get price ladder based on sold_counter=0. Do sell_credit 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737990,
+    "id": "20261115181940823ab32fabc04117",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181940823ab32fabc04117",
+    "usage": {
+      "completion_tokens": 446,
+      "completion_tokens_details": {
+        "reasoning_tokens": 375
+      },
+      "prompt_tokens": 1951,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2397
+    }
+  }
+}

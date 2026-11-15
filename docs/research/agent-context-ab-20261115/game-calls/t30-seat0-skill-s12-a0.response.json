@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.114,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продаю весь товар немедленно по лестнице с бумом +2, до налогообложения и падения цен.\"}",
+          "reasoning_content": "Sell 2 goods. Price ladder at counter 4: [.. index 4]=7, +2 boom = 9. Sell 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739541,
+    "id": "20261115184539ebbe5f6d1d1e4b07",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184539ebbe5f6d1d1e4b07",
+    "usage": {
+      "completion_tokens": 73,
+      "completion_tokens_details": {
+        "reasoning_tokens": 31
+      },
+      "prompt_tokens": 2861,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 2934
+    }
+  }
+}

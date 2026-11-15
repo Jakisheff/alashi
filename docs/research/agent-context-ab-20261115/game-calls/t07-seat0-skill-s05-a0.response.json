@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.77,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"donkey\",\"reason\":\"Товар есть прибыль: 1 alashi затрат против продажи по ~4 alashi на следующем рынке при нулевом налоге, а кассу 16 alashi сохраняю под ставку R4.\"}",
+          "reasoning_content": "Round 2 action, cash 17M, no goods. Donkey costs 1 alashi gives 1 good. Need pesos for R4 bid (~15-25 alashi). Donkey: 1 alashi for 1 good that sells at ~5-6? sold_counter=6, price next = 4. Devaluation cuts cash 38%. Buying donkey: spend 1M, get good worth ~4M... plus tax 0. Actually buy donkey twice over rounds. Marginal but positive. Choose donkey.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738216,
+    "id": "20261115182331da18069cb1894aec",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182331da18069cb1894aec",
+    "usage": {
+      "completion_tokens": 170,
+      "completion_tokens_details": {
+        "reasoning_tokens": 113
+      },
+      "prompt_tokens": 2180,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2350
+    }
+  }
+}

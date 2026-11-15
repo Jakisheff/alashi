@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.073,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Производство бесплатно даёт 2 товара к следующему рынку, кэш 17 alashi сохраняю под ставку раунда 4.\"}",
+          "reasoning_content": "I sold 2 units (visible cash shows 17M after tax? Actually sell gave revenue, sold_counter=6 means others sold too). My cash 17M, goods 0. Action: buy? Cash 17, keep peso for R4 bid — 15-25 alashi recommended. Better produce (free, subsidy 0 → 2 goods). Produce gives 2 goods for next market. Cash unchanged.\n\nAction: produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739516,
+    "id": "202611151845133f3d12d784074dc7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151845133f3d12d784074dc7",
+    "usage": {
+      "completion_tokens": 135,
+      "completion_tokens_details": {
+        "reasoning_tokens": 91
+      },
+      "prompt_tokens": 2181,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2316
+    }
+  }
+}

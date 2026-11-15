@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.807,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Налог 20% режет мою будущую выручку раундов 5–6; как президент ветирую его.\"}",
+          "reasoning_content": "I'm president, voted no. Others voted too — likely yes? voted all true, veto_pending false. If tax passed, veto. State doesn't show vote outcome; post_vote stage: I can veto. Tax 20% hurts my future sales (round 5-6 markets). Veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739394,
+    "id": "20261115184311c49cde3114764700",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184311c49cde3114764700",
+    "usage": {
+      "completion_tokens": 102,
+      "completion_tokens_details": {
+        "reasoning_tokens": 62
+      },
+      "prompt_tokens": 3738,
+      "prompt_tokens_details": {
+        "cached_tokens": 3456
+      },
+      "total_tokens": 3840
+    }
+  }
+}

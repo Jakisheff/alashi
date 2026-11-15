@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.363,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Финальный рынок: продаю оба товара по высоким ценам лестницы обычной продажей — кредитная выручка после последнего раунда не погашается.\"}",
+          "reasoning_content": "Round 6, sell 2 units normally (sell_credit won't redeem after last round). Prices start 12,10. Tax 0. Sell 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738136,
+    "id": "202611151822138d339c1090994d53",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151822138d339c1090994d53",
+    "usage": {
+      "completion_tokens": 84,
+      "completion_tokens_details": {
+        "reasoning_tokens": 34
+      },
+      "prompt_tokens": 2943,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3027
+    }
+  }
+}

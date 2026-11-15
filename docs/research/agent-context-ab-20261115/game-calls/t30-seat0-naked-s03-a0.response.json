@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.204,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, вето не требуется.\"}",
+          "reasoning_content": "Card 5 passed? Need current vote outcome unknown; post_vote stage but law passed? voted all yes likely, influence to richest — all equal cash 0, tie_order? Unknown recipient. My action now: phase law, post_vote... Actions allowed: vote_yes etc or veto. Vote already done? decision_stage post_vote — likely veto opportunity? veto_pending false. Vote passed; I'm president. Card 5: +1 influence to richest — all cash 0, tie_order decides; I'm idx 0 maybe tie_order favors lower index? Likely someone else. Anyway, pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739460,
+    "id": "20261115184415ba379297be214816",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184415ba379297be214816",
+    "usage": {
+      "completion_tokens": 142,
+      "completion_tokens_details": {
+        "reasoning_tokens": 121
+      },
+      "prompt_tokens": 1520,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1662
+    }
+  }
+}

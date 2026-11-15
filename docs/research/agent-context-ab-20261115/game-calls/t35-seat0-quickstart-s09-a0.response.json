@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.91,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатный produce даёт 2 товара на рынок раунда 4, альтернатив нет\"}",
+          "reasoning_content": "Round 3 action. I have 21.25 cash, 0 goods. Produce gives 2 goods for round 4 market — best. Bid is only round 4. Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746713,
+    "id": "20261115204510cf944b471833445c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115204510cf944b471833445c",
+    "usage": {
+      "completion_tokens": 68,
+      "completion_tokens_details": {
+        "reasoning_tokens": 39
+      },
+      "prompt_tokens": 3123,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3191
+    }
+  }
+}

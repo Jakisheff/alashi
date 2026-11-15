@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.213,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":20000000,\"reason\":\"Ожидаемый доход лицензии ~40 alashi оправдывает крупную ставку, а при проигрыше она возвращается.\"}",
+          "reasoning_content": "Round 4 action: bid for license. I have ~35.5M. Rivals ~35M and ~27M. License income 20-60, paid above share. Bidding in units min? amount integer units, bribe multiples of 5M — bid presumably any? Unclear; bribe multiple requirement only for bribe. Bid expected value: license 20-60 (mean 40) minus my share already... actually license income paid above share, so bidding up to expected income is fine. But if I lose, returned. Bid to win: rivals can bid too. I should bid decent amount, e.g., 20M (20 alashi). But spending reduces final cash which matters for ranking? Final payout = share of bank (50:30:15) + license. Spending bid reduces my cash but goes to bank... actually winner's bid goes to bank, redistributed by shares. Complex. Simpler: bid moderate like 15 alashi = 15000000. Expected license ~40, so worth bidding up to ~30-35. But winning reduces cash. If I win, cash ~20M + license later. Rivals similar cash. Bid 20000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738114,
+    "id": "2026111518214638d7e625568b42ba",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518214638d7e625568b42ba",
+    "usage": {
+      "completion_tokens": 293,
+      "completion_tokens_details": {
+        "reasoning_tokens": 249
+      },
+      "prompt_tokens": 2384,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2677
+    }
+  }
+}

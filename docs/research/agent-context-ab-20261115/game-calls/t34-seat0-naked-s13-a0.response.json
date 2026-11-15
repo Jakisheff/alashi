@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.01,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Карта 0 — пустая, голосовать не о чем, исход закона не влияет на мою выплату.\"}",
+          "reasoning_content": "Law card 0 — empty, nothing to vote on. But opponents already voted... I haven't voted. Vote irrelevant; abstain or pass. Passing gives up +2 vote weight bonus? The bonus is for skipping action in action phase, not law. Card 0 empty, so pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746690,
+    "id": "20261115204447ba5ad27477fd43c2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115204447ba5ad27477fd43c2",
+    "usage": {
+      "completion_tokens": 94,
+      "completion_tokens_details": {
+        "reasoning_tokens": 60
+      },
+      "prompt_tokens": 2547,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2641
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.225,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, я не президент — в post_vote ничего полезного сделать нельзя.\"}",
+          "reasoning_content": "Law post_vote, card 3 subsidy passed (I voted yes). Post_vote: no useful action except sell_credit in market? No, this is law phase post_vote — options per protocol: vote/veto/pass. Nothing useful; pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739115,
+    "id": "2026111518383292374a2f338c48a7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518383292374a2f338c48a7",
+    "usage": {
+      "completion_tokens": 78,
+      "completion_tokens_details": {
+        "reasoning_tokens": 49
+      },
+      "prompt_tokens": 4226,
+      "prompt_tokens_details": {
+        "cached_tokens": 3968
+      },
+      "total_tokens": 4304
+    }
+  }
+}

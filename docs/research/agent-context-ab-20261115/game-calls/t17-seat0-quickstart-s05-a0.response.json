@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.877,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нет товара; произвожу 2 единицы для продаж в будущих раундах, кэш всё равно девальвирует.\"}",
+          "reasoning_content": "Round 2 action. I have 17 cash, 0 goods. Produce gives 2 goods. Later rounds for selling. Donkey costs 1 alashi, gives 1. Cash devalues at boundary anyway (floor/100*62). Better buy goods now? Buy at market, not action. Action: produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738773,
+    "id": "202611151832508f7452d7450f4144",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151832508f7452d7450f4144",
+    "usage": {
+      "completion_tokens": 108,
+      "completion_tokens_details": {
+        "reasoning_tokens": 67
+      },
+      "prompt_tokens": 2760,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 2868
+    }
+  }
+}

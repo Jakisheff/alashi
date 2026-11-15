@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.036,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 4 даёт +1 влияния самому беднему (сопернику), мне выгоднее её провалить, но при равном весе голосов 1:1 закон всё равно не пройдёт.\"}",
+          "reasoning_content": "Law card 4: +1 influence to poorest. My cash 36.54 is highest, poorest is faction 1 (8.06... wait cash now 29.06, 30.64, mine 36.54). Poorest is idx1 (29.06). So law gives influence to rival, not me. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739156,
+    "id": "202611151839110293212144a54a03",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151839110293212144a54a03",
+    "usage": {
+      "completion_tokens": 130,
+      "completion_tokens_details": {
+        "reasoning_tokens": 72
+      },
+      "prompt_tokens": 3144,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3274
+    }
+  }
+}

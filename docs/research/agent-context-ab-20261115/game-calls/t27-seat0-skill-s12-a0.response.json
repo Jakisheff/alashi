@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.517,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Лестница после 4 проданных даёт ~9 за единицу, держать товар нельзя — продаю оба, выручка пойдёт на ставку за лицензию.\"}",
+          "reasoning_content": "Sell 2 goods at price ~9 (sold 4). Also should I bid later in action. Now sell 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739375,
+    "id": "2026111518425278ef57440d274c6a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518425278ef57440d274c6a",
+    "usage": {
+      "completion_tokens": 79,
+      "completion_tokens_details": {
+        "reasoning_tokens": 26
+      },
+      "prompt_tokens": 2763,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 2842
+    }
+  }
+}

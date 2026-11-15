@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.066,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продаю 2 товара по текущей цене лестницы 7 — выручка 14 alashi, безопаснее, чем промиссоры с риском девальвации и карты 8.\"}",
+          "reasoning_content": "I have 2 goods, price ladder: sold_counter=4, price at index 4 = 7. Round 4 market. Sell 2 units at 7 each. Later cash devalues at round 5 boundary — but selling now still better than holding? Only 2 rounds left (rounds 5,6 markets). Selling now at 7, devalued to 62% = ~4.34 effective. Holding to round 5: prices lower probably. Better to sell now? Selling now at 7 → 14 alashi, devalued to 8.68 at boundary. Or sell_credit: ×1.25 promissory, but risk card 8 wiping promissories, and paid at round 5 boundary, then devalued at round 6 boundary → 14×1.25=17.5 then ×0.62=10.85. Worse. Sell now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739055,
+    "id": "2026111518372894d1ed8c43af4088",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518372894d1ed8c43af4088",
+    "usage": {
+      "completion_tokens": 247,
+      "completion_tokens_details": {
+        "reasoning_tokens": 191
+      },
+      "prompt_tokens": 2314,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2561
+    }
+  }
+}

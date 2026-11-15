@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.486,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 8 нейтральна — непогашенных векселей ни у кого нет, исход не влияет на мою выплату.\"}",
+          "reasoning_content": "Law card 8 cancels all promissory notes — I have none; others may have. No one benefits... actually it wipes others' promissory? Others have none visible either (cash 0). Card 8 with no promissory is neutral. But voting yes vs no: neutral. I'm president; pass vote. Others already voted. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739333,
+    "id": "202611151842100b518067b4e74963",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151842100b518067b4e74963",
+    "usage": {
+      "completion_tokens": 120,
+      "completion_tokens_details": {
+        "reasoning_tokens": 77
+      },
+      "prompt_tokens": 1928,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2048
+    }
+  }
+}

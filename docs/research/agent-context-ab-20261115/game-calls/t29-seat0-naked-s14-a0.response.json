@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.754,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"У меня нет товара, а понижение цен на следующий рынок ударит по продажам соперников — закон мне выгоден\"}",
+          "reasoning_content": "Law card 6: prices -2 next market. I have no goods, others have no goods. Bad for them, not for me — no, I could buy goods cheaply? Lower prices make buying cheaper... buy happens at same ladder? Lower prices bad for sellers. I have no goods; rivals also have no goods. Round 4 action done (bid won? cash 615000, so lost 20M? bid 20M, cash was 20.615M, now 0.615M — so I won the bid and paid; license income comes at end). So law 6 doesn't hurt me — vote yes? If it passes, rivals' future sales cheaper — helps my relative rank. Vote yes. My weight 5, others voted already? voted [false,true,true] unknown. I'm president; veto unnecessary. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739518,
+    "id": "202611151845127676d041ecaf4271",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151845127676d041ecaf4271",
+    "usage": {
+      "completion_tokens": 217,
+      "completion_tokens_details": {
+        "reasoning_tokens": 181
+      },
+      "prompt_tokens": 2563,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 2780
+    }
+  }
+}

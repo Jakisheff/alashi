@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.508,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% уменьшит мою кредитную выручку; голосую против и при необходимости наложу вето\"}",
+          "reasoning_content": "Law card 1: tax 10%. I'm president, cash 0. Tax reduces my future sales revenue 10% — bad. Opponents have cash and goods. I should vote no? Votes: opponent 2 already voted (voted[2]=true, likely yes or no — unknown). Vote no, and veto if passes? President can veto. Vote_no first; if passes, veto. Tax 10% hurts my sales (I'm selling on credit). Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739337,
+    "id": "20261115184211663d7eb3df71422a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184211663d7eb3df71422a",
+    "usage": {
+      "completion_tokens": 141,
+      "completion_tokens_details": {
+        "reasoning_tokens": 101
+      },
+      "prompt_tokens": 1750,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1891
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.035,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара и денег для рыночных действий.\"}",
+          "reasoning_content": "I have 0 goods, 0 cash. Market round 2: nothing to do. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738904,
+    "id": "20261115183503739f45cfbbd74508",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183503739f45cfbbd74508",
+    "usage": {
+      "completion_tokens": 41,
+      "completion_tokens_details": {
+        "reasoning_tokens": 21
+      },
+      "prompt_tokens": 1611,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1652
+    }
+  }
+}

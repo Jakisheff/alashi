@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.209,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":30000000,\"reason\":\"Ожидаемый доход лицензии ~40 превышает эффективную цену ставки (ставка в банк, 50% вернётся через мою долю), а проигравшим вернут деньги — ставка 30 выгодна.\"}",
+          "reasoning_content": "Round 4 action: auction bid available. Cash 57.4. License income 20-60 alashi, paid on top of share. Bidding: winner pays to bank, gets license income. If I don't win, my rank matters — cash determines rank. I'm richest already. Bidding ~25-30 could be profitable (expected income ~40). But bid reduces cash affecting rank/devaluation? Cash floor: 57.4 → floor(57.4/100)... cash 57,435,000 = 57 alashi, under 100, no devaluation. Bid is cash out. If income 20-60 expected ~40, bidding 30 gives EV +10 but variance; also losing bid returned. Rival could bid higher. Bid 25 seems reasonable. Actually cash paid to bank reduces final payout directly 1:1 through... settlement: rank by cash, shares of bank. Bank includes entry fees and commission. Bid goes into bank, redistributed via shares 50:30:15 — I'd get 50% back if I win. So net cost ~50% of bid if I get 1st share. Bid 30: cost 15 effective, income ~40 → good EV. Bid 35? Others have ~35 and ~25. Bid 30 likely wins. Let's bid 30.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746643,
+    "id": "202611152043564a992e55a1154e27",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611152043564a992e55a1154e27",
+    "usage": {
+      "completion_tokens": 342,
+      "completion_tokens_details": {
+        "reasoning_tokens": 279
+      },
+      "prompt_tokens": 3482,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 3824
+    }
+  }
+}

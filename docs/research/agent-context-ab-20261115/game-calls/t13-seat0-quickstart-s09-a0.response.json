@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.376,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 2 единицы товара надёжнее рискованного shuttle и дают выручку на следующем рынке.\"}",
+          "reasoning_content": "Round 3 action. Cash 32.54, no goods. Options: produce (2 goods), donkey (1 alashi for 1 good), shuttle (3 goods, 25% confiscation). Produce gives 2 free goods. Shuttle gives 3 with risk — expected value: 3 goods minus 25% chance of losing? Confiscation ~25% chance losing all? Probably confiscates the grey goods. Expected 2.25 goods vs 2 free — marginal, plus possible tariff. Also bribes: influence gives presidency and 5% bonus. With 32.54M cash, bribe 2M gives... influence floor(amount/5M). Bribe 10M = 2 influence? I have most cash already; richest gets anti-rich law target but card 4/5 effects. Produce is safe and free.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738573,
+    "id": "20261115182928a53f957bf5414941",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182928a53f957bf5414941",
+    "usage": {
+      "completion_tokens": 211,
+      "completion_tokens_details": {
+        "reasoning_tokens": 176
+      },
+      "prompt_tokens": 3101,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3312
+    }
+  }
+}

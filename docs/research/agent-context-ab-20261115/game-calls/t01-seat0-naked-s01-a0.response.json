@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.763,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нет денег, а produce даёт 2 товара бесплатно.\"}",
+          "reasoning_content": "Have no cash; produce gives 2 goods. Donkey costs 1 cash—can't. Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737750,
+    "id": "202611151815485f5d088a76a34e04",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151815485f5d088a76a34e04",
+    "usage": {
+      "completion_tokens": 44,
+      "completion_tokens_details": {
+        "reasoning_tokens": 22
+      },
+      "prompt_tokens": 1359,
+      "prompt_tokens_details": {
+        "cached_tokens": 1152
+      },
+      "total_tokens": 1403
+    }
+  }
+}

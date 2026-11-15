@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.763,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон даёт +1 влияния богатейшему сопернику (22 alashi), что усилит его в будущих голосованиях и борьбе за бонус влияния\"}",
+          "reasoning_content": "Law card 5: +1 influence to richest. Player 2 has 22 alashi, richest. I'm not richest. Player 2 gains influence — bad for me? President determination, extra 5% bonus at end. Should I vote no? Votes: p2 already voted (yes presumably, they benefit). If I vote no and p1 votes yes, tie 2-2? Weight: influence +2 if skipped action... vote_weight all 1? vote_weight_mode 1 means influence+2. Weights are 1? Actually vote_weight [1,1,1]... they acted, so weight = influence = 1. Yes needs strictly more. If I vote no: 1 yes vs 1 no → fails unless p1 yes → 2-1 passes. If p1 votes after me, unknown. Vote no — reduces rival influence.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739232,
+    "id": "2026111518402641bbc149e21c421e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518402641bbc149e21c421e",
+    "usage": {
+      "completion_tokens": 226,
+      "completion_tokens_details": {
+        "reasoning_tokens": 181
+      },
+      "prompt_tokens": 1773,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1999
+    }
+  }
+}

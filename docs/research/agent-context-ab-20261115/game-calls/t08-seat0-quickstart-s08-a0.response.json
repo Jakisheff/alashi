@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.56,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Бум +2 даёт верхние цены 14 и 12 alashi за две единицы без налога — продаю сейчас.\"}",
+          "reasoning_content": "Round 3 market, prices +2 boom: ladder starts 12+2=14, 11,10,9... Sold counter 0. Sell 2 units: 14+12=26 alashi pre-tax, no tax. Sell 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738311,
+    "id": "20261115182508c82bf802b3a44790",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182508c82bf802b3a44790",
+    "usage": {
+      "completion_tokens": 96,
+      "completion_tokens_details": {
+        "reasoning_tokens": 54
+      },
+      "prompt_tokens": 3043,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3139
+    }
+  }
+}

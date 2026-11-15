@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.878,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":24000000,\"reason\":\"Ожидаемый доход лицензии (~40 alashi) плюс возврат через долю банка заметно превышают ставку, а соперники лишь немного богаче — ставлю почти всё.\"}",
+          "reasoning_content": "Round 4 action: bid for license. I have 24.98 alashi. Bid something. License income 20-60, paid over share plus. Bidding makes sense — opponents have more cash (32 each). Tie order unknown; my_idx 0 maybe worst tie. Bid reasonable amount, say 15M? Expected income ~40, plus payout proportional to bank contributions... bid goes to bank which then redistributes 50:30:15 — so my bid partially returns via share. I have 24.98, opponents have ~32 each. Risk being outbid. If I bid 20, opponents could bid more. My share of bid returned: bid goes into bank; bank split 50:30:15. If I win with 20, I get license income (20-60) plus my shares. Actually bid to bank reduces my cash by amount but increases shares pot.\n\nIf I win with bid B: net cost roughly B*(1 - 0.5*my weight... ) weights fixed 50:30:15, I don't know my rank. Rough: cost ~B*0.7, gain license income E≈40. So bid up to ~28? But I only have 24.98. Opponents with 32 could outbid me. Tie order: I'm idx 0, likely lose ties. Bid high: 24? Keep some cash for bribe later? Influence all 1; bribing gives influence for the 5% bonus and presidency. But license is big.\n\nBid 24000000, leaving ~1M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738365,
+    "id": "202611151825560f82d5b7039d4f73",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151825560f82d5b7039d4f73",
+    "usage": {
+      "completion_tokens": 383,
+      "completion_tokens_details": {
+        "reasoning_tokens": 328
+      },
+      "prompt_tokens": 3425,
+      "prompt_tokens_details": {
+        "cached_tokens": 3136
+      },
+      "total_tokens": 3808
+    }
+  }
+}

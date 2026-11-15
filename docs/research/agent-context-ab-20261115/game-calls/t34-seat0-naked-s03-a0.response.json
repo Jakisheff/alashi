@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.171,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продаю 2 товара по высокой цене (~10 и 9), деньги получаю сразу до дефляции.\"}",
+          "reasoning_content": "Round 2 market, I have 2 goods, price ladder starts at 12 (sold_counter=2? counter counts sold units already... sold 2 units round1 by others, so next price is 10). Sell 2 units at ~10/9. Cash 0. Sell now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746650,
+    "id": "202611152044080ea8f1203c7845f2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611152044080ea8f1203c7845f2",
+    "usage": {
+      "completion_tokens": 101,
+      "completion_tokens_details": {
+        "reasoning_tokens": 62
+      },
+      "prompt_tokens": 1566,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1667
+    }
+  }
+}

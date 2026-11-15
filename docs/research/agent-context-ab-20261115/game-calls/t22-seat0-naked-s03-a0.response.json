@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.065,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование уже завершено, остаётся ждать результата закона.\"}",
+          "reasoning_content": "Law card 5 passed? Post_vote stage — I already voted. Nothing to do; pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739019,
+    "id": "2026111518365693d2a0f0daa34f8c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518365693d2a0f0daa34f8c",
+    "usage": {
+      "completion_tokens": 44,
+      "completion_tokens_details": {
+        "reasoning_tokens": 20
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1565
+    }
+  }
+}

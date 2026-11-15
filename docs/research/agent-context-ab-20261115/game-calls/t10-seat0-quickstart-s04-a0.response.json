@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.762,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Цены в начале лестницы высоки (9/8 +2 бум), продать оба товара сейчас выгоднее всего.\"}",
+          "reasoning_content": "Round 2 market, I have 2 goods, boom +2. Ladder price at sold_counter=2: price 9+2=11? Actually first two sales at 12,12. My 2 units: 9 and 8 +2 → 11,10 = 21 total. Others also have 2 goods each. Sell now before counter drops. Sell 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738398,
+    "id": "202611151826297bc2699bc8ab4987",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151826297bc2699bc8ab4987",
+    "usage": {
+      "completion_tokens": 122,
+      "completion_tokens_details": {
+        "reasoning_tokens": 82
+      },
+      "prompt_tokens": 2681,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2803
+    }
+  }
+}

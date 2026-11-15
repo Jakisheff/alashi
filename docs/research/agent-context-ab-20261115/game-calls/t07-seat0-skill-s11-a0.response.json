@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.229,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Раунд 4: продаю оба товара по ~7 за штуку до падения лестницы, чтобы иметь кассу под ставку за лицензию.\"}",
+          "reasoning_content": "Round 4 market, I have 2 goods, price at sold_counter=4 → ladder index 4 = 7 alashi. Sell 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738236,
+    "id": "202611151823534813932a6c7045c2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151823534813932a6c7045c2",
+    "usage": {
+      "completion_tokens": 80,
+      "completion_tokens_details": {
+        "reasoning_tokens": 32
+      },
+      "prompt_tokens": 2736,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 2816
+    }
+  }
+}

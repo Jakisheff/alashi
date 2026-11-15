@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.435,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Фаза рынка уже прошла, товар некуда продать — любые действия по товару бессмысленны, лицензия доступна только в раунде 4.\"}",
+          "reasoning_content": "Round 6 action: no goods, shuttle gives 3 goods but market already passed this round — final market was round 6 market, already gone. Goods useless now. Bid not available (only round 4). Best: pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746707,
+    "id": "202611152045038ff79b91c208404e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611152045038ff79b91c208404e",
+    "usage": {
+      "completion_tokens": 92,
+      "completion_tokens_details": {
+        "reasoning_tokens": 48
+      },
+      "prompt_tokens": 3035,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3127
+    }
+  }
+}

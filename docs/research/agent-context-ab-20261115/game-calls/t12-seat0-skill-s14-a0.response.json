@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.551,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Шаттл даёт EV ~2.25 товара против 2 у produce — больше выручки на последнем рынке.\"}",
+          "reasoning_content": "I'm idx 0, cash 8.4M, no goods. R5 action. Options: shuttle (3 goods, ~25% confiscation, gives goods to sell next market), produce (2 goods). I have 8.4 alashi cash. Shuttle EV 2.25 goods. Produce gives 2 free. Shuttle better EV. Confiscation at border — I have no border role benefit. EV shuttle = 2.25 goods × ~10 price ≈ 22.5 vs produce 2×10=20. Slightly better, but variance. Bid already lost? R4 bid 7M — apparently lost (cash 8.4M includes returned? Original 13.59 → 8.42 after devaluation: 13.59*0.62=8.42, so 13.59 was after bid loss, 7M returned... actually 13.59 pre-deval → 8.42 post. Fine.\n\nChoose shuttle for higher EV.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738547,
+    "id": "202611151829006fc949681b644ae2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151829006fc949681b644ae2",
+    "usage": {
+      "completion_tokens": 246,
+      "completion_tokens_details": {
+        "reasoning_tokens": 208
+      },
+      "prompt_tokens": 3066,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3312
+    }
+  }
+}

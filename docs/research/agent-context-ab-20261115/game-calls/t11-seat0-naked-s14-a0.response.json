@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.925,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 0 пуста и безвредна; моё «за» ничего не меняет.\"}",
+          "reasoning_content": "Round 4 law, card 0 (empty), voted: others true. I haven't voted. Card 0 is empty—passes nothing. I can vote yes/no/abstain. Others voted yes (voted=true, but we don't know how). Empty law—vote yes, harmless.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738503,
+    "id": "202611151828208c406caa79334f5c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151828208c406caa79334f5c",
+    "usage": {
+      "completion_tokens": 96,
+      "completion_tokens_details": {
+        "reasoning_tokens": 63
+      },
+      "prompt_tokens": 2638,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2734
+    }
+  }
+}

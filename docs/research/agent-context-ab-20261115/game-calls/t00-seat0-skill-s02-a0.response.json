@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.419,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 8 списывает непогашенные векселя — сейчас их ни у кого нет, закон мне безвреден, а как президенту нет смысла тратить veto.\"}",
+          "reasoning_content": "Card 8: cancels promissory notes. I have none. Could hurt others? All cash 0, no promissory tracked. Actually card 8 wipes all outstanding promissory — could hurt rivals if they sell_credit. Currently no one has. It's neutral/slightly useful to block others. I'm president. Others voted already? voted [false,true,true] — they voted somehow. Vote yes seems fine; or veto? Card 8 wipes promissory — if opponents later use sell_credit... unlikely matters. Simplest: vote yes (neutral, keeps goodwill) — actually wiping promissory could hurt me later if I sell_credit before round 6. Devaluation makes sell_credit attractive (revenue*1.25 promissory added after devaluation... actually promissory added at round boundary cash, which then is hard? promissory added to cash and reset at boundary — order: cash devalues then promissory added? \"cash=floor(cash/100)*62 ... promissory прибавляется к cash\" — promissory likely added after devaluation, so sell_credit is good hedge. Card 8 active now only affects this round's law, not future. But if it becomes \"active\" ongoing? It's a one-time law. It only affects current outstanding promissory: zero. So harmless, vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737762,
+    "id": "20261115181554ec5a5b742fd94e3e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181554ec5a5b742fd94e3e",
+    "usage": {
+      "completion_tokens": 332,
+      "completion_tokens_details": {
+        "reasoning_tokens": 282
+      },
+      "prompt_tokens": 1929,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2261
+    }
+  }
+}

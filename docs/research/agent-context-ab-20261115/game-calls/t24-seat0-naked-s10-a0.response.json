@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.814,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Снижение цен на следующем рынке уменьшит выручку от моих 3 товаров — против.\"}",
+          "reasoning_content": "Law 6: prices next market -2. I have 3 goods. Vote no. Boom +2 means prices drop from 16 to ~14? Boom adds +2, law 6 removes 2 — back to normal ladder. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739183,
+    "id": "20261115183940af400d0639f54553",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183940af400d0639f54553",
+    "usage": {
+      "completion_tokens": 87,
+      "completion_tokens_details": {
+        "reasoning_tokens": 52
+      },
+      "prompt_tokens": 2203,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2290
+    }
+  }
+}

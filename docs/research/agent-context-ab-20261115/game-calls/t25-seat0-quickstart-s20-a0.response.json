@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.324,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Налог 20% действует на выручку рынка, но финальный рынок уже прошёл — закон мне не вредит, воздерживаюсь.\"}",
+          "reasoning_content": "Law card 2: tax 20%. I sold already, so tax affects next market—no next market. So it doesn't hurt me? Tax applied on market revenue; round 6 market done. Vote doesn't matter much. Card 2 hurts no one now. Others have 2 goods unsold? They sold too (sold_counter 6). Tax irrelevant. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739324,
+    "id": "20261115184159a374a77cc7954a3b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184159a374a77cc7954a3b",
+    "usage": {
+      "completion_tokens": 127,
+      "completion_tokens_details": {
+        "reasoning_tokens": 80
+      },
+      "prompt_tokens": 4200,
+      "prompt_tokens_details": {
+        "cached_tokens": 3904
+      },
+      "total_tokens": 4327
+    }
+  }
+}

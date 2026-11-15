@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.182,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Налог 10% бьёт по моей будущей выручке продавца — отменяю как президент\"}",
+          "reasoning_content": "Post-vote: I voted no, but law passed? voted all true; I'm president, can veto. Card 1 tax 10% hurts me as seller. Veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739477,
+    "id": "202611151844350bd1ba17396946ab",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151844350bd1ba17396946ab",
+    "usage": {
+      "completion_tokens": 72,
+      "completion_tokens_details": {
+        "reasoning_tokens": 38
+      },
+      "prompt_tokens": 2323,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2395
+    }
+  }
+}

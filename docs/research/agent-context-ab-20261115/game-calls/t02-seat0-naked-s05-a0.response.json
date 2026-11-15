@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.538,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Денег нет на donkey, produce бесплатно даёт 2 товара для будущих продаж.\"}",
+          "reasoning_content": "I'm idx 0, cash 0, influence 2, sold_counter 6. Need cash for bribe? Cash 0. Produce gives 2 goods. Donkey costs 1 alashi — cash 0. So produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737974,
+    "id": "20261115181932ef2ca9a327dc4890",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181932ef2ca9a327dc4890",
+    "usage": {
+      "completion_tokens": 80,
+      "completion_tokens_details": {
+        "reasoning_tokens": 50
+      },
+      "prompt_tokens": 1705,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1785
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.92,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Рынок раунда 6 уже пройден, товаров нет — покупка или производство выгоды не дадут.\"}",
+          "reasoning_content": "Round 6 action. Cash 40, donkey costs 1 alashi for 1 good but no more market phase... market of round 6 already done. No benefit. Bid not allowed (round 4 only). Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746721,
+    "id": "202611152045193dcfe8313c534ce0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611152045193dcfe8313c534ce0",
+    "usage": {
+      "completion_tokens": 85,
+      "completion_tokens_details": {
+        "reasoning_tokens": 48
+      },
+      "prompt_tokens": 4080,
+      "prompt_tokens_details": {
+        "cached_tokens": 3776
+      },
+      "total_tokens": 4165
+    }
+  }
+}

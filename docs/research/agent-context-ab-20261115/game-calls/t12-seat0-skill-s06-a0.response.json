@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.095,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование по карте 8 завершено, вето не ожидается — хода нет.\"}",
+          "reasoning_content": "Post_vote stage, card 8 passed? voted all true; card 8 passed earlier — this is post_vote observation; no pending veto. Action should be pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738505,
+    "id": "20261115182822c86129944386414d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182822c86129944386414d",
+    "usage": {
+      "completion_tokens": 64,
+      "completion_tokens_details": {
+        "reasoning_tokens": 34
+      },
+      "prompt_tokens": 2282,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2346
+    }
+  }
+}

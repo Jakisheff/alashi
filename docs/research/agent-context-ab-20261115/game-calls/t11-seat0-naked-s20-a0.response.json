@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.688,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Финальный рынок: обычная продажа 2 единиц по вершине лестницы даёт ~23 alashi сразу, а sell_credit после последнего раунда не погашается.\"}",
+          "reasoning_content": "Round 6 final market. I have 2 goods, sell now (regular sell; sell_credit won't be redeemed after last round). Price ladder top 12 each minus... sold_counter 0. Sell 2 units at 12+11=23, no tax. Use sell not sell_credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738530,
+    "id": "20261115182847f3271b7622c842f9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182847f3271b7622c842f9",
+    "usage": {
+      "completion_tokens": 116,
+      "completion_tokens_details": {
+        "reasoning_tokens": 62
+      },
+      "prompt_tokens": 3246,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 3362
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.522,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Продажа в кредит даёт 1.25x выручку и защищает её от девальвации 62% на границе раунда.\",\"note\":null}",
+          "reasoning_content": "Round 2 market, I have 2 goods, prices ladder: sold_counter=2, so prices now index 2: 9. Selling 2 at 9,8. Boom 0. Tax 0. Sell now before others? Ladder: sell 2 units → 9+8=17. Could sell_credit 1.25x but promissory credited at round boundary; round 2 boundary multiplies... cash floor(cash/100)*62 — big devaluation at boundary 2+? That's harsh: cash becomes 62% floored. Selling credit gives promissory added to cash after devaluation, so better sell_credit. But last round credit unpaid. Round 2 of 6, credit is fine and avoids devaluation.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739613,
+    "id": "2026111518464800d94f1be7104650",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518464800d94f1be7104650",
+    "usage": {
+      "completion_tokens": 212,
+      "completion_tokens_details": {
+        "reasoning_tokens": 159
+      },
+      "prompt_tokens": 2706,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2918
+    }
+  }
+}

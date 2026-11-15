@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.438,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Финальный рынок: продаю оба товара по высокой цене, sell_credit бессмысленен — векселя после раунда 6 не гасятся.\"}",
+          "reasoning_content": "Round 6 final market, ladder from 12. If all three sell 2 each, prices: 12,10,9,8,7,6. Tax 10%. Selling 2 first gets 12+10=22*0.9=19.8. Selling now is only option; sell both immediately. Could sell_credit? No—promissory not redeemed after last round. Sell 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738674,
+    "id": "202611151831105bbe93cb07624b0b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151831105bbe93cb07624b0b",
+    "usage": {
+      "completion_tokens": 136,
+      "completion_tokens_details": {
+        "reasoning_tokens": 87
+      },
+      "prompt_tokens": 4172,
+      "prompt_tokens_details": {
+        "cached_tokens": 3904
+      },
+      "total_tokens": 4308
+    }
+  }
+}

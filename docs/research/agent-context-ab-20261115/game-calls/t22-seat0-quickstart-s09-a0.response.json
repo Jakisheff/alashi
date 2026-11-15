@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.643,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 2 товара для продажи на рынке раунда 4 при сохранении кэша.\"}",
+          "reasoning_content": "Round 3 action. Cash 21.25. Produce gives 2 free goods — best. Could donkey with cash? Produce free.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739074,
+    "id": "202611151837511ac9debfb9224309",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151837511ac9debfb9224309",
+    "usage": {
+      "completion_tokens": 61,
+      "completion_tokens_details": {
+        "reasoning_tokens": 29
+      },
+      "prompt_tokens": 3183,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3244
+    }
+  }
+}

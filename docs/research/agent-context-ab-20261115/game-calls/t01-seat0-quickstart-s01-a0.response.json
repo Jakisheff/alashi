@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.703,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатно даёт 2 товара для продажи на следующем рынке.\"}",
+          "reasoning_content": "Produce gives 2 goods, others already have 2. Donkey costs 1, no cash. Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737750,
+    "id": "20261115181548b6e8eed2b04c4f7f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181548b6e8eed2b04c4f7f",
+    "usage": {
+      "completion_tokens": 49,
+      "completion_tokens_details": {
+        "reasoning_tokens": 24
+      },
+      "prompt_tokens": 2451,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2500
+    }
+  }
+}

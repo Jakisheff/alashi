@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.209,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Закон даёт +1 влияния беднейшему; у всех cash=0, а мой tie-приоритет высок — поддержка усиливает мой будущий вес голосов и президентство.\"}",
+          "reasoning_content": "Law card 4: +1 influence to poorest. I'm poorest (all cash 0, tie... tie_order?). I already produced, weight 1. Others voted already? voted [false,true,true]. Vote yes if it benefits me — likely poorest is tie; tie_order may favor me or not. Cash all 0, tie by order — idx 0 likely? Not guaranteed. Vote yes; being president, I can pass. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738177,
+    "id": "2026111518225443be015302dc4237",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518225443be015302dc4237",
+    "usage": {
+      "completion_tokens": 144,
+      "completion_tokens_details": {
+        "reasoning_tokens": 93
+      },
+      "prompt_tokens": 2525,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 2669
+    }
+  }
+}

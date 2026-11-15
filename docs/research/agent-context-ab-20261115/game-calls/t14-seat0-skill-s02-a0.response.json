@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.485,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 0 — пустая, закон ничего не меняет, экономлю позицию.\"}",
+          "reasoning_content": "Law card 0 — empty, nothing passes anyway? Card 0 = empty. Pass/abstain. I didn't skip action (shuttle), vote weight 1. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738593,
+    "id": "20261115182950200f55e17e9e4ba9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182950200f55e17e9e4ba9",
+    "usage": {
+      "completion_tokens": 73,
+      "completion_tokens_details": {
+        "reasoning_tokens": 41
+      },
+      "prompt_tokens": 1921,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 1994
+    }
+  }
+}

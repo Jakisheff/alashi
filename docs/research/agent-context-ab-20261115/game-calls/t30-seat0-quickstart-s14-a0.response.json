@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.468,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% урежет выручку моего будущего produce-рынка; конкуренты уже проголосовали, я против.\"}",
+          "reasoning_content": "Law card 1: tax 10%. I sold already; tax applies to future market revenue (round 5,6 presumably). I have no goods, will produce 2 and sell in round 5 — tax hurts me. But also rivals sell. I'm president, weight 4 vs 3+3; they voted already (voted true for both). Their votes unknown. I should vote no? If it passes, my round 5 sale loses 10%. Vote no. If passes anyway, consider veto — but that's next decision stage. Now primary: vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739526,
+    "id": "2026111518452166cf091679744c73",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518452166cf091679744c73",
+    "usage": {
+      "completion_tokens": 160,
+      "completion_tokens_details": {
+        "reasoning_tokens": 120
+      },
+      "prompt_tokens": 3603,
+      "prompt_tokens_details": {
+        "cached_tokens": 3328
+      },
+      "total_tokens": 3763
+    }
+  }
+}

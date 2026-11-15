@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.059,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Кредит даёт 32,5 alashi после границы раунда, обычная продажа потеряет ~38% на девальвации.\"}",
+          "reasoning_content": "Sell 2 units with boom +2: prices 12+2=14, 10+2=12 → 26, tax 0. Cash or credit? Round 3, credit pays at end of round 3 boundary (cash=floor(cash/100)*62, promissory added). Deva at round 3 boundary applies to cash. Selling normal adds 26 to cash, then devalued to 62% → lose ~10. Credit gives 32.5 paid after devaluation. Better credit again? Cash 21.25 already counted as cash... wait cash[0]=21.25 after promissory redeemed. Selling credit now: 26*1.25=32.5 promissory, redeemed at round 4 boundary without round-3 devaluation loss. Normal sell: 26 cash, devalued to 62% → ~16. Credit clearly better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738295,
+    "id": "20261115182448045a50e008a643a8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182448045a50e008a643a8",
+    "usage": {
+      "completion_tokens": 234,
+      "completion_tokens_details": {
+        "reasoning_tokens": 189
+      },
+      "prompt_tokens": 1920,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2154
+    }
+  }
+}

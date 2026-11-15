@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.375,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"No goods to sell in round 1; buying at top ladder prices is unprofitable.\"}",
+          "reasoning_content": "Round 1 market, no goods. Pass... could buy? Buying at high price to shift counter back is bad. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739113,
+    "id": "20261115183830851b47121e264ca2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183830851b47121e264ca2",
+    "usage": {
+      "completion_tokens": 55,
+      "completion_tokens_details": {
+        "reasoning_tokens": 26
+      },
+      "prompt_tokens": 2386,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2441
+    }
+  }
+}

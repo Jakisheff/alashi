@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.044,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"У меня нет товара (шаттл, видимо, конфискован), а +2 к ценам выгодит только соперников с товаром, поэтому против.\"}",
+          "reasoning_content": "Card 7: prices +2 next market. I have 0 goods, but shuttle gave me 3 goods... wait, state says goods 0 — confiscated? I chose shuttle, but goods=[0,2,2]. Probably confiscated (25%) or paid tribute. So I have no goods for round 6 market. Card 7 +2 helps others sell. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738067,
+    "id": "202611151821028104df46a5b04b9e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151821028104df46a5b04b9e",
+    "usage": {
+      "completion_tokens": 125,
+      "completion_tokens_details": {
+        "reasoning_tokens": 79
+      },
+      "prompt_tokens": 3014,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3139
+    }
+  }
+}

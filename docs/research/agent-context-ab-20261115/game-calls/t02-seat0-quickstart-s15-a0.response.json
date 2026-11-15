@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.203,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Карта 8 списывает мои ~18.75 alashi промиссори; даже если закон прошёл чужими голосами, veto президента сохраняет их.\"}",
+          "reasoning_content": "Card 8 wipes promissory; I voted no. Post-vote stage: vote counts? Weights 5 vs 3,3 — if both voted yes, 6>5, it passes. veto_pending false, but I'm president — action here could be veto? Protocol: in law phase I can veto. voted all true, but outcome unknown. Safest: veto to protect promissory.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738042,
+    "id": "20261115182038508f1e37b0f7425b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182038508f1e37b0f7425b",
+    "usage": {
+      "completion_tokens": 129,
+      "completion_tokens_details": {
+        "reasoning_tokens": 85
+      },
+      "prompt_tokens": 3793,
+      "prompt_tokens_details": {
+        "cached_tokens": 3520
+      },
+      "total_tokens": 3922
+    }
+  }
+}

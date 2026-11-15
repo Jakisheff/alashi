@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.724,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Счётчик продаж сброшен после раунда — продаю оба товара по максимальным ценам 12 и 10 без налога.\"}",
+          "reasoning_content": "Sell 2 at price 12,10 = 22, no tax (vetoed).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738923,
+    "id": "20261115183521bda80260b64244b0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183521bda80260b64244b0",
+    "usage": {
+      "completion_tokens": 66,
+      "completion_tokens_details": {
+        "reasoning_tokens": 20
+      },
+      "prompt_tokens": 3067,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3133
+    }
+  }
+}

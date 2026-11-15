@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.225,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Бум +2 даёт высокие цены (14 и 12), а кредитная продажа обходит девальвацию на границе раунда.\"}",
+          "reasoning_content": "Market round 3, boom +2, I have 2 goods, cash 21.25M. Price ladder start: 12+2=14, then 10+2=12... Sell 2 for credit? Credit gives 1.25x and bypasses devaluation? Devaluation at border rounds 2+; cash floor(cash/100)*62. Wait cash values: 21250000 — units are millions? 1M = 1 alashi. Devaluation: cash = floor(cash/100)*62? That would crush cash. Actually promissory added after devaluation at next border, so sell_credit bypasses devaluation. My cash 21.25 alashi would be devalued to ~13.2 at border? floor(21.25/100)=0 → 0! Hmm, cash in millions: 21250000 units; floor(21250000/100)=212500; *62=13175000. So 62% retained. Sell credit: revenue becomes promissory, added after devaluation at next border. Round 3→4 border devalues current cash. Sell 2 units credit at price 14 and 12 → 26 *1.25=32.5M promissory. Sell all credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739182,
+    "id": "202611151839353dcbe5521eeb4e4d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151839353dcbe5521eeb4e4d",
+    "usage": {
+      "completion_tokens": 315,
+      "completion_tokens_details": {
+        "reasoning_tokens": 268
+      },
+      "prompt_tokens": 3019,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3334
+    }
+  }
+}

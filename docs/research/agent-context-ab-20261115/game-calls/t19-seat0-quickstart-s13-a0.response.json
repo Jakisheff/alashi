@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.822,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":18000000,\"reason\":\"Доход лицензии 20–60 alashi сверх доли; ставка 18 даёт положительное ожидание и перекрывает вероятные ставки соперников при сопоставимом кэше.\"}",
+          "reasoning_content": "Round 4 action: bid on license. My cash 33.17, others 33.5 and 25.5. License income 20-60. Bid reasonable: maybe 15? Others similar wealth. Bid ~15-20. Tie goes tie_order unknown; my_idx 0 likely worst. Bid 18.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738948,
+    "id": "20261115183544fb643d0ed6dd43b8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183544fb643d0ed6dd43b8",
+    "usage": {
+      "completion_tokens": 127,
+      "completion_tokens_details": {
+        "reasoning_tokens": 68
+      },
+      "prompt_tokens": 3561,
+      "prompt_tokens_details": {
+        "cached_tokens": 3264
+      },
+      "total_tokens": 3688
+    }
+  }
+}

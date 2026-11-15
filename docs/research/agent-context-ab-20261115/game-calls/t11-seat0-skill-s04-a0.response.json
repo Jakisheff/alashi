@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.379,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Есть 2 товара, продаю на открытии по высокой лестнице, пока цена не упала.\"}",
+          "reasoning_content": "I'm idx0, president, cash 0, goods 2. Market round 2: sell 2 units. Price ladder at sold_counter=2, so next prices 9,8? Ladder [12,10,9,8,...] sold 2 → price 9, then 8. But others may sell first... sell 2 now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738437,
+    "id": "20261115182713a0f8b9c38fe143da",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182713a0f8b9c38fe143da",
+    "usage": {
+      "completion_tokens": 111,
+      "completion_tokens_details": {
+        "reasoning_tokens": 76
+      },
+      "prompt_tokens": 2073,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2184
+    }
+  }
+}

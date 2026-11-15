@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.808,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 8 списывает векселя — у меня их нет, возможная выгода только соперникам, отклоняю.\"}",
+          "reasoning_content": "Law card 8: writes off all promissory notes. I have none sold; others unknown. It doesn't help me; possibly helps rivals? My vote: player 2 already voted (voted true). I'm president. Card 8 cancels promissory — I haven't issued credit, others may have. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739581,
+    "id": "20261115184617f7fb2537e9604c21",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184617f7fb2537e9604c21",
+    "usage": {
+      "completion_tokens": 109,
+      "completion_tokens_details": {
+        "reasoning_tokens": 70
+      },
+      "prompt_tokens": 2266,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2375
+    }
+  }
+}

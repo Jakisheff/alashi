@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.598,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нет денег для осла, производю 2 единицы товара бесплатно.\"}",
+          "reasoning_content": "Round 1 action, no cash. Produce gives 2 goods. Donkey needs 1 alashi cash — no cash. So produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738304,
+    "id": "20261115182502f120f4ddc47d4f73",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182502f120f4ddc47d4f73",
+    "usage": {
+      "completion_tokens": 54,
+      "completion_tokens_details": {
+        "reasoning_tokens": 29
+      },
+      "prompt_tokens": 2450,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2504
+    }
+  }
+}

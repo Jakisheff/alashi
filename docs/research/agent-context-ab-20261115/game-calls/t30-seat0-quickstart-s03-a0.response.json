@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.708,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Карта выгодна (влияние богатейшему, скорее мне), вето не нужно.\"}",
+          "reasoning_content": "Law phase, already voted yes, stage post_vote. Veto? Card 5 gives +1 influence to richest — likely me (tie cash 0, tie_order? my_idx 0 maybe first). Veto would kill my beneficial card. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739478,
+    "id": "202611151844349823954b1765469b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151844349823954b1765469b",
+    "usage": {
+      "completion_tokens": 82,
+      "completion_tokens_details": {
+        "reasoning_tokens": 52
+      },
+      "prompt_tokens": 2609,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2691
+    }
+  }
+}

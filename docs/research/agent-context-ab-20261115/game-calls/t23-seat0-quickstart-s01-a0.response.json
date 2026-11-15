@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.299,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"У меня нет товара и денег, а produce даёт 2 единицы бесплатно для продажи на следующем рынке.\"}",
+          "reasoning_content": "Produce gives 2 goods (no subsidy). Others already have 2 goods — they likely produced? No, they have 2 goods in action phase... they probably got them anyway. Produce gives 2 goods. Donkey costs 1 cash which I don't have. Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739116,
+    "id": "2026111518383323c59361215948af",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518383323c59361215948af",
+    "usage": {
+      "completion_tokens": 91,
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      },
+      "prompt_tokens": 2459,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 2550
+    }
+  }
+}

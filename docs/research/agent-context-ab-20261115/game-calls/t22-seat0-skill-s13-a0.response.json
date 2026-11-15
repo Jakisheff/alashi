@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.524,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":20000000,\"reason\":\"Раунд 4 — аукцион лицензии решает партию; ставка ~47% песо-касса достаточно агрессивна при равных соперниках, оставляя резерв.\"}",
+          "reasoning_content": "Round 4 action: bid. Cash 42.9, bid ~40-60% → ~20-25. Bid 20.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739078,
+    "id": "20261115183755882489eed24e4266",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183755882489eed24e4266",
+    "usage": {
+      "completion_tokens": 85,
+      "completion_tokens_details": {
+        "reasoning_tokens": 29
+      },
+      "prompt_tokens": 2865,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 2950
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.107,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатное производство даёт 2 товара для продажи на последнем рынке с бумом +2; взяток и лицензии больше нет.\"}",
+          "reasoning_content": "I have 0 goods, ~0.6 alashi. Round 5 action. Subsidy 0. Produce gives 2 goods, sell next market round 6 at boom +2... but round 6 market exists. Produce free.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738381,
+    "id": "202611151826174f4dd898f3db4425",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151826174f4dd898f3db4425",
+    "usage": {
+      "completion_tokens": 91,
+      "completion_tokens_details": {
+        "reasoning_tokens": 51
+      },
+      "prompt_tokens": 3795,
+      "prompt_tokens_details": {
+        "cached_tokens": 3520
+      },
+      "total_tokens": 3886
+    }
+  }
+}

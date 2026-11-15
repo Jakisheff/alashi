@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.317,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Касса у всех равна, тай-брейк отдаёт «богатейшего» мне (я президент по тай-порядку) — +1 влияние выгодно.\"}",
+          "reasoning_content": "Law card 5: +1 influence to richest. All cash equal 0, tie_order decides richest? Probably me is idx0? Tie broken by tie_order (unknown). Vote yes benefits someone; I'm president. Rich is ambiguous. Safer vote_no? Card 5 gives +1 influence to richest — likely tied at 0, tie_order maybe lower index = me. I'm president (max influence tie, tie_order gave me presidency), so I'm richest? President by tie_order, so richest likely me. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737960,
+    "id": "20261115181915a2382aac67934a7c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181915a2382aac67934a7c",
+    "usage": {
+      "completion_tokens": 162,
+      "completion_tokens_details": {
+        "reasoning_tokens": 110
+      },
+      "prompt_tokens": 1913,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2075
+    }
+  }
+}

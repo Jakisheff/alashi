@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.144,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 2 товара для следующего рынка — максимальная долгосрочная выплата; кредитная выручка вернётся на границе раунда 3.\"}",
+          "reasoning_content": "I have 2 goods? Wait, seen cash 0? cash[0]=0? Actually cash[0]=13,000,000? My idx 0: cash 13M, goods 0. Opponents: idx1 cash 22M goods 0... wait arrays: cash [0]=13000000, [1]=22000000, [2]=0? goods [0,0,2] - player 2 has 2 goods.\n\nWait, cash[0]=13000000? Arrays listed cash [0,13000000,22000000] — idx0=0? My sell_credit proceeds are promissory, not cash. So cash[0]=0, idx1=13M, idx2=22M. My promissory = 2*price(1.25). Sold counter 6 means my 2 units sold at prices... ladder after 6 sold: prices 12,10,9,8,7,6 used? sold_counter was 6 including mine. Revenue ~ (avg)*1.25 ≈ 2*~9*1.25≈22 promissory.\n\nAction phase round 2: produce gives 2 goods free. Promissory returns at boundary round 3, unaffected by law? Card 8 could cancel it. Best: produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738230,
+    "id": "20261115182341e52050c226064e77",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182341e52050c226064e77",
+    "usage": {
+      "completion_tokens": 327,
+      "completion_tokens_details": {
+        "reasoning_tokens": 277
+      },
+      "prompt_tokens": 2791,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3118
+    }
+  }
+}

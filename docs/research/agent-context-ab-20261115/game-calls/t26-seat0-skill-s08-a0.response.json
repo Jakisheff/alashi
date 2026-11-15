@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.405,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"С субсидией produce даёт 3 товара гарантированно; shuttle даёт 4 с риском 25% конфискации — EV одинаковый, беру безрисковый вариант.\"}",
+          "reasoning_content": "Produce gives 2+1=3. Donkey costs 1. Shuttle gives 3+1=4 with confiscation risk. I have 32.5 alashi cash. Shuttle grey goods risk 25% confiscation — expected 3 goods vs 4*0.75=3. So shuttle slightly better expected. But shuttle gives 4 with 25% loss: EV 3 = produce's 3. Equal; produce safe. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739279,
+    "id": "202611151841166134b647f13b41df",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151841166134b647f13b41df",
+    "usage": {
+      "completion_tokens": 150,
+      "completion_tokens_details": {
+        "reasoning_tokens": 97
+      },
+      "prompt_tokens": 2420,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2570
+    }
+  }
+}

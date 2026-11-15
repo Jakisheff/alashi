@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.11,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товар больше некуда продавать — пропуск action даёт +2 к весу голоса в финальном законе.\"}",
+          "reasoning_content": "Round 6 action, cash 36.6M. No goods. Options: pass (gets +2 vote weight for law). No law card known yet. Passing action gives +2 weight — could matter. Produce gives goods but no market left to sell. So pass is fine? But guideline says don't pass without reason — reason: no market left, goods useless. Actually donkey/shuttle goods worthless. Pass gives +2 vote weight.\n\nPass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739438,
+    "id": "202611151843544743730f43614ac7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151843544743730f43614ac7",
+    "usage": {
+      "completion_tokens": 130,
+      "completion_tokens_details": {
+        "reasoning_tokens": 93
+      },
+      "prompt_tokens": 3558,
+      "prompt_tokens_details": {
+        "cached_tokens": 3264
+      },
+      "total_tokens": 3688
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.604,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товар и рынки исчерпаны, я и так выигрываю тай-брейк по кэшу за бонус влияния — тратить кэш на взятки невыгодно.\",\"reason_dummy\":null}",
+          "reasoning_content": "Round 6 action: no goods, no cash benefit. Options: donkey costs 1 alashi gives 1 good — but no more market rounds. Shuttle — no market left. Bid not available (round 4 only). Bribe gives influence — influence bonus 5% of bank for max influence, currently all at 1, tie broken by cash+hard, I'm richest → I'd win tie anyway. Bribe 5M to gain influence? Costs 5M cash (which counts toward my cash payout), but influence 5% bank bonus... bank size unknown, but I already win tie by cash. So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738295,
+    "id": "202611151824503aa309107f154a44",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151824503aa309107f154a44",
+    "usage": {
+      "completion_tokens": 187,
+      "completion_tokens_details": {
+        "reasoning_tokens": 131
+      },
+      "prompt_tokens": 4137,
+      "prompt_tokens_details": {
+        "cached_tokens": 3840
+      },
+      "total_tokens": 4324
+    }
+  }
+}

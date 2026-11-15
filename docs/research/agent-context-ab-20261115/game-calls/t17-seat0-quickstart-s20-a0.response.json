@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.563,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товар производить уже некуда продавать, а взятка не обгонит влияние соперника — пропускаю ради +2 к весу голоса.\",\"reason\":\"Пропуск даёт +2 к весу голоса в финальном законе; товар и влияние взять неоткуда выгодно.\"}",
+          "reasoning_content": "Round 6 action. No goods, cash 17.2M. Bid is round 4 only. Options: produce gives 2 goods but market already passed — useless. Donkey gives goods, useless. Shuttle gives goods, useless. Bribe gives influence; influence gives extra 5% commission share? Max influence is player 1 (2). I have 1; bribing 5M gives +1 influence → tie at 2, tie broken by cash+hard — player 1 has more. So bribe won't give me max influence. Passing action gives +2 vote weight, but law card unknown. Best: pass to get +2 vote weight.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738847,
+    "id": "2026111518335935c83866b2d54e3d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518335935c83866b2d54e3d",
+    "usage": {
+      "completion_tokens": 213,
+      "completion_tokens_details": {
+        "reasoning_tokens": 138
+      },
+      "prompt_tokens": 4145,
+      "prompt_tokens_details": {
+        "cached_tokens": 3840
+      },
+      "total_tokens": 4358
+    }
+  }
+}

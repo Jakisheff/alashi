@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.52,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатное производство даёт 2 товара на финальный рынок раунда 6 — чистая прибыль без риска.\"}",
+          "reasoning_content": "Round 5 action: no cash advantage... I have cash 27.8M, others similar. Options: produce (2 goods for round 6 market sale). Yes, produce — goods sell in round 6, revenue comes after round 6? Cash at end counts, market round 6 sells give cash counted. Yes, produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739101,
+    "id": "20261115183817b6ea1ed272ff4c76",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183817b6ea1ed272ff4c76",
+    "usage": {
+      "completion_tokens": 107,
+      "completion_tokens_details": {
+        "reasoning_tokens": 70
+      },
+      "prompt_tokens": 3856,
+      "prompt_tokens_details": {
+        "cached_tokens": 3584
+      },
+      "total_tokens": 3963
+    }
+  }
+}

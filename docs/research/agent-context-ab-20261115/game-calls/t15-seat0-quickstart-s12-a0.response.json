@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.34,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Продажа в кредит даёт +25% выручки, а погашение на границе раунда 5 ещё успевает в итог\",\"reasoning\":\"\"}",
+          "reasoning_content": "Round 4 market, sold_counter=8, ladder index 8 price 3. I have 3 goods, cash 24.5. Sell now at 3, or wait? Selling pushes price down for others. Sell 3 at ~3-2 alashi. Alternatively sell_credit ×1.25, but round 4 credits return at round 5 boundary — fine, still counts. sell_credit gives 25% more. Ladder prices: index 8,9,10 = 3,3,2 → 8 alashi ×1.25 = 10. Credit repaid at boundary before round 5. Yes, sell_credit 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738680,
+    "id": "20261115183115fa555a1045a740ef",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183115fa555a1045a740ef",
+    "usage": {
+      "completion_tokens": 190,
+      "completion_tokens_details": {
+        "reasoning_tokens": 138
+      },
+      "prompt_tokens": 3343,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 3533
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.061,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":1,\"reason\":\"Финальный раунд: продаю единицу по вершине лестницы (12), sell_credit бессмысленнен — promissory после игры не погашается.\"}",
+          "reasoning_content": "Round 6 final market, ladder starts fresh [12,10,9,...], sell 1 unit at 12. Use sell not sell_credit (promissory won't pay after last round).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738838,
+    "id": "202611151833549651603edfc942f4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151833549651603edfc942f4",
+    "usage": {
+      "completion_tokens": 92,
+      "completion_tokens_details": {
+        "reasoning_tokens": 41
+      },
+      "prompt_tokens": 4039,
+      "prompt_tokens_details": {
+        "cached_tokens": 3776
+      },
+      "total_tokens": 4131
+    }
+  }
+}

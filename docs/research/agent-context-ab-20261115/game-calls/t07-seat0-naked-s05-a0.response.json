@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.986,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Без денег взятки невозможны, а производство даёт гарантированные 2 товара без риска конфискации.\"}",
+          "reasoning_content": "Round 2 action. I have no cash (0), goods 0, credit sale pending ~45 alashi promissory. Actions: produce gives 2 goods free. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738214,
+    "id": "2026111518233231da81ea64f2498f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518233231da81ea64f2498f",
+    "usage": {
+      "completion_tokens": 73,
+      "completion_tokens_details": {
+        "reasoning_tokens": 39
+      },
+      "prompt_tokens": 1707,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1780
+    }
+  }
+}

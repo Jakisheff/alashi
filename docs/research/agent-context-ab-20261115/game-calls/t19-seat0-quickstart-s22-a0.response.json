@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.808,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 4 даёт +1 влияния беднейшему — это я (наименьший cash), а влияние приносит бонусные 5% банка в итоге.\"}",
+          "reasoning_content": "Law card 4: +1 influence to the poorest. I'm the poorest (cash 27.8M). Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738985,
+    "id": "20261115183623f29f49fed49348c6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183623f29f49fed49348c6",
+    "usage": {
+      "completion_tokens": 74,
+      "completion_tokens_details": {
+        "reasoning_tokens": 27
+      },
+      "prompt_tokens": 4432,
+      "prompt_tokens_details": {
+        "cached_tokens": 4160
+      },
+      "total_tokens": 4506
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.084,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товара нет, а покупка по стартовой цене 12 с последующей дефляцией 62% убыточна — экономлю деньги до аукциона/дальнейших раундов.\"}",
+          "reasoning_content": "Round 5 market. My cash 7.1M, no goods. Sold counter 0? Odd but prices high ladder 12. No goods to sell. Buying: price 12, resale next round after 62% devaluation and price drop... buying at 12 to sell at maybe 7-6 later loses. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746694,
+    "id": "2026111520445009a63cb56c9d4d57",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111520445009a63cb56c9d4d57",
+    "usage": {
+      "completion_tokens": 125,
+      "completion_tokens_details": {
+        "reasoning_tokens": 70
+      },
+      "prompt_tokens": 2636,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2761
+    }
+  }
+}

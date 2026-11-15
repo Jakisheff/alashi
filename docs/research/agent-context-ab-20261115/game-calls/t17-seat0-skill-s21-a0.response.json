@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.681,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товара нет, рынок пройден; пропуск action даёт +2 к весу голоса в финальном законе — это лучший ход.\"}",
+          "reasoning_content": "Round 6 action: no goods, cash 35.6M. Options: pass (gain +2 vote weight), bribe, donkey/shuttle pointless (goods won't sell? Actually donkey gives 1 goods but market passed). Best: pass to gain +2 vote weight for final law. No bribe worth it — bribe 5M gives 1 influence but vote weight matters. Influence bonus 5% goes to max influence; rival has 2. To tie need influence 2 — bribe 5M costs 5 alashi for a chance at 5% of bank share... bank small. Passing gives weight 5 vs others 3-4, helps law vote. Pass is fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738870,
+    "id": "20261115183423dce8ac4ecf6f4cc7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183423dce8ac4ecf6f4cc7",
+    "usage": {
+      "completion_tokens": 192,
+      "completion_tokens_details": {
+        "reasoning_tokens": 149
+      },
+      "prompt_tokens": 3604,
+      "prompt_tokens_details": {
+        "cached_tokens": 3328
+      },
+      "total_tokens": 3796
+    }
+  }
+}

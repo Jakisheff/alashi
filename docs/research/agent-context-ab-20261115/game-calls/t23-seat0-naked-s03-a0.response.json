@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.001,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продаю 2 товара по высоким ценам (9+8 alashi) до их падения и без налога\"}",
+          "reasoning_content": "We're in round 2 market. I have 2 goods. Sell now at price ladder: sold_counter=2, price index 3 = 8? Wait selling units, first unit at counter 2 → price list[2]=9. Two units: 9+8=17 alashi, no tax. Should sell rather than wait — prices decline and later devaluation. Yes sell 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739108,
+    "id": "20261115183825ef00a09808754677",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183825ef00a09808754677",
+    "usage": {
+      "completion_tokens": 122,
+      "completion_tokens_details": {
+        "reasoning_tokens": 84
+      },
+      "prompt_tokens": 1505,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1627
+    }
+  }
+}

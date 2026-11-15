@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.356,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Продажа в кредит даёт 1.25× выручки и обходит грядущую девальвацию на границе раунда.\"}",
+          "reasoning_content": "Round 2 market, I have 2 goods, sold_counter=2 (already 2 units sold). Prices: index 2 → 9. No tax. Sell 2 units now for cash (devaluation at round 2 border: floor(cash/100)*62 — wait, that's massive devaluation. Cash 0 anyway. If I sell now, cash gets devaluated at border of round 2... wait border of round 2+ happens at end of round 2? \"На границе раундов 2+ cash=floor(cash/100)*62\" — that applies at end of round 2 onwards. If I sell now, cash devalues at end of this round? Selling now gives cash which will be devalued. Better sell_credit? sell_credit gives promissory*1.25 added at next border — promissory survives devaluation and pays at round 3 border. But wait, does promissory paid at next round border get added after devaluation? \"promissory прибавляется к cash и обнуляется\" — added at border of next round, so it arrives at end of round 3? Sold in round 2, promissory returns at boundary of round 3, that cash survives until end of round 3 devaluation... Actually devaluation happens at borders 2+, meaning each border from end of round 2 onwards. If promissory paid at end of round 3, it devaluates at end of round 3 too? Ambiguous order. Standard interpretation: at each border, cash devalues, then promissory added? Or promissory added then devalued? Likely promissory added after devaluation (that's the point of credit). So sell_credit is better: 1.25x and no devaluation. Sell both via credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739379,
+    "id": "202611151842498ad099bc21fd410d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151842498ad099bc21fd410d",
+    "usage": {
+      "completion_tokens": 433,
+      "completion_tokens_details": {
+        "reasoning_tokens": 384
+      },
+      "prompt_tokens": 2687,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3120
+    }
+  }
+}

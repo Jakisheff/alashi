@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.795,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товара нет, а покупка для перепродажи убыточна — товар, полученный позже через donkey, уже не продать в этом раунде.\"}",
+          "reasoning_content": "Round 6 market. I have 0 goods, cash ~2. Donkey gives 1 good for 1 alashi, sell at ~10+ price. But market phase now — can't buy goods? Buy costs ~12+ per unit, sells at 10 — unprofitable. Pass.\n\nWait, donkey is action phase; market first: opponents have 2 goods each. Buy to push counter? No, selling later in action phase via donkey... In round 6, order: market, action, law. If I donkey in action phase, can't sell after. So goods can't be sold this round. So just pass in market.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739669,
+    "id": "20261115184743e9decab09a4e4ee9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184743e9decab09a4e4ee9",
+    "usage": {
+      "completion_tokens": 185,
+      "completion_tokens_details": {
+        "reasoning_tokens": 138
+      },
+      "prompt_tokens": 3006,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3191
+    }
+  }
+}

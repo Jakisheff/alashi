@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.675,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":20000000,\"reason\":\"Касса 37 alashi, ставка ~55% под лицензию с доходом 20-60 сверх доли банка.\"}",
+          "reasoning_content": "Round 4 action: bid. Cash ~37 alashi. Bid ~40-60% = 15-20. Opponents have ~37 and ~29. Bid 20 alashi = 20000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739544,
+    "id": "20261115184542e97c46a94b514830",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184542e97c46a94b514830",
+    "usage": {
+      "completion_tokens": 88,
+      "completion_tokens_details": {
+        "reasoning_tokens": 45
+      },
+      "prompt_tokens": 2959,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3047
+    }
+  }
+}

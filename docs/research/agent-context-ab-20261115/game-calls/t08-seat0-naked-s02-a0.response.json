@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.552,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 8 списывает promissory, у всех их нет — карте всё равно, трачу вес.\"}",
+          "reasoning_content": "Card 8 cancels promissory notes. I have none, opponents likely none. Vote yes? If others used sell_credit... no, they had no goods. Card 8 is harmless. Vote yes/no — abstain fine. Actually cancelling promissory hurts nobody; pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738269,
+    "id": "202611151824252e571b1038634337",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151824252e571b1038634337",
+    "usage": {
+      "completion_tokens": 94,
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      },
+      "prompt_tokens": 1430,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1524
+    }
+  }
+}

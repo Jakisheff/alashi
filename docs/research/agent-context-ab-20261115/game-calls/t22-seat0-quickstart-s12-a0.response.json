@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.384,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Кредитная продажа по 10 и 9 с бумом даёт ×1.25 и обходит девальвацию на границе раунда.\"}",
+          "reasoning_content": "Round 4 market, prices with boom+2: sold_counter=4, ladder index 4 → 8, next 7, +2 → 10, 9. Sell 2 units at 10+9=19. Not last round, but credit ×1.25 vs 62% devaluation... round 4 boundary is round 5, credit returns after devaluation — sell_credit is better (avoids devaluation). Yes, credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739084,
+    "id": "20261115183801052f47443c7a471d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183801052f47443c7a471d",
+    "usage": {
+      "completion_tokens": 145,
+      "completion_tokens_details": {
+        "reasoning_tokens": 95
+      },
+      "prompt_tokens": 3446,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 3591
+    }
+  }
+}

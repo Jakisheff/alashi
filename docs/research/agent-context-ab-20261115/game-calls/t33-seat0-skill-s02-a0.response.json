@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.837,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"abstain\",\"reason\":\"Пустая карта (0) — закон ничего не меняет, воздерживаюсь без риска.\"}",
+          "reasoning_content": "Law card 0 — nothing. Pass? Abstain costs nothing; law is empty. Vote abstain or pass — empty law passes nothing. Abstain fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739692,
+    "id": "20261115184808e179f52682ee47fe",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184808e179f52682ee47fe",
+    "usage": {
+      "completion_tokens": 69,
+      "completion_tokens_details": {
+        "reasoning_tokens": 35
+      },
+      "prompt_tokens": 1923,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 1992
+    }
+  }
+}

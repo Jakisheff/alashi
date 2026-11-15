@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.666,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 0 ничего не меняет, тратить влияние или деньги нет смысла — воздерживаюсь.\"}",
+          "reasoning_content": "Round 5 law, card 0 (empty). Vote abstain or pass. Nothing to gain — vote_abstain (or pass). Card 0 passes nothing; abstain safest.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738391,
+    "id": "20261115182629f47cec3115e446a5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182629f47cec3115e446a5",
+    "usage": {
+      "completion_tokens": 76,
+      "completion_tokens_details": {
+        "reasoning_tokens": 39
+      },
+      "prompt_tokens": 2859,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 2935
+    }
+  }
+}

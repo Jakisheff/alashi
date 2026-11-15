@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.234,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 3 (субсидия товара) уже ничего не меняет — раундов производства больше нет, исход мне безразличен.\"}",
+          "reasoning_content": "Law card 3: subsidy_goods=1 — irrelevant, no more production. But it also affects nothing for me. As president with max influence, I can veto; vote doesn't matter. Card 3 is harmless either way. Vote abstain; rivals might benefit? No production phases remain, so card 3 does nothing. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746680,
+    "id": "20261115204437ead4d6badef840a1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115204437ead4d6badef840a1",
+    "usage": {
+      "completion_tokens": 115,
+      "completion_tokens_details": {
+        "reasoning_tokens": 71
+      },
+      "prompt_tokens": 4351,
+      "prompt_tokens_details": {
+        "cached_tokens": 4096
+      },
+      "total_tokens": 4466
+    }
+  }
+}

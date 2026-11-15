@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.804,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Цена 9 без налога, кредитная продажа вернёт 22.5 alashi на границе раунда 5 — лучше прямой продажи\"}",
+          "reasoning_content": "Round 4 market. I have 2 goods. Sold_counter=2, price ladder position 2 → next price 9. Tax 0. Sell credit? Last round is 6; round 4 sell_credit returns at round 5 boundary — okay. Price 9, credit 1.25 → 22.5 promissory. But note cash after devaluation... sell_credit returns at round 5 boundary, added after? promissory added to cash after devaluation at boundary — good. Sell credit both units.\n\nWait, cash large (48.8M) — richest. Risk of anti-rich laws? Just sell.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746722,
+    "id": "2026111520451998bbe5d3b8ad4025",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111520451998bbe5d3b8ad4025",
+    "usage": {
+      "completion_tokens": 180,
+      "completion_tokens_details": {
+        "reasoning_tokens": 132
+      },
+      "prompt_tokens": 3361,
+      "prompt_tokens_details": {
+        "cached_tokens": 3136
+      },
+      "total_tokens": 3541
+    }
+  }
+}

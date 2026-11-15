@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.226,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Продажа в кредит даёт 1.25x и, судя по правилам, promissory прибавляется после девальвации cash, что выгоднее прямой продажи.\"}",
+          "reasoning_content": "Round 2 market, I have 2 goods, prices high (12,10). No tax, no shift. Sell 2 now for 12+10=22. But promissory? Selling credit gives 1.25x paid at round boundary with 62% devaluation of cash... cash floor(cash/100)*62 at round 2+ boundary, but promissory added after? \"On round 2+ boundaries cash=floor(cash/100)*62 ... promissory is added to cash and reset\" — order ambiguous. Selling now gives cash that gets devalued to 62%. Selling credit gives 1.25x promissory added after devaluation? Likely promissory added after, avoiding devaluation → 1.25 vs 0.62 factor. Sell credit 2 units → 27.5 promissory. That's better if promissory escapes devaluation. Also tax applies on sale revenue either way. Choose sell_credit 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746649,
+    "id": "202611152044041e088a8e2951442f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611152044041e088a8e2951442f",
+    "usage": {
+      "completion_tokens": 260,
+      "completion_tokens_details": {
+        "reasoning_tokens": 206
+      },
+      "prompt_tokens": 2606,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2866
+    }
+  }
+}

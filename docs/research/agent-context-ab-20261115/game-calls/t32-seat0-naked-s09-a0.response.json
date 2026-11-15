@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.139,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 2 товара для продажи на рынке раунда 4, деньги тратить не нужно.\"}",
+          "reasoning_content": "Round 3 action. I sold, cash 32.5M, no goods. Options: produce (free 2 goods) for next market. Later cash devaluation at rounds 2+ — currently cash 32M will be devalued unless hard? Actually floor(cash/100)*62... my cash 32540000 units = 32.54 alashi. Devaluation at round boundaries. Hmm, cash holdings get cut. Anyway produce is free goods for round 4 market. Best action: produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739610,
+    "id": "202611151846457728149556064082",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151846457728149556064082",
+    "usage": {
+      "completion_tokens": 140,
+      "completion_tokens_details": {
+        "reasoning_tokens": 108
+      },
+      "prompt_tokens": 2011,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2151
+    }
+  }
+}

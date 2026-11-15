@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.063,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товар после прошедшего рынка бесполезен, а взятка за влияние (10 alashi за перевес) дороже бонуса ~5% банка — пропускаю.\",\"reason_ru\":\"ok\"}",
+          "reasoning_content": "Round 6 action. I have cash 24.5, goods 0, subsidy=1. Options: produce gives 3 goods; but market already passed in round 6 — no selling left. Goods are worthless now? Market round 6 is done, so produce/shuttle give nothing. Bribe: influence bonus 5% bank share — I have influence 1 vs rival 2. Bribe 5 alashi = 1 influence, making me influence 2 (tie, tie-break by cash+hard — rival has 36.9, I have 24.5, so rival wins tie). Bribe 10 alashi = influence 3, I win the 5% bonus but spend 10. Bank size unknown; entry fees 3×10 = 30? Commission 5%+5% = 10%... Actually 5% commission, plus 5% of bank goes to max-influence player. Bank = entry fees + bids etc. ~30 alashi bank → 5% = 1.5. Spending 10 to gain 1.5 — bad. Bribe 5: tie, lose. Also bribe transfers cash to rival, reducing my cash rank. So best: donkey? Gives goods, worthless. Pass? Actually pass in action gives +2 vote weight, irrelevant. Bribe to whom — bribe gives influence to me. Hmm, spending 10 for 1.5 not worth. Pass.\n\nWait — cash affects rank: my cash rank 3rd. Not fixable. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739130,
+    "id": "2026111518383911e927e6197f4233",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518383911e927e6197f4233",
+    "usage": {
+      "completion_tokens": 375,
+      "completion_tokens_details": {
+        "reasoning_tokens": 323
+      },
+      "prompt_tokens": 4401,
+      "prompt_tokens_details": {
+        "cached_tokens": 4160
+      },
+      "total_tokens": 4776
+    }
+  }
+}

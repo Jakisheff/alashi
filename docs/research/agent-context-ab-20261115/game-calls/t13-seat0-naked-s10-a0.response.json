@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.522,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 7 повышает цены следующего рынка на 2, а у меня будет 2 единицы на продажу — закон выгоден\"}",
+          "reasoning_content": "Card 7: +2 prices next market. I sell 2 goods in round 4 — favorable. Vote yes. Also I'm president, veto if fails? First vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738567,
+    "id": "20261115182924adb163a0933d4f7a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182924adb163a0933d4f7a",
+    "usage": {
+      "completion_tokens": 77,
+      "completion_tokens_details": {
+        "reasoning_tokens": 38
+      },
+      "prompt_tokens": 2110,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2187
+    }
+  }
+}

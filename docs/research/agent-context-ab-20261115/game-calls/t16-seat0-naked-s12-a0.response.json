@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.062,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% уменьшит мою выручку в оставшихся рынках, голосую против.\"}",
+          "reasoning_content": "Law card 1: 10% tax. My vote weight 3, voted false. Others: player1 voted (unknown how), player2 not voted. I have passed action (bid) so no +2 bonus... bid counted as action, so weight 3. Tax 10% on my sales — but I likely won't sell much? Round 4 market done, rounds 5-6 sales taxed 10%. I'd prefer no tax. Vote no.\n\nveto_pending true — president (player2, weight 4) may veto. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738752,
+    "id": "202611151832263ba6c300753144b2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151832263ba6c300753144b2",
+    "usage": {
+      "completion_tokens": 153,
+      "completion_tokens_details": {
+        "reasoning_tokens": 117
+      },
+      "prompt_tokens": 2310,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2463
+    }
+  }
+}

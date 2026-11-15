@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.828,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Субсидия увеличит моё производство в финальном раунде, выгодно.\"}",
+          "reasoning_content": "Law card 3: subsidy_goods=1, benefits all equally, but I already have goods and it's last market next round... it applies to produce actions? Round 6 action produce would give 3 instead of 2. I'll produce in round 6. Vote yes helps me. Voted already? voted[0]=false. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738990,
+    "id": "202611151836271d6e5f3631cd42f8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151836271d6e5f3631cd42f8",
+    "usage": {
+      "completion_tokens": 105,
+      "completion_tokens_details": {
+        "reasoning_tokens": 73
+      },
+      "prompt_tokens": 3813,
+      "prompt_tokens_details": {
+        "cached_tokens": 3520
+      },
+      "total_tokens": 3918
+    }
+  }
+}

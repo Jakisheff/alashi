@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.539,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товар и производство уже бесполезны (рынка больше нет), а взятки лишь усиливают соперников и не окупают бонус влияния.\",\"reason\":\"Производить поздно — товара уже не продать, а взятка лишь обогатит соперника.\"}",
+          "reasoning_content": "Round 6 action, cash 27.8M. Options: produce gives 3 goods (subsidy) but no market left to sell — goods worthless at end. Donkey same. Bribe gives influence — max influence gets extra 5% of bank. Influence: I have 1, rival 2. Bribe 5M → 2 influence, tie broken by cash... rival has more cash+? Tie influence 2-2, tie breaks by cash? Bonus goes to max influence, tie better cash+hard; rival cash 31.4M > mine. Need 10M bribe to reach 3. Bank size? Commission 5% of bank — bank unknown, likely decent (my 18M bid went in). Extra 5% of bank maybe ~ few alashi. Bribe 10M to rival costs me 10M cash but boosts my final rank? Payout weights 50:30:15 — rank matters more. Cash ranks: I'm 27.8, second 31.4, third 25.9. Giving 10M to rival makes them richer (rank 1 further). But influence bonus 5% bank vs 10M cost... likely negative. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739102,
+    "id": "20261115183813b86799b45c644ff4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183813b86799b45c644ff4",
+    "usage": {
+      "completion_tokens": 323,
+      "completion_tokens_details": {
+        "reasoning_tokens": 256
+      },
+      "prompt_tokens": 3180,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3503
+    }
+  }
+}

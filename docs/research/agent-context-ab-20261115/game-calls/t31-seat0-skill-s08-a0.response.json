@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.734,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Лестница максимальна (12→10→9), у меня 3 товара — продаю всё на открытии, налога нет.\"}",
+          "reasoning_content": "All have 3 goods, price ladder starts at 12. Sell 3 now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739589,
+    "id": "202611151846277878e80aa0be4208",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151846277878e80aa0be4208",
+    "usage": {
+      "completion_tokens": 63,
+      "completion_tokens_details": {
+        "reasoning_tokens": 18
+      },
+      "prompt_tokens": 2447,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2510
+    }
+  }
+}

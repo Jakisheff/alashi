@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.281,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":25000000,\"reason\":\"Лицензия даёт 20-60 alashi сверх доли — ставка 25M имеет положительное ожидание при победе, а проигрыш возвращает деньги.\"}",
+          "reasoning_content": "Round 4 action: auction bid available. Cash ~20M, others have 42.5M and 29.5M. License income 20-60 alashi (20-60M). Bidding could be profitable, but I can't outbid rich player if they bid high. My promissory 15M (approx) will add cash. Current cash 20.17M. Max bid maybe ~35M? Risky if income is low (20M min). Expected value positive even at 30? Commission... Actually payout shares dilute marginal cash heavily — cash is pooled, 50:30:15 shares plus rank. Spending cash on license yields license income fully extra (\"выплачивается сверх доли\"). So license is valuable. But if I lose, bid returned. So bid high — as high as possible? Bid winner pays; income 20-60M directly extra. But cash spent reduces share. If I bid 35M and win, income at least 20M extra directly, so net could be negative. Expected 40M extra vs 35M spent — marginal. But losing bid returns. Risk: opponent outbids me and I get nothing (fine). If I win at 35, EV gain = E[income]-35 ≈ 40-35=5M extra, plus rank effects. Better bid modest, like 25M? If opponent bids higher, they win. Bidding 25M: if win, EV +15M. Yes bid 25M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739312,
+    "id": "202611151841424cde288cb8334502",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151841424cde288cb8334502",
+    "usage": {
+      "completion_tokens": 369,
+      "completion_tokens_details": {
+        "reasoning_tokens": 316
+      },
+      "prompt_tokens": 2272,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2641
+    }
+  }
+}

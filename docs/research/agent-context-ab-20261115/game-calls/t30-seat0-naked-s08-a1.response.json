@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.815,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Продажа за наличные потеряет ~38% при девальвации на границе, а кредит вернёт 30 alashi без потерь.\"}",
+          "reasoning_content": "Round 3 market, 2 goods, no tax, prices start at 12. Sell for cash 2*12=24. Devaluation at border only hits cash floor(cash/100)*62 — cash 24M becomes floor(24/100)... cash in units 24,000,000; floor(24000000/100)*62 = 240000*62=14,880,000. Big loss! Better sell_credit: 24*1.25=30 promissory returned at next border. Yes, sell_credit 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739638,
+    "id": "20261115184714a27bfee511584245",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184714a27bfee511584245",
+    "usage": {
+      "completion_tokens": 166,
+      "completion_tokens_details": {
+        "reasoning_tokens": 117
+      },
+      "prompt_tokens": 1960,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2126
+    }
+  }
+}

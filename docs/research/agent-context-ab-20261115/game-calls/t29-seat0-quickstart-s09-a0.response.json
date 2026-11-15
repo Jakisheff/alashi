@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.691,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатный товар для продажи в следующем раунде — лучший ход без расходов.\"}",
+          "reasoning_content": "Sell 2 happened, cash 32.5M now, no goods. Action phase: produce gives 2 free goods.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739475,
+    "id": "202611151844332630e20dda1c4f8b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151844332630e20dda1c4f8b",
+    "usage": {
+      "completion_tokens": 54,
+      "completion_tokens_details": {
+        "reasoning_tokens": 26
+      },
+      "prompt_tokens": 3139,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3193
+    }
+  }
+}

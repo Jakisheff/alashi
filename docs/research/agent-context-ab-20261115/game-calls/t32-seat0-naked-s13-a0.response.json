@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.567,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":28000000,\"reason\":\"Ожидаемый доход лицензии ~40 alashi сверх доли — ставка 28 даёт положительное матожидание, при проигрыше возвращается.\"}",
+          "reasoning_content": "Round 4 action: bid auction? I have 33 alashi. Others have ~33 and ~25. License income 20-60 alashi paid above share. Bidding could win but tie? I'm first? my_idx 0, tie_order unknown. Bidding ~25 alashi: others could bid too. If I win with big bid, license income expected ~40 average, bid goes to bank (reduces payout pool slightly). Money to bank isn't lost entirely—pool distributed by weights 50:30:15. My weight? vote_weight 4 vs 3,3. Final influence affects shares? Actually payout weights are fixed 50:30:15 by rank. Rank by cash+hard.\n\nAlternative: shuttle gives 3 goods, ~25% confiscation, sell next round at low prices anyway. Donkey costs 1 for 1 good. With cash 33, adding ~8 alashi goods next round—modest.\n\nAuction: if I bid 20 and win, expected income 40, net +20 extra (above share, paid directly). That's strong. But bid goes to bank, 5% commission... license income paid \"сверх доли\" — pure gain. So bid up to expected ~40 is profitable. Risk: someone outbids, my cash returned. Competitors with 33 and 25 alashi. Bid 22? If a rival bids higher, I lose but refunded. Highest rational bid ~35ish. I could bid 30 — risky if license pays only 20, loss 10. Expected value at bid B: 40 - B if win. Bid 25: EV +15. Competitors may also reason; bid 26 to beat likely 25s? Tie goes to tie_order unknown, my_idx 0 might be first tie_order.\n\nBid 30: if income low (20), lose 10; expected still +10. I'll bid 28.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739634,
+    "id": "2026111518470250b4a31ba1c341b9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518470250b4a31ba1c341b9",
+    "usage": {
+      "completion_tokens": 454,
+      "completion_tokens_details": {
+        "reasoning_tokens": 405
+      },
+      "prompt_tokens": 2338,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2792
+    }
+  }
+}

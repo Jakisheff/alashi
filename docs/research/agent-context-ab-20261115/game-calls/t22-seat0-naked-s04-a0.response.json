@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.981,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Наличные обнулятся девальвацией при <100, а promissory с 25% премией добавляется на границе без девальвации.\"}",
+          "reasoning_content": "Round 2 market. I have 3 goods, cash 0. Prices start at index sold_counter=2? Ladder position 2 → price 9. Sell 3 units at 9,9,8. Tax 0. No credits needed? Selling now gives cash which may devalue at round boundary (cash floor(cash/100)*62). 9+9+8=26 alashi = 26,000,000 cash → after devaluation floor(26M/100M)*62... wait floor(cash/100) with units of millions? 26 alashi → floor(26/100)=0 → cash becomes 0! So sell_credit is better: promissory added to cash next boundary after devaluation? \"promissory прибавляется к cash и обнуляется\" at boundary — so it's added after devaluation. Sell credit gives 26*1.25=32.5 alashi promissory, added to cash next boundary without devaluation. That's much better.\n\nAlso opponent 1 has 2 goods, will sell. sell_credit 3 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739026,
+    "id": "202611151837008869c3ac687440c9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151837008869c3ac687440c9",
+    "usage": {
+      "completion_tokens": 285,
+      "completion_tokens_details": {
+        "reasoning_tokens": 231
+      },
+      "prompt_tokens": 1592,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1877
+    }
+  }
+}

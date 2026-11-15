@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.658,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Последний раунд: продаю обе единицы на открытии по максимальной лестнице, кредит не погасится.\"}",
+          "reasoning_content": "Sell 2 units at open, last round — sell, not credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738458,
+    "id": "20261115182736eef9d9cb124c4213",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182736eef9d9cb124c4213",
+    "usage": {
+      "completion_tokens": 56,
+      "completion_tokens_details": {
+        "reasoning_tokens": 15
+      },
+      "prompt_tokens": 3365,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 3421
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.224,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара для продажи; pass в market без товара оптимален, в action сделаю produce для продажи в раунде 6.\"}",
+          "reasoning_content": "Round 5 market, no goods, cash 11.3. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738789,
+    "id": "202611151833056ef2a4ad293d475d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151833056ef2a4ad293d475d",
+    "usage": {
+      "completion_tokens": 53,
+      "completion_tokens_details": {
+        "reasoning_tokens": 16
+      },
+      "prompt_tokens": 3117,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3170
+    }
+  }
+}

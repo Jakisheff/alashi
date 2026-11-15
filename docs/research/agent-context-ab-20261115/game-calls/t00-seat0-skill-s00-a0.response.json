@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.637,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара и денег для осмысленной сделки в первом рынке.\"}",
+          "reasoning_content": "No goods, nothing to sell. Buy? Buying goods to move counter back seems bad early. Pass is standard here... but rule says don't pass in market with goods — no goods. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737748,
+    "id": "20261115181545e53ac98dbbfa48f9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181545e53ac98dbbfa48f9",
+    "usage": {
+      "completion_tokens": 63,
+      "completion_tokens_details": {
+        "reasoning_tokens": 40
+      },
+      "prompt_tokens": 1775,
+      "prompt_tokens_details": {
+        "cached_tokens": 1024
+      },
+      "total_tokens": 1838
+    }
+  }
+}

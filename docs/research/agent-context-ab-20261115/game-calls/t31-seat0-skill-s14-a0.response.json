@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.998,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 0 пустая — исход безразличен, отдаю формальный голос «за».\"}",
+          "reasoning_content": "Law card 0, veto not needed. But voting: card 0 is empty. I haven't voted; voting yes/no gives +2 weight only if action was skipped — I did bid, so no bonus. Just vote yes (empty card, no effect). Pass? \"Vote by interest, do not pass\" — card 0 is empty, doesn't matter. vote_yes harmless.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739614,
+    "id": "2026111518465075d45502ea134188",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518465075d45502ea134188",
+    "usage": {
+      "completion_tokens": 114,
+      "completion_tokens_details": {
+        "reasoning_tokens": 80
+      },
+      "prompt_tokens": 3035,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3149
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.153,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара и кэша, рынок R1 открывать нечем — actions начну с produce.\"}",
+          "reasoning_content": "No goods, round 1 market. Buy? Buying moves counter back — no point at 0. Pass is fine (no goods).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739115,
+    "id": "202611151838323b110644373f408f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151838323b110644373f408f",
+    "usage": {
+      "completion_tokens": 60,
+      "completion_tokens_details": {
+        "reasoning_tokens": 28
+      },
+      "prompt_tokens": 1775,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 1835
+    }
+  }
+}

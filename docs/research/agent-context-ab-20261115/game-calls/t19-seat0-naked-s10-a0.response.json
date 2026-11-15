@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.244,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 6 снижает цены следующего рынка на 2, что ударит по моей продаже 3 товаров; при прохождении применю вето\"}",
+          "reasoning_content": "Card 6: prices -2 next market. I have 3 goods, planned to sell at round 4 market with prices 12,10,9... minus 2 → 10,8,7. Bad for me. Vote no; if passes, veto as president.\n\nVote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738921,
+    "id": "20261115183518823be7a9c42c4403",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183518823be7a9c42c4403",
+    "usage": {
+      "completion_tokens": 103,
+      "completion_tokens_details": {
+        "reasoning_tokens": 61
+      },
+      "prompt_tokens": 2140,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2243
+    }
+  }
+}

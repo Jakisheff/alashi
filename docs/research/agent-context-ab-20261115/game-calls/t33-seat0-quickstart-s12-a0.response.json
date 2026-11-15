@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.15,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Кредитная премия ×1.25 меньше потерь от девальвации 62% на границе раунда, продаю обычно по высоким ценам (8,8,7).\"}",
+          "reasoning_content": "Round 4 market. Cash 39.4M, sell 3 units. Use sell or sell_credit? Boundary after round 4: promissory added to cash then devalued (cash floor/100*62 applies to total). Devaluation 62% loses more than 1.25 gain. So sell now normally. Price at sold_counter 4 → 8. 3 units at 8,8,7 ≈ 23 alashi. Sell normally.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746636,
+    "id": "20261115204352764b2870d27c4a33",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115204352764b2870d27c4a33",
+    "usage": {
+      "completion_tokens": 154,
+      "completion_tokens_details": {
+        "reasoning_tokens": 99
+      },
+      "prompt_tokens": 3373,
+      "prompt_tokens_details": {
+        "cached_tokens": 3136
+      },
+      "total_tokens": 3527
+    }
+  }
+}

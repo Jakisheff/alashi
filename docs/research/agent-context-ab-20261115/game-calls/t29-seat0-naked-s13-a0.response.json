@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.29,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":20000000,\"reason\":\"Ставлю весь кэш на лицензию: ожидаемый доход 20–60 alashi существенно выше ставки, при проигрыше она возвращается\"}",
+          "reasoning_content": "Round 4 action: bid for license. I'm president, richest. Income 20-60 alashi. Bid? Cash 20.6. Rival has 43.7. If I bid high, rivals could outbid. Bid amount goes to bank if won, returned otherwise. Fair value ~40 expected? Income 20-60, mean 40, paid as extra. Bid should be below expected income. Rival 1 has 43.7 cash — could outbid me. But their bid also costs. If I bid e.g. 30, rival could bid 35 and win, paying 35 for expected 40. Hmm. My payout: winning license gets its income extra. Expected 40, so bidding up to ~38 profitable. Rival knows too. I have 20.6 cash only — can bid at most cash? Presumably. Bid 20? If I win, +~40 -20 = +20 net. If rival outbids, returned. Bid 20 (20,000,000).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739511,
+    "id": "20261115184504e1e0778a74ad463d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184504e1e0778a74ad463d",
+    "usage": {
+      "completion_tokens": 264,
+      "completion_tokens_details": {
+        "reasoning_tokens": 217
+      },
+      "prompt_tokens": 2462,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2726
+    }
+  }
+}

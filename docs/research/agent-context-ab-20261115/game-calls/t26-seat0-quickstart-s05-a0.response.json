@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.473,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Субсидия даёт +1 товар каждый produce — выгодно мне.\"}",
+          "reasoning_content": "Card 3: subsidy_goods=1. Player 3 already voted yes. Vote yes — subsidy helps all, free goods.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739260,
+    "id": "20261115184058f40cbc127cc8447c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184058f40cbc127cc8447c",
+    "usage": {
+      "completion_tokens": 53,
+      "completion_tokens_details": {
+        "reasoning_tokens": 26
+      },
+      "prompt_tokens": 2783,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 2836
+    }
+  }
+}

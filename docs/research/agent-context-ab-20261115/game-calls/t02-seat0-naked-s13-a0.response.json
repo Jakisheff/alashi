@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.181,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":\"25000000\",\"reason\":\"Лицензия даёт 20–60 alashi сверх доли, ставка уходит в банк и снижает мой cash перед девальвацией и анти-богатыми законами, а проигрыш возвращается.\"}",
+          "reasoning_content": "Round 4 action: bid available. I have 40.675M cash, president, influence 3. License income 20-60 alashi, large. Bid amount? Bidding 20M vs opponents ~42.5 and 29.5. Expected value: license income avg ~40 alashi paid beyond share. Bid moderately high, e.g. 20M. But losing bid returned. Also cash dev at end of round 4: floor(cash/100)*62. Also promissory ~ (3 units sold at prices 5,4,3?) sold_counter 9, prices ladder index 9 = 2, then 2,1... units at 2,2,2? ladder: [12,10,9,8,7,6,5,4,3,3,2,...] index 9 → 3. Sales 3 units at 3,3,2 = 8*1.25=10 promissory... whatever.\n\nBid: I'm richest roughly? cash 40.7 vs 42.5 vs 29.5 — middle. Bid high to win license: 25M? If I bid 25 and win, license income 20-60 expected 40, minus bid... plus keep cash low for anti-rich laws and devaluation. Actually spending cash to bank avoids devaluation loss — bidding is efficient. Bid 25M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738039,
+    "id": "20261115182031260238b1759f44f6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182031260238b1759f44f6",
+    "usage": {
+      "completion_tokens": 361,
+      "completion_tokens_details": {
+        "reasoning_tokens": 296
+      },
+      "prompt_tokens": 2499,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2860
+    }
+  }
+}

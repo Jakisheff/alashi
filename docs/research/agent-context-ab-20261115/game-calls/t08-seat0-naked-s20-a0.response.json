@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.416,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 2 вводит налог на уже не существующие будущие рынки — она безвредна, исход не влияет на мою выплату, воздерживаюсь.\"}",
+          "reasoning_content": "Law card 2: tax 20% — already sold, affects nothing? Tax applies to market revenue; no more markets (this is final round law). So harmless. Vote yes/no doesn't matter much. I'm president. Just pass or vote. Influence bonus matters little for voting outcome. Vote abstain to keep? Vote weight same. Simplest: vote_abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738371,
+    "id": "20261115182605199e475d15a84916",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182605199e475d15a84916",
+    "usage": {
+      "completion_tokens": 129,
+      "completion_tokens_details": {
+        "reasoning_tokens": 78
+      },
+      "prompt_tokens": 3101,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3230
+    }
+  }
+}

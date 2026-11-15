@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.763,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Цены ещё 7/6/5, а кредит ×1.25 обходит жёсткую девальвацию cash на границе раунда 4.\"}",
+          "reasoning_content": "Round 4 market. Cash 52.78M (52 alashi... actually 52784800 = 52.78 alashi). Price ladder at sold_counter=4 → next price 7 (index 4). Subsidy 1. Goods 3. Sell 3 units at 7,6,5 = 18 alashi. Sell cash or credit? Cash will devalue at boundary floor(cash/100)*62 — that's brutal: 52 cash → floor(52.78)*0.62 ≈ 32. Credit gives ×1.25 promissory added to cash next boundary, but then next boundary (after round 5) devalues again. Actually round 4 boundary: promissory added and cash not devalued that boundary? \"promissory прибавляется к cash и обнуляется\" at boundary; cash devaluation floor(cash/100)*62 applies at boundaries round 2+. So credit from round 4 returns at boundary 4→5, then devalued at boundary 5→6. Hmm, devaluation applies to cash including newly added promissory. Cash sale now: 18 added, then devalued ×0.62 ≈ 11.2. Credit: 22.5 at boundary 4→5, no devaluation until 5→6: devalued at 5→6 floor*0.62 ≈ 13.9. Credit better. Also rivals may sell this round pushing prices. Sell credit 3 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738259,
+    "id": "2026111518241167f2834fe27f4067",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518241167f2834fe27f4067",
+    "usage": {
+      "completion_tokens": 372,
+      "completion_tokens_details": {
+        "reasoning_tokens": 320
+      },
+      "prompt_tokens": 3545,
+      "prompt_tokens_details": {
+        "cached_tokens": 3264
+      },
+      "total_tokens": 3917
+    }
+  }
+}

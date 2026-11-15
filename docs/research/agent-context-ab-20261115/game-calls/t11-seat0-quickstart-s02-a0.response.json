@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 21.213,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Закон 8 сейчас ничего не списывает (промиссори нет), исход мне безразличен.\"}",
+          "reasoning_content": "Law card 8: cancels promissory notes — bad only if I use sell_credit. Now no promissory outstanding. I'm president? is_president true, influence equal, tie_order maybe. Others voted already (voted true). Card 8 harmless now but also useless. Pass? If it passes, future sell_credit would be cancelled — actually card 8 cancels existing promissory only? \"списывает все непогашенные promissory\" — presumably at passage. No promissory now, so vote doesn't matter much. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738437,
+    "id": "20261115182657d9f0116c0f374a3c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182657d9f0116c0f374a3c",
+    "usage": {
+      "completion_tokens": 155,
+      "completion_tokens_details": {
+        "reasoning_tokens": 120
+      },
+      "prompt_tokens": 2523,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2678
+    }
+  }
+}

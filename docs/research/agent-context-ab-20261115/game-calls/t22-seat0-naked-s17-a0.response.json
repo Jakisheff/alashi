@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.242,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Пустая карта закона ничего не меняет, голос бессмысленен.\"}",
+          "reasoning_content": "Round 5 law, card 0 (empty). Vote doesn't matter. Abstain? Card 0 — nothing. Vote yes/no either. Vote abstain.\n\nWait, voted shows [false,false,true] — card 0, law likely \"no law\". Just abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739133,
+    "id": "20261115183851aa2cf079d0734b96",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183851aa2cf079d0734b96",
+    "usage": {
+      "completion_tokens": 88,
+      "completion_tokens_details": {
+        "reasoning_tokens": 59
+      },
+      "prompt_tokens": 2867,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 2955
+    }
+  }
+}

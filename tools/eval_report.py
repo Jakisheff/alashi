@@ -174,7 +174,8 @@ def main() -> int:
         ci_lo, ci_hi = bootstrap_ci(diffs, seed=args.bootstrap_seed)
         mde = (Z95 + Z80) * sd / math.sqrt(n)
         arm_pair = [c for c in clusters if c.get("complete")][:1]
-        label = "A1 - A0"
+        contrast = results.get("contrast", {})
+        label = contrast.get("label", "A1 - A0")
         emit(f"## Paired test ({label}, n={n} seeds)")
         emit("")
         emit(f"- mean difference: {mean/1e6:+.2f}M (SD {sd/1e6:.2f}M)")

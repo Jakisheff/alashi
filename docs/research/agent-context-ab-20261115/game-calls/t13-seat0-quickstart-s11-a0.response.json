@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.581,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Карта 7 уже прошла моим голосом «за» — вето против собственной выгоды не нужно.\"}",
+          "reasoning_content": "Post_vote, already voted yes, card 7 favorable, no veto needed. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738580,
+    "id": "20261115182938fa601b4b96854d6a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182938fa601b4b96854d6a",
+    "usage": {
+      "completion_tokens": 51,
+      "completion_tokens_details": {
+        "reasoning_tokens": 18
+      },
+      "prompt_tokens": 3292,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 3343
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.374,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 5 даёт +1 влияния богатейшему (сопернику с макс. cash), что усиливает его бонус влияния в итоге — голосую против своим весом 3.\"}",
+          "reasoning_content": "Card 5: +1 influence to richest. Richest cash is idx1 (37.57M). Not me. Vote no. My weight 3, president is idx2 (influence 2). Yes: idx1 weight 1. No: me 3. Likely fails anyway; vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739443,
+    "id": "202611151843598c9cf62ab1cd49b2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151843598c9cf62ab1cd49b2",
+    "usage": {
+      "completion_tokens": 118,
+      "completion_tokens_details": {
+        "reasoning_tokens": 64
+      },
+      "prompt_tokens": 3650,
+      "prompt_tokens_details": {
+        "cached_tokens": 3392
+      },
+      "total_tokens": 3768
+    }
+  }
+}

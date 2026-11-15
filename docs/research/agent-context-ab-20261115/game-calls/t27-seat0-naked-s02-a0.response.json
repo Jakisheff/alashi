@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.383,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 8 списывает promissory, которых ни у кого нет; исход безразличен, воздерживаюсь\"}",
+          "reasoning_content": "Law card 8: cancels all outstanding promissory notes. No one has promissory notes presumably (I sold none; opponents may have — sold_counter 0, but they could have used sell_credit? Market phase passed already; they had 0 goods, so no). Voting doesn't hurt me; abstain or vote no. Card 8 hurts no one. Pass is fine — vote yes or no irrelevant. I'm president. Just abstain to avoid passing anything harmful? Card 8 harmless. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739316,
+    "id": "20261115184151e716e9ede5184362",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184151e716e9ede5184362",
+    "usage": {
+      "completion_tokens": 149,
+      "completion_tokens_details": {
+        "reasoning_tokens": 109
+      },
+      "prompt_tokens": 1427,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1576
+    }
+  }
+}

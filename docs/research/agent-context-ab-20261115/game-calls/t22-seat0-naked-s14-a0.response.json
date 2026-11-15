@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.689,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон даёт +1 влияния беднейшему (сопернику 1), усиливая его против меня — голосую против.\"}",
+          "reasoning_content": "Law card 4: +1 influence to poorest. Poorest cash: me 57.35M is richest actually. 39.5M vs 41.7M — poorest is player 1. That gives +1 influence to player 1, who already voted (voted true). Vote weights 3,3,4. I'm not president; player 2 is (influence 2). Card 4 helps player 1, my rival. Vote no. Note veto_pending — president may veto. I vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739099,
+    "id": "2026111518381596d59d25e92540d8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518381596d59d25e92540d8",
+    "usage": {
+      "completion_tokens": 151,
+      "completion_tokens_details": {
+        "reasoning_tokens": 111
+      },
+      "prompt_tokens": 2540,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2691
+    }
+  }
+}

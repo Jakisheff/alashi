@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.229,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 8 списывает векселя — ни у кого их нет, закон нейтрален, поэтому воздерживаюсь.\"}",
+          "reasoning_content": "Law card 8 — writes off all promissory notes. I have none; nobody sold credit likely. Harmless. I'm president. Vote? Card 8 cancels promissory — others didn't sell credit either (sold_counter 0, no sales). So neutral. Pass action gives +2 weight? Weight applies only if action skipped — my action was produce. Vote yes/no doesn't matter; abstain or yes. Card 8 could later be useful but now it just passes/does nothing. Vote abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737756,
+    "id": "202611151815516b542192ae14442b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151815516b542192ae14442b",
+    "usage": {
+      "completion_tokens": 151,
+      "completion_tokens_details": {
+        "reasoning_tokens": 109
+      },
+      "prompt_tokens": 1925,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2076
+    }
+  }
+}

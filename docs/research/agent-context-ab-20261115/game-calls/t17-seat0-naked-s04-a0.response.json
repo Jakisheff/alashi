@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.891,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Продам 3 товара по высоким ценам 9/8/7, пока рынок не насыщен\"}",
+          "reasoning_content": "I sold 3 goods? sold_counter=2, my goods 3→? Actually my goods=3? Wait seen history: I had 3 goods after shuttle... state goods [3,2,0], sold_counter=2. So I haven't sold yet (counter from others? no, round 2 market fresh... hmm sold_counter=2 maybe carried). Anyway, sell 3 units now at prices 9,8,7.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738764,
+    "id": "20261115183238f8020005c1eb4b63",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183238f8020005c1eb4b63",
+    "usage": {
+      "completion_tokens": 128,
+      "completion_tokens_details": {
+        "reasoning_tokens": 92
+      },
+      "prompt_tokens": 1589,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1717
+    }
+  }
+}

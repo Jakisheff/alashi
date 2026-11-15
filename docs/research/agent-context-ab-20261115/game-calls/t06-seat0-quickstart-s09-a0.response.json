@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.996,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемая ценность шаттла (0.75×3 товара × ~5 с бумом ×1.25 в кредит) выше гарантированного produce (2 товара).\"}",
+          "reasoning_content": "Round 3 action. I have cash 10.54M, goods 0, influence 2, promissory outstanding from previous credit sales (~66M?). Round 3, action phase. Options: produce (2 goods), donkey (1 alashi per good), shuttle (3 goods with 25% confiscation risk).\n\nShuttle expected value: 3 goods at ~25% risk of losing all. Produce is safe 2 goods. Prices around... sold_counter=7, next price ~3, plus boom +2 = 5 each. Expected shuttle: 0.75×3×5=11.25 vs produce 2×5=10. Slightly better. But confiscation risk loses all. Shuttle marginally better EV. Also credit sales ×1.25.\n\nI'm not at a preferential border? Unspecified; assume standard 25% confiscation. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738239,
+    "id": "202611151823537df5ea57e12748b9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151823537df5ea57e12748b9",
+    "usage": {
+      "completion_tokens": 239,
+      "completion_tokens_details": {
+        "reasoning_tokens": 187
+      },
+      "prompt_tokens": 3253,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 3492
+    }
+  }
+}

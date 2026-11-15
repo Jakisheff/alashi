@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.03,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":1,\"reason\":\"Финальный раунд: продаю весь товар на вершине лестницы без налога и без кредита — вексель не погасится.\"}",
+          "reasoning_content": "Sell 1 unit at price 12.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746644,
+    "id": "202611152044025af06c2f36564c7e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611152044025af06c2f36564c7e",
+    "usage": {
+      "completion_tokens": 54,
+      "completion_tokens_details": {
+        "reasoning_tokens": 9
+      },
+      "prompt_tokens": 3460,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 3514
+    }
+  }
+}

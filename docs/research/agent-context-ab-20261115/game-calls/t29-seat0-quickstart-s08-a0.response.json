@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.23,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Лестница сброшена к началу раунда, две единицы уйдут по максимуму 12 и 10 alashi без налога.\"}",
+          "reasoning_content": "Sell 2 units at prices 12,10.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739472,
+    "id": "20261115184430d61c5b93a8a445e3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184430d61c5b93a8a445e3",
+    "usage": {
+      "completion_tokens": 58,
+      "completion_tokens_details": {
+        "reasoning_tokens": 11
+      },
+      "prompt_tokens": 3039,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3097
+    }
+  }
+}

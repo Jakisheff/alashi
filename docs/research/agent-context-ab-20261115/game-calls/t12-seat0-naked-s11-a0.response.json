@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.737,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Кэш на границе девальвирует до 62%, поэтому 1.25x через promissory выгоднее немедленной продажи.\"}",
+          "reasoning_content": "Round 4 market. Price ladder: sold_counter=2, next price 9? Ladder [12,10,9,8,7,6,5,4,3,3,2,...] — index 2 → 9. Sell 2 units: 9+8=17 alashi, no tax. Alternatively hold and sell_credit? Sell now is fine; cash devalues 62% at border. Could sell_credit for 1.25x, but promissory paid at round 5 border — devaluation applies to cash, promissory added at border. sell credit revenue 21.25 alashi received at round5 border — better than selling now (17 cash devalues to ~10.5). Yes, sell_credit units 2 gives 21.25 promissory paid at next round boundary. Law 8 risk (wipe promissory) but unknown future card. Promissory better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738515,
+    "id": "2026111518282918885de9474f4246",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518282918885de9474f4246",
+    "usage": {
+      "completion_tokens": 241,
+      "completion_tokens_details": {
+        "reasoning_tokens": 194
+      },
+      "prompt_tokens": 2253,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2494
+    }
+  }
+}

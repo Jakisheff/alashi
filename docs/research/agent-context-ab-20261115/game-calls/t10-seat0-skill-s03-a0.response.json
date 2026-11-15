@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.585,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голос уже подан за выгодную карту 7, повторное действие недоступно.\"}",
+          "reasoning_content": "Law phase, card 7 prices +2 — already voted yes. Now post_vote, need an action. Phase law: vote_no? Already voted yes. Choose pass? Must return one JSON {\"action\":...}. Card 7 benefits me; but president may veto. Vote yes again? Vote already cast; voted=true. Safest: pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738403,
+    "id": "20261115182639435df718ce97475f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182639435df718ce97475f",
+    "usage": {
+      "completion_tokens": 100,
+      "completion_tokens_details": {
+        "reasoning_tokens": 71
+      },
+      "prompt_tokens": 1992,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2092
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.051,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 20% бьёт по моей выручке от продаж в следующих раундах.\"}",
+          "reasoning_content": "Law card 2: tax 20%. Harmful to me as seller. Others likely vote yes? voted[1]=true unknown. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739256,
+    "id": "20261115184053fa37f92c20084637",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184053fa37f92c20084637",
+    "usage": {
+      "completion_tokens": 64,
+      "completion_tokens_details": {
+        "reasoning_tokens": 31
+      },
+      "prompt_tokens": 1919,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 1983
+    }
+  }
+}

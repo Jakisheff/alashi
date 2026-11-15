@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.865,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, я не президент и вето не ожидается — доступных действий нет.\"}",
+          "reasoning_content": "Law 8 passed? voted all; post_vote, not president, veto_pending false — pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738100,
+    "id": "2026111518213837e24ffa88904a6c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518213837e24ffa88904a6c",
+    "usage": {
+      "completion_tokens": 51,
+      "completion_tokens_details": {
+        "reasoning_tokens": 20
+      },
+      "prompt_tokens": 2196,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2247
+    }
+  }
+}

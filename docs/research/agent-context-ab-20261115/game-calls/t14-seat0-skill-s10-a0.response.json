@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.573,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 8 списывает непогашенные векселя — у меня их нет, а у соперников могут быть, закон мне выгоден/нейтрален.\"}",
+          "reasoning_content": "Card 8: writes off all promissory notes. I don't have promissory notes? I sold normally, not sell_credit. So card 8 is neutral/harmless to me; rivals may have notes—unknown. I'm president. Card 8 doesn't hurt me. If others have promissory, it hurts them — good for me. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738628,
+    "id": "20261115183024e348aa1912514da3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183024e348aa1912514da3",
+    "usage": {
+      "completion_tokens": 125,
+      "completion_tokens_details": {
+        "reasoning_tokens": 78
+      },
+      "prompt_tokens": 2652,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2777
+    }
+  }
+}

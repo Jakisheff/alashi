@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.253,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Кредитная продажа по 10 с коэффициентом 1.25 даёт 25 alashi promissory после границы раунда 3, избегая девальвации (обычная продажа дала бы ~12.4)\"}",
+          "reasoning_content": "Round 2 market. I have 2 goods, price now 10 (counter=2). Note post_vote action \"sell\" was invalid — turns out that action didn't happen; goods still 2. Sell 2 at price 10 = 20 alashi. Or sell_credit for 25 promissory, paid at round 3 boundary (devaluation applies to cash, promissory added after floor). Round 2 boundary: cash floored... cash currently 22M from... wait cash[0]=0? My cash is 22? cash array [0,0,22000000], my_idx=0 → my cash 0? But I sold in post_vote... that was invalid action replaced by pass. So cash 22 belongs to faction 2.\n\nSell now at 10 → 20M cash, devalued at round 3 boundary? Devaluation happens at borders of rounds 2+: cash=floor(cash/100)*62. So selling now gets devalued twice (border of round 2? Already at round 2 market, border happened). Next devaluation at border of round 3. Sell_credit: promissory added at border of round 3 after devaluation → avoids devaluation, gets 25M instead of 20*0.62=12.4. Much better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739454,
+    "id": "20261115184406e250432b97204088",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184406e250432b97204088",
+    "usage": {
+      "completion_tokens": 342,
+      "completion_tokens_details": {
+        "reasoning_tokens": 277
+      },
+      "prompt_tokens": 1587,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1929
+    }
+  }
+}

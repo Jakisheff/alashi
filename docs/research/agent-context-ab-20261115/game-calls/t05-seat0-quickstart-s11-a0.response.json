@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.578,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":20000000,\"reason\":\"Ожидаемый доход лицензии ~20-60 превышает разумную ставку, удваиваю шансы на победу при сохранении запаса наличных.\"}",
+          "reasoning_content": "Round 4 action: bid available. Cash ~33 alashi. License income 20-60 alashi, paid extra. Bidding makes sense. Others likely bid too. Bid maybe 20 alashi? Winning bid goes to bank (lost), but license income 20-60 extra. Expected ~40 minus bid. Tie order unknown. Bid 20 (20000000)? Risk: could lose 20 and gain ~40 expected → +20. Opponents with 25 and 33 cash could outbid. Bid high-ish, 25 alashi? My cash 33. If win, cash drops to 8 + license 20-60. Expected value positive. Bid 28? Then cash 5 + income ~40. Still positive rank-wise? Final shares depend on rank; keeping cash matters. I'll bid 20.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738149,
+    "id": "20261115182223a10dcbb2ac034920",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182223a10dcbb2ac034920",
+    "usage": {
+      "completion_tokens": 223,
+      "completion_tokens_details": {
+        "reasoning_tokens": 173
+      },
+      "prompt_tokens": 3350,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 3573
+    }
+  }
+}

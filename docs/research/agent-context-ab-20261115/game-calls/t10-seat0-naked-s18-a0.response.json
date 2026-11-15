@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.488,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Финальный раунд: рынок позади, товар уже некуда продать, а у меня нет кэша — любое действие бессмысленно.\"}",
+          "reasoning_content": "Round 6 action, final. No cash. Shuttle gives goods but nothing after — goods can't be sold, final market done. Donkey costs 1 alashi (I have 0.32, cost 1 alashi — impossible). Produce gives goods, worthless. Best: pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738454,
+    "id": "20261115182730ead3639c28bb480b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182730ead3639c28bb480b",
+    "usage": {
+      "completion_tokens": 102,
+      "completion_tokens_details": {
+        "reasoning_tokens": 60
+      },
+      "prompt_tokens": 2912,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3014
+    }
+  }
+}

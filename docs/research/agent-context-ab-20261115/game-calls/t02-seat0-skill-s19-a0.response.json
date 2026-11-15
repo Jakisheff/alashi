@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.621,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Закон 7 (+2 к ценам раунда 6, где я продам 3 товара) уже прошёл — вмешательство не нужно.\"}",
+          "reasoning_content": "Law 7 passed (yes 2 > no 0). Post_vote: pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738070,
+    "id": "202611151821071472962877224197",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151821071472962877224197",
+    "usage": {
+      "completion_tokens": 59,
+      "completion_tokens_details": {
+        "reasoning_tokens": 18
+      },
+      "prompt_tokens": 3623,
+      "prompt_tokens_details": {
+        "cached_tokens": 3328
+      },
+      "total_tokens": 3682
+    }
+  }
+}

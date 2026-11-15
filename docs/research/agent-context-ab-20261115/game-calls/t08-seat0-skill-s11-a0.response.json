@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.6,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продажа 2 товаров на открытии раунда 4 по цене ~10, пока лестница не упала; налог не активен.\"}",
+          "reasoning_content": "Round 4, market phase, I have 2 goods, price ladder at sold_counter=2 → price 10. Tax 0? Law card 1 vote pending? Actually active_tax_bps 0, so tax law failed. Sell 2 units now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738324,
+    "id": "2026111518252160637a006a8d4119",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518252160637a006a8d4119",
+    "usage": {
+      "completion_tokens": 100,
+      "completion_tokens_details": {
+        "reasoning_tokens": 55
+      },
+      "prompt_tokens": 2729,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2829
+    }
+  }
+}

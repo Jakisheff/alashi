@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.134,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% ударит по моей будущей продаже товаров, а я богатейший — голосую против.\"}",
+          "reasoning_content": "Law card 1: tax 10%. I'm richest? Cash: 32M vs 23M, 20M — yes I'm richest, tax 10% on market revenue. But I plan to sell in round 6? I'll have 3 goods (shuttle may have been confiscated). Tax 10% reduces my revenue. Vote no. But others already voted? voted[2]=true. I'm president, weight 2. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739659,
+    "id": "202611151847352ba8147d532d42fa",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151847352ba8147d532d42fa",
+    "usage": {
+      "completion_tokens": 132,
+      "completion_tokens_details": {
+        "reasoning_tokens": 97
+      },
+      "prompt_tokens": 2818,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 2950
+    }
+  }
+}

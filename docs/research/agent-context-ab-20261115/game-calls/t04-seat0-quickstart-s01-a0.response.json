@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.284,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нет товара; produce даёт 2 единицы для продажи на следующем рынке.\"}",
+          "reasoning_content": "I have 0 goods, others 2. vote_weight 3? Odd, but anyway. Produce gives 2 goods.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738069,
+    "id": "202611151821069a9eefaa55604c33",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151821069a9eefaa55604c33",
+    "usage": {
+      "completion_tokens": 53,
+      "completion_tokens_details": {
+        "reasoning_tokens": 26
+      },
+      "prompt_tokens": 2456,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 2509
+    }
+  }
+}

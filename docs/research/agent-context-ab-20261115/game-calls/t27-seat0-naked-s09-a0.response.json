@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.63,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bribe\",\"to\":0,\"reason\":\"Взятка себе возвращает деньги и даёт +1 влияние бесплатно — усиливает позицию в законах и аукционе следующего раунда\"}",
+          "reasoning_content": "Round 3 action. Cash 21.25, others richer. Bribe gives influence. Auction next round. Bribe 10 to whom? Influence helps presidency and law voting. Bribe 5 gives 1 influence; I could bribe myself? \"to\" — faction index; bribing opponent gives money away. Bribe to whom? Could bribe self? Probably to any faction including self — gives money to self + influence, net zero. Risky assumption but many games allow self-bribe. Actually safest: bribe to self index 0, amount 5000000, gaining 1 influence free. If not allowed... unclear. Safer: produce? I have no goods, no promissory needs. Produce gives 2 goods for market round 4, then sell credit — but round 4 boundary? sell_credit in round 4 market redeems at boundary after round 4 (border of round 5), fine, still redeemed. Round 6 market sell credit would not be redeemed. Round 4: auction bid; I'd want cash. Selling round 4 credit gives 1.25x redeem round 5.\n\nProduce now = 2 goods worth ~10 each in credit ~25 alashi later. Alternatively bribe self 5M for influence → presidency + extra 5% bank. Influence also affects auction? No. Presidency: currently president tie by tie_order. Law votes weight influence+2.\n\nBribe self: money transfers to self, floor(5000000/5000000)=1 influence. Net gain influence for free. Likely allowed. I'll do bribe to self.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739359,
+    "id": "20261115184227c4814fdae98548ec",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184227c4814fdae98548ec",
+    "usage": {
+      "completion_tokens": 386,
+      "completion_tokens_details": {
+        "reasoning_tokens": 337
+      },
+      "prompt_tokens": 2013,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2399
+    }
+  }
+}

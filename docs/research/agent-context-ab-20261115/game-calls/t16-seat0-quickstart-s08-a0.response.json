@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.191,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Цена высокая (12), кредит даёт 1.25x, возврат на границе раунда 4 выгоднее обычной продажи\"}",
+          "reasoning_content": "Round 3 market, I have 2 goods. Sell credit at price 12*1.25? Sold counter 0, price ladder 12. Sell 2 credit: revenue 2*12=24, promissory 30. But last round promissory returns at boundary and devalues? Promissory adds to cash at boundary, then next boundary devalues hard? Actually promissory added to cash at boundary round start; round 6 credit not redeemed. Round 3 credit returns at boundary 4 — fine, but devaluation at boundary 4 applies to cash floor(cash/100)*62. Selling credit round 3 gives 30 promissory, added at boundary to round 4 cash, then devalued at boundary to round 5 (62%). Selling now regular gives 24 cash which devalues too. Credit still 1.25x better. But 25% credit bonus vs holding? Sell credit units=2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738731,
+    "id": "2026111518320681d8fda6572f4b7e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518320681d8fda6572f4b7e",
+    "usage": {
+      "completion_tokens": 245,
+      "completion_tokens_details": {
+        "reasoning_tokens": 199
+      },
+      "prompt_tokens": 3019,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3264
+    }
+  }
+}

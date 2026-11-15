@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.979,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товара нет, продавать нечего; ставка/покупка невыгодны.\"}",
+          "reasoning_content": "Round 5 market, my cash ~35, goods 0. Nothing to sell. Promissory from round 4 credit sale (~3 units sold at prices... will return at round 6 boundary). No goods — pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738500,
+    "id": "20261115182816d23fb9cc3b244f14",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182816d23fb9cc3b244f14",
+    "usage": {
+      "completion_tokens": 76,
+      "completion_tokens_details": {
+        "reasoning_tokens": 47
+      },
+      "prompt_tokens": 3721,
+      "prompt_tokens_details": {
+        "cached_tokens": 3456
+      },
+      "total_tokens": 3797
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.477,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Рынок закончился, товары и влияние уже не конвертируются в выплаты — пропускаю.\"}",
+          "reasoning_content": "Final round, action phase, no more law effect on cash. Cash 65.8M. Options: donkey gives 1 good but no market left. Bid not available (round 4 only). Best: pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738402,
+    "id": "20261115182639724e1bc1e9774b54",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182639724e1bc1e9774b54",
+    "usage": {
+      "completion_tokens": 79,
+      "completion_tokens_details": {
+        "reasoning_tokens": 46
+      },
+      "prompt_tokens": 3144,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3223
+    }
+  }
+}

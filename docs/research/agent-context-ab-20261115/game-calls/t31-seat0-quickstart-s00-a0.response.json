@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.421,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара и денег в первом раунде рынка — действий нет.\"}",
+          "reasoning_content": "Round 1 market, no goods. Pass... nothing to sell or buy? Buy could move counter back but no cash. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739546,
+    "id": "20261115184544d1745c7e8fdb4bc6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184544d1745c7e8fdb4bc6",
+    "usage": {
+      "completion_tokens": 51,
+      "completion_tokens_details": {
+        "reasoning_tokens": 27
+      },
+      "prompt_tokens": 2386,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2437
+    }
+  }
+}

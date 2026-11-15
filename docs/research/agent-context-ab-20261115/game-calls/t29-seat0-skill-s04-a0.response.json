@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.19,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продам 2 товара на высоких ценах лестницы, пока цена не упала ниже\"}",
+          "reasoning_content": "Round 2 market, I have 2 goods. Prices ladder: sold_counter=2, so price starts at index 2 = 9? Ladder [12,10,9,...], sold 2 units means next price 9? Two others have 2 goods each, cash 22M belongs to player 2 (from... someone). I should sell 2 units now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739462,
+    "id": "202611151844190f44712fbcf147f5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151844190f44712fbcf147f5",
+    "usage": {
+      "completion_tokens": 113,
+      "completion_tokens_details": {
+        "reasoning_tokens": 80
+      },
+      "prompt_tokens": 2062,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2175
+    }
+  }
+}

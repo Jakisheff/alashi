@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.238,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Закон 7 уже прошёл моим голосом и выгоден мне — вето не нужно, просто завершаю фазу\"}",
+          "reasoning_content": "Card 7 passed (my yes=3, others? need their votes unknown, but post_vote stage: vote/veto/pass). It benefits me; no veto. Vote yes already done; now choose valid action in law post_vote: vote_yes/no/abstain/veto/pass. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739498,
+    "id": "20261115184454815f0a1c98344aba",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184454815f0a1c98344aba",
+    "usage": {
+      "completion_tokens": 98,
+      "completion_tokens_details": {
+        "reasoning_tokens": 61
+      },
+      "prompt_tokens": 2270,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2368
+    }
+  }
+}

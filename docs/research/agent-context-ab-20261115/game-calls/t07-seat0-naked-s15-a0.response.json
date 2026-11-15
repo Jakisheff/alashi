@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.21,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"С субсидией шаттл даёт 4 товара (EV ~3 после конфискации ≈ 36 млн при продаже в 6-м раунде), что значительно выгоднее взятки на 1 влияние.\"}",
+          "reasoning_content": "I'm faction 0 with 8.122M cash, subsidy 1. Shuttle gives 4 goods. Shuttle expected ~3 goods after confiscation × price ~12×1.25... Value ~3×12=36M. But cash risk: at border confiscation 25% lose goods. Prefer shuttle? Bribe 5M gives 1 influence; influence bonus 5% of bank — bank size unknown, commission 5% could be large. But I'm poor, influence tie.\n\nShuttle with subsidy gives 4 goods, EV ~3 goods → sell next round at ~12 = 36M. Bribe 5M leaves 3M and +1 influence. Influence bonus: 5% of bank extra. Bank likely large? Vote weights show 3,3,1 — I didn't bribe... weights 3 because pass action? Actually weight = influence+2 if passed. I passed in market but action matters. Weight 3 for me and 1 means... odd.\n\nShuttle is more valuable. Do shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738266,
+    "id": "202611151824199f850397ac734bc7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151824199f850397ac734bc7",
+    "usage": {
+      "completion_tokens": 278,
+      "completion_tokens_details": {
+        "reasoning_tokens": 218
+      },
+      "prompt_tokens": 2618,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2896
+    }
+  }
+}

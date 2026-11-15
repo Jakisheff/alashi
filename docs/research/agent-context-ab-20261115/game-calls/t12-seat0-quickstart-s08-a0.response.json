@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.305,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемо 2.25 товара против 2 у produce; риск конфискации оправдан.\"}",
+          "reasoning_content": "Action phase round 3, cash 21.25M, goods 0. Produce gives 2 free goods. Donkey costs 1 alashi gives 1. Shuttle gives 3, risk confiscation ~25%. Expected shuttle = 3*0.75=2.25 goods, better than produce 2. No tariff protection, no mention of favorable border... confiscation risk. Cash available so tribute risk. Shuttle slightly better EV. But safe produce = 2 guaranteed. Shuttle EV 2.25 > 2. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738503,
+    "id": "202611151828194252a4f3606e49d2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151828194252a4f3606e49d2",
+    "usage": {
+      "completion_tokens": 149,
+      "completion_tokens_details": {
+        "reasoning_tokens": 113
+      },
+      "prompt_tokens": 3071,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3220
+    }
+  }
+}

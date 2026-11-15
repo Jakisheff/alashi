@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.492,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 6 снижает цены следующего рынка на 2, а у меня 2 единицы на продажу — закон мне вреден\"}",
+          "reasoning_content": "Law card 6: prices -2 next market. I'm president. My goods 2, opponents each 2. Lower prices hurt me (I plan to sell). Vote no? My vote weight 1, opponent voted (yes probably). Actually voted shows one voted true. If law passes prices -2, bad for me. Vote no; as president I could veto if passes. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738549,
+    "id": "20261115182905656eafc05aee4e8e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182905656eafc05aee4e8e",
+    "usage": {
+      "completion_tokens": 121,
+      "completion_tokens_details": {
+        "reasoning_tokens": 82
+      },
+      "prompt_tokens": 1769,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 1890
+    }
+  }
+}

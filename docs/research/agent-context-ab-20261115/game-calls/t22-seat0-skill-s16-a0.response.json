@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.928,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"donkey\",\"reason\":\"Товара нет, donkey за 1 alashi даёт товар для продажи на следующем рынке по высокой цене лестницы — чистая прибыль.\"}",
+          "reasoning_content": "Action phase round 5. No goods, cash 14.2. Buy donkey? Donkey costs 1 alashi, gives 1 goods — sell at ~12 next market. Yes, donkey. Could do multiple? Only one action per phase. Donkey.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739092,
+    "id": "20261115183808a476bab3e1df45e6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183808a476bab3e1df45e6",
+    "usage": {
+      "completion_tokens": 99,
+      "completion_tokens_details": {
+        "reasoning_tokens": 57
+      },
+      "prompt_tokens": 3170,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3269
+    }
+  }
+}

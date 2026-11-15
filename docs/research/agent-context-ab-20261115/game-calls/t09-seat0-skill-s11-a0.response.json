@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.77,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продам обе единицы сразу за песо, чтобы иметь кассу для ставки на аукционе лицензии в этой же фазе раунда 4.\"}",
+          "reasoning_content": "Sell 2 units, but round 4 market: need cash for bid. Sell now gives cash for bid. Price ladder at sold_counter=4 → price 7? Ladder index 4 → 7. Sell 2 units.\n\nWait, sell_credit gives 1.25x paid at round 5 boundary — that's fine for later, but bid needs cash now. Sell normally.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738361,
+    "id": "2026111518255875ef828277e74566",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518255875ef828277e74566",
+    "usage": {
+      "completion_tokens": 131,
+      "completion_tokens_details": {
+        "reasoning_tokens": 81
+      },
+      "prompt_tokens": 2717,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2848
+    }
+  }
+}

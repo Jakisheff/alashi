@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.616,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, моя позиция выражена — дополнительных действий нет.\"}",
+          "reasoning_content": "Law card 1 (tax 10%). I voted no with weight 3; others voted (weight 1 each). Result unclear but likely no wins 3 vs 2. Post_vote stage—action: pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738902,
+    "id": "2026111518350018af5b3b8e204059",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518350018af5b3b8e204059",
+    "usage": {
+      "completion_tokens": 71,
+      "completion_tokens_details": {
+        "reasoning_tokens": 45
+      },
+      "prompt_tokens": 1538,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1609
+    }
+  }
+}

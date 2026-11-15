@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.884,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, остаётся только pass.\"}",
+          "reasoning_content": "Post-vote stage, only pass? Actions allowed in law phase: vote_yes/no/abstain, veto, pass. Post_vote — likely pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737763,
+    "id": "202611151815588c0d47d69a4740e3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151815588c0d47d69a4740e3",
+    "usage": {
+      "completion_tokens": 54,
+      "completion_tokens_details": {
+        "reasoning_tokens": 32
+      },
+      "prompt_tokens": 1527,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1581
+    }
+  }
+}

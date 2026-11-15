@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.578,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 4 даёт +1 влияния самому беднему (сопернику), а не мне — блокирую.\"}",
+          "reasoning_content": "Law card 4: +1 influence to poorest. Poorest is player 1 (25.06M). Not me. But extra influence to rival hurts. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737986,
+    "id": "20261115181944edb1da78634440fa",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181944edb1da78634440fa",
+    "usage": {
+      "completion_tokens": 74,
+      "completion_tokens_details": {
+        "reasoning_tokens": 36
+      },
+      "prompt_tokens": 2631,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2705
+    }
+  }
+}

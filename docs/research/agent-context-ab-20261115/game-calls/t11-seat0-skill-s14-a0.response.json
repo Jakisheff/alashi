@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.853,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 0 пуста — закон ничего не меняет, голосую «за» без риска.\"}",
+          "reasoning_content": "Law card 0 — empty. Voted already? voted shows [false,true,true] — my vote not counted yet. Card 0 empty; but passing nothing matters. Abstain? Pass action phase would give +2 weight, but card 0 is empty—no benefit. Just abstain/vote_yes? Vote yes on empty law harmless. Card 0 = nothing; pass any. vote_abstain fine, but \"не пасс\". vote_yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738481,
+    "id": "20261115182757f7169671d6fb4ab3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182757f7169671d6fb4ab3",
+    "usage": {
+      "completion_tokens": 128,
+      "completion_tokens_details": {
+        "reasoning_tokens": 96
+      },
+      "prompt_tokens": 3044,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3172
+    }
+  }
+}

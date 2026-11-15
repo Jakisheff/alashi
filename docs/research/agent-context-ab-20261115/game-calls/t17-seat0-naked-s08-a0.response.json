@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.173,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Продам весь товар в начале раунда по высоким ценам 12/10/9, пока счётчик продаж нулевой\"}",
+          "reasoning_content": "I have 3 goods, round 3 market, sold_counter 0, prices start at 12,10,9. Sell 3? Rivals also have 2+2 goods. Sell now at high prices. I also have untracked promissory? I didn't use sell_credit. Cash 13.64M — wait, my cash shown 13.64 after devaluation? Anyway sell 3 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738789,
+    "id": "20261115183304b45e0c53051842a8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183304b45e0c53051842a8",
+    "usage": {
+      "completion_tokens": 129,
+      "completion_tokens_details": {
+        "reasoning_tokens": 88
+      },
+      "prompt_tokens": 1933,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2062
+    }
+  }
+}

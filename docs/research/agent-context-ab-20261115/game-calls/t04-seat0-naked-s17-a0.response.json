@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.046,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Плюс влияния получит самый бедний (фракция 2), усиливая моего главного конкурента по влиянию — против.\"}",
+          "reasoning_content": "Card 4: +1 influence to poorest. Cash: I'm richest (25.9M), poorest is faction 2 (21.7M) with influence 2. Giving them more influence hurts me. Vote no. Opponent 2 already voted yes presumably (voted true). Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738130,
+    "id": "202611151822061c2188a8ded14f98",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151822061c2188a8ded14f98",
+    "usage": {
+      "completion_tokens": 103,
+      "completion_tokens_details": {
+        "reasoning_tokens": 63
+      },
+      "prompt_tokens": 2762,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 2865
+    }
+  }
+}

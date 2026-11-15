@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.288,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":25000000,\"reason\":\"Аукцион только в раунде 4; ожидаемый доход лицензии ~40 при ставке 25 даёт положительный ожидаемый выигрыш, а проигрыш ставки возвращается.\"}",
+          "reasoning_content": "Round 4 action — bid for license? Cash ~39.65 alashi. License income 20–60. Bid maybe 25 alashi = 25000000? Opponents cash 39 and 7.9. Bid 25 seems reasonable but risk: if win, pay 25, get 20–60 plus share. Alternatively produce. Income expected ~40, plus share 50% of bank. Bid 25 might be won or contested. Opponent has 39, could outbid. Tie favors? tie_order unknown. Bid 30 — leaves 9.6. Opponent could bid 39? Then lose 0. Bidding 30 vs produce: produce gives 2 goods worth ~2×9=18 at next market (round 5). Auction only round 4.\n\nExpected license gain 40, paid 30 → +10 net plus it removes from... actually license income paid super-marginally. If I win at 30, net expected +10. If opponent outbids at higher, fine. Risk of overpaying. Bid 25000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738965,
+    "id": "20261115183556f8c1c194e7cd45bc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183556f8c1c194e7cd45bc",
+    "usage": {
+      "completion_tokens": 283,
+      "completion_tokens_details": {
+        "reasoning_tokens": 227
+      },
+      "prompt_tokens": 3353,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 3636
+    }
+  }
+}

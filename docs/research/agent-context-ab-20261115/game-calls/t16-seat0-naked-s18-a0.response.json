@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.28,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товара и рынков больше нет; взятка за влияние (15M ради ~5M бонуса) убыточна и снизит мой cash при борьбе за первое место — пропускаю.\"}",
+          "reasoning_content": "Round 6 action: no goods, no auction. Options: bribe for influence (max influence bonus 5% of bank). I have 54 alashi, richest? Cash: 54.4, 34.6, 22.8 — I'm richest. Influence 1,1,2; rival has 2. Bribe 15M = 3 influence → 4 vs 4, tie broken by cash — I'd win tie (better cash+hard). Bribe to whom? Giving money to player... bribe gives me influence but gives cash to rival, increasing their cash — affects rank? Rank by cash; giving 15M to player 2 increases their total but I'm still ahead. The 5% bank bonus matters. Bank total roughly sum of cash ~112M → 5% ≈ 5.6M. Bribe costs 15M to gain ~5.6M? Not worth. Bribe also affects rank weights for final split — but split is fixed 50:30:15 by weight? Weights fixed. Rank by cash matters most: I'm first with 54M. Giving away money hurts. Better: donkey? costs 1 alashi, gives 1 good — but no more markets, worthless. So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738782,
+    "id": "2026111518325238843937ed304332",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518325238843937ed304332",
+    "usage": {
+      "completion_tokens": 321,
+      "completion_tokens_details": {
+        "reasoning_tokens": 268
+      },
+      "prompt_tokens": 2839,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3160
+    }
+  }
+}

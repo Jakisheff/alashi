@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.803,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% режет мою выручку от продажи трёх товаров в финальном раунде — голосую против.\"}",
+          "reasoning_content": "Law card 1: tax 10%. Harms me as seller in R6 (I'll sell 3 goods). Vote no. Veto pending — I'm not president though... veto_pending true, but I can't veto (not president). Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746750,
+    "id": "202611152045473ee6a87cade34b28",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611152045473ee6a87cade34b28",
+    "usage": {
+      "completion_tokens": 95,
+      "completion_tokens_details": {
+        "reasoning_tokens": 54
+      },
+      "prompt_tokens": 3253,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 3348
+    }
+  }
+}

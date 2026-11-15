@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.576,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 3 даёт +1 товар к производству и шаттлу, что выгодно мне с нулевым товаром на два оставшихся раунда\"}",
+          "reasoning_content": "Law card 3: subsidy_goods=1 — benefits everyone. It's helpful for future produce/shuttle. My weight 3, others voted already. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738034,
+    "id": "202611151820309eb21fd0496146cc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151820309eb21fd0496146cc",
+    "usage": {
+      "completion_tokens": 81,
+      "completion_tokens_details": {
+        "reasoning_tokens": 34
+      },
+      "prompt_tokens": 2428,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2509
+    }
+  }
+}

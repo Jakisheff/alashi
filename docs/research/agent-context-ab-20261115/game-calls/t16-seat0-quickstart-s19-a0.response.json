@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.043,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голос за карту 7 уже отдан, в post_vote дополнительных действий нет\"}",
+          "reasoning_content": "Post_vote, already voted, pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738783,
+    "id": "20261115183258ce3b405ad4344279",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183258ce3b405ad4344279",
+    "usage": {
+      "completion_tokens": 34,
+      "completion_tokens_details": {
+        "reasoning_tokens": 8
+      },
+      "prompt_tokens": 4046,
+      "prompt_tokens_details": {
+        "cached_tokens": 3776
+      },
+      "total_tokens": 4080
+    }
+  }
+}

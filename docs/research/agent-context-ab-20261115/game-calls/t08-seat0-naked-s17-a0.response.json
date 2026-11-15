@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.619,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 6 снижает цены следующего рынка на 2 — прямо режет выручку моей продажи 3 товаров в финальном раунде.\"}",
+          "reasoning_content": "Card 6: prices -2 next market. I have 3 goods to sell in round 6. Vote no. Veto pending — president has veto; I'm not president. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738340,
+    "id": "202611151825381c5f9a66f0734944",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151825381c5f9a66f0734944",
+    "usage": {
+      "completion_tokens": 86,
+      "completion_tokens_details": {
+        "reasoning_tokens": 41
+      },
+      "prompt_tokens": 2765,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 2851
+    }
+  }
+}

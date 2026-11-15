@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.066,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 1 вводит налог 10% — я планирую продавать 2 товара на последнем рынке, налог урежет мою выручку\"}",
+          "reasoning_content": "Law card 1: tax 10%. As richest, tax hurts me. I vote no. But card 5 was last round... did it pass? Influence shows [1,1,2] — player 2 has 2, richest is me (47M)... actually card 5 failed apparently or gave to... whatever. Now tax 10% affects my sales next round (2 goods at price 12 = 24, tax 2.4). Vote no. I'm not president, veto_pending true.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746747,
+    "id": "2026111520454348eb1875a9ac4c79",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111520454348eb1875a9ac4c79",
+    "usage": {
+      "completion_tokens": 151,
+      "completion_tokens_details": {
+        "reasoning_tokens": 107
+      },
+      "prompt_tokens": 2777,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 2928
+    }
+  }
+}

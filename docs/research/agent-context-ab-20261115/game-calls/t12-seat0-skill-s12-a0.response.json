@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.372,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 6 снижает цены следующего рынка на 2 — как продавцу мне это вредит, голосую против.\"}",
+          "reasoning_content": "Law card 6: prices -2 next market. Round 4, next market round 5 I'd sell. Bad for me. Vote no. President? is_president false; opponent 1 voted already. voted[1]=true. I vote no; opponent 2 likely also hurt (all sellers). Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738533,
+    "id": "20261115182851d2d05f94d69641de",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182851d2d05f94d69641de",
+    "usage": {
+      "completion_tokens": 104,
+      "completion_tokens_details": {
+        "reasoning_tokens": 67
+      },
+      "prompt_tokens": 2871,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 2975
+    }
+  }
+}

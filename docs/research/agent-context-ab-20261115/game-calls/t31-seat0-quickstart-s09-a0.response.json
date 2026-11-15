@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.795,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемая ценность shuttle (0.75×3≈2.25 товара) выше, чем produce (2), и cash покрывает возможную дань.\"}",
+          "reasoning_content": "Phase action, round 3. Produce gives 2 (subsidy 0). I have 41.5 cash, 4 goods... wait goods after selling 3? seen says I sold 3 but state goods=4 — I had 3, sold 3? Actually sold_counter=5, goods=4: seems I had... whatever. Shuttle gives 3 with confiscation risk 25%; produce 2. Extra unit ~8-10 alashi minus risk. Shuttle EV: 0.75*3=2.25 units vs 2. Also could buy goods later? Produce is safe. Confiscation loses all shuttle goods. EV units shuttle 2.25 > 2, worth ~2-3 alashi. But if confiscated, lose goods worth ~20. EV still positive. I'll shuttle... actually donkey: pay 1 get 1 — could buy multiple donkey? Only one action. Shuttle slightly better EV. Choose shuttle? Risk of losing all; produce certain. EV: shuttle 2.25*~9≈20.25 vs produce 18. I'll take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739591,
+    "id": "202611151846226ba69a70fa6e4f29",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151846226ba69a70fa6e4f29",
+    "usage": {
+      "completion_tokens": 282,
+      "completion_tokens_details": {
+        "reasoning_tokens": 234
+      },
+      "prompt_tokens": 3157,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3439
+    }
+  }
+}

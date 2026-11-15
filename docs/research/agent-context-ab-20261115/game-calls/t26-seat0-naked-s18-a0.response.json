@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.247,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bribe\",\"to\":2,\"amount\":5000000,\"reason\":\"Товар продан, рынок закрыт; взятка 5M даёт +1 влияние, выводя меня на максимум и претендуя на бонус 5% банка при ничтожной потере ранга по кэшу.\"}",
+          "reasoning_content": "Round 6 action: no goods, cash 54M. Options: donkey costs 1 alashi gives 1 good but market already past — no, market phase is done. Donkey now pointless. Shuttle gives goods but no market left (law phase next, then end). So bribe? Bribing gives influence; 5% bank bonus for max influence — tie broken by cash+hard, I have most cash. Bribe 5M to someone gives me +1 influence → 2, others 1 → I'd win influence bonus. But bribe costs 5M cash, and influence bonus is 5% of bank. Bank size unknown; likely commission pool from... unclear magnitude. Cash rank matters for 50:30:15 split — losing 5M cash barely matters. +1 influence could secure extra 5% bank. Risky but likely positive. Bribe 5M to faction 2 (any).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739344,
+    "id": "20261115184216bd02f9983f934908",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184216bd02f9983f934908",
+    "usage": {
+      "completion_tokens": 265,
+      "completion_tokens_details": {
+        "reasoning_tokens": 195
+      },
+      "prompt_tokens": 2952,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3217
+    }
+  }
+}

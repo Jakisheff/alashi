@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.254,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Последний раунд — кредит не погасится, продаю все 3 товара за наличные по 12/10/9.\"}",
+          "reasoning_content": "Final market round 6. No tax, prices 12,10,9. Cash selling is better than credit (credit unpaid after last round). Sell all 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739227,
+    "id": "202611151840243b4dd932ec7e4148",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151840243b4dd932ec7e4148",
+    "usage": {
+      "completion_tokens": 77,
+      "completion_tokens_details": {
+        "reasoning_tokens": 35
+      },
+      "prompt_tokens": 3008,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3085
+    }
+  }
+}

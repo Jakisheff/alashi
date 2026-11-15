@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.997,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нет товара и денег — produce даёт 2 единицы бесплатно, чтобы продать на следующем рынке\"}",
+          "reasoning_content": "I'm behind on goods. Produce gives 2. Donkey: 1 alashi each but I have 0 cash. Produce gives 2 goods.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746683,
+    "id": "2026111520444011044a423f5649a2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111520444011044a423f5649a2",
+    "usage": {
+      "completion_tokens": 63,
+      "completion_tokens_details": {
+        "reasoning_tokens": 32
+      },
+      "prompt_tokens": 1362,
+      "prompt_tokens_details": {
+        "cached_tokens": 1152
+      },
+      "total_tokens": 1425
+    }
+  }
+}

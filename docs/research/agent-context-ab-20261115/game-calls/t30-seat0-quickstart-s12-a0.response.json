@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.716,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Цены с бумом высокие (9 и 8), продаю оба товара сейчас.\"}",
+          "reasoning_content": "Round 4 market, boom +2. Prices ladder at sold_counter=4: next prices 7,6 with +2 → 9,8. Sell 2 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739511,
+    "id": "20261115184508f885fa8b888a4f93",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184508f885fa8b888a4f93",
+    "usage": {
+      "completion_tokens": 70,
+      "completion_tokens_details": {
+        "reasoning_tokens": 37
+      },
+      "prompt_tokens": 3399,
+      "prompt_tokens_details": {
+        "cached_tokens": 3136
+      },
+      "total_tokens": 3469
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.76,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 5 даёт +1 влияния богатейшему — при ничьей по кэшу (22 против 22) рискую усилить соперника, а мне президентство и так не светит, поэтому против.\"}",
+          "reasoning_content": "Law card 5: +1 influence to richest. Cash: me 22, others 13 and 22. Tie at 22 — tie_order decides richest. My_idx 0 vs 2 tie 22M. Tie order likely my_idx 0 first? Unknown. If richest gets +1 influence, benefits whoever. If it's me, good. I'm not president; vote weight 1 each, opponent 2 already voted. Card 5 might give rival influence. I should vote no if richest isn't me. Tie between 0 and 2 — risky, likely tie_order favors lower index? Uncertain. Vote no seems safer: rivals have more influence gains.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738611,
+    "id": "20261115183005e7fc80faafd9460b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183005e7fc80faafd9460b",
+    "usage": {
+      "completion_tokens": 199,
+      "completion_tokens_details": {
+        "reasoning_tokens": 140
+      },
+      "prompt_tokens": 2258,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2457
+    }
+  }
+}

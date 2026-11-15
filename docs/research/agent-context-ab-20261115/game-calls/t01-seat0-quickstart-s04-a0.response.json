@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.981,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продаю оба товара по высокой цене лестницы, пока она не упала от общих продаж.\"}",
+          "reasoning_content": "I have 2 goods. Others have 2 goods each too. Sold counter 2? Round 2 market. Sell 2 units at prices... ladder starts [12,10,9,...] with sold_counter=2 already, so first units price 9,8. Sell both.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737762,
+    "id": "20261115181559e5ed9c1907b64204",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181559e5ed9c1907b64204",
+    "usage": {
+      "completion_tokens": 95,
+      "completion_tokens_details": {
+        "reasoning_tokens": 60
+      },
+      "prompt_tokens": 2685,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2780
+    }
+  }
+}

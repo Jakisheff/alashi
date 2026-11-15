@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.234,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голос против налога уже отдан, veto_pending=false — дополнительных действий в post_vote нет\"}",
+          "reasoning_content": "Law card 1 (tax 10%) — I voted no. Post_vote, voted already; only pass makes sense (veto is for president against passed law, veto_pending false — but I could veto if it passed? veto action only when veto_pending). Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738763,
+    "id": "20261115183239d91cd651a7844334",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183239d91cd651a7844334",
+    "usage": {
+      "completion_tokens": 84,
+      "completion_tokens_details": {
+        "reasoning_tokens": 55
+      },
+      "prompt_tokens": 3697,
+      "prompt_tokens_details": {
+        "cached_tokens": 3392
+      },
+      "total_tokens": 3781
+    }
+  }
+}

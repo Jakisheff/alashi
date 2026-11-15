@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.313,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Карта 4 даёт сопернику +1 влияния, что отнимет у меня президентство и бонус максимального влияния — бесплатное вето блокирует это.\"}",
+          "reasoning_content": "Post-vote, law card 4. Vote done; card 4 likely passed or not — I voted no; others? voted all true. Card 4 gives influence to poorest — bad but minor. Not veto-worthy? Veto is free. If passed, poorest gets +1 influence, threatening presidency. I'm president with cash advantage. Using veto blocks it. Free, prevents influence loss of presidency (presidency gives influence bonus 5% bank share... actually max influence gets 5%). Veto seems good.\n\nBut card 4: +1 influence to poorest — could shift max influence. Currently all 1. If passed, one opponent has 2, I lose presidency and the 5% bonus. Veto it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738467,
+    "id": "20261115182742e2b330a8d56d4412",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182742e2b330a8d56d4412",
+    "usage": {
+      "completion_tokens": 199,
+      "completion_tokens_details": {
+        "reasoning_tokens": 150
+      },
+      "prompt_tokens": 2710,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2909
+    }
+  }
+}

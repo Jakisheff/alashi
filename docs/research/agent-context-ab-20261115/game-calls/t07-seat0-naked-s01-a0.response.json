@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.421,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Нет денег на взятки, шаттл даёт 3 товара с ожиданием ~2.25 против 2 от производства.\"}",
+          "reasoning_content": "I have vote_weight 3 (passed action gives +2). Action phase round 1: shuttle gives 3 goods, risk confiscation 25%. Others have 2 goods each. Produce gives 2. Donkey costs 1 (no cash). No cash so shuttle free, 25% confiscation — expected 2.25 goods vs produce 2. Shuttle better expected value.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738194,
+    "id": "202611151823064cf49e2683ca47a7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151823064cf49e2683ca47a7",
+    "usage": {
+      "completion_tokens": 119,
+      "completion_tokens_details": {
+        "reasoning_tokens": 80
+      },
+      "prompt_tokens": 1358,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1477
+    }
+  }
+}

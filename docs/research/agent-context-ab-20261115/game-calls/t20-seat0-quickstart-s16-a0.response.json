@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.469,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 2 товара дадут ~20+ alashi на последнем рынке; альтернативы хуже.\"}",
+          "reasoning_content": "Round 5 action. No goods, cash 9.08M. I have 2 goods? goods=[0,0,2] — my_idx=0, so I have 0. Others: idx1 cash 26.7, idx2 goods 2. Bid was lost (opponent bid more? cash 43M → after bid? Actually my bid 25M returned? my cash 14.65 after bid; then border → floor/100*62: 14.65→ floor 14*62? Actually floor(14.65M... ) → 9085976, so bid lost and returned then devalued. Ouch.\n\nNow produce gives 2 goods for round 6 market; donkey costs 1 gives 1; both. Only one action. Produce free 2 goods. Round 6 sell ~12+10=22 gross, prices will drop. Produce is best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738986,
+    "id": "202611151836195bfc27df9c5a4ede",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151836195bfc27df9c5a4ede",
+    "usage": {
+      "completion_tokens": 230,
+      "completion_tokens_details": {
+        "reasoning_tokens": 194
+      },
+      "prompt_tokens": 3721,
+      "prompt_tokens_details": {
+        "cached_tokens": 3456
+      },
+      "total_tokens": 3951
+    }
+  }
+}

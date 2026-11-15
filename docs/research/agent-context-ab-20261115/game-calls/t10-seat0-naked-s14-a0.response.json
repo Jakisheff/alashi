@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.964,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара для продажи, пропускаю рынок перед фазой действия.\"}",
+          "reasoning_content": "Round 5 market, no goods. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738436,
+    "id": "20261115182714303af8ee852046ea",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182714303af8ee852046ea",
+    "usage": {
+      "completion_tokens": 36,
+      "completion_tokens_details": {
+        "reasoning_tokens": 10
+      },
+      "prompt_tokens": 2531,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2567
+    }
+  }
+}

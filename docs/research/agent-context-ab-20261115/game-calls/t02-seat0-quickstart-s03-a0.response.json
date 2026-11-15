@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.448,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Промиссори зачисляется после девальвации на границе раунда, поэтому продажа в кредит по высокой стартовой цене даёт 1.25x без потерь.\",\"note\":\"units-int\"}",
+          "reasoning_content": "Round 2 market. I have 2 goods, no promissory. Sell credit gives 1.25x, devaluation 62%. Sell credit round 2: promissory added to cash at round boundary then devalued? \"На границе раундов 2+ cash=floor(cash/100)*62\" then promissory added? Order: devaluation happens, promissory added and zeroed. So sell_credit now at price ~12: revenue 2*12*1.25=30 promissory, added after devaluation — full value! So sell_credit is great.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737966,
+    "id": "20261115181920fa3c5a5e93594824",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181920fa3c5a5e93594824",
+    "usage": {
+      "completion_tokens": 188,
+      "completion_tokens_details": {
+        "reasoning_tokens": 129
+      },
+      "prompt_tokens": 2619,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2807
+    }
+  }
+}

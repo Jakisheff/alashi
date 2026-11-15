@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.339,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 3 (subsidy_goods) подействует только на produce раунда 6, который уже после последнего рынка — продать товар нельзя, исход мне безразличен.\"}",
+          "reasoning_content": "Card 3: subsidy_goods=1, gives me +1 goods per produce — helps opponents too (they each have 2 goods, likely will sell in round 6 market before me? Order unknown). I'm president, influence 3, others weight 1 each, one already voted (presumably yes?). voted[2]=true. My weight 3 vs 1+1... I could pass veto anyway. Subsidy helps everyone who produces; only I plan to produce in round 6? Opponents have goods already 2, may sell round 6. Subsidy only matters if they produce again. Round 6 action comes after market, so subsidy only affects produce in round 6's action phase — after final market, useless for selling. So card 3 is useless: goods produced in round 6 action can't be sold. Vote no or abstain. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737848,
+    "id": "2026111518172243c2e3306c114342",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518172243c2e3306c114342",
+    "usage": {
+      "completion_tokens": 240,
+      "completion_tokens_details": {
+        "reasoning_tokens": 186
+      },
+      "prompt_tokens": 2862,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3102
+    }
+  }
+}

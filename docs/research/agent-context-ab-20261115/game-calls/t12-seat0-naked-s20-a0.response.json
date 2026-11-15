@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.401,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Рынок уже пройден, товар больше не продать, влияние у меня максимальное (бонус 5% обеспечен) — любой платный ход лишь уменьшит итоговый cash.\"}",
+          "reasoning_content": "Round 6 action. Options: produce (no goods benefit for sale since market passed), donkey (buy goods but no more market), shuttle — useless. Bid not allowed (only round 4). Bribe converts cash to influence — cash devalues at border? Round 6 is last; no more border? Border after round 6? Devaluation occurs rounds 2+... after round 6 likely cash still counted. Influence gives 5% bank bonus to max influence — I already have 4, highest. So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738564,
+    "id": "20261115182919ff446cbb497f4cce",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182919ff446cbb497f4cce",
+    "usage": {
+      "completion_tokens": 164,
+      "completion_tokens_details": {
+        "reasoning_tokens": 109
+      },
+      "prompt_tokens": 3131,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3295
+    }
+  }
+}

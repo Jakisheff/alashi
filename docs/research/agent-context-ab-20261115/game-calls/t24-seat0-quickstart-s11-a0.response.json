@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.441,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Кредитная продажа 2 единиц по ~9/8 с бонусом 1.25x обходит девальвацию и даёт максимум выручки\"}",
+          "reasoning_content": "Round 4 market, boom 0, sold_counter 2, prices: next units at index 2 = 9,8. I have 2 goods. Sell now at ~9 and 8 = 17 alashi, no tax. Selling normal is fine; credit pays next round border with 1.25x — promissory added to cash then floor/62? No, promissory is added after devaluation, so credit avoids devaluation too and gets 1.25x. But round 5 border it will be added. That's fine — round 4 sell_credit matures at round 5 border, still usable. So sell_credit 2 units gives 17*1.25≈21.25 alashi. Better.\n\nAlso round 4 auction — need cash for bid. Cash 48.7 available. Bid later.\n\nSell credit 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739196,
+    "id": "20261115183951f79a1112e9ed4d1e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183951f79a1112e9ed4d1e",
+    "usage": {
+      "completion_tokens": 230,
+      "completion_tokens_details": {
+        "reasoning_tokens": 181
+      },
+      "prompt_tokens": 3296,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 3526
+    }
+  }
+}

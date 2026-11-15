@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.243,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 5 даёт +1 влияния богатейшему (сопернику с 40.6M), усиливая его голос и бонус влияния в финале — против.\"}",
+          "reasoning_content": "Card 5: +1 influence to richest — that's player 1 (40.6M vs my 10.5M). I'm not president, votes: others voted yes already? voted=[false,true,true]. If it passes, richest gains influence. Oppose: vote_no. My vote weight 3 vs their 6 — passes anyway, but vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738147,
+    "id": "20261115182223c2259194d9d140c7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182223c2259194d9d140c7",
+    "usage": {
+      "completion_tokens": 128,
+      "completion_tokens_details": {
+        "reasoning_tokens": 77
+      },
+      "prompt_tokens": 2826,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 2954
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.423,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Карта 7 уже не влияет на выплату (следующего рынка нет), veto не нужен.\"}",
+          "reasoning_content": "Post_vote, law 7 passed or not — irrelevant, no veto needed. Card 7 helps no one (no next market). Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739442,
+    "id": "202611151843587eec626f01dc4f29",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151843587eec626f01dc4f29",
+    "usage": {
+      "completion_tokens": 59,
+      "completion_tokens_details": {
+        "reasoning_tokens": 29
+      },
+      "prompt_tokens": 3858,
+      "prompt_tokens_details": {
+        "cached_tokens": 3584
+      },
+      "total_tokens": 3917
+    }
+  }
+}

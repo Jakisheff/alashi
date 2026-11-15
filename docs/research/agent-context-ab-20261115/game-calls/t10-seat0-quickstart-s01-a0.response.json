@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.705,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нет денег, товар бесплатно: produce даёт 2 единицы к нулю.\"}",
+          "reasoning_content": "Action phase, round 1. Produce gives 2 goods (no subsidy). Donkey costs 1 alashi but I have 0 cash. So produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738380,
+    "id": "20261115182618fd209ee8953044e1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182618fd209ee8953044e1",
+    "usage": {
+      "completion_tokens": 60,
+      "completion_tokens_details": {
+        "reasoning_tokens": 33
+      },
+      "prompt_tokens": 2455,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 2515
+    }
+  }
+}

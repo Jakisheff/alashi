@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 14.313,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bribe\",\"to\":2,\"amount\":5000000,\"reason\":\"Товар и рынок исчерпаны; взятка 5M даёт +1 влияния, сравнивая меня с лидером и побеждая по cash, что приносит бонус 5% банка сверх стоимости.\"}",
+          "reasoning_content": "Round 6 action. Cash ~36.8, no goods. Options: produce (no market left after action? Round 6 market already done, so produced goods useless). Donkey useless. Shuttle: grey goods confiscated chance, no more market to sell — useless. Bribe for influence: influence max gets extra 5% of bank. Rival 2 has influence 2; I have 1. Bribe 5M = +1 influence → tie at 2, but tie broken by better cash — I have most cash? Rival 0? cash: me 36.8, others 35.4, 24.9. So tie at influence 2, I win by cash. Bribe costs 5, gains extra 5% of bank. Bank unknown; total cash ~97 alashi = bank, plus commission 5%. 5% of bank... actually prize distributed 5% to max influence from commission. Bank ~97+? The extra 5% ≈ 5 alashi. Cost 5M bribe = 5 alashi, and cash also counts in rank/share. Net roughly zero-to-negative? Bribe 5M reduces cash by 5 and influence gain gives 5% of bank (~5). But share depends on weights 50:30:15 not cash. Cash only matters for rank among us... final rank by cash+hard determines weights assignment? \"Комиссия 5% банка; остаток по весам 50:30:15\" — weights fixed. So bribe -5 cash, +5% bank (~5+). Marginal. But bribe to rival increases their cash by 5 too. Net roughly wash. Also skipping action gives +2 vote weight — irrelevant, no law card? law_card 255 later unknown.\n\nAlternatively bribe 10M → influence 3, beating rival's 2, secure extra 5%. Cost 10, gain ~5. Negative.\n\nBribe 5M ties at 2, tie broken by cash+hard; I have 36.8 vs rival2's 24.9 (after receiving 5? bribe goes to someone; give to rival 2, their cash 29.9, still less). So +1 influence secures extra 5% (~5.7 alashi on ~97+bank... bank includes cash? bank is prize pool). Gain ~5-6, cost 5 bribe. Slightly positive. Do bribe 5M to faction 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738045,
+    "id": "202611151820324deb613c18b948f2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151820324deb613c18b948f2",
+    "usage": {
+      "completion_tokens": 593,
+      "completion_tokens_details": {
+        "reasoning_tokens": 525
+      },
+      "prompt_tokens": 3519,
+      "prompt_tokens_details": {
+        "cached_tokens": 3264
+      },
+      "total_tokens": 4112
+    }
+  }
+}
