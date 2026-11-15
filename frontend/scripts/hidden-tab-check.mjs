@@ -23,7 +23,22 @@ try {
   page.on('pageerror', (e) => errors.push(String(e)))
   await page.goto(`${origin}/live`, { waitUntil: 'load', timeout: 60000 })
   await page.waitForSelector('.live-feed article', { timeout: 60000 })
-  await sleep(1500)
+
+  // Readiness: the `before` snapshot must be taken only after the demo
+  // clock has ticked at least once. A fixed sleep races the page startup:
+  // if the guards finish initializing after `before` is captured but before
+  // the tab is hidden, the clock keeps ticking in the hidden phase and the
+  // freeze assertion fails without any product change (observed as three
+  // consecutive CI failures on unchanged frontend code, 14-15 Nov 2026).
+  const clockOf = () => document.querySelector('.live-playback-meta span')?.textContent ?? ''
+  let firstClock = await page.evaluate(clockOf)
+  let ticks = false
+  for (let i = 0; i < 60 && !ticks; i++) {
+    await sleep(500)
+    const c = await page.evaluate(clockOf)
+    if (c !== firstClock && c !== '') ticks = true; else firstClock = c
+  }
+  if (!ticks) throw new Error('demo clock never ticked before the check started')
 
   const before = await page.evaluate(() => ({
     clock: document.querySelector('.live-playback-meta span')?.textContent ?? '',
