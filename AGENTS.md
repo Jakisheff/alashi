@@ -115,6 +115,9 @@ platform-tools v1.54). A green rules-only run is not a green program.
 - Build SBF with `bash tools/build_sbf.sh` (cargo-build-sbf 4.1.0,
   platform-tools v1.54, isolated cache)
   before running `cargo test --locked -p alashi`.
+- `bash tools/sbf_gate.sh` must exit 0 between build and program tests: it
+  refuses a stale or foreign `.so` (sha256 manifest, ELF header, source
+  freshness). Green rules-only runs do not bypass it.
 
 For changes to rules or instructions, cover happy path, voting, forced exit,
 payout, and rake. Run both epoch replay-equivalence tests when SBF is available.

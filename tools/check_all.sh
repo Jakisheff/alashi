@@ -24,6 +24,12 @@ cargo build --locked --manifest-path bots/Cargo.toml || fail "bots"
 step "cargo check программы alashi (компиляция без SBF-тестов)"
 cargo check --locked -p alashi || fail "cargo check alashi"
 
+step "agent config lint (AGENTS.md budget, SKILL.md manifests)"
+python3 tools/lint_agent_configs.py || fail "lint_agent_configs"
+
+step "sbf gate self-test"
+python3 tools/test_sbf_gate.py || fail "test_sbf_gate"
+
 if [ -d frontend/node_modules ]; then
     step "frontend typecheck"
     (cd frontend && npm run typecheck) || fail "typecheck"
@@ -34,4 +40,4 @@ else
 fi
 
 printf '\nALL LOCAL CHECKS GREEN\n'
-printf 'Не покрыто здесь: SBF-сборка и тесты программы (bash tools/build_sbf.sh, затем cargo test --locked -p alashi), gitleaks, RustSec-аудит (CI).\n'
+printf 'Не покрыто здесь: SBF-сборка и тесты программы (bash tools/build_sbf.sh, затем bash tools/sbf_gate.sh и cargo test --locked -p alashi), gitleaks, RustSec-аудит (CI).\n'
