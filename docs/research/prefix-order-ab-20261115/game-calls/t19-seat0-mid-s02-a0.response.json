@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.321,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон 8 списывает непогашенные promissory, что может лишить меня выгоды от sell_credit в будущем\"}",
+          "reasoning_content": "Law card 8: cancels all outstanding promissory notes. I likely have no promissory notes (round 1, sold_counter 0, cash 0). Harmless to others too—but it could hurt if I plan sell_credit. Actually card 8 wipes promissory — passing it prevents sell_credit later? It only cancels existing ones now. Others voted already? voted [false,true,true]. I'm president. Card 8 is mostly neutral/harmful to whoever plans credit. Vote no; if it passes anyway, veto? Others' votes unknown. I'd prefer card not pass so I could use sell_credit later. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767157,
+    "id": "20261116022551c966ff169e1e4faa",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022551c966ff169e1e4faa",
+    "usage": {
+      "completion_tokens": 172,
+      "completion_tokens_details": {
+        "reasoning_tokens": 135
+      },
+      "prompt_tokens": 1380,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1552
+    }
+  }
+}

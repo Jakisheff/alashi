@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.473,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Безопасные 2 товара по высокой цене стоят ~24 alashi, а моё влияние и так доминирует\"}",
+          "reasoning_content": "Round 5, cash 8.06M, no goods. Produce gives 2 goods, sell later at ~12 each = 24. Shuttle gives 3 with 25% risk. Produce is safe. But influence matters: I'm president with weight 5. Could bribe to gain influence? Bribe 5M costs cash for +1 influence—maybe not needed. Produce best for goods value.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767407,
+    "id": "20261116023003d325d621f98043e7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023003d325d621f98043e7",
+    "usage": {
+      "completion_tokens": 119,
+      "completion_tokens_details": {
+        "reasoning_tokens": 85
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1640
+    }
+  }
+}

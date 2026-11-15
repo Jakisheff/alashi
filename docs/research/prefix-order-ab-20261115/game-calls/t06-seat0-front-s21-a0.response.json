@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.943,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Последний раунд: товары больше не продать, а взятка только перекачает деньги соперникам при уже максимальном влиянии.\"}",
+          "reasoning_content": "Round 6 action. Cash ~28 alashi, goods 0. No more sell after this? Market phase each round, but this is action phase round 6; market comes before action presumably. Actually round structure: market, action, law. So action now, no more market. Goods worthless now. Produce useless. Shuttle confiscation/donkey useless. Bribe? Influence gives extra 5% bank commission share at max influence. I'm already max influence (2 vs 1). President already. Bribe to self? bribe transfers amount to recipient... \"bribe переводит amount получателю to\" — to another faction increases influence. Increasing my influence beyond 2? Bribe gives influence to me? \"даёт floor(amount/5000000) влияния\" — to me? Presumably bribing gives me influence but costs money to recipient. Bribe 5M to a rival gives them 5M and me +1 influence. Max influence prize: 5% of bank commission... small. Cost 5M vs gain influence-based share. Marginal. Best: pass to keep cash.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766805,
+    "id": "2026111602195943be3417e58547e9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602195943be3417e58547e9",
+    "usage": {
+      "completion_tokens": 270,
+      "completion_tokens_details": {
+        "reasoning_tokens": 230
+      },
+      "prompt_tokens": 1523,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1793
+    }
+  }
+}

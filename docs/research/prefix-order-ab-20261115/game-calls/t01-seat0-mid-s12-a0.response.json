@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.343,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":20000000,\"reason\":\"Аукцион только в раунде 4: ожидаемый доход лицензии ~40 при ставке 20 даёт положительное матожидание, а конкуренты едва ли переплюнут.\"}",
+          "reasoning_content": "Round 4, license auction. Income ~20-60, share weight 50%. Bidding cost full amount to bank. Rival cash ~32.7 and 25.5. My cash 46.1. Bid maybe 20 alashi? If I win with 20M, license income 20-60 paid to me above share, but I pay 20 to bank. Expected value: paying A reduces my cash; license gives L (20-60, mean 40). Net expected +40-20=20 if rivals can't outbid. But rivals bid up to ~25-32. Blind auction: reasonable bid ~25? They may bid high too. Risk of losing money. Middle path: bid 20M.\n\nAlternatively shuttle/produce then sell later. Round 4 market already passed? Phases: market, action, law per round; decision_stage primary = action after market? Actually round 4 action now; market already done this round. Two more rounds of markets (5,6). Bid 20 seems decent EV. Go with bid 20000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766538,
+    "id": "2026111602153025de843a4040477f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602153025de843a4040477f",
+    "usage": {
+      "completion_tokens": 283,
+      "completion_tokens_details": {
+        "reasoning_tokens": 226
+      },
+      "prompt_tokens": 1520,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1803
+    }
+  }
+}

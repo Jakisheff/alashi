@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.635,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нет денег для взяток, товар даст выручку на следующем рынке\"}",
+          "reasoning_content": "I have 0 cash, 0 goods. Produce gives 2 goods. Best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766844,
+    "id": "20261116022040b9f23f2f77524166",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022040b9f23f2f77524166",
+    "usage": {
+      "completion_tokens": 43,
+      "completion_tokens_details": {
+        "reasoning_tokens": 18
+      },
+      "prompt_tokens": 1515,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1558
+    }
+  }
+}

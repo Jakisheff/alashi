@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.801,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 0 — пустой закон, ничего не меняет.\"}",
+          "reasoning_content": "Law card 0 = nothing. Vote already happened (post_vote). Card 0 passes nothing—abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766795,
+    "id": "2026111602195356c169596ec04fcd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602195356c169596ec04fcd",
+    "usage": {
+      "completion_tokens": 51,
+      "completion_tokens_details": {
+        "reasoning_tokens": 24
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1442
+    }
+  }
+}

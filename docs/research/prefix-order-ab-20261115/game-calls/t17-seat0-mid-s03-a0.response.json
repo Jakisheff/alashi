@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.838,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 8 сейчас безвредна (непогашённых promissory ни у кого нет), а при равных весах мой «за» помогает её принять без затрат.\"}",
+          "reasoning_content": "Card 8 cancels promissory notes. No one has promissory (visible). I have no goods, opponents have 2 each; I may sell_credit later. Veto not pending; president can veto. If passed, card 8 wipes promissories — but none outstanding? Mine aren't shown; I likely have none. Card 8 also affects others' future credits? Only wipes current. Passing it now is harmless. Also passing a law—voted already, phase \"post_vote\"? Wait, decision_stage post_vote and veto_pending false... but phase law with options vote. Odd. Likely pre-veto vote. I'll vote_yes harmlessly? Card 8 wipes promissory—could hurt me later? Only immediate. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767142,
+    "id": "20261116022536394f1a6c02e14549",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022536394f1a6c02e14549",
+    "usage": {
+      "completion_tokens": 205,
+      "completion_tokens_details": {
+        "reasoning_tokens": 156
+      },
+      "prompt_tokens": 1381,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1586
+    }
+  }
+}

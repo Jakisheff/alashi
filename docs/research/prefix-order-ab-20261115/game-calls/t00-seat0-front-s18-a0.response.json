@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.908,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% ударит по мне как по богатейшему, а президентское вето при необходимости подстрахует.\"}",
+          "reasoning_content": "Card 1: tax 10%. I'm richest. Vote no. Others each weight 1, one already voted (unknown). My no: if tie/no majority... pass requires yes>no. Vote no, veto if needed — but veto only before counting; can't know. Just vote_no, veto if pending later. Answer vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766562,
+    "id": "20261116021558551b7004a63b4552",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021558551b7004a63b4552",
+    "usage": {
+      "completion_tokens": 108,
+      "completion_tokens_details": {
+        "reasoning_tokens": 71
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1499
+    }
+  }
+}

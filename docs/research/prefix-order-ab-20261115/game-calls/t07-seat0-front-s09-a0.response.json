@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.431,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"EV товара выше, чем у produce (2.25 против 2), риск конфискации приемлем\"}",
+          "reasoning_content": "Round 3, cash 30M, tax 20%. Actions: produce gives 2 goods. Shuttle 3 goods with 25% confiscation risk. Donkey costs 1. Goods needed for selling at low prices... sold_counter=6, prices later low. Produce is safe +2. Shuttle EV 2.25 goods vs 2. Produce slightly better risk-free but shuttle more. Tax 20% hurts revenue. Prices at counter 6: ladder [12,10,9,8,7,6...] — but goods next round market sells at price ~5-6. Produce gives 2, shuttle 3 with risk. EV shuttle 2.25 > 2. I'll shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766802,
+    "id": "2026111602195841b7ff8375334187",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602195841b7ff8375334187",
+    "usage": {
+      "completion_tokens": 181,
+      "completion_tokens_details": {
+        "reasoning_tokens": 148
+      },
+      "prompt_tokens": 1518,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1699
+    }
+  }
+}

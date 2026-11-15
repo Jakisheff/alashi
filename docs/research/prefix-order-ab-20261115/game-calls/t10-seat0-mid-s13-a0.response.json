@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.285,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":25000000,\"reason\":\"Лицензия приносит в среднем ~40 alashi сверх доли; ставка 25M перекрывает вероятные ставки соперников при положительном ожидании.\"}",
+          "reasoning_content": "Round 4 action phase — auction available. License income 20-60 alashi, paid on top of share. Cash ~64.7 alashi. Bid something like 20-30? Expected value 40 minus share... winning bid gives ~40 extra minus bid. Bid 30 alashi? Rivals have ~37 and ~29. Bid 30 seems reasonable to outbid. But cash floor: cash devaluation happens at round borders; cash spent reduces payout. Winning costs bid fully. Expected gain = ~40 income - bid. Need bid > rivals' likely bids. Rival 1 has 37.5 cash, rival 2 29.5. Bid 25 alashi (25,000,000).\n\nAlternatively produce for selling next round... but license seems good. Bid 25M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766881,
+    "id": "2026111602211463e679c293a341bb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602211463e679c293a341bb",
+    "usage": {
+      "completion_tokens": 219,
+      "completion_tokens_details": {
+        "reasoning_tokens": 167
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1740
+    }
+  }
+}

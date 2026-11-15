@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.501,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товары уже нельзя продать, а взятка только уменьшит итоговый cash без явной выгоды.\"}",
+          "reasoning_content": "Round 6, final round. Cash ~35.66M, goods 0. Shuttle gives 4 goods (subsidy 1). Goods could be sold in market... wait order: each round market, action, law. Round 6 action comes after market — no more market. So goods useless. Best: pass? Bribe for influence gives max influence bonus 5% of bank? Bank unknown. Influence 1 now, others 1,2. Bribe 5M to gain influence — but gives cash away, and final rank by cash. Passing action gives +2 vote weight but law card 255... law card unknown at this stage? It says law_card 255 (no card yet). Influence bonus: 5% of bank to max influence. Bribing 5M costs 5M cash but might gain influence 2 vs faction 2's 2. Tie favors better cash+hard. Cost 5M; gain uncertain. Better pass (avoid losing cash).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766893,
+    "id": "2026111602212710f96bd8d0694fba",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602212710f96bd8d0694fba",
+    "usage": {
+      "completion_tokens": 242,
+      "completion_tokens_details": {
+        "reasoning_tokens": 206
+      },
+      "prompt_tokens": 1522,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1764
+    }
+  }
+}

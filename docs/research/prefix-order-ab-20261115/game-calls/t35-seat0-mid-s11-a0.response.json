@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.677,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Снижение цен на 2 при уже падающей лестнице вредит моей выручке следующего раунда.\"}",
+          "reasoning_content": "Law card 6: prices next market -2. Prices low anyway (sold_counter 6 → price ~7-2=5). Card hurts everyone; vote no. Others likely also vote no. vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767783,
+    "id": "202611160236207a02d1946ffd4ab7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160236207a02d1946ffd4ab7",
+    "usage": {
+      "completion_tokens": 80,
+      "completion_tokens_details": {
+        "reasoning_tokens": 44
+      },
+      "prompt_tokens": 1387,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1467
+    }
+  }
+}

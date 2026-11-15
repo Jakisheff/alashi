@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.538,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Налог 20% снизит мою выручку как крупнейшего продавца — блокирую как президент.\"}",
+          "reasoning_content": "Law card 2: tax 20%. I'm president, wealthiest. Veto? Vote already happened (post_vote). Wait, phase law, veto_pending false. Voting occurred; I can still vote. Card 2 hurts me (20% tax on revenue). Best: veto to block tax.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767470,
+    "id": "2026111602310600c03b51cf6444f5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602310600c03b51cf6444f5",
+    "usage": {
+      "completion_tokens": 96,
+      "completion_tokens_details": {
+        "reasoning_tokens": 61
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1487
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.92,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товара нет, покупать невыгодно — пропускаю рынок.\"}",
+          "reasoning_content": "No goods, no point buying. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767388,
+    "id": "202611160229467cdceb9a493d4842",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160229467cdceb9a493d4842",
+    "usage": {
+      "completion_tokens": 35,
+      "completion_tokens_details": {
+        "reasoning_tokens": 9
+      },
+      "prompt_tokens": 1427,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1462
+    }
+  }
+}

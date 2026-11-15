@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.243,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 0 — пустой закон, тратить голос не имеет смысла.\"}",
+          "reasoning_content": "Card 0 = nothing. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766958,
+    "id": "202611160222361f39d533929a4e19",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160222361f39d533929a4e19",
+    "usage": {
+      "completion_tokens": 40,
+      "completion_tokens_details": {
+        "reasoning_tokens": 10
+      },
+      "prompt_tokens": 1387,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1427
+    }
+  }
+}

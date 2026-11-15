@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.082,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Налог 20% сильнее бьёт по более богатым соперникам, а у меня меньше всего денег, что улучшает мой относительный ранг.\"}",
+          "reasoning_content": "Law card 2: tax 20%. I'm lowest cash. Tax reduces my competitors more? Tax applies to sales revenue. I have 0 goods, but can produce later (rounds 5,6 markets). Tax hurts me too. Vote no? Tax hits rich more in absolute; but final payout based on rank. 20% tax reduces their cash relative to mine. Vote yes helps me relatively.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767295,
+    "id": "20261116022811c0954a9088e246d3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022811c0954a9088e246d3",
+    "usage": {
+      "completion_tokens": 128,
+      "completion_tokens_details": {
+        "reasoning_tokens": 84
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1518
+    }
+  }
+}

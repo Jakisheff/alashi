@@ -1,0 +1,946 @@
+{
+  "schema": 1,
+  "created_utc": "2026-11-15T18:14:06+00:00",
+  "status": "frozen_before_collection",
+  "study": "prefix-order-ab",
+  "question": "Does moving the stable identity+menu block ahead of the dynamic state raise provider prefix-cache hits and cut billed prompt tokens, without shifting behavior?",
+  "model": "glm-5.3",
+  "executor_settings": {
+    "model": "glm-5.3",
+    "thinking": {
+      "type": "enabled"
+    },
+    "reasoning_effort": "low",
+    "temperature": 0.7,
+    "top_p": 0.95,
+    "max_tokens": 3072,
+    "response_format": {
+      "type": "json_object"
+    }
+  },
+  "collection_limits": {
+    "calls": 3200,
+    "prompt_tokens": 5600000,
+    "completion_tokens": 800000,
+    "wall_s": 7200
+  },
+  "workers": 6,
+  "seed_prng": 20261116,
+  "seeds": [
+    8726986848995026288,
+    5860937928095992874,
+    7903238188612657053,
+    3111362660695813859,
+    5968369505390681498,
+    5300624586840978963,
+    4666373257243272955,
+    6342023335141400469,
+    7010791291859368488,
+    4629796927091377604,
+    5297910392164333529,
+    3358029062333315074,
+    8660741918920370222,
+    5197173676347641977,
+    4031640619936910783,
+    3291047529381410375,
+    2373226057731091407,
+    8065204813091594918,
+    337758022193199018,
+    5283055283963385327,
+    3718176047830181280,
+    5930619809264718850,
+    7207320062290639230,
+    8283381264595275841,
+    1696882523729092018,
+    7531005522771923974,
+    53357132825271229,
+    8666283481165343556,
+    3648140257155246821,
+    6573923790552598108,
+    1775854237522297474,
+    1276292875634686146,
+    6705316107661069083,
+    5054902430641128268,
+    7134343577668305722,
+    1062635302252528182
+  ],
+  "arms": {
+    "mid": "user = OWNER + state + identity + menu (current agent.rs order, agent.rs:1394-1399)",
+    "front": "user = OWNER + identity + menu + state (cache-friendly candidate from prefix-audit.md)"
+  },
+  "primary": "cached prompt tokens per call (usage.prompt_tokens_details.cached_tokens) and billed prompt tokens per call (usage.prompt_tokens), front vs mid, paired by seed",
+  "secondary": "payout paired exact Wilcoxon front-mid per seed cluster; parse-error and illegal-action games via McNemar",
+  "engine_source_commit": "f172e8b",
+  "engine_binary_sha256": "62e9ea2b3e53e8854b6e1de8e8e21e0653ab70bbb17a54ec8156392457117d07",
+  "jobs": [
+    {
+      "id": "t00-seat0-mid",
+      "seed_index": 0,
+      "seed": 8726986848995026288,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t00-seat0-front",
+      "seed_index": 0,
+      "seed": 8726986848995026288,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t01-seat0-mid",
+      "seed_index": 1,
+      "seed": 5860937928095992874,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t01-seat0-front",
+      "seed_index": 1,
+      "seed": 5860937928095992874,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t02-seat0-mid",
+      "seed_index": 2,
+      "seed": 7903238188612657053,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t02-seat0-front",
+      "seed_index": 2,
+      "seed": 7903238188612657053,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t03-seat0-mid",
+      "seed_index": 3,
+      "seed": 3111362660695813859,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t03-seat0-front",
+      "seed_index": 3,
+      "seed": 3111362660695813859,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t04-seat0-mid",
+      "seed_index": 4,
+      "seed": 5968369505390681498,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t04-seat0-front",
+      "seed_index": 4,
+      "seed": 5968369505390681498,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t05-seat0-mid",
+      "seed_index": 5,
+      "seed": 5300624586840978963,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t05-seat0-front",
+      "seed_index": 5,
+      "seed": 5300624586840978963,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t06-seat0-mid",
+      "seed_index": 6,
+      "seed": 4666373257243272955,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t06-seat0-front",
+      "seed_index": 6,
+      "seed": 4666373257243272955,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t07-seat0-mid",
+      "seed_index": 7,
+      "seed": 6342023335141400469,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t07-seat0-front",
+      "seed_index": 7,
+      "seed": 6342023335141400469,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t08-seat0-mid",
+      "seed_index": 8,
+      "seed": 7010791291859368488,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t08-seat0-front",
+      "seed_index": 8,
+      "seed": 7010791291859368488,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t09-seat0-mid",
+      "seed_index": 9,
+      "seed": 4629796927091377604,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t09-seat0-front",
+      "seed_index": 9,
+      "seed": 4629796927091377604,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t10-seat0-mid",
+      "seed_index": 10,
+      "seed": 5297910392164333529,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t10-seat0-front",
+      "seed_index": 10,
+      "seed": 5297910392164333529,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t11-seat0-mid",
+      "seed_index": 11,
+      "seed": 3358029062333315074,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t11-seat0-front",
+      "seed_index": 11,
+      "seed": 3358029062333315074,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t12-seat0-mid",
+      "seed_index": 12,
+      "seed": 8660741918920370222,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t12-seat0-front",
+      "seed_index": 12,
+      "seed": 8660741918920370222,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t13-seat0-mid",
+      "seed_index": 13,
+      "seed": 5197173676347641977,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t13-seat0-front",
+      "seed_index": 13,
+      "seed": 5197173676347641977,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t14-seat0-mid",
+      "seed_index": 14,
+      "seed": 4031640619936910783,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t14-seat0-front",
+      "seed_index": 14,
+      "seed": 4031640619936910783,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t15-seat0-mid",
+      "seed_index": 15,
+      "seed": 3291047529381410375,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t15-seat0-front",
+      "seed_index": 15,
+      "seed": 3291047529381410375,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t16-seat0-mid",
+      "seed_index": 16,
+      "seed": 2373226057731091407,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t16-seat0-front",
+      "seed_index": 16,
+      "seed": 2373226057731091407,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t17-seat0-mid",
+      "seed_index": 17,
+      "seed": 8065204813091594918,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t17-seat0-front",
+      "seed_index": 17,
+      "seed": 8065204813091594918,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t18-seat0-mid",
+      "seed_index": 18,
+      "seed": 337758022193199018,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t18-seat0-front",
+      "seed_index": 18,
+      "seed": 337758022193199018,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t19-seat0-mid",
+      "seed_index": 19,
+      "seed": 5283055283963385327,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t19-seat0-front",
+      "seed_index": 19,
+      "seed": 5283055283963385327,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t20-seat0-mid",
+      "seed_index": 20,
+      "seed": 3718176047830181280,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t20-seat0-front",
+      "seed_index": 20,
+      "seed": 3718176047830181280,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t21-seat0-mid",
+      "seed_index": 21,
+      "seed": 5930619809264718850,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t21-seat0-front",
+      "seed_index": 21,
+      "seed": 5930619809264718850,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t22-seat0-mid",
+      "seed_index": 22,
+      "seed": 7207320062290639230,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t22-seat0-front",
+      "seed_index": 22,
+      "seed": 7207320062290639230,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t23-seat0-mid",
+      "seed_index": 23,
+      "seed": 8283381264595275841,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t23-seat0-front",
+      "seed_index": 23,
+      "seed": 8283381264595275841,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t24-seat0-mid",
+      "seed_index": 24,
+      "seed": 1696882523729092018,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t24-seat0-front",
+      "seed_index": 24,
+      "seed": 1696882523729092018,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t25-seat0-mid",
+      "seed_index": 25,
+      "seed": 7531005522771923974,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t25-seat0-front",
+      "seed_index": 25,
+      "seed": 7531005522771923974,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t26-seat0-mid",
+      "seed_index": 26,
+      "seed": 53357132825271229,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t26-seat0-front",
+      "seed_index": 26,
+      "seed": 53357132825271229,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t27-seat0-mid",
+      "seed_index": 27,
+      "seed": 8666283481165343556,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t27-seat0-front",
+      "seed_index": 27,
+      "seed": 8666283481165343556,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t28-seat0-mid",
+      "seed_index": 28,
+      "seed": 3648140257155246821,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t28-seat0-front",
+      "seed_index": 28,
+      "seed": 3648140257155246821,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t29-seat0-mid",
+      "seed_index": 29,
+      "seed": 6573923790552598108,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t29-seat0-front",
+      "seed_index": 29,
+      "seed": 6573923790552598108,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t30-seat0-mid",
+      "seed_index": 30,
+      "seed": 1775854237522297474,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t30-seat0-front",
+      "seed_index": 30,
+      "seed": 1775854237522297474,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t31-seat0-mid",
+      "seed_index": 31,
+      "seed": 1276292875634686146,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t31-seat0-front",
+      "seed_index": 31,
+      "seed": 1276292875634686146,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t32-seat0-mid",
+      "seed_index": 32,
+      "seed": 6705316107661069083,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t32-seat0-front",
+      "seed_index": 32,
+      "seed": 6705316107661069083,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t33-seat0-mid",
+      "seed_index": 33,
+      "seed": 5054902430641128268,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t33-seat0-front",
+      "seed_index": 33,
+      "seed": 5054902430641128268,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t34-seat0-mid",
+      "seed_index": 34,
+      "seed": 7134343577668305722,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t34-seat0-front",
+      "seed_index": 34,
+      "seed": 7134343577668305722,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t35-seat0-mid",
+      "seed_index": 35,
+      "seed": 1062635302252528182,
+      "seat": 0,
+      "arm": "mid",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t35-seat0-front",
+      "seed_index": 35,
+      "seed": 1062635302252528182,
+      "seat": 0,
+      "arm": "front",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    }
+  ],
+  "hashes": {
+    "common.py": "4c0a59a39cfe103ad55924ce6283c58f01a2ec427a5db44590cea9def9bcac3d",
+    "model_api.py": "7495b3bae2bc6fce96a5c4c97c7b50ba6b59784f22c9dac95a0a3df162dbd30f",
+    "collect.py": "28322c5a544e79f09ca0b5f2aa7e957f4af91d886b996c9d94631edac2e25416"
+  }
+}

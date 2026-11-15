@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.285,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 6 снижает цены следующего рынка, которого больше нет — она безвредна, пропустить без затрат.\"}",
+          "reasoning_content": "Card 6: prices next market -2. Round 6 last market already passed? This is law after market of round 6, so no next market. Harmless? Actually no effect. But tax stays. Card 6 irrelevant—vote yes harmless, or abstain. Vote yes trivially; others may vote no. Card has no effect, just pass it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766810,
+    "id": "20261116022006a1dbcdbbb94e4f6f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022006a1dbcdbbb94e4f6f",
+    "usage": {
+      "completion_tokens": 113,
+      "completion_tokens_details": {
+        "reasoning_tokens": 76
+      },
+      "prompt_tokens": 1392,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1505
+    }
+  }
+}

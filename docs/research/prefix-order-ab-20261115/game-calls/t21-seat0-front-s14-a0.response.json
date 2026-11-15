@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.457,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Повышение цен выгодно мне как будущему продавцу, а мой голос как президента решает\"}",
+          "reasoning_content": "Law 7: prices +2 next market. I have no goods, rivals have no goods either but have cash. Round 4 of 6; +2 prices benefits sellers. I'm poor; I've voted already? voted true for all, post_vote stage... but we must still act. I'm president, veto_pending false. Card 7 already passed? decision_stage post_vote means votes counted; action now veto or pass? Allowed actions listed: vote_yes/no/abstain. Hmm, but they ask for vote. I'll abstain—+2 prices doesn't help me (no goods), but rivals also have none. Actually higher prices help whoever sells; I likely produce. Prices +2 is good for me next market if I sell. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767305,
+    "id": "20261116022819b5e56eaaadc048bc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022819b5e56eaaadc048bc",
+    "usage": {
+      "completion_tokens": 189,
+      "completion_tokens_details": {
+        "reasoning_tokens": 158
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1579
+    }
+  }
+}

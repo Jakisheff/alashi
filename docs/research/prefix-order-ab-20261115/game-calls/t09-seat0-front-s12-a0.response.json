@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.466,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":5000000,\"reason\":\"Аукцион лицензии с ожидаемым доходом ~20–60 при малой ставке 5 alashi имеет положительное ожидание, проигрыш возвращается.\"}",
+          "reasoning_content": "Bid in round 4. I'm poor (3.6M cash). Opponents have ~27-36M. Expected license income ~40 alashi avg. Bidding low, e.g. 5M? If I win with 5M, gain expected ~20-60 minus 5. But opponents may outbid. If lose, refunded. Bid 5M seems +EV; but paying 5M drains most cash... final payout is share-based, cash matters. Expected value: license ~40, bid 5 → +35 net if win. But risk opponents bid more; blind auction. I'll bid 5M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766871,
+    "id": "20261116022106a3943918a0c94d71",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022106a3943918a0c94d71",
+    "usage": {
+      "completion_tokens": 185,
+      "completion_tokens_details": {
+        "reasoning_tokens": 133
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1706
+    }
+  }
+}

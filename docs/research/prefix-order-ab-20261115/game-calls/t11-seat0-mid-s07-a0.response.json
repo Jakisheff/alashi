@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.152,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"У меня cash=0 при продажах — вероятно, у меня непогашенные promissory, и карта 8 их списала бы.\"}",
+          "reasoning_content": "Law card 8: wipes all outstanding promissory. I have cash 0, sold 7 units. Do I have promissory? Unknown, not shown. Wiping promissory hurts whoever has them; likely opponents sold credit? Can't know. I'm president, cash 0, poorest. Card 8 wipes promissory — I may have promissory (unknown). Rivals have cash; card 8 likely harms opponents if they hold promissory. I can't know. Safer: vote_no or veto? Vote weight 1 each, both voted already, this is post_vote? decision_stage post_vote — my vote decides. If yes>no passes. I don't know others' votes. As president I can veto. Wiping promissory: my unknown promissory would be lost. But I likely sold credit? Round 2 market past, sold_counter 7, cash 0 — I probably sold on credit (cash 0 while others have cash). Likely I hold promissory! So vote no / veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766933,
+    "id": "20261116022203144d829b200c4805",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022203144d829b200c4805",
+    "usage": {
+      "completion_tokens": 260,
+      "completion_tokens_details": {
+        "reasoning_tokens": 219
+      },
+      "prompt_tokens": 1385,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1645
+    }
+  }
+}

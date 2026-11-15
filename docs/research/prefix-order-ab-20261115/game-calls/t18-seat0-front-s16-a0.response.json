@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.927,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Субсидия даёт всем +1 товар, а я беднее всех и выигрываю от дополнительного производства.\"}",
+          "reasoning_content": "Law card 3: subsidy_goods=1 — helps production, all equal. I have least cash; subsidy gives everyone +1 goods. Neutral-ish, slightly helps me produce more relative. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767211,
+    "id": "20261116022647912d9e5af6fe40a1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022647912d9e5af6fe40a1",
+    "usage": {
+      "completion_tokens": 77,
+      "completion_tokens_details": {
+        "reasoning_tokens": 41
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1468
+    }
+  }
+}

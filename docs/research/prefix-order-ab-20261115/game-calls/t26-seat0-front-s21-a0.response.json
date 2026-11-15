@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.9,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"При ценах ~5-6 за единицу ожидаемая ценность 3 товаров с учётом 25% конфискации выше, чем бесплатный produce (13.5 против 12 alashi).\"}",
+          "reasoning_content": "Round 6, last action. Cash 42.7. Shuttle: 3 goods, 25% confiscation, no cash use. Produce: 2 free goods. Goods sell at price ladder: sold_counter=7, prices [12,10,9,8,7,6,5,4...] next prices: position 7 onwards = 6,5,4,3,3,2... roughly. Shuttle EV: 3 goods * ~6 = 18 alashi * 0.75 = 13.5 vs produce 2*6=12. Shuttle slightly better, but confiscation risk. Tariff? No border info—assume gray risk. Shuttle EV better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767533,
+    "id": "20261116023209927b403c8885447d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023209927b403c8885447d",
+    "usage": {
+      "completion_tokens": 201,
+      "completion_tokens_details": {
+        "reasoning_tokens": 145
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1722
+    }
+  }
+}

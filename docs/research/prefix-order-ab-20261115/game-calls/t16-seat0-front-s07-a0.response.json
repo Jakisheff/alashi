@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.117,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Закон +2 к ценам увеличит выручку от моих продаж\"}",
+          "reasoning_content": "Card 7: prices +2 next market. I have 2 goods, want to sell. Vote yes. But others may vote; already voted (post_vote? decision_stage post_vote but phase law, voted all true). We still must give action... Just vote_yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767092,
+    "id": "20261116022449c36b82f1411444b7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022449c36b82f1411444b7",
+    "usage": {
+      "completion_tokens": 81,
+      "completion_tokens_details": {
+        "reasoning_tokens": 56
+      },
+      "prompt_tokens": 1385,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1466
+    }
+  }
+}

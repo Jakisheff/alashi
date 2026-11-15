@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.269,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 6 снижает цены следующего рынка, которого уже не будет (раунд 6), исход голосования предопределён моим весом — нет смысла тратить позицию.\"}",
+          "reasoning_content": "Card 6: prices -2 next market — but round 6, no next market. Harmless either way. I'm president with weight 4, law would pass regardless. Vote no or yes — doesn't matter. Just abstain? Pass means nothing; simplest: vote_no but it passes anyway. Actually since no next market, card is void. Vote yes doesn't hurt. Vote abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767221,
+    "id": "20261116022657acf87759c64b41b0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022657acf87759c64b41b0",
+    "usage": {
+      "completion_tokens": 137,
+      "completion_tokens_details": {
+        "reasoning_tokens": 83
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1528
+    }
+  }
+}

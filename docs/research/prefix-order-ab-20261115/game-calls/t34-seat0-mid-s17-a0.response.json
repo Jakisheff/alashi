@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.442,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Последний раунд: ожидаемо 2,25 товара по цене ~6 против 2 от produce, риск оправдан.\"}",
+          "reasoning_content": "Round 6, last round. Market after action. Produce gives 2 goods, sell at price ladder sold_counter=6 → price 6, tax 0. Shuttle 3 goods, 25% confiscation. Shuttle EV: 3*0.75=2.25 goods vs 2. Produce safer. Bribe: influence matters for extra 5% bank share? Commission is small. Pass to get +2 vote weight for law? Law card 255 no card. Skip action gives +2 vote weight — could matter for president? President determined on entering law. With no law card, law phase nothing. So just take produce? Actually vote weight matters only for voting. No card → no vote. So produce vs shuttle: shuttle EV higher: 2.25*6=13.5 vs 12 alashi. But shuttle goods may be confiscated entirely. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767798,
+    "id": "20261116023632d048c4b22ed64560",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023632d048c4b22ed64560",
+    "usage": {
+      "completion_tokens": 222,
+      "completion_tokens_details": {
+        "reasoning_tokens": 183
+      },
+      "prompt_tokens": 1523,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1745
+    }
+  }
+}

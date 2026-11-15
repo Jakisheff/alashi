@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.177,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара для продажи, покупка по высокой стартовой цене убыточна.\"}",
+          "reasoning_content": "Round 5 market, goods 0, sold_counter 0. Can't sell. Buy? Buying goods now to sell later? Price ladder high (12). Buying moves counter back — but counter already 0. Buying costs? Price presumably at current ladder price. Buy units at price 12? Then sell later... buying at 12 and selling later at lower price = loss. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766927,
+    "id": "20261116022203dbf4065037a64ad5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022203dbf4065037a64ad5",
+    "usage": {
+      "completion_tokens": 107,
+      "completion_tokens_details": {
+        "reasoning_tokens": 80
+      },
+      "prompt_tokens": 1426,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1533
+    }
+  }
+}

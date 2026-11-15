@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.871,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Снижение цен на следующем рынке уменьшит выручку от моих продаж\"}",
+          "reasoning_content": "Card 6: prices -2 next market. I'm poorest with 0 cash. Lower prices hurt sellers. I have 2 goods, no cash. Vote no? Cheaper prices hurt everyone's sales including mine. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767793,
+    "id": "20261116023630812a6275ba2149c8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023630812a6275ba2149c8",
+    "usage": {
+      "completion_tokens": 78,
+      "completion_tokens_details": {
+        "reasoning_tokens": 48
+      },
+      "prompt_tokens": 1386,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1464
+    }
+  }
+}

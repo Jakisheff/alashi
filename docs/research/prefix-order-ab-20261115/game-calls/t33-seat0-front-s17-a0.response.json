@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.065,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемо shuttle даёт 2.25 товара против 2 у produce при нуле на счётчике продаж\"}",
+          "reasoning_content": "Round 5 action. Cash 14.5M, goods 0. Produce gives 2 goods, shuttle gives 3 with 25% confiscation risk, no favorable border mentioned. Expected shuttle 2.25 goods vs 2. Produce is safe. Shuttle EV higher. But confiscation ~25% loses all. EV shuttle 2.25 > 2. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767740,
+    "id": "202611160235379f43472c397e4ad4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160235379f43472c397e4ad4",
+    "usage": {
+      "completion_tokens": 118,
+      "completion_tokens_details": {
+        "reasoning_tokens": 80
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1639
+    }
+  }
+}

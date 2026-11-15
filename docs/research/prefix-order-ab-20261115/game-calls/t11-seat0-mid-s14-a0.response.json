@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.563,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Карта 6 снижает цены следующего рынка, а у всех ноль товара — вето защищает мою будущую выручку бесплатно.\"}",
+          "reasoning_content": "Law card 6: prices -2 next market. I have no goods (bid auction? cash 16.1). Others voted already (voted true for both). If law passes, prices drop — bad for sellers, but I have no goods. I don't know how they voted. I'm president with veto. Card 6 hurts me next market (I'd like to produce and sell). Likely others (richer, maybe have goods?) goods are 0 for all. Actually all goods 0. So -2 prices hurts everyone next market. If both voted yes, it passes 6 vs my 3. Veto it? Veto is free and protects future prices. Yes, veto — but veto kills law; card 6 only affects next market. Since no one has goods, all will produce later; lower prices hurt me too. Veto.\n\nWait — veto can be applied; voting yes/no after veto? Just veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766970,
+    "id": "20261116022243197a79f9eab845d5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022243197a79f9eab845d5",
+    "usage": {
+      "completion_tokens": 236,
+      "completion_tokens_details": {
+        "reasoning_tokens": 194
+      },
+      "prompt_tokens": 1389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1625
+    }
+  }
+}

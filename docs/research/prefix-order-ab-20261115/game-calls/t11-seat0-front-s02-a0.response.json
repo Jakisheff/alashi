@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.712,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 0 — пустой закон, исход не важен, не трачу позицию.\"}",
+          "reasoning_content": "Card 0 — empty law, everyone equal, others voted. Abstain as president is fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766910,
+    "id": "20261116022146e8403da35c1a492a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022146e8403da35c1a492a",
+    "usage": {
+      "completion_tokens": 54,
+      "completion_tokens_details": {
+        "reasoning_tokens": 21
+      },
+      "prompt_tokens": 1380,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1434
+    }
+  }
+}

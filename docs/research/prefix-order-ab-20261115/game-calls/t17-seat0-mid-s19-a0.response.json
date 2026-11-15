@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.246,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 20% режет мою выручку от будущих продаж; мой вес 2 делает 'no' достаточным против любых двух 'yes'.\"}",
+          "reasoning_content": "Law card 2: tax 20%. Already taxed 10%. I'm president. Higher tax hurts my sales. Vote no, or veto. Vote no — my weight 2 vs yes 2 possible. If both others vote yes (2 vs 2), yes passes strictly > no? 2>2 false, fails. Actually yes must be strictly > no; tie fails. So vote_no suffices even if others yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767208,
+    "id": "20261116022643d4c1ff1834854c8e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022643d4c1ff1834854c8e",
+    "usage": {
+      "completion_tokens": 134,
+      "completion_tokens_details": {
+        "reasoning_tokens": 89
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1524
+    }
+  }
+}

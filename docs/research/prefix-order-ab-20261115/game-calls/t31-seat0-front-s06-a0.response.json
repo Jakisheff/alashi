@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.31,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 20% ударит по моей выручке от продажи 3 товаров в следующем раунде.\"}",
+          "reasoning_content": "Law card 2: tax 20%. I'm poorest (cash 0). Tax hurts sellers with goods; I have 3 goods to sell next market. Tax 20% on my revenue—bad for me. Opponents have cash and goods too. Vote no. I'm not president anyway.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767655,
+    "id": "202611160234125b7c36150770488a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160234125b7c36150770488a",
+    "usage": {
+      "completion_tokens": 97,
+      "completion_tokens_details": {
+        "reasoning_tokens": 62
+      },
+      "prompt_tokens": 1384,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1481
+    }
+  }
+}

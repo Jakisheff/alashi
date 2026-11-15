@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.0,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 2 товара — лучшее действие при нуле наличных.\"}",
+          "reasoning_content": "Cash 0, no goods. Produce gives free goods.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767270,
+    "id": "20261116022748715aaa9b06314b64",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022748715aaa9b06314b64",
+    "usage": {
+      "completion_tokens": 38,
+      "completion_tokens_details": {
+        "reasoning_tokens": 12
+      },
+      "prompt_tokens": 1517,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1555
+    }
+  }
+}

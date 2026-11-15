@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.329,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Последний раунд: шаттл даёт 3 товара при высоких ценах с бумом, ожидаемая выручка выше, чем от produce, а кредитных рисков дальше нет.\"}",
+          "reasoning_content": "Round 6, final round, cash low. Shuttle gives 3 goods with boom +2, ~25% confiscation, sell at ~price 12+2... sold_counter=4, price index 4 = 7+2=9. Shuttle: 3 goods × ~7-9 ≈ 21 alashi. Produce gives 2 goods ~14 alashi. Shuttle expected 0.75×3×9 ≈ 20. Better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767001,
+    "id": "20261116022316880fa52bb85c4f30",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022316880fa52bb85c4f30",
+    "usage": {
+      "completion_tokens": 151,
+      "completion_tokens_details": {
+        "reasoning_tokens": 96
+      },
+      "prompt_tokens": 1522,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1673
+    }
+  }
+}

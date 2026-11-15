@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.333,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Закон даёт +1 влияния богатейшему — это я, усиливает мой президентский вес и бонус влияния в итоге.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest. I'm richest (31M). Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767710,
+    "id": "202611160235098498b75f77584b7d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160235098498b75f77584b7d",
+    "usage": {
+      "completion_tokens": 59,
+      "completion_tokens_details": {
+        "reasoning_tokens": 20
+      },
+      "prompt_tokens": 1388,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1447
+    }
+  }
+}

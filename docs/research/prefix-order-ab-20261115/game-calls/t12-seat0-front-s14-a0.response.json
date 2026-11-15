@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.823,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Я беднейший без товара — 20% налог бьёт по продажам соперников и относительно повышает мою долю.\"}",
+          "reasoning_content": "Law card 2: tax 20%. I'm poorest, no goods to sell. Others have cash and would sell. Tax hurts rivals more? Tax applies to revenue. I have 0 goods. So tax hurts them, helps me relatively. Vote yes.\n\nWait — rivals already voted. voted [false,true,true] — unknown direction. My weight 4 vs their 3+3. I'm president with veto. Tax 20% reduces their revenue; I benefit relatively. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766980,
+    "id": "2026111602225586a4f7d8184c493e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602225586a4f7d8184c493e",
+    "usage": {
+      "completion_tokens": 140,
+      "completion_tokens_details": {
+        "reasoning_tokens": 101
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1531
+    }
+  }
+}

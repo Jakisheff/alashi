@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.369,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Падение цен на 2 в следующем рынке вредит моей выручке; голосую против.\"}",
+          "reasoning_content": "Law card 6: prices -2 next market. I'm poorest, want higher prices. Vote no. President is idx2 with weight 2; my vote no gives 1 vs 1+? Others unknown. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766705,
+    "id": "2026111602182129413895d00248ab",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602182129413895d00248ab",
+    "usage": {
+      "completion_tokens": 81,
+      "completion_tokens_details": {
+        "reasoning_tokens": 48
+      },
+      "prompt_tokens": 1389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1470
+    }
+  }
+}

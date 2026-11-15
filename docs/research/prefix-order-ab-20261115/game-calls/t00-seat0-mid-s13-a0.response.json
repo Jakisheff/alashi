@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.813,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":30000000,\"reason\":\"Ожидаемый доход лицензии ~40 alashi, ставка 30 alashi даёт положительное матожидание и скорее всего перекрывает возможности соперников\"}",
+          "reasoning_content": "License income 20-60 alashi, mean ~40. Bid: winner pays. Others have ~32 and 25 cash. Bid ~30M (30 alashi)? If win at 30, expected 40 → +10 profit. But paying reduces cash that also counts toward final ranking... bid goes to bank, so you lose it entirely. Expected value 40 - bid. Bid as high as needed to win. Rivals could bid too. Bid ~35M might win. But I'm richest; paying reduces my rank. Actually final payout: commission split by weights 50:30:15 based on rank by cash+hard. Bid 30 → cash 20. Expected license +40 gives 60ish. Profitable vs not bidding if I still rank well. Rival with 32 could bid 32 (all cash). Risky. Bid 30M reasonable.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766543,
+    "id": "202611160215361d12186ddcb54926",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160215361d12186ddcb54926",
+    "usage": {
+      "completion_tokens": 231,
+      "completion_tokens_details": {
+        "reasoning_tokens": 182
+      },
+      "prompt_tokens": 1520,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1751
+    }
+  }
+}

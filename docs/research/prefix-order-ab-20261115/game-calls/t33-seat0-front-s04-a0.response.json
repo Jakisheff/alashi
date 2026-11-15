@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.55,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Продажа в кредит даёт 1.25x и позволяет обойти девальвацию 62% на границе раунда\"}",
+          "reasoning_content": "Round 2 market, next devaluation 62%. Sell credit gives 1.25x but devalued: promissory counted at cash border... promissory added to cash then devalued? Devaluation applies to cash on border; promissory added to cash and reset — order unclear. If promissory added after devaluation, credit avoids devaluation → 1.25x better. Risky. Safer: sell now for cash, but cash devaluated 62%. Credit likely better (1.25 vs 0.62). Sell 3 units credit.\n\nPrice: sold_counter=2, ladder next price index 2? Prices [12,10,9,...], 2 sold → next at 9? 3 units at ~9,10,9... sell all 3 credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767692,
+    "id": "20261116023446012e285485bb46ee",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023446012e285485bb46ee",
+    "usage": {
+      "completion_tokens": 216,
+      "completion_tokens_details": {
+        "reasoning_tokens": 171
+      },
+      "prompt_tokens": 1420,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1636
+    }
+  }
+}

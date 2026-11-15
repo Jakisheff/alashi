@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.55,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Закон повышает цены на рынке, а у меня есть товар для продажи.\"}",
+          "reasoning_content": "Law card 7: prices +2 — helps me as a seller (I have goods). Yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767655,
+    "id": "202611160234133cf4b4e5cac943c4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160234133cf4b4e5cac943c4",
+    "usage": {
+      "completion_tokens": 48,
+      "completion_tokens_details": {
+        "reasoning_tokens": 21
+      },
+      "prompt_tokens": 1387,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1435
+    }
+  }
+}

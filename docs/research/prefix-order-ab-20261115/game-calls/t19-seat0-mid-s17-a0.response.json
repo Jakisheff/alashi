@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.418,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"С boom=2 и нулевым счётчиком продаж 3 товара дают высокую ожидаемую выручку, риск 25% оправдан\"}",
+          "reasoning_content": "Round 5, not round 4, bid not allowed. Shuttle gives 3 goods, 25% confiscation, but boom=2 and no tariff issue — shuttle expected value good. But maybe bribe for influence matters for bonus 5%? Cash similar. Shuttle gives 3 goods worth ~ (12+2)=14 first... sold_counter=0, prices [12..]+2 boom. 3 goods ~42 alashi expected 0.75. Do shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767231,
+    "id": "20261116022706da849aa5f5444dfc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022706da849aa5f5444dfc",
+    "usage": {
+      "completion_tokens": 143,
+      "completion_tokens_details": {
+        "reasoning_tokens": 99
+      },
+      "prompt_tokens": 1520,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1663
+    }
+  }
+}

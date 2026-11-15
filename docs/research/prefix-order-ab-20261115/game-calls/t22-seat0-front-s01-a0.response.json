@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.734,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемо 2.25 товара против 2 от produce, риск конфискации оправдан.\"}",
+          "reasoning_content": "Round 1, cash 0, no goods. Shuttle gives 3 goods with 25% confiscation risk. Shuttle expected 2.25 goods vs produce 2. Shuttle slightly better expected value? 3*0.75=2.25 > 2. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767271,
+    "id": "202611160227486641476331b94595",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160227486641476331b94595",
+    "usage": {
+      "completion_tokens": 95,
+      "completion_tokens_details": {
+        "reasoning_tokens": 59
+      },
+      "prompt_tokens": 1511,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1606
+    }
+  }
+}

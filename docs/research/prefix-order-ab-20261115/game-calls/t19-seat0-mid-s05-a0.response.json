@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.199,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"3 товара против 2 от produce; риск 25% оправдан, товары можно продать на следующем рынке\"}",
+          "reasoning_content": "Round 2, no goods, cash 17. Produce gives 2 goods. Shuttle gives 3 with 25% risk. Shuttle better EV. But tariff? no. Choose shuttle.\n\nNote cash will devalue at border. Pass action loses vote weight 2. But president already. Influence matters. Shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767171,
+    "id": "20261116022607f49009461d0b432b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022607f49009461d0b432b",
+    "usage": {
+      "completion_tokens": 99,
+      "completion_tokens_details": {
+        "reasoning_tokens": 64
+      },
+      "prompt_tokens": 1517,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1616
+    }
+  }
+}

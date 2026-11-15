@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.415,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":18000000,\"reason\":\"Лицензия даёт 20-60 alashi сверх доли, а ставка фактически частично возвращается через делёж банка — выгода превалирует над риском.\"}",
+          "reasoning_content": "Round 4, bid available. License income 20-60 alashi, paid above share. Cash 18.6. Bid maybe 10-15 alashi? Opponents have ~31 each. Blind auction; winning pays full amount to bank but income 20-60. Expected ~40, but cost reduces cash. Also president. I'd bid ~25M.\n\nAlternatively shuttle for goods. But license likely bigger value. Bid 25,000,000? Cash 18.6 — can't exceed cash? Possibly rejected. Bid 15M. Expected profit ~40-15=25 minus opponents also benefit from bank? Bid goes to bank, reduces pool... Bid reduces bank total which is then redistributed—net cost only fraction? Actually payment goes to bank, then 5% commission and remainder split 50:30:15. So cost to me of winning bid is only my share loss ~ I pay 15, of which I get back 50%*95%? Not exactly but roughly. So bidding high is cheap. Bid 18M (all cash minus? need cash). Bid 18000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766772,
+    "id": "202611160219259860cad4af924c03",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160219259860cad4af924c03",
+    "usage": {
+      "completion_tokens": 285,
+      "completion_tokens_details": {
+        "reasoning_tokens": 232
+      },
+      "prompt_tokens": 1520,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1805
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.57,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Налог 20% вредит только соперникам с деньгами, у меня cash=0.\"}",
+          "reasoning_content": "Law card 2: tax 20%. I have 0 cash, others have cash. Tax hurts them. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767278,
+    "id": "20261116022754a059f5d6d50a489b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022754a059f5d6d50a489b",
+    "usage": {
+      "completion_tokens": 57,
+      "completion_tokens_details": {
+        "reasoning_tokens": 26
+      },
+      "prompt_tokens": 1386,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1443
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.119,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Голоса уже подведены; закон 8 гасит promissory — у меня товар продан за наличные, а соперники могут потерять отложенную выручку, так что мешать нечего.\"}",
+          "reasoning_content": "post_vote, law_card 8 — wipes promissory notes. I may have sell_credit outstanding (not shown). I'm president, but veto_pending false, post_vote — voting already done? decision_stage post_vote means vote counted; maybe veto possible. Card 8 wipes promissory; if I have none, good. Cash 30M suggests I sold normally. I likely have no promissory. But safer: if I don't know, card 8 hurts rivals potentially. I gain nothing by veto. Actions allowed: vote options... post_vote means votes done; only veto/pass. But schema only allows votes. vote_abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767697,
+    "id": "20261116023452a5729c1ae521482a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023452a5729c1ae521482a",
+    "usage": {
+      "completion_tokens": 193,
+      "completion_tokens_details": {
+        "reasoning_tokens": 133
+      },
+      "prompt_tokens": 1388,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1581
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.015,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"В последнем раунде шаттл даёт максимум товара для продажи по цене ~5, ожидаемая ценность выше, чем у produce, а риск оправдан.\"}",
+          "reasoning_content": "Round 6, last round. Produce gives goods to sell at market this round. Shuttle gives 3 goods, 25% confiscation — expected value good if price decent. Sold counter 6, price ladder index 6 → 5 alashi. Shuttle 3 goods ~15 alashi expected 11+, better than produce (2 goods ~10). Do shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766702,
+    "id": "202611160218178a92f67b18ad47ef",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160218178a92f67b18ad47ef",
+    "usage": {
+      "completion_tokens": 125,
+      "completion_tokens_details": {
+        "reasoning_tokens": 76
+      },
+      "prompt_tokens": 1522,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1647
+    }
+  }
+}

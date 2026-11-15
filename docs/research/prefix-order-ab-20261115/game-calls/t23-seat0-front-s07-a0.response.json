@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.211,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование уже завершено, карта 3 (субсидия товара) выгодна — вмешиваться нечего.\"}",
+          "reasoning_content": "Card 3: subsidy_goods=1, benefits everyone producing. I'm not president, votes already cast (post_vote). Just abstain/pass... phase law, voted already true — my vote likely already recorded? decision_stage post_vote. Best: pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767373,
+    "id": "202611160229298231b62560204833",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160229298231b62560204833",
+    "usage": {
+      "completion_tokens": 87,
+      "completion_tokens_details": {
+        "reasoning_tokens": 52
+      },
+      "prompt_tokens": 1387,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1474
+    }
+  }
+}

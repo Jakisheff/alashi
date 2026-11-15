@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.112,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Налог 20% бьёт по более богатым соперникам, а я беднейший, значит теряю меньше всех.\"}",
+          "reasoning_content": "Card 2: tax 20%. I have lowest cash, tax hurts richer rivals — vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767004,
+    "id": "20261116022321c7e9c0888b0c48e2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022321c7e9c0888b0c48e2",
+    "usage": {
+      "completion_tokens": 60,
+      "completion_tokens_details": {
+        "reasoning_tokens": 21
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1451
+    }
+  }
+}

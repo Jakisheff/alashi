@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.878,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"3 товара с учётом 25% риска дают ожидаемые 2.25 против 2 у produce\"}",
+          "reasoning_content": "Round 1, no cash, no goods. Produce gives 2 goods. Shuttle gives 3 but ~25% confiscation risk. Shuttle 3 goods vs produce 2 — EV 2.25 vs 2. Shuttle slightly better but confiscation \"grey goods\" — small edge. Produce is safer; EV slightly favors shuttle. 25% risk of losing all 3. EV 2.25. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767569,
+    "id": "20261116023246ea494e1ee76c4f8a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023246ea494e1ee76c4f8a",
+    "usage": {
+      "completion_tokens": 120,
+      "completion_tokens_details": {
+        "reasoning_tokens": 88
+      },
+      "prompt_tokens": 1511,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1631
+    }
+  }
+}

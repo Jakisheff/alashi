@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.795,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Все при cash 0, я беднейший по tie_order, +1 влияние даёт мне вес в будущих голосах и бонус влияния.\"}",
+          "reasoning_content": "Card 4: +1 influence to poorest. All cash 0, tie — likely goes to someone else or me? Tie order — I'm idx 0, likely get it? Uncertain. Others already voted. I vote yes; likely helps me if poorest tie goes to me (tie_order favors 0). Yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767503,
+    "id": "20261116023139a4065cbc4d464f21",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023139a4065cbc4d464f21",
+    "usage": {
+      "completion_tokens": 109,
+      "completion_tokens_details": {
+        "reasoning_tokens": 67
+      },
+      "prompt_tokens": 1380,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1489
+    }
+  }
+}

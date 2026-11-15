@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.302,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 0 ничего не меняет, голос не влияет на выплату.\"}",
+          "reasoning_content": "Card 0 empty. Vote doesn't matter; abstain. Actually maybe opponent voted yes/no unknown. Card 0 does nothing, so abstain is safe. But veto free? No, card 0 nothing.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767236,
+    "id": "202611160227135029d31e62b549dc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160227135029d31e62b549dc",
+    "usage": {
+      "completion_tokens": 73,
+      "completion_tokens_details": {
+        "reasoning_tokens": 44
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1463
+    }
+  }
+}

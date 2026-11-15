@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.922,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":25000000,\"reason\":\"Ожидаемый доход лицензии (20–60 alashi) явно превышает эффективную стоимость ставки, а банк частично вернётся через долю 50%.\"}",
+          "reasoning_content": "Round 4 action, license auction available. Expected license income 20-60 alashi. Bid amount? Payout 50:30:15 split means winning bid roughly... license income is paid on top. A bid of ~20-30 alashi worth. Expected 40 * 50%? Winning bid vs opponents unknown. Bid 30000000? Bid goes to bank if won. Marginal gain = license income - bid, but only fraction of bank comes back... Actually bid to bank increases bank, commission 5%, remainder split 50:30:15. So my effective cost of bid ≈ 30 - 0.5*0.95*30 ≈ 15.75. License income 20-60, avg 40, effective gain ~40*... income paid on top directly? \"выплачивается сверх доли\" — full. So expected value positive for bid up to ~40M? Competing: my bid 30M cost effectively ~15.75, gain expected 40 minus opponent chance. But also influence matters. Alternative: shuttle gives 4 goods worth selling at ~7 alashi each later? Sold counter 7, price ~6-7. Goods value: 4 units ×~6 = 24 alashi. Bid seems better EV? Could do both? No, one action only. Also produce gives 3 goods ~ 18. Bid 25M? Choose bid 25000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767447,
+    "id": "202611160230399d807de17be44cec",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160230399d807de17be44cec",
+    "usage": {
+      "completion_tokens": 353,
+      "completion_tokens_details": {
+        "reasoning_tokens": 301
+      },
+      "prompt_tokens": 1520,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1873
+    }
+  }
+}

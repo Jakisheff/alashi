@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.576,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Лучшая цена в начале лестницы (12), налога нет — продаю всё сейчас.\"}",
+          "reasoning_content": "Round 3 market, sell 3 units at 12 each. Tax 0. Sell now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767427,
+    "id": "2026111602302492cadef6bf944824",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602302492cadef6bf944824",
+    "usage": {
+      "completion_tokens": 55,
+      "completion_tokens_details": {
+        "reasoning_tokens": 21
+      },
+      "prompt_tokens": 1425,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1480
+    }
+  }
+}

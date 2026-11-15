@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.883,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 2 товара для продажи на рынке при максимальном кэше\"}",
+          "reasoning_content": "Produce gives 2 goods for free. Cash is highest; influence 2 vs 1. Produce is best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767743,
+    "id": "20261116023539c6d60b5d00ce4b72",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023539c6d60b5d00ce4b72",
+    "usage": {
+      "completion_tokens": 52,
+      "completion_tokens_details": {
+        "reasoning_tokens": 24
+      },
+      "prompt_tokens": 1520,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1572
+    }
+  }
+}

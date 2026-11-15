@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.865,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":30000000,\"reason\":\"Лицензия приносит до 60 alashi сверх доли, а уплаченная ставка частично возвращается через банк — ставка 30M с высокой вероятностью выигрывает при положительном ожидании.\"}",
+          "reasoning_content": "Round 4, license auction. Bid amount? Cash 38.75. License income 20-60, pays on top of share. Bid must beat rivals; ties tie_order (I'm idx 0, likely worst tie). Reasonable bid ~25-30 alashi. License worth up to 60, expected ~40. Bid 28M? Must be multiple of 5000000? Only bribe requires multiple. Bid any integer. I'll bid 27000000.\n\nBut risk: if I bid and win, money goes to bank (bank gets bigger → pool shared). Net gain = license income - (bid - my share of bid returned). Bank returns 95% distributed, so effective cost of bid ≈ 5% + my share 50% → cost ≈ 55% of bid? Actually bid goes to bank, bank pays out 95%; I get 50% of that. So net cost ≈ bid*(1-0.95*0.5)=52.5%. License income fully mine. So expected gain ~40 - 0.525*bid. Bid 30: cost 15.75, gain ~24. But winning requires highest; rivals similar cash ~31.5. Bid 30M likely wins but leaves me less... but bid paid regardless of my cash? Cash 38.75, fine. Actually keeping cash isn't needed—cash paid to bank partially returns. Win probability higher with bigger bid. Bid 31,000,000.\n\nHmm, but rival bids returned; only winner pays. If I bid 30M and win, fine. If someone bids more, mine returned. Bid 30M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767335,
+    "id": "20261116022846ed4cf12c52914865",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022846ed4cf12c52914865",
+    "usage": {
+      "completion_tokens": 410,
+      "completion_tokens_details": {
+        "reasoning_tokens": 348
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1931
+    }
+  }
+}

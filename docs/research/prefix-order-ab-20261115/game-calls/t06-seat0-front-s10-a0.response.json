@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.9,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 8 списывает непогашённые promissory — вероятно, у соперников, а я богат обычным кэшем, поэтому закон мне выгоден.\"}",
+          "reasoning_content": "Law card 8: cancels all outstanding promissory notes. I have cash highest; do I have promissory? Unknown, but likely I used sell_credit? No history. Card 8 cancels promissory — if others have promissory, this hurts them. I'm richest, likely sold credit? Selling on credit benefits seller 1.25x. Card 8 destroys those. If I have none, voting yes hurts rivals. Likely benefit: vote yes. As president I could veto if bad. Risk: my own promissory cancelled. Uncertain; but likely I sold normally. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766757,
+    "id": "202611160219122ee265f11d5a428d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160219122ee265f11d5a428d",
+    "usage": {
+      "completion_tokens": 175,
+      "completion_tokens_details": {
+        "reasoning_tokens": 128
+      },
+      "prompt_tokens": 1387,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1562
+    }
+  }
+}

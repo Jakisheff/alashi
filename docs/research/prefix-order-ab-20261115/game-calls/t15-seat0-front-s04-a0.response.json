@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.062,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Продаю весь товар сейчас по цене ~9 без налога; sell_credit рискован из-за возможной девальвации/списания promissory\"}",
+          "reasoning_content": "Round 2 market. Sell 3 units at price 10? sold_counter=2, ladder index 2 → 9. Then devaluation 62% at border. Sell credit gives 1.25x promissory added at next round border and reset — promissory added to cash at boundary then devalued? \"На границе раунундов 2+ cash=floor(cash/100)*62, promissory прибавляется к cash и обнуляется\" — devaluation applies, order unclear; promissory likely added after? Risky. Tax 0. Selling 3 at 9 each = 27. Credit: 33.75 promissory. If added before devaluation, lose. Safer sell now... but devaluation hits cash anyway. If promissory added after devaluation, credit is better. Ambiguous; also law card 8 could wipe promissory. Sell now is safe.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767048,
+    "id": "202611160224022d9573e6827c47bd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160224022d9573e6827c47bd",
+    "usage": {
+      "completion_tokens": 247,
+      "completion_tokens_details": {
+        "reasoning_tokens": 198
+      },
+      "prompt_tokens": 1420,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1667
+    }
+  }
+}

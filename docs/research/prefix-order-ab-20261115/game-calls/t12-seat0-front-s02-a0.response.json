@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.32,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Повышение цен на 2 выгодно мне в будущих продажах, а сейчас у всех ноль денег — риск отсутствует.\"}",
+          "reasoning_content": "Card 7: prices +2, everyone has 0 cash, I'm president but no cash concerns. +2 prices helps all equally; I benefit since rivals have goods (2,2) but I have 0... they'd earn more. But I can produce next rounds too. Prices +2 benefits whoever sells. I'll vote yes—prices rise helps me in future rounds too.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766922,
+    "id": "202611160221575a3999f2e01b4f74",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160221575a3999f2e01b4f74",
+    "usage": {
+      "completion_tokens": 119,
+      "completion_tokens_details": {
+        "reasoning_tokens": 80
+      },
+      "prompt_tokens": 1380,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1499
+    }
+  }
+}

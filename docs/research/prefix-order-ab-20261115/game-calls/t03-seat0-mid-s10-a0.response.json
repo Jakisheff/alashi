@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.48,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Продаю весь товар в кредит по высокой части лестницы: 18 alashi выручки превращаются в 22,5 к границе раунда 5\"}",
+          "reasoning_content": "I have 3 goods, cash 22M. Sell at price 12? sold_counter=4, so next prices: index 4 → 7, then 6, 5. Selling 3 gives ~18 alashi. Round 4 of 6; sell credit gets 1.25x paid at round 5 boundary — fine. Sell credit 3 units: revenue 7+6+5=18 → 22.5 promissory. But devaluation? Cash devalues floor(cash/100)*62 each boundary — promissory added to cash after. Devaluation applies floor(cash/100)*62 to cash; promissory added. Cash 22.01M = 22.01 alashi... wait 1 alashi = 1,000,000. Cash 22M = 22.01 alashi. Devaluation floor(22.01)=22*62/100? That gives 13.6 — huge loss! floor(cash/100): 22.01M/100M? Units: cash/100 = 0.22M, floor=0 → 0. Hmm, cash in millions: 22.01 alashi; /100 = 0.22, floor 0, no devaluation. OK small amounts fine.\n\nSell credit 3 units for 22.5 alashi at round 5 boundary. Good.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766667,
+    "id": "202611160217395b931f4768ee44c4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160217395b931f4768ee44c4",
+    "usage": {
+      "completion_tokens": 342,
+      "completion_tokens_details": {
+        "reasoning_tokens": 291
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1770
+    }
+  }
+}

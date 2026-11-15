@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.707,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Субсидия даёт мне больше товара при производстве, выгодно поддержать.\"}",
+          "reasoning_content": "Card 3: subsidy_goods=1 — benefits me when producing. Others voted already (voted true) but I don't know how. Subsidy is good for me; vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766991,
+    "id": "20261116022308190773a96a1648f1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022308190773a96a1648f1",
+    "usage": {
+      "completion_tokens": 68,
+      "completion_tokens_details": {
+        "reasoning_tokens": 40
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1459
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.833,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Закон даёт влияние богатейшему (не мне), поэтому блокирую бесплатно как президент\"}",
+          "reasoning_content": "Law 5: +1 influence to richest. Richest is idx2 (22). That helps them, hurts me. Vote no; even if passes, I'm president — veto. Simpler: veto? Veto blocks it. I'm president, veto free. Use veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767049,
+    "id": "20261116022406f306d387daba44fb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022406f306d387daba44fb",
+    "usage": {
+      "completion_tokens": 88,
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      },
+      "prompt_tokens": 1384,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1472
+    }
+  }
+}

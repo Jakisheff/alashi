@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.111,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"налог 20% снижает мою будущую выручку, я против\"}",
+          "reasoning_content": "Law card 2: tax 20%. Others likely voted no? voted all true, unknown direction. I'm richest? cash 10.5 vs 23 vs 7.6 — no, I'm middle. Tax 20% hurts me. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767204,
+    "id": "20261116022640e183f03a99014c60",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022640e183f03a99014c60",
+    "usage": {
+      "completion_tokens": 83,
+      "completion_tokens_details": {
+        "reasoning_tokens": 55
+      },
+      "prompt_tokens": 1388,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1471
+    }
+  }
+}

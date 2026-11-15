@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.604,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"У меня нет непогашенных promissory, а списание долгов соперников-богачей относительно повышает мой ранг.\"}",
+          "reasoning_content": "Card 8 wipes all outstanding promissory. I have cash 0; rivals have cash — do they have promissory? Unknown. I likely don't have promissory (cash 0). Wiping rivals' promissory helps me relatively. Vote yes? As president I could veto if it hurts me. I probably sold nothing on credit (cash 0, goods 2). Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766650,
+    "id": "202611160217260a393373eab44b09",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160217260a393373eab44b09",
+    "usage": {
+      "completion_tokens": 124,
+      "completion_tokens_details": {
+        "reasoning_tokens": 84
+      },
+      "prompt_tokens": 1385,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1509
+    }
+  }
+}

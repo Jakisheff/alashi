@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.86,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатно получить 2 товара, чтобы продать в следующем рынке\"}",
+          "reasoning_content": "Cash 0. Produce gives 2 goods free. Best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766499,
+    "id": "202611160214542718b0e4f1e44fb6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160214542718b0e4f1e44fb6",
+    "usage": {
+      "completion_tokens": 38,
+      "completion_tokens_details": {
+        "reasoning_tokens": 13
+      },
+      "prompt_tokens": 1515,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1553
+    }
+  }
+}

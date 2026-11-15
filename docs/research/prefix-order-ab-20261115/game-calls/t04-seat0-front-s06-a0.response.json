@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.559,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 8 списывает promissory, а у меня cash=0 и обязательств нет, значит она может навредить только мне или быть бесполезной — отклоняю, при необходимости применю авторитет президента позже.\"}",
+          "reasoning_content": "Card 8 cancels all promissory notes. I have cash 0, no promissory likely (I have cash 0 — did I sell credit? Unknown, but cash 0 suggests no). Rivals have cash; card 8 hurts whoever holds promissory. I'm president. Vote no; rivals may vote yes. My vote matters. If I have no promissory, card 8 doesn't help me directly. Vote no and veto if needed? Veto only pre-count. I'll vote no — veto could also be used if it passes, but must choose one action. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766656,
+    "id": "202611160217309450e714f9ee4b0b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160217309450e714f9ee4b0b",
+    "usage": {
+      "completion_tokens": 188,
+      "completion_tokens_details": {
+        "reasoning_tokens": 127
+      },
+      "prompt_tokens": 1384,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1572
+    }
+  }
+}

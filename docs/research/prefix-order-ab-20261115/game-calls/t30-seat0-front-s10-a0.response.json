@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.841,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Закон 8 списывает promissory, вероятно, у соперников, мне с большим cash это выгодно — не ветирую.\"}",
+          "reasoning_content": "Law card 8 wipes promissory notes. I have cash 52M, no info about my promissory. It's post_vote stage — voting already happened? decision_stage \"post_vote\", voted all true. Only veto remains? Phase law, is_president, veto_pending false. Available actions listed include votes but voted already true... post_vote means my vote counted; only veto option. Card 8 cancels promissory. Do I have promissory? Unknown; my sell_credit not shown. Rivals likely used sell_credit. Card 8 hurts whoever holds promissory. Since I'm richest in cash, rivals likely hold promissory (they're poorer). Veto would cancel the law, helping rivals. Let it pass — hurts them. No veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767608,
+    "id": "20261116023320c8bbafdbc050450b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023320c8bbafdbc050450b",
+    "usage": {
+      "completion_tokens": 199,
+      "completion_tokens_details": {
+        "reasoning_tokens": 160
+      },
+      "prompt_tokens": 1389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1588
+    }
+  }
+}

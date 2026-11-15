@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.721,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Повышение цен выгодно мне как продавцу товара\"}",
+          "reasoning_content": "Card 7: prices +2. I have goods 2, others 2 and 5. +2 prices helps everyone; player 2 sells more. But I'm president, weight 2 vs 1+1=2 — tie, no (yes strictly greater than no): if I vote yes, yes=2, no=0 (others likely yes? unknown). +2 benefits me too. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766752,
+    "id": "20261116021909f88f9b7991c944fc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021909f88f9b7991c944fc",
+    "usage": {
+      "completion_tokens": 109,
+      "completion_tokens_details": {
+        "reasoning_tokens": 87
+      },
+      "prompt_tokens": 1387,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1496
+    }
+  }
+}

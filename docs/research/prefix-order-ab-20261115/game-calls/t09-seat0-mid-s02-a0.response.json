@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.089,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"У меня нет promissory, а закон 8 может списать чужие будущие/текущие обязательства — мне выгодно.\"}",
+          "reasoning_content": "Card 8 cancels promissory notes — but I have none, opponents may. Others already voted (voted true). Unknown how they voted. I have no promissory, so card 8 could hurt rivals if they have promissory... round 1, nobody sold credit yet? Unknown. Card 8 likely neutral/harmless. Others voted already; my vote weight 1. Vote yes seems fine (cancels opponents' future? No, cancels existing). Likely nobody has promissory in round 1 law — actually market happened before, someone might have sold credit. I don't know. Card 8 hurts whoever has promissory. Risky—could cancel mine? I have none. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766819,
+    "id": "202611160220133dcfdaeea60b47b2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160220133dcfdaeea60b47b2",
+    "usage": {
+      "completion_tokens": 192,
+      "completion_tokens_details": {
+        "reasoning_tokens": 152
+      },
+      "prompt_tokens": 1380,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1572
+    }
+  }
+}

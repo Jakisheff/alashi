@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.396,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта даёт +1 влияния богатейшему — при равном cash это, вероятно, я, что усилит мой голос и бонус влияния в итоге.\"}",
+          "reasoning_content": "Card 5: +1 influence to richest. All cash 0, tie — tie_order? Likely idx0 better tie_order? tie_order probably by idx; richest = idx0. Vote yes benefits me.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767642,
+    "id": "202611160233598c1c01b585f544af",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160233598c1c01b585f544af",
+    "usage": {
+      "completion_tokens": 88,
+      "completion_tokens_details": {
+        "reasoning_tokens": 43
+      },
+      "prompt_tokens": 1381,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1469
+    }
+  }
+}

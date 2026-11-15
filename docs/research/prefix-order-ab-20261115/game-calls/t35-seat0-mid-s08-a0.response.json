@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.175,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Цены высокие, но де валютация на границе раунда уничтожит малый кэш, а кредит даёт 1.25x и выплачивается после девальвации.\"}",
+          "reasoning_content": "Sell 2 units at price 12 = 24 alashi. Cash devaluation at round boundary: floor(cash/100)*62 — cash 24M → floor(24/100)... wait cash in millions: 24,000,000 /100,000,000? Actually cash/100 means 100 alashi blocks. 24M = 24 alashi → floor(24/100)=0, full loss! Sell credit gives 1.25x paid next round boundary — promissory added after devaluation, better. Sell_credit 2 → 30 promissory.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767773,
+    "id": "20261116023608f33e7c4b32524e44",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023608f33e7c4b32524e44",
+    "usage": {
+      "completion_tokens": 180,
+      "completion_tokens_details": {
+        "reasoning_tokens": 123
+      },
+      "prompt_tokens": 1423,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1603
+    }
+  }
+}

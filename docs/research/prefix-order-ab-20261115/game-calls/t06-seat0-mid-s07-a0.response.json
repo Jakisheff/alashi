@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.038,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон даёт влияние беднейшему сопернику, а не мне\"}",
+          "reasoning_content": "Law card 4: +1 influence to poorest. I'm richest (19M vs 16M vs 22M — actually idx2 is richest, idx1 poorest). Poorest is idx1 (16M). Gives influence to rival. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766736,
+    "id": "20261116021854e6beaaefc8cf43b5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021854e6beaaefc8cf43b5",
+    "usage": {
+      "completion_tokens": 78,
+      "completion_tokens_details": {
+        "reasoning_tokens": 53
+      },
+      "prompt_tokens": 1387,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1465
+    }
+  }
+}

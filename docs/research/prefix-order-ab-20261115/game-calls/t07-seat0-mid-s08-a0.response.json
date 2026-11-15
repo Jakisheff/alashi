@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.177,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Карта даёт +1 влияния богатейшему (не мне), что усилит соперника — налагаю вето как президент.\"}",
+          "reasoning_content": "Law card 5: +1 influence to richest. Richest is idx2 (26.64). I'm president, I'm not richest. Rich getting +1 influence harms me (extra 5% bonus tie-break). Vote no? Others equal weight; if they vote yes... I'm president, can veto. Veto is safest.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766761,
+    "id": "20261116021918310a5dc002ea443c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021918310a5dc002ea443c",
+    "usage": {
+      "completion_tokens": 110,
+      "completion_tokens_details": {
+        "reasoning_tokens": 70
+      },
+      "prompt_tokens": 1387,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1497
+    }
+  }
+}

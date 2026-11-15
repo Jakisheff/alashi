@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.93,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Налог 10% режет мою будущую выручку от продаж, а я президент и могу бесплатно заблокировать.\"}",
+          "reasoning_content": "Law card 1: tax 10%. Tax applies to market revenue — I have 0 goods and likely no sales potential? Round 4 of 6, I can still produce. Tax hurts sellers; rivals have cash but 0 goods too. Tax 10% would reduce future revenues including mine. I can veto as president. Vote no; likely doesn't pass anyway. Veto is guaranteed to kill it — but maybe tax is also fine if I plan to sell. I plan to sell in rounds 5-6, so tax hurts me. Veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766772,
+    "id": "20261116021926ba372b68f7654f58",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021926ba372b68f7654f58",
+    "usage": {
+      "completion_tokens": 154,
+      "completion_tokens_details": {
+        "reasoning_tokens": 116
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1544
+    }
+  }
+}

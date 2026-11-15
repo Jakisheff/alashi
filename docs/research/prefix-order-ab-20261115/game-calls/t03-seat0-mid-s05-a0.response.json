@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.857,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемо ~2.25 товара против 2 у produce, при нуле денег дополнительный риск оправдан.\"}",
+          "reasoning_content": "Cash 0. Produce gives 2 goods, shuttle 3 grey with confiscation risk. Shuttle expected value positive, but confiscation loses goods. Produce safest; no cash for donkey. Shuttle expected 2.25 vs produce 2. Slight edge to shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766644,
+    "id": "20261116021721e22260dd754e4754",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021721e22260dd754e4754",
+    "usage": {
+      "completion_tokens": 94,
+      "completion_tokens_details": {
+        "reasoning_tokens": 56
+      },
+      "prompt_tokens": 1515,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1609
+    }
+  }
+}

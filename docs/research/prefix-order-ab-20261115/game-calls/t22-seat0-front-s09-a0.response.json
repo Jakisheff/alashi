@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.085,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"У меня нет денег для взяток, а бесплатное производство даёт 2 товара для будущей продажи.\"}",
+          "reasoning_content": "No cash. Produce gives 2 goods free. Do it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767309,
+    "id": "202611160228251728008928544ae9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160228251728008928544ae9",
+    "usage": {
+      "completion_tokens": 45,
+      "completion_tokens_details": {
+        "reasoning_tokens": 13
+      },
+      "prompt_tokens": 1516,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1561
+    }
+  }
+}

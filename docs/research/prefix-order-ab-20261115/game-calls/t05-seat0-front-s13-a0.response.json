@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.362,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":15000000,\"reason\":\"Лицензия с ожидаемым доходом 20–60 при ставке 15 даёт положительное матожидание, у меня меньше наличных, чем у соперников, поэтому умеренная ставка\"}",
+          "reasoning_content": "Round 4, auction available. Bid amount? Cash 19.2. License income 20-60. Others have ~38-42 cash. Competitive auction. Bid maybe 15? Bidding 15 could win if others bid less; risky. Expected value: pay A, gain ~40. If win, net ~+25. Others richer. Maybe bid 15. Or shuttle to get goods for later selling — but round 4 of 6, goods can sell rounds 5-6. Shuttle 3 goods with ~25% confiscation. Goods worth ~3-4 each later. Moderate.\n\nAuction EV is high if won below ~40. Bid 15 seems reasonable. I'll bid 15.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766757,
+    "id": "202611160219122b550bd0c5614c84",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160219122b550bd0c5614c84",
+    "usage": {
+      "completion_tokens": 207,
+      "completion_tokens_details": {
+        "reasoning_tokens": 149
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1728
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.494,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон даёт +1 влияния беднейшему сопернику, что усилит его в борьбе за бонус комиссии — мне это невыгодно.\"}",
+          "reasoning_content": "Card 4: +1 influence to poorest. I have 2 influence, poorest is faction 2 (cash 31.8M) → they'd get +1 influence, tying/affecting the 5% commission. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767709,
+    "id": "2026111602350681571d27508a4de6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602350681571d27508a4de6",
+    "usage": {
+      "completion_tokens": 91,
+      "completion_tokens_details": {
+        "reasoning_tokens": 50
+      },
+      "prompt_tokens": 1392,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1483
+    }
+  }
+}

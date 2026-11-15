@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.48,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта даёт +1 влияния беднейшему — при равенстве ресурсов шанс, что достанется мне, а влияние повышает вес голоса и бонус.\"}",
+          "reasoning_content": "Card 4: +1 influence to poorest. All equal, tie_order likely gives it to someone — possibly idx0? Unknown. Vote: if it goes to me, yes. Tie broken by tie_order (probably lowest index?). Risky. vote_abstain — passes if others disagree. Others also equal; likely each votes self-interest. I'll vote yes hoping tie favors idx0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767506,
+    "id": "202611160231371d31a154fc874d66",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160231371d31a154fc874d66",
+    "usage": {
+      "completion_tokens": 126,
+      "completion_tokens_details": {
+        "reasoning_tokens": 80
+      },
+      "prompt_tokens": 1381,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1507
+    }
+  }
+}

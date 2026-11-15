@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.719,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 20% сильно урежет мою выручку от продажи товара в следующем раунде.\"}",
+          "reasoning_content": "Law card 2: tax 20%. I'm poor, small cash. President is idx2 (influence 2), veto_pending true. Tax on revenue hurts sellers—I have 4 goods to sell next market. Vote no. But will pass anyway? weights: yes need > no. Others unknown. Just vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766866,
+    "id": "20261116022102aaed472145624e8b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022102aaed472145624e8b",
+    "usage": {
+      "completion_tokens": 102,
+      "completion_tokens_details": {
+        "reasoning_tokens": 67
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1492
+    }
+  }
+}

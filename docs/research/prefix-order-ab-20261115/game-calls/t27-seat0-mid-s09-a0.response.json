@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.255,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемо ~2.25 товара против 2 от produce, при нуле наличности терять нечего.\"}",
+          "reasoning_content": "Cash 0, no bribe possible. Produce is free: +2 goods. Shuttle has confiscation risk but +3. Confiscation ~25% of goods lost? With cash 0, produce is safe. Shuttle expected 2.25 vs 2 — slightly better, risk of full confiscation. Shuttle marginally better EV. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767489,
+    "id": "202611160231240bd9fd2135dc4ca8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160231240bd9fd2135dc4ca8",
+    "usage": {
+      "completion_tokens": 110,
+      "completion_tokens_details": {
+        "reasoning_tokens": 73
+      },
+      "prompt_tokens": 1517,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1627
+    }
+  }
+}

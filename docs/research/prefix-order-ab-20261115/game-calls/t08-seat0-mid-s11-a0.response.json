@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.112,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продам по высокой цене сейчас; кредит обесценится девальвацией\"}",
+          "reasoning_content": "Round 4, sell 2 goods now. Prices start at counter 2 → price 9? Ladder index 2 = 9. Sell now gets 9+? No, sell now to get cash before... Actually devaluation at border of rounds 2+ (we're in round 4, border 4→5 already passed? border happens at rounds 2+). sell_credit pays at next border with 1.25x but devaluation 62%. Sell now better: 2*9=18.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766841,
+    "id": "2026111602203780fd21db91354f7a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602203780fd21db91354f7a",
+    "usage": {
+      "completion_tokens": 140,
+      "completion_tokens_details": {
+        "reasoning_tokens": 109
+      },
+      "prompt_tokens": 1427,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1567
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.999,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":30000000,\"reason\":\"Аукцион раунда 4 выгоден: ставка уходит в банк и частично возвращается через перераспределение, а доход лицензии (в среднем ~40) идёт сверх доли; ставка 30 alashi должна перекрыть соперников при положительном ожидании.\"}",
+          "reasoning_content": "Round 4, license auction. Expected license income 20-60, mean 40. Payout: winner takes license income on top. Bid expected value: license income minus bid... Shifting cash to bank reduces own cash but bank redistributes 50:30:15. I'm richest (47.2M). Bid amount goes to bank, but bank redistributed — so cost is only my share... Actually bid reduces cash fully but bank grows, and I get 50% back plus license income. So bidding is cheap: bid A, get back ~0.5A in distribution, net cost ~0.5A, gain license 20-60. Rivals also bid. Rational to bid high, e.g., 30M? Net cost 15M vs expected 40M gain → +25M. Even higher? If bid 40, net cost 20, gain ~40. Opponents face same logic; highest bid wins. But I need cash for... later rounds exist (rounds 5,6). Bid 30M seems fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766987,
+    "id": "202611160223008212f8e548b64fdb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160223008212f8e548b64fdb",
+    "usage": {
+      "completion_tokens": 298,
+      "completion_tokens_details": {
+        "reasoning_tokens": 220
+      },
+      "prompt_tokens": 1522,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1820
+    }
+  }
+}

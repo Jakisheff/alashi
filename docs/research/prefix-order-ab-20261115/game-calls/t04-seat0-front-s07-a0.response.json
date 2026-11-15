@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.03,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Карта 8 списывает promissory соперников, а у меня их нет — закон мне выгоден, вето не нужно.\"}",
+          "reasoning_content": "Card 8 cancels all promissory notes. I have cash 0, likely no promissory (I sold nothing? sold_counter 6, others have cash). I likely have no outstanding credits. Others have cash 17 and 26 — they may have promissory notes. Card 8 hurts rivals. Already voted though (post_vote, voted all true). Phase law with decision_stage post_vote and is_president... vote already cast? Actions allowed: vote yes/no/abstain or veto. Since already voted, veto is the meaningful choice. Card 8 harms rivals, keep it — no veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766660,
+    "id": "2026111602173728316e1c545d455c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602173728316e1c545d455c",
+    "usage": {
+      "completion_tokens": 166,
+      "completion_tokens_details": {
+        "reasoning_tokens": 128
+      },
+      "prompt_tokens": 1385,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1551
+    }
+  }
+}

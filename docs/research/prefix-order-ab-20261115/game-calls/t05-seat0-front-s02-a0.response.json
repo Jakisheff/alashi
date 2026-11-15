@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.927,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Закон списывает promissory, а у меня их нет — конкуренты могут потерять выручку с sell_credit, мне это выгодно.\"}",
+          "reasoning_content": "Card 8 cancels promissory notes. Others have 2 goods each, I have 0. Others may have used sell_credit... in round 1 market happened before. If others sold on credit, card 8 wipes them — good for me. Others voted already; I'm president with veto. Risky unknown. Card 8 hurts whoever holds promissory; I sold nothing, so I can't lose. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766717,
+    "id": "2026111602183307e2ba8a4cc04c24",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602183307e2ba8a4cc04c24",
+    "usage": {
+      "completion_tokens": 132,
+      "completion_tokens_details": {
+        "reasoning_tokens": 90
+      },
+      "prompt_tokens": 1380,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1512
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.928,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемо 2.25 товара против 2 от produce, риск конфискации приемлем\"}",
+          "reasoning_content": "Round 5 action, no goods, cash 11.4M. Produce gives 2 goods, worth ~8-10 each → ~16-20 alashi gain. Shuttle gives 3 with 25% confiscation risk, no cash cost. Shuttle EV = 3*0.75=2.25 goods vs produce 2. Shuttle better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767105,
+    "id": "202611160225036ef22f21ecde46bc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160225036ef22f21ecde46bc",
+    "usage": {
+      "completion_tokens": 108,
+      "completion_tokens_details": {
+        "reasoning_tokens": 74
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1629
+    }
+  }
+}

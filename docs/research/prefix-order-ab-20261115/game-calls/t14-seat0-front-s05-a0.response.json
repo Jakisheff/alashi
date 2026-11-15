@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.001,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемая ценность 3 товаров выше, чем 2 от produce, а риска денежных потерь нет.\"}",
+          "reasoning_content": "Round 2, no cash, no goods. Produce gives 2 goods. Shuttle 3 goods with 25% confiscation, but no border role info. Produce is safe. But shuttle gives 3 vs 2 expected 2.25. Shuttle slightly better EV. No tariff risk. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767045,
+    "id": "20261116022401ca9391c2e34d42d0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022401ca9391c2e34d42d0",
+    "usage": {
+      "completion_tokens": 99,
+      "completion_tokens_details": {
+        "reasoning_tokens": 63
+      },
+      "prompt_tokens": 1515,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1614
+    }
+  }
+}

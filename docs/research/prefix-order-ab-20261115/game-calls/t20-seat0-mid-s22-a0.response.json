@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.831,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон даёт +1 влияния беднейшему сопернику, мне выгоды нет — блокирую своим весом 3.\"}",
+          "reasoning_content": "Law card 4: +1 influence to poorest. I'm richest. Poorest is idx2. Give rival influence — vote no. My weight 3, others 2+? Vote no blocks (3 vs yes). No benefit to me. vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767323,
+    "id": "20261116022839309ec010f2c64b26",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022839309ec010f2c64b26",
+    "usage": {
+      "completion_tokens": 93,
+      "completion_tokens_details": {
+        "reasoning_tokens": 54
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1484
+    }
+  }
+}

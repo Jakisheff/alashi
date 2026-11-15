@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.711,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 20% режет мою выручку при продажах, я против\"}",
+          "reasoning_content": "Law card 2: tax 20%. I'm poorest, selling gives me less. Vote no. Others voted already... post_vote stage, my vote counts. vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767818,
+    "id": "2026111602365539b4e240a1ec4490",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602365539b4e240a1ec4490",
+    "usage": {
+      "completion_tokens": 65,
+      "completion_tokens_details": {
+        "reasoning_tokens": 36
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1456
+    }
+  }
+}

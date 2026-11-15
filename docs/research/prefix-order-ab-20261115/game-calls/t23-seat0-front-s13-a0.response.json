@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.316,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта даёт влияние беднейшему — фракции 2, моему конкуренту, поэтому против\"}",
+          "reasoning_content": "Card 4: +1 influence to poorest. Poorest is faction 2 (9.1M cash, influence 2 already). Poorest by cash: idx2 (9,136,800) vs me 11,085,600. So it helps rival 2. Vote no. Others voted already (true,true) — unknown which. My vote weight 3. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767399,
+    "id": "202611160229549844af00fa2e4b3b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160229549844af00fa2e4b3b",
+    "usage": {
+      "completion_tokens": 115,
+      "completion_tokens_details": {
+        "reasoning_tokens": 82
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1506
+    }
+  }
+}

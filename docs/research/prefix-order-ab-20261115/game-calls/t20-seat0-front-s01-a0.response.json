@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.667,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"3 товара с риском 25% лучше, чем 2 от produce\"}",
+          "reasoning_content": "Produce gives 2 goods; others have 2. Shuttle gives 3 with 25% confiscation risk — better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767231,
+    "id": "2026111602270903154bda424b41d8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602270903154bda424b41d8",
+    "usage": {
+      "completion_tokens": 52,
+      "completion_tokens_details": {
+        "reasoning_tokens": 26
+      },
+      "prompt_tokens": 1511,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1563
+    }
+  }
+}

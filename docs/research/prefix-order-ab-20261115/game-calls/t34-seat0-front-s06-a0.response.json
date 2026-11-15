@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.652,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% уменьшит мою будущую выручку от продаж, а своих денег у меня нет.\"}",
+          "reasoning_content": "Tax 10% — I have 0 cash and plan to sell. Others have cash; tax hits sales revenue. I'll sell goods this round? Tax on revenue hurts me. Vote no, and I'm president; but veto only needed if it passes. Two votes remain (mine + one other). If other votes yes, 1-1 fails? Yes > no strictly; 1 vs 1 fails. Just vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767751,
+    "id": "202611160235464631c5130f994c1b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160235464631c5130f994c1b",
+    "usage": {
+      "completion_tokens": 127,
+      "completion_tokens_details": {
+        "reasoning_tokens": 89
+      },
+      "prompt_tokens": 1384,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1511
+    }
+  }
+}

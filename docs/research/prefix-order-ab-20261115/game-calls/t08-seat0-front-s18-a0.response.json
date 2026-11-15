@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.514,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Последний рынок, налога нет, продаю весь товар по высокой цене\"}",
+          "reasoning_content": "Round 6, last market. Sell cash avoids? Selling now gives cash directly. Sell 3 at price 12. Cash counts at final. Tax 0. Sell all 3.\n\nBut devaluation: selling in round 6, no more boundary? Round 6 is last; boundary after round 6? Devaluation at rounds 2+ boundary; cash after final still counts floor(cash/100)*62? The devaluation happens at round boundaries 2+, likely including after round 6. sell_credit gives 1.25x but promissory \"after last round not redeemed\" — so no. Sell directly.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766886,
+    "id": "20261116022122744f2fac12cc4402",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022122744f2fac12cc4402",
+    "usage": {
+      "completion_tokens": 159,
+      "completion_tokens_details": {
+        "reasoning_tokens": 130
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1587
+    }
+  }
+}

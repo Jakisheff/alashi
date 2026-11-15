@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.611,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Раунд последний, рынок уже прошёл — налог 10% ни на что не повлияет\"}",
+          "reasoning_content": "Round 6, final. Card 1: tax 10%. Tax applies to next market? It's law phase of round 6; market already happened. Next market... there's no next market after round 6? Law card takes effect next round presumably; round 6 is last, so tax wouldn't apply. Actually tax affects current round's market? Market comes before law, so no effect. Also promissory settlement — irrelevant. So vote doesn't matter for payoff. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766888,
+    "id": "20261116022124a8b004a707be47cc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022124a8b004a707be47cc",
+    "usage": {
+      "completion_tokens": 137,
+      "completion_tokens_details": {
+        "reasoning_tokens": 103
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1527
+    }
+  }
+}

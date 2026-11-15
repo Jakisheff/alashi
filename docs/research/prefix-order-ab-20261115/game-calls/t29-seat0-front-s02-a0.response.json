@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.374,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон 8 списывает непогашенные promissory — мне это невыгодно и не приносит выгоды, голосую против.\"}",
+          "reasoning_content": "Card 8 cancels promissory notes. Others voted already (unknown how). If someone used sell_credit, card 8 wipes them. I don't know votes. Round 1, likely someone did sell_credit. Card 8 hurts creditors; safe to vote no (wiping promissory reduces others' cash). Actually no one has cash shown anyway. Vote no — risk-free? If no promissory exist, harmless. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767564,
+    "id": "20261116023240fd9e42e31d9b4f61",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023240fd9e42e31d9b4f61",
+    "usage": {
+      "completion_tokens": 133,
+      "completion_tokens_details": {
+        "reasoning_tokens": 92
+      },
+      "prompt_tokens": 1380,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1513
+    }
+  }
+}

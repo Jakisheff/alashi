@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.018,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Я богатейший и налог 10% урежет мою выручку последнего рынка; мой вес 2 сам блокирует закон.\"}",
+          "reasoning_content": "Round 6, last round. Law card 1: tax 10%. I'm richest. Tax reduces my market sale revenue. Vote no — I have weight 2, so no passes (2 no vs 1 yes). Also I'm president, could veto. Vote no suffices.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767129,
+    "id": "20261116022526740428a0e8b546f9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022526740428a0e8b546f9",
+    "usage": {
+      "completion_tokens": 101,
+      "completion_tokens_details": {
+        "reasoning_tokens": 60
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1491
+    }
+  }
+}

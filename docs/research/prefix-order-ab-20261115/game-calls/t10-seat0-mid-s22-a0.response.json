@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.609,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Налог 10% не влияет на уже прошедший рынок раунда 6, исход мне безразличен\"}",
+          "reasoning_content": "Law card 1: tax 10%. Market already done (sold_counter 6 means market passed already? round 6, decision_stage primary — market phase occurred earlier this round presumably). Tax applies to future sales — likely next market? Prices of next market — round 6 market already done, so tax affects nothing? Likely no effect. Vote yes or abstain — harmless. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766926,
+    "id": "2026111602220270b8211794024514",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602220270b8211794024514",
+    "usage": {
+      "completion_tokens": 118,
+      "completion_tokens_details": {
+        "reasoning_tokens": 81
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1509
+    }
+  }
+}

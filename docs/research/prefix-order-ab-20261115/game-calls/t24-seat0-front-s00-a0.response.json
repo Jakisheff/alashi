@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.152,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара и денег — любое действие невозможно или бессмысленно.\"}",
+          "reasoning_content": "Round 1, no goods, cash 0. Nothing to do.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767351,
+    "id": "20261116022909446689472cb04df4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022909446689472cb04df4",
+    "usage": {
+      "completion_tokens": 38,
+      "completion_tokens_details": {
+        "reasoning_tokens": 15
+      },
+      "prompt_tokens": 1418,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1456
+    }
+  }
+}

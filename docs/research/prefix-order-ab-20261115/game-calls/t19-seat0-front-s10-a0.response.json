@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.391,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Налог 20% сильнее бьёт по богатым соперникам, продающим больше товара\"}",
+          "reasoning_content": "Card 2: tax 20%. I'm poorest (cash 0). Tax hurts sellers. Vote yes? Others may vote no. But card 2 already passed? decision_stage post_vote... phase law, so vote still needed? voted all true, post_vote — hmm, my action likely matters. Card 2 taxes revenue 20%. I have 2 goods; rivals richer and will sell more. Yes, tax hurts them more. But tax reduces my sale revenue too. Still, as poorest, I gain relative. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767207,
+    "id": "20261116022643c3e004160a014006",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022643c3e004160a014006",
+    "usage": {
+      "completion_tokens": 141,
+      "completion_tokens_details": {
+        "reasoning_tokens": 110
+      },
+      "prompt_tokens": 1386,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1527
+    }
+  }
+}

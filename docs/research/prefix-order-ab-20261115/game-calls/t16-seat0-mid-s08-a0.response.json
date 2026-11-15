@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.449,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Цены высокие (16,14), а cash на границе раунда девальвирует; кредит даёт 1.25x после девальвации\"}",
+          "reasoning_content": "Prices +2+2=4 added. Sell 2 units at 12+4=16, 10+4=14 → 26. Tax 0. Sell normally — cash now helps with bribe later? Round 3, cash devalues 38% at round end (floors to 62%). sell_credit gives 1.25x, but paid at round border after devaluation? Promissory added after devaluation — so credit is better: 26*1.25=32.5 vs 26 losing 38%. Definitely sell_credit 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767072,
+    "id": "202611160224278194048797ce431d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160224278194048797ce431d",
+    "usage": {
+      "completion_tokens": 170,
+      "completion_tokens_details": {
+        "reasoning_tokens": 120
+      },
+      "prompt_tokens": 1425,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1595
+    }
+  }
+}

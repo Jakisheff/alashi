@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.34,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Снижение цен вредит моей продаже товаров в следующем раунде; вето бесплатно и гарантированно блокирует закон.\"}",
+          "reasoning_content": "Card 6: prices -2 next market. I'm poor with 2 goods to sell. Vote no, veto if needed. Veto directly is safest? If I vote no, others 2-2... wait votes: yes needs strictly more. Others both voted already (voted[1]=false, voted[2]=true)? voted [false,false,true] — only idx2 voted. Unknown vote. I'm president, veto kills it. Veto is free and certain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767587,
+    "id": "2026111602330257f9aa8b6b4841de",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602330257f9aa8b6b4841de",
+    "usage": {
+      "completion_tokens": 138,
+      "completion_tokens_details": {
+        "reasoning_tokens": 100
+      },
+      "prompt_tokens": 1384,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1522
+    }
+  }
+}

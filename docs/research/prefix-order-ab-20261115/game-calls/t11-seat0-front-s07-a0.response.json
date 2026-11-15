@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.3,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Карта 8 списывает мои непогашенные promissory при нулевом cash — вето спасает мой будущий доход\"}",
+          "reasoning_content": "Card 8 cancels all promissory notes. I likely have none? I have cash 0, so I probably used sell_credit... goods 3, cash 0 — likely my promissory exists. Card 8 wipes promissory — bad for me. Veto as president.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766938,
+    "id": "202611160222148d215f4271dd42ee",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160222148d215f4271dd42ee",
+    "usage": {
+      "completion_tokens": 101,
+      "completion_tokens_details": {
+        "reasoning_tokens": 61
+      },
+      "prompt_tokens": 1385,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1486
+    }
+  }
+}

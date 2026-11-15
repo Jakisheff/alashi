@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.86,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"С бумом +2 к цене 3 товара стоят конфискационного риска при нуле товаров.\"}",
+          "reasoning_content": "Round 3, cash 14.88M. Shuttle gives 3 goods, ~25% confiscation, worth it with boom 2. Do shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767480,
+    "id": "20261116023117dd4c87073f774c29",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023117dd4c87073f774c29",
+    "usage": {
+      "completion_tokens": 66,
+      "completion_tokens_details": {
+        "reasoning_tokens": 33
+      },
+      "prompt_tokens": 1519,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1585
+    }
+  }
+}

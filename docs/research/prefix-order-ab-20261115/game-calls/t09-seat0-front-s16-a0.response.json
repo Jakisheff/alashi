@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.557,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Без товара и денег на прочие действия производство 3 единиц — надёжный ход без риска конфискации\"}",
+          "reasoning_content": "Subsidy 1 → produce gives 3 goods. Shuttle 4 with 25% risk. Produce safer.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766885,
+    "id": "202611160221234ae86137549a4319",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160221234ae86137549a4319",
+    "usage": {
+      "completion_tokens": 58,
+      "completion_tokens_details": {
+        "reasoning_tokens": 24
+      },
+      "prompt_tokens": 1520,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1578
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.152,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Без риска даёт 3 товара — тот же ожидаемый объём, что shuttle, но без вероятности конфискации.\"}",
+          "reasoning_content": "Round 3, goods 0, subsidy 1. Shuttle gives 4 goods, 25% confiscation → expected 3. Produce gives 3 safe. Prices: sold_counter 5, ladder next ~7. Selling 4 units at ~7+... roughly 8,7,6,5 vs 3 units 8,7,6 — 4th unit worth 5 > cost of donkey 1 but produce gives 3. Shuttle expected extra 1 unit at ~5 vs 25% lose 4 units. EV shuttle: 0.75*4+0.25*0=3 units = produce. Equal expected goods, produce safer. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767704,
+    "id": "20261116023459212e585b1dd8474e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023459212e585b1dd8474e",
+    "usage": {
+      "completion_tokens": 183,
+      "completion_tokens_details": {
+        "reasoning_tokens": 144
+      },
+      "prompt_tokens": 1519,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1702
+    }
+  }
+}

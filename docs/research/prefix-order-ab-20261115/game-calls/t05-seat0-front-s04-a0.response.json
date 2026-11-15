@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.628,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара для продажи, сохраняю ход.\"}",
+          "reasoning_content": "I have 0 goods, so I can't sell. I'll pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766723,
+    "id": "20261116021841fddb5da4678c440f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021841fddb5da4678c440f",
+    "usage": {
+      "completion_tokens": 36,
+      "completion_tokens_details": {
+        "reasoning_tokens": 16
+      },
+      "prompt_tokens": 1420,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1456
+    }
+  }
+}

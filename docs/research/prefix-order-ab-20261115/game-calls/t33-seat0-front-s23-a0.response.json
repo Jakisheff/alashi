@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.316,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Налог 20% бьёт по продажам соперников, у меня товара нет, так что закон мне выгоден\"}",
+          "reasoning_content": "Round 6, card 2: tax 20%. All voted already; post_vote stage. Tax hurts me? Cash rich me, tax affects revenue only. Goods 0 anyway, tax doesn't affect cash directly. Law passing: tax on sales. Opponents have goods. Tax hurts rivals more. Vote already cast (voted true). Action now: nothing meaningful; veto would block tax—but tax hurts rivals' sales, helps ladder less sold. Keep tax. Vote yes? Already voted? vote_weight_mode 1, voted all true—my vote maybe already counted. I'll just vote_yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767769,
+    "id": "20261116023604438baa7c4d6e407a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023604438baa7c4d6e407a",
+    "usage": {
+      "completion_tokens": 159,
+      "completion_tokens_details": {
+        "reasoning_tokens": 123
+      },
+      "prompt_tokens": 1392,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1551
+    }
+  }
+}

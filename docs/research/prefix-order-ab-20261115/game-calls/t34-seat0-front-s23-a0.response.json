@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 24.784,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Повышение цен выгодно всем продажам, включая мои будущие\"}",
+          "reasoning_content": "Law 7: +2 prices next market — but it's round 6, last market? Market happens each round before action/law... actually round 6 already had its market. Post_vote phase — vote already counted? voted all true, decision_stage post_vote — seems we're asked again? We can still vote_yes/no/abstain. Card 7 benefits prices, helps everyone; it's already passed maybe. Just vote_yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767858,
+    "id": "20261116023714cee936a150c844c4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023714cee936a150c844c4",
+    "usage": {
+      "completion_tokens": 116,
+      "completion_tokens_details": {
+        "reasoning_tokens": 91
+      },
+      "prompt_tokens": 1393,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1509
+    }
+  }
+}

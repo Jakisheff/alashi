@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.24,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Даёт 3 товара без риска конфискации; шаттл с учётом ~25% риска даёт ту же ожидаемую ценность, но с риском.\"}",
+          "reasoning_content": "Shuttle gives 4 goods, ~25% confiscation. I have 0 cash. Produce gives 3 goods safe. Shuttle EV: 4*0.75=3 goods, but gray risk. Produce gives 3 safe — shuttle better EV (3 vs 3). Equal. But confiscation \"around 25%\" — shuttle EV 3 goods. Prefer produce for safety? Shuttle gives 4 with 75% → 3.0. Tie; safer produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767696,
+    "id": "20261116023452549031cd4a974acd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023452549031cd4a974acd",
+    "usage": {
+      "completion_tokens": 147,
+      "completion_tokens_details": {
+        "reasoning_tokens": 99
+      },
+      "prompt_tokens": 1515,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1662
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.127,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Закон даёт +1 влияния богатейшему (сопернику), что лишит меня бонуса за максимальное влияние.\"}",
+          "reasoning_content": "Law card 5: +1 influence to richest. Richest is idx2 (49.7M). I'm idx0 with influence 2. If passes, idx2 gets influence 3, beating me for max influence bonus and presidency. Vote no. Others voted already (likely yes?). My weight 4 vs 3+3=6 — passes without me. Then veto? Veto kills it. As president, veto free. Yes, veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766772,
+    "id": "202611160219279b301da7a3fa4f4a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160219279b301da7a3fa4f4a",
+    "usage": {
+      "completion_tokens": 135,
+      "completion_tokens_details": {
+        "reasoning_tokens": 94
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1526
+    }
+  }
+}

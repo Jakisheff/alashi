@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.512,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Последний раунд: 3 товара по ~4-5 alashi с риском 25% дают положительное EV, девальвации больше не будет\"}",
+          "reasoning_content": "Round 6 action. I have cash 54M, no goods. Shuttle gives 3 goods, ~25% confiscation, expected ~2.25 goods; sold_counter=7, price ~4-5 alashi each → expected ~9-10 alashi. No devaluation risk—cash doesn't devalue after this? Devaluation at border of rounds 2+: 62% floor... actually cash floor(cash/100)*62 at round borders. Round 6 is last, so no devaluation. Better shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767433,
+    "id": "202611160230299d025f9c46e4419d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160230299d025f9c46e4419d",
+    "usage": {
+      "completion_tokens": 154,
+      "completion_tokens_details": {
+        "reasoning_tokens": 110
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1675
+    }
+  }
+}

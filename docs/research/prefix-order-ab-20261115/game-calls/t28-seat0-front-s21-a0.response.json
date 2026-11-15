@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.564,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Рынок этого раунда уже прошёл, товары продать нельзя, а догнать влияние лидера невыгодно — храню кэш.\"}",
+          "reasoning_content": "Round 6, final. No goods. Cash 46M. Best action: shuttle for goods to sell this market? Market phase already passed? Round structure: market, action, law each round — market comes before action? Order listed market, action, law. If market already passed this round, goods can't be sold. But price_shift doesn't matter... Actually if market is before action, producing now is useless. So better bribe for influence? Influence gives 5% bonus pool to max influence — currently 3 vs mine 1, I can't catch up (bribe 40M = 8 influence, expensive). Roof? No anti-rich card. Pass or small bribe? Influence also affects final payout? No, payout by cash rank weights 50:30:15... \"остаток по весам 50:30:15\" — probably rank-based. So pass saves nothing. Could bribe 5M to gain influence — costs 5M, gains little. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767617,
+    "id": "20261116023327d34dc10a67f24802",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023327d34dc10a67f24802",
+    "usage": {
+      "completion_tokens": 250,
+      "completion_tokens_details": {
+        "reasoning_tokens": 207
+      },
+      "prompt_tokens": 1523,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1773
+    }
+  }
+}

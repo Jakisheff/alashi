@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.181,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемая выгода 3 товаров с учётом 25% конфискации выше, чем 2 от produce, при цене ~3 за единицу.\"}",
+          "reasoning_content": "Round 6, last market still to come. Produce gives 2 goods, worth ~2 alashi each at price 3 (sold_counter 10). Shuttle: 3 goods, 25% confiscation risk. Expected: produce +2 goods → sell at price 3 → 6 alashi pre-tax. Shuttle 3 goods, 75% keep → 6.75 expected. Shuttle slightly better. No tax active. Shuttle expected value marginally better. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766568,
+    "id": "20261116021604a4666e6e44094379",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021604a4666e6e44094379",
+    "usage": {
+      "completion_tokens": 147,
+      "completion_tokens_details": {
+        "reasoning_tokens": 99
+      },
+      "prompt_tokens": 1522,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1669
+    }
+  }
+}

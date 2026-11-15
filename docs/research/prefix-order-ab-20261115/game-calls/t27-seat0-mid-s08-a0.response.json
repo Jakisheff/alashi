@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.141,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Цены высокие, товара всё равно 3; sell_credit даёт на 25% больше выручки без риска девальвации при такой сумме.\"}",
+          "reasoning_content": "Sell 3 at 12 each. Cash 0. But devaluation at round 3+? floor(cash/100)*62 — cash in units of 1e6? Cash=6820000 → 6.82 → floor 6*62=372? Hmm. Selling 36M cash would devalue to floor(36)*62... actually cash in alashi: 36 alashi → floor(36/100)=0, no devaluation. Devaluation only over 100 alashi. So sell directly. Price 12 each = 36 alashi. sell_credit would give 45 later, but card 8 risk unknown; also law_card unknown this round? law_card=255 now. Direct sell is fine; credit gives 1.25x paid at round boundary — no devaluation risk (<100). 36 alashi < 100, credit returns 45. Better? Promissory arrives next round boundary and counts... it says on boundary promissory added to cash. That's before round 4 market. Take credit for 25% more.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767484,
+    "id": "202611160231159946fc499ff0492f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160231159946fc499ff0492f",
+    "usage": {
+      "completion_tokens": 274,
+      "completion_tokens_details": {
+        "reasoning_tokens": 226
+      },
+      "prompt_tokens": 1423,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1697
+    }
+  }
+}

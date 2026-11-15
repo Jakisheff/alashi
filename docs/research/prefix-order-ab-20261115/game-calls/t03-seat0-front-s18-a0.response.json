@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.362,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Финальный раунд: продаю весь товар по высокой цене, кредит не погасится\"}",
+          "reasoning_content": "Round 6, last market. Cash is paid at end anyway; sell all 3 goods. Sell vs sell_credit: credit won't be redeemed after last round? Promissory paid at round boundary after round 6 — no, after last round not redeemed. So sell directly. Prices 12 each, no tax.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766695,
+    "id": "20261116021811e53cb887b83c41ae",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021811e53cb887b83c41ae",
+    "usage": {
+      "completion_tokens": 100,
+      "completion_tokens_details": {
+        "reasoning_tokens": 66
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1528
+    }
+  }
+}

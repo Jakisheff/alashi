@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.628,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Продажа в кредит даёт 1.25x выручку по максимальной цене 12, а погашение на границе раунда избегает девальвации текущего кеша\"}",
+          "reasoning_content": "Round 3 market, ladder top price 12, no tax. Sell 2 units at 12 = 24. Credit gives 1.25x but promissory devalues at border (cash floor/100*62 — promissory added then devalued? promissory added to cash at border, then... actually devaluation applies to cash at border rounds 2+, promissory added and zeroed). Credit 24*1.25=30 promissory → added to cash after devaluation? Ambiguous. Cash sells now get devalued 62% at border. Credit pays 30 later possibly without devaluation. Safer: sell_credit 2 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767259,
+    "id": "20261116022734c35a598ad8714065",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022734c35a598ad8714065",
+    "usage": {
+      "completion_tokens": 205,
+      "completion_tokens_details": {
+        "reasoning_tokens": 143
+      },
+      "prompt_tokens": 1422,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1627
+    }
+  }
+}

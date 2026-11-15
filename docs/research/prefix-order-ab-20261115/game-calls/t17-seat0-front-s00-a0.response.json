@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.322,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара и денег — любое действие невозможно или бессмысленно.\"}",
+          "reasoning_content": "No goods, can't sell. Buy? Round 1, no cash (cash 0, buy needs cash presumably). Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767125,
+    "id": "20261116022522b45fe75450d244dd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022522b45fe75450d244dd",
+    "usage": {
+      "completion_tokens": 50,
+      "completion_tokens_details": {
+        "reasoning_tokens": 27
+      },
+      "prompt_tokens": 1418,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1468
+    }
+  }
+}

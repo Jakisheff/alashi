@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.549,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Цены упали до 5/4/3, но sell_credit даёт 1.25x выручку, погашаемую на границе раунда 5 — это выгоднее прямой продажи.\"}",
+          "reasoning_content": "Round 4, last-but... 6 rounds, sell now fine. Sell 3 goods at price ladder: sold_counter 7, prices [12,10,9,8,7,6,5,4,...] → 5,4,3 = 12 alashi. Sell credit gives 1.25x at next round boundary (round 5 exists). Better sell_credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767208,
+    "id": "202611160226442686f514c7c3495f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160226442686f514c7c3495f",
+    "usage": {
+      "completion_tokens": 143,
+      "completion_tokens_details": {
+        "reasoning_tokens": 82
+      },
+      "prompt_tokens": 1430,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1573
+    }
+  }
+}

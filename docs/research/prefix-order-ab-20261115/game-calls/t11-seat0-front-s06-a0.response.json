@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.214,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Списание promissory у богатых соперников относительно увеличивает мою выплату при нулевом кэше\"}",
+          "reasoning_content": "Card 8 wipes promissory notes. I have no promissory visible (unknown). Opponents have cash; I don't know their promissory. As president I could veto or vote. Wiping promissory hurts those who used sell_credit. My promissory unknown but I have cash 0, goods 3 — likely I sold credit? Unknown. Vote no is safe; likely others used sell_credit in round 1? Devaluation already happened. Card 8 wipes promissory — I'm poorest with 0 cash, so wiping others' promissory helps me relatively? But promissory adds to cash at round boundary regardless; wiping reduces their cash — relatively helps me. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766933,
+    "id": "20261116022208f8f8298d551f40d1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022208f8f8298d551f40d1",
+    "usage": {
+      "completion_tokens": 183,
+      "completion_tokens_details": {
+        "reasoning_tokens": 147
+      },
+      "prompt_tokens": 1384,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1567
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.852,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидание 2.25 товара выше, чем 2 от produce, риск 25% приемлем\"}",
+          "reasoning_content": "No cash, produce gives 2 goods. Shuttle gives 3 with 25% risk. Produce safer, but shuttle EV: 3*0.75=2.25 vs 2. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766626,
+    "id": "20261116021703aad08c7e2e6a48d4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021703aad08c7e2e6a48d4",
+    "usage": {
+      "completion_tokens": 77,
+      "completion_tokens_details": {
+        "reasoning_tokens": 43
+      },
+      "prompt_tokens": 1511,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1588
+    }
+  }
+}

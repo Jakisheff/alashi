@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.698,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"abstain\",\"reason\":\"Закон о субсидии в последнем раунде уже не влияет на мой итог (товар и рынок позади), поэтому нет смысла тратить veto.\"}",
+          "reasoning_content": "Law card 3: subsidy_goods=1 — passed already? post_vote stage... we're asked to vote? decision_stage post_vote but phase law with vote options. Card 3 is good for me? I have 0 goods. Subsidy helps all equally; rivals have goods. Voting no weakly. But it seems vote already happened (voted all true). Odd. Safest: veto? Card 3 helps rivals produce more. As president, veto subsidy. Actually subsidy+1 goods for everyone—I have no goods and no production rounds left? Round 6 is last; market already passed. Subsidy irrelevant now—no effect. Just pass/abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767673,
+    "id": "20261116023426f8db86036cc74c83",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023426f8db86036cc74c83",
+    "usage": {
+      "completion_tokens": 186,
+      "completion_tokens_details": {
+        "reasoning_tokens": 140
+      },
+      "prompt_tokens": 1394,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1580
+    }
+  }
+}

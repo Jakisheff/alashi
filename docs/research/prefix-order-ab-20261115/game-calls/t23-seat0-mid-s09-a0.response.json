@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.985,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bribe\",\"to\":1,\"amount\":5000000,\"reason\":\"За 5M получаю влияние 2, становлюсь президентом с правом вето и претендую на бонус 5% банка за максимальное влияние, что перевешивает стоимость.\"}",
+          "reasoning_content": "Shuttle: 4 goods, ~25% confiscation risk vs produce 3 goods. Shuttle expected 3 goods vs 3 — equal-ish. But if not confiscated, 4 goods at price ~6-7. Expected value shuttle = 3 goods = produce. Slight preference produce (no risk). I'm not president, influence 1 each. Bribe to gain influence? President decided by influence at law entry; vote weight all 3. Bribe 5M gives +1 influence — could become president for veto, and max influence gives extra 5% bank share. Bribe costs 5M cash to a rival. Influence 2 vs 1,1 → becomes president, plus max influence bonus 5% of bank. That could be worth it. Bank share: 5% of bank. Bank size unknown, likely tens of alashi... 5% maybe few alashi. President veto power valuable.\n\nI'd bribe 5M to weakest? Bribe to idx1 (lowest cash 23.8). Gives me influence 2 → president. Cost 5M but +5% bank share + veto. But bribes happen every action phase; rivals may counter later. Still, take bribe.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767376,
+    "id": "20261116022927b2961771c8fd4e4c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022927b2961771c8fd4e4c",
+    "usage": {
+      "completion_tokens": 320,
+      "completion_tokens_details": {
+        "reasoning_tokens": 255
+      },
+      "prompt_tokens": 1519,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1839
+    }
+  }
+}

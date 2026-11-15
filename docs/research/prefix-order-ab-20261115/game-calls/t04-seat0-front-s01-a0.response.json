@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.756,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Безопасно получаю 2 товара, риска конфискации нет\"}",
+          "reasoning_content": "vote_weight [3,1,1]? Interesting—I have weight 3 maybe from earlier? Anyway, action: produce gives 2 goods, donkey gives 1 for 1 alashi but cash=0. Shuttle gives 3 with 25% confiscation. Produce safest.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766627,
+    "id": "202611160217031430dbcb4f874230",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160217031430dbcb4f874230",
+    "usage": {
+      "completion_tokens": 83,
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      },
+      "prompt_tokens": 1511,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1594
+    }
+  }
+}

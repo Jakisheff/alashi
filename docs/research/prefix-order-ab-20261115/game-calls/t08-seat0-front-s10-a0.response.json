@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.347,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Закон даёт +1 влияния самому бедному — это я, а влияние повышает вес голоса и бонус комиссии.\"}",
+          "reasoning_content": "Card 4: +1 influence to poorest. Poorest is me (29.25M). Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766845,
+    "id": "20261116022042597938428604433c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022042597938428604433c",
+    "usage": {
+      "completion_tokens": 60,
+      "completion_tokens_details": {
+        "reasoning_tokens": 23
+      },
+      "prompt_tokens": 1388,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1448
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.877,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Снижение цен навредит моей продаже товара в следующем раунде\"}",
+          "reasoning_content": "Law 6: prices -2 next market. I have 2 goods, plan to sell. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767171,
+    "id": "20261116022609003973c615324980",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022609003973c615324980",
+    "usage": {
+      "completion_tokens": 49,
+      "completion_tokens_details": {
+        "reasoning_tokens": 23
+      },
+      "prompt_tokens": 1388,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1437
+    }
+  }
+}

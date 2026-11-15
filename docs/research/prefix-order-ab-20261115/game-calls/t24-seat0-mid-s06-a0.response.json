@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.168,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Я самый бедный и карта 4 даёт мне +1 влияния, что усилит мой голос и бонус влияния.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest. I'm poorest (cash 0). One player already voted (unknown how). Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767361,
+    "id": "202611160229191bcebda987c5429c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160229191bcebda987c5429c",
+    "usage": {
+      "completion_tokens": 66,
+      "completion_tokens_details": {
+        "reasoning_tokens": 29
+      },
+      "prompt_tokens": 1384,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1450
+    }
+  }
+}

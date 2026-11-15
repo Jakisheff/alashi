@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.73,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Закон +2 к ценам выгоден мне как продавцу с 3 товарами в оставшиеся рынки.\"}",
+          "reasoning_content": "Card 7: prices +2 next market. I'm poorest, veto not available. Prices +2 benefits sellers — I have 3 goods, want it. Vote yes. Others voted already; passes if yes > no. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767042,
+    "id": "20261116022357e6a772b0e47949b0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022357e6a772b0e47949b0",
+    "usage": {
+      "completion_tokens": 84,
+      "completion_tokens_details": {
+        "reasoning_tokens": 49
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1475
+    }
+  }
+}

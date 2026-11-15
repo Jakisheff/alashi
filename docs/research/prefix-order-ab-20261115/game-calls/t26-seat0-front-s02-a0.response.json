@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.867,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Списание всех promissory вредит соперникам, у меня их нет — мой относительный ранг улучшается.\"}",
+          "reasoning_content": "Card 8 wipes all promissory notes. I have no promissory (cash 0). Others may have? Cash all 0; promissory not shown. Unknown. Card 8 harms those with promissory. Round 1, likely some sold on credit. Vote no? Actually wiping promissory reduces others' cash, helping my rank. Vote yes seems fine. But I'm president with veto. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767444,
+    "id": "202611160230414a979edb96894847",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160230414a979edb96894847",
+    "usage": {
+      "completion_tokens": 125,
+      "completion_tokens_details": {
+        "reasoning_tokens": 90
+      },
+      "prompt_tokens": 1380,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1505
+    }
+  }
+}

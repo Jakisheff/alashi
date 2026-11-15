@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.377,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Финальный раунд без рынка, товара и денег на взятки — любое действие бесполезно\"}",
+          "reasoning_content": "Round 6, final. Cash 84568 — tiny. Produce gives goods, but no market left (this is action then law, market already done). No more selling. Bid not possible (round 4 only). Bribe increases influence — max influence gets extra 5% of bank. Influence 2 vs 1,1; bribe 5M would need 5M cash — I have 84k. Can't. So produce (worthless) or pass. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767557,
+    "id": "202611160232339192ac70e7a14f1d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160232339192ac70e7a14f1d",
+    "usage": {
+      "completion_tokens": 134,
+      "completion_tokens_details": {
+        "reasoning_tokens": 102
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1655
+    }
+  }
+}

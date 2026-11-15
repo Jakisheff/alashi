@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.931,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Закон о +2 к ценам повышает выручку от моих продаж в следующем раунде\"}",
+          "reasoning_content": "Card 7: +2 prices. I have 2 goods, plan to sell next market. Benefit for me. But rivals also have goods. All equal influence; they both voted... one voted already (idx2 yes presumably?). Vote yes — higher prices help me.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767088,
+    "id": "20261116022445602f601f60104c37",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022445602f601f60104c37",
+    "usage": {
+      "completion_tokens": 87,
+      "completion_tokens_details": {
+        "reasoning_tokens": 55
+      },
+      "prompt_tokens": 1384,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1471
+    }
+  }
+}

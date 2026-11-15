@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.018,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара для продажи, а покупка по максимальной цене 12 невыгодна.\"}",
+          "reasoning_content": "Sell credit? Devaluation at rounds 2+ borders: cash floor(cash/100)*62, promissory added after. Round 3 market; border after round 3 will devalue cash, but promissory added and not devalued. I have no goods. Others have 2 each. Sell credit not possible without goods. Buy? Could buy to push counter back and raise prices... but no goods to sell later? I have 0 goods; buying gives goods but I need to produce later. Buy moves counter back so others' sales hurt less — doesn't help me. Best pass? Actually buying goods cheap now to sell later at higher? Buying price = ladder price at current counter — counter 0, price 12. Expensive. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766896,
+    "id": "20261116022131cd8399385ae04a45",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022131cd8399385ae04a45",
+    "usage": {
+      "completion_tokens": 188,
+      "completion_tokens_details": {
+        "reasoning_tokens": 158
+      },
+      "prompt_tokens": 1425,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1613
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.428,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Продажа в кредит по высокой цене обходит девальвацию 62% на границе раунда и даёт бонус 25%\"}",
+          "reasoning_content": "Round 3, next devaluation 62% at border. Sell credit gives 1.25x but then devalued? Promissory added after floor(cash/100)*62? \"cash=floor(cash/100)*62, promissory прибавляется к cash и обнуляется\" — promissory added after devaluation, so credit avoids devaluation and gets 1.25x. Definitely sell_credit both units at price 12: 24*1.25=30.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767597,
+    "id": "20261116023314b61e390da56e4ffa",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023314b61e390da56e4ffa",
+    "usage": {
+      "completion_tokens": 151,
+      "completion_tokens_details": {
+        "reasoning_tokens": 105
+      },
+      "prompt_tokens": 1425,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1576
+    }
+  }
+}

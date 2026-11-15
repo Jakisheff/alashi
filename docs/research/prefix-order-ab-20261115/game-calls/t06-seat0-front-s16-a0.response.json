@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.212,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара, а перекупка с учётом налога 10% и обесценения невыгодна\"}",
+          "reasoning_content": "No goods, cash small. Sell impossible. Buy? Round 5 of 6, buying moves counter back to sell later at higher price—could profit: buy 1 unit costs? Buy purchases goods at current ladder price (counter 0, price 12). Then later sell... but price ladder with counter 0 starts at 12. Buying 1 unit then selling 1 unit same round? Different phases. Tax 10% on revenue. Buying at price 12, selling next market? No—market phase is now; selling would be later round (round 6 market). Buy moves counter back, then sell at round 6 at price 12, minus 10% tax → lose. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766784,
+    "id": "20261116021939ae9352da505f4041",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021939ae9352da505f4041",
+    "usage": {
+      "completion_tokens": 179,
+      "completion_tokens_details": {
+        "reasoning_tokens": 146
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1607
+    }
+  }
+}

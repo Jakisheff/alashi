@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.274,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":25000000,\"reason\":\"Доход лицензии (в среднем ~40) выплачивается сверх доли, а мои деньги всё равно девальвируются до 62%, поэтому агрессивная ставка выгодна.\"}",
+          "reasoning_content": "Round 4, auction available. License income 20-60 alashi (avg 40). Cash ~27.5 alashi. Bid? Rivals also bid. Bid maybe 20M (20 alashi)? Expected value: license value 40 alashi minus bid. Win chance depends. If I bid 20, EV positive if win. But cash devalues at round borders: floor(cash/100)*62 — 27.5M → 62% retention! Round 4→5 border applies. So spending cash is good (cash loses 38%). License pays at end, extra. So bid aggressively, e.g., 25M? Cash 27.5M; keep some. Bid 25M: if win, license EV 40 vs 25 spent, but spent cash would be devalued to 62% anyway, so effective cost ~15.5. Strong. Risk of losing bid = money returned but then devalued. If returned, devalued too. Bid 25M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767796,
+    "id": "20261116023630427c3d3bb40b4eae",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023630427c3d3bb40b4eae",
+    "usage": {
+      "completion_tokens": 267,
+      "completion_tokens_details": {
+        "reasoning_tokens": 213
+      },
+      "prompt_tokens": 1520,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1787
+    }
+  }
+}

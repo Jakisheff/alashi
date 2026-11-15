@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.027,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Продажа в кредит обходит девальвацию и даёт +25%\"}",
+          "reasoning_content": "Round 2, prices with boom+2: ladder starting at sold_counter=2 → price 9+2=11, 8+2=10... Sell 2 units now for cash; but devaluation at round 2+ border: cash floor(cash/100)*62 — that's huge devaluation (cash in units, floor(cash/100)*62?). Actually cash devalued to 62%. So better sell_credit: promissory added at next round border and not devalued. Sell credit 2 units: revenue 11+10=21*1.25=26.25 promissory.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766815,
+    "id": "2026111602201164fd27ad06994537",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602201164fd27ad06994537",
+    "usage": {
+      "completion_tokens": 163,
+      "completion_tokens_details": {
+        "reasoning_tokens": 131
+      },
+      "prompt_tokens": 1420,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1583
+    }
+  }
+}

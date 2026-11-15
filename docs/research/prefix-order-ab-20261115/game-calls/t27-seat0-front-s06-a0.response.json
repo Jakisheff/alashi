@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.923,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 8 списывает непогашенные promissory — у меня их нет, а соперники могут пострадать.\"}",
+          "reasoning_content": "Card 8 wipes all promissory notes. I have no promissory (cash 0). Player 2 has 22M cash — unknown promissory. Wiping promissory could hurt rivals who used sell_credit. Likely rivals may have promissory. Vote yes? But vote yes requires strictly more yes; one rival already voted (voted[2]=true, unknown how). I have cash 0, no promissory — card 8 only harms others potentially. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767491,
+    "id": "20261116023128e368fc0ba5d447ca",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023128e368fc0ba5d447ca",
+    "usage": {
+      "completion_tokens": 142,
+      "completion_tokens_details": {
+        "reasoning_tokens": 104
+      },
+      "prompt_tokens": 1384,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1526
+    }
+  }
+}

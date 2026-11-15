@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.495,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Плюс влияния беднейшему при равном кэше может достаться сопернику — рискованно, отдаю голос против.\"}",
+          "reasoning_content": "Card 4: +1 influence to poorest. All cash 0, tie? Poorest all equal; I might not get it. Law passes affects someone +1 influence, influence affects voting later and 5% bonus. Uncertain who gets it; risk rivals gain. Vote no? If tie in cash, who is poorest? Possibly lowest index or random. Better vote no to deny rivals influence. But if I get it, good. Vote_no; rivals also vote? voted all true... decision_stage post_vote, votes already cast. My vote still matters. Vote no is safe.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767509,
+    "id": "2026111602314465b476f6e1a64c8d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602314465b476f6e1a64c8d",
+    "usage": {
+      "completion_tokens": 161,
+      "completion_tokens_details": {
+        "reasoning_tokens": 120
+      },
+      "prompt_tokens": 1381,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1542
+    }
+  }
+}

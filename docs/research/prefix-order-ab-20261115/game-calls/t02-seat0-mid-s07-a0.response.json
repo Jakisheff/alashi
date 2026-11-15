@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.468,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Продать весь товар по максимальной цене 12 без налога — лучший обмен товара на деньги.\"}",
+          "reasoning_content": "Round 3 of 6, prices start at 12. Sell 3 now at 12 = 36, no tax. Sell plain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766646,
+    "id": "20261116021724636de09a80c24d3b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021724636de09a80c24d3b",
+    "usage": {
+      "completion_tokens": 66,
+      "completion_tokens_details": {
+        "reasoning_tokens": 30
+      },
+      "prompt_tokens": 1422,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1488
+    }
+  }
+}

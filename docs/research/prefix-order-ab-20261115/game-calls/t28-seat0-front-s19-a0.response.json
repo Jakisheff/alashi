@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.495,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Голосование уже завершено (post_vote), действие безопасно нейтрально.\"}",
+          "reasoning_content": "Card 7: prices +2, benefits sellers. I have 3 goods, others have 2 each. Already voted (post_vote). Phase law, but voted all true — probably nothing matters; abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767599,
+    "id": "2026111602331662bf3f631a394a96",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602331662bf3f631a394a96",
+    "usage": {
+      "completion_tokens": 75,
+      "completion_tokens_details": {
+        "reasoning_tokens": 44
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1466
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.31,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Больше товара при неплохом кэше; риск 25% приемлем ради лишней единицы к продаже\"}",
+          "reasoning_content": "Shuttle: 3 goods, 25% confiscation risk, worth it vs produce (2). No cash concerns. Shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767070,
+    "id": "202611160224271b3d850652cf4812",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160224271b3d850652cf4812",
+    "usage": {
+      "completion_tokens": 61,
+      "completion_tokens_details": {
+        "reasoning_tokens": 27
+      },
+      "prompt_tokens": 1519,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1580
+    }
+  }
+}

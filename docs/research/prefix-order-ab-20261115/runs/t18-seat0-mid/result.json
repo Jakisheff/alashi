@@ -1,0 +1,43 @@
+{
+  "id": "t18-seat0-mid",
+  "seed_index": 18,
+  "seed": 337758022193199018,
+  "seat": 0,
+  "arm": "mid",
+  "opponents": [
+    "greedy",
+    "tactical"
+  ],
+  "partition": "test",
+  "status": "completed",
+  "started_utc": "2026-11-15T18:25:34.121055+00:00",
+  "payout": 75466598,
+  "net_profit": 65466598,
+  "rank": 2,
+  "decisions": 20,
+  "model_decisions": 20,
+  "parse_errors": [
+    {
+      "phase": "law",
+      "decision": "Pass",
+      "parse_error": "unknown law action"
+    }
+  ],
+  "illegal_actions": 2,
+  "illegal_detail": [
+    {
+      "phase": "law",
+      "err": "AlreadyVoted",
+      "detail": {}
+    },
+    {
+      "phase": "action",
+      "err": "SelfBribe",
+      "detail": {
+        "amount": 5000000,
+        "to": 0
+      }
+    }
+  ],
+  "elapsed_s": 89.651
+}

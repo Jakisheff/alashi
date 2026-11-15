@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.449,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Налог 20% действует на будущий рынок, которого больше нет, поэтому исход голосования не влияет на мою выплату.\"}",
+          "reasoning_content": "Law card 2: tax 20%. Round 6 is last? Six rounds, round 6. Market already done (phase law after market). Tax applies next market? No next market. Actually law card affects next round — none. But sell_credit promissory repaid at round boundary... tax on market revenue. If no further market, tax is harmless. So vote yes harmless? Tax 20% could affect... card takes effect maybe immediately? Safer: card 2 tax 20% — if it affects nothing (last round), vote yes or veto doesn't matter. But if it affects promissory repayment? Unclear. Just pass/abstain — actually voting doesn't matter for payout. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767771,
+    "id": "20261116023606dffaaa7ac4e444e7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023606dffaaa7ac4e444e7",
+    "usage": {
+      "completion_tokens": 191,
+      "completion_tokens_details": {
+        "reasoning_tokens": 151
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1582
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.393,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Снижение цен вредит продажам соперников, у меня товара нет\"}",
+          "reasoning_content": "Card 6: prices next market -2. I have no goods, rivals have goods. Vote yes hurts rivals' sales.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766977,
+    "id": "2026111602225520e94a77b87442a5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602225520e94a77b87442a5",
+    "usage": {
+      "completion_tokens": 52,
+      "completion_tokens_details": {
+        "reasoning_tokens": 26
+      },
+      "prompt_tokens": 1386,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1438
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.365,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Бесплатные 3 товара с ожиданием 2,25 лучше, чем 2 от produce или donkey за 1 alashi.\"}",
+          "reasoning_content": "Round 3, cash 30M, no goods. Produce gives 2 goods. Shuttle gives 3, 25% confiscation. Donkey costs 1. Produce is safe 2 goods. Shuttle EV: 3*0.75=2.25 goods, free. Shuttle slightly better EV.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767686,
+    "id": "20261116023442a9c09a368bae4e65",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023442a9c09a368bae4e65",
+    "usage": {
+      "completion_tokens": 104,
+      "completion_tokens_details": {
+        "reasoning_tokens": 64
+      },
+      "prompt_tokens": 1518,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1622
+    }
+  }
+}

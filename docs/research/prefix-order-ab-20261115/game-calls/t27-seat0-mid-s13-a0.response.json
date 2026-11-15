@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.549,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":15000000,\"reason\":\"Ожидаемый доход лицензии ~40 alashi, ставка 15 alashi даёт положительное матожидание сверх моей доли.\"}",
+          "reasoning_content": "Round 4 auction: license income 20-60 alashi (~40 avg). Bid some amount, e.g. 5 alashi? Cash 38.75. Bid 8 alashi likely wins but risky. Opponents similar cash. Expected value ~40, share worth. Bid 10 alashi? If I win at 10, net +30 avg. Rational bid maybe ~15. But money later devalues 62%? Devaluation applies at rounds 2+ borders; cash spent now is full value. Bid 15M (15 alashi). Others may bid higher... choose 15.\n\nAlternatively shuttle for goods. But license is big. Bid 12.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767513,
+    "id": "202611160231473d6f0328f1c8463a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160231473d6f0328f1c8463a",
+    "usage": {
+      "completion_tokens": 185,
+      "completion_tokens_details": {
+        "reasoning_tokens": 140
+      },
+      "prompt_tokens": 1522,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1707
+    }
+  }
+}

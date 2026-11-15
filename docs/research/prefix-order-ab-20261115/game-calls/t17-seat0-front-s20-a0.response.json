@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.772,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемая ценность 3 товаров с учётом 25% конфискации выше, чем у produce (15.75 против 14 alashi до налога), а выручка всё равно поступит в этом финальном раунде.\"}",
+          "reasoning_content": "Round 6, final round. Cash 9.37. Shuttle gives 3 goods but 25% confiscation and need cash to sell... produce gives 2 goods, sell at price ladder sold_counter=4 → price 7. Selling 2 units at 7 = 14 alashi * tax 20% → 11.2. That's big. Shuttle: 3 goods, EV 2.25 units sold. Produce safer: 2 units guaranteed. Shuttle EV 15.75 vs 14. Produce better and no risk? Shuttle EV higher: 3*0.75=2.25 units ×7 =15.75 pre-tax. But confiscation risk ~25% all-or-nothing? \"может быть конфискован\" likely whole shipment. EV: 0.75*21=15.75 vs 14. Slightly better. But also border tribute? No special role info. I'm president—shuttle fine. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767218,
+    "id": "20261116022651bc95dfc935df4548",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022651bc95dfc935df4548",
+    "usage": {
+      "completion_tokens": 271,
+      "completion_tokens_details": {
+        "reasoning_tokens": 204
+      },
+      "prompt_tokens": 1523,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1794
+    }
+  }
+}

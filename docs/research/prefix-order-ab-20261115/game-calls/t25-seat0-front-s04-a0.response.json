@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.399,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Продажа в кредит даёт 1.25x и защищает выручку от девальвации на границе раунда 2.\"}",
+          "reasoning_content": "Round 2, price ladder at sold_counter=2: next price 9. Cash 0. Sell 3 goods at 9,10? Ladder: [12,10,9,8...] sold_counter=2 means 2 sold, so next units at 9,8,7. Selling 3 gives 24 alashi. Or sell_credit gives ×1.25 = 30 promissory, but round 2 boundary: cash=floor(cash/100)*62 devalues cash but promissory added to cash... \"promissory прибавляется к cash и обнуляется\" — devaluation happens at boundary 2+. Order unclear; promissory added after devaluation likely, so credit good. Tax 0 now, law unknown later. Sell credit 3 units: 24*1.25=30 alashi promissory. Risk: card 8 wipes promissory, unknown. Devaluation floor(cash/100)*62: cash 24M → floor = 24000000/1000000? Units: 1000000 units = 1 alashi; cash in units. floor(cash/100)... 24000000/100=240000 *62=14880000, lose ~38%. Sell_credit avoids devaluation → 30M vs 14.88M. Clear: sell_credit 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767411,
+    "id": "20261116023004fe5e77e874114349",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023004fe5e77e874114349",
+    "usage": {
+      "completion_tokens": 333,
+      "completion_tokens_details": {
+        "reasoning_tokens": 285
+      },
+      "prompt_tokens": 1420,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1753
+    }
+  }
+}

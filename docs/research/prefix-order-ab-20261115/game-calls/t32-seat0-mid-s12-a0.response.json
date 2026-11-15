@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.176,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон даёт +1 влияния богатейшему (idx1), не мне — голосую против и при необходимости наложу вето.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest. I'm richest (32.24M vs 36.77M? No, idx1 has 36.77M — richest is idx1). So vote no. I have veto. Others voted already (true,true). I'm president with influence 2→weight 4. Vote no. If it passes anyway, veto. Vote no; can't know their votes. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767686,
+    "id": "20261116023441f5cc51c401774403",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023441f5cc51c401774403",
+    "usage": {
+      "completion_tokens": 131,
+      "completion_tokens_details": {
+        "reasoning_tokens": 90
+      },
+      "prompt_tokens": 1389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1520
+    }
+  }
+}

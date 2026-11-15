@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.688,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Нет денег для взяток, шаттл даёт лучший ожидаемый доход товара (3 с риском 25%) против 2 у производства.\"}",
+          "reasoning_content": "I have 0 cash, can't bribe. Produce gives 2 goods. Shuttle gives 3 with 25% risk — no cash, best expected value shuttle (3 goods expected 2.25 vs 2). But goods worth? I'd say shuttle is better EV.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767517,
+    "id": "2026111602315217a079b59b1748fd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602315217a079b59b1748fd",
+    "usage": {
+      "completion_tokens": 100,
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      },
+      "prompt_tokens": 1515,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1615
+    }
+  }
+}

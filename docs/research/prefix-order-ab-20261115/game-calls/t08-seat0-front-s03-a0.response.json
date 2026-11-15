@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.208,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Закон +2 к ценам выгоден мне с 2 товарами на продажу\"}",
+          "reasoning_content": "Card 7: prices +2 next market. I have 2 goods. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766816,
+    "id": "20261116022013b195fe9b7a684fbb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022013b195fe9b7a684fbb",
+    "usage": {
+      "completion_tokens": 47,
+      "completion_tokens_details": {
+        "reasoning_tokens": 19
+      },
+      "prompt_tokens": 1381,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1428
+    }
+  }
+}

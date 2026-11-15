@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.67,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Финальный раунд, продаю весь товар по максимальной цене немедленно, так как credit после раунда не погашается.\"}",
+          "reasoning_content": "Round 6, last round. Sell all 3 units at price 12, no tax. Credit won't redeem after last round — sell normal.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767633,
+    "id": "202611160233508fc657f597614eff",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160233508fc657f597614eff",
+    "usage": {
+      "completion_tokens": 78,
+      "completion_tokens_details": {
+        "reasoning_tokens": 31
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1506
+    }
+  }
+}

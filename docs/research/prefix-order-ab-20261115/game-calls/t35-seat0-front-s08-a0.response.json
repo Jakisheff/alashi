@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.717,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Кредитная продажа даёт 30 alashi в promissory, который добавляется уже после девальвации, вместо ~14.9 с обычной продажи.\"}",
+          "reasoning_content": "Sell 2 units at 12 each. Tax 0. Use sell_credit? Cash 0, devaluation 62% at round boundary — credit pays at next round boundary, 12*2*1.25=30 becomes promissory, added to cash then devaluated? Promissory прибавляется к cash и обнуляется — devaluation happens at round boundary 2+: cash=floor(cash/100)*62, promissory added after? Order unclear; likely promissory added after devaluation... risky. Round 3 of 6, boundary rounds 2+. Safer: plain sell now, get 24 immediately, but it will devaluate at boundary anyway (62%). Credit gives 1.25x — if promissory added after devaluation, it's better. Ambiguity: \"cash=floor(cash/100)*62 (hard не девальвирует), promissory прибавляется к cash и обнуляется\" — promissory added after devaluation. So sell_credit better: 30 instead of 24*0.62≈14.88.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767787,
+    "id": "20261116023622cbf4795801f34951",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023622cbf4795801f34951",
+    "usage": {
+      "completion_tokens": 282,
+      "completion_tokens_details": {
+        "reasoning_tokens": 232
+      },
+      "prompt_tokens": 1423,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1705
+    }
+  }
+}

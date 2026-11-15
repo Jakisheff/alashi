@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.501,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Последний раунд: продать весь товар по максимальной цене, sell_credit не погасится.\"}",
+          "reasoning_content": "Round 6 final market. Sell all 3 at top price 12 = 36 alashi. Sell now (cash final). sell_credit won't be repaid after last round. Tax 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767528,
+    "id": "20261116023205be172c04809943a5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023205be172c04809943a5",
+    "usage": {
+      "completion_tokens": 79,
+      "completion_tokens_details": {
+        "reasoning_tokens": 42
+      },
+      "prompt_tokens": 1425,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1504
+    }
+  }
+}

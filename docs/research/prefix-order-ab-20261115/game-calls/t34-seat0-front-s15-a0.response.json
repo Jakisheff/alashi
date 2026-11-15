@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.079,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Цены уже у нижнего предела, но вето сохраняет мне чуть более высокие цены продаж\"}",
+          "reasoning_content": "Law card 6: prices -2 next market. I'm poorest, sold_counter 10 (prices low anyway). Vote already happened? post_vote stage... still must vote? We can veto. Prices -2 hurts everyone, minimum 1, so little effect at sold_counter 10. As president, veto? It barely matters at min prices. Actually all factions sell; low prices hurt rivals more relatively... all hurt. I'm president with veto. Prices already near min (10→price 3... ladder index 10 = 2). -2 makes min 1. Minor loss. Veto to keep prices higher for my sales? I'd rather veto to help myself. Yes, veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767802,
+    "id": "202611160236375511da772b0f43f8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160236375511da772b0f43f8",
+    "usage": {
+      "completion_tokens": 174,
+      "completion_tokens_details": {
+        "reasoning_tokens": 143
+      },
+      "prompt_tokens": 1392,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1566
+    }
+  }
+}

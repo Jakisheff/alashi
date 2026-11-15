@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.723,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Снижение цен следующего рынка вредит моей выручке, а вето бесплатно и надёжно\"}",
+          "reasoning_content": "Law card 6: next market prices -2. Prices low already (sold_counter=6, price 8→6). Bad for me selling. Vote no? Others voted already, unknown. Veto free as president—safest: veto. But veto possible before count; we're post_vote. Card 6 lowers my revenue. Vote no plus veto? Only one action. Veto kills it regardless.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767593,
+    "id": "2026111602330631ee9de5304440ee",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602330631ee9de5304440ee",
+    "usage": {
+      "completion_tokens": 118,
+      "completion_tokens_details": {
+        "reasoning_tokens": 85
+      },
+      "prompt_tokens": 1385,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1503
+    }
+  }
+}

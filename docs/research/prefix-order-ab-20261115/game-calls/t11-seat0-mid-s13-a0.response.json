@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.168,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":30000000,\"reason\":\"Лицензия даёт ~20-60 alashi сверх доли, а ставка в банк вернётся на 50% — чистая выгода при сильной ставке, которую соперники вряд ли перебьют.\"}",
+          "reasoning_content": "Round 4, cash 46.1M, president. License income ~20-60 alashi, worth a lot (shares of bank). Bidding: how much is worth? License income expected ~40 alashi. Bid a big chunk — but cash counts to final. Actually cash spent goes to bank (winner's bid), which is redistributed 50/30/15 — so I'd get back 50% effectively. Value of license: ~40 alashi extra on top. I hold 50% share already. Extra income of license ~40 goes fully to me if I win.\n\nBid B: cost to me = B - 0.5B = 0.5B (bank gets B, redistributed). Gain = 40 (license). Competitors may bid. Expected rival bids unknown. Bid ~30M? Break-even vs no-win: my payoff if I win: +40 - 0.5B... vs if rival wins: I get 0.5*B_rival extra. If B=30: cost 15, gain 40. Rivals have ~32 and ~25 cash. Bid 30M seems strong. Bid 30000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766963,
+    "id": "20261116022234bbe046ec08f14268",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022234bbe046ec08f14268",
+    "usage": {
+      "completion_tokens": 307,
+      "completion_tokens_details": {
+        "reasoning_tokens": 244
+      },
+      "prompt_tokens": 1520,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1827
+    }
+  }
+}

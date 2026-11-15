@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.442,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"EV выше: 3 товара против 2 при риске 25%, а конфискации товара при cash=0 я не боюсь\"}",
+          "reasoning_content": "Cash=0, so no bribe. Produce gives 2 goods. Shuttle risk but cash 0 → confiscation loses goods. Produce safest: 2 goods vs 3 with 25% risk = EV 2.25. Shuttle slightly better EV, and if tribute rule at favorable border... unclear. Marginal; choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767033,
+    "id": "20261116022350caf2e6e01c9c42ea",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022350caf2e6e01c9c42ea",
+    "usage": {
+      "completion_tokens": 110,
+      "completion_tokens_details": {
+        "reasoning_tokens": 69
+      },
+      "prompt_tokens": 1515,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1625
+    }
+  }
+}

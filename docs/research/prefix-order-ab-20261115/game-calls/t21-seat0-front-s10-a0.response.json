@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.777,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Налог 20% ударит по моей будущей выручке, а кэша у меня нет — снимаю закон.\"}",
+          "reasoning_content": "Card 2: tax 20%. I have no cash, so tax on revenue hurts me when selling. But voting already done (voted true, post_vote stage). Just... phase law but post_vote? Probably the vote passed; I'm president, can veto. Card 2 tax 20% — I'll sell goods later, tax hurts me and rivals have cash but tax is on revenue. Rivals have more cash; they'll sell too. Tax hurts everyone equally on revenue. Veto removes tax, good for me. But wait — maybe I voted yes and it benefits me? With 0 cash, tax hits my future sales. Veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767278,
+    "id": "202611160227534253809c824149e2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160227534253809c824149e2",
+    "usage": {
+      "completion_tokens": 173,
+      "completion_tokens_details": {
+        "reasoning_tokens": 135
+      },
+      "prompt_tokens": 1387,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1560
+    }
+  }
+}

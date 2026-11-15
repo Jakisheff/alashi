@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.392,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон даёт +1 влияния беднейшему (сопернику idx2), а не мне — против.\"}",
+          "reasoning_content": "Card 4: +1 influence to poorest. I'm not poorest? Cash: me 18.89M, p2 18.67M — poorest is idx2. So card gives influence to rival. Vote no. Others: idx2 voted (unknown how). Vote no; veto if passes? I can veto. I'll vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767317,
+    "id": "20261116022833ca3b35c3fc14497c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022833ca3b35c3fc14497c",
+    "usage": {
+      "completion_tokens": 108,
+      "completion_tokens_details": {
+        "reasoning_tokens": 72
+      },
+      "prompt_tokens": 1389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1497
+    }
+  }
+}

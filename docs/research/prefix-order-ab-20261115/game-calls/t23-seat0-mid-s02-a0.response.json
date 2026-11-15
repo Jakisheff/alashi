@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.097,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 8 списывает непогашенные promissory — при нулевом кэше у всех, вероятно, включая меня, это прямые потери, поэтому против.\"}",
+          "reasoning_content": "Card 8 wipes unredeemed promissory. I haven't sold credit (unknown? state doesn't show). No one has cash; sell_credit likely none used. Wiping promissory hurts anyone who used sell_credit — possibly rivals. Voting no is safe default? Others voted already (voted true), outcome unknown. Card 8 hurts whoever has outstanding promissory; I likely have none (started round 1, could have sold credit in market... I have 3 goods left, cash 0 — maybe I sold credit). Actually cash=0 for all; rivals may have promissory. Card 8 hurts rivals likely more. But I might have promissory myself. Unknown. Cash 0 suggests I may have used sell_credit. Safer to vote no to protect my potential promissory? If everyone has 0 cash, likely all sold credit in round 1 (25% bonus). Then card 8 hurts everyone including me — vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767342,
+    "id": "20261116022856fe63d2e02e3f4d7e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022856fe63d2e02e3f4d7e",
+    "usage": {
+      "completion_tokens": 249,
+      "completion_tokens_details": {
+        "reasoning_tokens": 200
+      },
+      "prompt_tokens": 1380,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1629
+    }
+  }
+}

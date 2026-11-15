@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.333,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Субсидия товара бесполезна в последнем раунде, закон мне ничего не даёт\"}",
+          "reasoning_content": "Law 3: subsidy_goods=1, benefits all equally. Round 6 — final round, subsidy only helps produce next round? No more rounds after 6. So no benefit. Vote no? Abstain same. Vote no fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767665,
+    "id": "202611160234224c8b4eb1e81a4418",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160234224c8b4eb1e81a4418",
+    "usage": {
+      "completion_tokens": 83,
+      "completion_tokens_details": {
+        "reasoning_tokens": 50
+      },
+      "prompt_tokens": 1393,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1476
+    }
+  }
+}

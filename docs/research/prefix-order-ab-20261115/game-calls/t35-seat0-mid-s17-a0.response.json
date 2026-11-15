@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.877,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"3 товара дают больше выручки, риск 25% конфискации приемлем при отсутствии товара\"}",
+          "reasoning_content": "Round 5, cash 17.8M. Shuttle gives 3 goods with 25% confiscation risk — EV positive. Produce safe 2. Take shuttle for 3 goods.\n\nVote weight 3 vs 3 — I'm not president? tie_order... I'll just shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767811,
+    "id": "2026111602364838dc578f7ff3440f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602364838dc578f7ff3440f",
+    "usage": {
+      "completion_tokens": 92,
+      "completion_tokens_details": {
+        "reasoning_tokens": 60
+      },
+      "prompt_tokens": 1520,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1612
+    }
+  }
+}

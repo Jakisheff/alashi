@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.077,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон даёт +1 влияния богатейшему (сопернику), усиливая его вес в голосах и бонус комиссии — против.\"}",
+          "reasoning_content": "Law card 5: +1 influence to richest. Richest is player 1 (23M), already influence 2. I'm influence 1. This strengthens rival. Vote no — but player 1 has weight 2, I have 1, third has 1. If third votes no, tie 2-2... yes must be strictly greater. Player 1 presumably votes yes. If third votes no with me: no=2, yes=2 → fails. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767540,
+    "id": "20261116023216f9be7ab25c9243c2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023216f9be7ab25c9243c2",
+    "usage": {
+      "completion_tokens": 143,
+      "completion_tokens_details": {
+        "reasoning_tokens": 102
+      },
+      "prompt_tokens": 1385,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1528
+    }
+  }
+}

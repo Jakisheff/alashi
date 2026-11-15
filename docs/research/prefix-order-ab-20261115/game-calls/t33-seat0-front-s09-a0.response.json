@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.965,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемая ценность shuttle (~2.25 товара) выше, чем produce (2), а конфликтов на границе нет.\"}",
+          "reasoning_content": "No goods. Produce gives 2. Shuttle gives 3 with 25% confiscation risk — worth it? Shuttle expected 2.25 goods vs produce 2. I'm president with influence tie; keep cash. Shuttle slightly better EV, but confiscation. Produce is safe. Take shuttle for EV.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767708,
+    "id": "202611160235058a7e439b86844b41",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160235058a7e439b86844b41",
+    "usage": {
+      "completion_tokens": 104,
+      "completion_tokens_details": {
+        "reasoning_tokens": 63
+      },
+      "prompt_tokens": 1519,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1623
+    }
+  }
+}

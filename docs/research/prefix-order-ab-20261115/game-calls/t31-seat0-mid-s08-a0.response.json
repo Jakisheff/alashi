@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.762,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"EV товара выше, чем у produce (3 товара с риском ~25% против 2 безопасных), при цене около 7 за единицу\"}",
+          "reasoning_content": "Round 3, no goods. Shuttle gives 3 goods with 25% confiscation risk — good EV for selling later. Or produce (2 goods safe). Prices start at sold_counter=4 → price 7. Shuttle EV = 2.25 goods × ~7 = ~15.75 vs produce 2×7=14. Shuttle slightly better; confiscation risk though. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767652,
+    "id": "20261116023409a3b1eecf33894b3c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023409a3b1eecf33894b3c",
+    "usage": {
+      "completion_tokens": 124,
+      "completion_tokens_details": {
+        "reasoning_tokens": 82
+      },
+      "prompt_tokens": 1518,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1642
+    }
+  }
+}

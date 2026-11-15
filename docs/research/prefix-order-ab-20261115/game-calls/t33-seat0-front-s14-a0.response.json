@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.749,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Снижение цен на следующем рынке вредит и мне, и у меня нет причин поддерживать его.\"}",
+          "reasoning_content": "Card 6: prices -2 next market. I have no goods, others have no goods either. Prices -2 hurts sellers. Round 4 market... wait phase law of round 4, next market is round 5. No goods anywhere; production ahead. Lower prices hurt everyone including me later. I'm poor; -2 prices hurt rich more? All equal goods. I'd vote no. Vote yes/no: others voted already (weights 3,3). I have 4. Vote no to avoid price drop.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767728,
+    "id": "20261116023523e4de50b328294b9c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023523e4de50b328294b9c",
+    "usage": {
+      "completion_tokens": 141,
+      "completion_tokens_details": {
+        "reasoning_tokens": 108
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1532
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.427,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% бьёт по мне как по богатейшему.\"}",
+          "reasoning_content": "Card 1 = tax 10%. I'm richest; tax hurts me. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767063,
+    "id": "202611160224208f274015f8fc4521",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160224208f274015f8fc4521",
+    "usage": {
+      "completion_tokens": 46,
+      "completion_tokens_details": {
+        "reasoning_tokens": 19
+      },
+      "prompt_tokens": 1389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1435
+    }
+  }
+}

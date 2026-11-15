@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.556,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 8 сейчас ничего не списывает (непогашённых promissory ещё нет), а её прохождение безвредно для меня.\"}",
+          "reasoning_content": "Card 8 wipes promissory notes. Both rivals voted (yes probably? unknown). Card 8 cancels all promissory notes — bad if I plan to sell_credit; good to cancel others'. All cash 0. Vote no to keep promissory flexibility? If others rely on sell_credit, passing card 8 hurts them. Others already voted; I'm last. Passing requires yes>no. My vote decides (weight 1 vs 1,1). I don't know their votes. Card 8 harms anyone using sell_credit; early round, wiping promissory is mostly neutral now but could block future? Card applies now — nothing outstanding yet. So card 8 now does nothing. Vote yes freely.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766712,
+    "id": "202611160218268089ed52e89046aa",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160218268089ed52e89046aa",
+    "usage": {
+      "completion_tokens": 191,
+      "completion_tokens_details": {
+        "reasoning_tokens": 149
+      },
+      "prompt_tokens": 1380,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1571
+    }
+  }
+}

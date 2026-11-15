@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.962,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Цена высокая (9+2), а sell_credit даёт 1.25x и прибавляется после дефляции cash.\"}",
+          "reasoning_content": "Round 2, boom +2. Ladder at sold=2: prices 9,8,7... With boom +2 → 11. Sell 2 now (cash) or credit? Cash devalues floor(cash/100)*62 at round borders. Selling now cash 2*11=22 → devalued to 13. Credit: 22*1.25=27.5 promissory added to cash after devaluation... promissory arrives at round border and isn't devalued. Sell_credit better: 27.5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766922,
+    "id": "20261116022157cb360dc053e9441c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022157cb360dc053e9441c",
+    "usage": {
+      "completion_tokens": 161,
+      "completion_tokens_details": {
+        "reasoning_tokens": 117
+      },
+      "prompt_tokens": 1420,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1581
+    }
+  }
+}

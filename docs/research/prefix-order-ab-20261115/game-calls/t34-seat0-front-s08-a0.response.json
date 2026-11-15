@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.605,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Продажа в кредит по высокой цене 12 с бонусом 1.25 выгоднее из-за будущих девальваций\"}",
+          "reasoning_content": "Round 3 market, sold_counter 0, prices start at 12. Sell 3 units now at 12 each = 36, no tax. Sell outright (cash won't devalue? cash devalues at round 2+ boundary... round 3 selling cash, boundary after round 3 devalues 62%). sell_credit gives 1.25x but arrives after next boundary — round 3 credit pays at round 4 boundary, then round 5-6 boundaries devalue twice? Cash floor(cash/100)*62 each round 2+. Credit 36*1.25=45 arrives at round 4 boundary, then devalued twice → 45*0.62^2≈17.3. Cash 36 devalued 3 times → 36*0.62^3≈8.6? Wait boundaries at rounds 2+, so after rounds 3,4,5,6: 4 devaluations of cash: 36*.62^4≈5.3 vs credit 45*.62^3≈10.7. Credit better. Sell 3 credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767762,
+    "id": "2026111602355674d1f84fbe96451f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602355674d1f84fbe96451f",
+    "usage": {
+      "completion_tokens": 276,
+      "completion_tokens_details": {
+        "reasoning_tokens": 232
+      },
+      "prompt_tokens": 1422,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1698
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.806,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта даёт +1 влияния беднейшему — это я, и влияние приносит долю банка.\"}",
+          "reasoning_content": "Card 4: +1 influence to poorest — that's me (cash 0). Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766742,
+    "id": "202611160219002c8a6c2836b24f36",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160219002c8a6c2836b24f36",
+    "usage": {
+      "completion_tokens": 55,
+      "completion_tokens_details": {
+        "reasoning_tokens": 21
+      },
+      "prompt_tokens": 1385,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1440
+    }
+  }
+}

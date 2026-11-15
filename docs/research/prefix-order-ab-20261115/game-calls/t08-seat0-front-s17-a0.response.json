@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.246,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Налог 20% в абсолютном выражении сильнее бьёт по более богатым соперникам перед финалом, помогая моему рангу.\"}",
+          "reasoning_content": "Law card 2: tax 20%. I'm poorest. Tax hurts sellers; rivals have more cash but tax applies to revenue. We each have 3 goods. Tax hurts everyone selling. I'm least wealthy; rivals would sell. Vote yes? Tax reduces my revenue too. But payout relative rank matters. Vote weight: rival idx2 has weight 2. Hard to say. Tax hurts me proportionally same. Since I'm competing, hurting bigger sellers more? Same rate though. But ranking by cash — tax reduces all equally proportionally; relative same. Abstain? I'd say vote_no to protect own revenue... Actually tax harms me less absolute than richer players, and final payout rank matters — vote yes weakens rivals' cash more in absolute. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766881,
+    "id": "20261116022115b0980e296c9e40aa",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022115b0980e296c9e40aa",
+    "usage": {
+      "completion_tokens": 202,
+      "completion_tokens_details": {
+        "reasoning_tokens": 158
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1592
+    }
+  }
+}

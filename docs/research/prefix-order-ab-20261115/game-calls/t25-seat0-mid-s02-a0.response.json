@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.764,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 8 списывает непогашенные promissory, которых сейчас ни у кого нет, поэтому исход безразличен.\"}",
+          "reasoning_content": "Card 8 cancels promissory notes. I haven't used sell_credit (round 1, cash 0). Opponents also likely no promissory. Harmless either way; I'm president, weight equal. Card 8 wipes promissory — could hurt rivals if they plan sell_credit? No, affects current outstanding only. Nothing outstanding. Vote yes/abstain — no effect. But voting yes with equal weights: yes vs no... others voted already (voted[1],[2] true, unknown). I can't know their votes. Card 8 does nothing now. Abstain keeps options? Just pass/abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767397,
+    "id": "202611160229523da765a7e78a41ca",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160229523da765a7e78a41ca",
+    "usage": {
+      "completion_tokens": 177,
+      "completion_tokens_details": {
+        "reasoning_tokens": 136
+      },
+      "prompt_tokens": 1380,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1557
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.871,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Карта 8 списывает promissory — у меня их нет, а у соперников могут быть, поэтому закон мне выгоден и вето не нужно.\"}",
+          "reasoning_content": "Law 8 wipes promissory notes. No one has cash; sell_credit possible for others? If someone sold credit... cash all 0, but promissory not shown. Card 8 hurts anyone with promissory. Could benefit others or hurt me. Likely no promissory yet (round 1 market before action? order market,action,law — sell_credit in market possible). Unknown. Abstain—wait, decision_stage post_vote means votes already counted? Phase law with post_vote... votes already in, and I'm president, can veto? voted all true, post_vote — my action? Actually I still must respond. Given post_vote, perhaps I choose veto or pass. Card 8 clears promissory; my opponents may have used sell_credit. I'm president; if law passed and it hurts me (I may have promissory), veto. Cash 0 suggests promissory possibly exists. I likely sold credit too? Goods 3, didn't sell... I have goods 3, cash 0, so I didn't sell. Others may have sold credit. Veto card 8 would help opponents keep promissory; letting it pass wipes their promissory — good for me. So veto only if law hurts me. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767454,
+    "id": "2026111602304661eacee81da848e6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602304661eacee81da848e6",
+    "usage": {
+      "completion_tokens": 305,
+      "completion_tokens_details": {
+        "reasoning_tokens": 262
+      },
+      "prompt_tokens": 1381,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1686
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.569,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"EV ~2.25 товара бесплатно против 2 у produce; риск 25% приемлем в раунде 1.\"}",
+          "reasoning_content": "vote_weight 3 suggests others skipped? I'm idx0 with weight 3 (skipped action gives +2, but I'm in action now... vote_weight_mode 1 odd). Anyway choose action. Round 1: shuttle risky; produce gives 2 goods. Others have 2 goods. Expected shuttle 3 goods vs produce 2. ~25% confiscation: EV 2.25 goods free. Shuttle slightly better but confiscation may hurt... EV higher. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767650,
+    "id": "2026111602340564b97c0e70454db1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602340564b97c0e70454db1",
+    "usage": {
+      "completion_tokens": 137,
+      "completion_tokens_details": {
+        "reasoning_tokens": 100
+      },
+      "prompt_tokens": 1511,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1648
+    }
+  }
+}

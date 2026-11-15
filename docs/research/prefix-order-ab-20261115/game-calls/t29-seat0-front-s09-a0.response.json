@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.005,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% бьёт по мне как богатейшему — против.\"}",
+          "reasoning_content": "Law card 1: tax 10%. I'm richest; tax reduces my future sale revenue. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767589,
+    "id": "20261116023306faaa98a52a524d0e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023306faaa98a52a524d0e",
+    "usage": {
+      "completion_tokens": 51,
+      "completion_tokens_details": {
+        "reasoning_tokens": 23
+      },
+      "prompt_tokens": 1388,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1439
+    }
+  }
+}

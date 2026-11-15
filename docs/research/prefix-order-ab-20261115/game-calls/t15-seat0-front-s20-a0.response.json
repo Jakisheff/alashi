@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.646,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Я богатейший, налог 10% бьёт по мне; мой вес 3 уже блокирует закон, но голосую против\"}",
+          "reasoning_content": "Card 1: tax 10%. I'm richest. Vote no; if passes, veto. Others each weight 1 (did action? weight 1 means they used action). My vote_no 3 vs 2 yes → fails anyway. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767128,
+    "id": "20261116022522c4e18dbc75b54fd3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022522c4e18dbc75b54fd3",
+    "usage": {
+      "completion_tokens": 92,
+      "completion_tokens_details": {
+        "reasoning_tokens": 53
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1483
+    }
+  }
+}

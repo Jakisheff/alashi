@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.804,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Снижение цен на последнем рынке вредит всем; голосую против и при необходимости наложу вето.\"}",
+          "reasoning_content": "Law card 6: prices -2 next market. Round 6, last market already happened? Phase law after vote... it's post_vote stage? Actually we're asked to vote. Card 6 lowers prices -2, hurting everyone. Vote no; but even if passes, veto. Just veto? Vote no is fine, and if passes veto. Simplest: vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766587,
+    "id": "202611160216239f1db582ea114ade",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160216239f1db582ea114ade",
+    "usage": {
+      "completion_tokens": 113,
+      "completion_tokens_details": {
+        "reasoning_tokens": 78
+      },
+      "prompt_tokens": 1393,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1506
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.178,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 0 ничего не меняет, но yes безопасен и сохраняет позицию президента.\"}",
+          "reasoning_content": "Law card 0 — пусто, но это post_vote и phase law... можно vote_abstain/pass. Карта 0 ничего не меняет. Голосовать yes безопасно.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767155,
+    "id": "20261116022550643531aa0a3649e3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022550643531aa0a3649e3",
+    "usage": {
+      "completion_tokens": 70,
+      "completion_tokens_details": {
+        "reasoning_tokens": 39
+      },
+      "prompt_tokens": 1385,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1455
+    }
+  }
+}

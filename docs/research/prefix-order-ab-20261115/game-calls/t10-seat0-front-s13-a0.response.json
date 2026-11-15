@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.44,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон даёт +1 влияния богатейшему сопернику, что усилит его вес в выплате — против.\"}",
+          "reasoning_content": "Card 5: +1 influence to richest. Richest is idx1 (46.9). My influence 2, tied with idx2. Giving rival +1 influence hurts (they gain payout weight, influence bonus). Vote no. But others voted already... voted [false,true,true] — unknown how. Just vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766918,
+    "id": "20261116022155c7d2874b49e9464e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022155c7d2874b49e9464e",
+    "usage": {
+      "completion_tokens": 103,
+      "completion_tokens_details": {
+        "reasoning_tokens": 67
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1493
+    }
+  }
+}

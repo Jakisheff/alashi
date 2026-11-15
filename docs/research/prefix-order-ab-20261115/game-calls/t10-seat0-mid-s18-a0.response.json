@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.348,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 0 пустая, закон ничего не меняет — незачем тратить влияние.\"}",
+          "reasoning_content": "Card 0 = empty law. Vote yes/no doesn't matter; card 0 likely no effect. Just abstain? My weight 2, others 1+1... faction2 voted (unknown how). Card 0 is empty, harmless. Abstain is safe.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766910,
+    "id": "202611160221414a59417e35c2470f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160221414a59417e35c2470f",
+    "usage": {
+      "completion_tokens": 90,
+      "completion_tokens_details": {
+        "reasoning_tokens": 57
+      },
+      "prompt_tokens": 1389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1479
+    }
+  }
+}

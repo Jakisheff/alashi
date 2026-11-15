@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.362,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Я беднейший и планирую продавать — 20% налог мне невыгоден, а veto президента бесплатно блокирует закон.\"}",
+          "reasoning_content": "Card 2: tax 20%. Current 10%. I'm president, poorest. Tax hurts sellers. Vote no; if passes, veto. Others voted: idx2 voted yes? voted[2]=true, unknown direction. Safer: veto to block 20% tax. But veto before counting — veto unilaterally kills it. I plan to sell later; higher tax bad. Veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767638,
+    "id": "202611160233540e570ff4126b4c4a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160233540e570ff4126b4c4a",
+    "usage": {
+      "completion_tokens": 121,
+      "completion_tokens_details": {
+        "reasoning_tokens": 83
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1511
+    }
+  }
+}

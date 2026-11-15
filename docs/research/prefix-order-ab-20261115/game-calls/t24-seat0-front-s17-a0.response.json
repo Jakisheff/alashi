@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.949,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Закон о +2 к ценам выгоден мне как продавцу с наибольшим весом голоса\"}",
+          "reasoning_content": "Card 7: prices +2 next market. Good for me, I'm president, vote yes. Faction 2 already voted (yes presumably). I vote yes; weights 2 vs 1 — passes 3-1.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767432,
+    "id": "20261116023027b7732557f8eb4869",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023027b7732557f8eb4869",
+    "usage": {
+      "completion_tokens": 80,
+      "completion_tokens_details": {
+        "reasoning_tokens": 47
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1471
+    }
+  }
+}

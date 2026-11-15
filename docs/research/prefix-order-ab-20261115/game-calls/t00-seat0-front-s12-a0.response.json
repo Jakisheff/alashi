@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.015,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Кредитная продажа даёт выручку с премией 25%, а погашение на границе раунда 4→5 обгоняет обычную продажу после девальвации\"}",
+          "reasoning_content": "Round 4 market. Sell 3 goods at counter 4: prices 4,3,3. Sell normally — cash 10 alashi. sell_credit would give 12.5 promissory, paid at round boundary 4→5? Boundary of round 2+: promissory added to cash at next round boundary — round 4 to 5 boundary counts, then devaluation floor(cash/100)*62? Wait, devaluation: cash = floor(cash/100)*62. That's severe 38% haircut. Promissory added then devalued too? \"На границе раундов 2+ cash=floor(cash/100)*62... promissory прибавляется к cash и обнуляется.\" Order unclear; promissory likely added then devalued. Selling credit: 12.5 → becomes cash then devalued 0.62 → 7.75 vs sell now 10 → devalued at boundary anyway: 10*0.62=6.2? Devaluation applies to cash regardless. Actually cash devalued every boundary from round 2+. So current 46.1 also devalues. Sell now for 10, both get devalued: sell=10*0.62=6.2 vs credit=12.5*0.62=7.75. Credit better if promissory paid at next boundary (round 4→5). Yes, sell_credit better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766532,
+    "id": "2026111602152451cff3f7d59e4acb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602152451cff3f7d59e4acb",
+    "usage": {
+      "completion_tokens": 362,
+      "completion_tokens_details": {
+        "reasoning_tokens": 306
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1790
+    }
+  }
+}

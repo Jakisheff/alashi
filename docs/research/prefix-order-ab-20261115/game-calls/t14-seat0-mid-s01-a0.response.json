@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.552,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемая выгода 3*0.75≈2.25 товара выше, чем 2 у produce.\"}",
+          "reasoning_content": "Round 1, cash=0, shuttle gives 3 goods vs produce 2. Shuttle risk 25% confiscation of gray goods — but which goods are gray? Shuttle goods may be confiscated. EV: shuttle 3*0.75=2.25 vs produce 2. Marginal. Non-president, influence matters little. Take shuttle slightly better EV... confiscation ~25% of goods. 2.25>2, choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767011,
+    "id": "202611160223273e758ba763a741fa",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160223273e758ba763a741fa",
+    "usage": {
+      "completion_tokens": 130,
+      "completion_tokens_details": {
+        "reasoning_tokens": 93
+      },
+      "prompt_tokens": 1511,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1641
+    }
+  }
+}

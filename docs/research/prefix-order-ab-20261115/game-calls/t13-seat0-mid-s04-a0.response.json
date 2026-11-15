@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.084,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Цены ещё высокие (10), продать весь товар сейчас до дефляции лестницы.\"}",
+          "reasoning_content": "Sell 3 units at price 10 (counter=2). Devaluation 62% next border — sell normally.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766954,
+    "id": "20261116022231bf2b5e2c69ee49a0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022231bf2b5e2c69ee49a0",
+    "usage": {
+      "completion_tokens": 58,
+      "completion_tokens_details": {
+        "reasoning_tokens": 24
+      },
+      "prompt_tokens": 1420,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1478
+    }
+  }
+}

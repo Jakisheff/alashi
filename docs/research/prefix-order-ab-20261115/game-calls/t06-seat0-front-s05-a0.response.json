@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.845,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Без денег shuttle даёт больше товара, чем produce, и ожидаемая ценность выше несмотря на риск конфискации.\"}",
+          "reasoning_content": "Round 2, no cash. Produce gives 2 goods. Shuttle gives 3 with 25% confiscation risk. Shuttle expected higher but confiscation loses goods. Expected shuttle 2.25 goods vs produce 2. Shuttle slightly better. But risk. Also donkey needs cash—no cash. Choose shuttle? Expected value slightly higher. Confiscation on border ~25%—worth it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766735,
+    "id": "202611160218525973a20251354511",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160218525973a20251354511",
+    "usage": {
+      "completion_tokens": 119,
+      "completion_tokens_details": {
+        "reasoning_tokens": 82
+      },
+      "prompt_tokens": 1515,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1634
+    }
+  }
+}

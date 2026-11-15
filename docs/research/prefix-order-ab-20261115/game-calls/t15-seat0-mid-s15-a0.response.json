@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.077,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Закон о налоге 20% бьёт по мне как по богатейшему, поэтому блокирую его президентским вето.\"}",
+          "reasoning_content": "Law card 2 = tax 20%. I'm richest. Vote no. Others voted already (weights 3,3). Unknown their votes. I have weight 4; veto available as president. Safest: veto? Wait—phase law, decision_stage post_vote, votes already cast, I haven't voted? voted[0]=true... actually voted all true. Hmm, maybe I already voted and now can veto? decision_stage post_vote suggests votes counted, I can veto. Law tax 20% hurts me. Veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767099,
+    "id": "20261116022454b7965d190d5f4f77",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022454b7965d190d5f4f77",
+    "usage": {
+      "completion_tokens": 150,
+      "completion_tokens_details": {
+        "reasoning_tokens": 110
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1541
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.284,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товар уже бесполезен (рынок раунда прошёл), а влияние 2 уже максимальное — тратить cash невыгодно.\"}",
+          "reasoning_content": "Round 6, last round. Market phase already done? Round 6 action phase. Goods 0, cash 6.3M. Produce gives 2 goods but market already passed this round... order is market, action, law per round. So market already happened? sold_counter 4, decision_stage primary, round 6 action — market of round 6 already done, goods useless. Bribe for influence: max influence gives 5% bonus of bank. Influence 2 vs 1,1. But cash is lowest. Bribe 5M to gain influence → +1 influence each 5M. Costly. President, influence bonus 5% of bank — bank size unknown. Vote weight matters only for law this round (card 255 — no card? law_card 255 means no card). So law phase has no card; influence only matters for final 5% bonus. I'm currently max influence (2). Keep it. Best: pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767004,
+    "id": "20261116022319409a675e94704047",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022319409a675e94704047",
+    "usage": {
+      "completion_tokens": 243,
+      "completion_tokens_details": {
+        "reasoning_tokens": 200
+      },
+      "prompt_tokens": 1524,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1767
+    }
+  }
+}

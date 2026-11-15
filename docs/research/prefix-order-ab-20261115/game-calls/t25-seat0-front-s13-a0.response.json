@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.588,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":20000000,\"reason\":\"Аукцион раунда 4: лицензия стоит ~20-60 alashi сверх доли, ставка 20 даёт хороший шанс выиграть при положительном EV\"}",
+          "reasoning_content": "Round 4 action: bid available. Shuttle gives 4 goods, risk. Bid for license worth 20-60. I'm richest. Cash 37.8. Bid maybe 10? Reasonable bid ~15 alashi. Rivals have ~31.5. License EV ~40, pays over share. Bid 20 seems good. Risk: overpay. Bid 15M? I'll bid 20.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767450,
+    "id": "202611160230471f450e6c7f4f4040",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160230471f450e6c7f4f4040",
+    "usage": {
+      "completion_tokens": 138,
+      "completion_tokens_details": {
+        "reasoning_tokens": 87
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1659
+    }
+  }
+}

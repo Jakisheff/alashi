@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.652,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 2 товара без риска; у меня нет ни денег, ни товара для альтернатив.\"}",
+          "reasoning_content": "I have 0 cash, 0 goods. Produce gives 2 goods free. Shuttle risky. Produce best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767647,
+    "id": "20261116023405121ab17d7cb64532",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023405121ab17d7cb64532",
+    "usage": {
+      "completion_tokens": 53,
+      "completion_tokens_details": {
+        "reasoning_tokens": 23
+      },
+      "prompt_tokens": 1515,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1568
+    }
+  }
+}

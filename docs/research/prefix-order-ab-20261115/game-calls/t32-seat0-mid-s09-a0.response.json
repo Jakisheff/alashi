@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.207,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Карта 8 списывает непогашенные promissory — рискованно для меня, а вето бесплатно\"}",
+          "reasoning_content": "Card 8 writes off promissory notes. I have sell_credit outstanding? Unknown; I sold earlier? sold_counter=6, cash high. Card 8 hurts those holding promissory. Likely I have none... risky. My vote weight 2 vs others 1+1. If they vote yes and me no: 2 vs 2 tie → no. But I'm president, can veto. Card 8 likely targets me? I might have promissory. Safer to vote no / veto. Actually if card benefits me (I have no promissory, others do?), unknown. sold_counter=6 suggests I sold 6 units early. Hard to know. Conservative: veto card 8 (writes off promissory, which punishes credit sellers). If I did sell_credit, I lose. I'll veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767672,
+    "id": "20261116023426b22dde7c7d484aaa",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023426b22dde7c7d484aaa",
+    "usage": {
+      "completion_tokens": 207,
+      "completion_tokens_details": {
+        "reasoning_tokens": 172
+      },
+      "prompt_tokens": 1388,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1595
+    }
+  }
+}

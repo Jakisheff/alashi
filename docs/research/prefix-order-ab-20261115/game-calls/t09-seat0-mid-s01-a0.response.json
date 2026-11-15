@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.361,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемая ценность шаттла (2.25 товара) выше, чем у produce (2), а деньги сейчас нулевые, взятки невозможны.\"}",
+          "reasoning_content": "Round 1, no cash. Shuttle gives 3 goods with 25% confiscation risk; goods worth ~12 at market. Expected value: produce = 2 goods safe. Shuttle = 3 goods, 25% lose → 2.25 expected. Shuttle better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766812,
+    "id": "202611160220092bd59a47369f423e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160220092bd59a47369f423e",
+    "usage": {
+      "completion_tokens": 105,
+      "completion_tokens_details": {
+        "reasoning_tokens": 57
+      },
+      "prompt_tokens": 1511,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1616
+    }
+  }
+}

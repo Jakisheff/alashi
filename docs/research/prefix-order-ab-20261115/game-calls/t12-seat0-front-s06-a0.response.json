@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.951,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта даёт +1 влияния беднейшему — это я, а влияние повышает мою долю бонуса и статус президента.\"}",
+          "reasoning_content": "Card 4: +1 influence to poorest. I'm poorest (cash 0). Influence matters for final 5% bonus and presidency. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766942,
+    "id": "20261116022218e10dce043ada4354",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022218e10dce043ada4354",
+    "usage": {
+      "completion_tokens": 72,
+      "completion_tokens_details": {
+        "reasoning_tokens": 32
+      },
+      "prompt_tokens": 1384,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1456
+    }
+  }
+}

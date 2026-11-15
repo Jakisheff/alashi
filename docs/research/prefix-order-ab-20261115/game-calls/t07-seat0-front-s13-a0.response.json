@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.067,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":15000000,\"reason\":\"Аукцион в раунде 4: ожидаемый доход лицензии 20–60 при умеренной ставке 15 даёт положительный EV сверх доли\"}",
+          "reasoning_content": "Round 4, auction. Bid for license. Cash 40.6, license income 20-60. Bid maybe 15? Expected value ~40, but payment from bank reduces pool... payout comes extra above share. Bid ~12-15 reasonable. I'm richest with cash 40.6. Bid 15M.\n\nBut roof could cancel anti-rich law — no card visible. Bid 15000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766818,
+    "id": "202611160220127ed70dcee96c46de",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160220127ed70dcee96c46de",
+    "usage": {
+      "completion_tokens": 136,
+      "completion_tokens_details": {
+        "reasoning_tokens": 86
+      },
+      "prompt_tokens": 1522,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1658
+    }
+  }
+}

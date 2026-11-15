@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.166,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 8 списывает promissory — при cash=0 я, вероятно, имею непогашенные кредитные продажи, которые потеряю.\"}",
+          "reasoning_content": "Card 8 wipes promissory notes. I don't know if I have promissory. My cash is 0; likely I sold credit? Unknown. Opponents have cash. Card 8 hurts whoever has promissory. If I sold credit earlier, vote no. Uncertain; cash 0 suggests maybe I sold credit and hold promissory. Vote no to protect my promissory.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767475,
+    "id": "2026111602311102900fdd0ece419a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602311102900fdd0ece419a",
+    "usage": {
+      "completion_tokens": 127,
+      "completion_tokens_details": {
+        "reasoning_tokens": 83
+      },
+      "prompt_tokens": 1385,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1512
+    }
+  }
+}

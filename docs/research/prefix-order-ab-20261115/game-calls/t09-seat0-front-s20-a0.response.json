@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.398,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Раунд последний, рынок уже прошёл, товар и влияние уже не конвертируются в выплату\"}",
+          "reasoning_content": "Final round, no goods, cash 46. Nothing useful; donkey then can't sell (market phase is before action? phase order: market, action, law — market already passed this round). So donkey useless. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766902,
+    "id": "20261116022138ce3342f19c5c4089",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022138ce3342f19c5c4089",
+    "usage": {
+      "completion_tokens": 80,
+      "completion_tokens_details": {
+        "reasoning_tokens": 48
+      },
+      "prompt_tokens": 1523,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1603
+    }
+  }
+}

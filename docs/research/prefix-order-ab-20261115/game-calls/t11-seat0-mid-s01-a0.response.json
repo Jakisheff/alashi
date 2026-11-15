@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.446,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемо 3 товара против 2 от produce при нулевом кэше — чуть выше ожидаемая выгода, риск умеренный.\"}",
+          "reasoning_content": "Cash 0, produce gives 2 goods, shuttle risky but no cash needed—3 goods with 25% confiscation. Shuttle EV: 3*0.75=2.25 vs produce 2. Marginal, but confiscated all? Assume confiscation of goods. Slight edge shuttle but risk. Choose produce safe? 0.25 goods EV difference small. I'll shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766895,
+    "id": "2026111602213186b0a5a720bf4a15",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602213186b0a5a720bf4a15",
+    "usage": {
+      "completion_tokens": 126,
+      "completion_tokens_details": {
+        "reasoning_tokens": 81
+      },
+      "prompt_tokens": 1511,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1637
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.458,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bribe\",\"to\":1,\"amount\":5000000,\"reason\":\"Небольшая взятка беднейшему даёт +1 влияние, закрепляя право на бонус 5% банка без смены рангов.\"}",
+          "reasoning_content": "Round 6, last round. Produce gives goods but market already passed? Order: market, action, law per round. Round 6 market already done (sold_counter=5). So goods gained now can't be sold—unless produce still useful? No market left. So produce worthless. Cash large, richest. Bribe influence 2 vs idx2 also 2; president tie. Extra 5% commission pool goes to max influence (tie broken by cash). Bribe 5M to gain influence +1 → secures 5% of bank? Cost 5M, gain influence lead. But bribe gives money to rival too. Bank size unknown. Commission 5% of bank twice? 5% extra to max influence. Probably worth 5M bribe. Actually who benefits: bribing idx1 (weakest) gives 5M cash to rival — increases their final rank? Ranking matters but payout weights fixed 50:30:15 by rank... likely rank by cash determines share. So giving 5M to poorest doesn't change ranks, and +1 influence secures the 5% bonus. Bribe idx1, 5M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766792,
+    "id": "20261116021945b537d836e10240c2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021945b537d836e10240c2",
+    "usage": {
+      "completion_tokens": 292,
+      "completion_tokens_details": {
+        "reasoning_tokens": 240
+      },
+      "prompt_tokens": 1520,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1812
+    }
+  }
+}

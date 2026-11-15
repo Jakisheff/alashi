@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.885,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидание 2.25 товара против 2 у produce; я богатейший, но карты закона нет\"}",
+          "reasoning_content": "I'm richest (52 vs ~24). Law card none. Shuttle gives 3 goods, ~25% confiscation risk. Expected value 2.25 goods. Produce gives 2. Shuttle better in expectation. Cash enough for donkey? Donkey costs 1 alashi each, one action only gives 1 good. Shuttle best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767594,
+    "id": "2026111602331035412256abc64e66",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602331035412256abc64e66",
+    "usage": {
+      "completion_tokens": 105,
+      "completion_tokens_details": {
+        "reasoning_tokens": 70
+      },
+      "prompt_tokens": 1519,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1624
+    }
+  }
+}

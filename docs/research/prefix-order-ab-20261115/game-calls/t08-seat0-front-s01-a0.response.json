@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.577,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Без товара и денег лучший ход — произвести 2 единицы для будущей продажи\"}",
+          "reasoning_content": "Round 1, cash 0, no goods. Others have 2 goods. Produce gives 2 goods — best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766810,
+    "id": "202611160220088154fbc5ccce4271",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160220088154fbc5ccce4271",
+    "usage": {
+      "completion_tokens": 52,
+      "completion_tokens_details": {
+        "reasoning_tokens": 25
+      },
+      "prompt_tokens": 1511,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1563
+    }
+  }
+}

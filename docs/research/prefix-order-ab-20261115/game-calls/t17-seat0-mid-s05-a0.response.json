@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.019,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 2 товара; взятка и donkey недоступны без средств\"}",
+          "reasoning_content": "Cash 0, can't bribe. Produce gives 2 goods for free. Do it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767149,
+    "id": "20261116022545bda21d3b3912428a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022545bda21d3b3912428a",
+    "usage": {
+      "completion_tokens": 47,
+      "completion_tokens_details": {
+        "reasoning_tokens": 20
+      },
+      "prompt_tokens": 1515,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1562
+    }
+  }
+}

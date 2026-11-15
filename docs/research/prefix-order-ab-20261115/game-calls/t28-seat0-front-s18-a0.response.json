@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.402,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Повышение цен выгодно моей продаже в последнем раунде.\"}",
+          "reasoning_content": "Card 7: +2 prices next market. Round 5, next market round 6, last round. I have 3 goods. Prices up helps me sell. Vote yes. P2 already voted (likely yes?). My vote 1 vs P1's 3 — P1 decides. Vote yes anyway.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767595,
+    "id": "2026111602331284069f32ea9845ff",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602331284069f32ea9845ff",
+    "usage": {
+      "completion_tokens": 91,
+      "completion_tokens_details": {
+        "reasoning_tokens": 65
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1481
+    }
+  }
+}

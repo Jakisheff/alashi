@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.082,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Закон -2 к ценам снизит выручку моих продаж\"}",
+          "reasoning_content": "Law card 6: prices next market -2. Bad for me (I have goods). Vote no? Vote already happened... post_vote stage? voted all true, decision_stage post_vote — I can still veto. Card 6 hurts prices; veto it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767319,
+    "id": "202611160228358f6d492ea16a484e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160228358f6d492ea16a484e",
+    "usage": {
+      "completion_tokens": 77,
+      "completion_tokens_details": {
+        "reasoning_tokens": 53
+      },
+      "prompt_tokens": 1386,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1463
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.935,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Закон даёт +1 влияния самому бедному — это я, повышает мой вес и долю бонуса.\"}",
+          "reasoning_content": "Law card 4: +1 influence to poorest. I'm poorest (5.4M). P2 voted already (unknown). Veto pending — someone may veto. Card benefits me. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767193,
+    "id": "202611160226308621cbb9a6174f00",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160226308621cbb9a6174f00",
+    "usage": {
+      "completion_tokens": 78,
+      "completion_tokens_details": {
+        "reasoning_tokens": 42
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1469
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.254,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 0 ничего не делает, тратить голос бессмысленно\"}",
+          "reasoning_content": "Card 0 empty. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767382,
+    "id": "20261116022939aff882f16aa240cb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022939aff882f16aa240cb",
+    "usage": {
+      "completion_tokens": 36,
+      "completion_tokens_details": {
+        "reasoning_tokens": 9
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1427
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.779,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Продажа в кредит даёт 25% сверх низкой текущей цены, а погашение придёт на границе раунда 5 — до конца игры.\"}",
+          "reasoning_content": "Round 4, prices ladder at sold=8: price 8? Ladder [12,10,9,8,7,6,5,4,3,3,2,...] index 8 → 4. Selling 3 units: prices 4,3,3 = 10. Tax 0. Sell credit gives 1.25x, repaid at boundary after round 4 — round 4 is last? Six rounds total, so round 4 is not last. Use sell_credit for 12.5 alashi.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767717,
+    "id": "20261116023514e09387bcd66d4fc1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023514e09387bcd66d4fc1",
+    "usage": {
+      "completion_tokens": 166,
+      "completion_tokens_details": {
+        "reasoning_tokens": 115
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1594
+    }
+  }
+}

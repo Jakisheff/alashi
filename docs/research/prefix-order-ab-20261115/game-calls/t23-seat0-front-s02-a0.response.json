@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.368,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"У меня нет promissory, а списание долга конкурентам мне выгодно\"}",
+          "reasoning_content": "Card 8 wipes promissory notes. Others voted already; my vote... their votes unknown. I have no promissory. Card 8 hurts anyone who sold credit. Nobody has cash; nobody could have sold credit (no goods? they had goods). Selling requires goods — round 1 they could have sold. Risky. Wiping promissory hurts others possibly, helps me relatively if they used sell_credit. But unclear. I'll vote yes — no promissory of mine, likely others used credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767346,
+    "id": "20261116022900dc2d56694d2b421d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022900dc2d56694d2b421d",
+    "usage": {
+      "completion_tokens": 134,
+      "completion_tokens_details": {
+        "reasoning_tokens": 106
+      },
+      "prompt_tokens": 1380,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1514
+    }
+  }
+}

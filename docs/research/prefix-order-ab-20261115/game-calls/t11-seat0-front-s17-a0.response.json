@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.41,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Повышение цен выгодно и мне — произведу товар и продам по высоким ценам в следующем раунде.\"}",
+          "reasoning_content": "Card 7: prices +2 next market. I'm president, cash similar. +2 prices helps me sell goods — but I have 0 goods, rivals have 2 each. Round 5 market next round (round 6). I could produce. Higher prices benefit all sellers; I likely sell too. Voting yes helps me if I produce. But also helps rivals. My cash lowest-ish. Vote yes — prices help whoever sells; I can produce 2 goods and sell. Yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766984,
+    "id": "20261116022300b6331b3c6be641bf",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022300b6331b3c6be641bf",
+    "usage": {
+      "completion_tokens": 137,
+      "completion_tokens_details": {
+        "reasoning_tokens": 101
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1528
+    }
+  }
+}

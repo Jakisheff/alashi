@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.444,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Продаю все 3 единицы по верхним ценам лестницы без налога.\"}",
+          "reasoning_content": "Round 3 of 6. Sell 3 at top prices 12,10,9 ≈ 31, taxed 0? tax 0. No devaluation until round border 2+... wait \"at round 2+ boundaries cash devalued floor/100*62\". Round 3 border applies. Sell credit would give 1.25x but devalued 62% at border... promissory added to cash then devaluation? Devaluation at border: cash=floor(cash/100)*62; promissory added and zeroed — order unclear. Hard likely better: sell now, cash becomes hard before... Actually sell now gives cash which then devalues at round-3 border too. Sell credit gives 1.25x promissory; if promissory added after devaluation, credit is much better. Ambiguous; safe: sell_credit gives 1.25 factor vs 62% devaluation timing. If promissory added before devaluation, 1.25*0.62<1. If after, 1.25>1. Uncertain — sell normally? Later rounds credit better (less devaluation borders). Round 3 border applies to both anyway. With uncertainty, just sell 3 now for ~31 cash.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767067,
+    "id": "20261116022418614114467a254797",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022418614114467a254797",
+    "usage": {
+      "completion_tokens": 296,
+      "completion_tokens_details": {
+        "reasoning_tokens": 263
+      },
+      "prompt_tokens": 1425,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1721
+    }
+  }
+}

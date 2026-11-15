@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.0,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон усиливает самого беднего соперника, который и так лидирует по влиянию, а мне выгоды не даёт\"}",
+          "reasoning_content": "Law card 4: +1 influence to poorest. I'm richest, poorest is idx2 who already has influence 2. Giving them +1 influence boosts their final payout share weight. I should vote no. Others: idx2 would benefit, vote yes likely. My weight 3 vs 2... vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766907,
+    "id": "202611160221433b62071957c745c9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160221433b62071957c745c9",
+    "usage": {
+      "completion_tokens": 102,
+      "completion_tokens_details": {
+        "reasoning_tokens": 65
+      },
+      "prompt_tokens": 1392,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1494
+    }
+  }
+}

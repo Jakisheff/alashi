@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.941,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Продажа в кредит обходит грядущую девальвацию и даёт ×1.25\"}",
+          "reasoning_content": "Sell 3 at price 12. Cash now; sell vs sell_credit: credit gives 1.25x but round 3 boundary devalues cash by 62%? Devaluation applies to cash at rounds 2+. Cash floor(cash/100)*62. Promissory added after devaluation? \"On the boundary of rounds 2+ cash=floor(cash/100)*62... promissory is added to cash and reset to zero\" — so promissory arrives after devaluation. So sell_credit is better: 12*3*1.25=45 alashi vs 36 devalued to ~22. Sell credit 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767188,
+    "id": "20261116022622a6c52bbfb9ca4e04",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022622a6c52bbfb9ca4e04",
+    "usage": {
+      "completion_tokens": 174,
+      "completion_tokens_details": {
+        "reasoning_tokens": 137
+      },
+      "prompt_tokens": 1425,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1599
+    }
+  }
+}

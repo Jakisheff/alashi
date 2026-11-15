@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.532,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Последний раунд: гарантированные 3 товара без риска конфискации выгоднее рискованного shuttle при низких ценах\"}",
+          "reasoning_content": "Round 6, last round. Cash is high; need goods to sell? This is action phase, goods=0. Shuttle gives 4 goods (3+1). Shuttle risk 25% confiscation — but even so, value ~4 goods × ~3 alashi = 12; expected ~9. Produce gives 3 goods safely. Tax 0, prices low (sold_counter 9, price ~3). Produce: 3 goods, safe. Shuttle EV higher if prices ~3: 4×0.75=3 goods vs 3. Marginal. Confiscation could lose all? Probably confiscates the shuttle goods. 4×0.75=3 = produce. Safer: produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766558,
+    "id": "202611160215534de7b88c84d64c0c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160215534de7b88c84d64c0c",
+    "usage": {
+      "completion_tokens": 187,
+      "completion_tokens_details": {
+        "reasoning_tokens": 149
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1708
+    }
+  }
+}

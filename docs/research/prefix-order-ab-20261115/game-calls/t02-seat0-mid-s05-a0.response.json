@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.587,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 3 товара без риска конфискации, у меня нет денег для других действий\"}",
+          "reasoning_content": "I have 0 cash, can't bribe. Produce gives 3 goods (2+1 subsidy). Shuttle gives 4 grey with 25% confiscation risk. Shuttle higher expected? 4*0.75=3 expected but risk of losing all; produce is safe 3. Take produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766640,
+    "id": "20261116021716a9fb7c5197ce4931",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021716a9fb7c5197ce4931",
+    "usage": {
+      "completion_tokens": 93,
+      "completion_tokens_details": {
+        "reasoning_tokens": 63
+      },
+      "prompt_tokens": 1515,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1608
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.051,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Налог 10% бьёт по мне как по богатейшему; я президент и заблокирую его бесплатно\"}",
+          "reasoning_content": "Card 1: tax 10%. I'm richest. Vote no. If it passes anyway, veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766954,
+    "id": "202611160222313a4e8fcad0ce4be1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160222313a4e8fcad0ce4be1",
+    "usage": {
+      "completion_tokens": 58,
+      "completion_tokens_details": {
+        "reasoning_tokens": 22
+      },
+      "prompt_tokens": 1387,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1445
+    }
+  }
+}

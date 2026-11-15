@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.926,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Снижение цен вредит соперникам с товаром, у меня товара нет и cash наибольший — мне выгодно.\"}",
+          "reasoning_content": "Card 6: prices next market -2. I have most cash, no goods. Round 6 is last market. Lower prices hurt rivals who hold goods. Vote yes. Also I'm president—no veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766728,
+    "id": "202611160218465802eb4ad745493e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160218465802eb4ad745493e",
+    "usage": {
+      "completion_tokens": 82,
+      "completion_tokens_details": {
+        "reasoning_tokens": 44
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1473
+    }
+  }
+}

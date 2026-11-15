@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.843,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Налог бьёт по более богатым соперникам сильнее, чем по мне — пусть проходит.\"}",
+          "reasoning_content": "Law card 1: tax 10%. Passed already (post_vote stage)? We're in law phase but decision_stage post_vote... card 1 tax 10%. Tax hurts us little (lowest cash). Vote has happened; we can veto? veto_pending false, votes all voted. Likely we just vote... phase law with voted all true — our vote maybe counted? Decision stage post_vote means vote counted, we can veto as president. Tax 10% on revenue — I'm poorest seller, rivals richer and will sell more. Let it pass? Vote yes doesn't matter post-vote. Tax hurts them more. Abstain/vote_no — law passes if yes>no; rivals likely voted yes (they're richer, tax hurts them... actually tax hurts sellers regardless). Tax reduces my future revenue by 10% too. But rivals sell more, so relatively good for me. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767509,
+    "id": "20261116023141239aa636f85440f1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023141239aa636f85440f1",
+    "usage": {
+      "completion_tokens": 216,
+      "completion_tokens_details": {
+        "reasoning_tokens": 184
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1606
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.394,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"The final round—selling at the maximum price of the ladder, credit will not be repaid\"}",
+          "reasoning_content": "Round 6, last market. Sell all 2 at price 12. sell_credit won't pay out after last round? Promissory paid at round boundary after last round? \"after the last round it is not redeemed\" — so sell, not credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766697,
+    "id": "2026111602181492b29f00123543bd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602181492b29f00123543bd",
+    "usage": {
+      "completion_tokens": 87,
+      "completion_tokens_details": {
+        "reasoning_tokens": 54
+      },
+      "prompt_tokens": 1426,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1513
+    }
+  }
+}

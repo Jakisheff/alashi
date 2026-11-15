@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.85,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нет товара и денег для других действий; produce даёт 2 единицы для будущей продажи.\"}",
+          "reasoning_content": "Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766501,
+    "id": "20261116021459bc7a050669fa4c62",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021459bc7a050669fa4c62",
+    "usage": {
+      "completion_tokens": 33,
+      "completion_tokens_details": {
+        "reasoning_tokens": 3
+      },
+      "prompt_tokens": 1515,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1548
+    }
+  }
+}

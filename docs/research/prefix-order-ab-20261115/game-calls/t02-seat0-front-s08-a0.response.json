@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.793,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"С субсидией shuttle даёт 4 товара, даже с риском конфискации это лучше 3 от produce.\"}",
+          "reasoning_content": "Shuttle gives 4 goods, ~25% confiscation risk. Produce gives 3 free. Shuttle EV: 4*0.75=3 goods vs 3 produce. Price at counter 5 → price 7. Small gain. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766653,
+    "id": "2026111602172934c4127aa952442c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602172934c4127aa952442c",
+    "usage": {
+      "completion_tokens": 90,
+      "completion_tokens_details": {
+        "reasoning_tokens": 53
+      },
+      "prompt_tokens": 1518,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1608
+    }
+  }
+}

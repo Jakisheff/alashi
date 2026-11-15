@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.567,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара для продажи, а покупка по высокой цене без выгоды невыгодна.\"}",
+          "reasoning_content": "Round 5, no goods, cash ~14.7M. Nothing to sell. Buying moves counter back — could help later? Prices next market... buying costs money, no goods to sell later? Buying gives goods that could be sold later rounds, but selling lowers ladder which helps rivals too. Likely pass. Could buy to sell at high price? Price at 0 counter is 12; buy at ~12 then sell at 12? Buy price presumably ladder price too; round 6 selling gives 12 back — roughly neutral, minus tax 0. Not profitable. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767808,
+    "id": "20261116023643acaa195b67074142",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023643acaa195b67074142",
+    "usage": {
+      "completion_tokens": 147,
+      "completion_tokens_details": {
+        "reasoning_tokens": 119
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1575
+    }
+  }
+}

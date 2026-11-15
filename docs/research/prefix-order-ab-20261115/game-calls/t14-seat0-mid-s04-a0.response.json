@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.8,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Продаю в кредит: +25% выручки и избегаю девальвации на границе раунда.\"}",
+          "reasoning_content": "Sell 3 at prices: sold_counter=2, prices [12,10,9,...]. Next unit at 9. Sell all 3 → 9+8+7=24. But others may sell too; sell now. Use sell_credit? Devaluation at round boundary: cash floor/100*62, promissory added after? promissory прибавляется к cash и обнуляется — after devaluation, so credit avoids devaluation and ×1.25. Sell credit better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767029,
+    "id": "20261116022344358e9281b9e145d1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022344358e9281b9e145d1",
+    "usage": {
+      "completion_tokens": 147,
+      "completion_tokens_details": {
+        "reasoning_tokens": 104
+      },
+      "prompt_tokens": 1420,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1567
+    }
+  }
+}

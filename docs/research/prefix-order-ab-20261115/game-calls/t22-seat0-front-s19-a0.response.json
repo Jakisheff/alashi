@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.943,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Карта 7 повышает цены на следующем рынке — выгодно мне, вето не нужно.\"}",
+          "reasoning_content": "Card 7: +2 prices next market. I'm president, everyone voted (post_vote). If it passed, benefit me. I'm poorest, law card 7 helps all. Since post_vote, voting already done—wait phase law with voted all true, decision_stage post_vote: only veto decision left. I'm president, should I veto? Card 7 raises prices, good for me. No veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767364,
+    "id": "202611160229205beeaef480c242a7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160229205beeaef480c242a7",
+    "usage": {
+      "completion_tokens": 116,
+      "completion_tokens_details": {
+        "reasoning_tokens": 85
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1506
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.96,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Никто не имеет promissory, закон нейтрален; экономлю вес на случай конкуренции.\"}",
+          "reasoning_content": "Card 8 wipes promissory notes. No promissory outstanding (cash 0). Harmless either way; others already voted. I'm president. Vote yes or abstain. Since nobody has promissory (likely), it doesn't matter. Vote abstain to save nothing. Actually card 8 could hurt rivals if they used sell_credit later — but it's this round only. Just abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767037,
+    "id": "20261116022353e01548d6889a4b37",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022353e01548d6889a4b37",
+    "usage": {
+      "completion_tokens": 120,
+      "completion_tokens_details": {
+        "reasoning_tokens": 84
+      },
+      "prompt_tokens": 1380,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1500
+    }
+  }
+}

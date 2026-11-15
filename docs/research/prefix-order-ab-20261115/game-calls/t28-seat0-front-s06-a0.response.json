@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.45,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Непонятно, у кого непогашенные promissory, а мой голос всё равно мало весит — воздержусь.\"}",
+          "reasoning_content": "Card 8 wipes promissory notes. I have 0 cash, likely no promissory... actually my promissory not shown. I may have some from sell_credit. Unknown. Others have cash, I'm poorest. Card 8 likely hurts others. Vote yes — but if I have promissory outstanding, bad. I have 0 cash but could have promissory. Risky either way; my weight 1 vs opponent 2 voted. Unknown direction. Card 8 also zeroes promissory before devaluation? Promissory is added to cash then zeroed at round border; card 8 cancels promissory — hurts whoever used sell_credit. I don't know. I'll abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767521,
+    "id": "20261116023156a7c04817b65f48f0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023156a7c04817b65f48f0",
+    "usage": {
+      "completion_tokens": 191,
+      "completion_tokens_details": {
+        "reasoning_tokens": 149
+      },
+      "prompt_tokens": 1384,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1575
+    }
+  }
+}

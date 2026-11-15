@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.578,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голос уже подан, стадия post_vote, я не президент.\"}",
+          "reasoning_content": "post_vote, уже проголосовали — pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766634,
+    "id": "20261116021712e222af859a0e4690",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021712e222af859a0e4690",
+    "usage": {
+      "completion_tokens": 35,
+      "completion_tokens_details": {
+        "reasoning_tokens": 10
+      },
+      "prompt_tokens": 1381,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1416
+    }
+  }
+}

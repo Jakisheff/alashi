@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.837,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Снижение цен на следующем рынке ударит по моим продажам (у меня больше всех товара и денег), поэтому против.\"}",
+          "reasoning_content": "Law card 6: prices -2 next market. I'm president, my vote weight 2 vs others 1+1. Vote already happened (voted all true) — post_vote stage? phase law, decision_stage post_vote... but only vote actions available. Card 6 hurts my sales (I sell). I'm richest-ish, sell goods. Price -2 next round: bad for me. Opponents also sell though. I have goods 3, highest cash. Lower prices hurt me next market. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767077,
+    "id": "20261116022432ff7d0500a4d94de3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022432ff7d0500a4d94de3",
+    "usage": {
+      "completion_tokens": 146,
+      "completion_tokens_details": {
+        "reasoning_tokens": 108
+      },
+      "prompt_tokens": 1389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1535
+    }
+  }
+}

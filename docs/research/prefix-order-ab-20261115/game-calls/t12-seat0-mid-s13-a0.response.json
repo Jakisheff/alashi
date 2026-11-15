@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.874,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":25000000,\"reason\":\"Аукцион только в этом раунде; ожидаемый доход лицензии ~20–60 alashi сверх доли, ставка 25M даёт положительное матожидание при шансах на победу\"}",
+          "reasoning_content": "Bid auction. License income 20-60, value maybe ~40. Bidding ~20-30? Cash 41.5. Also influence gives voting weight, but bid doesn't give influence. Expected license value ~40 alashi; competitor bids unknown. Bid 15 alashi seems reasonable. Actually license pays \"сверх доли\" so winning is pure gain of income minus bid. Expected ~40, bid 25? Risk: opponents have ~33 each. I'll bid 25.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766962,
+    "id": "202611160222377214fbed448d4396",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160222377214fbed448d4396",
+    "usage": {
+      "completion_tokens": 159,
+      "completion_tokens_details": {
+        "reasoning_tokens": 102
+      },
+      "prompt_tokens": 1523,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1682
+    }
+  }
+}

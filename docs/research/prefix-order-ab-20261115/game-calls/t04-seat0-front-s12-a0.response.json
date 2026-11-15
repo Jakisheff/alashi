@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.478,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Цена 3 за единицу, а выручка через sell_credit вернётся 1.25× без девальвации на границе раунда.\"}",
+          "reasoning_content": "Round 4 market, sold_counter=8, prices: index 8 → 3. Two goods, sell both → 6 alashi. No tax. Sell now vs sell_credit: 1.25x but promissory paid at round boundary after round 4 — round 4 boundary... after round 4 there's round 5,6, so it's redeemed. Wait boundary of round 4→5: cash=floor/100*62 devaluation applies to cash, promissory added and reset. Promissory 7.5 vs 6 cash that gets devalued to 62%... sell_credit better: 6*1.25=7.5 promissory, not devalued. Yes sell_credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766686,
+    "id": "20261116021800403c02d6c44940b4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021800403c02d6c44940b4",
+    "usage": {
+      "completion_tokens": 208,
+      "completion_tokens_details": {
+        "reasoning_tokens": 156
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1636
+    }
+  }
+}

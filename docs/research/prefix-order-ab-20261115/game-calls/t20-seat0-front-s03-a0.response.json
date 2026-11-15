@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.183,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Дополнительное влияние богатейшему при равном cash достаётся мне по tie_order и усилит мою долю итоговой выплаты.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest. Cash all 0, tie_order favors... my_idx 0 likely best tie. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767239,
+    "id": "20261116022715ea83127f59f041db",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022715ea83127f59f041db",
+    "usage": {
+      "completion_tokens": 70,
+      "completion_tokens_details": {
+        "reasoning_tokens": 30
+      },
+      "prompt_tokens": 1381,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1451
+    }
+  }
+}

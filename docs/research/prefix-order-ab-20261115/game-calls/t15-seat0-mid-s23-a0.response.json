@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.343,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Налог 10% не подействует — рынок этого раунда уже прошёл, рынков больше нет.\"}",
+          "reasoning_content": "Law card 1 = tax 10%. Round 6, last round's market already passed? Law applies to... post_vote stage, market already done this round? Order per round: market, action, law. So tax affects next market—but there is no next market (round 6 last). Wait, market already happened in round 6. Tax card would affect nothing? Actually active_tax applies at market; no more markets. Vote is irrelevant; abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767135,
+    "id": "202611160225303195d79b6ad74a3a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160225303195d79b6ad74a3a",
+    "usage": {
+      "completion_tokens": 132,
+      "completion_tokens_details": {
+        "reasoning_tokens": 95
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1523
+    }
+  }
+}

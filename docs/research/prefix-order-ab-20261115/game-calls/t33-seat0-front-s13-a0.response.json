@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.186,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":12000000,\"reason\":\"Аукцион лицензии в раунде 4: ожидаемый доход 20-60 alashi сверх доли, ставка ~12 alashi с возвратом при проигрыше — выгодно даже при частых победах.\"}",
+          "reasoning_content": "License auction round 4, income 20-60 alashi. I'm president, cash 19.22. Rivals ~35. Bid something competitive but not overpaying. Expected value ~40; weight 50:30:15 means marginal cash value ~0.5. Bid ~10-15 alashi. But rivals may bid more. Bid 10,000,000? Losing bid refunded. Reasonable: bid 12000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767722,
+    "id": "2026111602351849cf32d5e2ed4705",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602351849cf32d5e2ed4705",
+    "usage": {
+      "completion_tokens": 158,
+      "completion_tokens_details": {
+        "reasoning_tokens": 94
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1679
+    }
+  }
+}

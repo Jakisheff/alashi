@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.389,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Карта даёт +1 влияния богатейшему (сопернику), это ослабляет мой статус президента и итоговый бонус — налагаю вето.\"}",
+          "reasoning_content": "Card 5: +1 influence to richest. Richest is idx2 (22M), not me (0). I'm president. Votes: idx2 voted (unknown how). If passes, rival gains influence. Vote no; but even if passes, veto? Veto kills it. Free. Use veto to prevent rival influence gain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767038,
+    "id": "202611160223546029390db20b4878",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160223546029390db20b4878",
+    "usage": {
+      "completion_tokens": 116,
+      "completion_tokens_details": {
+        "reasoning_tokens": 69
+      },
+      "prompt_tokens": 1384,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1500
+    }
+  }
+}

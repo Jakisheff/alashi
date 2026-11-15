@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.087,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":15000000,\"reason\":\"Ожидаемый доход лицензии ~20-60 при ставке 15 оставляет положительную ожидаемую прибыль сверх доли.\"}",
+          "reasoning_content": "Round 4, license auction. Income 20-60 alashi. Bid some amount. My cash 27.7. Expected license value ~40 alashi, but winning bid pays. Opponents similar. Bid maybe 20 alashi (20000000)? Risky. Alternatively shuttle gives goods. License is worth ~40 expected; bid 20M gives expected profit ~20 minus bank loss... Final payout proportional though. Bid ~15M? Let's bid 15M.\n\nActually bribery influence matters for bonus. Keep simple: bid 15000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767193,
+    "id": "202611160226283dedc33322cb4488",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160226283dedc33322cb4488",
+    "usage": {
+      "completion_tokens": 159,
+      "completion_tokens_details": {
+        "reasoning_tokens": 115
+      },
+      "prompt_tokens": 1522,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1681
+    }
+  }
+}

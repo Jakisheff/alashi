@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.963,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Мелкий кэш обнулится при девальвации, а sell_credit приносит 1.25x после границы раунда без потерь.\"}",
+          "reasoning_content": "Sell 2 units now? Price ladder next prices ~9,8. But sell_credit gives 1.25x and pays at round boundary (cash floor then deval... promissory added to cash after devaluation of cash, so credit avoids devaluation). Cash=0 anyway. Sell 2 via credit: 2*(9+8)=34*1.25=42.5 promissory. Normal sell gives 34 cash, devalued floor(34/100)*62→0... floor(34/100)=0 → cash becomes 0! So sell_credit definitely.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767280,
+    "id": "20261116022755ea36bf13f31a4558",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022755ea36bf13f31a4558",
+    "usage": {
+      "completion_tokens": 172,
+      "completion_tokens_details": {
+        "reasoning_tokens": 123
+      },
+      "prompt_tokens": 1420,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1592
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.795,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Закон пустой, исход не важен — не даю лишний вес\"}",
+          "reasoning_content": "Card 0 = empty. Vote yes/no doesn't matter. Abstain is safe.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766747,
+    "id": "20261116021905574dfea812ea4d73",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021905574dfea812ea4d73",
+    "usage": {
+      "completion_tokens": 48,
+      "completion_tokens_details": {
+        "reasoning_tokens": 19
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1439
+    }
+  }
+}

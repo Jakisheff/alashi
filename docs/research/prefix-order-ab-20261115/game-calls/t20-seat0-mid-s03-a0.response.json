@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.383,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"При равном капитале я выигрываю тай-брейк и получаю +1 влияния, усиливая будущие голоса и бонус влияния.\"}",
+          "reasoning_content": "Law card 5: +1 influence to richest. All cash 0, tie — richest maybe tie_order? I'm idx 0, best tie. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767243,
+    "id": "202611160227203e14b2e795af4702",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160227203e14b2e795af4702",
+    "usage": {
+      "completion_tokens": 79,
+      "completion_tokens_details": {
+        "reasoning_tokens": 35
+      },
+      "prompt_tokens": 1381,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1460
+    }
+  }
+}

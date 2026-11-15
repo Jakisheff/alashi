@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.539,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Закон даёт +1 влияния самой богатой фракции-сопернику, что ослабляет мои позиции президента и бонус за влияние.\"}",
+          "reasoning_content": "Card 5: +1 influence to richest. Richest is idx2 (26.64). Not me. Vote no; others with weight 1+2=3 vs my 3+2=5 if I skip... actually vote weight is influence +2 if primary action skipped. vote_weight=[1,1,1] means nobody skipped. My no =1 vs yes 1+1=2 passes. I'm president—veto it? Giving influence to rival hurts my 5% influence bonus and power. Veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767760,
+    "id": "20261116023555d8c43a945a1a4e50",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023555d8c43a945a1a4e50",
+    "usage": {
+      "completion_tokens": 155,
+      "completion_tokens_details": {
+        "reasoning_tokens": 111
+      },
+      "prompt_tokens": 1387,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1542
+    }
+  }
+}

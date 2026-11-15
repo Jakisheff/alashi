@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.163,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Налог 20% бьёт по более богатым соперникам, мне вредит минимально.\"}",
+          "reasoning_content": "Law card 2: tax 20%. I'm poorest (cash 0). Tax hurts rivals. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767579,
+    "id": "2026111602325805bb73d56d484deb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602325805bb73d56d484deb",
+    "usage": {
+      "completion_tokens": 57,
+      "completion_tokens_details": {
+        "reasoning_tokens": 24
+      },
+      "prompt_tokens": 1384,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1441
+    }
+  }
+}

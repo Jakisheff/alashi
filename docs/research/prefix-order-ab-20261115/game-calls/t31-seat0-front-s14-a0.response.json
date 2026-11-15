@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.841,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Мой голос уже учтён; карта 8 нейтральна при неизвестных promissory, дераться за неё нет смысла.\"}",
+          "reasoning_content": "Card 8 cancels all promissory notes. My sell_credit unknown... I don't have info on my outstanding promissory. Card 8 wipes promissory; if I have none, harmless; rivals may have some? Unknown. voted=true already — my vote already cast; decision_stage post_vote. Only action: I'm not president. Actions allowed: vote_* but voted... likely pass. But pass not listed. Hmm, only vote options given. If voted already, vote does nothing? Choose vote_abstain? Best: vote_no (card 8 could wipe promissory — risky if I have credit sales). Actually wiping rivals' promissory helps me relatively. Unknown. Since already voted, safest: vote_abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767697,
+    "id": "20261116023453db69044638ac427e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023453db69044638ac427e",
+    "usage": {
+      "completion_tokens": 197,
+      "completion_tokens_details": {
+        "reasoning_tokens": 154
+      },
+      "prompt_tokens": 1392,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1589
+    }
+  }
+}

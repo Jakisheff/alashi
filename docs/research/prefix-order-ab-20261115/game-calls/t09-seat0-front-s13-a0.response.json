@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.682,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Субсидия даёт мне больше товара, а у соперников товаров нет\"}",
+          "reasoning_content": "Law card 3: subsidy_goods=1 — helps me produce more goods; opponents have 0 goods. Vote yes. Others voted already (unknown). Influence 2 player has weight 4; if they vote no, passes 3-4 fails... but I still vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766875,
+    "id": "2026111602211219c4f0b9aa48433b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602211219c4f0b9aa48433b",
+    "usage": {
+      "completion_tokens": 85,
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1475
+    }
+  }
+}

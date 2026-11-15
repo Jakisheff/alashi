@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.564,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"У меня нет товара, снижение цен бьёт по доходам соперников, мне почти безвредно.\"}",
+          "reasoning_content": "Card 6: prices -2 next market. I have goods=0, likely won't sell next market. Others also goods 0 but may produce. Lower prices hurt others, not me much (I'll produce too... actually next round 5 I could produce 2 goods). Still -2 prices hurts everyone including me slightly. Vote yes? With no goods, prices -2 hurts rivals more likely. My vote: others voted already. Vote yes since it lowers others' revenue; I'm president, no need veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767796,
+    "id": "20261116023632593bff7a791441a4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023632593bff7a791441a4",
+    "usage": {
+      "completion_tokens": 141,
+      "completion_tokens_details": {
+        "reasoning_tokens": 107
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1532
+    }
+  }
+}

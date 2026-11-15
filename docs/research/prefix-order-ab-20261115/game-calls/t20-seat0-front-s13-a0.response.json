@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.376,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":20000000,\"reason\":\"Ожидаемый доход лицензии ~40 alashi превышает умеренную ставку 20, при проигрыше ставка вернётся\"}",
+          "reasoning_content": "Round 4, cash 40.5M. Bid for license? Income 20-60 alashi; my share base ~50% weight? Weights 3/4/3 → weights roughly equal, bank share similar. License pays extra beyond share; worth bidding up to maybe ~30-40? But risk overpaying. Shuttle risk. Produce gives 2 goods, shuttle 3 with 25% confiscation → EV 2.25. Produce safer. But cash is highest — anti-rich laws... Bid: blind auction, winner pays. Expected license 40 alashi split? Income 20-60, pays to holder above share. If I win with bid ~20, EV gain = ~40-20=20. But others may bid. Bid 15M? Cash 40.5. If I bid 20M and win, cash drops. Also roof protects against anti-rich laws? No law card pending.\n\nChoose bid 15M (moderate) or produce? License EV ~40, paying 15 leaves +25 expected. But opponent with 35M may bid higher. Bid 20M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767285,
+    "id": "202611160227563ca148ba3eed4880",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160227563ca148ba3eed4880",
+    "usage": {
+      "completion_tokens": 278,
+      "completion_tokens_details": {
+        "reasoning_tokens": 234
+      },
+      "prompt_tokens": 1519,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1797
+    }
+  }
+}

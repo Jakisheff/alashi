@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.462,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Снижение цен на следующий рынок вредит моей будущей выручке\"}",
+          "reasoning_content": "Law card 6: prices -2 next market. Bad for me (I have no goods anyway... prices lower hurts sellers). Round 4 market already passed? Decision stage primary, law phase after market/action. Prices -2 applies next market (round 5). I likely will produce goods later. Vote no. Player 1 voted (unknown how). Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767096,
+    "id": "20261116022453059c3e87ac32492f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022453059c3e87ac32492f",
+    "usage": {
+      "completion_tokens": 101,
+      "completion_tokens_details": {
+        "reasoning_tokens": 75
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1491
+    }
+  }
+}

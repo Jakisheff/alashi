@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.601,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Последний раунд, рынок уже прошёл — товары бесполезны, а взятка за влияние стоит дороже потенциального бонуса.\"}",
+          "reasoning_content": "Round 6, last round. Market before? Order: market, action, law per round. Goods=0, sold_counter=7, boom=2. Need goods for... wait, market already happened this round? Phase action means market already done. So goods produced now can only be sold next round — but no next round. Shuttle gives goods but no market left. So produce useless. Bribe for influence: max influence gets extra 5% of bank. I'm cash-rich 42.9M. Influence 1 vs 3. Bribe 20M gives +4 influence → 5 vs 3. Cost 20M cash, gain extra 5% of bank? Bank size unknown. My share is 50% weights anyway (I'm richest, rank-based? payout 50:30:15 by rank). Extra 5% of bank from commission to max influence. 20M cost likely not worth unknown 5% of bank — bank is bids+license payments, probably small. Also passing primary gives +2 vote weight for law — but law_card 255 (none). So pass is fine. Actually produce gives goods worth 0. Donkey useless. Pass.\n\nActually bribe changes influence which persists for endgame influence bonus and final tie? Max influence bonus 5% of bank. Bank likely small. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767608,
+    "id": "2026111602331969a5255d71ec4087",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602331969a5255d71ec4087",
+    "usage": {
+      "completion_tokens": 316,
+      "completion_tokens_details": {
+        "reasoning_tokens": 277
+      },
+      "prompt_tokens": 1523,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1839
+    }
+  }
+}

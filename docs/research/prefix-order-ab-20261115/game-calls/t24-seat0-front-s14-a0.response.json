@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.682,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Карта 6 снижает цены следующего рынка, что вредит моей будущей выручке; как президент отменяю её бесплатно.\"}",
+          "reasoning_content": "Card 6: prices next market -2. We're president, others voted (unknown how). Prices -2 hurts revenue; I have no goods though (goods 0). Round 4 market already passed; next market round 5. Prices -2 bad for everyone selling. Vote no, veto if passes? I can only choose one action. Others voted already—outcome unknown. Safest: veto card 6? But veto only works if it passes. Veto is applied \"до подсчёта\" — free veto kills law regardless? \"может применить veto бесплатно\" — seems veto before count kills law. As president with no goods, low prices hurt future sales; but rivals also have 0 goods... all have goods 0. Prices -2 hurts everyone's round 5 selling. Vote veto.\n\nWait, veto pending false, veto available. Use veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767415,
+    "id": "20261116023009326055a1f5474309",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023009326055a1f5474309",
+    "usage": {
+      "completion_tokens": 220,
+      "completion_tokens_details": {
+        "reasoning_tokens": 180
+      },
+      "prompt_tokens": 1389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1609
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.888,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон даёт влияние беднейшему сопернику, мне невыгоден\"}",
+          "reasoning_content": "Card 4: +1 influence to poorest. Poorest is idx2 (cash 11.85M)? Mine 17.28M. Yes, idx2 is poorest, they already have influence 2. Voting against it... my vote weight 1, others 1 and 2. Card helps rival. Vote no; outcome unclear but no cost.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767116,
+    "id": "20261116022513af6fc0dd51fa41e4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022513af6fc0dd51fa41e4",
+    "usage": {
+      "completion_tokens": 100,
+      "completion_tokens_details": {
+        "reasoning_tokens": 74
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1491
+    }
+  }
+}

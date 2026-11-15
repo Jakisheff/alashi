@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.245,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Налог 20% уже не действует — рынок финального раунда прошёл, рынок не затронут.\"}",
+          "reasoning_content": "Law card 2: tax 20%. Round 6, final market already passed? Phase law round 6, post_vote stage... decision_stage post_vote but we must vote. Tax hurts richest? Tax applies to revenue generally. I'm richest (40M). But market already done? Round 6 order: market, action, law — so market done, tax won't affect us anymore? Actually law card 2 tax 20% — likely applies next market, none. But safest: veto to avoid tax? If no future market, irrelevant. Card 2 active tax only affects market sales; round 6 market passed, so harmless. Abstain fine. I'm president, veto free. Just abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767776,
+    "id": "20261116023612d475fcc3d6054ad3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023612d475fcc3d6054ad3",
+    "usage": {
+      "completion_tokens": 187,
+      "completion_tokens_details": {
+        "reasoning_tokens": 148
+      },
+      "prompt_tokens": 1392,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1579
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.962,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 5 даёт +1 влияния богатейшему — это я, что усилит мой бонус влияния при итоговой выплате.\"}",
+          "reasoning_content": "Card 5 gives +1 influence to richest — that's me (45.6M richest). But post_vote stage, voted already true — vote already happened? phase law, decision_stage post_vote... probably my vote already counted; but I must still give an action. Pass isn't listed; allowed only votes. Vote yes favors me.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767493,
+    "id": "20261116023130a1283894bcc94fad",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023130a1283894bcc94fad",
+    "usage": {
+      "completion_tokens": 110,
+      "completion_tokens_details": {
+        "reasoning_tokens": 69
+      },
+      "prompt_tokens": 1392,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1502
+    }
+  }
+}

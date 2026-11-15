@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.323,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 20% невыгоден, я беднейший; при прохождении смогу наложить veto как президент\"}",
+          "reasoning_content": "Law card 2: tax 20%. Others already voted (voted true) — unknown how. I'm president. Tax 20% hurts me if I sell next rounds. I'm poorest. Vote no; if passes, veto. But veto decides here — vote_no likely enough? Their votes unknown; with 3-3 ties? Weights 3 each; if both voted yes, 6-3 passes → veto. If I vote no and it passes, veto. Just vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767092,
+    "id": "2026111602244803665679911c4367",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602244803665679911c4367",
+    "usage": {
+      "completion_tokens": 138,
+      "completion_tokens_details": {
+        "reasoning_tokens": 103
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1529
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.335,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Бесплатный серый товар с ожиданием 2.25 единицы лучше 2 безопасных\"}",
+          "reasoning_content": "Round 2, no goods, need goods to sell next market? Market happens before action each round, so goods from now sell in round 3 market. Shuttle gives 3 goods, 25% confiscation risk. Produce gives 2 safe. Expected shuttle 2.25 goods free. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766504,
+    "id": "2026111602150079bdf68b3d044fd3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602150079bdf68b3d044fd3",
+    "usage": {
+      "completion_tokens": 94,
+      "completion_tokens_details": {
+        "reasoning_tokens": 63
+      },
+      "prompt_tokens": 1517,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1611
+    }
+  }
+}

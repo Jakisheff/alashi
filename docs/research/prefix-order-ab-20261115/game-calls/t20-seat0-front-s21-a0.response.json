@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.334,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товар и взятки уже не влияют на выплату: рынок прошёл, бонус за влияние мал относительно стоимости взятки.\"}",
+          "reasoning_content": "Round 6, last action. Cash 37.6. Bid only round 4. Need goods for final market sale — but after action phase there's law, then round ends? Market comes before action in round, so no more market after this. So goods useless. Bribe for influence bonus? Final payout: 5% bonus for max influence. I have 1, rival 2. Bribe 5M to faction 1 gives me +1 influence → 2, tie broken by cash — I have more cash, so I'd win influence tie and get 5% of bank. But bribe costs 5M cash, which counts in final ranking. Bank commission 5%... bank size unknown. 5% of bank likely >5M? Bank from license bids etc., unknown. Rank matters more: 50:30:15 shares. I'm richest; losing 5M still richest (37.6-5=32.6 >31.3). And gaining influence tie for bonus. Bribe seems worthwhile if bank bonus >5M. Risky but plausible. Alternatively pass. Influence bonus: 5% of bank — bank includes license winner's bid ~ maybe 20-40M? 5% could be ~1-2M, less than 5M cost. Commission 5% of bank, half goes as bonus? \"Комиссия 5% банка; ещё 5% банка из комиссии получает...\" — unclear. Likely small. Pass.\n\nActually vote weight 3 vs rival 4 — law card absent (255). Skip bribe.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767323,
+    "id": "20261116022835d74a0256ece4429b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022835d74a0256ece4429b",
+    "usage": {
+      "completion_tokens": 365,
+      "completion_tokens_details": {
+        "reasoning_tokens": 329
+      },
+      "prompt_tokens": 1523,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1888
+    }
+  }
+}

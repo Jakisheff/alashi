@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.865,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Снижение цен hurts моей будущей продажи товара, поэтому наложить вето.\"}",
+          "reasoning_content": "Law card 6: prices -2 next market. I'm president, cash 0 (poorest, ties?). Veto available? phase law, veto_pending false. Card 6 hurts prices; I have 2 goods to sell. Vote no... it already voted (voted all true, post_vote). Actually decision_stage post_vote — vote already done? Actions available still vote options. If vote already cast, better veto: card 6 reduces prices, bad for me selling 2 goods. Veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767319,
+    "id": "202611160228331f881de3373c448e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160228331f881de3373c448e",
+    "usage": {
+      "completion_tokens": 133,
+      "completion_tokens_details": {
+        "reasoning_tokens": 105
+      },
+      "prompt_tokens": 1386,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1519
+    }
+  }
+}

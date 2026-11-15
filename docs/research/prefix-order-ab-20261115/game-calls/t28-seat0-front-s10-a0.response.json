@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.718,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон усиливает самого богатого соперника, что ухудшает мою долю и бонус влияния.\"}",
+          "reasoning_content": "Card 5 gives +1 influence to richest (idx1, 25.5M). I'm poorest, cash 0. Vote no. My weight 1 vs their 2 — likely fails anyway.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767540,
+    "id": "20261116023216f39420195ff647e1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023216f39420195ff647e1",
+    "usage": {
+      "completion_tokens": 76,
+      "completion_tokens_details": {
+        "reasoning_tokens": 43
+      },
+      "prompt_tokens": 1385,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1461
+    }
+  }
+}

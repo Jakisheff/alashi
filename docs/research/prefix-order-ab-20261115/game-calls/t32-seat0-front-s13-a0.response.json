@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.743,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":30000000,\"reason\":\"Ожидаемый доход лицензии ~40 alashi сверх доли, ставка 30 даёт положительное матожидание\"}",
+          "reasoning_content": "Round 4 action, bid auction available. License income 20-60, expected ~40, split extra beyond share. Bidding: winner pays bid to bank, gets license income on top of share. So bid up to ~40 makes sense. Opponents may bid. Blind auction. Bid 25 maybe.\n\nBut cash competition: I have less cash. Others have ~31.5M each. Expected value of license ~40 alashi extra. Bidding 30 reasonable; ties broken by tie_order (my_idx 0? tie_order unknown). I'll bid 30.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767712,
+    "id": "20261116023507bb851ae5a7b74dfd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023507bb851ae5a7b74dfd",
+    "usage": {
+      "completion_tokens": 160,
+      "completion_tokens_details": {
+        "reasoning_tokens": 119
+      },
+      "prompt_tokens": 1520,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1680
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.188,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Субсидия товара выгодна всем, особенно мне с наибольшим весом.\"}",
+          "reasoning_content": "Law card 3: subsidy_goods=1. Beneficial, but only if passes — votes already cast, decision_stage post_vote? Still need my vote? voted all true. Phase law, I can vote... but decision_stage post_vote. Maybe my vote already counted. Vote yes to support subsidy.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767735,
+    "id": "202611160235299b77df859f4446a8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160235299b77df859f4446a8",
+    "usage": {
+      "completion_tokens": 91,
+      "completion_tokens_details": {
+        "reasoning_tokens": 61
+      },
+      "prompt_tokens": 1389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1480
+    }
+  }
+}

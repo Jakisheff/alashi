@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.02,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Наличная выручка обнулится девальвацией (cash<100 alashi), а promissory 1.25x выплатится на границе раунда 4 без потерь.\"}",
+          "reasoning_content": "Sell 2 units at price 12, tax 20%. Cash vs credit: round 3, border between 3 and 4 applies floor(cash/100)*62 — depreciation. sell_credit gives 1.25x paid next round border (round 4). Wait: promissory added to cash at border of next round — round 3 credit pays at border 3→4, then... cash received at border 4 then devalued at border... actually promissory added to cash and cleared at border; the border devaluation applies to cash? Devaluation happens at border rounds 2+. So credit paid at border 3→4: 12*2*1.25=30, then floor(30/100)*62? Cash stays as is since under 100? floor(30/100)=0 → cash becomes 0! Careful: cash formula floor(cash/100)*62 means cash <100 alashi (100M) wiped to 0? floor(30/100)=0 → 0. But my cash is 30M = 30 alashi, under 100? Wait units: 1000000 = 1 alashi. So cash 30 alashi < 100 alashi → devalued to 0?! Hmm, that seems harsh but that's the rule. So holding cash under 100M gets wiped at each border! Then I should sell credit to avoid devaluation — credit pays at next border, added to cash and cleared... but is promissory-added cash subject to devaluation at the same border? Ambiguous; likely promissory added after devaluation. Sell credit: revenue 24*1.25=30 alashi promissory, added at border 4 → avoids round 3→4 devaluation of that 30, but my existing 30 cash gets wiped anyway. Actually sell now: 24*0.8=19.2 cash, total 49.2, wiped to 0 at border. Sell credit: 30 promissory paid at border 4, cash 30 wiped to 0. So credit much better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766797,
+    "id": "20261116021948f8741125435d48d8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021948f8741125435d48d8",
+    "usage": {
+      "completion_tokens": 502,
+      "completion_tokens_details": {
+        "reasoning_tokens": 442
+      },
+      "prompt_tokens": 1426,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1928
+    }
+  }
+}

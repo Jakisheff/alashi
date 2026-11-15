@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.803,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bribe\",\"to\":1,\"amount\":5000000,\"reason\":\"Догоняю лидера по влиянию (2=2), при тайме мой cash выше — забираю 5% бонус влияния в итоге\"}",
+          "reasoning_content": "Round 6, final. Action phase, then law, then market? Actually round order: market, action, law. This is action of round 6, market already passed? sold_counter=7 and goods 0. Then law. No more market? Market happened before action. So goods useless now. Influence matters for final 5% bonus. I'm president (influence tie? I have 1, idx2 has 2... president says me true). Vote weight mode with pass bonus. Best: pass to get +2 weight? Influence max is idx2 (2). The 5% influence bonus goes to max influence, tie by cash — if I bribe 5M, I'd have influence 2, tie with idx2, cash higher → I win bonus. Bribe 5M to whom? To idx2 increases their cash. Bribe to idx1 or idx2. Cost 5M cash; bonus 5% of bank. Bank size unknown. Probably bribe to idx1 (5M) to gain influence and win 5% bonus. Also passing gives vote weight. Bribe is my action. Bribe 5M to idx1, reason.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767332,
+    "id": "202611160228446348b0a3e5504d93",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160228446348b0a3e5504d93",
+    "usage": {
+      "completion_tokens": 301,
+      "completion_tokens_details": {
+        "reasoning_tokens": 246
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1822
+    }
+  }
+}

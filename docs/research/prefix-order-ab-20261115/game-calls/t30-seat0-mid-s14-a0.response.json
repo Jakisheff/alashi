@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.833,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Налог 10% перекачивает выручку соперников в общий банк, из которого я получаю крупнейшую долю\"}",
+          "reasoning_content": "Law card 1: tax 10%. I'm richest? cash 20.7M vs 37.5M, 33.5M — I'm poorest. Tax hurts sellers; I have no goods. Tax reduces others' revenue. I benefit relatively. But final payout: tax collected goes to bank, increases pool... tax goes to bank, increases pool, and I get 50% share (weights 50:30:15?). Actually weights are by rank presumably. Tax to bank means more shared, and I take 50% share — good for me since I'm poorest? Tax taken from others' sales revenue, pooled to bank, I get 50% of it back. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767628,
+    "id": "20261116023343fc1ff63c821145e4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023343fc1ff63c821145e4",
+    "usage": {
+      "completion_tokens": 183,
+      "completion_tokens_details": {
+        "reasoning_tokens": 146
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1573
+    }
+  }
+}

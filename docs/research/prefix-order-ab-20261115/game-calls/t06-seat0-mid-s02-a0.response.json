@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.294,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 20% невыгоден, я голосую против\"}",
+          "reasoning_content": "Card 2 = tax 20%. Bad for me. Others already voted, presumably yes. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766716,
+    "id": "2026111602183367b16d1328e94f2c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602183367b16d1328e94f2c",
+    "usage": {
+      "completion_tokens": 46,
+      "completion_tokens_details": {
+        "reasoning_tokens": 22
+      },
+      "prompt_tokens": 1380,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1426
+    }
+  }
+}

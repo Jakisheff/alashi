@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.993,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 8 сейчас ничего не списывает у меня, а одобрение безвредно\"}",
+          "reasoning_content": "Law card 8: cancels all promissory notes. Round 1, nobody has promissory (all cash 0, sell_credit not shown). Card 8 hurts those who used sell_credit—unknown. It's harmless now but may limit my future sell_credit use only if active? It applies immediately (sinks outstanding promissory), not a lasting effect. Likely no effect now. Vote yes is fine, or abstain. Others' votes unknown; card 8 seems mildly harmful to anyone using sell_credit this round. I don't know others' sell_credit. Vote yes—neutral.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767037,
+    "id": "2026111602235225e66c6f630642da",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602235225e66c6f630642da",
+    "usage": {
+      "completion_tokens": 154,
+      "completion_tokens_details": {
+        "reasoning_tokens": 124
+      },
+      "prompt_tokens": 1381,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1535
+    }
+  }
+}

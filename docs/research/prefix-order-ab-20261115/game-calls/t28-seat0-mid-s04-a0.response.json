@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.083,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Наличная выручка обнулится девальвацией на границе раунда 2, а sell_credit обходит её с бонусом x1.25.\"}",
+          "reasoning_content": "Sell 2 at price ~ ladder sold_counter=2 → next price 9. Tax 0. Sell credit: 1.25x but round-2 boundary will deflate cash floor(cash/100)*62 — but promissory adds after deflation at boundary. So sell_credit better: revenue*1.25 added next round, avoiding devaluation? Devaluation applies to cash at border 2→3... wait \"на границе раундов 2+\". Sell now → cash 18, becomes floor(18/100)*62=0 (cash 18M = 18 alashi, floor(18/100)=0 → 0!). So selling for cash loses everything. sell_credit: promissory added after, no devaluation. Definitely sell_credit 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767512,
+    "id": "20261116023146652c484bd97c4706",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023146652c484bd97c4706",
+    "usage": {
+      "completion_tokens": 216,
+      "completion_tokens_details": {
+        "reasoning_tokens": 163
+      },
+      "prompt_tokens": 1420,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1636
+    }
+  }
+}

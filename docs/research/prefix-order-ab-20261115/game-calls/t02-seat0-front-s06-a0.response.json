@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.611,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Снижение цен на 2 ударит по моей выручке от продажи товара\"}",
+          "reasoning_content": "Law card 6: prices next market -2. Bad. Vote no. Others may vote yes... 1-1 tie fails. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766644,
+    "id": "20261116021722a3650bef7ece45f6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021722a3650bef7ece45f6",
+    "usage": {
+      "completion_tokens": 59,
+      "completion_tokens_details": {
+        "reasoning_tokens": 31
+      },
+      "prompt_tokens": 1384,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1443
+    }
+  }
+}

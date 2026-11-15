@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.301,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"EV ~2.25 товара против 2 у produce, риск оправдан\"}",
+          "reasoning_content": "Round 5, cash 11.5. Shuttle: 3 goods, 25% confiscation risk, no subsidy. Produce: 2 goods safe. Shuttle EV higher. Also could bribe for influence (I'm president already, influence 2). Money matters. Shuttle vs produce: shuttle 3 goods vs 2, risk 25% lose all? \"may be confiscated\" — likely all grey goods confiscated. EV shuttle = 0.75*3=2.25 goods > 2. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767724,
+    "id": "20261116023520e0bdc75d8d434e68",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023520e0bdc75d8d434e68",
+    "usage": {
+      "completion_tokens": 135,
+      "completion_tokens_details": {
+        "reasoning_tokens": 108
+      },
+      "prompt_tokens": 1519,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1654
+    }
+  }
+}

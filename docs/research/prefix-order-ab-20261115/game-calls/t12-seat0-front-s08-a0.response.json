@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.47,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Цена высокая (12), налога нет, продаю весь товар за 36 alashi\"}",
+          "reasoning_content": "Sell 3 at price 12 = 36, no tax. Cash 0, so sell now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766950,
+    "id": "202611160222276da03e23e18d40ef",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160222276da03e23e18d40ef",
+    "usage": {
+      "completion_tokens": 55,
+      "completion_tokens_details": {
+        "reasoning_tokens": 22
+      },
+      "prompt_tokens": 1422,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1477
+    }
+  }
+}

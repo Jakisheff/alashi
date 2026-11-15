@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.408,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Рынок уже прошёл, товар в последнем раунде бесполезен — экономлю деньги\"}",
+          "reasoning_content": "Round 6, last round. Shuttle gives 3 goods, can't sell anyway (market passed already? phase is action, after this law). Goods can't be sold after round 6. So produce/shuttle useless unless... no more market. Donkey costs money. So pass is best. Maybe bid? Only round 4. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766949,
+    "id": "202611160222259a2ab2669cd543a7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160222259a2ab2669cd543a7",
+    "usage": {
+      "completion_tokens": 103,
+      "completion_tokens_details": {
+        "reasoning_tokens": 71
+      },
+      "prompt_tokens": 1520,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1623
+    }
+  }
+}

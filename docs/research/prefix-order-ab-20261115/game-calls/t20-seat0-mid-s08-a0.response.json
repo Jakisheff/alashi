@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.668,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Продажа в кредит: выручка 1.25x придёт после девальвации, избегая потери 38%\"}",
+          "reasoning_content": "Sell 2 now at price 12... sell_credit gives 1.25x paid at round 4 border, then devalued 62%? Hard cash devalues? Devaluation floor(cash/100)*62 applies to cash; promissory added then zeroed—devaluation likely applies to cash only, promissory added after? \"cash=floor(cash/100)*62, promissory добавляется к cash\". So sell_credit now: revenue*1.25 paid after devaluation → better. Sell 2 at 12*2=24, credit → 30 alashi after devaluation. Plain sell: 24 → devalued to ~14. So sell_credit 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767267,
+    "id": "2026111602274180ae49a176044c5a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602274180ae49a176044c5a",
+    "usage": {
+      "completion_tokens": 192,
+      "completion_tokens_details": {
+        "reasoning_tokens": 148
+      },
+      "prompt_tokens": 1422,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1614
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.75,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемо 3 товара с учётом 25% конфискации выгоднее, чем 2 от produce.\"}",
+          "reasoning_content": "Produce gives 2 goods. Shuttle gives 3 with 25% confiscation, no subsidy. EV: shuttle 2.25 vs produce 2. Shuttle slightly better, but tariff risk none. Cash ~19.8. Shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767092,
+    "id": "202611160224490987435ea00b4ff4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160224490987435ea00b4ff4",
+    "usage": {
+      "completion_tokens": 88,
+      "completion_tokens_details": {
+        "reasoning_tokens": 50
+      },
+      "prompt_tokens": 1522,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1610
+    }
+  }
+}

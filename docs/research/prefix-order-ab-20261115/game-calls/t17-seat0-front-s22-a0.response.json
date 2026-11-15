@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.685,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голос уже подан, карта 6 на последнем раунде уже не влияет на следующий рынок.\"}",
+          "reasoning_content": "Law card 6: prices -2 next market, but this is round 6 law — next market? Round 6 law happens after round 6 market, so no next market? Actually law applies to next market; round 6 is last, so no effect. Already voted (voted true, post_vote stage). So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767225,
+    "id": "202611160227028bba1f8e81d840ca",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160227028bba1f8e81d840ca",
+    "usage": {
+      "completion_tokens": 101,
+      "completion_tokens_details": {
+        "reasoning_tokens": 69
+      },
+      "prompt_tokens": 1393,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1494
+    }
+  }
+}

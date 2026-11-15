@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.2,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Продажа в кредит избегает девальвации cash на границе раунда и даёт выручку 1.25x.\"}",
+          "reasoning_content": "Sell 3 units at price ladder: sold_counter=2, so prices 9,8,7 = 24 alashi. Sell credit gives 30 promissory paid at round boundary... but wait, boundary at rounds 2+ applies floor(cash/100)*62 to cash, promissory added. Selling credit yields 1.25x = 30. That's better than 24 now? Cash now 0, devaluation floor(24/100)*62 — 24 alashi = 2,400,000 units? Wait, cash units: 1M = 1 alashi. 24 alashi cash → floor(2400000/100)*62 = 24000*62=1,488,000 units = 14.88 alashi. So selling now loses heavily. Sell credit avoids devaluation and gets 30 alashi promissory. Definitely sell_credit 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767644,
+    "id": "202611160234008a7cb22b569143ab",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160234008a7cb22b569143ab",
+    "usage": {
+      "completion_tokens": 238,
+      "completion_tokens_details": {
+        "reasoning_tokens": 191
+      },
+      "prompt_tokens": 1420,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1658
+    }
+  }
+}

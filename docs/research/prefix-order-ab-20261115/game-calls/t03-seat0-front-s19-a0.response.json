@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.296,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемо ~2.25 товара против 2 у produce, цены ещё высокие\"}",
+          "reasoning_content": "Round 6, last. Produce gives 2 goods, market later at price ~ ladder position 7 → price 4. Shuttle 3 goods but 25% confiscation. Shuttle expected 2.25 goods > produce. But grey at border... no favorable border mention. Shuttle better expected value.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766699,
+    "id": "20261116021816c36a88fa650647c9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021816c36a88fa650647c9",
+    "usage": {
+      "completion_tokens": 92,
+      "completion_tokens_details": {
+        "reasoning_tokens": 62
+      },
+      "prompt_tokens": 1523,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1615
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.713,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Последний раунд: продаю весь товар по высокой цене; sell_credit уже не погасится.\"}",
+          "reasoning_content": "Round 6 last round. Sell credit won't redeem. Sell all 3 at price 12 minus 10% tax.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767829,
+    "id": "2026111602370782b24d177f0f4ed1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602370782b24d177f0f4ed1",
+    "usage": {
+      "completion_tokens": 61,
+      "completion_tokens_details": {
+        "reasoning_tokens": 26
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1489
+    }
+  }
+}

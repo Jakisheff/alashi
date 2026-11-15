@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.317,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Цены сейчас высокие (10 за единицу), налога нет, а кредитный возврат рискован из-за девальвации и карты 8 — продаю за наличные.\"}",
+          "reasoning_content": "Sell 2 goods at price 10 (sold_counter=2, prices [12,10,9,...]). Sell now vs credit: cash 0, devaluation 62% at round boundary — sell_credit gives 1.25x but arrives after devaluation? Promissory added at boundary after devaluation... risky (card 8 wipes). Just sell now for cash, no tax. 2*10=20.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767166,
+    "id": "20261116022603fc565b7a19854339",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022603fc565b7a19854339",
+    "usage": {
+      "completion_tokens": 143,
+      "completion_tokens_details": {
+        "reasoning_tokens": 88
+      },
+      "prompt_tokens": 1420,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1563
+    }
+  }
+}

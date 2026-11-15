@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.762,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Продажа в кредит даёт 1.25x и прибавляется после девальвации, кэш всё равно ноль — чистый выигрыш.\"}",
+          "reasoning_content": "Sell 3 units at prices: counter=2, so prices 9,8,7 → 24. Cash now. Sell now vs credit: credit returns at round boundary then devalued? Devaluation applies cash at boundary of rounds 2+: cash=floor(cash/100)*62. Promissory added after devaluation and cleared. So sell_credit avoids devaluation! Revenue 24*1.25=30 added after devaluation. Cash 0 anyway. Sell credit is better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767044,
+    "id": "20261116022358b270fdd3ff27488a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022358b270fdd3ff27488a",
+    "usage": {
+      "completion_tokens": 153,
+      "completion_tokens_details": {
+        "reasoning_tokens": 103
+      },
+      "prompt_tokens": 1420,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1573
+    }
+  }
+}

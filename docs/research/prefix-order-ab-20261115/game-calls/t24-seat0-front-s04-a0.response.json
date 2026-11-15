@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.159,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Денег нет, девальвация не страшна, а выручка с 25% премией придёт на границе раунда\"}",
+          "reasoning_content": "Round 2 market, prices: sold_counter=2, next price 8. Cash 0. Goods 2. Sell now at 8, or sell_credit ×1.25 — but round boundary 2+ devalues cash floor(cash/100)*62 — wait, that applies at round borders. Promissory added at boundary... selling credit means revenue arrives at boundary of next round as promissory which adds to cash and zeroes? Actually promissory returns at round boundary. Cash devaluation hits cash, promissory added. Selling credit avoids devaluation? Cash=0 anyway. Sell credit: 8*2*1.25=20 promissory → arrives at border of round 3? \"вернётся только на границе следующего раунда\" — border after this round. Devaluation happens at border 2+ then promissory added. So credit is better (1.25x, avoids devaluation since cash=0). But card 8 wipes promissory — unknown future. Sell credit 2 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767369,
+    "id": "20261116022923c67a037e98de44f0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022923c67a037e98de44f0",
+    "usage": {
+      "completion_tokens": 266,
+      "completion_tokens_details": {
+        "reasoning_tokens": 219
+      },
+      "prompt_tokens": 1420,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1686
+    }
+  }
+}

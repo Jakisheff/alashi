@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.515,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Закон +2 к ценам выгоден всем продавцам, включая меня, и нет причин блокировать.\"}",
+          "reasoning_content": "Card 7: prices +2. All voted already, post_vote stage? Decision stage post_vote — but available vote actions... Anyway card 7 benefits everyone equally, but I'm poorest — price boost helps me sell. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767223,
+    "id": "202611160227002ebd413e183746ef",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160227002ebd413e183746ef",
+    "usage": {
+      "completion_tokens": 80,
+      "completion_tokens_details": {
+        "reasoning_tokens": 48
+      },
+      "prompt_tokens": 1392,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1472
+    }
+  }
+}

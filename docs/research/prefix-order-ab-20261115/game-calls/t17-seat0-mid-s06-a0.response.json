@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.614,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Пустая карта — нечего проводить или блокировать.\"}",
+          "reasoning_content": "Card 0 = nothing. Pass... but options are vote. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767152,
+    "id": "20261116022549f534dd8b66164727",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022549f534dd8b66164727",
+    "usage": {
+      "completion_tokens": 42,
+      "completion_tokens_details": {
+        "reasoning_tokens": 17
+      },
+      "prompt_tokens": 1384,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1426
+    }
+  }
+}

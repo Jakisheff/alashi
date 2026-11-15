@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.943,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 8 списывает promissory — у меня их нет, а соперники богаче; закон мне выгоден.\"}",
+          "reasoning_content": "Card 8 cancels all promissory notes. I have cash 0, no promissory notes presumably (I'm poor). Others may have promissory? Unknown; card 8 hurts those holding promissory. I benefit relatively. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767699,
+    "id": "20261116023457a0e8963521634781",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023457a0e8963521634781",
+    "usage": {
+      "completion_tokens": 91,
+      "completion_tokens_details": {
+        "reasoning_tokens": 54
+      },
+      "prompt_tokens": 1384,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1475
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.329,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатно даёт 3 товара без риска конфискации, а cash у меня мал для donkey; shuttle рискован.\"}",
+          "reasoning_content": "Subsidy 1, shuttle gives 4 goods with 25% confiscation risk. Produce gives 3 goods free. Produce is safe.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766874,
+    "id": "202611160221119d817313c8944580",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160221119d817313c8944580",
+    "usage": {
+      "completion_tokens": 69,
+      "completion_tokens_details": {
+        "reasoning_tokens": 30
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1590
+    }
+  }
+}

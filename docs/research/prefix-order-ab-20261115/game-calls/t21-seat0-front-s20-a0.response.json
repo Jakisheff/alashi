@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.608,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товары уже нельзя продать, а взятка только уменьшит мой cash и усилит соперника при неясной выгоде от бонуса влияния.\"}",
+          "reasoning_content": "Round 6, final. License? bid only round 4. Produce gives goods but no market left to sell (law after action, market already passed). So production useless. Shuttle useless. Bribe? Influence max already mine (2)? Influence 2 is player 2. Bribe 5M gives +1 influence → max influence bonus 5% bank? Bank size unknown; cash totals ~100M, commission 5% maybe of bank. 5% bank to max influence. Could be worth. But roof/bribe costs cash which counts toward final ranking. Bribe 5M costs 5M cash but may gain 5% bank (~?). Bank likely large (sales). Risky: opponent 2 has influence 2; if I stay at 1, they win bonus. Bribe 5M → influence 2, tie → tie_order decides, my_idx 0 likely better. Cash ranking matters too: I'm richest anyway. Spending 5M costs me directly plus could trigger anti-rich? No law card. Bribe gives influence to me, recipient gets cash (opponent). That helps opponent 2 already rich... give to poorest (idx2)? They get 5M cash, rank below me anyway. Gain: 5% of bank. Bank = money sunk? Bank includes bid payments, bribes go to players. Bank size unknown, likely small; commission 5% of bank. Might be net negative. But ranking: 5M of ~46M is ~11% of my cash. Bonus 5% of bank — if bank ~30M, that's 1.5M, negative. Safer: pass? Or donkey? Useless. Pass.\n\nActually bribe money goes to recipient from my cash, increasing their payout. Skip. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767341,
+    "id": "202611160228497285939d28434292",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160228497285939d28434292",
+    "usage": {
+      "completion_tokens": 419,
+      "completion_tokens_details": {
+        "reasoning_tokens": 373
+      },
+      "prompt_tokens": 1520,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1939
+    }
+  }
+}

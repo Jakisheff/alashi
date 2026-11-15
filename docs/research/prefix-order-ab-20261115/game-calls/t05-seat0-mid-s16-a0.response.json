@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.049,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемая ценность 3 товаров с учётом 25% риска выше, чем 2 от produce\"}",
+          "reasoning_content": "Round 5, shuttle: 3 goods, ~25% confiscation risk. Cash ~30M. Produce gives 2 safely. Shuttle EV: 0.75*3=2.25 goods. Sell later at ~12 price? sold_counter 0, prices [12,10,9...]... total goods value: shuttle ~27 alashi vs produce 24. Moderate edge — take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766780,
+    "id": "20261116021937899dc5e872724186",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021937899dc5e872724186",
+    "usage": {
+      "completion_tokens": 119,
+      "completion_tokens_details": {
+        "reasoning_tokens": 84
+      },
+      "prompt_tokens": 1522,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1641
+    }
+  }
+}

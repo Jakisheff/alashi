@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.307,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Налог бьёт по богатым соперникам и пополняет банк, мне с минимальным кэшем он почти не вредит\"}",
+          "reasoning_content": "Card 1: tax 10%. I'm poorest, low cash. Tax hurts sellers (others). But tax revenue goes to bank, shared. Others likely vote no. I vote yes? Tax reduces their cash, benefits me relatively. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767810,
+    "id": "2026111602364766ee1a74146d48fc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602364766ee1a74146d48fc",
+    "usage": {
+      "completion_tokens": 90,
+      "completion_tokens_details": {
+        "reasoning_tokens": 51
+      },
+      "prompt_tokens": 1389,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1479
+    }
+  }
+}

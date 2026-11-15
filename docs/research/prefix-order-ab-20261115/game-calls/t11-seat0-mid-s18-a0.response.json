@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.219,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Повышение цен выгодит соперников с товаром, а я без товара выиграю от блокировки закона.\"}",
+          "reasoning_content": "Card 7: prices +2 next market. I'm poorest, no goods. Others have goods and will benefit. Vote no — but others may pass it. As president, veto is better? Weights 1 each, all voted. If it passed and veto pending... it says post_vote, voted all true, veto_pending false. Likely it passed (others voted yes). Veto to suppress +2 prices hurting me relatively. Veto kills +2 price, good for me.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766993,
+    "id": "2026111602230828b28d992b444252",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602230828b28d992b444252",
+    "usage": {
+      "completion_tokens": 134,
+      "completion_tokens_details": {
+        "reasoning_tokens": 99
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1525
+    }
+  }
+}

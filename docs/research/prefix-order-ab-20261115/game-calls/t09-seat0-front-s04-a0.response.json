@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.987,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Кредитная продажа избегает девальвации и даёт +25%, цены пока высокие\"}",
+          "reasoning_content": "Round 2 market, next border devalues cash (floor/100*62). Sell credit gives 1.25 but promissory added to cash at round border... wait, promissory added at border and then devaluation? Devaluation happens at border; promissory added to cash and reset — order matters. Cash devaluation then promissory added? \"at round boundaries 2+ cash=floor(cash/100)*62, promissory is added to cash and reset\". Likely promissory added after, avoiding devaluation. So sell_credit is better. Sell 3 units credit at price ladder: sold_counter=2, prices [12,10,9,...] → 9,8,7 = 24 ×1.25 = 30 promissory. Opponent may also sell. Sell credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766830,
+    "id": "20261116022024873664bfbcd74b79",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022024873664bfbcd74b79",
+    "usage": {
+      "completion_tokens": 207,
+      "completion_tokens_details": {
+        "reasoning_tokens": 172
+      },
+      "prompt_tokens": 1420,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1627
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.824,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Закон даёт +1 влияния беднейшему сопернику, что усиливает его в борьбе за бонус за влияние — налагаю вето.\"}",
+          "reasoning_content": "Card 4: +1 influence to poorest. I'm richest. Poorest gets +1 influence — helps their final 5% bonus contention. It passed? voted all true, post_vote stage — wait, decision_stage is post_vote but phase law with voting options? Odd. Actually phase law, actions vote_yes etc available. Post_vote... but I'm president and law card 4 passed presumably; I can veto. Veto card 4: it gives +1 influence to poorest (idx 2). That influence affects final influence bonus. Deny rivals influence — veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767548,
+    "id": "202611160232239bd2bad9f0034a88",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160232239bd2bad9f0034a88",
+    "usage": {
+      "completion_tokens": 160,
+      "completion_tokens_details": {
+        "reasoning_tokens": 118
+      },
+      "prompt_tokens": 1392,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1552
+    }
+  }
+}

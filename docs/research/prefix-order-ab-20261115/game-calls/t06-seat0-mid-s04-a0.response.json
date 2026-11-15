@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.577,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Продам весь товар по высоким ценам лестницы (9,8,7) без налога — лучший немедленный доход.\"}",
+          "reasoning_content": "Round 2 market, sell now: prices ladder starting at counter=2 → next price 9,8,7... Selling 3 goods: 9+8+7=24. No tax. Devaluation 62% at end of round — sell_credit gives 1.25x but paid at next round boundary (after devaluation? promissory added to cash then devalued? \"On border of rounds 2+ cash=floor(cash/100)*62; promissory added to cash and reset\"). Order ambiguous; credit likely added before/after? Risky. Sell directly now for 24 cash, devalued to 62%? Still sell now is fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766725,
+    "id": "20261116021840966f388a15204811",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021840966f388a15204811",
+    "usage": {
+      "completion_tokens": 184,
+      "completion_tokens_details": {
+        "reasoning_tokens": 144
+      },
+      "prompt_tokens": 1420,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1604
+    }
+  }
+}

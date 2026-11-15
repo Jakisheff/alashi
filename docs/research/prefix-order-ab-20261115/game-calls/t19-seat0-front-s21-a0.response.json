@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.885,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Субсидия товара в финальном раунде мне бесполезна (товара нет, действий больше не будет), исход голосования не влияет на мою выплату.\"}",
+          "reasoning_content": "Card 3: subsidy_goods=1. Doesn't help me (goods 0, no more actions? round 6 law last). Subsidy applies... after law, next market? Round 6: market already happened, action happened, law last. Subsidy useless now. But voting yes/no doesn't matter for my payoff. I'm richest; vote weight 3 dominates anyway. Pass/abstain — vote_abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767254,
+    "id": "20261116022730d39f5746069e4e1b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022730d39f5746069e4e1b",
+    "usage": {
+      "completion_tokens": 145,
+      "completion_tokens_details": {
+        "reasoning_tokens": 92
+      },
+      "prompt_tokens": 1392,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1537
+    }
+  }
+}

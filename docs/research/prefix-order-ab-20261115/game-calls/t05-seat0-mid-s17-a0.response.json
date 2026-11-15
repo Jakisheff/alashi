@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.924,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Налог 20% ударит по моим продажам, я богатейший, применяю вето.\"}",
+          "reasoning_content": "Law card 2: tax 20%. I'm rich (30.4M cash). Tax reduces my market revenue. Vote no. Others: idx2 voted (unknown). My weight 2 vs... I can veto anyway. Vote no; if passes, veto. But action only one. Veto kills it outright? President may veto before counting. Safest: veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766784,
+    "id": "202611160219412176450bc076463b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160219412176450bc076463b",
+    "usage": {
+      "completion_tokens": 112,
+      "completion_tokens_details": {
+        "reasoning_tokens": 77
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1503
+    }
+  }
+}

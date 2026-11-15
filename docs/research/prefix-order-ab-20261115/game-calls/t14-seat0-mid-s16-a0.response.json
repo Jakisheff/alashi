@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.711,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 20% режет мою выручку от продаж; как президент при необходимости мог бы ветировать, но сначала голосую против.\"}",
+          "reasoning_content": "Law card 2: tax 20%. I'm richest? cash 15.4M — actually poorest. Tax hurts sellers. My vote weight 2+1(faction2 voted)... I'm president; opponents combined 2 vs my 3? vote_weight [2,1,1], one voted. If I vote yes: 2 vs already votes. Unknown their votes. Tax 20% hurts me as I plan to sell. Vote no and veto if passes? Can't veto after voting? Veto available before count. Simpler: vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767092,
+    "id": "2026111602244795958fadf0334250",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602244795958fadf0334250",
+    "usage": {
+      "completion_tokens": 157,
+      "completion_tokens_details": {
+        "reasoning_tokens": 116
+      },
+      "prompt_tokens": 1390,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1547
+    }
+  }
+}

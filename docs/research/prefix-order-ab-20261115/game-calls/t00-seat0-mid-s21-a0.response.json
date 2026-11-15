@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.38,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Последний раунд: шаттл даёт больше товара с положительным EV против конфискации, всё продаю на рынке этого же раунда.\"}",
+          "reasoning_content": "Round 6, last round. No goods, no law card. Best: produce 2 goods then sell at price ladder sold_counter=9 → price ~3-4. 2 goods ~7-8 alashi revenue. Shuttle: 3 goods, 25% confiscation → EV ~2.25*3.5≈8. But produce safe 2*~3.5=7. Shuttle EV slightly better. Cash is king last round; goods sold now. Shuttle EV ~8 vs produce 7 — marginal. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766578,
+    "id": "20261116021613a75caad2819c4d57",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021613a75caad2819c4d57",
+    "usage": {
+      "completion_tokens": 158,
+      "completion_tokens_details": {
+        "reasoning_tokens": 113
+      },
+      "prompt_tokens": 1523,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1681
+    }
+  }
+}

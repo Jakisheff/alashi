@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.403,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон даёт +1 влияния богатейшему (сопернику), что ослабляет мои шансы на бонус за влияние и президентство\"}",
+          "reasoning_content": "Law 5: +1 influence to richest. Richest is faction 1 (46.9M). I'm president, tied influence 2-2 with idx2. Giving +1 to faction 1 reduces my max-influence bonus chances. Vote no. Others voted already; unknown. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766922,
+    "id": "20261116022159fac06c5ae379440b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022159fac06c5ae379440b",
+    "usage": {
+      "completion_tokens": 106,
+      "completion_tokens_details": {
+        "reasoning_tokens": 63
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1497
+    }
+  }
+}

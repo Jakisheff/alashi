@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.881,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Финальный раунд: шаттл даёт 3 товара, ожидаемая ценность после риска конфискации выше, чем у produce.\"}",
+          "reasoning_content": "Round 6, last round, action phase before final market. Shuttle: 3 goods, 25% confiscation. Price at sold_counter 7: ladder[7]=4. Tax 10%. 3 goods at ~4 = 12, minus tax → ~10.8. Shuttle expected value positive (~75% * 10.8 ≈ 8). Produce gives 2 goods → ~7.2 after tax. Shuttle better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767539,
+    "id": "20261116023213c1d838e2a3a944b2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023213c1d838e2a3a944b2",
+    "usage": {
+      "completion_tokens": 138,
+      "completion_tokens_details": {
+        "reasoning_tokens": 93
+      },
+      "prompt_tokens": 1522,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1660
+    }
+  }
+}

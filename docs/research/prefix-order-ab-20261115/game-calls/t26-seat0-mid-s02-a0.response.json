@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.204,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Закон 8 списывает непогашенные promissory — у меня их нет, а конкурентам может навредить, поэтому поддерживаю.\"}",
+          "reasoning_content": "Law card 8: cancels all promissory notes. If I vote yes: no=0? Others voted already (voted true) but unknown direction. I'm president; card 8 only hurts those with promissory. I likely have none (no sell_credit yet). Vote yes is safe; but passing cancels nothing? If nobody has promissory, no effect. Either fine. Vote yes to keep goodwill? Or abstain. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767440,
+    "id": "20261116023037632fee8231204803",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023037632fee8231204803",
+    "usage": {
+      "completion_tokens": 139,
+      "completion_tokens_details": {
+        "reasoning_tokens": 96
+      },
+      "prompt_tokens": 1380,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1519
+    }
+  }
+}

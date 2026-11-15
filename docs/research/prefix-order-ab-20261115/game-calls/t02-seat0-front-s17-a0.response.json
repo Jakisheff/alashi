@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.16,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Последний раунд, кредит не погасится; продаю весь товар по максимальной цене 12.\"}",
+          "reasoning_content": "Round 6, last round. Sell credit won't be redeemed — sell normally. Sold counter 0, price 12. Sell 3 units at 12 = 36.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766696,
+    "id": "2026111602181419e3fe98b3ac4a08",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602181419e3fe98b3ac4a08",
+    "usage": {
+      "completion_tokens": 75,
+      "completion_tokens_details": {
+        "reasoning_tokens": 37
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1503
+    }
+  }
+}

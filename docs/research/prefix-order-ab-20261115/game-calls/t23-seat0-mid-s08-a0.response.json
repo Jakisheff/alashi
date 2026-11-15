@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.14,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Цены высоки в начале лестницы, а кредитная продажа с коэффициентом 1.25 позволяет обойти девальвацию cash на границе раунда.\"}",
+          "reasoning_content": "Sell 2 at 12 = 24 alashi. Use sell_credit? Devaluation at round 3→4 boundary: cash floor/100*62, promissory added after. Selling credit gives 1.25x but devaluation applies after promissory added? Promissory added to cash and reset at boundary — cash then devalued? Devaluation happens at boundary, promissory added... order unclear. Cash kept: 30 alashi will devalue to 62%. Selling regular gives 24 taxed 0. Selling credit gives 30 promissory; if promissory added after devaluation, better. Risk of card 8 wiping promissory is small. Also credit avoids devaluation. Choose sell_credit 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767367,
+    "id": "202611160229225cd54877c1044600",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160229225cd54877c1044600",
+    "usage": {
+      "completion_tokens": 206,
+      "completion_tokens_details": {
+        "reasoning_tokens": 155
+      },
+      "prompt_tokens": 1425,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1631
+    }
+  }
+}

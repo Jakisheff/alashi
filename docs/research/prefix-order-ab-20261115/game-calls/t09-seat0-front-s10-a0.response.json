@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.125,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон даёт +1 влияния богатейшему (фракция 2), а не мне — это усиливает соперника в борьбе за бонус влияния.\"}",
+          "reasoning_content": "Card 5: +1 influence to richest. Richest is idx2 (30.64). Not me. Not president. Vote yes/no doesn't matter for me—it helps idx2. Vote no, but others may pass anyway. I'm not president, idx2 is richest. Vote yes only if beneficial—influence gives extra 5% bonus to max influence. Helping idx2 hurts me. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766855,
+    "id": "2026111602205113ebb1e05dc84013",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602205113ebb1e05dc84013",
+    "usage": {
+      "completion_tokens": 129,
+      "completion_tokens_details": {
+        "reasoning_tokens": 84
+      },
+      "prompt_tokens": 1388,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1517
+    }
+  }
+}

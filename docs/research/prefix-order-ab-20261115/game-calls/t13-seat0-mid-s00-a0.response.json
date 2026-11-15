@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.16,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара и денег — продавать нечего, покупка убыточна.\"}",
+          "reasoning_content": "No goods, cash 0. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766935,
+    "id": "20261116022212601755f6ac434573",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022212601755f6ac434573",
+    "usage": {
+      "completion_tokens": 36,
+      "completion_tokens_details": {
+        "reasoning_tokens": 9
+      },
+      "prompt_tokens": 1418,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1454
+    }
+  }
+}

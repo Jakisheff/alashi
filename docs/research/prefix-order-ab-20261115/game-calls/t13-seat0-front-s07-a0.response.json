@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.92,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Продажа в кредит по высокой цене 12 даёт 30 alashi на границе этого раунда с премией 25%\"}",
+          "reasoning_content": "Round 3 market, prices 12 first. Sell 2 units at 12 = 24 alashi, no tax. Sell credit gives 1.25x but paid next round boundary (round 4), fine—still gets paid. 24*1.25=30 promissory, returned at end of round 3 boundary. Safe, do sell_credit 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766997,
+    "id": "202611160223144c405f884da748cc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160223144c405f884da748cc",
+    "usage": {
+      "completion_tokens": 124,
+      "completion_tokens_details": {
+        "reasoning_tokens": 79
+      },
+      "prompt_tokens": 1425,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1549
+    }
+  }
+}

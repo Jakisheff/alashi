@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.083,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Закон +2 к ценам выгоден мне как продавцу с 3 товарами.\"}",
+          "reasoning_content": "Law 7: prices +2. Good for seller. I have 3 goods, selling. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766865,
+    "id": "20261116022102129374bf7b774f56",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022102129374bf7b774f56",
+    "usage": {
+      "completion_tokens": 53,
+      "completion_tokens_details": {
+        "reasoning_tokens": 23
+      },
+      "prompt_tokens": 1387,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1440
+    }
+  }
+}

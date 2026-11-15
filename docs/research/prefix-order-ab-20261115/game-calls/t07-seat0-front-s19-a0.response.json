@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.923,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара для продажи, а покупка в последнем раунде бессмысленна\"}",
+          "reasoning_content": "Round 6 market. Tax 20%, price ladder 12,10,9... I have 0 goods. Buy? Buying moves counter back, could set up... no more sell opportunity except this market only (round 6, last round). Buying goods to sell later — sell_credit won't pay after last round. Buying goods raises counter price for later sales but I have no goods. Nothing to gain. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766846,
+    "id": "20261116022040d4b714a2886a48b0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022040d4b714a2886a48b0",
+    "usage": {
+      "completion_tokens": 114,
+      "completion_tokens_details": {
+        "reasoning_tokens": 86
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1542
+    }
+  }
+}

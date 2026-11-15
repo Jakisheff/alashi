@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.677,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"abstain\",\"reason\":\"Карта 0 — пусто, закон ни на что не влияет, нет смысла тратить ход.\"}",
+          "reasoning_content": "Law card 0 = empty. Nothing to veto really. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767386,
+    "id": "2026111602294382a5ab8282f0404f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602294382a5ab8282f0404f",
+    "usage": {
+      "completion_tokens": 50,
+      "completion_tokens_details": {
+        "reasoning_tokens": 16
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1441
+    }
+  }
+}

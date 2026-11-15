@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.589,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ноль наличных — конфискация не страшна, ожидаю ~2.25 товара против 2 гарантированных\"}",
+          "reasoning_content": "Cash 0. Produce gives 2 goods free. Shuttle risky but more goods, cash 0 anyway so confiscation risk loses goods. Expected: shuttle 3 goods *0.75=2.25 expected. Produce 2 guaranteed, no risk. Shuttle slightly better expected. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767536,
+    "id": "20261116023212f90620cec19c4753",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023212f90620cec19c4753",
+    "usage": {
+      "completion_tokens": 98,
+      "completion_tokens_details": {
+        "reasoning_tokens": 60
+      },
+      "prompt_tokens": 1516,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1614
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.536,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Последний раунд: продаю весь товар по максимальной цене, кредит не успеет погаситься.\"}",
+          "reasoning_content": "Round 6, final round — sell_credit won't redeem. Sell 3 goods at 12 each.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766887,
+    "id": "20261116022124db820abc2ac74651",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022124db820abc2ac74651",
+    "usage": {
+      "completion_tokens": 61,
+      "completion_tokens_details": {
+        "reasoning_tokens": 22
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1489
+    }
+  }
+}

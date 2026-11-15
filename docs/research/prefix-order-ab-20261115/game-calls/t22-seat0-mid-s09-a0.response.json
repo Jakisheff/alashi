@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.353,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нет денег для взяток, а бесплатный товар даёт выручку на следующем рынке\"}",
+          "reasoning_content": "I have 0 cash, influence 2, president. Produce gives 2 goods — free. Do produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767309,
+    "id": "2026111602282631956081f1ed43f5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602282631956081f1ed43f5",
+    "usage": {
+      "completion_tokens": 52,
+      "completion_tokens_details": {
+        "reasoning_tokens": 23
+      },
+      "prompt_tokens": 1516,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1568
+    }
+  }
+}

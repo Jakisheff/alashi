@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.549,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон даёт +1 влияния богатейшему (сопернику), что ослабляет мою позицию президента.\"}",
+          "reasoning_content": "Card 5: +1 influence to richest. Richest is idx2 (29.12). I'm president with influence 1, tie. Passing gives idx2 influence 2 — hurts me. Vote no; others? voted already... decision_stage post_vote means votes counted? Actually we're in law phase pre-vote? voted all true — likely my vote remains. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766669,
+    "id": "20261116021745535882912a4743a5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021745535882912a4743a5",
+    "usage": {
+      "completion_tokens": 118,
+      "completion_tokens_details": {
+        "reasoning_tokens": 79
+      },
+      "prompt_tokens": 1387,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1505
+    }
+  }
+}

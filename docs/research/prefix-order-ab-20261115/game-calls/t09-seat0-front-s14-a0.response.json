@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.323,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голос уже подан, а карта 3 (субсидия) мне выгодна — вмешиваться нечем.\"}",
+          "reasoning_content": "Card 3: subsidy_goods=1 benefits me (I produce). Already voted though; post_vote stage, only president actions? Voted true, phase law, decision_stage post_vote — my actions likely vote_* would be rejected... but I'm not president. Best: pass? Protocol law allows pass. Since I already voted, choose pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766879,
+    "id": "20261116022116c4b5278db07e409c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022116c4b5278db07e409c",
+    "usage": {
+      "completion_tokens": 105,
+      "completion_tokens_details": {
+        "reasoning_tokens": 70
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1496
+    }
+  }
+}

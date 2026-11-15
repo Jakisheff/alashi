@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.881,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"голоса уже поданы, карта +2 к ценам выгодна — ничего не меняю\"}",
+          "reasoning_content": "Law 7: prices +2. Good for selling next round. Already voted (post_vote), but I must answer something... voted true for all, decision_stage post_vote — maybe I'm asked to decide veto? is_president, veto_pending false. Likely my vote already cast; safest pass? Protocol allows vote actions only; abstain may burn or count. Actually all voted true and stage post_vote — probably nothing to do; answer vote_abstain (safe, no effect) — but if veto pending... not pending. Choose vote_abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766992,
+    "id": "20261116022307644553c466b34f05",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022307644553c466b34f05",
+    "usage": {
+      "completion_tokens": 145,
+      "completion_tokens_details": {
+        "reasoning_tokens": 114
+      },
+      "prompt_tokens": 1392,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1537
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.466,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Больше товара при почти нулевом кэше, риск конфискации приемлем ради роста выручки\"}",
+          "reasoning_content": "Shuttle: 3 goods, ~25% confiscation, worth it? I have no cash (0.372). Produce gives 2 goods safely. Shuttle EV: 0.75*3=2.25 goods but confiscation may lose everything? Risk. Shuttle better EV. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766789,
+    "id": "20261116021945b780e68f9bb1466e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021945b780e68f9bb1466e",
+    "usage": {
+      "completion_tokens": 99,
+      "completion_tokens_details": {
+        "reasoning_tokens": 63
+      },
+      "prompt_tokens": 1521,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1620
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.631,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 20% снизит мою будущую выручку, а у соперников больше наличных — голосую против.\"}",
+          "reasoning_content": "Law card 2: tax 20%. I'd vote no. But veto_pending true; someone else's veto? I'm not president. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767570,
+    "id": "20261116023248da078de6790f47a1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116023248da078de6790f47a1",
+    "usage": {
+      "completion_tokens": 70,
+      "completion_tokens_details": {
+        "reasoning_tokens": 32
+      },
+      "prompt_tokens": 1384,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1454
+    }
+  }
+}

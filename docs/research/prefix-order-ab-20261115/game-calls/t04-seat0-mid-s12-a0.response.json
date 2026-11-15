@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.298,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продаю 2 единицы по цене 7 сейчас — надёжные 14 alashi без риска девальвации кредитной выручки.\"}",
+          "reasoning_content": "Round 4, last market before round 5? Six rounds. Sell credit pays at boundary of next round — round 4 credit pays at boundary 5, fine. Sold counter 4, price for next unit: index 4 = 7. Sell 2 units at 7 each = 14 alashi, *1.25 = 17.5 credit, but devaluation at boundary 5: floor(cash/100)*62 — promissory added to cash then devalued? Promissory added at boundary of next round... devaluation applies to cash at boundaries 2+. Round 4 sales → promissory paid at boundary 5, then... likely cash after addition devalued? Cash devaluation formula floor(cash/100)*62 applies at boundaries; promissory added and zeroed at boundary. Order unclear. Risky. Direct sell: 14 alashi, no tax. 14 alashi vs credit 17.5 possibly devalued. If devalued 62%: 10.85. Sell now safe.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766675,
+    "id": "202611160217507068ecf8f3284132",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160217507068ecf8f3284132",
+    "usage": {
+      "completion_tokens": 268,
+      "completion_tokens_details": {
+        "reasoning_tokens": 222
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1696
+    }
+  }
+}

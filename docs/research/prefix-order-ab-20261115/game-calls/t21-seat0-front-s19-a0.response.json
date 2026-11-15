@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.762,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Последний раунд — продать весь товар по высоким ценам, sell_credit уже не погасится.\"}",
+          "reasoning_content": "Round 6 final market. Sell all 3 at price 12 each? Sold counter 0, price ladder starts at 12. Sell 3 → 12+10+9=31. Tax 0. Sell now as sell (credit won't be redeemed after last round).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767329,
+    "id": "2026111602284584a6ff41ffeb4e23",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602284584a6ff41ffeb4e23",
+    "usage": {
+      "completion_tokens": 94,
+      "completion_tokens_details": {
+        "reasoning_tokens": 59
+      },
+      "prompt_tokens": 1425,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1519
+    }
+  }
+}

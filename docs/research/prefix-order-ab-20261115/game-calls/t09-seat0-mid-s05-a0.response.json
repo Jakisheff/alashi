@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.999,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 2 товара можно продать на текущей высокой цене, денег на взятки нет\"}",
+          "reasoning_content": "I have 0 cash, 0 goods. Produce gives 2 goods, sell at price ~4 (sold_counter 7, prices [12,10,9,8,7,6,...] index 7 = 6? Actually sold 7 units, next price index 7 = 6). Produce is free, gives goods to sell. Do produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766833,
+    "id": "202611160220296f7b623db9234d79",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160220296f7b623db9234d79",
+    "usage": {
+      "completion_tokens": 106,
+      "completion_tokens_details": {
+        "reasoning_tokens": 76
+      },
+      "prompt_tokens": 1515,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1621
+    }
+  }
+}

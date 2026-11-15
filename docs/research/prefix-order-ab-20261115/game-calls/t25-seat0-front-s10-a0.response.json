@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.293,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Субсидия товара выгодна всем, включая меня, и увеличивает будущие продажи.\"}",
+          "reasoning_content": "Card 3: subsidy_goods=1 — benefits everyone, helps me produce more. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767432,
+    "id": "2026111602303178e858efcee04f66",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111602303178e858efcee04f66",
+    "usage": {
+      "completion_tokens": 50,
+      "completion_tokens_details": {
+        "reasoning_tokens": 20
+      },
+      "prompt_tokens": 1388,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1438
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.926,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Нет денег и товара; шаттл даёт больше товара в ожидании (2.25 против 2), риск приемлем.\"}",
+          "reasoning_content": "Shuttle gives 3 goods, ~25% confiscation. No cash, no goods. Produce gives 2. Shuttle EV: 3*0.75=2.25 goods. Shuttle better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794766642,
+    "id": "20261116021720ec7b56bc28114ba2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116021720ec7b56bc28114ba2",
+    "usage": {
+      "completion_tokens": 81,
+      "completion_tokens_details": {
+        "reasoning_tokens": 42
+      },
+      "prompt_tokens": 1515,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1596
+    }
+  }
+}

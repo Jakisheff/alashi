@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.747,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Продаю в кредит по цене 8 с бонусом 25%, погашение на границе раунда 4 успевает.\"}",
+          "reasoning_content": "Round 4, sell 2 goods at price for sold_counter=4: next price index 4 = 8. Sell credit gives 1.25x, paid at round boundary — round 4 boundary goes to round 5, so redeemable. Sell credit: 2*8*1.25=20 alashi promissory, no tax now? Tax 0. Yes, sell_credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767328,
+    "id": "20261116022839bfc1c37426b04e80",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261116022839bfc1c37426b04e80",
+    "usage": {
+      "completion_tokens": 131,
+      "completion_tokens_details": {
+        "reasoning_tokens": 85
+      },
+      "prompt_tokens": 1428,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1559
+    }
+  }
+}

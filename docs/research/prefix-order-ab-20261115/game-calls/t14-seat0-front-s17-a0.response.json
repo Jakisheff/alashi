@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.21,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Налог 20% ударит по продавцам с товаром (соперники), а у меня товара нет — пусть проходит.\"}",
+          "reasoning_content": "Law card 2: tax 20%. I have most cash? No, I'm lowest cash. Tax hits revenue; sold_counter 0, next market round 6. Tax hurts sellers. Goods: I have 0, others 2 each. Tax 20% hurts them, not me. Vote yes.\n\nPresident — can veto, but I want it to pass. vote_yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794767098,
+    "id": "202611160224538475141dbde744fe",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611160224538475141dbde744fe",
+    "usage": {
+      "completion_tokens": 119,
+      "completion_tokens_details": {
+        "reasoning_tokens": 80
+      },
+      "prompt_tokens": 1391,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1510
+    }
+  }
+}
